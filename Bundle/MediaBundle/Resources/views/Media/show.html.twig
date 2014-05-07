@@ -1,4 +1,4 @@
-{% extends 'KunstmaanMediaBundle:Default:layout.html.twig' %}
+{% extends 'VictoireMediaBundle:Default:layout.html.twig' %}
 
 {% block header %}
      <h1>{{ 'media.media.title'|trans }} <small>{{ media.name }}</small></h1>
@@ -12,7 +12,7 @@
     <div class="main_actions btn-group">
         {% block extraactions %}{% endblock %}
         {% block actions %}
-            <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'mediaId': media.id }) }}" data-target="#sure-modal-{{ media.id }}" data-toggle="modal" class="btn">{{ 'form.delete'|trans }}</a>
+            <a href="{{ path('VictoireMediaBundle_media_delete', { 'mediaId': media.id }) }}" data-target="#sure-modal-{{ media.id }}" data-toggle="modal" class="btn">{{ 'form.delete'|trans }}</a>
         {% endblock %}
     </div>
 
@@ -58,14 +58,14 @@
 
         <div class="tab-pane" id="properties">
 
-            {% form_theme editform 'KunstmaanMediaBundle:Form:fields.html.twig' %}
+            {% form_theme editform 'VictoireMediaBundle:Form:fields.html.twig' %}
 
-            <form class="form-horizontal properties" action="{{ path('KunstmaanMediaBundle_media_show', { 'mediaId' : media.id } ) }}" method="post" {{ form_enctype(editform) }}>
+            <form class="form-horizontal properties" action="{{ path('VictoireMediaBundle_media_show', { 'mediaId' : media.id } ) }}" method="post" {{ form_enctype(editform) }}>
                 <div class="prop_wrp">
                     {{ form_widget(editform) }}
                     <div class="input_prop">
                     	<div class="btn_group">
-                        	<button class="btn" onclick="window.location = '{{ path('KunstmaanMediaBundle_media_show', { 'mediaId' : media.id } ) }}'" type="reset">{{ 'form.cancel' |trans }}</button>
+                        	<button class="btn" onclick="window.location = '{{ path('VictoireMediaBundle_media_show', { 'mediaId' : media.id } ) }}'" type="reset">{{ 'form.cancel' |trans }}</button>
                         	<button class="btn btn-primary" type="submit">{{ 'form.save' |trans }}</button>
                        	</div>
                     </div>
@@ -75,6 +75,6 @@
     </div>
 
     <!--=========Modals=========-->
-    {% include 'KunstmaanMediaBundle:Media:delete-modal.html.twig' %}
+    {% include 'VictoireMediaBundle:Media:delete-modal.html.twig' %}
 
 {% endblock %}

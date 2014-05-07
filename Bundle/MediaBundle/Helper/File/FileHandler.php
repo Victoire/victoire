@@ -1,15 +1,15 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Helper\File;
+namespace Victoire\Bundle\MediaBundle\Helper\File;
 
-use Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler;
-use Kunstmaan\MediaBundle\Form\File\FileType;
+use Victoire\Bundle\MediaBundle\Helper\Media\AbstractMediaHandler;
+use Victoire\Bundle\MediaBundle\Form\File\FileType;
 use Symfony\Component\HttpFoundation\File\MimeType\FileBinaryMimeTypeGuesser;
 use Gaufrette\Filesystem;
 use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
 use Gaufrette\Adapter\Local;
 use Symfony\Component\HttpFoundation\File\File;
-use Kunstmaan\MediaBundle\Entity\Media;
+use Victoire\Bundle\MediaBundle\Entity\Media;
 use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesserInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -201,7 +201,7 @@ class FileHandler extends AbstractMediaHandler
      */
     public function getShowTemplate(Media $media)
     {
-        return 'KunstmaanMediaBundle:Media\File:show.html.twig';
+        return 'VictoireMediaBundle:Media\File:show.html.twig';
     }
 
     /**

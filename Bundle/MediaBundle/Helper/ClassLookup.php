@@ -1,5 +1,5 @@
 <?php
-namespace Kunstmaan\MediaBundle\Helper;
+namespace Victoire\Bundle\MediaBundle\Helper;
 
 use Doctrine\ORM\Proxy\Proxy;
 

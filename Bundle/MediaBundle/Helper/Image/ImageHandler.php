@@ -1,13 +1,13 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Helper\Image;
+namespace Victoire\Bundle\MediaBundle\Helper\Image;
 
 use Symfony\Component\HttpFoundation\File\File;
 
-use Kunstmaan\MediaBundle\Helper\File\FileHandler;
+use Victoire\Bundle\MediaBundle\Helper\File\FileHandler;
 use Symfony\Component\HttpFoundation\File\MimeType\FileBinaryMimeTypeGuesser;
 use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
-use Kunstmaan\MediaBundle\Entity\Media;
+use Victoire\Bundle\MediaBundle\Entity\Media;
 
 /**
  * FileHandler
@@ -69,7 +69,7 @@ class ImageHandler extends FileHandler
      */
     public function getShowTemplate(Media $media)
     {
-        return 'KunstmaanMediaBundle:Media\Image:show.html.twig';
+        return 'VictoireMediaBundle:Media\Image:show.html.twig';
     }
 
     /**

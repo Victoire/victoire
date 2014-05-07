@@ -1,14 +1,14 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Controller;
+namespace Victoire\Bundle\MediaBundle\Controller;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Kunstmaan\MediaBundle\Entity\Folder;
+use Victoire\Bundle\MediaBundle\Entity\Folder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Kunstmaan\MediaBundle\Entity\Media;
-use Kunstmaan\MediaBundle\Helper\MediaManager;
+use Victoire\Bundle\MediaBundle\Entity\Media;
+use Victoire\Bundle\MediaBundle\Helper\MediaManager;
 
 /**
  * controllerclass which Aviary can use to upload the edited image and add it to the database
@@ -20,7 +20,7 @@ class AviaryController extends Controller
      * @param int $folderId The id of the Folder
      * @param int $mediaId  The id of the image
      *
-     * @Route("/aviary/{folderId}/{mediaId}", requirements={"folderId" = "\d+", "mediaId" = "\d+"}, name="KunstmaanMediaBundle_aviary")
+     * @Route("/aviary/{folderId}/{mediaId}", requirements={"folderId" = "\d+", "mediaId" = "\d+"}, name="VictoireMediaBundle_aviary")
      * @return RedirectResponse
      */
     public function indexAction($folderId, $mediaId)
@@ -28,11 +28,11 @@ class AviaryController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         /* @var Folder $folder */
-        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
+        $folder = $em->getRepository('VictoireMediaBundle:Folder')->getFolder($folderId);
         /* @var Media $media */
-        $media = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($mediaId);
+        $media = $em->getRepository('VictoireMediaBundle:Media')->getMedia($mediaId);
         /* @var MediaManager $mediaManager */
-        $mediaManager = $this->get('kunstmaan_media.media_manager');
+        $mediaManager = $this->get('Victoire_media.media_manager');
 
         $handler = $mediaManager->getHandler($media);
         $fileHelper = $handler->getFormHelper($media);
@@ -42,6 +42,6 @@ class AviaryController extends Controller
         $em->persist($media);
         $em->flush();
 
-        return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('folderId' => $folder->getId())));
+        return new RedirectResponse($this->generateUrl('VictoireMediaBundle_folder_show', array('folderId' => $folder->getId())));
     }
 }

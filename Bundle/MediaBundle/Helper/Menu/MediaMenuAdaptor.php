@@ -1,15 +1,15 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Helper\Menu;
+namespace Victoire\Bundle\MediaBundle\Helper\Menu;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
-use Kunstmaan\MediaBundle\Helper\Menu\MenuItem;
-use Kunstmaan\MediaBundle\Helper\Menu\MenuAdaptorInterface;
-use Kunstmaan\MediaBundle\Helper\Menu\MenuBuilder;
-use Kunstmaan\MediaBundle\Helper\Menu\TopMenuItem;
-use Kunstmaan\MediaBundle\Entity\Media;
-use Kunstmaan\MediaBundle\Entity\Folder;
+use Victoire\Bundle\MediaBundle\Helper\Menu\MenuItem;
+use Victoire\Bundle\MediaBundle\Helper\Menu\MenuAdaptorInterface;
+use Victoire\Bundle\MediaBundle\Helper\Menu\MenuBuilder;
+use Victoire\Bundle\MediaBundle\Helper\Menu\TopMenuItem;
+use Victoire\Bundle\MediaBundle\Entity\Media;
+use Victoire\Bundle\MediaBundle\Entity\Folder;
 
 /**
  * The Media Menu Adaptor
@@ -41,35 +41,35 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
     {
 
         $mediaRoutes = array(
-            'Show media'    => 'KunstmaanMediaBundle_media_show',
-            'Edit metadata' => 'KunstmaanMediaBundle_metadata_edit',
-            'Edit slide'    => 'KunstmaanMediaBundle_slide_edit',
-            'Edit video'    => 'KunstmaanMediaBundle_video_edit'
+            'Show media'    => 'VictoireMediaBundle_media_show',
+            'Edit metadata' => 'VictoireMediaBundle_metadata_edit',
+            'Edit slide'    => 'VictoireMediaBundle_slide_edit',
+            'Edit video'    => 'VictoireMediaBundle_video_edit'
         );
 
         $createRoutes = array(
-            'Create' => 'KunstmaanMediaBundle_media_create',
-            'Bulk upload' => 'KunstmaanMediaBundle_media_bulk_upload'
+            'Create' => 'VictoireMediaBundle_media_create',
+            'Bulk upload' => 'VictoireMediaBundle_media_bulk_upload'
         );
 
         $allRoutes = array_merge($createRoutes, $mediaRoutes);
 
         if (is_null($parent)) {
             /* @var Folder[] $galleries */
-            $galleries = $this->em->getRepository('KunstmaanMediaBundle:Folder')->getAllFolders();
+            $galleries = $this->em->getRepository('VictoireMediaBundle:Folder')->getAllFolders();
             $currentId = $request->get('folderId');
 
             if (isset($currentId)) {
                 /* @var Folder $currentFolder */
-                $currentFolder = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneById($currentId);
+                $currentFolder = $this->em->getRepository('VictoireMediaBundle:Folder')->findOneById($currentId);
             } else if (in_array($request->attributes->get('_route'), $mediaRoutes)) {
                 /* @var Media $media */
-                $media     = $this->em->getRepository('KunstmaanMediaBundle:Media')->getMedia($request->get('mediaId'));
+                $media     = $this->em->getRepository('VictoireMediaBundle:Media')->getMedia($request->get('mediaId'));
                 $currentFolder = $media->getFolder();
             } else if (in_array($request->attributes->get('_route'), $createRoutes)) {
                 $currentId = $request->get('folderId');
                 if (isset($currentId)) {
-                    $currentFolder = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneById($currentId);
+                    $currentFolder = $this->em->getRepository('VictoireMediaBundle:Folder')->findOneById($currentId);
                 }
             }
 
@@ -81,7 +81,7 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
 
             foreach ($galleries as $folder) {
                 $menuitem = new TopMenuItem($menu);
-                $menuitem->setRoute('KunstmaanMediaBundle_folder_show');
+                $menuitem->setRoute('VictoireMediaBundle_folder_show');
                 $menuitem->setRouteparams(array('folderId' => $folder->getId()));
                 $menuitem->setInternalname($folder->getName());
                 $menuitem->setParent($parent);
@@ -100,24 +100,24 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
                 }
                 $children[] = $menuitem;
             }
-        } else if ('KunstmaanMediaBundle_folder_show' == $parent->getRoute()) {
+        } else if ('VictoireMediaBundle_folder_show' == $parent->getRoute()) {
             $parentRouteParams = $parent->getRouteparams();
             /* @var Folder $parentFolder */
-            $parentFolder = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneById($parentRouteParams['folderId']);
+            $parentFolder = $this->em->getRepository('VictoireMediaBundle:Folder')->findOneById($parentRouteParams['folderId']);
             /* @var Folder[] $galleries */
             $galleries = $parentFolder->getChildren();
             $currentId = $request->get('folderId');
 
             if (isset($currentId)) {
                 /* @var Folder $currentFolder */
-                $currentFolder = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneById($currentId);
+                $currentFolder = $this->em->getRepository('VictoireMediaBundle:Folder')->findOneById($currentId);
             } else if (in_array($request->attributes->get('_route'), $mediaRoutes)) {
-                $media     = $this->em->getRepository('KunstmaanMediaBundle:Media')->getMedia($request->get('mediaId'));
+                $media     = $this->em->getRepository('VictoireMediaBundle:Media')->getMedia($request->get('mediaId'));
                 $currentFolder = $media->getFolder();
             } else if (in_array($request->attributes->get('_route'), $createRoutes)) {
                 $currentId = $request->get('folderId');
                 if (isset($currentId)) {
-                    $currentFolder = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneById($currentId);
+                    $currentFolder = $this->em->getRepository('VictoireMediaBundle:Folder')->findOneById($currentId);
                 }
             }
 
@@ -131,7 +131,7 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
 
             foreach ($galleries as $folder) {
                 $menuitem = new MenuItem($menu);
-                $menuitem->setRoute('KunstmaanMediaBundle_folder_show');
+                $menuitem->setRoute('VictoireMediaBundle_folder_show');
                 $menuitem->setRouteparams(array('folderId' => $folder->getId()));
                 $menuitem->setInternalname($folder->getName());
                 $menuitem->setParent($parent);
@@ -158,9 +158,9 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
                 $menuitem->setParent($parent);
                 $menuitem->setAppearInNavigation(false);
                 if (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0) {
-                    if (stripos($menuitem->getRoute(), 'KunstmaanMediaBundle_media_show') === 0) {
+                    if (stripos($menuitem->getRoute(), 'VictoireMediaBundle_media_show') === 0) {
                         /* @var Media $media */
-                        $media     = $this->em->getRepository('KunstmaanMediaBundle:Media')->getMedia($request->get('mediaId'));
+                        $media     = $this->em->getRepository('VictoireMediaBundle:Media')->getMedia($request->get('mediaId'));
                         $menuitem->setInternalname('Show ' . $media->getClassType() . ' ' . $media->getName());
                     }
                     $menuitem->setActive(true);

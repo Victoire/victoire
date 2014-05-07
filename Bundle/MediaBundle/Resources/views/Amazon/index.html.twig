@@ -1,11 +1,11 @@
-{% extends 'KunstmaanMediaBundle:Default:layout.html.twig' %}
+{% extends 'VictoireMediaBundle:Default:layout.html.twig' %}
 
 {% block sidebar %}
-    {% include 'KunstmaanMediaBundle:Gallery:sidebar.html.twig' %}
+    {% include 'VictoireMediaBundle:Gallery:sidebar.html.twig' %}
 {% endblock %}
 
 {% block subbreadcrumb %}
-    <li><a href="{{ path('KunstmaanMediaBundle_media_images') }}">{{ 'menu.images'|trans }}</a> <span class="divider">/</span></li>
+    <li><a href="{{ path('VictoireMediaBundle_media_images') }}">{{ 'menu.images'|trans }}</a> <span class="divider">/</span></li>
 {% endblock %}
 
 {% block content %}

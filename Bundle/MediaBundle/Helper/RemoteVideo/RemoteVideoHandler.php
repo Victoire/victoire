@@ -1,10 +1,10 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Helper\RemoteVideo;
+namespace Victoire\Bundle\MediaBundle\Helper\RemoteVideo;
 
-use Kunstmaan\MediaBundle\Form\RemoteVideo\RemoteVideoType;
-use Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler;
-use Kunstmaan\MediaBundle\Entity\Media;
+use Victoire\Bundle\MediaBundle\Form\RemoteVideo\RemoteVideoType;
+use Victoire\Bundle\MediaBundle\Helper\Media\AbstractMediaHandler;
+use Victoire\Bundle\MediaBundle\Entity\Media;
 
 /**
  * RemoteVideoStrategy
@@ -148,7 +148,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
     {
         return array(
                 'video' => array(
-                        'path'   => 'KunstmaanMediaBundle_folder_videocreate',
+                        'path'   => 'VictoireMediaBundle_folder_videocreate',
                         'params' => array(
                                 'folderId' => $params['folderId']
                         )
@@ -212,7 +212,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
      */
     public function getShowTemplate(Media $media)
     {
-        return 'KunstmaanMediaBundle:Media\RemoteVideo:show.html.twig';
+        return 'VictoireMediaBundle:Media\RemoteVideo:show.html.twig';
     }
 
     /**

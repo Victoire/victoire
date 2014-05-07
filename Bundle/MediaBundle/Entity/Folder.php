@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Entity;
+namespace Victoire\Bundle\MediaBundle\Entity;
 
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Class that defines a folder from the MediaBundle in the database
  *
- * @ORM\Entity(repositoryClass="Kunstmaan\MediaBundle\Repository\FolderRepository")
+ * @ORM\Entity(repositoryClass="Victoire\Bundle\MediaBundle\Repository\FolderRepository")
  * @ORM\Table(name="kuma_folders")
  * @ORM\HasLifecycleCallbacks
  */

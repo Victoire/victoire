@@ -1,4 +1,4 @@
-{% extends 'KunstmaanMediaBundle:Media\\File:show.html.twig' %}
+{% extends 'VictoireMediaBundle:Media\\File:show.html.twig' %}
 
 {% block extraactions %}
 
@@ -17,7 +17,7 @@
                 onSave: function(imageID, newURL) {
                     var img = document.getElementById(imageID);
                     img.src = newURL;
-                    window.location = '{{ url('KunstmaanMediaBundle_aviary', { 'folderId' : folder.id, 'mediaId' : media.id }) }}?url='+newURL;
+                    window.location = '{{ url('VictoireMediaBundle_aviary', { 'folderId' : folder.id, 'mediaId' : media.id }) }}?url='+newURL;
                 }
             });
 

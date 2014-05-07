@@ -1,8 +1,8 @@
 <div id="addvideo-modal" class="modal hide fade">
 
-    {% form_theme videoform 'KunstmaanMediaBundle:Form:fields.html.twig' %}
+    {% form_theme videoform 'VictoireMediaBundle:Form:fields.html.twig' %}
 
-    <form action="{{ path('KunstmaanMediaBundle_media_modal_create', { 'folderId' : folder.id, 'type': 'video' }  ) }}" method="post" {{ form_enctype(videoform) }}>
+    <form action="{{ path('VictoireMediaBundle_media_modal_create', { 'folderId' : folder.id, 'type': 'video' }  ) }}" method="post" {{ form_enctype(videoform) }}>
         <div class="modal-header">
             <button class="close" data-dismiss="modal">&times;</button>
             <h3>{{ 'media.video.modal.title' | trans }}</h3>

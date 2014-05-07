@@ -1,10 +1,10 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Form;
+namespace Victoire\Bundle\MediaBundle\Form;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-use Kunstmaan\MediaBundle\Entity\Folder;
+use Victoire\Bundle\MediaBundle\Entity\Folder;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -49,7 +49,7 @@ class FolderType extends AbstractType
             ->add('rel', 'choice', array(
                 'choices'   => array('media' => 'media', 'image' => 'image', 'slideshow' => 'slideshow', 'video' => 'video'),
                 ))
-            ->add('parent', 'entity', array( 'class' => 'Kunstmaan\MediaBundle\Entity\Folder', 'required' => false,
+            ->add('parent', 'entity', array( 'class' => 'Victoire\Bundle\MediaBundle\Entity\Folder', 'required' => false,
               'query_builder' => function(\Doctrine\ORM\EntityRepository $er) use($folder, $type) {
                   $qb = $er->createQueryBuilder('folder');
 
@@ -72,7 +72,7 @@ class FolderType extends AbstractType
      */
     public function getName()
     {
-        return 'kunstmaan_mediabundle_FolderType';
+        return 'Victoire_mediabundle_FolderType';
     }
 
     /**
@@ -99,7 +99,7 @@ class FolderType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-                'data_class' => 'Kunstmaan\MediaBundle\Entity\Folder',
+                'data_class' => 'Victoire\Bundle\MediaBundle\Entity\Folder',
         ));
     }
 }

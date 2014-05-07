@@ -1,11 +1,11 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Helper\File;
+namespace Victoire\Bundle\MediaBundle\Helper\File;
 
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-use Kunstmaan\MediaBundle\Entity\Media;
+use Victoire\Bundle\MediaBundle\Entity\Media;
 
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 

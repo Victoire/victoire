@@ -1,8 +1,8 @@
 <div id="addslide-modal" class="modal hide fade">
 
-    {% form_theme slideform 'KunstmaanMediaBundle:Form:fields.html.twig' %}
+    {% form_theme slideform 'VictoireMediaBundle:Form:fields.html.twig' %}
 
-    <form action="{{ path('KunstmaanMediaBundle_media_modal_create', { 'folderId' : folder.id, 'type': 'slide' }  ) }}" method="post" {{ form_enctype(slideform) }}>
+    <form action="{{ path('VictoireMediaBundle_media_modal_create', { 'folderId' : folder.id, 'type': 'slide' }  ) }}" method="post" {{ form_enctype(slideform) }}>
         <div class="modal-header">
             <button class="close" data-dismiss="modal">&times;</button>
             <h3>{{ 'media.slide.modal.title' | trans }}</h3>

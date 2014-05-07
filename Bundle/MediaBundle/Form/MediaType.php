@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Form;
+namespace Victoire\Bundle\MediaBundle\Form;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -37,7 +37,7 @@ class MediaType extends AbstractType
      */
     public function getName()
     {
-        return 'kunstmaan_mediabundle_mediatype';
+        return 'Victoire_mediabundle_mediatype';
     }
 
 }

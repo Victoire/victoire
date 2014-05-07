@@ -1,8 +1,8 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Repository;
+namespace Victoire\Bundle\MediaBundle\Repository;
 
-use Kunstmaan\MediaBundle\Entity\Media;
+use Victoire\Bundle\MediaBundle\Entity\Media;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityNotFoundException;
 
@@ -44,7 +44,7 @@ class MediaRepository extends EntityRepository
     {
         $em = $this->getEntityManager();
 
-        $media = $em->getRepository('KunstmaanMediaBundle:Media')->find($mediaId);
+        $media = $em->getRepository('VictoireMediaBundle:Media')->find($mediaId);
         if (!$media) {
             throw new EntityNotFoundException('The id given for the media is not valid.');
         }
@@ -62,7 +62,7 @@ class MediaRepository extends EntityRepository
     {
         $em = $this->getEntityManager();
 
-        $picture = $em->getRepository('KunstmaanMediaBundle:Image')->find($pictureId);
+        $picture = $em->getRepository('VictoireMediaBundle:Image')->find($pictureId);
         if (!$picture) {
             throw new EntityNotFoundException('Unable to find image.');
         }

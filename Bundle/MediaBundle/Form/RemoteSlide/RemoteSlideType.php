@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Form\RemoteSlide;
+namespace Victoire\Bundle\MediaBundle\Form\RemoteSlide;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -40,7 +40,7 @@ class RemoteSlideType extends AbstractType
      */
     public function getName()
     {
-        return 'kunstmaan_mediabundle_slidetype';
+        return 'Victoire_mediabundle_slidetype';
     }
 
     /**
@@ -51,7 +51,7 @@ class RemoteSlideType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-                'data_class' => 'Kunstmaan\MediaBundle\Helper\RemoteSlide\RemoteSlideHelper',
+                'data_class' => 'Victoire\Bundle\MediaBundle\Helper\RemoteSlide\RemoteSlideHelper',
         ));
     }
 }

@@ -1,4 +1,4 @@
-{% extends 'KunstmaanMediaBundle:Default:layout.html.twig' %}
+{% extends 'VictoireMediaBundle:Default:layout.html.twig' %}
 
 {% block content %}
 
@@ -7,9 +7,9 @@
     <div class="main_actions btn-group">
         {% block actions %}
             {% for addaction in mediamanager.getFolderAddActions() %}
-                <a href="{{ path('KunstmaanMediaBundle_media_create', { 'folderId' : folder.id, 'type': addaction.type }) }}" class="btn {% if loop.first %}btn-primary{% endif %}">{{ addaction.name |trans }}</a>
+                <a href="{{ path('VictoireMediaBundle_media_create', { 'folderId' : folder.id, 'type': addaction.type }) }}" class="btn {% if loop.first %}btn-primary{% endif %}">{{ addaction.name |trans }}</a>
             {% endfor %}
-            <a href="{{ path('KunstmaanMediaBundle_media_bulk_upload', { 'folderId' : folder.id }) }}" class="btn">{{ 'media.bulkupload.bulkupload' |trans }}</a>
+            <a href="{{ path('VictoireMediaBundle_media_bulk_upload', { 'folderId' : folder.id }) }}" class="btn">{{ 'media.bulkupload.bulkupload' |trans }}</a>
             <button class="btn" data-target="#addsub-modal" data-toggle="modal" type="button">{{ 'media.folder.addsub.action' |trans }}</button>
             <button class="btn" data-target="#delete-modal" data-toggle="modal" type="button">{{ 'media.folder.delete.action' |trans }}</button>
         {% endblock %}
@@ -38,7 +38,7 @@
                         {% for child in folder.children %}
                             <tr>
                                 <td>
-                                	<a href="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' :child.id }) }}" class="item">{{ child.name }}</a>
+                                	<a href="{{ path('VictoireMediaBundle_folder_show', { 'folderId' :child.id }) }}" class="item">{{ child.name }}</a>
                                 </td>
                             </tr>
                         {% else %}
@@ -57,9 +57,9 @@
             <section>
             	<ul class="thumbnails" id="file-list">
                 {% for media in folder.media %}
-                    {% include 'KunstmaanMediaBundle:Media:delete-modal.html.twig' %}
+                    {% include 'VictoireMediaBundle:Media:delete-modal.html.twig' %}
                     <li>
-                        <a class="thumbnail" href="{{ path('KunstmaanMediaBundle_media_show',  { 'mediaId' : media.id }) }}">
+                        <a class="thumbnail" href="{{ path('VictoireMediaBundle_media_show',  { 'mediaId' : media.id }) }}">
                             {% set handler = mediamanager.getHandler(media) %}
                             {% set thumbnailurl =  handler.getImageUrl(media, app.request.basePath, 210, 150) %}
                             {% set imageurl =  handler.getImageUrl(media, app.request.basePath) %}
@@ -72,7 +72,7 @@
                            {% endif %}
                             <p class="img_name">{{ media.name }}</p>
                         </a>
-                        <a class="del" href="{{ path('KunstmaanMediaBundle_media_delete', { 'mediaId': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="close-btn" title="delete">close</a>
+                        <a class="del" href="{{ path('VictoireMediaBundle_media_delete', { 'mediaId': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="close-btn" title="delete">close</a>
                      	<span class="helper">Click to edit</span>
                      </li>
                 {% else %}
@@ -98,18 +98,18 @@
     			paramname:'files',
     			maxfiles: 500,
     	    	maxfilesize: 200,
-    			url: '{{ path('KunstmaanMediaBundle_media_drop_upload', { 'folderId' : folder.id } ) }}',
+    			url: '{{ path('VictoireMediaBundle_media_drop_upload', { 'folderId' : folder.id } ) }}',
 
     			drop: function(e) {
     				files = e.dataTransfer.files;
     				if (files === null || files === undefined || files.length <= 0) {
         			    if(e.dataTransfer.getData('Text')) {
         			        jQuery.ajax({
-        			            url: '{{ path('KunstmaanMediaBundle_media_drop_upload', { 'folderId' :folder.id }) }}',
+        			            url: '{{ path('VictoireMediaBundle_media_drop_upload', { 'folderId' :folder.id }) }}',
         			            data: {'text': e.dataTransfer.getData('Text')},
         			            async: false,
         			            success: function() {
-        			            	window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' :folder.id }) }}';
+        			            	window.location = '{{ path('VictoireMediaBundle_folder_show', { 'folderId' :folder.id }) }}';
         			            }
             			    });
             			}
@@ -144,7 +144,7 @@
     			},
 
     			afterAll:function(i,file,response){
-    				window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' :folder.id }) }}';
+    				window.location = '{{ path('VictoireMediaBundle_folder_show', { 'folderId' :folder.id }) }}';
     			}
 
     		});
@@ -166,14 +166,14 @@
        </script>
        <div class="tab-pane" id="properties">
 
-           {% form_theme editform 'KunstmaanMediaBundle:Form:fields.html.twig' %}
+           {% form_theme editform 'VictoireMediaBundle:Form:fields.html.twig' %}
 
-       		<form class="form-horizontal properties" action="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id } ) }}" method="post" {{ form_enctype(editform) }}>
+       		<form class="form-horizontal properties" action="{{ path('VictoireMediaBundle_folder_show', { 'folderId' : folder.id } ) }}" method="post" {{ form_enctype(editform) }}>
                 <div class="prop_wrp">
                     {{ form_widget(editform) }}
                     <div class="input_prop">
                     	<div class="btn_group">
-                        	<button class="btn" onclick="window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id } ) }}'" type="reset">{{ 'form.cancel' |trans }}</button>
+                        	<button class="btn" onclick="window.location = '{{ path('VictoireMediaBundle_folder_show', { 'folderId' : folder.id } ) }}'" type="reset">{{ 'form.cancel' |trans }}</button>
                         	<button class="btn btn-primary" type="submit">{{ 'media.folder.save' |trans }}</button>
                        	</div>
                     </div>
@@ -183,9 +183,9 @@
     </div>
     <!--=========Modals=========-->
     <div id="addsub-modal" class="modal hide fade">
-        {% include 'KunstmaanMediaBundle:Folder:addsub-modal.html.twig' %}
+        {% include 'VictoireMediaBundle:Folder:addsub-modal.html.twig' %}
     </div>
-    {% include 'KunstmaanMediaBundle:Folder:delete-modal.html.twig' %}
-    {# include 'KunstmaanMediaBundle:Image:create-modal.html.twig' #}
+    {% include 'VictoireMediaBundle:Folder:delete-modal.html.twig' %}
+    {# include 'VictoireMediaBundle:Image:create-modal.html.twig' #}
 
 {% endblock %}

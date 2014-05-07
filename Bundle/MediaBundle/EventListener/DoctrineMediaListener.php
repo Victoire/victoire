@@ -1,13 +1,13 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\EventListener;
+namespace Victoire\Bundle\MediaBundle\EventListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 
-use Kunstmaan\MediaBundle\Entity\Media;
-use Kunstmaan\MediaBundle\Helper\MediaManager;
-use Kunstmaan\MediaBundle\Helper\ClassLookup;
+use Victoire\Bundle\MediaBundle\Entity\Media;
+use Victoire\Bundle\MediaBundle\Helper\MediaManager;
+use Victoire\Bundle\MediaBundle\Helper\ClassLookup;
 
 /**
  * DoctrineMediaListener

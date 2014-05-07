@@ -18,4 +18,4 @@ script: phpunit --debug
 
 notifications:
   email:
-    - travis@kunstmaan.be
+    - travis@Victoire.be

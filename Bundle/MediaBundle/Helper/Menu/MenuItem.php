@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Helper\Menu;
+namespace Victoire\Bundle\MediaBundle\Helper\Menu;
 
 /**
  * A MenuItem is part of the menu in the admin interface, this will be build by the {@link MenuBuilder}

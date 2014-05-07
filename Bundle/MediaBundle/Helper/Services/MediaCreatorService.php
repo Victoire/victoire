@@ -1,15 +1,15 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Helper\Services;
+namespace Victoire\Bundle\MediaBundle\Helper\Services;
 
 use Doctrine\ORM\EntityManager;
 
 use Gaufrette\Filesystem;
 
-use Kunstmaan\MediaBundle\Entity\Folder,
-    Kunstmaan\MediaBundle\Repository\FolderRepository,
-    Kunstmaan\MediaBundle\Entity\Media,
-    Kunstmaan\MediaBundle\Helper\File\FileHandler;
+use Victoire\Bundle\MediaBundle\Entity\Folder,
+    Victoire\Bundle\MediaBundle\Repository\FolderRepository,
+    Victoire\Bundle\MediaBundle\Entity\Media,
+    Victoire\Bundle\MediaBundle\Helper\File\FileHandler;
 
 use Symfony\Component\HttpFoundation\File\File;
 
@@ -24,7 +24,7 @@ use Symfony\Component\HttpFoundation\File\File;
  * This is especially useful in migrations or places where you want to automate the uploading of media.
  *
  * Class MediaCreatorService
- * @package Kunstmaan\MediaBundle\Helper\Services
+ * @package Victoire\Bundle\MediaBundle\Helper\Services
  */
 class MediaCreatorService
 {
@@ -40,7 +40,7 @@ class MediaCreatorService
     public function setEntityManager(EntityManager $em)
     {
         $this->em = $em;
-        $this->folderRepository = $em->getRepository('KunstmaanMediaBundle:Folder');
+        $this->folderRepository = $em->getRepository('VictoireMediaBundle:Folder');
     }
 
     const CONTEXT_CONSOLE = 'console';

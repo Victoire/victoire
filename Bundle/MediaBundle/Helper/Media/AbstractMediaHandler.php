@@ -1,9 +1,9 @@
 <?php
 
 
-namespace Kunstmaan\MediaBundle\Helper\Media;
+namespace Victoire\Bundle\MediaBundle\Helper\Media;
 
-use Kunstmaan\MediaBundle\Entity\Media;
+use Victoire\Bundle\MediaBundle\Entity\Media;
 use Symfony\Component\Form\AbstractType;
 
 /**
@@ -72,7 +72,7 @@ abstract class AbstractMediaHandler
      */
     public function getShowTemplate(Media $media)
     {
-        return 'KunstmaanMediaBundle:Media:show.html.twig';
+        return 'VictoireMediaBundle:Media:show.html.twig';
     }
 
     /**

@@ -1,18 +1,18 @@
 <?php
 
-namespace Kunstmaan\MediaBundle;
+namespace Victoire\MediaBundle;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-use Kunstmaan\MediaBundle\DependencyInjection\Compiler\MediaHandlerCompilerPass;
+use Victoire\Bundle\MediaBundle\DependencyInjection\Compiler\MediaHandlerCompilerPass;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-use Kunstmaan\MediaBundle\DependencyInjection\Compiler\MenuCompilerPass;
+use Victoire\Bundle\MediaBundle\DependencyInjection\Compiler\MenuCompilerPass;
 
 /**
- * KunstmaanMediaBundle
+ * VictoireMediaBundle
  */
-class KunstmaanMediaBundle extends Bundle
+class VictoireMediaBundle extends Bundle
 {
 
     /**

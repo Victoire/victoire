@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Form;
+namespace Victoire\Bundle\MediaBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -57,6 +57,6 @@ class BulkUploadType extends AbstractType
      */
     public function getName()
     {
-        return "kunstmaan_mediabundle_bulkupload";
+        return "Victoire_mediabundle_bulkupload";
     }
 }

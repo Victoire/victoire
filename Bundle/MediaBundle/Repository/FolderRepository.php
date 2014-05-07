@@ -1,8 +1,8 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Repository;
+namespace Victoire\Bundle\MediaBundle\Repository;
 
-use Kunstmaan\MediaBundle\Entity\Folder;
+use Victoire\Bundle\MediaBundle\Entity\Folder;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityNotFoundException;
 
@@ -91,7 +91,7 @@ class FolderRepository extends EntityRepository
     {
         $em = $this->getEntityManager();
 
-        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->find($folderId);
+        $folder = $em->getRepository('VictoireMediaBundle:Folder')->find($folderId);
         if (!$folder) {
             throw new EntityNotFoundException('The id given for the folder is not valid.');
         }
@@ -103,7 +103,7 @@ class FolderRepository extends EntityRepository
     {
         $em = $this->getEntityManager();
 
-        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('parent' => NULL));
+        $folder = $em->getRepository('VictoireMediaBundle:Folder')->findOneBy(array('parent' => NULL));
         if (!$folder) {
             throw new EntityNotFoundException('No first top folder found (where parent is NULL)');
         }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Helper\Menu;
+namespace Victoire\Bundle\MediaBundle\Helper\Menu;
 
 /**
  * A MenuItem which represents an item in the top menu

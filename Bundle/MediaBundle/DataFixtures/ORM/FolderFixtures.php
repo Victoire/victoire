@@ -1,10 +1,10 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\DataFixtures\ORM;
+namespace Victoire\Bundle\MediaBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use Kunstmaan\MediaBundle\Entity\Folder;
+use Victoire\Bundle\MediaBundle\Entity\Folder;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**

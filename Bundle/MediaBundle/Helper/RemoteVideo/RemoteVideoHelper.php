@@ -1,12 +1,12 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Helper\RemoteVideo;
-use Kunstmaan\MediaBundle\Entity\Media;
+namespace Victoire\Bundle\MediaBundle\Helper\RemoteVideo;
+use Victoire\Bundle\MediaBundle\Entity\Media;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Kunstmaan\MediaBundle\Entity\Video
+ * Victoire\Bundle\MediaBundle\Entity\Video
  * Class that defines a video in the system
  */
 class RemoteVideoHelper

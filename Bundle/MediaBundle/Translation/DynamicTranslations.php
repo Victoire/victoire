@@ -1,5 +1,5 @@
 <?php
-namespace Kunstmaan\MediaBundle\Translation;
+namespace Victoire\Bundle\MediaBundle\Translation;
 
 use JMS\TranslationBundle\Model\Message;
 use JMS\TranslationBundle\Translation\TranslationContainerInterface;

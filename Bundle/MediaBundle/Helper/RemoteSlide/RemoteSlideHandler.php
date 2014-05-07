@@ -1,10 +1,10 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Helper\RemoteSlide;
+namespace Victoire\Bundle\MediaBundle\Helper\RemoteSlide;
 
-use Kunstmaan\MediaBundle\Form\RemoteSlide\RemoteSlideType;
-use Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler;
-use Kunstmaan\MediaBundle\Entity\Media;
+use Victoire\Bundle\MediaBundle\Form\RemoteSlide\RemoteSlideType;
+use Victoire\Bundle\MediaBundle\Helper\Media\AbstractMediaHandler;
+use Victoire\Bundle\MediaBundle\Entity\Media;
 
 /**
  * RemoteSlideStrategy
@@ -123,7 +123,7 @@ class RemoteSlideHandler extends AbstractMediaHandler
     {
         return array(
                 'slide' => array(
-                        'path'   => 'KunstmaanMediaBundle_folder_slidecreate',
+                        'path'   => 'VictoireMediaBundle_folder_slidecreate',
                         'params' => array(
                                 'folderId' => $params['folderId']
                         )
@@ -166,7 +166,7 @@ class RemoteSlideHandler extends AbstractMediaHandler
      */
     public function getShowTemplate(Media $media)
     {
-        return 'KunstmaanMediaBundle:Media\RemoteSlide:show.html.twig';
+        return 'VictoireMediaBundle:Media\RemoteSlide:show.html.twig';
     }
 
     /**

@@ -1,4 +1,4 @@
-{% extends 'KunstmaanMediaBundle:Default:layout.html.twig' %}
+{% extends 'VictoireMediaBundle:Default:layout.html.twig' %}
 
 {% block extrajavascript %}
     {{ parent() }}
@@ -35,7 +35,7 @@
 
 {% block subbreadcrumb %}
     {% for parent in folder.parents %}
-        <li><a href="{{ path('KunstmaanMediaBundle_image_chooser_show_folder', { 'folderId': parent.id, 'type': type, 'CKEditorFuncNum': cKEditorFuncNum }) }}">{{ parent.name | trans }}</a></li>
+        <li><a href="{{ path('VictoireMediaBundle_image_chooser_show_folder', { 'folderId': parent.id, 'type': type, 'CKEditorFuncNum': cKEditorFuncNum }) }}">{{ parent.name | trans }}</a></li>
     {% endfor %}
 	<li class="active">{{ folder.name | trans }}</li>
 {% endblock %}
@@ -48,7 +48,7 @@
             	{% for topfolder in folders %}
             		<ul>
             			{% for child in topfolder.children %}
-        	                {% include 'KunstmaanMediaBundle:Chooser:choosershownode.html.twig' %}
+        	                {% include 'VictoireMediaBundle:Chooser:choosershownode.html.twig' %}
         	            {% endfor %}
         	         </ul>
             	{% endfor %}
@@ -59,7 +59,7 @@
             <div class="main_actions btn-group">
                 <div class="main_actions btn-group">
                     {% for addaction in mediamanager.getFolderAddActions() %}
-                        <a href="{{ path('KunstmaanMediaBundle_media_create', { 'folderId' : folder.id, 'type': addaction.type }) }}" data-toggle="modal" data-target="#add{{ addaction.type }}-modal" class="btn {% if loop.first %}btn-primary{% endif %}">{{ addaction.name |trans }}</a>
+                        <a href="{{ path('VictoireMediaBundle_media_create', { 'folderId' : folder.id, 'type': addaction.type }) }}" data-toggle="modal" data-target="#add{{ addaction.type }}-modal" class="btn {% if loop.first %}btn-primary{% endif %}">{{ addaction.name |trans }}</a>
                     {% endfor %}
                 </div>
             </div>
@@ -68,7 +68,7 @@
                 	<tbody>
         		        {% for child in folder.children %}
         		            <tr>
-        		            	<td><a href="{{ path('KunstmaanMediaBundle_chooser_show_folder', { 'folderId' :child.id, 'type' : type, 'CKEditorFuncNum': cKEditorFuncNum }) }}">{{ child.name | trans }}</td>
+        		            	<td><a href="{{ path('VictoireMediaBundle_chooser_show_folder', { 'folderId' :child.id, 'type' : type, 'CKEditorFuncNum': cKEditorFuncNum }) }}">{{ child.name | trans }}</td>
         		            </tr>
         		        {% endfor %}
         			</tbody>
@@ -101,7 +101,7 @@
 	</div>
 
     <!--=========Modals=========-->
-    {% include 'KunstmaanMediaBundle:Media:addfile-modal.html.twig' %}
-    {% include 'KunstmaanMediaBundle:Media:addvideo-modal.html.twig' %}
-    {% include 'KunstmaanMediaBundle:Media:addslide-modal.html.twig' %}
+    {% include 'VictoireMediaBundle:Media:addfile-modal.html.twig' %}
+    {% include 'VictoireMediaBundle:Media:addvideo-modal.html.twig' %}
+    {% include 'VictoireMediaBundle:Media:addslide-modal.html.twig' %}
 {% endblock %}

@@ -1,7 +1,7 @@
 # MediaBundle
 ## Add Aviary image editor
 
-This document describes how you can enable the Aviary image editor to the [KunstmaanMediaBundle][KunstmaanMediaBundle].
+This document describes how you can enable the Aviary image editor to the [VictoireMediaBundle][VictoireMediaBundle].
 
 ### Add Api Key to parameters.yml:
 
@@ -16,11 +16,11 @@ Register and get your Api Key on [http://www.aviary.com/](http://www.aviary.com/
 
 Now you will get an "edit" button when you view an image.
 
-[KunstmaanMediaBundle]: https://github.com/Kunstmaan/KunstmaanMediaBundle "KunstmaanMediaBundle"
+[VictoireMediaBundle]: https://github.com/Victoire/VictoireMediaBundle "VictoireMediaBundle"
 
 ## Add media handler
 
-This document describes how you can add a new media handlers to the [KunstmaanMediaBundle][KunstmaanMediaBundle].
+This document describes how you can add a new media handlers to the [VictoireMediaBundle][VictoireMediaBundle].
 
 ### Create a MediaHandler
 
@@ -33,11 +33,11 @@ This document describes how you can add a new media handlers to the [KunstmaanMe
         ...
         pdf:
             default: false
-            id: kunstmaan_media.provider.pdf
+            id: Victoire_media.provider.pdf
 
 ```
 
-[KunstmaanMediaBundle]: https://github.com/Kunstmaan/KunstmaanMediaBundle "KunstmaanMediaBundle"
+[VictoireMediaBundle]: https://github.com/Victoire/VictoireMediaBundle "VictoireMediaBundle"
 
 ## MediaField
 
@@ -67,7 +67,7 @@ form
 
 ### Class:
 
-Kunstmaan\MediaBundle\Form\Type\MediaType
+Victoire\Bundle\MediaBundle\Form\Type\MediaType
 
 ## Uploading Media in Your Code
 
@@ -76,7 +76,7 @@ Using the ```MediaCreatorService``` you can easily upload a media-asset to a Fol
 The API is straightforward:
 
 ```
-    $mediaCreatorService = $this->container->get('kunstmaan_media.media_creator_service');
+    $mediaCreatorService = $this->container->get('Victoire_media.media_creator_service');
     $media = $mediaCreatorService->createFile('./app/Content/Images/placeholder.jpg', 1, MediaCreatorService::CONTEXT_CONSOLE);
 ```
 

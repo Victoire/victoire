@@ -5,14 +5,14 @@ CKEDITOR.editorConfig = function( config )
     config.height = 500;
     config.bodyClass = 'CKEditor';
     {% if nodebundleisactive is defined %}
-        config.filebrowserBrowseUrl = '{{ path('KunstmaanNodeBundle_ckselecturl') }}';
+        config.filebrowserBrowseUrl = '{{ path('VictoireNodeBundle_ckselecturl') }}';
     {% else %}
         config.filebrowserBrowseUrl = '';
     {% endif %}
     config.filebrowserWindowWidth = '580';
     {% if mediabundleisactive is defined %}
-        config.filebrowserImageBrowseUrl = '{{ path('KunstmaanMediaBundle_chooser', {'type': 'image'}) }}';
-        config.filebrowserImageBrowseLinkUrl = '{{ path('KunstmaanMediaBundle_chooser', {'type': 'image'}) }}';
+        config.filebrowserImageBrowseUrl = '{{ path('VictoireMediaBundle_chooser', {'type': 'image'}) }}';
+        config.filebrowserImageBrowseLinkUrl = '{{ path('VictoireMediaBundle_chooser', {'type': 'image'}) }}';
         config.filebrowserImageWindowWidth = '900';
     {% else %}
         config.filebrowserImageBrowseUrl = '';

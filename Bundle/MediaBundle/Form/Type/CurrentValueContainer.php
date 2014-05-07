@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Form\Type;
+namespace Victoire\Bundle\MediaBundle\Form\Type;
 
 /**
  * CurrentValueContainer

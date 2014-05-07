@@ -1,15 +1,15 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Helper\Menu;
+namespace Victoire\Bundle\MediaBundle\Helper\Menu;
 
-use Kunstmaan\MediaBundle\Helper\Menu\MenuBuilder;
-use Kunstmaan\MediaBundle\Helper\Menu\MenuItem;
+use Victoire\Bundle\MediaBundle\Helper\Menu\MenuBuilder;
+use Victoire\Bundle\MediaBundle\Helper\Menu\MenuItem;
 
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The menu adaptor can be used to configure the main menu, to do this you need to implement this interface and tag
- * your interface with 'kunstmaan_admin.menu.adaptor'
+ * your interface with 'Victoire_admin.menu.adaptor'
  */
 interface MenuAdaptorInterface
 {

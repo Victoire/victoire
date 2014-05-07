@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="kunstmaanbundles" default="beforescripts">
+<project name="Victoirebundles" default="beforescripts">
 
     <target name="beforescripts">
         <echo msg="Running the before scripts..." />

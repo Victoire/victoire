@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Form\File;
+namespace Victoire\Bundle\MediaBundle\Form\File;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -37,7 +37,7 @@ class FileType extends AbstractType
      */
     public function getName()
     {
-        return 'kunstmaan_mediabundle_filetype';
+        return 'Victoire_mediabundle_filetype';
     }
 
     /**
@@ -48,7 +48,7 @@ class FileType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-                'data_class' => 'Kunstmaan\MediaBundle\Helper\File\FileHelper',
+                'data_class' => 'Victoire\Bundle\MediaBundle\Helper\File\FileHelper',
         ));
     }
 }

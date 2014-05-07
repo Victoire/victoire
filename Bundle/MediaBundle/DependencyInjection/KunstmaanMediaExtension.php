@@ -1,5 +1,5 @@
 <?php
-namespace Kunstmaan\MediaBundle\DependencyInjection;
+namespace Victoire\Bundle\MediaBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -15,7 +15,7 @@ use Symfony\Component\Yaml\Yaml;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class KunstmaanMediaExtension extends Extension implements PrependExtensionInterface
+class VictoireMediaExtension extends Extension implements PrependExtensionInterface
 {
 
     /**
@@ -36,7 +36,7 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
 
         $container->setParameter('twig.form.resources', array_merge(
             $container->getParameter('twig.form.resources'),
-            array('KunstmaanMediaBundle:Form:formWidgets.html.twig')
+            array('VictoireMediaBundle:Form:formWidgets.html.twig')
         ));
 
         $loader->load('services.yml');
@@ -46,13 +46,13 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
     public function prepend(ContainerBuilder $container)
     {
 
-        if(!$container->hasParameter('kunstmaan_media.upload_dir')) {
-            $container->setParameter('kunstmaan_media.upload_dir', '/uploads/media/');
+        if(!$container->hasParameter('Victoire_media.upload_dir')) {
+            $container->setParameter('Victoire_media.upload_dir', '/uploads/media/');
         }
 
-        $twigConfig['globals']['upload_dir'] = $container->getParameter('kunstmaan_media.upload_dir');
+        $twigConfig['globals']['upload_dir'] = $container->getParameter('Victoire_media.upload_dir');
         $twigConfig['globals']['mediabundleisactive'] = true;
-        $twigConfig['globals']['mediamanager'] = "@kunstmaan_media.media_manager";
+        $twigConfig['globals']['mediamanager'] = "@Victoire_media.media_manager";
         $container->prependExtensionConfig('twig', $twigConfig);
 
         $liipConfig = Yaml::parse(file_get_contents(__DIR__ . '/../Resources/config/liip_imagine.yml'));
@@ -67,6 +67,6 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
      */
     public function getAlias()
     {
-        return 'kunstmaan_media';
+        return 'Victoire_media';
     }
 }

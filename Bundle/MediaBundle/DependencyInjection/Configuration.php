@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\DependencyInjection;
+namespace Victoire\Bundle\MediaBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -20,7 +20,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('kunstmaan_media');
+        $rootNode = $treeBuilder->root('Victoire_media');
 
         return $treeBuilder;
     }

@@ -1,10 +1,10 @@
 parameters:
-    kunstmaan_media.media_manager.class: 'Kunstmaan\MediaBundle\Helper\MediaManager'
-    kunstmaan_media.menu.adaptor.class: 'Kunstmaan\MediaBundle\Helper\Menu\MediaMenuAdaptor'
-    kunstmaan_media.listener.doctrine.class: 'Kunstmaan\MediaBundle\EventListener\DoctrineMediaListener'
-    kunstmaan_media.form.type.media.class: 'Kunstmaan\MediaBundle\Form\Type\MediaType'
-    kunstmaan_media.media_creator_service.class: 'Kunstmaan\MediaBundle\Helper\Services\MediaCreatorService'
-    kunstmaan_media.menubuilder.class: 'Kunstmaan\MediaBundle\Helper\Menu\MenuBuilder'
+    Victoire_media.media_manager.class: 'Victoire\Bundle\MediaBundle\Helper\MediaManager'
+    Victoire_media.menu.adaptor.class: 'Victoire\Bundle\MediaBundle\Helper\Menu\MediaMenuAdaptor'
+    Victoire_media.listener.doctrine.class: 'Victoire\Bundle\MediaBundle\EventListener\DoctrineMediaListener'
+    Victoire_media.form.type.media.class: 'Victoire\Bundle\MediaBundle\Form\Type\MediaType'
+    Victoire_media.media_creator_service.class: 'Victoire\Bundle\MediaBundle\Helper\Services\MediaCreatorService'
+    Victoire_media.menubuilder.class: 'Victoire\Bundle\MediaBundle\Helper\Menu\MenuBuilder'
 
 
 services:
@@ -14,20 +14,20 @@ services:
             - "@liip_imagine"
             - ''
         tags:
-            - { name: 'liip_imagine.data.loader', loader: 'kunstmaan_media_thumbloader' }
+            - { name: 'liip_imagine.data.loader', loader: 'Victoire_media_thumbloader' }
 
-    kunstmaan_media.media_manager:
-        class: "%kunstmaan_media.media_manager.class%"
+    Victoire_media.media_manager:
+        class: "%Victoire_media.media_manager.class%"
 
-    kunstmaan_media.menu.adaptor:
-        class: "%kunstmaan_media.menu.adaptor.class%"
+    Victoire_media.menu.adaptor:
+        class: "%Victoire_media.menu.adaptor.class%"
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
-            -  { name: 'kunstmaan_media.menu.adaptor' }
+            -  { name: 'Victoire_media.menu.adaptor' }
 
-    kunstmaan_media.listener.doctrine:
-        class: "%kunstmaan_media.listener.doctrine.class%"
-        arguments: ["@kunstmaan_media.media_manager"]
+    Victoire_media.listener.doctrine:
+        class: "%Victoire_media.listener.doctrine.class%"
+        arguments: ["@Victoire_media.media_manager"]
         tags:
             - { name: 'doctrine.event_listener', event: 'prePersist' }
             - { name: 'doctrine.event_listener', event: 'preUpdate' }
@@ -36,30 +36,30 @@ services:
             - { name: 'doctrine.event_listener', event: 'preRemove' }
 
     form.type.media:
-        class: "%kunstmaan_media.form.type.media.class%"
+        class: "%Victoire_media.form.type.media.class%"
         arguments:
-            - "@kunstmaan_media.media_manager"
+            - "@Victoire_media.media_manager"
             - "@doctrine.orm.entity_manager"
         tags:
             - { name: form.type, alias: media }
 
-    kunstmaan_media.media_creator_service:
-        class: "%kunstmaan_media.media_creator_service.class%"
+    Victoire_media.media_creator_service:
+        class: "%Victoire_media.media_creator_service.class%"
         calls:
             - [ setEntityManager, [ "@doctrine.orm.entity_manager" ] ]
 
-    kunstmaan_media.menubuilder:
-        class: "%kunstmaan_media.menubuilder.class%"
+    Victoire_media.menubuilder:
+        class: "%Victoire_media.menubuilder.class%"
         arguments: ["@translator", "@service_container"]
 
-    kunstmaan_media.menu.twig.extension:
-        class: Kunstmaan\MediaBundle\Twig\MenuTwigExtension
-        arguments: ["@kunstmaan_media.menubuilder"]
+    Victoire_media.menu.twig.extension:
+        class: Victoire\Bundle\MediaBundle\Twig\MenuTwigExtension
+        arguments: ["@Victoire_media.menubuilder"]
         tags:
             -  { name: 'twig.extension' }
 
     victoire_core.media_menu_listener:
-        class: Kunstmaan\MediaBundle\EventListener\MediaMenuListener
+        class: Victoire\Bundle\MediaBundle\EventListener\MediaMenuListener
         arguments:
             - "@victoire_core.admin_menu_builder"
             - "@event_dispatcher"

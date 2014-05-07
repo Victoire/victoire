@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\DependencyInjection\Compiler;
+namespace Victoire\Bundle\MediaBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -16,13 +16,13 @@ class MenuCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('kunstmaan_media.menubuilder')) {
+        if (!$container->hasDefinition('Victoire_media.menubuilder')) {
             return;
         }
 
-        $definition = $container->getDefinition('kunstmaan_media.menubuilder');
+        $definition = $container->getDefinition('Victoire_media.menubuilder');
 
-        foreach ($container->findTaggedServiceIds('kunstmaan_media.menu.adaptor') as $id => $attributes) {
+        foreach ($container->findTaggedServiceIds('Victoire_media.menu.adaptor') as $id => $attributes) {
             $definition->addMethodCall('addAdaptMenu', array(new Reference($id)));
         }
     }

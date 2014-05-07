@@ -1,19 +1,19 @@
-KunstmaanMediaBundle_media:
-    resource: "@KunstmaanMediaBundle/Controller/MediaController.php"
+VictoireMediaBundle_media:
+    resource: "@VictoireMediaBundle/Controller/MediaController.php"
     type:     annotation
     prefix:   /
 
-KunstmaanMediaBundle_aviary:
-    resource: "@KunstmaanMediaBundle/Controller/AviaryController.php"
+VictoireMediaBundle_aviary:
+    resource: "@VictoireMediaBundle/Controller/AviaryController.php"
     type:     annotation
     prefix:   /aviari
 
-KunstmaanMediaBundle_media_chooser:
-    resource: "@KunstmaanMediaBundle/Controller/ChooserController.php"
+VictoireMediaBundle_media_chooser:
+    resource: "@VictoireMediaBundle/Controller/ChooserController.php"
     type:     annotation
     prefix:   /
 
-KunstmaanMediaBundle_media_folder:
-    resource: "@KunstmaanMediaBundle/Controller/FolderController.php"
+VictoireMediaBundle_media_folder:
+    resource: "@VictoireMediaBundle/Controller/FolderController.php"
     type:     annotation
     prefix:   /folder

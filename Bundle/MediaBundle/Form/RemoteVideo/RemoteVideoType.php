@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Form\RemoteVideo;
+namespace Victoire\Bundle\MediaBundle\Form\RemoteVideo;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -40,7 +40,7 @@ class RemoteVideoType extends AbstractType
      */
     public function getName()
     {
-        return 'kunstmaan_mediabundle_videotype';
+        return 'Victoire_mediabundle_videotype';
     }
 
     /**
@@ -51,7 +51,7 @@ class RemoteVideoType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-                'data_class' => 'Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper',
+                'data_class' => 'Victoire\Bundle\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper',
         ));
     }
 }

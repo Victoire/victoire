@@ -1,5 +1,5 @@
 <?php
-namespace Kunstmaan\MediaBundle\EventListener;
+namespace Victoire\Bundle\MediaBundle\EventListener;
 
 use Symfony\Component\EventDispatcher\Event;
 use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;

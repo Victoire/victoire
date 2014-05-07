@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Form\Type;
+namespace Victoire\Bundle\MediaBundle\Form\Type;
 
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 use Doctrine\Common\Persistence\ObjectManager;
-use Kunstmaan\MediaBundle\Helper\MediaManager;
+use Victoire\Bundle\MediaBundle\Helper\MediaManager;
 
 /**
  * MediaType
@@ -71,7 +71,7 @@ class MediaType extends AbstractType
         parent::setDefaultOptions($resolver);
         $resolver->setDefaults(array(
             'compound' => false,
-            'chooser'		=> 'KunstmaanMediaBundle_chooser',
+            'chooser'		=> 'VictoireMediaBundle_chooser',
             'mediatype'		=> null,
             'current_value_container' => new CurrentValueContainer(),
         ));

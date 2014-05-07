@@ -1,8 +1,8 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Twig;
+namespace Victoire\Bundle\MediaBundle\Twig;
 
-use Kunstmaan\MediaBundle\Helper\Menu\MenuBuilder;
+use Victoire\Bundle\MediaBundle\Helper\Menu\MenuBuilder;
 
 /**
  * MenuTwigExtension

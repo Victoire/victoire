@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Helper;
+namespace Victoire\Bundle\MediaBundle\Helper;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 

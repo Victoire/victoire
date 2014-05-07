@@ -56,8 +56,8 @@
     <!--=========== JS ===========-->
     <!--Combined-->
     {% javascripts injector=""
-        '@KunstmaanMediaBundle/Resources/public/js/libs/modernizr.custom.2.6.2.js'
-        '@KunstmaanMediaBundle/Resources/public/js/libs/jquery-1.9.0.min.js'
+        '@VictoireMediaBundle/Resources/public/js/libs/modernizr.custom.2.6.2.js'
+        '@VictoireMediaBundle/Resources/public/js/libs/jquery-1.9.0.min.js'
         output='generated-js/scripts.js'
     %}
     <script src="{{ asset_url }}"></script>
@@ -75,7 +75,7 @@
     <div class="container-fluid">
         <!--Sidebar-->
         {% block sidebar %}
-            {% include "KunstmaanMediaBundle:Default:sidebar.html.twig" %}
+            {% include "VictoireMediaBundle:Default:sidebar.html.twig" %}
         {% endblock %}
 
         <!--Content_wrp-->
@@ -126,9 +126,9 @@
     <footer>
         <div class="container-fluid">
             <p class="pull-right">
-                <a target="_blank" href="http://www.kunstmaan.be" class="kunstmaan-logo">
-                    <object data="{{ asset('bundles/kunstmaanmedia/img/general/kunstmaan_dark.svg') }}" type="image/svg+xml">
-                        <img src="{{ asset('bundles/kunstmaanmedia/img/general/kunstmaan_dark.png') }}" alt="Kunstmaan" />
+                <a target="_blank" href="http://www.Victoire.be" class="Victoire-logo">
+                    <object data="{{ asset('bundles/Victoiremedia/img/general/Victoire_dark.svg') }}" type="image/svg+xml">
+                        <img src="{{ asset('bundles/Victoiremedia/img/general/Victoire_dark.png') }}" alt="Victoire" />
                     </object>
                 </a>
             </p>
@@ -147,28 +147,28 @@
     <!--=========== JS ===========-->
 
     <!--Uncombined-->
-    <script src="{{ asset('bundles/kunstmaanmedia/js/libs/jquery.jstree.js') }}"></script>
-    <script src="{{ asset('bundles/kunstmaanmedia/js/ckeditor/ckeditor.js') }}"></script>
-    <script src="{{ asset('bundles/kunstmaanmedia/js/ckeditor/adapters/jquery.js') }}"></script>
+    <script src="{{ asset('bundles/Victoiremedia/js/libs/jquery.jstree.js') }}"></script>
+    <script src="{{ asset('bundles/Victoiremedia/js/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('bundles/Victoiremedia/js/ckeditor/adapters/jquery.js') }}"></script>
 
     <!--Combined-->
     {% javascripts injector=""
-        '@KunstmaanMediaBundle/Resources/public/js/libs/jquery-ui-1.10.0.custom.min.js'
-        '@KunstmaanMediaBundle/Resources/public/js/libs/bootstrap.min.js'
-        '@KunstmaanMediaBundle/Resources/public/js/libs/chosen.jquery.min.js'
-        '@KunstmaanMediaBundle/Resources/public/js/libs/jquery.filedrop.js'
-        '@KunstmaanMediaBundle/Resources/public/js/libs/jquery.fileupload.js'
-        '@KunstmaanMediaBundle/Resources/public/js/libs/jquery.iframe-transport.js'
-        '@KunstmaanMediaBundle/Resources/public/js/libs/jquery.inputmask.js'
-        '@KunstmaanMediaBundle/Resources/public/js/libs/jquery.form.js'
-        '@KunstmaanMediaBundle/Resources/public/js/libs/jquery.inputmask.date.extensions.js'
-        '@KunstmaanMediaBundle/Resources/public/js/libs/modaldialog.min.js'
-        '@KunstmaanMediaBundle/Resources/public/js/libs/responsive-tables.js'
-        '@KunstmaanMediaBundle/Resources/public/js/libs/charCount.js'
-        '@KunstmaanMediaBundle/Resources/public/js/libs/bootstrap-datepicker.js'
-        '@KunstmaanMediaBundle/Resources/public/js/libs/bootstrap-timepicker.js'
-        '@KunstmaanMediaBundle/Resources/public/js/libs/iphone-style-checkboxes.js'
-        '@KunstmaanMediaBundle/Resources/public/js/script.js'
+        '@VictoireMediaBundle/Resources/public/js/libs/jquery-ui-1.10.0.custom.min.js'
+        '@VictoireMediaBundle/Resources/public/js/libs/bootstrap.min.js'
+        '@VictoireMediaBundle/Resources/public/js/libs/chosen.jquery.min.js'
+        '@VictoireMediaBundle/Resources/public/js/libs/jquery.filedrop.js'
+        '@VictoireMediaBundle/Resources/public/js/libs/jquery.fileupload.js'
+        '@VictoireMediaBundle/Resources/public/js/libs/jquery.iframe-transport.js'
+        '@VictoireMediaBundle/Resources/public/js/libs/jquery.inputmask.js'
+        '@VictoireMediaBundle/Resources/public/js/libs/jquery.form.js'
+        '@VictoireMediaBundle/Resources/public/js/libs/jquery.inputmask.date.extensions.js'
+        '@VictoireMediaBundle/Resources/public/js/libs/modaldialog.min.js'
+        '@VictoireMediaBundle/Resources/public/js/libs/responsive-tables.js'
+        '@VictoireMediaBundle/Resources/public/js/libs/charCount.js'
+        '@VictoireMediaBundle/Resources/public/js/libs/bootstrap-datepicker.js'
+        '@VictoireMediaBundle/Resources/public/js/libs/bootstrap-timepicker.js'
+        '@VictoireMediaBundle/Resources/public/js/libs/iphone-style-checkboxes.js'
+        '@VictoireMediaBundle/Resources/public/js/script.js'
         output='generated-js/scripts_bottom.js'
     %}
     <script src="{{ asset_url }}"></script>
@@ -179,7 +179,7 @@
 
     <!--CKEDITOR-->
     <script>
-    {% include "KunstmaanMediaBundle:Default:ckeditor.js.twig" %}
+    {% include "VictoireMediaBundle:Default:ckeditor.js.twig" %}
         jQuery(document).ready(function(){
             jQuery('textarea.rich_editor').each(function(item){
                 var config = {};

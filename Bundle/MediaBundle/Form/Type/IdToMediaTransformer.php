@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Form\Type;
+namespace Victoire\Bundle\MediaBundle\Form\Type;
 
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -8,7 +8,7 @@ use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Doctrine\Common\Collections\Collection;
-use Kunstmaan\MediaBundle\Entity\Media;
+use Victoire\Bundle\MediaBundle\Entity\Media;
 
 /**
  * IdToMediaTransformer
@@ -85,7 +85,7 @@ class IdToMediaTransformer implements DataTransformerInterface
             throw new UnexpectedTypeException($key, 'numeric');
         }
 
-        if (!($entity = $this->objectManager->getRepository('KunstmaanMediaBundle:Media')->findOneById($key))) {
+        if (!($entity = $this->objectManager->getRepository('VictoireMediaBundle:Media')->findOneById($key))) {
             throw new TransformationFailedException(sprintf('The entity with key "%s" could not be found', $key));
         }
 

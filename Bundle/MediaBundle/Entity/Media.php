@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Entity;
+namespace Victoire\Bundle\MediaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
 /**
  * Media
  *
- * @ORM\Entity(repositoryClass="Kunstmaan\MediaBundle\Repository\MediaRepository")
+ * @ORM\Entity(repositoryClass="Victoire\Bundle\MediaBundle\Repository\MediaRepository")
  * @ORM\Table(name="kuma_media")
  * @ORM\HasLifecycleCallbacks
  */

@@ -1,10 +1,10 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Helper;
+namespace Victoire\Bundle\MediaBundle\Helper;
 
-use Kunstmaan\MediaBundle\Helper\File\FileHandler;
-use Kunstmaan\MediaBundle\Entity\Media;
-use Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler;
+use Victoire\Bundle\MediaBundle\Helper\File\FileHandler;
+use Victoire\Bundle\MediaBundle\Entity\Media;
+use Victoire\Bundle\MediaBundle\Helper\Media\AbstractMediaHandler;
 
 /**
  * MediaManager
@@ -70,7 +70,7 @@ class MediaManager
     }
 
     /**
-     * @param \Kunstmaan\MediaBundle\Entity\Media $media
+     * @param \Victoire\Bundle\MediaBundle\Entity\Media $media
      */
     public function prepareMedia(Media $media)
     {
@@ -94,7 +94,7 @@ class MediaManager
     }
 
     /**
-     * @param \Kunstmaan\MediaBundle\Entity\Media $media
+     * @param \Victoire\Bundle\MediaBundle\Entity\Media $media
      */
     public function removeMedia(Media $media)
     {

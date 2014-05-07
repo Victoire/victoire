@@ -1,12 +1,12 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Controller;
+namespace Victoire\Bundle\MediaBundle\Controller;
 
-use Kunstmaan\MediaBundle\Form\Type\MediaType;
-use Kunstmaan\MediaBundle\Helper\MediaManager;
+use Victoire\Bundle\MediaBundle\Form\Type\MediaType;
+use Victoire\Bundle\MediaBundle\Helper\MediaManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Kunstmaan\MediaBundle\Entity\Folder;
-use Kunstmaan\MediaBundle\Entity\Media;
+use Victoire\Bundle\MediaBundle\Entity\Folder;
+use Victoire\Bundle\MediaBundle\Entity\Media;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -20,7 +20,7 @@ class ChooserController extends Controller
 {
 
     /**
-     * @Route("/chooser", name="KunstmaanMediaBundle_chooser", options={"expose"=true})
+     * @Route("/chooser", name="VictoireMediaBundle_chooser", options={"expose"=true})
      *
      * @return RedirectResponse
      */
@@ -32,15 +32,15 @@ class ChooserController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         /* @var Folder $firstFolder */
-        $firstFolder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFirstTopFolder();
+        $firstFolder = $em->getRepository('VictoireMediaBundle:Folder')->getFirstTopFolder();
 
-        return $this->redirect($this->generateUrl("KunstmaanMediaBundle_chooser_show_folder", array("folderId" => $firstFolder->getId(), "type" => $type, "CKEditorFuncNum" => $cKEditorFuncNum)));
+        return $this->redirect($this->generateUrl("VictoireMediaBundle_chooser_show_folder", array("folderId" => $firstFolder->getId(), "type" => $type, "CKEditorFuncNum" => $cKEditorFuncNum)));
     }
 
     /**
      * @param int $folderId The filder id
      *
-     * @Route("/chooser/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_chooser_show_folder")
+     * @Route("/chooser/{folderId}", requirements={"folderId" = "\d+"}, name="VictoireMediaBundle_chooser_show_folder")
      * @Template()
      *
      * @return array
@@ -52,12 +52,12 @@ class ChooserController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         /* @var MediaManager $mediaHandler */
-        $mediaHandler = $this->get('kunstmaan_media.media_manager');
+        $mediaHandler = $this->get('Victoire_media.media_manager');
 
         /* @var Folder $folder */
-        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
+        $folder = $em->getRepository('VictoireMediaBundle:Folder')->getFolder($folderId);
         /* @var array $mediaHandler */
-        $folders = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFolders();
+        $folders = $em->getRepository('VictoireMediaBundle:Folder')->getAllFolders();
 
         $handler = null;
         if ($type) {

@@ -2,7 +2,7 @@
     <a href="{{ path(menuitem.route, menuitem.routeparams) }}">{{ menuitem.internalname | trans }}</a>
     <ul>
         {% for menuitem in menuitem.navigationChildren %}
-            {% include 'KunstmaanMediaBundle:Default:rectreeview.html.twig' %}
+            {% include 'VictoireMediaBundle:Default:rectreeview.html.twig' %}
         {% endfor %}
     </ul>
 </li>
