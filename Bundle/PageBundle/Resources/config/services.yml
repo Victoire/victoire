@@ -7,10 +7,10 @@ services:
     page.subscriber:
         class: Victoire\Bundle\PageBundle\EventSubscriber\PageSubscriber
         arguments:
-            - @victoire_cms.cache.route_registerer
+            - @victoire_core.cache.route_registerer
             - @router
             - @victoire_page.user_callable
-            - "%victoire_cms.user_class%"
+            - "%victoire_core.user_class%"
         tags:
             - { name: doctrine.event_subscriber, connection: default, priority: -1 }
 
@@ -24,7 +24,7 @@ services:
     ####################################################################################################################
     page.security.voter.page_owner:
         class: Victoire\Bundle\PageBundle\Security\Voter\PageOwnerVoter
-        arguments: ['%victoire_cms.user_class%']
+        arguments: ['%victoire_core.user_class%']
         tags:
             - { name: security.voter }
 
@@ -34,12 +34,12 @@ services:
 
     victoire_page.page.form.type:
         class: Victoire\Bundle\PageBundle\Form\PageType
-        arguments: ['%victoire_cms.layouts%']
+        arguments: ['%victoire_core.layouts%']
         tags:
             - { name: form.type, alias: victoire_page_type }
 
     victoire_page.page_settings.form.type:
         class: Victoire\Bundle\PageBundle\Form\PageSettingsType
-        arguments: ['%victoire_cms.layouts%']
+        arguments: ['%victoire_core.layouts%']
         tags:
             - { name: form.type, alias: victoire_page_settings_type }

@@ -24,7 +24,7 @@ class TemplateController extends Controller
      * list of all templates
      *
      * @return response
-     * @Route("/index", name="victoire_cms_template_index")
+     * @Route("/index", name="victoire_core_template_index")
      * @Template()
      */
     public function indexAction()
@@ -41,7 +41,7 @@ class TemplateController extends Controller
      * create a new Template
      *
      * @return Response
-     * @Route("/new", name="victoire_cms_template_new")
+     * @Route("/new", name="victoire_core_template_new")
      * @Template()
      */
     public function newAction()
@@ -55,7 +55,7 @@ class TemplateController extends Controller
             $em->persist($template);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('victoire_cms_template_show', array("slug" => $template->getSlug())));
+            return $this->redirect($this->generateUrl('victoire_core_template_show', array("slug" => $template->getSlug())));
         }
 
         return $this->container->get('victoire_templating')->renderResponse(
@@ -69,7 +69,7 @@ class TemplateController extends Controller
      *
      * @param string $slug The slug of page
      * @return Response
-     * @Route("/{slug}/parametres", name="victoire_cms_template_settings")
+     * @Route("/{slug}/parametres", name="victoire_core_template_settings")
      * @Template()
      */
     public function settingsAction($slug)
@@ -91,7 +91,7 @@ class TemplateController extends Controller
      *
      * @param Template $template the Template to show
      * @return Response
-     * @Route("/{slug}", name="victoire_cms_template_show")
+     * @Route("/{slug}", name="victoire_core_template_show")
      * @Template()
      * @ParamConverter("template", class="VictoirePageBundle:Template")
      */
@@ -99,7 +99,7 @@ class TemplateController extends Controller
     {
 
         $event = new TemplateMenuContextualEvent($template);
-        $this->get('event_dispatcher')->dispatch('victoire_cms.template_menu.contextual', $event);
+        $this->get('event_dispatcher')->dispatch('victoire_core.template_menu.contextual', $event);
 
         return $this->container->get('victoire_templating')->renderResponse(
             'VictoireCoreBundle:Template:show.html.twig',
@@ -112,7 +112,7 @@ class TemplateController extends Controller
      *
      * @param Template $template The Template to edit
      * @return Response
-     * @Route("/edit/{slug}", name="victoire_cms_template_edit")
+     * @Route("/edit/{slug}", name="victoire_core_template_edit")
      * @Template()
      * @ParamConverter("template", class="VictoirePageBundle:Template")
      */
@@ -127,10 +127,10 @@ class TemplateController extends Controller
             $em->persist($template);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('victoire_cms_template_show', array("slug" => $template->getSlug())));
+            return $this->redirect($this->generateUrl('victoire_core_template_show', array("slug" => $template->getSlug())));
         }
 
-        return $this->redirect($this->generateUrl('victoire_cms_template_settings', array("slug" => $template->getSlug())));
+        return $this->redirect($this->generateUrl('victoire_core_template_settings', array("slug" => $template->getSlug())));
 
     }
 }

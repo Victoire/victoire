@@ -299,7 +299,7 @@ EOT
     {
         $generator = new WidgetGenerator(
             $this->getContainer()->get('filesystem'),
-            $this->getContainer()->getParameter('victoire_cms.available_frameworks')
+            $this->getContainer()->getParameter('victoire_core.available_frameworks')
         );
         $generator->setTemplating($this->getContainer()->get('twig'));
 

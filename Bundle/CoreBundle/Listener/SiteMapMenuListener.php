@@ -33,7 +33,7 @@ class SiteMapMenuListener
 
         $this->mainItem
             ->addChild('menu.sitemap', array(
-                'route' => 'victoire_cms_page_sitemap'
+                'route' => 'victoire_core_page_sitemap'
             ))
             ->setLinkAttribute('data-toggle', 'vic-modal');
 

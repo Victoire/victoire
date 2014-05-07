@@ -10,14 +10,14 @@ class ThemePass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
 
-        if ($container->hasDefinition('victoire_cms.theme_chain')) {
+        if ($container->hasDefinition('victoire_core.theme_chain')) {
 
             $definition = $container->getDefinition(
-                'victoire_cms.theme_chain'
+                'victoire_core.theme_chain'
             );
 
             $taggedServices = $container->findTaggedServiceIds(
-                'victoire_cms.theme'
+                'victoire_core.theme'
             );
             foreach ($taggedServices as $id => $attributes) {
                 $definition->addMethodCall(

@@ -33,7 +33,7 @@ class ArticleController extends BasePageController
 
         $this->routes = array(
                 'new'      => 'victoire_blog_article_new',
-                'show'     => 'victoire_cms_page_show',
+                'show'     => 'victoire_core_page_show',
                 'settings' => 'victoire_blog_article_settings',
             );
     }
@@ -70,7 +70,7 @@ class ArticleController extends BasePageController
      *
      * @param article $article
      * @return template
-     * @Route("/{id}/delete", name="victoire_cms_article_delete")
+     * @Route("/{id}/delete", name="victoire_core_article_delete")
      * @Template()
      * @ParamConverter("article", class="VictoirePageBundle:BasePage")
      */

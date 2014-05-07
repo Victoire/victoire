@@ -38,7 +38,7 @@ class BasePageController extends Controller
 
             return array(
                 'success' => true,
-                'url'     => $this->generateUrl('victoire_cms_page_show', array('url'     => $homepage->getUrl()))
+                'url'     => $this->generateUrl('victoire_core_page_show', array('url'     => $homepage->getUrl()))
             );
 
         } else {
@@ -99,7 +99,7 @@ class BasePageController extends Controller
                 $seoUrl = $page->getSeo()->getRedirectTo()->getUrl();
 
                 //generate the url
-                $url = $this->generateUrl('victoire_cms_page_show', array('url' => $seoUrl));
+                $url = $this->generateUrl('victoire_core_page_show', array('url' => $seoUrl));
                 //generate the redirect
                 $response = $this->redirect($url);
             } else {
@@ -107,7 +107,7 @@ class BasePageController extends Controller
                 $this->get('twig')->addGlobal('page', $page);
 
                 $event = new \Victoire\Bundle\CoreBundle\Event\Menu\BasePageMenuContextualEvent($page);
-                $this->get('event_dispatcher')->dispatch('victoire_cms.' . $page->getType() . '_menu.contextual', $event); //TODO : il serait bon de faire des constantes pour les noms d'évents
+                $this->get('event_dispatcher')->dispatch('victoire_core.' . $page->getType() . '_menu.contextual', $event); //TODO : il serait bon de faire des constantes pour les noms d'évents
 
                 $response = $this->container->get('victoire_templating')->renderResponse(
                     'AppBundle:Layout:' . $page->getLayout() . '.html.twig',
@@ -156,7 +156,7 @@ class BasePageController extends Controller
 
             return array(
                 "success"  => true,
-                "url"      => $this->generateUrl('victoire_cms_page_show', array('url' => $page->getUrl()))
+                "url"      => $this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl()))
             );
         }
 
@@ -189,7 +189,7 @@ class BasePageController extends Controller
 
             return array(
                 'success' => true,
-                "url"     => $this->generateUrl('victoire_cms_page_show', array('url' => $page->getUrl()))
+                "url"     => $this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl()))
             );
 
         }

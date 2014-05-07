@@ -2,7 +2,7 @@ knp_menu:
     twig:
         template: VictoireCoreBundle:Menu:knp_menu_main.html.twig
 
-victoire_cms:
+victoire_core:
     applicative_bundle: ~
     available_frameworks: ['foundation', 'bootstrap']
     framework: bootstrap

@@ -23,7 +23,7 @@ var toggleHandler = function(toggle) {
             }
 
             $vic.ajax({
-                url: Routing.generate('victoire_cms_switch', {'mode': $vic(this).val() }),
+                url: Routing.generate('victoire_core_switch', {'mode': $vic(this).val() }),
                 context: document.body,
                 type: "GET",
                 error: function(jsonResponse) {

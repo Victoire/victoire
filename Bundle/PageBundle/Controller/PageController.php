@@ -30,10 +30,10 @@ class PageController extends BasePageController
     public function __construct()
     {
         $this->routes = array(
-            'new'      => 'victoire_cms_page_new',
-            'show'     => 'victoire_cms_page_show',
-            'settings' => 'victoire_cms_page_settings',
-            'detach'   => 'victoire_cms_page_detach'
+            'new'      => 'victoire_core_page_new',
+            'show'     => 'victoire_core_page_show',
+            'settings' => 'victoire_core_page_settings',
+            'detach'   => 'victoire_core_page_detach'
         );
     }
 
@@ -48,7 +48,7 @@ class PageController extends BasePageController
      *     redirect to welcome page (dashboard)
      * ==========================
      *
-     * @Route("/", name="victoire_cms_page_homepage")
+     * @Route("/", name="victoire_core_page_homepage")
      * @return template
      *
      */
@@ -67,8 +67,8 @@ class PageController extends BasePageController
      * New page
      *
      * @return template
-     * @Route("/page/new", name="victoire_cms_page_new", defaults={"isHomepage" : false})
-     * @Route("/homepage/new", name="victoire_cms_homepage_new", defaults={"isHomepage" : true})
+     * @Route("/page/new", name="victoire_core_page_new", defaults={"isHomepage" : false})
+     * @Route("/homepage/new", name="victoire_core_homepage_new", defaults={"isHomepage" : true})
      * @Template()
      */
     public function newAction($isHomepage = false)
@@ -82,7 +82,7 @@ class PageController extends BasePageController
      *
      * @param page $page
      * @return template
-     * @Route("/page/{id}/settings", name="victoire_cms_page_settings")
+     * @Route("/page/{id}/settings", name="victoire_core_page_settings")
      * @Template()
      * @ParamConverter("page", class="VictoirePageBundle:BasePage")
      */
@@ -97,7 +97,7 @@ class PageController extends BasePageController
      *
      * @param page $page
      * @return template
-     * @Route("/page/{id}/delete", name="victoire_cms_page_delete")
+     * @Route("/page/{id}/delete", name="victoire_core_page_delete")
      * @Template()
      * @ParamConverter("page", class="VictoirePageBundle:BasePage")
      */
@@ -116,7 +116,7 @@ class PageController extends BasePageController
      *
      * @param page $page
      * @return template
-     * @Route("/page/{id}/detach", name="victoire_cms_page_detach")
+     * @Route("/page/{id}/detach", name="victoire_core_page_detach")
      * @ParamConverter("page", class="VictoirePageBundle:BasePage")
      */
     public function detachAction(BasePage $page)
@@ -154,7 +154,7 @@ class PageController extends BasePageController
      *
      * @param page $page
      * @return template
-     * @Route("/page/{id}/create-template", name="victoire_cms_page_createtemplate")
+     * @Route("/page/{id}/create-template", name="victoire_core_page_createtemplate")
      * @ParamConverter("page", class="VictoirePageBundle:BasePage")
      */
     public function createTemplateAction(BasePage $page)
@@ -170,7 +170,7 @@ class PageController extends BasePageController
             $em->persist($template);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('victoire_cms_template_show', array("slug" => $template->getSlug())));
+            return $this->redirect($this->generateUrl('victoire_core_template_show', array("slug" => $template->getSlug())));
         }
 
         return $this->container->get('victoire_templating')->renderResponse(
@@ -184,7 +184,7 @@ class PageController extends BasePageController
      * Show and edit sitemap
      *
      * @return template
-     * @Route("/page/sitemap", name="victoire_cms_page_sitemap")
+     * @Route("/page/sitemap", name="victoire_core_page_sitemap")
      * @Template()
      */
     public function siteMapAction()

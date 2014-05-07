@@ -32,7 +32,7 @@ class TemplateMenuListener
         $mainItem = $this->getMainItem();
         $mainItem->addChild('menu.template.settings',
             array(
-                'route' => 'victoire_cms_template_settings',
+                'route' => 'victoire_core_template_settings',
                 'routeParameters' => array('slug' => $event->getPage()->getSlug())
                 )
         )->setLinkAttribute('data-toggle', 'vic-modal');
@@ -47,13 +47,13 @@ class TemplateMenuListener
     {
         $mainItem = $this->getMainItem();
         $mainItem->addChild('menu.template.new', array(
-            'route' => 'victoire_cms_template_new'
+            'route' => 'victoire_core_template_new'
             )
         );
         $mainItem['menu.template.new']->setLinkAttribute('data-toggle', 'modal');
 
         $mainItem->addChild('menu.template.index', array(
-            'route' => 'victoire_cms_template_index'
+            'route' => 'victoire_core_template_index'
             )
         )->setLinkAttribute('data-toggle', 'vic-modal');
 

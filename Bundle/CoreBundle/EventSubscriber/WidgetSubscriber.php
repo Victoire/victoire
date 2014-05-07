@@ -38,7 +38,7 @@ class WidgetSubscriber implements EventSubscriberInterface
 
     public function buildFilterQuery(WidgetQueryEvent $event)
     {
-        if ($this->container->has('victoire_cms.filter_chain')) {
+        if ($this->container->has('victoire_core.filter_chain')) {
 
             $request = $event->getRequest();
             $widget = $event->getWidget();
@@ -48,7 +48,7 @@ class WidgetSubscriber implements EventSubscriberInterface
 
             if ($listId == $widget->getId()) {
                 unset($filters['list']);
-                foreach ($this->container->get('victoire_cms.filter_chain')->getFilters() as $name => $filter) {
+                foreach ($this->container->get('victoire_core.filter_chain')->getFilters() as $name => $filter) {
                     if (!empty($filters[$name])) {
                         $filter->buildQuery($qb, $filters[$name]);
                     }
@@ -64,7 +64,7 @@ class WidgetSubscriber implements EventSubscriberInterface
     {
         $form = $event->getForm();
         $widget = $event->getWidget();
-        $themeChain = $this->container->get('victoire_cms.theme_chain');
+        $themeChain = $this->container->get('victoire_core.theme_chain');
         $manager = $this->container->get('widget_manager')->getManager($widget);
         if ($widget instanceof ThemeWidgetInterface) {
             $widgetClass = get_parent_class($widget);
@@ -73,8 +73,8 @@ class WidgetSubscriber implements EventSubscriberInterface
             $widgetClass = get_class($widget);
             $currentWidget = $this->container->get('widget_manager')->getWidgetType($widget);
         }
-        $widgets = $this->container->getParameter('victoire_cms.widgets');
-        foreach ($this->container->getParameter('victoire_cms.widgets') as $widgetName => $params) {
+        $widgets = $this->container->getParameter('victoire_core.widgets');
+        foreach ($this->container->getParameter('victoire_core.widgets') as $widgetName => $params) {
             if ($params['class'] === $widgetClass) {
                 break;
             }

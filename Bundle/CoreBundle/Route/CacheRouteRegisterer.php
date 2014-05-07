@@ -42,7 +42,7 @@ class CacheRouteRegisterer
     public function registerRoute($page)
     {
         $pageSlug = $page->getSlug();
-        $routeName = "victoire_cms_page_show";
+        $routeName = "victoire_core_page_show";
         $slugs = array();
         while ($page = $page->getParent()) {
             array_push($slugs, $page->getSlug());

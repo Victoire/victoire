@@ -25,7 +25,7 @@ class VictoireCoreBundle extends Bundle
 
         $driverChain = $this->container->get('doctrine.orm.entity_manager')->getConfiguration()->getMetadataDriverImpl();
 
-        $proxyDriver = $this->container->get('victoire_cms.entity_proxy.cache_driver');
+        $proxyDriver = $this->container->get('victoire_core.entity_proxy.cache_driver');
         $driverChain->addDriver($proxyDriver, 'Victoire\Bundle\CoreBundle\Cached\Entity');
 
     }

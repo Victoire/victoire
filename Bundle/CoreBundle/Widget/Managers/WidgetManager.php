@@ -133,7 +133,7 @@ class WidgetManager
 
         $widget = $manager->newWidget($page, $slot);
         $widget->setCurrentPage($page);
-        $classes = $this->container->get('victoire_cms.annotation_reader')->getBusinessClassesForWidget($widget);
+        $classes = $this->container->get('victoire_core.annotation_reader')->getBusinessClassesForWidget($widget);
 
         $form = $this->buildForm($manager, $widget);
 
@@ -242,7 +242,7 @@ class WidgetManager
      */
     private function renderNewWidgetForms($type, $slot, BasePage $page, Widget $widget)
     {
-        $annotationReader = $this->container->get('victoire_cms.annotation_reader');
+        $annotationReader = $this->container->get('victoire_core.annotation_reader');
         $classes = $annotationReader->getBusinessClassesForWidget($widget);
         $manager = $this->getManager($widget);
 
@@ -266,7 +266,7 @@ class WidgetManager
     public function renderWidgetForms($widget)
     {
         $manager = $this->getManager($widget);
-        $classes = $this->container->get('victoire_cms.annotation_reader')->getBusinessClassesForWidget($widget);
+        $classes = $this->container->get('victoire_core.annotation_reader')->getBusinessClassesForWidget($widget);
 
         $forms['static'] = $manager->renderForm($this->buildForm($manager, $widget), $widget);
 
@@ -291,7 +291,7 @@ class WidgetManager
         $manager = $this->getManager(null, $type);
         $widget = $manager->newWidget($page, $slot);
 
-        $classes = $this->container->get('victoire_cms.annotation_reader')->getBusinessClassesForWidget($widget);
+        $classes = $this->container->get('victoire_core.annotation_reader')->getBusinessClassesForWidget($widget);
         $forms = $this->renderNewWidgetForms($type, $slot, $page, $widget);
 
         return array(
@@ -315,7 +315,7 @@ class WidgetManager
     public function edit(Widget $widget, $entity = null)
     {
         $request = $this->container->get('request');
-        $classes = $this->container->get('victoire_cms.annotation_reader')->getBusinessClassesForWidget($widget);
+        $classes = $this->container->get('victoire_core.annotation_reader')->getBusinessClassesForWidget($widget);
         $manager = $this->getManager($widget);
 
         if (method_exists($manager, 'edit')) {
@@ -412,7 +412,7 @@ class WidgetManager
      */
     public function renderActions($slot, BasePage $page, $first = false)
     {
-        $slots = $this->container->getParameter('victoire_cms.slots');
+        $slots = $this->container->getParameter('victoire_core.slots');
 
         $max = null;
         if (array_key_exists('max', $slots[$slot])) {
@@ -529,7 +529,7 @@ class WidgetManager
     public function isWidgetAllowedForSlot($widget, $slot)
     {
         $widgetType = str_replace('widget_', '', $this->getWidgetType($widget));
-        $slots = $this->container->getParameter('victoire_cms.slots');
+        $slots = $this->container->getParameter('victoire_core.slots');
         if ($widget instanceof ThemeWidgetInterface) {
             $manager = $this->getManager($widget);
             $widgetName = $manager->getWidgetName();

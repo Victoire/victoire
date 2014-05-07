@@ -36,25 +36,25 @@ class MenuListener
     public function onKernelRequest(GetResponseEvent $event)
     {
 
-        $this->eventDispatcher->addListener("victoire_cms.page_menu.global",
+        $this->eventDispatcher->addListener("victoire_core.page_menu.global",
             array($this->pageMenu, 'addGlobal')
         );
-        $this->eventDispatcher->addListener("victoire_cms.page_menu.contextual",
+        $this->eventDispatcher->addListener("victoire_core.page_menu.contextual",
             array($this->pageMenu, 'addContextual')
         );
-        $this->eventDispatcher->addListener("victoire_cms.template_menu.global",
+        $this->eventDispatcher->addListener("victoire_core.template_menu.global",
             array($this->templateMenu, 'addGlobal')
         );
-        $this->eventDispatcher->addListener("victoire_cms.template_menu.contextual",
+        $this->eventDispatcher->addListener("victoire_core.template_menu.contextual",
             array($this->templateMenu, 'addContextual')
         );
-        $this->eventDispatcher->addListener("victoire_cms.sitemap_menu.global",
+        $this->eventDispatcher->addListener("victoire_core.sitemap_menu.global",
             array($this->sitemapMenu, 'addGlobal')
         );
 
-        $this->eventDispatcher->dispatch('victoire_cms.page_menu.global');
-        $this->eventDispatcher->dispatch('victoire_cms.template_menu.global');
-        $this->eventDispatcher->dispatch('victoire_cms.sitemap_menu.global');
+        $this->eventDispatcher->dispatch('victoire_core.page_menu.global');
+        $this->eventDispatcher->dispatch('victoire_core.template_menu.global');
+        $this->eventDispatcher->dispatch('victoire_core.sitemap_menu.global');
 
 
     }

@@ -51,10 +51,10 @@ class AnnotationReader extends AnnotationDriver
      **/
     public function getBusinessClasses()
     {
-        if (!$businessClasses = $this->cache->fetch('victoire_cms_business_classes')) {
+        if (!$businessClasses = $this->cache->fetch('victoire_core_business_classes')) {
             $classes = $this->getAllClassnames();
             $businessClasses = $this->loadBusinessClasses($classes);
-            $this->cache->save('victoire_cms_business_classes', $businessClasses);
+            $this->cache->save('victoire_core_business_classes', $businessClasses);
         }
         return $businessClasses;
     }
@@ -68,7 +68,7 @@ class AnnotationReader extends AnnotationDriver
         $widgetName = explode('\\', get_class($widget));
         $widgetName = strtolower(array_pop($widgetName)); //TODO : Use the class name instead
 
-        $businessClassesForWidget = $this->cache->fetch('victoire_cms_business_classes_for_widget');
+        $businessClassesForWidget = $this->cache->fetch('victoire_core_business_classes_for_widget');
 
         if (!$businessClassesForWidget || (is_array($businessClassesForWidget) && !array_key_exists($widgetName, $businessClassesForWidget))) {
             $businessClasses = $this->getBusinessClasses();
@@ -80,7 +80,7 @@ class AnnotationReader extends AnnotationDriver
              * We should do this in a single call
              **/
             $businessClassesForWidget[$widgetName] = $this->loadBusinessClassesForWidget($businessClasses, $widgetName);
-            $this->cache->save('victoire_cms_business_classes_for_widget', $businessClassesForWidget);
+            $this->cache->save('victoire_core_business_classes_for_widget', $businessClassesForWidget);
         }
 
         return $businessClassesForWidget[$widgetName];
@@ -93,10 +93,10 @@ class AnnotationReader extends AnnotationDriver
     public function getBusinessProperties($class)
     {
         $rc = new \ReflectionClass($class);
-        $businessProperties = $this->cache->fetch('victoire_cms_business_properties');
+        $businessProperties = $this->cache->fetch('victoire_core_business_properties');
         if (!$businessProperties || (is_array($businessProperties) && !array_key_exists($class, $businessProperties))) {
             $businessProperties[$class] = $this->loadBusinessProperties($rc);
-            $this->cache->save('victoire_cms_business_properties', $businessProperties);
+            $this->cache->save('victoire_core_business_properties', $businessProperties);
         }
 
         /* TODO REMOVE THIS : It exists to avoid a crash but should be prevent before */
@@ -119,10 +119,10 @@ class AnnotationReader extends AnnotationDriver
      **/
     public function getReceiverProperties()
     {
-        $receiverProperties = $this->cache->fetch('victoire_cms_receiver_properties');
+        $receiverProperties = $this->cache->fetch('victoire_core_receiver_properties');
         if (!$receiverProperties || (is_array($receiverProperties) )) {
             $receiverProperties = $this->loadReceiverProperties();
-            $this->cache->save('victoire_cms_receiver_properties', $receiverProperties);
+            $this->cache->save('victoire_core_receiver_properties', $receiverProperties);
         }
 
         return $receiverProperties;

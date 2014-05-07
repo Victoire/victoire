@@ -36,7 +36,7 @@ function updatePosition(ui){
         sorted[$vic(el).attr('id')] = $vic(el).sortable('toArray');
     });
 
-    return $vic.post(Routing.generate('victoire_cms_widget_update_position', {'page': pageId}),
+    return $vic.post(Routing.generate('victoire_core_widget_update_position', {'page': pageId}),
         { 'sorted': sorted }
     );
 }

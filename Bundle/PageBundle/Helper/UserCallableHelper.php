@@ -24,7 +24,7 @@ class UserCallableHelper
     */
    public function getCurrentUser()
    {
-        $userClass = $this->container->getParameter('victoire_cms.user_class');
+        $userClass = $this->container->getParameter('victoire_core.user_class');
         $token = $this->container->get('security.context')->getToken();
         if ($token->getUser() instanceof $userClass) {
             return $token->getUser();

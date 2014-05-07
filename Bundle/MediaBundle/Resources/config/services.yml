@@ -58,10 +58,10 @@ services:
         tags:
             -  { name: 'twig.extension' }
 
-    victoire_cms.media_menu_listener:
+    victoire_core.media_menu_listener:
         class: Kunstmaan\MediaBundle\EventListener\MediaMenuListener
         arguments:
-            - "@victoire_cms.admin_menu_builder"
+            - "@victoire_core.admin_menu_builder"
             - "@event_dispatcher"
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

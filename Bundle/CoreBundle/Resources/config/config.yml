@@ -13,7 +13,7 @@ stof_doctrine_extensions:
           tree: true
           sluggable: true
 
-victoire_cms:
+victoire_core:
     widgets: ~
     slots:
         default_menu_bar:

@@ -32,7 +32,7 @@ class PageMenuListener
         $mainItem = $this->getMainItem();
         $mainItem->addChild('menu.page.settings',
             array(
-                'route' => 'victoire_cms_page_settings',
+                'route' => 'victoire_core_page_settings',
                 'routeParameters' => array('id' => $event->getPage()->getId())
             )
         )->setLinkAttribute('data-toggle', 'vic-modal');
@@ -46,7 +46,7 @@ class PageMenuListener
         if ($event->getPage()->getTemplate()) {
             $mainItem->addChild('menu.page.template',
                 array(
-                    'route' => 'victoire_cms_template_show',
+                    'route' => 'victoire_core_template_show',
                     'routeParameters' => array('slug' => $event->getPage()->getTemplate()->getSlug())
                 )
             );
@@ -65,7 +65,7 @@ class PageMenuListener
         $mainItem = $this->getMainItem();
 
         $mainItem->addChild('menu.page.new', array(
-            'route'     => 'victoire_cms_page_new'
+            'route'     => 'victoire_core_page_new'
             )
         )
         ->setLinkAttribute('data-toggle', 'vic-modal');

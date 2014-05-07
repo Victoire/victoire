@@ -27,7 +27,7 @@
         {% block modal_footer_content %}
             <span class="vic-pull-left"><sup>*</sup>{{ 'modal.mandatory_fields.label'|trans({}, 'victoire')|desc('Mandatory fields') }}</span>
             {% if not page.undeletable %}
-            <a href="{{ path('victoire_cms_page_delete', {'id': page.id}) }}" class="confirm" data-title="{{ 'modal.form.page.settings.action.delete.confirm.title'|trans({}, 'victoire')|desc('Are you sure ?') }}" data-body="{{ 'modal.form.page.settings.action.delete.confirm.body'|trans({}, 'victoire')|desc('This action can not be undone, do you confirm your action ?') }}" data-modal="delete"></a>
+            <a href="{{ path('victoire_core_page_delete', {'id': page.id}) }}" class="confirm" data-title="{{ 'modal.form.page.settings.action.delete.confirm.title'|trans({}, 'victoire')|desc('Are you sure ?') }}" data-body="{{ 'modal.form.page.settings.action.delete.confirm.body'|trans({}, 'victoire')|desc('This action can not be undone, do you confirm your action ?') }}" data-modal="delete"></a>
             {% endif %}
             <a href="#" data-modal="{% block action %}update{% endblock action %}" title="{{ 'modal.button.'~ block('action') ~'.title'|trans({}, 'victoire') }}"></a>
         {% endblock modal_footer_content %}

@@ -78,8 +78,8 @@
         <target>Thème</target>
         <jms:reference-file line="92">CoreBundle/EventSubscriber/WidgetSubscriber.php</jms:reference-file>
       </trans-unit>
-      <trans-unit resname="victoire_cms.edit_mode_switch">
-        <source>victoire_cms.edit_mode_switch</source>
+      <trans-unit resname="victoire_core.edit_mode_switch">
+        <source>victoire_core.edit_mode_switch</source>
         <target>Mode édition</target>
       </trans-unit>
       <trans-unit resname="widget.dropdown.action.label">

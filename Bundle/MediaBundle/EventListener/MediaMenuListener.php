@@ -29,11 +29,11 @@ class MediaMenuListener
     public function onKernelRequest(GetResponseEvent $event)
     {
 
-        $this->ed->addListener("victoire_cms.media_menu.global",
+        $this->ed->addListener("victoire_core.media_menu.global",
             array($this, 'addGlobal')
         );
 
-        $this->ed->dispatch('victoire_cms.media_menu.global');
+        $this->ed->dispatch('victoire_core.media_menu.global');
 
 
     }

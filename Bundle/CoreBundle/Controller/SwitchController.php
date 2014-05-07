@@ -16,7 +16,7 @@ class SwitchController extends Controller
 {
 
     /**
-     * @Route("/switch/{mode}", name="victoire_cms_switch", options={"expose"=true})
+     * @Route("/switch/{mode}", name="victoire_core_switch", options={"expose"=true})
      */
     public function switchAction(Request $request, $mode)
     {

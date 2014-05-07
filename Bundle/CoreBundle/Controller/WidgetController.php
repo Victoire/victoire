@@ -26,7 +26,7 @@ class WidgetController extends Controller
      *
      * @param Widget $widget the widget to show
      * @return response
-     * @Route("/show/{id}", name="victoire_cms_widget_show", options={"expose"=true})
+     * @Route("/show/{id}", name="victoire_core_widget_show", options={"expose"=true})
      * @Template()
      * @ParamConverter("id", class="VictoireCoreBundle:Widget")
      */
@@ -36,7 +36,7 @@ class WidgetController extends Controller
             return new JsonResponse($this->get('widget_manager')->render($widget));
         }
 
-        return $this->redirect($this->generateUrl('victoire_cms_page_show', array('url' => $widget->getPage()->getUrl())));
+        return $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $widget->getPage()->getUrl())));
     }
 
     /**
@@ -46,8 +46,8 @@ class WidgetController extends Controller
      * @param string $type   The type of widget we edit
      * @return response
      *
-     * @Route("/edit/{id}/{type}", name="victoire_cms_widget_edit", defaults={"type": null})
-     * @Route("/update/{id}/{type}", name="victoire_cms_widget_update", defaults={"type": null})
+     * @Route("/edit/{id}/{type}", name="victoire_core_widget_edit", defaults={"type": null})
+     * @Route("/update/{id}/{type}", name="victoire_core_widget_update", defaults={"type": null})
      * @Template()
      * @ParamConverter("id", class="VictoireCoreBundle:Widget")
      */
@@ -65,7 +65,7 @@ class WidgetController extends Controller
      * @param BusinessEntity $entity The business entity the widget shows on dynamic mode
      * @return response
      *
-     * @Route("/new/{type}/{page}/{slot}/{entity}", name="victoire_cms_widget_new", defaults={"slot":null, "entity":null}, options={"expose"=true})
+     * @Route("/new/{type}/{page}/{slot}/{entity}", name="victoire_core_widget_new", defaults={"slot":null, "entity":null}, options={"expose"=true})
      * @Template()
      */
     public function newAction($type, $page, $slot = null, $entity = null)
@@ -84,7 +84,7 @@ class WidgetController extends Controller
             }
 
             if ($entity) {
-                $annotationReader = $this->get('victoire_cms.annotation_reader');
+                $annotationReader = $this->get('victoire_core.annotation_reader');
                 $classes = $annotationReader->getBusinessClassesForWidget($widget);
                 $namespace = $classes[$entity];
             }
@@ -106,7 +106,7 @@ class WidgetController extends Controller
      * @param string         $slot   The slot where attach the widget
      * @param BusinessEntity $entity The business entity the widget shows on dynamic mode
      * @return response
-     * @Route("/create/{type}/{page}/{slot}/{entity}", name="victoire_cms_widget_create", defaults={"slot":null, "entity":null, "_format": "json"})
+     * @Route("/create/{type}/{page}/{slot}/{entity}", name="victoire_core_widget_create", defaults={"slot":null, "entity":null, "_format": "json"})
      * @Template()
      */
     public function createAction($type, $page, $slot = null, $entity = null)
@@ -122,7 +122,7 @@ class WidgetController extends Controller
      *
      * @param Widget $widget The widget to delete
      * @return empty response
-     * @Route("/delete/{id}", name="victoire_cms_widget_delete", defaults={"_format": "json"})
+     * @Route("/delete/{id}", name="victoire_core_widget_delete", defaults={"_format": "json"})
      * @Template()
      * @ParamConverter("id", class="VictoireCoreBundle:Widget")
      */
@@ -140,7 +140,7 @@ class WidgetController extends Controller
      *
      * @param Page $page The page where update widget positions
      * @return response
-     * @Route("/position/{page}", name="victoire_cms_widget_update_position", options={"expose"=true})
+     * @Route("/position/{page}", name="victoire_core_widget_update_position", options={"expose"=true})
      * @ParamConverter("page", class="VictoirePageBundle:BasePage")
      */
     public function updatePositionAction(BasePage $page)

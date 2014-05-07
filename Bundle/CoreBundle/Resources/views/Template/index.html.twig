@@ -14,7 +14,7 @@
 
 {% macro templatesHierarchy(templates) %}
     {% for template in templates %}
-      <li id="list_{{template.id}}"><a href="{{path('victoire_cms_template_show', {'slug' : template.slug })}}">{{template.title}}</a>
+      <li id="list_{{template.id}}"><a href="{{path('victoire_core_template_show', {'slug' : template.slug })}}">{{template.title}}</a>
       {% if template.children %}
           <ol>
             {{ _self.templatesHierarchy(template.children) }}

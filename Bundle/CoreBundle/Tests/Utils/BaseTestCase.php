@@ -109,8 +109,8 @@ class BaseTestCase extends WebTestCase
     public function getTemplateMapperMock()
     {
         $templating = $this->container->get("templating");
-        $framework = $this->container->getParameter("victoire_cms.framework");
-        $bundle = $this->container->getParameter("victoire_cms.applicative_bundle");
+        $framework = $this->container->getParameter("victoire_core.framework");
+        $bundle = $this->container->getParameter("victoire_core.applicative_bundle");
 
         return new \Victoire\Bundle\CoreBundle\Template\TemplateMapper($this->container);
     }
@@ -142,8 +142,8 @@ class BaseTestCase extends WebTestCase
      */
     public function getCmsExtensionMock()
     {
-        $slots = $this->container->getParameter("victoire_cms.slots");
-        $slots = $this->container->getParameter("victoire_cms.slots");
+        $slots = $this->container->getParameter("victoire_core.slots");
+        $slots = $this->container->getParameter("victoire_core.slots");
         $menuManager = $this->getMenuManagerMock();
         $widgetManager = $this->getWidgetManagerMock();
         $templateMapper = $this->getTemplateMapperMock();

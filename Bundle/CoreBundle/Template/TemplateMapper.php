@@ -24,9 +24,9 @@ class TemplateMapper
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->framework = $container->getParameter('victoire_cms.framework');
-        $this->appBundle = $container->getParameter('victoire_cms.applicative_bundle');
-        $this->templates = $container->getParameter('victoire_cms.templates');
+        $this->framework = $container->getParameter('victoire_core.framework');
+        $this->appBundle = $container->getParameter('victoire_core.applicative_bundle');
+        $this->templates = $container->getParameter('victoire_core.templates');
     }
 
     /**

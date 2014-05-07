@@ -9,7 +9,7 @@ $vic(document).ready(function() {
         slot = $vic(this).parents('.slot').attr('id');
 
         $vic.ajax({
-            url: Routing.generate('victoire_cms_widget_new', {'type': item, 'page': pageId, 'slot': slot, 'entity': entity}),
+            url: Routing.generate('victoire_core_widget_new', {'type': item, 'page': pageId, 'slot': slot, 'entity': entity}),
             data: item,
             context: document.body,
             type: "POST",
@@ -94,7 +94,7 @@ function updatePosition(ui){
         sorted[$vic(el).attr('id')] = $vic(el).sortable('toArray');
     });
 
-    return $vic.post(Routing.generate('victoire_cms_widget_update_position', {'page': pageId}),
+    return $vic.post(Routing.generate('victoire_core_widget_update_position', {'page': pageId}),
         { 'sorted': sorted }
     );
 }

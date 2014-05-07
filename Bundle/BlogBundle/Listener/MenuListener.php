@@ -20,14 +20,14 @@ class MenuListener
     public function onKernelRequest(GetResponseEvent $event)
     {
 
-        $this->ed->addListener("victoire_cms.article_menu.global",
+        $this->ed->addListener("victoire_core.article_menu.global",
             array($this->blogMenu, 'addGlobal')
         );
-        $this->ed->addListener("victoire_cms.article_menu.contextual",
+        $this->ed->addListener("victoire_core.article_menu.contextual",
             array($this->blogMenu, 'addContextual')
         );
 
-        $this->ed->dispatch('victoire_cms.article_menu.global');
+        $this->ed->dispatch('victoire_core.article_menu.global');
 
     }
 

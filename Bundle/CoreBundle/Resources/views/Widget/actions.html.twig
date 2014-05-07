@@ -2,7 +2,7 @@
 {#% if widgets|length == 1 %}
       {% set widget = attribute(widgets, 0) %}
       {% set widget_label = "widget."~widget~".new.action.label" %}
-      <a class="btn add-widget-btn" id="slot-{{slot}}-add-button" data-toggle="add-widget" data-slot="{{slot}}" href="{{path('victoire_cms_widget_new', {'page':page.id,'type':widget, 'slot':slot} )}}"><i class="icon icon-{{widget}}"></i>&nbsp;Ajouter un widget {{widget_label|trans}}</a>
+      <a class="btn add-widget-btn" id="slot-{{slot}}-add-button" data-toggle="add-widget" data-slot="{{slot}}" href="{{path('victoire_core_widget_new', {'page':page.id,'type':widget, 'slot':slot} )}}"><i class="icon icon-{{widget}}"></i>&nbsp;Ajouter un widget {{widget_label|trans}}</a>
 {% else %#}
     <div class="vic-dropdown vic-undraggable vic-new-widget {{ first ? "vic-first" : "" }}">
         <a data-toggle="vic-dropdown" href="#" class="text-center">
@@ -12,7 +12,7 @@
         <ul class="vic-dropdown-menu" role="menu" aria-labelledby="dLabel">
             {% for widget in widgets %}
             <li>
-                <a href="{{ path('victoire_cms_widget_new', {'page':page.id,'type':widget, 'slot':slot} ) }}">
+                <a href="{{ path('victoire_core_widget_new', {'page':page.id,'type':widget, 'slot':slot} ) }}">
                     {{ ("widget."~widget~".new.action.label")|trans({}, 'victoire') }}
                 </a>
             </li>

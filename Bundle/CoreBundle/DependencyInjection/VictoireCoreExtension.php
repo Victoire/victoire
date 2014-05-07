@@ -30,49 +30,49 @@ class VictoireCoreExtension extends Extension
         $loader->load('services.yml');
         $loader->load('forms.yml');
 
-        // We instanciate a new kernel and iterate on all it's bundles to load the victoire_cms configs
+        // We instanciate a new kernel and iterate on all it's bundles to load the victoire_core configs
         $kernel = new \AppKernel('prod', false);
         foreach ($kernel->registerBundles() as $bundle) {
             $path = $bundle->getPath();
             $yamlParser = new Yaml($container, $path . '/Resources/config/config.yml');
             $victoireConfig = $yamlParser->parse($path . '/Resources/config/config.yml');
-            if (is_array($victoireConfig) && array_key_exists('victoire_cms', $victoireConfig)) {
-                $config['widgets'] = array_merge($config['widgets'], $victoireConfig['victoire_cms']['widgets']?:array());
+            if (is_array($victoireConfig) && array_key_exists('victoire_core', $victoireConfig)) {
+                $config['widgets'] = array_merge($config['widgets'], $victoireConfig['victoire_core']['widgets']?:array());
             }
         }
 
         $container->setParameter(
-            'victoire_cms.cache_dir', $config['cache_dir']
+            'victoire_core.cache_dir', $config['cache_dir']
         );
         $container->setParameter(
-            'victoire_cms.applicative_bundle', $config['applicative_bundle']
+            'victoire_core.applicative_bundle', $config['applicative_bundle']
         );
         $container->setParameter(
-            'victoire_cms.available_frameworks', $config['available_frameworks']
+            'victoire_core.available_frameworks', $config['available_frameworks']
         );
         $container->setParameter(
-            'victoire_cms.framework', ucfirst($config['framework'])
+            'victoire_core.framework', ucfirst($config['framework'])
         );
         if (array_key_exists('templates', $config)) {
             $container->setParameter(
-                'victoire_cms.templates', $config['templates']
+                'victoire_core.templates', $config['templates']
             );
         } else {
             $container->setParameter(
-                'victoire_cms.templates', ''
+                'victoire_core.templates', ''
             );
         }
         $container->setParameter(
-            'victoire_cms.widgets', $config['widgets']
+            'victoire_core.widgets', $config['widgets']
         );
         $container->setParameter(
-            'victoire_cms.layouts', $config['layouts']
+            'victoire_core.layouts', $config['layouts']
         );
         $container->setParameter(
-            'victoire_cms.slots', $config['slots']
+            'victoire_core.slots', $config['slots']
         );
         $container->setParameter(
-            'victoire_cms.user_class', $config['user_class']
+            'victoire_core.user_class', $config['user_class']
         );
     }
 }

@@ -11,7 +11,7 @@ VictoireWidgetLoader:
     resource: .
     type: victoire
 
-victoire_cms_page_show:
+victoire_core_page_show:
     path:      /{url}
     defaults:  { _controller: VictoirePageBundle:BasePage:show }
     requirements:

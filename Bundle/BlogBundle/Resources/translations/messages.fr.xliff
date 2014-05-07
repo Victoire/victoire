@@ -21,13 +21,13 @@
         <target state="new">Paramètres de l'article</target>
         <jms:reference-file line="4">Bootstrap/Article/settings.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="02d18cf0e0ca7a227963f722e23711b08fa5711a" resname="victoire_cms.close">
+      <trans-unit id="02d18cf0e0ca7a227963f722e23711b08fa5711a" resname="victoire_core.close">
         <source>Fermer</source>
         <target state="new">Fermer</target>
         <jms:reference-file line="15">Bootstrap/Article/new.html.twig</jms:reference-file>
         <jms:reference-file line="17">Bootstrap/Article/settings.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="49f3e57c389a6ba549e6e460815a2a16b1f3be4c" resname="victoire_cms.save">
+      <trans-unit id="49f3e57c389a6ba549e6e460815a2a16b1f3be4c" resname="victoire_core.save">
         <source>Sauvegarder</source>
         <target state="new">Sauvegarder</target>
         <jms:reference-file line="14">Bootstrap/Article/new.html.twig</jms:reference-file>

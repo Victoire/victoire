@@ -9,7 +9,7 @@ services:
 
     victoire_blog.blog_menu_listener:
         class: Victoire\Bundle\BlogBundle\Listener\BlogMenuListener
-        arguments: ["@victoire_cms.admin_menu_builder"]
+        arguments: ["@victoire_core.admin_menu_builder"]
 
     victoire_blog.base_page.subscriber: #REVIEW surement prendre une convention
         class: Victoire\Bundle\BlogBundle\EventSubscriber\LoadMetadataSubscriber
@@ -23,7 +23,7 @@ services:
             - "@request="
         tags:
             - { name: form.type, alias: category_filter }
-            - { name: victoire_cms.filter }
+            - { name: victoire_core.filter }
 
     ####################################################################################################################
     # Forms
@@ -31,6 +31,6 @@ services:
 
     victoire_blog.article.form.type:
         class: Victoire\Bundle\BlogBundle\Form\ArticleType
-        arguments: ['%victoire_cms.layouts%']
+        arguments: ['%victoire_core.layouts%']
         tags:
             - { name: form.type, alias: victoire_article_type }
