@@ -1,10 +1,10 @@
 parameters:
-    Victoire_media.media_manager.class: 'Victoire\Bundle\MediaBundle\Helper\MediaManager'
-    Victoire_media.menu.adaptor.class: 'Victoire\Bundle\MediaBundle\Helper\Menu\MediaMenuAdaptor'
-    Victoire_media.listener.doctrine.class: 'Victoire\Bundle\MediaBundle\EventListener\DoctrineMediaListener'
-    Victoire_media.form.type.media.class: 'Victoire\Bundle\MediaBundle\Form\Type\MediaType'
-    Victoire_media.media_creator_service.class: 'Victoire\Bundle\MediaBundle\Helper\Services\MediaCreatorService'
-    Victoire_media.menubuilder.class: 'Victoire\Bundle\MediaBundle\Helper\Menu\MenuBuilder'
+    victoire_media.media_manager.class: 'Victoire\Bundle\MediaBundle\Helper\MediaManager'
+    victoire_media.menu.adaptor.class: 'Victoire\Bundle\MediaBundle\Helper\Menu\MediaMenuAdaptor'
+    victoire_media.listener.doctrine.class: 'Victoire\Bundle\MediaBundle\EventListener\DoctrineMediaListener'
+    victoire_media.form.type.media.class: 'Victoire\Bundle\MediaBundle\Form\Type\MediaType'
+    victoire_media.media_creator_service.class: 'Victoire\Bundle\MediaBundle\Helper\Services\MediaCreatorService'
+    victoire_media.menubuilder.class: 'Victoire\Bundle\MediaBundle\Helper\Menu\MenuBuilder'
 
 
 services:
@@ -14,20 +14,20 @@ services:
             - "@liip_imagine"
             - ''
         tags:
-            - { name: 'liip_imagine.data.loader', loader: 'Victoire_media_thumbloader' }
+            - { name: 'liip_imagine.data.loader', loader: 'victoire_media_thumbloader' }
 
-    Victoire_media.media_manager:
-        class: "%Victoire_media.media_manager.class%"
+    victoire_media.media_manager:
+        class: "%victoire_media.media_manager.class%"
 
-    Victoire_media.menu.adaptor:
-        class: "%Victoire_media.menu.adaptor.class%"
+    victoire_media.menu.adaptor:
+        class: "%victoire_media.menu.adaptor.class%"
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
-            -  { name: 'Victoire_media.menu.adaptor' }
+            -  { name: 'victoire_media.menu.adaptor' }
 
-    Victoire_media.listener.doctrine:
-        class: "%Victoire_media.listener.doctrine.class%"
-        arguments: ["@Victoire_media.media_manager"]
+    victoire_media.listener.doctrine:
+        class: "%victoire_media.listener.doctrine.class%"
+        arguments: ["@victoire_media.media_manager"]
         tags:
             - { name: 'doctrine.event_listener', event: 'prePersist' }
             - { name: 'doctrine.event_listener', event: 'preUpdate' }
@@ -36,25 +36,25 @@ services:
             - { name: 'doctrine.event_listener', event: 'preRemove' }
 
     form.type.media:
-        class: "%Victoire_media.form.type.media.class%"
+        class: "%victoire_media.form.type.media.class%"
         arguments:
-            - "@Victoire_media.media_manager"
+            - "@victoire_media.media_manager"
             - "@doctrine.orm.entity_manager"
         tags:
             - { name: form.type, alias: media }
 
-    Victoire_media.media_creator_service:
-        class: "%Victoire_media.media_creator_service.class%"
+    victoire_media.media_creator_service:
+        class: "%victoire_media.media_creator_service.class%"
         calls:
             - [ setEntityManager, [ "@doctrine.orm.entity_manager" ] ]
 
-    Victoire_media.menubuilder:
-        class: "%Victoire_media.menubuilder.class%"
+    victoire_media.menubuilder:
+        class: "%victoire_media.menubuilder.class%"
         arguments: ["@translator", "@service_container"]
 
-    Victoire_media.menu.twig.extension:
+    victoire_media.menu.twig.extension:
         class: Victoire\Bundle\MediaBundle\Twig\MenuTwigExtension
-        arguments: ["@Victoire_media.menubuilder"]
+        arguments: ["@victoire_media.menubuilder"]
         tags:
             -  { name: 'twig.extension' }
 

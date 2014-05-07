@@ -52,7 +52,7 @@ class ChooserController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         /* @var MediaManager $mediaHandler */
-        $mediaHandler = $this->get('Victoire_media.media_manager');
+        $mediaHandler = $this->get('victoire_media.media_manager');
 
         /* @var Folder $folder */
         $folder = $em->getRepository('VictoireMediaBundle:Folder')->getFolder($folderId);

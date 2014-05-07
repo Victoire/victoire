@@ -37,7 +37,7 @@ class MediaType extends AbstractType
      */
     public function getName()
     {
-        return 'Victoire_mediabundle_mediatype';
+        return 'victoire_mediabundle_mediatype';
     }
 
 }

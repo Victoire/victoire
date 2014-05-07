@@ -1,31 +1,31 @@
 parameters:
 
-    Victoire_media.media_handler.remote_slide.class: 'Victoire\Bundle\MediaBundle\Helper\RemoteSlide\RemoteSlideHandler'
-    Victoire_media.media_handler.remote_video.class: 'Victoire\Bundle\MediaBundle\Helper\RemoteVideo\RemoteVideoHandler'
-    Victoire_media.media_handler.image.class: 'Victoire\Bundle\MediaBundle\Helper\Image\ImageHandler'
-    Victoire_media.media_handler.file.class: 'Victoire\Bundle\MediaBundle\Helper\File\FileHandler'
+    victoire_media.media_handler.remote_slide.class: 'Victoire\Bundle\MediaBundle\Helper\RemoteSlide\RemoteSlideHandler'
+    victoire_media.media_handler.remote_video.class: 'Victoire\Bundle\MediaBundle\Helper\RemoteVideo\RemoteVideoHandler'
+    victoire_media.media_handler.image.class: 'Victoire\Bundle\MediaBundle\Helper\Image\ImageHandler'
+    victoire_media.media_handler.file.class: 'Victoire\Bundle\MediaBundle\Helper\File\FileHandler'
     aviary_api_key: null
 
 services:
 
-    Victoire_media.media_handlers.remote_slide:
-        class: "%Victoire_media.media_handler.remote_slide.class%"
+    victoire_media.media_handlers.remote_slide:
+        class: "%victoire_media.media_handler.remote_slide.class%"
         tags:
-            -  { name: 'Victoire_media.media_handler' }
+            -  { name: 'victoire_media.media_handler' }
 
-    Victoire_media.media_handlers.remote_video:
-        class: "%Victoire_media.media_handler.remote_video.class%"
+    victoire_media.media_handlers.remote_video:
+        class: "%victoire_media.media_handler.remote_video.class%"
         tags:
-            -  { name: 'Victoire_media.media_handler' }
+            -  { name: 'victoire_media.media_handler' }
 
-    Victoire_media.media_handlers.image:
-        class: "%Victoire_media.media_handler.image.class%"
+    victoire_media.media_handlers.image:
+        class: "%victoire_media.media_handler.image.class%"
         arguments: ["%aviary_api_key%"]
         tags:
-            -  { name: 'Victoire_media.media_handler' }
+            -  { name: 'victoire_media.media_handler' }
 
-    Victoire_media.media_handlers.file:
-        class: "%Victoire_media.media_handler.file.class%"
+    victoire_media.media_handlers.file:
+        class: "%victoire_media.media_handler.file.class%"
         tags:
-            -  { name: 'Victoire_media.media_handler' }
+            -  { name: 'victoire_media.media_handler' }
 

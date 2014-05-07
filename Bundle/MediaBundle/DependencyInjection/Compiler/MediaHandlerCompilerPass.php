@@ -18,13 +18,13 @@ class MediaHandlerCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (false === $container->hasDefinition('Victoire_media.media_manager')) {
+        if (false === $container->hasDefinition('victoire_media.media_manager')) {
             return;
         }
 
-        $definition = $container->getDefinition('Victoire_media.media_manager');
+        $definition = $container->getDefinition('victoire_media.media_manager');
 
-        foreach ($container->findTaggedServiceIds('Victoire_media.media_handler') as $id => $attributes) {
+        foreach ($container->findTaggedServiceIds('victoire_media.media_handler') as $id => $attributes) {
             $definition->addMethodCall('addHandler', array(new Reference($id)));
         }
     }

@@ -46,13 +46,13 @@ class VictoireMediaExtension extends Extension implements PrependExtensionInterf
     public function prepend(ContainerBuilder $container)
     {
 
-        if(!$container->hasParameter('Victoire_media.upload_dir')) {
-            $container->setParameter('Victoire_media.upload_dir', '/uploads/media/');
+        if(!$container->hasParameter('victoire_media.upload_dir')) {
+            $container->setParameter('victoire_media.upload_dir', '/uploads/media/');
         }
 
-        $twigConfig['globals']['upload_dir'] = $container->getParameter('Victoire_media.upload_dir');
+        $twigConfig['globals']['upload_dir'] = $container->getParameter('victoire_media.upload_dir');
         $twigConfig['globals']['mediabundleisactive'] = true;
-        $twigConfig['globals']['mediamanager'] = "@Victoire_media.media_manager";
+        $twigConfig['globals']['mediamanager'] = "@victoire_media.media_manager";
         $container->prependExtensionConfig('twig', $twigConfig);
 
         $liipConfig = Yaml::parse(file_get_contents(__DIR__ . '/../Resources/config/liip_imagine.yml'));
@@ -67,6 +67,6 @@ class VictoireMediaExtension extends Extension implements PrependExtensionInterf
      */
     public function getAlias()
     {
-        return 'Victoire_media';
+        return 'victoire_media';
     }
 }

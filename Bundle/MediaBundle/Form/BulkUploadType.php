@@ -57,6 +57,6 @@ class BulkUploadType extends AbstractType
      */
     public function getName()
     {
-        return "Victoire_mediabundle_bulkupload";
+        return "victoire_mediabundle_bulkupload";
     }
 }

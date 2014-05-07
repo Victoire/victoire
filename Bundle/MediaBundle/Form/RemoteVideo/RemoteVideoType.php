@@ -40,7 +40,7 @@ class RemoteVideoType extends AbstractType
      */
     public function getName()
     {
-        return 'Victoire_mediabundle_videotype';
+        return 'victoire_mediabundle_videotype';
     }
 
     /**

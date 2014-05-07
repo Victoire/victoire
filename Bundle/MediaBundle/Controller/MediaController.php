@@ -38,7 +38,7 @@ class MediaController extends Controller
         $folder = $media->getFolder();
 
         /* @var MediaManager $mediaManager */
-        $mediaManager = $this->get('Victoire_media.media_manager');
+        $mediaManager = $this->get('victoire_media.media_manager');
         $handler = $mediaManager->getHandler($media);
         $helper = $handler->getFormHelper($media);
 
@@ -57,7 +57,7 @@ class MediaController extends Controller
 
         return $this->render($showTemplate, array(
                 'handler' => $handler,
-                'mediamanager' => $this->get('Victoire_media.media_manager'),
+                'mediamanager' => $this->get('victoire_media.media_manager'),
                 'editform'      => $form->createView(),
                 'media' => $media,
                 'helper' => $helper,
@@ -113,7 +113,7 @@ class MediaController extends Controller
             if ($form->isValid()) {
                 foreach ($helper->getFiles() as $file) {
                     /* @var Media $media */
-                    $media = $this->get('Victoire_media.media_manager')->getHandler($file)->createNew($file);
+                    $media = $this->get('victoire_media.media_manager')->getHandler($file)->createNew($file);
                     $media->setFolder($folder);
                     $em->getRepository('VictoireMediaBundle:Media')->save($media);
                 }
@@ -127,7 +127,7 @@ class MediaController extends Controller
         $formView = $form->createView();
         $filesfield = $formView->children['files'];
         $filesfield->vars = array_replace($filesfield->vars, array(
-            'full_name' => 'Victoire_mediabundle_bulkupload[files][]'
+            'full_name' => 'victoire_mediabundle_bulkupload[files][]'
         ));
 
         return array(
@@ -158,7 +158,7 @@ class MediaController extends Controller
         } else {
             $drop = $this->getRequest()->get('text');
         }
-        $media = $this->get('Victoire_media.media_manager')->createNew($drop);
+        $media = $this->get('victoire_media.media_manager')->createNew($drop);
         if ($media) {
             $media->setFolder($folder);
             $em->getRepository('VictoireMediaBundle:Media')->save($media);
@@ -217,7 +217,7 @@ class MediaController extends Controller
         $folder = $em->getRepository('VictoireMediaBundle:Folder')->getFolder($folderId);
 
         /* @var MediaManager $mediaManager */
-        $mediaManager = $this->get('Victoire_media.media_manager');
+        $mediaManager = $this->get('victoire_media.media_manager');
         $handler = $mediaManager->getHandlerForType($type);
         $media = new Media();
         $helper = $handler->getFormHelper($media);

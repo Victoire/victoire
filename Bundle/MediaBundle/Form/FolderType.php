@@ -72,7 +72,7 @@ class FolderType extends AbstractType
      */
     public function getName()
     {
-        return 'Victoire_mediabundle_FolderType';
+        return 'victoire_mediabundle_FolderType';
     }
 
     /**

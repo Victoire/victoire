@@ -33,7 +33,7 @@ This document describes how you can add a new media handlers to the [VictoireMed
         ...
         pdf:
             default: false
-            id: Victoire_media.provider.pdf
+            id: victoire_media.provider.pdf
 
 ```
 
@@ -76,7 +76,7 @@ Using the ```MediaCreatorService``` you can easily upload a media-asset to a Fol
 The API is straightforward:
 
 ```
-    $mediaCreatorService = $this->container->get('Victoire_media.media_creator_service');
+    $mediaCreatorService = $this->container->get('victoire_media.media_creator_service');
     $media = $mediaCreatorService->createFile('./app/Content/Images/placeholder.jpg', 1, MediaCreatorService::CONTEXT_CONSOLE);
 ```
 

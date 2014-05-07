@@ -16,13 +16,13 @@ class MenuCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('Victoire_media.menubuilder')) {
+        if (!$container->hasDefinition('victoire_media.menubuilder')) {
             return;
         }
 
-        $definition = $container->getDefinition('Victoire_media.menubuilder');
+        $definition = $container->getDefinition('victoire_media.menubuilder');
 
-        foreach ($container->findTaggedServiceIds('Victoire_media.menu.adaptor') as $id => $attributes) {
+        foreach ($container->findTaggedServiceIds('victoire_media.menu.adaptor') as $id => $attributes) {
             $definition->addMethodCall('addAdaptMenu', array(new Reference($id)));
         }
     }

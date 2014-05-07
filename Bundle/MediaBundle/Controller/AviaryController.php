@@ -32,7 +32,7 @@ class AviaryController extends Controller
         /* @var Media $media */
         $media = $em->getRepository('VictoireMediaBundle:Media')->getMedia($mediaId);
         /* @var MediaManager $mediaManager */
-        $mediaManager = $this->get('Victoire_media.media_manager');
+        $mediaManager = $this->get('victoire_media.media_manager');
 
         $handler = $mediaManager->getHandler($media);
         $fileHelper = $handler->getFormHelper($media);

@@ -40,7 +40,7 @@ class RemoteSlideType extends AbstractType
      */
     public function getName()
     {
-        return 'Victoire_mediabundle_slidetype';
+        return 'victoire_mediabundle_slidetype';
     }
 
     /**

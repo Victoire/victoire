@@ -40,7 +40,7 @@ class FolderController extends Controller
         $editForm = $this->createForm(new FolderType($folder), $folder);
 
         return array(
-            'mediamanager'  => $this->get('Victoire_media.media_manager'),
+            'mediamanager'  => $this->get('victoire_media.media_manager'),
             'subform'       => $subForm->createView(),
             'editform'      => $editForm->createView(),
             'folder'        => $folder,

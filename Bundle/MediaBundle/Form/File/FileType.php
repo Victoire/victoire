@@ -37,7 +37,7 @@ class FileType extends AbstractType
      */
     public function getName()
     {
-        return 'Victoire_mediabundle_filetype';
+        return 'victoire_mediabundle_filetype';
     }
 
     /**
