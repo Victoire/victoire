@@ -1,3 +1,4 @@
+{% trans_default_domain "victoire" %}
 {% use 'form_div_layout.html.twig' %}
 
 {# Buttons #}
@@ -375,7 +376,7 @@
         {% endif %}
         {% set label_attr = label_attr|merge({'class': label_attr.class|default('') ~ label_attr_class ~ (required ? ' vic-required' : ' vic-optional') }) %}
         <label{% for attrname,attrvalue in label_attr %} {{attrname}}="{{attrvalue}}"{% endfor %}>
-        {{ label|trans({}, translation_domain) }}
+        {{ label|trans }}
         {{- block('label_asterisk') }}
         {% if 'collection' in form.vars.block_prefixes and widget_add_btn|default(null) and form.vars.allow_add == true %}
             {{ block('form_widget_add_btn') }}

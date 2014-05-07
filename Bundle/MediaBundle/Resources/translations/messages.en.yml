@@ -1,16 +1,16 @@
 aviary:
-    nothing: aviary.nothing   # FIXME
-    title: aviary.title   # FIXME
+    nothing: Empty
+    title: Title
 
-dailymotion: dailymotion   # FIXME
+dailymotion: Dailymotion
 
 form:
-    cancel: form.cancel   # FIXME
-    delete: form.delete   # FIXME
-    save: form.save   # FIXME
+    cancel: Cancel
+    delete: Delete
+    save: Save
 
-image: image   # FIXME
-media: media   # FIXME
+image: Image
+media: Media
 media.aviary.nothing: 'Nothing to see here.'
 media.aviary.title: Aviary
 media.bulkupload.bulkupload: 'Bulk upload'
@@ -53,11 +53,11 @@ media.widget.choose: Choose
 media.widget.delete: Delete
 
 menu:
-    images: menu.images   # FIXME
-    media: menu.media   # FIXME
+    images: Images
+    media: Media
 
-slideshare: slideshare   # FIXME
-slideshow: slideshow   # FIXME
-video: video   # FIXME
-vimeo: vimeo   # FIXME
-youtube: youtube   # FIXME
+slideshare: slideshare
+slideshow: slideshow
+video: video
+vimeo: Vimeo
+youtube: Youtube

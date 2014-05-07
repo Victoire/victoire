@@ -1,0 +1,4 @@
+media:
+    video:
+        modal:
+            save: media.video.modal.save   # FIXME

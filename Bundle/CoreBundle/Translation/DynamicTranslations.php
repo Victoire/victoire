@@ -27,6 +27,26 @@ class DynamicTranslations implements TranslationContainerInterface
             new Message('widget.form.theme.default', 'victoire'),
             new Message('modal.button.create.title', 'victoire'),
             new Message('modal.button.update.title', 'victoire'),
+
+
+            new Message('modal.button.update.title', 'victoire'),
+            new Message('modal.button.update.title', 'victoire'),
+            new Message('modal.button.update.title', 'victoire'),
+            new Message('modal.button.update.title', 'victoire'),
+            new Message('modal.button.update.title', 'victoire'),
+            new Message('modal.button.update.title', 'victoire'),
+            new Message('modal.button.update.title', 'victoire'),
+
+            new Message('menu.leftnavbar.stats.label', 'victoire'),
+            new Message('menu.leftnavbar.target.label', 'victoire'),
+            new Message('menu.leftnavbar.lang.label', 'victoire'),
+            new Message('menu.leftnavbar.network.label', 'victoire'),
+            new Message('menu.leftnavbar.todo.label', 'victoire'),
+            new Message('menu.leftnavbar.img.label', 'victoire'),
+            new Message('menu.leftnavbar.user.label', 'victoire'),
+            new Message('menu.leftnavbar.404.label', 'victoire'),
+            new Message('menu.leftnavbar.sitemap.label', 'victoire'),
+            new Message('menu.leftnavbar.sandbox.label', 'victoire'),
         );
     }
 
