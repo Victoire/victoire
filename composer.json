@@ -26,7 +26,7 @@
         "victoire/seo-bundle": "self.version"
     },
     "autoload": {
-        "psr-0": { "Victoire": "", "Kunstmaan\\MediaBundle": "Bundle/MediaBundle" }
+        "psr-0": { "Victoire": "", "Kunstmaan\\MediaBundle": "Victoire/Bundle/MediaBundle" }
     },
     "minimum-stability": "dev",
     "target-dir": "Victoire",
