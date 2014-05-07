@@ -16,7 +16,7 @@ use Symfony\Component\DependencyInjection\Definition;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class VictoireCmsExtension extends Extension
+class VictoireCoreExtension extends Extension
 {
     /**
      * {@inheritDoc}
