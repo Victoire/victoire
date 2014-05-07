@@ -1,0 +1,37 @@
+{
+    "name": "victoire/victoire",
+    "type": "symfony-bundle",
+    "description": "Victoire Bundles components",
+    "keywords": ["cms", "victoire", "bundle"],
+    "homepage": "http://appventus.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Leny Bernard",
+            "email": "leny@appventus.com"
+        }
+    ],
+    "require": {
+        "php"                                 : ">=5.3.3",
+        "symfony/framework-bundle"            : "~2.3"        
+    },    
+    "replace": {
+        "victoire/blog-bundle": "self.version",
+        "victoire/core-bundle": "self.version",
+        "victoire/dashboard-bundle": "self.version",
+        "victoire/form-bundle": "self.version",
+        "victoire/media-bundle": "self.version",
+        "victoire/page-bundle": "self.version",
+        "victoire/seo-bundle": "self.version"
+    },
+    "autoload": {
+        "psr-0": { "Victoire": "" }
+    },
+    "minimum-stability": "dev",
+    "target-dir": "Victoire",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.3-dev"
+        }
+    }
+}
