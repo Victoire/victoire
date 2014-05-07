@@ -1,0 +1,63 @@
+<?php
+namespace {{ namespace }}\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Victoire\Bundle\CoreBundle\Entity\Widget;
+
+/**
+ * Widget{{widget}}
+ *
+ * @ORM\Table("cms_widget_{{widget|lower}}")
+ * @ORM\Entity
+ */
+class Widget{{widget}} extends Widget
+{
+    use \Victoire\Bundle\CoreBundle\Entity\Traits\WidgetTrait;
+{% for field in fields %}
+
+    /**
+     * @var {{field.type}}
+     *
+     * @ORM\Column(name="{{field.columnName}}", type="{{field.type}}"{% if field.length is defined %}, length={{field.length}}{% endif %})
+     */
+    protected ${{field.fieldName}};
+{% endfor %}
+
+    /**
+     * To String function
+     * Used in render choices type (Especially in VictoireWidgetRenderBundle)
+     * //TODO Check the generated value and make it more consistent
+     *
+     * @return String
+     */
+    public function __toString()
+    {
+        return '#'.$this->id.' - '.$this->{{ toStringProperty }};
+    }
+
+{% for field in fields %}
+
+    /**
+     * Set {{field.fieldName}}
+     *
+     * @param string ${{field.fieldName}}
+     */
+    public function set{{field.fieldName|capitalize}}(${{field.fieldName}})
+    {
+        $this->{{field.fieldName}} = ${{field.fieldName}};
+
+        return $this;
+    }
+
+    /**
+     * Get {{field.fieldName}}
+     *
+     * @return string
+     */
+    public function get{{field.fieldName|capitalize}}()
+    {
+        return $this->{{field.fieldName}};
+    }
+{% endfor %}
+
+}

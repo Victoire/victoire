@@ -1,0 +1,34 @@
+{
+    "require_all":
+    {
+        "javascripts":
+        {
+            "victoire-head":
+            [
+                "@VictoireCoreBundle/Resources/public/vendor/jquery/1.10.2/jquery-1.10.2.js",
+                "@VictoireCoreBundle/Resources/public/js/jquery.noConflict.js"
+            ],
+            "victoire-edit":
+            [
+                "@VictoireCoreBundle/Resources/public/vendor/jquery-ui/1.10.4/jquery-ui-1.10.4.js",
+                "@VictoireCoreBundle/Resources/public/js/edit/classie.js",
+                "@VictoireCoreBundle/Resources/public/js/edit/gnmenu.js",
+                "@VictoireCoreBundle/Resources/public/js/edit/custom_radio.js",
+                "@VictoireCoreBundle/Resources/public/js/edit/victoire.js",
+                "@VictoireCoreBundle/Resources/public/js/edit/modal.js",
+                "@VictoireCoreBundle/Resources/public/js/edit/widget.js",
+                "@VictoireCoreBundle/Resources/public/vendor/vic-bootstrap/3.0.3/js/bootstrap.min.js",
+                "@VictoireCoreBundle/Resources/public/js/jquery.mjs.nestedSortable.js"
+            ]
+        },
+        "stylesheets":
+        {
+            "victoire-edit":
+            [
+                "@VictoireCoreBundle/Resources/public/vendor/font-awesome/4.0.3/css/font-awesome.css",
+                "@VictoireCoreBundle/Resources/public/vendor/vic-bootstrap/3.0.3/css/bootstrap.min.css",
+                "@VictoireCoreBundle/Resources/public/less/victoire.less"
+            ]
+        }
+    }
+}

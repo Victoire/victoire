@@ -1,0 +1,50 @@
+{% extends 'VictoireCoreBundle::_modal.html.twig' %}
+
+{% block modal_container_classes %}{{ parent() }} vic-page-modal{% endblock modal_container_classes %}
+
+{% block modal_body_content %}
+{# REVIEW : indentation deux espaces #}
+<ol id="sortable">
+    {{ _self.pagesHierarchy(pages) }}
+</ol>
+<script>
+   $vic(document).ready(function () {
+       $vic('#sortable').nestedSortable({
+           handle: 'div',
+           items: 'li',
+           toleranceElement: '> div',
+           update: function (event, ui )
+           {
+              updatePosition($('#sortable'), ui);
+           }
+       });
+
+       function updatePosition(element, ui)
+       {
+           var sorted = element.nestedSortable( "toArray");
+           $vic.post("{{path('victoire_cms_page_sitemap')}}",
+               {
+                   sorted: sorted
+               }
+           );
+       };
+
+       $vic('.modal').on('hidden', function () {
+           $vic('.modal').remove();
+       });
+    });
+</script>
+{% endblock modal_body_content %}
+
+
+{% macro pagesHierarchy(pagesList) %}
+    {% for page in pagesList %}
+      <li id="list_{{page.id}}"><div>{{page.title}}</div>
+      {% if page.children %}
+          <ol>
+            {{ _self.pagesHierarchy(page.children) }}
+          </ol>
+      {% endif %}
+      </li>
+    {% endfor %}
+{% endmacro %}

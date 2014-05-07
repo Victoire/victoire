@@ -1,0 +1,49 @@
+knp_menu:
+    twig:
+        template: VictoireCoreBundle:Menu:knp_menu_main.html.twig
+
+victoire_cms:
+    applicative_bundle: ~
+    available_frameworks: ['foundation', 'bootstrap']
+    framework: bootstrap
+
+    slots:
+        3cols_left:
+            widgets:
+                label: ~
+                image: ~
+                text: ~
+                redactor:
+                    themes: ['normal', 'newspaper']
+                    ############
+                    # Examples #
+                    ############
+                    # quantitys: [7]
+                    # colors: ['red', 'yellow']
+        3cols_center:
+            widgets:
+                text: ~
+                redactor: ~
+                label: ~
+                image: ~
+        3cols_right:
+            widgets:
+                text: ~
+        2cols_left:
+            widgets:
+                text: ~
+        2cols_center:
+            widgets:
+                text: ~
+
+
+
+# Stof Configuration
+stof_doctrine_extensions:
+    default_locale: fr
+    translation_fallback: false
+    orm:
+        default:
+          tree: true
+          sluggable: true
+

@@ -1,0 +1,29 @@
+{% set o = "{{" %}
+{% set c = "}}" %}
+{% set oc = "{#" %}
+{% set cc = "#}" %}
+{% set of = "{%" %}
+{% set cf = "%}" %}
+{{of}} block body {{cf}}
+
+{{oc}}
+{{"Commons"|pixelart("bubble", false)}}
+{{cc}}
+
+<div class="vic-widget vic-widget-{{ widget|lower }}" id="widget-{{o}}widget.id{{c}}">
+{{of}} block actions {{cf}}{{o}}cms_widget_actions(widget){{c}}{{of}} endblock actions {{cf}}
+
+{{of}} block content {{cf}}
+{{oc}}Booya ! Replace this default rendering by your own logic{{cc}}
+<ul>
+{% for field in fields %}
+    <li>
+        {{o}}widget.{{field.fieldName}}{% if field.type == 'datetime'%}|date('Y/m/d H:i:s'){% elseif field.type == 'date' %}|date('H:i:s'){% elseif field.type == 'time' %}|date('H:i:s'){% endif %}{{c}}
+    </li>
+{% endfor %}
+</ul>
+{{oc}}Enjoy !{{cc}}
+{{of}} endblock content {{cf}}
+</div>
+
+{{of}} endblock body {{cf}}

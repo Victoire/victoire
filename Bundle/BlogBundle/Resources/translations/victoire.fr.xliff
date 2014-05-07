@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+  <file date="2013-11-28T17:11:45Z" source-language="en" target-language="fr" datatype="plaintext" original="not.available">
+    <header>
+      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
+      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
+    </header>
+    <body>
+      <trans-unit resname="form.widget.tab.article.label">
+        <source>form.widget.tab.article.label</source>
+        <target state="new">Article</target>
+      </trans-unit>
+      <trans-unit resname="entity_proxy.form.article.label">
+        <source>entity_proxy.form.article.label</source>
+        <target>Article</target>
+      </trans-unit>
+      <trans-unit id="9b39444d8d4d52ee8371bd147a45392b465249a8" resname="menu.blog">
+        <source>menu.blog</source>
+        <target>Blog</target>
+      </trans-unit>
+      <trans-unit id="44ee3ff9b926d8e0fe6e8e356600ad5c77166029" resname="menu.blog.new">
+        <source>menu.blog.new</source>
+        <target>Nouvel article</target>
+      </trans-unit>
+      <trans-unit id="604de4ede156d22c87184505b9794ba2ad9c5062" resname="menu.blog.settings">
+        <source>menu.blog.settings</source>
+        <target>Paramètres de l'article</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

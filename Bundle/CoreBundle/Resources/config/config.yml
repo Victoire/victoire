@@ -1,0 +1,43 @@
+knp_menu:
+    twig:
+        template: VictoireCoreBundle:Menu:knp_menu_main.html.twig
+
+# Stof Configuration
+stof_doctrine_extensions:
+    default_locale: fr
+    translation_fallback: false
+    # class:
+    #     sluggable: Victoire\Bundle\CoreBundle\Listener\SluggableListener
+    orm:
+        default:
+          tree: true
+          sluggable: true
+
+victoire_cms:
+    widgets: ~
+    slots:
+        default_menu_bar:
+            max: 1
+            widgets:
+                menu: ~
+        default_mini_sidebar:
+            widgets:
+                filter: ~
+                text: ~
+        default_full:
+            max: 10
+            widgets:
+                text: ~
+                label: ~
+                image: ~
+                list: ~
+                archive: ~
+                file: ~
+        default_social_sidebar:
+            widgets:
+                text: ~
+                redactor: ~
+                label: ~
+                image: ~
+                list: ~
+                archive: ~

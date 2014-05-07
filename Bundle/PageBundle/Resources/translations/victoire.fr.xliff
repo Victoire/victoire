@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit resname="new.page.modal.header">
+                <source>new.page.modal.header</source>
+                <target>Nouvelle page</target>
+            </trans-unit>
+            <trans-unit resname="form.page.type.title.label">
+                <source>form.page.type.title.label</source>
+                <target>Titre</target>
+            </trans-unit>
+            <trans-unit resname="form.page.type.parent.label">
+                <source>form.page.type.parent.label</source>
+                <target>Page parente</target>
+            </trans-unit>
+            <trans-unit resname="form.page.type.layout.label">
+                <source>form.page.type.layout.label</source>
+                <target>Architecture</target>
+            </trans-unit>
+            <trans-unit resname="form.page.type.template.label">
+                <source>form.page.type.template.label</source>
+                <target>Modèle à utiliser</target>
+            </trans-unit>
+            <trans-unit resname="form.page.type.bodyClass.label">
+                <source>form.page.type.bodyClass.label</source>
+                <target>Body Class</target>
+            </trans-unit>
+            <trans-unit resname="form.page.type.bodyId.label">
+                <source>form.page.type.bodyId.label</source>
+                <target>Body Id</target>
+            </trans-unit>
+            <trans-unit resname="page.undeletable">
+                <source>page.undeletable</source>
+                <target>Cette page n'est pas supprimable.</target>
+            </trans-unit>
+            <trans-unit resname="modal.form.page.settings.title">
+                <source>modal.form.page.settings.title</source>
+                <target>Paramètres de la page "page.title"</target>
+            </trans-unit>
+            <trans-unit resname="form.page.type.slug.label">
+                <source>form.page.type.slug.label</source>
+                <target>URL</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

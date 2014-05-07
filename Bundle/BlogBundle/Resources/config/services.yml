@@ -1,0 +1,36 @@
+services:
+    victoire_blog.menu_listener:
+        class: Victoire\Bundle\BlogBundle\Listener\MenuListener
+        arguments:
+            - "@event_dispatcher"
+            - "@victoire_blog.blog_menu_listener"
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+    victoire_blog.blog_menu_listener:
+        class: Victoire\Bundle\BlogBundle\Listener\BlogMenuListener
+        arguments: ["@victoire_cms.admin_menu_builder"]
+
+    victoire_blog.base_page.subscriber: #REVIEW surement prendre une convention
+        class: Victoire\Bundle\BlogBundle\EventSubscriber\LoadMetadataSubscriber
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+
+    victoire_blog.category_filters.form.type:
+        class: Victoire\Bundle\BlogBundle\Filter\CategoryFilter
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@request="
+        tags:
+            - { name: form.type, alias: category_filter }
+            - { name: victoire_cms.filter }
+
+    ####################################################################################################################
+    # Forms
+    ####################################################################################################################
+
+    victoire_blog.article.form.type:
+        class: Victoire\Bundle\BlogBundle\Form\ArticleType
+        arguments: ['%victoire_cms.layouts%']
+        tags:
+            - { name: form.type, alias: victoire_article_type }

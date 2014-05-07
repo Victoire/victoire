@@ -1,0 +1,135 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit>
+                <source>form.pageSeo.metaTitle.label</source>
+                <target>Titre</target>
+            </trans-unit>
+            <trans-unit>
+                <source>form.pageSeo.metaDescription.label</source>
+                <target>Description</target>
+            </trans-unit>
+            <trans-unit>
+                <source>form.pageSeo.relAuthor.label</source>
+                <target>Auteur (Url g+)</target>
+            </trans-unit>
+            <trans-unit>
+                <source>form.pageSeo.relPublisher.label</source>
+                <target>Publieur (Url g+)</target>
+            </trans-unit>
+            <trans-unit>
+                <source>form.pageSeo.ogTitle.label</source>
+                <target>Fb - Titre</target>
+            </trans-unit>
+            <trans-unit>
+                <source>form.pageSeo.ogType.label</source>
+                <target>Fb - Type</target>
+            </trans-unit>
+            <trans-unit>
+                <source>form.pageSeo.ogImage.label</source>
+                <target>Fb - Image</target>
+            </trans-unit>
+            <trans-unit>
+                <source>form.pageSeo.ogUrl.label</source>
+                <target>Fb - Uri</target>
+            </trans-unit>
+            <trans-unit>
+                <source>form.pageSeo.ogDescription.label</source>
+                <target>Fb - Description</target>
+            </trans-unit>
+            <trans-unit>
+                <source>form.pageSeo.fbAdmins.label</source>
+                <target>Fb - Admins (USER_ID)</target>
+            </trans-unit>
+            <trans-unit>
+                <source>form.pageSeo.twitterCard.label</source>
+                <target>Tw - Type</target>
+            </trans-unit>
+            <trans-unit>
+                <source>form.pageSeo.twitterUrl.label</source>
+                <target>Tw - Uri</target>
+            </trans-unit>
+            <trans-unit>
+                <source>form.pageSeo.twitterTitle.label</source>
+                <target>Tw - Titre</target>
+            </trans-unit>
+            <trans-unit>
+                <source>form.pageSeo.twitterDescription.label</source>
+                <target>Tw - Description</target>
+            </trans-unit>
+            <trans-unit>
+                <source>form.pageSeo.twitterImage.label</source>
+                <target>Tw - Image</target>
+            </trans-unit>
+            <trans-unit>
+                <source>form.pageSeo.schemaPageType.label</source>
+                <target>Schema - Type</target>
+            </trans-unit>
+            <trans-unit>
+                <source>form.pageSeo.schemaName.label</source>
+                <target>Schema - Nom</target>
+            </trans-unit>
+            <trans-unit>
+                <source>form.pageSeo.schemaDescription.label</source>
+                <target>Schema - Description</target>
+            </trans-unit>
+            <trans-unit>
+                <source>form.pageSeo.schemaImage.label</source>
+                <target>Schema - Image</target>
+            </trans-unit>
+            <trans-unit>
+                <source>form.pageSeo.metaRobotsIndex.label</source>
+                <target>Meta Robots - Index</target>
+            </trans-unit>
+            <trans-unit>
+                <source>form.pageSeo.metaRobotsFollow.label</source>
+                <target>Meta Robots - Follow</target>
+            </trans-unit>
+            <trans-unit>
+                <source>form.pageSeo.metaRobotsAdvanced.label</source>
+                <target>Meta Robots - Avancé</target>
+            </trans-unit>
+            <trans-unit>
+                <source>form.pageSeo.sitemapIndexed.label</source>
+                <target>Sitemap - Présent ?</target>
+            </trans-unit>
+            <trans-unit>
+                <source>form.pageSeo.sitemapPriority.label</source>
+                <target>Sitemap - Priorité</target>
+            </trans-unit>
+            <trans-unit>
+                <source>form.pageSeo.relCanonical.label</source>
+                <target>Uri canonique</target>
+            </trans-unit>
+            <trans-unit>
+                <source>form.pageSeo.keyword.label</source>
+                <target>Mot clé principal</target>
+            </trans-unit>
+            <trans-unit>
+                <source>modal.form.pageSeo.settings.title</source>
+                <target>Paramètres SEO de la page "page.title"</target>
+            </trans-unit>
+            <trans-unit>
+                <source>menu.page.seoSettings</source>
+                <target><![CDATA[<i class="vic-menuImg vic-menuImg-gear"></i> Paramètres SEO]]></target>
+            </trans-unit>
+            <trans-unit resname="form.pageSeo.redirectTo.help_block">
+                <source>form.pageSeo.redirectTo.help_block</source>
+                <target>Indiquez ici la page vers laquelle vous voulez effectuer une redirection. Cette page ne sera accessible qu'en mode administration.</target>
+            </trans-unit>
+            <trans-unit resname="form.pageSeo.redirectTo.label">
+                <source>form.pageSeo.redirectTo.label</source>
+                <target>Redirection automatique</target>
+            </trans-unit>
+            <trans-unit resname="form.pageSeo.twitterCard.help_block">
+                <source>form.pageSeo.twitterCard.help_block</source>
+                <target><![CDATA[<a href="https://dev.twitter.com/docs/cards/validation/validator"><i class="glyphicon glyphicon-link"></i> Testez en direct le rendu ici !</a>]]></target>
+            </trans-unit>
+            <trans-unit resname="form.pageSeo.ogTitle.help_block">
+                <source>form.pageSeo.ogTitle.help_block</source>
+                <target><![CDATA[<a href="https://developers.facebook.com/tools/debug/og/object"><i class="glyphicon glyphicon-link"></i> Testez en direct le rendu ici !</a>]]></target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -1,0 +1,23 @@
+{% extends app.request.isXmlHttpRequest ? 'VictoireCoreBundle::blankLayout.html.twig' : 'VictoireCoreBundle::ajaxModalLayout.html.twig' %}
+
+{% block content %}
+<div class="modal">
+{% block modal %}
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+            {% block modal_header %}
+            {% endblock modal_header %}
+    </div>
+
+    <div class="modal-body">
+        {% block modal_content %}
+        {% endblock modal_content %}
+    </div>
+    <div class="modal-footer">
+        {% block modal_footer %}
+        {% endblock modal_footer %}
+    </div>
+</div>
+{% endblock modal %}
+
+{% endblock content %}

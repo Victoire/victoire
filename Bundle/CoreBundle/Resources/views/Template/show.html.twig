@@ -1,0 +1,26 @@
+{% extends global_layout %}
+
+{% block navbar %}
+{% endblock navbar %}
+{% block headline %}{% endblock headline %}
+{% block content %}
+{# page|raw #}
+{{ cms_page(template) }}
+{% endblock %}
+
+{% block footer %}
+{% endblock footer %}
+
+{% block foot_script %}
+{{parent()}}
+
+<script type="text/javascript">
+
+pageId = {{template.id}};
+{% if is_granted('ROLE_VICTOIRE') %}
+    $(document).ready(function() {
+        enableSortableSlots();
+    });
+{% endif %}
+</script>
+{% endblock foot_script %}

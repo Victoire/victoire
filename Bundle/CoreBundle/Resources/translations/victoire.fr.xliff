@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+  <file date="2013-12-08T15:34:47Z" source-language="en" target-language="fr" datatype="plaintext" original="not.available">
+    <header>
+      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
+      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
+    </header>
+    <body>
+      <trans-unit id="64dc24b06e2ec6521c20fc5d7ce4cc196fe2c2df" resname="new.page.modal.header">
+        <source>Nouvelle Page</source>
+        <target state="new">Nouvelle Page</target>
+        <jms:reference-file line="4">Bootstrap/Page/new.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="67c0389fd251acfac612655ca5e660f7ad153bcb" resname="menu.media">
+        <source>menu.media</source>
+        <target>Media</target>
+      </trans-unit>
+      <trans-unit id="1468cdaa5a094e7fc462d045d829d884051439d3" resname="menu.page">
+        <source>menu.page</source>
+        <target>Page</target>
+      </trans-unit>
+      <trans-unit id="988d30bf1d090a16c4c086005c745ec82dfc20d7" resname="menu.page.new">
+        <source>menu.page.new</source>
+        <target><![CDATA[<i class="vic-menuImg vic-menuImg-new"></i> Nouvelle page]]></target>
+      </trans-unit>
+      <trans-unit id="da05b847ec5c3af60439eddb617f5a682c88963b" resname="menu.page.settings">
+        <source>menu.page.settings</source>
+        <target><![CDATA[<i class="vic-menuImg vic-menuImg-gear"></i> Paramètres de la page]]></target>
+      </trans-unit>
+      <trans-unit id="da05b847ec5c3af60439eddb617f5a682c88963b" resname="menu.page.template">
+        <source>menu.page.template</source>
+        <target><![CDATA[<i class="vic-menuImg vic-glyphicon-th-large"></i> Template de la page]]></target>
+      </trans-unit>
+      <trans-unit id="7143127923e2258df3b91920224c689d170aa155" resname="menu.sitemap">
+        <source>menu.sitemap</source>
+        <target>Plan du site</target>
+      </trans-unit>
+      <trans-unit id="eaeab063c6c4371efab54c81387875c285203f54" resname="menu.template">
+        <source>menu.template</source>
+        <target>Modèle</target>
+      </trans-unit>
+      <trans-unit id="eaec515f32ede19c5d5b5048ca8ca296443454ab" resname="menu.template.new">
+        <source>menu.template.new</source>
+        <target>Nouveau</target>
+      </trans-unit>
+      <trans-unit id="6a352f12741976c2b1287940116a2fe66616fa68" resname="menu.template.settings">
+        <source>menu.template.settings</source>
+        <target>Paramètres</target>
+      </trans-unit>
+      <trans-unit resname="menu.logo">
+        <source>menu.logo</source>
+        <target><![CDATA[<i class="vic-menuImg vic-menuImg-logo"></i>]]></target>
+      </trans-unit>
+      <trans-unit resname="menu.preview">
+        <source>menu.logo</source>
+        <target><![CDATA[<a href=""><i class="vic-menuImg vic-menuImg-eye"></i> Voir le site</a>]]></target>
+      </trans-unit>
+      <trans-unit resname="modal.mandatory_fields.label">
+        <source>modal.mandatory_fields.label</source>
+        <target>Champs obligatoires</target>
+      </trans-unit>
+      <trans-unit id="bfd1fdf793c99a949a2e428e3fa0663cb88f410b" resname="template.index.title">
+        <source>Liste des modèles</source>
+        <target state="new">Liste des modèles</target>
+        <jms:reference-file line="4">Bootstrap/Template/index.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="e73f4ed23832568330c963f0e40ac22daa9ab2c9" resname="widget.form.fields.label">
+        <source>widget.form.fields.label</source>
+        <target>Champs</target>
+        <jms:reference-file line="56">CoreBundle/Form/WidgetType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="baa2a4733047849f29b3c0f2093e33f58fcfc8ea" resname="widget.form.theme.default">
+        <source>widget.form.theme.default</source>
+        <target>Défaut</target>
+      </trans-unit>
+      <trans-unit id="f20da08ae6b8cbd8d13f9076c53583b0238842b9" resname="widget.form.theme.label">
+        <source>widget.form.theme.label</source>
+        <target>Thème</target>
+        <jms:reference-file line="92">CoreBundle/EventSubscriber/WidgetSubscriber.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit resname="victoire_cms.edit_mode_switch">
+        <source>victoire_cms.edit_mode_switch</source>
+        <target>Mode édition</target>
+      </trans-unit>
+      <trans-unit resname="widget.dropdown.action.label">
+        <source>widget.dropdown.action.label</source>
+        <target>Nouveau contenu</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

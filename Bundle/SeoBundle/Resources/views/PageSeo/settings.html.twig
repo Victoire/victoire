@@ -1,0 +1,34 @@
+{% extends 'VictoireCoreBundle::_modal.html.twig' %}
+{% form_theme form 'VictoireFormBundle:Form:fields.html.twig' %}
+
+{% block modal_container_classes %}{{ parent() }} vic-page-modal{% endblock modal_container_classes %}
+
+{% block modal_body_content %}
+
+<div class="vic-tab-content vic-modal-tab-content">
+    <div class="vic-tab-pane vic-active" id="basics">
+        <form method="POST" action="{{path('victoire_seo_pageSeo_settings', {'id':page.id} )}}">
+            {{form_widget(form)}}
+        </form>
+    </div>
+</div>
+
+{% endblock modal_body_content %}
+
+{% block modal_header_title %}
+    {{ 'modal.form.pageSeo.settings.title'|trans({'page.title' : page.title}, 'victoire')|desc('%page.title% > Settings') }}
+{% endblock modal_header_title %}
+
+{% block modal_footer %}
+    <div class="vic-modal-footer">
+        <div class="vic-container">
+        {% block modal_footer_content %}
+            <span class="vic-pull-left"><sup>*</sup>{{ 'modal.mandatory_fields.label'|trans({}, 'victoire')|desc('Mandatory fields') }}</span>
+
+            <a href="#" data-modal="{% block action %}update{% endblock action %}" title="{{ 'modal.button.'~ block('action') ~'.title'|trans({}, 'victoire') }}"></a>
+        {% endblock modal_footer_content %}
+        </div>
+    </div>
+{% endblock modal_footer %}
+
+

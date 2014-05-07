@@ -1,0 +1,33 @@
+{% block modal_container %}
+<div id="{% block modal_container_id %}vic-modal{% endblock modal_container_id %}" class="{% block modal_container_classes %}vic-modal vic-fade{% endblock modal_container_classes %}" role="dialog" aria-labelledby="victoire-modal-label" aria-hidden="true">
+    <div class="vic-modal-dialog">
+        <div class="vic-modal-content">
+            {% block modal_header %}
+            <div class="vic-modal-header">
+                <div class="vic-container">
+                    <button type="button" class="vic-close" data-modal="close">&times;</button>
+                    {% block modal_header_title_container %}
+                    <h4 class="vic-modal-title" id="victoire-modal-label">{% block modal_header_title %}{% endblock modal_header_title %}</h4>
+                    {% endblock modal_header_title_container %}
+                </div>
+            </div>
+            {% endblock modal_header %}
+            {% block modal_body %}
+            <div class="vic-modal-body">
+                <div class="vic-container">
+                    {% block modal_body_content %}{% endblock modal_body_content %}
+                </div>
+            </div>
+            {% endblock modal_body %}
+            {% block modal_footer %}
+            <div class="vic-modal-footer">
+                <div class="vic-container">
+                {% block modal_footer_content %}
+                {% endblock modal_footer_content %}
+                </div>
+            </div>
+            {% endblock modal_footer %}
+        </div>
+    </div>
+</div>
+{% endblock modal_container %}

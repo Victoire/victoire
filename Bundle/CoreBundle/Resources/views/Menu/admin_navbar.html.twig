@@ -1,0 +1,74 @@
+<nav id="vic-admin-menu" class="vic-menu-main vic-list-unstyled vic-clearfix vic-navbar-fixed-top" role="navigation">
+
+    {% block header %}
+    <div class="vic-navbar-header">
+        {% block leftMenu %}
+        {% if is_granted('ROLE_VICTOIRE_LEFTNAVBAR') %}
+        <div class="vic-trigger vic-pull-left vic-text-center">
+            <a class="vic-icon-menu"><i class="fa fa-bars"></i></a>
+            <nav class="vic-menu-wrapper">
+                <div class="vic-scroller">
+                    {#<ul id="vic-menu" class="vic-menu-main vic-list-unstyled vic-clearfix"></ul>#}
+                        {{ knp_menu_render('leftnavbar') }}
+                </div>
+
+            </nav>
+        </div>
+        {% endif %}
+        {% endblock %}
+        {% block brand %}
+        <div class="vic-pull-left vic-text-center vic-logo">
+            <a href="#"><i class="vic-menuImg vic-menuImg-logo"></i></a>
+        </div>
+        {% endblock %}
+    </div>
+    {% endblock %}
+    {% block menu_container %}
+    <div class="vic-collapse vic-navbar-collapse vic-navbar-responsive-collapse">
+        <ul class="vic-userNav">
+            <li class="vic-text-center">
+                <div class="vic-toggle vic-pull-left">
+                    <label class="vic-toggle-radio" for="toggleAdmin2"></label>
+                    <input type="radio" name="toggleAdmin" id="toggleAdmin1" value="1" {{ edit_mode ? 'checked="checked"' : ''}}>
+                    <label class="vic-toggle-radio" for="toggleAdmin1"></label>
+                    <input type="radio" name="toggleAdmin" id="toggleAdmin2" value="0" {{ not edit_mode ? 'checked="checked"' : ''}}>
+                </div>
+                <div class="vic-toggle-label">{{"victoire_cms.edit_mode_switch"|trans({}, 'victoire')}}</div>
+            </li>
+            <li class="vic-text-center vic-last-child">
+                <a href="" class="vic-pull-left"><img src="http://placehold.it/35" class="vic-img-circle"></a>
+                <a href="/logout" class="vic-pull-left"><i class="fa fa-power-off"></i></a>
+            </li>
+        </ul>
+
+        {% block menu %}
+        {{ knp_menu_render('topnavbar') }}
+        {% endblock %}
+
+    </div>
+    {% endblock %}
+</nav>
+
+
+    {#% for item in knp_menu_get('topnavbar') %}
+
+            {% if item.hasChildren %}
+            <li class="vic-pull-left vic-dropdown">
+                <a href="#" class="vic-dropdown-toggle vic-pull-left" data-toggle="vic-dropdown">{{ item.label|trans({}, 'victoire')|raw }} <b class="vic-caret"></b></a>
+                <ul class="vic-dropdown-menu">
+                    {% for subitem in item %}
+                    <li><a href="{{ subitem.uri }}">{{ subitem.label|trans({}, 'victoire')|raw }}</a></li>
+                    {% endfor %}
+                </ul>
+            </li>
+            {% else %}
+            <li class="vic-pull-left">
+                <a href="{{ item.uri }}" class="vic-pull-left">{{ item.label|trans({}, 'victoire')|raw }}</a>
+            </li>
+            {% endif %}
+
+
+        </li>
+
+    {% endfor %#}
+

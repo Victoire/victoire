@@ -1,0 +1,198 @@
+{% set adminmenu = admin_menu_get() %}
+
+{% set extraclasshtml %}{% block extraclasshtml %}{% endblock %}{% endset %}
+
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie {{ extraclasshtml }}" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie {{ extraclasshtml }}" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie {{ extraclasshtml }}" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js {{ extraclasshtml }}" lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="robots" content="noindex, nofollow">
+
+    <title>{% block title %}{% endblock %}</title>
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+
+
+
+    <!--=========== CSS ===========-->
+    <!--Combine-->
+    {% stylesheets injector="victoire-media"
+        output='generated-css/style.css'
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    <!--Customizable color brand-->
+    <style type="text/css">
+        {% if titlecolor is not defined or titlecolor is empty %}
+            {% set titlecolor = "#FFFFFF" %}
+        {% endif %}
+            {% if titlebgcolor is not defined or titlebgcolor is empty %}
+        {% set titlebgcolor = "#2997CE" %}
+        {% endif %}
+        header .navbar .container-fluid .brand, header .navbar .container-fluid .brand:visited, header .navbar .container-fluid .brand:hover, header .navbar .container-fluid .brand:active, header .navbar .container-fluid .brand:focus {
+            color: {{ titlecolor }};
+            background-color: {{ titlebgcolor }};
+        }
+        header .navbar .container-fluid .brand::after {
+            border-left-color: {{ titlebgcolor }};
+        }
+    </style>
+    {% endstylesheets %}
+    <!--Extra CSS-->
+    {% block extracss %}{% endblock %}
+
+
+
+    <!--=========== JS ===========-->
+    <!--Combined-->
+    {% javascripts injector=""
+        '@KunstmaanMediaBundle/Resources/public/js/libs/modernizr.custom.2.6.2.js'
+        '@KunstmaanMediaBundle/Resources/public/js/libs/jquery-1.9.0.min.js'
+        output='generated-js/scripts.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+</head>
+
+
+
+<body {% block extraparamsinbody %}{% endblock %}>
+
+    {% block body %}
+
+
+    <!--=========Main Content=========-->
+    <div class="container-fluid">
+        <!--Sidebar-->
+        {% block sidebar %}
+            {% include "KunstmaanMediaBundle:Default:sidebar.html.twig" %}
+        {% endblock %}
+
+        <!--Content_wrp-->
+        <div id="main_content" class="content">
+            <!--Breadcrumb-->
+            {% block breadcrumb %}
+            {% set breadcrumbitems = adminmenu.breadcrumb %}
+            {% if breadcrumbitems | length > 0 %}
+            <ul class="breadcrumb">
+                {% for breadcrumbitem in breadcrumbitems %}
+                {% if loop.last %}
+                <li class="active">{{ breadcrumbitem.internalname | trans }}</li>
+                {% else %}
+                <li><a href="{{ path(breadcrumbitem.route, breadcrumbitem.routeparams) }}">{{ breadcrumbitem.internalname | trans }}</a></li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endblock %}
+
+            {% for flashMessageType, flashMessages in app.session.flashbag.all() %}
+                {% for flashMessage in flashMessages %}
+                    <div class="alert alert-{{ flashMessageType }}">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>{{ flashMessageType | capitalize }}:</strong> {{ flashMessage }}
+                    </div>
+                 {% endfor %}
+            {% endfor %}
+
+            <!-- Messages -->
+            {% block messages %}{% endblock %}
+
+            <!--Content-header-->
+            {% block header %}
+            <div class="page-header">
+                {% if adminmenu.current %}<h1>{{ adminmenu.current.internalname | trans }} {% block page_header_addition %}{% endblock %}</h1>{% endif %}
+                {% block extra_actions_header %}{% endblock %}
+            </div>
+            {% endblock %}
+
+            <!--Content-->
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+
+    <!--=========Footer=========-->
+    <footer>
+        <div class="container-fluid">
+            <p class="pull-right">
+                <a target="_blank" href="http://www.kunstmaan.be" class="kunstmaan-logo">
+                    <object data="{{ asset('bundles/kunstmaanmedia/img/general/kunstmaan_dark.svg') }}" type="image/svg+xml">
+                        <img src="{{ asset('bundles/kunstmaanmedia/img/general/kunstmaan_dark.png') }}" alt="Kunstmaan" />
+                    </object>
+                </a>
+            </p>
+        </div>
+    </footer>
+    {% endblock %}
+
+
+
+
+
+
+
+
+
+    <!--=========== JS ===========-->
+
+    <!--Uncombined-->
+    <script src="{{ asset('bundles/kunstmaanmedia/js/libs/jquery.jstree.js') }}"></script>
+    <script src="{{ asset('bundles/kunstmaanmedia/js/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('bundles/kunstmaanmedia/js/ckeditor/adapters/jquery.js') }}"></script>
+
+    <!--Combined-->
+    {% javascripts injector=""
+        '@KunstmaanMediaBundle/Resources/public/js/libs/jquery-ui-1.10.0.custom.min.js'
+        '@KunstmaanMediaBundle/Resources/public/js/libs/bootstrap.min.js'
+        '@KunstmaanMediaBundle/Resources/public/js/libs/chosen.jquery.min.js'
+        '@KunstmaanMediaBundle/Resources/public/js/libs/jquery.filedrop.js'
+        '@KunstmaanMediaBundle/Resources/public/js/libs/jquery.fileupload.js'
+        '@KunstmaanMediaBundle/Resources/public/js/libs/jquery.iframe-transport.js'
+        '@KunstmaanMediaBundle/Resources/public/js/libs/jquery.inputmask.js'
+        '@KunstmaanMediaBundle/Resources/public/js/libs/jquery.form.js'
+        '@KunstmaanMediaBundle/Resources/public/js/libs/jquery.inputmask.date.extensions.js'
+        '@KunstmaanMediaBundle/Resources/public/js/libs/modaldialog.min.js'
+        '@KunstmaanMediaBundle/Resources/public/js/libs/responsive-tables.js'
+        '@KunstmaanMediaBundle/Resources/public/js/libs/charCount.js'
+        '@KunstmaanMediaBundle/Resources/public/js/libs/bootstrap-datepicker.js'
+        '@KunstmaanMediaBundle/Resources/public/js/libs/bootstrap-timepicker.js'
+        '@KunstmaanMediaBundle/Resources/public/js/libs/iphone-style-checkboxes.js'
+        '@KunstmaanMediaBundle/Resources/public/js/script.js'
+        output='generated-js/scripts_bottom.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <!--Extra-->
+    {% block extrajavascript %}{% endblock %}
+
+    <!--CKEDITOR-->
+    <script>
+    {% include "KunstmaanMediaBundle:Default:ckeditor.js.twig" %}
+        jQuery(document).ready(function(){
+            jQuery('textarea.rich_editor').each(function(item){
+                var config = {};
+                if($(this).attr('height')){
+                    config.height = $(this).attr('height');
+                }
+                if($(this).attr('noparagraphs')){
+                    config.enterMode = CKEDITOR.ENTER_BR;
+                    config.shiftEnterMode = CKEDITOR.ENTER_P;
+                }
+                CKEDITOR.replace( $(this).attr('id'), config);
+            });
+        });
+     </script>
+</body>
+</html>

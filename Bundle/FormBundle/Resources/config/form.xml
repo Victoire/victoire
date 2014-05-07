@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="victoire_form.form.type_extension.static_text.class">Victoire\Bundle\FormBundle\Form\Extension\StaticTextExtension</parameter>
+        <parameter key="victoire_form.form.type_extension.offset_button.class">Victoire\Bundle\FormBundle\Form\Extension\OffsetButtonExtension</parameter>
+        <parameter key="victoire_form.form.type_extension.button.class">Victoire\Bundle\FormBundle\Form\Extension\IconButtonExtension</parameter>
+        <parameter key="victoire_form.form.type_extension.help.class">Victoire\Bundle\FormBundle\Form\Extension\HelpFormTypeExtension</parameter>
+        <parameter key="victoire_form.form.type_extension.legend.class">Victoire\Bundle\FormBundle\Form\Extension\LegendFormTypeExtension</parameter>
+        <parameter key="victoire_form.form.type_extension.error.class">Victoire\Bundle\FormBundle\Form\Extension\ErrorTypeFormTypeExtension</parameter>
+        <parameter key="victoire_form.form.type_extension.widget.class">Victoire\Bundle\FormBundle\Form\Extension\WidgetFormTypeExtension</parameter>
+        <parameter key="victoire_form.form.type_extension.horizontal.class">Victoire\Bundle\FormBundle\Form\Extension\HorizontalFormTypeExtension</parameter>
+        <parameter key="victoire_form.form.type_extension.widget_collection.class">Victoire\Bundle\FormBundle\Form\Extension\WidgetCollectionFormTypeExtension</parameter>
+        <parameter key="victoire_form.form.type_extension.date.class">Victoire\Bundle\FormBundle\Form\Extension\DateTypeExtension</parameter>
+        <parameter key="victoire_form.form.type_extension.datetime.class">Victoire\Bundle\FormBundle\Form\Extension\DatetimeTypeExtension</parameter>
+        <parameter key="victoire_form.form.type_extension.time.class">Victoire\Bundle\FormBundle\Form\Extension\TimeTypeExtension</parameter>
+        <parameter key="victoire_form.form.type_extension.tabbed.class">Victoire\Bundle\FormBundle\Form\Extension\TabbedFormTypeExtension</parameter>
+        <parameter key="victoire_form.form.type.tab.class">Victoire\Bundle\FormBundle\Form\Type\TabType</parameter>
+        <parameter key="victoire_form.form.type.form_actions.class">Victoire\Bundle\FormBundle\Form\Type\FormActionsType</parameter>
+    </parameters>
+
+    <services>
+        <service id="victoire_form.form.type_extension.static_text" class="%victoire_form.form.type_extension.static_text.class%">
+            <tag name="form.type_extension" alias="form" />
+        </service>
+
+        <service id="victoire_form.form.type_extension.offset_button" class="%victoire_form.form.type_extension.offset_button.class%">
+            <tag name="form.type_extension" alias="button" />
+        </service>
+
+        <service id="victoire_form.form.type_extension.button" class="%victoire_form.form.type_extension.button.class%">
+            <tag name="form.type_extension" alias="button" />
+        </service>
+
+        <service id="victoire_form.form.type_extension.help" class="%victoire_form.form.type_extension.help.class%">
+            <argument type="collection">
+                <argument key="help_label_tooltip">%victoire_form.form.help_label.tooltip%</argument>
+                <argument key="help_label_popover">%victoire_form.form.help_label.popover%</argument>
+                <argument key="help_widget_popover">%victoire_form.form.help_widget.popover%</argument>
+            </argument>
+
+            <tag name="form.type_extension" alias="form" />
+        </service>
+
+        <service id="victoire_form.form.type_extension.legend" class="%victoire_form.form.type_extension.legend.class%">
+            <argument type="collection">
+                <argument key="render_fieldset">%victoire_form.form.render_fieldset%</argument>
+                <argument key="show_legend">%victoire_form.form.show_legend%</argument>
+                <argument key="show_child_legend">%victoire_form.form.show_child_legend%</argument>
+                <argument key="legend_tag">%victoire_form.form.legend_tag%</argument>
+                <argument key="render_required_asterisk">%victoire_form.form.render_required_asterisk%</argument>
+                <argument key="render_optional_text">%victoire_form.form.render_optional_text%</argument>
+            </argument>
+
+            <tag name="form.type_extension" alias="form" />
+        </service>
+
+        <service id="victoire_form.form.type_extension.error" class="%victoire_form.form.type_extension.error.class%">
+            <argument type="collection">
+                <argument key="error_type">%victoire_form.form.error_type%</argument>
+            </argument>
+
+            <tag name="form.type_extension" alias="form" />
+        </service>
+
+        <service id="victoire_form.form.type_extension.widget" class="%victoire_form.form.type_extension.widget.class%">
+            <argument type="collection">
+                <argument key="checkbox_label">%victoire_form.form.checkbox_label%</argument>
+            </argument>
+
+            <tag name="form.type_extension" alias="form" />
+        </service>
+
+        <service id="victoire_form.form.type_extension.horizontal" class="%victoire_form.form.type_extension.horizontal.class%">
+            <argument type="collection">
+                <argument key="horizontal">%victoire_form.form.horizontal%</argument>
+                <argument key="horizontal_label_class">%victoire_form.form.horizontal_label_class%</argument>
+                <argument key="horizontal_label_offset_class">%victoire_form.form.horizontal_label_offset_class%</argument>
+                <argument key="horizontal_input_wrapper_class">%victoire_form.form.horizontal_input_wrapper_class%</argument>
+            </argument>
+
+            <tag name="form.type_extension" alias="form" />
+        </service>
+
+        <service id="victoire_form.form.type_extension.widget_collection" class="%victoire_form.form.type_extension.widget_collection.class%">
+            <argument type="collection">
+                <argument key="render_collection_item">%victoire_form.form.render_collection_item%</argument>
+                <argument key="widget_add_btn">%victoire_form.form.collection.widget_add_btn%</argument>
+                <argument key="widget_remove_btn">%victoire_form.form.collection.widget_remove_btn%</argument>
+            </argument>
+
+            <tag name="form.type_extension" alias="form" />
+        </service>
+
+        <service id="victoire_form.form.type_extension.date" class="%victoire_form.form.type_extension.date.class%">
+            <tag name="form.type_extension" alias="date" />
+        </service>
+
+        <service id="victoire_form.form.type_extension.datetime" class="%victoire_form.form.type_extension.datetime.class%">
+            <tag name="form.type_extension" alias="datetime" />
+        </service>
+
+        <service id="victoire_form.form.type_extension.time" class="%victoire_form.form.type_extension.time.class%">
+            <tag name="form.type_extension" alias="time" />
+        </service>
+
+        <service id="victoire_form.form.type_extension.tabbed" class="%victoire_form.form.type_extension.tabbed.class%">
+            <argument type="service" id="form.factory" />
+            <argument type="collection">
+                <argument key="class">%victoire_form.form.tabs.class%</argument>
+            </argument>
+
+            <tag name="form.type_extension" alias="form" />
+        </service>
+
+        <service id="victoire_form.form.type.tab" class="%victoire_form.form.type.tab.class%">
+            <tag name="form.type" alias="tab" />
+        </service>
+
+        <service id="victoire_form.form.type.form_actions" class="%victoire_form.form.type.form_actions.class%">
+            <tag name="form.type" alias="form_actions" />
+        </service>
+    </services>
+</container>

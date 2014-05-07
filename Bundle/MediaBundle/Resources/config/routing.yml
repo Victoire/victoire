@@ -1,0 +1,19 @@
+KunstmaanMediaBundle_media:
+    resource: "@KunstmaanMediaBundle/Controller/MediaController.php"
+    type:     annotation
+    prefix:   /
+
+KunstmaanMediaBundle_aviary:
+    resource: "@KunstmaanMediaBundle/Controller/AviaryController.php"
+    type:     annotation
+    prefix:   /aviari
+
+KunstmaanMediaBundle_media_chooser:
+    resource: "@KunstmaanMediaBundle/Controller/ChooserController.php"
+    type:     annotation
+    prefix:   /
+
+KunstmaanMediaBundle_media_folder:
+    resource: "@KunstmaanMediaBundle/Controller/FolderController.php"
+    type:     annotation
+    prefix:   /folder

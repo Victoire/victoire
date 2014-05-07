@@ -1,0 +1,35 @@
+{#_meta.html.twig #}
+
+{% if page.seo %}
+    <!-- Basics -->
+    {% if page.seo.metaTitle %}<title>{{ page.seo.metaTitle }}</title>{% endif %}
+    {% if page.seo.metaDescription %}<meta name="description" content="{{ page.seo.metaDescription }}"/>{% endif %}
+
+    <!-- Google Authorship -->
+    {% if page.seo.relAuthor %}<link rel"author" href="{{ page.seo.relAuthor }}"/>{% endif %}
+    {% if page.seo.relPublisher %}<link rel="publisher" href="{{ page.seo.relPublisher }}"/>{% endif %}
+
+    <!-- Facebook -->
+    {% if page.seo.ogTitle %}<meta property="og:title" content="{{ page.seo.ogTitle }}"/>{% endif %}
+    {% if page.seo.ogType %}<meta property="og:type" content="{{ page.seo.ogType }}"/>{% endif %}
+    {% if page.seo.ogImage %}<meta property="og:image" content="{{ page.seo.ogImage }}"/>{% endif %}
+    {% if page.seo.ogUrl %}<meta property="og:url" content="{{ page.seo.ogUrl }}"/>{% endif %}
+    {% if page.seo.ogDescription %}<meta property="og:description" content="{{ page.seo.ogDescription }}"/>{% endif %}
+    {% if page.seo.fbAdmins %}<meta name="fb:admins" content="{{ page.seo.fbAdmins }}"/>{% endif %}
+
+    <!-- Twitter -->
+    {% if page.seo.twitterCard %}<meta name="twitter:card" content="{{ page.seo.twitterCard }}"/>{% endif %}
+    {% if page.seo.twitterUrl %}<meta name="twitter:url" content="{{ page.seo.twitterUrl }}"/>{% endif %}
+    {% if page.seo.twitterTitle %}<meta name="twitter:title" content="{{ page.seo.twitterTitle }}"/>{% endif %}
+    {% if page.seo.twitterDescription %}<meta name="twitter:description" content="{{ page.seo.twitterDescription }}"/>{% endif %}
+    {% if page.seo.twitterImage %}<meta name="twitter:image" content="{{ page.seo.twitterImage }}"/>{% endif %}
+
+
+    {% if page.seo.metaRobotsIndex %}<meta name="robots" content="{{ page.seo.metaRobotsIndex }},{{ page.seo.metaRobotsFollow }}"/>{% endif %}
+    <!-- Robots advanced {{ page.seo.metaRobotsAdvanced }} -->
+
+    {% if page.seo.relCanonical %}<link rel="canonical" href="{{ page.seo.relCanonical }}"/>{% endif %}
+    {% if page.seo.keyword %}<meta name="keyword" content="{{ page.seo.keyword }}"/>{% endif %}
+{% else %}
+<title>{{ page.title }}</title>
+{% endif %}

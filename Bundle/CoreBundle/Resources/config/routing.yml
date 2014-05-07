@@ -1,0 +1,18 @@
+# VictoireCoreBundleCache:
+#     resource: .
+#     type: cache
+
+VictoireCoreBundle:
+    resource: "@VictoireCoreBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+VictoireWidgetLoader:
+    resource: .
+    type: victoire
+
+victoire_cms_page_show:
+    path:      /{url}
+    defaults:  { _controller: VictoirePageBundle:BasePage:show }
+    requirements:
+        url:  ^.*$

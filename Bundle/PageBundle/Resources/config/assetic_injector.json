@@ -1,0 +1,12 @@
+{
+    "require_all":
+    {
+        "javascripts":
+        {
+            "victoire-edit":
+            [
+                "@VictoirePageBundle/Resources/public/js/modal_page.js"
+            ]
+        }
+    }
+}

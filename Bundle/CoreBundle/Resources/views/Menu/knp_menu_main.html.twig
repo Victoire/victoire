@@ -1,0 +1,24 @@
+{% extends 'knp_menu.html.twig' %}
+
+{% block linkElement %}
+{% spaceless %}
+{% import 'knp_menu.html.twig' as macros %}
+{% if item.extras.caret|default(false) %}
+    <div class="vic-dropdown">
+        <a class="vic-btn vic-dropdown-toggle" data-toggle="vic-dropdown">
+            {{ block('label') }}
+            <span class="vic-caret"></span>
+        </a>
+        <ul class="vic-dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+            {{ block('children') }}
+        </ul>
+    </div>
+{% else %}
+    <a href="{{ item.uri }}"{{ macros.attributes(item.linkAttributes) }}>
+    {{ block('label') }}
+    </a>
+{% endif -%}
+{% endspaceless %}
+{% endblock %}
+{% block label %}{{ item.label|trans({}, 'victoire')|raw }}{% endblock %}
+{% block dropdown %}{% if level == 2 and item.hasChildren %}vic-dropdown-menu{% endif %}{% endblock %}

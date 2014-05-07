@@ -1,0 +1,7 @@
+services:
+    victoire_cms.twig.widget_{{ widget|lower }}_manager:
+        class: {{ namespace }}\Widget\Manager\Widget{{ widget }}Manager
+        arguments: [@service_container]
+
+    widget_{{ widget|lower }}_manager:
+        alias: victoire_cms.twig.widget_{{ widget|lower }}_manager

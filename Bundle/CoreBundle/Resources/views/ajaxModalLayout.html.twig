@@ -1,0 +1,20 @@
+{% extends 'VictoireCoreBundle::layout.html.twig' %}
+
+{% block content %}
+<div class="modal hide fade">
+{% block modal %}
+{% endblock modal %}
+</div>
+{% endblock content %}
+
+{% block foot_script %}
+{{ parent() }}
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.modal').modal();
+    });
+
+</script>
+{% endblock foot_script %}

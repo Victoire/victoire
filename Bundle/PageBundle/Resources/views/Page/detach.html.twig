@@ -1,0 +1,17 @@
+
+<div class="modal-header">
+    <a class="close" data-dismiss="modal">&times;</a>
+    <h3>Détacher la page ?</h3>
+</div>
+<div class="modal-body">
+<p>Cette page hérite du modèle "{{widget.page.title}}".</p>
+<p>Pour éditer ce widget, vous devez détacher cette page de son modèle.</p>
+<p>Si vous confirmez, cette page ne sera pas mise à jour lors de modifications de son modèle.</p>
+<p>Etes vous sur de votre choix ?</p>
+
+
+</div>
+<div class="modal-footer">
+    <a class="btn"  href="{{path('victoire_cms_page_detach', {'id':widget.page.id})}}" >Ok</a>
+    <a class="btn" data-dismiss="modal">Fermer</a>
+</div>

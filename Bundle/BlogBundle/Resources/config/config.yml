@@ -1,0 +1,5 @@
+jms_translation:
+    configs:
+        victoire_blog_bundle:
+            dirs: ["@VictoireBlogBundle"]
+            output_dir: "@VictoireBlogBundle/Resources/translations"

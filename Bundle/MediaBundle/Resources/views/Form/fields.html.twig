@@ -1,0 +1,152 @@
+{# Widgets #}
+
+{% block choice_widget_expanded %}
+    {% spaceless %}
+        <div {{ block('widget_container_attributes') }} class="nested_input_prop_container">
+            {% for child in form %}
+                <div class="input_prop">
+                    {{ form_label(child) }}
+                    <div class="input">
+                        {{ form_widget(child) }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endspaceless %}
+{% endblock choice_widget_expanded %}
+
+{# Labels #}
+
+{% block form_label %}
+    {% spaceless %}
+        {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' control-label')|trim}) %}
+        {% if not compound %}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {% endif %}
+        {% if required %}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {% endif %}
+        {% if label is empty %}
+            {% set label = name|humanize %}
+        {% endif %}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}{% if required %} *{% endif %}</label>
+    {% endspaceless %}
+{% endblock form_label %}
+
+{# Rows #}
+
+{% block form_row %}
+    {% spaceless %}
+        <div class="input_prop{% if errors|length > 0 %} error{% endif %}">
+            {{ form_label(form) }}
+            <div class="input">
+                {% if attr['nested_form'] is defined %}
+                    <ul class="nested_form ul_{{ form.vars.id }}" {% if form.vars.allow_add %}data-prototype="{{ form_widget(form.vars.prototype)|e }}"{% endif %}>
+                        {% for obj in form %}
+                            <li class="nested_form_item" delkey='{{ form.vars.id|replace({'form_': 'delete_'}) }}_{{ obj.vars.value.id }}'>
+                                {% for child in obj.children %}
+                                    {{ form_row(child) }}
+                                {% endfor %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                    <script>
+                        var collectionHolder = $('ul.ul_{{ form.vars.id }}');
+                        var $addButtonLi = $('<li><a href="#" class="btn btn-mini add-btn"><i class="icon-plus-sign"></i> add new</a></li>');
+                        var removeButtonHtml = '<a href="#" class="btn btn-mini del-btn"><i class="icon-trash"></i> delete</a>';
+
+                        var allow_add = {{ form.vars.allow_delete|default('0') }};
+                        var allow_delete = {{ form.vars.allow_delete|default('0') }};
+                        var min = {{ attr['nested_form_min']|default('0') }};
+                        var max = {{ attr['nested_form_max']|default('false') }};
+
+                        $(document).ready(function () {
+                            new PagepartSubForm(collectionHolder, $addButtonLi, removeButtonHtml, allow_add, allow_delete, min, max).init();
+                        });
+                    </script>
+                {% else %}
+                    {{ form_widget(form) }}
+                {% endif %}
+
+                {% if max_length %}
+                    <script>
+                        jQuery(document).ready(function(){
+                            $("#{{ id }}").charCount({
+                                allowed: {{ max_length }},
+                                counterText: 'Characters left: ',
+                                css: 'help-inline',
+                                cssExceeded: 'error'
+                            });
+                            $("#{{ id }}").attr('maxlength', '');
+                        });
+                    </script>
+                {% endif %}
+                {% if attr['title'] is defined %}
+                    <script>
+                        jQuery(document).ready(function(){
+                            $("#{{ id }}").tooltip();
+                        });
+                    </script>
+                {% endif %}
+
+                {{ form_errors(form) }}
+            </div>
+        </div>
+    {% endspaceless %}
+{% endblock form_row %}
+
+{# Misc #}
+
+{% block datetime_widget %}
+    {% use 'form_div_layout.html.twig' with datetime_widget as base_datetime_widget %}
+    <div class="datetime small-datetime-widget">
+        {{ block('base_datetime_widget') }}
+    </div>
+{% endblock %}
+
+{% block date_widget %}
+    {% use 'form_div_layout.html.twig' with date_widget as base_date_widget %}
+    {% if widget == 'single_text' %}
+        <script>
+            jQuery(document).ready(function(){
+                $("#{{ id }}").inputmask("date");
+            });
+        </script>
+    {% endif %}
+    {{ block('base_date_widget') }}
+    {% if widget == 'single_text' %}
+        <script>
+            $("#{{ id }}").addClass('form_datepicker');
+        </script>
+    {% endif %}
+{% endblock date_widget %}
+
+{% block time_widget %}
+    {% use 'form_div_layout.html.twig' with time_widget as base_time_widget %}
+    {% if widget == 'single_text' %}
+        <script>
+            jQuery(document).ready(function(){
+                $("#{{ id }}").inputmask("hh:mm");
+                $("#{{ id }}").addClass('form_timepicker');
+            });
+        </script>
+    {% endif %}
+    {# type="time" shows am/pm in chrome #}
+    {% set type = 'text' %}
+    {{ block('base_time_widget') }}
+{% endblock time_widget %}
+
+{% block form_errors %}
+    {% spaceless %}
+        {% if errors|length > 0 %}
+                {% for error in errors %}
+                    <span class="help-inline">{{
+                    error.messagePluralization is null
+                    ? error.messageTemplate|trans(error.messageParameters, 'validators')
+                    : error.messageTemplate|transchoice(error.messagePluralization, error.messageParameters, 'validators')
+                    }}</span>
+                {% endfor %}
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_errors %}

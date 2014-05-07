@@ -1,0 +1,7 @@
+{% extends 'VictoireCoreBundle:Widget:new.html.twig' %}
+
+{% block modal_body_form_action %}
+    {{ path('victoire_cms_widget_update', {'id':id, 'type' : entity} ) }}
+{% endblock modal_body_form_action %}
+
+{% block action %}update{% endblock action %}

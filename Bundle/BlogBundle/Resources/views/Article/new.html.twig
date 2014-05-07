@@ -1,0 +1,21 @@
+{% extends 'VictoireCoreBundle::_modal.html.twig' %}
+
+{% block modal_container_classes %}{{ parent() }} vic-page-modal{% endblock modal_container_classes %}
+
+{% block modal_header_title %}
+    {{"victoire_blog.new.title"|trans()|desc("New article")}}
+{% endblock modal_header_title %}
+
+{% block modal_body_content %}
+    <div class="vic-tab-pane vic-active">
+        <form method="POST" action="{{path('victoire_blog_article_new')}}">
+            {{form_widget(form)}}
+        </form>
+    </div>
+
+{% endblock modal_body_content %}
+
+{% block modal_footer_content %}
+    <span class="vic-pull-left"><sup>*</sup>{{ 'modal.mandatory_fields.label'|trans({}, 'victoire')|desc('Mandatory fields') }}</span>
+    <a href="#" data-modal="{% block action %}create{% endblock action %}" title="{{ ('modal.button.'~ block('action') ~'.title')|trans({}, 'victoire') }}"></a>
+{% endblock modal_footer_content %}

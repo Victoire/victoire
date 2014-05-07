@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+  <file date="2013-12-08T15:34:47Z" source-language="en" target-language="fr" datatype="plaintext" original="not.available">
+    <header>
+      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
+      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
+    </header>
+    <body>
+      <trans-unit id="a32959d6cdd4500a095ff22a20fff18ca8765db1" resname="Url">
+        <source>Url</source>
+        <target state="new">Url</target>
+        <jms:reference-file line="55">CoreBundle/Form/MenuType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="4fd0653c4f2aef3b19a3c145bbdc5f4740715a09" resname="cancel">
+        <source>Annuler</source>
+        <target state="new">Annuler</target>
+        <jms:reference-file line="12">Bootstrap/Template/index.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="79fd52cd95aad0a35b167f6a03b414b7b4f8eb7c" resname="entity_proxy.form.empty_value">
+        <source>entity_proxy.form.empty_value</source>
+        <target>Choisir</target>
+        <jms:reference-file line="22">CoreBundle/Form/EntityProxyFormType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="45a878a54ff38689d87488acccad61b76adf139d" resname="menu.form.link_type.label">
+        <source>menu.form.link_type.label</source>
+        <target>Type de lien</target>
+        <jms:reference-file line="38">CoreBundle/Form/MenuType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="ec52a858b0786dc104df3840f47902741f95412d" resname="menu.form.link_type.page">
+        <source>menu.form.link_type.page</source>
+        <target>page</target>
+        <jms:reference-file line="42">CoreBundle/Form/MenuType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="3c8a88bb33261170ca96ca2c8746929aea8a86a6" resname="menu.form.link_type.route">
+        <source>menu.form.link_type.route</source>
+        <target>route</target>
+        <jms:reference-file line="43">CoreBundle/Form/MenuType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="93bbdd209265f665090f17eb0133a725782b592c" resname="menu.form.link_type.url">
+        <source>menu.form.link_type.url</source>
+        <target>url</target>
+        <jms:reference-file line="44">CoreBundle/Form/MenuType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="2f69e82b0d28c097ddbb314879fca260a5d527a4" resname="menu.form.page.blank">
+        <source>menu.form.page.blank</source>
+        <target>choisir</target>
+        <jms:reference-file line="50">CoreBundle/Form/MenuType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="1ee3089e3ef2690a089d968a7b5c9c5949f0c04e" resname="menu.form.page.label">
+        <source>menu.form.page.label</source>
+        <target>Page liée</target>
+        <jms:reference-file line="48">CoreBundle/Form/MenuType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="d86b36f9743d6a6846ca030e5344cd5ab0c53351" resname="menu.form.title.label">
+        <source>menu.form.title.label</source>
+        <target>Titre</target>
+        <jms:reference-file line="34">CoreBundle/Form/MenuType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="6c7119185583b6dd44ecceb108bd09e5aebc1319" resname="menu.type.custom">
+        <source>menu.type.custom</source>
+        <target>Personnalisé</target>
+        <jms:reference-file line="172">CoreBundle/Controller/MenuController.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="eed89890f6c9c4accb14faca33e839f00729dbc4" resname="menu.type.hierarchical">
+        <source>menu.type.hierarchical</source>
+        <target>Automatique</target>
+        <jms:reference-file line="171">CoreBundle/Controller/MenuController.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="92cf458305ee4486a73b492af972e1915e92bbcf" resname="menu.type.inherited">
+        <source>menu.type.inherited</source>
+        <target>Parent</target>
+        <jms:reference-file line="173">CoreBundle/Controller/MenuController.php</jms:reference-file>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

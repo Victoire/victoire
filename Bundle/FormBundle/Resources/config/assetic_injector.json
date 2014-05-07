@@ -1,0 +1,12 @@
+{
+    "require_all":
+    {
+        "javascripts":
+        {
+            "victoire-edit":
+            [
+                "@VictoireFormBundle/Resources/public/js/mopabootstrap-collection.js"
+            ]
+         }
+    }
+}

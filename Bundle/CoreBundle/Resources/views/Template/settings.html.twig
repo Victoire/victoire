@@ -1,0 +1,22 @@
+
+<div class="modal-header">
+    <a class="close" data-dismiss="modal">&times;</a>
+    <h3>Paramètres du template</h3>
+</div>
+<div class="modal-body">
+
+
+    <form method="POST" action="{{path('victoire_cms_template_edit', {'slug':template.slug} )}}">
+    {{form_widget(form)}}
+    {{form_errors(form)}}
+    {{form_rest(form)}}
+    <input type="submit" value="Sauvegarder" />
+    </form>
+
+
+
+</div>
+<div class="modal-footer">
+    <a class="btn" data-dismiss="modal">Fermer</a>
+    <a href="{{ path('victoire_cms_page_delete', {'id': page.id}) }}" class="confirm btn" data-title="Êtes vous sur ?" data-body="Cette action irreversible ! Souhaitez vous confirmer ?">Supprimer</a>
+</div>

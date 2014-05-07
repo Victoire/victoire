@@ -1,0 +1,71 @@
+{% extends 'VictoireCoreBundle::base.html.twig' %}
+
+    {% block container_attributes %}{{ parent() }} {% if app.session.get('victoire.edit_mode') %}role="admin"{% endif %}{% endblock container_attributes %}
+
+    {% block container_class %}{% endblock container_class %}
+    {% block title %}Victoire CMS{% endblock title %}
+
+    {% block head_script %}
+    <!-- HEAD_SCRIPT -->
+        {% if is_granted('ROLE_VICTOIRE') %}
+		    {% javascripts injector="victoire-head" %}
+		        <script type="text/javascript" src="{{ asset_url }}"></script>
+		    {% endjavascripts %}
+	    {% endif %}
+	    {% javascripts injector="head" %}
+	        <script type="text/javascript" src="{{ asset_url }}"></script>
+	    {% endjavascripts %}
+	    <!-- END HEAD_SCRIPT -->
+    {% endblock head_script %}
+    {% block head_style %}
+
+    {% stylesheets filter='less, cssrewrite' injector="head" %}
+    <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+    {% endstylesheets %}
+
+    {% if is_granted('ROLE_VICTOIRE') %}
+	    {% stylesheets filter='less, cssrewrite' injector="victoire-edit"
+	     %}
+	    <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+	    {% endstylesheets %}
+    {% endif %}
+     <link href="http://netdna.bootstrapcdn.com/bootstrap/2.3.2/css/bootstrap.min.css" type="text/css" rel="stylesheet" media="screen" />
+
+    {% endblock head_style %}
+    {% block body %}
+    {% if is_granted('ROLE_VICTOIRE') %}
+        {% include 'VictoireCoreBundle:Menu:admin_navbar.html.twig' %}
+    {% endif %}
+    {% block content %}
+    {% endblock content %}
+    {% endblock body %}
+
+    {% block foot_script %}
+	    {% if is_granted('ROLE_VICTOIRE') %}
+		    {% spaceless %}
+		        {% javascripts injector='victoire-edit' %}
+		        <script type="text/javascript" src="{{ asset_url }}"></script>
+		        {% endjavascripts %}
+		    {% endspaceless %}
+	    {% endif %}
+	    {% javascripts injector='foot'
+	        "http://netdna.bootstrapcdn.com/bootstrap/2.3.2/js/bootstrap.min.js"
+	    %}
+	    <script type="text/javascript" src="{{ asset_url }}"></script>
+	    {% endjavascripts %}
+
+	    <script type="text/javascript">
+	        $vic(document).ready(function(){
+	            $vic('a#media-manager').on('click', function(ev) {
+	                ev.preventDefault();
+	                openDGDialog("{{ path('KunstmaanMediaBundle_folder_show', {'folderId': 1} ) }}", 1050, 600);
+	            });
+	        });
+	    </script>
+	    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+	    <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+
+    {% endblock foot_script %}
+
+    {% block foot_script_additional %}
+    {% endblock foot_script_additional %}

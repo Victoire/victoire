@@ -1,0 +1,931 @@
+// Victoire Menu
+////////////////
+
+.vic-menu-main {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    font-size: 13px;
+    z-index: 1000;
+    .box-shadow(0 3px 14px 1px fade(black,60%));
+
+    &,
+    & .vic-navbar-header {
+        margin: 0;
+        text-transform: none;
+        font-weight: 300;
+        line-height: 40px;
+    }
+
+    a {
+        display: block;
+        height: 100%;
+    }
+
+    & .vic-navbar-header > div,
+    & .vic-navbar-collapse > ul > li {
+        display: block;
+        height: 100%;
+        padding: 3px 0;
+        float: left;
+        border-right: 1px solid;
+
+        &.vic-logo {
+            padding: 3px 10px;
+
+            > a {
+                height: 37px;
+            }
+        }
+
+        &.vic-last-child {
+            img {
+                margin-top: -4px;
+            }
+
+            .vic-fa-power-off {
+                font-size: 18px;
+                vertical-align: middle;
+            }
+
+            & > a {
+                border: none;
+            }
+        }
+
+        & > a {
+            letter-spacing: 1px;
+            font-size: 12px;
+            font-weight: 400;
+            padding: 0 10px;
+            line-height: 3;
+        }
+    }
+
+    & .vic-navbar-collapse > ul.vic-userNav > li {
+        border-right: 0px;
+    }
+
+    .vic-trigger {
+        position: relative;
+        -webkit-touch-callout: none;
+        font-size: 16px;
+        .user-select;
+    }
+
+    .vic-icon-menu {
+        font-size: 18px;
+        line-height: 34px;
+    }
+}
+
+.vic-menu-wrapper {
+    position: fixed;
+    top: 40px;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    width: 60px;
+}
+
+.vic-scroller {
+    position: absolute;
+    overflow-y: scroll;
+    width: 370px;
+    height: 100%;
+}
+
+.vic-topnavbar {
+    border-bottom: 1px solid;
+    font-size: 18px;
+    padding-top: 51px;
+
+    li a {
+        padding-left: 7px;
+        font-weight: 400;
+        height: 51px;
+        line-height: 51px;
+        font-size: 14px;
+    }
+
+    .vic-badge {
+        margin: 15px 190px 0 0;
+    }
+}
+
+.vic-toggle {
+    width: 185px;
+
+    span {
+        line-height: 35px;
+        margin-left: 4px;
+        letter-spacing: 1px;
+        font-weight: 400;
+    }
+}
+
+
+// Images
+
+.vic-menuImg {
+    display: inline-block;
+    background-image: url(/bundles/victoirecms/images/sprite@2x.png);
+    background-size: 459px 285px;
+
+    &.vic-menuImg-logo {
+        width: 176px;
+        height: 33px;
+        &:hover {
+            background-size: 459px 285px;
+        }
+    }
+
+    &.vic-menuImg-eye {
+        width: 19px;
+        height: 11px;
+        background-position: -178px 0;
+    }
+
+    &.vic-menuImg-new {
+        width: 12px;
+        height: 16px;
+        background-position: -199px 0;
+    }
+
+    &.vic-menuImg-gear {
+        width: 16px;
+        height: 16px;
+        background-position: -213px 0;
+    }
+
+    &.vic-menuImg-signal {
+        width: 18px;
+        height: 20px;
+    }
+
+    &.vic-menuImg-signal-white {
+        background-position: -1px -35px;
+    }
+
+    &.vic-menuImg-signal-green {
+        background-position: -21px -35px;
+    }
+
+    &.vic-menuImg-signal-orange {
+        background-position: -41px -35px;
+    }
+
+    &.vic-menuImg-signal-red {
+        background-position: -61px -35px;
+    }
+
+    &.vic-menuImg-stats {
+        width: 17px;
+        height: 14px;
+        background-position: -342px 0;
+    }
+
+    &.vic-menuImg-target {
+        width: 19px;
+        height: 19px;
+        background-position: -361px 0;
+    }
+
+    &.vic-menuImg-lang {
+        width: 20px;
+        height: 15px;
+        background-position: -306px 0;
+    }
+
+    &.vic-menuImg-network {
+        width: 15px;
+        height: 15px;
+        background-position: -382px 0;
+    }
+
+    &.vic-menuImg-todo {
+        width: 12px;
+        height: 17px;
+        background-position: -328px 0;
+    }
+
+    &.vic-menuImg-img {
+        width: 15px;
+        height: 15px;
+        background-position: -422px 0;
+    }
+
+    &.vic-menuImg-user {
+        width: 17px;
+        height: 16px;
+        background-position: -287px 0;
+    }
+
+    &.vic-menuImg-404 {
+        width: 21px;
+        height: 9px;
+        background-position: -399px 0;
+    }
+
+    &.vic-menuImg-sitemap {
+        width: 18px;
+        height: 20px;
+        background-position: -267px 0;
+    }
+
+    &.vic-menuImg-sandbox {
+        width: 18px;
+        height: 12px;
+        background-position: -439px 0;
+    }
+}
+
+a:hover .vic-menuImg,
+a.vic-active .vic-menuImg {
+    &.vic-menuImg-eye,
+    &.vic-menuImg-new,
+    &.vic-menuImg-gear,
+    &.vic-menuImg-stats,
+    &.vic-menuImg-target,
+    &.vic-menuImg-lang,
+    &.vic-menuImg-network,
+    &.vic-menuImg-todo,
+    &.vic-menuImg-img,
+    &.vic-menuImg-user,
+    &.vic-menuImg-404,
+    &.vic-menuImg-sitemap,
+    &.vic-menuImg-sandbox {
+        background-position-y: -35px;
+    }
+}
+
+.vic-menuImg {
+    margin-right: 3px;
+
+    &:not(.vic-menuImg-logo):not(.vic-menuImg-signal):not(.vic-menuImg-eye):not(.vic-menuImg-404):not(.vic-menuImg-sandbox) {
+        vertical-align: -4px;
+    }
+
+    &.vic-menuImg-signal {
+        vertical-align: -6px;
+    }
+
+    &.vic-menuImg-eye {
+        vertical-align: -1px;
+    }
+}
+
+
+
+
+// toggle
+/////////
+
+ul.vic-userNav {
+    float: right;
+    > li {
+        float: right;
+        line-height: 20px;
+    }
+    .vic-toggle {
+        width: 35px;
+        height: 16px;
+        overflow: hidden;
+        *zoom: 1;
+        display: inline-block;
+        zoom: 1;
+        *display: inline;
+        margin: 10px 0;
+
+        &:before,
+        &:after {
+            display: table;
+            content: "";
+        }
+
+        &:after {
+            clear: both;
+        }
+
+        &.vic-toggle-off {
+
+            .vic-toggle-radio {
+                left: 0;
+                margin-left: -13px;
+                z-index: 1;
+
+                &:first-child {
+                    left: -120%;
+                }
+            }
+        }
+
+        .vic-toggle-radio {
+            display: block;
+            font-weight: 700;
+            height: 16px;
+            left: 120%;
+            margin-left: -13px;
+            padding: 5px 23px 3px;
+            position: relative;
+            z-index: 2;
+
+            &:first-child {
+                margin-bottom: -16.5px;
+                left: 0;
+            }
+        }
+
+        input {
+            display: none;
+            position: absolute;
+            outline: none !important;
+            display: block\9;
+            zoom: 1;
+        }
+
+        &.vic-toggle-icon {
+            border-radius: 6px 7px 7px 6px;
+
+            &.vic-toggle-off {
+                border-radius: 7px 6px 6px 7px;
+            }
+
+            .vic-toggle-radio {
+                .radius(6px);
+                min-width: 27px;
+            }
+        }
+    }
+    .vic-toggle-label {
+        margin-left: 8px;
+        width: inherit;
+        float: right;
+        margin-top: 8px;
+    }
+}
+
+
+
+
+// Dropdown New Widget
+//////////////////////
+
+.vic-new-widget {
+    display: none;
+    clear: both;
+    border: 1px dashed;
+    margin-bottom: 30px;
+
+    a {
+        padding: 10px;
+        display: block;
+        font-weight: 200;
+        letter-spacing: 1px;
+
+        i {
+            font-weight: 800;
+        }
+    }
+
+    .vic-dropdown-menu {
+        width: 214px;
+        left: 50%;
+        margin: -55px 0 0 -107px;
+    }
+}
+
+
+
+
+// Victoire Modal
+///////////////
+
+.vic-modal {
+    z-index: 999;
+    width: 100%;
+    height: 100%;
+    display: block;
+    &.vic-in {
+        display: block;
+        opacity: 1;
+    }
+
+    .vic-modal-dialog {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+    }
+
+    .vic-modal-content {
+        width: 100%;
+        height: 100%;
+        padding: 39px 0 0;
+    }
+
+    .vic-modal-header {
+        height: 45px;
+        padding: 8px 0;
+        border-top: none;
+
+        .vic-close {
+            font-size: 35px;
+            line-height: 25px;
+        }
+    }
+
+    .vic-modal-body {
+        position: absolute;
+        width: 100%;
+        top: 84px;
+        bottom: 60px;
+        overflow: scroll;
+    }
+
+    .vic-modal-footer {
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+        height: 60px;
+        padding: 12px 0;
+
+        span {
+            padding: 8px 0;
+        }
+
+        *[data-modal="create"], *[data-modal="update"], *[data-modal="delete"] {
+            width: 35px;
+            height: 35px;
+            display: inline-block;
+        }
+    }
+}
+
+// Drag & drop state highlight
+//////////////////////////////
+
+.vic-ui-state-highlight {
+    border: 1px dashed;
+    margin: 15px;
+    overflow: hidden;
+    text-align: center;
+    font-size: 18px;
+    letter-spacing: 1px;
+    padding: 10px;
+
+    &:after {
+        content: "déposez ici";
+    }
+}
+
+
+
+
+// Widget
+/////////
+.vic-widget {
+    position: relative;
+    // Hover widget edit
+    ////////////////////
+
+    .vic-hover-widget {
+        position: absolute;
+        display: none;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+
+        &:hover {
+            i {
+                position: absolute;
+                top: 50%;
+                margin-top: -20px;
+                left: 50%;
+                margin-left: -20px;
+                display: inline-block;
+                width: 38px;
+                height: 38px;
+            }
+        }
+    }
+}
+
+.vic-widget-img {
+    margin-bottom: 30px;
+    text-align: center;
+    overflow: hidden;
+
+
+}
+
+.vic-widget-text {
+    margin-bottom: 30px;
+}
+
+
+
+// Input
+////////
+
+.vic-form-control {
+    border: 1px solid;    
+}
+
+
+
+
+// Select
+/////////
+
+.vic-select {
+    .box-sizing;
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    height: 34px;
+    width: 162px;
+    border: 1px solid;
+
+
+    .fa-caret-down {
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        width: 26px;
+        font-size: 20px;
+        text-align: center;
+        padding: 9px;
+        font-size: 14px;
+    }
+
+    select {
+        .box-sizing;
+        .border;
+        position: absolute;
+        height: 33px;
+        width: 103%;
+        margin: -1px -1px -1px 5px;
+        padding: 8px 0 8px 4px;
+        line-height: 18px;
+    }
+}
+
+.vic-form-group .vic-select {
+    width: 100%;
+}
+
+
+
+
+// Select 2
+///////////
+
+.select2-container {
+    width: 100%;
+
+    .select2-choice {
+        border: 1px solid;
+        padding: 6px 10px;
+        height: auto;
+        line-height: inherit;
+
+        .select2-arrow {
+            width: 26px;
+
+            b {
+                display: none;
+            }
+        }
+    }
+}
+
+.select2-drop-active {
+    padding: 4px 0 0 0;
+}
+
+
+
+
+// Radio
+////////
+
+.vic-radio-custom {
+    label {
+        input[type=radio] {
+            width: 12px;
+            height: 12px;
+
+            &:checked {
+                border: 3px solid;
+            }
+        }
+    }
+}
+
+
+
+
+// Modal Tab
+////////////
+
+.vic-modal-nav-tabs {
+    .border;
+
+    & > li {
+        margin: 0;
+        padding: 0 20px;
+
+        &:first-child {
+            padding: 0 20px 0 0;
+        }
+
+        &:last-child {
+            padding: 0 0 0 20px;
+        }
+
+        &.vic-seperate {
+            border-right: 1px solid;
+        }
+
+        & > a {
+            margin: 0;
+            padding: 5px 0;
+            line-height: normal;
+            font-weight: 500;
+            font-size: 18px;
+            .border;
+
+            &:hover {
+                padding: 5px 0 3px;
+                background: transparent;
+                border-bottom: 2px solid;
+            }
+        }
+
+        &.vic-active {
+            & > a {
+                padding: 5px 0 3px;
+                .border;
+                border-bottom: 2px solid;
+
+                &:hover {
+                    border-bottom: 2px solid !important;
+                }
+            }
+        }
+    }
+}
+
+.vic-modal-tab-content {
+    margin-top: 30px;
+}
+
+.vic-modal-tab-content {
+    .vic-modal-nav-tabs {
+        margin-left: 40px;
+    }
+}
+
+
+
+
+// Panel
+////////
+
+.vic-panel {
+    .box-shadow;
+}
+
+.vic-panel-default {
+    & > .vic-panel-heading {
+        padding: 10px;
+    }
+}
+
+.vic-panel-title {
+    font-weight: 300;
+    letter-spacing: 1px;
+    font-size: 18px;
+}
+
+.vic-panel-body-request {
+    font-size: 18px;
+    font-weight: 200;
+    line-height: 40px;
+    letter-spacing: 0.33px;
+}
+
+
+
+
+// Circled
+//////////
+
+.vic-circled {
+    font-weight: 500;
+    display: inline-block;
+    border: 2px solid;
+    width: 22px;
+    height: 22px;
+    text-align: center;
+    line-height: 18px;
+}
+
+
+
+
+// natural language select
+//////////////////////////
+
+.vic-nl-form {
+    font-size: 18px;
+    font-weight: 200;
+    line-height: 40px;
+    letter-spacing: .33px;
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+}
+
+.vic-nl-field {
+    display: inline-block;
+    position: relative;
+
+    &.vic-nl-field-open {
+        z-index: 10000;
+    }
+}
+
+.vic-nl-field-toggle,
+.vic-nl-form select {
+    line-height: inherit;
+    display: inline-block;
+    cursor: pointer;
+    border-bottom: 1px dashed;
+    height: 35px;
+}
+
+.vic-nl-field {
+    ul {
+        position: absolute;
+        visibility: hidden;
+        left: -0.5em;
+        top: 50%;
+        font-size: 80%;
+        .transform (translateY(-40%) scale(0.9));
+
+        li {
+            position: relative;
+        }
+    }
+
+    &.vic-nl-field-open {
+        ul {
+            visibility: visible;
+            opacity: 1;
+            .transform (translateY(-50%) scale(1));
+        }
+    }
+}
+
+.vic-nl-dd {
+    ul li {
+        padding: 0 18px;
+        cursor: pointer;
+        white-space: nowrap;
+    }
+}
+
+
+
+
+// Btn
+//////
+
+// btn-add
+.vic-btn-add {
+    border: 1px dashed;
+    width: 100%;
+
+    & > img {
+        margin-right: 4px;
+    }
+}
+
+.add-request {
+    width: 200px;
+}
+
+.add-request-block {
+    margin-bottom: 20px;
+}
+
+
+
+
+// Checkbox
+///////////
+
+.vic-checkbox {
+    position: relative;
+    width: 19px;
+    height: 18px;
+    display: inline-block;
+    .appearance;
+
+    &:checked:after {
+        font-family: FontAwesome;
+        content: "\f00c";
+        position: absolute;
+        top: 3px;
+        left: 2px;
+    }
+}
+
+/*
+ * Homepage
+ *
+ * Tweaks to the custom homepage and the masthead (main jumbotron).
+ */
+
+ /* Masthead (headings and download button) */
+ body.welcome {
+    background-image: url('/bundles/victoirecms/images/background/nebu-full.jpg');
+    background-position: center center;
+}
+.vic-masthead {
+    position: relative;
+    padding: 30px 15px;
+    text-align: center;
+    text-shadow: 0 1px 0 rgba(0,0,0,.15);
+}
+.vic-masthead h1 {
+    font-size: 50px;
+    line-height: 1;
+    color: #fff;
+    font-family: Verlag, Josefin Sans, Arial, Verdana, Geneva, Helvetica, sans-serif;
+}
+.vic-masthead .vic-btn-outline-inverse {
+    margin: 10px;
+    border-color: #E5F9F5;
+    color: #E5F9F5;
+    &:hover {
+        background-color: #E5F9F5;
+        color: @black;
+    }
+}
+
+/* Links to project-level content like the repo, Expo, etc */
+.vic-masthead-links {
+    margin-top: 20px;
+    margin-bottom: 40px;
+    padding: 0 15px;
+    list-style: none;
+    text-align: center;
+}
+.vic-masthead-links li {
+    display: inline;
+}
+.vic-masthead-links li + li {
+    margin-left: 20px;
+}
+.vic-masthead-links a {
+    color: #fff;
+}
+.vic-masthead .vic-lead {
+    color: #E5F9F5;
+}
+
+@media (min-width: 768px) {
+  .vic-masthead {
+    text-align: left;
+    padding-top:    140px;
+    padding-bottom: 140px;
+  }
+  .vic-masthead h1 {
+    font-size: 100px;
+  }
+  .vic-masthead .vic-lead {
+    margin-right: 25%;
+    font-size: 30px;
+  }
+  .vic-masthead .vic-btn-outline-inverse {
+    width: auto;
+    margin: 20px 5px 20px 0;
+    padding: 18px 24px;
+    font-size: 21px;
+  }
+  .vic-masthead-links {
+    padding: 0;
+    text-align: left;
+  }
+}
+

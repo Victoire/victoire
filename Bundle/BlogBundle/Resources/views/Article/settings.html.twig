@@ -1,0 +1,37 @@
+{% extends 'VictoireCoreBundle::_modal.html.twig' %}
+{% form_theme form 'VictoireFormBundle:Form:fields.html.twig' %}
+
+{% block modal_container_classes %}{{ parent() }} vic-page-modal{% endblock modal_container_classes %}
+
+{% block modal_body_content %}
+
+<div class="vic-tab-content vic-modal-tab-content">
+    <div class="vic-tab-pane vic-active" id="basics">
+         <form method="POST" action="{{path('victoire_blog_article_settings', {'id':page.id} )}}">
+            {{form_widget(form)}}
+            {{form_errors(form)}}
+            {{form_rest(form)}}
+        </form>
+    </div>
+</div>
+
+{% endblock modal_body_content %}
+
+{% block modal_header_title %}
+    {{"victoire_blog.settings.title"|trans()|desc("Paramètres de l'article")}}
+{% endblock modal_header_title %}
+
+{% block modal_footer %}
+    <div class="vic-modal-footer">
+        <div class="vic-container">
+        {% block modal_footer_content %}
+            <span class="vic-pull-left"><sup>*</sup>{{ 'modal.mandatory_fields.label'|trans({}, 'victoire')|desc('Mandatory fields') }}</span>
+            {% if not page.undeletable %}
+            <a href="{{ path('victoire_cms_page_delete', {'id': page.id}) }}" class="confirm" data-title="{{ 'modal.form.page.settings.action.delete.confirm.title'|trans({}, 'victoire')|desc('Are you sure ?') }}" data-body="{{ 'modal.form.page.settings.action.delete.confirm.body'|trans({}, 'victoire')|desc('This action can not be undone, do you confirm your action ?') }}" data-modal="delete"></a>
+            {% endif %}
+            <a href="#" data-modal="{% block action %}update{% endblock action %}" title="{{ 'modal.button.'~ block('action') ~'.title'|trans({}, 'victoire') }}"></a>
+        {% endblock modal_footer_content %}
+        </div>
+    </div>
+{% endblock modal_footer %}
+

@@ -1,0 +1,35 @@
+{
+    "name": "victoire/dashboard-bundle",
+    "type": "symfony-bundle",
+    "description": "Victoire Cms Dashboard component",
+    "keywords": ["cms", "victoire", "dashboard"],
+    "homepage": "http://appventus.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Leny BERNARD",
+            "email": "leny@appventus.com"
+        }
+    ],
+    "repositories": [
+       {
+           "type": "composer",
+           "url": "http://packagist.appventus.com"
+       }
+   ],
+    "require": {
+        "php"                                 : ">=5.3.3",
+        "symfony/framework-bundle"            : "~2.3",
+        "victoire/cms-bundle"                 : "~0.1"
+    },   
+    "autoload": {
+        "psr-0": { "Victoire\\DashboardBundle": "" }
+    },
+    "minimum-stability": "dev",
+    "target-dir": "Victoire/DashboardBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
+    }
+}

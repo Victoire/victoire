@@ -1,0 +1,16 @@
+
+<div class="modal-header">
+    <a class="close" data-dismiss="modal">&times;</a>
+    <h3>Gestion des templates</h3>
+</div>
+<div class="modal-body">
+    <form method="POST" action="{{path('victoire_cms_template_new')}}">
+        {{form_widget(form)}}
+        {{form_rest(form)}}
+    </form>
+
+</div>
+<div class="modal-footer">
+    <a class="btn btn-primary" href="#" onclick="$('.modal-body > form').submit();">Sauvegarder</a>
+    <a class="btn" data-dismiss="modal">Fermer</a>
+</div>

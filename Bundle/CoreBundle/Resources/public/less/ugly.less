@@ -1,0 +1,83 @@
+#vic-modal {
+    label[for="resultNumber"] {
+        width: 100%;
+    }
+}
+
+[name="resultNumber"] {
+    width: 60px;
+    margin-right: 10px;
+}
+
+[for="pagination"] {
+    float: left;
+    margin-top: 10px;
+
+    input {
+        margin: 0;
+    }
+}
+
+.request-line {
+    margin-bottom: 20px;
+}
+
+.vic-listSelection-addbar {
+    margin-bottom: 30px;
+}
+
+.vic-listSelection-addbtn {
+    width: 100%;
+}
+
+.listSelection-item {
+    min-height: 34px;
+    margin-bottom: 10px;
+}
+
+.vic-select.vic-form-control {
+    width: 100%;
+    padding: 0;
+}
+
+
+.vic-panel-heading {
+
+}
+
+.vic-btn-remove {
+    padding: 0;
+    background: transparent;
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: @icon-hover;
+        background: none;
+        .box-shadow;
+        outline: 0;
+    }
+
+    &.vic-btn-large {
+        font-size: 22px;
+    }
+}
+
+
+.vic-listRequest-removeBlock {
+    line-height: 0;
+}
+
+
+//FORM RESET
+
+.vic-modal {
+    select, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+        height: 30px;
+        &:invalid {
+            all: none;
+            .radius(2px);
+            border: 1px solid @red;
+        }
+    }
+}

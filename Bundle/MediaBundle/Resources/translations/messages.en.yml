@@ -1,0 +1,63 @@
+aviary:
+    nothing: aviary.nothing   # FIXME
+    title: aviary.title   # FIXME
+
+dailymotion: dailymotion   # FIXME
+
+form:
+    cancel: form.cancel   # FIXME
+    delete: form.delete   # FIXME
+    save: form.save   # FIXME
+
+image: image   # FIXME
+media: media   # FIXME
+media.aviary.nothing: 'Nothing to see here.'
+media.aviary.title: Aviary
+media.bulkupload.bulkupload: 'Bulk upload'
+media.bulkupload.upload: Upload
+media.file.add: 'Add File'
+media.file.modal.save: Add
+media.file.modal.title: 'Add File'
+media.folder.addsub.action: 'Add subfolder'
+media.folder.addsub.modal.save: Add
+media.folder.addsub.modal.title: 'Add subfolder'
+media.folder.contenttab.title: Content
+media.folder.delete.action: 'Delete this folder'
+media.folder.delete.modal.text: 'Are you sure you want to delete "%folder%"?'
+media.folder.delete.modal.title: 'Delete folder'
+media.folder.propertiestab.title: Properties
+media.folder.save: Save
+media.folder.sub.no: 'No subfolders yet.'
+media.media.addto: 'Add media to "%folder%"'
+media.media.bulkupload.addto: 'Upload files to "%folder%"'
+media.media.contenttab.title: Content
+media.media.deletesure: 'Are you sure you want to delete this item?'
+media.media.download.action: Download
+media.media.edit.action: Edit
+media.media.mediainfo.contenttype: Content-type
+media.media.mediainfo.createdat: Added
+media.media.mediainfo.downloadlink: 'Download link'
+media.media.mediainfo.name: Name
+media.media.mediainfo.updatedat: Updated
+media.media.new: 'Add media to "%folder%"'
+media.media.no: 'No files in this folder yet.'
+media.media.propertiestab.title: Properties
+media.media.title: Media
+media.slide.add: 'Add Slide'
+media.slide.modal.save: Add
+media.slide.modal.title: 'Add Slide'
+media.video.add: 'Add Video'
+media.video.modal.save: Add
+media.video.modal.title: 'Add Video'
+media.widget.choose: Choose
+media.widget.delete: Delete
+
+menu:
+    images: menu.images   # FIXME
+    media: menu.media   # FIXME
+
+slideshare: slideshare   # FIXME
+slideshow: slideshow   # FIXME
+video: video   # FIXME
+vimeo: vimeo   # FIXME
+youtube: youtube   # FIXME

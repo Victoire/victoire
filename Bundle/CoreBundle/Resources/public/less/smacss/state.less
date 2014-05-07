@@ -1,0 +1,41 @@
+// Victoire Menu
+////////////////
+
+.vic-icon-menu.is-selected {
+    color: @green;
+
+    &:hover {
+        color: @black;
+    }
+}
+
+.vic-menu-wrapper {
+    &.vic-open-all {
+        width: 200px;
+    }
+}
+
+ul.vic-dropdown-menu {
+    li a.vic-disabled {
+        color: @grey;
+        i.vic-menuImg {
+            opacity: 0.5;
+        }
+    }
+}
+
+body[role="admin"] {
+    .vic-hover-widget, .vic-new-widget {
+        display: block;
+    }
+}
+
+@media screen and (max-width: 422px) {
+    .vic-menu-wrapper.vic-open-all {
+        width: 100%;
+    }
+
+    .vic-menu-wrapper.vic-open-all .vic-scroller {
+        width: 130%;
+    }
+}

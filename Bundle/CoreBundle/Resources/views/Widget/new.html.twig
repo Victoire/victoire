@@ -1,0 +1,19 @@
+{% form_theme form 'VictoireFormBundle:Form:fields.html.twig' %}
+{% block form_container %}
+
+<form name="widget" action={% spaceless %}
+{% block modal_body_form_action %}
+{{ path('victoire_cms_widget_create', {'page': page.id,'slot':slot, 'type': widget.type, 'entity': entity} ) }}
+{% endblock modal_body_form_action %}
+{% endspaceless %} method="POST" class="vic-form-horizontal">
+
+{% block body %}
+{% block form %}
+
+{{form_widget(form)}}
+
+{% endblock form %}
+{% endblock body %}
+</form>
+{% endblock form_container %}
+

@@ -1,0 +1,160 @@
+parameters:
+    router.options.generator_base_class: Victoire\Bundle\CoreBundle\Route\UrlGenerator
+
+services:
+    # av_assetic_injector.collector_engine.require_victoire:
+    #     class: "Victoire\Bundle\CoreBundle\AssetsCollector\RequireVictoire"
+    #     arguments: [@service_container]
+
+    # assetic_injector.require_victoire:
+    #     alias: av_assetic_injector.collector_engine.require_victoire
+
+#  ==================  Widgets ================== #
+    victoire_cms.twig.widget_manager:
+        class: Victoire\Bundle\CoreBundle\Widget\Managers\WidgetManager
+        arguments: [@service_container]
+
+    widget_manager:
+        alias: victoire_cms.twig.widget_manager
+
+    widget.subscriber:
+        class: Victoire\Bundle\CoreBundle\EventSubscriber\WidgetSubscriber
+        arguments:
+            - "@service_container"
+        tags:
+            - { name: kernel.event_subscriber }
+
+    victoire_cms.entity_proxy.fields_builder:
+        class: Victoire\Bundle\CoreBundle\Form\Builder\EntityProxyFieldsBuilder
+        arguments: [@victoire_cms.annotation_reader]
+
+#  ==================  MENU ================== #
+
+    victoire_cms.admin_menu_builder:
+        class: Victoire\Bundle\CoreBundle\Menu\MenuBuilder
+        arguments: [ '@knp_menu.factory', '@security.context' ]
+
+    victoire_cms.admin_menu:
+        class: Knp\Menu\MenuItem
+        factory_service: victoire_cms.admin_menu_builder
+        factory_method: getMenu
+        scope: request
+        tags:
+            - { name: knp_menu.menu, alias: admin_menu }
+
+    victoire_cms.admin_menu.navbar_top:
+        class: Knp\Menu\MenuItem
+        factory_service: victoire_cms.admin_menu_builder
+        factory_method: getTopNavbar
+        scope: request
+        tags:
+            - { name: knp_menu.menu, alias: topnavbar }
+
+    victoire_cms.admin_menu.navbar_left:
+        class: Knp\Menu\MenuItem
+        factory_service: victoire_cms.admin_menu_builder
+        factory_method: getLeftNavbar
+        scope: request
+        tags:
+            - { name: knp_menu.menu, alias: leftnavbar }
+
+    victoire_cms.menu_listener:
+        class: Victoire\Bundle\CoreBundle\Listener\MenuListener
+        arguments:
+            - "@event_dispatcher"
+            - "@victoire_cms.page_menu_listener"
+            - "@victoire_cms.template_menu_listener"
+            - "@victoire_cms.sitemap_menu_listener"
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+    victoire_cms.page_menu_listener:
+        class: Victoire\Bundle\PageBundle\Listener\PageMenuListener
+        arguments: ["@victoire_cms.admin_menu_builder"]
+    victoire_cms.template_menu_listener:
+        class: Victoire\Bundle\CoreBundle\Listener\TemplateMenuListener
+        arguments: ["@victoire_cms.admin_menu_builder"]
+    victoire_cms.sitemap_menu_listener:
+        class: Victoire\Bundle\CoreBundle\Listener\SiteMapMenuListener
+        arguments: ["@victoire_cms.admin_menu_builder"]
+
+#  ==================  Template ================== #
+    victoire_cms.template_mapper:
+        class: Victoire\Bundle\CoreBundle\Template\TemplateMapper
+        arguments: [@service_container]
+
+    victoire_templating:
+        alias: victoire_cms.template_mapper
+
+#  ==================  Twig ================== #
+    victoire_cms.twig.cms_extension:
+        class: Victoire\Bundle\CoreBundle\Twig\Extension\CmsExtension
+        arguments: [@widget_manager, @victoire_templating, @security.context, @session]
+        tags:
+            - { name: twig.extension }
+    victoire_cms.twig.globals_extension:
+        class: Victoire\Bundle\CoreBundle\Twig\Extension\GlobalsExtension
+        arguments: [@victoire_templating, @session]
+        tags:
+            - { name: twig.extension }
+
+#  ==================  Cache ================== #
+
+    victoire_cms.apc.cache:
+        class: Victoire\Bundle\CoreBundle\Cache\ApcCache
+        arguments: [%doctrine.orm.cache.apc.class%, %kernel.debug%]
+
+#  ==================  Routing ================== #
+
+    victoire_cms.routing.loader.cache:
+        class: Victoire\Bundle\CoreBundle\Route\CacheRouteLoader
+        arguments: [@victoire_cms.cache.route_registerer, @doctrine.orm.entity_manager]
+        tags:
+            - { name: routing.loader }
+
+    victoire_cms.cache.route_registerer:
+        class: Victoire\Bundle\CoreBundle\Route\CacheRouteRegisterer
+        arguments: [@victoire_cms.apc.cache]
+#  ==================  Annotations ================== #
+
+    victoire_cms.annotation_reader:
+        class: Victoire\Bundle\CoreBundle\Annotations\Reader\AnnotationReader
+        arguments: [@annotation_reader, %kernel.root_dir%, %victoire_cms.widgets%]
+        calls:
+            - [ setCache, [@victoire_cms.apc.cache] ]
+
+
+#  ==================  Theme ================== #
+
+    victoire_cms.theme_chain:
+        class: "Victoire\Bundle\CoreBundle\Theme\ThemeChain"
+        arguments: [%victoire_cms.widgets%]
+
+#  ==================  Subscribers ================== #
+
+    victoire_cms.widget_discriminator_map.subscriber:
+        class: Victoire\Bundle\CoreBundle\EventSubscriber\WidgetDiscriminatorMapSubscriber
+        arguments: ["%victoire_cms.widgets%", "@victoire_cms.theme_chain"]
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+
+    victoire_cms.entity_proxy.subscriber:
+        class: Victoire\Bundle\CoreBundle\EventSubscriber\EntityProxySubscriber
+        arguments: [@victoire_cms.annotation_reader]
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+
+
+#  ==================  Cache =================== #
+
+    victoire_cms.cache_warmer.entity_proxy_warmer:
+        class: Victoire\Bundle\CoreBundle\CacheWarmer\EntityProxyWarmer
+        arguments: [@victoire_cms.annotation_reader]
+        tags:
+            - { name: kernel.cache_warmer}
+
+    victoire_cms.entity_proxy.cache_driver:
+        class: Victoire\Bundle\CoreBundle\CacheWarmer\EntityProxyCacheDriver
+        arguments: [@annotation_reader, %kernel.root_dir%, %kernel.environment%]
+
+

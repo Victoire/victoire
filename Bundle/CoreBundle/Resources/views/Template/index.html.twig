@@ -1,0 +1,25 @@
+
+<div class="modal-header">
+    <a class="close" data-dismiss="modal">&times;</a>
+    <h3>{{ 'template.index.title'|trans|desc('Liste des modèles') }}</h3>
+</div>
+<div class="modal-body">
+
+    {{ _self.templatesHierarchy(templates) }}
+
+</div>
+<div class="modal-footer">
+    <a class="btn" data-dismiss="modal">{{ 'cancel'|trans|desc('Annuler') }}</a>
+</div>
+
+{% macro templatesHierarchy(templates) %}
+    {% for template in templates %}
+      <li id="list_{{template.id}}"><a href="{{path('victoire_cms_template_show', {'slug' : template.slug })}}">{{template.title}}</a>
+      {% if template.children %}
+          <ol>
+            {{ _self.templatesHierarchy(template.children) }}
+          </ol>
+      {% endif %}
+      </li>
+    {% endfor %}
+{% endmacro %}

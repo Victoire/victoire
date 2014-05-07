@@ -1,0 +1,44 @@
+{
+    "require_all":
+    {
+        "javascripts":
+        {
+            "victoire-media":
+            [
+                "@KunstmaanMediaBundle/Resources/public/js/libs/jquery-ui-1.10.0.custom.min.js",
+                "@KunstmaanMediaBundle/Resources/public/js/libs/bootstrap.min.js",
+                "@KunstmaanMediaBundle/Resources/public/js/libs/chosen.jquery.min.js",
+                "@KunstmaanMediaBundle/Resources/public/js/libs/jquery.filedrop.js",
+                "@KunstmaanMediaBundle/Resources/public/js/libs/jquery.fileupload.js",
+                "@KunstmaanMediaBundle/Resources/public/js/libs/jquery.iframe-transport.js",
+                "@KunstmaanMediaBundle/Resources/public/js/libs/jquery.inputmask.js",
+                "@KunstmaanMediaBundle/Resources/public/js/libs/jquery.form.js",
+                "@KunstmaanMediaBundle/Resources/public/js/libs/jquery.inputmask.date.extensions.js",
+                "@KunstmaanMediaBundle/Resources/public/js/libs/modaldialog.min.js",
+                "@KunstmaanMediaBundle/Resources/public/js/libs/responsive-tables.js",
+                "@KunstmaanMediaBundle/Resources/public/js/libs/charCount.js",
+                "@KunstmaanMediaBundle/Resources/public/js/libs/bootstrap-datepicker.js",
+                "@KunstmaanMediaBundle/Resources/public/js/libs/bootstrap-timepicker.js",
+                "@KunstmaanMediaBundle/Resources/public/js/libs/iphone-style-checkboxes.js",
+                "@KunstmaanMediaBundle/Resources/public/js/script.js",
+                "bundles/kunstmaanmedia/js/libs/jquery.jstree.js"
+            ],
+            "victoire-edit":
+            [
+                "@KunstmaanMediaBundle/Resources/public/js/libs/modaldialog.min.js"
+            ]
+
+         },
+        "stylesheets":
+        {
+            "victoire-media":
+            [
+                "bundles/kunstmaanmedia/css/style.css"
+            ],
+            "victoire-edit":
+            [
+                "bundles/kunstmaanmedia/css/media-style.less"
+            ]
+        }
+    }
+}

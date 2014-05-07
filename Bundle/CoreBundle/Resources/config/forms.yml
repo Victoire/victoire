@@ -1,0 +1,18 @@
+services:
+    Victoire_cms.widget.form.type:
+        class: Victoire\Bundle\CoreBundle\Form\WidgetType
+        tags:
+            - { name: form.type, alias: widget }
+
+    victoire_cms.entity_proxy.form.type:
+        class: Victoire\Bundle\CoreBundle\Form\EntityProxyFormType
+        arguments:
+            - "@victoire_cms.annotation_reader"
+        tags:
+            - { name: form.type, alias: entity_proxy }
+    victoire_cms.widget_fields.form.type:
+        class: Victoire\Bundle\CoreBundle\Form\WidgetFieldsFormType
+        arguments:
+            - "@victoire_cms.entity_proxy.fields_builder"
+        tags:
+            - { name: form.type, alias: widget_fields }

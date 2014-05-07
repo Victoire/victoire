@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+  <file date="2013-11-28T17:11:45Z" source-language="en" target-language="en" datatype="plaintext" original="not.available">
+    <header>
+      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
+      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
+    </header>
+    <body>
+      <trans-unit id="b6bb1a3f347cd3c96d5dd3615232471d291cb6e1" resname="blog.category_filter.label">
+        <source>blog.category_filter.label</source>
+        <target state="new">blog.category_filter.label</target>
+        <jms:reference-file line="61">BlogBundle/Filter/CategoryFilter.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="9b39444d8d4d52ee8371bd147a45392b465249a8" resname="menu.blog">
+        <source>menu.blog</source>
+        <target state="new">menu.blog</target>
+      </trans-unit>
+      <trans-unit id="44ee3ff9b926d8e0fe6e8e356600ad5c77166029" resname="menu.blog.new">
+        <source>menu.blog.new</source>
+        <target state="new">menu.blog.new</target>
+      </trans-unit>
+      <trans-unit id="604de4ede156d22c87184505b9794ba2ad9c5062" resname="menu.blog.settings">
+        <source>menu.blog.settings</source>
+        <target state="new">menu.blog.settings</target>
+      </trans-unit>
+      <trans-unit id="32f456880b2a4432df410b00ada0364856ed4b4e" resname="victoire_blog.new.title">
+        <source>Nouvel article</source>
+        <target state="new">Nouvel article</target>
+        <jms:reference-file line="4">Bootstrap/Article/new.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="143a419d2cd0df9aa37a313c28f8be04a8cc76f2" resname="victoire_blog.settings.title">
+        <source>Paramètres de l'article</source>
+        <target state="new">Paramètres de l'article</target>
+        <jms:reference-file line="4">Bootstrap/Article/settings.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="02d18cf0e0ca7a227963f722e23711b08fa5711a" resname="victoire_cms.close">
+        <source>Fermer</source>
+        <target state="new">Fermer</target>
+        <jms:reference-file line="15">Bootstrap/Article/new.html.twig</jms:reference-file>
+        <jms:reference-file line="17">Bootstrap/Article/settings.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="49f3e57c389a6ba549e6e460815a2a16b1f3be4c" resname="victoire_cms.save">
+        <source>Sauvegarder</source>
+        <target state="new">Sauvegarder</target>
+        <jms:reference-file line="14">Bootstrap/Article/new.html.twig</jms:reference-file>
+        <jms:reference-file line="16">Bootstrap/Article/settings.html.twig</jms:reference-file>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
