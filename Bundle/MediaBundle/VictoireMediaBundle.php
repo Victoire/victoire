@@ -1,6 +1,6 @@
 <?php
 
-namespace Victoire\MediaBundle;
+namespace Victoire\Bundle\MediaBundle;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
