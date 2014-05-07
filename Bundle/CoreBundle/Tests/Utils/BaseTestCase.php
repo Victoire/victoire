@@ -241,7 +241,7 @@ class BaseTestCase extends WebTestCase
     public function getWidgetImageMock($id = 1)
     {
         $widget = new \Victoire\ImageBundle\Entity\WidgetImage();
-        $image = new \Kunstmaan\MediaBundle\Entity\Media();
+        $image = new \Victoire\MediaBundle\Entity\Media();
         $widget->setImage($image);
         $widget->setId($id);
 
