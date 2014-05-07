@@ -18,6 +18,7 @@
     "replace": {
         "victoire/blog-bundle": "self.version",
         "victoire/core-bundle": "self.version",
+        "victoire/cms-bundle": "self.version",
         "victoire/dashboard-bundle": "self.version",
         "victoire/form-bundle": "self.version",
         "victoire/media-bundle": "self.version",
