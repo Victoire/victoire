@@ -1,3 +1,4 @@
+{% trans_default_domain "victoire" %}
 {% extends 'knp_menu.html.twig' %}
 
 {% block linkElement %}
@@ -20,5 +21,5 @@
 {% endif -%}
 {% endspaceless %}
 {% endblock %}
-{% block label %}{{ item.label|trans({}, 'victoire')|raw }}{% endblock %}
+{% block label %}{{ item.label|trans|raw }}{% endblock %}
 {% block dropdown %}{% if level == 2 and item.hasChildren %}vic-dropdown-menu{% endif %}{% endblock %}
