@@ -35,7 +35,7 @@
         "friendsofsymfony/jsrouting-bundle"   : "~1.1",
         "friendsofsymfony/user-bundle"        : "2.0.*@dev",
         "appventus/alertify-bundle"           : "2.4.*@dev",
-        "appventus/ajax-bundle"               : "v1.1.0",
+        "appventus/ajax-bundle"               : "1.1.*@dev",
         "appventus/shortcuts-bundle"          : "dev-master",
         "appventus/assetic-injector-bundle"   : "dev-master"
     },
