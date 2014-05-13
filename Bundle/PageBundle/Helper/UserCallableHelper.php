@@ -26,8 +26,11 @@ class UserCallableHelper
    {
         $userClass = $this->container->getParameter('victoire_core.user_class');
         $token = $this->container->get('security.context')->getToken();
-        if ($token->getUser() instanceof $userClass) {
-            return $token->getUser();
+
+        if ($token !== null) {
+            if ($token->getUser() instanceof $userClass) {
+                return $token->getUser();
+            }
         }
 
         return null;
