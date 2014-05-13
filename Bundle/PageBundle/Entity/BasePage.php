@@ -788,4 +788,53 @@ abstract class BasePage
         return $this;
     }
 
+    /**
+     * Get the left value
+     *
+     * @return integer
+     */
+    public function getLft()
+    {
+        return $this->lft;
+    }
+
+    /**
+     * Get the right value
+     *
+     * @return integer
+     */
+    public function getRgt()
+    {
+        return $this->rgt;
+    }
+
+    /**
+     * Get the level value
+     *
+     * @return integer
+     */
+    public function getLvl()
+    {
+        return $this->lvl;
+    }
+
+    /**
+     * Get the root value
+     *
+     * @return integer
+     */
+    public function getRoot()
+    {
+        return $this->root;
+    }
+
+    /**
+     * Get the undeleteable value
+     *
+     * @return boolean
+     */
+    public function getUndeletable()
+    {
+        return $this->undeletable;
+    }
 }
