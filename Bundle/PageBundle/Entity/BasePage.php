@@ -254,9 +254,12 @@ abstract class BasePage
      * @param PageSeo $seo
      * @return Page
      */
-    public function setSeo(PageSeo $seo)
+    public function setSeo($seo)
     {
-        $seo->setPage($this);
+        if ($seo !== null) {
+            $seo->setPage($this);
+        }
+
         $this->seo = $seo;
 
         return $this;
@@ -374,6 +377,7 @@ abstract class BasePage
     public function setWidgets($widgets)
     {
         $this->widgets = $widgets;
+
         foreach ($widgets as $widget) {
             $widget->setPage($this);
         }
@@ -799,6 +803,16 @@ abstract class BasePage
     }
 
     /**
+     * Set the left value
+     *
+     * @param integer $lft
+     */
+    public function setLft($lft)
+    {
+        $this->lft = $lft;
+    }
+
+    /**
      * Get the right value
      *
      * @return integer
@@ -806,6 +820,16 @@ abstract class BasePage
     public function getRgt()
     {
         return $this->rgt;
+    }
+
+    /**
+     * Set the right value
+     *
+     * @param integer $rgt
+     */
+    public function setRgt($rgt)
+    {
+        $this->rgt = $rgt;
     }
 
     /**
@@ -819,6 +843,16 @@ abstract class BasePage
     }
 
     /**
+     * Set the level value
+     *
+     * @param integer $lvl
+     */
+    public function setLvl($lvl)
+    {
+        $this->lvl = $lvl;
+    }
+
+    /**
      * Get the root value
      *
      * @return integer
@@ -829,6 +863,16 @@ abstract class BasePage
     }
 
     /**
+     * Set the root value
+     *
+     * @return integer $root
+     */
+    public function setRoot($root)
+    {
+        $this->root = $root;
+    }
+
+    /**
      * Get the undeleteable value
      *
      * @return boolean
@@ -836,5 +880,15 @@ abstract class BasePage
     public function getUndeletable()
     {
         return $this->undeletable;
+    }
+
+    /**
+     * Set the refere
+     *
+     * @param string $referer
+     */
+    public function setReferer($referer)
+    {
+        $this->referer = $referer;
     }
 }
