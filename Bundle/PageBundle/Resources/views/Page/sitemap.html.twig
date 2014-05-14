@@ -36,10 +36,9 @@
 </script>
 {% endblock modal_body_content %}
 
-
 {% macro pagesHierarchy(pagesList) %}
     {% for page in pagesList %}
-      <li id="list_{{page.id}}"><div>{{page.title}}</div>
+      <li id="list_{{page.id}}"><div><a href='/{{ page.url }}' title='{{ page.url }}'>{{ page.title }}</a></div>
       {% if page.children %}
           <ol>
             {{ _self.pagesHierarchy(page.children) }}
