@@ -34,7 +34,7 @@
         "knplabs/knp-gaufrette-bundle"        : "0.2.*@dev",
         "friendsofsymfony/jsrouting-bundle"   : "~1.1",
         "friendsofsymfony/user-bundle"        : "2.0.*@dev",
-        "appventus/ajax-bundle"               : "1.1.*@dev",
+        "appventus/ajax-bundle"               : ">=1.1.0",
         "appventus/alertify-bundle"           : "2.3.*@dev",
         "appventus/shortcuts-bundle"          : "dev-master",
         "appventus/assetic-injector-bundle"   : "dev-master"
