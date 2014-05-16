@@ -22,7 +22,7 @@ class EntityProxyFormType extends AbstractType
                 'empty_value' => 'entity_proxy.form.empty_value',
                 'class'       => $options['namespace'],
                 'attr'        => array(
-                    'class' => 'add_' .$options['entity_name'] . '_link'
+                    'class' => 'add_' .$options['entity_name'] . '_link picker_entity_select',
                 )
             ));
 

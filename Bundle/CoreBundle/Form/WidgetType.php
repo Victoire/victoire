@@ -33,24 +33,8 @@ class WidgetType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
-        // $builder
-        //     ->add('page', 'choice',
-        //         array(
-        //             "mapped" => false,
-        //             "label" => null,
-        //             "attr"  => array("class" => "hide")
-        //         )
-        //     );
-
         if ($this->entity_name !== null) {
             $builder
-                ->add('page', null,
-                    array(
-                        "label" => null,
-                        "attr"  => array("class" => "hide")
-                    )
-                )
                 ->add('slot', 'hidden')
                 ->add('fields', 'widget_fields', array(
                     "label" => 'widget.form.fields.label',
@@ -62,6 +46,7 @@ class WidgetType extends AbstractType
                     "namespace"   => $this->namespace,
                     "widget"      => $options['widget']
                 ))
+                ->add('query')
                 //
                 ;
         }
