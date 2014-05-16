@@ -86,6 +86,14 @@
         <source>widget.dropdown.action.label</source>
         <target>Nouveau contenu</target>
       </trans-unit>
+      <trans-unit resname="form.widget.tab.picker.label">
+        <source>form.widget.tab.picker.label</source>
+        <target>Choix</target>
+      </trans-unit>
+      <trans-unit resname="form.widget.tab.query.label">
+        <source>form.widget.tab.query.label</source>
+        <target>Requête</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

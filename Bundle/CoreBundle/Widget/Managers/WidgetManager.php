@@ -152,6 +152,9 @@ class WidgetManager
 
 
             $widget->setBusinessEntityName($entity);
+            if ($entity) {
+                $widget->setBusinessClass($classes[$entity]);
+            }
             $em->persist($widget);
             $em->flush();
 
@@ -173,12 +176,6 @@ class WidgetManager
 
 
         $forms = $this->renderNewWidgetForms($entity, $slot, $page, $widget);
-
-        // if ($entity) {
-        //     $forms[$entity] = $form;
-        // } else {
-        //     $forms['static'] = $this->buildForm($manager, $widget);
-        // }
 
         return array(
             "success" => false,
