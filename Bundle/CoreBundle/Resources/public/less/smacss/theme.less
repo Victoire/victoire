@@ -202,13 +202,16 @@ body[role="admin"] {
                 text-decoration: none;
             }
         }
+        .vic-dropdown a:focus {
+            outline : 0;
+        }
 
         .vic-dropdown-menu {
             & > li > a {
                 &:hover,
                 &:focus {
-                    background-color: #597fee;
-                    color: @white;
+                    background-color: @green !important;
+                    color: @white !important;
                 }
             }
         }
@@ -251,6 +254,9 @@ body[role="admin"] {
         *[data-modal="delete"] {
             background-position: -35px -102px;
         }
+    }
+    select, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+        height: 30px;
     }
 }
 

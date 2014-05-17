@@ -39,3 +39,20 @@ body[role="admin"] {
         width: 130%;
     }
 }
+
+.vic-modal {
+    select, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+        &:invalid {
+            all: none;
+            .radius(2px);
+            border: 1px solid @green;
+        }
+    }
+    input:focus:invalid:focus, textarea:focus:invalid:focus, select:focus:invalid:focus {
+        border-color: @green;
+        -webkit-box-shadow: 0 0 6px @green_lighter;
+        -moz-box-shadow: 0 0 6px @green_lighter;
+        box-shadow: 0 0 6px @green_lighter;
+    }
+}
+

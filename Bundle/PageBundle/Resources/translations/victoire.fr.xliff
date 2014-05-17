@@ -42,6 +42,26 @@
                 <source>form.page.type.slug.label</source>
                 <target>URL</target>
             </trans-unit>
+            <trans-unit resname="form.page.type.status.label">
+                <source>form.page.type.status.label</source>
+                <target>Statut de publication</target>
+            </trans-unit>
+            <trans-unit resname="form.page.type.status.choice.label.draft">
+                <source>form.page.type.status.choice.label.draft</source>
+                <target>Brouillon</target>
+            </trans-unit>
+            <trans-unit resname="form.page.type.status.choice.label.published">
+                <source>form.page.type.status.choice.label.published</source>
+                <target>Publié</target>
+            </trans-unit>
+            <trans-unit resname="form.page.type.status.choice.label.unpublished">
+                <source>form.page.type.status.choice.label.unpublished</source>
+                <target>Non publié</target>
+            </trans-unit>
+            <trans-unit resname="form.page.type.status.choice.label.scheduled">
+                <source>form.page.type.status.choice.label.scheduled</source>
+                <target>Publier à partir du</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

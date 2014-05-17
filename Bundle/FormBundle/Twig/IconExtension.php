@@ -109,7 +109,7 @@ class IconExtension extends \Twig_Extension
     protected function getIconTemplate()
     {
         if ($this->iconTemplate === null) {
-            $this->iconTemplate = $this->environment->loadTemplate('@VictoireFormBundle/icons.html.twig');
+            $this->iconTemplate = $this->environment->loadTemplate('VictoireFormBundle::icons.html.twig');
         }
 
         return $this->iconTemplate;

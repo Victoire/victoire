@@ -19,6 +19,11 @@ class WidgetType extends AbstractType
     protected $entity_name;
     protected $namespace;
 
+    /**
+     * @param string $entity_name The entity name
+     * @param string $namespace   The entity namespace
+     *
+     */
     public function __construct($entity_name, $namespace)
     {
         $this->namespace = $namespace;
@@ -28,8 +33,9 @@ class WidgetType extends AbstractType
 
     /**
      * define form fields
-     * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param FormBuilderInterface $builder The builder
+     * @param array                $options The options
+     *
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -37,14 +43,14 @@ class WidgetType extends AbstractType
             $builder
                 ->add('slot', 'hidden')
                 ->add('fields', 'widget_fields', array(
-                    "label" => 'widget.form.fields.label',
-                    "namespace" => $this->namespace,
-                    "widget"    => $options['widget']
+                    'label' => 'widget.form.fields.label',
+                    'namespace' => $this->namespace,
+                    'widget'    => $options['widget']
                 ))
                 ->add('entity', 'entity_proxy', array(
-                    "entity_name" => $this->entity_name,
-                    "namespace"   => $this->namespace,
-                    "widget"      => $options['widget']
+                    'entity_name' => $this->entity_name,
+                    'namespace'   => $this->namespace,
+                    'widget'      => $options['widget']
                 ))
                 ->add('query')
                 //
@@ -56,6 +62,7 @@ class WidgetType extends AbstractType
     /**
      * bind form to WidgetRedactor entity
      * @param OptionsResolverInterface $resolver
+     *
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {

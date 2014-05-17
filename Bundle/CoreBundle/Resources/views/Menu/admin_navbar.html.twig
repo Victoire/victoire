@@ -36,8 +36,10 @@
                 <div class="vic-toggle-label">{{"victoire_core.edit_mode_switch"|trans({}, 'victoire')}}</div>
             </li>
             <li class="vic-text-center vic-last-child">
-                <a href="" class="vic-pull-left"><img src="http://placehold.it/35" class="vic-img-circle"></a>
-                <a href="/logout" class="vic-pull-left"><i class="fa fa-power-off"></i></a>
+                <a href="" class="vic-pull-left">
+                    <img src="http://www.gravatar.com/avatar/{{ app.user.email|hash }}?s=35" class="vic-img-circle" alt="avatar">
+                </a>
+                <a href="{{ path('_logout') }}" class="vic-pull-left"><i class="fa fa-power-off"></i></a>
             </li>
         </ul>
 

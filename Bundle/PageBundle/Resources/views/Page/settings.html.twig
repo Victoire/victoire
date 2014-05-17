@@ -8,32 +8,46 @@
 <div class="vic-tab-content vic-modal-tab-content">
     <div class="vic-tab-pane vic-active" id="basics">
         <form method="POST" action="{{path('victoire_core_page_settings', {'id':page.id} )}}">
-            {{ form_row(form.title) }}
-            {{ form_row(form.parent) }}
-            {{ form_row(form.template) }}
-            {{ form_row(form.bodyId) }}
-            {{ form_row(form.bodyClass) }}
             <div class="vic-form-group">
-                <label for="victoire_page_settings_type_bodyClass" class="vic-control-label vic-col-lg-3 control-label vic-optional">
-                    {{ 'form.page.type.slug.label'|trans({}, 'victoire') }}
-                </label>
-                <div class="vic-col-lg-9">
-                    <table style="width: 100%;">
-                        <tr>
-                            <td>
-                                {{ url('victoire_core_page_show', {'url' : page.url })|replace({(page.slug): ''}) }}
-                            </td>
-                            <td style="width: 100%;">
-                                {{ form_widget(form.slug) }}
-                            </td>
-                        </tr>
-                    </table>
+                <div class="vic-col-lg-8">
+                    {{ form_row(form.title) }}
+                    {{ form_row(form.parent) }}
+                    {{ form_row(form.template) }}
+                    {{ form_row(form.bodyId) }}
+                    {{ form_row(form.bodyClass) }}
+                    <div class="vic-form-group">
+                        <label for="victoire_page_settings_type_bodyClass" class="vic-control-label vic-col-lg-3 control-label vic-optional">
+                            {{ 'form.page.type.slug.label'|trans({}, 'victoire') }}
+                        </label>
+                        <div class="vic-col-lg-9">
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td>
+                                        {{ url('victoire_core_page_show', {'url' : page.url })|replace({(page.slug): ''}) }}
+                                    </td>
+                                    <td style="width: 100%;">
+                                        {{ form_widget(form.slug) }}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="vic-col-lg-4">
+                    {{ form_row(form.status) }}
+                    {{ form_widget(form.publishedAt) }}
                 </div>
             </div>
             {{ form_rest(form) }}
         </form>
     </div>
 </div>
+
+{% javascripts
+    '@VictoireFormBundle/Resources/public/js/datetimepicker-init.js'
+%}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
 
 {% endblock modal_body_content %}
 
