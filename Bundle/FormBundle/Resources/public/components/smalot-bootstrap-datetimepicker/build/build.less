@@ -10,24 +10,24 @@
 @grayLight:             #999;
 @grayLighter:           #eee;
 @white:                 #fff;
-@linkColor:             #08c;
+@linkColor:             #04be95;
 @btnPrimaryBackground:  @linkColor;
 @orange:                #f89406;
 
 // Mixins
 
 // Border Radius
-.border-radius(@radius: 5px) {
+.vic-border-radius(@radius: 5px) {
   -webkit-border-radius: @radius;
      -moz-border-radius: @radius;
           border-radius: @radius;
 }
 
 // Button backgrounds
-.buttonBackground(@startColor, @endColor) {
-  .gradientBar(@startColor, @endColor);
-  .reset-filter();
-  &:hover, &:active, &.active, &.disabled, &[disabled] {
+.vic-buttonBackground(@startColor, @endColor) {
+  .vic-gradientBar(@startColor, @endColor);
+  .vic-reset-filter();
+  &:hover, &:active, &.vic-active, &.vic-disabled, &[disabled] {
     background-color: @endColor;
   }
   &:active,
@@ -37,20 +37,20 @@
 }
 
 // Reset filters for IE
-.reset-filter() {
+.vic-reset-filter() {
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
 }
 
 // Gradient Bar Colors for buttons and alerts
-.gradientBar(@primaryColor, @secondaryColor) {
-  #gradient > .vertical(@primaryColor, @secondaryColor);
+.vic-gradientBar(@primaryColor, @secondaryColor) {
+  #gradient > .vic-vertical(@primaryColor, @secondaryColor);
   border-color: @secondaryColor @secondaryColor darken(@secondaryColor, 15%);
   border-color: rgba(0,0,0,.1) rgba(0,0,0,.1) fadein(rgba(0,0,0,.1), 15%);
 }
 
 // Gradients
 #gradient {
-  .vertical(@startColor: #555, @endColor: #333) {
+  .vic-vertical(@startColor: #555, @endColor: #333) {
     background-color: mix(@startColor, @endColor, 60%);
     background-image: -moz-linear-gradient(top, @startColor, @endColor); // FF 3.6+
     background-image: -ms-linear-gradient(top, @startColor, @endColor); // IE10

@@ -62,6 +62,10 @@
                 <source>form.page.type.status.choice.label.scheduled</source>
                 <target>Publier à partir du</target>
             </trans-unit>
+            <trans-unit resname="victoire.menu.publication.scheduled.tooltip">
+                <source>victoire.menu.publication.scheduled.tooltip</source>
+                <target>Cette page sera publiée à partir du %publication_date%.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

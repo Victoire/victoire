@@ -26,6 +26,22 @@
     {% block menu_container %}
     <div class="vic-collapse vic-navbar-collapse vic-navbar-responsive-collapse">
         <ul class="vic-userNav">
+            {% if page is defined and not page.published %}
+            <li class="vic-text-center">
+                {% if page.status == constant('Victoire\\Bundle\\PageBundle\\Entity\\BasePage::STATUS_SCHEDULED') %}
+                    {% set icon = "clock-o" %}
+                    {% set tooltip = "victoire.menu.publication.scheduled.tooltip"|trans({'%publication_date%': page.publishedAt|localizeddate('medium', 'none', null, null, "cccc dd/MM/yyyy à hh'h'mm") }, 'victoire') %}
+                {% elseif page.status == constant('Victoire\\Bundle\\PageBundle\\Entity\\BasePage::STATUS_DRAFT') %}
+                    {% set icon = "pencil" %}
+                {% elseif page.status == constant('Victoire\\Bundle\\PageBundle\\Entity\\BasePage::STATUS_UNPUBLISHED') %}
+                    {% set icon = "moon-o" %}
+                {% endif %}
+                <a href="{{ path('victoire_core_page_settings', {'id' : page.id}) }}" data-toggle="vic-modal"{% if tooltip is defined %}title="{{ tooltip }}"{% endif %}>
+
+                    <i class="fa fa-{{ icon }}"></i>
+                </a>
+            </li>
+            {% endif %}
             <li class="vic-text-center">
                 <div class="vic-toggle vic-pull-left">
                     <label class="vic-toggle-radio" for="toggleAdmin2"></label>

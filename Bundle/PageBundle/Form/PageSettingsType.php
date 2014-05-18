@@ -39,7 +39,7 @@ class PageSettingsType extends PageType
             ))
             ->add('publishedAt', null, array(
                 'widget'         => 'single_text',
-                'datetimepicker' => true,
+                'datetimepicker' => true
             ))
             ->remove('layout');
     }

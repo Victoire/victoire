@@ -102,6 +102,12 @@ class BasePageController extends Controller
                 $url = $this->generateUrl('victoire_core_page_show', array('url' => $seoUrl));
                 //generate the redirect
                 $response = $this->redirect($url);
+            } elseif (
+                //If page is not yet published, we display it only for admin in edit mode
+                ($page->getStatus() != BasePage::STATUS_PUBLISHED || ($page->getStatus() == BasePage::STATUS_SCHEDULED && $page->getPublishedAt() > new \DateTime()))
+                && !$this->get('session')->get('victoire.edit_mode', false)
+                ) {
+                throw new NotFoundHttpException('Unpublished page');
             } else {
                 //add the page to twig
                 $this->get('twig')->addGlobal('page', $page);
@@ -210,15 +216,16 @@ class BasePageController extends Controller
      * If the valid is not valid, an exception is thrown
      *
      * @param Page $page
+     *
      * @throws NotFoundHttpException
      */
     protected function isPageValid($page)
     {
-        $errorMessgae = 'The page was not found.';
+        $errorMessage = 'The page was not found.';
 
         //there is no page
         if ($page === null) {
-            throw new NotFoundHttpException($errorMessgae);
+            return new NotFoundHttpException($errorMessage);
         }
 
         $isPublished = $page->isPublished();
@@ -227,7 +234,7 @@ class BasePageController extends Controller
 
         //a page not published, not owned, nor granted throw an exception
         if (!$isPublished && !$isPageOwner && !$granted) {
-            throw new NotFoundHttpException($errorMessgae);
+            return new NotFoundHttpException($errorMessage);
         }
     }
 }

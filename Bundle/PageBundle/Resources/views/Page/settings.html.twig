@@ -35,13 +35,25 @@
                 </div>
                 <div class="vic-col-lg-4">
                     {{ form_row(form.status) }}
+                    <div class="publication-date-container{{ form.vars.value.publishedAt != constant('Victoire\\Bundle\\PageBundle\\Entity\\BasePage::STATUS_SCHEDULED') ? ' vic-hidden' }}">
                     {{ form_widget(form.publishedAt) }}
+                    </div>
                 </div>
             </div>
             {{ form_rest(form) }}
         </form>
     </div>
 </div>
+
+<script type="text/javascript">
+    $vic('#victoire_page_settings_type_status').on('change', function(){
+        if ($vic(this).val() == '{{ constant('Victoire\\Bundle\\PageBundle\\Entity\\BasePage::STATUS_SCHEDULED') }}') {
+            $vic('.publication-date-container').removeClass('vic-hidden');
+        } else {
+            $vic('.publication-date-container').addClass('vic-hidden');
+        }
+    });
+</script>
 
 {% javascripts
     '@VictoireFormBundle/Resources/public/js/datetimepicker-init.js'

@@ -21,7 +21,7 @@
 @dropdownLinkBackgroundHover:   @linkColor;
 
 // Drop shadows
-.box-shadow(@shadow) {
+.vic-box-shadow(@shadow) {
   -webkit-box-shadow: @shadow;
      -moz-box-shadow: @shadow;
           box-shadow: @shadow;
@@ -29,7 +29,7 @@
 
 // The dropdown menu (ul)
 // ----------------------
-.datepicker.dropdown-menu {
+.vic-datepicker.vic-dropdown-menu {
   position: absolute;
   top: 100%;
   left: 0;
@@ -41,8 +41,8 @@
   background-color: @dropdownBackground;
   border: 1px solid #ccc;
   border: 1px solid rgba(0,0,0,.2);
-  .border-radius(5px);
-  .box-shadow(0 5px 10px rgba(0,0,0,.2));
+  .vic-border-radius(5px);
+  .vic-box-shadow(0 5px 10px rgba(0,0,0,.2));
   -webkit-background-clip: padding-box;
      -moz-background-clip: padding;
           background-clip: padding-box;
@@ -62,8 +62,8 @@
 
 // Alternative arrows
 // May require `charset="UTF-8"` in your `<link>` tag
-.datepicker {
-  .prev, .next {font-style:normal;}
-  .prev:after {content:"«";}
-  .next:after {content:"»";}
+.vic-datepicker {
+  .vic-prev, .vic-next {font-style:normal;}
+  .vic-prev:after {content:"«";}
+  .vic-next:after {content:"»";}
 }

@@ -1,5 +1,6 @@
 $vic('[data-provider="datepicker"]').datetimepicker({
     autoclose: true,
+    format: 'dd/mm/yyyy',
     language: 'fr',
     minView: 'month',
     pickerPosition: 'bottom-left',
@@ -9,6 +10,7 @@ $vic('[data-provider="datepicker"]').datetimepicker({
 
 $vic('[data-provider="datetimepicker"]').datetimepicker({
     autoclose: true,
+    format: 'dd/mm/yyyy hh:ii',
     language: 'fr',
     pickerPosition: 'bottom-left',
     todayBtn: true
@@ -16,6 +18,7 @@ $vic('[data-provider="datetimepicker"]').datetimepicker({
 
 $vic('[data-provider="timepicker"]').datetimepicker({
     autoclose: true,
+    format: 'hh:ii',
     formatViewType: 'time',
     maxView: 'day',
     minView: 'hour',
