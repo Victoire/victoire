@@ -6,11 +6,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppVentus\Awesome\ShortcutsBundle\Controller\AwesomeController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Victoire\Bundle\CoreBundle\Entity\Widget;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
+use Victoire\Bundle\CoreBundle\Widget\Managers\WidgetManager;
 
 
 /**
@@ -18,9 +19,8 @@ use Victoire\Bundle\PageBundle\Entity\BasePage;
  *
  * @Route("/victoire-dcms/widget")
  */
-class WidgetController extends Controller
+class WidgetController extends AwesomeController
 {
-
     /**
      * Show a widget
      *
@@ -33,7 +33,9 @@ class WidgetController extends Controller
     public function showAction(Widget $widget)
     {
         if ($this->getRequest()->isXmlHttpRequest()) {
-            return new JsonResponse($this->get('widget_manager')->render($widget));
+            $widgetManager = $this->getWidgetManager();
+
+            return new JsonResponse($widgetManager->render($widget));
         }
 
         return $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $widget->getPage()->getUrl())));
@@ -53,7 +55,9 @@ class WidgetController extends Controller
      */
     public function editAction(Widget $widget, $type = null)
     {
-        return new JsonResponse($this->get('widget_manager')->edit($widget, $type));
+        $widgetManager = $this->getWidgetManager();
+
+        return new JsonResponse($widgetManager->edit($widget, $type));
     }
 
     /**
@@ -73,7 +77,6 @@ class WidgetController extends Controller
         $page = $this->get('doctrine.orm.entity_manager')->getRepository('VictoirePageBundle:BasePage')->findOneById($page);
 
         if ($entity) {
-
             $widgetManager = $this->get('widget_manager')->getManager(null, $type);
             $widget = $widgetManager->newWidget($page, $slot);
 
@@ -111,10 +114,13 @@ class WidgetController extends Controller
      */
     public function createAction($type, $page, $slot = null, $entity = null)
     {
+        //services
+        $em = $this->getEntityManager();
 
-        $page = $this->get('doctrine.orm.entity_manager')->getRepository('VictoirePageBundle:BasePage')->findOneById($page);
+        $page = $em->getRepository('VictoirePageBundle:BasePage')->findOneById($page);
+        $widgetManager = $this->getWidgetManager();
 
-        return new JsonResponse($this->get('widget_manager')->createWidget($type, $slot, $page, $entity));
+        return new JsonResponse($widgetManager->createWidget($type, $slot, $page, $entity));
     }
 
     /**
@@ -149,5 +155,17 @@ class WidgetController extends Controller
         $this->get('widget_manager')->computeWidgetMap($page, $sortedWidgets);
 
         return new JsonResponse();
+    }
+
+    /**
+     * Shortcut for getting the widget manager
+     *
+     * @return WidgetManager
+     */
+    protected function getWidgetManager()
+    {
+        $manager = $this->get('widget_manager');
+
+        return $manager;
     }
 }
