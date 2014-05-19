@@ -16,7 +16,7 @@ use Victoire\Bundle\PageBundle\Entity\BasePage;
 /**
  * Widget Controller
  *
- * @Route("/widget")
+ * @Route("/victoire-dcms/widget")
  */
 class WidgetController extends Controller
 {
