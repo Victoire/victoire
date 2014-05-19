@@ -124,17 +124,12 @@ class CmsExtension extends \Twig_Extension
         return $this->widgetManager->renderActions($slot, $page);
     }
 
-
     /**
      * render a widget
      */
     public function cmsWidget($widget, $addContainer = true)
     {
-
-        $response = $this->widgetManager->render($widget);
-        if ($addContainer) {
-            $response = "<div class='widget-container' id='vic-widget-".$widget->getId()."-container'>".$response.'</div>';
-        }
+        $response = $this->widgetManager->render($widget, $addContainer);
 
         return $response;
     }
