@@ -11,12 +11,17 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Switch controller
  *
+ * @Route("/victoire-dcms/switch")
  */
 class SwitchController extends Controller
 {
-
     /**
-     * @Route("/switch/{mode}", name="victoire_core_switch", options={"expose"=true})
+     * @Route("/{mode}", name="victoire_core_switch", options={"expose"=true})
+     *
+     * @param Request $request The request
+     * @param string  $mode    The mode
+     *
+     * @return Response The redirect
      */
     public function switchAction(Request $request, $mode)
     {
