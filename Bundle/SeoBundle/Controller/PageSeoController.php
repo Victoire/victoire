@@ -10,15 +10,20 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\SeoBundle\Entity\PageSeo;
 
+/**
+ *
+ * @author Thomas Beaujean <thomas@appventus.com>
+ *
+ * @Route("/victoire-dcms/seo")
+ */
 class PageSeoController extends Controller
 {
-
     /**
      * Page settings
      *
      * @param page $page
      * @return template
-     * @Route("/page/{id}/seo", name="victoire_seo_pageSeo_settings")
+     * @Route("/page/{id}", name="victoire_seo_pageSeo_settings")
      * @Template()
      * @ParamConverter("page", class="VictoirePageBundle:BasePage")
      */
