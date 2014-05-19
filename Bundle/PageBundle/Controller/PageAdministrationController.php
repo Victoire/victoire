@@ -19,14 +19,17 @@ use Victoire\Bundle\PageBundle\Form\PageType;
 
 
 /**
- * Page controller
+ * Page Administration Controller
  *
+ * @Route("/victoire-dcms/page")
  */
-class PageController extends BasePageController
+class PageAdministrationController extends BasePageController
 {
-
     protected $routes;
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->routes = array(
@@ -38,38 +41,14 @@ class PageController extends BasePageController
     }
 
     /**
-     * Show homepage or redirect to new page
-     *
-     * ==========================
-     * find homepage
-     * if homepage
-     *     forward show(homepage)
-     * else
-     *     redirect to welcome page (dashboard)
-     * ==========================
-     *
-     * @Route("/", name="victoire_core_page_homepage")
-     * @return template
-     *
-     */
-    public function homepageAction()
-    {
-        $homepage = $this->getDoctrine()->getManager()->getRepository('VictoirePageBundle:Page')->findOneByHomepage(true);
-
-        if ($homepage) {
-            return $this->showAction($homepage->getUrl());
-        } else {
-            return $this->redirect($this->generateUrl('victoire_dashboard_default_welcome'));
-        }
-    }
-
-    /**
      * New page
      *
      * @return template
-     * @Route("/page/new", name="victoire_core_page_new", defaults={"isHomepage" : false})
+     * @Route("/new", name="victoire_core_page_new", defaults={"isHomepage" : false})
      * @Route("/homepage/new", name="victoire_core_homepage_new", defaults={"isHomepage" : true})
      * @Template()
+     *
+     * @param boolean $isHomepage Is the page a homepage
      */
     public function newAction($isHomepage = false)
     {
@@ -80,11 +59,13 @@ class PageController extends BasePageController
     /**
      * Page settings
      *
-     * @param page $page
-     * @return template
-     * @Route("/page/{id}/settings", name="victoire_core_page_settings")
+     * @Route("/{id}/settings", name="victoire_core_page_settings")
      * @Template()
      * @ParamConverter("page", class="VictoirePageBundle:BasePage")
+     *
+     * @param BasePage $page The page
+     *
+     * @return json The settings
      */
     public function settingsAction(BasePage $page)
     {
@@ -97,7 +78,7 @@ class PageController extends BasePageController
      *
      * @param page $page
      * @return template
-     * @Route("/page/{id}/delete", name="victoire_core_page_delete")
+     * @Route("/{id}/delete", name="victoire_core_page_delete")
      * @Template()
      * @ParamConverter("page", class="VictoirePageBundle:BasePage")
      */
@@ -116,36 +97,11 @@ class PageController extends BasePageController
      *
      * @param page $page
      * @return template
-     * @Route("/page/{id}/detach", name="victoire_core_page_detach")
+     * @Route("/{id}/detach", name="victoire_core_page_detach")
      * @ParamConverter("page", class="VictoirePageBundle:BasePage")
      */
     public function detachAction(BasePage $page)
     {
-        // $template = $page->getTemplate();
-        // $em = $this->getDoctrine()->getManager();
-
-        // foreach ($page->getWidgets() as $widget) {
-        //     if ($widget instanceof WidgetReference) {
-        //         $em->remove($widget);
-        //     }
-        // }
-
-        // $widgets = $template->getWidgets();
-        // $pageWidgets = array();
-
-        // foreach ($widgets as $widget) {
-        //     $pageWidget = clone $widget;
-        //     $pageWidgets[] = $pageWidget;
-        //     $em->persist($pageWidget);
-        // }
-        // //associate template's widgets to our standalone page and detach page from template
-        // $page->setWidgets($pageWidgets);
-        // $page->setTemplate(null);
-
-        // $em->persist($page);
-        // $em->flush();
-
-        // return $this->redirect($this->generateUrl($this->getRoutes('show'), array('slug' => $page->getSlug())));
 
     }
 
@@ -154,7 +110,7 @@ class PageController extends BasePageController
      *
      * @param page $page
      * @return template
-     * @Route("/page/{id}/create-template", name="victoire_core_page_createtemplate")
+     * @Route("/{id}/create-template", name="victoire_core_page_createtemplate")
      * @ParamConverter("page", class="VictoirePageBundle:BasePage")
      */
     public function createTemplateAction(BasePage $page)
@@ -177,14 +133,13 @@ class PageController extends BasePageController
             'VictoirePageBundle:Page:settings.html.twig',
             array('page' => $page, 'form' => $form->createView())
         );
-
     }
 
     /**
      * Show and edit sitemap
      *
      * @return template
-     * @Route("/page/sitemap", name="victoire_core_page_sitemap")
+     * @Route("/sitemap", name="victoire_core_page_sitemap")
      * @Template()
      */
     public function siteMapAction()
@@ -198,7 +153,7 @@ class PageController extends BasePageController
             foreach ($sorted as $item) {
                 $depths[$item['depth']][$item['item_id']] = 1;
                 $page = $pageRepo->findOneById($item['item_id']);
-                if ( $page !== null) {
+                if ($page !== null) {
                     if ($item['parent_id'] !== '') {
                         $parent = $pageRepo->findOneById($item['parent_id']);
                         $page->setParent($parent);
@@ -225,22 +180,53 @@ class PageController extends BasePageController
         }
     }
 
+    /**
+     * getNewPageType
+     *
+     * @return string
+     */
     protected function getNewPageType()
     {
         return 'victoire_page_type';
     }
+
+    /**
+     * getPageSettingsType
+     *
+     * @return string
+     */
     protected function getPageSettingsType()
     {
         return 'victoire_page_settings_type';
     }
+
+    /**
+     * getNewPage
+     *
+     * @return \Victoire\Bundle\PageBundle\Entity\Page
+     */
     protected function getNewPage()
     {
         return new Page();
     }
+
+    /**
+     * getBaseTemplatePath
+     *
+     * @return string
+     */
     protected function getBaseTemplatePath()
     {
         return "VictoirePageBundle:Page";
     }
+
+    /**
+     * getRoutes
+     *
+     * @param string $action
+     *
+     * @return string The route
+     */
     protected function getRoutes($action)
     {
         return $this->routes[$action];

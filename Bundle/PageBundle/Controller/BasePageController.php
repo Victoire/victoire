@@ -20,35 +20,72 @@ use Victoire\Bundle\PageBundle\Entity\Page;
  **/
 class BasePageController extends Controller
 {
-
     /**
-     * @param $page
+     * Show homepage or redirect to new page
+     *
+     * ==========================
+     * find homepage
+     * if homepage
+     *     forward show(homepage)
+     * else
+         *     redirect to welcome page (dashboard)
+     * ==========================
+     *
+     * @Route("/", name="victoire_core_page_homepage")
      * @return template
      *
      */
+    public function homepageAction()
+    {
+        $homepage = $this->getDoctrine()->getManager()->getRepository('VictoirePageBundle:Page')->findOneByHomepage(true);
+
+        if ($homepage) {
+            return $this->showAction($homepage->getUrl());
+        } else {
+            return $this->redirect($this->generateUrl('victoire_dashboard_default_welcome'));
+        }
+    }
+
+    /**
+     * @param $page
+     *
+     * @return template
+     */
     public function deleteAction(BasePage $page)
     {
-        if (!$page->isUndeletable()) {
+        $return = null;
+
+        try {
+            //it should not be allowed to try to delete an undeletable page
+            if ($page->isUndeletable()) {
+                $message = $this->get('translator')->trans('page.undeletable', array(), 'victoire');
+                throw new \Exception($message);
+            }
+
+            //the entity manager
             $em = $this->get('doctrine.orm.entity_manager');
+
+            //remove the page
             $em->remove($page);
+
+            //flush the modifications
             $em->flush();
 
-            $pageRepo = $this->getDoctrine()->getManager()->getRepository('VictoirePageBundle:BasePage');
-            $homepage = $pageRepo->findOneByHomepage(true);
+            //redirect to the homepage
+            $homepageUrl = $this->generateUrl('victoire_core_page_homepage');
 
-            return array(
+            $return = array(
                 'success' => true,
-                'url'     => $this->generateUrl('victoire_core_page_show', array('url'     => $homepage->getUrl()))
+                'url'     => $homepageUrl
             );
-
-        } else {
-            return array(
+        } catch (\Exception $ex) {
+            $return = array(
                 'success' => false,
-                'message' => $this->get('translator')->trans('page.undeletable', array(), 'victoire')
+                'message' => $ex->getMessage()
             );
-
         }
 
+        return $return;
     }
 
     /**
@@ -126,6 +163,8 @@ class BasePageController extends Controller
     /**
      * New page
      *
+     * @param boolean $isHomepage
+     *
      * @return template
      */
     protected function newAction($isHomepage = false)
@@ -146,7 +185,9 @@ class BasePageController extends Controller
             // + 1 because position start at 1, not 0
             $page->setPosition($pageNb + 1);
 
-            if ($template = $page->getTemplate()) {
+            $template = $page->getTemplate();
+
+            if ($template) {
                 $page->setWidgetMap($template->getWidgetMap());
             }
 

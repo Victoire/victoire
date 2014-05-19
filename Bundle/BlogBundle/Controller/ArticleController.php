@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 /**
  * blog Controller
  *
- * @Route("blog")
+ * @Route("/blog")
  */
 class ArticleController extends BasePageController
 {
