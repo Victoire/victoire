@@ -5,7 +5,16 @@
         {
             "victoire-edit":
             [
+                "@VictoireFormBundle/Resources/public/components/smalot-bootstrap-datetimepicker/js/bootstrap-datetimepicker.js",
+                "@VictoireFormBundle/Resources/public/components/smalot-bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.fr.js",
                 "@VictoireFormBundle/Resources/public/js/mopabootstrap-collection.js"
+            ]
+         },
+        "stylesheets":
+        {
+            "victoire-edit":
+            [
+                "@VictoireFormBundle/Resources/public/components/smalot-bootstrap-datetimepicker/build/build_standalone.less"
             ]
          }
     }

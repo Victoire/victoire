@@ -21,7 +21,7 @@
                 "@VictoireMediaBundle/Resources/public/js/libs/bootstrap-timepicker.js",
                 "@VictoireMediaBundle/Resources/public/js/libs/iphone-style-checkboxes.js",
                 "@VictoireMediaBundle/Resources/public/js/script.js",
-                "bundles/Victoiremedia/js/libs/jquery.jstree.js"
+                "bundles/victoiremedia/js/libs/jquery.jstree.js"
             ],
             "victoire-edit":
             [
@@ -33,11 +33,11 @@
         {
             "victoire-media":
             [
-                "bundles/Victoiremedia/css/style.css"
+                "bundles/victoiremedia/css/style.css"
             ],
             "victoire-edit":
             [
-                "bundles/Victoiremedia/css/media-style.less"
+                "bundles/victoiremedia/css/media-style.less"
             ]
         }
     }

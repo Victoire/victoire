@@ -47,6 +47,16 @@ class CmsExtension extends \Twig_Extension
         );
     }
 
+    /**
+     * register twig filters
+     */
+    public function getFilters()
+    {
+        return array(
+            'hash' => new \Twig_Filter_Method($this, 'hash'),
+        );
+    }
+
 
 
     /**
@@ -138,6 +148,24 @@ class CmsExtension extends \Twig_Extension
             'VictoireCoreBundle:Layout:' . $page->getLayout(). '.html.twig',
             array('page' => $page)
         );
+
+    }
+
+    /**
+     * hash some string with given algorithm
+     * @param string $value     The string to hash
+     * @param string $algorithm The algorithm we have to use to hash the string
+     *
+     */
+    public function hash($value, $algorithm = "md5")
+    {
+        try {
+            return hash($algorithm, $value);
+        } catch (Exception $e) {
+            error_log('Please check that the '.$algorithm.' does exists because it failed when trying to run. We are expecting a valid algorithm such as md5 or sha512 etc.');
+
+            return $value;
+        }
 
     }
 

@@ -1,0 +1,418 @@
+/*!
+ * Datetimepicker for Bootstrap
+ *
+ * Copyright 2012 Stefan Petre
+ * Improvements by Andrew Rowls
+ * Improvements by Sébastien Malot
+ * Licensed under the Apache License v2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ */
+
+.vic-datetimepicker {
+    padding: 4px;
+    margin-top: 1px;
+    white-space: normal;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    direction: ltr;
+    &.vic-datetimepicker-rtl {
+        direction: rtl;
+        table {
+            tr {
+                td {
+                    span {
+                        float: right;
+                    }
+                }
+            }
+        }
+    }
+    & > div {
+        display: none;
+    }
+    &.vic-minutes {
+        div {
+            &.vic-datetimepicker-minutes {
+                display: block;
+            }
+        }
+    }
+    &.vic-hours {
+        div {
+            &.vic-datetimepicker-hours {
+                display: block;
+            }
+        }
+    }
+    &.vic-days {
+        div {
+            &.vic-datetimepicker-days {
+                display: block;
+            }
+        }
+    }
+    &.vic-months {
+        div {
+            &.vic-datetimepicker-months {
+                display: block;
+            }
+        }
+    }
+    &.vic-years {
+        div {
+            &.vic-datetimepicker-years {
+                display: block;
+            }
+        }
+    }
+    table {
+        margin: 0;
+        tr {
+            td {
+                &.vic-minute {
+                    &:hover {
+                        background: #eeeeee;
+                        cursor: pointer;
+                    }
+                }
+                &.vic-hour {
+                    &:hover {
+                        background: #eeeeee;
+                        cursor: pointer;
+                    }
+                }
+                &.vic-day {
+                    &:hover {
+                        background: #eeeeee;
+                        cursor: pointer;
+                    }
+                }
+                span {
+                    display: block;
+                    width: 23%;
+                    height: 54px;
+                    line-height: 54px;
+                    float: left;
+                    margin: 1%;
+                    cursor: pointer;
+                    -webkit-border-radius: 4px;
+                    -moz-border-radius: 4px;
+                    border-radius: 4px;
+                    &:hover {
+                        background: #eeeeee;
+                    }
+                    &.vic-old {
+                        color: #999999;
+                    }
+                }
+            }
+        }
+    }
+    .vic-datetimepicker-hours {
+        span {
+            height: 26px;
+            line-height: 26px;
+        }
+    }
+    .vic-datetimepicker-minutes {
+        span {
+            height: 26px;
+            line-height: 26px;
+        }
+    }
+    th {
+        &.vic-switch {
+            width: 145px;
+        }
+    }
+}
+.vic-datetimepicker-inline {
+    width: 220px;
+}
+.vic-datetimepicker-dropdown, .vic-datetimepicker-dropdown-left {
+    top: 0;
+    left: 0;
+}
+[class*="datetimepicker-dropdown"]:before {
+    content: '';
+    display: inline-block;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 7px solid #ccc;
+    border-bottom-color: rgba(0, 0, 0, 0.2);
+    position: absolute;
+}
+[class*="datetimepicker-dropdown"]:after {
+    content: '';
+    display: inline-block;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid #ffffff;
+    position: absolute;
+}
+[class*="datetimepicker-dropdown-top"]:before {
+    content: '';
+    display: inline-block;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-top: 7px solid #ccc;
+    border-top-color: rgba(0, 0, 0, 0.2);
+    border-bottom: 0;
+}
+[class*="datetimepicker-dropdown-top"]:after {
+    content: '';
+    display: inline-block;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #ffffff;
+    border-bottom: 0;
+}
+.vic-datetimepicker-dropdown-bottom-left {
+    &:before {
+        top: -7px;
+        right: 6px;
+    }
+    &:after {
+        top: -6px;
+        right: 7px;
+    }
+}
+.vic-datetimepicker-dropdown-bottom-right {
+    &:before {
+        top: -7px;
+        left: 6px;
+    }
+    &:after {
+        top: -6px;
+        left: 7px;
+    }
+}
+.vic-datetimepicker-dropdown-top-left {
+    &:before {
+        bottom: -7px;
+        right: 6px;
+    }
+    &:after {
+        bottom: -6px;
+        right: 7px;
+    }
+}
+.vic-datetimepicker-dropdown-top-right {
+    &:before {
+        bottom: -7px;
+        left: 6px;
+    }
+    &:after {
+        bottom: -6px;
+        left: 7px;
+    }
+}
+.vic-datetimepicker  td,
+.vic-datetimepicker th {
+    text-align: center;
+    width: 20px;
+    height: 20px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    border: none;
+}
+.vic-table-striped .vic-datetimepicker table tr td,
+.vic-table-striped .vic-datetimepicker table tr th {
+    background-color: transparent;
+}
+.vic-datetimepicker table tr td.vic-old,
+.vic-datetimepicker table tr td.vic-new {
+    color: #999999;
+}
+.vic-datetimepicker table tr td.vic-disabled,
+.vic-datetimepicker table tr td.vic-disabled:hover {
+    background: none;
+    color: #999999;
+    cursor: default;
+}
+.vic-datetimepicker table tr td.vic-today,
+.vic-datetimepicker table tr td.vic-today:hover,
+.vic-datetimepicker table tr td.vic-today.vic-disabled,
+.vic-datetimepicker table tr td.vic-today.vic-disabled:hover {
+    background-color: #fde19a;
+    background-image: -moz-linear-gradient(top, #fdd49a, #fdf59a);
+    background-image: -ms-linear-gradient(top, #fdd49a, #fdf59a);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fdd49a), to(#fdf59a));
+    background-image: -webkit-linear-gradient(top, #fdd49a, #fdf59a);
+    background-image: -o-linear-gradient(top, #fdd49a, #fdf59a);
+    background-image: linear-gradient(top, #fdd49a, #fdf59a);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fdd49a', endColorstr='#fdf59a', GradientType=0);
+    border-color: #fdf59a #fdf59a #fbed50;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+.vic-datetimepicker table tr td.vic-today:hover,
+.vic-datetimepicker table tr td.vic-today:hover:hover,
+.vic-datetimepicker table tr td.vic-today.vic-disabled:hover,
+.vic-datetimepicker table tr td.vic-today.vic-disabled:hover:hover,
+.vic-datetimepicker table tr td.vic-today:active,
+.vic-datetimepicker table tr td.vic-today:hover:active,
+.vic-datetimepicker table tr td.vic-today.vic-disabled:active,
+.vic-datetimepicker table tr td.vic-today.vic-disabled:hover:active,
+.vic-datetimepicker table tr td.vic-today.vic-active,
+.vic-datetimepicker table tr td.vic-today:hover.vic-active,
+.vic-datetimepicker table tr td.vic-today.vic-disabled.vic-active,
+.vic-datetimepicker table tr td.vic-today.vic-disabled:hover.vic-active,
+.vic-datetimepicker table tr td.vic-today.vic-disabled,
+.vic-datetimepicker table tr td.vic-today:hover.vic-disabled,
+.vic-datetimepicker table tr td.vic-today.vic-disabled.vic-disabled,
+.vic-datetimepicker table tr td.vic-today.vic-disabled:hover.vic-disabled,
+.vic-datetimepicker table tr td.vic-today[disabled],
+.vic-datetimepicker table tr td.vic-today:hover[disabled],
+.vic-datetimepicker table tr td.vic-today.vic-disabled[disabled],
+.vic-datetimepicker table tr td.vic-today.vic-disabled:hover[disabled] {
+    background-color: #fdf59a;
+}
+.vic-datetimepicker table tr td.vic-today:active,
+.vic-datetimepicker table tr td.vic-today:hover:active,
+.vic-datetimepicker table tr td.vic-today.vic-disabled:active,
+.vic-datetimepicker table tr td.vic-today.vic-disabled:hover:active,
+.vic-datetimepicker table tr td.vic-today.vic-active,
+.vic-datetimepicker table tr td.vic-today:hover.vic-active,
+.vic-datetimepicker table tr td.vic-today.vic-disabled.vic-active,
+.vic-datetimepicker table tr td.vic-today.vic-disabled:hover.vic-active {
+    background-color: #fbf069 \9;
+}
+.vic-datetimepicker table tr td.vic-active,
+.vic-datetimepicker table tr td.vic-active:hover,
+.vic-datetimepicker table tr td.vic-active.vic-disabled,
+.vic-datetimepicker table tr td.vic-active.vic-disabled:hover {
+    background-color: #04be95;
+    background-image: -moz-linear-gradient(top, #36cbaa, #04be95);
+    background-image: -ms-linear-gradient(top, #36cbaa, #04be95);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#36cbaa), to(#04be95));
+    background-image: -webkit-linear-gradient(top, #36cbaa, #04be95);
+    background-image: -o-linear-gradient(top, #36cbaa, #04be95);
+    background-image: linear-gradient(top, #36cbaa, #04be95);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#36cbaa', endColorstr='#04be95', GradientType=0);
+    border-color: #04be95 #04be95 #002a80;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+    color: #fff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+.vic-datetimepicker table tr td.vic-active:hover,
+.vic-datetimepicker table tr td.vic-active:hover:hover,
+.vic-datetimepicker table tr td.vic-active.vic-disabled:hover,
+.vic-datetimepicker table tr td.vic-active.vic-disabled:hover:hover,
+.vic-datetimepicker table tr td.vic-active:active,
+.vic-datetimepicker table tr td.vic-active:hover:active,
+.vic-datetimepicker table tr td.vic-active.vic-disabled:active,
+.vic-datetimepicker table tr td.vic-active.vic-disabled:hover:active,
+.vic-datetimepicker table tr td.vic-active.vic-active,
+.vic-datetimepicker table tr td.vic-active:hover.vic-active,
+.vic-datetimepicker table tr td.vic-active.vic-disabled.vic-active,
+.vic-datetimepicker table tr td.vic-active.vic-disabled:hover.vic-active,
+.vic-datetimepicker table tr td.vic-active.vic-disabled,
+.vic-datetimepicker table tr td.vic-active:hover.vic-disabled,
+.vic-datetimepicker table tr td.vic-active.vic-disabled.vic-disabled,
+.vic-datetimepicker table tr td.vic-active.vic-disabled:hover.vic-disabled,
+.vic-datetimepicker table tr td.vic-active[disabled],
+.vic-datetimepicker table tr td.vic-active:hover[disabled],
+.vic-datetimepicker table tr td.vic-active.vic-disabled[disabled],
+.vic-datetimepicker table tr td.vic-active.vic-disabled:hover[disabled] {
+    background-color: #04be95;
+}
+.vic-datetimepicker table tr td.vic-active:active,
+.vic-datetimepicker table tr td.vic-active:hover:active,
+.vic-datetimepicker table tr td.vic-active.vic-disabled:active,
+.vic-datetimepicker table tr td.vic-active.vic-disabled:hover:active,
+.vic-datetimepicker table tr td.vic-active.vic-active,
+.vic-datetimepicker table tr td.vic-active:hover.vic-active,
+.vic-datetimepicker table tr td.vic-active.vic-disabled.vic-active,
+.vic-datetimepicker table tr td.vic-active.vic-disabled:hover.vic-active {
+    background-color: #003399 \9;
+}
+.vic-datetimepicker .vic-datetimepicker-hours table tr td span.vic-hour_am,
+.vic-datetimepicker .vic-datetimepicker-hours table tr td span.vic-hour_pm {
+    width: 14.6%;
+}
+.vic-datetimepicker .vic-datetimepicker-hours fieldset legend,
+.vic-datetimepicker .vic-datetimepicker-minutes fieldset legend {
+    margin-bottom: inherit;
+    line-height: 30px;
+}
+.vic-datetimepicker table tr td span.vic-disabled,
+.vic-datetimepicker table tr td span.vic-disabled:hover {
+    background: none;
+    color: #999999;
+    cursor: default;
+}
+.vic-datetimepicker table tr td span.vic-active,
+.vic-datetimepicker table tr td span.vic-active:hover,
+.vic-datetimepicker table tr td span.vic-active.vic-disabled,
+.vic-datetimepicker table tr td span.vic-active.vic-disabled:hover {
+    background-color: #04be95;
+    background-image: -moz-linear-gradient(top, #36cbaa, #04be95);
+    background-image: -ms-linear-gradient(top, #36cbaa, #04be95);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#36cbaa), to(#04be95));
+    background-image: -webkit-linear-gradient(top, #36cbaa, #04be95);
+    background-image: -o-linear-gradient(top, #36cbaa, #04be95);
+    background-image: linear-gradient(top, #36cbaa, #04be95);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#36cbaa', endColorstr='#04be95', GradientType=0);
+    border-color: #04be95 #04be95 #002a80;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+    color: #fff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+.vic-datetimepicker table tr td span.vic-active:hover,
+.vic-datetimepicker table tr td span.vic-active:hover:hover,
+.vic-datetimepicker table tr td span.vic-active.vic-disabled:hover,
+.vic-datetimepicker table tr td span.vic-active.vic-disabled:hover:hover,
+.vic-datetimepicker table tr td span.vic-active:active,
+.vic-datetimepicker table tr td span.vic-active:hover:active,
+.vic-datetimepicker table tr td span.vic-active.vic-disabled:active,
+.vic-datetimepicker table tr td span.vic-active.vic-disabled:hover:active,
+.vic-datetimepicker table tr td span.vic-active.vic-active,
+.vic-datetimepicker table tr td span.vic-active:hover.vic-active,
+.vic-datetimepicker table tr td span.vic-active.vic-disabled.vic-active,
+.vic-datetimepicker table tr td span.vic-active.vic-disabled:hover.vic-active,
+.vic-datetimepicker table tr td span.vic-active.vic-disabled,
+.vic-datetimepicker table tr td span.vic-active:hover.vic-disabled,
+.vic-datetimepicker table tr td span.vic-active.vic-disabled.vic-disabled,
+.vic-datetimepicker table tr td span.vic-active.vic-disabled:hover.vic-disabled,
+.vic-datetimepicker table tr td span.vic-active[disabled],
+.vic-datetimepicker table tr td span.vic-active:hover[disabled],
+.vic-datetimepicker table tr td span.vic-active.vic-disabled[disabled],
+.vic-datetimepicker table tr td span.vic-active.vic-disabled:hover[disabled] {
+    background-color: #04be95;
+}
+.vic-datetimepicker table tr td span.vic-active:active,
+.vic-datetimepicker table tr td span.vic-active:hover:active,
+.vic-datetimepicker table tr td span.vic-active.vic-disabled:active,
+.vic-datetimepicker table tr td span.vic-active.vic-disabled:hover:active,
+.vic-datetimepicker table tr td span.vic-active.vic-active,
+.vic-datetimepicker table tr td span.vic-active:hover.vic-active,
+.vic-datetimepicker table tr td span.vic-active.vic-disabled.vic-active,
+.vic-datetimepicker table tr td span.vic-active.vic-disabled:hover.vic-active {
+    background-color: #003399 \9;
+}
+.vic-datetimepicker thead tr:first-child th,
+.vic-datetimepicker tfoot tr:first-child th {
+    cursor: pointer;
+}
+.vic-datetimepicker thead tr:first-child th:hover,
+.vic-datetimepicker tfoot tr:first-child th:hover {
+    background: #eeeeee;
+}
+
+.vic-input-append.vic-date .vic-add-on i,
+.vic-input-prepend.vic-date .vic-add-on i,
+.vic-input-group.vic-date .vic-input-group-addon span {
+    cursor: pointer;
+    width: 14px;
+    height: 14px;
+}
+

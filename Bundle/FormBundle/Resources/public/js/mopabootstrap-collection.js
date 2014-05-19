@@ -17,26 +17,26 @@
  * limitations under the License.
  * ============================================================ */
 
-!function ($) {
+!function ($vic) {
     "use strict";
 
     /* Collection PUBLIC CLASS DEFINITION
      * ============================== */
 
     var Collection = function (element, options) {
-        this.$element = $(element);
-        this.options = $.extend({}, $.fn.collection.defaults, options);
+        this.$vicelement = $vic(element);
+        this.options = $vic.extend({}, $vic.fn.collection.defaults, options);
 
         // This must work with "collections" inside "collections", and should
         // select its children, and not the "collection" inside children.
-        var $collection = $('div' + this.options.collection_id);
+        var $viccollection = $vic('div' + this.options.collection_id);
 
         // Indexes must be different for every Collection
         if (typeof this.options.index === 'undefined') {
             this.options.index = {};
         }
         if (!this.options.initial_size) {
-            this.options.initial_size = $collection.children().size();
+            this.options.initial_size = $viccollection.children().size();
         }
 
         this.options.index[this.options.collection_id] = this.options.initial_size;
@@ -48,8 +48,8 @@
             // this leads to overriding items
             this.options.index[this.options.collection_id] = this.options.index[this.options.collection_id] + 1;
             var index = this.options.index[this.options.collection_id];
-            if ($.isFunction(this.options.addcheckfunc) && ! this.options.addcheckfunc()) {
-                if ($.isFunction(this.options.addfailedfunc)) {
+            if ($vic.isFunction(this.options.addcheckfunc) && ! this.options.addcheckfunc()) {
+                if ($vic.isFunction(this.options.addfailedfunc)) {
                     this.options.addfailedfunc();
                 }
                 return;
@@ -58,10 +58,10 @@
         },
         addPrototype: function (index) {
             console.log('collection item addPrototype');
-            var $collection = $(this.options.collection_id);
-            console.log($collection);
-            var prototype_name = $collection.data('prototype-name');
-            var prototype_label = $collection.data('prototype-label');
+            var $viccollection = $vic(this.options.collection_id);
+            console.log($viccollection);
+            var prototype_name = $viccollection.data('prototype-name');
+            var prototype_label = $viccollection.data('prototype-label');
 
             // Just in case it doesn't get it
             if (typeof prototype_name === 'undefined') {
@@ -74,23 +74,23 @@
 
             var name_replace_pattern = new RegExp(prototype_name, 'g');
             var label_replace_pattern = new RegExp(prototype_label, 'g');
-            var rowContent = $collection.attr('data-prototype')
+            var rowContent = $viccollection.attr('data-prototype')
                     .replace(label_replace_pattern, index)
                     .replace(name_replace_pattern, index);
-            var row = $(rowContent);
+            var row = $vic(rowContent);
             console.log(rowContent);
-            $collection.append(row);
-            $(window).triggerHandler('add.mopa-collection-item', [$collection, row, index])
+            $viccollection.append(row);
+            $vic(window).triggerHandler('add.mopa-collection-item', [$viccollection, row, index])
         },
         remove: function (row) {
-            var $collection = $(this.options.collection_id);
+            var $viccollection = $vic(this.options.collection_id);
 
             if (typeof row == 'undefined') {
-                row = this.$element.closest('.collection-item');
+                row = this.$vicelement.closest('.collection-item');
             }
 
             if (typeof row != 'undefined') {
-                if (row instanceof jQuery) {
+                if (row instanceof $vic) {
                     row = row.get(0);
                 }
 
@@ -100,9 +100,9 @@
                     throw new Error('row not contained in collection');
                 }
 
-                $(window).triggerHandler('before-remove.mopa-collection-item', [$collection, row, oldIndex]);
+                $vic(window).triggerHandler('before-remove.mopa-collection-item', [$viccollection, row, oldIndex]);
                 row.remove();
-                $(window).triggerHandler('remove.mopa-collection-item', [$collection, row, oldIndex]);
+                $vic(window).triggerHandler('remove.mopa-collection-item', [$viccollection, row, oldIndex]);
             }
         },
         /**
@@ -110,12 +110,12 @@
          * return -1 if not found
          */
         getIndex: function (row) {
-            if (row instanceof jQuery) {
+            if (row instanceof $vic) {
                 row = row.get(0);
             }
 
-            var $collection = $(this.options.collection_id);
-            var items = $collection.children();
+            var $viccollection = $vic(this.options.collection_id);
+            var items = $viccollection.children();
 
             for (var i = 0; i < items.size(); i ++) {
                 if (row == items[i]) {
@@ -130,8 +130,8 @@
             return items[index];
         },
         getItems: function (index) {
-            var $collection = $(this.options.collection_id);
-            var items = $collection.children();
+            var $viccollection = $vic(this.options.collection_id);
+            var items = $viccollection.children();
 
             return items;
         }
@@ -140,20 +140,20 @@
     /* COLLECTION PLUGIN DEFINITION
      * ======================== */
 
-    $.fn.collection = function (option) {
+    $vic.fn.collection = function (option) {
         var coll_args = arguments;
 
         return this.each(function () {
-            var $this = $(this),
-                collection_id = $this.data('collection-vic-add-btn'),
-                data = $this.data('collection'),
+            var $victhis = $vic(this),
+                collection_id = $victhis.data('collection-vic-add-btn'),
+                data = $victhis.data('collection'),
                 options = typeof option == 'object' ? option : {};
 
             if (collection_id) {
                 options.collection_id = collection_id;
             }
-            else if ($this.closest(".collection-vic-items").attr('id')) {
-                options.collection_id = '#' + $this.closest(".collection-vic-items").attr('id');
+            else if ($victhis.closest(".collection-vic-items").attr('id')) {
+                options.collection_id = '#' + $victhis.closest(".collection-vic-items").attr('id');
             } else {
                 options.collection_id = this.id.length === 0 ? false : '#' + this.id;
                 if (!options.collection_id) {
@@ -161,7 +161,7 @@
                 }
             }
             if (!data) {
-                $this.data('collection', (data = new Collection(this, options)));
+                $victhis.data('collection', (data = new Collection(this, options)));
             }
             if (coll_args.length > 1) {
                 var arg1 = coll_args[1];
@@ -188,38 +188,38 @@
         });
     };
 
-    $.fn.collection.defaults = {
+    $vic.fn.collection.defaults = {
         collection_id: null,
         initial_size: 0,
         addcheckfunc: false,
         addfailedfunc: false
     };
 
-    $.fn.collection.Constructor = Collection;
+    $vic.fn.collection.Constructor = Collection;
 
     /* COLLECTION DATA-API
      * =============== */
 
-    $(function () {
-        $('body').on('click.collection.data-api', '[data-collection-vic-add-btn]', function (e) {
+    $vic(function () {
+        $vic('body').on('click.collection.data-api', '[data-collection-vic-add-btn]', function (e) {
             console.log('add item');
-            var $btn = $(e.target);
-            if (! $btn.hasClass('vic-btn')) {
-                $btn = $btn.closest('.vic-btn');
+            var $vicbtn = $vic(e.target);
+            if (! $vicbtn.hasClass('vic-btn')) {
+                $vicbtn = $vicbtn.closest('.vic-btn');
             }
-            console.log($btn);
-            $btn.collection('add');
+            console.log($vicbtn);
+            $vicbtn.collection('add');
             e.preventDefault();
         });
-        $('body').on('click.collection.data-api', '[data-collection-vic-remove-btn]', function (e) {
-            var $btn = $(e.target);
+        $vic('body').on('click.collection.data-api', '[data-collection-vic-remove-btn]', function (e) {
+            var $vicbtn = $vic(e.target);
 
-            if (! $btn.hasClass('vic-btn')) {
-                $btn = $btn.closest('.vic-btn');
+            if (! $vicbtn.hasClass('vic-btn')) {
+                $vicbtn = $vicbtn.closest('.vic-btn');
             }
-            $btn.collection('remove');
+            $vicbtn.collection('remove');
             e.preventDefault();
         });
     });
 
-}(window.jQuery);
+}(window.$vic);

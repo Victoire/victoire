@@ -2681,8 +2681,8 @@ input[type="button"].vic-btn-block {
 
 @font-face {
   font-family: 'Victoire Glyphicons Halflings';
-  src: url('../fonts/glyphicons-halflings-regular.eot');
-  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
+  src: url('/bundles/victoirecore/vendor/vic-bootstrap/3.0.3/fonts/glyphicons-halflings-regular.eot');
+  src: url('/bundles/victoirecore/vendor/vic-bootstrap/3.0.3/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('/bundles/victoirecore/vendor/vic-bootstrap/3.0.3/fonts/glyphicons-halflings-regular.woff') format('woff'), url('/bundles/victoirecore/vendor/vic-bootstrap/3.0.3/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('/bundles/victoirecore/vendor/vic-bootstrap/3.0.3/fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
 }
 
 .vic-glyphicon {
