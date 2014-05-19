@@ -150,7 +150,6 @@ class WidgetManager
             $widget = $form->getData();
             $em = $this->container->get('doctrine')->getManager();
 
-
             $widget->setBusinessEntityName($entity);
             if ($entity) {
                 $widget->setBusinessClass($classes[$entity]);
@@ -168,9 +167,12 @@ class WidgetManager
             $em->persist($page);
             $em->flush();
 
+            //get the html for the widget
+            $hmltWidget = $this->render($widget, $page, true);
+
             return array(
                 "success" => true,
-                "html"    => $this->render($widget, $page)
+                "html"    => $hmltWidget
             );
         }
 
@@ -359,16 +361,22 @@ class WidgetManager
      * @param Widget $widget
      * @return template
      */
-    public function render(Widget $widget)
+    public function render(Widget $widget, $addContainer = false)
     {
         $html = '';
         $dispatcher = $this->container->get('event_dispatcher');
         $dispatcher->dispatch(VictoireCmsEvents::WIDGET_PRE_RENDER, new WidgetRenderEvent($widget, $html));
 
         $html .= $this->getManager($widget)->render($widget);
+
         if ($this->container->get('security.context')->isGranted('ROLE_VICTOIRE')) {
             $html .= $this->renderActions($widget->getSlot(), $widget->getPage());
         }
+
+        if ($addContainer) {
+             $html = "<div class='widget-container' id='vic-widget-".$widget->getId()."-container'>".$html.'</div>';
+        }
+
         $dispatcher->dispatch(VictoireCmsEvents::WIDGET_POST_RENDER, new WidgetRenderEvent($widget, $html));
 
         return $html;
@@ -527,12 +535,19 @@ class WidgetManager
     {
         $widgetType = str_replace('widget_', '', $this->getWidgetType($widget));
         $slots = $this->container->getParameter('victoire_core.slots');
+
         if ($widget instanceof ThemeWidgetInterface) {
             $manager = $this->getManager($widget);
             $widgetName = $manager->getWidgetName();
 
-            return (array_key_exists($widgetName, $slots[$slot]['widgets']) && $slots[$slot]['widgets'][$widgetName] == null) || !array_key_exists('themes', $slots[$slot]['widgets'][$widgetName]) || in_array($widgetType, $slots[$slot]['widgets'][$widgetName]['themes']);
+            return (
+                array_key_exists($widgetName, $slots[$slot]['widgets']) &&
+                $slots[$slot]['widgets'][$widgetName] == null) ||
+                !array_key_exists('themes', $slots[$slot]['widgets'][$widgetName]) ||
+                in_array($widgetType, $slots[$slot]['widgets'][$widgetName]['themes']);
         }
+
+
         return !empty($slots[$slot]) && (array_key_exists($widgetType, $slots[$slot]['widgets']));
 
 

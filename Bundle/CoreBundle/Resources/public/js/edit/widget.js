@@ -30,6 +30,9 @@ $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(
                 $vic('.vic-creating').parents('.widget-container').after(response.html);
             }
             closeModal();
+            
+            //save the positions of the widgets
+            updatePosition();
         } else {
             $vic('.vic-modal-body .vic-container').html(response.html);
         }

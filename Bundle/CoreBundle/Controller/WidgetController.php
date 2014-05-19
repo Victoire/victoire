@@ -137,8 +137,6 @@ class WidgetController extends AwesomeController
         $page = $widget->getPage();
 
         return new JsonResponse($this->get('widget_manager')->deleteWidget($widget));
-
-
     }
 
     /**
