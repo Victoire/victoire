@@ -15,11 +15,10 @@ use Victoire\Bundle\PageBundle\Entity\Template as TemplateEntity;
 /**
  * Template Controller
  *
- * @Route("template")
+ * @Route("/victoire-dcms/template")
  */
 class TemplateController extends Controller
 {
-
     /**
      * list of all templates
      *
