@@ -6,7 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppVentus\Awesome\ShortcutsBundle\Controller\AwesomeController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Victoire\Bundle\CoreBundle\Form\PageType;
@@ -18,33 +18,8 @@ use Victoire\Bundle\PageBundle\Entity\Page;
  * undocumented class
  *
  **/
-class BasePageController extends Controller
+class BasePageController extends AwesomeController
 {
-    /**
-     * Show homepage or redirect to new page
-     *
-     * ==========================
-     * find homepage
-     * if homepage
-     *     forward show(homepage)
-     * else
-         *     redirect to welcome page (dashboard)
-     * ==========================
-     *
-     * @Route("/", name="victoire_core_page_homepage")
-     * @return template
-     *
-     */
-    public function homepageAction()
-    {
-        $homepage = $this->getDoctrine()->getManager()->getRepository('VictoirePageBundle:Page')->findOneByHomepage(true);
-
-        if ($homepage) {
-            return $this->showAction($homepage->getUrl());
-        } else {
-            return $this->redirect($this->generateUrl('victoire_dashboard_default_welcome'));
-        }
-    }
 
     /**
      * @param $page
@@ -63,7 +38,7 @@ class BasePageController extends Controller
             }
 
             //the entity manager
-            $em = $this->get('doctrine.orm.entity_manager');
+            $em = $this->getEntityManager();
 
             //remove the page
             $em->remove($page);
@@ -99,7 +74,7 @@ class BasePageController extends Controller
         $response = null;
 
         //manager
-        $manager = $this->getDoctrine()->getManager();
+        $manager = $this->getEntityManager();
         $basePageRepository = $manager->getRepository('VictoirePageBundle:BasePage');
         $routeRepository = $manager->getRepository('VictoireCoreBundle:Route');
 
@@ -175,8 +150,7 @@ class BasePageController extends Controller
      */
     protected function newAction($isHomepage = false)
     {
-
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getEntityManager();
         $page = $this->getNewPage();
         $page->setHomepage($isHomepage ? $isHomepage : 0);
         $form = $this->container->get('form.factory')->create($this->getNewPageType(), $page);
@@ -224,7 +198,7 @@ class BasePageController extends Controller
      */
     protected function settingsAction(BasePage $page)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getEntityManager();
 
         $formFactory = $this->container->get('form.factory');
         $form = $formFactory->create($this->getPageSettingsType(), $page);
