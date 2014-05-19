@@ -52,8 +52,6 @@ class WidgetType extends AbstractType
                     'namespace'   => $this->namespace,
                     'widget'      => $options['widget']
                 ))
-                ->add('query')
-                //
                 ;
         }
     }
@@ -79,6 +77,6 @@ class WidgetType extends AbstractType
      */
     public function getName()
     {
-        return 'appventus_victoireCoreBundle_widgettype';
+        return 'appventus_victoirecorebundle_widgettype';
     }
 }

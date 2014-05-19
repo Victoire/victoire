@@ -20,12 +20,14 @@
                 {{form_widget(form.items)}}
             {% endblock form_picker %}
         </div>
-        <div id="query-{{entity}}" class="vic-tab-pane">
+        {% if is_granted('ROLE_VICTOIRE_DEVELOPER') %}
+            <div id="query-{{entity}}" class="vic-tab-pane">
 
-        {% block form_query %}
-            {{form_row(form.query)}}
-        {% endblock form_query %}
-        </div>
+            {% block form_query %}
+                {{form_row(form.query)}}
+            {% endblock form_query %}
+            </div>
+        {% endif %}
     {% else %}
         {% if form.items is defined %}
         <ul class="items" data-prototype="{{ form_widget(form.items.vars.prototype)|e }}">

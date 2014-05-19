@@ -13,7 +13,7 @@
   {% for class, form in forms %}
     <div class="vic-tab-pane {% if class == 'static' %}vic-active{% endif %}" id="{{class}}">
 
-    {% if class != 'static' %}
+    {% if class != 'static' and is_granted('ROLE_VICTOIRE_DEVELOPER') %}
         <ul class="vic-nav vic-nav-tabs vic-modal-nav-tabs">
             <li class="vic-active vic-seperate"><a href="#picker-{{class}}" data-toggle="vic-tab">{{ ('form.widget.tab.picker.label')|trans({}, 'victoire') }}</a></li>
             <li><a href="#query-{{class}}" data-toggle="vic-tab">{{ ('form.widget.tab.query.label')|trans({}, 'victoire') }}</a></li>

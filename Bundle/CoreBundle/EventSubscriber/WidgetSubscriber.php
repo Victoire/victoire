@@ -32,6 +32,7 @@ class WidgetSubscriber implements EventSubscriberInterface
             ),
             VictoireCmsEvents::WIDGET_BUILD_FORM => array(
                 array('addThemeField'),
+                array('addQueryMode'),
             ),
         );
     }
@@ -97,6 +98,24 @@ class WidgetSubscriber implements EventSubscriberInterface
                 )
             );
         }
+    }
+    /**
+     * Activates the query behavior adding a "query" text field in the form.
+     * This field is appended only if:
+     *  - current user is a Victoire Developer
+     *  - the form is in "entity" mode
+     *
+     * @param WidgetBuildFormEvent $event
+     */
+    public function addQueryMode(WidgetBuildFormEvent $event)
+    {
+        $form = $event->getForm();
+        $security = $this->container->get('security.context');
+        if ($form->has('entity') && $security->isGranted('ROLE_VICTOIRE_DEVELOPER')) {
+            $form->add('query');
+        }
+
+
     }
 
 }
