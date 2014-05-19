@@ -42,8 +42,12 @@ class PageSeoController extends Controller
             $em->persist($page);
             $em->flush();
 
+            //redirect to the page url
+            $pageUrl = $page->getUrl();
+
             return new JsonResponse(array(
-                'success' => true
+                'success' => true,
+                'url' => $pageUrl
             ));
 
         }
