@@ -36,9 +36,12 @@
                 {% elseif page.status == constant('Victoire\\Bundle\\PageBundle\\Entity\\BasePage::STATUS_UNPUBLISHED') %}
                     {% set icon = "moon-o" %}
                 {% endif %}
-                <a href="{{ path('victoire_core_page_settings', {'id' : page.id}) }}" data-toggle="vic-modal"{% if tooltip is defined %}title="{{ tooltip }}"{% endif %}>
+                <a href="{{ path('victoire_core_page_settings', {'id' : page.id}) }}" data-toggle="vic-modal"{% if tooltip is defined %}title="{{ tooltip }}"{% endif %} style="font-size:10px;margin-top:5px;">
+                {# todo use vic tooltips #}
+                {# todo kick style inline #}
+                {# todo add unpublished and draft tooltip #}
 
-                    <i class="fa fa-{{ icon }}"></i>
+                    <i class="fa fa-{{ icon }} fa-2x"></i>
                 </a>
             </li>
             {% endif %}
