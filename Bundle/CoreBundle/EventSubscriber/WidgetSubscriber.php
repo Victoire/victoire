@@ -103,7 +103,7 @@ class WidgetSubscriber implements EventSubscriberInterface
      * Activates the query behavior adding a "query" text field in the form.
      * This field is appended only if:
      *  - current user is a Victoire Developer
-     *  - the form is in "entity" mode
+     *  - the form is in "entity" mode (it have a "fields" field)
      *
      * @param WidgetBuildFormEvent $event
      */
@@ -111,10 +111,9 @@ class WidgetSubscriber implements EventSubscriberInterface
     {
         $form = $event->getForm();
         $security = $this->container->get('security.context');
-        if ($form->has('entity') && $security->isGranted('ROLE_VICTOIRE_DEVELOPER')) {
+        if ($form->has('fields') && $security->isGranted('ROLE_VICTOIRE_DEVELOPER')) {
             $form->add('query');
         }
-
 
     }
 

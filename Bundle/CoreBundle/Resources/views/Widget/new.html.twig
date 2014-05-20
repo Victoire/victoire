@@ -12,12 +12,10 @@
 
 <div class="vic-tab-content vic-modal-tab-content">
     {% if entity != null %}
-      <ul id="{{form.items.vars.attr.id}}-listing"></ul>
         <div id="picker-{{entity}}" class="vic-tab-pane vic-active">
 
             {% block form_picker %}
-                {{ form_widget(form.items.vars.prototype.entity)|raw }}
-                {{form_widget(form.items)}}
+                {{ form_widget(form.entity) }}
             {% endblock form_picker %}
         </div>
         {% if is_granted('ROLE_VICTOIRE_DEVELOPER') %}
@@ -29,12 +27,9 @@
             </div>
         {% endif %}
     {% else %}
-        {% if form.items is defined %}
-        <ul class="items" data-prototype="{{ form_widget(form.items.vars.prototype)|e }}">
-            {{form_row(form.items)}}
-        </ul>
+        {% block form_static %}
+        {% endblock form_static %}
 
-        {% endif %}
     {% endif %}
     {{form_rest(form)}}
 </div>
