@@ -35,7 +35,7 @@
                 </div>
                 <div class="vic-col-lg-4">
                     {{ form_row(form.status) }}
-                    <div class="publication-date-container{{ form.vars.value.publishedAt != constant('Victoire\\Bundle\\PageBundle\\Entity\\BasePage::STATUS_SCHEDULED') ? ' vic-hidden' }}">
+                    <div class="publication-date-container{{ form.vars.value.status != constant('Victoire\\Bundle\\PageBundle\\Entity\\BasePage::STATUS_SCHEDULED') ? ' vic-hidden' }}">
                     {{ form_widget(form.publishedAt) }}
                     </div>
                 </div>
