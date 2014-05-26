@@ -1,0 +1,64 @@
+<?php
+
+namespace {{ namespace }}\Form;
+
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Victoire\Bundle\CoreBundle\Form\EntityProxyFormType;
+use Victoire\Bundle\CoreBundle\Form\WidgetType;
+
+
+/**
+ * Widget{{widget}} form type
+ */
+class Widget{{widget}}Type extends WidgetType
+{
+
+    /**
+     * define form fields
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        //choose form mode
+        if ($this->entity_name === null) {
+            //if no entity is given, we generate the static form
+            $builder
+            {% for field in fields %}
+                ->add('{{field.fieldName}}')
+            {% endfor %}
+            ;
+
+        } else {
+            //else, WidgetType class will embed a EntityProxyType for given entity
+            parent::buildForm($builder, $options);
+        }
+
+
+    }
+
+
+    /**
+     * bind form to Widget{{widget}} entity
+     * @param OptionsResolverInterface $resolver
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class'         => '{{ namespace }}\Entity\Widget{{ widget }}',
+            'widget'             => '{{widget|lower}}',
+            'translation_domain' => 'victoire'
+        ));
+    }
+
+
+    /**
+     * get form name
+     */
+    public function getName()
+    {
+        return 'appventus_victoireCoreBundle_widget{{widget|lower}}type';
+    }
+}

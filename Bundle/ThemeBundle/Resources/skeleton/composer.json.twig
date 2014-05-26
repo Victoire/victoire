@@ -1,8 +1,8 @@
 {
-    "name": "victoire/{{ widget|lower }}-bundle",
+    "name": "victoire/{{ widget|lower }}-{{ theme|lower }}-theme",
     "type": "symfony-bundle",
-    "description": "Victoire Cms {{ widget }} widget",
-    "keywords": ["cms", "victoire", "{{ widget }}", "widget"],
+    "description": "Victoire Cms {{ widget }} {{ theme }} theme",
+    "keywords": ["cms", "victoire", "{{ theme }}", "{{ widget }}", "theme"],
     "homepage": "http://appventus.com",
     "license": "MIT",
     "authors": [
@@ -17,8 +17,8 @@
         "victoire/victoire"        : "dev-master"
     },
     "autoload": {
-        "psr-0": { "Victoire\\Widget\\{{ widget }}Bundle": "" }
+        "psr-0": { "Victoire\\Theme\\{{ widget }}\\{{ theme }}\\{{ bundle }}": "" }
     },
     "minimum-stability": "dev",
-    "target-dir": "Victoire/Widget/{{ widget }}Bundle"
+    "target-dir": "Victoire/Theme/{{ widget }}/{{ theme }}/{{ bundle }}"
 }

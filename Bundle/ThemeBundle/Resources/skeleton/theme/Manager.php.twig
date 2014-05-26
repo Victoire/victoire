@@ -1,0 +1,129 @@
+<?php
+
+namespace {{ namespace }}\Manager;
+
+{% block use_statements %}
+use {{ namespace }}\Form\Theme{{ widget ~ theme }}Type;
+use {{ namespace }}\Entity\Theme{{ widget ~ theme }};
+use Victoire\Bundle\CoreBundle\Widget\Managers\ManagerInterface;
+{% endblock use_statements %}
+
+/**
+ * Manage {{ widget ~ theme }} Widget
+ */
+{% block class_definition %}
+class {{ widget ~ theme }}Manager implements ManagerInterface
+{% endblock class_definition %}
+{
+
+{% block class_body %}
+    protected $container;
+
+    /**
+     * constructor
+     *
+     * @param ServiceContainer $container
+     */
+    public function __construct($container)
+    {
+        $this->container = $container;
+    }
+
+    /**
+     * create a new widget based on the Theme{{ widget ~ theme }} theme
+     * @param Page   $page
+     * @param string $slot
+     *
+     * @return $widget
+     */
+    public function newWidget($page, $slot)
+    {
+        $widget = new Theme{{ widget ~ theme }}();
+        $widget->setPage($page);
+        $widget->setslot($slot);
+
+        return $widget;
+    }
+    /**
+     * render the Theme{{ widget ~ theme }}
+     * @param Theme $widget
+     *
+     * @return widget show
+     */
+    public function render($widget)
+    {
+        return $this->container->get('victoire_templating')->render(
+            "VictoireTheme{{ widget ~ theme }}Bundle::show.html.twig",
+            array(
+                "widget" => $widget
+            )
+        );
+    }
+
+    /**
+     * render Theme{{ widget ~ theme }} form
+     * @param Form                $form
+     * @param Theme{{ widget ~ theme }} $widget
+     * @param BusinessEntity      $entity
+     *
+     * @return form
+     */
+    public function renderForm($form, $widget, $entity = null)
+    {
+
+        return $this->container->get('victoire_templating')->render(
+            "VictoireTheme{{ widget ~ theme }}Bundle::edit.html.twig",
+            array(
+                "widget" => $widget,
+                'form'   => $form->createView(),
+                'id'     => $widget->getId(),
+                'entity' => $entity
+            )
+        );
+    }
+
+    /**
+     * create a form with given widget
+     * @param Theme{{ widget ~ theme }} $widget
+     * @param string $entityName
+     * @param string $namespace
+     *
+     * @return $form
+     */
+    public function buildForm($widget, $entityName = null, $namespace = null)
+    {
+        $form = $this->container->get('form.factory')->create(
+            new Theme{{ widget ~ theme }}Type($entityName, $namespace),
+            $widget
+        );
+
+        return $form;
+    }
+
+    /**
+     * create form new for Theme{{ widget ~ theme }}
+     * @param Form           $form
+     * @param Theme{{ widget ~ theme }} $widget
+     * @param string         $slot
+     * @param Page           $page
+     * @param string         $entity
+     *
+     * @return new form
+     */
+    public function renderNewForm($form, $widget, $slot, $page, $entity = null)
+    {
+
+        return $this->container->get('victoire_templating')->render(
+            "VictoireTheme{{ widget ~ theme }}Bundle::new.html.twig",
+            array(
+                "widget"          => $widget,
+                'form'            => $form->createView(),
+                "slot"            => $slot,
+                "entity"          => $entity,
+                "renderContainer" => true,
+                "page"            => $page
+            )
+        );
+    }
+{% endblock class_body %}
+}

@@ -1,4 +1,17 @@
-# Victoire DCMS #
+# Themes
+
+Add this bundle to your AppKernel.php file :
+
+
+    new Victoire\Bundle\ThemeBundle\VictoireThemeBundle(),
+
+
+## Generate a theme
+
+```shell
+    php app/console victoire:generate:theme
+```
+
 
 Property of AppVentus
 
