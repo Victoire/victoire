@@ -6,7 +6,7 @@ $vic(document).ready(function() {
     $vic(document).on('change', 'select.theme-choices', function(e) {
         entity = $vic(this).parents('div.vic-tab-pane').attr('id');
         item = $vic('div#' + entity + ' select.theme-choices option:selected').val();
-        slot = $vic(this).parents('.slot').attr('id');
+        slot = $vic(this).parents('form').data('slot');
 
         $vic.ajax({
             url: Routing.generate('victoire_core_widget_new', {'type': item, 'page': pageId, 'slot': slot, 'entity': entity}),

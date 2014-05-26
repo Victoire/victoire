@@ -5,7 +5,7 @@
 {% block modal_body_form_action %}
 {{ path('victoire_core_widget_create', {'page': page.id,'slot':slot, 'type': widget.type, 'entity': entity} ) }}
 {% endblock modal_body_form_action %}
-{% endspaceless %} method="POST" class="vic-form-horizontal">
+{% endspaceless %} method="POST" class="vic-form-horizontal" data-slot="{{ widget.slot }}">
 
 {% block body %}
 {% block form %}
