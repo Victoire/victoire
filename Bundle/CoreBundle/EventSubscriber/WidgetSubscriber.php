@@ -65,6 +65,10 @@ class WidgetSubscriber implements EventSubscriberInterface
     {
         $form = $event->getForm();
         $widget = $event->getWidget();
+        // if we are in edition mode, do not add theme field
+        if ($widget->getId()) {
+            return;
+        }
         $themeChain = $this->container->get('victoire_core.theme_chain');
         $manager = $this->container->get('widget_manager')->getManager($widget);
         if ($widget instanceof ThemeWidgetInterface) {
