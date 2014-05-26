@@ -28,4 +28,28 @@ class BusinessEntityTemplateController extends BasePageController
 
         return array('businessEntities' => $businessEntities);
     }
+
+    /**
+     *
+     * @Route("/list/{id}", name="victoire_business_entity_template_list")
+     * @Template()
+     *
+     * @return template
+     *
+     */
+    public function listAction($id)
+    {
+        //services
+        $businessEntityManager = $this->get('victoire_core.helper.business_entity_helper');
+
+        //get the businessEntity
+        $businessEntity = $businessEntityManager->findById($id);
+
+        //test the result
+        if ($businessEntity === null) {
+            throw new \Exception('The business entity ['.$id.'] was not found.');
+        }
+
+        return array('businessEntity' => $businessEntity);
+    }
 }

@@ -42,4 +42,34 @@ class BusinessEntityHelper
 
         return $businessEntitiesObjects;
     }
+
+    /**
+     * Get a business entity by its id
+     *
+     * @return BusinessEntity
+     */
+    public function findById($id)
+    {
+        if ($id === null) {
+            throw new \Exception('The paramerter $id is mandatory');
+        }
+
+        //get all the business entities
+        $businessEntities = $this->getBusinessEntities();
+
+        //the result
+        $businessEntity = null;
+
+        //parse the business entities
+        foreach ($businessEntities as $tempBusinessEntity) {
+            //look for the same id
+            if ($tempBusinessEntity->getId() === $id) {
+                $businessEntity = $tempBusinessEntity;
+                //business entity was found, there is no need ton continue
+                continue;
+            }
+        }
+
+        return $businessEntity;
+    }
 }
