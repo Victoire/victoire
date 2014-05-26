@@ -1,0 +1,11 @@
+{% extends 'VictoireCoreBundle::layout.html.twig' %}
+
+{% block content %}
+<div class="vic-container vic-masthead">
+{%  for businessEntity in businessEntities %}
+    <div>
+    {{ businessEntity.getName }}
+    </div>
+{% endfor %}
+</div>
+{% endblock content %}

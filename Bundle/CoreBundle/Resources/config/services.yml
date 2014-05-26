@@ -157,4 +157,7 @@ services:
         class: Victoire\Bundle\CoreBundle\CacheWarmer\EntityProxyCacheDriver
         arguments: [@annotation_reader, %kernel.root_dir%, %kernel.environment%]
 
-
+    victoire_core.helper.business_entity_helper:
+        class: Victoire\Bundle\CoreBundle\Helper\BusinessEntityHelper
+        arguments: 
+            - @victoire_core.annotation_reader

@@ -16,8 +16,9 @@ use Doctrine\Common\Cache\Cache,
     Doctrine\Common\Annotations\CachedReader;
 
 /**
- * undocumented class
+ * The annotation reader for the business entities
  *
+ * ref: victoire_core.annotation_reader
  **/
 class AnnotationReader extends AnnotationDriver
 {
