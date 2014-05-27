@@ -157,4 +157,8 @@ services:
         class: Victoire\Bundle\CoreBundle\CacheWarmer\EntityProxyCacheDriver
         arguments: [@annotation_reader, %kernel.root_dir%, %kernel.environment%]
 
+#  ==================  Error handler =================== #
 
+    victoire_core.widget_exception_handler:
+        class: Victoire\Bundle\CoreBundle\Handler\WidgetExceptionHandler
+        arguments: [@security.context, @templating, %kernel.debug%]
