@@ -81,6 +81,16 @@ class BasePageController extends AwesomeController
         //get the page
         $page = $basePageRepository->findOneByUrl($url);
 
+        //no page were found, we try to look for an BusinessEntityTemplatePage
+        if ($page === null) {
+            $urlMatcher = $this->getGeneralUrlMatcher($url);
+
+            //if the url have been shorten
+            if ($urlMatcher !== null) {
+                $page = $basePageRepository->findOneByUrl($urlMatcher);
+            }
+        }
+
         //no page found using the url, we look for previous url
         if ($page === null) {
             $route = $routeRepository->findOneMostRecentByUrl($url);
@@ -244,5 +254,35 @@ class BasePageController extends AwesomeController
         if (!$isPublished && !$isPageOwner) {
             throw new NotFoundHttpException($errorMessage);
         }
+    }
+
+    /**
+     * Get the urlMatcher for the template generator
+     * It removes what is after the last /
+     * and add /{id} to the url
+     *
+     * @param string $url
+     *
+     * @return string The url
+     */
+    protected function getGeneralUrlMatcher($url)
+    {
+        $urlMatcher = null;
+
+        // split on the / character
+        $keywords = preg_split("/\//", $url);
+
+        //if there are some words, we pop the last
+        if (count($keywords) > 0) {
+            array_pop($keywords);
+        }
+
+        //add the id to the end of the url
+        array_push($keywords, '{id}');
+
+        //rebuild the url
+        $urlMatcher = implode('/', $keywords);
+
+        return $urlMatcher;
     }
 }
