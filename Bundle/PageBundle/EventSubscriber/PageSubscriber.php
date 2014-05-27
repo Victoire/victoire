@@ -82,18 +82,22 @@ class PageSubscriber implements EventSubscriber
 
         foreach ($this->uow->getScheduledEntityInsertions() as $entity) {
             if ($entity instanceof BasePage) {
-                $this->buildUrl($entity);
-                $meta = $this->entityManager->getClassMetadata(get_class($entity));
-                $this->uow->recomputeSingleEntityChangeSet($meta, $entity);
-                $entity->setAuthor($this->userCallable->getCurrentUser());
+                if ($entity->getComputeUrl()) {
+                    $this->buildUrl($entity);
+                    $meta = $this->entityManager->getClassMetadata(get_class($entity));
+                    $this->uow->recomputeSingleEntityChangeSet($meta, $entity);
+                    $entity->setAuthor($this->userCallable->getCurrentUser());
+                }
             }
         }
 
         foreach ($this->uow->getScheduledEntityUpdates() as $entity) {
             if ($entity instanceof BasePage) {
-                $meta = $this->entityManager->getClassMetadata(get_class($entity));
-                $this->uow->computeChangeSet($meta, $entity);
-                $this->buildUrl($entity);
+                if ($entity->getComputeUrl()) {
+                    $meta = $this->entityManager->getClassMetadata(get_class($entity));
+                    $this->uow->computeChangeSet($meta, $entity);
+                    $this->buildUrl($entity);
+                }
             }
         }
     }

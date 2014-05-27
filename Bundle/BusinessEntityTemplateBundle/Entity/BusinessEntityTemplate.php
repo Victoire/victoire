@@ -201,6 +201,9 @@ class BusinessEntityTemplate
         $this->page->setTitle($this->getName());
         $this->page->setLayout($this->layout);
 
+        //we set manually the url
+        $this->page->setComputeUrl(false);
+
         //generate the url for the template
         $url = $this->getName().'/{id}';
         $this->page->setUrl($url);

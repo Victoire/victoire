@@ -146,6 +146,15 @@ abstract class BasePage
     protected $homepage;
 
     /**
+     * @var boolean
+     *
+     * Do we compute automatically the url on the flush
+     *
+     * @ORM\Column(name="compute_url", type="boolean", nullable=false)
+     */
+    protected $computeUrl = true;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="position", type="integer", nullable=false)
@@ -890,5 +899,25 @@ abstract class BasePage
     public function setReferer($referer)
     {
         $this->referer = $referer;
+    }
+
+    /**
+     * Get the compute url value
+     *
+     * @return boolean The compute url
+     */
+    public function getComputeUrl()
+    {
+        return $this->computeUrl;
+    }
+
+    /**
+     * Set the compute url value
+     *
+     * @param boolean $computeUrl
+     */
+    public function setComputeUrl($computeUrl)
+    {
+        $this->computeUrl = $computeUrl;
     }
 }
