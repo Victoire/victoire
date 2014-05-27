@@ -8,6 +8,8 @@ use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
+use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
+use Victoire\Bundle\CoreBundle\Entity\BaseWidget;
 
 /**
  * PageExtension extends Twig with page capabilities.
@@ -82,7 +84,16 @@ class CmsExtension extends \Twig_Extension
      *
      * @return string HTML markup of the widget with action button if needed
      */
-    public function cmsSlotWidgets($page, $slot, $addContainer = true)
+
+    /**
+     *
+     * @param BasePage $page
+     * @param unknown $slot
+     * @param string $addContainer
+     * @param string $entity
+     * @return string
+     */
+    public function cmsSlotWidgets(BasePage $page, $slot, $addContainer = true, $entity = null)
     {
         $result = "";
         if ($this->securityContext->isGranted('ROLE_VICTOIRE')) {
@@ -90,10 +101,16 @@ class CmsExtension extends \Twig_Extension
         }
 
         $widgets = array();
-        // foreach ($page->getWidgetsForSlot($slot) as $widget) {
+
         $pageWidgets = $this->widgetManager->findByPageBySlot($page, $slot);
 
         foreach ($pageWidgets as $_widget) {
+            //is the widget a current entity widget
+            if ($_widget instanceof BaseWidget) {//@TODO check current entity widget
+                //set the entity for the widget
+                $_widget->setEntity($entity);
+            }
+
             $widgets[$_widget->getId()] = $_widget->setCurrentPage($page);
         }
 
@@ -125,7 +142,11 @@ class CmsExtension extends \Twig_Extension
     }
 
     /**
-     * render a widget
+     *
+     * @param unknown $widget
+     * @param string $addContainer
+     * @param string $entity
+     * @return unknown
      */
     public function cmsWidget($widget, $addContainer = true)
     {

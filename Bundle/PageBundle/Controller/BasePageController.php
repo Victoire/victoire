@@ -13,6 +13,7 @@ use Victoire\Bundle\CoreBundle\Form\PageType;
 use Victoire\Bundle\CoreBundle\Form\TemplateType;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
+use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
 
 /**
  * undocumented class
@@ -72,6 +73,7 @@ class BasePageController extends AwesomeController
     {
         //the response
         $response = null;
+        $entity = null;
 
         //manager
         $manager = $this->getEntityManager();
@@ -88,6 +90,19 @@ class BasePageController extends AwesomeController
             //if the url have been shorten
             if ($urlMatcher !== null) {
                 $page = $basePageRepository->findOneByUrl($urlMatcher);
+
+                //a page match the entity template generator
+                if ($page) {
+                    //we look for the entity
+                    $entityId = $this->getEntityIdFromUrl($url);
+
+                    //test the entity id
+                    if ($entityId === null) {
+                        throw new \Exception('The id could not be retrieved from the url.');
+                    }
+
+                    $entity = $this->getEntityByPageAndId($page, $entityId);
+                }
             }
         }
 
@@ -131,9 +146,20 @@ class BasePageController extends AwesomeController
                 $event = new \Victoire\Bundle\CoreBundle\Event\Menu\BasePageMenuContextualEvent($page);
                 $this->get('event_dispatcher')->dispatch('victoire_core.' . $page->getType() . '_menu.contextual', $event); //TODO : il serait bon de faire des constantes pour les noms d'évents
 
-                $response = $this->container->get('victoire_templating')->renderResponse(
-                    'AppBundle:Layout:' . $page->getLayout() . '.html.twig',
-                    array('page' => $page, 'id' => $page->getId())
+                //the victoire templating
+                $victoireTemplating = $this->container->get('victoire_templating');
+                $layout = 'AppBundle:Layout:' . $page->getLayout() . '.html.twig';
+
+                $parameters = array(
+                    'page' => $page,
+                    'id' => $page->getId(),
+                    'entity' => $entity
+                );
+
+                //create the response
+                $response = $victoireTemplating->renderResponse(
+                    $layout,
+                    $parameters
                 );
             }
         }
@@ -284,5 +310,61 @@ class BasePageController extends AwesomeController
         $urlMatcher = implode('/', $keywords);
 
         return $urlMatcher;
+    }
+
+    /**
+     * Get the entity id from the url
+     *
+     * @param string $url
+     * @return string The id
+     */
+    protected function getEntityIdFromUrl($url)
+    {
+        $entityId = null;
+
+        // split on the / character
+        $keywords = preg_split("/\//", $url);
+
+        //if there are some words, we pop the last
+        if (count($keywords) > 0) {
+            $entityId = array_pop($keywords);
+        }
+
+        return $entityId;
+    }
+
+    /**
+     * Get the entity from the page and the id given
+     *
+     * @param BusinessEntityTemplatePage $page
+     * @param string $id
+     *
+     * @return The entity
+     */
+    protected function getEntityByPageAndId(BusinessEntityTemplatePage $page, $id)
+    {
+        $entity = null;
+
+        $businessEntityHelper = $this->get('victoire_core.helper.business_entity_helper');
+
+        $template = $page->getBusinessEntityTemplate();
+
+        $businessEntityId = $template->getBusinessEntityId();
+
+        $businessEntity = $businessEntityHelper->findById($businessEntityId);
+
+        //test the result
+        if ($businessEntity === null) {
+            throw new \Exception('The business entity ['.$businessEntityId.'] was not found.');
+        }
+
+        $entity = $businessEntityHelper->findEntityByBusinessEntityAndId($businessEntity, $id);
+
+        //test the result
+        if ($entity === null) {
+            throw new \Exception('The entity ['.$id.'] was not found.');
+        }
+
+        return $entity;
     }
 }

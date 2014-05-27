@@ -3,6 +3,7 @@ namespace Victoire\Bundle\CoreBundle\Helper;
 
 use Victoire\Bundle\CoreBundle\Annotations\Reader\AnnotationReader;
 use Victoire\Bundle\CoreBundle\Entity\BusinessEntity;
+use Doctrine\ORM\EntityManager;
 
 /**
  * The BusinessEntityHelper
@@ -12,15 +13,19 @@ use Victoire\Bundle\CoreBundle\Entity\BusinessEntity;
 class BusinessEntityHelper
 {
     protected $annotationReader = null;
+    protected $em = null;
 
     /**
      * Constructor
      *
      * @param AnnotationReader $annotationReader
+     * @param EntityManager    $entityManager
+     *
      */
-    public function __construct(AnnotationReader $annotationReader)
+    public function __construct(AnnotationReader $annotationReader, EntityManager $entityManager)
     {
         $this->annotationReader = $annotationReader;
+        $this->em = $entityManager;
     }
 
     /**
@@ -75,5 +80,30 @@ class BusinessEntityHelper
         }
 
         return $businessEntity;
+    }
+
+
+    /**
+     * Find a entity by the business entity and the id
+     *
+     * @param BusinessEntity $businessEntity
+     * @param unknown $id
+     *
+     * @return Entity
+     */
+    public function findEntityByBusinessEntityAndId(BusinessEntity $businessEntity, $id)
+    {
+        //retrieve the class of the business entity
+        $class = $businessEntity->getClass();
+
+        $em = $this->em;
+
+        //get the repository
+        $repo = $em->getRepository($class);
+
+        //get the entity
+        $entity = $repo->findOneById($id);
+
+        return $entity;
     }
 }

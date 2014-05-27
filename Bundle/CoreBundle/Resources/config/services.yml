@@ -160,4 +160,5 @@ services:
     victoire_core.helper.business_entity_helper:
         class: Victoire\Bundle\CoreBundle\Helper\BusinessEntityHelper
         arguments: 
-            - @victoire_core.annotation_reader
+            - "@victoire_core.annotation_reader"
+            - "@doctrine.orm.entity_manager"

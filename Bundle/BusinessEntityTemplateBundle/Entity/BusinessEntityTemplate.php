@@ -42,7 +42,7 @@ class BusinessEntityTemplate
     protected $name;
 
     /**
-     * @ORM\OneToOne(targetEntity="Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage", cascade={"persist", "remove",})
+     * @ORM\OneToOne(targetEntity="Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage", cascade={"persist", "remove",}, inversedBy="businessEntityTemplate")
      * @ORM\JoinColumn(name="page_id", referencedColumnName="id", nullable=false)
      *
      */
