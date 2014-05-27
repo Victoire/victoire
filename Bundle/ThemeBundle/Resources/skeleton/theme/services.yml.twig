@@ -2,17 +2,9 @@ services:
     victoire_core.theme_{{ widget|lower }}_{{ theme|lower }}_manager:
         class: {{ namespace }}\Manager\{{ widget ~ theme }}Manager
         arguments: [@service_container]
-
-    victoire_core.theme.widget_{{ widget|lower }}_{{ theme|lower }}:
-        class: {{ namespace }}\Theme\{{ widget }}{{ theme }}
-        arguments: [@widget_theme{{ widget|lower }}{{ theme|lower }}_manager]
         tags:
             - { name: victoire_core.theme, widget: {{ widget|lower }} }
 
-#<<<< @todo Cleanup
     widget_theme{{ widget|lower }}{{ theme|lower }}_manager:
         alias: victoire_core.theme_{{ widget|lower }}_{{ theme|lower }}_manager
 
-    widget_{{ widget|lower }}{{ theme|lower }}_manager:
-        alias: victoire_core.theme_{{ widget|lower }}_{{ theme|lower }}_manager
-#END @todo Cleanup >>>

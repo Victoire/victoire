@@ -125,5 +125,15 @@ class {{ widget ~ theme }}Manager implements ManagerInterface
             )
         );
     }
+
+    public function getName()
+    {
+        return $this->container->getParameter('victoire_theme_{{ widget|lower }}_{{ underscore_theme|lower }}.name');
+    }
+    public function getWidgetName()
+    {
+        return $this->container->getParameter('victoire_theme_{{ widget|lower }}_{{ underscore_theme|lower }}.widgetName');
+    }
+
 {% endblock class_body %}
 }

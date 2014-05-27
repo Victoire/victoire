@@ -69,11 +69,10 @@ class WidgetSubscriber implements EventSubscriberInterface
         if ($widget->getId()) {
             return;
         }
-        $themeChain = $this->container->get('victoire_core.theme_chain');
         $manager = $this->container->get('widget_manager')->getManager($widget);
         if ($widget instanceof ThemeWidgetInterface) {
             $widgetClass = get_parent_class($widget);
-            $currentWidget = $manager->getThemeName();
+            $currentWidget = $manager->getName();
         } else {
             $widgetClass = get_class($widget);
             $currentWidget = $this->container->get('widget_manager')->getWidgetType($widget);
@@ -84,6 +83,7 @@ class WidgetSubscriber implements EventSubscriberInterface
                 break;
             }
         }
+        $themeChain = $this->container->get('victoire_core.theme_chain');
         $themeObjs = $themeChain->getThemes($widgetClass);
         if (count($themeObjs) > 0) {
 

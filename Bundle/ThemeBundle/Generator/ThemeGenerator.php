@@ -47,7 +47,7 @@ class ThemeGenerator extends Generator
      * @param string $structure             The structure
      * @param array  $fields                The fields
      */
-    public function generate($namespace, $bundle, $theme, $widget, $widgetEntityNamespace, $dir, $format, $structure, $fields = null)
+    public function generate($namespace, $bundle, $theme, $widget, $widgetEntityNamespace, $widgetTypeNamespace, $dir, $format, $structure, $fields = null)
     {
         $dir .= '/'.strtr($namespace, '\\', '/');
         if (file_exists($dir)) {
@@ -84,8 +84,10 @@ class ThemeGenerator extends Generator
             'namespace'             => $namespace,
             'bundle'                => $bundle,
             'theme'                 => $theme,
+            'underscore_theme'      => Container::underscore($theme),
             'widget'                => $widget,
             'widgetEntityNamespace' => $widgetEntityNamespace,
+            'widgetTypeNamespace'   => $widgetTypeNamespace,
             'format'                => $format,
             'fields'                => $fields,
             'toStringProperty'      => $toStringProperty,
@@ -100,7 +102,6 @@ class ThemeGenerator extends Generator
         $this->renderFile('theme/Configuration.php.twig', $dir.'/DependencyInjection/Configuration.php', $parameters);
 
         $this->renderFile('theme/entity.php.twig', $dir.'/Entity/Theme'.$widget.$theme.'.php', $parameters);
-        $this->renderFile('theme/theme.php.twig', $dir.'/Theme/'.$widget.$theme.'.php', $parameters);
         $this->renderFile('theme/form.php.twig', $dir.'/Form/Theme'.$widget.$theme.'Type.php', $parameters);
 
         $this->renderFile('theme/config.yml.twig', $dir.'/Resources/config/config.yml', $parameters);

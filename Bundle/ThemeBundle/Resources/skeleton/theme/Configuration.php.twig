@@ -28,10 +28,8 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('{{ extension_alias }}');
         $rootNode
             ->children()
-                ->scalarNode('name')->defaultValue('{{ theme }}')->end()
-                ->scalarNode('widgetName')->defaultValue('{{ widget }}')->end()
-                ->scalarNode('label')->defaultValue('widget.form.theme.{{ theme }}')->end()
-                ->scalarNode('entityClass')->defaultValue('{{ namespace }}\Entity\Theme{{ widget ~ theme }}')->end()
+                ->scalarNode('name')->defaultValue('theme{{widget|lower}}{{ theme|lower }}')->end()
+                ->scalarNode('widgetName')->defaultValue('{{ widget|lower }}')->end()
             ->end()
             // Here you should define the parameters that are allowed to configure your bundle.
         ;

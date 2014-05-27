@@ -6,13 +6,13 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Victoire\Bundle\CoreBundle\Form\EntityProxyFormType;
-use Victoire\Bundle\CoreBundle\Form\WidgetType;
+use {{ widgetTypeNamespace }};
 
 
 /**
- * Widget{{widget}} form type
+ * Theme{{widget}} form type
  */
-class Widget{{widget}}Type extends WidgetType
+class Theme{{ widget }}{{ theme }}Type extends Widget{{ widget }}Type
 {
 
     /**
@@ -31,10 +31,10 @@ class Widget{{widget}}Type extends WidgetType
             {% endfor %}
             ;
 
-        } else {
-            //else, WidgetType class will embed a EntityProxyType for given entity
-            parent::buildForm($builder, $options);
         }
+
+        parent::buildForm($builder, $options);
+
 
 
     }
@@ -47,7 +47,7 @@ class Widget{{widget}}Type extends WidgetType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class'         => '{{ namespace }}\Entity\Widget{{ widget }}',
+            'data_class'         => '{{ namespace }}\Entity\Theme{{ widget }}{{ theme }}',
             'widget'             => '{{widget|lower}}',
             'translation_domain' => 'victoire'
         ));
