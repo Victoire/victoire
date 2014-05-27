@@ -207,7 +207,20 @@ class BusinessEntityTemplate
         //generate the url for the template
         $url = $this->getName().'/{id}';
         $this->page->setUrl($url);
+    }
 
 
+    /**
+     * Get the url of the page
+     *
+     * @return string The url
+     */
+    public function getPageUrl()
+    {
+        $page = $this->page;
+
+        $url = $page->getUrl();
+
+        return $url;
     }
 }

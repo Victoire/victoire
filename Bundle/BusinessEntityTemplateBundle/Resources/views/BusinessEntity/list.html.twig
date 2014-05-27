@@ -16,8 +16,11 @@
     </div>
     {%  for template in templates %}
     <div>
-	    <a href="{{ path('victoire_businessentitytemplate_businessentity_list', {'id': businessEntity.getId}) }}">
+        <a href="/{{ template.getPageUrl }}">
 	        {{ template.getName }}
+	    </a>
+	    <a href="{{ path('victoire_businessentitytemplate_businessentitytemplate_edit', {'id': template.getId}) }}">
+	        EDIT
 	    </a>
     </div>
     {% endfor %}

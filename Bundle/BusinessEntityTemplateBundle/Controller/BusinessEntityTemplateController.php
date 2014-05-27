@@ -144,7 +144,7 @@ class BusinessEntityTemplateController extends BaseController
     */
     private function createEditForm(BusinessEntityTemplate $entity)
     {
-        $form = $this->createForm(new BusinessEntityTemplateType(), $entity, array(
+        $form = $this->createForm('victoire_business_entity_template_type', $entity, array(
             'action' => $this->generateUrl('victoire_businessentitytemplate_businessentitytemplate_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
@@ -183,7 +183,8 @@ class BusinessEntityTemplateController extends BaseController
             //get the url of the page
             $pageurl = $page->getUrl();
 
-            return $this->redirect($pageurl);
+            //redirect to the page of the template
+            return $this->redirect('/'.$pageurl);
         }
 
         return array(
