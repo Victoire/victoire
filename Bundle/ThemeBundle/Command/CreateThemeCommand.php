@@ -224,7 +224,7 @@ EOT
         if ($this->getContainer()->hasParameter('victoire_'.$widgetName.'.entityClass')) {
             $widgetEntityNamespace = $this->getContainer()->getParameter('victoire_'.$widgetName.'.entityClass');
         } else {
-            $widgetEntityNamespace = $dialog->askAndValidate($output, $dialog->getQuestion('Widget\'s entity namespace', $input->getOption('widget-entity-namespace')), array('Victoire\Bundle\ThemeBundle\Command\CreateThemeCommand', 'validateNamespace'), false, $input->getOption('widget-entity-namespace'));
+            $widgetEntityNamespace = $dialog->askAndValidate($output, $dialog->getQuestion('Widget\'s entity namespace (please use "/" instead of backslashes)', $input->getOption('widget-entity-namespace')), array('Victoire\Bundle\ThemeBundle\Command\CreateThemeCommand', 'validateNamespace'), false, $input->getOption('widget-entity-namespace'));
         }
 
         $input->setOption('widget-entity-namespace', $widgetEntityNamespace);
@@ -329,7 +329,7 @@ EOT
         }
 
         // validate reserved keywords
-        $reserved = self::getReservedWords();
+        $reserved = Validators::getReservedWords();
         foreach (explode('\\', $namespace) as $word) {
             if (in_array(strtolower($word), $reserved)) {
                 throw new \InvalidArgumentException(sprintf('The namespace cannot contain PHP reserved words ("%s").', $word));

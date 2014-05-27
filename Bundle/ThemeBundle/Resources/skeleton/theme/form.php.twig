@@ -10,9 +10,9 @@ use Victoire\Bundle\CoreBundle\Form\WidgetType;
 
 
 /**
- * Widget{{widget}} form type
+ * Theme{{widget}} form type
  */
-class Widget{{widget}}Type extends WidgetType
+class Theme{{widget}}{{theme}}Type extends WidgetType
 {
 
     /**
@@ -47,7 +47,7 @@ class Widget{{widget}}Type extends WidgetType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class'         => '{{ namespace }}\Entity\Widget{{ widget }}',
+            'data_class'         => '{{ namespace }}\Entity\Theme{{ widget }}{{ theme }}',
             'widget'             => '{{widget|lower}}',
             'translation_domain' => 'victoire'
         ));
@@ -59,6 +59,6 @@ class Widget{{widget}}Type extends WidgetType
      */
     public function getName()
     {
-        return 'appventus_victoireCoreBundle_widget{{widget|lower}}type';
+        return 'appventus_victoirecorebundle_theme{{widget|lower}}{{theme|lower}}type';
     }
 }
