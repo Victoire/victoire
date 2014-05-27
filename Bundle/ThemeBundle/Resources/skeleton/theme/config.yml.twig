@@ -2,8 +2,8 @@
 #victoire_core:
 #    widgets:
 #        {{ theme|lower }}:
-#            class: "Victoire\\Widget\\{{ bundle }}\\Entity\\Widget{{ widget }}{{ theme }}"
-#            name: {{ widget|lower ~ theme|lower }}
+#            class: "Victoire\\Theme\\{{ widget }}\\{{ theme }}Bundle\\Entity\\Theme{{ widget }}{{ theme }}"
+#            name: theme{{ widget|lower ~ theme|lower }}
 
 victoire_theme_{{ widget|lower }}_{{ theme|lower }}:
     name: theme{{ widget|lower }}{{ theme|lower }}
