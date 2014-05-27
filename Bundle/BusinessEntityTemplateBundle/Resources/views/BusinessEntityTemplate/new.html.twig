@@ -1,0 +1,15 @@
+{% extends 'VictoireCoreBundle::layout.html.twig' %}
+
+{% block content %}
+    <h1>BusinessEntityTemplate creation</h1>
+
+    {{ form(form) }}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('victoire_businessentitytemplate_businessentitytemplate_create') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock %}

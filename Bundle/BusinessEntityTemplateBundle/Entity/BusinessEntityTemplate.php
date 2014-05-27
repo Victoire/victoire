@@ -4,12 +4,15 @@ namespace Victoire\Bundle\BusinessEntityTemplateBundle\Entity;
 use Victoire\Bundle\CoreBundle\Entity\BusinessEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Victoire\Bundle\PageBundle\Entity\Page;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * BusinessEntityTemplate
  *
  * @ORM\Table("cms_business_entity_template")
  * @ORM\Entity(repositoryClass="Victoire\Bundle\BusinessEntityTemplateBundle\Repository\BusinessEntityTemplateRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class BusinessEntityTemplate
 {
@@ -27,9 +30,9 @@ class BusinessEntityTemplate
     /**
      * @var string
      *
-     * @ORM\Column(name="business_entity", type="string", length=255, nullable=false)
+     * @ORM\Column(name="business_entity_id", type="string", length=255, nullable=false)
      */
-    protected $businessEntity;
+    protected $businessEntityId;
 
     /**
      * @var string
@@ -39,11 +42,31 @@ class BusinessEntityTemplate
     protected $name;
 
     /**
-     * @ORM\OneToOne(targetEntity="Victoire\Bundle\PageBundle\Entity\Page", cascade={"persist", "remove",})
+     * @ORM\OneToOne(targetEntity="Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage", cascade={"persist", "remove",})
      * @ORM\JoinColumn(name="page_id", referencedColumnName="id", nullable=false)
      *
      */
     protected $page;
+
+    /**
+     * @var string
+     *
+     * @Assert\NotBlank()
+     * @ORM\Column(name="layout", type="string", length=255, nullable=false)
+     */
+    protected $layout;
+
+    protected $businessEntity = null;
+
+    /**
+     * contructor
+     *
+     **/
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+    }
 
     /**
      * Get the id
@@ -102,6 +125,26 @@ class BusinessEntityTemplate
     public function setBusinessEntity(BusinessEntity $businessEntity)
     {
         $this->businessEntity = $businessEntity;
+        $this->businessEntityId = $businessEntity->getId();
+    }
+
+    /**
+     * Set the business entity id
+     * @param string $businessEntityId
+     */
+    public function setBusinessEntityId($businessEntityId)
+    {
+        $this->businessEntityId = $businessEntityId;
+    }
+
+    /**
+     * Get the business entity id
+     *
+     * @return string
+     */
+    public function getBusinessEntityId()
+    {
+        return $this->businessEntityId;
     }
 
     /**
@@ -122,5 +165,46 @@ class BusinessEntityTemplate
     public function setPage(Page $page)
     {
         $this->page = $page;
+    }
+
+    /**
+     * Set layout
+     *
+     * @param string $layout
+     * @return Page
+     */
+    public function setLayout($layout)
+    {
+        $this->layout = $layout;
+
+        return $this;
+    }
+
+    /**
+     * Get layout
+     *
+     * @return string
+     */
+    public function getLayout()
+    {
+        return $this->layout;
+    }
+
+    /**
+     * Prepersist
+     *
+     * @ORM\PrePersist
+     */
+    public function prePersist()
+    {
+        $this->page = new BusinessEntityTemplatePage();
+        $this->page->setTitle($this->getName());
+        $this->page->setLayout($this->layout);
+
+        //generate the url for the template
+        $url = $this->getName().'/{id}';
+        $this->page->setUrl($url);
+
+
     }
 }

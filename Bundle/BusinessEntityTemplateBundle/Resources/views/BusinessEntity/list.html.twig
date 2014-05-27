@@ -9,11 +9,14 @@
     </div>
     <h2>{{ 'list.title.templates'|trans }}</h2>
     <div>
-        {{ 'list.action.add'|trans }}
+
+        <a href="{{ path('victoire_businessentitytemplate_businessentitytemplate_new', {'id': businessEntity.getId}) }}">
+            {{ 'list.action.add'|trans }}
+	    </a>
     </div>
     {%  for template in templates %}
     <div>
-	    <a href="{{ path('victoire_business_entity_template_list', {'id': businessEntity.getId}) }}">
+	    <a href="{{ path('victoire_businessentitytemplate_businessentity_list', {'id': businessEntity.getId}) }}">
 	        {{ template.getName }}
 	    </a>
     </div>
