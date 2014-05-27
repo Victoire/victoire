@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  */
 class BusinessEntityTemplateController extends BasePageController
 {
+
     /**
      *
      * @Route("/", name="victoire_business_entity_template_index")
@@ -34,13 +35,18 @@ class BusinessEntityTemplateController extends BasePageController
      * @Route("/list/{id}", name="victoire_business_entity_template_list")
      * @Template()
      *
+     * @param string $id The id of the business entity
+     *
      * @return template
+     *
+     * @throws Exception If the business entity was not found
      *
      */
     public function listAction($id)
     {
         //services
         $businessEntityManager = $this->get('victoire_core.helper.business_entity_helper');
+        $businessEntityTemplateHelper = $this->get('victoire_business_entity_template.helper.business_entity_template_helper');
 
         //get the businessEntity
         $businessEntity = $businessEntityManager->findById($id);
@@ -50,6 +56,9 @@ class BusinessEntityTemplateController extends BasePageController
             throw new \Exception('The business entity ['.$id.'] was not found.');
         }
 
-        return array('businessEntity' => $businessEntity);
+        //get the templates associated to the business entity
+        $templates = $businessEntityTemplateHelper->findTemplatesByBusinessEntity($businessEntity);
+
+        return array('businessEntity' => $businessEntity, 'templates' => $templates);
     }
 }

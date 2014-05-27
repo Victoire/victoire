@@ -4,7 +4,11 @@ namespace Victoire\Bundle\CoreBundle\Helper;
 use Victoire\Bundle\CoreBundle\Annotations\Reader\AnnotationReader;
 use Victoire\Bundle\CoreBundle\Entity\BusinessEntity;
 
-
+/**
+ * The BusinessEntityHelper
+ *
+ * ref: victoire_core.helper.business_entity_helper
+ */
 class BusinessEntityHelper
 {
     protected $annotationReader = null;

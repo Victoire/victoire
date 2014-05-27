@@ -3,7 +3,20 @@
 {% block content %}
 <div class="vic-container vic-masthead">
     <div>
-	        {{ businessEntity.getName }}
+        <h2>
+            {{ 'list.title.businessEntity'|trans }} : {{ businessEntity.getName }}
+        </h2>
     </div>
+    <h2>{{ 'list.title.templates'|trans }}</h2>
+    <div>
+        {{ 'list.action.add'|trans }}
+    </div>
+    {%  for template in templates %}
+    <div>
+	    <a href="{{ path('victoire_business_entity_template_list', {'id': businessEntity.getId}) }}">
+	        {{ template.getName }}
+	    </a>
+    </div>
+    {% endfor %}
 </div>
 {% endblock content %}
