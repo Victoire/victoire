@@ -457,18 +457,6 @@ class BaseWidgetManager
 
     }
 
-    /**
-     * build widget form and dispatch event
-     * @param Manager $manager
-     * @param Widget  $widget
-     * @param string  $entityName
-     * @param string  $namespace
-     * @return Form
-     */
-    public function buildForm($widget, $entityName = null, $namespace = null)
-    {
-        throw new \Exception('Please provide a buildForm function for the widget manager');
-    }
 
     /**
      * render a new form
@@ -568,5 +556,46 @@ class BaseWidgetManager
         $dispatcher->dispatch(VictoireCmsEvents::WIDGET_POST_RENDER, new WidgetRenderEvent($widget, $html));
 
         return $html;
+    }
+
+
+    /**
+     * create a form with given widget
+     *
+     * @param WidgetRedactor $widget
+     * @param string         $entityName
+     * @param string         $namespace
+     * @return $form
+     */
+    public function buildForm($widget, $entityName = null, $namespace = null)
+    {
+        //test parameters
+        if ($entityName !== null) {
+            if ($namespace === null) {
+                throw new \Exception('The namespace is mandatory if the entityName is given');
+            }
+        }
+
+        $form = $this->buildWidgetForm($widget, $entityName, $namespace);
+
+        //send event
+        $dispatcher = $this->container->get('event_dispatcher');
+        $dispatcher->dispatch(VictoireCmsEvents::WIDGET_BUILD_FORM, new WidgetBuildFormEvent($widget, $form));
+
+        return $form;
+    }
+
+
+    /**
+     * build widget form and dispatch event
+     * @param Manager $manager
+     * @param Widget  $widget
+     * @param string  $entityName
+     * @param string  $namespace
+     * @return Form
+     */
+    public function buildWidgetForm($widget, $entityName = null, $namespace = null)
+    {
+        throw new \Exception('Please provide a buildForm function for the widget manager');
     }
 }
