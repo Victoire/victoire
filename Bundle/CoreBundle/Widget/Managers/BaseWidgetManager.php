@@ -551,11 +551,13 @@ class BaseWidgetManager
     {
         $html = '';
         $dispatcher = $this->container->get('event_dispatcher');
+        $securityContext = $this->container->get('security.context');
+
         $dispatcher->dispatch(VictoireCmsEvents::WIDGET_PRE_RENDER, new WidgetRenderEvent($widget, $html));
 
         $html .= $this->render($widget);
 
-        if ($this->container->get('security.context')->isGranted('ROLE_VICTOIRE')) {
+        if ($securityContext->isGranted('ROLE_VICTOIRE')) {
             $html .= $this->renderActions($widget->getSlot(), $widget->getPage());
         }
 
