@@ -228,7 +228,7 @@ class BaseWidgetManager
             $em->flush();
 
             //get the html for the widget
-            $hmltWidget = $this->render($widget);
+            $hmltWidget = $this->renderContainer($widget, true);
 
             $response = array(
                 "success" => true,
@@ -540,5 +540,31 @@ class BaseWidgetManager
         $fieldValue = call_user_func(array($entity, $functionName));
 
         return $fieldValue;
+    }
+
+    /**
+     * render a widget
+     * @param Widget $widget
+     * @return template
+     */
+    public function renderContainer(Widget $widget, $addContainer = false)
+    {
+        $html = '';
+        $dispatcher = $this->container->get('event_dispatcher');
+        $dispatcher->dispatch(VictoireCmsEvents::WIDGET_PRE_RENDER, new WidgetRenderEvent($widget, $html));
+
+        $html .= $this->render($widget);
+
+        if ($this->container->get('security.context')->isGranted('ROLE_VICTOIRE')) {
+            $html .= $this->renderActions($widget->getSlot(), $widget->getPage());
+        }
+
+        if ($addContainer) {
+            $html = "<div class='widget-container' id='vic-widget-".$widget->getId()."-container'>".$html.'</div>';
+        }
+
+        $dispatcher->dispatch(VictoireCmsEvents::WIDGET_POST_RENDER, new WidgetRenderEvent($widget, $html));
+
+        return $html;
     }
 }

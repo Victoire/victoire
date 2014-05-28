@@ -352,7 +352,6 @@ class WidgetManager
         );
     }
 
-
     /**
      * render a widget
      * @param Widget $widget
@@ -360,21 +359,7 @@ class WidgetManager
      */
     public function render(Widget $widget, $addContainer = false)
     {
-        $html = '';
-        $dispatcher = $this->container->get('event_dispatcher');
-        $dispatcher->dispatch(VictoireCmsEvents::WIDGET_PRE_RENDER, new WidgetRenderEvent($widget, $html));
-
-        $html .= $this->getManager($widget)->render($widget);
-
-        if ($this->container->get('security.context')->isGranted('ROLE_VICTOIRE')) {
-            $html .= $this->renderActions($widget->getSlot(), $widget->getPage());
-        }
-
-        if ($addContainer) {
-             $html = "<div class='widget-container' id='vic-widget-".$widget->getId()."-container'>".$html.'</div>';
-        }
-
-        $dispatcher->dispatch(VictoireCmsEvents::WIDGET_POST_RENDER, new WidgetRenderEvent($widget, $html));
+        $html = $this->getManager($widget)->renderContainer($widget);
 
         return $html;
     }
