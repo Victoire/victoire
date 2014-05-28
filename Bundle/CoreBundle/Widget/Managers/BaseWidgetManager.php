@@ -16,8 +16,11 @@ use Victoire\Bundle\CoreBundle\Theme\ThemeWidgetInterface;
 
 /**
  * Generic Widget CRUD operations
+ *
+ * @TODO CLEAN THIS CLASS
+ * IT IS A COPY PASTE FROM THE WIDGET MANAGER
  */
-class WidgetManager
+class BaseWidgetManager
 {
     protected $container;
     protected $widget;
@@ -41,8 +44,6 @@ class WidgetManager
     {
         $this->page = $page;
     }
-
-
 
     /**
      * remove a widget
@@ -115,6 +116,69 @@ class WidgetManager
     }
 
     /**
+     * Call the build form with selected parameter switch the parameters
+     * The call is not the same if an entity is provided or not
+     *
+     * @param Widget $widget
+     * @param Entity $entity
+     *
+     * @throws \Exception
+     * @return \Victoire\Bundle\CoreBundle\Widget\Managers\Form
+     */
+    protected function callBuildFormSwitchParameters($widget, $entityName)
+    {
+        //if there is an entity
+        if ($entityName) {
+            //get the businessClasses for the widget
+            $classes = $this->container->get('victoire_core.annotation_reader')->getBusinessClassesForWidget($widget);
+
+            //test the result
+            if (!isset($classes[$entityName])) {
+                throw new \Exception('The entity '.$entityName.' was not found int the business classes.');
+            }
+
+            //get the class of the entity name
+            $entityClass = $classes[$entityName];
+
+            $form = $this->buildForm($widget, $entityName, $entityClass);
+        } else {
+            //build a form only with the widget
+            $form = $this->buildForm($widget);
+        }
+
+        return $form;
+    }
+
+    /**
+     * Update a widget by the entity
+     *
+     * @param Widget $widget
+     * @param unknown $entity
+     * @throws \Exception
+     * @return Widget
+     */
+    protected function updateWidgetData(Widget $widget, $entity)
+    {
+        $em = $this->getEntityManager();
+
+        $widget->setBusinessEntityName($entity);
+
+        if ($entity) {
+            $classes = $this->container->get('victoire_core.annotation_reader')->getBusinessClassesForWidget($widget);
+
+            if (!isset($classes[$entity])) {
+                throw new \Exception('The entity '.$entity.' was not found int the business classes.');
+            }
+
+            $entityClass = $classes[$entity];
+
+            $widget->setBusinessClass($classes[$entity]);
+        }
+
+        return $widget;
+    }
+
+    /**
      * create a widget
      * @param string $type
      * @param string $slot
@@ -124,35 +188,32 @@ class WidgetManager
      */
     public function createWidget($type, $slot, BasePage $page, $entity)
     {
-        $manager = $this->getManager(null, $type);
+        //services
+        $formErrorService = $this->container->get('av.form_error_service');
+        $em = $this->getEntityManager();
 
-        if (method_exists($manager, 'createWidget')) {
-            return $manager->createWidget($type, $slot, $page, $entity, $this);
-        }
+        //the default response
+        $response = array(
+            "success" => false,
+            "html"    => ''
+        );
 
-        $widget = $manager->newWidget($page, $slot);
-        $widget->setCurrentPage($page);
-        $classes = $this->container->get('victoire_core.annotation_reader')->getBusinessClassesForWidget($widget);
+        //create a new widget
+        $widget = $this->newWidget($page, $slot);
 
-        $form = $this->buildForm($manager, $widget);
-
-        if ($entity) {
-            $form = $this->buildForm($manager, $widget, $entity, $classes[$entity]);
-        } else {
-            $form = $this->buildForm($manager, $widget);
-        }
+        $form = $this->callBuildFormSwitchParameters($widget, $entity);
 
         $request = $this->container->get('request');
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            //get the widget from the form
             $widget = $form->getData();
-            $em = $this->container->get('doctrine')->getManager();
 
-            $widget->setBusinessEntityName($entity);
-            if ($entity) {
-                $widget->setBusinessClass($classes[$entity]);
-            }
+            //update fields of the widget
+            $widget = $this->updateWidgetData($widget, $entity);
+
+            //persist the widget
             $em->persist($widget);
             $em->flush();
 
@@ -167,64 +228,20 @@ class WidgetManager
             $em->flush();
 
             //get the html for the widget
-            $hmltWidget = $this->render($widget, $page, true);
+            $hmltWidget = $this->render($widget);
 
-            return array(
+            $response = array(
                 "success" => true,
                 "html"    => $hmltWidget
             );
+        } else {
+            //get the errors as a string
+            $errorMessage = $formErrorService->getRecursiveReadableErrors($form);
+
+            throw new \Exception($errorMessage);
         }
 
-
-        $forms = $this->renderNewWidgetForms($entity, $slot, $page, $widget);
-
-        return array(
-            "success" => false,
-            "html"    => $this->container->get('victoire_templating')->render(
-                "VictoireCoreBundle:Widget:new.html.twig",
-                array(
-                    'classes' => $classes,
-                    'forms'   => $forms
-                )
-            )
-        );
-    }
-
-    public function buildWidget($type, $entity, $page, $slot, $entityName, $attrs, $fields)
-    {
-        $manager = $this->getManager(null, $type);
-        $widget = $manager->newWidget($page, $slot);
-
-        $widget->setBusinessEntityName($entityName);
-
-        foreach ($attrs as $key => $value) {
-            $widget->{'set'.ucfirst($key)}($value);
-
-        }
-
-        $widget->setFields($fields);
-
-        return $widget;
-    }
-
-    /**
-     * Build a static widget by giving it the content as
-     * @param  string $type       The widget type
-     * @param  Page   $page       The page
-     * @param  string $slot       The slot name
-     * @param  string $entityName The entity name
-     * @param  array  values      The values to set
-     * @return Widget             The widget
-     */
-    public function buildStaticWidget($type, $page, $slot, $values)
-    {
-        $manager = $this->getManager(null, $type);
-        $widget  = $manager->newWidget($page, $slot);
-        foreach ($values as $key => $value) {
-            $widget->{"set".ucFirst($key)}($value);
-        }
-
-        return $widget;
+        return $response;
     }
 
     /**
@@ -240,13 +257,12 @@ class WidgetManager
     {
         $annotationReader = $this->container->get('victoire_core.annotation_reader');
         $classes = $annotationReader->getBusinessClassesForWidget($widget);
-        $manager = $this->getManager($widget);
 
-        $forms['static'] = $this->renderNewForm($this->buildForm($manager, $widget), $widget, $slot, $page);
+        $forms['static'] = $this->renderNewForm($this->buildForm($widget), $widget, $slot, $page);
 
         // Build each form relative to business entities
         foreach ($classes as $entityName => $namespace) {
-            $form = $this->buildForm($manager, $widget, $entityName, $namespace);
+            $form = $this->buildForm($widget, $entityName, $namespace);
             $forms[$entityName] = $this->renderNewForm($form, $widget, $slot, $page, $entityName);
         }
 
@@ -275,108 +291,15 @@ class WidgetManager
         return $forms;
     }
 
-    /**
-     * new widget
-     * @param string   $type
-     * @param string   $slot
-     * @param BasePage $page
-     * @return template
-     */
-    public function newWidget($type, $slot, BasePage $page)
-    {
-        $manager = $this->getManager(null, $type);
-        $widget = $manager->newWidget($page, $slot);
-
-        $classes = $this->container->get('victoire_core.annotation_reader')->getBusinessClassesForWidget($widget);
-        $forms = $this->renderNewWidgetForms($type, $slot, $page, $widget);
-
-        return array(
-            "html" => $this->container->get('victoire_templating')->render(
-                "VictoireCoreBundle:Widget:Form/new.html.twig",
-                array(
-                    'classes' => $classes,
-                    'widget'  => $widget,
-                    'forms'   => $forms
-                )
-            )
-        );
-    }
-
-    /**
-     * edit a widget
-     * @param Widget $widget
-     * @param string $entity
-     * @return template
-     */
-    public function edit(Widget $widget, $entity = null)
-    {
-        $request = $this->container->get('request');
-        $classes = $this->container->get('victoire_core.annotation_reader')->getBusinessClassesForWidget($widget);
-        $manager = $this->getManager($widget);
-
-        if (method_exists($manager, 'edit')) {
-            return $manager->edit($widget, $entity, $this);
-        }
-
-        $form = $this->buildForm($manager, $widget);
-
-        if ($entity) {
-            $form = $this->buildForm($manager, $widget, $entity, $classes[$entity]);
-        }
-        $form->handleRequest($request);
-        if ($form->isValid()) {
-            $em = $this->container->get('doctrine')->getManager();
-            $widget->setBusinessEntityName($entity);
-            $em->persist($widget);
-            $em->flush();
-
-            return array(
-                "success"  => true,
-                "html"     => $this->render($widget),
-                "widgetId" => "vic-widget-".$widget->getId()."-container"
-            );
-        }
-
-        $forms = $this->renderWidgetForms($widget);
-
-        return array(
-            "success"  => false,
-            "html"     => $this->container->get('victoire_templating')->render(
-                "VictoireCoreBundle:Widget:Form/edit.html.twig",
-                array(
-                    'classes' => $classes,
-                    'forms'   => $forms,
-                    'widget'  => $widget
-                )
-            )
-        );
-    }
-
 
     /**
      * render a widget
      * @param Widget $widget
      * @return template
      */
-    public function render(Widget $widget, $addContainer = false)
+    public function render(Widget $widget)
     {
-        $html = '';
-        $dispatcher = $this->container->get('event_dispatcher');
-        $dispatcher->dispatch(VictoireCmsEvents::WIDGET_PRE_RENDER, new WidgetRenderEvent($widget, $html));
-
-        $html .= $this->getManager($widget)->render($widget);
-
-        if ($this->container->get('security.context')->isGranted('ROLE_VICTOIRE')) {
-            $html .= $this->renderActions($widget->getSlot(), $widget->getPage());
-        }
-
-        if ($addContainer) {
-             $html = "<div class='widget-container' id='vic-widget-".$widget->getId()."-container'>".$html.'</div>';
-        }
-
-        $dispatcher->dispatch(VictoireCmsEvents::WIDGET_POST_RENDER, new WidgetRenderEvent($widget, $html));
-
-        return $html;
+        throw new \Exception('Please provide the render function for the widget manager');
     }
 
     /**
@@ -433,21 +356,6 @@ class WidgetManager
         );
     }
 
-
-    /**
-     * get specific widget for provided widget type
-     * @param Widget $widget
-     * @param string $type
-     * @return manager
-     */
-    public function getManager($widget = null, $type = null)
-    {
-        $renderer = $this->container->get($this->getWidgetType($widget, $type)."_manager");
-
-        return $renderer;
-    }
-
-
     /**
      * return widget type
      * @param widget $widget
@@ -481,7 +389,6 @@ class WidgetManager
 
         return $widgetRepo->findByPageBySlot($page, $slot);
     }
-
 
 
     /**
@@ -558,14 +465,9 @@ class WidgetManager
      * @param string  $namespace
      * @return Form
      */
-    public function buildForm($manager, $widget, $entityName = null, $namespace = null)
+    public function buildForm($widget, $entityName = null, $namespace = null)
     {
-        $form = $manager->buildForm($widget, $entityName, $namespace);
-
-        $dispatcher = $this->container->get('event_dispatcher');
-        $dispatcher->dispatch(VictoireCmsEvents::WIDGET_BUILD_FORM, new WidgetBuildFormEvent($widget, $form));
-
-        return $form;
+        throw new \Exception('Please provide a buildForm function for the widget manager');
     }
 
     /**
@@ -582,5 +484,61 @@ class WidgetManager
         $manager = $this->getManager($widget);
 
         return $manager->renderNewForm($form, $widget, $slot, $page, $entityName);
+    }
+
+    /**
+     * Get a new widget entity
+     *
+     * @return Widget
+     */
+    protected function getNewWidgetEntity()
+    {
+        throw new \Exception('Please provide a getNewWidgetEntity function in your widget manager');
+    }
+
+    /**
+     * create a new WidgetRedactor
+     * @param Page   $page
+     * @param string $slot
+     *
+     * @return $widget
+     */
+    public function newWidget($page, $slot)
+    {
+        $widget = $this->getNewWidgetEntity();
+
+        $widget->setPage($page);
+        $widget->setSlot($slot);
+
+        return $widget;
+    }
+
+    /**
+     * Get the entity manager
+     *
+     * @return EntityManager
+     */
+    protected function getEntityManager()
+    {
+        $em = $this->container->get('doctrine')->getManager();
+
+        return $em;
+    }
+
+    /**
+     * Get the content of an attribute of an entity given
+     *
+     * @param entity $entity
+     * @param strin $functionName
+     *
+     * @return mixed
+     */
+    protected function getEntityAttributeValue($entity, $field)
+    {
+        $functionName = 'get'.ucfirst($field);
+
+        $fieldValue = call_user_func(array($entity, $functionName));
+
+        return $fieldValue;
     }
 }

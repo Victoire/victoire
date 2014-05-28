@@ -5,6 +5,12 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+/**
+ * Create an entity proxy for the widget
+ *
+ * @author Paul Andrieux
+ *
+ */
 class EntityProxyFormType extends AbstractType
 {
 
@@ -15,6 +21,8 @@ class EntityProxyFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        //add the link to the business entity instance
+        //it depends of the form
         $builder
             ->add($options['entity_name'], 'entity', array(
                 'label'       => 'entity_proxy.form.' . $options['entity_name'] . '.label',
@@ -26,8 +34,11 @@ class EntityProxyFormType extends AbstractType
                 )
             ));
 
+        //set the business entity name in an hidden field
+        $builder->add('business_entity_name', 'hidden', array(
+            'data' => $options['entity_name']
+        ));
     }
-
 
     /**
      * bind to Menu entity
@@ -44,9 +55,10 @@ class EntityProxyFormType extends AbstractType
         ));
     }
 
-
     /**
      * get form name
+     *
+     * @return string
      */
     public function getName()
     {

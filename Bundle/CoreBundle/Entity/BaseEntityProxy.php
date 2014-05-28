@@ -21,11 +21,12 @@ abstract class BaseEntityProxy
     protected  $id;
 
     /**
-     * @var integer
+     *  Auto list mode: businessentity type
+     * @var string
+     * @ORM\Column(name="business_entity_name", type="string", nullable=true)
      *
-     * @ORM\OneToOne(targetEntity="\Victoire\Bundle\CoreBundle\Entity\Widget", mappedBy="entity")
      */
-    protected $widget;
+    protected $businessEntityName;
 
     /**
      * Get id
@@ -56,37 +57,41 @@ abstract class BaseEntityProxy
         }
     }
 
+
     /**
-     * get related entity
-     * @param string $entityName The related entity name
-     * @return mixed
+     * Get businessEntity
+     *
+     * @return integer
      */
-    public function getEntity($entityName)
+    public function getBusinessEntityName()
     {
+        return $this->businessEntityName;
+    }
+
+    /**
+     * Set businessEntityName
+     *
+     * @param String $businessEntityName The business entity name
+     */
+    public function setBusinessEntityName($businessEntityName)
+    {
+        $this->businessEntityName = $businessEntityName;
+    }
+
+    /**
+     * Get the entity of the proxy
+     *
+     * @return Entity
+     */
+    public function getEntity()
+    {
+        $entityName = $this->getBusinessEntityName();
+
+        //test the entity name
+        if ($entityName === null || $entityName === '') {
+            throw new \Exception('The businessEntityName is not defined for the entityProxy with the id:'.$this->getId());
+        }
+
         return $this->{'get'.ucfirst($entityName)}();
     }
-
-    /**
-     * Set widget
-     *
-     * @param Widget $widget
-     * @return EntityProxy
-     */
-    public function setWidget(Widget $widget = null)
-    {
-        $this->widget = $widget;
-
-        return $this;
-    }
-
-    /**
-     * Get widget
-     *
-     * @return Widget
-     */
-    public function getWidget()
-    {
-        return $this->widget;
-    }
-
 }

@@ -15,7 +15,7 @@
         <div id="picker-{{entity}}" class="vic-tab-pane vic-active">
 
             {% block form_picker %}
-                {{ form_widget(form.entity) }}
+                {{ form_widget(form.entity_proxy) }}
             {% endblock form_picker %}
         </div>
         {% if is_granted('ROLE_VICTOIRE_DEVELOPER') %}

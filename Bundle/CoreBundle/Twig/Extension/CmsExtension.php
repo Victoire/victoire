@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
-use Victoire\Bundle\CoreBundle\Entity\BaseWidget;
+use Victoire\Bundle\CoreBundle\Entity\Widget;
 
 /**
  * PageExtension extends Twig with page capabilities.
@@ -99,14 +99,13 @@ class CmsExtension extends \Twig_Extension
         if ($this->securityContext->isGranted('ROLE_VICTOIRE')) {
             $result .= $this->widgetManager->renderActions($slot, $page, true);
         }
-
         $widgets = array();
 
         $pageWidgets = $this->widgetManager->findByPageBySlot($page, $slot);
 
         foreach ($pageWidgets as $_widget) {
             //is the widget a current entity widget
-            if ($_widget instanceof BaseWidget) {//@TODO check current entity widget
+            if ($_widget instanceof Widget) {//@TODO check current entity widget
                 //set the entity for the widget
                 $_widget->setEntity($entity);
             }

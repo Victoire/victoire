@@ -2,6 +2,7 @@
 namespace Victoire\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy;
 
 /**
  * undocumented class
@@ -14,17 +15,27 @@ abstract class BaseWidget
      * Auto simple mode: joined entity
      * @var integer
      *
-     * @ORM\OneToOne(targetEntity="\Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy", inversedBy="widget", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="\Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy", cascade={"persist", "remove"})
      */
-    protected $entity;
+    protected $entityProxy;
 
-    public function setEntity($entity)
+    /**
+     * Set the entity proxy
+     *
+     * @param EntityProxy $entity
+     */
+    public function setEntityProxy(EntityProxy $entityProxy)
     {
-        $this->entity = $entity;
+        $this->entityProxy = $entityProxy;
     }
 
-    public function getEntity()
+    /**
+     * Get the entity proxy
+     *
+     * @return EntityProxy
+     */
+    public function getEntityProxy()
     {
-        return $this->entity;
+        return $this->entityProxy;
     }
 }

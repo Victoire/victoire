@@ -12,8 +12,18 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
  */
-class Widget
+class Widget extends BaseWidget
 {
+    const MODE_ENTITY = 'entity';
+    const MODE_QUERY = 'query';
+    const MODE_STATIC = 'static';
+
+    /**
+     * The entity linked to the widget
+     * @var unknown
+     */
+    protected $entity;
+
     /**
      * @var integer
      *
@@ -36,6 +46,7 @@ class Widget
      * @ORM\Column(name="query", type="text", nullable=true)
      */
     private $query;
+
     /**
      * @var string
      *
@@ -51,14 +62,6 @@ class Widget
      *
      */
     protected $page;
-
-    /**
-     * Auto simple mode: joined entity
-     * @var integer
-     *
-     * @ORM\OneToOne(targetEntity="\Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy", inversedBy="widget", cascade={"persist"})
-     */
-    protected $entity;
 
     /**
      *  Auto list mode: businessentity type
@@ -80,6 +83,13 @@ class Widget
      * @ORM\Column(name="fields", type="array")
      */
     protected $fields = array();
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="mode", type="string", length=255, nullable=false)
+     */
+    protected $mode = self::MODE_STATIC;
 
     /**
      * Constructor
@@ -210,7 +220,6 @@ class Widget
         $this->businessEntityName = $businessEntityName;
     }
 
-
     /**
      * Set the entity
      *
@@ -219,7 +228,6 @@ class Widget
     public function setEntity($entity)
     {
         $this->entity = $entity;
-        $entity->setWidget($this);
     }
 
     /**
@@ -229,6 +237,18 @@ class Widget
      */
     public function getEntity()
     {
+        //if there is no entity
+        if ($this->entity === null) {
+            //we try to get one from the proxy
+            $entityProxy = $this->getEntityProxy();
+
+            //if there is a proxy
+            if ($entityProxy !== null) {
+                $entity = $entityProxy->getEntity();
+                $this->entity = $entity;
+            }
+        }
+
         return $this->entity;
     }
 
@@ -240,7 +260,8 @@ class Widget
      */
     public function getValue()
     {
-        return $this->getContent();
+        //return $this->getContent();
+        return null;
     }
 
     /**
@@ -329,5 +350,25 @@ class Widget
         $type = explode('\\', get_class($this));
 
         return strtolower(preg_replace('/Widget/', '', end($type)));
+    }
+
+
+    /**
+     * Set the mode
+     * @param string $mode
+     */
+    public function setMode($mode)
+    {
+        $this->mode = $mode;
+    }
+
+    /**
+     * Get the mode
+     *
+     * @return string
+     */
+    public function getMode()
+    {
+        return $this->mode;
     }
 }
