@@ -2,7 +2,7 @@
 namespace Victoire\Bundle\CoreBundle\Tests\Listener;
 
 use Victoire\Bundle\CoreBundle\Tests\Utils\BaseTestCase;
-use Victoire\Bundle\CoreBundle\Event\PageMenuContextualEvent;
+use Victoire\Bundle\PageBundle\Event\PageMenuContextualEvent;
 use Symfony\Component\EventDispatcher\Event;
 
 /**

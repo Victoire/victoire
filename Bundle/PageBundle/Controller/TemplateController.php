@@ -1,15 +1,16 @@
 <?php
 
-namespace Victoire\Bundle\CoreBundle\Controller;
+namespace Victoire\Bundle\PageBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Victoire\Bundle\CoreBundle\Event\Menu\TemplateMenuContextualEvent;
-use Victoire\Bundle\PageBundle\Form\TemplateType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Victoire\Bundle\PageBundle\Entity\Template as TemplateEntity;
+use Victoire\Bundle\PageBundle\Event\Menu\TemplateMenuContextualEvent;
+use Victoire\Bundle\PageBundle\Form\TemplateType;
 
 
 /**
@@ -30,9 +31,14 @@ class TemplateController extends Controller
     {
         $templates = $this->get('doctrine.orm.entity_manager')->getRepository('VictoirePageBundle:Template')->findByParent(null, array('position' => 'ASC'));
 
-        return $this->container->get('victoire_templating')->renderResponse(
-            'VictoireCoreBundle:Template:index.html.twig',
-            array('templates' => $templates)
+        return new JsonResponse(
+            array(
+                "success" => true,
+                'html'    => $this->container->get('victoire_templating')->render(
+                    'VictoirePageBundle:Template:index.html.twig',
+                    array('templates' => $templates)
+                )
+            )
         );
     }
 
@@ -47,7 +53,7 @@ class TemplateController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $template = new TemplateEntity();
-        $form = $this->container->get('form.factory')->create(new TemplateType($em), $template); //TODO utiliser un service
+        $form = $this->container->get('form.factory')->create($this->getNewTemplateType(), $template); //TODO utiliser un service
 
         $form->handleRequest($this->get('request'));
         if ($form->isValid()) {
@@ -57,9 +63,14 @@ class TemplateController extends Controller
             return $this->redirect($this->generateUrl('victoire_core_template_show', array("slug" => $template->getSlug())));
         }
 
-        return $this->container->get('victoire_templating')->renderResponse(
-            "VictoireCoreBundle:Template:new.html.twig",
-            array('form' => $form->createView())
+        return new JsonResponse(
+            array(
+                "success" => true,
+                'html'    => $this->container->get('victoire_templating')->render(
+                    "VictoirePageBundle:Template:new.html.twig",
+                    array('form' => $form->createView())
+                )
+            )
         );
     }
 
@@ -76,12 +87,31 @@ class TemplateController extends Controller
         $em = $this->getDoctrine()->getManager();
         $template = $em->getRepository('VictoirePageBundle:Template')->findOneBySlug($slug);
 
-        $templateForm = $this->container->get('form.factory')->create(new TemplateType($em), $template);
+        $templateForm = $this->container->get('form.factory')->create($this->getNewTemplateType(), $template);
 
 
-        return $this->container->get('victoire_templating')->renderResponse(
-            'VictoireCoreBundle:Template:settings.html.twig',
-            array('template' => $template,'form' => $templateForm->createView())
+        $templateForm->handleRequest($this->get('request'));
+        if ($templateForm->isValid()) {
+            $em->persist($template);
+            $em->flush();
+
+            return new JsonResponse(
+                    array(
+                    'success' => true,
+                    "url"     => $this->generateUrl('victoire_core_template_show', array('slug' => $template->getSlug()))
+                )
+            );
+
+        }
+
+        return new JsonResponse(
+            array(
+                "success" => true,
+                'html'    => $this->container->get('victoire_templating')->render(
+                    'VictoirePageBundle:Template:settings.html.twig',
+                    array('page' => $template,'form' => $templateForm->createView())
+                )
+            )
         );
     }
 
@@ -101,8 +131,8 @@ class TemplateController extends Controller
         $this->get('event_dispatcher')->dispatch('victoire_core.template_menu.contextual', $event);
 
         return $this->container->get('victoire_templating')->renderResponse(
-            'VictoireCoreBundle:Template:show.html.twig',
-            array('template' => $template)
+            'AppBundle:Layout:' . $template->getLayout() . '.html.twig',
+            array('page' => $template, 'id' => $template->getId())
         );
     }
 
@@ -119,7 +149,7 @@ class TemplateController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
-        $form = $this->container->get('form.factory')->create(new TemplateType($em), $template);
+        $form = $this->container->get('form.factory')->create($this->getNewTemplateType(), $template);
 
         $form->handleRequest($this->get('request'));
         if ($form->isValid()) {
@@ -131,5 +161,15 @@ class TemplateController extends Controller
 
         return $this->redirect($this->generateUrl('victoire_core_template_settings', array("slug" => $template->getSlug())));
 
+    }
+
+    /**
+     * getNewPageType
+     *
+     * @return string
+     */
+    protected function getNewTemplateType()
+    {
+        return 'victoire_template_type';
     }
 }

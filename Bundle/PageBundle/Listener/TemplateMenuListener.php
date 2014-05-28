@@ -1,9 +1,9 @@
 <?php
-namespace Victoire\Bundle\CoreBundle\Listener;
+namespace Victoire\Bundle\PageBundle\Listener;
 
 use Symfony\Component\EventDispatcher\Event;
-use Victoire\Bundle\CoreBundle\Event\Menu\BasePageMenuContextualEvent;
 use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
+use Victoire\Bundle\PageBundle\Event\Menu\TemplateMenuContextualEvent;
 
 /**
  */
@@ -27,13 +27,13 @@ class TemplateMenuListener
     /**
      * add a contextual menu item
      */
-    public function addContextual(BasePageMenuContextualEvent $event)
+    public function addContextual(TemplateMenuContextualEvent $event)
     {
         $mainItem = $this->getMainItem();
         $mainItem->addChild('menu.template.settings',
             array(
                 'route' => 'victoire_core_template_settings',
-                'routeParameters' => array('slug' => $event->getPage()->getSlug())
+                'routeParameters' => array('slug' => $event->getTemplate()->getSlug())
                 )
         )->setLinkAttribute('data-toggle', 'vic-modal');
 
@@ -49,8 +49,7 @@ class TemplateMenuListener
         $mainItem->addChild('menu.template.new', array(
             'route' => 'victoire_core_template_new'
             )
-        );
-        $mainItem['menu.template.new']->setLinkAttribute('data-toggle', 'modal');
+        )->setLinkAttribute('data-toggle', 'vic-modal');
 
         $mainItem->addChild('menu.template.index', array(
             'route' => 'victoire_core_template_index'
@@ -62,11 +61,11 @@ class TemplateMenuListener
 
     private function getMainItem()
     {
-        if ($menuTemplate = $this->menuBuilder->getMenu()->getChild(('menu.template'))) {
+        if ($menuTemplate = $this->menuBuilder->getTopNavbar()->getChild('menu.template')) {
             return $menuTemplate;
         } else {
             return $this->menuBuilder->createDropdownMenuItem(
-                $this->menuBuilder->getMenu(),
+                $this->menuBuilder->getTopNavbar(),
                 "menu.template"
             );
         }

@@ -17,15 +17,15 @@ use Victoire\Bundle\PageBundle\Form\DataTransformer\PageToTemplateTransformer;
 class TemplateType extends AbstractType
 {
 
-    protected $em;
+    protected $layouts;
 
     /**
      * constructor
-     * @param EntityManager $em
+     * @param EntityManager $layouts
      */
-    public function __construct($em)
+    public function __construct($layouts)
     {
-        $this->em = $em;
+        $this->layouts = $layouts;
     }
 
     /**
@@ -36,14 +36,24 @@ class TemplateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-        $transformer = new PageToTemplateTransformer($this->em);
         $builder
-            ->add('title')
-            ->add('slug')
-            ->add('template')
-            ->add('layout')
+            ->add('title', null, array(
+                'label' => 'form.template.type.title.label'
+            ))
+            ->add('template', null, array(
+                'label' => 'form.template.type.template.label'
+            ))
+            ->add('layout', 'choice', array(
+                'label' => 'form.template.type.layout.label',
+                'choices' => $options['layouts']
+            ))
+            ->add('bodyId', null, array(
+                'label' => 'form.template.type.bodyId.label'
+            ))
+            ->add('bodyClass', null, array(
+                'label' => 'form.template.type.bodyClass.label'
+            ));
 
-            ->addModelTransformer($transformer)
         ;
     }
 
@@ -57,7 +67,8 @@ class TemplateType extends AbstractType
         $resolver->setDefaults(
             array(
                 'data_class'         => 'Victoire\Bundle\PageBundle\Entity\Template',
-                'translation_domain' => 'victoire'
+                'translation_domain' => 'victoire',
+                'layouts' => $this->layouts,
             )
         );
     }
@@ -68,6 +79,6 @@ class TemplateType extends AbstractType
      */
     public function getName()
     {
-        return 'victoire_page_type';
+        return 'victoire_template_type';
     }
 }

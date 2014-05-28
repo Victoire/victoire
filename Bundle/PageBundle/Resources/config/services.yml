@@ -38,8 +38,26 @@ services:
         tags:
             - { name: form.type, alias: victoire_page_type }
 
+    victoire_page.template.form.type:
+        class: Victoire\Bundle\PageBundle\Form\TemplateType
+        arguments: ['%victoire_core.layouts%']
+        tags:
+            - { name: form.type, alias: victoire_template_type }
+
     victoire_page.page_settings.form.type:
         class: Victoire\Bundle\PageBundle\Form\PageSettingsType
         arguments: ['%victoire_core.layouts%']
         tags:
             - { name: form.type, alias: victoire_page_settings_type }
+
+
+    ####################################################################################################################
+    # Menu
+    ####################################################################################################################
+
+    victoire_core.page_menu_listener:
+        class: Victoire\Bundle\PageBundle\Listener\PageMenuListener
+        arguments: ["@victoire_core.admin_menu_builder"]
+    victoire_core.template_menu_listener:
+        class: Victoire\Bundle\PageBundle\Listener\TemplateMenuListener
+        arguments: ["@victoire_core.admin_menu_builder"]
