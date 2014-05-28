@@ -10,3 +10,7 @@ services:
             - "%victoire_core.layouts%"
         tags:
             - { name: form.type, alias: victoire_business_entity_template_type }
+            
+    victoire_business_entity_template.business_entity_template_menu_listener:
+        class: Victoire\Bundle\BusinessEntityTemplateBundle\Listener\BusinessEntityTemplateMenuListener
+        arguments: ["@victoire_core.admin_menu_builder"]

@@ -23,6 +23,7 @@ class DynamicTranslations implements TranslationContainerInterface
             new Message('menu.template.new', 'victoire'),
             new Message('menu.sitemap', 'victoire'),
             new Message('menu.media', 'victoire'),
+            new Message('menu.business_entity_template', 'victoire'),
             new Message('widget.form.theme.label', 'victoire'),
             new Message('widget.form.theme.default', 'victoire'),
             new Message('modal.button.create.title', 'victoire'),

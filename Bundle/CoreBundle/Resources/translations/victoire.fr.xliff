@@ -11,6 +11,10 @@
         <target state="new">Nouvelle Page</target>
         <jms:reference-file line="4">Bootstrap/Page/new.html.twig</jms:reference-file>
       </trans-unit>
+      <trans-unit id="19ccbd8b16123d88eb230626a5b1110504c35954" resname="menu.business_entity_template">
+        <source>menu.business_entity_template</source>
+        <target state="new">Business Entity Template</target>
+      </trans-unit>
       <trans-unit id="67c0389fd251acfac612655ca5e660f7ad153bcb" resname="menu.media">
         <source>menu.media</source>
         <target>Media</target>

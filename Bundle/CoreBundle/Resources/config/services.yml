@@ -65,6 +65,7 @@ services:
             - "@victoire_core.page_menu_listener"
             - "@victoire_core.template_menu_listener"
             - "@victoire_core.sitemap_menu_listener"
+            - "@victoire_business_entity_template.business_entity_template_menu_listener"
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 

@@ -3,6 +3,7 @@ namespace Victoire\Bundle\CoreBundle\Listener;
 
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernel;
+use Victoire\Bundle\BusinessEntityTemplateBundle\Listener\BusinessEntityTemplateMenuListener;
 
 /**
  * This class add items in admin menu
@@ -18,6 +19,7 @@ class MenuListener
     protected $pageMenu;
     protected $templateMenu;
     protected $sitemapMenu;
+    protected $businessEntityTemplateMenuListener;
 
     /**
      * Construct function to include eventDispatcher, pageMenu, TemplateMenu, SiteMapMenu
@@ -25,12 +27,13 @@ class MenuListener
      * @return void
      * TODO We should tag menu listeners to dynamically get them iof pass them as arg
      **/
-    public function __construct($eventDispatcher, $pageMenu, $templateMenu, $sitemapMenu)
+    public function __construct($eventDispatcher, $pageMenu, $templateMenu, $sitemapMenu, BusinessEntityTemplateMenuListener $businessEntityTemplateMenuListener)
     {
         $this->eventDispatcher = $eventDispatcher;
         $this->pageMenu = $pageMenu;
         $this->templateMenu = $templateMenu;
         $this->sitemapMenu = $sitemapMenu;
+        $this->businessEntityTemplateMenuListener = $businessEntityTemplateMenuListener;
     }
 
     public function onKernelRequest(GetResponseEvent $event)
@@ -51,11 +54,15 @@ class MenuListener
         $this->eventDispatcher->addListener("victoire_core.sitemap_menu.global",
             array($this->sitemapMenu, 'addGlobal')
         );
+        $this->eventDispatcher->addListener("victoire_core.businessentitytemplate_menu.global",
+            array($this->businessEntityTemplateMenuListener, 'addGlobal')
+        );
 
         $this->eventDispatcher->dispatch('victoire_core.page_menu.global');
         $this->eventDispatcher->dispatch('victoire_core.template_menu.global');
         $this->eventDispatcher->dispatch('victoire_core.sitemap_menu.global');
-
+        $this->eventDispatcher->dispatch('victoire_core.sitemap_menu.global');
+        $this->eventDispatcher->dispatch('victoire_core.businessentitytemplate_menu.global');
 
     }
 
