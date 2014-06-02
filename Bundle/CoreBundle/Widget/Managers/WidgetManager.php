@@ -336,7 +336,7 @@ class WidgetManager
 
             $response = array(
                 'page'     => $page,
-                'uccess'   => true,
+                'success'   => true,
                 'html'     => $this->render($widget),
                 'widgetId' => "vic-widget-".$widget->getId()."-container"
             );
