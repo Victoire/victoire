@@ -143,8 +143,11 @@ class BasePageController extends AwesomeController
                 //add the page to twig
                 $this->get('twig')->addGlobal('page', $page);
 
-                $event = new \Victoire\Bundle\CoreBundle\Event\Menu\BasePageMenuContextualEvent($page);
-                $this->get('event_dispatcher')->dispatch('victoire_core.' . $page->getType() . '_menu.contextual', $event); //TODO : il serait bon de faire des constantes pour les noms d'évents
+                $event = new \Victoire\Bundle\CoreBundle\Event\Menu\BasePageMenuContextualEvent($page, $entity);
+
+                $eventName = 'victoire_core.' . $page->getType() . '_menu.contextual';
+
+                $this->get('event_dispatcher')->dispatch($eventName, $event); //TODO : il serait bon de faire des constantes pour les noms d'évents
 
                 //the victoire templating
                 $victoireTemplating = $this->container->get('victoire_templating');
