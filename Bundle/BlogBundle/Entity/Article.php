@@ -16,6 +16,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Article extends Page
 {
+    use \Victoire\Bundle\CoreBundle\Entity\Traits\BusinessEntityTrait;
+
     const TYPE = 'article';
 
     /**
