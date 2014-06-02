@@ -14,6 +14,7 @@ use Victoire\Bundle\CoreBundle\Entity\Route;
 use Victoire\Bundle\PageBundle\Entity\Template;
 use Victoire\Bundle\CoreBundle\Entity\Widget;
 use Victoire\Bundle\SeoBundle\Entity\PageSeo;
+use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
 
 /**
  * Page
@@ -919,5 +920,29 @@ abstract class BasePage
     public function setComputeUrl($computeUrl)
     {
         $this->computeUrl = $computeUrl;
+    }
+
+    /**
+     * Get the page that is a legacy and a business entity template
+     *
+     * @return Page The page that is a business entity Template
+     */
+    public function getBusinessEntityTemplateLegacyPage()
+    {
+        $page = null;
+
+        //is the page a business entity template
+        if ($this->getType() === BusinessEntityTemplatePage::TYPE) {
+            $page = $this;
+        } else {
+            //we check if the parent is a business entity template
+            $parent = $this->getParent();
+
+            if ($parent !== null) {
+                $page = $parent->getBusinessEntityLegacyPage();
+            }
+        }
+
+        return $page;
     }
 }

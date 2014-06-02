@@ -17,7 +17,9 @@
         <ul class="vic-nav vic-nav-tabs vic-modal-nav-tabs">
             <li class="vic-active vic-seperate"><a href="#picker-{{class}}" data-toggle="vic-tab" onClick="victoire.widget.setMode(this, 'entity');">{{ ('form.widget.tab.picker.label')|trans({}, 'victoire') }}</a></li>
             <li><a href="#query-{{class}}" data-toggle="vic-tab" onClick="victoire.widget.setMode(this, 'query');">{{ ('form.widget.tab.query.label')|trans({}, 'victoire') }}</a></li>
-            <li><a href="#businessEntity-{{class}}" data-toggle="vic-tab" onClick="victoire.widget.setMode(this, 'businessEntity');">{{ ('form.widget.tab.entity_instance.label')|trans({}, 'victoire') }}</a></li>
+            {% if is_business_entity_allowed(class, page) %}
+                <li><a href="#businessEntity-{{class}}" data-toggle="vic-tab" onClick="victoire.widget.setMode(this, 'businessEntity');">{{ ('form.widget.tab.entity_instance.label')|trans({}, 'victoire') }}</a></li>
+            {% endif %}
         </ul>
     {% endif %}
         {{ form|raw }}

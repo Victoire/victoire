@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
 use Victoire\Bundle\CoreBundle\Entity\Widget;
+use Victoire\Bundle\CoreBundle\Form\WidgetType;
+use Victoire\Bundle\PageBundle\Entity\Page;
 
 /**
  * PageExtension extends Twig with page capabilities.
@@ -41,13 +43,14 @@ class CmsExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'cms_widget_actions'     => new \Twig_Function_Method($this, 'cmsWidgetActions', array('is_safe' => array('html'))),
-            'cms_slot_widgets'       => new \Twig_Function_Method($this, 'cmsSlotWidgets', array('is_safe' => array('html'))),
-            'cms_slot_actions'       => new \Twig_Function_Method($this, 'cmsSlotActions', array('is_safe' => array('html'))),
-            'cms_widget'             => new \Twig_Function_Method($this, 'cmsWidget', array('is_safe' => array('html'))),
-            'cms_page'               => new \Twig_Function_Method($this, 'cmsPage', array('is_safe' => array('html'))),
-            'cms_widget_mode_class'  => new \Twig_Function_Method($this, 'cmsWidgetModeClass', array('is_safe' => array('html'))),
+            'cms_widget_actions'         => new \Twig_Function_Method($this, 'cmsWidgetActions', array('is_safe' => array('html'))),
+            'cms_slot_widgets'           => new \Twig_Function_Method($this, 'cmsSlotWidgets', array('is_safe' => array('html'))),
+            'cms_slot_actions'           => new \Twig_Function_Method($this, 'cmsSlotActions', array('is_safe' => array('html'))),
+            'cms_widget'                 => new \Twig_Function_Method($this, 'cmsWidget', array('is_safe' => array('html'))),
+            'cms_page'                   => new \Twig_Function_Method($this, 'cmsPage', array('is_safe' => array('html'))),
+            'cms_widget_mode_class'      => new \Twig_Function_Method($this, 'cmsWidgetModeClass', array('is_safe' => array('html'))),
             'cms_widget_extra_css_class' => new \Twig_Function_Method($this, 'cmsWidgetExtraCssClass', array('is_safe' => array('html'))),
+            'is_business_entity_allowed' => new \Twig_Function_Method($this, 'isBusinessEntityAllowed', array('is_safe' => array('html'))),
         );
     }
 
@@ -237,6 +240,42 @@ class CmsExtension extends \Twig_Extension
         $extraClass = $this->widgetManager->getExtraCssClass($widget);
 
         return $extraClass;
+    }
+
+    /**
+     * Is the business entity type allowed for the widget and the page context
+     *
+     * @param string   $formEntityName The business entity name
+     * @param BasePage $page           The page
+     *
+     * @return boolean Does the form allows this kind of business entity in this page
+     */
+    public function isBusinessEntityAllowed($formEntityName, Page $page)
+    {
+        //the result
+        $isBusinessEntityAllowed = false;
+
+        //get the page that is a business entity template page (parent included)
+        $businessEntityTemplatePage = $page->getBusinessEntityTemplateLegacyPage();
+
+        //if there is a page
+        if ($businessEntityTemplatePage !== null) {
+            //and a businessEntity name is given
+            if ($formEntityName !== null) {
+                //we check that the twi matches
+                $businessEntityTemplate = $businessEntityTemplatePage->getBusinessEntityTemplate();
+
+                //the business entity linked to the page template
+                $pageBusinessEntity = $businessEntityTemplate->getBusinessEntityId();
+
+                //are we using the same business entity
+                if ($formEntityName === $pageBusinessEntity) {
+                    $isBusinessEntityAllowed = true;
+                }
+            }
+        }
+
+        return $isBusinessEntityAllowed;
     }
 
 }

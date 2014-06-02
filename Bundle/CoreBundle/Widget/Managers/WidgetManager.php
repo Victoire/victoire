@@ -72,7 +72,6 @@ class WidgetManager
         );
     }
 
-
     /**
      * edit a widget
      * @param BasePage $basePage
@@ -183,6 +182,7 @@ class WidgetManager
             "html"    => $this->container->get('victoire_templating')->render(
                 "VictoireCoreBundle:Widget:new.html.twig",
                 array(
+                    'page'    => $page,
                     'classes' => $classes,
                     'forms'   => $forms
                 )
@@ -294,6 +294,7 @@ class WidgetManager
             "html" => $this->container->get('victoire_templating')->render(
                 "VictoireCoreBundle:Widget:Form/new.html.twig",
                 array(
+                    'page'    => $page,
                     'classes' => $classes,
                     'widget'  => $widget,
                     'forms'   => $forms
