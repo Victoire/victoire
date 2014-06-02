@@ -5,6 +5,11 @@ use JMS\TranslationBundle\Model\Message;
 use JMS\TranslationBundle\Translation\TranslationContainerInterface;
 use JMS\TranslationBundle\Model\FileSource;
 
+/**
+ *
+ * @author Paul Andrieux
+ *
+ */
 class DynamicTranslations implements TranslationContainerInterface
 {
 
@@ -23,21 +28,12 @@ class DynamicTranslations implements TranslationContainerInterface
             new Message('menu.template.new', 'victoire'),
             new Message('menu.sitemap', 'victoire'),
             new Message('menu.media', 'victoire'),
+            new Message('menu.parent', 'victoire'),
             new Message('menu.business_entity_template', 'victoire'),
             new Message('widget.form.theme.label', 'victoire'),
             new Message('widget.form.theme.default', 'victoire'),
             new Message('modal.button.create.title', 'victoire'),
             new Message('modal.button.update.title', 'victoire'),
-
-
-            new Message('modal.button.update.title', 'victoire'),
-            new Message('modal.button.update.title', 'victoire'),
-            new Message('modal.button.update.title', 'victoire'),
-            new Message('modal.button.update.title', 'victoire'),
-            new Message('modal.button.update.title', 'victoire'),
-            new Message('modal.button.update.title', 'victoire'),
-            new Message('modal.button.update.title', 'victoire'),
-
             new Message('menu.leftnavbar.stats.label', 'victoire'),
             new Message('menu.leftnavbar.target.label', 'victoire'),
             new Message('menu.leftnavbar.lang.label', 'victoire'),

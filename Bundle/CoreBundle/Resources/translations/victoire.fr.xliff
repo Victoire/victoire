@@ -23,6 +23,10 @@
         <source>menu.page</source>
         <target>Page</target>
       </trans-unit>
+      <trans-unit id="" resname="menu.parent">
+        <source>menu.parent</source>
+        <target>Template Parent</target>
+      </trans-unit>
       <trans-unit id="988d30bf1d090a16c4c086005c745ec82dfc20d7" resname="menu.page.new">
         <source>menu.page.new</source>
         <target><![CDATA[<i class="vic-menuImg vic-menuImg-new"></i> Nouvelle page]]></target>
