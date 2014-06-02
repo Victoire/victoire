@@ -1,0 +1,11 @@
+{% block body %}
+
+<div class="vic-widget vic-widget-redactor {{cms_widget_mode_class(widget)}}" id="widget-{{widget.id}}">
+{% block actions %}{{cms_widget_actions(widget)}}{% endblock actions %}
+
+{% block content %}
+THE WIDGET MUST OVERRIDE THE CONTENT BLOCK
+{% endblock content %}
+</div>
+
+{% endblock body %}

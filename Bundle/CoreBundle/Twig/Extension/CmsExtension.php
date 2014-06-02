@@ -41,11 +41,12 @@ class CmsExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'cms_widget_actions' => new \Twig_Function_Method($this, 'cmsWidgetActions', array('is_safe' => array('html'))),
-            'cms_slot_widgets'   => new \Twig_Function_Method($this, 'cmsSlotWidgets', array('is_safe' => array('html'))),
-            'cms_slot_actions'   => new \Twig_Function_Method($this, 'cmsSlotActions', array('is_safe' => array('html'))),
-            'cms_widget'         => new \Twig_Function_Method($this, 'cmsWidget', array('is_safe' => array('html'))),
-            'cms_page'           => new \Twig_Function_Method($this, 'cmsPage', array('is_safe' => array('html'))),
+            'cms_widget_actions'    => new \Twig_Function_Method($this, 'cmsWidgetActions', array('is_safe' => array('html'))),
+            'cms_slot_widgets'      => new \Twig_Function_Method($this, 'cmsSlotWidgets', array('is_safe' => array('html'))),
+            'cms_slot_actions'      => new \Twig_Function_Method($this, 'cmsSlotActions', array('is_safe' => array('html'))),
+            'cms_widget'            => new \Twig_Function_Method($this, 'cmsWidget', array('is_safe' => array('html'))),
+            'cms_page'              => new \Twig_Function_Method($this, 'cmsPage', array('is_safe' => array('html'))),
+            'cms_widget_mode_class' => new \Twig_Function_Method($this, 'cmsWidgetModeClass', array('is_safe' => array('html'))),
         );
     }
 
@@ -104,8 +105,12 @@ class CmsExtension extends \Twig_Extension
         $pageWidgets = $this->widgetManager->findByPageBySlot($page, $slot);
 
         foreach ($pageWidgets as $_widget) {
-            //is the widget a current entity widget
-            if ($_widget instanceof Widget) {//@TODO check current entity widget
+
+            //the mode of display of the widget
+            $mode = $_widget->getMode();
+
+            //in the business entity mode, we override the entity of the widget
+            if ($mode === Widget::MODE_BUSINESS_ENTITY) {
                 //set the entity for the widget
                 $_widget->setEntity($entity);
             }
@@ -182,6 +187,41 @@ class CmsExtension extends \Twig_Extension
             return $value;
         }
 
+    }
+
+    /**
+     * Get the class for the widget by the widget mode
+     *
+     * @param Widget $widget
+     * @throws \Exception
+     * @return string
+     */
+    public function cmsWidgetModeClass(Widget $widget)
+    {
+        //the css class used
+        $cssClass = '';
+
+        //the mode of display of the widget
+        $mode = $widget->getMode();
+
+        switch ($mode) {
+            case Widget::MODE_STATIC:
+                $cssClass = 'vic-widget-mode-static';
+                break;
+            case Widget::MODE_ENTITY:
+                $cssClass = 'vic-widget-mode-entity';
+                break;
+            case Widget::MODE_BUSINESS_ENTITY:
+                $cssClass = 'vic-widget-mode-business-entity';
+                break;
+            case Widget::MODE_QUERY:
+                $cssClass = 'vic-widget-mode-query';
+                break;
+            default:
+                throw new \Exception('The mode ['.$mode.'] is not supported by the cmsWidgetModeClass. Please update this function that gives the extra css class of the widget.');
+        }
+
+        return $cssClass;
     }
 
 }
