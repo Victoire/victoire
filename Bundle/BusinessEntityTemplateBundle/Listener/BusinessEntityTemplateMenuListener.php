@@ -29,6 +29,8 @@ class BusinessEntityTemplateMenuListener
      * @param Event $event
      *
      * @return Menu
+     *
+     * @SuppressWarnings checkUnusedFunctionParameters
      */
     public function addGlobal(Event $event)
     {

@@ -56,6 +56,12 @@ class BusinessEntityTemplate
      */
     protected $layout;
 
+    /**
+     * @ORM\Column(name="mandatory", type="boolean", nullable=false)
+     *
+     */
+    protected $mandatory = true;
+
     protected $businessEntity = null;
 
     /**
@@ -222,5 +228,25 @@ class BusinessEntityTemplate
         $url = $page->getUrl();
 
         return $url;
+    }
+
+    /**
+     * Get the mandatory value
+     *
+     * @return boolean Is the template mandatory
+     */
+    public function getMandatory()
+    {
+        return $this->mandatory;
+    }
+
+    /**
+     * Set the mandatory value
+     *
+     * @param boolean $mandatory
+     */
+    public function setMandatory($mandatory)
+    {
+        $this->mandatory = $mandatory;
     }
 }

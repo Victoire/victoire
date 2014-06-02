@@ -114,6 +114,8 @@ class BusinessEntityTemplateController extends BaseController
      * @param string $id The id of the businessEntity
      *
      * @return array The entity and the form
+     *
+     * @throws \Exception
      */
     public function editAction($id)
     {
@@ -159,6 +161,12 @@ class BusinessEntityTemplateController extends BaseController
      * @Route("/{id}", name="victoire_businessentitytemplate_businessentitytemplate_update")
      * @Method("PUT")
      * @Template("VictoireBusinessEntityTemplateBundle:BusinessEntityTemplate:edit.html.twig")
+     *
+     * @param Request $request
+     * @param string $id
+     * @return array The parameter for the response
+     *
+     * @throws \Exception
      */
     public function updateAction(Request $request, $id)
     {
@@ -199,6 +207,13 @@ class BusinessEntityTemplateController extends BaseController
      *
      * @Route("/{id}", name="victoire_businessentitytemplate_businessentitytemplate_delete")
      * @Method("DELETE")
+     *
+     * @param Request $request
+     * @param string $id
+     *
+     * @throws \Exception
+     *
+     * @return redirect
      */
     public function deleteAction(Request $request, $id)
     {

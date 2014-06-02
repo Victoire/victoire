@@ -27,12 +27,15 @@ class BusinessEntityTemplateType extends AbstractType
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
+     *
+     * @SuppressWarnings checkUnusedFunctionParameters
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('businessEntityId', 'hidden')
             ->add('name')
+            ->add('mandatory')
             ->add('layout', 'choice', array(
                 'label' => 'form.page.type.layout.label',
                 'choices' => $this->layouts
