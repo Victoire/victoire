@@ -354,12 +354,24 @@ class WidgetManager
 
     /**
      * render a widget
-     * @param Widget $widget
+     *
+     * @param Widget  $widget
+     * @param boolean $addContainer
+     *
      * @return template
      */
     public function render(Widget $widget, $addContainer = false)
     {
-        $html = $this->getManager($widget)->renderContainer($widget);
+        $widgetManager = $this->getManager($widget);
+
+        //the widget should all extends BaseWidgetManager
+        if (method_exists($widgetManager, 'renderContainer')) {
+            $html = $widgetManager->renderContainer($widget, $addContainer);
+        } else {
+            //but in order to keep retro compatibility
+            //we test if the method exists
+            $html = $widgetManager->render($widget);
+        }
 
         return $html;
     }
