@@ -314,6 +314,7 @@ class WidgetManager
         $request = $this->container->get('request');
         $classes = $this->container->get('victoire_core.annotation_reader')->getBusinessClassesForWidget($widget);
         $manager = $this->getManager($widget);
+        $page = $widget->getPage();
 
         if (method_exists($manager, 'edit')) {
             return $manager->edit($widget, $entity, $this);
@@ -324,33 +325,40 @@ class WidgetManager
         if ($entity) {
             $form = $this->buildForm($manager, $widget, $entity, $classes[$entity]);
         }
+
         $form->handleRequest($request);
+
         if ($form->isValid()) {
             $em = $this->container->get('doctrine')->getManager();
             $widget->setBusinessEntityName($entity);
             $em->persist($widget);
             $em->flush();
 
-            return array(
-                "success"  => true,
-                "html"     => $this->render($widget),
-                "widgetId" => "vic-widget-".$widget->getId()."-container"
+            $response = array(
+                'page'     => $page,
+                'uccess'   => true,
+                'html'     => $this->render($widget),
+                'widgetId' => "vic-widget-".$widget->getId()."-container"
+            );
+        } else {
+
+            $forms = $this->renderWidgetForms($widget);
+
+            $response = array(
+                "success"  => false,
+                "html"     => $this->container->get('victoire_templating')->render(
+                    "VictoireCoreBundle:Widget:Form/edit.html.twig",
+                    array(
+                        'page'    => $page,
+                        'classes' => $classes,
+                        'forms'   => $forms,
+                        'widget'  => $widget
+                    )
+                )
             );
         }
 
-        $forms = $this->renderWidgetForms($widget);
-
-        return array(
-            "success"  => false,
-            "html"     => $this->container->get('victoire_templating')->render(
-                "VictoireCoreBundle:Widget:Form/edit.html.twig",
-                array(
-                    'classes' => $classes,
-                    'forms'   => $forms,
-                    'widget'  => $widget
-                )
-            )
-        );
+        return $response;
     }
 
     /**
