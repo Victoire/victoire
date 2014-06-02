@@ -17,6 +17,7 @@ class Widget extends BaseWidget
     const MODE_ENTITY = 'entity';
     const MODE_QUERY = 'query';
     const MODE_STATIC = 'static';
+    const MODE_BUSINESS_ENTITY = 'businessEntity';
 
     /**
      * The entity linked to the widget

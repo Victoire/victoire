@@ -83,3 +83,27 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="delete"]', function(
         }
     });
 });
+
+//create the victoire object
+if (victoire === undefined) {
+    var victoire = {};    
+}
+
+$vic(function() {
+    //Add the widget namespace
+    victoire.widget = {};
+    
+    //add properties
+    victoire.widget.setMode = function (link, modeValue)
+    {
+        //get the pane that is 3 parents up
+        var paneDiv = $vic(link).parent().parent().parent();
+        //get the form
+        var form = paneDiv.children('form');
+        //get the mode input hidden        
+        var mode = form.children().children("[name$='[mode]']");
+        
+        //set the new value
+        mode.val(modeValue);       
+    };
+});
