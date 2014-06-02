@@ -598,4 +598,15 @@ class BaseWidgetManager
     {
         throw new \Exception('Please provide a buildForm function for the widget manager');
     }
+
+    /**
+     * Get the extra classes for the css
+     * This function can be overwritten by the children
+     *
+     * @return string The classes
+     */
+    public function getExtraCssClass()
+    {
+        return '';
+    }
 }

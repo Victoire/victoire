@@ -568,4 +568,27 @@ class WidgetManager
 
         return $manager->renderNewForm($form, $widget, $slot, $page, $entityName);
     }
+
+
+    /**
+     * Get the extra classes for the css
+     *
+     * @param Widget $widget
+     *
+     * @return string the extra classes
+     */
+    public function getExtraCssClass(Widget $widget)
+    {
+        $extraClasses = '';
+
+        $manager = $this->getManager($widget);
+
+        //if there is a manager
+        if ($manager !== null) {
+            //and this one has the function
+            $extraClasses = $manager->getExtraCssClass();
+        }
+
+        return $extraClasses;
+    }
 }

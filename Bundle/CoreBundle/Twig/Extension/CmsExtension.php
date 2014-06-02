@@ -41,12 +41,13 @@ class CmsExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'cms_widget_actions'    => new \Twig_Function_Method($this, 'cmsWidgetActions', array('is_safe' => array('html'))),
-            'cms_slot_widgets'      => new \Twig_Function_Method($this, 'cmsSlotWidgets', array('is_safe' => array('html'))),
-            'cms_slot_actions'      => new \Twig_Function_Method($this, 'cmsSlotActions', array('is_safe' => array('html'))),
-            'cms_widget'            => new \Twig_Function_Method($this, 'cmsWidget', array('is_safe' => array('html'))),
-            'cms_page'              => new \Twig_Function_Method($this, 'cmsPage', array('is_safe' => array('html'))),
-            'cms_widget_mode_class' => new \Twig_Function_Method($this, 'cmsWidgetModeClass', array('is_safe' => array('html'))),
+            'cms_widget_actions'     => new \Twig_Function_Method($this, 'cmsWidgetActions', array('is_safe' => array('html'))),
+            'cms_slot_widgets'       => new \Twig_Function_Method($this, 'cmsSlotWidgets', array('is_safe' => array('html'))),
+            'cms_slot_actions'       => new \Twig_Function_Method($this, 'cmsSlotActions', array('is_safe' => array('html'))),
+            'cms_widget'             => new \Twig_Function_Method($this, 'cmsWidget', array('is_safe' => array('html'))),
+            'cms_page'               => new \Twig_Function_Method($this, 'cmsPage', array('is_safe' => array('html'))),
+            'cms_widget_mode_class'  => new \Twig_Function_Method($this, 'cmsWidgetModeClass', array('is_safe' => array('html'))),
+            'cms_widget_extra_css_class' => new \Twig_Function_Method($this, 'cmsWidgetExtraCssClass', array('is_safe' => array('html'))),
         );
     }
 
@@ -222,6 +223,20 @@ class CmsExtension extends \Twig_Extension
         }
 
         return $cssClass;
+    }
+
+    /**
+     * Get the extra class for this kind of widget
+     *
+     * @param Widget $widget
+     *
+     * @return string The extra classes
+     */
+    public function cmsWidgetExtraCssClass(Widget $widget)
+    {
+        $extraClass = $this->widgetManager->getExtraCssClass($widget);
+
+        return $extraClass;
     }
 
 }
