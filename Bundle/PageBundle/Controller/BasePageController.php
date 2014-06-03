@@ -14,6 +14,7 @@ use Victoire\Bundle\CoreBundle\Form\TemplateType;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
+use Victoire\Bundle\PageBundle\Helper\UrlHelper;
 
 /**
  * undocumented class
@@ -21,7 +22,6 @@ use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePa
  **/
 class BasePageController extends AwesomeController
 {
-
     /**
      * @param $page
      *
@@ -77,15 +77,17 @@ class BasePageController extends AwesomeController
 
         //manager
         $manager = $this->getEntityManager();
+        $urlHelper = $this->getUrlHelper();
         $basePageRepository = $manager->getRepository('VictoirePageBundle:BasePage');
         $routeRepository = $manager->getRepository('VictoireCoreBundle:Route');
+        $businessEntityHelper = $this->get('victoire_core.helper.business_entity_helper');
 
         //get the page
         $page = $basePageRepository->findOneByUrl($url);
 
         //no page were found, we try to look for an BusinessEntityTemplatePage
         if ($page === null) {
-            $urlMatcher = $this->getGeneralUrlMatcher($url);
+            $urlMatcher = $urlHelper->getGeneralUrlMatcher($url);
 
             //if the url have been shorten
             if ($urlMatcher !== null) {
@@ -94,14 +96,14 @@ class BasePageController extends AwesomeController
                 //a page match the entity template generator
                 if ($page) {
                     //we look for the entity
-                    $entityId = $this->getEntityIdFromUrl($url);
+                    $entityId = $urlHelper->getEntityIdFromUrl($url);
 
                     //test the entity id
                     if ($entityId === null) {
                         throw new \Exception('The id could not be retrieved from the url.');
                     }
 
-                    $entity = $this->getEntityByPageAndId($page, $entityId);
+                    $entity = $businessEntityHelper->getEntityByPageAndId($page, $entityId);
                 }
             }
         }
@@ -286,88 +288,14 @@ class BasePageController extends AwesomeController
     }
 
     /**
-     * Get the urlMatcher for the template generator
-     * It removes what is after the last /
-     * and add /{id} to the url
+     * Get the url helper
      *
-     * @param string $url
-     *
-     * @return string The url
+     * @return UrlHelper
      */
-    protected function getGeneralUrlMatcher($url)
+    public function getUrlHelper()
     {
-        $urlMatcher = null;
+        $helper = $this->get('victoire_page.url_helper');
 
-        // split on the / character
-        $keywords = preg_split("/\//", $url);
-
-        //if there are some words, we pop the last
-        if (count($keywords) > 0) {
-            array_pop($keywords);
-        }
-
-        //add the id to the end of the url
-        array_push($keywords, '{id}');
-
-        //rebuild the url
-        $urlMatcher = implode('/', $keywords);
-
-        return $urlMatcher;
-    }
-
-    /**
-     * Get the entity id from the url
-     *
-     * @param string $url
-     * @return string The id
-     */
-    protected function getEntityIdFromUrl($url)
-    {
-        $entityId = null;
-
-        // split on the / character
-        $keywords = preg_split("/\//", $url);
-
-        //if there are some words, we pop the last
-        if (count($keywords) > 0) {
-            $entityId = array_pop($keywords);
-        }
-
-        return $entityId;
-    }
-
-    /**
-     * Get the entity from the page and the id given
-     *
-     * @param BusinessEntityTemplatePage $page
-     * @param string $id
-     *
-     * @return The entity
-     */
-    protected function getEntityByPageAndId(BusinessEntityTemplatePage $page, $id)
-    {
-        $entity = null;
-
-        $businessEntityHelper = $this->get('victoire_core.helper.business_entity_helper');
-
-        $template = $page->getBusinessEntityTemplate();
-
-        $businessEntityId = $template->getBusinessEntityId();
-
-        $businessEntity = $businessEntityHelper->findById($businessEntityId);
-
-        //test the result
-        if ($businessEntity === null) {
-            throw new \Exception('The business entity ['.$businessEntityId.'] was not found.');
-        }
-
-        $entity = $businessEntityHelper->findEntityByBusinessEntityAndId($businessEntity, $id);
-
-        //test the result
-        if ($entity === null) {
-            throw new \Exception('The entity ['.$id.'] was not found.');
-        }
-
-        return $entity;
+        return $helper;
     }
 }

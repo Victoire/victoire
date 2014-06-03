@@ -3,6 +3,11 @@ namespace Victoire\Bundle\PageBundle\Helper;
 
 use Symfony\Component\DependencyInjection\Container;
 
+/**
+ *
+ * @author Paul Andrieux
+ *
+ */
 class UserCallableHelper
 {
     /**
@@ -11,7 +16,8 @@ class UserCallableHelper
     private $container;
 
     /**
-     * @param callable
+     * Constructor
+     *
      * @param string $userEntity
      */
     public function __construct(Container $container)
@@ -19,11 +25,13 @@ class UserCallableHelper
         $this->container = $container;
     }
 
-   /**
-    * @{inheritdoc}
-    */
-   public function getCurrentUser()
-   {
+    /**
+     * Get the current user
+     *
+     * @return NULL
+     */
+    public function getCurrentUser()
+    {
         $userClass = $this->container->getParameter('victoire_core.user_class');
         $token = $this->container->get('security.context')->getToken();
 
@@ -34,5 +42,5 @@ class UserCallableHelper
         }
 
         return null;
-   }
+    }
 }

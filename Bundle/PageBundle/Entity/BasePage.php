@@ -939,7 +939,7 @@ abstract class BasePage
             $parent = $this->getParent();
 
             if ($parent !== null) {
-                $page = $parent->getBusinessEntityLegacyPage();
+                $page = $parent->getBusinessEntityTemplateLegacyPage();
             }
         }
 

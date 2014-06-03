@@ -123,6 +123,9 @@ class WidgetManager
      */
     public function createWidget($type, $slot, BasePage $page, $entity)
     {
+        //create a page for the business entity instance if we are currently display an instance for a business entity template
+        $page = $this->duplicateTemplatePageIfPageInstance($page);
+
         $manager = $this->getManager(null, $type);
 
         if (method_exists($manager, 'createWidget')) {
@@ -315,6 +318,9 @@ class WidgetManager
         $classes = $this->container->get('victoire_core.annotation_reader')->getBusinessClassesForWidget($widget);
         $manager = $this->getManager($widget);
         $page = $widget->getPage();
+
+        //create a page for the business entity instance if we are currently display an instance for a business entity template
+        $page = $this->duplicateTemplatePageIfPageInstance($page);
 
         if (method_exists($manager, 'edit')) {
             return $manager->edit($widget, $entity, $this);
@@ -611,5 +617,52 @@ class WidgetManager
         }
 
         return $extraClasses;
+    }
+
+    /**
+     * If the current page is a business entity template and where are displaying an instance
+     * We create a new page for this instance
+     *
+     * @param Page $widgetPage The page of the widget
+     *
+     * @return Page The page for the entity instance
+     */
+    public function duplicateTemplatePageIfPageInstance(Page $page)
+    {
+        //we copy the reference to the widget page
+        $widgetPage = $page;
+
+        //services
+        $pageHelper = $this->container->get('victoire_page.page_helper');
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $urlHelper = $this->container->get('victoire_page.url_helper');
+
+        //if the url of the referer is not the same as the url of the page of the widget
+        //it means we are in a business entity template page and displaying an instance
+        $url = $urlHelper->getAjaxUrlRefererWithoutBase();
+        $widgetPageUrl = $widgetPage->getUrl();
+
+        //the widget is linked to a page url that is not the current page url
+        if ($url !== $widgetPageUrl) {
+            //we try to get the page if it exists
+            $basePageRepository = $em->getRepository('VictoirePageBundle:BasePage');
+
+            //the url for the new page
+            $newPageUrl = $urlHelper->getEntityIdFromUrl($url);
+
+            //get the page
+            $page = $basePageRepository->findOneByUrl($url);
+
+            //no page were found
+            if ($page === null) {
+                //so we duplicate the business entity template page for this current instance
+                $page = $pageHelper->createPageInstanceFromBusinessEntityTemplatePage($widgetPage, $newPageUrl);
+
+                //the page
+                $em->persist($page);
+            }
+        }
+
+        return $page;
     }
 }

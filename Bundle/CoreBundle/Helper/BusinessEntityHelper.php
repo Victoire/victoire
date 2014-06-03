@@ -4,6 +4,8 @@ namespace Victoire\Bundle\CoreBundle\Helper;
 use Victoire\Bundle\CoreBundle\Annotations\Reader\AnnotationReader;
 use Victoire\Bundle\CoreBundle\Entity\BusinessEntity;
 use Doctrine\ORM\EntityManager;
+use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
+
 
 /**
  * The BusinessEntityHelper
@@ -55,6 +57,10 @@ class BusinessEntityHelper
     /**
      * Get a business entity by its id
      *
+     * @param string $id
+     *
+     * @throws \Exception
+     *
      * @return BusinessEntity
      */
     public function findById($id)
@@ -103,6 +109,41 @@ class BusinessEntityHelper
 
         //get the entity
         $entity = $repo->findOneById($id);
+
+        return $entity;
+    }
+
+    /**
+     * Get the entity from the page and the id given
+     *
+     * @param BusinessEntityTemplatePage $page
+     * @param string $id
+     *
+     * @throws \Exception
+     *
+     * @return The entity
+     */
+    public function getEntityByPageAndId(BusinessEntityTemplatePage $page, $id)
+    {
+        $entity = null;
+
+        $template = $page->getBusinessEntityTemplate();
+
+        $businessEntityId = $template->getBusinessEntityId();
+
+        $businessEntity = $this->findById($businessEntityId);
+
+        //test the result
+        if ($businessEntity === null) {
+            throw new \Exception('The business entity ['.$businessEntityId.'] was not found.');
+        }
+
+        $entity = $this->findEntityByBusinessEntityAndId($businessEntity, $id);
+
+        //test the result
+        if ($entity === null) {
+            throw new \Exception('The entity ['.$id.'] was not found.');
+        }
 
         return $entity;
     }
