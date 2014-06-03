@@ -16,7 +16,7 @@ use Victoire\Bundle\BlogBundle\Form\ArticleType;
 use Victoire\Bundle\BlogBundle\Event\BlogMenuContextualEvent;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * blog Controller
@@ -59,9 +59,8 @@ class ArticleController extends BasePageController
      * @Template()
      * @ParamConverter("article", class="VictoirePageBundle:BasePage")
      */
-    public function settingsAction(BasePage $article)
+    public function settingsAction(Request $request, BasePage $page)
     {
-
         return new JsonResponse(parent::settingsAction($article));
     }
 

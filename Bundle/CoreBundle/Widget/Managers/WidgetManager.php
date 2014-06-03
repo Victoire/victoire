@@ -22,7 +22,6 @@ class WidgetManager
     protected $container;
     protected $widget;
     protected $page;
-    protected $widgetReference;
 
     /**
      * contructor
@@ -42,15 +41,18 @@ class WidgetManager
         $this->page = $page;
     }
 
-
-
     /**
-     * remove a widget
+     * Remove a widget
      * @param Widget $widget
      */
     public function deleteWidget(Widget $widget)
     {
         $page = $widget->getPage();
+
+        //create a page for the business entity instance if we are currently display an instance for a business entity template
+        $page = $this->duplicateTemplatePageIfPageInstance($page);
+
+
         $this->populateChildrenReferences($page, $widget, true);
 
         $widgetMap = $page->getWidgetMap();
@@ -531,7 +533,6 @@ class WidgetManager
         $page->setWidgetMap($widgetMap);
         $em->persist($page);
         $em->flush();
-
     }
 
     /**
@@ -595,7 +596,6 @@ class WidgetManager
 
         return $manager->renderNewForm($form, $widget, $slot, $page, $entityName);
     }
-
 
     /**
      * Get the extra classes for the css

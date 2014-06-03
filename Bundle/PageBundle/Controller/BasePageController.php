@@ -15,6 +15,7 @@ use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
 use Victoire\Bundle\PageBundle\Helper\UrlHelper;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * undocumented class
@@ -231,35 +232,56 @@ class BasePageController extends AwesomeController
      * @param page $page
      * @return template
      */
-    protected function settingsAction(BasePage $page)
+    protected function settingsAction(Request $request, BasePage $page)
     {
         $em = $this->getEntityManager();
+
+        $response = array();
 
         $formFactory = $this->container->get('form.factory');
         $form = $formFactory->create($this->getPageSettingsType(), $page);
 
-        $form->handleRequest($this->get('request'));
-        if ($form->isValid()) {
-            $em->persist($page);
-            $em->flush();
+        //the type of method used
+        $requestMethod = $request->getMethod();
 
-            return array(
-                'success' => true,
-                "url"     => $this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl()))
+        //if the form is posted
+        if ($requestMethod === 'POST') {
+            //bind data to the form
+            $form->handleRequest($this->get('request'));
+
+            //the form should be valid
+            if ($form->isValid()) {
+                $em->persist($page);
+                $em->flush();
+
+                $response =  array(
+                    'success' => true,
+                    'url'     => $this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl()))
+                );
+            } else {
+                $formErrorService = $this->get('av.form_error_service');
+                $errors = $formErrorService->getRecursiveReadableErrors($form);
+
+                $response =  array(
+                    'success' => false,
+                    'message' => $errors
+                );
+            }
+        } else {
+            //we display the form
+            $response = array(
+                'success' => false,
+                'html' => $this->container->get('victoire_templating')->render(
+                    $this->getBaseTemplatePath() . ':settings.html.twig',
+                    array(
+                        'page' => $page,
+                        'form' => $form->createView()
+                    )
+                )
             );
-
         }
 
-        return array(
-            'success' => false,
-            'html' => $this->container->get('victoire_templating')->render(
-                $this->getBaseTemplatePath() . ':settings.html.twig',
-                array(
-                    'page' => $page,
-                    'form' => $form->createView()
-                )
-            )
-        );
+        return $response;
     }
 
     /**

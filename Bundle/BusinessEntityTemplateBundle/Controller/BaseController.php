@@ -2,7 +2,6 @@
 namespace Victoire\Bundle\BusinessEntityTemplateBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Victoire\Bundle\PageBundle\Controller\BasePageController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
@@ -12,7 +11,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  */
 class BaseController extends Controller
 {
-
     /**
      *
      * @param string $id The id of the business entity

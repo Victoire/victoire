@@ -14,7 +14,6 @@ use Victoire\Bundle\BusinessEntityTemplateBundle\Listener\BusinessEntityTemplate
  **/
 class MenuListener
 {
-
     protected $eventDispatcher;
     protected $pageMenu;
     protected $templateMenu;
@@ -24,9 +23,14 @@ class MenuListener
     /**
      * Construct function to include eventDispatcher, pageMenu, TemplateMenu, SiteMapMenu
      *
-     * @return void
      * TODO We should tag menu listeners to dynamically get them iof pass them as arg
-     **/
+     *
+     * @param unknown $eventDispatcher
+     * @param unknown $pageMenu
+     * @param unknown $templateMenu
+     * @param unknown $sitemapMenu
+     * @param BusinessEntityTemplateMenuListener $businessEntityTemplateMenuListener
+     */
     public function __construct($eventDispatcher, $pageMenu, $templateMenu, $sitemapMenu, BusinessEntityTemplateMenuListener $businessEntityTemplateMenuListener)
     {
         $this->eventDispatcher = $eventDispatcher;
@@ -49,6 +53,9 @@ class MenuListener
             array($this->pageMenu, 'addGlobal')
         );
         $this->eventDispatcher->addListener("victoire_core.page_menu.contextual",
+            array($this->pageMenu, 'addContextual')
+        );
+        $this->eventDispatcher->addListener("victoire_core.businessEntityTemplate_menu.contextual",
             array($this->pageMenu, 'addContextual')
         );
         $this->eventDispatcher->addListener("victoire_core.template_menu.global",
