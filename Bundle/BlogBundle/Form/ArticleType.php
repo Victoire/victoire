@@ -19,7 +19,8 @@ class ArticleType extends PageType
         parent::buildForm($builder, $options);
         $builder
             ->add('description')
-            ->add('categories');
+            ->add('category')
+            ->add('tags');
     }
 
 

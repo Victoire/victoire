@@ -177,16 +177,16 @@ class WidgetManager
             );
         }
 
-
         $forms = $this->renderNewWidgetForms($entity, $slot, $page, $widget);
 
         return array(
             "success" => false,
             "html"    => $this->container->get('victoire_templating')->render(
-                "VictoireCoreBundle:Widget:new.html.twig",
+                "VictoireCoreBundle:Widget:Form/new.html.twig",
                 array(
                     'classes' => $classes,
-                    'forms'   => $forms
+                    'forms'   => $forms,
+                    'widget'   => $widget,
                 )
             )
         );

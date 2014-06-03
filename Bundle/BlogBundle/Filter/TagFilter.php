@@ -11,7 +11,7 @@ use Doctrine\ORM\QueryBuilder;
 /**
  * CategoryFilter form type
  */
-class CategoryFilter extends BaseFilter
+class TagFilter extends BaseFilter
 {
     protected $em;
     protected $requets;
@@ -25,9 +25,9 @@ class CategoryFilter extends BaseFilter
     public function buildQuery(QueryBuilder &$qb, array $parameters)
     {
         $qb = $qb
-             ->join('item.category', 'c')
-             ->andWhere('c.id IN (:category)')
-             ->setParameter('category', $parameters['category']);
+             ->join('item.tags', 't')
+             ->andWhere('t.id IN (:tags)')
+             ->setParameter('tags', $parameters['tags']);
 
         return $qb;
     }
@@ -40,29 +40,29 @@ class CategoryFilter extends BaseFilter
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $categories = $this->em->getRepository('VictoireBlogBundle:Category')->findAll();
-        $categoriesChoices = array();
-        foreach ($categories as $category) {
-            $categoriesChoices[$category->getId()] = $category->getTitle();
+        $tags = $this->em->getRepository('VictoireBlogBundle:Tag')->findAll();
+        $tagsChoices = array();
+        foreach ($tags as $tag) {
+            $tagsChoices[$tag->getId()] = $tag->getTitle();
         }
 
-        $selectedCategories = array();
+        $selectedTags = array();
         if ($this->request->query->has('filter')) {
-            foreach ($this->request->query->get('filter')['category_filter']['category'] as $id => $selectedCategory) {
-                $selectedCategories[$id] = $selectedCategory;
+            foreach ($this->request->query->get('filter')['tag_filter']['tags'] as $id => $selectedTag) {
+                $selectedTags[$id] = $selectedTag;
             }
         }
 
         $builder
             ->add(
-                'category', 'choice', array(
-                    'label' => 'blog.category_filter.label',
-                    'choices' => $categoriesChoices,
+                'tags', 'choice', array(
+                    'label' => 'blog.tag_filter.label',
+                    'choices' => $tagsChoices,
                     'multiple' => true,
                     'attr' => array(
                         'class' => 'select2'
                     ),
-                    'data' => $selectedCategories
+                    'data' => $selectedTags
                 )
             );
     }
@@ -76,7 +76,7 @@ class CategoryFilter extends BaseFilter
 
     public function getFilters($filters)
     {
-        return $this->em->getRepository('VictoireBlogBundle:Category')->findById($filters['category']);
+        return $this->em->getRepository('VictoireBlogBundle:Tag')->findById($filters['tags']);
     }
 
     /**
@@ -85,6 +85,6 @@ class CategoryFilter extends BaseFilter
      */
     public function getName()
     {
-        return 'category_filter';
+        return 'tag_filter';
     }
 }
