@@ -12,7 +12,9 @@ services:
 #  ==================  Widgets ================== #
     victoire_core.twig.widget_manager:
         class: Victoire\Bundle\CoreBundle\Widget\Managers\WidgetManager
-        arguments: ["@service_container"]
+        arguments: 
+            - "@service_container"
+            - "@page.widgetMap.builder"
 
     widget_manager:
         alias: victoire_core.twig.widget_manager
@@ -27,7 +29,10 @@ services:
     victoire_core.entity_proxy.fields_builder:
         class: Victoire\Bundle\CoreBundle\Form\Builder\EntityProxyFieldsBuilder
         arguments: ["@victoire_core.annotation_reader"]
-
+    victoire_core.widget_helper:
+        class: Victoire\Bundle\CoreBundle\Helper\WidgetHelper
+        arguments:
+            - "@doctrine.orm.entity_manager"
 #  ==================  MENU ================== #
 
     victoire_core.admin_menu_builder:
@@ -94,7 +99,7 @@ services:
             - "@widget_manager"
             - "@victoire_templating"
             - "@security.context" 
-            - "@session"
+            - "@victoire_core.widget_helper"
         tags:
             - { name: twig.extension }
     victoire_core.twig.globals_extension:

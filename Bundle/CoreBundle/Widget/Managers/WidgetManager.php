@@ -13,6 +13,8 @@ use Victoire\Bundle\CoreBundle\Event\WidgetRenderEvent;
 use Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy;
 use Victoire\Bundle\CoreBundle\Event\WidgetBuildFormEvent;
 use Victoire\Bundle\CoreBundle\Theme\ThemeWidgetInterface;
+use Victoire\Bundle\PageBundle\WidgetMap\WidgetMapBuilder;
+use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 
 /**
  * Generic Widget CRUD operations
@@ -22,14 +24,17 @@ class WidgetManager
     protected $container;
     protected $widget;
     protected $page;
+    protected $widgetMapBuilder = null;
 
     /**
      * contructor
-     * @param Container $container
+     * @param Container        $container
+     * @param WidgetMapBuilder $widgetMapBuilder
      */
-    public function __construct($container)
+    public function __construct($container, WidgetMapBuilder $widgetMapBuilder)
     {
         $this->container = $container;
+        $this->widgetMapBuilder = $widgetMapBuilder;
     }
 
     /**
@@ -51,7 +56,6 @@ class WidgetManager
 
         //create a page for the business entity instance if we are currently display an instance for a business entity template
         $page = $this->duplicateTemplatePageIfPageInstance($page);
-
 
         $this->populateChildrenReferences($page, $widget, true);
 
@@ -118,12 +122,12 @@ class WidgetManager
     /**
      * create a widget
      * @param string $type
-     * @param string $slot
+     * @param string $slotId
      * @param Page   $page
      * @param string $entity
      * @return template
      */
-    public function createWidget($type, $slot, BasePage $page, $entity)
+    public function createWidget($type, $slotId, BasePage $page, $entity)
     {
         //create a page for the business entity instance if we are currently display an instance for a business entity template
         $page = $this->duplicateTemplatePageIfPageInstance($page);
@@ -131,10 +135,10 @@ class WidgetManager
         $manager = $this->getManager(null, $type);
 
         if (method_exists($manager, 'createWidget')) {
-            return $manager->createWidget($type, $slot, $page, $entity, $this);
+            return $manager->createWidget($type, $slotId, $page, $entity, $this);
         }
 
-        $widget = $manager->newWidget($page, $slot);
+        $widget = $manager->newWidget($page, $slotId);
         $widget->setCurrentPage($page);
         $classes = $this->container->get('victoire_core.annotation_reader')->getBusinessClassesForWidget($widget);
 
@@ -162,10 +166,27 @@ class WidgetManager
 
             $this->populateChildrenReferences($page, $widget);
 
-            $widgetMap = $page->getWidgetMap();
-            $widgetMap[$slot][] = $widget->getId();
+            //the id of the widget
+            $widgetId = $widget->getId();
 
-            $page->setWidgetMap($widgetMap);
+            //create the new widget map
+            $widgetMapEntry = new WidgetMap();
+            $widgetMapEntry->setAction(WidgetMap::ACTION_CREATE);
+            $widgetMapEntry->setWidgetId($widgetId);
+
+            //get the slot
+            $slot = $page->getSlotById($slotId);
+
+            //test that slot exists
+            if ($slot === null) {
+                throw new \Exception('The slot with the id:['.$slotId.'] was not found for the widget with the id:['.$widgetId.']');
+            }
+
+            //update the slot
+            $slot->addWidgetMap($widgetMapEntry);
+
+            //update the widget map
+            $page->updateWidgetMapBySlots();
 
             $em->persist($page);
             $em->flush();
@@ -180,7 +201,7 @@ class WidgetManager
         }
 
 
-        $forms = $this->renderNewWidgetForms($entity, $slot, $page, $widget);
+        $forms = $this->renderNewWidgetForms($entity, $slotId, $page, $widget);
 
         return array(
             "success" => false,
@@ -490,13 +511,15 @@ class WidgetManager
      */
     public function findByPageBySlot(BasePage $page, $slot)
     {
-        $em = $this->container->get('doctrine.orm.entity_manager');
-        $widgetRepo = $em->getRepository('VictoireCoreBundle:Widget');
+        //$em = $this->container->get('doctrine.orm.entity_manager');
+        //$widgetRepo = $em->getRepository('VictoireCoreBundle:Widget');
 
-        return $widgetRepo->findByPageBySlot($page, $slot);
+        //get the widgets of the page
+        $widgets = $this->widgetMapBuilder->computeCompleteWidgetMap($page, $slot);
+        //$widgets = $widgetRepo->findByPageBySlot($page, $slot);
+
+        return $widgets;
     }
-
-
 
     /**
      * compute the widget map for page

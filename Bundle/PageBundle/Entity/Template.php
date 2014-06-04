@@ -24,7 +24,7 @@ class Template extends BasePage
     /**
      * contruct
      **/
-    public function __contruct()
+    public function __construct()
     {
         $this->widgets = new \ArrayCollection();
     }

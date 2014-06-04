@@ -6,12 +6,12 @@ use Victoire\Bundle\CoreBundle\Menu\MenuManager;
 use Victoire\Bundle\CoreBundle\Widget\Managers\WidgetManager;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 use Symfony\Component\Security\Core\SecurityContext;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
 use Victoire\Bundle\CoreBundle\Entity\Widget;
 use Victoire\Bundle\CoreBundle\Form\WidgetType;
 use Victoire\Bundle\PageBundle\Entity\Page;
+use Victoire\Bundle\CoreBundle\Helper\WidgetHelper;
 
 /**
  * PageExtension extends Twig with page capabilities.
@@ -24,21 +24,28 @@ class CmsExtension extends \Twig_Extension
     protected $widgetManager;
     protected $templating;
     protected $securityContext;
-    protected $session;
+    protected $widgetHelper;
 
     /**
-     * contructor
+     * Constructor
+     *
+     * @param WidgetManager $widgetManager
+     * @param TemplateMapper $templating
+     * @param SecurityContext $securityContext
+     * @param WidgetHelper $widgetHelper
      */
-    public function __construct(WidgetManager $widgetManager, TemplateMapper $templating, SecurityContext $securityContext, $session)
+    public function __construct(WidgetManager $widgetManager, TemplateMapper $templating, SecurityContext $securityContext, WidgetHelper $widgetHelper)
     {
         $this->widgetManager = $widgetManager;
         $this->templating = $templating;
         $this->securityContext = $securityContext;
-        $this->session = $session;
+        $this->widgetHelper = $widgetHelper;
     }
 
     /**
      * register twig functions
+     *
+     * @return array The list of extensions
      */
     public function getFunctions()
     {
@@ -56,6 +63,8 @@ class CmsExtension extends \Twig_Extension
 
     /**
      * register twig filters
+     *
+     * @return array The list of filters
      */
     public function getFilters()
     {
@@ -64,10 +73,10 @@ class CmsExtension extends \Twig_Extension
         );
     }
 
-
-
     /**
      * get extension name
+     *
+     * @return string The name
      */
     public function getName()
     {
@@ -98,15 +107,18 @@ class CmsExtension extends \Twig_Extension
      * @param string $entity
      * @return string
      */
-    public function cmsSlotWidgets(BasePage $page, $slot, $addContainer = true, $entity = null)
+    public function cmsSlotWidgets(BasePage $page, $slotId, $addContainer = true, $entity = null)
     {
+        //services
+        $widgetHelper = $this->widgetHelper;
+
         $result = "";
         if ($this->securityContext->isGranted('ROLE_VICTOIRE')) {
-            $result .= $this->widgetManager->renderActions($slot, $page, true);
+            $result .= $this->widgetManager->renderActions($slotId, $page, true);
         }
         $widgets = array();
 
-        $pageWidgets = $this->widgetManager->findByPageBySlot($page, $slot);
+        $pageWidgets = $this->widgetManager->findByPageBySlot($page, $slotId);
 
         foreach ($pageWidgets as $_widget) {
 
@@ -122,16 +134,29 @@ class CmsExtension extends \Twig_Extension
             $widgets[$_widget->getId()] = $_widget->setCurrentPage($page);
         }
 
-        foreach ($page->getWidgetMap() as $_widgets) {
-            foreach ($_widgets as $widgetId) {
-                if (!empty($widgets[$widgetId])) {
-                    $result .= $this->cmsWidget($widgets[$widgetId], $addContainer);
-                }
+        //render slot
+        $slot = $page->getSlotById($slotId);
+        $widgetMaps = $slot->getWidgetMaps();
+
+        //parse the widget maps
+        foreach ($widgetMaps as $widgetMap) {
+            //get the widget id
+            $widgetId = $widgetMap->getWidgetId();
+
+            //get the widget
+            $widget = $widgetHelper->findOneById($widgetId);
+
+            //test widget
+            if ($widget === null) {
+                throw new \Exception('The widget with the id:['.$widgetId.'] was not found.');
             }
+
+            //render this widget
+            $result .= $this->cmsWidget($widget, $addContainer);
         }
 
         if ($addContainer) {
-            $result = "<div class='vic-slot' id='vic-slot-".$slot."'>".$result."</div>";
+            $result = "<div class='vic-slot' id='vic-slot-".$slotId."'>".$result."</div>";
         }
 
         return $result;
@@ -190,7 +215,6 @@ class CmsExtension extends \Twig_Extension
 
             return $value;
         }
-
     }
 
     /**

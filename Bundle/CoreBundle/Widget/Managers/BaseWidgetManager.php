@@ -13,6 +13,8 @@ use Victoire\Bundle\CoreBundle\Event\WidgetRenderEvent;
 use Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy;
 use Victoire\Bundle\CoreBundle\Event\WidgetBuildFormEvent;
 use Victoire\Bundle\CoreBundle\Theme\ThemeWidgetInterface;
+use Victoire\Bundle\PageBundle\Entity\WidgetMap;
+use Victoire\Bundle\PageBundle\Entity\Slot;
 
 /**
  * Generic Widget CRUD operations
@@ -181,12 +183,12 @@ class BaseWidgetManager
     /**
      * create a widget
      * @param string $type
-     * @param string $slot
+     * @param string $slotId
      * @param Page   $page
      * @param string $entity
      * @return template
      */
-    public function createWidget($type, $slot, BasePage $page, $entity)
+    public function createWidget($type, $slotId, BasePage $page, $entity)
     {
         //services
         $formErrorService = $this->container->get('av.form_error_service');
@@ -199,7 +201,7 @@ class BaseWidgetManager
         );
 
         //create a new widget
-        $widget = $this->newWidget($page, $slot);
+        $widget = $this->newWidget($page, $slotId);
 
         $form = $this->callBuildFormSwitchParameters($widget, $entity);
 
@@ -219,10 +221,30 @@ class BaseWidgetManager
 
             $this->populateChildrenReferences($page, $widget);
 
-            $widgetMap = $page->getWidgetMap();
-            $widgetMap[$slot][] = $widget->getId();
 
-            $page->setWidgetMap($widgetMap);
+            //the id of the widget
+            $widgetId = $widget->getId();
+
+            //create the new widget map
+            $widgetMapEntry = new WidgetMap();
+            $widgetMapEntry->setAction(WidgetMap::ACTION_CREATE);
+            $widgetMapEntry->setWidgetId($widgetId);
+
+            //get the slot
+            $slot = $page->getSlotById($slotId);
+
+            //test that slot exists
+            if ($slot === null) {
+                $slot = new Slot();
+                $slot->setId($slotId);
+                $page->addSlot($slot);
+            }
+
+            //update the slot
+            $slot->addWidgetMap($widgetMapEntry);
+
+            //update the widget map
+            $page->updateWidgetMapBySlots();
 
             $em->persist($page);
             $em->flush();

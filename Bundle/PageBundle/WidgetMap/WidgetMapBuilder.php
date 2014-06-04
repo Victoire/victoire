@@ -5,6 +5,8 @@ use Victoire\Bundle\PageBundle\Entity\BasePage as Page;
 
 /**
  * Page WidgetMap builder
+ *
+ * ref: page.widgetMap.builder
  */
 class WidgetMapBuilder
 {
@@ -53,5 +55,41 @@ class WidgetMapBuilder
         }
 
         return $sortedWidgetMap;
+    }
+
+    /**
+     * Compute the complete widget map for a page by its parents
+     *
+     * @param Page   $page The page
+     * @param string $slot The slot to get
+     *
+     * @return array The computed widgetMap
+     */
+    public function computeCompleteWidgetMap(Page $page, $slot)
+    {
+        $widgetMap = array();
+        $parentWidgetMap = null;
+
+        //get the parent widget map
+        $parent = $page->getParent();
+
+        if ($parent !== null) {
+            $parentWidgetMap = $this->computeCompleteWidgetMap($parent, $slot);
+        }
+
+        $pageWidgetMap = $page->getWidgetMapForSlot($slot);
+
+        if ($parentWidgetMap !== null) {
+
+        }
+
+        if ($pageWidgetMap !== null) {
+
+        }
+
+        //$parentWidgetMap
+
+
+        return $widgetMap;
     }
 }

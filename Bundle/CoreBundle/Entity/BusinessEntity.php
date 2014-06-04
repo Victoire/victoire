@@ -1,7 +1,11 @@
 <?php
 namespace Victoire\Bundle\CoreBundle\Entity;
 
-
+/**
+ *
+ * @author Thomas Beaujean
+ *
+ */
 class BusinessEntity
 {
     protected $id = null;
