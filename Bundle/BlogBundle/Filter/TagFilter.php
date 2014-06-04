@@ -47,7 +47,7 @@ class TagFilter extends BaseFilter
         }
 
         $selectedTags = array();
-        if ($this->request->query->has('filter')) {
+        if ($this->request->query->has('filter') && array_key_exists('tag_filter', $this->request->query->get('filter'))) {
             foreach ($this->request->query->get('filter')['tag_filter']['tags'] as $id => $selectedTag) {
                 $selectedTags[$id] = $selectedTag;
             }

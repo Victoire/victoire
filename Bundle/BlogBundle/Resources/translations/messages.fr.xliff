@@ -6,9 +6,14 @@
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
     </header>
     <body>
+      <trans-unit id="b6bb1a3f347cd3c96d5dd3615232471d291cb6e2" resname="blog.tag_filter.label">
+        <source>blog.tag_filter.label</source>
+        <target>Étiquettes</target>
+        <jms:reference-file line="61">BlogBundle/Filter/CategoryFilter.php</jms:reference-file>
+      </trans-unit>
       <trans-unit id="b6bb1a3f347cd3c96d5dd3615232471d291cb6e1" resname="blog.category_filter.label">
         <source>blog.category_filter.label</source>
-        <target>Filtre par catégories</target>
+        <target>Catégories</target>
         <jms:reference-file line="61">BlogBundle/Filter/CategoryFilter.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="32f456880b2a4432df410b00ada0364856ed4b4e" resname="victoire_blog.new.title">

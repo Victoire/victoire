@@ -47,7 +47,7 @@ class CategoryFilter extends BaseFilter
         }
 
         $selectedCategories = array();
-        if ($this->request->query->has('filter')) {
+        if ($this->request->query->has('filter') && array_key_exists('category_filter', $this->request->query->get('filter'))) {
             foreach ($this->request->query->get('filter')['category_filter']['category'] as $id => $selectedCategory) {
                 $selectedCategories[$id] = $selectedCategory;
             }

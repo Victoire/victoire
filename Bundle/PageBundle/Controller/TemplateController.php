@@ -60,7 +60,10 @@ class TemplateController extends Controller
             $em->persist($template);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('victoire_core_template_show', array("slug" => $template->getSlug())));
+            return new JsonResponse( array(
+                "success"  => true,
+                "url"      => $this->generateUrl('victoire_core_template_show', array("slug" => $template->getSlug()))
+            ));
         }
 
         return new JsonResponse(

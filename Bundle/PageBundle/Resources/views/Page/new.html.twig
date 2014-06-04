@@ -3,12 +3,10 @@
 {% block modal_container_classes %}{{ parent() }} vic-page-modal{% endblock modal_container_classes %}
 
 {% block modal_body_content %}
-    <div class="vic-tab-pane vic-active">
         <form method="POST" action="{{path('victoire_core_page_new')}}">
             {{form_widget(form)}}
             {{form_rest(form)}}
         </form>
-    </div>
 
 {% endblock modal_body_content %}
 
