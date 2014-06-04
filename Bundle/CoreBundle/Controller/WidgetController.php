@@ -98,7 +98,6 @@ class WidgetController extends AwesomeController
         }
 
         return new JsonResponse($this->get('widget_manager')->newWidget($type, $slot, $page));
-
     }
 
     /**

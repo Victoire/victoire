@@ -75,6 +75,7 @@ class BasePageController extends AwesomeController
         //the response
         $response = null;
         $entity = null;
+        $businessEntityTemplatePage = null;
 
         //manager
         $manager = $this->getEntityManager();
@@ -86,16 +87,17 @@ class BasePageController extends AwesomeController
         //get the page
         $page = $basePageRepository->findOneByUrl($url);
 
-        //no page were found, we try to look for an BusinessEntityTemplatePage
-        if ($page === null) {
+        //we do not try to retrieve an entity for the business entity template page
+        if (!$page instanceof BusinessEntityTemplatePage) {
+            //create an url matcher based on the current url
             $urlMatcher = $urlHelper->getGeneralUrlMatcher($url);
 
             //if the url have been shorten
             if ($urlMatcher !== null) {
-                $page = $basePageRepository->findOneByUrl($urlMatcher);
+                $businessEntityTemplatePage = $basePageRepository->findOneByUrl($urlMatcher);
 
                 //a page match the entity template generator
-                if ($page) {
+                if ($businessEntityTemplatePage) {
                     //we look for the entity
                     $entityId = $urlHelper->getEntityIdFromUrl($url);
 
@@ -104,10 +106,18 @@ class BasePageController extends AwesomeController
                         throw new \Exception('The id could not be retrieved from the url.');
                     }
 
-                    $entity = $businessEntityHelper->getEntityByPageAndId($page, $entityId);
+                    $entity = $businessEntityHelper->getEntityByPageAndId($businessEntityTemplatePage, $entityId);
                 }
             }
         }
+
+        //no page were found, we try to look for an BusinessEntityTemplatePage
+        if ($page === null) {
+            $page = $businessEntityTemplatePage;
+        }
+
+        //no need for this variable anymore
+        unset($businessEntityTemplatePage);
 
         //no page found using the url, we look for previous url
         if ($page === null) {

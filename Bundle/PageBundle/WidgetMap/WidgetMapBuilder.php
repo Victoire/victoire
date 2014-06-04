@@ -104,8 +104,6 @@ class WidgetMapBuilder
                         throw new \Exception('The action ['.$action.'] is not handeld yet.');
                         break;
                     case WidgetMap::ACTION_DELETE:
-                        zdebug('delete');
-                        zdebug($pageWidgetMap);
                         //parse the widget maps
                         foreach ($widgetMap as $index => $wm) {
                             if ($wm->getId() === $pageWidgetMap->getId()) {
@@ -132,6 +130,7 @@ class WidgetMapBuilder
      */
     public function getUpdatedSlotsByPage(Page $page, $widgetSlots)
     {
+        throw new \Exception('The action updateOrder is not handeld yet.');
 
     }
 
