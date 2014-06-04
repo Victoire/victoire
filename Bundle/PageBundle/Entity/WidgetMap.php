@@ -21,8 +21,8 @@ class WidgetMap
     //the id of the widget replaced (only in action replace)
     protected $replacedWidgetId = null;
 
-    //the position of the widget
-    protected $position = null;
+    //the position of the widget, by default it is at the bottom of the page.
+    protected $position = 999999;
 
     //the position of the widget by its parent widgets
     //the widget is after the widget positionned at this position
@@ -85,6 +85,7 @@ class WidgetMap
     public function setWidgetId($widgetId)
     {
         $this->widgetId = $widgetId;
+        $this->setId($widgetId);
     }
 
     /**

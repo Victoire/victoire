@@ -100,6 +100,7 @@ services:
             - "@victoire_templating"
             - "@security.context" 
             - "@victoire_core.widget_helper"
+            - "@page.widgetMap.builder"
         tags:
             - { name: twig.extension }
     victoire_core.twig.globals_extension:

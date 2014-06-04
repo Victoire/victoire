@@ -108,7 +108,7 @@ class UrlHelper
         $completeUrl = $scheme.'://'.$host.'/';
 
         //the referer
-        $referer = $request->server->get('HTTP_REFERER');
+        $referer = urldecode($request->server->get('HTTP_REFERER'));
 
         //remove the base of the url
         $urlReferer = substr($referer, strlen($completeUrl));

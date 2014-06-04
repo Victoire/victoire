@@ -12,6 +12,7 @@ use Victoire\Bundle\CoreBundle\Entity\Widget;
 use Victoire\Bundle\CoreBundle\Form\WidgetType;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\CoreBundle\Helper\WidgetHelper;
+use Victoire\Bundle\PageBundle\WidgetMap\WidgetMapBuilder;
 
 /**
  * PageExtension extends Twig with page capabilities.
@@ -25,21 +26,24 @@ class CmsExtension extends \Twig_Extension
     protected $templating;
     protected $securityContext;
     protected $widgetHelper;
+    protected $widgetMapBuilder;
 
     /**
      * Constructor
      *
-     * @param WidgetManager $widgetManager
-     * @param TemplateMapper $templating
-     * @param SecurityContext $securityContext
-     * @param WidgetHelper $widgetHelper
+     * @param WidgetManager    $widgetManager
+     * @param TemplateMapper   $templating
+     * @param SecurityContext  $securityContext
+     * @param WidgetHelper     $widgetHelper
+     * @param WidgetMapBuilder $widgetMapBuilder
      */
-    public function __construct(WidgetManager $widgetManager, TemplateMapper $templating, SecurityContext $securityContext, WidgetHelper $widgetHelper)
+    public function __construct(WidgetManager $widgetManager, TemplateMapper $templating, SecurityContext $securityContext, WidgetHelper $widgetHelper, WidgetMapBuilder $widgetMapBuilder)
     {
         $this->widgetManager = $widgetManager;
         $this->templating = $templating;
         $this->securityContext = $securityContext;
         $this->widgetHelper = $widgetHelper;
+        $this->widgetMapBuilder = $widgetMapBuilder;
     }
 
     /**
@@ -111,32 +115,15 @@ class CmsExtension extends \Twig_Extension
     {
         //services
         $widgetHelper = $this->widgetHelper;
+        $widgetMapBuilder = $this->widgetMapBuilder;
 
         $result = "";
         if ($this->securityContext->isGranted('ROLE_VICTOIRE')) {
             $result .= $this->widgetManager->renderActions($slotId, $page, true);
         }
-        $widgets = array();
 
-        $pageWidgets = $this->widgetManager->findByPageBySlot($page, $slotId);
-
-        foreach ($pageWidgets as $_widget) {
-
-            //the mode of display of the widget
-            $mode = $_widget->getMode();
-
-            //in the business entity mode, we override the entity of the widget
-            if ($mode === Widget::MODE_BUSINESS_ENTITY) {
-                //set the entity for the widget
-                $_widget->setEntity($entity);
-            }
-
-            $widgets[$_widget->getId()] = $_widget->setCurrentPage($page);
-        }
-
-        //render slot
-        $slot = $page->getSlotById($slotId);
-        $widgetMaps = $slot->getWidgetMaps();
+        //get the widget map computed with the parent
+        $widgetMaps = $widgetMapBuilder->computeCompleteWidgetMap($page, $slotId);
 
         //parse the widget maps
         foreach ($widgetMaps as $widgetMap) {
@@ -149,6 +136,15 @@ class CmsExtension extends \Twig_Extension
             //test widget
             if ($widget === null) {
                 throw new \Exception('The widget with the id:['.$widgetId.'] was not found.');
+            }
+
+            //the mode of display of the widget
+            $mode = $widget->getMode();
+
+            //in the business entity mode, we override the entity of the widget
+            if ($mode === Widget::MODE_BUSINESS_ENTITY) {
+                //set the entity for the widget
+                $widget->setEntity($entity);
             }
 
             //render this widget

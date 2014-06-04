@@ -62,4 +62,49 @@ class Slot
     {
         $this->widgetMaps[] = $widgetMap;
     }
+
+    /**
+     * Get the widget map by the widget id
+     *
+     * @param integer $widgetId
+     *
+     * @return WidgetMap
+     */
+    public function getWidgetMapByWidgetId($widgetId)
+    {
+        $widgetMap = null;
+
+        $widgetMaps = $this->widgetMaps;
+
+        //parse the widgets maps
+        foreach ($widgetMaps as $wm) {
+            if ($wm->getWidgetId() === $widgetId) {
+                $widgetMap = $wm;
+                //entity found, there is no need to continue
+                continue;
+            }
+        }
+
+        return $widgetMap;
+    }
+
+    /**
+     * Remove the widget map from the slot
+     *
+     * @param WidgetMap $widgetMap
+     */
+    public function removeWidgetMap(WidgetMap $widgetMap)
+    {
+        $widgetMaps = $this->widgetMaps;
+
+        //parse the widgets maps
+        foreach ($widgetMaps as $index => $wm) {
+            if ($wm->getId() === $widgetMap->getId()) {
+                unset($this->widgetMaps[$index]);
+                //entity found, there is no need to continue
+                continue;
+            }
+        }
+
+    }
 }

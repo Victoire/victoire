@@ -48,28 +48,36 @@ class WidgetManager
 
     /**
      * Remove a widget
+     *
      * @param Widget $widget
+     *
+     * @return array The parameter for the view
      */
     public function deleteWidget(Widget $widget)
     {
+        //services
+        $em = $this->container->get('doctrine')->getManager();
+        $widgetMapBuilder = $this->widgetMapBuilder;
+
+        //the widget id
+        $widgetId = $widget->getId();
+
+        //the page
         $page = $widget->getPage();
 
         //create a page for the business entity instance if we are currently display an instance for a business entity template
         $page = $this->duplicateTemplatePageIfPageInstance($page);
 
-        $this->populateChildrenReferences($page, $widget, true);
+        //update the page deleting the widget
+        $widgetMapBuilder->deleteWidgetFromPage($page, $widget);
 
-        $widgetMap = $page->getWidgetMap();
-        foreach ($widgetMap as $slot => $map) {
-            if (false !== $key = array_search($widget->getId(), $map)) {
-                unset($widgetMap[$slot][$key]);
-            }
-        }
-        $widgetId = "vic-widget-".$widget->getId()."-container";
-        $page->setWidgetMap($widgetMap);
-        $em = $this->container->get('doctrine')->getManager();
-        $em->persist($page);
+        //we update the widget map of the page
+        $page->updateWidgetMapBySlots();
+
+        //we remove the widget
         $em->remove($widget);
+        //we update the page
+        $em->persist($page);
         $em->flush();
 
         return array(
@@ -504,56 +512,55 @@ class WidgetManager
     }
 
     /**
-     * find widget by page and by slot
-     * @param Page   $page
-     * @param string $slot
-     * @return Collection widgets
-     */
-    public function findByPageBySlot(BasePage $page, $slot)
-    {
-        //$em = $this->container->get('doctrine.orm.entity_manager');
-        //$widgetRepo = $em->getRepository('VictoireCoreBundle:Widget');
-
-        //get the widgets of the page
-        $widgets = $this->widgetMapBuilder->computeCompleteWidgetMap($page, $slot);
-        //$widgets = $widgetRepo->findByPageBySlot($page, $slot);
-
-        return $widgets;
-    }
-
-    /**
      * compute the widget map for page
      * @param BasePage   $page
      * @param array      $sortedWidgets
      */
-    public function computeWidgetMap(BasePage $page, $sortedWidgets)
+    public function updateWidgetMapOrder(BasePage $page, $sortedWidgets)
     {
         $em = $this->container->get('doctrine.orm.entity_manager');
+        $widgetMapBuilder = $this->widgetMapBuilder;
 
         $widgetMap = array();
         $widgetSlots = array();
 
+        //parse the sorted widgets
         foreach ($sortedWidgets as $slot => $widgetContainers) {
-            $slot = str_replace('vic-slot-', '', $slot);
+            //get the slot id removing the prefix
+            $slotId = str_replace('vic-slot-', '', $slot);
+
+            //create an array for this slot
+            $widgetSlots[$slotId] = array();
+
+            //parse the list of div ids
             foreach ($widgetContainers as $containerId) {
-                $id = preg_replace('/[^0-9]*/', '', $containerId);
-                if ($id !== '') {
-                    $widgetSlots[$id] = $slot;
-                    $widgetMap[$slot][] = $id;
+                //get the widget id from the div id  (remove the text around non numerical characters)
+                $widgetId = preg_replace('/[^0-9]*/', '', $containerId);
+
+                if ($widgetId === '' || $widgetId === null) {
+                    throw new \Exception('The containerId does not have any numerical characters. Containerid:['.$containerId.']');
                 }
+
+                //test if the widget is allowed for the slot
+                //@todo
+//                 $isAllowed = $this->isWidgetAllowedForSlot($widget, $widgetSlots[$id]);
+//                 if (!$isAllowed) {
+//                     throw new \Exception('This widget is not allowed in this slot');
+//                 }
+
+                //add the id of the widget to the slot
+                $widgetSlots[$slotId][] = $widgetId;
             }
         }
 
-        $widgets = $em->getRepository('VictoireCoreBundle:Widget')->findAllIn(array_keys($widgetSlots));
-        foreach ($widgets as $widget) {
-            $id = $widget->getId();
-            $isAllowed = $this->isWidgetAllowedForSlot($widget, $widgetSlots[$id]);
-            if (!$isAllowed) {
-                throw new \Exception('This widget is not allowed in this slot');
-            }
-        }
+        zdebug($widgetSlots);
+        $updatedSlots = $widgetMapBuilder->getUpdatedSlotsByPage($page, $widgetSlots);
 
-        $page->setWidgetMap($widgetMap);
+        //set the new updated slots
+        $page->setSlots($updatedSlots);
+        $page->updateWidgetMapBySlots();
+
+        //update the page with the new widget map
         $em->persist($page);
         $em->flush();
     }

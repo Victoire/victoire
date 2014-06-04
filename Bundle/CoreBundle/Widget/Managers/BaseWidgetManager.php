@@ -48,35 +48,6 @@ class BaseWidgetManager
     }
 
     /**
-     * remove a widget
-     * @param Widget $widget
-     */
-    public function deleteWidget(Widget $widget)
-    {
-        $page = $widget->getPage();
-        $this->populateChildrenReferences($page, $widget, true);
-
-        $widgetMap = $page->getWidgetMap();
-        foreach ($widgetMap as $slot => $map) {
-            if (false !== $key = array_search($widget->getId(), $map)) {
-                unset($widgetMap[$slot][$key]);
-            }
-        }
-        $widgetId = "vic-widget-".$widget->getId()."-container";
-        $page->setWidgetMap($widgetMap);
-        $em = $this->container->get('doctrine')->getManager();
-        $em->persist($page);
-        $em->remove($widget);
-        $em->flush();
-
-        return array(
-            "success"  => true,
-            "widgetId" => $widgetId
-        );
-    }
-
-
-    /**
      * edit a widget
      * @param BasePage $basePage
      * @param Widget   $widget
