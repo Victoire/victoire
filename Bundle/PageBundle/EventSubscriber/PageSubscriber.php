@@ -119,8 +119,8 @@ class PageSubscriber implements EventSubscriber
             //Get Initial url to historize it
             $initialUrl = $page->getUrl();
 
-            // build url binded with parents slugs
-            $url = array($page->isHomepage() ? "" : $page->getSlug());
+            // build url binded with parents url
+            $url = array($page->isHomepage() ? "" : $page->getUrl());
             $_page = $page;
             while ($_page = $_page->getParent()) {
                 if (!$_page->isHomepage()) {

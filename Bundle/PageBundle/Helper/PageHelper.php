@@ -32,8 +32,10 @@ class PageHelper
 
         $newPage->setTitle($page->getTitle());
         $newPage->setUrl($url);
-        //the slug is a copy of the url
-        $newPage->setSlug($newPage->getUrl());
+
+        //the slug is a copy of the url of the copy and the current url
+        $slug = $page->getSlug().'-'.$newPage->getUrl();
+        $newPage->setSlug($slug);
 
         return $newPage;
     }
