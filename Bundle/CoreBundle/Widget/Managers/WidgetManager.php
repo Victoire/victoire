@@ -545,7 +545,6 @@ class WidgetManager
             }
         }
 
-        zdebug($widgetSlots);
         $widgetMapBuilder->updateWidgetMapsByPage($page, $widgetSlots);
 
         $page->updateWidgetMapBySlots();

@@ -125,10 +125,6 @@ class WidgetMapBuilder
             unset($index);
         }
 
-        zdebug($parentWidgetMaps);
-        zdebug($pageWidgetMaps);
-
-        zdebug($widgetMap);
         //if the current page have some widget maps
         if ($pageWidgetMaps !== null) {
             //we parse the widget maps
@@ -146,7 +142,13 @@ class WidgetMapBuilder
                             $parentPosition = 0;
                         } else {
                             //otherwise we look for the position of the widget map parent with this id
-                            $parentPosition = $widgetMapPositionIndex[$reference];
+                            if (isset($widgetMapPositionIndex[$reference])) {
+                                $parentPosition = $widgetMapPositionIndex[$reference];
+                            } else {
+                                //the widget of the parent has been deleted
+                                //the widget comes at the top of the page
+                                $parentPosition = 0;
+                            }
                         }
 
                         //the position of the widget is the sum of the parent widget map position and the position of the widget map
@@ -180,7 +182,7 @@ class WidgetMapBuilder
                 }
             }
         }
-        zdebug($widgetMap);
+
         //the widget maps must be reordered by the indexes
         ksort($widgetMap, SORT_NUMERIC);
 
@@ -207,9 +209,6 @@ class WidgetMapBuilder
             //parse the widget ids
             foreach ($widgetIds as $widgetId) {
                 $widgetMap = $slot->getWidgetMapByWidgetId($widgetId);
-
-                zdebug($slot);
-                zdebug($widgetId);
 
                 //the slot comes from the parent
                 if ($widgetMap === null) {
