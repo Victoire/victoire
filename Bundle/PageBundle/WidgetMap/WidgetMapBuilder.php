@@ -102,10 +102,33 @@ class WidgetMapBuilder
             $pageWidgetMaps = $slot->getWidgetMaps();
         }
 
+        //this array gives the position of the widget maps by its id
+        $widgetMapPositionIndex = array();
+
         if ($parentWidgetMaps !== null) {
-            $widgetMap = array_merge($widgetMap, $parentWidgetMaps);
+            //the parent widget map array might not have a clean index
+            $index = 1;
+            foreach ($parentWidgetMaps as $parentWidgetMap) {
+                //id of the widget map
+                $id = $parentWidgetMap->getId();
+                //save the position of the widget map
+                //the widget maps of the parent are each 100 units
+                //so we can insert 99 widget map of the child between each widget map of the parent
+                $widgetMapPosition = ($index * 100);
+                $widgetMapPositionIndex[$id] = $widgetMapPosition;
+
+                $widgetMap[$widgetMapPosition] = $parentWidgetMap;
+
+                $index++;
+            }
+
+            unset($index);
         }
 
+        zdebug($parentWidgetMaps);
+        zdebug($pageWidgetMaps);
+
+        zdebug($widgetMap);
         //if the current page have some widget maps
         if ($pageWidgetMaps !== null) {
             //we parse the widget maps
@@ -115,7 +138,23 @@ class WidgetMapBuilder
 
                 switch ($action) {
                     case WidgetMap::ACTION_CREATE:
-                        $widgetMap[] = $pageWidgetMap;
+                        $position = $pageWidgetMap->getPosition();
+                        $reference = $pageWidgetMap->getPositionReference();
+
+                        //the 0 reference means the top of the page
+                        if ($reference === 0) {
+                            $parentPosition = 0;
+                        } else {
+                            //otherwise we look for the position of the widget map parent with this id
+                            $parentPosition = $widgetMapPositionIndex[$reference];
+                        }
+
+                        //the position of the widget is the sum of the parent widget map position and the position of the widget map
+                        $position += $parentPosition;
+
+                        $position = $this->getNextAvailaiblePosition($position, $widgetMap);
+
+                        $widgetMap[$position] = $pageWidgetMap;
                         break;
                     case WidgetMap::ACTION_REPLACE:
                         //parse the widget maps
@@ -141,19 +180,57 @@ class WidgetMapBuilder
                 }
             }
         }
+        zdebug($widgetMap);
+        //the widget maps must be reordered by the indexes
+        ksort($widgetMap, SORT_NUMERIC);
 
         return $widgetMap;
     }
 
     /**
-     * Get the slots for the page by the sorted slots given by the reorder on the Screen
+     * Get the slots for the page by the sorted slots given by the Screen
      *
      * @param Page $page
      * @param array $widgetSlots
      */
-    public function getUpdatedSlotsByPage(Page $page, $widgetSlots)
+    public function updateWidgetMapsByPage(Page $page, $widgetSlots)
     {
-        throw new \Exception('The action updateOrder is not handeld yet.');
+        foreach ($widgetSlots as $slotId => $widgetIds) {
+            //the reference to the previous widget map parent
+            $lastParentWidgetMapId = null;
+
+            //get the slot of the page
+            $slot = $page->getSlotById($slotId);
+            //the widget map position counter
+            $positionCounter = 1;
+
+            //parse the widget ids
+            foreach ($widgetIds as $widgetId) {
+                $widgetMap = $slot->getWidgetMapByWidgetId($widgetId);
+
+                zdebug($slot);
+                zdebug($widgetId);
+
+                //the slot comes from the parent
+                if ($widgetMap === null) {
+                    $lastParentWidgetMapId = $widgetId;
+                    //we reset the widget map position counter
+                    $positionCounter = 1;
+                } else {
+                    //the parent widget map reference
+                    if ($lastParentWidgetMapId === null) {
+                        $reference = 0;
+                    } else {
+                        $reference = $lastParentWidgetMapId;
+                    }
+                    $widgetMap->setPositionReference($reference);
+                    //update the position
+                    $widgetMap->setPosition($positionCounter);
+                    //incremente the position widget map counter
+                    $positionCounter++;
+                }
+            }
+        }
     }
 
     /**
@@ -270,5 +347,26 @@ class WidgetMapBuilder
         }
 
         return $widget;
+    }
+
+    /**
+     * Get the next availaible position for the widgetmap array
+     *
+     * @param integer $position  The position required
+     * @param array   $widgetMap The list of widget map
+     *
+     * @return integer The next position available
+     */
+    public function getNextAvailaiblePosition($position, $widgetMap)
+    {
+        //if the position is not available
+        if (isset($widgetMap[$position])) {
+            //we increment the position
+            $position += 1;
+            //we check that this one is also available
+            $position = $this->getNextAvailaiblePosition($position, $widgetMap);
+        }
+
+        return $position;
     }
 }

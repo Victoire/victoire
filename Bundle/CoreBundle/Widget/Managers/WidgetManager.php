@@ -540,15 +540,14 @@ class WidgetManager
 //                 }
 
                 //add the id of the widget to the slot
-                $widgetSlots[$slotId][] = $widgetId;
+                //cast the id as integer
+                $widgetSlots[$slotId][] = intval($widgetId);
             }
         }
 
         zdebug($widgetSlots);
-        $updatedSlots = $widgetMapBuilder->getUpdatedSlotsByPage($page, $widgetSlots);
+        $widgetMapBuilder->updateWidgetMapsByPage($page, $widgetSlots);
 
-        //set the new updated slots
-        $page->setSlots($updatedSlots);
         $page->updateWidgetMapBySlots();
 
         //update the page with the new widget map

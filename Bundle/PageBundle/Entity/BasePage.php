@@ -1087,4 +1087,14 @@ abstract class BasePage
     {
         $this->slots[] = $slot;
     }
+
+    /**
+     * Get the slots
+     *
+     * @return array The slots
+     */
+    public function getSlots()
+    {
+        return $this->slots;
+    }
 }
