@@ -63,10 +63,10 @@ class WidgetManager
         $widgetId = $widget->getId();
 
         //the page
-        $page = $widget->getPage();
+        $widgetPage = $widget->getPage();
 
         //create a page for the business entity instance if we are currently display an instance for a business entity template
-        $page = $this->duplicateTemplatePageIfPageInstance($page);
+        $page = $this->duplicateTemplatePageIfPageInstance($widgetPage);
 
         //update the page deleting the widget
         $widgetMapBuilder->deleteWidgetFromPage($page, $widget);
@@ -74,8 +74,12 @@ class WidgetManager
         //we update the widget map of the page
         $page->updateWidgetMapBySlots();
 
-        //we remove the widget
-        $em->remove($widget);
+        //the widget is removed only if the current page is the page of the widget
+        if ($page === $widgetPage) {
+            //we remove the widget
+            $em->remove($widget);
+        }
+
         //we update the page
         $em->persist($page);
         $em->flush();
@@ -84,47 +88,6 @@ class WidgetManager
             "success"  => true,
             "widgetId" => $widgetId
         );
-    }
-
-    /**
-     * edit a widget
-     * @param BasePage $basePage
-     * @param Widget   $widget
-     * @param bool     $delete
-     * @return template
-     *
-     */
-    public function populateChildrenReferences(BasePage $basePage, Widget $widget, $delete = false)
-    {
-
-        if (get_class($basePage) === "Victoire\Bundle\PageBundle\Entity\Template" &&
-            count($basePage->getPages()) > 0
-            ) {
-            $em = $this->container->get('doctrine')->getManager();
-            foreach ($basePage->getPages() as $page) {
-
-                if ($delete) {
-                    $widgetMap = $page->getWidgetMap();
-                    foreach ($widgetMap as $slot => $map) {
-                        if (false !== $key = array_search($widget->getId(), $map)) {
-                            unset($widgetMap[$slot][$key]);
-                        }
-                    }
-                    $page->setWidgetMap($widgetMap);
-
-                } else {
-                    $widgetMap = $page->getWidgetMap();
-                    $widgetMap[$widget->getSlot()][] = $widget->getId();
-                    $page->setWidgetMap($widgetMap);
-                }
-
-                $em->persist($page);
-
-                $this->populateChildrenReferences($page, $widget, $delete);
-            }
-            $em->flush();
-        }
-
     }
 
     /**
@@ -171,8 +134,6 @@ class WidgetManager
             }
             $em->persist($widget);
             $em->flush();
-
-            $this->populateChildrenReferences($page, $widget);
 
             //the id of the widget
             $widgetId = $widget->getId();

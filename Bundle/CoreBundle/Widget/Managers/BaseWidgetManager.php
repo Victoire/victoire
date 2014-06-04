@@ -48,47 +48,6 @@ class BaseWidgetManager
     }
 
     /**
-     * edit a widget
-     * @param BasePage $basePage
-     * @param Widget   $widget
-     * @param bool     $delete
-     * @return template
-     *
-     */
-    public function populateChildrenReferences(BasePage $basePage, Widget $widget, $delete = false)
-    {
-
-        if (get_class($basePage) === "Victoire\Bundle\PageBundle\Entity\Template" &&
-            count($basePage->getPages()) > 0
-            ) {
-            $em = $this->container->get('doctrine')->getManager();
-            foreach ($basePage->getPages() as $page) {
-
-                if ($delete) {
-                    $widgetMap = $page->getWidgetMap();
-                    foreach ($widgetMap as $slot => $map) {
-                        if (false !== $key = array_search($widget->getId(), $map)) {
-                            unset($widgetMap[$slot][$key]);
-                        }
-                    }
-                    $page->setWidgetMap($widgetMap);
-
-                } else {
-                    $widgetMap = $page->getWidgetMap();
-                    $widgetMap[$widget->getSlot()][] = $widget->getId();
-                    $page->setWidgetMap($widgetMap);
-                }
-
-                $em->persist($page);
-
-                $this->populateChildrenReferences($page, $widget, $delete);
-            }
-            $em->flush();
-        }
-
-    }
-
-    /**
      * Call the build form with selected parameter switch the parameters
      * The call is not the same if an entity is provided or not
      *
@@ -189,9 +148,6 @@ class BaseWidgetManager
             //persist the widget
             $em->persist($widget);
             $em->flush();
-
-            $this->populateChildrenReferences($page, $widget);
-
 
             //the id of the widget
             $widgetId = $widget->getId();
