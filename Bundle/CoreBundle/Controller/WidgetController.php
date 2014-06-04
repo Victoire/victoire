@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Victoire\Bundle\CoreBundle\Entity\Widget;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\CoreBundle\Widget\Managers\WidgetManager;
-
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Widget Controller
@@ -53,11 +53,11 @@ class WidgetController extends AwesomeController
      * @Template()
      * @ParamConverter("id", class="VictoireCoreBundle:Widget")
      */
-    public function editAction(Widget $widget, $type = null)
+    public function editAction(Request $request, Widget $widget, $type = null)
     {
         $widgetManager = $this->getWidgetManager();
 
-        return new JsonResponse($widgetManager->edit($widget, $type));
+        return new JsonResponse($widgetManager->edit($request, $widget, $type));
     }
 
     /**
@@ -148,8 +148,11 @@ class WidgetController extends AwesomeController
      */
     public function updatePositionAction(BasePage $page)
     {
-        $sortedWidgets = $this->getRequest()->request->get("sorted");
-        $this->get('widget_manager')->computeWidgetMap($page, $sortedWidgets);
+        //the sorted order for the widgets
+        $sortedWidgets = $this->getRequest()->request->get('sorted');
+
+        //recompute the order for the widgets
+        $this->get('widget_manager')->updateWidgetMapOrder($page, $sortedWidgets);
 
         return new JsonResponse();
     }

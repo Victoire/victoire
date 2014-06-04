@@ -15,6 +15,8 @@ use Victoire\Bundle\CoreBundle\Event\WidgetBuildFormEvent;
 use Victoire\Bundle\CoreBundle\Theme\ThemeWidgetInterface;
 use Victoire\Bundle\PageBundle\WidgetMap\WidgetMapBuilder;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
+use AppVentus\Awesome\ShortcutsBundle\Service\FormErrorService;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Generic Widget CRUD operations
@@ -25,16 +27,19 @@ class WidgetManager
     protected $widget;
     protected $page;
     protected $widgetMapBuilder = null;
+    protected $formErrorService = null;
 
     /**
      * contructor
      * @param Container        $container
      * @param WidgetMapBuilder $widgetMapBuilder
+     * @param FormErrorService $formErrorService
      */
-    public function __construct($container, WidgetMapBuilder $widgetMapBuilder)
+    public function __construct($container, WidgetMapBuilder $widgetMapBuilder, FormErrorService $formErrorService)
     {
         $this->container = $container;
         $this->widgetMapBuilder = $widgetMapBuilder;
+        $this->formErrorService = $formErrorService;
     }
 
     /**
@@ -304,9 +309,11 @@ class WidgetManager
      * @param string $entity
      * @return template
      */
-    public function edit(Widget $widget, $entity = null)
+    public function edit(Request $request, Widget $widget, $entity = null)
     {
-        $request = $this->container->get('request');
+        //services
+        $widgetMapBuilder = $this->widgetMapBuilder;
+
         $classes = $this->container->get('victoire_core.annotation_reader')->getBusinessClassesForWidget($widget);
         $manager = $this->getManager($widget);
         $page = $widget->getPage();
@@ -318,28 +325,51 @@ class WidgetManager
             return $manager->edit($widget, $entity, $this);
         }
 
-        $form = $this->buildForm($manager, $widget);
+        //the type of method used
+        $requestMethod = $request->getMethod();
 
-        if ($entity) {
-            $form = $this->buildForm($manager, $widget, $entity, $classes[$entity]);
-        }
+        //if the form is posted
+        if ($requestMethod === 'POST') {
+            //
+            $widget = $widgetMapBuilder->editWidgetFromPage($page, $widget);
 
-        $form->handleRequest($request);
+            $form = $this->buildForm($manager, $widget);
 
-        if ($form->isValid()) {
-            $em = $this->container->get('doctrine')->getManager();
-            $widget->setBusinessEntityName($entity);
-            $em->persist($widget);
-            $em->flush();
+            if ($entity) {
+                $form = $this->buildForm($manager, $widget, $entity, $classes[$entity]);
+            }
 
-            $response = array(
-                'page'     => $page,
-                'success'   => true,
-                'html'     => $this->render($widget),
-                'widgetId' => "vic-widget-".$widget->getId()."-container"
-            );
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $em = $this->container->get('doctrine')->getManager();
+
+                $widget->setBusinessEntityName($entity);
+
+                $em->persist($widget);
+
+                //update the widget map by the slots
+                $page->updateWidgetMapBySlots();
+                $em->persist($page);
+                $em->flush();
+
+                $response = array(
+                    'page'     => $page,
+                    'success'   => true,
+                    'html'     => $this->render($widget),
+                    'widgetId' => "vic-widget-".$widget->getId()."-container"
+                );
+            } else {
+                $formErrorService = $this->formErrorService;
+
+                $errors = $formErrorService->getRecursiveReadableErrors($form);
+
+                $response =  array(
+                    'success' => false,
+                    'message' => $errors
+                );
+            }
         } else {
-
             $forms = $this->renderWidgetForms($widget);
 
             $response = array(

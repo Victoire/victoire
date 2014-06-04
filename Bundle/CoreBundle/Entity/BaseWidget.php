@@ -13,7 +13,7 @@ abstract class BaseWidget
 
     /**
      * Auto simple mode: joined entity
-     * @var integer
+     * @var EntityProxy
      *
      * @ORM\OneToOne(targetEntity="\Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy", cascade={"persist", "remove"})
      */

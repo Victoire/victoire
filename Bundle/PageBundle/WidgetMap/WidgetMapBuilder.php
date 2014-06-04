@@ -5,6 +5,7 @@ use Victoire\Bundle\PageBundle\Entity\BasePage as Page;
 use Victoire\Bundle\CoreBundle\Entity\Widget;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 use Victoire\Bundle\PageBundle\Entity\Slot;
+use Doctrine\ORM\EntityManager;
 
 /**
  * Page WidgetMap builder
@@ -13,6 +14,18 @@ use Victoire\Bundle\PageBundle\Entity\Slot;
  */
 class WidgetMapBuilder
 {
+    protected $em = null;
+
+    /**
+     * Constructor
+     *
+     * @param EntityManager $em The entity manager
+     */
+    public function __construct(EntityManager $em)
+    {
+        $this->em = $em;
+    }
+
     /**
      * Build page widget map builder
      * @param  Page   $page The page we want to build the widget map
@@ -67,6 +80,8 @@ class WidgetMapBuilder
      * @param string $slot The slot to get
      *
      * @return array The computed widgetMap
+     *
+     * @throws \Exception
      */
     public function computeCompleteWidgetMap(Page $page, $slotId)
     {
@@ -91,9 +106,11 @@ class WidgetMapBuilder
             $widgetMap = array_merge($widgetMap, $parentWidgetMaps);
         }
 
+        //if the current page have some widget maps
         if ($pageWidgetMaps !== null) {
-
+            //we parse the widget maps
             foreach ($pageWidgetMaps as $pageWidgetMap) {
+                //depending on the action
                 $action = $pageWidgetMap->getAction();
 
                 switch ($action) {
@@ -101,7 +118,13 @@ class WidgetMapBuilder
                         $widgetMap[] = $pageWidgetMap;
                         break;
                     case WidgetMap::ACTION_REPLACE:
-                        throw new \Exception('The action ['.$action.'] is not handeld yet.');
+                        //parse the widget maps
+                        foreach ($widgetMap as $index => $wm) {
+                            if ($wm->getId() === $pageWidgetMap->getReplacedWidgetId()) {
+                                //replace the widget map from the list
+                                $widgetMap[$index] = $pageWidgetMap;
+                            }
+                        }
                         break;
                     case WidgetMap::ACTION_DELETE:
                         //parse the widget maps
@@ -131,7 +154,6 @@ class WidgetMapBuilder
     public function getUpdatedSlotsByPage(Page $page, $widgetSlots)
     {
         throw new \Exception('The action updateOrder is not handeld yet.');
-
     }
 
     /**
@@ -186,5 +208,67 @@ class WidgetMapBuilder
 
             $slot->addWidgetMap($widgetMap);
         }
+    }
+
+    /**
+     * Edit the widget from the page, if the widget is not linked to the current page, a copy is created
+     *
+     * @param Page   $page
+     * @param Widget $widget
+     *
+     * @throws \Exception The slot does not exists
+     */
+    public function editWidgetFromPage(Page $page, Widget $widget)
+    {
+        //the widget page
+        $widgetPage = $widget->getPage();
+
+        //we only copy the widget if the page of the widget is not the current page
+        if ($widgetPage !== $page) {
+            //services
+            $em = $this->em;
+
+            $widgetCopy = clone $widget;
+            $widgetCopy->setPage($page);
+
+            //we have to persist the widget to get its id
+            $em->persist($widgetCopy);
+            $em->flush();
+
+            //the id of the new widget
+            $widgetId = $widgetCopy->getId();
+
+            //the widget slot
+            $widgetSlotId = $widget->getSlot();
+
+            //the widget id
+            $replacedWidgetId = $widget->getId();
+
+            //get the slot
+            $slot = $page->getSlotById($widgetSlotId);
+
+            //there might be no slot yet for the child page
+            if ($slot === null) {
+                //create a new slot
+                $slot = new Slot();
+                $slot->setId($widgetSlotId);
+
+                //add the new slot to the page
+                $page->addSlot($slot);
+            }
+
+            //the widget is owned by another page (a parent)
+            //so we add a new widget map that indicates we delete this widget
+            $widgetMap = new WidgetMap();
+            $widgetMap->setAction(WidgetMap::ACTION_REPLACE);
+            $widgetMap->setReplacedWidgetId($replacedWidgetId);
+            $widgetMap->setWidgetId($widgetId);
+
+            $slot->addWidgetMap($widgetMap);
+
+            $widget = $widgetCopy;
+        }
+
+        return $widget;
     }
 }

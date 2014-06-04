@@ -15,6 +15,7 @@ services:
         arguments: 
             - "@service_container"
             - "@page.widgetMap.builder"
+            - "@av.form_error_service"
 
     widget_manager:
         alias: victoire_core.twig.widget_manager

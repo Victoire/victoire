@@ -16,6 +16,8 @@ services:
 
     page.widgetMap.builder:
         class: Victoire\Bundle\PageBundle\WidgetMap\WidgetMapBuilder
+        arguments:
+            - "@doctrine.orm.entity_manager"
 
     victoire_page.page_helper:
         class: Victoire\Bundle\PageBundle\Helper\PageHelper
