@@ -25,8 +25,8 @@ class PageSettingsType extends PageType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('slug', null, array(
-                'label' => 'form.page.type.slug.label'
+            ->add('url', null, array(
+                'label' => 'form.page.type.url.label'
             ))
             ->add('status', 'choice', array(
                 'label'   => 'form.page.type.status.label',

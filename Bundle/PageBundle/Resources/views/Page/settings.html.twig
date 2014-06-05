@@ -17,16 +17,16 @@
                     {{ form_row(form.bodyClass) }}
                     <div class="vic-form-group">
                         <label for="victoire_page_settings_type_bodyClass" class="vic-control-label vic-col-lg-3 control-label vic-optional">
-                            {{ 'form.page.type.slug.label'|trans({}, 'victoire') }}
+                            {{ 'form.page.type.url.label'|trans({}, 'victoire') }}
                         </label>
                         <div class="vic-col-lg-9">
                             <table style="width: 100%;">
                                 <tr>
                                     <td>
-                                        {{ url('victoire_core_page_show', {'url' : page.url })|replace({(page.slug): ''}) }}
+                                        {{ url('victoire_core_page_show', {'url' : page.url }) }}
                                     </td>
                                     <td style="width: 100%;">
-                                        {{ form_widget(form.slug) }}
+                                        {{ form_widget(form.url) }}
                                     </td>
                                 </tr>
                             </table>

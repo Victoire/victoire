@@ -94,4 +94,36 @@ abstract class BaseEntityProxy
 
         return $this->{'get'.ucfirst($entityName)}();
     }
+
+    /**
+     * Set the entity
+     *
+     * @param unknown $entity
+     *
+     * @throws \Exception
+     */
+    public function setEntity($entity)
+    {
+        $className = get_class($entity);
+
+        //split
+        $namespaceEntries = explode("\\", $className);
+
+        $businessEntityName = array_pop($namespaceEntries);
+
+        if ($businessEntityName === null) {
+            throw new \Exception('No business entity name were found for the entity.');
+        }
+
+        $businessEntityName = strtolower($businessEntityName);
+
+        //set the business entity name
+        $this->setBusinessEntityName($businessEntityName);
+
+        //set the entity
+        $method = 'set'.ucfirst($businessEntityName);
+
+        //set the entity
+        call_user_method($method, $this, $entity);
+    }
 }

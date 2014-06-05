@@ -660,6 +660,7 @@ class WidgetManager
         $pageHelper = $this->container->get('victoire_page.page_helper');
         $em = $this->container->get('doctrine.orm.entity_manager');
         $urlHelper = $this->container->get('victoire_page.url_helper');
+        $businessEntityHelper = $this->container->get('victoire_core.helper.business_entity_helper');
 
         //if the url of the referer is not the same as the url of the page of the widget
         //it means we are in a business entity template page and displaying an instance
@@ -672,15 +673,22 @@ class WidgetManager
             $basePageRepository = $em->getRepository('VictoirePageBundle:BasePage');
 
             //the url for the new page
-            $newPageUrl = $urlHelper->getEntityIdFromUrl($url);
+            $entityId = $urlHelper->getEntityIdFromUrl($url);
 
             //get the page
             $page = $basePageRepository->findOneByUrl($url);
 
             //no page were found
             if ($page === null) {
+                //test the entity id
+                if ($entityId === null) {
+                    throw new \Exception('The id could not be retrieved from the url.');
+                }
+
+                $entity = $businessEntityHelper->getEntityByPageAndId($widgetPage, $entityId);
+
                 //so we duplicate the business entity template page for this current instance
-                $page = $pageHelper->createPageInstanceFromBusinessEntityTemplatePage($widgetPage, $newPageUrl);
+                $page = $pageHelper->createPageInstanceFromBusinessEntityTemplatePage($widgetPage, $url, $entity);
 
                 //the page
                 $em->persist($page);

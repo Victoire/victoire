@@ -119,58 +119,61 @@ class PageSubscriber implements EventSubscriber
             //Get Initial url to historize it
             $initialUrl = $page->getUrl();
 
-            // build url binded with parents url
-            if ($page->isHomepage()) {
-                $url = array('');
-            } else {
-                if ($page->getUrl() !== null && $page->getUrl() !== '') {
-                    $url = array($page->getUrl());
+            if ($initialUrl === null || $initialUrl === '') {
+
+                // build url binded with parents url
+                if ($page->isHomepage()) {
+                    $url = array('');
                 } else {
-                    $url = array($page->getSlug());
+                    if ($page->getUrl() !== null && $page->getUrl() !== '') {
+                        $url = array($page->getUrl());
+                    } else {
+                        $url = array($page->getSlug());
+                    }
                 }
-            }
 
-            $_page = $page;
+                $_page = $page;
 
-            while ($_page = $_page->getParent()) {
-                if (!$_page->isHomepage()) {
-                    array_push($url, $_page->getSlug());
+                while ($_page = $_page->getParent()) {
+                    if (!$_page->isHomepage()) {
+                        array_push($url, $_page->getSlug());
+                    }
                 }
-            }
 
-            $url = array_reverse($url);
-            $url = implode('/', $url);
-            $page->setUrl($url);
+                $url = array_reverse($url);
+                $url = implode('/', $url);
+                $page->setUrl($url);
 
-            //if we edit page
-            if ($page->getId()) {
+                //if we edit page
+                if ($page->getId()) {
+                    if ($depth === 0) {
+
+                        $route = new Route();
+                        $route->setUrl($initialUrl);
+                        $route->setPage($page);
+                        $meta = $this->entityManager->getClassMetadata(get_class($route));
+                        $this->entityManager->persist($route);
+                        $this->uow->computeChangeSet($meta, $route);
+                        $page->addRoute($route);
+                    }
+                }
+
                 if ($depth === 0) {
-
-                    $route = new Route();
-                    $route->setUrl($initialUrl);
-                    $route->setPage($page);
-                    $meta = $this->entityManager->getClassMetadata(get_class($route));
-                    $this->entityManager->persist($route);
-                    $this->uow->computeChangeSet($meta, $route);
-                    $page->addRoute($route);
+                    $meta = $this->entityManager->getClassMetadata(get_class($page));
+                    $this->uow->recomputeSingleEntityChangeSet($meta, $page);
+                } else {
+                    $meta = $this->entityManager->getClassMetadata(get_class($page));
+                    $this->uow->computeChangeSet($meta, $page);
                 }
-            }
 
-            if ($depth === 0) {
-                $meta = $this->entityManager->getClassMetadata(get_class($page));
-                $this->uow->recomputeSingleEntityChangeSet($meta, $page);
-            } else {
-                $meta = $this->entityManager->getClassMetadata(get_class($page));
-                $this->uow->computeChangeSet($meta, $page);
-            }
-
-            if ($page->getChildren()) {
-                foreach ($page->getChildren() as $child) {
-                    $depth++;
-                    // recursive call for each children
-                    $this->buildUrl($child, $depth);
-                    $meta = $this->entityManager->getClassMetadata(get_class($child));
-                    $this->uow->computeChangeSet($meta, $child);
+                if ($page->getChildren()) {
+                    foreach ($page->getChildren() as $child) {
+                        $depth++;
+                        // recursive call for each children
+                        $this->buildUrl($child, $depth);
+                        $meta = $this->entityManager->getClassMetadata(get_class($child));
+                        $this->uow->computeChangeSet($meta, $child);
+                    }
                 }
             }
         }

@@ -16,6 +16,8 @@ use Victoire\Bundle\CoreBundle\Entity\Widget;
 use Victoire\Bundle\SeoBundle\Entity\PageSeo;
 use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
+use Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy;
+
 
 /**
  * Page
@@ -219,6 +221,74 @@ abstract class BasePage
 
     //the slot contains the widget maps entities
     protected $slots = array();
+
+    /**
+     * Auto simple mode: joined entity
+     * @var EntityProxy
+     *
+     * @ORM\OneToOne(targetEntity="\Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy", cascade={"persist", "remove"})
+     */
+    protected $entityProxy;
+
+    /**
+     * The entity linked to the page
+     * @var unknown
+     */
+    protected $entity;
+
+
+    /**
+     * Set the entity proxy
+     *
+     * @param EntityProxy $entity
+     */
+    public function setEntityProxy(EntityProxy $entityProxy)
+    {
+        $this->entityProxy = $entityProxy;
+    }
+
+    /**
+     * Get the entity proxy
+     *
+     * @return EntityProxy
+     */
+    public function getEntityProxy()
+    {
+        return $this->entityProxy;
+    }
+
+    /**
+     * Set the entity
+     *
+     * @param unknown $entity
+     */
+    public function setEntity($entity)
+    {
+        $this->entity = $entity;
+    }
+
+    /**
+     * Get the entity
+     *
+     * @return number
+     */
+    public function getEntity()
+    {
+        //if there is no entity
+        if ($this->entity === null) {
+            //we try to get one from the proxy
+            $entityProxy = $this->getEntityProxy();
+
+            //if there is a proxy
+            if ($entityProxy !== null) {
+                $entity = $entityProxy->getEntity();
+                $this->entity = $entity;
+            }
+        }
+
+        return $this->entity;
+    }
+
 
     /**
      * to string

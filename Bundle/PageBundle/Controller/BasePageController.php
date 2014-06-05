@@ -88,7 +88,7 @@ class BasePageController extends AwesomeController
         $page = $basePageRepository->findOneByUrl($url);
 
         //we do not try to retrieve an entity for the business entity template page
-        if (!$page instanceof BusinessEntityTemplatePage) {
+        if ($page === null) {
             //create an url matcher based on the current url
             $urlMatcher = $urlHelper->getGeneralUrlMatcher($url);
 
@@ -109,6 +109,8 @@ class BasePageController extends AwesomeController
                     $entity = $businessEntityHelper->getEntityByPageAndId($businessEntityTemplatePage, $entityId);
                 }
             }
+        } else {
+            $entity = $page->getEntity();
         }
 
         //no page were found, we try to look for an BusinessEntityTemplatePage
