@@ -390,4 +390,16 @@ class Widget extends BaseWidget
 
         return $pageId;
     }
+
+    /**
+     * Clone a widget
+     */
+    public function __clone()
+    {
+        //if there is a proxy
+        if ($this->entityProxy) {
+            //we clone this one
+            $this->entityProxy = clone $this->entityProxy;
+        }
+    }
 }
