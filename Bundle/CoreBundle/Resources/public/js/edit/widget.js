@@ -75,11 +75,19 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="delete"]', function(
     $vic.ajax({
         type: "GET",
         url : $vic(this).attr('href')
-    }).done(function(response){
+    }).done(function(response) {
         if (true === response.success) {
-            $vic("#"+response.widgetId).next('.vic-dropdown.vic-new-widget').remove();
-            $vic("#"+response.widgetId).remove();
+            //selector for the widget div
+            var widgetContainerSelector = 'vic-widget-' + response.widgetId + '-container';
+            var widgetDiv = $vic("#" + widgetContainerSelector);
+            //remove the div
+            widgetDiv.remove();
+            //close the modal
             closeModal();
+        } else {
+            //log the error
+            console.log('An error occured during the deletion of the widget.');
+            console.log(response.message);
         }
     });
 });
