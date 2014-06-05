@@ -318,6 +318,10 @@ class WidgetManager
         $manager = $this->getManager($widget);
         $page = $widget->getPage();
 
+        //the id of the edited widget
+        //a new widget might be created in the case of a legacy
+        $initialWidgetId = $widget->getId();
+
         //create a page for the business entity instance if we are currently display an instance for a business entity template
         $page = $this->duplicateTemplatePageIfPageInstance($page);
 
@@ -356,8 +360,8 @@ class WidgetManager
                 $response = array(
                     'page'     => $page,
                     'success'   => true,
-                    'html'     => $this->render($widget),
-                    'widgetId' => "vic-widget-".$widget->getId()."-container"
+                    'html'     => $this->render($widget, true),
+                    'widgetId' => "vic-widget-".$initialWidgetId."-container"
                 );
             } else {
                 $formErrorService = $this->formErrorService;
