@@ -70,7 +70,7 @@ class BusinessEntityTemplateMenuListener
         if ($parent !== null) {
             $mainItem
                 ->addChild('menu.parent', array(
-                    'uri' => '/'.$page->getUrl() //we use the root url
+                    'uri' => '/'.$parent->getUrl() //we use the root url
                 ));
         }
 
