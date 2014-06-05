@@ -326,21 +326,6 @@ class BaseWidgetManager
     }
 
     /**
-     * find widget by page and by slot
-     * @param Page   $page
-     * @param string $slot
-     * @return Collection widgets
-     */
-    public function findByPageBySlot(BasePage $page, $slot)
-    {
-        $em = $this->container->get('doctrine.orm.entity_manager');
-        $widgetRepo = $em->getRepository('VictoireCoreBundle:Widget');
-
-        return $widgetRepo->findByPageBySlot($page, $slot);
-    }
-
-
-    /**
      * compute the widget map for page
      * @param BasePage   $page
      * @param array      $sortedWidgets

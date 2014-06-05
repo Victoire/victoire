@@ -753,21 +753,6 @@ abstract class BasePage
     }
 
     /**
-     * Get widgetMap
-     * @param string $slot
-     *
-     * @return widgetMap
-     */
-    public function getWidgetMapForSlot($slot = null)
-    {
-        if (empty($this->widgetMap[$slot])) {
-            return null;
-        }
-
-        return $this->widgetMap[$slot];
-    }
-
-    /**
      * Get bodyId
      *
      * @return string
@@ -988,6 +973,18 @@ abstract class BasePage
 
         //set the slots to the page
         $this->slots = $slots;
+    }
+
+    /**
+     * Method before updating a page
+     *
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function preUpdate()
+    {
+        //we update the widget map by the slots
+        $this->updateWidgetMapBySlots();
     }
 
     /**
