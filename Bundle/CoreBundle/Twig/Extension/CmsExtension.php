@@ -62,6 +62,7 @@ class CmsExtension extends \Twig_Extension
             'cms_widget_legacy'          => new \Twig_Function_Method($this, 'cmsWidgetLegacy', array('is_safe' => array('html'))),
             'cms_widget_extra_css_class' => new \Twig_Function_Method($this, 'cmsWidgetExtraCssClass', array('is_safe' => array('html'))),
             'is_business_entity_allowed' => new \Twig_Function_Method($this, 'isBusinessEntityAllowed', array('is_safe' => array('html'))),
+            'cms_widget_title'           => new \Twig_Function_Method($this, 'cmsWidgetTitle', array('is_safe' => array('html'))),
         );
     }
 
@@ -118,7 +119,8 @@ class CmsExtension extends \Twig_Extension
         $widgetMapBuilder = $this->widgetMapBuilder;
 
         $result = "";
-        if ($this->securityContext->isGranted('ROLE_VICTOIRE')) {
+
+        if ($this->isRoleVictoireGranted()) {
             $result .= $this->widgetManager->renderActions($slotId, $page, true);
         }
 
@@ -282,5 +284,48 @@ class CmsExtension extends \Twig_Extension
         }
 
         return $cssClass;
+    }
+
+    /**
+     * Get the title for a widget
+     *
+     * @param Widget $widget
+     *
+     * @return string The title text
+     */
+    public function cmsWidgetTitle(Widget $widget)
+    {
+        $title = '';
+
+        if ($this->isRoleVictoireGranted()) {
+            //the title markup
+            $title = 'title="';
+
+            //the description of the widget
+            $description = $widget->getType().' - '.$widget->getMode();
+            //add the description to the title
+            $title .= $description;
+
+            //close the markup
+            $title .= '"';
+        }
+
+        return $title;
+    }
+
+    /**
+     * Does the current user have the role victoire granted
+     *
+     * @return boolean
+     */
+    protected function isRoleVictoireGranted()
+    {
+        $isGranted = false;
+
+        if ($this->securityContext->isGranted('ROLE_VICTOIRE')) {
+            $isGranted = true;
+        }
+
+        return $isGranted;
     }
 }

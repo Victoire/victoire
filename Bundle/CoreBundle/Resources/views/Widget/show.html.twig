@@ -1,6 +1,6 @@
 {% block body %}
 
-<div class="vic-widget {{cms_widget_extra_css_class(widget)}} {{cms_widget_legacy(widget, page)}}" id="widget-{{widget.id}}">
+<div {{cms_widget_title(widget)}} class="vic-widget {{cms_widget_extra_css_class(widget)}} {{cms_widget_legacy(widget, page)}}" id="widget-{{widget.id}}">
 {% block actions %}{{cms_widget_actions(widget)}}{% endblock actions %}
 
 {% block content %}
