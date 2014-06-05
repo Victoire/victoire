@@ -466,6 +466,8 @@ class BaseWidgetManager
      * @param string         $entityName
      * @param string         $namespace
      * @return $form
+     *
+     * @throws \Exception
      */
     public function buildForm($widget, $entityName = null, $namespace = null)
     {
@@ -597,28 +599,6 @@ class BaseWidgetManager
     }
 
     /**
-     * Get content for the widget
-     *
-     * @param Widget $widget
-     *
-     * @return string The content
-     *
-     * @SuppressWarnings checkUnusedFunctionParameters
-     */
-    protected function getWidgetContent(Widget $widget)
-    {
-        //BY DEFAULT THIS FUNCTION DOES NOT RETURN ANY CONTENT
-        //THE WIDGET MANAGER SHOULD OVERWRITE THIS FUNCTION
-        //IF IT WANTS TO SET SOME CONTENT FOR THE VIEW
-        //OR IT CAN SIMPLY USE THE WIDGET IN THE VIEW
-
-        //the content of the widget
-        $content = '';
-
-        return $content;
-    }
-
-    /**
      * render the WidgetRedactor
      * @param WidgetRedactor $widget
      *
@@ -649,7 +629,10 @@ class BaseWidgetManager
      * @param WidgetRedactor $widget
      * @param string         $entityName
      * @param string         $namespace
+     *
      * @return $form
+     *
+     * @throws \Exception
      */
     public function buildWidgetForm($widget, $entityName = null, $namespace = null)
     {
@@ -698,7 +681,7 @@ class BaseWidgetManager
 
         switch ($mode) {
             case Widget::MODE_STATIC:
-                $content = $widget->getWidgetStaticContent();
+                $content = $this->getWidgetStaticContent($widget);
                 break;
             case Widget::MODE_ENTITY:
                 //get the content of the widget with its entity
@@ -723,6 +706,8 @@ class BaseWidgetManager
      *
      * @param Widget $widget
      * @return string The static content
+     *
+     * @SuppressWarnings checkUnusedFunctionParameters
      */
     protected function getWidgetStaticContent(Widget $widget)
     {
@@ -733,6 +718,8 @@ class BaseWidgetManager
      * Get the business entity content
      * @param Widget $widget
      * @return Ambigous <string, unknown, \Victoire\Bundle\CoreBundle\Widget\Managers\mixed, mixed>
+     *
+     * @SuppressWarnings checkUnusedFunctionParameters
      */
     protected function getWidgetBusinessEntityContent(Widget $widget)
     {
@@ -745,6 +732,8 @@ class BaseWidgetManager
      * @param Widget $widget
      *
      * @return string
+     *
+     * @SuppressWarnings checkUnusedFunctionParameters
      */
     protected function getWidgetEntityContent(Widget $widget)
     {
