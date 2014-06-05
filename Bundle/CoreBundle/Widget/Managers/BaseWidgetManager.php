@@ -111,12 +111,15 @@ class BaseWidgetManager
     }
 
     /**
-     * create a widget
+     * Create a widget
+     *
      * @param string $type
      * @param string $slotId
      * @param Page   $page
      * @param string $entity
      * @return template
+     *
+     * @throws \Exception
      */
     public function createWidget($type, $slotId, BasePage $page, $entity)
     {
@@ -238,17 +241,6 @@ class BaseWidgetManager
         }
 
         return $forms;
-    }
-
-
-    /**
-     * render a widget
-     * @param Widget $widget
-     * @return template
-     */
-    public function render(Widget $widget)
-    {
-        throw new \Exception('Please provide the render function for the widget manager');
     }
 
     /**
@@ -393,32 +385,6 @@ class BaseWidgetManager
 
 
     /**
-     * render a new form
-     * @param Form   $form
-     * @param Widget $widget
-     * @param string $slot
-     * @param Page   $page
-     * @param string $entityName
-     * @return Collection widgets
-     */
-    public function renderNewForm($form, $widget, $slot, $page, $entityName = null)
-    {
-        $manager = $this->getManager($widget);
-
-        return $manager->renderNewForm($form, $widget, $slot, $page, $entityName);
-    }
-
-    /**
-     * Get a new widget entity
-     *
-     * @return Widget
-     */
-    protected function getNewWidgetEntity()
-    {
-        throw new \Exception('Please provide a getNewWidgetEntity function in your widget manager');
-    }
-
-    /**
      * create a new WidgetRedactor
      * @param Page   $page
      * @param string $slot
@@ -519,27 +485,282 @@ class BaseWidgetManager
         return $form;
     }
 
+    /**
+     * Get a new widget entity
+     *
+     * @return Widget
+     */
+    protected function getNewWidgetEntity()
+    {
+        //the widget alias
+        $widgetAlias = 'victoire.widget.'. $this->getWidgetName();
+        $widget = $this->container->get($widgetAlias);
+
+        return $widget;
+    }
 
     /**
-     * build widget form and dispatch event
-     * @param Manager $manager
-     * @param Widget  $widget
-     * @param string  $entityName
-     * @param string  $namespace
-     * @return Form
+     * create form new for WidgetRedactor
+     * @param Form           $form
+     * @param WidgetRedactor $widget
+     * @param string         $slot
+     * @param Page           $page
+     * @param string         $entity
+     *
+     * @return new form
      */
-    public function buildWidgetForm($widget, $entityName = null, $namespace = null)
+    public function renderNewForm($form, $widget, $slot, $page, $entity = null)
     {
-        throw new \Exception('Please provide a buildForm function for the widget manager');
+        //the name of the bundle depends of the widget name
+        $bundleName = $this->getBundleName();
+
+        //the template displayed is in the widget bundle
+        $templateName = $bundleName.'::new.html.twig';
+
+        return $this->container->get('victoire_templating')->render(
+            $templateName,
+            array(
+                "widget"          => $widget,
+                'form'            => $form->createView(),
+                "slot"            => $slot,
+                "entity"          => $entity,
+                "renderContainer" => true,
+                "page"            => $page
+            )
+        );
+    }
+
+    /**
+     * Get the name of the widget bundle
+     *
+     * @return string
+     */
+    protected function getBundleName()
+    {
+        //the name of the bundle depends of the widget name
+        $bundleName = 'Victoire'.ucfirst($this->getWidgetName()).'Bundle';
+
+        return $bundleName;
+    }
+
+    /**
+     * render WidgetRedactor form
+     * @param Form           $form
+     * @param WidgetRedactor $widget
+     * @param BusinessEntity $entity
+     * @return form
+     */
+    protected function renderForm($form, $widget, $entity = null)
+    {
+        //the template displayed is in the widget bundle
+        $templateName = $this->getTemplateName('edit');
+
+        return $this->container->get('victoire_templating')->render(
+            $templateName,
+            array(
+                "widget" => $widget,
+                'form'   => $form->createView(),
+                'id'     => $widget->getId(),
+                'entity' => $entity
+            )
+        );
+    }
+
+    /**
+     * Get the name of the template to display for an action
+     *
+     * @param string $action
+     *
+     * @return string
+     */
+    protected function getTemplateName($action)
+    {
+        //the name of the bundle depends of the widget name
+        $bundleName = $this->getBundleName();
+
+        //the template displayed is in the widget bundle
+        $templateName = $bundleName.'::'.$action.'.html.twig';
+
+        return $templateName;
     }
 
     /**
      * Get the extra classes for the css
-     * This function can be overwritten by the children
      *
      * @return string The classes
      */
     public function getExtraCssClass()
+    {
+        $cssClass = 'vic-widget-'.$this->getWidgetName();
+
+        return $cssClass;
+    }
+
+    /**
+     * Get content for the widget
+     *
+     * @param Widget $widget
+     *
+     * @return string The content
+     *
+     * @SuppressWarnings checkUnusedFunctionParameters
+     */
+    protected function getWidgetContent(Widget $widget)
+    {
+        //BY DEFAULT THIS FUNCTION DOES NOT RETURN ANY CONTENT
+        //THE WIDGET MANAGER SHOULD OVERWRITE THIS FUNCTION
+        //IF IT WANTS TO SET SOME CONTENT FOR THE VIEW
+        //OR IT CAN SIMPLY USE THE WIDGET IN THE VIEW
+
+        //the content of the widget
+        $content = '';
+
+        return $content;
+    }
+
+    /**
+     * render the WidgetRedactor
+     * @param WidgetRedactor $widget
+     *
+     * @return widget show
+     */
+    public function render(Widget $widget)
+    {
+        //the templating service
+        $templating = $this->container->get('victoire_templating');
+
+        //the content of the widget
+        $content = $this->getWidgetContent($widget);
+
+        //the template displayed is in the widget bundle
+        $templateName = $this->getTemplateName('show');
+
+        return $templating->render(
+            $templateName,
+            array(
+                "widget" => $widget,
+                "content" => $content
+            )
+        );
+    }
+
+    /**
+     * create a form with given widget
+     * @param WidgetRedactor $widget
+     * @param string         $entityName
+     * @param string         $namespace
+     * @return $form
+     */
+    public function buildWidgetForm($widget, $entityName = null, $namespace = null)
+    {
+        //test parameters
+        if ($entityName !== null) {
+            if ($namespace === null) {
+                throw new \Exception('The namespace is mandatory if the entityName is given');
+            }
+        }
+
+        $container = $this->container;
+        $formFactory = $container->get('form.factory');
+
+        $formAlias = 'victoire_widget_form_'.$this->getWidgetName();
+
+        $form = $formFactory->create($formAlias, $widget,
+            array(
+                'entityName' => $entityName,
+                'namespace' => $namespace
+            )
+        );
+
+        return $form;
+    }
+
+
+    /**
+     * Get content for the widget
+     *
+     * @param Widget $widget
+     * @throws \Exception
+     * @return Ambigous <string, unknown, \Victoire\Bundle\CoreBundle\Widget\Managers\mixed, mixed>
+     */
+    protected function getWidgetContent(Widget $widget)
+    {
+        //the mode of display of the widget
+        $mode = $widget->getMode();
+
+        //the widget must have a mode
+        if ($mode === null) {
+            throw new \Exception('The widget ['.$widget->getId().'] has no mode.');
+        }
+
+        //the content of the widget
+        $content = '';
+
+        switch ($mode) {
+            case Widget::MODE_STATIC:
+                $content = $widget->getWidgetStaticContent();
+                break;
+            case Widget::MODE_ENTITY:
+                //get the content of the widget with its entity
+                $content = $this->getWidgetEntityContent($widget);
+                break;
+            case Widget::MODE_BUSINESS_ENTITY:
+                //get the content of the widget with its entity
+                $content = $this->getWidgetBusinessEntityContent($widget);
+                break;
+            case Widget::MODE_QUERY:
+                $content = $this->getWidgetQueryContent($widget);
+                break;
+            default:
+                throw new \Exception('The mode ['.$mode.'] is not supported by the widget manager. Widget ID:['.$widget->getId().']');
+        }
+
+        return $content;
+    }
+
+    /**
+     * Get the static content of the widget
+     *
+     * @param Widget $widget
+     * @return string The static content
+     */
+    protected function getWidgetStaticContent(Widget $widget)
+    {
+        return '';
+    }
+
+    /**
+     * Get the business entity content
+     * @param Widget $widget
+     * @return Ambigous <string, unknown, \Victoire\Bundle\CoreBundle\Widget\Managers\mixed, mixed>
+     */
+    protected function getWidgetBusinessEntityContent(Widget $widget)
+    {
+        return '';
+    }
+
+    /**
+     * Get the content of the widget by the entity linked to it
+     *
+     * @param Widget $widget
+     *
+     * @return string
+     */
+    protected function getWidgetEntityContent(Widget $widget)
+    {
+        return '';
+    }
+
+    /**
+     * Get the content of the widget for the query mode
+     *
+     * @param Widget $widget
+     *
+     * @return string
+     *
+     * @SuppressWarnings checkUnusedFunctionParameters
+     */
+    protected function getWidgetQueryContent(Widget $widget)
     {
         return '';
     }

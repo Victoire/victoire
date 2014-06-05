@@ -14,27 +14,6 @@ use Victoire\Bundle\CoreBundle\Entity\Widget;
  */
 class WidgetType extends AbstractType
 {
-    protected $entity_name;
-    protected $namespace;
-
-    /**
-     * @param string $entity_name The entity name
-     * @param string $namespace   The entity namespace
-     *
-     * @throws Exception
-     */
-    public function __construct($entity_name, $namespace)
-    {
-        $this->namespace = $namespace;
-        $this->entity_name = $entity_name;
-
-        if ($this->entity_name !== null) {
-            if ($this->namespace === null) {
-                throw new \Exception('The namespace is mandatory if the entity_name is given.');
-            }
-        }
-    }
-
     /**
      * define form fields
      * @param FormBuilderInterface $builder The builder
@@ -43,10 +22,19 @@ class WidgetType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $namespace = $options['namespace'];
+        $entityName = $options['entityName'];
+
+        if ($entityName !== null) {
+            if ($namespace === null) {
+                throw new \Exception('The namespace is mandatory if the entity_name is given.');
+            }
+        }
+
         //the mode of the widget
         $mode = Widget::MODE_STATIC;
 
-        if ($this->entity_name !== null) {
+        if ($entityName !== null) {
 
             $mode = Widget::MODE_ENTITY;
 
@@ -54,12 +42,12 @@ class WidgetType extends AbstractType
                 ->add('slot', 'hidden')
                 ->add('fields', 'widget_fields', array(
                     'label' => 'widget.form.fields.label',
-                    'namespace' => $this->namespace,
+                    'namespace' => $namespace,
                     'widget'    => $options['widget']
                 ))
                 ->add('entity_proxy', 'entity_proxy', array(
-                    'entity_name' => $this->entity_name,
-                    'namespace'   => $this->namespace,
+                    'entity_name' => $entityName,
+                    'namespace'   => $namespace,
                     'widget'      => $options['widget']
                 ));
         }
@@ -83,6 +71,9 @@ class WidgetType extends AbstractType
             'widget'             => null,
             'translation_domain' => 'victoire'
         ));
+
+        $resolver->setOptional(array('namespace'));
+        $resolver->setOptional(array('entityName'));
     }
 
     /**
@@ -95,13 +86,13 @@ class WidgetType extends AbstractType
         return 'appventus_victoirecorebundle_widgettype';
     }
 
-    /**
-     * Get the entity name
-     *
-     * @return string
-     */
-    public function getEntityName()
-    {
-        return $this->entity_name;
-    }
+//     /**
+//      * Get the entity name
+//      *
+//      * @return string
+//      */
+//     public function getEntityName()
+//     {
+//         return $entityName;
+//     }
 }
