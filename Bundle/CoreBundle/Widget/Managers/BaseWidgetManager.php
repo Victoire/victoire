@@ -1,7 +1,6 @@
 <?php
 namespace Victoire\Bundle\CoreBundle\Widget\Managers;
 
-use Victoire\Bundle\CoreBundle\Entity\WidgetReference;
 use Victoire\Bundle\CoreBundle\Entity\Widget;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Template;
@@ -10,7 +9,6 @@ use Victoire\MenuBundle\Entity\MenuItem;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use Victoire\Bundle\CoreBundle\VictoireCmsEvents;
 use Victoire\Bundle\CoreBundle\Event\WidgetRenderEvent;
-use Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy;
 use Victoire\Bundle\CoreBundle\Event\WidgetBuildFormEvent;
 use Victoire\Bundle\CoreBundle\Theme\ThemeWidgetInterface;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
@@ -25,9 +23,6 @@ use Victoire\Bundle\PageBundle\Entity\Slot;
 class BaseWidgetManager
 {
     protected $container;
-    protected $widget;
-    protected $page;
-    protected $widgetReference;
 
     /**
      * contructor
@@ -36,15 +31,6 @@ class BaseWidgetManager
     public function __construct($container)
     {
         $this->container = $container;
-    }
-
-    /**
-     * set page
-     * @param Page $page
-     */
-    public function setPage(BasePage $page)
-    {
-        $this->page = $page;
     }
 
     /**
@@ -194,80 +180,6 @@ class BaseWidgetManager
         }
 
         return $response;
-    }
-
-    /**
-     * Generates new forms for each available business entities
-     * @param string   $type
-     * @param string   $slot
-     * @param BasePage $page
-     * @param Widget   $widget
-     *
-     * @return collection of forms
-     */
-    private function renderNewWidgetForms($type, $slot, BasePage $page, Widget $widget)
-    {
-        $annotationReader = $this->container->get('victoire_core.annotation_reader');
-        $classes = $annotationReader->getBusinessClassesForWidget($widget);
-
-        $forms['static'] = $this->renderNewForm($this->buildForm($widget), $widget, $slot, $page);
-
-        // Build each form relative to business entities
-        foreach ($classes as $entityName => $namespace) {
-            $form = $this->buildForm($widget, $entityName, $namespace);
-            $forms[$entityName] = $this->renderNewForm($form, $widget, $slot, $page, $entityName);
-        }
-
-        return $forms;
-    }
-
-    /**
-     * Generates forms for each available business entities
-     * @param string   $widget
-     *
-     * @return collection of forms
-     */
-    public function renderWidgetForms($widget)
-    {
-        $manager = $this->getManager($widget);
-        $classes = $this->container->get('victoire_core.annotation_reader')->getBusinessClassesForWidget($widget);
-
-        $forms['static'] = $manager->renderForm($this->buildForm($manager, $widget), $widget);
-
-        // Build each form relative to business entities
-        foreach ($classes as $entityName => $namespace) {
-            $form = $this->buildForm($manager, $widget, $entityName, $namespace);
-            $forms[$entityName] = $manager->renderForm($form, $widget, $entityName);
-        }
-
-        return $forms;
-    }
-
-    /**
-     * tells if current widget is a reference
-     * @param Widget   $widget
-     * @param BasePage $page
-     * @return boolean
-     */
-    public function isReference(Widget $widget, BasePage $page)
-    {
-        return $widget->getPage()->getId() !== $page->getId();
-    }
-
-    /**
-     * render widget actions
-     * @param Widget $widget
-     * @return template
-     */
-    public function renderWidgetActions(Widget $widget)
-    {
-        return $this->container->get('victoire_templating')->render(
-            'VictoireCoreBundle:Widget:widgetActions.html.twig',
-            array(
-                "widget" => $widget,
-                "page" => $widget->getCurrentPage(),
-            )
-        );
     }
 
     /**
