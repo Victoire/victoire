@@ -552,7 +552,7 @@ class BaseWidgetManager
      * @param BusinessEntity $entity
      * @return form
      */
-    protected function renderForm($form, $widget, $entity = null)
+    public function renderForm($form, $widget, $entity = null)
     {
         //the template displayed is in the widget bundle
         $templateName = $this->getTemplateName('edit');

@@ -154,6 +154,7 @@ class CmsExtension extends \Twig_Extension
         }
 
         if ($addContainer) {
+            //the container for the slot
             $result = "<div class='vic-slot' id='vic-slot-".$slotId."'>".$result."</div>";
         }
 
@@ -273,14 +274,17 @@ class CmsExtension extends \Twig_Extension
      * @throws \Exception
      * @return string
      */
-    public function cmsWidgetLegacy(Widget $widget, Page $page)
+    public function cmsWidgetLegacy(Widget $widget, $page)
     {
         //the css class used
         $cssClass = '';
 
-        //the page of the widget is not the current page
-        if ($widget->getPageId() !== $page->getId()) {
-            $cssClass = 'vic-widget-legacy';
+        //the page context was given
+        if ($page !== null) {
+            //the page of the widget is not the current page
+            if ($widget->getPageId() !== $page->getId()) {
+                $cssClass = 'vic-widget-legacy';
+            }
         }
 
         return $cssClass;

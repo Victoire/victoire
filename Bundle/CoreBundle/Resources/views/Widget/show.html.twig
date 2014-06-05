@@ -1,5 +1,10 @@
 {% block body %}
 
+{# the page is given by the Widget Manager, it might not be given to the view if the widget ir rendered without the page context #}
+{% if page is not defined  %}
+   {% set page = null %}
+{% endif %}
+
 <div {{cms_widget_title(widget)}} class="vic-widget {{cms_widget_extra_css_class(widget)}} {{cms_widget_legacy(widget, page)}}" id="widget-{{widget.id}}">
 {% block actions %}{{cms_widget_actions(widget)}}{% endblock actions %}
 
