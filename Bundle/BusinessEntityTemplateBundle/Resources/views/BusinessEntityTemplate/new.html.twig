@@ -1,7 +1,9 @@
+{% trans_default_domain "victoire" %}
+
 {% extends 'VictoireCoreBundle::layout.html.twig' %}
 
 {% block content %}
-    <h1>BusinessEntityTemplate creation</h1>
+    <h1>{{ 'business_entity_template.creation.title'|trans }}</h1>
 
     {{ form(form) }}
 

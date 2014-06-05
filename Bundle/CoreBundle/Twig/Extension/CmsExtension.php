@@ -59,7 +59,7 @@ class CmsExtension extends \Twig_Extension
             'cms_slot_actions'           => new \Twig_Function_Method($this, 'cmsSlotActions', array('is_safe' => array('html'))),
             'cms_widget'                 => new \Twig_Function_Method($this, 'cmsWidget', array('is_safe' => array('html'))),
             'cms_page'                   => new \Twig_Function_Method($this, 'cmsPage', array('is_safe' => array('html'))),
-            'cms_widget_mode_class'      => new \Twig_Function_Method($this, 'cmsWidgetModeClass', array('is_safe' => array('html'))),
+            'cms_widget_legacy'          => new \Twig_Function_Method($this, 'cmsWidgetLegacy', array('is_safe' => array('html'))),
             'cms_widget_extra_css_class' => new \Twig_Function_Method($this, 'cmsWidgetExtraCssClass', array('is_safe' => array('html'))),
             'is_business_entity_allowed' => new \Twig_Function_Method($this, 'isBusinessEntityAllowed', array('is_safe' => array('html'))),
         );
@@ -214,41 +214,6 @@ class CmsExtension extends \Twig_Extension
     }
 
     /**
-     * Get the class for the widget by the widget mode
-     *
-     * @param Widget $widget
-     * @throws \Exception
-     * @return string
-     */
-    public function cmsWidgetModeClass(Widget $widget)
-    {
-        //the css class used
-        $cssClass = '';
-
-        //the mode of display of the widget
-        $mode = $widget->getMode();
-
-        switch ($mode) {
-            case Widget::MODE_STATIC:
-                $cssClass = 'vic-widget-mode-static';
-                break;
-            case Widget::MODE_ENTITY:
-                $cssClass = 'vic-widget-mode-entity';
-                break;
-            case Widget::MODE_BUSINESS_ENTITY:
-                $cssClass = 'vic-widget-mode-business-entity';
-                break;
-            case Widget::MODE_QUERY:
-                $cssClass = 'vic-widget-mode-query';
-                break;
-            default:
-                throw new \Exception('The mode ['.$mode.'] is not supported by the cmsWidgetModeClass. Please update this function that gives the extra css class of the widget.');
-        }
-
-        return $cssClass;
-    }
-
-    /**
      * Get the extra class for this kind of widget
      *
      * @param Widget $widget
@@ -298,4 +263,24 @@ class CmsExtension extends \Twig_Extension
         return $isBusinessEntityAllowed;
     }
 
+    /**
+     * If the widget is a legacy, we add the widget-legacy css class to the div
+     *
+     * @param Widget $widget The widget displayed
+     * @param Page   $page   The page
+     * @throws \Exception
+     * @return string
+     */
+    public function cmsWidgetLegacy(Widget $widget, Page $page)
+    {
+        //the css class used
+        $cssClass = '';
+
+        //the page of the widget is not the current page
+        if ($widget->getPageId() !== $page->getId()) {
+            $cssClass = 'vic-widget-legacy';
+        }
+
+        return $cssClass;
+    }
 }

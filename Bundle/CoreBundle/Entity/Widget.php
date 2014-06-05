@@ -372,4 +372,22 @@ class Widget extends BaseWidget
     {
         return $this->mode;
     }
+
+    /**
+     * Get the page id
+     *
+     * @return integer The page id
+     */
+    public function getPageId()
+    {
+        $pageId = null;
+
+        $page = $this->getPage();
+
+        if ($page !== null) {
+            $pageId = $page->getId();
+        }
+
+        return $pageId;
+    }
 }
