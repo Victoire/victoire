@@ -120,13 +120,24 @@ class PageSubscriber implements EventSubscriber
             $initialUrl = $page->getUrl();
 
             // build url binded with parents url
-            $url = array($page->isHomepage() ? "" : $page->getUrl());
+            if ($page->isHomepage()) {
+                $url = array('');
+            } else {
+                if ($page->getUrl() !== null && $page->getUrl() !== '') {
+                    $url = array($page->getUrl());
+                } else {
+                    $url = array($page->getSlug());
+                }
+            }
+
             $_page = $page;
+
             while ($_page = $_page->getParent()) {
                 if (!$_page->isHomepage()) {
                     array_push($url, $_page->getSlug());
                 }
             }
+
             $url = array_reverse($url);
             $url = implode('/', $url);
             $page->setUrl($url);
