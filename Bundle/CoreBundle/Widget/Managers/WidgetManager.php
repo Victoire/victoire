@@ -96,7 +96,8 @@ class WidgetManager
     }
 
     /**
-     * create a widget
+     * Create a widget
+     *
      * @param string $type
      * @param string $slotId
      * @param Page   $page
@@ -111,7 +112,7 @@ class WidgetManager
         $manager = $this->getManager(null, $type);
 
         if (method_exists($manager, 'createWidget')) {
-            return $manager->createWidget($type, $slotId, $page, $entity, $this);
+            return $manager->createWidget($slotId, $page, $entity);
         }
 
         $widget = $manager->newWidget($page, $slotId);

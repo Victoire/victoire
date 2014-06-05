@@ -5,8 +5,6 @@ use Victoire\Bundle\CoreBundle\Entity\Widget;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Template;
 use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\MenuBundle\Entity\MenuItem;
-use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use Victoire\Bundle\CoreBundle\VictoireCmsEvents;
 use Victoire\Bundle\CoreBundle\Event\WidgetRenderEvent;
 use Victoire\Bundle\CoreBundle\Event\WidgetBuildFormEvent;
@@ -17,8 +15,6 @@ use Victoire\Bundle\PageBundle\Entity\Slot;
 /**
  * Generic Widget CRUD operations
  *
- * @TODO CLEAN THIS CLASS
- * IT IS A COPY PASTE FROM THE WIDGET MANAGER
  */
 class BaseWidgetManager
 {
@@ -99,7 +95,6 @@ class BaseWidgetManager
     /**
      * Create a widget
      *
-     * @param string $type
      * @param string $slotId
      * @param Page   $page
      * @param string $entity
@@ -107,7 +102,7 @@ class BaseWidgetManager
      *
      * @throws \Exception
      */
-    public function createWidget($type, $slotId, BasePage $page, $entity)
+    public function createWidget($slotId, BasePage $page, $entity)
     {
         //services
         $formErrorService = $this->container->get('av.form_error_service');
@@ -184,8 +179,11 @@ class BaseWidgetManager
 
     /**
      * render slot actions
-     * @param string $slot
-     * @param Page   $page
+     *
+     * @param string  $slot
+     * @param Page    $page
+     * @param boolean $first
+     *
      * @return template
      */
     public function renderActions($slot, BasePage $page, $first = false)
@@ -230,44 +228,6 @@ class BaseWidgetManager
     }
 
     /**
-     * compute the widget map for page
-     * @param BasePage   $page
-     * @param array      $sortedWidgets
-     */
-    public function computeWidgetMap(BasePage $page, $sortedWidgets)
-    {
-        $em = $this->container->get('doctrine.orm.entity_manager');
-
-        $widgetMap = array();
-        $widgetSlots = array();
-
-        foreach ($sortedWidgets as $slot => $widgetContainers) {
-            $slot = str_replace('vic-slot-', '', $slot);
-            foreach ($widgetContainers as $containerId) {
-                $id = preg_replace('/[^0-9]*/', '', $containerId);
-                if ($id !== '') {
-                    $widgetSlots[$id] = $slot;
-                    $widgetMap[$slot][] = $id;
-                }
-            }
-        }
-
-        $widgets = $em->getRepository('VictoireCoreBundle:Widget')->findAllIn(array_keys($widgetSlots));
-        foreach ($widgets as $widget) {
-            $id = $widget->getId();
-            $isAllowed = $this->isWidgetAllowedForSlot($widget, $widgetSlots[$id]);
-            if (!$isAllowed) {
-                throw new \Exception('This widget is not allowed in this slot');
-            }
-        }
-
-        $page->setWidgetMap($widgetMap);
-        $em->persist($page);
-        $em->flush();
-
-    }
-
-    /**
      * check if widget is allowed for slot
      * @param Widget $widget
      * @param string $slot
@@ -289,10 +249,7 @@ class BaseWidgetManager
                 in_array($widgetType, $slots[$slot]['widgets'][$widgetName]['themes']);
         }
 
-
         return !empty($slots[$slot]) && (array_key_exists($widgetType, $slots[$slot]['widgets']));
-
-
     }
 
 
@@ -344,7 +301,10 @@ class BaseWidgetManager
 
     /**
      * render a widget
-     * @param Widget $widget
+     *
+     * @param Widget  $widget
+     * @param boolean $addContainer
+     *
      * @return template
      */
     public function renderContainer(Widget $widget, $addContainer = false)
