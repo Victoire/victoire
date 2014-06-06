@@ -121,7 +121,7 @@ class CmsExtension extends \Twig_Extension
         $result = "";
 
         if ($this->isRoleVictoireGranted()) {
-            $result .= $this->widgetManager->renderActions($slotId, $page, true);
+            $result .= $this->widgetManager->renderActions($slotId, $page, $entity, true);
         }
 
         //get the widget map computed with the parent
@@ -274,7 +274,7 @@ class CmsExtension extends \Twig_Extension
      * @throws \Exception
      * @return string
      */
-    public function cmsWidgetLegacy(Widget $widget, $page)
+    public function cmsWidgetLegacy(Widget $widget, $page, $entity)
     {
         //the css class used
         $cssClass = '';
@@ -284,6 +284,10 @@ class CmsExtension extends \Twig_Extension
             //the page of the widget is not the current page
             if ($widget->getPageId() !== $page->getId()) {
                 $cssClass = 'vic-widget-legacy';
+            } else {
+                if ($entity !== null && $page instanceof BusinessEntityTemplatePage) {
+                    $cssClass = 'vic-widget-legacy';
+                }
             }
         }
 

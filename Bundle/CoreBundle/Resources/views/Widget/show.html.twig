@@ -5,7 +5,11 @@
    {% set page = null %}
 {% endif %}
 
-<div {{cms_widget_title(widget)}} class="vic-widget {{cms_widget_extra_css_class(widget)}} {{cms_widget_legacy(widget, page)}}" id="widget-{{widget.id}}">
+{% if entity is not defined  %}
+   {% set entity = null %}
+{% endif %}
+
+<div {{cms_widget_title(widget)}} class="vic-widget {{cms_widget_extra_css_class(widget)}} {{cms_widget_legacy(widget, page, entity)}}" id="widget-{{widget.id}}">
 {% block actions %}{{cms_widget_actions(widget)}}{% endblock actions %}
 
 {% block content %}

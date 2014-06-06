@@ -157,6 +157,7 @@ class BasePageController extends AwesomeController
             } else {
                 //add the page to twig
                 $this->get('twig')->addGlobal('page', $page);
+                $this->get('twig')->addGlobal('entity', $entity);
 
                 $event = new \Victoire\Bundle\CoreBundle\Event\Menu\BasePageMenuContextualEvent($page, $entity);
 
