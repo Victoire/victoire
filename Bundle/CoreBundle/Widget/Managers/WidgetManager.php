@@ -688,7 +688,7 @@ class WidgetManager
                 $entity = $businessEntityHelper->getEntityByPageAndId($widgetPage, $entityId);
 
                 //so we duplicate the business entity template page for this current instance
-                $page = $pageHelper->createPageInstanceFromBusinessEntityTemplatePage($widgetPage, $url, $entity);
+                $page = $pageHelper->createPageInstanceFromBusinessEntityTemplatePage($widgetPage, $entityId, $entity);
 
                 //the page
                 $em->persist($page);

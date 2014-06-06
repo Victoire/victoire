@@ -79,7 +79,7 @@ abstract class BasePage
     /**
      * @var string
      *
-     * @Gedmo\Slug(fields={"title"}, separator="-", updatable=false)
+     * @Gedmo\Slug(fields={"title"}, updatable=false, unique=false)
      * @ORM\Column(name="slug", type="string", length=255)
      */
     protected $slug;

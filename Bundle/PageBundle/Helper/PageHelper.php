@@ -31,12 +31,7 @@ class PageHelper
         $newPage->setParent($page);
         $newPage->setLayout($page->getLayout());
 
-        $newPage->setTitle($page->getTitle());
-        $newPage->setUrl($url);
-
-        //the slug is a copy of the url of the copy and the current url
-        $slug = $page->getSlug().'-'.$newPage->getUrl();
-        $newPage->setSlug($slug);
+        $newPage->setTitle($url);
 
         $entityProxy = new EntityProxy();
         $entityProxy->setEntity($entity);

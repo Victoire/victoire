@@ -11,6 +11,7 @@ use Victoire\Bundle\CoreBundle\Entity\Route;
 use Victoire\Bundle\PageBundle\Entity\Template;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
+use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
 
 /**
  * This class listen Page Entity changes.
@@ -108,73 +109,142 @@ class PageSubscriber implements EventSubscriber
     * Builds the pages children urls with new page slug
     * If page has a custom url, we don't modify it, but we modify children urls
     *
-    * @param Page $page
+    * @param BasePage $page
     * @param bool $depth
     * @return $page
      */
-    public function buildUrl($page, $depth = 0)
+    public function buildUrl(BasePage $page, $depth = 0)
     {
+        //services
+        $em = $this->entityManager;
+        $uow = $this->uow;
+
         //if slug changed or child page
-        if (array_key_exists('slug', $this->uow->getEntityChangeSet($page)) || $depth !== 0) {
+        $buildUrl = false;
+
+        //the slug of the page has been modified
+        if (array_key_exists('slug', $uow->getEntityChangeSet($page))) {
+            $buildUrl = true;
+        }
+        //the depth is > 0, so this page is a child
+        if ($depth !== 0) {
+             $buildUrl = true;
+        }
+
+        //should we build the url
+        if ($buildUrl) {
             //Get Initial url to historize it
             $initialUrl = $page->getUrl();
 
-            if ($initialUrl === null || $initialUrl === '') {
+            // build url binded with parents url
+            if ($page->isHomepage()) {
+                $url = array('');
+            } else {
+                $url = array($page->getSlug());
+            }
 
-                // build url binded with parents url
-                if ($page->isHomepage()) {
-                    $url = array('');
-                } else {
-                    if ($page->getUrl() !== null && $page->getUrl() !== '') {
-                        $url = array($page->getUrl());
-                    } else {
-                        $url = array($page->getSlug());
-                    }
-                }
+            //get the slug of the parents
+            $url = $this->getParentSlugs($page, $url);
 
-                $_page = $page;
+            //reorder the list of slugs
+            $url = array_reverse($url);
+            //build an url based on the slugs
+            $url = implode('/', $url);
 
-                while ($_page = $_page->getParent()) {
-                    if (!$_page->isHomepage()) {
-                        array_push($url, $_page->getSlug());
-                    }
-                }
+            //it is a template that accepts to look for entities
+            if ($page instanceof BusinessEntityTemplatePage) {
+                //so we add the identifier to the url
+                $url .= '/{id}';
+            }
 
-                $url = array_reverse($url);
-                $url = implode('/', $url);
-                $page->setUrl($url);
+            //update url of the page
+            $page->setUrl($url);
 
-                //if we edit page
-                if ($page->getId()) {
-                    if ($depth === 0) {
+            //the metadata of the page
+            $meta = $em->getClassMetadata(get_class($page));
 
-                        $route = new Route();
-                        $route->setUrl($initialUrl);
-                        $route->setPage($page);
-                        $meta = $this->entityManager->getClassMetadata(get_class($route));
-                        $this->entityManager->persist($route);
-                        $this->uow->computeChangeSet($meta, $route);
-                        $page->addRoute($route);
-                    }
-                }
+            if ($depth === 0) {
+                $this->uow->recomputeSingleEntityChangeSet($meta, $page);
+            } else {
+                $this->uow->computeChangeSet($meta, $page);
+            }
 
-                if ($depth === 0) {
-                    $meta = $this->entityManager->getClassMetadata(get_class($page));
-                    $this->uow->recomputeSingleEntityChangeSet($meta, $page);
-                } else {
-                    $meta = $this->entityManager->getClassMetadata(get_class($page));
-                    $this->uow->computeChangeSet($meta, $page);
-                }
+            $this->rebuildChildrenUrl($page, $depth);
+            $this->addRouteHistory($page, $initialUrl);
+        }
+    }
 
-                if ($page->getChildren()) {
-                    foreach ($page->getChildren() as $child) {
-                        $depth++;
-                        // recursive call for each children
-                        $this->buildUrl($child, $depth);
-                        $meta = $this->entityManager->getClassMetadata(get_class($child));
-                        $this->uow->computeChangeSet($meta, $child);
-                    }
-                }
+    /**
+     * Get the array of slugs of the parents
+     *
+     * @param Page  $page
+     * @param array $urlArray The list of slugs
+     *
+     * @return array $urlArray The list of slugs
+     */
+    protected function getParentSlugs(Page $page, $urlArray)
+    {
+        $parent = $page->getParent();
+
+        if ($parent !== null) {
+            if (!$parent->isHomepage()) {
+                array_push($urlArray, $parent->getSlug());
+            }
+        }
+
+        return $urlArray;
+    }
+
+
+    /**
+     * Record the route history of the page
+     *
+     * @param Page   $page
+     * @param String $initialUrl
+     */
+    protected function addRouteHistory(Page $page, $initialUrl)
+    {
+        //services
+        $em = $this->entityManager;
+        $uow = $this->uow;
+
+        //if we edit page, there is an id
+        if ($page->getId()) {
+            $route = new Route();
+            $route->setUrl($initialUrl);
+            $route->setPage($page);
+            $meta = $em->getClassMetadata(get_class($route));
+            $em->persist($route);
+            $uow->computeChangeSet($meta, $route);
+
+            //add the route to the page
+            $page->addRoute($route);
+        }
+    }
+
+    /**
+     * Rebuild the url for all the children
+     *
+     * @param Page    $page  The page
+     * @param Integer $depth The depth
+     */
+    protected function rebuildChildrenUrl(Page $page, $depth)
+    {
+        //services
+        $em = $this->entityManager;
+        $uow = $this->uow;
+
+        $children = $page->getChildren();
+
+        //if there are some children
+        if ($children) {
+            //we parse the children
+            foreach ($children as $child) {
+                $depth++;
+                // recursive call for each children
+                $this->buildUrl($child, $depth);
+                $meta = $em->getClassMetadata(get_class($child));
+                $uow->computeChangeSet($meta, $child);
             }
         }
     }
