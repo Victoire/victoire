@@ -3,8 +3,6 @@ namespace Victoire\Bundle\CoreBundle\Widget\Managers;
 
 interface ManagerInterface
 {
-
-
     /**
      * constructor
      *
