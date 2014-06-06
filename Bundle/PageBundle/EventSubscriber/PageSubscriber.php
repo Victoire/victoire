@@ -12,6 +12,7 @@ use Victoire\Bundle\PageBundle\Entity\Template;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
+use Victoire\Bundle\PageBundle\Helper\UrlHelper;
 
 /**
  * This class listen Page Entity changes.
@@ -23,17 +24,42 @@ class PageSubscriber implements EventSubscriber
     protected $router;
     protected $userClass;
     protected $userCallable;
+    protected $container;
 
-    public function __construct($cacheRouteRegisterer, $router, $userCallable, $userClass)
+    /**
+     * Constructor
+     *
+     * @param unknown $cacheRouteRegisterer
+     * @param unknown $router
+     * @param unknown $userCallable
+     * @param unknown $userClass
+     * @param UrlHelper $urlHelper
+     */
+    public function __construct($cacheRouteRegisterer, $router, $userCallable, $userClass, $container)
     {
         $this->cacheRouteRegisterer = $cacheRouteRegisterer;
         $this->router = $router;
         $this->userClass = $userClass;
         $this->userCallable = $userCallable;
+        $this->container = $container;
+    }
+
+    /**
+     * Get the url helper
+     *
+     * @return UrlHelper
+     */
+    public function getUrlHelper()
+    {
+        $urlHelper = $this->container->get('victoire_page.url_helper');
+
+        return $urlHelper;
     }
 
     /**
      * bind to LoadClassMetadata method
+     *
+     * @return array The subscribed events
      */
     public function getSubscribedEvents()
     {
@@ -46,25 +72,26 @@ class PageSubscriber implements EventSubscriber
 
     /**
      * Insert enabled widgets in base widget DiscriminatorMap
+     *
      * @param LoadClassMetadataEventArgs $eventArgs
      */
     public function loadClassMetadata(LoadClassMetadataEventArgs $eventArgs)
     {
 
         $metadatas = $eventArgs->getClassMetadata();
-        if ($metadatas->name == 'Victoire\Bundle\PageBundle\Entity\BasePage') {
+        if ($metadatas->name === 'Victoire\Bundle\PageBundle\Entity\BasePage') {
             $metadatas->discriminatorMap[Page::TYPE] = 'Victoire\Bundle\PageBundle\Entity\Page';
             $metadatas->discriminatorMap[Template::TYPE] = 'Victoire\Bundle\PageBundle\Entity\Template';
         }
 
         //set a relation between Page and User to define the page author
         $metaBuilder = new ClassMetadataBuilder($metadatas);
-        if ($this->userClass && $metadatas->name == 'Victoire\Bundle\PageBundle\Entity\BasePage') {
+        if ($this->userClass && $metadatas->name === 'Victoire\Bundle\PageBundle\Entity\BasePage') {
             $metaBuilder->addManyToOne('author', $this->userClass, 'pages');
         }
 
         // if $pages property exists, add the inversed side on User
-        if ($metadatas->name == $this->userClass && property_exists($this->userClass, 'pages')) {
+        if ($metadatas->name === $this->userClass && property_exists($this->userClass, 'pages')) {
             $metaBuilder->addOneToMany('pages', 'Victoire\Bundle\PageBundle\Entity\BasePage', 'author');
         }
     }
@@ -79,7 +106,6 @@ class PageSubscriber implements EventSubscriber
     {
         $this->entityManager = $eventArgs->getEntityManager();
         $this->uow  = $this->entityManager->getUnitOfWork();
-        $eventManager = $this->entityManager->getEventManager();
 
         foreach ($this->uow->getScheduledEntityInsertions() as $entity) {
             if ($entity instanceof BasePage) {
@@ -118,6 +144,7 @@ class PageSubscriber implements EventSubscriber
         //services
         $em = $this->entityManager;
         $uow = $this->uow;
+        $urlHelper = $this->getUrlHelper();
 
         //if slug changed or child page
         $buildUrl = false;
@@ -126,6 +153,7 @@ class PageSubscriber implements EventSubscriber
         if (array_key_exists('slug', $uow->getEntityChangeSet($page))) {
             $buildUrl = true;
         }
+
         //the depth is > 0, so this page is a child
         if ($depth !== 0) {
              $buildUrl = true;
@@ -157,6 +185,9 @@ class PageSubscriber implements EventSubscriber
                 $url .= '/{id}';
             }
 
+            //get the next free url
+            $url = $urlHelper->getNextAvailaibleUrl($url);
+
             //update url of the page
             $page->setUrl($url);
 
@@ -164,9 +195,9 @@ class PageSubscriber implements EventSubscriber
             $meta = $em->getClassMetadata(get_class($page));
 
             if ($depth === 0) {
-                $this->uow->recomputeSingleEntityChangeSet($meta, $page);
+                $uow->recomputeSingleEntityChangeSet($meta, $page);
             } else {
-                $this->uow->computeChangeSet($meta, $page);
+                $uow->computeChangeSet($meta, $page);
             }
 
             $this->rebuildChildrenUrl($page, $depth);

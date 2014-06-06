@@ -11,6 +11,7 @@ services:
             - "@router"
             - "@victoire_page.user_callable"
             - "%victoire_core.user_class%"
+            - "@service_container"
         tags:
             - { name: doctrine.event_subscriber, connection: default, priority: -1 }
 
@@ -25,6 +26,7 @@ services:
         class: Victoire\Bundle\PageBundle\Helper\UrlHelper
         arguments:
             - "@router"
+            - "@doctrine.orm.entity_manager"
         calls:
             - [setRequest, ["@request_stack"]]
 

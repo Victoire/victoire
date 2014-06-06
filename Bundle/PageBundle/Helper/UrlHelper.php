@@ -4,6 +4,7 @@ namespace Victoire\Bundle\PageBundle\Helper;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Doctrine\ORM\EntityManager;
 
 /**
  *
@@ -15,15 +16,18 @@ class UrlHelper
 {
     protected $request = null;
     protected $router = null;
+    protected $em = null;
 
     /**
      * Constructor
      *
-     * @param unknown $router
+     * @param unknown       $router
+     * @param EntityManager $entityManager
      */
-    public function __construct($router)
+    public function __construct($router, EntityManager $entityManager)
     {
         $this->router = $router;
+        $this->em = $entityManager;
     }
 
     /**
@@ -114,5 +118,63 @@ class UrlHelper
         $urlReferer = substr($referer, strlen($completeUrl));
 
         return $urlReferer;
+    }
+
+    /**
+     * Is this url is already used
+     *
+     * @param string  $url     The url to test
+     * @param integer $suffixe The suffixe
+     *
+     * @return string The next available url
+     */
+    public function getNextAvailaibleUrl($url, $suffixe = 1)
+    {
+        $isUrlAlreadyUsed = $this->isUrlAlreadyUsed($url);
+
+        //if the url is alreay used, we look for another one
+        if ($isUrlAlreadyUsed) {
+            $urlWithSuffix = $url . '-' . $suffixe;
+
+            $isUrlAlreadyUsed = $this->isUrlAlreadyUsed($urlWithSuffix);
+
+            //the url is still used, we try the next one
+            if ($isUrlAlreadyUsed) {
+                //get the next available url
+                $url = $this->getNextAvailaibleUrl($url, $suffixe + 1);
+            } else {
+                //this url if free, let us use it
+                $url = $urlWithSuffix;
+            }
+        }
+
+        return $url;
+    }
+
+    /**
+     * Test is the url is already used
+     *
+     * @param string $url
+     *
+     * @return boolean Is the url free
+     */
+    public function isUrlAlreadyUsed($url)
+    {
+        $isUrlAlreadyUsed = false;
+
+        $em = $this->em;
+
+        //the base page repository
+        $repo = $em->getRepository('VictoirePageBundle:BasePage');
+
+        //try to get a page with this url
+        $page = $repo->findOneByUrl($url);
+
+        //a page use this url
+        if ($page !== null) {
+            $isUrlAlreadyUsed = true;
+        }
+
+        return $isUrlAlreadyUsed;
     }
 }
