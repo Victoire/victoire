@@ -412,7 +412,7 @@ class BaseWidgetManager
     protected function getBundleName()
     {
         //the name of the bundle depends of the widget name
-        $bundleName = 'Victoire'.ucfirst($this->getWidgetName()).'Bundle';
+        $bundleName = 'VictoireWidget'.ucfirst($this->getWidgetName()).'Bundle';
 
         return $bundleName;
     }
