@@ -118,13 +118,13 @@ class Media
     }
 
     /**
-     * Return string representation of entity
+     * Return string representation of entity; we return the url display directly the media without using any getter
      *
      * @return string
      */
     public function __toString()
     {
-        return "" . $this->getId();
+        return $this->url;
     }
 
     /**
