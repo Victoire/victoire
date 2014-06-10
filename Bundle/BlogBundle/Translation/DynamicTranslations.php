@@ -13,6 +13,8 @@ class DynamicTranslations implements TranslationContainerInterface
             new Message('menu.blog', array(), 'victoire'),
             new Message('menu.blog.settings', array(), 'victoire'),
             new Message('menu.blog.new', array(), 'victoire'),
+            new Message('widget_filter.category_filter', array(), 'victoire'),
+            new Message('widget_filter.tag_filter', array(), 'victoire'),
         );
     }
 }
