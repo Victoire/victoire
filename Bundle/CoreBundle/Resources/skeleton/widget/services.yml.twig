@@ -1,6 +1,6 @@
 services:
     victoire_core.twig.widget_{{ widget|lower }}_manager:
-        class: {{ namespace }}\Manager\Widget{{ widget }}Manager
+        class: {{ namespace }}\Widget\Manager\Widget{{ widget }}Manager
         arguments:
             - "@service_container"
     widget_{{ widget|lower }}_manager:
