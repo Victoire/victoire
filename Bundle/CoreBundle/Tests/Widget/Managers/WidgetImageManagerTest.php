@@ -22,10 +22,10 @@ class WidgetImageManagerTest extends BaseTestCase
         $templateMock = $this->getTemplateMock();
 
         $response = $widgetImageManagerMock->newWidget($pageMock, "3cols");
-        $this->assertEquals('Victoire\ImageBundle\Entity\WidgetImage', get_class($response));
+        $this->assertEquals('Victoire\Widget\ImageBundle\Entity\WidgetImage', get_class($response));
 
         $response = $widgetImageManagerMock->newWidget($templateMock, "3cols");
-        $this->assertEquals('Victoire\ImageBundle\Entity\WidgetImage', get_class($response));
+        $this->assertEquals('Victoire\Widget\ImageBundle\Entity\WidgetImage', get_class($response));
 
     }
 
