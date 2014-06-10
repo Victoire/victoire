@@ -7,11 +7,12 @@
 {% block modal_body_content %}
 	<div class="vic-container vic-masthead">
 	{%  for businessEntity in businessEntities %}
-	    <div>
+        <h2>
 		    <a data-toggle="vic-modal" href="{{ path('victoire_businessentitytemplate_businessentity_list', {'id': businessEntity.getId}) }}">
 		        {{ businessEntity.getName }}
 		    </a>
-	    </div>
+	    </h2>
+
 	{% endfor %}
 	</div>
 {% endblock modal_body_content %}

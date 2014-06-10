@@ -24,7 +24,7 @@
 	        {{ template.getName }}
 	    </a>
 	    <a data-toggle="vic-modal"  href="{{ path('victoire_businessentitytemplate_businessentitytemplate_edit', {'id': template.getId}) }}">
-	        EDIT
+	        {{ 'list.action.edit'|trans }}
 	    </a>
     </div>
     {% endfor %}
