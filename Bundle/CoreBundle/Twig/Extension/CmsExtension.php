@@ -121,7 +121,7 @@ class CmsExtension extends \Twig_Extension
         $result = "";
 
         if ($this->isRoleVictoireGranted()) {
-            $result .= $this->widgetManager->renderActions($slotId, $page, $entity, true);
+            $result .= $this->widgetManager->renderActions($slotId, $page, true);
         }
 
         //get the widget map computed with the parent
