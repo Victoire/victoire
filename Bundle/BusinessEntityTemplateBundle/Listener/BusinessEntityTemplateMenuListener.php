@@ -2,7 +2,7 @@
 namespace Victoire\Bundle\BusinessEntityTemplateBundle\Listener;
 
 use Symfony\Component\EventDispatcher\Event;
-use Victoire\Bundle\CoreBundle\Event\Menu\BasePageMenuContextualEvent;
+use Victoire\Bundle\PageBundle\Event\Menu\BasePageMenuContextualEvent;
 use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
 use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
 

@@ -24,6 +24,14 @@ services:
         tags:
             - { name: form.type, alias: category_filter }
             - { name: victoire_core.filter }
+    victoire_blog.tag_filters.form.type:
+        class: Victoire\Bundle\BlogBundle\Filter\TagFilter
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@request="
+        tags:
+            - { name: form.type, alias: tag_filter }
+            - { name: victoire_core.filter }
 
     ####################################################################################################################
     # Forms

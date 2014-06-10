@@ -13,7 +13,7 @@ $vic(document).on('click', '.vic-new-widget > .vic-dropdown-menu a', function(ev
 $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(event) {
     event.preventDefault();
     // we remove the prototype picker to avoid persist it
-    if ($("select.picker_entity_select").length != 0 && $("select.picker_entity_select").attr('name').indexOf('appventus_victoirecorebundle_widgetlistingtype[items][__name__][entity]') !== -1) {
+    if ($("select.picker_entity_select").length != 0 && $("select.picker_entity_select").attr('name').indexOf('[items][__name__][entity]') !== -1) {
         $("select.picker_entity_select").remove();
     }
     var form = $vic(this).parents('.vic-modal-content').find('.vic-tab-pane.vic-active form');;
@@ -30,7 +30,7 @@ $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(
                 $vic('.vic-creating').parents('.widget-container').after(response.html);
             }
             closeModal();
-            
+
             //save the positions of the widgets
             updatePosition();
         } else {

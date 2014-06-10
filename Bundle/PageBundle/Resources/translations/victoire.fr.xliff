@@ -66,6 +66,34 @@
                 <source>victoire.menu.publication.scheduled.tooltip</source>
                 <target>Cette page sera publiée à partir du %publication_date%.</target>
             </trans-unit>
+            <trans-unit resname="menu.template.index">
+                <source>menu.template.index</source>
+                <target>Liste des modèles</target>
+            </trans-unit>
+            <trans-unit resname="index.template.modal.header">
+                <source>index.template.modal.header</source>
+                <target>Liste des modèles</target>
+            </trans-unit>
+            <trans-unit resname="form.template.type.title.label">
+                <source>form.template.type.title.label</source>
+                <target>Titre</target>
+            </trans-unit>
+            <trans-unit resname="form.template.type.template.label">
+                <source>form.template.type.template.label</source>
+                <target>Modèle à utiliser</target>
+            </trans-unit>
+            <trans-unit resname="form.template.type.layout.label">
+                <source>form.template.type.layout.label</source>
+                <target>Architecture</target>
+            </trans-unit>
+            <trans-unit resname="form.template.type.bodyId.label">
+                <source>form.template.type.bodyId.label</source>
+                <target>Body id</target>
+            </trans-unit>
+            <trans-unit resname="form.template.type.bodyClass.label">
+                <source>form.template.type.bodyClass.label</source>
+                <target>Body class</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

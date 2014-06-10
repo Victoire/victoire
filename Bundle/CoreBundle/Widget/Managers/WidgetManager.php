@@ -1,22 +1,24 @@
 <?php
 namespace Victoire\Bundle\CoreBundle\Widget\Managers;
 
-use Victoire\Bundle\CoreBundle\Entity\WidgetReference;
-use Victoire\Bundle\CoreBundle\Entity\Widget;
-use Victoire\Bundle\PageBundle\Entity\BasePage;
-use Victoire\Bundle\PageBundle\Entity\Template;
-use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\MenuBundle\Entity\MenuItem;
+use Symfony\Component\Debug\Exception\FatalErrorException;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
-use Victoire\Bundle\CoreBundle\VictoireCmsEvents;
-use Victoire\Bundle\CoreBundle\Event\WidgetRenderEvent;
 use Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy;
+use Victoire\Bundle\CoreBundle\Entity\Widget;
+use Victoire\Bundle\CoreBundle\Entity\WidgetReference;
 use Victoire\Bundle\CoreBundle\Event\WidgetBuildFormEvent;
+use Victoire\Bundle\CoreBundle\Event\WidgetRenderEvent;
 use Victoire\Bundle\CoreBundle\Theme\ThemeWidgetInterface;
 use Victoire\Bundle\PageBundle\WidgetMap\WidgetMapBuilder;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 use AppVentus\Awesome\ShortcutsBundle\Service\FormErrorService;
 use Symfony\Component\HttpFoundation\Request;
+
+use Victoire\Bundle\CoreBundle\VictoireCmsEvents;
+use Victoire\Bundle\PageBundle\Entity\BasePage;
+use Victoire\Bundle\PageBundle\Entity\Page;
+use Victoire\Bundle\PageBundle\Entity\Template;
+use Victoire\MenuBundle\Entity\MenuItem;
 
 /**
  * Generic Widget CRUD operations
@@ -175,17 +177,17 @@ class WidgetManager
             );
         }
 
-
         $forms = $this->renderNewWidgetForms($entity, $slotId, $page, $widget);
 
         return array(
             "success" => false,
             "html"    => $this->container->get('victoire_templating')->render(
-                "VictoireCoreBundle:Widget:new.html.twig",
+                "VictoireCoreBundle:Widget:Form/new.html.twig",
                 array(
                     'page'    => $page,
                     'classes' => $classes,
-                    'forms'   => $forms
+                    'forms'   => $forms,
+                    'widget'   => $widget,
                 )
             )
         );
@@ -404,15 +406,12 @@ class WidgetManager
      */
     public function render(Widget $widget, $addContainer = false)
     {
-        $widgetManager = $this->getManager($widget);
+        $html = '';
 
-        //the widget should all extends BaseWidgetManager
-        if (method_exists($widgetManager, 'renderContainer')) {
-            $html = $widgetManager->renderContainer($widget, $addContainer);
-        } else {
-            //but in order to keep retro compatibility
-            //we test if the method exists
-            $html = $widgetManager->render($widget);
+        try {
+            $html .= $this->getManager($widget)->renderContainer($widget, $addContainer);
+        } catch (\Exception $e) {
+            $html .= $this->container->get('victoire_core.widget_exception_handler')->handle($e, $widget);
         }
 
         return $html;

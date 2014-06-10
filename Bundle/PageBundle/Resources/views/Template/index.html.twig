@@ -1,16 +1,17 @@
+{% extends 'VictoireCoreBundle::_modal.html.twig' %}
 
-<div class="modal-header">
-    <a class="close" data-dismiss="modal">&times;</a>
-    <h3>{{ 'template.index.title'|trans|desc('Liste des modèles') }}</h3>
-</div>
-<div class="modal-body">
+{% block modal_container_classes %}{{ parent() }} vic-page-modal{% endblock modal_container_classes %}
 
+{% block modal_header_title %}
+    {{'index.template.modal.header'|trans({}, 'victoire')}}
+{% endblock modal_header_title %}
+
+{% block modal_body_content %}
     {{ _self.templatesHierarchy(templates) }}
+{% endblock modal_body_content %}
 
-</div>
-<div class="modal-footer">
-    <a class="btn" data-dismiss="modal">{{ 'cancel'|trans|desc('Annuler') }}</a>
-</div>
+{% block modal_footer_content %}
+{% endblock modal_footer_content %}
 
 {% macro templatesHierarchy(templates) %}
     {% for template in templates %}

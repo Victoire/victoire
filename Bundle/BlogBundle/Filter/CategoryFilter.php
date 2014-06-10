@@ -25,11 +25,9 @@ class CategoryFilter extends BaseFilter
     public function buildQuery(QueryBuilder &$qb, array $parameters)
     {
         $qb = $qb
-             ->join('item.entity', 'e')
-             ->join('e.article', 'a')
-             ->join('a.categories', 'c')
-             ->andWhere('c.id IN (:categories)')
-             ->setParameter('categories', $parameters['categories']);
+             ->join('item.category', 'c')
+             ->andWhere('c.id IN (:category)')
+             ->setParameter('category', $parameters['category']);
 
         return $qb;
     }
@@ -49,15 +47,15 @@ class CategoryFilter extends BaseFilter
         }
 
         $selectedCategories = array();
-        if ($this->request->query->has('filter')) {
-            foreach ($this->request->query->get('filter')['category_filter']['categories'] as $id => $selectedCategory) {
+        if ($this->request->query->has('filter') && array_key_exists('category_filter', $this->request->query->get('filter'))) {
+            foreach ($this->request->query->get('filter')['category_filter']['category'] as $id => $selectedCategory) {
                 $selectedCategories[$id] = $selectedCategory;
             }
         }
 
         $builder
             ->add(
-                'categories', 'choice', array(
+                'category', 'choice', array(
                     'label' => 'blog.category_filter.label',
                     'choices' => $categoriesChoices,
                     'multiple' => true,
@@ -74,6 +72,11 @@ class CategoryFilter extends BaseFilter
         $resolver->setDefaults(array(
             'csrf_protection'   => false
         ));
+    }
+
+    public function getFilters($filters)
+    {
+        return $this->em->getRepository('VictoireBlogBundle:Category')->findById($filters['category']);
     }
 
     /**

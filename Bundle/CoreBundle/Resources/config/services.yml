@@ -75,12 +75,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
-    victoire_core.page_menu_listener:
-        class: Victoire\Bundle\PageBundle\Listener\PageMenuListener
-        arguments: ["@victoire_core.admin_menu_builder"]
-    victoire_core.template_menu_listener:
-        class: Victoire\Bundle\CoreBundle\Listener\TemplateMenuListener
-        arguments: ["@victoire_core.admin_menu_builder"]
     victoire_core.sitemap_menu_listener:
         class: Victoire\Bundle\CoreBundle\Listener\SiteMapMenuListener
         arguments: ["@victoire_core.admin_menu_builder"]
@@ -190,3 +184,13 @@ services:
         arguments: 
             - "@victoire_core.annotation_reader"
             - "@doctrine.orm.entity_manager"
+
+    #  ==================  Error handler =================== #
+
+    victoire_core.widget_exception_handler:
+        class: Victoire\Bundle\CoreBundle\Handler\WidgetExceptionHandler
+        arguments: 
+            - "@security.context"
+            - "@templating"
+            - "%kernel.debug%"
+            

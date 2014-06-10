@@ -4,7 +4,7 @@
 // Create new page after submit
 $(document).on('click', '.vic-modal.vic-page-modal *[data-modal="create"]', function(event) {
     event.preventDefault();
-    var form = $(this).parents('.vic-modal-content').find('.vic-tab-pane.vic-active form');;
+    var form = $(this).parents('.vic-modal-content').find('form');;
 
     $.ajax({
         type: form.attr('method'),
@@ -28,7 +28,7 @@ $(document).on('click', '.vic-modal.vic-page-modal *[data-modal="create"]', func
 // Update an existing page
 $(document).on('click', '.vic-modal.vic-page-modal a[data-modal="update"]', function(event) {
     event.preventDefault();
-    var form = $(this).parents('.vic-modal-content').find('.vic-tab-pane.vic-active form');
+        var form = $(this).parents('.vic-modal-content').find('form');
 
     $.ajax({
         type: form.attr('method'),

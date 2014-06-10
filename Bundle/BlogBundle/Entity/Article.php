@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Entity
  *
- * @VIC\BusinessEntity({"widgetredactor", "themeredactornewspaper", "widgetlisting", "widgetarchive"})
+ * @VIC\BusinessEntity({"widgetredactor", "themeredactornewspaper", "widgetimage", "widgetlisting", "widgetarchive", "themelistingblogarticles"})
  */
 class Article extends Page
 {
@@ -41,17 +41,39 @@ class Article extends Page
 
     /**
      * Categories of the article
-     * @ORM\ManyToMany(targetEntity="Category", inversedBy="articles")
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="articles")
      */
-    protected $categories;
+    protected $category;
 
     /**
     * @var datetime $publishedAt
     *
     * @ORM\Column(name="publishedAt", type="datetime")
-    * @VIC\BusinessProperty("date")
+    * @VIC\BusinessProperty("datable")
     */
     protected $publishedAt;
+
+    /**
+     * @var string
+     * Title is inherited from BasePage, just add the BusinessProperty annotation
+     *
+     * @VIC\BusinessProperty("textable")
+     */
+    protected $url;
+
+    /**
+     * @var string
+     * Author is inherited from BasePage, just add the BusinessProperty annotation
+     *
+     * @VIC\BusinessProperty("textable")
+     */
+    protected $author;
+
+    /**
+     * Tags of the article
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="articles")
+     */
+    protected $tags;
 
     /**
      * Set description
@@ -78,52 +100,26 @@ class Article extends Page
 
 
     /**
-     * Set categories
-     *
-     * @param string $categories
-     * @return Article
-     */
-    public function setCategories($categories)
-    {
-        $this->categories = $categories;
-
-        return $this;
-    }
-
-    /**
-     * Add category
+     * Set category
      *
      * @param string $category
      * @return Article
      */
-    public function addCategory($category)
+    public function setCategory($category)
     {
-        $this->categories[] = $category;
+        $this->category = $category;
 
         return $this;
     }
 
     /**
-     * Remove category
-     *
-     * @param string $category
-     * @return Article
-     */
-    public function removeCategory($category)
-    {
-        $this->categories->removeElement($category);
-
-        return $this;
-    }
-
-    /**
-     * Get categories
+     * Get category
      *
      * @return string
      */
-    public function getCategories()
+    public function getCategory()
     {
-        return $this->categories;
+        return $this->category;
     }
 
     /**
@@ -155,4 +151,56 @@ class Article extends Page
     {
         $this->title = $title;
     }
+
+
+    /**
+     * Set tags
+     *
+     * @param string $tags
+     * @return Article
+     */
+    public function setTags($tags)
+    {
+        $this->tags = $tags;
+
+        return $this;
+    }
+
+    /**
+     * Add tag
+     *
+     * @param string $tag
+     * @return Article
+     */
+    public function addTag($tag)
+    {
+        $this->tags[] = $tag;
+
+        return $this;
+    }
+
+    /**
+     * Remove tag
+     *
+     * @param string $tag
+     * @return Article
+     */
+    public function removeTag($tag)
+    {
+        $this->tags->removeElement($tag);
+
+        return $this;
+    }
+
+    /**
+     * Get tags
+     *
+     * @return string
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+
 }

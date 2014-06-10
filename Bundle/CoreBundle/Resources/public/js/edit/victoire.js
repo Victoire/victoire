@@ -4,9 +4,9 @@ $vic(document).ready(function() {
     enableSortableSlots();
 
     $vic(document).on('change', 'select.theme-choices', function(e) {
-        entity = $vic(this).parents('div.tab-pane').attr('id');
+        entity = $vic(this).parents('div.vic-tab-pane').attr('id');
         item = $vic('div#' + entity + ' select.theme-choices option:selected').val();
-        slot = $vic(this).parents('.slot').attr('id');
+        slot = $vic(this).parents('form').data('slot');
 
         $vic.ajax({
             url: Routing.generate('victoire_core_widget_new', {'type': item, 'page': pageId, 'slot': slot, 'entity': entity}),
@@ -14,7 +14,7 @@ $vic(document).ready(function() {
             context: document.body,
             type: "POST",
             success: function(data) {
-                $vic('div#' + entity + ' select.theme-choices').parents('form').parent().parent().html(data);
+                $vic('div#' + entity + ' select.theme-choices').parents('form').parent().html(data);
             },
             error: function(data) {
                 alert("Il semble s'êre produit une erreur");

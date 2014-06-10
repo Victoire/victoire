@@ -1,5 +1,5 @@
 <?php
-namespace Victoire\Bundle\CoreBundle\Event\Menu;
+namespace Victoire\Bundle\PageBundle\Event\Menu;
 
 use Symfony\Component\EventDispatcher\Event;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
