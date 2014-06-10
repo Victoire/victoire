@@ -4,6 +4,7 @@ namespace Victoire\Bundle\BusinessEntityTemplateBundle\Controller;
 use Victoire\Bundle\PageBundle\Controller\BasePageController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Business entity template controller
@@ -12,11 +13,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  */
 class BusinessEntityController extends BasePageController
 {
-
     /**
      *
      * @Route("/", name="victoire_businessentitytemplate_businessentity_index")
-     * @Template()
      *
      * @return template
      *
@@ -27,13 +26,18 @@ class BusinessEntityController extends BasePageController
 
         $businessEntities = $businessEntityManager->getBusinessEntities();
 
-        return array('businessEntities' => $businessEntities);
+        return new JsonResponse(array(
+            'html' => $this->container->get('victoire_templating')->render(
+                'VictoireBusinessEntityTemplateBundle:BusinessEntity:index.html.twig',
+                array('businessEntities' => $businessEntities)
+            ),
+            'success' => true
+        ));
     }
 
     /**
      *
      * @Route("/list/{id}", name="victoire_businessentitytemplate_businessentity_list")
-     * @Template()
      *
      * @param string $id The id of the business entity
      *
@@ -59,6 +63,14 @@ class BusinessEntityController extends BasePageController
         //get the templates associated to the business entity
         $templates = $businessEntityTemplateHelper->findTemplatesByBusinessEntity($businessEntity);
 
-        return array('businessEntity' => $businessEntity, 'templates' => $templates);
+        $parameters = array('businessEntity' => $businessEntity, 'templates' => $templates);
+
+        return new JsonResponse(array(
+            'html' => $this->container->get('victoire_templating')->render(
+                'VictoireBusinessEntityTemplateBundle:BusinessEntity:list.html.twig',
+                $parameters
+            ),
+            'success' => true
+        ));
     }
 }

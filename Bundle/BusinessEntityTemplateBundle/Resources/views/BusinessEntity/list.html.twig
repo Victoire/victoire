@@ -1,8 +1,10 @@
 {% trans_default_domain "victoire" %}
 
-{% extends 'VictoireCoreBundle::layout.html.twig' %}
+{% extends 'VictoireCoreBundle::_modal.html.twig' %}
 
-{% block content %}
+{% block modal_container_classes %}{{ parent() }} vic-page-modal{% endblock modal_container_classes %}
+
+{% block modal_body_content %}
 <div class="vic-container vic-masthead">
     <div>
         <h2>
@@ -12,7 +14,7 @@
     <h2>{{ 'list.title.templates'|trans }}</h2>
     <div>
 
-        <a href="{{ path('victoire_businessentitytemplate_businessentitytemplate_new', {'id': businessEntity.getId}) }}">
+        <a data-toggle="vic-modal" href="{{ path('victoire_businessentitytemplate_businessentitytemplate_new', {'id': businessEntity.getId}) }}">
             {{ 'list.action.add'|trans }}
 	    </a>
     </div>
@@ -21,10 +23,10 @@
         <a href="/{{ template.getPageUrl }}">
 	        {{ template.getName }}
 	    </a>
-	    <a href="{{ path('victoire_businessentitytemplate_businessentitytemplate_edit', {'id': template.getId}) }}">
+	    <a data-toggle="vic-modal"  href="{{ path('victoire_businessentitytemplate_businessentitytemplate_edit', {'id': template.getId}) }}">
 	        EDIT
 	    </a>
     </div>
     {% endfor %}
 </div>
-{% endblock content %}
+{% endblock modal_body_content %}

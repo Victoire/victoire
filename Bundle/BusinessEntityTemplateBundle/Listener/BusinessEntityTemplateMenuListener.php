@@ -39,7 +39,8 @@ class BusinessEntityTemplateMenuListener
         $this->mainItem
             ->addChild('menu.business_entity_template', array(
                 'route' => 'victoire_businessentitytemplate_businessentity_index'
-            ));
+            ))
+            ->setLinkAttribute('data-toggle', 'vic-modal');
 
         return $this->mainItem;
     }

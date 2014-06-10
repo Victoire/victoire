@@ -129,28 +129,34 @@ class CmsExtension extends \Twig_Extension
 
         //parse the widget maps
         foreach ($widgetMaps as $widgetMap) {
-            //get the widget id
-            $widgetId = $widgetMap->getWidgetId();
+            try {
+                //get the widget id
+                $widgetId = $widgetMap->getWidgetId();
 
-            //get the widget
-            $widget = $widgetHelper->findOneById($widgetId);
+                //get the widget
+                $widget = $widgetHelper->findOneById($widgetId);
 
-            //test widget
-            if ($widget === null) {
-                throw new \Exception('The widget with the id:['.$widgetId.'] was not found.');
+                //test widget
+                if ($widget === null) {
+                    throw new \Exception('The widget with the id:['.$widgetId.'] was not found.');
+                }
+
+                //the mode of display of the widget
+                $mode = $widget->getMode();
+
+                //in the business entity mode, we override the entity of the widget
+                if ($mode === Widget::MODE_BUSINESS_ENTITY) {
+                    //set the entity for the widget
+                    $widget->setEntity($entity);
+                }
+
+                //render this widget
+                $result .= $this->cmsWidget($widget, $addContainer);
+            } catch (\Exception $ex) {
+                $result .= '<div>Error: ';
+                $result .= $ex->getMessage();
+                $result .= '</div>';
             }
-
-            //the mode of display of the widget
-            $mode = $widget->getMode();
-
-            //in the business entity mode, we override the entity of the widget
-            if ($mode === Widget::MODE_BUSINESS_ENTITY) {
-                //set the entity for the widget
-                $widget->setEntity($entity);
-            }
-
-            //render this widget
-            $result .= $this->cmsWidget($widget, $addContainer);
         }
 
         if ($addContainer) {

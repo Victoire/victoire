@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
 use Victoire\Bundle\BusinessEntityTemplateBundle\Form\BusinessEntityTemplateType;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 
 /**
  * BusinessEntityTemplate controller.
@@ -45,13 +47,17 @@ class BusinessEntityTemplateController extends BaseController
             $pageurl = $page->getUrl();
 
             //redirect to the page of the template
-            return $this->redirect('/'.$pageurl);
+            $completeUrl = '/'.$pageurl;
+            $success = true;
+        } else {
+            $success = false;
+            $completeUrl = null;
         }
 
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
+        return new JsonResponse(array(
+            'success' => $success,
+            'url' => $completeUrl
+        ));
     }
 
     /**
@@ -69,9 +75,6 @@ class BusinessEntityTemplateController extends BaseController
             'action' => $this->generateUrl('victoire_businessentitytemplate_businessentitytemplate_create'),
             'method' => 'POST',
         ));
-
-
-        $form->add('submit', 'submit', array('label' => 'Create'));
 
         return $form;
     }
@@ -97,10 +100,17 @@ class BusinessEntityTemplateController extends BaseController
 
         $form = $this->createCreateForm($entity);
 
-        return array(
+        $parameters = array(
             'entity' => $entity,
             'form'   => $form->createView(),
         );
+        return new JsonResponse(array(
+            'html' => $this->container->get('victoire_templating')->render(
+                'VictoireBusinessEntityTemplateBundle:BusinessEntityTemplate:new.html.twig',
+                $parameters
+            ),
+            'success' => true
+        ));
     }
 
 
@@ -130,11 +140,19 @@ class BusinessEntityTemplateController extends BaseController
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return array(
+        $parameters = array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
+
+        return new JsonResponse(array(
+            'html' => $this->container->get('victoire_templating')->render(
+                'VictoireBusinessEntityTemplateBundle:BusinessEntityTemplate:edit.html.twig',
+                $parameters
+            ),
+            'success' => true
+        ));
     }
 
     /**
@@ -150,8 +168,6 @@ class BusinessEntityTemplateController extends BaseController
             'action' => $this->generateUrl('victoire_businessentitytemplate_businessentitytemplate_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
-
-        $form->add('submit', 'submit', array('label' => 'Update'));
 
         return $form;
     }
@@ -192,14 +208,17 @@ class BusinessEntityTemplateController extends BaseController
             $pageurl = $page->getUrl();
 
             //redirect to the page of the template
-            return $this->redirect('/'.$pageurl);
+            $completeUrl = '/'.$pageurl;
+            $success = true;
+        } else {
+            $success = false;
+            $completeUrl = null;
         }
 
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+        return new JsonResponse(array(
+            'success' => $success,
+            'url' => $completeUrl
+        ));
     }
 
     /**

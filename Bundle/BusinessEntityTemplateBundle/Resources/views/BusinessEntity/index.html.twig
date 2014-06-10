@@ -1,15 +1,17 @@
 {% trans_default_domain "victoire" %}
 
-{% extends 'VictoireCoreBundle::layout.html.twig' %}
+{% extends 'VictoireCoreBundle::_modal.html.twig' %}
 
-{% block content %}
-<div class="vic-container vic-masthead">
-{%  for businessEntity in businessEntities %}
-    <div>
-	    <a href="{{ path('victoire_businessentitytemplate_businessentity_list', {'id': businessEntity.getId}) }}">
-	        {{ businessEntity.getName }}
-	    </a>
-    </div>
-{% endfor %}
-</div>
-{% endblock content %}
+{% block modal_container_classes %}{{ parent() }} vic-page-modal{% endblock modal_container_classes %}
+
+{% block modal_body_content %}
+	<div class="vic-container vic-masthead">
+	{%  for businessEntity in businessEntities %}
+	    <div>
+		    <a data-toggle="vic-modal" href="{{ path('victoire_businessentitytemplate_businessentity_list', {'id': businessEntity.getId}) }}">
+		        {{ businessEntity.getName }}
+		    </a>
+	    </div>
+	{% endfor %}
+	</div>
+{% endblock modal_body_content %}
