@@ -1,19 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2013-12-08T15:34:47Z" source-language="en" target-language="fr" datatype="plaintext" original="not.available">
+  <file source-language="en" target-language="fr" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
     </header>
     <body>
-      <trans-unit id="64dc24b06e2ec6521c20fc5d7ce4cc196fe2c2df" resname="new.page.modal.header">
-        <source>Nouvelle Page</source>
-        <target state="new">Nouvelle Page</target>
-        <jms:reference-file line="4">Bootstrap/Page/new.html.twig</jms:reference-file>
+      <trans-unit id="f2e5f1243797e0fc89bedab0f0fe5f36df4f8f57" resname=".title">
+        <source>.title</source>
+        <target state="new">.title</target>
+      </trans-unit>
+      <trans-unit id="79fd52cd95aad0a35b167f6a03b414b7b4f8eb7c" resname="entity_proxy.form.empty_value">
+        <source>entity_proxy.form.empty_value</source>
+        <target>Veuillez sélectionner une entité</target>
+      </trans-unit>
+      <trans-unit id="5388360d9636ad4b61bf60291deb7d679b6ff2c3" resname="form.widget.tab.entity_instance.label">
+        <source>form.widget.tab.entity_instance.label</source>
+        <target>Instance de Business Entité</target>
+      </trans-unit>
+      <trans-unit id="b7c8b58d12f169a6040d907e356a133de28b5eee" resname="form.widget.tab.picker.label">
+        <source>form.widget.tab.picker.label</source>
+        <target>Choix</target>
+      </trans-unit>
+      <trans-unit id="1c35acaf15f741a76567a68a91bbfc4d280a3249" resname="form.widget.tab.query.label">
+        <source>form.widget.tab.query.label</source>
+        <target>Requête</target>
       </trans-unit>
       <trans-unit id="19ccbd8b16123d88eb230626a5b1110504c35954" resname="menu.business_entity_template">
         <source>menu.business_entity_template</source>
-        <target state="new">Business Entity Template</target>
+        <target>Business Entity Template</target>
+      </trans-unit>
+      <trans-unit id="c4dc18d2f6573e619afaa0cc9696ab1e7fdf29e5" resname="menu.leftnavbar.404.label">
+        <source>menu.leftnavbar.404.label</source>
+        <target>Page 404</target>
+      </trans-unit>
+      <trans-unit id="e577c14cd7a0f2b2312a4daef64cdb77f9dd8837" resname="menu.leftnavbar.img.label">
+        <source>menu.leftnavbar.img.label</source>
+        <target state="new">menu.leftnavbar.img.label</target>
+      </trans-unit>
+      <trans-unit id="719d5363d8ebf09cb900c7d711f1316bc5ab3e73" resname="menu.leftnavbar.lang.label">
+        <source>menu.leftnavbar.lang.label</source>
+        <target state="new">menu.leftnavbar.lang.label</target>
+      </trans-unit>
+      <trans-unit id="420f842be6f0ed4e505a77069b39b2a9e5951c3a" resname="menu.leftnavbar.network.label">
+        <source>menu.leftnavbar.network.label</source>
+        <target>Réseau</target>
+      </trans-unit>
+      <trans-unit id="94768bc2044652b193fd6df6d358fafd80bb041b" resname="menu.leftnavbar.sandbox.label">
+        <source>menu.leftnavbar.sandbox.label</source>
+        <target state="new">menu.leftnavbar.sandbox.label</target>
+      </trans-unit>
+      <trans-unit id="e95f29317df6a1d8c7a9a560b0aadbe231c601fe" resname="menu.leftnavbar.sitemap.label">
+        <source>menu.leftnavbar.sitemap.label</source>
+        <target>Plan du site</target>
+      </trans-unit>
+      <trans-unit id="5e00d320d8d96443529379885f9d7b1f42c91e63" resname="menu.leftnavbar.stats.label">
+        <source>menu.leftnavbar.stats.label</source>
+        <target state="new">menu.leftnavbar.stats.label</target>
+      </trans-unit>
+      <trans-unit id="dabbe5078e1e6e4421dea6398c4e7b669a62a42a" resname="menu.leftnavbar.target.label">
+        <source>menu.leftnavbar.target.label</source>
+        <target state="new">menu.leftnavbar.target.label</target>
+      </trans-unit>
+      <trans-unit id="8b34a6a75e35b1afecdd55d5d711a6312a642cc5" resname="menu.leftnavbar.todo.label">
+        <source>menu.leftnavbar.todo.label</source>
+        <target state="new">menu.leftnavbar.todo.label</target>
+      </trans-unit>
+      <trans-unit id="d0f90378ee4947b8849c360ee4a3b254b7474fd8" resname="menu.leftnavbar.user.label">
+        <source>menu.leftnavbar.user.label</source>
+        <target state="new">menu.leftnavbar.user.label</target>
       </trans-unit>
       <trans-unit id="67c0389fd251acfac612655ca5e660f7ad153bcb" resname="menu.media">
         <source>menu.media</source>
@@ -23,10 +78,6 @@
         <source>menu.page</source>
         <target>Page</target>
       </trans-unit>
-      <trans-unit id="" resname="menu.parent">
-        <source>menu.parent</source>
-        <target>Template Parent</target>
-      </trans-unit>
       <trans-unit id="988d30bf1d090a16c4c086005c745ec82dfc20d7" resname="menu.page.new">
         <source>menu.page.new</source>
         <target><![CDATA[<i class="vic-menuImg vic-menuImg-new"></i> Nouvelle page]]></target>
@@ -35,9 +86,9 @@
         <source>menu.page.settings</source>
         <target><![CDATA[<i class="vic-menuImg vic-menuImg-gear"></i> Paramètres de la page]]></target>
       </trans-unit>
-      <trans-unit id="da05b847ec5c3af60439eddb617f5a682c88963b" resname="menu.page.template">
-        <source>menu.page.template</source>
-        <target><![CDATA[<i class="vic-menuImg vic-glyphicon-th-large"></i> Template de la page]]></target>
+      <trans-unit id="7269b57341e3d2887e9ff29432859d64756ff595" resname="menu.parent">
+        <source>menu.parent</source>
+        <target>Template Parent</target>
       </trans-unit>
       <trans-unit id="7143127923e2258df3b91920224c689d170aa155" resname="menu.sitemap">
         <source>menu.sitemap</source>
@@ -55,27 +106,45 @@
         <source>menu.template.settings</source>
         <target>Paramètres</target>
       </trans-unit>
-      <trans-unit resname="menu.logo">
-        <source>menu.logo</source>
-        <target><![CDATA[<i class="vic-menuImg vic-menuImg-logo"></i>]]></target>
+      <trans-unit id="0d78177827ece7fd6e7cf7426c5be1299b611988" resname="modal.button.create.title">
+        <source>modal.button.create.title</source>
+        <target>Créer</target>
       </trans-unit>
-      <trans-unit resname="menu.preview">
-        <source>menu.logo</source>
-        <target><![CDATA[<a href=""><i class="vic-menuImg vic-menuImg-eye"></i> Voir le site</a>]]></target>
+      <trans-unit id="07b2988c1c5daf0bdf6be270bede6fc8424cd688" resname="modal.button.delete.confirm.body">
+        <source>This actions will permanently delete this content from the database. This action is irreversible so you have to understand this message. Do you ?</source>
+        <target>Cette action va supprimer définitivement ce contenu. Cette action est irréversible. Etes vous sûr ?</target>
       </trans-unit>
-      <trans-unit resname="modal.mandatory_fields.label">
+      <trans-unit id="131320710e98bb9e085c0b3eecb26ebcdd8dc5a8" resname="modal.button.delete.confirm.title">
+        <source>Are you sure ?</source>
+        <target>Etes vous sûr ?</target>
+      </trans-unit>
+      <trans-unit id="71923cd8ca737329416b829fdb8663e532457a2c" resname="modal.button.delete.title">
+        <source>Delete</source>
+        <target>Supprimer</target>
+      </trans-unit>
+      <trans-unit id="fa43c246404596586f4f3ad7c55654c5f75f6de4" resname="modal.button.update.title">
+        <source>modal.button.update.title</source>
+        <target state="new">modal.button.update.title</target>
+      </trans-unit>
+      <trans-unit id="9a84dc1132d73a2f0abce302a49337045c823482" resname="modal.mandatory_fields.label">
         <source>modal.mandatory_fields.label</source>
         <target>Champs obligatoires</target>
       </trans-unit>
-      <trans-unit id="bfd1fdf793c99a949a2e428e3fa0663cb88f410b" resname="template.index.title">
-        <source>Liste des modèles</source>
-        <target state="new">Liste des modèles</target>
-        <jms:reference-file line="4">Bootstrap/Template/index.html.twig</jms:reference-file>
+      <trans-unit id="f39fc96feb4ef136347994d198e544cea70ebf40" resname="victoire.menu.publication.scheduled.tooltip">
+        <source>victoire.menu.publication.scheduled.tooltip</source>
+        <target state="new">victoire.menu.publication.scheduled.tooltip</target>
+      </trans-unit>
+      <trans-unit id="ceb669459413ff95ae62ceaad270428e24379ba9" resname="victoire_core.edit_mode_switch">
+        <source>victoire_core.edit_mode_switch</source>
+        <target>Mode édition</target>
+      </trans-unit>
+      <trans-unit id="18fd04000e8580063916cb16b059fcf9f900e398" resname="widget.dropdown.action.label">
+        <source>widget.dropdown.action.label</source>
+        <target>Nouveau contenu</target>
       </trans-unit>
       <trans-unit id="e73f4ed23832568330c963f0e40ac22daa9ab2c9" resname="widget.form.fields.label">
         <source>widget.form.fields.label</source>
         <target>Champs</target>
-        <jms:reference-file line="56">CoreBundle/Form/WidgetType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="baa2a4733047849f29b3c0f2093e33f58fcfc8ea" resname="widget.form.theme.default">
         <source>widget.form.theme.default</source>
@@ -84,23 +153,6 @@
       <trans-unit id="f20da08ae6b8cbd8d13f9076c53583b0238842b9" resname="widget.form.theme.label">
         <source>widget.form.theme.label</source>
         <target>Thème</target>
-        <jms:reference-file line="92">CoreBundle/EventSubscriber/WidgetSubscriber.php</jms:reference-file>
-      </trans-unit>
-      <trans-unit resname="victoire_core.edit_mode_switch">
-        <source>victoire_core.edit_mode_switch</source>
-        <target>Mode édition</target>
-      </trans-unit>
-      <trans-unit resname="widget.dropdown.action.label">
-        <source>widget.dropdown.action.label</source>
-        <target>Nouveau contenu</target>
-      </trans-unit>
-      <trans-unit resname="form.widget.tab.picker.label">
-        <source>form.widget.tab.picker.label</source>
-        <target>Choix</target>
-      </trans-unit>
-      <trans-unit resname="form.widget.tab.query.label">
-        <source>form.widget.tab.query.label</source>
-        <target>Requête</target>
       </trans-unit>
     </body>
   </file>
