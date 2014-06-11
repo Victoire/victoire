@@ -15,7 +15,7 @@
         "php"                                 : ">=5.3.3",
         "symfony/symfony"                     : ">=2.4.2",
         "doctrine/orm"                        : "~2.2,>=2.2.3",
-        "doctrine/doctrine-bundle"            : "~1.2",
+        "doctrine/doctrine-bundle"            : ">=1.2",
         "twig/extensions"                     : "~1.0",
         "symfony/assetic-bundle"              : "~2.3",
         "symfony/swiftmailer-bundle"          : "~2.3",
@@ -38,6 +38,19 @@
         "appventus/alertify-bundle"           : "2.3.*@dev",
         "appventus/shortcuts-bundle"          : "dev-master",
         "appventus/assetic-injector-bundle"   : "dev-master"
+    },
+    "require-dev": {
+        "behat/behat":                              "2.4.*@dev",
+        "behat/mink":                               "1.5.*",
+        "behat/mink-extension":                     "*",
+        "behat/mink-sahi-driver":                   "*",
+        "behat/mink-goutte-driver":                 "*",
+        "behat/mink-browserkit-driver":             "*@stable",
+        "behat/mink-selenium2-driver":              "1.1.*",
+        "behat/mink-zombie-driver":                 "*",
+        "behat/symfony2-extension":                 "*@dev",
+        "vipsoft/doctrine-data-fixtures-extension": "dev-master",
+        "phpunit/phpunit":                          "3.7.*"
     },
     "replace": {
         "victoire/blog-bundle": "self.version",
