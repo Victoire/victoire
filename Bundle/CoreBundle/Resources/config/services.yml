@@ -151,14 +151,15 @@ services:
 
     victoire_core.widget_discriminator_map.subscriber:
         class: Victoire\Bundle\CoreBundle\EventSubscriber\WidgetDiscriminatorMapSubscriber
-        arguments: ["%victoire_core.widgets%", "@victoire_core.theme_chain"]
+        calls:
+            - [ setWidgets, ["%victoire_core.widgets%"] ]
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
     victoire_core.entity_proxy.subscriber:
         class: Victoire\Bundle\CoreBundle\EventSubscriber\EntityProxySubscriber
-        arguments: 
-            - "@victoire_core.annotation_reader"
+        calls:
+            - [ setAnnotationReader, ["@victoire_core.annotation_reader"] ]
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
