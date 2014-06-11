@@ -91,6 +91,8 @@ class CmsExtension extends \Twig_Extension
     /**
      * render actions for a widget
      *
+     * @param Widget $widget The widget to render
+     *
      * @return string the widget actions (buttons edit, move and delete)
      */
     public function cmsWidgetActions($widget)
@@ -153,9 +155,12 @@ class CmsExtension extends \Twig_Extension
                 //render this widget
                 $result .= $this->cmsWidget($widget, $addContainer);
             } catch (\Exception $ex) {
-                $result .= '<div>Error: ';
-                $result .= $ex->getMessage();
-                $result .= '</div>';
+                //the error is only displyed if we are a victoire user
+                if ($this->isRoleVictoireGranted()) {
+                    $result .= '<div>Error: ';
+                    $result .= $ex->getMessage();
+                    $result .= '</div>';
+                }
             }
         }
 
