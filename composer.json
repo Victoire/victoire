@@ -15,7 +15,7 @@
         "php"                                 : ">=5.3.3",
         "symfony/symfony"                     : ">=2.4.2",
         "doctrine/orm"                        : "~2.2,>=2.2.3",
-        "doctrine/doctrine-bundle"            : "~1.2",
+        "doctrine/doctrine-bundle"            : ">=1.2",
         "twig/extensions"                     : "~1.0",
         "symfony/assetic-bundle"              : "~2.3",
         "symfony/swiftmailer-bundle"          : "~2.3",
@@ -55,7 +55,6 @@
     "replace": {
         "victoire/blog-bundle": "self.version",
         "victoire/core-bundle": "self.version",
-        "victoire/cms-bundle": "self.version",
         "victoire/dashboard-bundle": "self.version",
         "victoire/form-bundle": "self.version",
         "victoire/media-bundle": "self.version",
@@ -69,7 +68,7 @@
     "target-dir": "Victoire",
     "extra": {
         "branch-alias": {
-            "dev-master": "0.1-dev"
+            "dev-feature/business-entity-template": "0.1-dev"
         }
     }
 }
