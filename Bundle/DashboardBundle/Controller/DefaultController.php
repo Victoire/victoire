@@ -24,7 +24,6 @@ class DefaultController extends Controller
      */
     public function welcomeAction()
     {
-
         return array();
     }
 }

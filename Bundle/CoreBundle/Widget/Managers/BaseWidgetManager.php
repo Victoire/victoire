@@ -240,7 +240,7 @@ class BaseWidgetManager
 
         if ($widget instanceof ThemeWidgetInterface) {
             $manager = $this->getManager($widget);
-            $widgetName = $manager->getWidgetName();
+            $widgetName = strtolower($manager->getWidgetName());
 
             return (
                 array_key_exists($widgetName, $slots[$slot]['widgets']) &&
@@ -367,7 +367,7 @@ class BaseWidgetManager
     protected function getNewWidgetEntity()
     {
         //the widget alias
-        $widgetAlias = 'victoire.widget.'. $this->getWidgetName();
+        $widgetAlias = 'victoire.widget.'. strtolower($this->getWidgetName());
         $widget = $this->container->get($widgetAlias);
 
         return $widget;
@@ -412,7 +412,7 @@ class BaseWidgetManager
     protected function getBundleName()
     {
         //the name of the bundle depends of the widget name
-        $bundleName = 'VictoireWidget'.ucfirst($this->getWidgetName()).'Bundle';
+        $bundleName = 'VictoireWidget'.$this->getWidgetName().'Bundle';
 
         return $bundleName;
     }
@@ -465,7 +465,7 @@ class BaseWidgetManager
      */
     public function getExtraCssClass()
     {
-        $cssClass = 'vic-widget-'.$this->getWidgetName();
+        $cssClass = 'vic-widget-'.strtolower($this->getWidgetName());
 
         return $cssClass;
     }
@@ -518,7 +518,7 @@ class BaseWidgetManager
         $container = $this->container;
         $formFactory = $container->get('form.factory');
 
-        $formAlias = 'victoire_widget_form_'.$this->getWidgetName();
+        $formAlias = 'victoire_widget_form_'.strtolower($this->getWidgetName());
 
         $form = $formFactory->create($formAlias, $widget,
             array(
