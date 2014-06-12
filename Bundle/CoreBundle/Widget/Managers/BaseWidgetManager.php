@@ -625,4 +625,29 @@ class BaseWidgetManager
     {
         return '';
     }
+
+    /**
+     * Get the widget query result
+     *
+     * @param Widget $widget The widget
+     *
+     * @return array The list of entities
+     */
+    protected function getWidgetQueryResults(Widget $widget)
+    {
+        $em = $this->container->get('doctrine.orm.entity_manager');
+
+        $itemsQueryBuilder = $em
+        ->createQueryBuilder()
+        ->select('item')
+        ->from($widget->getBusinessClass(), 'item');
+
+        $query = $widget->getQuery();
+
+        $itemsQuery = $itemsQueryBuilder->getQuery()->getDQL() . " " . $query;
+
+        $items = $em->createQuery($itemsQuery)->getResult();
+
+        return $items;
+    }
 }

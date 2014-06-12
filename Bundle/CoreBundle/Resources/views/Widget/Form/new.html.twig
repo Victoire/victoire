@@ -3,7 +3,7 @@
 {% block modal_body_content %}
 {% if classes|length %}
     <ul class="vic-nav vic-nav-tabs vic-modal-nav-tabs">
-        <li class="vic-active vic-seperate"><a href="#static" data-toggle="vic-tab">Manuel</a></li>
+        <li class="vic-active vic-seperate"><a href="#static" data-toggle="vic-tab" onClick="victoire.widget.setMode(this, 'static');">Manuel</a></li>
         {% for class, namespace in classes %}
         <li{% if not loop.last %} class="vic-seperate"{% endif %}><a href="#{{class}}" data-toggle="vic-tab">{{ ('form.widget.tab.' ~ class ~ '.label')|trans({}, 'victoire') }}</a></li>
         {% endfor %}
@@ -11,7 +11,7 @@
 {% endif %}
 <div class="vic-tab-content vic-modal-tab-content">
   {% for class, form in forms %}
-    <div class="vic-tab-pane {% if class == 'static' %}vic-active{% endif %}" id="{{class}}">
+    <div class="vic-tab-pane {% if class == 'static' %}vic-active{% endif %}" id="{{class}}" onClick="victoire.widget.setMode(this, 'static');">
 
     {% if class != 'static' and is_granted('ROLE_VICTOIRE_DEVELOPER') %}
         <ul class="vic-nav vic-nav-tabs vic-modal-nav-tabs">

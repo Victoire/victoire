@@ -85,14 +85,4 @@ class WidgetType extends AbstractType
     {
         return 'appventus_victoirecorebundle_widgettype';
     }
-
-//     /**
-//      * Get the entity name
-//      *
-//      * @return string
-//      */
-//     public function getEntityName()
-//     {
-//         return $entityName;
-//     }
 }
