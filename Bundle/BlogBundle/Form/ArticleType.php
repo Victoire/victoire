@@ -20,7 +20,12 @@ class ArticleType extends PageType
         $builder
             ->add('description')
             ->add('category')
-            ->add('tags');
+            ->add('tags', 'select2', array(
+                    'class' => 'Victoire\Bundle\BlogBundle\Entity\Tag',
+                    'property' => 'title',
+                    'multiple' => true,
+                ))
+        ;
     }
 
 

@@ -1,0 +1,20 @@
+{
+    "require_all":
+    {
+        "javascripts":
+        {
+            "victoire-edit":
+            [
+                "@AvAwesomeShortcutsBundle/Resources/vendor/select2/select2.min.js",
+                "@AvAwesomeShortcutsBundle/Resources/vendor/select2/select2_locale_fr.js"
+            ]
+        },
+        "stylesheets":
+        {
+            "victoire-edit":
+            [
+                "@AvAwesomeShortcutsBundle/Resources/vendor/select2/select2.css"
+            ]
+        }
+    }
+}
