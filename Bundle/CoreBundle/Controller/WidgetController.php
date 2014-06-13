@@ -214,7 +214,7 @@ class WidgetController extends AwesomeController
             //recompute the order for the widgets
             $this->get('widget_manager')->updateWidgetMapOrder($page, $sortedWidgets);
 
-            $response = JsonResponse(array('success' => true));
+            $response = new JsonResponse(array('success' => true));
         } catch (\Exception $ex) {
             $response = new JsonResponse(
                 array(
