@@ -44,7 +44,8 @@ class WidgetController extends AwesomeController
             $response = new JsonResponse(
                 array(
                     'success' => false,
-                    'message' => $ex->getMessage()
+                    'message' => $ex->getMessage(),
+                    'stackTrace' => $ex->getTrace()
                 )
             );
         }
@@ -73,7 +74,8 @@ class WidgetController extends AwesomeController
             $response = new JsonResponse(
                 array(
                     'success' => false,
-                    'message' => $ex->getMessage()
+                    'message' => $ex->getMessage(),
+                    'stackTrace' => $ex->getTrace()
                 )
             );
         }
@@ -124,7 +126,8 @@ class WidgetController extends AwesomeController
             $response = new JsonResponse(
                 array(
                     'success' => false,
-                    'message' => $ex->getMessage()
+                    'message' => $ex->getMessage(),
+                    'stackTrace' => $ex->getTrace()
                 )
             );
         }
@@ -159,7 +162,8 @@ class WidgetController extends AwesomeController
             $response = new JsonResponse(
                 array(
                     'success' => false,
-                    'message' => $ex->getMessage()
+                    'message' => $ex->getMessage(),
+                    'stackTrace' => $ex->getTrace()
                 )
             );
         }
@@ -184,7 +188,8 @@ class WidgetController extends AwesomeController
             $response = new JsonResponse(
                 array(
                     'success' => false,
-                    'message' => $ex->getMessage()
+                    'message' => $ex->getMessage(),
+                    'stackTrace' => $ex->getTrace()
                 )
             );
         }
@@ -214,7 +219,8 @@ class WidgetController extends AwesomeController
             $response = new JsonResponse(
                 array(
                     'success' => false,
-                    'message' => $ex->getMessage()
+                    'message' => $ex->getMessage(),
+                    'stackTrace' => $ex->getTrace()
                 )
             );
         }
