@@ -104,14 +104,16 @@ $vic(function() {
     //add properties
     victoire.widget.setMode = function (link, modeValue)
     {
-        //get the pane that is 3 parents up
-        var paneDiv = $vic(link).parent().parent().parent();
+        //the hash has the form "#picker-vehicle"
+        //so we remove the #picker
+        var linkId = link.hash.substring(8);
+        var paneDiv = $vic('#' + linkId);
         //get the form
         var form = paneDiv.children('form');
         //get the mode input hidden        
         var mode = form.children().children("[name$='[mode]']");
         
         //set the new value
-        mode.val(modeValue);       
+        mode.val(modeValue);
     };
 });
