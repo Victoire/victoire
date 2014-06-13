@@ -32,13 +32,24 @@ class WidgetController extends AwesomeController
      */
     public function showAction(Widget $widget)
     {
-        if ($this->getRequest()->isXmlHttpRequest()) {
-            $widgetManager = $this->getWidgetManager();
+        try {
+            if ($this->getRequest()->isXmlHttpRequest()) {
+                $widgetManager = $this->getWidgetManager();
 
-            return new JsonResponse($widgetManager->render($widget));
+                $response = new JsonResponse($widgetManager->render($widget));
+            } else {
+                $response = $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $widget->getPage()->getUrl())));
+            }
+        } catch (\Exception $ex) {
+            $response = new JsonResponse(
+                array(
+                    'success' => false,
+                    'message' => $ex->getMessage()
+                )
+            );
         }
 
-        return $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $widget->getPage()->getUrl())));
+        return $response;
     }
 
     /**
@@ -55,9 +66,19 @@ class WidgetController extends AwesomeController
      */
     public function editAction(Request $request, Widget $widget, $type = null)
     {
-        $widgetManager = $this->getWidgetManager();
+        try {
+            $widgetManager = $this->getWidgetManager();
+            $response = new JsonResponse($widgetManager->edit($request, $widget, $type));
+        } catch (\Exception $ex) {
+            $response = new JsonResponse(
+                array(
+                    'success' => false,
+                    'message' => $ex->getMessage()
+                )
+            );
+        }
 
-        return new JsonResponse($widgetManager->edit($request, $widget, $type));
+        return $response;
     }
 
     /**
@@ -74,30 +95,43 @@ class WidgetController extends AwesomeController
      */
     public function newAction($type, $page, $slot = null, $entity = null)
     {
-        $page = $this->get('doctrine.orm.entity_manager')->getRepository('VictoirePageBundle:BasePage')->findOneById($page);
-
-        if ($entity) {
-            $widgetManager = $this->get('widget_manager')->getManager(null, $type);
-            $widget = $widgetManager->newWidget($page, $slot);
-
-            $namespace = null;
-
-            if ($entity === 'static' || $entity === '') {
-                $entity = null;
-            }
+        try {
+            $page = $this->get('doctrine.orm.entity_manager')->getRepository('VictoirePageBundle:BasePage')->findOneById($page);
 
             if ($entity) {
-                $annotationReader = $this->get('victoire_core.annotation_reader');
-                $classes = $annotationReader->getBusinessClassesForWidget($widget);
-                $namespace = $classes[$entity];
+                $widgetManager = $this->get('widget_manager')->getManager(null, $type);
+                $widget = $widgetManager->newWidget($page, $slot);
+
+                $namespace = null;
+
+                if ($entity === 'static' || $entity === '') {
+                    $entity = null;
+                }
+
+                if ($entity) {
+                    $annotationReader = $this->get('victoire_core.annotation_reader');
+                    $classes = $annotationReader->getBusinessClassesForWidget($widget);
+                    $namespace = $classes[$entity];
+                }
+
+                $form = $this->get('widget_manager')->buildForm($widgetManager, $widget, $entity, $namespace);
+
+                $response = JsonResponse($this->get('widget_manager')->renderNewForm($form, $widget, $slot, $page, $entity));
+            } else {
+                $response = new JsonResponse($this->get('widget_manager')->newWidget($type, $slot, $page));
             }
-
-            $form = $this->get('widget_manager')->buildForm($widgetManager, $widget, $entity, $namespace);
-
-            return new JsonResponse($this->get('widget_manager')->renderNewForm($form, $widget, $slot, $page, $entity));
+        } catch (\Exception $ex) {
+            $response = new JsonResponse(
+                array(
+                    'success' => false,
+                    'message' => $ex->getMessage()
+                )
+            );
         }
 
-        return new JsonResponse($this->get('widget_manager')->newWidget($type, $slot, $page));
+        return $response;
+
+
     }
 
     /**
@@ -113,13 +147,24 @@ class WidgetController extends AwesomeController
      */
     public function createAction($type, $page, $slot = null, $entity = null)
     {
-        //services
-        $em = $this->getEntityManager();
+        try {
+            //services
+            $em = $this->getEntityManager();
 
-        $page = $em->getRepository('VictoirePageBundle:BasePage')->findOneById($page);
-        $widgetManager = $this->getWidgetManager();
+            $page = $em->getRepository('VictoirePageBundle:BasePage')->findOneById($page);
+            $widgetManager = $this->getWidgetManager();
 
-        return new JsonResponse($widgetManager->createWidget($type, $slot, $page, $entity));
+            $response = new JsonResponse($widgetManager->createWidget($type, $slot, $page, $entity));
+        } catch (\Exception $ex) {
+            $response = new JsonResponse(
+                array(
+                    'success' => false,
+                    'message' => $ex->getMessage()
+                )
+            );
+        }
+
+        return $response;
     }
 
     /**
@@ -133,9 +178,18 @@ class WidgetController extends AwesomeController
      */
     public function deleteAction(Widget $widget)
     {
-        $page = $widget->getPage();
+        try {
+            $response = new JsonResponse($this->get('widget_manager')->deleteWidget($widget));
+        } catch (\Exception $ex) {
+            $response = new JsonResponse(
+                array(
+                    'success' => false,
+                    'message' => $ex->getMessage()
+                )
+            );
+        }
 
-        return new JsonResponse($this->get('widget_manager')->deleteWidget($widget));
+        return $response;
     }
 
     /**
@@ -148,13 +202,24 @@ class WidgetController extends AwesomeController
      */
     public function updatePositionAction(BasePage $page)
     {
-        //the sorted order for the widgets
-        $sortedWidgets = $this->getRequest()->request->get('sorted');
+        try {
+            //the sorted order for the widgets
+            $sortedWidgets = $this->getRequest()->request->get('sorted');
 
-        //recompute the order for the widgets
-        $this->get('widget_manager')->updateWidgetMapOrder($page, $sortedWidgets);
+            //recompute the order for the widgets
+            $this->get('widget_manager')->updateWidgetMapOrder($page, $sortedWidgets);
 
-        return new JsonResponse();
+            $response = JsonResponse(array('success' => true));
+        } catch (\Exception $ex) {
+            $response = new JsonResponse(
+                array(
+                    'success' => false,
+                    'message' => $ex->getMessage()
+                )
+            );
+        }
+
+        return $response;
     }
 
     /**

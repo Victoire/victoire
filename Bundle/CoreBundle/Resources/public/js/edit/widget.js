@@ -34,7 +34,11 @@ $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(
             //save the positions of the widgets
             updatePosition();
         } else {
-            $vic('.vic-modal-body .vic-container').html(response.html);
+            //inform user there have been an error
+            alert(response.message);
+            if (response.html) {
+                $vic('.vic-modal-body .vic-container').html(response.html);
+            }
         }
     });
 });
@@ -58,12 +62,12 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update"]', function(
             $vic("#"+response.widgetId).replaceWith(response.html);
             closeModal();
         } else {
-            closeModal();
-            $vic('body').append(response.html);
-            $vic('#vic-modal').vicmodal({
-                keyboard: true,
-                backdrop: false
-            });
+            //inform user there have been an error
+            alert(response.message);
+            
+            if (response.html) {
+                $vic('.vic-modal-body .vic-container').html(response.html);
+            }
         }
     });
 });
