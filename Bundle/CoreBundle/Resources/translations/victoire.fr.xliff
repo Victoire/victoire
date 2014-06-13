@@ -90,6 +90,10 @@
         <source>menu.parent</source>
         <target>Template Parent</target>
       </trans-unit>
+      <trans-unit id="b56be300a76acfd99efb0bb2d8010cd61ac1d8f4" resname="menu.preview">
+        <source>menu.preview</source>
+        <target>Prévisualisation</target>
+      </trans-unit>
       <trans-unit id="7143127923e2258df3b91920224c689d170aa155" resname="menu.sitemap">
         <source>menu.sitemap</source>
         <target>Plan du site</target>

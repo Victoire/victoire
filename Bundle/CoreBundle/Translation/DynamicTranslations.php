@@ -21,6 +21,7 @@ class DynamicTranslations implements TranslationContainerInterface
     {
         return array(
             new Message('menu.page', 'victoire'),
+            new Message('menu.preview', 'victoire'),
             new Message('menu.page.settings', 'victoire'),
             new Message('menu.page.new', 'victoire'),
             new Message('menu.template', 'victoire'),

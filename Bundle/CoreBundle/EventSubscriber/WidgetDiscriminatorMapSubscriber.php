@@ -48,7 +48,11 @@ class WidgetDiscriminatorMapSubscriber implements EventSubscriber
             $metadatas = $eventArgs->getClassMetadata();
             if ($metadatas->name === 'Victoire\Bundle\CoreBundle\Entity\Widget') {
                 foreach (self::$widgets as $widget) {
-                    $metadatas->discriminatorMap[$widget['name']] = $widget['class'];
+                    $class = $widget['class'];
+                    if (!class_exists($class)) {
+                        throw new \Exception('The class '.$class.' does not exists, please check the config.yml of the widget bundle.');
+                    }
+                    $metadatas->discriminatorMap[$widget['name']] = $class;
                 }
             }
         }
