@@ -2,7 +2,7 @@
 
 namespace Victoire\Bundle\BlogBundle\Filter;
 
-use Victoire\FilterBundle\Filter\BaseFilter;
+use Victoire\Widget\FilterBundle\Filter\BaseFilter;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityManager;

@@ -117,6 +117,9 @@ class UrlHelper
         //remove the base of the url
         $urlReferer = substr($referer, strlen($completeUrl));
 
+        //remove potential parameters
+        $urlReferer = substr($urlReferer, 0, stripos($urlReferer, "?") );
+
         return $urlReferer;
     }
 
