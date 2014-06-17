@@ -118,7 +118,10 @@ class UrlHelper
         $urlReferer = substr($referer, strlen($completeUrl));
 
         //remove potential parameters
-        $urlReferer = substr($urlReferer, 0, stripos($urlReferer, "?") );
+        $position = stripos($urlReferer, "?");
+        if ($position > 0) {
+            $urlReferer = substr($urlReferer, 0, stripos($urlReferer, "?") );
+        }
 
         return $urlReferer;
     }
