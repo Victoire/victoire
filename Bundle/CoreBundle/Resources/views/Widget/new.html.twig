@@ -1,5 +1,7 @@
 {% form_theme form 'VictoireFormBundle:Form:fields.html.twig' %}
 
+{% trans_default_domain "victoire" %}
+
 {% block form_container %}
     <form name="widget" action={% spaceless %}
         {% block modal_body_form_action %}
