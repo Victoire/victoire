@@ -9,7 +9,6 @@ use Victoire\Bundle\CoreBundle\Theme\ThemeWidgetInterface;
 
 class WidgetSubscriber implements EventSubscriberInterface
 {
-
     private $container;
 
     public function __construct($container)
@@ -23,45 +22,11 @@ class WidgetSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            // VictoireCmsEvents::WIDGET_PRE_RENDER => array(
-            // ),
-            // VictoireCmsEvents::WIDGET_POST_RENDER => array(
-            // ),
-            VictoireCmsEvents::WIDGET_POST_QUERY => array(
-                array('buildFilterQuery'),
-            ),
             VictoireCmsEvents::WIDGET_BUILD_FORM => array(
                 array('addThemeField'),
                 array('addQueryMode'),
             ),
         );
-    }
-
-    public function buildFilterQuery(WidgetQueryEvent $event)
-    {
-        $qb = $event->getQb();
-        // add this fake condition to ensure that there is always a "where" clause.
-        // In query mode, usage of "AND" will be alwayse valid instead of "WHERE"
-        $qb->andWhere('1 = 1');
-        if ($this->container->has('victoire_core.filter_chain')) {
-
-            $request = $event->getRequest();
-            $widget = $event->getWidget();
-            $filters = $request->query->get('filter');
-            $listId = $filters['listing'];
-
-            if ($listId == $widget->getId()) {
-                unset($filters['listing']);
-                foreach ($this->container->get('victoire_core.filter_chain')->getFilters() as $name => $filter) {
-                    if (!empty($filters[$name])) {
-                        $filter->buildQuery($qb, $filters[$name]);
-                        $widget->filters[$name] = $filter->getFilters($filters[$name]);
-
-                    }
-                }
-
-            }
-        }
     }
 
     public function addThemeField(WidgetBuildFormEvent $event)

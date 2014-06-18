@@ -14,14 +14,24 @@ use Doctrine\ORM\QueryBuilder;
 class TagFilter extends BaseFilter
 {
     protected $em;
-    protected $requets;
+    protected $request;
 
+    /**
+     * Constructor
+     *
+     * @param EntityManager $em
+     * @param unknown $request
+     */
     public function __construct(EntityManager $em, $request)
     {
         $this->em = $em;
         $this->request = $request;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see \Victoire\Widget\FilterBundle\Filter\BaseFilter::buildQuery()
+     */
     public function buildQuery(QueryBuilder &$qb, array $parameters)
     {
         $qb = $qb
