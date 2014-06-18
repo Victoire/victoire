@@ -29,10 +29,14 @@ class TagFilter extends BaseFilter
     }
 
     /**
-     * (non-PHPdoc)
-     * @see \Victoire\Widget\FilterBundle\Filter\BaseFilter::buildQuery()
+     * Build the query
+     *
+     * @param QueryBuilder &$qb
+     * @param array        $parameters
+     *
+     * @return queryBuilder
      */
-    public function buildQuery(QueryBuilder &$qb, array $parameters)
+    public function buildQuery(QueryBuilder $qb, array $parameters)
     {
         $qb = $qb
              ->join('item.tags', 't')
@@ -47,6 +51,7 @@ class TagFilter extends BaseFilter
      * @param FormBuilderInterface $builder
      * @param array                $options
      *
+     * @SuppressWarnings checkUnusedFunctionParameters
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -77,6 +82,11 @@ class TagFilter extends BaseFilter
             );
     }
 
+    /**
+     * Set the default options
+     *
+     * @param OptionsResolverInterface $resolver
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
@@ -84,6 +94,13 @@ class TagFilter extends BaseFilter
         ));
     }
 
+    /**
+     * Get the filters
+     *
+     * @param array $filters
+     *
+     * @return array The filters
+     */
     public function getFilters($filters)
     {
         return $this->em->getRepository('VictoireBlogBundle:Tag')->findById($filters['tags']);

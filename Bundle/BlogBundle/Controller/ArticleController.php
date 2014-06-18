@@ -28,9 +28,11 @@ class ArticleController extends BasePageController
 
     protected $routes;
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
-
         $this->routes = array(
                 'new'      => 'victoire_blog_article_new',
                 'show'     => 'victoire_core_page_show',
@@ -82,25 +84,48 @@ class ArticleController extends BasePageController
         return new JsonResponse(parent::deleteAction($article));
     }
 
+    /**
+     *
+     * @return string
+     */
     protected function getPageSettingsType()
     {
         return 'victoire_article_type';
     }
+
+    /**
+     *
+     * @return string
+     */
     protected function getNewPageType()
     {
         return 'victoire_article_type';
     }
+
+    /**
+     *
+     * @return \Victoire\Bundle\BlogBundle\Entity\Article
+     */
     protected function getNewPage()
     {
         return new Article();
     }
+
+    /**
+     *
+     * @return string
+     */
     protected function getBaseTemplatePath()
     {
         return "VictoireBlogBundle:Article";
     }
+
+    /**
+     *
+     * @param unknown $action
+     */
     protected function getRoutes($action)
     {
         return $this->routes[$action];
     }
-
 }

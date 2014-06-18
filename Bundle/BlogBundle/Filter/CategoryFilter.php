@@ -14,15 +14,29 @@ use Doctrine\ORM\QueryBuilder;
 class CategoryFilter extends BaseFilter
 {
     protected $em;
-    protected $requets;
+    protected $request;
 
+    /**
+     *
+     * @param EntityManager $em
+     *
+     * @param Request $request
+     */
     public function __construct(EntityManager $em, $request)
     {
         $this->em = $em;
         $this->request = $request;
     }
 
-    public function buildQuery(QueryBuilder &$qb, array $parameters)
+    /**
+     * Build the query
+     *
+     * @param QueryBuilder &$qb
+     * @param array        $parameters
+     *
+     * @return queryBuilder
+     */
+    public function buildQuery(QueryBuilder $qb, array $parameters)
     {
         $qb = $qb
              ->join('item.category', 'c')
@@ -36,6 +50,8 @@ class CategoryFilter extends BaseFilter
      * define form fields
      * @param FormBuilderInterface $builder
      * @param array                $options
+     *
+     * @SuppressWarnings checkUnusedFunctionParameters
      *
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -67,6 +83,11 @@ class CategoryFilter extends BaseFilter
             );
     }
 
+    /**
+     * Set the default options
+     *
+     * @param OptionsResolverInterface $resolver
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
@@ -74,6 +95,13 @@ class CategoryFilter extends BaseFilter
         ));
     }
 
+    /**
+     * Get the filters
+     *
+     * @param array $filters
+     *
+     * @return array The filters
+     */
     public function getFilters($filters)
     {
         return $this->em->getRepository('VictoireBlogBundle:Category')->findById($filters['category']);
