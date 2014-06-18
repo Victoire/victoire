@@ -13,6 +13,7 @@ use Victoire\Bundle\CoreBundle\Form\WidgetType;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\CoreBundle\Helper\WidgetHelper;
 use Victoire\Bundle\PageBundle\WidgetMap\WidgetMapBuilder;
+use Victoire\Bundle\CoreBundle\Handler\WidgetExceptionHandler;
 
 /**
  * PageExtension extends Twig with page capabilities.
@@ -27,23 +28,32 @@ class CmsExtension extends \Twig_Extension
     protected $securityContext;
     protected $widgetHelper;
     protected $widgetMapBuilder;
+    protected $widgetExceptionHandler;
 
     /**
      * Constructor
      *
-     * @param WidgetManager    $widgetManager
-     * @param TemplateMapper   $templating
-     * @param SecurityContext  $securityContext
-     * @param WidgetHelper     $widgetHelper
-     * @param WidgetMapBuilder $widgetMapBuilder
+     * @param WidgetManager          $widgetManager
+     * @param TemplateMapper         $templating
+     * @param SecurityContext        $securityContext
+     * @param WidgetHelper           $widgetHelper
+     * @param WidgetMapBuilder       $widgetMapBuilder
+     * @param WidgetExceptionHandler $widgetExceptionHandler
      */
-    public function __construct(WidgetManager $widgetManager, TemplateMapper $templating, SecurityContext $securityContext, WidgetHelper $widgetHelper, WidgetMapBuilder $widgetMapBuilder)
+    public function __construct(WidgetManager $widgetManager,
+        TemplateMapper $templating,
+        SecurityContext $securityContext,
+        WidgetHelper $widgetHelper,
+        WidgetMapBuilder $widgetMapBuilder,
+        WidgetExceptionHandler $widgetExceptionHandler
+    )
     {
         $this->widgetManager = $widgetManager;
         $this->templating = $templating;
         $this->securityContext = $securityContext;
         $this->widgetHelper = $widgetHelper;
         $this->widgetMapBuilder = $widgetMapBuilder;
+        $this->widgetExceptionHandler = $widgetExceptionHandler;
     }
 
     /**
@@ -155,12 +165,7 @@ class CmsExtension extends \Twig_Extension
                 //render this widget
                 $result .= $this->cmsWidget($widget, $addContainer);
             } catch (\Exception $ex) {
-                //the error is only displyed if we are a victoire user
-                if ($this->isRoleVictoireGranted()) {
-                    $result .= '<div>Error: ';
-                    $result .= $ex->getMessage();
-                    $result .= '</div>';
-                }
+                $result .= $this->widgetExceptionHandler->handle($ex, $widget);
             }
         }
 
@@ -188,13 +193,16 @@ class CmsExtension extends \Twig_Extension
      *
      * @param unknown $widget
      * @param string $addContainer
-     * @param string $entity
+     *
      * @return unknown
      */
     public function cmsWidget($widget, $addContainer = true)
     {
-        $response = $this->widgetManager->render($widget, $addContainer);
-
+        try {
+            $response = $this->widgetManager->render($widget, $addContainer);
+        } catch (\Exception $ex) {
+            $response = $this->widgetExceptionHandler->handle($ex, $widget);
+        }
         return $response;
     }
 

@@ -96,6 +96,7 @@ services:
             - "@security.context" 
             - "@victoire_core.widget_helper"
             - "@page.widgetMap.builder"
+            - "@victoire_core.widget_exception_handler"
         tags:
             - { name: twig.extension }
     victoire_core.twig.globals_extension:
@@ -192,6 +193,7 @@ services:
         class: Victoire\Bundle\CoreBundle\Handler\WidgetExceptionHandler
         arguments: 
             - "@security.context"
-            - "@templating"
+            - "@twig"
             - "%kernel.debug%"
+            - "@victoire_templating"
             

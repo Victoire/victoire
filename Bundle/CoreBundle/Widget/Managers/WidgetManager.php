@@ -18,7 +18,7 @@ use Victoire\Bundle\CoreBundle\VictoireCmsEvents;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\PageBundle\Entity\Template;
-use Victoire\MenuBundle\Entity\MenuItem;
+use Victoire\Widget\MenuBundle\Entity\MenuItem;
 
 /**
  * Generic Widget CRUD operations
@@ -408,11 +408,7 @@ class WidgetManager
     {
         $html = '';
 
-        try {
-            $html .= $this->getManager($widget)->renderContainer($widget, $addContainer);
-        } catch (\Exception $e) {
-            $html .= $this->container->get('victoire_core.widget_exception_handler')->handle($e, $widget);
-        }
+        $html .= $this->getManager($widget)->renderContainer($widget, $addContainer);
 
         return $html;
     }
