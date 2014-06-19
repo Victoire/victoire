@@ -63,7 +63,7 @@ class WidgetSubscriber implements EventSubscriberInterface
             $form->add('theme', 'choice',
                 array(
                     'mapped' => false,
-                    'label' => /** @Ignore */'widget.form.theme.label',
+                    'label' => 'widget.form.theme.label',
                     'choices' => $themes,
                     'data' => $currentWidget,
                     'attr' => array('class' => 'theme-choices'),
