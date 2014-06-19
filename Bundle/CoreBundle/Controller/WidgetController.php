@@ -32,11 +32,16 @@ class WidgetController extends AwesomeController
      */
     public function showAction(Widget $widget)
     {
+        //the response is for the ajax.js from the AppVentus Ajax Bundle
         try {
             if ($this->getRequest()->isXmlHttpRequest()) {
                 $widgetManager = $this->getWidgetManager();
 
-                $response = new JsonResponse($widgetManager->render($widget));
+                 $response = new JsonResponse(array(
+                     'html' => $widgetManager->render($widget),
+                     'update' => 'vic-widget-'.$widget->getId().'-container',
+                     'success' => false
+                 ));
             } else {
                 $response = $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $widget->getPage()->getUrl())));
             }

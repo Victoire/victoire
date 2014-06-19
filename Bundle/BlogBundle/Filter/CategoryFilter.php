@@ -38,10 +38,20 @@ class CategoryFilter extends BaseFilter
      */
     public function buildQuery(QueryBuilder $qb, array $parameters)
     {
-        $qb = $qb
+        //clean the parameters from the blank value
+        foreach ($parameters['category'] as $index => $parameter) {
+            //the blank value is removed
+            if ($parameter === '') {
+                unset($parameters['category'][$index]);
+            }
+        }
+
+        if (count($parameters['category']) > 0) {
+            $qb = $qb
              ->join('item.category', 'c')
              ->andWhere('c.id IN (:category)')
              ->setParameter('category', $parameters['category']);
+        }
 
         return $qb;
     }
@@ -57,7 +67,10 @@ class CategoryFilter extends BaseFilter
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $categories = $this->em->getRepository('VictoireBlogBundle:Category')->findAll();
-        $categoriesChoices = array();
+
+        //the blank value
+        $categoriesChoices = array(null => '');
+
         foreach ($categories as $category) {
             $categoriesChoices[$category->getId()] = $category->getTitle();
         }

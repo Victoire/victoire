@@ -38,10 +38,20 @@ class TagFilter extends BaseFilter
      */
     public function buildQuery(QueryBuilder $qb, array $parameters)
     {
-        $qb = $qb
-             ->join('item.tags', 't')
-             ->andWhere('t.id IN (:tags)')
-             ->setParameter('tags', $parameters['tags']);
+        //clean the parameters from the blank value
+        foreach ($parameters['tags'] as $index => $parameter) {
+            //the blank value is removed
+            if ($parameter === '') {
+                unset($parameters['tags'][$index]);
+            }
+        }
+
+        if (count($parameters['tags']) > 0) {
+            $qb = $qb
+                 ->join('item.tags', 't')
+                 ->andWhere('t.id IN (:tags)')
+                 ->setParameter('tags', $parameters['tags']);
+        }
 
         return $qb;
     }
@@ -56,7 +66,10 @@ class TagFilter extends BaseFilter
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $tags = $this->em->getRepository('VictoireBlogBundle:Tag')->findAll();
-        $tagsChoices = array();
+
+        //the blank value
+        $tagsChoices = array(null => '');
+
         foreach ($tags as $tag) {
             $tagsChoices[$tag->getId()] = $tag->getTitle();
         }
@@ -73,6 +86,7 @@ class TagFilter extends BaseFilter
                 'tags', 'choice', array(
                     'label' => 'blog.tag_filter.label',
                     'choices' => $tagsChoices,
+                    'required' => false,
                     'multiple' => true,
                     'attr' => array(
                         'class' => 'select2'
