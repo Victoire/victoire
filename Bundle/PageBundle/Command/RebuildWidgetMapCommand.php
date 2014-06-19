@@ -85,7 +85,9 @@ EOT
         foreach ($pages as $page) {
             // Build tree
             $output->writeln(sprintf('<comment>+++ Build widget map for page #%s : %s... </comment>', $page->getId(), $page->getSlug()));
-            $page->setWidgetMap($widgetMapBuilder->build($page));
+
+            $widgetMapBuilder->removeMissingWidgets($page);
+
             $em->persist($page);
 
             // Flush every 100 queries

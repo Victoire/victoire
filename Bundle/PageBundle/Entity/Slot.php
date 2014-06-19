@@ -15,6 +15,14 @@ class Slot
     protected $widgetMaps = null;
 
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->widgetMaps = array();
+    }
+
+    /**
      * Get the id
      *
      * @return string The id

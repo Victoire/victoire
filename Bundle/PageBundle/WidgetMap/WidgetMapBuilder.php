@@ -27,50 +27,47 @@ class WidgetMapBuilder
     }
 
     /**
-     * Build page widget map builder
-     * @param  Page   $page The page we want to build the widget map
-     * @return array       The widget map as an array
+     * Remove the missing widgets from the widget map of a page
+     *
+     * @param Page $page
      */
-    public function build(Page $page)
+    public function removeMissingWidgets(Page $page)
     {
-        $widgetMap = array();
-        //Get all page/Template widgets
-        foreach ($page->getWidgets() as $key => $widget) {
-            if (!isset($widgetMap[$widget->getSlot()])) {
-                $widgetMap[$widget->getSlot()] = array();
-            }
-            $widgetMap[$widget->getSlot()][] = $widget->getId();
-        }
+        //get the slots of the page
+        $slots = $page->getSlots();
 
-        //Then use old widgetMap to order them
-        $oldWidgetMap = $page->getWidgetMap();
+        //the entity manager
+        $em = $this->em;
+        //the repository
+        $widgetRepo = $em->getRepository('VictoireCoreBundle:Widget');
 
-        $sortedWidgetMap = array();
-        foreach ($oldWidgetMap as $slot => $widgets) {
-            foreach ($widgets as $position => $widgetId) {
-                if (isset($widgetMap[$slot]) && in_array($widgetId, $widgetMap[$slot])) {
-                    if (!isset($sortedWidgetMap[$slot])) {
-                        $sortedWidgetMap[$slot] = array();
-                    }
-                    $sortedWidgetMap[$slot][] = $widgetId;
-                    unset($widgetMap[$slot][array_search($widgetId, $widgetMap[$slot])]);
+        //parse the slots
+        foreach ($slots as $slot) {
+            $widgetMaps = $slot->getWidgetMaps();
+
+            //parse the widget maps
+            foreach ($widgetMaps as $widgetMap) {
+                $widgetId = $widgetMap->getWidgetId();
+
+                //get the widget by its id
+                $widget = $widgetRepo->findOneById($widgetId);
+
+                //if the widget is missing
+                if ($widget === null) {
+                    $missingWidget = true;
+                } else {
+                    $missingWidget = false;
+                }
+
+                //if the widget is missing
+                if ($missingWidget) {
+                    $slot->removeWidgetMap($widgetMap);
                 }
             }
         }
-        foreach ($widgetMap as $slot => $widgets) {
-            foreach ($widgets as $id) {
-                if (!isset($sortedWidgetMap[$slot])) {
-                    $sortedWidgetMap[$slot] = array();
-                }
-                $sortedWidgetMap[$slot][] = $id;
-            }
-        }
 
-        if ($template = $page->getTemplate()) {
-            $sortedWidgetMap = array_merge($sortedWidgetMap, $this->build($template));
-        }
-
-        return $sortedWidgetMap;
+        //we update the serialized widget map
+        $page->updateWidgetMapBySlots();
     }
 
     /**
