@@ -87,7 +87,7 @@ class PageSubscriber implements EventSubscriber
         //set a relation between Page and User to define the page author
         $metaBuilder = new ClassMetadataBuilder($metadatas);
         if ($this->userClass && $metadatas->name === 'Victoire\Bundle\PageBundle\Entity\BasePage') {
-            $metaBuilder->addManyToOne('author', $this->userClass, 'pages');
+            $metaBuilder->addManyToOne('author', $this->userClass);
         }
 
         // if $pages property exists, add the inversed side on User
