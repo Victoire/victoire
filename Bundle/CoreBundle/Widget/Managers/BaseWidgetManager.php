@@ -347,6 +347,7 @@ class BaseWidgetManager
         if ($entityName !== null) {
             if ($namespace === null) {
                 throw new \Exception('The namespace is mandatory if the entityName is given');
+            }
             if ($formMode === null) {
                 throw new \Exception('The formMode is mandatory if the entityName is given');
             }
