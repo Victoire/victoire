@@ -16,7 +16,8 @@ $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(
     if ($("select.picker_entity_select").length != 0 && $("select.picker_entity_select").attr('name').indexOf('[items][__name__][entity]') !== -1) {
         $("select.picker_entity_select").remove();
     }
-    var form = $vic(this).parents('.vic-modal-content').find('.vic-tab-pane.vic-active form');;
+    //we look for the form currently active and visible
+    var form = $vic(this).parents('.vic-modal-content').find('.vic-tab-pane.vic-active form').filter(":visible");
 
     $vic.ajax({
         type: form.attr('method'),
@@ -94,30 +95,4 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="delete"]', function(
             console.log(response.message);
         }
     });
-});
-
-//create the victoire object
-if (victoire === undefined) {
-    var victoire = {};    
-}
-
-$vic(function() {
-    //Add the widget namespace
-    victoire.widget = {};
-    
-    //add properties
-    victoire.widget.setMode = function (link, modeValue)
-    {
-        //the hash has the form "#picker-vehicle"
-        //so we remove the #picker
-        var linkId = link.hash.substring(8);
-        var paneDiv = $vic('#' + linkId);
-        //get the form
-        var form = paneDiv.children('form');
-        //get the mode input hidden        
-        var mode = form.children().children("[name$='[mode]']");
-        
-        //set the new value
-        mode.val(modeValue);
-    };
 });

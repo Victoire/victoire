@@ -107,6 +107,7 @@ class BaseWidgetManager
         //services
         $formErrorService = $this->container->get('av.form_error_service');
         $em = $this->getEntityManager();
+        $request = $this->container->get('request');
 
         //the default response
         $response = array(
@@ -119,7 +120,6 @@ class BaseWidgetManager
 
         $form = $this->callBuildFormSwitchParameters($widget, $entity);
 
-        $request = $this->container->get('request');
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -336,21 +336,23 @@ class BaseWidgetManager
      *
      * @param WidgetRedactor $widget
      * @param string         $entityName
-     * @param string         $namespace
+     * @param string         $formMode
      * @return $form
      *
      * @throws \Exception
      */
-    public function buildForm($widget, $entityName = null, $namespace = null)
+    public function buildForm($widget, $entityName = null, $namespace = null, $formMode = Widget::MODE_STATIC)
     {
         //test parameters
         if ($entityName !== null) {
             if ($namespace === null) {
                 throw new \Exception('The namespace is mandatory if the entityName is given');
+            if ($formMode === null) {
+                throw new \Exception('The formMode is mandatory if the entityName is given');
             }
         }
 
-        $form = $this->buildWidgetForm($widget, $entityName, $namespace);
+        $form = $this->buildWidgetForm($widget, $entityName, $namespace, $formMode);
 
         //send event
         $dispatcher = $this->container->get('event_dispatcher');
@@ -500,18 +502,21 @@ class BaseWidgetManager
      * create a form with given widget
      * @param WidgetRedactor $widget
      * @param string         $entityName
-     * @param string         $namespace
+     * @param string         $formMode
      *
      * @return $form
      *
      * @throws \Exception
      */
-    public function buildWidgetForm($widget, $entityName = null, $namespace = null)
+    public function buildWidgetForm($widget, $entityName = null, $namespace = null, $formMode = null)
     {
         //test parameters
         if ($entityName !== null) {
             if ($namespace === null) {
                 throw new \Exception('The namespace is mandatory if the entityName is given');
+            }
+            if ($formMode === null) {
+                throw new \Exception('The formMode is mandatory if the entityName is given');
             }
         }
 
@@ -523,7 +528,8 @@ class BaseWidgetManager
         $form = $formFactory->create($formAlias, $widget,
             array(
                 'entityName' => $entityName,
-                'namespace' => $namespace
+                'namespace' => $namespace,
+                'mode' => $formMode
             )
         );
 

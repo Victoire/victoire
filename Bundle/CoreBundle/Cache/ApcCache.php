@@ -52,7 +52,6 @@ class ApcCache
         $id = $this->uniqId . '-' . $id;
 
         if (!$this->apcIsEnabled()) {
-            zdebug('apc not enable');
             return false;
         }
 

@@ -110,87 +110,11 @@ class WidgetManager
     {
         //create a page for the business entity instance if we are currently display an instance for a business entity template
         $page = $this->duplicateTemplatePageIfPageInstance($page);
+        $request = $this->container->get('request');
 
         $manager = $this->getManager(null, $type);
 
-        if (method_exists($manager, 'createWidget')) {
-            return $manager->createWidget($slotId, $page, $entity);
-        }
-
-        $widget = $manager->newWidget($page, $slotId);
-        $widget->setCurrentPage($page);
-        $classes = $this->container->get('victoire_core.annotation_reader')->getBusinessClassesForWidget($widget);
-
-        $form = $this->buildForm($manager, $widget);
-
-        if ($entity) {
-            $form = $this->buildForm($manager, $widget, $entity, $classes[$entity]);
-        } else {
-            $form = $this->buildForm($manager, $widget);
-        }
-
-        $request = $this->container->get('request');
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $widget = $form->getData();
-            $em = $this->container->get('doctrine')->getManager();
-
-            $widget->setBusinessEntityName($entity);
-            if ($entity) {
-                $widget->setBusinessClass($classes[$entity]);
-            }
-            $em->persist($widget);
-            $em->flush();
-
-            //the id of the widget
-            $widgetId = $widget->getId();
-
-            //create the new widget map
-            $widgetMapEntry = new WidgetMap();
-            $widgetMapEntry->setAction(WidgetMap::ACTION_CREATE);
-            $widgetMapEntry->setWidgetId($widgetId);
-
-            //get the slot
-            $slot = $page->getSlotById($slotId);
-
-            //test that slot exists
-            if ($slot === null) {
-                throw new \Exception('The slot with the id:['.$slotId.'] was not found for the widget with the id:['.$widgetId.']');
-            }
-
-            //update the slot
-            $slot->addWidgetMap($widgetMapEntry);
-
-            //update the widget map
-            $page->updateWidgetMapBySlots();
-
-            $em->persist($page);
-            $em->flush();
-
-            //get the html for the widget
-            $hmltWidget = $this->render($widget, $page, true);
-
-            return array(
-                "success" => true,
-                "html"    => $hmltWidget
-            );
-        }
-
-        $forms = $this->renderNewWidgetForms($entity, $slotId, $page, $widget);
-
-        return array(
-            "success" => false,
-            "html"    => $this->container->get('victoire_templating')->render(
-                "VictoireCoreBundle:Widget:Form/new.html.twig",
-                array(
-                    'page'    => $page,
-                    'classes' => $classes,
-                    'forms'   => $forms,
-                    'widget'   => $widget,
-                )
-            )
-        );
+        return $manager->createWidget($slotId, $page, $entity);
     }
 
     public function buildWidget($type, $entity, $page, $slot, $entityName, $attrs, $fields)
@@ -239,18 +163,29 @@ class WidgetManager
      *
      * @return collection of forms
      */
-    private function renderNewWidgetForms($type, $slot, BasePage $page, Widget $widget)
+    protected function renderNewWidgetForms($type, $slot, BasePage $page, Widget $widget)
     {
         $annotationReader = $this->container->get('victoire_core.annotation_reader');
         $classes = $annotationReader->getBusinessClassesForWidget($widget);
         $manager = $this->getManager($widget);
 
-        $forms['static'] = $this->renderNewForm($this->buildForm($manager, $widget), $widget, $slot, $page);
+        //the static form
+        $forms['static'] = array();
+        $forms['static']['main'] = $this->renderNewForm($this->buildForm($manager, $widget), $widget, $slot, $page);
 
         // Build each form relative to business entities
         foreach ($classes as $entityName => $namespace) {
-            $form = $this->buildForm($manager, $widget, $entityName, $namespace);
-            $forms[$entityName] = $this->renderNewForm($form, $widget, $slot, $page, $entityName);
+            //get the forms for the business entity (entity/query/businessEntity)
+            $entityForms = $this->buildEntityForms($manager, $widget, $entityName, $namespace);
+
+            //the list of forms
+            $forms[$entityName] = array();
+
+            //foreach of the entity form
+            foreach ($entityForms as $formMode => $entityForm) {
+                //we add the form
+                $forms[$entityName][$formMode] = $this->renderNewForm($entityForm, $widget, $slot, $page, $entityName);
+            }
         }
 
         return $forms;
@@ -576,10 +511,7 @@ class WidgetManager
                 in_array($widgetType, $slots[$slot]['widgets'][$widgetName]['themes']);
         }
 
-
         return !empty($slots[$slot]) && (array_key_exists($widgetType, $slots[$slot]['widgets']));
-
-
     }
 
     /**
@@ -590,14 +522,41 @@ class WidgetManager
      * @param string  $namespace
      * @return Form
      */
-    public function buildForm($manager, $widget, $entityName = null, $namespace = null)
+    public function buildForm($manager, $widget, $entityName = null, $namespace = null, $formMode = null)
     {
-        $form = $manager->buildForm($widget, $entityName, $namespace);
+        $form = $manager->buildForm($widget, $entityName, $namespace, $formMode);
 
         $dispatcher = $this->container->get('event_dispatcher');
         $dispatcher->dispatch(VictoireCmsEvents::WIDGET_BUILD_FORM, new WidgetBuildFormEvent($widget, $form));
 
         return $form;
+    }
+
+    /**
+     *
+     * @param unknown $manager
+     * @param unknown $widget
+     * @param string $entityName
+     * @param string $namespace
+     * @return multitype:
+     */
+    public function buildEntityForms($manager, $widget, $entityName = null, $namespace = null)
+    {
+        $forms = array();
+
+        //get the entity form
+        $entityForm = $this->buildForm($manager, $widget, $entityName, $namespace, Widget::MODE_ENTITY);
+        $forms[Widget::MODE_ENTITY] = $entityForm;
+
+        //get the query form
+        $queryForm = $this->buildForm($manager, $widget, $entityName, $namespace, Widget::MODE_QUERY);
+        $forms[Widget::MODE_QUERY] = $queryForm;
+
+        //get the query form
+        $businessEntityForm = $this->buildForm($manager, $widget, $entityName, $namespace, Widget::MODE_BUSINESS_ENTITY);
+        $forms[Widget::MODE_BUSINESS_ENTITY] = $businessEntityForm;
+
+        return $forms;
     }
 
     /**
