@@ -5,25 +5,21 @@
 {% block form_container %}
     {% block body %}
         {% block form %}
-                    {% if entity != null %}
-                        <div id="picker-{{entity}}-{{ form.mode.vars.data }}" class="vic-tab-pane {% if form.mode.vars.data == 'entity' %}vic-active{% endif %}">
-                            <form name="widget" action={% spaceless %}
-                                    {{ path('victoire_core_widget_create', {'page': page.id,'slot':slot, 'type': widget.type, 'entity': entity} ) }}
-                                {% endspaceless %} method="POST" class="vic-form-horizontal" data-slot="{{ widget.slot }}">
-                                {{form_rest(form)}}
-                            </form>
-                        </div>
-                    {% else %}
-                        {% block form_static %}
-                            <div id="picker-{{ form.mode.vars.data }}" class="vic-tab-pane vic-active">
-                                <form name="widget" action={% spaceless %}
-                                        {{ path('victoire_core_widget_create', {'page': page.id,'slot':slot, 'type': widget.type, 'entity': entity} ) }}
-                                    {% endspaceless %} method="POST" class="vic-form-horizontal" data-slot="{{ widget.slot }}">
-                                    {{form_rest(form)}}
-                                </form>
-                            </div>
-                        {% endblock form_static %}
-                    {% endif %}
+            {% if entity != null %}
+                <div id="picker-{{entity}}-{{ form.mode.vars.data }}" class="vic-tab-pane {% if form.mode.vars.data == 'entity' %}vic-active{% endif %}">
+                    {{ form_start(form) }}
+                        {{form_rest(form)}}
+                    {{ form_end(form) }}
+                </div>
+            {% else %}
+                {% block form_static %}
+                    <div id="picker-{{ form.mode.vars.data }}" class="vic-tab-pane vic-active">
+                        {{ form_start(form) }}
+                            {{form_rest(form)}}
+                        {{ form_end(form) }}
+                    </div>
+                {% endblock form_static %}
+            {% endif %}
         {% endblock form %}
     {% endblock body %}
 {% endblock form_container %}

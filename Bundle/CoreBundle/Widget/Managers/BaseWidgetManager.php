@@ -39,7 +39,7 @@ class BaseWidgetManager
      * @throws \Exception
      * @return \Victoire\Bundle\CoreBundle\Widget\Managers\Form
      */
-    protected function callBuildFormSwitchParameters($widget, $entityName)
+    protected function callBuildFormSwitchParameters($widget, $page, $entityName)
     {
         //if there is an entity
         if ($entityName) {
@@ -54,10 +54,10 @@ class BaseWidgetManager
             //get the class of the entity name
             $entityClass = $classes[$entityName];
 
-            $form = $this->buildForm($widget, $entityName, $entityClass);
+            $form = $this->buildForm($widget, $page, $entityName, $entityClass);
         } else {
             //build a form only with the widget
-            $form = $this->buildForm($widget);
+            $form = $this->buildForm($widget, $page);
         }
 
         return $form;
@@ -118,7 +118,7 @@ class BaseWidgetManager
         //create a new widget
         $widget = $this->newWidget($page, $slotId);
 
-        $form = $this->callBuildFormSwitchParameters($widget, $entity);
+        $form = $this->callBuildFormSwitchParameters($widget, $page, $entity);
 
         $form->handleRequest($request);
 
@@ -341,7 +341,7 @@ class BaseWidgetManager
      *
      * @throws \Exception
      */
-    public function buildForm($widget, $entityName = null, $namespace = null, $formMode = Widget::MODE_STATIC)
+    public function buildForm($widget, BasePage $page, $entityName = null, $namespace = null, $formMode = Widget::MODE_STATIC)
     {
         //test parameters
         if ($entityName !== null) {
@@ -353,7 +353,7 @@ class BaseWidgetManager
             }
         }
 
-        $form = $this->buildWidgetForm($widget, $entityName, $namespace, $formMode);
+        $form = $this->buildWidgetForm($widget, $page, $entityName, $namespace, $formMode);
 
         //send event
         $dispatcher = $this->container->get('event_dispatcher');
@@ -386,8 +386,9 @@ class BaseWidgetManager
      *
      * @return new form
      */
-    public function renderNewForm($form, $widget, $slot, $page, $entity = null)
+    public function renderNewForm($form, $widget, $slot, BasePage $page, $entity = null)
     {
+        $router = $this->container->get('router');
         //the name of the bundle depends of the widget name
         $bundleName = $this->getBundleName();
 
@@ -509,8 +510,10 @@ class BaseWidgetManager
      *
      * @throws \Exception
      */
-    public function buildWidgetForm($widget, $entityName = null, $namespace = null, $formMode = null)
+    public function buildWidgetForm($widget, BasePage $page, $entityName = null, $namespace = null, $formMode = null)
     {
+        $router = $this->container->get('router');
+
         //test parameters
         if ($entityName !== null) {
             if ($namespace === null) {
@@ -526,11 +529,32 @@ class BaseWidgetManager
 
         $formAlias = 'victoire_widget_form_'.strtolower($this->getWidgetName());
 
+        //are we updating or creating the widget?
+        if ($widget->getId() === null) {
+            $formUrl = $router->generate('victoire_core_widget_create',
+                array(
+                    'page' => $page->getId(),
+                    'slot' => $widget->getSlot(),
+                    'type' => $widget->getType(),
+                    'entity' => $entityName
+                )
+            );
+        } else {
+            $formUrl = $router->generate('victoire_core_widget_update',
+                array(
+                    'id' => $widget->getId(),
+                    'type' => $entityName
+                )
+            );
+        }
+
         $form = $formFactory->create($formAlias, $widget,
             array(
                 'entityName' => $entityName,
                 'namespace' => $namespace,
-                'mode' => $formMode
+                'mode' => $formMode,
+                'action'  => $formUrl,
+                'method' => 'POST'
             )
         );
 
