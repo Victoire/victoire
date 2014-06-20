@@ -53,7 +53,7 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update"]', function(
     if ($("select.picker_entity_select").length != 0 && $("select.picker_entity_select").attr('name').indexOf('appventus_victoirecorebundle_widgetlistingtype[items][__name__][entity]') !== -1) {
         $("select.picker_entity_select").remove();
     }
-    var form = $vic(this).parents('.vic-modal-content').find('.vic-tab-pane.vic-active form');
+    var form = $vic(this).parents('.vic-modal-content').find('.vic-tab-pane.vic-active form').filter(":visible");
     $vic.ajax({
         type: form.attr('method'),
         url : form.attr('action'),
