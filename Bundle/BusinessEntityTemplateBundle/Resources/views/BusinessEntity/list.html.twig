@@ -1,32 +1,21 @@
 {% trans_default_domain "victoire" %}
 
-{% extends 'VictoireCoreBundle::_modal.html.twig' %}
-
-{% block modal_container_classes %}{{ parent() }} vic-page-modal{% endblock modal_container_classes %}
-
-{% block modal_body_content %}
-<div class="vic-container vic-masthead">
-    <div>
-        <h2>
-            {{ 'list.title.businessEntity'|trans }} : {{ businessEntity.getName }}
-        </h2>
-    </div>
-    <h2>{{ 'list.title.templates'|trans }}</h2>
-    <div>
-
+<div class="vic-container">
+    <div  style='margin-bottom: 15px;'>
         <a data-toggle="vic-modal" href="{{ path('victoire_businessentitytemplate_businessentitytemplate_new', {'id': businessEntity.getId}) }}">
-            {{ 'list.action.add'|trans }}
+            <i class="fa fa-plus-square">{{ 'list.action.add'|trans }}</i>
 	    </a>
     </div>
-    {%  for template in templates %}
+    {%  for template in businessEntitiesTemplates %}
     <div>
-        <a href="/{{ template.getPageUrl }}">
-	        {{ template.getName }}
+        <a data-toggle="vic-modal"  href="{{ path('victoire_businessentitytemplate_businessentitytemplate_edit', {'id': template.getId}) }}">
+	        <i class="fa fa-pencil-square-o">{{ 'list.action.edit'|trans }}</i>
 	    </a>
-	    <a data-toggle="vic-modal"  href="{{ path('victoire_businessentitytemplate_businessentitytemplate_edit', {'id': template.getId}) }}">
-	        {{ 'list.action.edit'|trans }}
-	    </a>
+	    <span style='margin-left: 15px'>
+            <a href="/{{ template.getPageUrl }}">
+                {{ template.getName }}
+    	    </a>
+	    </span>
     </div>
     {% endfor %}
 </div>
-{% endblock modal_body_content %}
