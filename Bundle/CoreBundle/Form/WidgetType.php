@@ -15,7 +15,8 @@ use Victoire\Bundle\CoreBundle\Entity\Widget;
 class WidgetType extends AbstractType
 {
     /**
-     * define form fields
+     * Define form fields
+     *
      * @param FormBuilderInterface $builder The builder
      * @param array                $options The options
      *
@@ -45,34 +46,15 @@ class WidgetType extends AbstractType
         }
 
         if ($mode === Widget::MODE_ENTITY) {
-            $builder
-                ->add('slot', 'hidden')
-                ->add('fields', 'widget_fields', array(
-                    'label' => 'widget.form.fields.label',
-                    'namespace' => $namespace,
-                    'widget'    => $options['widget']
-                ))
-                ->add('entity_proxy', 'entity_proxy', array(
-                    'entity_name' => $entityName,
-                    'namespace'   => $namespace,
-                    'widget'      => $options['widget']
-                ));
+            $this->addEntityFields($builder);
         }
 
         if ($mode === Widget::MODE_QUERY) {
-            $builder->add('query');
-            $builder->add('fields', 'widget_fields', array(
-                'label' => 'widget.form.fields.label',
-                'namespace' => $namespace,
-                'widget'    => $options['widget']
-            ));
+            $this->addQueryFields($builder);
         }
+
         if ($mode === Widget::MODE_BUSINESS_ENTITY) {
-            $builder->add('fields', 'widget_fields', array(
-                'label' => 'widget.form.fields.label',
-                'namespace' => $namespace,
-                'widget'    => $options['widget']
-            ));
+            $this->addBusinessEntityFields($builder);
         }
 
         //add the mode to the form
@@ -98,39 +80,68 @@ class WidgetType extends AbstractType
 
                 //the controller does not use the mode to construct the form, so we update it automatically
                 if ($mode === Widget::MODE_ENTITY) {
-                    $form
-                    ->add('slot', 'hidden')
-                    ->add('fields', 'widget_fields', array(
-                        'label' => 'widget.form.fields.label',
-                        'namespace' => $options['namespace'],
-                        'widget'    => $options['widget']
-                    ))
-                    ->add('entity_proxy', 'entity_proxy', array(
-                        'entity_name' => $options['entityName'],
-                        'namespace' => $options['namespace'],
-                        'widget'      => $options['widget']
-                    ));
+                    $this->addEntityFields($form);
                 }
 
                 if ($mode === Widget::MODE_QUERY) {
-                    $form->add('query');
-                    $form->add('fields', 'widget_fields', array(
-                        'label' => 'widget.form.fields.label',
-                        'namespace' => $options['namespace'],
-                        'widget'    => $options['widget']
-                    ));
+                    $this->addQueryFields($form);
                 }
                 if ($mode === Widget::MODE_BUSINESS_ENTITY) {
-                    $form->add('fields', 'widget_fields', array(
-                        'label' => 'widget.form.fields.label',
-                        'namespace' => $options['namespace'],
-                        'widget'    => $options['widget']
-                    ));
+                    $this->addBusinessEntityFields($form);
                 }
             }
         );
     }
 
+    /**
+     * Add the fields for the business entity mode
+     *
+     * @param unknown $form
+     */
+    protected function addBusinessEntityFields($form)
+    {
+        $form->add('fields', 'widget_fields', array(
+            'label' => 'widget.form.fields.label',
+            'namespace' => $options['namespace'],
+            'widget'    => $options['widget']
+        ));
+    }
+
+    /**
+     * Add the fields for the form and the entity mode
+     *
+     * @param unknown $form
+     */
+    protected function addEntityFields($form)
+    {
+        $form
+        ->add('slot', 'hidden')
+        ->add('fields', 'widget_fields', array(
+            'label' => 'widget.form.fields.label',
+            'namespace' => $options['namespace'],
+            'widget'    => $options['widget']
+        ))
+        ->add('entity_proxy', 'entity_proxy', array(
+            'entity_name' => $options['entityName'],
+            'namespace' => $options['namespace'],
+            'widget'      => $options['widget']
+        ));
+    }
+
+    /**
+     * Add the fields to the form for the query mode
+     *
+     * @param unknown $form
+     */
+    protected function addQueryFields($form)
+    {
+        $form->add('query');
+        $form->add('fields', 'widget_fields', array(
+            'label' => 'widget.form.fields.label',
+            'namespace' => $options['namespace'],
+            'widget'    => $options['widget']
+        ));
+    }
 
     /**
      * bind form to WidgetRedactor entity
