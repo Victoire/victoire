@@ -217,8 +217,6 @@ class WidgetManager
             $widget = $widgetMapBuilder->editWidgetFromPage($page, $widget);
 
             if ($entity !== null) {
-                zdebug($classes);
-                zdebug($entity);
                 $form = $this->buildForm($manager, $widget, $page, $entity, $classes[$entity]);
             } else {
                 $form = $this->buildForm($manager, $widget, $page);
