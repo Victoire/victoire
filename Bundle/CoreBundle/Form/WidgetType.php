@@ -100,6 +100,8 @@ class WidgetType extends AbstractType
      */
     protected function addBusinessEntityFields($form)
     {
+        $options = $this->options;
+
         $form->add('fields', 'widget_fields', array(
             'label' => 'widget.form.fields.label',
             'namespace' => $options['namespace'],
@@ -114,6 +116,8 @@ class WidgetType extends AbstractType
      */
     protected function addEntityFields($form)
     {
+        $options = $this->options;
+
         $form
         ->add('slot', 'hidden')
         ->add('fields', 'widget_fields', array(
@@ -135,6 +139,8 @@ class WidgetType extends AbstractType
      */
     protected function addQueryFields($form)
     {
+        $options = $this->options;
+
         $form->add('query');
         $form->add('fields', 'widget_fields', array(
             'label' => 'widget.form.fields.label',

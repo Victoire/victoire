@@ -392,8 +392,15 @@ class BaseWidgetManager
         //the name of the bundle depends of the widget name
         $bundleName = $this->getBundleName();
 
+        //are we updating or creating the widget?
+        if ($widget->getId() === null) {
+            $action = 'new';
+        } else {
+            $action = 'edit';
+        }
+
         //the template displayed is in the widget bundle
-        $templateName = $bundleName.'::new.html.twig';
+        $templateName = $this->getTemplateName($action);
 
         return $this->container->get('victoire_templating')->render(
             $templateName,
