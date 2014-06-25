@@ -65,5 +65,10 @@
         "psr-0": { "Victoire": "" }
     },
     "minimum-stability": "dev",
-    "target-dir": "Victoire"
+    "target-dir": "Victoire",
+    "extra": {
+        "branch-alias": {
+            "dev-feature/business-entity-template": "0.1-dev"
+        }
+    }
 }
