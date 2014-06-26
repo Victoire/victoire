@@ -5,22 +5,26 @@ use Symfony\Component\EventDispatcher\Event;
 use Victoire\Bundle\PageBundle\Event\Menu\BasePageMenuContextualEvent;
 use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
 use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
+use AppVentus\Awesome\ShortcutsBundle\Service\ShortcutService;
 
 /**
  * When dispatched, this listener add items to a KnpMenu
  */
 class BusinessEntityTemplateMenuListener
 {
-    private $menuBuilder;
+    protected $menuBuilder = null;
+    protected $shortcuts = null;
 
     /**
      * Constructor
      *
-     * @param MenuBuilder $menuBuilder
+     * @param MenuBuilder     $menuBuilder
+     * @param ShortcutService $shortcuts
      */
-    public function __construct(MenuBuilder $menuBuilder)
+    public function __construct(MenuBuilder $menuBuilder, ShortcutService $shortcuts)
     {
         $this->menuBuilder = $menuBuilder;
+        $this->shortcuts = $shortcuts;
     }
 
     /**
@@ -69,9 +73,13 @@ class BusinessEntityTemplateMenuListener
 
         //if there is a parent, we add the link in the top bar
         if ($parent !== null) {
+            $shortcuts = $this->shortcuts;
+
+            $url = $shortcuts->generateUrl('victoire_core_page_show', array('url' => $parent->getUrl()));
+
             $mainItem
                 ->addChild('menu.parent', array(
-                    'uri' => '/'.$parent->getUrl() //we use the root url
+                    'uri' => $url //we use the root url
                 ));
         }
 

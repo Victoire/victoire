@@ -46,8 +46,12 @@ class BusinessEntityTemplateController extends BaseController
             //get the url of the page
             $pageurl = $page->getUrl();
 
+            //the shortcuts service
+            $shortcuts = $this->get('av.shortcuts');
+
             //redirect to the page of the template
-            $completeUrl = '/'.$pageurl;
+            $completeUrl = $shortcuts->generateUrl('victoire_core_page_show', array('url' => $pageurl));
+
             $success = true;
         } else {
             $success = false;
@@ -207,8 +211,12 @@ class BusinessEntityTemplateController extends BaseController
             //get the url of the page
             $pageurl = $page->getUrl();
 
+            //the shortcuts service
+            $shortcuts = $this->get('av.shortcuts');
+
             //redirect to the page of the template
-            $completeUrl = '/'.$pageurl;
+            $completeUrl = $shortcuts->generateUrl('victoire_core_page_show', array('url' => $pageurl));
+
             $success = true;
         } else {
             $success = false;
