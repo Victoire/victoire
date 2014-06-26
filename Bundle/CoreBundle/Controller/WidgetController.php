@@ -13,6 +13,7 @@ use Victoire\Bundle\CoreBundle\Entity\Widget;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\CoreBundle\Widget\Managers\WidgetManager;
 use Symfony\Component\HttpFoundation\Request;
+use Gedmo\Blameable\ProtectedPropertySupperclassTest;
 
 /**
  * Widget Controller
@@ -46,13 +47,7 @@ class WidgetController extends AwesomeController
                 $response = $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $widget->getPage()->getUrl())));
             }
         } catch (\Exception $ex) {
-            $response = new JsonResponse(
-                array(
-                    'success' => false,
-                    'message' => $ex->getMessage(),
-                    'stackTrace' => $ex->getTrace()
-                )
-            );
+            $response = $this->getJsonReponseFromException($ex);
         }
 
         return $response;
@@ -76,13 +71,7 @@ class WidgetController extends AwesomeController
             $widgetManager = $this->getWidgetManager();
             $response = new JsonResponse($widgetManager->edit($request, $widget, $type));
         } catch (\Exception $ex) {
-            $response = new JsonResponse(
-                array(
-                    'success' => false,
-                    'message' => $ex->getMessage(),
-                    'stackTrace' => $ex->getTrace()
-                )
-            );
+            $response = $this->getJsonReponseFromException($ex);
         }
 
         return $response;
@@ -128,13 +117,7 @@ class WidgetController extends AwesomeController
                 $response = new JsonResponse($this->get('widget_manager')->newWidget($type, $slot, $page));
             }
         } catch (\Exception $ex) {
-            $response = new JsonResponse(
-                array(
-                    'success' => false,
-                    'message' => $ex->getMessage(),
-                    'stackTrace' => $ex->getTrace()
-                )
-            );
+            $response = $this->getJsonReponseFromException($ex);
         }
 
         return $response;
@@ -162,13 +145,7 @@ class WidgetController extends AwesomeController
 
             $response = new JsonResponse($widgetManager->createWidget($type, $slot, $page, $entity));
         } catch (\Exception $ex) {
-            $response = new JsonResponse(
-                array(
-                    'success' => false,
-                    'message' => $ex->getMessage(),
-                    'stackTrace' => $ex->getTrace()
-                )
-            );
+            $response = $this->getJsonReponseFromException($ex);
         }
 
         return $response;
@@ -188,13 +165,7 @@ class WidgetController extends AwesomeController
         try {
             $response = new JsonResponse($this->get('widget_manager')->deleteWidget($widget));
         } catch (\Exception $ex) {
-            $response = new JsonResponse(
-                array(
-                    'success' => false,
-                    'message' => $ex->getMessage(),
-                    'stackTrace' => $ex->getTrace()
-                )
-            );
+            $response = $this->getJsonReponseFromException($ex);
         }
 
         return $response;
@@ -219,13 +190,7 @@ class WidgetController extends AwesomeController
 
             $response = new JsonResponse(array('success' => true));
         } catch (\Exception $ex) {
-            $response = new JsonResponse(
-                array(
-                    'success' => false,
-                    'message' => $ex->getMessage(),
-                    'stackTrace' => $ex->getTrace()
-                )
-            );
+            $response = $this->getJsonReponseFromException($ex);
         }
 
         return $response;
@@ -241,5 +206,43 @@ class WidgetController extends AwesomeController
         $manager = $this->get('widget_manager');
 
         return $manager;
+    }
+
+    /**
+     * Get the json response by the exception and the current user
+     *
+     * @param \Exception $ex
+     *
+     * @return JsonResponse
+     */
+    protected function getJsonReponseFromException(\Exception $ex)
+    {
+        $secutiryContext = $this->get('security.context');
+        $isDebugAllowed = $secutiryContext->isGranted('PAGE_DEBUG');
+
+        if ($isDebugAllowed) {
+            $response = new JsonResponse(
+                array(
+                    'success' => false,
+                    'message' => $ex->getMessage(),
+                    'stackTrace' => $ex->getTrace()
+                )
+            );
+        } else {
+            //translate the message
+            $translator = $this->get('translator');
+
+            //get the translated message
+            $message = $translator->trans('error_occured', array(), 'victoire');
+
+            $response = new JsonResponse(
+                array(
+                    'success' => false,
+                    'message' => $message
+                )
+            );
+        }
+
+        return $response;
     }
 }

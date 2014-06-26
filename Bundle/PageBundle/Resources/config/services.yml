@@ -38,7 +38,11 @@ services:
         arguments: ['%victoire_core.user_class%']
         tags:
             - { name: security.voter }
-
+    page.security.voter.page_debug:
+        class: Victoire\Bundle\PageBundle\Security\Voter\PageDebugVoter
+        arguments: ['%victoire_core.user_class%']
+        tags:
+            - { name: security.voter }
     ####################################################################################################################
     # Forms
     ####################################################################################################################
