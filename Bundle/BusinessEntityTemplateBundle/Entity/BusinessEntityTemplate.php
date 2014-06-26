@@ -51,8 +51,6 @@ class BusinessEntityTemplate
     /**
      * @var string
      *
-     * @Assert\NotBlank()
-     * @ORM\Column(name="layout", type="string", length=255, nullable=false)
      */
     protected $layout;
 
