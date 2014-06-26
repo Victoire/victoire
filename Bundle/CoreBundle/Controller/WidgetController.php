@@ -138,8 +138,6 @@ class WidgetController extends AwesomeController
         }
 
         return $response;
-
-
     }
 
     /**
