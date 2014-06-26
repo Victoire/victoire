@@ -217,8 +217,16 @@ class WidgetController extends AwesomeController
      */
     protected function getJsonReponseFromException(\Exception $ex)
     {
-        $secutiryContext = $this->get('security.context');
-        $isDebugAllowed = $secutiryContext->isGranted('PAGE_DEBUG');
+        //services
+        $securityContext = $this->get('security.context');
+        $logger = $this->get('logger');
+
+        //can we see the debug
+        $isDebugAllowed = $securityContext->isGranted('PAGE_DEBUG');
+
+        //whatever is the exception, we log it
+        $logger->error($ex->getMessage());
+        $logger->error($ex->getTraceAsString());
 
         if ($isDebugAllowed) {
             $response = new JsonResponse(
