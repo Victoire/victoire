@@ -30,10 +30,6 @@ services:
     victoire_core.entity_proxy.fields_builder:
         class: Victoire\Bundle\CoreBundle\Form\Builder\EntityProxyFieldsBuilder
         arguments: ["@victoire_core.annotation_reader"]
-    victoire_core.widget_helper:
-        class: Victoire\Bundle\CoreBundle\Helper\WidgetHelper
-        arguments:
-            - "@doctrine.orm.entity_manager"
 #  ==================  MENU ================== #
 
     victoire_core.admin_menu_builder:
@@ -93,8 +89,8 @@ services:
         arguments: 
             - "@widget_manager"
             - "@victoire_templating"
-            - "@security.context" 
-            - "@victoire_core.widget_helper"
+            - "@security.context"
+            - "@doctrine.orm.entity_manager"
             - "@page.widgetMap.builder"
             - "@victoire_core.widget_exception_handler"
         tags:

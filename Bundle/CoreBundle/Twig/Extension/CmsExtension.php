@@ -14,6 +14,7 @@ use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\CoreBundle\Helper\WidgetHelper;
 use Victoire\Bundle\PageBundle\WidgetMap\WidgetMapBuilder;
 use Victoire\Bundle\CoreBundle\Handler\WidgetExceptionHandler;
+use Doctrine\ORM\EntityManager;
 
 /**
  * PageExtension extends Twig with page capabilities.
@@ -26,7 +27,7 @@ class CmsExtension extends \Twig_Extension
     protected $widgetManager;
     protected $templating;
     protected $securityContext;
-    protected $widgetHelper;
+    protected $entityManager;
     protected $widgetMapBuilder;
     protected $widgetExceptionHandler;
 
@@ -36,14 +37,14 @@ class CmsExtension extends \Twig_Extension
      * @param WidgetManager          $widgetManager
      * @param TemplateMapper         $templating
      * @param SecurityContext        $securityContext
-     * @param WidgetHelper           $widgetHelper
+     * @param EntityManager          $entityManager
      * @param WidgetMapBuilder       $widgetMapBuilder
      * @param WidgetExceptionHandler $widgetExceptionHandler
      */
     public function __construct(WidgetManager $widgetManager,
         TemplateMapper $templating,
         SecurityContext $securityContext,
-        WidgetHelper $widgetHelper,
+        EntityManager $entityManager,
         WidgetMapBuilder $widgetMapBuilder,
         WidgetExceptionHandler $widgetExceptionHandler
     )
@@ -51,7 +52,7 @@ class CmsExtension extends \Twig_Extension
         $this->widgetManager = $widgetManager;
         $this->templating = $templating;
         $this->securityContext = $securityContext;
-        $this->widgetHelper = $widgetHelper;
+        $this->entityManager = $entityManager;
         $this->widgetMapBuilder = $widgetMapBuilder;
         $this->widgetExceptionHandler = $widgetExceptionHandler;
     }
@@ -127,8 +128,8 @@ class CmsExtension extends \Twig_Extension
     public function cmsSlotWidgets(BasePage $page, $slotId, $addContainer = true, $entity = null)
     {
         //services
-        $widgetHelper = $this->widgetHelper;
         $widgetMapBuilder = $this->widgetMapBuilder;
+        $em = $this->entityManager;
 
         $result = "";
 
@@ -146,7 +147,8 @@ class CmsExtension extends \Twig_Extension
                 $widgetId = $widgetMap->getWidgetId();
 
                 //get the widget
-                $widget = $widgetHelper->findOneById($widgetId);
+                $widgetRepo = $em->getRepository('VictoireCoreBundle:Widget');
+                $widget = $widgetRepo->findOneById($widgetId);
 
                 //test widget
                 if ($widget === null) {
