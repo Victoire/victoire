@@ -9,14 +9,11 @@ use Symfony\Component\ClassLoader\UniversalClassLoader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Victoire\Bundle\CoreBundle\DependencyInjection\Compiler\ThemePass;
 
-
 /**
  * Awesome Cms for Symfony2
  */
 class VictoireCoreBundle extends Bundle
 {
-
-
     /**
      * create admin menu, add listeners for generate contextual menu item and dispatch globals item menus
      */
@@ -30,6 +27,10 @@ class VictoireCoreBundle extends Bundle
 
     }
 
+    /**
+     * Build bundle
+     * @param ContainerBuilder $container
+     */
     public function build(ContainerBuilder $container)
     {
         parent::build($container);
@@ -37,5 +38,4 @@ class VictoireCoreBundle extends Bundle
         $container->addCompilerPass(new TraductionCompilerPass());
         $container->addCompilerPass(new ThemePass());
     }
-
 }

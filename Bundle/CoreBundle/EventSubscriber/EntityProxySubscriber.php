@@ -11,16 +11,16 @@ use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
 class EntityProxySubscriber implements EventSubscriber
 {
 
-    protected $annotationReader;
+    protected static $annotationReader;
 
 
     /**
      * contructor
      * @param array $annotationReader
      */
-    public function __construct($annotationReader)
+    public function setAnnotationReader($annotationReader)
     {
-        $this->annotationReader = $annotationReader;
+        self::$annotationReader = $annotationReader;
     }
 
     /**
@@ -39,17 +39,24 @@ class EntityProxySubscriber implements EventSubscriber
      * Insert enabled widgets in base widget add relationship between BusinessEntities and EntityProxy
      * @param LoadClassMetadataEventArgs $eventArgs
      */
-    public function loadClassMetadata(LoadClassMetadataEventArgs $eventArgs)
+    static public function loadClassMetadata($eventArgs)
     {
-        $metadatas = $eventArgs->getClassMetadata();
-        $metaBuilder = new ClassMetadataBuilder($metadatas);
-        if ($metadatas->name == 'Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy') {
-            foreach ($this->annotationReader->getBusinessClasses() as $field => $entity) {
-                $metaBuilder->addManyToOne($field, $entity, $inversedBy = "proxies");
+        //this functions is called during the extract of translations
+        //but the argument is not the same
+        //so to avoid an error during extractions, we test the argument
+        if ($eventArgs instanceof LoadClassMetadataEventArgs) {
+            $annotationReader = self::$annotationReader;
+
+            $metadatas = $eventArgs->getClassMetadata();
+            $metaBuilder = new ClassMetadataBuilder($metadatas);
+            if ($metadatas->name == 'Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy') {
+                foreach ($annotationReader->getBusinessClasses() as $field => $entity) {
+                    $metaBuilder->addManyToOne($field, $entity, $inversedBy = "proxies");
+                }
             }
-        }
-        if ($key = array_search($metadatas->name, $this->annotationReader->getBusinessClasses())) {
-            $metaBuilder->addOneToMany('proxies', 'Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy', $key);
+            if ($key = array_search($metadatas->name, $annotationReader->getBusinessClasses())) {
+                $metaBuilder->addOneToMany('proxies', 'Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy', $key);
+            }
         }
     }
 }

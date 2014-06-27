@@ -1,15 +1,9 @@
-# VictoireCoreBundleCache:
-#     resource: .
-#     type: cache
 
 VictoireCoreBundle:
     resource: "@VictoireCoreBundle/Controller/"
     type:     annotation
     prefix:   /
 
-VictoireWidgetLoader:
-    resource: .
-    type: victoire
 
 victoire_core_page_show:
     path:      /{url}

@@ -6,9 +6,13 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Victoire\Bundle\PageBundle\Form\PageType;
 
+/**
+ *
+ * @author Thomas Beaujean
+ *
+ */
 class ArticleType extends PageType
 {
-
     /**
      * define form fields
      * @param FormBuilderInterface $builder
@@ -45,6 +49,8 @@ class ArticleType extends PageType
 
     /**
      * get form name
+     *
+     * @return string The name of the form
      */
     public function getName()
     {

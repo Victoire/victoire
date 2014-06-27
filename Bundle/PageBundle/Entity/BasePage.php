@@ -14,6 +14,10 @@ use Victoire\Bundle\CoreBundle\Entity\Route;
 use Victoire\Bundle\PageBundle\Entity\Template;
 use Victoire\Bundle\CoreBundle\Entity\Widget;
 use Victoire\Bundle\SeoBundle\Entity\PageSeo;
+use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
+use Victoire\Bundle\PageBundle\Entity\WidgetMap;
+use Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy;
+
 
 /**
  * Page
@@ -24,6 +28,7 @@ use Victoire\Bundle\SeoBundle\Entity\PageSeo;
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\Entity(repositoryClass="Victoire\Bundle\PageBundle\Repository\BasePageRepository")
  * @UniqueEntity("url")
+ * @ORM\HasLifecycleCallbacks
  */
 abstract class BasePage
 {
@@ -74,7 +79,7 @@ abstract class BasePage
     /**
      * @var string
      *
-     * @Gedmo\Slug(fields={"title"}, separator="-", updatable=false)
+     * @Gedmo\Slug(fields={"title"}, updatable=false, unique=false)
      * @ORM\Column(name="slug", type="string", length=255)
      */
     protected $slug;
@@ -110,7 +115,6 @@ abstract class BasePage
      */
     protected $widgets;
 
-
     /**
      * @var string
      *
@@ -144,6 +148,15 @@ abstract class BasePage
      * @ORM\Column(name="homepage", type="boolean", nullable=false)
      */
     protected $homepage;
+
+    /**
+     * @var boolean
+     *
+     * Do we compute automatically the url on the flush
+     *
+     * @ORM\Column(name="compute_url", type="boolean", nullable=false)
+     */
+    protected $computeUrl = true;
 
     /**
      * @var int
@@ -205,6 +218,77 @@ abstract class BasePage
      * @ORM\Column(name="widgetMap", type="array")
      */
     protected $widgetMap;
+
+    //the slot contains the widget maps entities
+    protected $slots = array();
+
+    /**
+     * Auto simple mode: joined entity
+     * @var EntityProxy
+     *
+     * @ORM\OneToOne(targetEntity="\Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy", cascade={"persist", "remove"})
+     */
+    protected $entityProxy;
+
+    /**
+     * The entity linked to the page
+     * @var unknown
+     */
+    protected $entity;
+
+
+    /**
+     * Set the entity proxy
+     *
+     * @param EntityProxy $entity
+     */
+    public function setEntityProxy(EntityProxy $entityProxy)
+    {
+        $this->entityProxy = $entityProxy;
+    }
+
+    /**
+     * Get the entity proxy
+     *
+     * @return EntityProxy
+     */
+    public function getEntityProxy()
+    {
+        return $this->entityProxy;
+    }
+
+    /**
+     * Set the entity
+     *
+     * @param unknown $entity
+     */
+    public function setEntity($entity)
+    {
+        $this->entity = $entity;
+    }
+
+    /**
+     * Get the entity
+     *
+     * @return number
+     */
+    public function getEntity()
+    {
+        //if there is no entity
+        if ($this->entity === null) {
+            //we try to get one from the proxy
+            $entityProxy = $this->getEntityProxy();
+
+            //if there is a proxy
+            if ($entityProxy !== null) {
+                $entity = $entityProxy->getEntity();
+                $this->entity = $entity;
+            }
+        }
+
+        return $this->entity;
+    }
+
 
     /**
      * to string
@@ -421,7 +505,7 @@ abstract class BasePage
      */
     public function addWidget(Widget $widget)
     {
-            $this->widgets[] = $widget;
+        $this->widgets[] = $widget;
     }
     /**
      * has widget
@@ -486,7 +570,7 @@ abstract class BasePage
      */
     public function addChild(Page $child)
     {
-            $this->children[] = $child;
+        $this->children[] = $child;
     }
 
     /**
@@ -530,8 +614,9 @@ abstract class BasePage
     public function isPublished()
     {
         if (
-            $this->getStatus() == self::STATUS_PUBLISHED ||
-            $this->getStatus() == self::STATUS_SCHEDULED && $this->getPublishedAt() < new \DateTime()
+            $this->getStatus() === self::STATUS_PUBLISHED ||
+            $this->getStatus() === self::STATUS_SCHEDULED &&
+            $this->getPublishedAt() < new \DateTime()
             ) {
             return true;
         } else {
@@ -562,7 +647,10 @@ abstract class BasePage
     /**
      * Get undeletable
      *
-     * @return undeletable
+     * @param boolean $undeletable
+     *
+     * @return BasePage The current instance
+     *
      */
     public function setUndeletable($undeletable)
     {
@@ -631,6 +719,7 @@ abstract class BasePage
     {
         return $this->routes;
     }
+
     /**
      * Set url
      *
@@ -731,21 +820,6 @@ abstract class BasePage
     public function getWidgetMap()
     {
         return $this->widgetMap;
-    }
-
-    /**
-     * Get widgetMap
-     * @param string $slot
-     *
-     * @return widgetMap
-     */
-    public function getWidgetMapForSlot($slot = null)
-    {
-        if (empty($this->widgetMap[$slot])) {
-            return null;
-        }
-
-        return $this->widgetMap[$slot];
     }
 
     /**
@@ -865,7 +939,7 @@ abstract class BasePage
     /**
      * Set the root value
      *
-     * @return integer $root
+     * @param integer $root
      */
     public function setRoot($root)
     {
@@ -890,5 +964,204 @@ abstract class BasePage
     public function setReferer($referer)
     {
         $this->referer = $referer;
+    }
+
+    /**
+     * Get the compute url value
+     *
+     * @return boolean The compute url
+     */
+    public function getComputeUrl()
+    {
+        return $this->computeUrl;
+    }
+
+    /**
+     * Set the compute url value
+     *
+     * @param boolean $computeUrl
+     */
+    public function setComputeUrl($computeUrl)
+    {
+        $this->computeUrl = $computeUrl;
+    }
+
+    /**
+     * Get the page that is a legacy and a business entity template
+     *
+     * @return Page The page that is a business entity Template
+     */
+    public function getBusinessEntityTemplateLegacyPage()
+    {
+        $page = null;
+
+        //is the page a business entity template
+        if ($this->getType() === BusinessEntityTemplatePage::TYPE) {
+            $page = $this;
+        } else {
+            //we check if the parent is a business entity template
+            $parent = $this->getParent();
+
+            if ($parent !== null) {
+                $page = $parent->getBusinessEntityTemplateLegacyPage();
+            }
+        }
+
+        return $page;
+    }
+
+    /**
+     * Method called once the entity is loaded
+     *
+     * @ORM\PostLoad
+     */
+    public function postLoad()
+    {
+        $widgetMap = $this->getWidgetMap();
+
+        //the slots of the page
+        $slots = array();
+
+        //convert the widget map array as objects
+        foreach ($widgetMap as $slotId => $widgetMapEntries) {
+            $slot = new Slot();
+            $slot->setId($slotId);
+
+            foreach ($widgetMapEntries as $widgetMapEntry) {
+                $widgetMapTemp = new WidgetMap();
+                $widgetMapTemp->setAction($widgetMapEntry['action']);
+                $widgetMapTemp->setPosition($widgetMapEntry['position']);
+                $widgetMapTemp->setPositionReference($widgetMapEntry['positionReference']);
+                $widgetMapTemp->setReplacedWidgetId($widgetMapEntry['replacedWidgetId']);
+                $widgetMapTemp->setWidgetId($widgetMapEntry['widgetId']);
+
+                $slot->addWidgetMap($widgetMapTemp);
+            }
+
+            $slots[] = $slot;
+        }
+
+        //set the slots to the page
+        $this->slots = $slots;
+    }
+
+    /**
+     * Method before updating a page
+     *
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function preUpdate()
+    {
+        //we update the widget map by the slots
+        $this->updateWidgetMapBySlots();
+    }
+
+    /**
+     * Set the slots
+     * @param unknown $slots
+     */
+    public function setSlots($slots)
+    {
+        $this->slots = $slots;
+
+        //convert the slots object in a widget map array
+        $widgetMap = $this->convertSlotsToWidgetMap();
+        $this->setWidgetMap($widgetMap);
+    }
+
+    /**
+     * Convert slots to a widget map
+     *
+     * @return array The widget map
+     */
+    protected function convertSlotsToWidgetMap()
+    {
+        $slots = $this->slots;
+
+        $widgetMap = array();
+
+        //parse the slots
+        foreach ($slots as $slot) {
+            $slotId = $slot->getId();
+
+            $widgetMap[$slotId] = array();
+
+            $widgetMaps = $slot->getWidgetMaps();
+
+            //parse the widget map objects
+            foreach ($widgetMaps as $widgetMapTemp) {
+                $widgetMapEntry = array();
+                $widgetMapEntry['action'] = $widgetMapTemp->getAction();
+                $widgetMapEntry['position'] = $widgetMapTemp->getPosition();
+                $widgetMapEntry['positionReference'] = $widgetMapTemp->getPositionReference();
+                $widgetMapEntry['replacedWidgetId'] = $widgetMapTemp->getReplacedWidgetId();
+                $widgetMapEntry['widgetId'] = $widgetMapTemp->getWidgetId();
+
+                //add the temp slot to the widget map
+                $widgetMap[$slotId][] = $widgetMapEntry;
+            }
+        }
+
+        return $widgetMap;
+    }
+
+    /**
+     * This function update the widgetMap array using the slots entities array
+     *
+     */
+    public function updateWidgetMapBySlots()
+    {
+        //generate widget map by the slots
+        $widgetMap = $this->convertSlotsToWidgetMap();
+
+        //update widget map
+        $this->setWidgetMap($widgetMap);
+    }
+
+    /**
+     * Get the slot by the slotId
+     *
+     * @param string $slotId
+     *
+     * @return Slot
+     */
+    public function getSlotById($slotId)
+    {
+        $slot = null;
+
+        $slots = $this->slots;
+
+        //parse all slots
+        foreach ($slots as $sl) {
+            //if this the slot we are looikong for
+            if ($sl->getId() === $slotId) {
+                $slot = $sl;
+                //there no need to continue, we found the slot
+                continue;
+            }
+        }
+
+        return $slot;
+    }
+
+    /**
+     * Add a slot to the slots array
+     *
+     * @param Slot $slot The slot to add
+     */
+    public function addSlot(Slot $slot)
+    {
+        $this->slots[] = $slot;
+    }
+
+    /**
+     * Get the slots
+     *
+     * @return array The slots
+     */
+    public function getSlots()
+    {
+        return $this->slots;
     }
 }

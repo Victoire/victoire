@@ -12,7 +12,10 @@ services:
 #  ==================  Widgets ================== #
     victoire_core.twig.widget_manager:
         class: Victoire\Bundle\CoreBundle\Widget\Managers\WidgetManager
-        arguments: [@service_container]
+        arguments: 
+            - "@service_container"
+            - "@page.widgetMap.builder"
+            - "@av.form_error_service"
 
     widget_manager:
         alias: victoire_core.twig.widget_manager
@@ -26,8 +29,7 @@ services:
 
     victoire_core.entity_proxy.fields_builder:
         class: Victoire\Bundle\CoreBundle\Form\Builder\EntityProxyFieldsBuilder
-        arguments: [@victoire_core.annotation_reader]
-
+        arguments: ["@victoire_core.annotation_reader"]
 #  ==================  MENU ================== #
 
     victoire_core.admin_menu_builder:
@@ -65,6 +67,7 @@ services:
             - "@victoire_core.page_menu_listener"
             - "@victoire_core.template_menu_listener"
             - "@victoire_core.sitemap_menu_listener"
+            - "@victoire_business_entity_template.business_entity_template_menu_listener"
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
@@ -75,7 +78,7 @@ services:
 #  ==================  Template ================== #
     victoire_core.template_mapper:
         class: Victoire\Bundle\CoreBundle\Template\TemplateMapper
-        arguments: [@service_container]
+        arguments: ["@service_container"]
 
     victoire_templating:
         alias: victoire_core.template_mapper
@@ -83,12 +86,20 @@ services:
 #  ==================  Twig ================== #
     victoire_core.twig.cms_extension:
         class: Victoire\Bundle\CoreBundle\Twig\Extension\CmsExtension
-        arguments: [@widget_manager, @victoire_templating, @security.context, @session]
+        arguments: 
+            - "@widget_manager"
+            - "@victoire_templating"
+            - "@security.context"
+            - "@doctrine.orm.entity_manager"
+            - "@page.widgetMap.builder"
+            - "@victoire_core.widget_exception_handler"
         tags:
             - { name: twig.extension }
     victoire_core.twig.globals_extension:
         class: Victoire\Bundle\CoreBundle\Twig\Extension\GlobalsExtension
-        arguments: [@victoire_templating, @session]
+        arguments: 
+            - "@victoire_templating"
+            - "@session"
         tags:
             - { name: twig.extension }
 
@@ -96,45 +107,56 @@ services:
 
     victoire_core.apc.cache:
         class: Victoire\Bundle\CoreBundle\Cache\ApcCache
-        arguments: [%doctrine.orm.cache.apc.class%, %kernel.debug%]
+        arguments: 
+            - "%doctrine.orm.cache.apc.class%"
+            - "%kernel.debug%"
 
 #  ==================  Routing ================== #
 
     victoire_core.routing.loader.cache:
         class: Victoire\Bundle\CoreBundle\Route\CacheRouteLoader
-        arguments: [@victoire_core.cache.route_registerer, @doctrine.orm.entity_manager]
+        arguments: 
+            - "@victoire_core.cache.route_registerer"
+            - "@doctrine.orm.entity_manager"
         tags:
             - { name: routing.loader }
 
     victoire_core.cache.route_registerer:
         class: Victoire\Bundle\CoreBundle\Route\CacheRouteRegisterer
-        arguments: [@victoire_core.apc.cache]
+        arguments: 
+            - "@victoire_core.apc.cache"
 #  ==================  Annotations ================== #
 
     victoire_core.annotation_reader:
         class: Victoire\Bundle\CoreBundle\Annotations\Reader\AnnotationReader
-        arguments: [@annotation_reader, %kernel.root_dir%, %victoire_core.widgets%]
+        arguments: 
+            - "@annotation_reader"
+            - "%kernel.root_dir%" 
+            - "%victoire_core.widgets%"
         calls:
-            - [ setCache, [@victoire_core.apc.cache] ]
+            - [ setCache, ["@victoire_core.apc.cache"] ]
 
 
 #  ==================  Theme ================== #
 
     victoire_core.theme_chain:
-        class: "Victoire\Bundle\CoreBundle\Theme\ThemeChain"
-        arguments: [%victoire_core.widgets%]
+        class: Victoire\Bundle\CoreBundle\Theme\ThemeChain
+        arguments:
+            - "%victoire_core.widgets%"
 
 #  ==================  Subscribers ================== #
 
     victoire_core.widget_discriminator_map.subscriber:
         class: Victoire\Bundle\CoreBundle\EventSubscriber\WidgetDiscriminatorMapSubscriber
-        arguments: ["%victoire_core.widgets%", "@victoire_core.theme_chain"]
+        calls:
+            - [ setWidgets, ["%victoire_core.widgets%"] ]
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
     victoire_core.entity_proxy.subscriber:
         class: Victoire\Bundle\CoreBundle\EventSubscriber\EntityProxySubscriber
-        arguments: [@victoire_core.annotation_reader]
+        calls:
+            - [ setAnnotationReader, ["@victoire_core.annotation_reader"] ]
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
@@ -143,16 +165,31 @@ services:
 
     victoire_core.cache_warmer.entity_proxy_warmer:
         class: Victoire\Bundle\CoreBundle\CacheWarmer\EntityProxyWarmer
-        arguments: [@victoire_core.annotation_reader]
+        arguments:
+            - "@victoire_core.annotation_reader"
         tags:
             - { name: kernel.cache_warmer}
 
     victoire_core.entity_proxy.cache_driver:
         class: Victoire\Bundle\CoreBundle\CacheWarmer\EntityProxyCacheDriver
-        arguments: [@annotation_reader, %kernel.root_dir%, %kernel.environment%]
+        arguments: 
+            - "@annotation_reader"
+            - "%kernel.root_dir%"
+            - "%kernel.environment%"
 
-#  ==================  Error handler =================== #
+    victoire_core.helper.business_entity_helper:
+        class: Victoire\Bundle\CoreBundle\Helper\BusinessEntityHelper
+        arguments: 
+            - "@victoire_core.annotation_reader"
+            - "@doctrine.orm.entity_manager"
+
+    #  ==================  Error handler =================== #
 
     victoire_core.widget_exception_handler:
         class: Victoire\Bundle\CoreBundle\Handler\WidgetExceptionHandler
-        arguments: [@security.context, @templating, %kernel.debug%]
+        arguments: 
+            - "@security.context"
+            - "@twig"
+            - "%kernel.debug%"
+            - "@victoire_templating"
+            

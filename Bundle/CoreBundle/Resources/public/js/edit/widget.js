@@ -16,7 +16,8 @@ $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(
     if ($("select.picker_entity_select").length != 0 && $("select.picker_entity_select").attr('name').indexOf('[items][__name__][entity]') !== -1) {
         $("select.picker_entity_select").remove();
     }
-    var form = $vic(this).parents('.vic-modal-content').find('.vic-tab-pane.vic-active form');;
+    //we look for the form currently active and visible
+    var form = $vic(this).parents('.vic-modal-content').find('.vic-tab-pane.vic-active form').filter(":visible");
 
     $vic.ajax({
         type: form.attr('method'),
@@ -34,7 +35,11 @@ $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(
             //save the positions of the widgets
             updatePosition();
         } else {
-            $vic('.vic-modal-body .vic-container').html(response.html);
+            //inform user there have been an error
+            alert(response.message);
+            if (response.html) {
+                $vic('.vic-modal-body .vic-container').html(response.html);
+            }
         }
     });
 });
@@ -48,7 +53,7 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update"]', function(
     if ($("select.picker_entity_select").length != 0 && $("select.picker_entity_select").attr('name').indexOf('appventus_victoirecorebundle_widgetlistingtype[items][__name__][entity]') !== -1) {
         $("select.picker_entity_select").remove();
     }
-    var form = $vic(this).parents('.vic-modal-content').find('.vic-tab-pane.vic-active form');
+    var form = $vic(this).parents('.vic-modal-content').find('.vic-tab-pane.vic-active form').filter(":visible");
     $vic.ajax({
         type: form.attr('method'),
         url : form.attr('action'),
@@ -58,12 +63,12 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update"]', function(
             $vic("#"+response.widgetId).replaceWith(response.html);
             closeModal();
         } else {
-            closeModal();
-            $vic('body').append(response.html);
-            $vic('#vic-modal').vicmodal({
-                keyboard: true,
-                backdrop: false
-            });
+            //inform user there have been an error
+            alert(response.message);
+            
+            if (response.html) {
+                $vic('.vic-modal-body .vic-container').html(response.html);
+            }
         }
     });
 });
@@ -75,11 +80,19 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="delete"]', function(
     $vic.ajax({
         type: "GET",
         url : $vic(this).attr('href')
-    }).done(function(response){
+    }).done(function(response) {
         if (true === response.success) {
-            $vic("#"+response.widgetId).next('.vic-dropdown.vic-new-widget').remove();
-            $vic("#"+response.widgetId).remove();
+            //selector for the widget div
+            var widgetContainerSelector = 'vic-widget-' + response.widgetId + '-container';
+            var widgetDiv = $vic("#" + widgetContainerSelector);
+            //remove the div
+            widgetDiv.remove();
+            //close the modal
             closeModal();
+        } else {
+            //log the error
+            console.log('An error occured during the deletion of the widget.');
+            console.log(response.message);
         }
     });
 });

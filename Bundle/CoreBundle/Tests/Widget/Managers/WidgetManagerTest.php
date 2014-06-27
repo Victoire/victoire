@@ -84,7 +84,7 @@ class WidgetManagerTest extends BaseTestCase
         $response = $widgetManagerMock->getManager($widget);
         $this->assertEquals('Victoire\TextBundle\Widget\Manager\WidgetTextManager', get_class($response));
 
-        $widget = new \Victoire\ImageBundle\Entity\WidgetImage();
+        $widget = new \Victoire\Widget\ImageBundle\Entity\WidgetImage();
         $response = $widgetManagerMock->getManager($widget);
         $this->assertEquals('Victoire\ImageBundle\Widget\Manager\WidgetImageManager', get_class($response));
 

@@ -1,5 +1,7 @@
 {% extends 'VictoireCoreBundle::_modal.html.twig' %}
 
+{% trans_default_domain "victoire" %}
+
 {% block modal_container_classes %}{{ parent() }} vic-widget-modal{% endblock %}
 {% block modal_header_title %}
     {% if widget.id %}Widget #{{ widget.id}} - {% endif %}{{ ('modal.form.widget.type.'~widget.type|lower ~'.label')|trans({}, 'victoire') }}
@@ -13,7 +15,7 @@
             {% if widget.id %}
             <a href={{ path('victoire_core_widget_delete', {'id':widget.id})}} onclick="if(!confirm('Are you sure ?')) return false;" data-modal="delete" data-title="{{ 'modal.button.delete.confirm.title'|trans({}, 'victoire')|desc('Are you sure ?') }}" data-body="{{ 'modal.button.delete.confirm.body'|trans({}, 'victoire')|desc('This actions will permanently delete this content from the database. This action is irreversible so you have to understand this message. Do you ?') }}" title="{{ 'modal.button.delete.title'|trans({}, 'victoire')|desc('Delete') }}"></a>
             {% endif %}
-            <a href="#" data-modal="{% block action %}update{% endblock action %}" title="{{ 'modal.button.'~ block('action') ~'.title'|trans({}, 'victoire') }}"></a>
+            <a href="#" data-modal="{% block action %}update{% endblock action %}" title="{{ ('modal.button.'~ block('action') ~'.title')|trans({}, 'victoire') }}"></a>
         {% endblock modal_footer_content %}
         </div>
     </div>

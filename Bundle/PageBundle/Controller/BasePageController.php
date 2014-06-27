@@ -13,6 +13,9 @@ use Victoire\Bundle\CoreBundle\Form\PageType;
 use Victoire\Bundle\CoreBundle\Form\TemplateType;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
+use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
+use Victoire\Bundle\PageBundle\Helper\UrlHelper;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * undocumented class
@@ -20,7 +23,6 @@ use Victoire\Bundle\PageBundle\Entity\Page;
  **/
 class BasePageController extends AwesomeController
 {
-
     /**
      * @param $page
      *
@@ -72,14 +74,52 @@ class BasePageController extends AwesomeController
     {
         //the response
         $response = null;
+        $entity = null;
+        $businessEntityTemplatePage = null;
 
         //manager
         $manager = $this->getEntityManager();
+        $urlHelper = $this->getUrlHelper();
         $basePageRepository = $manager->getRepository('VictoirePageBundle:BasePage');
         $routeRepository = $manager->getRepository('VictoireCoreBundle:Route');
+        $businessEntityHelper = $this->get('victoire_core.helper.business_entity_helper');
 
         //get the page
         $page = $basePageRepository->findOneByUrl($url);
+
+        //we do not try to retrieve an entity for the business entity template page
+        if ($page === null) {
+            //create an url matcher based on the current url
+            $urlMatcher = $urlHelper->getGeneralUrlMatcher($url);
+
+            //if the url have been shorten
+            if ($urlMatcher !== null) {
+                $businessEntityTemplatePage = $basePageRepository->findOneByUrl($urlMatcher);
+
+                //a page match the entity template generator
+                if ($businessEntityTemplatePage) {
+                    //we look for the entity
+                    $entityId = $urlHelper->getEntityIdFromUrl($url);
+
+                    //test the entity id
+                    if ($entityId === null) {
+                        throw new \Exception('The id could not be retrieved from the url.');
+                    }
+
+                    $entity = $businessEntityHelper->getEntityByPageAndId($businessEntityTemplatePage, $entityId);
+                }
+            }
+        } else {
+            $entity = $page->getEntity();
+        }
+
+        //no page were found, we try to look for an BusinessEntityTemplatePage
+        if ($page === null) {
+            $page = $businessEntityTemplatePage;
+        }
+
+        //no need for this variable anymore
+        unset($businessEntityTemplatePage);
 
         //no page found using the url, we look for previous url
         if ($page === null) {
@@ -117,13 +157,29 @@ class BasePageController extends AwesomeController
             } else {
                 //add the page to twig
                 $this->get('twig')->addGlobal('page', $page);
+                $this->get('twig')->addGlobal('entity', $entity);
 
-                $event = new \Victoire\Bundle\PageBundle\Event\Menu\BasePageMenuContextualEvent($page);
-                $this->get('event_dispatcher')->dispatch('victoire_core.' . $page->getType() . '_menu.contextual', $event); //TODO : il serait bon de faire des constantes pour les noms d'évents
+                $event = new \Victoire\Bundle\PageBundle\Event\Menu\BasePageMenuContextualEvent($page, $entity);
 
-                $response = $this->container->get('victoire_templating')->renderResponse(
-                    'AppBundle:Layout:' . $page->getLayout() . '.html.twig',
-                    array('page' => $page, 'id' => $page->getId())
+                //TODO : il serait bon de faire des constantes pour les noms d'évents
+                $eventName = 'victoire_core.' . $page->getType() . '_menu.contextual';
+
+                $this->get('event_dispatcher')->dispatch($eventName, $event);
+
+                //the victoire templating
+                $victoireTemplating = $this->container->get('victoire_templating');
+                $layout = 'AppBundle:Layout:' . $page->getLayout() . '.html.twig';
+
+                $parameters = array(
+                    'page' => $page,
+                    'id' => $page->getId(),
+                    'entity' => $entity
+                );
+
+                //create the response
+                $response = $victoireTemplating->renderResponse(
+                    $layout,
+                    $parameters
                 );
             }
         }
@@ -190,35 +246,56 @@ class BasePageController extends AwesomeController
      * @param page $page
      * @return template
      */
-    protected function settingsAction(BasePage $page)
+    protected function settingsAction(Request $request, BasePage $page)
     {
         $em = $this->getEntityManager();
+
+        $response = array();
 
         $formFactory = $this->container->get('form.factory');
         $form = $formFactory->create($this->getPageSettingsType(), $page);
 
-        $form->handleRequest($this->get('request'));
-        if ($form->isValid()) {
-            $em->persist($page);
-            $em->flush();
+        //the type of method used
+        $requestMethod = $request->getMethod();
 
-            return array(
-                'success' => true,
-                "url"     => $this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl()))
+        //if the form is posted
+        if ($requestMethod === 'POST') {
+            //bind data to the form
+            $form->handleRequest($this->get('request'));
+
+            //the form should be valid
+            if ($form->isValid()) {
+                $em->persist($page);
+                $em->flush();
+
+                $response =  array(
+                    'success' => true,
+                    'url'     => $this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl()))
+                );
+            } else {
+                $formErrorService = $this->get('av.form_error_service');
+                $errors = $formErrorService->getRecursiveReadableErrors($form);
+
+                $response =  array(
+                    'success' => false,
+                    'message' => $errors
+                );
+            }
+        } else {
+            //we display the form
+            $response = array(
+                'success' => false,
+                'html' => $this->container->get('victoire_templating')->render(
+                    $this->getBaseTemplatePath() . ':settings.html.twig',
+                    array(
+                        'page' => $page,
+                        'form' => $form->createView()
+                    )
+                )
             );
-
         }
 
-        return array(
-            'success' => false,
-            'html' => $this->container->get('victoire_templating')->render(
-                $this->getBaseTemplatePath() . ':settings.html.twig',
-                array(
-                    'page' => $page,
-                    'form' => $form->createView()
-                )
-            )
-        );
+        return $response;
     }
 
     /**
@@ -244,5 +321,17 @@ class BasePageController extends AwesomeController
         if (!$isPublished && !$isPageOwner) {
             throw new NotFoundHttpException($errorMessage);
         }
+    }
+
+    /**
+     * Get the url helper
+     *
+     * @return UrlHelper
+     */
+    public function getUrlHelper()
+    {
+        $helper = $this->get('victoire_page.url_helper');
+
+        return $helper;
     }
 }

@@ -16,7 +16,7 @@ use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\PageBundle\Form\PageSettingsType;
 use Victoire\Bundle\PageBundle\Form\PageType;
-
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Page Administration Controller
@@ -67,10 +67,9 @@ class PageAdministrationController extends BasePageController
      *
      * @return json The settings
      */
-    public function settingsAction(BasePage $page)
+    public function settingsAction(Request $request, BasePage $page)
     {
-
-        return new JsonResponse(parent::settingsAction($page));
+        return new JsonResponse(parent::settingsAction($request, $page));
     }
 
     /**

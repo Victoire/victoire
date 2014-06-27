@@ -21,11 +21,12 @@ abstract class BaseEntityProxy
     protected  $id;
 
     /**
-     * @var integer
+     *  Auto list mode: businessentity type
+     * @var string
+     * @ORM\Column(name="business_entity_name", type="string", nullable=true)
      *
-     * @ORM\OneToOne(targetEntity="\Victoire\Bundle\CoreBundle\Entity\Widget", mappedBy="entity")
      */
-    protected $widget;
+    protected $businessEntityName;
 
     /**
      * Get id
@@ -56,37 +57,73 @@ abstract class BaseEntityProxy
         }
     }
 
+
     /**
-     * get related entity
-     * @param string $entityName The related entity name
-     * @return mixed
+     * Get businessEntity
+     *
+     * @return integer
      */
-    public function getEntity($entityName)
+    public function getBusinessEntityName()
     {
+        return $this->businessEntityName;
+    }
+
+    /**
+     * Set businessEntityName
+     *
+     * @param String $businessEntityName The business entity name
+     */
+    public function setBusinessEntityName($businessEntityName)
+    {
+        $this->businessEntityName = $businessEntityName;
+    }
+
+    /**
+     * Get the entity of the proxy
+     *
+     * @return Entity
+     */
+    public function getEntity()
+    {
+        $entityName = $this->getBusinessEntityName();
+
+        //test the entity name
+        if ($entityName === null || $entityName === '') {
+            throw new \Exception('The businessEntityName is not defined for the entityProxy with the id:'.$this->getId());
+        }
+
         return $this->{'get'.ucfirst($entityName)}();
     }
 
     /**
-     * Set widget
+     * Set the entity
      *
-     * @param Widget $widget
-     * @return EntityProxy
-     */
-    public function setWidget(Widget $widget = null)
-    {
-        $this->widget = $widget;
-
-        return $this;
-    }
-
-    /**
-     * Get widget
+     * @param unknown $entity
      *
-     * @return Widget
+     * @throws \Exception
      */
-    public function getWidget()
+    public function setEntity($entity)
     {
-        return $this->widget;
-    }
+        $className = get_class($entity);
 
+        //split
+        $namespaceEntries = explode("\\", $className);
+
+        $businessEntityName = array_pop($namespaceEntries);
+
+        if ($businessEntityName === null) {
+            throw new \Exception('No business entity name were found for the entity.');
+        }
+
+        $businessEntityName = strtolower($businessEntityName);
+
+        //set the business entity name
+        $this->setBusinessEntityName($businessEntityName);
+
+        //set the entity
+        $method = 'set'.ucfirst($businessEntityName);
+
+        //set the entity
+        call_user_method($method, $this, $entity);
+    }
 }

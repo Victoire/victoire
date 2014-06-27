@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Entity
  *
- * @VIC\BusinessEntity({"widgetredactor", "themeredactornewspaper", "widgetimage", "widgetlisting", "widgetarchive", "themelistingblogarticles"})
+ * @VIC\BusinessEntity({"widgetredactor", "themeredactornewspaper", "widgetlisting", "themelistingblogarticles"})
  */
 class Article extends Page
 {

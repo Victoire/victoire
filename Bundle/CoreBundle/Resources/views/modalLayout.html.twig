@@ -1,5 +1,7 @@
 {% extends app.request.isXmlHttpRequest ? 'VictoireCoreBundle::blankLayout.html.twig' : 'VictoireCoreBundle::ajaxModalLayout.html.twig' %}
 
+{% trans_default_domain "victoire" %}
+
 {% block content %}
 <div class="modal">
 {% block modal %}

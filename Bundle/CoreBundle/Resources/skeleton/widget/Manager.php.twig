@@ -4,117 +4,95 @@ namespace {{ namespace }}\Widget\Manager;
 
 
 {% block use_statements %}
-use {{ namespace }}\Form\Widget{{widget}}Type;
-use {{ namespace }}\Entity\Widget{{widget}};
+use Victoire\Bundle\CoreBundle\Widget\Managers\BaseWidgetManager;
+use Victoire\Bundle\CoreBundle\Entity\Widget;
+use Victoire\Bundle\CoreBundle\Widget\Managers\WidgetManagerInterface;
 {% endblock use_statements %}
 
+/**
+ * CRUD operations on Widget{{widget}} Widget
+ *
+ * The widget view has two parameters: widget and content
+ *
+ * widget: The widget to display, use the widget as you wish to render the view
+ * content: This variable is computed in this WidgetManager, you can set whatever you want in it and display it in the show view
+ *
+ * The content variable depends of the mode: static/businessEntity/entity/query
+ *
+ * The content is given depending of the mode by the methods:
+ *  getWidgetStaticContent
+ *  getWidgetBusinessEntityContent
+ *  getWidgetEntityContent
+ *  getWidgetQueryContent
+ *
+ * So, you can use the widget or the content in the show.html.twig view.
+ * If you want to do some computation, use the content and do it the 4 previous methods.
+ *
+ * If you just want to use the widget and not the content, remove the method that throws the exceptions.
+ *
+ * By default, the methods throws Exception to notice the developer that he should implements it owns logic for the widget
+ */
 {% block class_definition %}
-class Widget{{widget}}Manager
+class Widget{{widget}}Manager extends BaseWidgetManager implements WidgetManagerInterface
 {% endblock class_definition %}
 {
 {% block class_body %}
-protected $container;
-
     /**
-     * constructor
+     * The name of the widget
      *
-     * @param ServiceContainer $container
+     * @return string
      */
-    public function __construct($container)
+    public function getWidgetName()
     {
-        $this->container = $container;
+        return '{{ widget }}';
     }
 
     /**
-     * create a new Widget{{widget}}
-     * @param Page   $page
-     * @param string $slot
+     * Get the static content of the widget
      *
-     * @return $widget
+     * @param Widget $widget
+     * @return string The static content
      */
-    public function newWidget($page, $slot)
+    protected function getWidgetStaticContent(Widget $widget)
     {
-        $widget = new Widget{{widget}}();
-        $widget->setPage($page);
-        $widget->setslot($slot);
-
-        return $widget;
+        $mode = $widget->getMode();
+        throw new \Exception('The mode ['.$mode.'] is not yet supported by the Widget{{widget}}Manager. Widget ID:['.$widget->getId().']');
     }
+
     /**
-     * render the Widget{{widget}}
+     * Get the business entity content
+     * @param Widget $widget
+     * @return string
+     */
+    protected function getWidgetBusinessEntityContent(Widget $widget)
+    {
+        $mode = $widget->getMode();
+        throw new \Exception('The mode ['.$mode.'] is not yet supported by the Widget{{widget}}Manager. Widget ID:['.$widget->getId().']');
+    }
+
+    /**
+     * Get the content of the widget by the entity linked to it
+     *
      * @param Widget $widget
      *
-     * @return widget show
+     * @return string
      */
-    public function render($widget)
+    protected function getWidgetEntityContent(Widget $widget)
     {
-        return $this->container->get('victoire_templating')->render(
-            "VictoireWidget{{widget}}Bundle::show.html.twig",
-            array(
-                "widget" => $widget
-            )
-        );
+        $mode = $widget->getMode();
+        throw new \Exception('The mode ['.$mode.'] is not yet supported by the Widget{{widget}}Manager. Widget ID:['.$widget->getId().']');
     }
 
     /**
-     * render Widget{{widget}} form
-     * @param Form           $form
-     * @param Widget{{widget}} $widget
-     * @param BusinessEntity $entity
-     * @return form
-     */
-    public function renderForm($form, $widget, $entity = null)
-    {
-
-        return $this->container->get('victoire_templating')->render(
-            "VictoireWidget{{widget}}Bundle::edit.html.twig",
-            array(
-                "widget" => $widget,
-                'form'   => $form->createView(),
-                'id'     => $widget->getId(),
-                'entity' => $entity
-            )
-        );
-    }
-
-    /**
-     * create a form with given widget
-     * @param Widget{{widget}} $widget
-     * @param string         $entityName
-     * @param string         $namespace
-     * @return $form
-     */
-    public function buildForm($widget, $entityName = null, $namespace = null)
-    {
-        $form = $this->container->get('form.factory')->create(new Widget{{widget}}Type($entityName, $namespace), $widget);
-
-        return $form;
-    }
-
-    /**
-     * create form new for Widget{{widget}}
-     * @param Form           $form
-     * @param Widget{{widget}} $widget
-     * @param string         $slot
-     * @param Page           $page
-     * @param string         $entity
+     * Get the content of the widget for the query mode
      *
-     * @return new form
+     * @param Widget $widget
+     * @throws \Exception
      */
-    public function renderNewForm($form, $widget, $slot, $page, $entity = null)
+    protected function getWidgetQueryContent(Widget $widget)
     {
-
-        return $this->container->get('victoire_templating')->render(
-            "VictoireWidget{{widget}}Bundle::new.html.twig",
-            array(
-                "widget"          => $widget,
-                'form'            => $form->createView(),
-                "slot"            => $slot,
-                "entity"          => $entity,
-                "renderContainer" => true,
-                "page"            => $page
-            )
-        );
+        $mode = $widget->getMode();
+        throw new \Exception('The mode ['.$mode.'] is not yet supported by the Widget{{widget}}Manager. Widget ID:['.$widget->getId().']');
     }
 {% endblock class_body %}
 }

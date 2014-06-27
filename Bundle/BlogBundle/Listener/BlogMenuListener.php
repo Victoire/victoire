@@ -11,21 +11,23 @@ use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
  */
 class BlogMenuListener
 {
-    private $menuBuilder;
-
+    protected $menuBuilder;
 
     /**
      * Blog menu listener constructor
+     *
+     * @param MenuBuilder $menuBuilder
      */
     public function __construct(MenuBuilder $menuBuilder)
     {
         $this->menuBuilder = $menuBuilder;
     }
 
-
     /**
      * add a contextual menu item
-     * @return MenuItem The added item
+     *
+     * @param BasePageMenuContextualEvent $event
+     * @return \Victoire\Bundle\BlogBundle\Listener\MenuItem
      */
     public function addContextual(BasePageMenuContextualEvent $event)
     {
@@ -43,7 +45,11 @@ class BlogMenuListener
 
     /**
      * add global menu items
-     * @return MenuItem The added item
+     *
+     * @param Event $event
+     * @return \Victoire\Bundle\BlogBundle\Listener\MenuItem
+     *
+     * @SuppressWarnings checkUnusedFunctionParameters
      */
     public function addGlobal(Event $event)
     {
@@ -59,6 +65,7 @@ class BlogMenuListener
 
     /**
      * This method returns you the main item and create it if not exists
+     *
      * @return MenuItem The main item to get
      */
     private function getMainItem()
@@ -71,7 +78,7 @@ class BlogMenuListener
             return $this->menuBuilder->createDropdownMenuItem(
                 $this->menuBuilder->getTopNavbar(),
                 "menu.blog",
-                array("attributes" => array( "class" => "vic-pull-left vic-text-center"))
+                array("attributes" => array("class" => "vic-pull-left vic-text-center"))
             );
         }
     }

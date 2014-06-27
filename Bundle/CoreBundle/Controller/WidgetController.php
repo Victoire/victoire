@@ -12,7 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Victoire\Bundle\CoreBundle\Entity\Widget;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\CoreBundle\Widget\Managers\WidgetManager;
-
+use Symfony\Component\HttpFoundation\Request;
+use Gedmo\Blameable\ProtectedPropertySupperclassTest;
 
 /**
  * Widget Controller
@@ -32,13 +33,24 @@ class WidgetController extends AwesomeController
      */
     public function showAction(Widget $widget)
     {
-        if ($this->getRequest()->isXmlHttpRequest()) {
-            $widgetManager = $this->getWidgetManager();
+        //the response is for the ajax.js from the AppVentus Ajax Bundle
+        try {
+            if ($this->getRequest()->isXmlHttpRequest()) {
+                $widgetManager = $this->getWidgetManager();
 
-            return new JsonResponse($widgetManager->render($widget));
+                 $response = new JsonResponse(array(
+                     'html' => $widgetManager->render($widget),
+                     'update' => 'vic-widget-'.$widget->getId().'-container',
+                     'success' => false
+                 ));
+            } else {
+                $response = $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $widget->getPage()->getUrl())));
+            }
+        } catch (\Exception $ex) {
+            $response = $this->getJsonReponseFromException($ex);
         }
 
-        return $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $widget->getPage()->getUrl())));
+        return $response;
     }
 
     /**
@@ -53,11 +65,16 @@ class WidgetController extends AwesomeController
      * @Template()
      * @ParamConverter("id", class="VictoireCoreBundle:Widget")
      */
-    public function editAction(Widget $widget, $type = null)
+    public function editAction(Request $request, Widget $widget, $type = null)
     {
-        $widgetManager = $this->getWidgetManager();
+        try {
+            $widgetManager = $this->getWidgetManager();
+            $response = new JsonResponse($widgetManager->edit($request, $widget, $type));
+        } catch (\Exception $ex) {
+            $response = $this->getJsonReponseFromException($ex);
+        }
 
-        return new JsonResponse($widgetManager->edit($widget, $type));
+        return $response;
     }
 
     /**
@@ -74,31 +91,36 @@ class WidgetController extends AwesomeController
      */
     public function newAction($type, $page, $slot = null, $entity = null)
     {
-        $page = $this->get('doctrine.orm.entity_manager')->getRepository('VictoirePageBundle:BasePage')->findOneById($page);
-
-        if ($entity) {
-            $widgetManager = $this->get('widget_manager')->getManager(null, $type);
-            $widget = $widgetManager->newWidget($page, $slot);
-
-            $namespace = null;
-
-            if ($entity === 'static' || $entity === '') {
-                $entity = null;
-            }
+        try {
+            $page = $this->get('doctrine.orm.entity_manager')->getRepository('VictoirePageBundle:BasePage')->findOneById($page);
 
             if ($entity) {
-                $annotationReader = $this->get('victoire_core.annotation_reader');
-                $classes = $annotationReader->getBusinessClassesForWidget($widget);
-                $namespace = $classes[$entity];
+                $widgetManager = $this->get('widget_manager')->getManager(null, $type);
+                $widget = $widgetManager->newWidget($page, $slot);
+
+                $namespace = null;
+
+                if ($entity === 'static' || $entity === '') {
+                    $entity = null;
+                }
+
+                if ($entity) {
+                    $annotationReader = $this->get('victoire_core.annotation_reader');
+                    $classes = $annotationReader->getBusinessClassesForWidget($widget);
+                    $namespace = $classes[$entity];
+                }
+
+                $form = $this->get('widget_manager')->buildForm($widgetManager, $widget, $entity, $namespace);
+
+                $response = JsonResponse($this->get('widget_manager')->renderNewForm($form, $widget, $slot, $page, $entity));
+            } else {
+                $response = new JsonResponse($this->get('widget_manager')->newWidget($type, $slot, $page));
             }
-
-            $form = $this->get('widget_manager')->buildForm($widgetManager, $widget, $entity, $namespace);
-
-            return new JsonResponse($this->get('widget_manager')->renderNewForm($form, $widget, $slot, $page, $entity));
+        } catch (\Exception $ex) {
+            $response = $this->getJsonReponseFromException($ex);
         }
 
-        return new JsonResponse($this->get('widget_manager')->newWidget($type, $slot, $page));
-
+        return $response;
     }
 
     /**
@@ -114,13 +136,19 @@ class WidgetController extends AwesomeController
      */
     public function createAction($type, $page, $slot = null, $entity = null)
     {
-        //services
-        $em = $this->getEntityManager();
+        try {
+            //services
+            $em = $this->getEntityManager();
 
-        $page = $em->getRepository('VictoirePageBundle:BasePage')->findOneById($page);
-        $widgetManager = $this->getWidgetManager();
+            $page = $em->getRepository('VictoirePageBundle:BasePage')->findOneById($page);
+            $widgetManager = $this->getWidgetManager();
 
-        return new JsonResponse($widgetManager->createWidget($type, $slot, $page, $entity));
+            $response = new JsonResponse($widgetManager->createWidget($type, $slot, $page, $entity));
+        } catch (\Exception $ex) {
+            $response = $this->getJsonReponseFromException($ex);
+        }
+
+        return $response;
     }
 
     /**
@@ -134,9 +162,13 @@ class WidgetController extends AwesomeController
      */
     public function deleteAction(Widget $widget)
     {
-        $page = $widget->getPage();
+        try {
+            $response = new JsonResponse($this->get('widget_manager')->deleteWidget($widget));
+        } catch (\Exception $ex) {
+            $response = $this->getJsonReponseFromException($ex);
+        }
 
-        return new JsonResponse($this->get('widget_manager')->deleteWidget($widget));
+        return $response;
     }
 
     /**
@@ -149,10 +181,19 @@ class WidgetController extends AwesomeController
      */
     public function updatePositionAction(BasePage $page)
     {
-        $sortedWidgets = $this->getRequest()->request->get("sorted");
-        $this->get('widget_manager')->computeWidgetMap($page, $sortedWidgets);
+        try {
+            //the sorted order for the widgets
+            $sortedWidgets = $this->getRequest()->request->get('sorted');
 
-        return new JsonResponse();
+            //recompute the order for the widgets
+            $this->get('widget_manager')->updateWidgetMapOrder($page, $sortedWidgets);
+
+            $response = new JsonResponse(array('success' => true));
+        } catch (\Exception $ex) {
+            $response = $this->getJsonReponseFromException($ex);
+        }
+
+        return $response;
     }
 
     /**
@@ -165,5 +206,51 @@ class WidgetController extends AwesomeController
         $manager = $this->get('widget_manager');
 
         return $manager;
+    }
+
+    /**
+     * Get the json response by the exception and the current user
+     *
+     * @param \Exception $ex
+     *
+     * @return JsonResponse
+     */
+    protected function getJsonReponseFromException(\Exception $ex)
+    {
+        //services
+        $securityContext = $this->get('security.context');
+        $logger = $this->get('logger');
+
+        //can we see the debug
+        $isDebugAllowed = $securityContext->isGranted('PAGE_DEBUG');
+
+        //whatever is the exception, we log it
+        $logger->error($ex->getMessage());
+        $logger->error($ex->getTraceAsString());
+
+        if ($isDebugAllowed) {
+            $response = new JsonResponse(
+                array(
+                    'success' => false,
+                    'message' => $ex->getMessage(),
+                    'stackTrace' => $ex->getTrace()
+                )
+            );
+        } else {
+            //translate the message
+            $translator = $this->get('translator');
+
+            //get the translated message
+            $message = $translator->trans('error_occured', array(), 'victoire');
+
+            $response = new JsonResponse(
+                array(
+                    'success' => false,
+                    'message' => $message
+                )
+            );
+        }
+
+        return $response;
     }
 }

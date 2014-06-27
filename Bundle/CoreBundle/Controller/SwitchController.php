@@ -7,6 +7,7 @@ use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Switch controller
@@ -18,16 +19,18 @@ class SwitchController extends Controller
     /**
      * @Route("/{mode}", name="victoire_core_switch", options={"expose"=true})
      *
-     * @param Request $request The request
      * @param string  $mode    The mode
      *
-     * @return Response The redirect
+     * @return JsonResponse Empty response
      */
-    public function switchAction(Request $request, $mode)
+    public function switchAction($mode)
     {
-        $this->get('session')->set('victoire.edit_mode', $mode);
-        $referer = $request->headers->get('referer');
+        //the session
+        $session = $this->get('session');
 
-        return $this->redirect($referer);
+        //memorize that we are in edit mode
+        $session->set('victoire.edit_mode', $mode);
+
+        return new JsonResponse();
     }
 }

@@ -1,28 +1,38 @@
 {% extends 'VictoireCoreBundle:Widget:Form/_modal.html.twig' %}
 
-{% block modal_body_content %}
-{% if classes|length %}
-    <ul class="vic-nav vic-nav-tabs vic-modal-nav-tabs">
-        <li class="vic-active vic-seperate"><a href="#static" data-toggle="vic-tab">Manuel</a></li>
-        {% for class, namespace in classes %}
-        <li{% if not loop.last %} class="vic-seperate"{% endif %}><a href="#{{class}}" data-toggle="vic-tab">{{ ('form.widget.tab.' ~ class ~ '.label')|trans({}, 'victoire') }}</a></li>
-        {% endfor %}
-    </ul>
-{% endif %}
-<div class="vic-tab-content vic-modal-tab-content">
-  {% for class, form in forms %}
-    <div class="vic-tab-pane {% if class == 'static' %}vic-active{% endif %}" id="{{class}}">
+{% trans_default_domain "victoire" %}
 
-    {% if class != 'static' and is_granted('ROLE_VICTOIRE_DEVELOPER') %}
+{% block modal_body_content %}
+    {% if classes|length %}
         <ul class="vic-nav vic-nav-tabs vic-modal-nav-tabs">
-            <li class="vic-active vic-seperate"><a href="#picker-{{class}}" data-toggle="vic-tab">{{ ('form.widget.tab.picker.label')|trans({}, 'victoire') }}</a></li>
-            <li><a href="#query-{{class}}" data-toggle="vic-tab">{{ ('form.widget.tab.query.label')|trans({}, 'victoire') }}</a></li>
+            <li class="vic-active vic-seperate"><a href="#picker-static" data-toggle="vic-tab">Manuel</a></li>
+            {% for class, namespace in classes %}
+            <li{% if not loop.last %} class="vic-seperate"{% endif %}><a href="#picker-{{class}}" data-toggle="vic-tab">{{ ('form.widget.tab.' ~ class ~ '.label')|trans({}, 'victoire') }}</a></li>
+            {% endfor %}
         </ul>
     {% endif %}
-        {{ form|raw }}
+    <div class="vic-tab-content vic-modal-tab-content">
+      {% for class, form in forms %}
+        <div class="vic-tab-pane {% if class == 'static' %}vic-active{% endif %}" id="picker-{{class}}">
+
+        {% if class != 'static' and is_granted('ROLE_VICTOIRE_DEVELOPER') %}
+            <ul class="vic-nav vic-nav-tabs vic-modal-nav-tabs">
+                <li class="vic-active vic-seperate"><a href="#picker-{{class}}-entity" data-toggle="vic-tab">{{ ('form.widget.tab.picker.label')|trans({}, 'victoire') }}</a></li>
+                <li><a href="#picker-{{class}}-query" data-toggle="vic-tab">{{ ('form.widget.tab.query.label')|trans({}, 'victoire') }}</a></li>
+
+                {% if is_business_entity_allowed(class, page) %}
+                    <li><a href="#picker-{{class}}-businessEntity" data-toggle="vic-tab">{{ ('form.widget.tab.entity_instance.label')|trans({}, 'victoire') }}</a></li>
+                {% endif %}
+            </ul>
+        {% endif %}
+            <div class="vic-tab-content vic-modal-tab-content">
+                {% for subForm in form %}
+                    {{ subForm|raw }}
+                {% endfor %}
+            </div>
+        </div>
+      {% endfor %}
     </div>
-  {% endfor %}
-</div>
 
 {% endblock modal_body_content %}
 

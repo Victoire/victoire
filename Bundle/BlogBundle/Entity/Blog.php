@@ -15,8 +15,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Blog extends Page
 {
-    use \Victoire\Bundle\CoreBundle\Entity\Traits\BusinessEntityTrait;
-
     const TYPE = 'blog';
 
 }

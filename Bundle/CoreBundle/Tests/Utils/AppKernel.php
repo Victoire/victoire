@@ -36,7 +36,7 @@ class AppKernel extends Kernel
             new \Victoire\TextBundle\VictoireTextBundle(),
             new \Victoire\ImageBundle\VictoireImageBundle(),
             new \Acme\Bundle\DemoBundle\AcmeDemoBundle(),
-            new \Victoire\ListingBundle\VictoireListingBundle(),
+            new \Victoire\Widget\ListingBundle\VictoireWidgetListingBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

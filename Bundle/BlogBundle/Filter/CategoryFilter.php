@@ -2,7 +2,7 @@
 
 namespace Victoire\Bundle\BlogBundle\Filter;
 
-use Victoire\FilterBundle\Filter\BaseFilter;
+use Victoire\Widget\FilterBundle\Filter\BaseFilter;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityManager;
@@ -14,20 +14,44 @@ use Doctrine\ORM\QueryBuilder;
 class CategoryFilter extends BaseFilter
 {
     protected $em;
-    protected $requets;
+    protected $request;
 
+    /**
+     *
+     * @param EntityManager $em
+     *
+     * @param Request $request
+     */
     public function __construct(EntityManager $em, $request)
     {
         $this->em = $em;
         $this->request = $request;
     }
 
-    public function buildQuery(QueryBuilder &$qb, array $parameters)
+    /**
+     * Build the query
+     *
+     * @param QueryBuilder &$qb
+     * @param array        $parameters
+     *
+     * @return queryBuilder
+     */
+    public function buildQuery(QueryBuilder $qb, array $parameters)
     {
-        $qb = $qb
+        //clean the parameters from the blank value
+        foreach ($parameters['category'] as $index => $parameter) {
+            //the blank value is removed
+            if ($parameter === '') {
+                unset($parameters['category'][$index]);
+            }
+        }
+
+        if (count($parameters['category']) > 0) {
+            $qb = $qb
              ->join('item.category', 'c')
              ->andWhere('c.id IN (:category)')
              ->setParameter('category', $parameters['category']);
+        }
 
         return $qb;
     }
@@ -37,11 +61,16 @@ class CategoryFilter extends BaseFilter
      * @param FormBuilderInterface $builder
      * @param array                $options
      *
+     * @SuppressWarnings checkUnusedFunctionParameters
+     *
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $categories = $this->em->getRepository('VictoireBlogBundle:Category')->findAll();
-        $categoriesChoices = array();
+
+        //the blank value
+        $categoriesChoices = array(null => '');
+
         foreach ($categories as $category) {
             $categoriesChoices[$category->getId()] = $category->getTitle();
         }
@@ -67,6 +96,11 @@ class CategoryFilter extends BaseFilter
             );
     }
 
+    /**
+     * Set the default options
+     *
+     * @param OptionsResolverInterface $resolver
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
@@ -74,6 +108,13 @@ class CategoryFilter extends BaseFilter
         ));
     }
 
+    /**
+     * Get the filters
+     *
+     * @param array $filters
+     *
+     * @return array The filters
+     */
     public function getFilters($filters)
     {
         return $this->em->getRepository('VictoireBlogBundle:Category')->findById($filters['category']);

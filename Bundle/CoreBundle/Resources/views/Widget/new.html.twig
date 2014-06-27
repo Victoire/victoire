@@ -1,41 +1,25 @@
 {% form_theme form 'VictoireFormBundle:Form:fields.html.twig' %}
+
+{% trans_default_domain "victoire" %}
+
 {% block form_container %}
-
-<form name="widget" action={% spaceless %}
-{% block modal_body_form_action %}
-{{ path('victoire_core_widget_create', {'page': page.id,'slot':slot, 'type': widget.type, 'entity': entity} ) }}
-{% endblock modal_body_form_action %}
-{% endspaceless %} method="POST" class="vic-form-horizontal" data-slot="{{ widget.slot }}">
-
-{% block body %}
-{% block form %}
-
-<div class="vic-tab-content vic-modal-tab-content">
-    {% if entity != null %}
-        <div id="picker-{{entity}}" class="vic-tab-pane vic-active">
-
-            {% block form_picker %}
-                {{ form_widget(form.entity) }}
-            {% endblock form_picker %}
-        </div>
-        {% if is_granted('ROLE_VICTOIRE_DEVELOPER') %}
-            <div id="query-{{entity}}" class="vic-tab-pane">
-
-            {% block form_query %}
-                {{form_row(form.query)}}
-            {% endblock form_query %}
-            </div>
-        {% endif %}
-    {% else %}
-        {% block form_static %}
-        {% endblock form_static %}
-
-    {% endif %}
-    {{form_rest(form)}}
-</div>
-
-{% endblock form %}
-{% endblock body %}
-</form>
+    {% block body %}
+        {% block form %}
+            {% if entity != null %}
+                <div id="picker-{{entity}}-{{ form.mode.vars.data }}" class="vic-tab-pane {% if form.mode.vars.data == 'entity' %}vic-active{% endif %}">
+                    {{ form_start(form) }}
+                        {{form_rest(form)}}
+                    {{ form_end(form) }}
+                </div>
+            {% else %}
+                {% block form_static %}
+                    <div id="picker-{{ form.mode.vars.data }}" class="vic-tab-pane vic-active">
+                        {{ form_start(form) }}
+                            {{form_rest(form)}}
+                        {{ form_end(form) }}
+                    </div>
+                {% endblock form_static %}
+            {% endif %}
+        {% endblock form %}
+    {% endblock body %}
 {% endblock form_container %}
-

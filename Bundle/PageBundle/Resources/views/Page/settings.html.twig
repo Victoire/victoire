@@ -1,4 +1,7 @@
 {% extends 'VictoireCoreBundle::_modal.html.twig' %}
+
+{% trans_default_domain "victoire" %}
+
 {% form_theme form 'VictoireFormBundle:Form:fields.html.twig' %}
 
 {% block modal_container_classes %}{{ parent() }} vic-page-modal{% endblock modal_container_classes %}
@@ -16,20 +19,20 @@
                     {{ form_row(form.bodyId) }}
                     {{ form_row(form.bodyClass) }}
                     <div class="vic-form-group">
-                        <label for="victoire_page_settings_type_bodyClass" class="vic-control-label vic-col-lg-3 control-label vic-optional">
+                         <label for="victoire_page_settings_type_bodyClass" class="vic-control-label vic-col-lg-3 control-label vic-optional">
                             {{ 'form.page.type.slug.label'|trans({}, 'victoire') }}
-                        </label>
-                        <div class="vic-col-lg-9">
-                            <table style="width: 100%;">
-                                <tr>
-                                    <td>
+                         </label>
+                         <div class="vic-col-lg-9">
+                             <table style="width: 100%;">
+                                 <tr>
+                                     <td>
                                         {{ url('victoire_core_page_show', {'url' : page.url })|replace({(page.slug): ''}) }}
-                                    </td>
-                                    <td style="width: 100%;">
+                                     </td>
+                                     <td style="width: 100%;">
                                         {{ form_widget(form.slug) }}
-                                    </td>
-                                </tr>
-                            </table>
+                                     </td>
+                                 </tr>
+                             </table>
                         </div>
                     </div>
                 </div>

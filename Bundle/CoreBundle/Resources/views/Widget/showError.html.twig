@@ -1,5 +1,12 @@
+{% trans_default_domain "victoire" %}
+
+{% if widget != null %}
 <div class="vic-widget vic-alert vic-alert-danger" id="widget-{{widget.id}}">
     {{cms_widget_actions(widget)}}
+{% else %}
+<div class="vic-widget vic-alert vic-alert-danger">
+{% endif %}
     {{ error }}
 </div>
+
 

@@ -2,7 +2,7 @@
 
 namespace Victoire\Bundle\BlogBundle\Filter;
 
-use Victoire\FilterBundle\Filter\BaseFilter;
+use Victoire\Widget\FilterBundle\Filter\BaseFilter;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityManager;
@@ -14,20 +14,44 @@ use Doctrine\ORM\QueryBuilder;
 class TagFilter extends BaseFilter
 {
     protected $em;
-    protected $requets;
+    protected $request;
 
+    /**
+     * Constructor
+     *
+     * @param EntityManager $em
+     * @param unknown $request
+     */
     public function __construct(EntityManager $em, $request)
     {
         $this->em = $em;
         $this->request = $request;
     }
 
-    public function buildQuery(QueryBuilder &$qb, array $parameters)
+    /**
+     * Build the query
+     *
+     * @param QueryBuilder &$qb
+     * @param array        $parameters
+     *
+     * @return queryBuilder
+     */
+    public function buildQuery(QueryBuilder $qb, array $parameters)
     {
-        $qb = $qb
-             ->join('item.tags', 't')
-             ->andWhere('t.id IN (:tags)')
-             ->setParameter('tags', $parameters['tags']);
+        //clean the parameters from the blank value
+        foreach ($parameters['tags'] as $index => $parameter) {
+            //the blank value is removed
+            if ($parameter === '') {
+                unset($parameters['tags'][$index]);
+            }
+        }
+
+        if (count($parameters['tags']) > 0) {
+            $qb = $qb
+                 ->join('item.tags', 't')
+                 ->andWhere('t.id IN (:tags)')
+                 ->setParameter('tags', $parameters['tags']);
+        }
 
         return $qb;
     }
@@ -37,11 +61,15 @@ class TagFilter extends BaseFilter
      * @param FormBuilderInterface $builder
      * @param array                $options
      *
+     * @SuppressWarnings checkUnusedFunctionParameters
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $tags = $this->em->getRepository('VictoireBlogBundle:Tag')->findAll();
-        $tagsChoices = array();
+
+        //the blank value
+        $tagsChoices = array(null => '');
+
         foreach ($tags as $tag) {
             $tagsChoices[$tag->getId()] = $tag->getTitle();
         }
@@ -58,6 +86,7 @@ class TagFilter extends BaseFilter
                 'tags', 'choice', array(
                     'label' => 'blog.tag_filter.label',
                     'choices' => $tagsChoices,
+                    'required' => false,
                     'multiple' => true,
                     'attr' => array(
                         'class' => 'select2'
@@ -67,6 +96,11 @@ class TagFilter extends BaseFilter
             );
     }
 
+    /**
+     * Set the default options
+     *
+     * @param OptionsResolverInterface $resolver
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
@@ -74,6 +108,13 @@ class TagFilter extends BaseFilter
         ));
     }
 
+    /**
+     * Get the filters
+     *
+     * @param array $filters
+     *
+     * @return array The filters
+     */
     public function getFilters($filters)
     {
         return $this->em->getRepository('VictoireBlogBundle:Tag')->findById($filters['tags']);

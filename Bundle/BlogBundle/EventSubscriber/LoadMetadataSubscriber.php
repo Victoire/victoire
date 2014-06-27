@@ -11,6 +11,8 @@ class LoadMetadataSubscriber implements EventSubscriber
 {
     /**
      * bind to LoadClassMetadata method
+     *
+     * @return array The list of events
      */
     public function getSubscribedEvents()
     {
@@ -25,7 +27,7 @@ class LoadMetadataSubscriber implements EventSubscriber
      */
     public function loadClassMetadata($class)
     {
-        if ($class->getClassMetadata()->name == 'Victoire\Bundle\PageBundle\Entity\BasePage') {
+        if ($class->getClassMetadata()->name === 'Victoire\Bundle\PageBundle\Entity\BasePage') {
             $class->getClassMetadata()->discriminatorMap[Article::TYPE] = 'Victoire\Bundle\BlogBundle\Entity\Article';
         }
     }

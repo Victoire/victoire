@@ -7,9 +7,15 @@ namespace Victoire\Bundle\CoreBundle\Cache;
  **/
 class ApcCache
 {
-    private $cache;
-    private $debug;
+    protected $cache;
+    protected $debug;
 
+    /**
+     * Constructor
+     *
+     * @param unknown $cache
+     * @param boolean $debug The debug environment
+     */
     public function __construct($cache, $debug)
     {
         $this->cache = new $cache();
@@ -26,7 +32,7 @@ class ApcCache
      */
     public function fetch($id)
     {
-        $id = $this->uniqId + '-' + $id;
+        $id = $this->uniqId . '-' . $id;
         if ($this->contains($id)) {
             return $this->cache->fetch($id);
         }
@@ -43,32 +49,39 @@ class ApcCache
      */
     public function save($id, $data)
     {
-        $id = $this->uniqId + '-' + $id;
+        $id = $this->uniqId . '-' . $id;
+
         if (!$this->apcIsEnabled()) {
             return false;
         }
 
-        if (!$this->contains($id)) {
-            if ($this->debug) {
-                $this->cache->save($id, $data, 20);
-            } else {
-                $this->cache->save($id, $data);
-            }
-
-            return true;
+        if ($this->debug) {
+            $this->cache->save($id, $data, 20);
+        } else {
+            $this->cache->save($id, $data);
         }
-
 
         return false;
     }
 
-    private function contains($key)
+    /**
+     * Does the cache contains this key
+     *
+     * @param unknown $key
+     * @return boolean
+     */
+    protected function contains($key)
     {
 
         return $this->apcIsEnabled() && $this->cache->contains($key);
     }
 
-    private function apcIsEnabled()
+    /**
+     * Is apc enabled
+     *
+     * @return boolean
+     */
+    protected function apcIsEnabled()
     {
         //consider cache enabled only if apc is loaded and enabled and debug is false
         return extension_loaded('apc') && ini_get('apc.enabled');

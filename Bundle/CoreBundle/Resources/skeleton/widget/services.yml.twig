@@ -1,7 +1,15 @@
 services:
     victoire_core.twig.widget_{{ widget|lower }}_manager:
         class: {{ namespace }}\Widget\Manager\Widget{{ widget }}Manager
-        arguments: [@service_container]
-
+        arguments:
+            - "@service_container"
     widget_{{ widget|lower }}_manager:
         alias: victoire_core.twig.widget_{{ widget|lower }}_manager
+    #alias to the entity
+    victoire.widget.{{ widget|lower }}:
+        class: {{ namespace }}\Entity\Widget{{ widget }}
+    #alias to the form
+    victoire.widget.form.{{ widget|lower }}:
+        class: {{ namespace }}\Form\Widget{{ widget }}Type
+        tags:
+            - { name: form.type , alias: victoire_widget_form_{{ widget|lower }} }

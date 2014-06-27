@@ -1,0 +1,22 @@
+{% trans_default_domain "victoire" %}
+
+{% block body %}
+
+{# the page is given by the Widget Manager, it might not be given to the view if the widget is rendered without the page context #}
+{% if page is not defined  %}
+   {% set page = null %}
+{% endif %}
+
+{% if entity is not defined  %}
+   {% set entity = null %}
+{% endif %}
+
+<div {{cms_widget_title(widget)}} class="vic-widget {{cms_widget_extra_css_class(widget)}} {{cms_widget_legacy(widget, page, entity)}}" id="widget-{{widget.id}}">
+{% block actions %}{{cms_widget_actions(widget)}}{% endblock actions %}
+
+{% block content %}
+{{content|raw}}
+{% endblock content %}
+</div>
+
+{% endblock body %}

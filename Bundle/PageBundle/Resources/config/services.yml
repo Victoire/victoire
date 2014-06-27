@@ -1,23 +1,34 @@
 services:
-
     victoire_page.user_callable:
         class: Victoire\Bundle\PageBundle\Helper\UserCallableHelper
-        arguments: [@service_container]
+        arguments: 
+            - "@service_container"
 
     page.subscriber:
         class: Victoire\Bundle\PageBundle\EventSubscriber\PageSubscriber
         arguments:
-            - @victoire_core.cache.route_registerer
-            - @router
-            - @victoire_page.user_callable
+            - "@victoire_core.cache.route_registerer"
+            - "@router"
+            - "@victoire_page.user_callable"
             - "%victoire_core.user_class%"
+            - "@service_container"
         tags:
             - { name: doctrine.event_subscriber, connection: default, priority: -1 }
 
     page.widgetMap.builder:
         class: Victoire\Bundle\PageBundle\WidgetMap\WidgetMapBuilder
+        arguments:
+            - "@doctrine.orm.entity_manager"
 
-
+    victoire_page.page_helper:
+        class: Victoire\Bundle\PageBundle\Helper\PageHelper
+    victoire_page.url_helper:
+        class: Victoire\Bundle\PageBundle\Helper\UrlHelper
+        arguments:
+            - "@router"
+            - "@doctrine.orm.entity_manager"
+        calls:
+            - [setRequest, ["@request_stack"]]
 
     ####################################################################################################################
     # Security voter
@@ -27,7 +38,11 @@ services:
         arguments: ['%victoire_core.user_class%']
         tags:
             - { name: security.voter }
-
+    page.security.voter.page_debug:
+        class: Victoire\Bundle\PageBundle\Security\Voter\PageDebugVoter
+        arguments: ['%victoire_core.user_class%']
+        tags:
+            - { name: security.voter }
     ####################################################################################################################
     # Forms
     ####################################################################################################################

@@ -3,7 +3,6 @@ namespace Victoire\Bundle\CoreBundle\EventSubscriber;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
-use Victoire\Bundle\CoreBundle\Theme\ThemeChain;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 
 /**
@@ -11,18 +10,16 @@ use Doctrine\ORM\Mapping\ClassMetadataInfo;
  */
 class WidgetDiscriminatorMapSubscriber implements EventSubscriber
 {
-    protected $widgets;
-    protected $themeChain;
 
+    static protected $widgets;
 
     /**
      * contructor
      * @param array $widgets
      */
-    public function __construct($widgets, ThemeChain $themeChain)
+    public function setWidgets($widgets)
     {
-        $this->widgets = $widgets;
-        $this->themeChain = $themeChain;
+        self::$widgets = $widgets;
     }
 
     /**
@@ -39,14 +36,24 @@ class WidgetDiscriminatorMapSubscriber implements EventSubscriber
 
     /**
      * Insert enabled widgets in base widget DiscriminatorMap
+     *
      * @param LoadClassMetadataEventArgs $eventArgs
      */
-    public function loadClassMetadata(LoadClassMetadataEventArgs $eventArgs)
+    static public function loadClassMetadata($eventArgs)
     {
-        $metadatas = $eventArgs->getClassMetadata();
-        if ($metadatas->name == 'Victoire\Bundle\CoreBundle\Entity\Widget') {
-            foreach ($this->widgets as $widget) {
-                $metadatas->discriminatorMap[$widget['name']] = $widget['class'];
+        //this functions is called during the extract of translations
+        //but the argument is not the same
+        //so to avoid an error during extractions, we test the argument
+        if ($eventArgs instanceof LoadClassMetadataEventArgs) {
+            $metadatas = $eventArgs->getClassMetadata();
+            if ($metadatas->name === 'Victoire\Bundle\CoreBundle\Entity\Widget') {
+                foreach (self::$widgets as $widget) {
+                    $class = $widget['class'];
+                    if (!class_exists($class)) {
+                        throw new \Exception('The class '.$class.' does not exists, please check the config.yml of the widget bundle.');
+                    }
+                    $metadatas->discriminatorMap[$widget['name']] = $class;
+                }
             }
         }
     }
