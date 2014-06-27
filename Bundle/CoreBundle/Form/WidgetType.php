@@ -141,8 +141,8 @@ class WidgetType extends AbstractType
     {
         $options = $this->options;
 
-        $builder->add('businessClass', 'hidden', array(
-            'data' => $namespace
+        $form->add('businessClass', 'hidden', array(
+            'data' => $options['namespace']
         ));
         $form->add('query');
         $form->add('fields', 'widget_fields', array(
