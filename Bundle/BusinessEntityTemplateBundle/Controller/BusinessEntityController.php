@@ -23,7 +23,12 @@ class BusinessEntityController extends BasePageController
     public function indexAction()
     {
         $businessEntityManager = $this->get('victoire_core.helper.business_entity_helper');
-        $businessEntityTemplateHelper = $this->get('victoire_business_entity_template.helper.business_entity_template_helper');
+
+        //services
+        $em = $this->get('doctrine.orm.entity_manager');
+
+        //the repository
+        $repository = $em->getRepository('VictoireBusinessEntityTemplateBundle:BusinessEntityTemplate');
 
         $businessEntitiesTemplates = array();
 
@@ -31,7 +36,10 @@ class BusinessEntityController extends BasePageController
 
         foreach ($businessEntities as $businessEntity) {
             $name = $businessEntity->getName();
-            $templates = $businessEntityTemplateHelper->findTemplatesByBusinessEntity($businessEntity);
+
+            //retrieve the templates
+            $templates = $repository->findTemplatesByBusinessEntity($businessEntity);
+
             $businessEntitiesTemplates[$name] = $templates;
         }
 

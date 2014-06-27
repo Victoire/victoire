@@ -1,9 +1,4 @@
 services:
-    victoire_business_entity_template.helper.business_entity_template_helper:
-        class: Victoire\Bundle\BusinessEntityTemplateBundle\Helper\BusinessEntityTemplateHelper
-        arguments: 
-            - "@doctrine.orm.entity_manager"
-            
     victoire_business_entity_template.business_entity_template.form.type:
         class: Victoire\Bundle\BusinessEntityTemplateBundle\Form\BusinessEntityTemplateType
         arguments: 
