@@ -1033,7 +1033,7 @@ abstract class BasePage
                 $widgetMapTemp->setPosition($widgetMapEntry['position']);
                 $widgetMapTemp->setPositionReference($widgetMapEntry['positionReference']);
                 $widgetMapTemp->setReplacedWidgetId($widgetMapEntry['replacedWidgetId']);
-                $widgetMapTemp->setWidgetId($widgetMapEntry['widgetId']);
+                $widgetMapTemp->setWidgetId(intval($widgetMapEntry['widgetId']));
 
                 $slot->addWidgetMap($widgetMapTemp);
             }

@@ -87,6 +87,7 @@ EOT
             $output->writeln(sprintf('<comment>+++ Build widget map for page #%s : %s... </comment>', $page->getId(), $page->getSlug()));
 
             $widgetMapBuilder->removeMissingWidgets($page);
+            $widgetMapBuilder->removeDuplicateWidgetLegacy($page);
 
             $em->persist($page);
 

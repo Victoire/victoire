@@ -71,6 +71,94 @@ class WidgetMapBuilder
     }
 
     /**
+     * remove the widget ids from the widget map if any of the parents has it in its widget map
+     *
+     * @param Page $page
+     *
+     */
+    public function removeDuplicateWidgetLegacy(Page $page)
+    {
+        //get the parent of the page
+        $parent = $page->getParent();
+
+        //if there is one
+        if ($parent !== null) {
+            //get the list of ids of the parent
+            $parentIds = $this->getCompleteWidgetIds($parent);
+
+            //get the slots of the page
+            $slots = $page->getSlots();
+
+            //parse the slots
+            foreach ($slots as $slot) {
+                $widgetMaps = $slot->getWidgetMaps();
+
+                //parse the widget maps
+                foreach ($widgetMaps as $widgetMap) {
+                    //id of the widget
+                    $widgetId = $widgetMap->getWidgetId();
+
+                    //if the widget is in the parents
+                    if (in_array($widgetId, $widgetId)) {
+                        //we remove it from the widget map
+                        $slot->removeWidgetMap($widgetMap);
+                    }
+                }
+            }
+
+            //we update the serialized widget map
+            $page->updateWidgetMapBySlots();
+        }
+    }
+
+    /**
+     * Get the complete list of widget ids of the page and its parents
+     *
+     * @param Page $page
+     *
+     * @return array The list of ids
+     */
+    protected function getCompleteWidgetIds(Page $page)
+    {
+        $ids = array();
+
+        $slots = $page->getSlots();
+
+        //the entity manager
+        $em = $this->em;
+        //the repository
+        $widgetRepo = $em->getRepository('VictoireCoreBundle:Widget');
+
+        //parse the slots
+        foreach ($slots as $slot) {
+            $widgetMaps = $slot->getWidgetMaps();
+
+            //parse the widget maps
+            foreach ($widgetMaps as $widgetMap) {
+                $widgetId = $widgetMap->getWidgetId();
+
+                //add the id to the list
+                $ids[] = $widgetId;
+            }
+        }
+
+        $parent = $page->getParent();
+
+        //if there is one
+        if ($parent !== null) {
+            $parentIds = $this->getCompleteWidgetIds($parent);
+
+            //merge the ids
+            $ids = array_merge($ids, $parentIds);
+        }
+
+        //remove duplicate entries
+        $ids = array_unique($ids);
+
+        return $ids;
+    }
+
+    /**
      * Compute the complete widget map for a page by its parents
      *
      * @param Page   $page The page
@@ -260,6 +348,12 @@ class WidgetMapBuilder
 
             //get the widget map
             $widgetMap = $slot->getWidgetMapByWidgetId($widgetId);
+
+            //check that the widget map exists
+            if ($widgetMap === null) {
+                throw new \Exception('The widgetMap for the widget ['.$widgetId.'] and the page ['.$page->getId().'] does not exists.');
+            }
+
             //remove the widget map from the slot
             $slot->removeWidgetMap($widgetMap);
         } else {
