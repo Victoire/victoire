@@ -546,7 +546,7 @@ class WidgetManager
      *
      * @return Page The page for the entity instance
      */
-    public function duplicateTemplatePageIfPageInstance(Page $page)
+    public function duplicateTemplatePageIfPageInstance(BasePage $page)
     {
         //we copy the reference to the widget page
         $widgetPage = $page;
