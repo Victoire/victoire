@@ -62,6 +62,10 @@ class WidgetType extends AbstractType
             'data' => $mode
         ));
 
+        //add the slot to the form
+        $builder->add('slot', 'hidden', array());
+
+
         //we use the PRE_SUBMIT event to set the mode option
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
@@ -165,6 +169,7 @@ class WidgetType extends AbstractType
             'translation_domain' => 'victoire'
         ));
 
+        $resolver->setOptional(array('slot'));
         $resolver->setOptional(array('mode'));
         $resolver->setOptional(array('namespace'));
         $resolver->setOptional(array('entityName'));

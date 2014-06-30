@@ -107,6 +107,11 @@ class WidgetController extends AwesomeController
                 if ($entity) {
                     $annotationReader = $this->get('victoire_core.annotation_reader');
                     $classes = $annotationReader->getBusinessClassesForWidget($widget);
+
+                    if (!isset($classes[$entity])) {
+                        throw new \Exception('The widget type ['.$entity.'] does not exists.');
+                    }
+
                     $namespace = $classes[$entity];
                 }
 
