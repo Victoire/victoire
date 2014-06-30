@@ -3,6 +3,7 @@ services:
         class: {{ namespace }}\Widget\Manager\Widget{{ widget }}Manager
         arguments:
             - "@service_container"
+            - "{{ widget }}"         #name of the widget
     widget_{{ widget|lower }}_manager:
         alias: victoire_core.twig.widget_{{ widget|lower }}_manager
     #alias to the entity

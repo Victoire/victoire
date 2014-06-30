@@ -19,14 +19,25 @@ use Victoire\Bundle\PageBundle\Entity\Slot;
 class BaseWidgetManager
 {
     protected $container;
+    //the widget name set with the configuration of the service
+    protected $widgetName = null;
 
     /**
      * contructor
      * @param Container $container
+     * @param String    $widgetName The name of the widget
+     *
+     * @throws \Exception Test of the parameters
      */
-    public function __construct($container)
+    public function __construct($container, $widgetName)
     {
         $this->container = $container;
+
+        //test the widget name
+        if ($widgetName === null || $widgetName === '') {
+            throw new \Exception('The widgetName constructor parameter of the class '.__CLASS__.' can not be null or empty. Please set one in the services.yml of your widget bundle.');
+        }
+        $this->widgetName = $widgetName;
     }
 
     /**
@@ -34,6 +45,7 @@ class BaseWidgetManager
      * The call is not the same if an entity is provided or not
      *
      * @param Widget $widget
+     * @param Page   $page
      * @param Entity $entity
      *
      * @throws \Exception
@@ -244,7 +256,7 @@ class BaseWidgetManager
 
             return (
                 array_key_exists($widgetName, $slots[$slot]['widgets']) &&
-                $slots[$slot]['widgets'][$widgetName] == null) ||
+                $slots[$slot]['widgets'][$widgetName] === null) ||
                 !array_key_exists('themes', $slots[$slot]['widgets'][$widgetName]) ||
                 in_array($widgetType, $slots[$slot]['widgets'][$widgetName]['themes']);
         }
@@ -335,7 +347,9 @@ class BaseWidgetManager
      * create a form with given widget
      *
      * @param WidgetRedactor $widget
+     * @param BasePage       $page
      * @param string         $entityName
+     * @param string         $namespace
      * @param string         $formMode
      * @return $form
      *
@@ -509,8 +523,11 @@ class BaseWidgetManager
 
     /**
      * create a form with given widget
+     *
      * @param WidgetRedactor $widget
+     * @param BasePage       $page
      * @param string         $entityName
+     * @param string         $namespace
      * @param string         $formMode
      *
      * @return $form
@@ -687,5 +704,15 @@ class BaseWidgetManager
         $items = $em->createQuery($itemsQuery)->getResult();
 
         return $items;
+    }
+
+    /**
+     * The name of the widget
+     *
+     * @return string
+     */
+    public function getWidgetName()
+    {
+        return $this->widgetName;
     }
 }
