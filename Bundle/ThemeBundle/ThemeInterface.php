@@ -4,6 +4,11 @@ namespace Victoire\Bundle\ThemeBundle;
 
 use Victoire\Bundle\CoreBundle\Widget\Managers\ManagerInterface;
 
+/**
+ *
+ * @author Paul Andrieux
+ *
+ */
 interface ThemeInterface
 {
 
