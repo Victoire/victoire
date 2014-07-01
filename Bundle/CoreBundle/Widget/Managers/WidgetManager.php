@@ -564,6 +564,7 @@ class WidgetManager
 
         //the widget is linked to a page url that is not the current page url
         if ($url !== $widgetPageUrl) {
+
             //we try to get the page if it exists
             $basePageRepository = $em->getRepository('VictoirePageBundle:BasePage');
 

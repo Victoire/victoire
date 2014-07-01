@@ -16,7 +16,6 @@ use Victoire\Bundle\PageBundle\Form\TemplateType;
 /**
  * Template Controller
  *
- * @Route("/victoire-dcms/template")
  */
 class TemplateController extends Controller
 {
@@ -24,7 +23,7 @@ class TemplateController extends Controller
      * list of all templates
      *
      * @return response
-     * @Route("/index", name="victoire_core_template_index")
+     * @Route("/victoire-dcms/template/index", name="victoire_core_template_index")
      * @Template()
      */
     public function indexAction()
@@ -46,7 +45,7 @@ class TemplateController extends Controller
      * create a new Template
      *
      * @return Response
-     * @Route("/new", name="victoire_core_template_new")
+     * @Route("/victoire-dcms/template/new", name="victoire_core_template_new")
      * @Template()
      */
     public function newAction()
@@ -82,7 +81,7 @@ class TemplateController extends Controller
      *
      * @param string $slug The slug of page
      * @return Response
-     * @Route("/{slug}/parametres", name="victoire_core_template_settings")
+     * @Route("/victoire-dcms/template/{slug}/parametres", name="victoire_core_template_settings")
      * @Template()
      */
     public function settingsAction($slug)
@@ -129,7 +128,6 @@ class TemplateController extends Controller
      */
     public function showAction($template)
     {
-
         $event = new TemplateMenuContextualEvent($template);
         $this->get('event_dispatcher')->dispatch('victoire_core.template_menu.contextual', $event);
 
@@ -144,7 +142,7 @@ class TemplateController extends Controller
      *
      * @param Template $template The Template to edit
      * @return Response
-     * @Route("/edit/{slug}", name="victoire_core_template_edit")
+     * @Route("/victoire-dcms/template/edit/{slug}", name="victoire_core_template_edit")
      * @Template()
      * @ParamConverter("template", class="VictoirePageBundle:Template")
      */
