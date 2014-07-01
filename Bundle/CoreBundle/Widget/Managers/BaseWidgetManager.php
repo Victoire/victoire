@@ -22,16 +22,22 @@ class BaseWidgetManager
     //the widget name set with the configuration of the service
     protected $widgetName = null;
 
+    //the bundle name can be given as parameter
+    protected $bundleName = null;
+
     /**
      * contructor
+     *
      * @param Container $container
      * @param String    $widgetName The name of the widget
+     * @param string    $bundleName The name of the bundle
      *
      * @throws \Exception Test of the parameters
      */
-    public function __construct($container, $widgetName)
+    public function __construct($container, $widgetName, $bundleName = null)
     {
         $this->container = $container;
+        $this->bundleName = $bundleName;
 
         //test the widget name
         if ($widgetName === null || $widgetName === '') {
@@ -432,12 +438,19 @@ class BaseWidgetManager
     /**
      * Get the name of the widget bundle
      *
+     * If you want to override the bundleName, please use the argument of the manager
+     *
      * @return string
      */
-    protected function getBundleName()
+    private function getBundleName()
     {
-        //the name of the bundle depends of the widget name
-        $bundleName = 'VictoireWidget'.$this->getWidgetName().'Bundle';
+        //if the name of the bundle was given as a parameter
+        if ($this->bundleName !== null) {
+            $bundleName = $this->bundleName;
+        } else {
+            //the name of the bundle depends of the widget name
+            $bundleName = 'VictoireWidget'.$this->getWidgetName().'Bundle';
+        }
 
         return $bundleName;
     }
