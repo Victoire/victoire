@@ -67,7 +67,7 @@ class WidgetSubscriber implements EventSubscriberInterface
         $widgetName = $this->getWidgetName($widget);
 
         if ($widgetName === null) {
-            throw new \Exception('The name of the widget was not found');
+            throw new \Exception('The name of the widget was not found, please check that the config.yml of the bundle contains the entry victoire_core.widgets.xxxxx.');
         }
 
         //get the list of themes for the widget

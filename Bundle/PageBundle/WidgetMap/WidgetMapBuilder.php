@@ -288,6 +288,15 @@ class WidgetMapBuilder
 
             //get the slot of the page
             $slot = $page->getSlotById($slotId);
+
+            //test slot exists, it might not exists yet
+            if ($slot === null) {
+                //so we add it
+                $slot = new Slot();
+                $slot->setId($slotId);
+                $page->addSlot($slot);
+            }
+
             //the widget map position counter
             $positionCounter = 1;
 
