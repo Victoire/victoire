@@ -259,7 +259,7 @@ class CmsExtension extends \Twig_Extension
      *
      * @return boolean Does the form allows this kind of business entity in this page
      */
-    public function isBusinessEntityAllowed($formEntityName, Page $page)
+    public function isBusinessEntityAllowed($formEntityName, BasePage $page)
     {
         //the result
         $isBusinessEntityAllowed = false;

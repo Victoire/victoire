@@ -19,6 +19,7 @@ use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\PageBundle\Entity\Template;
 use Victoire\Widget\MenuBundle\Entity\MenuItem;
+use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
 
 /**
  * Generic Widget CRUD operations
@@ -564,7 +565,6 @@ class WidgetManager
 
         //the widget is linked to a page url that is not the current page url
         if ($url !== $widgetPageUrl) {
-
             //we try to get the page if it exists
             $basePageRepository = $em->getRepository('VictoirePageBundle:BasePage');
 
@@ -581,13 +581,19 @@ class WidgetManager
                     throw new \Exception('The id could not be retrieved from the url.');
                 }
 
-                $entity = $businessEntityHelper->getEntityByPageAndId($widgetPage, $entityId);
+                if ($widgetPage instanceof BusinessEntityTemplatePage) {
+                    $entity = $businessEntityHelper->getEntityByPageAndId($widgetPage, $entityId);
 
-                //so we duplicate the business entity template page for this current instance
-                $page = $pageHelper->createPageInstanceFromBusinessEntityTemplatePage($widgetPage, $entityId, $entity);
+                    //so we duplicate the business entity template page for this current instance
+                    $page = $pageHelper->createPageInstanceFromBusinessEntityTemplatePage($widgetPage, $entityId, $entity);
 
-                //the page
-                $em->persist($page);
+                    //the page
+                    $em->persist($page);
+                } else {
+                    //we restore the widget page as the page
+                    //we might be editing a template
+                    $page = $widgetPage;
+                }
             }
         }
 
