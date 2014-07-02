@@ -51,11 +51,11 @@ class WidgetExceptionHandler
 
         //
         if ($this->debug) {
-            $result = '<div style="border: 3px solid #FF0000;height: 500px;overflow: auto;">';
+            $exceptionResult = '<div style="border: 3px solid #FF0000;height: 500px;overflow: auto;">';
 
             $template = new TemplateReference('TwigBundle', 'Exception', 'exception', 'html', 'twig');
             $exception = FlattenException::create($ex);
-            $result .= $this->twig->render(
+            $exceptionResult = $this->twig->render(
                 $template,
                 array(
                     'status_code'    => $ex->getCode(),
@@ -66,7 +66,16 @@ class WidgetExceptionHandler
                 )
             );
 
-            $result .= '</div>';
+            $exceptionResult .= '</div>';
+
+            //only a user victoire can see that there is an error
+            $result = $this->templating->render(
+                'VictoireCoreBundle:Widget:showError.html.twig',
+                array(
+                    "widget" => $widget,
+                    "error" => $exceptionResult
+                )
+            );
         } else {
             //environnement not debug
             //only a user victoire can see that there is an error
@@ -76,9 +85,8 @@ class WidgetExceptionHandler
                     array(
                         "widget" => $widget,
                         "error" => $ex->getMessage()
-                        )
+                    )
                 );
-
             }
         }
 
