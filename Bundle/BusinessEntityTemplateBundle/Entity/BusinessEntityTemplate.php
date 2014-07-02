@@ -42,15 +42,22 @@ class BusinessEntityTemplate
     protected $name;
 
     /**
-     * @ORM\OneToOne(targetEntity="Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage", cascade={"persist", "remove",}, inversedBy="businessEntityTemplate")
-     * @ORM\JoinColumn(name="page_id", referencedColumnName="id", nullable=false)
+     * @ORM\OneToOne(targetEntity="Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage", cascade={"persist", "remove"}, inversedBy="businessEntityTemplate")
+     * @ORM\JoinColumn(name="template_id", referencedColumnName="id", nullable=false)
      *
      */
-    protected $page;
+    protected $template;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Victoire\Bundle\PageBundle\Entity\Page", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="parent_page_id", referencedColumnName="id", nullable=false)
+     *
+     */
+    protected $parentPage;
 
     /**
      * @var string
-     *
+     * @ORM\Column(name="layout", type="string", length=255, nullable=false)
      */
     protected $layout;
 
@@ -151,24 +158,45 @@ class BusinessEntityTemplate
         return $this->businessEntityId;
     }
 
+
     /**
-     * Get the page
+     * Get the template page
      *
-     * @return Page The page
+     * @return Template The template page
      */
-    public function getPage()
+    public function getTemplate()
     {
-        return $this->page;
+        return $this->template;
     }
 
     /**
-     * Set the page
+     * Set the template page
      *
-     * @param Page $page The page
+     * @param Page $page The template page
      */
-    public function setPage(Page $page)
+    public function setTemplatePage(Template $page)
     {
-        $this->page = $page;
+        $this->template = $page;
+    }
+
+    /**
+     * Get the parent page
+     *
+     * @return Page The parent page
+     */
+    public function getParentPage()
+    {
+        return $this->parentPage;
+    }
+
+    /**
+     * Set the parent page
+     *
+     * @param Page $page The parent page
+     */
+    public function setParentPage(Page $page)
+    {
+        $this->parentPage = $page;
     }
 
     /**
@@ -201,20 +229,37 @@ class BusinessEntityTemplate
      */
     public function prePersist()
     {
-        $this->page = new BusinessEntityTemplatePage();
-        $this->page->setTitle($this->getName());
-        $this->page->setLayout($this->layout);
-    }
+        $this->template = new BusinessEntityTemplatePage();
+        $this->template->setTitle($this->getName());
+        $this->template->setLayout($this->layout);
 
+        $this->parentPage = new Page();
+        $this->parentPage->setTitle($this->getName());
+        $this->parentPage->setLayout($this->layout);
+    }
 
     /**
      * Get the url of the page
      *
      * @return string The url
      */
-    public function getPageUrl()
+    public function getParentPageUrl()
     {
-        $page = $this->page;
+        $page = $this->parentPage;
+
+        $url = $page->getUrl();
+
+        return $url;
+    }
+
+    /**
+     * Get the url of the template
+     *
+     * @return string The url
+     */
+    public function getTemplateUrl()
+    {
+        $page = $this->template;
 
         $url = $page->getUrl();
 

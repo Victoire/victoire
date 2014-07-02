@@ -81,6 +81,7 @@ class BasePageController extends AwesomeController
         $manager = $this->getEntityManager();
         $urlHelper = $this->getUrlHelper();
         $basePageRepository = $manager->getRepository('VictoirePageBundle:BasePage');
+        $businessEntityTemplateRepository = $manager->getRepository('VictoireBusinessEntityTemplateBundle:BusinessEntityTemplatePage');
         $routeRepository = $manager->getRepository('VictoireCoreBundle:Route');
         $businessEntityHelper = $this->get('victoire_core.helper.business_entity_helper');
 
@@ -94,7 +95,7 @@ class BasePageController extends AwesomeController
 
             //if the url have been shorten
             if ($urlMatcher !== null) {
-                $businessEntityTemplatePage = $basePageRepository->findOneByUrl($urlMatcher);
+                $businessEntityTemplatePage = $businessEntityTemplateRepository->findOneByUrl($urlMatcher);
 
                 //a page match the entity template generator
                 if ($businessEntityTemplatePage) {

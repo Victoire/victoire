@@ -213,7 +213,7 @@ class PageSubscriber implements EventSubscriber
      *
      * @return array $urlArray The list of slugs
      */
-    protected function getParentSlugs(Page $page, $urlArray)
+    protected function getParentSlugs(BasePage $page, $urlArray)
     {
         $parent = $page->getParent();
 
@@ -233,7 +233,7 @@ class PageSubscriber implements EventSubscriber
      * @param Page   $page
      * @param String $initialUrl
      */
-    protected function addRouteHistory(Page $page, $initialUrl)
+    protected function addRouteHistory(BasePage $page, $initialUrl)
     {
         //services
         $em = $this->entityManager;
@@ -259,7 +259,7 @@ class PageSubscriber implements EventSubscriber
      * @param Page    $page  The page
      * @param Integer $depth The depth
      */
-    protected function rebuildChildrenUrl(Page $page, $depth)
+    protected function rebuildChildrenUrl(BasePage $page, $depth)
     {
         //services
         $em = $this->entityManager;

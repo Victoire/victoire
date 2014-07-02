@@ -40,17 +40,17 @@ class BusinessEntityTemplateController extends BaseController
             $em->persist($entity);
             $em->flush();
 
-            //get the associated page
-            $page = $entity->getPage();
+            //get the associated template
+            $template = $entity->getTemplate();
 
-            //get the url of the page
-            $pageurl = $page->getUrl();
+            //get the url of the template
+            $templateUrl = $template->getUrl();
 
             //the shortcuts service
             $shortcuts = $this->get('av.shortcuts');
 
             //redirect to the page of the template
-            $completeUrl = $shortcuts->generateUrl('victoire_core_page_show', array('url' => $pageurl));
+            $completeUrl = $shortcuts->generateUrl('victoire_core_page_show', array('url' => $templateUrl));
 
             $success = true;
         } else {
@@ -205,17 +205,17 @@ class BusinessEntityTemplateController extends BaseController
         if ($editForm->isValid()) {
             $em->flush();
 
-            //get the associated page
-            $page = $entity->getPage();
+            //get the associated template
+            $template = $entity->getTemplate();
 
-            //get the url of the page
-            $pageurl = $page->getUrl();
+            //get the url of the template
+            $templateUrl = $template->getUrl();
 
             //the shortcuts service
             $shortcuts = $this->get('av.shortcuts');
 
             //redirect to the page of the template
-            $completeUrl = $shortcuts->generateUrl('victoire_core_page_show', array('url' => $pageurl));
+            $completeUrl = $shortcuts->generateUrl('victoire_core_page_show', array('url' => $templateUrl));
 
             $success = true;
         } else {

@@ -589,6 +589,7 @@ class WidgetManager
                 }
 
                 if ($widgetPage instanceof BusinessEntityTemplatePage) {
+
                     $entity = $businessEntityHelper->getEntityByPageAndId($widgetPage, $entityId);
 
                     //so we duplicate the business entity template page for this current instance
@@ -596,6 +597,7 @@ class WidgetManager
 
                     //the page
                     $em->persist($page);
+                    $em->flush();
                 } else {
                     //we restore the widget page as the page
                     //we might be editing a template

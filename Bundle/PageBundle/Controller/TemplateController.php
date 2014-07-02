@@ -135,7 +135,7 @@ class TemplateController extends Controller
 
         return $this->container->get('victoire_templating')->renderResponse(
             'AppBundle:Layout:' . $template->getLayout() . '.html.twig',
-            array('page' => $template, 'id' => $template->getId())
+            array('page' => $template, 'entity' => null,'id' => $template->getId())
         );
     }
 

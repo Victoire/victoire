@@ -78,13 +78,13 @@ class WidgetMapBuilder
      */
     public function removeDuplicateWidgetLegacy(Page $page)
     {
-        //get the parent of the page
-        $parent = $page->getParent();
+        //get the template of the page
+        $template = $page->getTemplate();
 
         //if there is one
-        if ($parent !== null) {
+        if ($template !== null) {
             //get the list of ids of the parent
-            $parentIds = $this->getCompleteWidgetIds($parent);
+            $parentIds = $this->getCompleteWidgetIds($template);
 
             //get the slots of the page
             $slots = $page->getSlots();
@@ -118,7 +118,7 @@ class WidgetMapBuilder
      *
      * @return array The list of ids
      */
-    protected function getCompleteWidgetIds(Page $page)
+    protected function getCompleteWidgetIds(BasePage $page)
     {
         $ids = array();
 
@@ -142,11 +142,11 @@ class WidgetMapBuilder
             }
         }
 
-        $parent = $page->getParent();
+        $template = $page->getTemplate();
 
         //if there is one
-        if ($parent !== null) {
-            $parentIds = $this->getCompleteWidgetIds($parent);
+        if ($template !== null) {
+            $parentIds = $this->getCompleteWidgetIds($template);
 
             //merge the ids
             $ids = array_merge($ids, $parentIds);
@@ -174,11 +174,11 @@ class WidgetMapBuilder
         $parentWidgetMaps = null;
         $pageWidgetMaps = null;
 
-        //get the parent widget map
-        $parent = $page->getParent();
+        //get the template widget map
+        $template = $page->getTemplate();
 
-        if ($parent !== null) {
-            $parentWidgetMaps = $this->computeCompleteWidgetMap($parent, $slotId);
+        if ($template !== null) {
+            $parentWidgetMaps = $this->computeCompleteWidgetMap($template, $slotId);
         }
 
         $slot = $page->getSlotById($slotId);
@@ -236,7 +236,7 @@ class WidgetMapBuilder
                             }
                         }
 
-                        //the position of the widget is the sum of the parent widget map position and the position of the widget map
+                        //the position of the widget is the sum of the widget map position and the position of the widget map
                         $position += $parentPosition;
 
                         $position = $this->getNextAvailaiblePosition($position, $widgetMap);
