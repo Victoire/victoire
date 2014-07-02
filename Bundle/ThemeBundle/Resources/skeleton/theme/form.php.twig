@@ -7,6 +7,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Victoire\Bundle\CoreBundle\Form\EntityProxyFormType;
 use {{ widgetTypeNamespace }};
+use Victoire\Widget\{{ widget }}Bundle\Form\Widget{{ widget }}Type;
+
 
 
 /**
@@ -14,7 +16,6 @@ use {{ widgetTypeNamespace }};
  */
 class Theme{{ widget }}{{ theme }}Type extends Widget{{ widget }}Type
 {
-
     /**
      * define form fields
      * @param FormBuilderInterface $builder
@@ -22,23 +23,8 @@ class Theme{{ widget }}{{ theme }}Type extends Widget{{ widget }}Type
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        //choose form mode
-        if ($this->entity_name === null) {
-            //if no entity is given, we generate the static form
-            $builder
-            {% for field in fields %}
-                ->add('{{field.fieldName}}')
-            {% endfor %}
-            ;
-
-        }
-
         parent::buildForm($builder, $options);
-
-
-
     }
-
 
     /**
      * bind form to Widget{{widget}} entity
@@ -46,6 +32,8 @@ class Theme{{ widget }}{{ theme }}Type extends Widget{{ widget }}Type
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
+        parent::setDefaultOptions($resolver);
+
         $resolver->setDefaults(array(
             'data_class'         => '{{ namespace }}\Entity\Theme{{ widget }}{{ theme }}',
             'widget'             => '{{widget|lower}}',
@@ -53,12 +41,13 @@ class Theme{{ widget }}{{ theme }}Type extends Widget{{ widget }}Type
         ));
     }
 
-
     /**
      * get form name
+     *
+     * @return string The form name
      */
     public function getName()
     {
-        return 'appventus_victoirecorebundle_theme{{widget|lower}}{{theme|lower}}type';
+        return 'victoire_widget_form_{{widget|lower}}{{theme|lower}}';
     }
 }

@@ -1,10 +1,19 @@
 services:
-    victoire_core.theme_{{ widget|lower }}_{{ theme|lower }}_manager:
-        class: {{ namespace }}\Manager\{{ widget ~ theme }}Manager
-        arguments: [@service_container]
+    victoire_core.twig.widget_{{ widget|lower }}{{ theme| lower }}_manager:
+        class: {{ namespace }}\Manager\Theme{{ widget }}{{ theme }}Manager
+        arguments:
+            - "@service_container"
+            - "{{ widget }}{{ theme }}"         #name of the widget
+            - "VictoireTheme{{ widget }}{{ theme }}Bundle"
+    widget_{{ widget|lower }}{{ theme| lower }}_manager:
+        alias: victoire_core.twig.widget_{{ widget|lower }}{{ theme| lower }}_manager
+    #alias to the entity
+    victoire.widget.{{ widget|lower }}{{ theme| lower }}:
+        class: {{ namespace }}\Entity\Theme{{ widget }}{{ theme }}
         tags:
             - { name: victoire_core.theme, widget: {{ widget|lower }} }
-
-    widget_theme{{ widget|lower }}{{ theme|lower }}_manager:
-        alias: victoire_core.theme_{{ widget|lower }}_{{ theme|lower }}_manager
-
+    #alias to the form
+    victoire.widget.form.{{ widget|lower }}{{ theme| lower }}:
+        class: {{ namespace }}\Form\Theme{{ widget }}{{ theme }}Type
+        tags:
+            - { name: form.type , alias: victoire_widget_form_{{ widget|lower }}{{ theme| lower }} }

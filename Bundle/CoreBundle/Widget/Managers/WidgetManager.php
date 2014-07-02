@@ -344,7 +344,6 @@ class WidgetManager
         );
     }
 
-
     /**
      * get specific widget for provided widget type
      * @param Widget $widget
@@ -358,11 +357,12 @@ class WidgetManager
         return $renderer;
     }
 
-
     /**
      * return widget type
+     *
      * @param widget $widget
      * @param string $type
+     *
      * @return widget type
      */
     public function getWidgetType($widget, $type = null)
@@ -373,7 +373,14 @@ class WidgetManager
            $widgetClass = explode('\\', get_class($widget));
         }
 
-        $widgetName = str_replace('Widget', '', end($widgetClass));
+        //the class name of the widget or theme
+        $widgetName = end($widgetClass);
+
+        //we remove the beginning Widget from the namespace
+        $widgetName = preg_replace('/^Widget/', '', $widgetName);
+        //or the beginning Theme if it is a theme
+        $widgetName = preg_replace('/^Theme/', '', $widgetName);
+
         $widgetType = "widget_".strtolower($widgetName);
 
         return $widgetType;
