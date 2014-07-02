@@ -141,8 +141,6 @@ services:
 
     victoire_core.theme_chain:
         class: Victoire\Bundle\CoreBundle\Theme\ThemeChain
-        arguments:
-            - "%victoire_core.widgets%"
 
 #  ==================  Subscribers ================== #
 

@@ -107,7 +107,7 @@ class ThemeGenerator extends Generator
         $this->renderFile('theme/config.yml.twig', $dir.'/Resources/config/config.yml', $parameters);
         $this->renderFile('theme/services.yml.twig', $dir.'/Resources/config/services.yml', $parameters);
 
-        $this->renderFile('theme/Manager.php.twig', $dir.'/Manager/'.$widget.$theme.'Manager.php', $parameters);
+        $this->renderFile('theme/Manager.php.twig', $dir.'/Manager/Theme'.$widget.$theme.'Manager.php', $parameters);
         $this->renderFile('theme/victoire.xliff.twig', $dir.'/Resources/translations/victoire.en.xliff', $parameters);
         $this->renderFile('theme/victoire.xliff.twig', $dir.'/Resources/translations/victoire.fr.xliff', $parameters);
 

@@ -19,9 +19,6 @@ class Widget{{widget}}Type extends WidgetType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        //$namespace = $options['namespace'];
-        //$entityName = $options['entityName'];
-
         parent::buildForm($builder, $options);
     }
 
@@ -44,7 +41,7 @@ class Widget{{widget}}Type extends WidgetType
     /**
      * get form name
      *
-     * @return string
+     * @return string The form name
      */
     public function getName()
     {

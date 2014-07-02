@@ -142,6 +142,8 @@ class CmsExtension extends \Twig_Extension
 
         //parse the widget maps
         foreach ($widgetMaps as $widgetMap) {
+
+            $widget = null;
             try {
                 //get the widget id
                 $widgetId = $widgetMap->getWidgetId();
@@ -259,7 +261,7 @@ class CmsExtension extends \Twig_Extension
      *
      * @return boolean Does the form allows this kind of business entity in this page
      */
-    public function isBusinessEntityAllowed($formEntityName, Page $page)
+    public function isBusinessEntityAllowed($formEntityName, BasePage $page)
     {
         //the result
         $isBusinessEntityAllowed = false;
@@ -300,14 +302,17 @@ class CmsExtension extends \Twig_Extension
         //the css class used
         $cssClass = '';
 
-        //the page context was given
-        if ($page !== null) {
-            //the page of the widget is not the current page
-            if ($widget->getPageId() !== $page->getId()) {
-                $cssClass = 'vic-widget-legacy';
-            } else {
-                if ($entity !== null && $page instanceof BusinessEntityTemplatePage) {
+        //only the developer can have the orange aura
+        if ($this->isRoleVictoireDeveloperGranted()) {
+            //the page context was given
+            if ($page !== null) {
+                //the page of the widget is not the current page
+                if ($widget->getPageId() !== $page->getId()) {
                     $cssClass = 'vic-widget-legacy';
+                } else {
+                    if ($entity !== null && $page instanceof BusinessEntityTemplatePage) {
+                        $cssClass = 'vic-widget-legacy';
+                    }
                 }
             }
         }
@@ -352,6 +357,22 @@ class CmsExtension extends \Twig_Extension
         $isGranted = false;
 
         if ($this->securityContext->isGranted('ROLE_VICTOIRE')) {
+            $isGranted = true;
+        }
+
+        return $isGranted;
+    }
+
+    /**
+     * Does the current user have the role victoire granted
+     *
+     * @return boolean
+     */
+    protected function isRoleVictoireDeveloperGranted()
+    {
+        $isGranted = false;
+
+        if ($this->securityContext->isGranted('ROLE_VICTOIRE_DEVELOPER')) {
             $isGranted = true;
         }
 

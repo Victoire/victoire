@@ -12,7 +12,6 @@ use JMS\TranslationBundle\Model\FileSource;
  */
 class DynamicTranslations implements TranslationContainerInterface
 {
-
     /**
      * usage example: new Message('example.keymap')->addSource('path/to/source/file', '514', '10'),
      * @return array the keys to register in jms translation
@@ -23,6 +22,7 @@ class DynamicTranslations implements TranslationContainerInterface
             new Message('menu.page', 'victoire'),
             new Message('menu.preview', 'victoire'),
             new Message('menu.page.settings', 'victoire'),
+            new Message('menu.page.template', 'victoire'),
             new Message('menu.page.new', 'victoire'),
             new Message('menu.template', 'victoire'),
             new Message('menu.template.settings', 'victoire'),

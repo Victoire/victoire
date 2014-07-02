@@ -19,6 +19,7 @@ use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\PageBundle\Entity\Template;
 use Victoire\Widget\MenuBundle\Entity\MenuItem;
+use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
 
 /**
  * Generic Widget CRUD operations
@@ -343,7 +344,6 @@ class WidgetManager
         );
     }
 
-
     /**
      * get specific widget for provided widget type
      * @param Widget $widget
@@ -357,11 +357,12 @@ class WidgetManager
         return $renderer;
     }
 
-
     /**
      * return widget type
+     *
      * @param widget $widget
      * @param string $type
+     *
      * @return widget type
      */
     public function getWidgetType($widget, $type = null)
@@ -372,7 +373,14 @@ class WidgetManager
            $widgetClass = explode('\\', get_class($widget));
         }
 
-        $widgetName = str_replace('Widget', '', end($widgetClass));
+        //the class name of the widget or theme
+        $widgetName = end($widgetClass);
+
+        //we remove the beginning Widget from the namespace
+        $widgetName = preg_replace('/^Widget/', '', $widgetName);
+        //or the beginning Theme if it is a theme
+        $widgetName = preg_replace('/^Theme/', '', $widgetName);
+
         $widgetType = "widget_".strtolower($widgetName);
 
         return $widgetType;
@@ -546,7 +554,7 @@ class WidgetManager
      *
      * @return Page The page for the entity instance
      */
-    public function duplicateTemplatePageIfPageInstance(Page $page)
+    public function duplicateTemplatePageIfPageInstance(BasePage $page)
     {
         //we copy the reference to the widget page
         $widgetPage = $page;
@@ -580,13 +588,19 @@ class WidgetManager
                     throw new \Exception('The id could not be retrieved from the url.');
                 }
 
-                $entity = $businessEntityHelper->getEntityByPageAndId($widgetPage, $entityId);
+                if ($widgetPage instanceof BusinessEntityTemplatePage) {
+                    $entity = $businessEntityHelper->getEntityByPageAndId($widgetPage, $entityId);
 
-                //so we duplicate the business entity template page for this current instance
-                $page = $pageHelper->createPageInstanceFromBusinessEntityTemplatePage($widgetPage, $entityId, $entity);
+                    //so we duplicate the business entity template page for this current instance
+                    $page = $pageHelper->createPageInstanceFromBusinessEntityTemplatePage($widgetPage, $entityId, $entity);
 
-                //the page
-                $em->persist($page);
+                    //the page
+                    $em->persist($page);
+                } else {
+                    //we restore the widget page as the page
+                    //we might be editing a template
+                    $page = $widgetPage;
+                }
             }
         }
 

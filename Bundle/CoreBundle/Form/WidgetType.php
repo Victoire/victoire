@@ -123,7 +123,6 @@ class WidgetType extends AbstractType
         $options = $this->options;
 
         $form
-        ->add('slot', 'hidden')
         ->add('fields', 'widget_fields', array(
             'label' => 'widget.form.fields.label',
             'namespace' => $options['namespace'],
