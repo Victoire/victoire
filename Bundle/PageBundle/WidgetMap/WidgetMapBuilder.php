@@ -99,7 +99,7 @@ class WidgetMapBuilder
                     $widgetId = $widgetMap->getWidgetId();
 
                     //if the widget is in the parents
-                    if (in_array($widgetId, $widgetId)) {
+                    if (in_array($widgetId, $parentIds)) {
                         //we remove it from the widget map
                         $slot->removeWidgetMap($widgetMap);
                     }
