@@ -4,6 +4,7 @@ namespace Victoire\Bundle\PageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Template
@@ -26,7 +27,7 @@ class Template extends BasePage
      **/
     public function __construct()
     {
-        $this->widgets = new \ArrayCollection();
+        $this->widgets = new ArrayCollection();
     }
 
     /**
