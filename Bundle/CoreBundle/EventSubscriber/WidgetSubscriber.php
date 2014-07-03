@@ -59,7 +59,9 @@ class WidgetSubscriber implements EventSubscriberInterface
         $widget = $event->getWidget();
 
         // if we are in edition mode, do not add theme field
-        if ($widget->getId() === null) {
+        // the theme  field is disabled while the data is not given between theme forms
+        // this test should be removed when the data is keep between themes
+        if ($widget->getId() !== null) {
             $addThemeField = false;
         }
 
