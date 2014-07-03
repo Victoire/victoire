@@ -3,7 +3,8 @@ namespace Victoire\Bundle\PageBundle\Listener;
 
 use Symfony\Component\EventDispatcher\Event;
 use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
-use Victoire\Bundle\PageBundle\Event\Menu\TemplateMenuContextualEvent;
+use Victoire\Bundle\PageBundle\Event\Menu\BasePageMenuContextualEvent;
+use Victoire\Bundle\PageBundle\Entity\Template;
 
 /**
  */
@@ -27,15 +28,22 @@ class TemplateMenuListener
     /**
      * add a contextual menu item
      */
-    public function addContextual(TemplateMenuContextualEvent $event)
+    public function addContextual(BasePageMenuContextualEvent $event)
     {
+        $page = $event->getPage();
+
         $mainItem = $this->getMainItem();
-        $mainItem->addChild('menu.template.settings',
-            array(
-                'route' => 'victoire_core_template_settings',
-                'routeParameters' => array('slug' => $event->getTemplate()->getSlug())
-                )
-        )->setLinkAttribute('data-toggle', 'vic-modal');
+
+        //this contextual menu appears only for template
+        if ($page instanceof Template) {
+
+            $mainItem->addChild('menu.template.settings',
+                array(
+                    'route' => 'victoire_core_template_settings',
+                    'routeParameters' => array('slug' => $page->getSlug())
+                    )
+            )->setLinkAttribute('data-toggle', 'vic-modal');
+        }
 
         return $mainItem;
     }
