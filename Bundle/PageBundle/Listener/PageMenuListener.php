@@ -46,8 +46,8 @@ class PageMenuListener
         if ($event->getPage()->getTemplate()) {
             $mainItem->addChild('menu.page.template',
                 array(
-                    'route' => 'victoire_core_template_show',
-                    'routeParameters' => array('slug' => $event->getPage()->getTemplate()->getSlug())
+                    'route' => 'victoire_core_page_show',
+                    'routeParameters' => array('url' => $event->getPage()->getTemplate()->getUrl())
                 )
             );
         }

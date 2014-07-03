@@ -62,7 +62,7 @@ class TemplateController extends Controller
 
             return new JsonResponse( array(
                 "success"  => true,
-                "url"      => $this->generateUrl('victoire_core_template_show', array("slug" => $template->getSlug()))
+                "url"      => $this->generateUrl('victoire_core_page_show', array('url' => $template->getUrl()))
             ));
         }
 
@@ -101,7 +101,7 @@ class TemplateController extends Controller
             return new JsonResponse(
                     array(
                     'success' => true,
-                    "url"     => $this->generateUrl('victoire_core_template_show', array('slug' => $template->getSlug()))
+                    "url"     => $this->generateUrl('victoire_core_page_show', array('url' => $template->getUrl()))
                 )
             );
 
@@ -115,27 +115,6 @@ class TemplateController extends Controller
                     array('page' => $template,'form' => $templateForm->createView())
                 )
             )
-        );
-    }
-
-    /**
-     * show a Template
-     *
-     * @param Template $template the Template to show
-     * @return Response
-     * @Route("/{slug}", name="victoire_core_template_show")
-     * @Template()
-     * @ParamConverter("template", class="VictoirePageBundle:Template")
-     */
-    public function showAction($template)
-    {
-
-        $event = new TemplateMenuContextualEvent($template);
-        $this->get('event_dispatcher')->dispatch('victoire_core.template_menu.contextual', $event);
-
-        return $this->container->get('victoire_templating')->renderResponse(
-            'AppBundle:Layout:' . $template->getLayout() . '.html.twig',
-            array('page' => $template, 'entity' => null,'id' => $template->getId())
         );
     }
 
@@ -159,7 +138,7 @@ class TemplateController extends Controller
             $em->persist($template);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('victoire_core_template_show', array("slug" => $template->getSlug())));
+            return $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $template->getUrl())));
         }
 
         return $this->redirect($this->generateUrl('victoire_core_template_settings', array("slug" => $template->getSlug())));
