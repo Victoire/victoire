@@ -114,7 +114,22 @@ EOT
 
         $generator = $this->getGenerator();
 
-        $generator->generate($namespace, $bundle, $input->getOption('theme-name'), $input->getOption('widget-name'), $input->getOption('widget-entity-namespace'), $input->getOption('widget-type-namespace'), $dir, $format, $structure, $fields);
+        $themeName = $input->getOption('theme-name');
+        $widgetName = $input->getOption('widget-name');
+        $widgetEntityNamespace = $input->getOption('widget-entity-namespace');
+        $widgetTypeNamespace = $input->getOption('widget-type-namespace');
+
+        $generator->generate(
+            $namespace,
+            $bundle,
+            $themeName,
+            $widgetName,
+            $widgetEntityNamespace,
+            $widgetTypeNamespace,
+            $dir,
+            $format,
+            $structure,
+            $fields);
 
         $output->writeln('Generating the bundle code: <info>OK</info>');
 
@@ -222,16 +237,13 @@ EOT
             $input->setOption('namespace', $namespace);
         }
 
-        if ($this->getContainer()->hasParameter('victoire_'.$widgetName.'.entityClass')) {
-            $widgetEntityNamespace = $this->getContainer()->getParameter('victoire_'.$widgetName.'.entityClass');
-        } else {
-            $widgetEntityNamespace = $dialog->askAndValidate($output, $dialog->getQuestion('Widget\'s entity namespace (please use "/" instead of backslashes)', $input->getOption('widget-entity-namespace')), array('Victoire\Bundle\ThemeBundle\Command\CreateThemeCommand', 'validateNamespace'), false, $input->getOption('widget-entity-namespace'));
-        }
+        //the namespace of the widget
+        $widgetEntityNamespace = 'Victoire\\Widget\\'.$widgetName.'Bundle';
 
         $input->setOption('widget-entity-namespace', $widgetEntityNamespace);
 
-        $widgetTypeNamespace = $dialog->askAndValidate($output, $dialog->getQuestion('Widget\'s type namespace (please use "/" instead of backslashes)', $input->getOption('widget-type-namespace')), array('Victoire\Bundle\ThemeBundle\Command\CreateThemeCommand', 'validateNamespace'), false, $input->getOption('widget-type-namespace'));
-        $input->setOption('widget-type-namespace', $widgetTypeNamespace);
+        //the namespace of the theme
+        $widgetTypeNamespace = 'Victoire\\Theme\\'.$widgetName.'\\'.$themeName.'Bundle';
 
         $dir = dirname($this->getContainer()->getParameter('kernel.root_dir')).'/src';
 
