@@ -125,7 +125,7 @@ class PageAdministrationController extends BasePageController
             $em->persist($template);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('victoire_core_template_show', array("slug" => $template->getSlug())));
+            return $this->redirect($this->generateUrl('victoire_core_page_show', array("url" => $template->getUrl())));
         }
 
         return $this->container->get('victoire_templating')->renderResponse(
