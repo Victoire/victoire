@@ -59,7 +59,7 @@ class WidgetSubscriber implements EventSubscriberInterface
         $widget = $event->getWidget();
 
         // if we are in edition mode, do not add theme field
-        if ($widget->getId()) {
+        if ($widget->getId() === null) {
             $addThemeField = false;
         }
 
