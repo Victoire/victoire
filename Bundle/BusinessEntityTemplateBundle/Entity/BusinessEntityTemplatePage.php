@@ -3,18 +3,19 @@ namespace Victoire\Bundle\BusinessEntityTemplateBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Victoire\Bundle\PageBundle\Entity\Page;
+use Victoire\Bundle\PageBundle\Entity\Template;
 
 /**
  * Page
  *
  * @ORM\Entity
  */
-class BusinessEntityTemplatePage extends Page
+class BusinessEntityTemplatePage extends Template
 {
     const TYPE = 'businessEntityTemplate';
 
     /**
-     * @ORM\OneToOne(targetEntity="Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate", mappedBy="page")
+     * @ORM\OneToOne(targetEntity="Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate", mappedBy="template")
      */
     protected $businessEntityTemplate;
 

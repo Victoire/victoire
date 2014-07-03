@@ -65,17 +65,17 @@ class BusinessEntityTemplateMenuListener
 
         //are we in a business entity template with an entity given as parameter
         if (($page->getType() === BusinessEntityTemplatePage::TYPE)  && ($entity !== null)) {
-            $parent = $page;
+            $template = $page;
         } else {
             //get the parent
-            $parent = $page->getParent();
+            $template = $page->getTemplate();
         }
 
-        //if there is a parent, we add the link in the top bar
-        if ($parent !== null) {
+        //if there is a template, we add the link in the top bar
+        if ($template !== null) {
             $shortcuts = $this->shortcuts;
 
-            $url = $shortcuts->generateUrl('victoire_core_page_show', array('url' => $parent->getUrl()));
+            $url = $shortcuts->generateUrl('victoire_core_page_show', array('url' => $template->getUrl()));
 
             $mainItem
                 ->addChild('menu.parent', array(

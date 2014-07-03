@@ -27,6 +27,7 @@ class Template extends BasePage
      **/
     public function __construct()
     {
+        parent::__construct();
         $this->widgets = new ArrayCollection();
     }
 

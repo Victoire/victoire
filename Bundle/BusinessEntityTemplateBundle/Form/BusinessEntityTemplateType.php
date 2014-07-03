@@ -35,7 +35,6 @@ class BusinessEntityTemplateType extends AbstractType
         $builder
             ->add('businessEntityId', 'hidden')
             ->add('name')
-            ->add('mandatory')
             ->add('layout', 'choice', array(
                 'label' => 'form.page.type.layout.label',
                 'choices' => $this->layouts
