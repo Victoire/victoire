@@ -11,3 +11,9 @@ services:
         arguments: 
             - "@victoire_core.admin_menu_builder"
             - "@av.shortcuts"
+            
+    victoire_business_entity_template.business_entity_template_helper:
+        class: Victoire\Bundle\BusinessEntityTemplateBundle\Helper\BusinessEntityTemplateHelper
+        arguments:
+            - "@victoire_query.query_helper"
+            

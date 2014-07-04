@@ -129,13 +129,13 @@ class BusinessEntityHelper
 
         $template = $page->getBusinessEntityTemplate();
 
-        $businessEntityId = $template->getBusinessEntityId();
+        $businessEntityName = $template->getBusinessEntityName();
 
-        $businessEntity = $this->findById($businessEntityId);
+        $businessEntity = $this->findById($businessEntityName);
 
         //test the result
         if ($businessEntity === null) {
-            throw new \Exception('The business entity ['.$businessEntityId.'] was not found.');
+            throw new \Exception('The business entity ['.$businessEntityName.'] was not found.');
         }
 
         $entity = $this->findEntityByBusinessEntityAndId($businessEntity, $id);

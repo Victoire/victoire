@@ -277,7 +277,7 @@ class CmsExtension extends \Twig_Extension
                 $businessEntityTemplate = $businessEntityTemplatePage->getBusinessEntityTemplate();
 
                 //the business entity linked to the page template
-                $pageBusinessEntity = $businessEntityTemplate->getBusinessEntityId();
+                $pageBusinessEntity = $businessEntityTemplate->getBusinessEntityName();
 
                 //are we using the same business entity
                 if ($formEntityName === $pageBusinessEntity) {

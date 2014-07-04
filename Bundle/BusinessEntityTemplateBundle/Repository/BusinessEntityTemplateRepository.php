@@ -24,9 +24,9 @@ class BusinessEntityTemplateRepository extends EntityRepository
     {
 
         $qb = $this->createQueryBuilder('businessEntityTemplate');
-        $qb->where('businessEntityTemplate.businessEntityId = :businessEntityId');
+        $qb->where('businessEntityTemplate.businessEntityName = :businessEntityName');
 
-        $qb->setParameter(':businessEntityId', $businessEntity->getId());
+        $qb->setParameter(':businessEntityName', $businessEntity->getId());
 
         $qb->orderBy('businessEntityTemplate.updatedAt', 'ASC');
 
