@@ -278,4 +278,44 @@ class BusinessEntityTemplateController extends BaseController
             ->getForm()
         ;
     }
+
+    /**
+     * List the entities that matches the query of the businessEntityTemplate
+     *
+     * @Route("listEntities/{id}", name="victoire_businessentitytemplate_businessentitytemplate_listentities")
+     *
+     * @param Request $request
+     *
+     * @return array The list of items for this template
+     *
+     * @throws Exception
+     */
+    public function listEntitiesAction($id)
+    {
+        //services
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('VictoireBusinessEntityTemplateBundle:BusinessEntityTemplate')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find BusinessEntityTemplate entity.');
+        }
+
+        $businessEntityTemplateHelper = $this->get('victoire_business_entity_template.business_entity_template_helper');
+
+        $entities = $businessEntityTemplateHelper->getEntitiesAllowed($entity);
+
+        //parameters for the view
+        $parameters = array(
+            'businessEntityTemplate' => $entity,
+            'items' => $entities);
+
+        return new JsonResponse(array(
+            'html' => $this->container->get('victoire_templating')->render(
+                'VictoireBusinessEntityTemplateBundle:BusinessEntityTemplate:listEntities.html.twig',
+                $parameters
+            ),
+            'success' => true
+        ));
+    }
 }

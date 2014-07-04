@@ -124,10 +124,10 @@ class QueryHelper
         //get the query of the container entity
         $query = $containerEntity->getQuery();
 
-        if ($query !== '') {
+        if ($query !== '' && $query !== null) {
             $query = 'AND '.$query;
         }
-        if ($additionnalDql !== '') {
+        if ($additionnalDql !== '' && $additionnalDql !== null) {
             $additionnalDql = 'AND '.$additionnalDql;
         }
 

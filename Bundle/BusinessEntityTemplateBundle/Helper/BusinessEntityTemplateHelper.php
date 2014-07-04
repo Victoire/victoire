@@ -2,6 +2,7 @@
 namespace Victoire\Bundle\BusinessEntityTemplateBundle\Helper;
 
 use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
+use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
 use Victoire\Bundle\QueryBundle\Helper\QueryHelper;
 
 /**
@@ -70,5 +71,30 @@ class BusinessEntityTemplateHelper
         }
 
         return $allowed;
+    }
+
+
+    /**
+     * Get the list of entities allowed for the businessEntityTemplate page
+     *
+     * @param BusinessEntityTemplatePage $page
+     * @throws \Exception
+     * @return boolean
+     */
+    public function getEntitiesAllowed(BusinessEntityTemplate $businessEntityTemplate)
+    {
+        $queryHelper = $this->queryHelper;
+
+        //the base of the query
+        $baseQuery = $queryHelper->getQueryBuilder($businessEntityTemplate);
+
+        // add this fake condition to ensure that there is always a "where" clause.
+        // In query mode, usage of "AND" will be always valid instead of "WHERE"
+        $baseQuery->andWhere('1 = 1');
+
+        //filter with the query of the page
+        $items =  $queryHelper->getResultsAddingSubQuery($businessEntityTemplate, $baseQuery);
+
+        return $items;
     }
 }
