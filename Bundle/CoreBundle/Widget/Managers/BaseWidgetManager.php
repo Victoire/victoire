@@ -95,18 +95,6 @@ class BaseWidgetManager
 
         $widget->setBusinessEntityName($entity);
 
-        if ($entity) {
-            $classes = $this->container->get('victoire_core.annotation_reader')->getBusinessClassesForWidget($widget);
-
-            if (!isset($classes[$entity])) {
-                throw new \Exception('The entity '.$entity.' was not found int the business classes.');
-            }
-
-            $entityClass = $classes[$entity];
-
-            $widget->setBusinessClass($classes[$entity]);
-        }
-
         return $widget;
     }
 
