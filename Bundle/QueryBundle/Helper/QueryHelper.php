@@ -90,10 +90,9 @@ class QueryHelper
             throw new \Exception('The container entity parameter must not be null.');
         }
 
-        $traits = class_uses($containerEntity);
 
-        //test that the containerENtity has the trait
-        if (!in_array('Victoire\Bundle\QueryBundle\Entity\Traits\QueryTrait', $traits)) {
+        //test that the containerEntity has the trait
+        if (!method_exists($containerEntity, 'getQuery') || !method_exists($containerEntity, 'getBusinessEntityName')) {
             throw new \Exception('The object '.get_class($containerEntity).' does not have the QueryTrait.');
         }
     }
