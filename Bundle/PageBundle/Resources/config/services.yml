@@ -76,3 +76,14 @@ services:
     victoire_core.template_menu_listener:
         class: Victoire\Bundle\PageBundle\Listener\TemplateMenuListener
         arguments: ["@victoire_core.admin_menu_builder"]
+  
+    ####################################################################################################################
+    # twig
+    ####################################################################################################################
+
+    victoire_page.twig.page_extension:
+        class: Victoire\Bundle\PageBundle\Twig\Extension\PageExtension
+        arguments: 
+            - "@victoire_business_entity_template.business_entity_template_helper"
+        tags:
+            - { name: twig.extension }

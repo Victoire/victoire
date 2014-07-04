@@ -9,7 +9,7 @@ use Victoire\Bundle\QueryBundle\Helper\QueryHelper;
  *
  * @author Thomas Beaujean
  *
- * ref:victoire_business_entity_template.business_entity_template_helper
+ * ref: victoire_business_entity_template.business_entity_template_helper
  */
 class BusinessEntityTemplateHelper
 {
