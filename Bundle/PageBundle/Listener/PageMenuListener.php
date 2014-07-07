@@ -67,7 +67,7 @@ class PageMenuListener
                     'route' => 'victoire_core_page_show',
                     'routeParameters' => array('url' => $template->getUrl())
                 )
-            );
+            )->setLinkAttribute('data-toggle', 'vic-none');//there is no modal for this menu entry
         }
 
         return $mainItem;
