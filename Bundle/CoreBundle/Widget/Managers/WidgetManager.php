@@ -393,6 +393,9 @@ class WidgetManager
      */
     public function updateWidgetMapOrder(BasePage $page, $sortedWidgets)
     {
+        //create a page for the business entity instance if we are currently display an instance for a business entity template
+        $page = $this->duplicateTemplatePageIfPageInstance($page);
+
         $em = $this->container->get('doctrine.orm.entity_manager');
         $widgetMapBuilder = $this->widgetMapBuilder;
 
