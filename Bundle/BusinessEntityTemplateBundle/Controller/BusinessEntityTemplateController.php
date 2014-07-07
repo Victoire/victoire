@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
 use Victoire\Bundle\BusinessEntityTemplateBundle\Form\BusinessEntityTemplateType;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * BusinessEntityTemplate controller.
@@ -283,24 +283,16 @@ class BusinessEntityTemplateController extends BaseController
      * List the entities that matches the query of the businessEntityTemplate
      *
      * @Route("listEntities/{id}", name="victoire_businessentitytemplate_businessentitytemplate_listentities")
-     *
+     * @ParamConverter("id", class="VictoireBusinessEntityTemplateBundle:BusinessEntityTemplate")
      * @param Request $request
      *
      * @return array The list of items for this template
      *
      * @throws Exception
      */
-    public function listEntitiesAction($id)
+    public function listEntitiesAction(BusinessEntityTemplate $entity)
     {
         //services
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('VictoireBusinessEntityTemplateBundle:BusinessEntityTemplate')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find BusinessEntityTemplate entity.');
-        }
-
         $businessEntityTemplateHelper = $this->get('victoire_business_entity_template.business_entity_template_helper');
 
         $entities = $businessEntityTemplateHelper->getEntitiesAllowed($entity);
