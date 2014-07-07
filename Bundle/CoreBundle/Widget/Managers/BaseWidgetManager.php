@@ -95,18 +95,6 @@ class BaseWidgetManager
 
         $widget->setBusinessEntityName($entity);
 
-        if ($entity) {
-            $classes = $this->container->get('victoire_core.annotation_reader')->getBusinessClassesForWidget($widget);
-
-            if (!isset($classes[$entity])) {
-                throw new \Exception('The entity '.$entity.' was not found int the business classes.');
-            }
-
-            $entityClass = $classes[$entity];
-
-            $widget->setBusinessClass($classes[$entity]);
-        }
-
         return $widget;
     }
 
@@ -703,18 +691,17 @@ class BaseWidgetManager
      */
     protected function getWidgetQueryResults(Widget $widget)
     {
-        $em = $this->container->get('doctrine.orm.entity_manager');
+        $queryHelper = $this->get('victoire_query.query_helper');
 
-        $itemsQueryBuilder = $em
-        ->createQueryBuilder()
-        ->select('item')
-        ->from($widget->getBusinessClass(), 'item');
+        //get the base query
+        $itemsQueryBuilder = $queryHelper->getQueryBuilder($widget);
 
-        $query = $widget->getQuery();
+        // add this fake condition to ensure that there is always a "where" clause.
+        // In query mode, usage of "AND" will be always valid instead of "WHERE"
+        $itemsQueryBuilder->andWhere('1 = 1');
 
-        $itemsQuery = $itemsQueryBuilder->getQuery()->getDQL() . " " . $query;
-
-        $items = $em->createQuery($itemsQuery)->getResult();
+        //add the query of the widget
+        $items = $queryHelper->getResultsAddingSubQuery($widget, $itemsQueryBuilder);
 
         return $items;
     }
@@ -727,5 +714,20 @@ class BaseWidgetManager
     public function getWidgetName()
     {
         return $this->widgetName;
+    }
+
+    /**
+     * Get a service from the container
+     *
+     * @param string $serviceId
+     * @return service
+     */
+    public function get($serviceId)
+    {
+        $container = $this->container;
+
+        $service = $container->get($serviceId);
+
+        return $service;
     }
 }

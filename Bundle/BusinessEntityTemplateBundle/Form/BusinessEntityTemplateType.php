@@ -33,12 +33,13 @@ class BusinessEntityTemplateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('businessEntityId', 'hidden')
+            ->add('businessEntityName', 'hidden')
             ->add('name')
             ->add('layout', 'choice', array(
                 'label' => 'form.page.type.layout.label',
                 'choices' => $this->layouts
             ))
+            ->add('query')
         ;
     }
 

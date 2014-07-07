@@ -22,13 +22,17 @@
         <source>list.action.edit</source>
         <target>Editer</target>
       </trans-unit>
-      <trans-unit id="9f3d013882789d383791c05dd22bcce67bb7894c" resname="list.title.businessEntity">
-        <source>list.title.businessEntity</source>
-        <target>L'entité</target>
+      <trans-unit id="db605d7777629ced90e6d0289ab792957ee18558" resname="list.action.list">
+        <source>list.action.list</source>
+        <target>Lister entités</target>
       </trans-unit>
-      <trans-unit id="0f9d9e543ccf1d2732e6fe5c613ac450705641ae" resname="list.title.templates">
-        <source>list.title.templates</source>
-        <target>Les templates</target>
+      <trans-unit id="dad127b6fcbcbb3015dcd9b8ab70d8299dde0f98" resname="list.entities.query">
+        <source>list.entities.query</source>
+        <target>Requête liée au template</target>
+      </trans-unit>
+      <trans-unit id="8d88f538d836c0babeaab40ffa3d39958602a6a1" resname="list.entities.title">
+        <source>list.entities.title</source>
+        <target>Les entités qui peuvent être affichées pour ce template</target>
       </trans-unit>
       <trans-unit id="9a84dc1132d73a2f0abce302a49337045c823482" resname="modal.mandatory_fields.label">
         <source>Mandatory fields</source>

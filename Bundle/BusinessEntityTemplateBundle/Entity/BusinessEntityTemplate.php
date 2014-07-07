@@ -17,6 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class BusinessEntityTemplate
 {
     use \Gedmo\Timestampable\Traits\TimestampableEntity;
+    use \Victoire\Bundle\QueryBundle\Entity\Traits\QueryTrait;
 
     /**
      * @var integer
@@ -26,13 +27,6 @@ class BusinessEntityTemplate
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="business_entity_id", type="string", length=255, nullable=false)
-     */
-    protected $businessEntityId;
 
     /**
      * @var string
@@ -49,7 +43,7 @@ class BusinessEntityTemplate
     protected $template;
 
     /**
-     * @ORM\OneToOne(targetEntity="Victoire\Bundle\PageBundle\Entity\Page", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="Victoire\Bundle\PageBundle\Entity\Page", cascade={"persist", "remove"}, inversedBy="businessEntityTemplate")
      * @ORM\JoinColumn(name="parent_page_id", referencedColumnName="id", nullable=false)
      *
      */
@@ -130,28 +124,8 @@ class BusinessEntityTemplate
     public function setBusinessEntity(BusinessEntity $businessEntity)
     {
         $this->businessEntity = $businessEntity;
-        $this->businessEntityId = $businessEntity->getId();
+        $this->businessEntityName = $businessEntity->getId();
     }
-
-    /**
-     * Set the business entity id
-     * @param string $businessEntityId
-     */
-    public function setBusinessEntityId($businessEntityId)
-    {
-        $this->businessEntityId = $businessEntityId;
-    }
-
-    /**
-     * Get the business entity id
-     *
-     * @return string
-     */
-    public function getBusinessEntityId()
-    {
-        return $this->businessEntityId;
-    }
-
 
     /**
      * Get the template page

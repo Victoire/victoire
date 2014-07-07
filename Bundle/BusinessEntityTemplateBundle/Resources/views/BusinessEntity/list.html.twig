@@ -11,6 +11,9 @@
         <a data-toggle="vic-modal"  href="{{ path('victoire_businessentitytemplate_businessentitytemplate_edit', {'id': template.getId}) }}">
 	        <i class="fa fa-pencil-square-o">{{ 'list.action.edit'|trans }}</i>
 	    </a>
+	    <a data-toggle="vic-modal"  href="{{ path('victoire_businessentitytemplate_businessentitytemplate_listentities', {'id': template.getId}) }}">
+	        <i class="fa fa-list">{{ 'list.action.list'|trans }}</i>
+	    </a>
 	    <span style='margin-left: 15px'>
             <a href="/{{ template.getTemplateUrl }}">
                 {{ template.getName }}

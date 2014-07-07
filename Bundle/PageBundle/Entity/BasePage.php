@@ -14,10 +14,12 @@ use Victoire\Bundle\CoreBundle\Entity\Route;
 use Victoire\Bundle\PageBundle\Entity\Template;
 use Victoire\Bundle\CoreBundle\Entity\Widget;
 use Victoire\Bundle\SeoBundle\Entity\PageSeo;
-use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
+
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 use Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy;
 
+use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
+use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
 
 /**
  * Page
@@ -235,7 +237,6 @@ abstract class BasePage
      * @var unknown
      */
     protected $entity;
-
 
     /**
      * Set the entity proxy

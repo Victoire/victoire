@@ -186,7 +186,7 @@ class BasePageController extends AwesomeController
         }
 
         //throw an exception is the page is not valid
-        $this->isPageValid($page);
+        $this->isPageValid($page, $entity);
 
         return $response;
     }
@@ -244,7 +244,9 @@ class BasePageController extends AwesomeController
     /**
      * Page settings
      *
-     * @param page $page
+     * @param Request  $request
+     * @param BasePage $page
+     *
      * @return template
      */
     protected function settingsAction(Request $request, BasePage $page)
@@ -302,12 +304,16 @@ class BasePageController extends AwesomeController
     /**
      * If the valid is not valid, an exception is thrown
      *
-     * @param Page $page
+     * @param Page   $page
+     * @param Entity $entity
      *
      * @throws NotFoundHttpException
      */
-    protected function isPageValid($page)
+    protected function isPageValid($page, $entity)
     {
+        //services
+        $securityContext = $this->get('security.context');
+
         $errorMessage = 'The page was not found.';
 
         //there is no page
@@ -316,11 +322,30 @@ class BasePageController extends AwesomeController
         }
 
         $isPublished = $page->isPublished();
-        $isPageOwner = $this->get('security.context')->isGranted('PAGE_OWNER', $page);
+        $isPageOwner = $securityContext->isGranted('PAGE_OWNER', $page);
 
         //a page not published, not owned, nor granted throw an exception
         if (!$isPublished && !$isPageOwner) {
             throw new NotFoundHttpException($errorMessage);
+        }
+
+        //if the page is a businessEntityTemplatePage and the entity is not allowed for this template
+        if ($page instanceof BusinessEntityTemplatePage) {
+            $hasRoleVictoire = $securityContext->isGranted('ROLE_VICTOIRE');
+
+            //a not victoire user can not access a business template page
+            if (!$hasRoleVictoire) {
+                throw $this->createAccessDeniedException('You are not allowed to see this page');
+            }
+
+            if ($entity !== null) {
+                $businessEntityTemplateHelper = $this->get('victoire_business_entity_template.business_entity_template_helper');
+                $entityAllowed = $businessEntityTemplateHelper->isEntityAllowed($page, $entity);
+
+                if ($entityAllowed === false) {
+                    throw $this->createNotFoundException('The entity ['.$entity->getId().'] is not allowed for the template ['.$page->getId().']');
+                }
+            }
         }
     }
 

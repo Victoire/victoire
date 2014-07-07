@@ -12,4 +12,28 @@ class Page extends BasePage
 {
     const TYPE = 'page';
 
+    /**
+     * @ORM\OneToOne(targetEntity="Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate", mappedBy="parentPage")
+     */
+    protected $businessEntityTemplate;
+
+    /**
+     * Set the businessEntityTemplate
+     *
+     * @param BusinessEntityTemplate $businessEntityTemplate
+     */
+    public function setBusinessEntityTemplate(BusinessEntityTemplate $businessEntityTemplate)
+    {
+        $this->businessEntityTemplate = $businessEntityTemplate;
+    }
+
+    /**
+     * Get the businessEntityTemplate
+     *
+     * @return BusinessEntityTemplate $businessEntityTemplate
+     */
+    public function getBusinessEntityTemplate()
+    {
+        return $this->businessEntityTemplate;
+    }
 }

@@ -46,6 +46,7 @@
             {{ _self.pagesHierarchy(page.children) }}
           </ol>
       {% endif %}
+      {{ cms_page_business_template_sitemap(page) }}
       </li>
     {% endfor %}
 {% endmacro %}
