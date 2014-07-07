@@ -16,7 +16,6 @@ class TemplateMenuListener
 {
     private $menuBuilder;
 
-
     /**
      * {@inheritDoc}
      */

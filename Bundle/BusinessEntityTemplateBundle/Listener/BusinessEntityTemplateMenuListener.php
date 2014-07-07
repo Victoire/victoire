@@ -13,18 +13,15 @@ use AppVentus\Awesome\ShortcutsBundle\Service\ShortcutService;
 class BusinessEntityTemplateMenuListener
 {
     protected $menuBuilder = null;
-    protected $shortcuts = null;
 
     /**
      * Constructor
      *
      * @param MenuBuilder     $menuBuilder
-     * @param ShortcutService $shortcuts
      */
-    public function __construct(MenuBuilder $menuBuilder, ShortcutService $shortcuts)
+    public function __construct(MenuBuilder $menuBuilder)
     {
         $this->menuBuilder = $menuBuilder;
-        $this->shortcuts = $shortcuts;
     }
 
     /**
@@ -58,30 +55,6 @@ class BusinessEntityTemplateMenuListener
     public function addContextual(BasePageMenuContextualEvent $event)
     {
         $mainItem = $this->menuBuilder->getTopNavbar();
-
-        //get the current page
-        $page = $event->getPage();
-        $entity = $event->getEntity();
-
-        //are we in a business entity template with an entity given as parameter
-        if (($page->getType() === BusinessEntityTemplatePage::TYPE)  && ($entity !== null)) {
-            $template = $page;
-        } else {
-            //get the parent
-            $template = $page->getTemplate();
-        }
-
-        //if there is a template, we add the link in the top bar
-        if ($template !== null) {
-            $shortcuts = $this->shortcuts;
-
-            $url = $shortcuts->generateUrl('victoire_core_page_show', array('url' => $template->getUrl()));
-
-            $mainItem
-                ->addChild('menu.parent', array(
-                    'uri' => $url //we use the root url
-                ));
-        }
 
         return $mainItem;
     }
