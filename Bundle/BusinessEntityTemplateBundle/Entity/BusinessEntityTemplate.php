@@ -124,6 +124,12 @@ class BusinessEntityTemplate
     public function setBusinessEntity(BusinessEntity $businessEntity)
     {
         $this->businessEntity = $businessEntity;
+
+        //the business entity is an object that represents the type of business entity available (car, person, etc.)
+        //the object has an id like a normal object
+        //but in the previous versions we used the name of the businessEntity has an id
+        //that is why this code can be ankward
+        //@todo we should always used the object of type BusinessEntity instead of businessEntityName in the victoire
         $this->businessEntityName = $businessEntity->getId();
     }
 

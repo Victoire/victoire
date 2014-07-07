@@ -25,6 +25,8 @@ function openModal(url) {
 
 //redirect to the direct links of the menu
 //the dropdown menu intercepts the event and does not let the link do their job
+//@todo the vic none is a fix
+//the dropdown does an event prevent that does not allow the link.
 $vic(document).on('click', 'a[data-toggle="vic-none"]', function(event) {
     event.preventDefault();
     window.location = $vic(this).attr('href');
