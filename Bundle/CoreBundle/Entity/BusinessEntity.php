@@ -1,6 +1,7 @@
 <?php
 namespace Victoire\Bundle\CoreBundle\Entity;
 
+use Victoire\Bundle\CoreBundle\Entity\BusinessProperty;
 /**
  *
  * @author Thomas Beaujean
@@ -11,7 +12,7 @@ class BusinessEntity
     protected $id = null;
     protected $class = null;
     protected $name = null;
-
+    protected $businessProperties = array();
 
     /**
      * Get the id
@@ -71,4 +72,40 @@ class BusinessEntity
     {
         $this->class = $class;
     }
+
+    /**
+     * Add a business property
+     *
+     * @param BusinessProperty $businessProperty
+     */
+    public function addBusinessProperty(BusinessProperty $businessProperty)
+    {
+        //the type of business property (textable, slideable...)
+        $type = $businessProperty->getType();
+
+        if (!isset($this->businessProperties[$type])) {
+            $this->businessProperties[$type] = array();
+        }
+
+        //add the business property indexed by the type
+        $this->businessProperties[$type][] = $businessProperty;
+    }
+
+    /**
+     * Get the business properties by type
+     *
+     * @param string $type
+     * @return array The businnes properties
+     */
+    public function getBusinessPropertiesByType($type)
+    {
+        $bp = array();
+
+        if (isset($this->businessProperties[$type])) {
+            $bp = $this->businessProperties[$type];
+        }
+
+        return $bp;
+    }
+
 }

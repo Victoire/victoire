@@ -10,11 +10,23 @@
 
 <div class="vic-tab-content vic-modal-tab-content">
     <div class="vic-tab-pane vic-active" id="basics">
-        <form method="POST" action="{{path('victoire_seo_pageSeo_settings', {'id':page.id} )}}">
+        <div class='businessProperties'>
+            {% for businessProperty in businessProperties %}
+                <div class='businessProperty'>
+                    <a onClick='seo.addPropertyToCurrentInput("{{ businessProperty.entityProperty }}")'>{{ businessProperty.entityProperty }}</a>
+                </div>
+            {% endfor %}
+        </div>
+        {{form_start(form)}}
             {{form_widget(form)}}
-        </form>
+        {{form_end(form)}}
     </div>
 </div>
+
+<script type="text/javascript">
+    //init the event handler for the business entity property
+    seo.initPropertyHelper();
+</script>
 
 {% endblock modal_body_content %}
 

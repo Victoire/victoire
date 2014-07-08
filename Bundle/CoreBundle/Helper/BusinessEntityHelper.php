@@ -5,6 +5,7 @@ use Victoire\Bundle\CoreBundle\Annotations\Reader\AnnotationReader;
 use Victoire\Bundle\CoreBundle\Entity\BusinessEntity;
 use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
+use Victoire\Bundle\CoreBundle\Entity\BusinessProperty;
 
 
 /**
@@ -16,6 +17,7 @@ class BusinessEntityHelper
 {
     protected $annotationReader = null;
     protected $em = null;
+    protected $businessEntities = null;
 
     /**
      * Constructor
@@ -37,21 +39,42 @@ class BusinessEntityHelper
      */
     public function getBusinessEntities()
     {
-        $annotationReader = $this->annotationReader;
+        //generate the business entities on demand
+        if ($this->businessEntities === null) {
+            $annotationReader = $this->annotationReader;
 
-        $businessEntities = $annotationReader->getBusinessClasses();
-        $businessEntitiesObjects = array();
+            $businessEntities = $annotationReader->getBusinessClasses();
+            $businessEntitiesObjects = array();
 
-        foreach ($businessEntities as $name => $class) {
-            $be = new BusinessEntity();
-            $be->setId($name);
-            $be->setName($name);
-            $be->setClass($class);
+            foreach ($businessEntities as $name => $class) {
+                $be = new BusinessEntity();
+                $be->setId($name);
+                $be->setName($name);
+                $be->setClass($class);
 
-            $businessEntitiesObjects[] = $be;
+                //the business properties of the business entity
+                $businessProperties = $annotationReader->getBusinessProperties($class);
+
+                //parse the array of the annotation reader
+                foreach ($businessProperties as $type => $properties) {
+                    foreach ($properties as $property) {
+                        $bp = new BusinessProperty();
+                        $bp->setType($type);
+                        $bp->setEntityProperty($property);
+
+                        //add the business property to the business entity object
+                        $be->addBusinessProperty($bp);
+                        unset($bp);
+                    }
+                }
+
+                $businessEntitiesObjects[] = $be;
+            }
+
+            $this->businessEntities = $businessEntitiesObjects;
         }
 
-        return $businessEntitiesObjects;
+        return $this->businessEntities;
     }
 
     /**
@@ -66,7 +89,7 @@ class BusinessEntityHelper
     public function findById($id)
     {
         if ($id === null) {
-            throw new \Exception('The paramerter $id is mandatory');
+            throw new \Exception('The parameter $id is mandatory');
         }
 
         //get all the business entities
@@ -80,7 +103,7 @@ class BusinessEntityHelper
             //look for the same id
             if ($tempBusinessEntity->getId() === $id) {
                 $businessEntity = $tempBusinessEntity;
-                //business entity was found, there is no need ton continue
+                //business entity was found, there is no need to continue
                 continue;
             }
         }
@@ -89,6 +112,39 @@ class BusinessEntityHelper
     }
 
 
+    /**
+     * Get a business entity by its classname
+     *
+     * @param string $classname
+     *
+     * @throws \Exception
+     *
+     * @return BusinessEntity
+     */
+    public function findByClassname($classname)
+    {
+        if ($classname === null) {
+            throw new \Exception('The parameter $$classname is mandatory');
+        }
+
+        //get all the business entities
+        $businessEntities = $this->getBusinessEntities();
+
+        //the result
+        $businessEntity = null;
+
+        //parse the business entities
+        foreach ($businessEntities as $tempBusinessEntity) {
+            //look for the same id
+            if ($tempBusinessEntity->getClass() === $classname) {
+                $businessEntity = $tempBusinessEntity;
+                //business entity was found, there is no need to continue
+                continue;
+            }
+        }
+
+        return $businessEntity;
+    }
     /**
      * Find a entity by the business entity and the id
      *

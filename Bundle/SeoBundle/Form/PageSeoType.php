@@ -137,6 +137,8 @@ class PageSeoType extends AbstractType
     }
 
     /**
+     * The name of the form
+     *
      * @return string
      */
     public function getName()
