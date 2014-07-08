@@ -79,10 +79,11 @@ class PageSeoController extends Controller
 
             //redirect to the page url
             $pageUrl = $page->getUrl();
+            $url = $this->generateUrl('victoire_core_page_show', array('url' => $pageUrl));
 
             return new JsonResponse(array(
                 'success' => true,
-                'url' => $pageUrl
+                'url' => $url
             ));
 
         }
