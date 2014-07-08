@@ -11,6 +11,9 @@
 <div class="vic-tab-content vic-modal-tab-content">
     <div class="vic-tab-pane vic-active" id="basics">
         <div class='businessProperties'>
+            <div class='businessPropertyTitle'>
+                {{ 'modal.form.pageSeo.settings.businessProperties'|trans }}
+            </div>
             {% for businessProperty in businessProperties %}
                 <div class='businessProperty'>
                     <a onClick='seo.addPropertyToCurrentInput("{{ businessProperty.entityProperty }}")'>{{ businessProperty.entityProperty }}</a>

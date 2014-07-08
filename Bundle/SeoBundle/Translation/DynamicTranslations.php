@@ -21,7 +21,8 @@ class DynamicTranslations implements TranslationContainerInterface
     public static function getTranslationMessages()
     {
         return array(
-            new Message('form.pageSeo.redirectTo.help_block'),
+            new Message('menu.page.seoSettings', 'victoire'),
+            new Message('form.pageSeo.redirectTo.help_block', 'victoire')
         );
     }
 }
