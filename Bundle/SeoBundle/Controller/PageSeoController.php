@@ -21,11 +21,13 @@ class PageSeoController extends Controller
     /**
      * Page settings
      *
-     * @param page $page
+     * @param BasePage $page
      * @return template
      * @Route("/page/{id}", name="victoire_seo_pageSeo_settings")
      * @Template()
      * @ParamConverter("page", class="VictoirePageBundle:BasePage")
+     *
+     * @return JsonResponse
      */
     public function settingsAction(BasePage $page)
     {

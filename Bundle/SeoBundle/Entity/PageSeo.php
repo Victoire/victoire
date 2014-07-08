@@ -223,7 +223,10 @@ class PageSeo
     protected $redirectTo;
 
     /**
-     * contruct
+     * contructor
+     *
+     * @param Page $page
+     *
      **/
     public function __construct($page = null)
     {

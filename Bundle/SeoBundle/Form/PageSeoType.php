@@ -8,10 +8,13 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Victoire\Bundle\SeoBundle\DataTransformer\PageToIdTransformer;
 
+/**
+ *
+ * @author Paul Andrieux
+ *
+ */
 class PageSeoType extends AbstractType
 {
-
-
     /**
      * @param ObjectManager $em
      */
