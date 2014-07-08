@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2014-07-08T17:25:07Z" source-language="en" target-language="fr" datatype="plaintext" original="not.available">
+  <file date="2014-07-08T17:33:09Z" source-language="en" target-language="fr" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -56,6 +56,10 @@
         <target>Fb - Image</target>
         <jms:reference-file line="56">SeoBundle/Form/PageSeoType.php</jms:reference-file>
       </trans-unit>
+      <trans-unit id="193128bf45239a9b151a60184db3678e87c803a0" resname="form.pageSeo.ogTitle.help_block">
+        <source>form.pageSeo.ogTitle.help_block</source>
+        <target>Titre</target>
+      </trans-unit>
       <trans-unit id="fd776a6ac301728d22d0a7a20418db1106e9f6fa" resname="form.pageSeo.ogTitle.label">
         <source>form.pageSeo.ogTitle.label</source>
         <target>Fb - Titre</target>
@@ -78,7 +82,7 @@
       </trans-unit>
       <trans-unit id="80a407248802ef25ba49a89d78c518bc37036f8b" resname="form.pageSeo.redirectTo.help_block">
         <source>form.pageSeo.redirectTo.help_block</source>
-        <target>form.pageSeo.redirectTo.help_block</target>
+        <target>Titre Facebook</target>
       </trans-unit>
       <trans-unit id="16a1310d9050a9320cccdcbfb4d64533ad75d054" resname="form.pageSeo.redirectTo.label">
         <source>form.pageSeo.redirectTo.label</source>
@@ -129,6 +133,10 @@
         <source>form.pageSeo.sitemapPriority.label</source>
         <target>Sitemap - Priorité</target>
         <jms:reference-file line="108">SeoBundle/Form/PageSeoType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="df44e71281b87399f0293a79d8155c3491415011" resname="form.pageSeo.twitterCard.help_block">
+        <source>form.pageSeo.twitterCard.help_block</source>
+        <target>Carte Twitter</target>
       </trans-unit>
       <trans-unit id="15c542c8b3d81dbb50ec4aa75921437eadc46619" resname="form.pageSeo.twitterCard.label">
         <source>form.pageSeo.twitterCard.label</source>
