@@ -82,7 +82,7 @@
       </trans-unit>
       <trans-unit id="80a407248802ef25ba49a89d78c518bc37036f8b" resname="form.pageSeo.redirectTo.help_block">
         <source>form.pageSeo.redirectTo.help_block</source>
-        <target>Titre Facebook</target>
+        <target>Redirection permanente</target>
       </trans-unit>
       <trans-unit id="16a1310d9050a9320cccdcbfb4d64533ad75d054" resname="form.pageSeo.redirectTo.label">
         <source>form.pageSeo.redirectTo.label</source>
