@@ -2,6 +2,7 @@
 namespace Victoire\Bundle\PageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
 
 /**
  * Page
