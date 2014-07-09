@@ -84,6 +84,8 @@ class BasePageController extends AwesomeController
         $businessEntityTemplateRepository = $manager->getRepository('VictoireBusinessEntityTemplateBundle:BusinessEntityTemplatePage');
         $routeRepository = $manager->getRepository('VictoireCoreBundle:Route');
         $businessEntityHelper = $this->get('victoire_core.helper.business_entity_helper');
+        $pageSeoHelper = $this->get('victoire_seo.helper.pageseo_helper');
+
 
         //get the page
         $page = $basePageRepository->findOneByUrl($url);
@@ -117,6 +119,12 @@ class BasePageController extends AwesomeController
         //no page were found, we try to look for an BusinessEntityTemplatePage
         if ($page === null) {
             $page = $businessEntityTemplatePage;
+        }
+
+        //override of the seo using the current entity
+        if ($page !== null) {
+            //only if the page was found
+            $pageSeoHelper->updateSeoByEntity($page, $entity);
         }
 
         //no need for this variable anymore

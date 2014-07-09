@@ -7,6 +7,11 @@ use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 
+/**
+ *
+ * @author Paul Andrieux
+ *
+ */
 class PageToIdTransformer implements DataTransformerInterface
 {
     /**

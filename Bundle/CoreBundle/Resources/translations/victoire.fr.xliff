@@ -6,13 +6,13 @@
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
     </header>
     <body>
-      <trans-unit id="f2e5f1243797e0fc89bedab0f0fe5f36df4f8f57" resname=".title">
-        <source>.title</source>
-        <target state="new">.title</target>
-      </trans-unit>
       <trans-unit id="79fd52cd95aad0a35b167f6a03b414b7b4f8eb7c" resname="entity_proxy.form.empty_value">
         <source>entity_proxy.form.empty_value</source>
         <target>Veuillez sélectionner une entité</target>
+      </trans-unit>
+      <trans-unit id="5ec78416cc19bcd441bf69345e854bf535488535" resname="error_occured">
+        <source>error_occured</source>
+        <target>Une erreur est apparue</target>
       </trans-unit>
       <trans-unit id="5388360d9636ad4b61bf60291deb7d679b6ff2c3" resname="form.widget.tab.entity_instance.label">
         <source>form.widget.tab.entity_instance.label</source>
@@ -85,6 +85,10 @@
       <trans-unit id="da05b847ec5c3af60439eddb617f5a682c88963b" resname="menu.page.settings">
         <source>menu.page.settings</source>
         <target><![CDATA[<i class="vic-menuImg vic-menuImg-gear"></i> Paramètres de la page]]></target>
+      </trans-unit>
+      <trans-unit id="f6f4243e5ddbf57050e0876a9ad4408dc17a6113" resname="menu.page.template">
+        <source>menu.page.template</source>
+        <target><![CDATA[<i class="vic-menuImg vic-menuImg-gear"></i> Template de la page]]></target>
       </trans-unit>
       <trans-unit id="7269b57341e3d2887e9ff29432859d64756ff595" resname="menu.parent">
         <source>menu.parent</source>
