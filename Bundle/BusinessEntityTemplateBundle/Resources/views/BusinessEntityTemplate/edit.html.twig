@@ -6,7 +6,9 @@
 
 {% block modal_body_content %}
     <h1>{{ 'business_entity_template.edit.title'|trans }}</h1>
-    {{ form(edit_form) }}
+    <div class='simpleForm'>
+        {{ form(edit_form) }}
+    </div>
 {% endblock modal_body_content %}
 {% block modal_footer_content %}
     <span class="vic-pull-left"><sup>*</sup>{{ 'modal.mandatory_fields.label'|trans({}, 'victoire')|desc('Mandatory fields') }}</span>

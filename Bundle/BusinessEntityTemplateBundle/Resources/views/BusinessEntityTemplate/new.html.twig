@@ -6,7 +6,9 @@
 
 {% block modal_body_content %}
     <h1>{{ 'business_entity_template.creation.title'|trans }}</h1>
-    {{ form(form) }}
+    <div class='simpleForm'>
+        {{ form(form) }}
+    </div>
 </ul>
 {% endblock modal_body_content %}
 
