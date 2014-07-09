@@ -593,7 +593,7 @@ class WidgetManager
 
                 if ($widgetPage instanceof BusinessEntityTemplatePage) {
 
-                    $entity = $businessEntityHelper->getEntityByPageAndId($widgetPage, $entityId);
+                    $entity = $businessEntityHelper->getEntityByPageAndAttribute($widgetPage, $entityId);
 
                     //so we duplicate the business entity template page for this current instance
                     $page = $pageHelper->createPageInstanceFromBusinessEntityTemplatePage($widgetPage, $entityId, $entity);
