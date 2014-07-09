@@ -96,15 +96,22 @@ class PageExtension extends \Twig_Extension
             //the items allowed for the template
             $items = $businessEntityTemplateHelper->getEntitiesAllowed($businessEntityTemplate);
 
+            //the attribute used for getting the entity instance
+            $attributeName = $businessEntityTemplate->getEntityIdentifier();
+
+            //the function for the getter
+            $functionName = 'get'.ucfirst($attributeName);
+
             //parse entities
             foreach ($items as $item) {
-                $itemId = $item->getId();
+                //get the entity
+                $itemId = call_user_func(array($item, $functionName));
 
                 $url = $pageUrl .'/'.$itemId;
 
                 //if the url does no exists in the children
                 if (!in_array($url, $childrenUrls)) {
-                    $itemsToAdd[$url] = $item;
+                    $itemsToAdd[$url] = array('item' => $item, 'url' => $url, 'itemId' => $itemId);
                 }
 
                 unset($url);
@@ -112,8 +119,8 @@ class PageExtension extends \Twig_Extension
 
             //render the ol li
             $html .= '<ol>';
-            foreach ($itemsToAdd as $url => $item) {
-                $html .= "<li><div class='generated'><a href='/".$url."' title='".$item->getId()."'>".$item->getId()."</a></div>";
+            foreach ($itemsToAdd as $item) {
+                $html .= "<li><div class='generated'><a href='/".$item['url']."' title='".$item['itemId']."'>".$item['itemId']."</a></div>";
             }
             $html .= '</ol>';
         }

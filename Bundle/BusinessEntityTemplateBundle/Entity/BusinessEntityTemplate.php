@@ -51,6 +51,13 @@ class BusinessEntityTemplate
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="entity_identifier", type="string", length=255, nullable=false)
+     */
+    protected $entityIdentifier;
+
+    /**
+     * @var string
      * @ORM\Column(name="layout", type="string", length=255, nullable=false)
      */
     protected $layout;
@@ -238,5 +245,25 @@ class BusinessEntityTemplate
         $url = $page->getUrl();
 
         return $url;
+    }
+
+    /**
+     * Get the entity identifier
+     *
+     * @return string
+     */
+    public function getEntityIdentifier()
+    {
+        return $this->entityIdentifier;
+    }
+
+    /**
+     * Set the entity identifier
+     *
+     * @param string $entityIdentifier
+     */
+    public function setEntityIdentifier($entityIdentifier)
+    {
+        $this->entityIdentifier = $entityIdentifier;
     }
 }

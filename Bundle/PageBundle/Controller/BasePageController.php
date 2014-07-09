@@ -109,7 +109,7 @@ class BasePageController extends AwesomeController
                         throw new \Exception('The id could not be retrieved from the url.');
                     }
 
-                    $entity = $businessEntityHelper->getEntityByPageAndId($businessEntityTemplatePage, $entityId);
+                    $entity = $businessEntityHelper->getEntityByPageAndAttribute($businessEntityTemplatePage, $entityId);
                 }
             }
         } else {
