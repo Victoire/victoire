@@ -4,7 +4,7 @@ namespace Victoire\Bundle\SeoBundle\Helper;
 
 
 use Victoire\Bundle\PageBundle\Entity\BasePage;
-use Victoire\Bundle\CoreBundle\Helper\BusinessEntityHelper;
+use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessEnityBundle\Entity\BusinessProperty;
 
 /**

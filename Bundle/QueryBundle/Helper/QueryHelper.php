@@ -4,7 +4,7 @@ namespace Victoire\Bundle\QueryBundle\Helper;
 
 
 use Doctrine\ORM\EntityManager;
-use Victoire\Bundle\CoreBundle\Helper\BusinessEntityHelper;
+use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Doctrine\ORM\QueryBuilder;
 
 /**

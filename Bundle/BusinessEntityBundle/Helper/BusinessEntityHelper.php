@@ -1,5 +1,5 @@
 <?php
-namespace Victoire\Bundle\CoreBundle\Helper;
+namespace Victoire\Bundle\BusinessEntityBundle\Helper;
 
 use Victoire\Bundle\CoreBundle\Annotations\Reader\AnnotationReader;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
