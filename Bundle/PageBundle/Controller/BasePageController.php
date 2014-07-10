@@ -101,15 +101,16 @@ class BasePageController extends AwesomeController
 
                 //a page match the entity template generator
                 if ($businessEntityTemplatePage) {
-                    //we look for the entity
-                    $entityId = $urlHelper->getEntityIdFromUrl($url);
+                    //we look for the entity identifier
+                    //it might be a slug or an id
+                    $entityIdentifier = $urlHelper->getEntityIdFromUrl($url);
 
-                    //test the entity id
-                    if ($entityId === null) {
-                        throw new \Exception('The id could not be retrieved from the url.');
+                    //test the entity identifier
+                    if ($entityIdentifier === null) {
+                        throw new \Exception('The entity identifier could not be retrieved from the url.');
                     }
 
-                    $entity = $businessEntityHelper->getEntityByPageAndAttribute($businessEntityTemplatePage, $entityId);
+                    $entity = $businessEntityHelper->getEntityByPageAndBusinessIdentifier($businessEntityTemplatePage, $entityIdentifier);
                 }
             }
         } else {

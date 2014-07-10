@@ -175,14 +175,14 @@ class BusinessEntityHelper
     /**
      * Get the entity from the page and the id given
      *
-     * @param BusinessEntityTemplatePage $page
-     * @param string $id
+     * @param BusinessEntityTemplatePage $page             The page
+     * @param string                     $entityIdentifier The identifier for the business entity
      *
      * @throws \Exception
      *
      * @return The entity
      */
-    public function getEntityByPageAndAttribute(BusinessEntityTemplatePage $page, $id)
+    public function getEntityByPageAndBusinessIdentifier(BusinessEntityTemplatePage $page, $entityIdentifier)
     {
         $entity = null;
 
@@ -200,11 +200,11 @@ class BusinessEntityHelper
             throw new \Exception('The business entity ['.$businessEntityName.'] was not found.');
         }
 
-        $entity = $this->findEntityByBusinessEntityAndAttribute($businessEntity, $attributeName, $id);
+        $entity = $this->findEntityByBusinessEntityAndAttribute($businessEntity, $attributeName, $entityIdentifier);
 
         //test the result
         if ($entity === null) {
-            throw new \Exception('The entity ['.$id.'] was not found.');
+            throw new \Exception('The entity ['.$entityIdentifier.'] was not found.');
         }
 
         return $entity;
