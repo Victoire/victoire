@@ -1,3 +1,5 @@
+{% form_theme edit_form 'VictoireFormBundle:Form:fields.html.twig' %}
+
 {% trans_default_domain "victoire" %}
 
 {% extends 'VictoireCoreBundle::_modal.html.twig' %}
@@ -6,9 +8,7 @@
 
 {% block modal_body_content %}
     <h1>{{ 'business_entity_template.edit.title'|trans }}</h1>
-    <div class='vic-simpleForm'>
-        {{ form(edit_form) }}
-    </div>
+    {{ form(edit_form) }}
 {% endblock modal_body_content %}
 {% block modal_footer_content %}
     <span class="vic-pull-left"><sup>*</sup>{{ 'modal.mandatory_fields.label'|trans({}, 'victoire')|desc('Mandatory fields') }}</span>

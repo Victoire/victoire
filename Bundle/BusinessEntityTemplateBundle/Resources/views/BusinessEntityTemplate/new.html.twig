@@ -1,3 +1,5 @@
+{% form_theme form 'VictoireFormBundle:Form:fields.html.twig' %}
+
 {% trans_default_domain "victoire" %}
 
 {% extends 'VictoireCoreBundle::_modal.html.twig' %}
@@ -6,9 +8,7 @@
 
 {% block modal_body_content %}
     <h1>{{ 'business_entity_template.creation.title'|trans }}</h1>
-    <div class='vic-simpleForm'>
-        {{ form(form) }}
-    </div>
+    {{ form(form) }}
 </ul>
 {% endblock modal_body_content %}
 

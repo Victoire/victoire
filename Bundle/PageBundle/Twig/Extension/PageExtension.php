@@ -120,7 +120,9 @@ class PageExtension extends \Twig_Extension
             //render the ol li
             $html .= '<ol>';
             foreach ($itemsToAdd as $item) {
-                $html .= "<li><div class='generated'><a href='/".$item['url']."' title='".$item['itemId']."'>".$item['itemId']."</a></div>";
+                $itemUrl = $item['url'];
+                $itemId = $item['itemId'];
+                $html .= "<li><div class='generated'><a href='/".$itemUrl."' title='".$itemId."'>".$itemId."</a></div>";
             }
             $html .= '</ol>';
         }
