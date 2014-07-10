@@ -1,29 +1,29 @@
 
 
-var seo = {};
+var businessProperty = {};
 
-seo.initPropertyHelper = function ()
+businessProperty.initPropertyHelper = function ()
 {
-    seo.currentInput = null;
+    businessProperty.currentInput = null;
     
     //if an input or a textarea lose the focus
-    $("form[name='seo_page']").find('input, textarea').focusout(function () {
+    $("form").find('input, textarea').focusout(function () {
         //we memorize the input
-        seo.currentInput = $(this);
+        businessProperty.currentInput = $(this);
      });
 };
 
 
 //we add the {{ item.XXX }} string to the current input
-seo.addPropertyToCurrentInput = function (businessProperty)
+businessProperty.addPropertyToCurrentInput = function (businessPropertyId)
 {
     //get the current input
-    var currentInput = seo.currentInput;
+    var currentInput = businessProperty.currentInput;
     
     //there was an input
     if (currentInput !== null) {
         //the string to insert
-        var insertString = '{{' + 'item.' + businessProperty + '}}';
+        var insertString = '{{' + 'item.' + businessPropertyId + '}}';
         //we get the current string
         var currentString = currentInput.val();
         //we add the item

@@ -267,6 +267,23 @@ class BasePageController extends AwesomeController
         $formFactory = $this->container->get('form.factory');
         $form = $formFactory->create($this->getPageSettingsType(), $page);
 
+
+        //services
+        $businessEntityHelper = $this->get('victoire_core.helper.business_entity_helper');
+
+        $businessProperties = array();
+
+        //if the page is a business entity template page
+        if ($page instanceof BusinessEntityTemplatePage) {
+            //get the id of the business entity
+            $businessEntityId = $page->getBusinessEntityTemplate()->getBusinessEntityName();
+            //we can use the business entity properties on the seo
+            $businessEntity = $businessEntityHelper->findById($businessEntityId);
+
+            $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
+        }
+
+
         //the type of method used
         $requestMethod = $request->getMethod();
 
@@ -301,7 +318,8 @@ class BasePageController extends AwesomeController
                     $this->getBaseTemplatePath() . ':settings.html.twig',
                     array(
                         'page' => $page,
-                        'form' => $form->createView()
+                        'form' => $form->createView(),
+                        'businessProperties' => $businessProperties
                     )
                 )
             );

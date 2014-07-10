@@ -1,0 +1,15 @@
+<div class='businessProperties'>
+    <div class='businessPropertyTitle'>
+        {{ 'modal.form.pageSeo.settings.businessProperties'|trans }}
+    </div>
+    {% for businessProperty in businessProperties %}
+        <div class='businessProperty'>
+            <a onClick='businessProperty.addPropertyToCurrentInput("{{ businessProperty.entityProperty }}")'>{{ businessProperty.entityProperty }}</a>
+        </div>
+    {% endfor %}
+</div>
+
+<script type="text/javascript">
+    //init the event handler for the business entity property
+    businessProperty.initPropertyHelper();
+</script>
