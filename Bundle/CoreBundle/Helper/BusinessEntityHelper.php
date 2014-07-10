@@ -111,7 +111,6 @@ class BusinessEntityHelper
         return $businessEntity;
     }
 
-
     /**
      * Get a business entity by its classname
      *
@@ -145,15 +144,17 @@ class BusinessEntityHelper
 
         return $businessEntity;
     }
+
     /**
      * Find a entity by the business entity and the id
      *
      * @param BusinessEntity $businessEntity
-     * @param unknown $id
+     * @param string         $attributeName
+     * @param string         $id
      *
      * @return Entity
      */
-    public function findEntityByBusinessEntityAndId(BusinessEntity $businessEntity, $id)
+    public function findEntityByBusinessEntityAndAttribute(BusinessEntity $businessEntity, $attributeName, $attributeValue)
     {
         //retrieve the class of the business entity
         $class = $businessEntity->getClass();
@@ -163,8 +164,10 @@ class BusinessEntityHelper
         //get the repository
         $repo = $em->getRepository($class);
 
+        $functionName = 'findOneBy'.ucfirst($attributeName);
+
         //get the entity
-        $entity = $repo->findOneById($id);
+        $entity = call_user_func(array($repo, $functionName), $attributeValue);
 
         return $entity;
     }
@@ -172,14 +175,14 @@ class BusinessEntityHelper
     /**
      * Get the entity from the page and the id given
      *
-     * @param BusinessEntityTemplatePage $page
-     * @param string $id
+     * @param BusinessEntityTemplatePage $page             The page
+     * @param string                     $entityIdentifier The identifier for the business entity
      *
      * @throws \Exception
      *
      * @return The entity
      */
-    public function getEntityByPageAndId(BusinessEntityTemplatePage $page, $id)
+    public function getEntityByPageAndBusinessIdentifier(BusinessEntityTemplatePage $page, $entityIdentifier)
     {
         $entity = null;
 
@@ -189,16 +192,19 @@ class BusinessEntityHelper
 
         $businessEntity = $this->findById($businessEntityName);
 
+        //the attribute used for getting the entity instance
+        $attributeName = $template->getEntityIdentifier();
+
         //test the result
         if ($businessEntity === null) {
             throw new \Exception('The business entity ['.$businessEntityName.'] was not found.');
         }
 
-        $entity = $this->findEntityByBusinessEntityAndId($businessEntity, $id);
+        $entity = $this->findEntityByBusinessEntityAndAttribute($businessEntity, $attributeName, $entityIdentifier);
 
         //test the result
         if ($entity === null) {
-            throw new \Exception('The entity ['.$id.'] was not found.');
+            throw new \Exception('The entity ['.$entityIdentifier.'] was not found.');
         }
 
         return $entity;

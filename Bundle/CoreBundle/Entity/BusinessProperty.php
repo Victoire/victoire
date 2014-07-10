@@ -47,4 +47,14 @@ class BusinessProperty
     {
         $this->entityProperty = $property;
     }
+
+    /**
+     * Display object as string
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->entityProperty;
+    }
 }

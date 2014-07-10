@@ -578,8 +578,8 @@ class WidgetManager
             //we try to get the page if it exists
             $basePageRepository = $em->getRepository('VictoirePageBundle:BasePage');
 
-            //the url for the new page
-            $entityId = $urlHelper->getEntityIdFromUrl($url);
+            //the identifier of the business entity
+            $entityIdentifier = $urlHelper->getEntityIdFromUrl($url);
 
             //get the page
             $page = $basePageRepository->findOneByUrl($url);
@@ -587,16 +587,16 @@ class WidgetManager
             //no page were found
             if ($page === null) {
                 //test the entity id
-                if ($entityId === null) {
-                    throw new \Exception('The id could not be retrieved from the url.');
+                if ($entityIdentifier === null) {
+                    throw new \Exception('The business identifier could not be retrieved from the url.');
                 }
 
                 if ($widgetPage instanceof BusinessEntityTemplatePage) {
 
-                    $entity = $businessEntityHelper->getEntityByPageAndId($widgetPage, $entityId);
+                    $entity = $businessEntityHelper->getEntityByPageAndBusinessIdentifier($widgetPage, $entityIdentifier);
 
                     //so we duplicate the business entity template page for this current instance
-                    $page = $pageHelper->createPageInstanceFromBusinessEntityTemplatePage($widgetPage, $entityId, $entity);
+                    $page = $pageHelper->createPageInstanceFromBusinessEntityTemplatePage($widgetPage, $entityIdentifier, $entity);
 
                     //the page
                     $em->persist($page);

@@ -22,17 +22,23 @@ class BusinessEntityTemplateController extends BaseController
     /**
      * Creates a new BusinessEntityTemplate entity.
      *
-     * @Route("/", name="victoire_businessentitytemplate_businessentitytemplate_create")
+     * @Route("{id}/create", name="victoire_businessentitytemplate_businessentitytemplate_create")
      * @Method("POST")
      * @Template("VictoireBusinessEntityTemplateBundle:BusinessEntityTemplate:new.html.twig")
      *
      * @param Request $request
      * @return multitype:\Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate NULL
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request, $id)
     {
+        //get the business entity
+        $businessEntity = $this->getBusinessEntity($id);
+
         $entity = new BusinessEntityTemplate();
+        $entity->setBusinessEntity($businessEntity);
+
         $form = $this->createCreateForm($entity);
+
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -75,9 +81,13 @@ class BusinessEntityTemplateController extends BaseController
      */
     private function createCreateForm(BusinessEntityTemplate $entity)
     {
+        $businessEntityName = $entity->getBusinessEntityName();
+        $businessProperty = $this->getBusinessProperties($entity);
+
         $form = $this->createForm('victoire_business_entity_template_type', $entity, array(
-            'action' => $this->generateUrl('victoire_businessentitytemplate_businessentitytemplate_create'),
+            'action' => $this->generateUrl('victoire_businessentitytemplate_businessentitytemplate_create', array('id' => $businessEntityName)),
             'method' => 'POST',
+            'businessProperty' => $businessProperty
         ));
 
         return $form;
@@ -168,9 +178,12 @@ class BusinessEntityTemplateController extends BaseController
     */
     private function createEditForm(BusinessEntityTemplate $entity)
     {
+        $businessProperty = $this->getBusinessProperties($entity);
+
         $form = $this->createForm('victoire_business_entity_template_type', $entity, array(
             'action' => $this->generateUrl('victoire_businessentitytemplate_businessentitytemplate_update', array('id' => $entity->getId())),
             'method' => 'PUT',
+            'businessProperty' => $businessProperty
         ));
 
         return $form;
@@ -309,5 +322,30 @@ class BusinessEntityTemplateController extends BaseController
             ),
             'success' => true
         ));
+    }
+
+    /**
+     * Get an array of business properties by the business entity template
+     *
+     * @param BusinessEntityTemplate $entity
+     * @return array of business properties
+     */
+    public function getBusinessProperties(BusinessEntityTemplate $entity)
+    {
+        $businessEntityHelper = $this->get('victoire_core.helper.business_entity_helper');
+        //the name of the business entity link to the business entity template
+        $businessEntityName = $entity->getBusinessEntityName();
+
+        $businessEntity = $businessEntityHelper->findById($businessEntityName);
+        $businessProperties = $businessEntity->getBusinessPropertiesByType('businessIdentifier');
+
+        $businessProperty = array();
+
+        foreach ($businessProperties as $bp) {
+            $entityProperty = $bp->getEntityProperty();
+            $businessProperty[$entityProperty] = $entityProperty;
+        }
+
+        return $businessProperty;
     }
 }

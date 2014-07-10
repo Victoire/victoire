@@ -32,8 +32,13 @@ class BusinessEntityTemplateType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $businessProperty = $options['businessProperty'];
+
         $builder
             ->add('businessEntityName', 'hidden')
+            ->add('entityIdentifier', 'choice', array(
+                'choices' => $businessProperty
+            ))
             ->add('name')
             ->add('layout', 'choice', array(
                 'label' => 'form.page.type.layout.label',
@@ -48,6 +53,8 @@ class BusinessEntityTemplateType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
+        $resolver->setOptional(array('businessProperty'));
+
         $resolver->setDefaults(array(
             'data_class' => 'Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate'
         ));
