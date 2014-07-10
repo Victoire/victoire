@@ -1,22 +1,25 @@
-
+/*global $vic*/
 
 var businessProperty = {};
 
 businessProperty.initPropertyHelper = function ()
 {
+    "use strict";
     businessProperty.currentInput = null;
     
     //if an input or a textarea lose the focus
-    $("form").find('input, textarea').focusout(function () {
+    $vic("form").find('input, textarea').focusout(function () {
         //we memorize the input
-        businessProperty.currentInput = $(this);
-     });
+        businessProperty.currentInput = $vic(this);
+    });
 };
 
 
 //we add the {{ item.XXX }} string to the current input
 businessProperty.addPropertyToCurrentInput = function (businessPropertyId)
 {
+    "use strict";
+    
     //get the current input
     var currentInput = businessProperty.currentInput;
     
