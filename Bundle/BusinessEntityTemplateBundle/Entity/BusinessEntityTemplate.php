@@ -1,7 +1,7 @@
 <?php
 namespace Victoire\Bundle\BusinessEntityTemplateBundle\Entity;
 
-use Victoire\Bundle\CoreBundle\Entity\BusinessEntity;
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Victoire\Bundle\PageBundle\Entity\Page;

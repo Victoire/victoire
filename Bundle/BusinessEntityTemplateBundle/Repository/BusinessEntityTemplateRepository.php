@@ -3,7 +3,7 @@
 namespace Victoire\Bundle\BusinessEntityTemplateBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Victoire\Bundle\CoreBundle\Entity\BusinessEntity;
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 
 
 /**

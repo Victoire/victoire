@@ -2,10 +2,10 @@
 namespace Victoire\Bundle\CoreBundle\Helper;
 
 use Victoire\Bundle\CoreBundle\Annotations\Reader\AnnotationReader;
-use Victoire\Bundle\CoreBundle\Entity\BusinessEntity;
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
-use Victoire\Bundle\CoreBundle\Entity\BusinessProperty;
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
 
 
 /**

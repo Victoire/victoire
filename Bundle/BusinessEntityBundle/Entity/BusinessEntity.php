@@ -1,7 +1,8 @@
 <?php
-namespace Victoire\Bundle\CoreBundle\Entity;
+namespace Victoire\Bundle\BusinessEntityBundle\Entity;
 
-use Victoire\Bundle\CoreBundle\Entity\BusinessProperty;
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
+
 /**
  *
  * @author Thomas Beaujean

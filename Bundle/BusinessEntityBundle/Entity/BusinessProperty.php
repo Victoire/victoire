@@ -1,5 +1,5 @@
 <?php
-namespace Victoire\Bundle\CoreBundle\Entity;
+namespace Victoire\Bundle\BusinessEntityBundle\Entity;
 
 /**
  *
