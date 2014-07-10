@@ -2,7 +2,7 @@
 namespace Victoire\Bundle\CoreBundle\Tests\Listener;
 
 use Victoire\Bundle\CoreBundle\Tests\Utils\BaseTestCase;
-use Victoire\Bundle\PageBundle\Event\Menu\BasePageMenuContextualEvent;
+use Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
@@ -35,7 +35,7 @@ class PageMenuListenerTest extends BaseTestCase
         $pageMenuListenerMock->addGlobal($event);
 
         $pageMock = $this->getPageMock();
-        $event = new BasePageMenuContextualEvent($pageMock);
+        $event = new PageMenuContextualEvent($pageMock);
         $response = $pageMenuListenerMock->addContextual($event);
 
         $this->assertEquals('menu.page', $response->getName());

@@ -15,11 +15,10 @@ use AppVentus\Awesome\ShortcutsBundle\Service\FormErrorService;
 use Symfony\Component\HttpFoundation\Request;
 
 use Victoire\Bundle\CoreBundle\VictoireCmsEvents;
-use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\PageBundle\Entity\Template;
 use Victoire\Widget\MenuBundle\Entity\MenuItem;
-use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
+use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
 
 /**
  * Generic Widget CRUD operations
@@ -49,7 +48,7 @@ class WidgetManager
      * set page
      * @param Page $page
      */
-    public function setPage(BasePage $page)
+    public function setPage(Page $page)
     {
         $this->page = $page;
     }
@@ -107,7 +106,7 @@ class WidgetManager
      * @param string $entity
      * @return template
      */
-    public function createWidget($type, $slotId, BasePage $page, $entity)
+    public function createWidget($type, $slotId, Page $page, $entity)
     {
         //create a page for the business entity instance if we are currently display an instance for a business entity template
         $page = $this->duplicateTemplatePageIfPageInstance($page);
@@ -122,12 +121,12 @@ class WidgetManager
      * Generates new forms for each available business entities
      * @param string   $type
      * @param string   $slot
-     * @param BasePage $page
+     * @param Page $page
      * @param Widget   $widget
      *
      * @return collection of forms
      */
-    protected function renderNewWidgetForms($slot, BasePage $page, Widget $widget)
+    protected function renderNewWidgetForms($slot, Page $page, Widget $widget)
     {
         $annotationReader = $this->container->get('victoire_core.annotation_reader');
         $classes = $annotationReader->getBusinessClassesForWidget($widget);
@@ -159,10 +158,10 @@ class WidgetManager
      * new widget
      * @param string   $type
      * @param string   $slot
-     * @param BasePage $page
+     * @param Page $page
      * @return template
      */
-    public function newWidget($type, $slot, BasePage $page)
+    public function newWidget($type, $slot, Page $page)
     {
         $manager = $this->getManager(null, $type);
         $widget = $manager->newWidget($page, $slot);
@@ -293,10 +292,10 @@ class WidgetManager
     /**
      * tells if current widget is a reference
      * @param Widget   $widget
-     * @param BasePage $page
+     * @param Page $page
      * @return boolean
      */
-    public function isReference(Widget $widget, BasePage $page)
+    public function isReference(Widget $widget, Page $page)
     {
         return $widget->getPage()->getId() !== $page->getId();
     }
@@ -323,7 +322,7 @@ class WidgetManager
      * @param Page   $page
      * @return template
      */
-    public function renderActions($slot, BasePage $page, $first = false)
+    public function renderActions($slot, Page $page, $first = false)
     {
         $slots = $this->container->getParameter('victoire_core.slots');
 
@@ -388,10 +387,10 @@ class WidgetManager
 
     /**
      * compute the widget map for page
-     * @param BasePage   $page
+     * @param Page   $page
      * @param array      $sortedWidgets
      */
-    public function updateWidgetMapOrder(BasePage $page, $sortedWidgets)
+    public function updateWidgetMapOrder(Page $page, $sortedWidgets)
     {
         //create a page for the business entity instance if we are currently display an instance for a business entity template
         $page = $this->duplicateTemplatePageIfPageInstance($page);
@@ -474,7 +473,7 @@ class WidgetManager
      * @param string  $namespace
      * @return Form
      */
-    public function buildForm($manager, $widget, BasePage $page, $entityName = null, $namespace = null, $formMode = Widget::MODE_STATIC)
+    public function buildForm($manager, $widget, Page $page, $entityName = null, $namespace = null, $formMode = Widget::MODE_STATIC)
     {
         $form = $manager->buildForm($widget, $page, $entityName, $namespace, $formMode);
 
@@ -492,7 +491,7 @@ class WidgetManager
      * @param string $namespace
      * @return multitype:
      */
-    public function buildEntityForms($manager, $widget, BasePage $page,$entityName = null, $namespace = null)
+    public function buildEntityForms($manager, $widget, Page $page,$entityName = null, $namespace = null)
     {
         $forms = array();
 
@@ -520,7 +519,7 @@ class WidgetManager
      * @param string $entityName
      * @return Collection widgets
      */
-    public function renderNewForm($form, $widget, $slot, BasePage $page, $entityName = null)
+    public function renderNewForm($form, $widget, $slot, Page $page, $entityName = null)
     {
         $manager = $this->getManager($widget);
 
@@ -557,7 +556,7 @@ class WidgetManager
      *
      * @return Page The page for the entity instance
      */
-    public function duplicateTemplatePageIfPageInstance(BasePage $page)
+    public function duplicateTemplatePageIfPageInstance(Page $page)
     {
         //we copy the reference to the widget page
         $widgetPage = $page;
@@ -576,13 +575,13 @@ class WidgetManager
         //the widget is linked to a page url that is not the current page url
         if ($url !== $widgetPageUrl) {
             //we try to get the page if it exists
-            $basePageRepository = $em->getRepository('VictoirePageBundle:BasePage');
+            $PageRepository = $em->getRepository('VictoirePageBundle:Page');
 
             //the identifier of the business entity
             $entityIdentifier = $urlHelper->getEntityIdFromUrl($url);
 
             //get the page
-            $page = $basePageRepository->findOneByUrl($url);
+            $page = $PageRepository->findOneByUrl($url);
 
             //no page were found
             if ($page === null) {
@@ -591,12 +590,12 @@ class WidgetManager
                     throw new \Exception('The business identifier could not be retrieved from the url.');
                 }
 
-                if ($widgetPage instanceof BusinessEntityTemplatePage) {
+                if ($widgetPage instanceof BusinessEntityTemplate) {
 
                     $entity = $businessEntityHelper->getEntityByPageAndBusinessIdentifier($widgetPage, $entityIdentifier);
 
                     //so we duplicate the business entity template page for this current instance
-                    $page = $pageHelper->createPageInstanceFromBusinessEntityTemplatePage($widgetPage, $entityIdentifier, $entity);
+                    $page = $pageHelper->createPageInstanceFromBusinessEntityTemplate($widgetPage, $entityIdentifier, $entity);
 
                     //the page
                     $em->persist($page);

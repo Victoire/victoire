@@ -11,9 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Victoire\Bundle\CoreBundle\Form\PageType;
 use Victoire\Bundle\CoreBundle\Form\TemplateType;
-use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
+use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
 use Victoire\Bundle\PageBundle\Helper\UrlHelper;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -28,7 +27,7 @@ class BasePageController extends AwesomeController
      *
      * @return template
      */
-    public function deleteAction(BasePage $page)
+    public function deleteAction(Page $page)
     {
         $return = null;
 
@@ -75,20 +74,20 @@ class BasePageController extends AwesomeController
         //the response
         $response = null;
         $entity = null;
-        $businessEntityTemplatePage = null;
+        $BusinessEntityTemplate = null;
 
         //manager
         $manager = $this->getEntityManager();
         $urlHelper = $this->getUrlHelper();
-        $basePageRepository = $manager->getRepository('VictoirePageBundle:BasePage');
-        $businessEntityTemplateRepository = $manager->getRepository('VictoireBusinessEntityTemplateBundle:BusinessEntityTemplatePage');
+        $PageRepository = $manager->getRepository('VictoirePageBundle:Page');
+        $businessEntityTemplateRepository = $manager->getRepository('VictoireBusinessEntityTemplateBundle:BusinessEntityTemplate');
         $routeRepository = $manager->getRepository('VictoireCoreBundle:Route');
         $businessEntityHelper = $this->get('victoire_core.helper.business_entity_helper');
         $pageSeoHelper = $this->get('victoire_seo.helper.pageseo_helper');
         $pageHelper = $this->get('victoire_page.page_helper');
 
         //get the page
-        $page = $basePageRepository->findOneByUrl($url);
+        $page = $PageRepository->findOneByUrl($url);
 
         //we do not try to retrieve an entity for the business entity template page
         if ($page === null) {
@@ -97,10 +96,10 @@ class BasePageController extends AwesomeController
 
             //if the url have been shorten
             if ($urlMatcher !== null) {
-                $businessEntityTemplatePage = $businessEntityTemplateRepository->findOneByUrl($urlMatcher);
+                $BusinessEntityTemplate = $businessEntityTemplateRepository->findOneByUrl($urlMatcher);
 
                 //a page match the entity template generator
-                if ($businessEntityTemplatePage) {
+                if ($BusinessEntityTemplate) {
                     //we look for the entity identifier
                     //it might be a slug or an id
                     $entityIdentifier = $urlHelper->getEntityIdFromUrl($url);
@@ -110,16 +109,16 @@ class BasePageController extends AwesomeController
                         throw new \Exception('The entity identifier could not be retrieved from the url.');
                     }
 
-                    $entity = $businessEntityHelper->getEntityByPageAndBusinessIdentifier($businessEntityTemplatePage, $entityIdentifier);
+                    $entity = $businessEntityHelper->getEntityByPageAndBusinessIdentifier($BusinessEntityTemplate, $entityIdentifier);
                 }
             }
         } else {
             $entity = $page->getEntity();
         }
 
-        //no page were found, we try to look for an BusinessEntityTemplatePage
+        //no page were found, we try to look for an BusinessEntityTemplate
         if ($page === null) {
-            $page = $businessEntityTemplatePage;
+            $page = $BusinessEntityTemplate;
         }
 
         //override of the seo using the current entity
@@ -132,7 +131,7 @@ class BasePageController extends AwesomeController
         }
 
         //no need for this variable anymore
-        unset($businessEntityTemplatePage);
+        unset($BusinessEntityTemplate);
 
         //no page found using the url, we look for previous url
         if ($page === null) {
@@ -172,7 +171,7 @@ class BasePageController extends AwesomeController
                 $this->get('twig')->addGlobal('page', $page);
                 $this->get('twig')->addGlobal('entity', $entity);
 
-                $event = new \Victoire\Bundle\PageBundle\Event\Menu\BasePageMenuContextualEvent($page, $entity);
+                $event = new \Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent($page, $entity);
 
                 //TODO : il serait bon de faire des constantes pour les noms d'évents
                 $eventName = 'victoire_core.' . $page->getType() . '_menu.contextual';
@@ -257,11 +256,11 @@ class BasePageController extends AwesomeController
      * Page settings
      *
      * @param Request  $request
-     * @param BasePage $page
+     * @param Page $page
      *
      * @return template
      */
-    protected function settingsAction(Request $request, BasePage $page)
+    protected function settingsAction(Request $request, Page $page)
     {
         $em = $this->getEntityManager();
 
@@ -277,9 +276,9 @@ class BasePageController extends AwesomeController
         $businessProperties = array();
 
         //if the page is a business entity template page
-        if ($page instanceof BusinessEntityTemplatePage) {
+        if ($page instanceof BusinessEntityTemplate) {
             //get the id of the business entity
-            $businessEntityId = $page->getBusinessEntityTemplate()->getBusinessEntityName();
+            $businessEntityId = $page->getBusinessEntityName();
             //we can use the business entity properties on the seo
             $businessEntity = $businessEntityHelper->findById($businessEntityId);
 
@@ -359,8 +358,8 @@ class BasePageController extends AwesomeController
             throw new NotFoundHttpException($errorMessage);
         }
 
-        //if the page is a businessEntityTemplatePage and the entity is not allowed for this template
-        if ($page instanceof BusinessEntityTemplatePage) {
+        //if the page is a BusinessEntityTemplate and the entity is not allowed for this template
+        if ($page instanceof BusinessEntityTemplate) {
             $hasRoleVictoire = $securityContext->isGranted('ROLE_VICTOIRE');
 
             //a not victoire user can not access a business template page

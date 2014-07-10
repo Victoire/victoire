@@ -34,7 +34,7 @@ class ParameterConverter
         $entityProperty = $businessProperty->getEntityProperty();
 
         //the string to replace
-        $stringToReplate = '{{item.'.$entityProperty.'}}';
+        $stringToReplace = '{{item.'.$entityProperty.'}}';
 
         //the value of the attribute
         $attributeValue = $this->getEntityAttributeValue($entity, $entityProperty);
@@ -45,7 +45,7 @@ class ParameterConverter
         }
 
         //we replace the string
-        $string = str_replace($stringToReplate, $attributeValue, $string);
+        $string = str_replace($stringToReplace, $attributeValue, $string);
 
         return $string;
     }

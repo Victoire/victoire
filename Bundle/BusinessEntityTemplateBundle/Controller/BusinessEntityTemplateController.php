@@ -33,6 +33,7 @@ class BusinessEntityTemplateController extends BaseController
     {
         //get the business entity
         $businessEntity = $this->getBusinessEntity($id);
+        $errorMessage = '';
 
         $entity = new BusinessEntityTemplate();
         $entity->setBusinessEntity($businessEntity);
@@ -46,11 +47,8 @@ class BusinessEntityTemplateController extends BaseController
             $em->persist($entity);
             $em->flush();
 
-            //get the associated template
-            $template = $entity->getTemplate();
-
             //get the url of the template
-            $templateUrl = $template->getUrl();
+            $templateUrl = $entity->getUrl();
 
             //the shortcuts service
             $shortcuts = $this->get('av.shortcuts');
@@ -60,13 +58,20 @@ class BusinessEntityTemplateController extends BaseController
 
             $success = true;
         } else {
+            //the form error service
+            $formErrorService = $this->container->get('av.form_error_service');
+
+            //get the errors as a string
+            $errorMessage = $formErrorService->getRecursiveReadableErrors($form);
+
             $success = false;
             $completeUrl = null;
         }
 
         return new JsonResponse(array(
             'success' => $success,
-            'url' => $completeUrl
+            'url'     => $completeUrl,
+            'message' => $errorMessage
         ));
     }
 

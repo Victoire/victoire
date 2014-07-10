@@ -5,13 +5,14 @@ namespace Victoire\Bundle\BusinessEntityTemplateBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Victoire\Bundle\PageBundle\Form\TemplateType;
 
 /**
  *
  * @author Thomas Beaujean
  *
  */
-class BusinessEntityTemplateType extends AbstractType
+class BusinessEntityTemplateType extends TemplateType
 {
     protected $layouts;
 
@@ -44,8 +45,9 @@ class BusinessEntityTemplateType extends AbstractType
                 'label' => 'form.page.type.layout.label',
                 'choices' => $this->layouts
             ))
-            ->add('query')
-        ;
+            ->add('query');
+
+        parent::buildForm($builder, $options);
     }
 
     /**
@@ -53,6 +55,8 @@ class BusinessEntityTemplateType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
+        parent::setDefaultOptions($resolver);
+
         $resolver->setOptional(array('businessProperty'));
 
         $resolver->setDefaults(array(
@@ -61,6 +65,8 @@ class BusinessEntityTemplateType extends AbstractType
     }
 
     /**
+     * The name of the form
+     *
      * @return string
      */
     public function getName()

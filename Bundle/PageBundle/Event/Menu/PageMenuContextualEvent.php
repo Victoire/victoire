@@ -2,13 +2,13 @@
 namespace Victoire\Bundle\PageBundle\Event\Menu;
 
 use Symfony\Component\EventDispatcher\Event;
-use Victoire\Bundle\PageBundle\Entity\BasePage;
+use Victoire\Bundle\PageBundle\Entity\Page;
 
 
 /**
  * This Event provides current Page entity to which listen it
  */
-class BasePageMenuContextualEvent extends Event
+class PageMenuContextualEvent extends Event
 {
     protected $page;
     protected $entity;
@@ -16,10 +16,10 @@ class BasePageMenuContextualEvent extends Event
     /**
      * Constructor
      *
-     * @param BasePage $page
+     * @param Page $page
      * @param string $entity
      */
-    public function __construct(BasePage $page, $entity = null)
+    public function __construct(Page $page, $entity = null)
     {
         $this->page = $page;
         $this->entity = $entity;

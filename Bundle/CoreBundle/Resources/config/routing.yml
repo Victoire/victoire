@@ -7,6 +7,6 @@ VictoireCoreBundle:
 
 victoire_core_page_show:
     path:      /{url}
-    defaults:  { _controller: VictoirePageBundle:BasePage:show }
+    defaults:  { _controller: VictoirePageBundle:Page:show }
     requirements:
         url:  ^.*$

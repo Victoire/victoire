@@ -30,7 +30,7 @@ class CacheRouteLoader extends Loader
         $routes = new RouteCollection();
         $cachedRoutes = $this->cacheRouteRegisterer->getRoutes();
         if (count($cachedRoutes) === 0) {
-            $pages = $this->em->getRepository('VictoirePageBundle:BasePage')->findAll();
+            $pages = $this->em->getRepository('VictoirePageBundle:Page')->findAll();
             $cachedRoutes = $this->cacheRouteRegisterer->registerRoutes($pages);
         }
         foreach ($cachedRoutes as $routeName => $route) {

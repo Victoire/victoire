@@ -10,7 +10,7 @@ use AppVentus\Awesome\ShortcutsBundle\Controller\AwesomeController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Victoire\Bundle\CoreBundle\Entity\Widget;
-use Victoire\Bundle\PageBundle\Entity\BasePage;
+use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\CoreBundle\Widget\Managers\WidgetManager;
 use Symfony\Component\HttpFoundation\Request;
 use Gedmo\Blameable\ProtectedPropertySupperclassTest;
@@ -92,7 +92,7 @@ class WidgetController extends AwesomeController
     public function newAction($type, $page, $slot = null, $entity = null)
     {
         try {
-            $page = $this->get('doctrine.orm.entity_manager')->getRepository('VictoirePageBundle:BasePage')->findOneById($page);
+            $page = $this->get('doctrine.orm.entity_manager')->getRepository('VictoirePageBundle:Page')->findOneById($page);
 
             if ($entity) {
                 $widgetManager = $this->get('widget_manager')->getManager(null, $type);
@@ -145,7 +145,7 @@ class WidgetController extends AwesomeController
             //services
             $em = $this->getEntityManager();
 
-            $page = $em->getRepository('VictoirePageBundle:BasePage')->findOneById($page);
+            $page = $em->getRepository('VictoirePageBundle:Page')->findOneById($page);
             $widgetManager = $this->getWidgetManager();
 
             $response = new JsonResponse($widgetManager->createWidget($type, $slot, $page, $entity));
@@ -182,9 +182,9 @@ class WidgetController extends AwesomeController
      * @param Page $page The page where update widget positions
      * @return response
      * @Route("/position/{page}", name="victoire_core_widget_update_position", options={"expose"=true})
-     * @ParamConverter("page", class="VictoirePageBundle:BasePage")
+     * @ParamConverter("page", class="VictoirePageBundle:Page")
      */
-    public function updatePositionAction(BasePage $page)
+    public function updatePositionAction(Page $page)
     {
         try {
             //the sorted order for the widgets

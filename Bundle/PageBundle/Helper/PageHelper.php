@@ -1,8 +1,8 @@
 <?php
 namespace Victoire\Bundle\PageBundle\Helper;
 
-use Victoire\Bundle\PageBundle\Entity\BasePage;
-use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
+use Victoire\Bundle\PageBundle\Entity\Page;
+use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
 use Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
@@ -39,13 +39,13 @@ class PageHelper
     /**
      * Create an instance of the business entity template page
      *
-     * @param BusinessEntityTemplatePage $page   The business entity template page
+     * @param BusinessEntityTemplate $page   The business entity template page
      * @param string                     $url    The new url
      * @param entity                     $entity The entity
      *
      * @return \Victoire\Bundle\PageBundle\Entity\Page
      */
-    public function createPageInstanceFromBusinessEntityTemplatePage(BusinessEntityTemplatePage $template, $url, $entity)
+    public function createPageInstanceFromBusinessEntityTemplate(BusinessEntityTemplate $template, $url, $entity)
     {
         //create a new page
         $newPage = new Page();
@@ -72,10 +72,10 @@ class PageHelper
     /**
      * Generate update the page parameters with the entity
      *
-     * @param BasePage $page
+     * @param Page $page
      * @param Entity   $entity
      */
-    public function updatePageParametersByEntity(BasePage $page, $entity)
+    public function updatePageParametersByEntity(Page $page, $entity)
     {
         //if no entity is provided
         if ($entity === null) {

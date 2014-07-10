@@ -2,7 +2,7 @@
 namespace Victoire\Bundle\CoreBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Victoire\Bundle\PageBundle\Entity\BasePage;
+use Victoire\Bundle\PageBundle\Entity\Page;
 
 class WidgetRepository extends EntityRepository
 {

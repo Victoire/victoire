@@ -2,7 +2,7 @@
 namespace Victoire\Bundle\PageBundle\Helper;
 
 use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
+use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Doctrine\ORM\EntityManager;
 
@@ -171,7 +171,7 @@ class UrlHelper
         $em = $this->em;
 
         //the base page repository
-        $repo = $em->getRepository('VictoirePageBundle:BasePage');
+        $repo = $em->getRepository('VictoirePageBundle:Page');
 
         //try to get a page with this url
         $page = $repo->findOneByUrl($url);

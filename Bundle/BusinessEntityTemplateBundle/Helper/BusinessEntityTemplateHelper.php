@@ -1,9 +1,11 @@
 <?php
 namespace Victoire\Bundle\BusinessEntityTemplateBundle\Helper;
 
-use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
 use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
 use Victoire\Bundle\QueryBundle\Helper\QueryHelper;
+use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
+use Victoire\Bundle\PageBundle\Entity\Page;
+use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
 
 /**
  *
@@ -14,25 +16,30 @@ use Victoire\Bundle\QueryBundle\Helper\QueryHelper;
 class BusinessEntityTemplateHelper
 {
     protected $queryHelper = null;
+    protected $businessEntityHelper = null;
+    protected $parameterConverter = null;
 
     /**
      *
-     * @param QueryHelper $queryHelper
+     * @param QueryHelper          $queryHelper
+     * @param BusinessEntityHelper $businessEntityHelper
      */
-    public function __construct(QueryHelper $queryHelper)
+    public function __construct(QueryHelper $queryHelper, BusinessEntityHelper $businessEntityHelper, ParameterConverter $parameterConverter)
     {
         $this->queryHelper = $queryHelper;
+        $this->businessEntityHelper = $businessEntityHelper;
+        $this->parameterConverter = $parameterConverter;
     }
 
     /**
      * Is the entity allowed for the business entity template page
      *
-     * @param BusinessEntityTemplatePage $page
+     * @param BusinessEntityTemplate $businessEntityTemplate
      * @param unknown $entity
      * @throws \Exception
      * @return boolean
      */
-    public function isEntityAllowed(BusinessEntityTemplatePage $page, $entity)
+    public function isEntityAllowed(BusinessEntityTemplate $businessEntityTemplate, $entity)
     {
         $allowed = true;
 
@@ -40,8 +47,6 @@ class BusinessEntityTemplateHelper
         if ($entity === null) {
             throw new \Exception('The entity is mandatory.');
         }
-
-        $businessEntityTemplate = $page->getBusinessEntityTemplate();
 
         $queryHelper = $this->queryHelper;
 
@@ -77,7 +82,7 @@ class BusinessEntityTemplateHelper
     /**
      * Get the list of entities allowed for the businessEntityTemplate page
      *
-     * @param BusinessEntityTemplatePage $page
+     * @param BusinessEntityTemplate $page
      * @throws \Exception
      * @return boolean
      */
@@ -96,5 +101,45 @@ class BusinessEntityTemplateHelper
         $items =  $queryHelper->getResultsAddingSubQuery($businessEntityTemplate, $baseQuery);
 
         return $items;
+    }
+
+    /**
+     * Generate update the page parameters with the entity
+     *
+     * @param Page $page
+     * @param Entity   $entity
+     */
+    public function updatePageUrlByEntity(Page $page, $entity)
+    {
+        //if no entity is provided
+        if ($entity === null) {
+            //we look for the entity of the page
+            if ($page->getEntity() !== null) {
+                $entity = $page->getEntity();
+            }
+        }
+
+        //only if we have an entity instance
+        if ($entity !== null) {
+            $className = get_class($entity);
+
+            $businessEntity = $this->businessEntityHelper->findByClassname($className);
+
+            if ($businessEntity !== null) {
+                //the business properties usable in a url
+                $businessProperties = $businessEntity->getBusinessPropertiesByType('businessIdentifier');
+
+                //the url of the page
+                $pageUrl = $page->getUrl();
+
+                //parse the business properties
+                foreach ($businessProperties as $businessProperty) {
+                    $pageUrl = $this->parameterConverter->setBusinessPropertyInstance($pageUrl, $businessProperty, $entity);
+                }
+
+                //we update the url of the page
+                $page->setUrl($pageUrl);
+            }
+        }
     }
 }

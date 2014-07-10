@@ -6,18 +6,20 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Symfony\Component\Validator\Constraints as Assert;
+use Victoire\Bundle\PageBundle\Entity\Template;
 
 /**
  * BusinessEntityTemplate
  *
- * @ORM\Table("cms_business_entity_template")
+ * @ORM\Table("cms_page_business_entity_template")
  * @ORM\Entity(repositoryClass="Victoire\Bundle\BusinessEntityTemplateBundle\Repository\BusinessEntityTemplateRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class BusinessEntityTemplate
+class BusinessEntityTemplate extends Template
 {
-    use \Gedmo\Timestampable\Traits\TimestampableEntity;
     use \Victoire\Bundle\QueryBundle\Entity\Traits\QueryTrait;
+
+    const TYPE = 'businessEntityTemplate';
 
     /**
      * @var integer
@@ -36,31 +38,11 @@ class BusinessEntityTemplate
     protected $name;
 
     /**
-     * @ORM\OneToOne(targetEntity="Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage", cascade={"persist", "remove"}, inversedBy="businessEntityTemplate")
-     * @ORM\JoinColumn(name="template_id", referencedColumnName="id", nullable=false)
-     *
-     */
-    protected $template;
-
-    /**
-     * @ORM\OneToOne(targetEntity="Victoire\Bundle\PageBundle\Entity\Page", cascade={"persist", "remove"}, inversedBy="businessEntityTemplate")
-     * @ORM\JoinColumn(name="parent_page_id", referencedColumnName="id", nullable=false)
-     *
-     */
-    protected $parentPage;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="entity_identifier", type="string", length=255, nullable=false)
      */
     protected $entityIdentifier;
-
-    /**
-     * @var string
-     * @ORM\Column(name="layout", type="string", length=255, nullable=false)
-     */
-    protected $layout;
 
     protected $businessEntity = null;
 
@@ -70,8 +52,7 @@ class BusinessEntityTemplate
      **/
     public function __construct()
     {
-        $this->createdAt = new \DateTime();
-        $this->updatedAt = new \DateTime();
+        parent::__construct();
     }
 
     /**
@@ -204,22 +185,6 @@ class BusinessEntityTemplate
     }
 
     /**
-     * Prepersist
-     *
-     * @ORM\PrePersist
-     */
-    public function prePersist()
-    {
-        $this->template = new BusinessEntityTemplatePage();
-        $this->template->setTitle($this->getName());
-        $this->template->setLayout($this->layout);
-
-        $this->parentPage = new Page();
-        $this->parentPage->setTitle($this->getName());
-        $this->parentPage->setLayout($this->layout);
-    }
-
-    /**
      * Get the url of the page
      *
      * @return string The url
@@ -227,20 +192,6 @@ class BusinessEntityTemplate
     public function getParentPageUrl()
     {
         $page = $this->parentPage;
-
-        $url = $page->getUrl();
-
-        return $url;
-    }
-
-    /**
-     * Get the url of the template
-     *
-     * @return string The url
-     */
-    public function getTemplateUrl()
-    {
-        $page = $this->template;
 
         $url = $page->getUrl();
 

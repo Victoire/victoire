@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Victoire\Bundle\CoreBundle\Form\TemplateType;
-use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\PageBundle\Form\PageSettingsType;
 use Victoire\Bundle\PageBundle\Form\PageType;
@@ -23,7 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @Route("/victoire-dcms/page")
  */
-class PageAdministrationController extends BasePageController
+class PageAdministrationController extends PageController
 {
     protected $routes;
 
@@ -61,13 +60,13 @@ class PageAdministrationController extends BasePageController
      *
      * @Route("/{id}/settings", name="victoire_core_page_settings")
      * @Template()
-     * @ParamConverter("page", class="VictoirePageBundle:BasePage")
+     * @ParamConverter("page", class="VictoirePageBundle:Page")
      *
-     * @param BasePage $page The page
+     * @param Page $page The page
      *
      * @return json The settings
      */
-    public function settingsAction(Request $request, BasePage $page)
+    public function settingsAction(Request $request, Page $page)
     {
         return new JsonResponse(parent::settingsAction($request, $page));
     }
@@ -79,9 +78,9 @@ class PageAdministrationController extends BasePageController
      * @return template
      * @Route("/{id}/delete", name="victoire_core_page_delete")
      * @Template()
-     * @ParamConverter("page", class="VictoirePageBundle:BasePage")
+     * @ParamConverter("page", class="VictoirePageBundle:Page")
      */
-    public function deleteAction(BasePage $page)
+    public function deleteAction(Page $page)
     {
         if (!$this->get('security.context')->isGranted('PAGE_OWNER', $page)) {
             throw new AccessDeniedException("Nop ! you can't do such an action");
@@ -97,9 +96,9 @@ class PageAdministrationController extends BasePageController
      * @param page $page
      * @return template
      * @Route("/{id}/detach", name="victoire_core_page_detach")
-     * @ParamConverter("page", class="VictoirePageBundle:BasePage")
+     * @ParamConverter("page", class="VictoirePageBundle:Page")
      */
-    public function detachAction(BasePage $page)
+    public function detachAction(Page $page)
     {
 
     }
@@ -110,9 +109,9 @@ class PageAdministrationController extends BasePageController
      * @param page $page
      * @return template
      * @Route("/{id}/create-template", name="victoire_core_page_createtemplate")
-     * @ParamConverter("page", class="VictoirePageBundle:BasePage")
+     * @ParamConverter("page", class="VictoirePageBundle:Page")
      */
-    public function createTemplateAction(BasePage $page)
+    public function createTemplateAction(Page $page)
     {
         $em = $this->getDoctrine()->getManager();
 

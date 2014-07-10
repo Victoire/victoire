@@ -6,11 +6,10 @@ use Victoire\Bundle\CoreBundle\Menu\MenuManager;
 use Victoire\Bundle\CoreBundle\Widget\Managers\WidgetManager;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 use Symfony\Component\Security\Core\SecurityContext;
-use Victoire\Bundle\PageBundle\Entity\BasePage;
-use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
+use Victoire\Bundle\PageBundle\Entity\Page;
+use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
 use Victoire\Bundle\CoreBundle\Entity\Widget;
 use Victoire\Bundle\CoreBundle\Form\WidgetType;
-use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\CoreBundle\Helper\WidgetHelper;
 use Victoire\Bundle\PageBundle\WidgetMap\WidgetMapBuilder;
 use Victoire\Bundle\CoreBundle\Handler\WidgetExceptionHandler;
@@ -43,7 +42,8 @@ class PageExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'cms_page_business_template_sitemap' => new \Twig_Function_Method($this, 'cmsPageBusinessTemplateSiteMap', array('is_safe' => array('html')))
+            'cms_page_business_template_sitemap' => new \Twig_Function_Method($this, 'cmsPageBusinessTemplateSiteMap', array('is_safe' => array('html'))),
+            'cms_page_sitemap' => new \Twig_Function_Method($this, 'cmsPageSiteMap', array('is_safe' => array('html')))
         );
     }
 
@@ -68,27 +68,48 @@ class PageExtension extends \Twig_Extension
     }
 
     /**
-     * Get the ol li for the generated page of a business Entity template
+     * Get the link for a page in the sitemap
      *
-     * @param BasePage $page
+     * @param Page $page
      *
      * @return string The html
      */
-    public function cmsPageBusinessTemplateSiteMap(BasePage $page)
+    public function cmsPageSiteMap(Page $page)
+    {
+        $html = '';
+
+        //the business enity template must not be displayed in the sitemap
+        if (!$page instanceof BusinessEntityTemplate) {
+            $pageId = $page->getId();
+            $pageUrl = $page->getUrl();
+            $pageTitle = $page->getTitle();
+
+            $html = '<li id="'.$pageId.'"><div><a href="'.$pageUrl.'" title="'.$pageUrl.'">'.$pageTitle.'</a></div>';
+        }
+
+        return $html;
+    }
+
+    /**
+     * Get the ol li for the generated page of a business Entity template
+     *
+     * @param Page $page
+     *
+     * @return string The html
+     */
+    public function cmsPageBusinessTemplateSiteMap(Page $page)
     {
         $html = '';
 
         $urls = array();
 
         //the template link to the page
-        $businessEntityTemplate = $page->getBusinessEntityTemplate();
+        $businessEntityTemplate = $page;
+
         //
-        if ($businessEntityTemplate !== null) {
+        if ($page instanceof BusinessEntityTemplate) {
             //get the list of url of the children to avoid to have it twice.
             $childrenUrls = $this->getChildrenUrls($page);
-
-            //the page url
-            $pageUrl = $page->getUrl();
 
             //services
             $businessEntityTemplateHelper = $this->businessEntityTemplateHelper;
@@ -107,11 +128,20 @@ class PageExtension extends \Twig_Extension
                 //get the entity
                 $itemId = call_user_func(array($item, $functionName));
 
-                $url = $pageUrl .'/'.$itemId;
+                $pageEntity = clone $businessEntityTemplate;
+
+                //update url using the entity instance
+                $businessEntityTemplateHelper->updatePageUrlByEntity($pageEntity, $item);
+
+                $url = $pageEntity->getUrl();
 
                 //if the url does no exists in the children
                 if (!in_array($url, $childrenUrls)) {
-                    $itemsToAdd[$url] = array('item' => $item, 'url' => $url, 'itemId' => $itemId);
+                    $itemsToAdd[$url] = array(
+                        'item'   => $item,
+                        'url'    => $url,
+                        'itemId' => $itemId
+                    );
                 }
 
                 unset($url);
@@ -133,11 +163,11 @@ class PageExtension extends \Twig_Extension
     /**
      * Get the list of urls of the children
      *
-     * @param BasePage $page
+     * @param Page $page
      *
      * @return aray of strings The list of urls
      */
-    protected function getChildrenUrls(BasePage $page)
+    protected function getChildrenUrls(Page $page)
     {
         $urls = array();
 
