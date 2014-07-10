@@ -12,3 +12,4 @@ services:
         class: "%victoire_seo.pageSeoHelper.class%"
         arguments:
             - "@victoire_core.helper.business_entity_helper"
+            - "@victoire_business_entity.converter.parameter_converter"

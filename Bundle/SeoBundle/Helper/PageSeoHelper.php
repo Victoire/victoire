@@ -5,7 +5,7 @@ namespace Victoire\Bundle\SeoBundle\Helper;
 
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
-use Victoire\Bundle\BusinessEnityBundle\Entity\BusinessProperty;
+use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
 
 /**
  *
@@ -16,6 +16,7 @@ use Victoire\Bundle\BusinessEnityBundle\Entity\BusinessProperty;
 class PageSeoHelper
 {
     protected $businessEntityHelper = null;
+    protected $parameterConverter = null;
 
     protected $pageSeoAttributes = array(
         'metaTitle',
@@ -43,16 +44,16 @@ class PageSeoHelper
         'relCanonical',
         'keyword');
 
-
-
     /**
      * Constructor
      *
      * @param BusinessEntityHelper $businessEntityHelper
+     * @param ParameterConverter   $parameterConverter
      */
-    public function __construct(BusinessEntityHelper $businessEntityHelper)
+    public function __construct(BusinessEntityHelper $businessEntityHelper, ParameterConverter $parameterConverter)
     {
         $this->businessEntityHelper = $businessEntityHelper;
+        $this->parameterConverter = $parameterConverter;
     }
 
     /**
@@ -91,7 +92,7 @@ class PageSeoHelper
                         //parse of seo attributes
                         foreach ($this->pageSeoAttributes as $seoAttribute) {
                             $string = $this->getEntityAttributeValue($pageSeo, $seoAttribute);
-                            $updatedString = $this->setBusinessPropertyInstance($string, $businessProperty, $entity);
+                            $updatedString = $this->parameterConverter->setBusinessPropertyInstance($string, $businessProperty, $entity);
                             $this->setEntityAttributeValue($pageSeo, $seoAttribute, $updatedString);
                         }
                     }
@@ -99,45 +100,6 @@ class PageSeoHelper
             }
         }
     }
-
-    /**
-     * Replace the code string with the value of the entity attribute
-     *
-     * @param The string       $string
-     * @param BusinessProperty $businessProperty
-     * @param Object           $entity
-     *
-     * @throws \Exception
-     *
-     * @return string The updated string
-     */
-    protected function setBusinessPropertyInstance($string, BusinessProperty $businessProperty, $entity)
-    {
-        //test parameters
-        if ($entity === null) {
-            throw new \Exception('The parameter entity can not be null');
-        }
-
-        //the attribute to set
-        $entityProperty = $businessProperty->getEntityProperty();
-
-        //the string to replace
-        $stringToReplate = '{{item.'.$entityProperty.'}}';
-
-        //the value of the attribute
-        $attributeValue = $this->getEntityAttributeValue($entity, $entityProperty);
-
-        //we provide a default value
-        if ($attributeValue === null) {
-            $attributeValue = '';
-        }
-
-        //we replace the string
-        $string = str_replace($stringToReplate, $attributeValue, $string);
-
-        return $string;
-    }
-
 
     /**
      * Get the content of an attribute of an entity given

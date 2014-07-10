@@ -85,7 +85,7 @@ class BasePageController extends AwesomeController
         $routeRepository = $manager->getRepository('VictoireCoreBundle:Route');
         $businessEntityHelper = $this->get('victoire_core.helper.business_entity_helper');
         $pageSeoHelper = $this->get('victoire_seo.helper.pageseo_helper');
-
+        $pageHelper = $this->get('victoire_page.page_helper');
 
         //get the page
         $page = $basePageRepository->findOneByUrl($url);
@@ -126,6 +126,9 @@ class BasePageController extends AwesomeController
         if ($page !== null) {
             //only if the page was found
             $pageSeoHelper->updateSeoByEntity($page, $entity);
+
+            //update the parameters of the page
+            $pageHelper->updatePageParametersByEntity($page, $entity);
         }
 
         //no need for this variable anymore
