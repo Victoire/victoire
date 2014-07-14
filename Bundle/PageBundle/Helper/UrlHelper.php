@@ -108,6 +108,19 @@ class UrlHelper
         //the scheme
         $scheme = $context->getScheme();
 
+        $httpPort = $context->getHttpPort();
+        $httpsPort = $context->getHttpsPort();
+
+        //we update the host using the port
+        if ($httpPort !== null && $httpPort !== '') {
+            $host = $host.':'.$httpPort;
+        }
+
+        //we update the host using the port
+        if ($httpsPort !== null && $httpsPort !== '') {
+            $host = $host.':'.$httpsPort;
+        }
+
         //get the complete url
         $completeUrl = $scheme.'://'.$host.'/';
 
