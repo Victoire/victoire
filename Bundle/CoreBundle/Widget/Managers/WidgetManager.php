@@ -575,13 +575,13 @@ class WidgetManager
         //the widget is linked to a page url that is not the current page url
         if ($url !== $widgetPageUrl) {
             //we try to get the page if it exists
-            $PageRepository = $em->getRepository('VictoirePageBundle:Page');
+            $pageRepository = $em->getRepository('VictoirePageBundle:Page');
 
             //the identifier of the business entity
             $entityIdentifier = $urlHelper->getEntityIdFromUrl($url);
 
             //get the page
-            $page = $PageRepository->findOneByUrl($url);
+            $page = $pageRepository->findOneByUrl($url);
 
             //no page were found
             if ($page === null) {
