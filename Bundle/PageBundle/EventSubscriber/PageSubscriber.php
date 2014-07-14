@@ -179,8 +179,9 @@ class PageSubscriber implements EventSubscriber
 
             //it is a template that accepts to look for entities
             if ($page instanceof BusinessEntityTemplate) {
+                $entityIdentifier = $page->getEntityIdentifier();
                 //so we add the identifier to the url
-                $url .= '/{id}';
+                $url .= '/{{item.'.$entityIdentifier.'}}';
             }
 
             //get the next free url

@@ -78,14 +78,11 @@ class PageExtension extends \Twig_Extension
     {
         $html = '';
 
-        //the business enity template must not be displayed in the sitemap
-        if (!$page instanceof BusinessEntityTemplate) {
-            $pageId = $page->getId();
-            $pageUrl = $page->getUrl();
-            $pageTitle = $page->getTitle();
+        $pageId = $page->getId();
+        $pageUrl = $page->getUrl();
+        $pageTitle = $page->getTitle();
 
-            $html = '<li id="'.$pageId.'"><div><a href="'.$pageUrl.'" title="'.$pageUrl.'">'.$pageTitle.'</a></div>';
-        }
+        $html = '<li id="'.$pageId.'"><div><a href="'.$pageUrl.'" title="'.$pageUrl.'">'.$pageTitle.'</a></div>';
 
         return $html;
     }
