@@ -15,6 +15,7 @@ use Victoire\Bundle\PageBundle\WidgetMap\WidgetMapBuilder;
 use Victoire\Bundle\CoreBundle\Handler\WidgetExceptionHandler;
 use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\BusinessEntityTemplateBundle\Helper\BusinessEntityTemplateHelper;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
 /**
  *
@@ -24,14 +25,17 @@ use Victoire\Bundle\BusinessEntityTemplateBundle\Helper\BusinessEntityTemplateHe
 class PageExtension extends \Twig_Extension
 {
     protected $businessEntityTemplateHelper = null;
+    protected $router = null;
+
     /**
      * Constructor
      *
      * @param BusinessEntityTemplateHelper $businessEntityTemplateHelper
      */
-    public function __construct(BusinessEntityTemplateHelper $businessEntityTemplateHelper)
+    public function __construct(BusinessEntityTemplateHelper $businessEntityTemplateHelper, Router $router)
     {
         $this->businessEntityTemplateHelper = $businessEntityTemplateHelper;
+        $this->router = $router;
     }
 
     /**
@@ -82,7 +86,11 @@ class PageExtension extends \Twig_Extension
         $pageUrl = $page->getUrl();
         $pageTitle = $page->getTitle();
 
-        $html = '<li id="'.$pageId.'"><div><a href="'.$pageUrl.'" title="'.$pageUrl.'">'.$pageTitle.'</a></div>';
+        $router = $this->router;
+
+        $url = $router->generate('victoire_core_page_show', array('url' => $pageUrl));
+
+        $html = '<li id="'.$pageId.'"><div><a href="'.$url.'" title="'.$url.'">'.$pageTitle.'</a></div>';
 
         return $html;
     }

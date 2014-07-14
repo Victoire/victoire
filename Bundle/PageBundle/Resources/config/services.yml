@@ -88,5 +88,6 @@ services:
         class: Victoire\Bundle\PageBundle\Twig\Extension\PageExtension
         arguments: 
             - "@victoire_business_entity_template.business_entity_template_helper"
+            - "@router"
         tags:
             - { name: twig.extension }
