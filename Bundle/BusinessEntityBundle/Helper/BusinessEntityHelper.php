@@ -176,7 +176,7 @@ class BusinessEntityHelper
      * Get the entity from the page and the id given
      *
      * @param BusinessEntityTemplate $page             The page
-     * @param string                     $entityIdentifier The identifier for the business entity
+     * @param string                 $entityIdentifier The identifier for the business entity
      *
      * @throws \Exception
      *

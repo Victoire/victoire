@@ -119,9 +119,13 @@ class BusinessEntityTemplateController extends BaseController
 
         $form = $this->createCreateForm($entity);
 
+        $businessEntityHelper = $this->get('victoire_business_entity_template.business_entity_template_helper');
+        $businessProperties = $businessEntityHelper->getBusinessProperties($businessEntity);
+
         $parameters = array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'businessProperties' => $businessProperties
         );
         return new JsonResponse(array(
             'html' => $this->container->get('victoire_templating')->render(
@@ -149,8 +153,11 @@ class BusinessEntityTemplateController extends BaseController
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
+        $businessEntityTemplateHelper = $this->get('victoire_business_entity_template.business_entity_template_helper');
+        $businessEntityHelper = $this->get('victoire_core.helper.business_entity_helper');
 
         $entity = $em->getRepository('VictoireBusinessEntityTemplateBundle:BusinessEntityTemplate')->find($id);
+
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find BusinessEntityTemplate entity.');
@@ -159,10 +166,19 @@ class BusinessEntityTemplateController extends BaseController
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
+        //the business property link to the page
+        $businessEntityId = $entity->getBusinessEntityName();
+        $businessEntity = $businessEntityHelper->findById($businessEntityId);
+
+        $businessEntityTemplateHelper = $this->get('victoire_business_entity_template.business_entity_template_helper');
+
+        $businessProperties = $businessEntityTemplateHelper->getBusinessProperties($businessEntity);
+
         $parameters = array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'businessProperties' => $businessProperties
         );
 
         return new JsonResponse(array(

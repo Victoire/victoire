@@ -153,7 +153,7 @@ class BusinessEntityTemplateHelper
      *
      * @return array The list of business properties
      */
-    protected function getBusinessProperties(BusinessEntity $businessEntity)
+    public function getBusinessProperties(BusinessEntity $businessEntity)
     {
         //the business properties usable in a url
         $businessProperties = $businessEntity->getBusinessPropertiesByType('businessIdentifier');

@@ -45,7 +45,8 @@ class BusinessEntityTemplateType extends TemplateType
                 'label' => 'form.page.type.layout.label',
                 'choices' => $this->layouts
             ))
-            ->add('query');
+            ->add('query')
+            ->add('url');
 
         parent::buildForm($builder, $options);
     }
