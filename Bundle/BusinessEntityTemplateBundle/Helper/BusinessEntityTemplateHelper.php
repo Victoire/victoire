@@ -129,6 +129,12 @@ class BusinessEntityTemplateHelper
                 //the business properties usable in a url
                 $businessProperties = $businessEntity->getBusinessPropertiesByType('businessIdentifier');
 
+                //the business properties usable in a url
+                $seoBusinessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
+
+                //the business properties are the identifier and the seoables properties
+                $businessProperties = array_merge($businessProperties, $seoBusinessProperties);
+
                 //the url of the page
                 $pageUrl = $page->getUrl();
 
