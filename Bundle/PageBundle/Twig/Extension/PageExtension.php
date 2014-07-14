@@ -31,6 +31,7 @@ class PageExtension extends \Twig_Extension
      * Constructor
      *
      * @param BusinessEntityTemplateHelper $businessEntityTemplateHelper
+     * @param Router                       $router
      */
     public function __construct(BusinessEntityTemplateHelper $businessEntityTemplateHelper, Router $router)
     {
