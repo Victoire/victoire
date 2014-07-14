@@ -226,21 +226,18 @@ class BusinessEntityTemplateController extends BaseController
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('VictoireBusinessEntityTemplateBundle:BusinessEntityTemplate')->find($id);
+        $template = $em->getRepository('VictoireBusinessEntityTemplateBundle:BusinessEntityTemplate')->find($id);
 
-        if (!$entity) {
+        if (!$template) {
             throw $this->createNotFoundException('Unable to find BusinessEntityTemplate entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createEditForm($template);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $em->flush();
-
-            //get the associated template
-            $template = $entity->getTemplate();
 
             //get the url of the template
             $templateUrl = $template->getUrl();
