@@ -83,6 +83,7 @@ class BasePageController extends AwesomeController
         $businessEntityTemplateRepository = $manager->getRepository('VictoireBusinessEntityTemplateBundle:BusinessEntityTemplate');
         $routeRepository = $manager->getRepository('VictoireCoreBundle:Route');
         $businessEntityHelper = $this->get('victoire_core.helper.business_entity_helper');
+        $businessEntityTemplateHelper = $this->get('victoire_business_entity_template.business_entity_template_helper');
         $pageSeoHelper = $this->get('victoire_seo.helper.pageseo_helper');
         $pageHelper = $this->get('victoire_page.page_helper');
 
@@ -91,25 +92,62 @@ class BasePageController extends AwesomeController
 
         //we do not try to retrieve an entity for the business entity template page
         if ($page === null) {
-            //create an url matcher based on the current url
-            $urlMatcher = $urlHelper->getGeneralUrlMatcher($url);
+            //the exact url was not found
 
-            //if the url have been shorten
-            if ($urlMatcher !== null) {
-                $BusinessEntityTemplate = $businessEntityTemplateRepository->findOneByUrl($urlMatcher);
+            $shorterUrl = $url;
+            $shorterCount = 0;
+            $businessEntityTemplate = null;
 
-                //a page match the entity template generator
-                if ($BusinessEntityTemplate) {
-                    //we look for the entity identifier
-                    //it might be a slug or an id
-                    $entityIdentifier = $urlHelper->getEntityIdFromUrl($url);
+            $watchDog = 1;
 
-                    //test the entity identifier
-                    if ($entityIdentifier === null) {
-                        throw new \Exception('The entity identifier could not be retrieved from the url.');
+            //until we try to remove all parts
+            while ($shorterUrl !== null && $businessEntityTemplate === null) {
+                //we remove the last part to look for a business entity template
+                $shorterUrl = $urlHelper->removeLastPart($shorterUrl);
+                //the number of time the short has been done
+                $shorterCount += 1;
+
+                $searchUrl = $shorterUrl;
+
+                //we add the % for the like query
+                for ($i = 0; $i < $shorterCount; $i += 1) {
+                    $searchUrl .= '/%';
+                }
+
+                //we look for a business entity template that looks like this url
+                $businessEntityTemplate = $businessEntityTemplateRepository->findOneByLikeUrl($searchUrl);
+
+                //does a template fit the url
+                if ($businessEntityTemplate !== null) {
+                    //we want the identifier
+                    $position = $businessEntityTemplateHelper->getIdentifierPositionInUrl($businessEntityTemplate);
+
+                    if ($position !== null) {
+                        $entityIdentifier = $urlHelper->extractPartByPosition($url, $position);
+                        //test the entity identifier
+                        if ($entityIdentifier === null) {
+                            throw new \Exception('The entity identifier could not be retrieved from the url.');
+                        }
+
+                        //get the entity
+                        $entity = $businessEntityHelper->getEntityByPageAndBusinessIdentifier($businessEntityTemplate, $entityIdentifier);
+
+                        if ($entity === null) {
+                            throw new \Exception('The entity with the identifier ['.$entityIdentifier.'] was not found');
+                        }
+
+                        //the page is the template found
+                        $page = $businessEntityTemplate;
+                    } else {
+                        throw new \Exception('The template ['.$businessEntityTemplate->getId().'] has no identifier.');
                     }
+                }
 
-                    $entity = $businessEntityHelper->getEntityByPageAndBusinessIdentifier($BusinessEntityTemplate, $entityIdentifier);
+                //THE watchdog
+                $watchDog += 1;
+
+                if ($watchDog > 200) {
+                    throw new \Exception('The watchdog has been raised, there might be an infinite loop');
                 }
             }
         } else {

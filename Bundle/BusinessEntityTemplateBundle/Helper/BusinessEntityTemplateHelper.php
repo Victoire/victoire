@@ -6,6 +6,7 @@ use Victoire\Bundle\QueryBundle\Helper\QueryHelper;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 
 /**
  *
@@ -23,6 +24,8 @@ class BusinessEntityTemplateHelper
      *
      * @param QueryHelper          $queryHelper
      * @param BusinessEntityHelper $businessEntityHelper
+     * @param ParameterConverter   $parameterConverter
+     *
      */
     public function __construct(QueryHelper $queryHelper, BusinessEntityHelper $businessEntityHelper, ParameterConverter $parameterConverter)
     {
@@ -127,13 +130,7 @@ class BusinessEntityTemplateHelper
 
             if ($businessEntity !== null) {
                 //the business properties usable in a url
-                $businessProperties = $businessEntity->getBusinessPropertiesByType('businessIdentifier');
-
-                //the business properties usable in a url
-                $seoBusinessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
-
-                //the business properties are the identifier and the seoables properties
-                $businessProperties = array_merge($businessProperties, $seoBusinessProperties);
+                $businessProperties = $this->getBusinessProperties($businessEntity);
 
                 //the url of the page
                 $pageUrl = $page->getUrl();
@@ -147,5 +144,66 @@ class BusinessEntityTemplateHelper
                 $page->setUrl($pageUrl);
             }
         }
+    }
+
+    /**
+     * Get the list of business properties usable for the url
+     *
+     * @param BusinessEntity $businessEntity
+     *
+     * @return array The list of business properties
+     */
+    protected function getBusinessProperties(BusinessEntity $businessEntity)
+    {
+        //the business properties usable in a url
+        $businessProperties = $businessEntity->getBusinessPropertiesByType('businessIdentifier');
+
+        //the business properties usable in a url
+        $seoBusinessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
+
+        //the business properties are the identifier and the seoables properties
+        $businessProperties = array_merge($businessProperties, $seoBusinessProperties);
+
+        return $businessProperties;
+    }
+
+    /**
+     * Get the position of the identifier in the url of a business entity template
+     *
+     * @param BusinessEntityTemplate $businessEntityTemplate
+     *
+     * @return integer The position
+     */
+    public function getIdentifierPositionInUrl(BusinessEntityTemplate $businessEntityTemplate)
+    {
+        $position = null;
+
+        $url = $businessEntityTemplate->getUrl();
+
+        // split on the / character
+        $keywords = preg_split("/\//", $url);
+
+        //the business property link to the page
+        $businessEntityId = $businessEntityTemplate->getBusinessEntityName();
+
+        $businessEntity = $this->businessEntityHelper->findById($businessEntityId);
+
+        //the business properties usable in a url
+        $businessProperties = $businessEntity->getBusinessPropertiesByType('businessIdentifier');
+
+        //we parse the words of the url
+        foreach ($keywords as $index => $keyword) {
+            foreach ($businessProperties as $businessProperty) {
+                $entityProperty = $businessProperty->getEntityProperty();
+                $searchWord = '{{item.'.$entityProperty.'}}';
+
+                if ($searchWord === $keyword) {
+                    //the array start at index 0 but we want the position to start at 1
+                    $position = $index + 1;
+                }
+            }
+        }
+
+        return $position;
     }
 }

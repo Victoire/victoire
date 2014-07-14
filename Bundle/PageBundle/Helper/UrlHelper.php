@@ -62,7 +62,7 @@ class UrlHelper
         }
 
         //add the id to the end of the url
-        array_push($keywords, '{id}');
+        array_push($keywords, '{{item.id}}');
 
         //rebuild the url
         $urlMatcher = implode('/', $keywords);
@@ -133,7 +133,7 @@ class UrlHelper
         //remove potential parameters
         $position = stripos($urlReferer, "?");
         if ($position > 0) {
-            $urlReferer = substr($urlReferer, 0, stripos($urlReferer, "?") );
+            $urlReferer = substr($urlReferer, 0, stripos($urlReferer, "?"));
         }
 
         return $urlReferer;
@@ -195,5 +195,58 @@ class UrlHelper
         }
 
         return $isUrlAlreadyUsed;
+    }
+
+    /**
+     * Remove the last part of the url
+     *
+     * @param string $url
+     *
+     * @return string The shorten url
+     */
+    public function removeLastPart($url)
+    {
+        $shortenUrl = null;
+
+        if ($url !== null && $url !== '') {
+            // split on the / character
+            $keywords = preg_split("/\//", $url);
+
+            //if there are some words, we pop the last
+            if (count($keywords) > 0) {
+                array_pop($keywords);
+
+                //rebuild the url
+                $shortenUrl = implode('/', $keywords);
+            }
+        }
+
+        return $shortenUrl;
+    }
+
+    /**
+     * Extract a part of the url
+     *
+     * @param string  $url
+     * @param integer $position
+     *
+     * @return string The extracted part
+     */
+    public function extractPartByPosition($url, $position)
+    {
+        $part = null;
+
+        if ($url !== null && $url !== '') {
+            // split on the / character
+            $keywords = preg_split("/\//", $url);
+
+            //if there are some words, we pop the last
+            if (count($keywords) > 0) {
+                //get the part
+                $part = $keywords[$position - 1];
+            }
+        }
+
+        return $part;
     }
 }
