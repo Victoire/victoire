@@ -177,13 +177,6 @@ class PageSubscriber implements EventSubscriber
             //build an url based on the slugs
             $url = implode('/', $url);
 
-            //it is a template that accepts to look for entities
-            if ($page instanceof BusinessEntityTemplate) {
-                $entityIdentifier = $page->getEntityIdentifier();
-                //so we add the identifier to the url
-                $url .= '/{{item.'.$entityIdentifier.'}}';
-            }
-
             //get the next free url
             $url = $urlHelper->getNextAvailaibleUrl($url);
 

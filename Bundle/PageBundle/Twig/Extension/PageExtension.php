@@ -123,17 +123,8 @@ class PageExtension extends \Twig_Extension
             //the items allowed for the template
             $items = $businessEntityTemplateHelper->getEntitiesAllowed($businessEntityTemplate);
 
-            //the attribute used for getting the entity instance
-            $attributeName = $businessEntityTemplate->getEntityIdentifier();
-
-            //the function for the getter
-            $functionName = 'get'.ucfirst($attributeName);
-
             //parse entities
             foreach ($items as $item) {
-                //get the entity
-                $itemId = call_user_func(array($item, $functionName));
-
                 $pageEntity = clone $businessEntityTemplate;
 
                 //update url using the entity instance
@@ -146,7 +137,7 @@ class PageExtension extends \Twig_Extension
                     $itemsToAdd[$url] = array(
                         'item'   => $item,
                         'url'    => $url,
-                        'itemId' => $itemId
+                        'itemId' => $url
                     );
                 }
 
