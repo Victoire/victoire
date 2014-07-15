@@ -23,7 +23,6 @@ class PageSeoController extends Controller
      * Page settings
      *
      * @param Page $page
-     * @return template
      * @Route("/page/{id}", name="victoire_seo_pageSeo_settings")
      * @Template()
      * @ParamConverter("page", class="VictoirePageBundle:Page")
@@ -50,7 +49,6 @@ class PageSeoController extends Controller
             $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
         }
 
-        //@todo should not the seo be created with the page
         $pageSeo = $page->getSeo() ? $page->getSeo() : new PageSeo($page);
 
         //url for the form
