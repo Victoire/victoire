@@ -266,15 +266,12 @@ class CmsExtension extends \Twig_Extension
         $isBusinessEntityAllowed = false;
 
         //get the page that is a business entity template page (parent included)
-        $BusinessEntityTemplate = $page->getBusinessEntityTemplateLegacyPage();
+        $businessEntityTemplate = $page->getBusinessEntityTemplateLegacyPage();
 
         //if there is a page
-        if ($BusinessEntityTemplate !== null) {
+        if ($businessEntityTemplate !== null) {
             //and a businessEntity name is given
             if ($formEntityName !== null) {
-                //we check that the twi matches
-                $businessEntityTemplate = $BusinessEntityTemplate->getBusinessEntityTemplate();
-
                 //the business entity linked to the page template
                 $pageBusinessEntity = $businessEntityTemplate->getBusinessEntityName();
 
