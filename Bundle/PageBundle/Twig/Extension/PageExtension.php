@@ -16,27 +16,32 @@ use Victoire\Bundle\CoreBundle\Handler\WidgetExceptionHandler;
 use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\BusinessEntityTemplateBundle\Helper\BusinessEntityTemplateHelper;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Victoire\Bundle\SeoBundle\Helper\PageSeoHelper;
+use Victoire\Bundle\PageBundle\Helper\PageHelper;
 
 /**
  *
- * @author thomas
+ * @author Thomas Beaujean
  *
  */
 class PageExtension extends \Twig_Extension
 {
     protected $businessEntityTemplateHelper = null;
     protected $router = null;
+    protected $pageHelper = null;
 
     /**
      * Constructor
      *
      * @param BusinessEntityTemplateHelper $businessEntityTemplateHelper
      * @param Router                       $router
+     * @param PageSeoHelper                $pageSeoHelper
      */
-    public function __construct(BusinessEntityTemplateHelper $businessEntityTemplateHelper, Router $router)
+    public function __construct(BusinessEntityTemplateHelper $businessEntityTemplateHelper, Router $router, PageHelper $pageHelper)
     {
         $this->businessEntityTemplateHelper = $businessEntityTemplateHelper;
         $this->router = $router;
+        $this->pageHelper = $pageHelper;
     }
 
     /**
@@ -119,6 +124,7 @@ class PageExtension extends \Twig_Extension
 
             //services
             $businessEntityTemplateHelper = $this->businessEntityTemplateHelper;
+            $pageHelper = $this->pageHelper;
 
             //the items allowed for the template
             $items = $businessEntityTemplateHelper->getEntitiesAllowed($businessEntityTemplate);
@@ -139,10 +145,15 @@ class PageExtension extends \Twig_Extension
                     $generated = false;
                 }
 
+                //update the parameters of the page
+                $pageHelper->updatePageParametersByEntity($pageEntity, $item);
+
+                $title = $pageEntity->getTitle();
+
                 $itemsToAdd[$url] = array(
                     'item'      => $item,
                     'url'       => $url,
-                    'itemId'    => $url,
+                    'title'     => $title,
                     'generated' => $generated
                 );
 
@@ -153,7 +164,7 @@ class PageExtension extends \Twig_Extension
             $html .= '<ol>';
             foreach ($itemsToAdd as $item) {
                 $itemUrl = $item['url'];
-                $itemId = $item['itemId'];
+                $title = $item['title'];
                 $generated = $item['generated'];
 
                 //the class to identify the generated pages
@@ -163,7 +174,7 @@ class PageExtension extends \Twig_Extension
                     $class = '';
                 }
 
-                $html .= "<li><div class='".$class."'><a href='/".$itemUrl."' title='".$itemId."'>".$itemId."</a></div>";
+                $html .= "<li><div class='".$class."'><a href='/".$itemUrl."' title='".$title."'>".$title."</a></div>";
             }
             $html .= '</ol>';
         }

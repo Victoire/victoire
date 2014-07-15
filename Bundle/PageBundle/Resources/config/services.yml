@@ -97,5 +97,6 @@ services:
         arguments: 
             - "@victoire_business_entity_template.business_entity_template_helper"
             - "@router"
+            - "@victoire_page.page_helper"
         tags:
             - { name: twig.extension }
