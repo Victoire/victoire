@@ -33,6 +33,14 @@ services:
         calls:
             - [setRequest, ["@request_stack"]]
 
+    victoire_page.matcher.url_matcher:
+        class: Victoire\Bundle\PageBundle\Matcher\UrlMatcher
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@victoire_page.url_helper"
+            - "@victoire_business_entity_template.business_entity_template_helper"
+            - "@victoire_core.helper.business_entity_helper"
+        
     ####################################################################################################################
     # Security voter
     ####################################################################################################################

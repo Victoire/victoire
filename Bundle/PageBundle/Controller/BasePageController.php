@@ -78,77 +78,26 @@ class BasePageController extends AwesomeController
 
         //manager
         $manager = $this->getEntityManager();
-        $urlHelper = $this->getUrlHelper();
-        $PageRepository = $manager->getRepository('VictoirePageBundle:Page');
-        $businessEntityTemplateRepository = $manager->getRepository('VictoireBusinessEntityTemplateBundle:BusinessEntityTemplate');
+        $pageRepository = $manager->getRepository('VictoirePageBundle:Page');
         $routeRepository = $manager->getRepository('VictoireCoreBundle:Route');
         $businessEntityHelper = $this->get('victoire_core.helper.business_entity_helper');
         $businessEntityTemplateHelper = $this->get('victoire_business_entity_template.business_entity_template_helper');
         $pageSeoHelper = $this->get('victoire_seo.helper.pageseo_helper');
         $pageHelper = $this->get('victoire_page.page_helper');
 
+        $urlMatcher = $this->get('victoire_page.matcher.url_matcher');
+
         //get the page
-        $page = $PageRepository->findOneByUrl($url);
+        $page = $pageRepository->findOneByUrl($url);
 
         //we do not try to retrieve an entity for the business entity template page
         if ($page === null) {
-            //the exact url was not found
+            $instance = $urlMatcher->getBusinessEntityTemplateInstanceByUrl($url);
 
-            $shorterUrl = $url;
-            $shorterCount = 0;
-            $businessEntityTemplate = null;
-
-            $watchDog = 1;
-
-            //until we try to remove all parts
-            while ($shorterUrl !== null && $businessEntityTemplate === null) {
-                //we remove the last part to look for a business entity template
-                $shorterUrl = $urlHelper->removeLastPart($shorterUrl);
-                //the number of time the short has been done
-                $shorterCount += 1;
-
-                $searchUrl = $shorterUrl;
-
-                //we add the % for the like query
-                for ($i = 0; $i < $shorterCount; $i += 1) {
-                    $searchUrl .= '/%';
-                }
-
-                //we look for a business entity template that looks like this url
-                $businessEntityTemplate = $businessEntityTemplateRepository->findOneByLikeUrl($searchUrl);
-
-                //does a template fit the url
-                if ($businessEntityTemplate !== null) {
-                    //we want the identifier
-                    $position = $businessEntityTemplateHelper->getIdentifierPositionInUrl($businessEntityTemplate);
-
-                    if ($position !== null) {
-                        $entityIdentifier = $urlHelper->extractPartByPosition($url, $position);
-                        //test the entity identifier
-                        if ($entityIdentifier === null) {
-                            throw new \Exception('The entity identifier could not be retrieved from the url.');
-                        }
-
-                        //get the entity
-                        $entity = $businessEntityHelper->getEntityByPageAndBusinessIdentifier($businessEntityTemplate, $entityIdentifier);
-
-                        if ($entity === null) {
-                            throw new \Exception('The entity with the identifier ['.$entityIdentifier.'] was not found');
-                        }
-
-                        //the page is the template found
-                        $page = $businessEntityTemplate;
-                    } else {
-                        throw new \Exception('The template ['.$businessEntityTemplate->getId().'] has no identifier.');
-                    }
-                }
-
-                //THE watchdog
-                $watchDog += 1;
-
-                if ($watchDog > 200) {
-                    throw new \Exception('The watchdog has been raised, there might be an infinite loop');
-                }
+            //an instance of a business entity template and an entity has been identified
+            if ($instance !== null) {
+                $page = $instance['businessEntityTemplate'];
+                $entity = $instance['entity'];
             }
         } else {
             $entity = $page->getEntity();
