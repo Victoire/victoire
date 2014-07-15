@@ -7,6 +7,7 @@ use Victoire\Bundle\CoreBundle\VictoireCmsEvents;
 use Victoire\Bundle\CoreBundle\Event\WidgetBuildFormEvent;
 use Victoire\Bundle\CoreBundle\Theme\ThemeWidgetInterface;
 use Victoire\Bundle\CoreBundle\Entity\Widget;
+use Behat\Behat\Exception\Exception;
 
 /**
  *
@@ -33,17 +34,21 @@ class WidgetSubscriber implements EventSubscriberInterface
      */
     public static function getSubscribedEvents()
     {
-        return array(
+        $events = array(
              VictoireCmsEvents::WIDGET_BUILD_FORM => array(
                  array('addThemeField')
              )
         );
+
+        return $events;
     }
 
     /**
      * Add the theme field for the widget form
      *
      * @param WidgetBuildFormEvent $event
+     *
+     * @throws Exception
      */
     public function addThemeField(WidgetBuildFormEvent $event)
     {

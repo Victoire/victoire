@@ -24,7 +24,9 @@ class EntityContext extends BehatContext implements KernelAwareInterface
     /**
      * Constructor
      */
-    public function __construct($a) {}
+    public function __construct($a) {
+
+    }
 
     /**
      * @BeforeScenario

@@ -14,18 +14,22 @@ class SiteMapMenuListener
     private $menuBuilder;
     private $mainItem;
 
-
     /**
-     * {@inheritDoc}
+     * Constructor
+     * @param MenuBuilder $menuBuilder
      */
     public function __construct(MenuBuilder $menuBuilder)
     {
         $this->menuBuilder = $menuBuilder;
     }
 
-
     /**
      * add global menu items
+     *
+     * @param Event $event
+     * @return \Knp\Menu\ItemInterface
+     *
+     * @SuppressWarnings checkUnusedFunctionParameters
      */
     public function addGlobal(Event $event)
     {

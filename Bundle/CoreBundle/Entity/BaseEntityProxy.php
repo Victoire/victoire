@@ -4,6 +4,7 @@ namespace Victoire\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Victoire\Bundle\CoreBundle\Entity\Widget;
+use Behat\Behat\Exception\Exception;
 
 /**
  *
@@ -39,26 +40,6 @@ abstract class BaseEntityProxy
     }
 
     /**
-     * Method used to get the value of asked $name parameter in the entity $entityName if exists else in the related widget
-     * @param string $entityName The related entity name
-     * @param string $name       The property to get
-     * @return mixed  A string, a relation or anything as value
-     */
-    public function getReferedValue($entityName, $name)
-    {
-        if ($this->getEntity($entityName) && $this->getWidget() && array_key_exists($name, $this->getWidget()->getFields()) ) {
-            $fields = $this->getWidget()->getFields();
-
-            return $this->getEntity($entityName)->{'get' . ucfirst($fields[$name])}();
-        } else if ($this->getWidget() && method_exists($this->getWidget(), 'get'.ucfirst($name))) {
-            return $this->getWidget()->{'get' . ucfirst($name)}();
-        } else {
-            throw new \Exception(sprintf('% Object doesn\'t have any property or relation named %s', get_class($this->getWidget()), 'get'.ucfirst($name)));
-        }
-    }
-
-
-    /**
      * Get businessEntity
      *
      * @return integer
@@ -82,6 +63,8 @@ abstract class BaseEntityProxy
      * Get the entity of the proxy
      *
      * @return Entity
+     *
+     * @throws Exception
      */
     public function getEntity()
     {
@@ -92,7 +75,11 @@ abstract class BaseEntityProxy
             throw new \Exception('The businessEntityName is not defined for the entityProxy with the id:'.$this->getId());
         }
 
-        return $this->{'get'.ucfirst($entityName)}();
+        $functionName = 'get'.ucfirst($entityName);
+
+        $entity = call_user_func(array($entity, $functionName));
+
+        return $entity;
     }
 
     /**
@@ -124,6 +111,6 @@ abstract class BaseEntityProxy
         $method = 'set'.ucfirst($businessEntityName);
 
         //set the entity
-        call_user_method($method, $this, $entity);
+        call_user_func(array($this, $method), $entity);
     }
 }

@@ -10,9 +10,7 @@ use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
  **/
 class EntityProxySubscriber implements EventSubscriber
 {
-
     protected static $annotationReader;
-
 
     /**
      * contructor
@@ -49,12 +47,13 @@ class EntityProxySubscriber implements EventSubscriber
 
             $metadatas = $eventArgs->getClassMetadata();
             $metaBuilder = new ClassMetadataBuilder($metadatas);
-            if ($metadatas->name == 'Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy') {
+            if ($metadatas->name === 'Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy') {
                 foreach ($annotationReader->getBusinessClasses() as $field => $entity) {
-                    $metaBuilder->addManyToOne($field, $entity, $inversedBy = "proxies");
+                    $metaBuilder->addManyToOne($field, $entity, "proxies");
                 }
             }
-            if ($key = array_search($metadatas->name, $annotationReader->getBusinessClasses())) {
+            $key = array_search($metadatas->name, $annotationReader->getBusinessClasses());
+            if ($key) {
                 $metaBuilder->addOneToMany('proxies', 'Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy', $key);
             }
         }
