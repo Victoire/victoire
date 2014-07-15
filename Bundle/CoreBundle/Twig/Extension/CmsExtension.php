@@ -225,8 +225,11 @@ class CmsExtension extends \Twig_Extension
 
     /**
      * hash some string with given algorithm
+     *
      * @param string $value     The string to hash
      * @param string $algorithm The algorithm we have to use to hash the string
+     *
+     * @return string
      *
      */
     public function hash($value, $algorithm = "md5")
@@ -234,7 +237,7 @@ class CmsExtension extends \Twig_Extension
         try {
             return hash($algorithm, $value);
         } catch (Exception $e) {
-            error_log('Please check that the '.$algorithm.' does exists because it failed when trying to run. We are expecting a valid algorithm such as md5 or sha512 etc.');
+            error_log('Please check that the '.$algorithm.' does exists because it failed when trying to run. We are expecting a valid algorithm such as md5 or sha512 etc. ['.$e->getMessage().']');
 
             return $value;
         }
@@ -257,8 +260,8 @@ class CmsExtension extends \Twig_Extension
     /**
      * Is the business entity type allowed for the widget and the page context
      *
-     * @param string   $formEntityName The business entity name
-     * @param Page $page           The page
+     * @param string $formEntityName The business entity name
+     * @param Page   $page           The page
      *
      * @return boolean Does the form allows this kind of business entity in this page
      */
