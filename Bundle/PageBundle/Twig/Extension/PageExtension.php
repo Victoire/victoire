@@ -156,6 +156,7 @@ class PageExtension extends \Twig_Extension
                 $itemId = $item['itemId'];
                 $generated = $item['generated'];
 
+                //the class to identify the generated pages
                 if ($generated) {
                     $class = 'generated';
                 } else {

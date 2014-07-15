@@ -5,8 +5,8 @@
         {{ 'modal.form.businessEntity.settings.businessProperties'|trans }}
     </div>
     {% for businessProperty in businessProperties %}
-        <div class='businessProperty'>
-            <a onClick='businessProperty.addPropertyToCurrentInput("{{ businessProperty.entityProperty }}")'>{{ businessProperty.entityProperty }}</a>
+        <div class='businessProperty {{ businessProperty.type }}'>
+            <a onClick='businessProperty.addPropertyToCurrentInput("{{ businessProperty.entityProperty }}")' title="{{ businessProperty.type }}">{{ businessProperty.entityProperty }}</a>
         </div>
     {% endfor %}
 </div>
