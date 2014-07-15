@@ -9,9 +9,9 @@ class RequireVictoire
      protected $container;
      protected $widgetTypes;
 
-
-    /**
-      * {@inheritdoc}
+     /**
+      *
+      * @param unknown $container
       */
      public function __construct($container)
      {

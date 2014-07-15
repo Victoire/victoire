@@ -23,6 +23,11 @@ class ReceiverProperty
         $this->types = $types;
     }
 
+    /**
+     * Get types
+     *
+     * @return NULL|multitype:NULL
+     */
     public function getTypes()
     {
         if (!array_key_exists('value', $this->types)) {

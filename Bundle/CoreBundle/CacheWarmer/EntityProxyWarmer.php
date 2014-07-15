@@ -6,20 +6,33 @@ use Victoire\Bundle\CoreBundle\CacheWarmer\GeneratedClassLoader;
 use Composer\Autoload\ClassLoader;
 use Symfony\Component\Config\ConfigCache;
 use Sensio\Bundle\GeneratorBundle\Generator\Generator;
+use Behat\Behat\Exception\Exception;
 
+/**
+ *
+ * @author Paul Andrieux
+ *
+ */
 class EntityProxyWarmer extends CacheWarmer
 {
-
     private $annotationReader;
 
+    /**
+     * Constructor
+     *
+     * @param unknown $annotationReader
+     */
     public function __construct($annotationReader)
     {
         $this->annotationReader = $annotationReader;
     }
+
     /**
      * Warms up the cache.
      *
      * @param string $cacheDir The cache directory
+     *
+     * @throws Exception
      */
     public function warmUp($cacheDir)
     {
@@ -40,7 +53,11 @@ class EntityProxyWarmer extends CacheWarmer
         $this->writeCacheFile($file, $cacheContent);
     }
 
-
+    /**
+     * IS the warmer optionnal
+     *
+     * @return boolean
+     */
     public function isOptional()
     {
         return false;
