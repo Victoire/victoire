@@ -134,12 +134,17 @@ class PageExtension extends \Twig_Extension
 
                 //if the url does no exists in the children
                 if (!in_array($url, $childrenUrls)) {
-                    $itemsToAdd[$url] = array(
-                        'item'   => $item,
-                        'url'    => $url,
-                        'itemId' => $url
-                    );
+                    $generated = true;
+                } else {
+                    $generated = false;
                 }
+
+                $itemsToAdd[$url] = array(
+                    'item'      => $item,
+                    'url'       => $url,
+                    'itemId'    => $url,
+                    'generated' => $generated
+                );
 
                 unset($url);
             }
@@ -149,7 +154,15 @@ class PageExtension extends \Twig_Extension
             foreach ($itemsToAdd as $item) {
                 $itemUrl = $item['url'];
                 $itemId = $item['itemId'];
-                $html .= "<li><div class='generated'><a href='/".$itemUrl."' title='".$itemId."'>".$itemId."</a></div>";
+                $generated = $item['generated'];
+
+                if ($generated) {
+                    $class = 'generated';
+                } else {
+                    $class = '';
+                }
+
+                $html .= "<li><div class='".$class."'><a href='/".$itemUrl."' title='".$itemId."'>".$itemId."</a></div>";
             }
             $html .= '</ol>';
         }
@@ -168,7 +181,7 @@ class PageExtension extends \Twig_Extension
     {
         $urls = array();
 
-        $children = $page->getChildren();
+        $children = $page->getPages();
 
         //parse the children
         foreach ($children as $child) {
