@@ -37,9 +37,6 @@ class BusinessEntityTemplateType extends TemplateType
 
         $builder
             ->add('businessEntityName', 'hidden')
-            ->add('entityIdentifier', 'choice', array(
-                'choices' => $businessProperty
-            ))
             ->add('name')
             ->add('layout', 'choice', array(
                 'label' => 'form.page.type.layout.label',

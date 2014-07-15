@@ -565,7 +565,7 @@ class WidgetManager
         $pageHelper = $this->container->get('victoire_page.page_helper');
         $em = $this->container->get('doctrine.orm.entity_manager');
         $urlHelper = $this->container->get('victoire_page.url_helper');
-        $businessEntityHelper = $this->container->get('victoire_core.helper.business_entity_helper');
+        $urlMatcher = $this->container->get('victoire_page.matcher.url_matcher');
 
         //if the url of the referer is not the same as the url of the page of the widget
         //it means we are in a business entity template page and displaying an instance
@@ -577,25 +577,20 @@ class WidgetManager
             //we try to get the page if it exists
             $pageRepository = $em->getRepository('VictoirePageBundle:Page');
 
-            //the identifier of the business entity
-            $entityIdentifier = $urlHelper->getEntityIdFromUrl($url);
-
             //get the page
             $page = $pageRepository->findOneByUrl($url);
 
             //no page were found
             if ($page === null) {
-                //test the entity id
-                if ($entityIdentifier === null) {
-                    throw new \Exception('The business identifier could not be retrieved from the url.');
-                }
+                $instance = $urlMatcher->getBusinessEntityTemplateInstanceByUrl($url);
 
-                if ($widgetPage instanceof BusinessEntityTemplate) {
-
-                    $entity = $businessEntityHelper->getEntityByPageAndBusinessIdentifier($widgetPage, $entityIdentifier);
+                //an instance of a business entity template and an entity has been identified
+                if ($instance !== null) {
+                    $page = $instance['businessEntityTemplate'];
+                    $entity = $instance['entity'];
 
                     //so we duplicate the business entity template page for this current instance
-                    $page = $pageHelper->createPageInstanceFromBusinessEntityTemplate($widgetPage, $entityIdentifier, $entity);
+                    $page = $pageHelper->createPageInstanceFromBusinessEntityTemplate($page, $entity);
 
                     //the page
                     $em->persist($page);

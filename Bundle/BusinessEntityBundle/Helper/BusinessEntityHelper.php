@@ -177,21 +177,19 @@ class BusinessEntityHelper
      *
      * @param BusinessEntityTemplate $page             The page
      * @param string                 $entityIdentifier The identifier for the business entity
+     * @param string                 $attributeName    The name of the attribute used to identify an entity
      *
      * @throws \Exception
      *
      * @return The entity
      */
-    public function getEntityByPageAndBusinessIdentifier(BusinessEntityTemplate $page, $entityIdentifier)
+    public function getEntityByPageAndBusinessIdentifier(BusinessEntityTemplate $page, $entityIdentifier, $attributeName)
     {
         $entity = null;
 
         $businessEntityName = $page->getBusinessEntityName();
 
         $businessEntity = $this->findById($businessEntityName);
-
-        //the attribute used for getting the entity instance
-        $attributeName = $page->getEntityIdentifier();
 
         //test the result
         if ($businessEntity === null) {

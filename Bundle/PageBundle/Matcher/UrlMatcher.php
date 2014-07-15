@@ -9,7 +9,7 @@ use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 /**
  *
  * @author Thomas Beaujean
- *
+ * ref: victoire_page.matcher.url_matcher
  */
 class UrlMatcher
 {
@@ -79,17 +79,24 @@ class UrlMatcher
             //does a template fit the url
             if ($businessEntityTemplate !== null) {
                 //we want the identifier
-                $position = $businessEntityTemplateHelper->getIdentifierPositionInUrl($businessEntityTemplate);
+                $positionProperty = $businessEntityTemplateHelper->getIdentifierPositionInUrl($businessEntityTemplate);
 
-                if ($position !== null) {
+                if ($positionProperty !== null) {
+
+                    $position = $positionProperty['position'];
+                    $businessProperty = $positionProperty['businessProperty'];
+
                     $entityIdentifier = $urlHelper->extractPartByPosition($url, $position);
                     //test the entity identifier
                     if ($entityIdentifier === null) {
                         throw new \Exception('The entity identifier could not be retrieved from the url.');
                     }
 
+                    //name of the attribute used to get the entity
+                    $attributeName = $businessProperty->getEntityProperty();
+
                     //get the entity
-                    $entity = $businessEntityHelper->getEntityByPageAndBusinessIdentifier($businessEntityTemplate, $entityIdentifier);
+                    $entity = $businessEntityHelper->getEntityByPageAndBusinessIdentifier($businessEntityTemplate, $entityIdentifier, $attributeName);
 
                     if ($entity === null) {
                         throw new \Exception('The entity with the identifier ['.$entityIdentifier.'] was not found');

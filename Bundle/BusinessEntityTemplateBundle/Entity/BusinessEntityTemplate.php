@@ -37,13 +37,6 @@ class BusinessEntityTemplate extends Template
      */
     protected $name;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="entity_identifier", type="string", length=255, nullable=false)
-     */
-    protected $entityIdentifier;
-
     protected $businessEntity = null;
 
     /**
@@ -196,25 +189,5 @@ class BusinessEntityTemplate extends Template
         $url = $page->getUrl();
 
         return $url;
-    }
-
-    /**
-     * Get the entity identifier
-     *
-     * @return string
-     */
-    public function getEntityIdentifier()
-    {
-        return $this->entityIdentifier;
-    }
-
-    /**
-     * Set the entity identifier
-     *
-     * @param string $entityIdentifier
-     */
-    public function setEntityIdentifier($entityIdentifier)
-    {
-        $this->entityIdentifier = $entityIdentifier;
     }
 }
