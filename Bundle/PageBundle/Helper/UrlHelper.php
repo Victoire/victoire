@@ -102,33 +102,26 @@ class UrlHelper
 
         //get the base url
         $router = $this->router;
-        $context = $router->getContext();
-        //the host
-        $host = $context->getHost();
-        //the scheme
-        $scheme = $context->getScheme();
-
-        $httpPort = $context->getHttpPort();
-        $httpsPort = $context->getHttpsPort();
-
-        //we update the host using the port
-        if ($httpPort !== null && $httpPort !== '') {
-            $host = $host.':'.$httpPort;
-        }
-
-        //we update the host using the port
-        if ($httpsPort !== null && $httpsPort !== '') {
-            $host = $host.':'.$httpsPort;
-        }
-
-        //get the complete url
-        $completeUrl = $scheme.'://'.$host.'/';
 
         //the referer
         $referer = urldecode($request->server->get('HTTP_REFERER'));
 
-        //remove the base of the url
-        $urlReferer = substr($referer, strlen($completeUrl));
+        // split on the / character
+        $keywords = preg_split("/\//", $referer);
+
+        //it gives an array that looks like
+        //    [0] => http:
+        //    [1] =>
+        //    [2] => sandbox.dev:443
+        //    [3] => renault
+        //    [4] => clio
+
+        unset($keywords[0]);
+        unset($keywords[1]);
+        unset($keywords[2]);
+
+        //so we remove the 3 first entries
+        $urlReferer = implode('/', $keywords);
 
         //remove potential parameters
         $position = stripos($urlReferer, "?");

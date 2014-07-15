@@ -157,6 +157,14 @@ class PageSubscriber implements EventSubscriber
              $buildUrl = true;
         }
 
+        if ($page instanceof BusinessEntityTemplate) {
+            $buildUrl = false;
+        }
+        $template = $page->getTemplate();
+        if ($template instanceof BusinessEntityTemplate) {
+            $buildUrl = false;
+        }
+
         //should we build the url
         if ($buildUrl) {
             //Get Initial url to historize it

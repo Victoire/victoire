@@ -40,17 +40,17 @@ class PageHelper
      * Create an instance of the business entity template page
      *
      * @param BusinessEntityTemplate $page   The business entity template page
-     * @param string                     $url    The new url
-     * @param entity                     $entity The entity
+     * @param entity                 $entity The entity
+     * @param string                 $url    The new url
      *
      * @return \Victoire\Bundle\PageBundle\Entity\Page
      */
-    public function createPageInstanceFromBusinessEntityTemplate(BusinessEntityTemplate $template, $entity)
+    public function createPageInstanceFromBusinessEntityTemplate(BusinessEntityTemplate $template, $entity, $url)
     {
         //create a new page
         $newPage = new Page();
 
-        $parentPage = $template->getParentPage();
+        $parentPage = $template->getParent();
 
         //set the page parameter by the business entity template page
         $newPage->setParent($parentPage);
@@ -58,7 +58,12 @@ class PageHelper
 
         $newPage->setLayout($template->getLayout());
 
-        $newPage->setTitle('');
+        $newPage->setUrl($url);
+
+        $newPage->setTitle($template->getTitle());
+
+        //update the parameters of the page
+        $this->updatePageParametersByEntity($newPage, $entity);
 
         $entityProxy = new EntityProxy();
         $entityProxy->setEntity($entity);

@@ -586,11 +586,11 @@ class WidgetManager
 
                 //an instance of a business entity template and an entity has been identified
                 if ($instance !== null) {
-                    $page = $instance['businessEntityTemplate'];
+                    $template = $instance['businessEntityTemplate'];
                     $entity = $instance['entity'];
 
                     //so we duplicate the business entity template page for this current instance
-                    $page = $pageHelper->createPageInstanceFromBusinessEntityTemplate($page, $entity);
+                    $page = $pageHelper->createPageInstanceFromBusinessEntityTemplate($template, $entity, $url);
 
                     //the page
                     $em->persist($page);
