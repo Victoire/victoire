@@ -211,6 +211,9 @@ class CmsExtension extends \Twig_Extension
 
     /**
      * render all widgets for a page
+     *
+     * @param Page $page
+     * @return \Victoire\Bundle\CoreBundle\Template\template
      */
     public function cmsPage(Page $page)
     {
@@ -218,7 +221,6 @@ class CmsExtension extends \Twig_Extension
             'VictoireCoreBundle:Layout:' . $page->getLayout(). '.html.twig',
             array('page' => $page)
         );
-
     }
 
     /**
@@ -290,7 +292,8 @@ class CmsExtension extends \Twig_Extension
      *
      * @param Widget $widget The widget displayed
      * @param Page   $page   The page
-     * @throws \Exception
+     * @param Entity $entity The current entity
+     *
      * @return string
      */
     public function cmsWidgetLegacy(Widget $widget, $page, $entity)

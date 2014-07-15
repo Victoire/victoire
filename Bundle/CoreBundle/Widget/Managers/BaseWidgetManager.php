@@ -221,9 +221,9 @@ class BaseWidgetManager
     public function getWidgetType($widget, $type = null)
     {
         if ($type !== null) {
-           $widgetClass = array("Widget".ucfirst($type));
+            $widgetClass = array("Widget".ucfirst($type));
         } else {
-           $widgetClass = explode('\\', get_class($widget));
+            $widgetClass = explode('\\', get_class($widget));
         }
 
         $widgetName = str_replace('Widget', '', end($widgetClass));

@@ -7,10 +7,13 @@ use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\RequestContext;
 use Psr\Log\LoggerInterface;
 
-
+/**
+ *
+ * @author Paul Andrieux
+ *
+ */
 class UrlGenerator extends BaseUrlGenerator
 {
-
     protected $cache;
 
     /**
@@ -30,6 +33,4 @@ class UrlGenerator extends BaseUrlGenerator
         $this->context = $context;
         $this->logger = $logger;
     }
-
-
 }

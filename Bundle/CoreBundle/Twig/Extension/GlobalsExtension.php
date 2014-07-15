@@ -20,6 +20,9 @@ class GlobalsExtension extends \Twig_Extension
 
     /**
      * contructor
+     *
+     * @param TemplateMapper $templateMapper
+     * @param unknown $session
      */
     public function __construct(TemplateMapper $templateMapper, $session)
     {
@@ -27,6 +30,11 @@ class GlobalsExtension extends \Twig_Extension
         $this->session = $session;
     }
 
+    /**
+     * Get the globals
+     *
+     * @return array
+     */
     public function getGlobals()
     {
         return array(
@@ -35,9 +43,13 @@ class GlobalsExtension extends \Twig_Extension
         );
     }
 
+    /**
+     * The name of the extension
+     *
+     * @return string
+     */
     public function getName()
     {
         return 'Globals_extention';
     }
-
 }

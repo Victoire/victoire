@@ -19,6 +19,7 @@ use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\PageBundle\Entity\Template;
 use Victoire\Widget\MenuBundle\Entity\MenuItem;
 use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
+use Behat\Behat\Exception\Exception;
 
 /**
  * Generic Widget CRUD operations
@@ -110,7 +111,6 @@ class WidgetManager
     {
         //create a page for the business entity instance if we are currently display an instance for a business entity template
         $page = $this->duplicateTemplatePageIfPageInstance($page);
-        $request = $this->container->get('request');
 
         $manager = $this->getManager(null, $type);
 
@@ -119,10 +119,10 @@ class WidgetManager
 
     /**
      * Generates new forms for each available business entities
-     * @param string   $type
-     * @param string   $slot
-     * @param Page $page
-     * @param Widget   $widget
+     *
+     * @param string $slot
+     * @param Page   $page
+     * @param Widget $widget
      *
      * @return collection of forms
      */
@@ -184,8 +184,11 @@ class WidgetManager
 
     /**
      * edit a widget
-     * @param Widget $widget
-     * @param string $entity
+     *
+     * @param Request $request
+     * @param Widget  $widget
+     * @param string  $entity
+     *
      * @return template
      */
     public function edit(Request $request, Widget $widget, $entity = null)
@@ -318,8 +321,11 @@ class WidgetManager
 
     /**
      * render slot actions
-     * @param string $slot
-     * @param Page   $page
+     *
+     * @param string  $slot
+     * @param Page    $page
+     * @param boolean $first
+     *
      * @return template
      */
     public function renderActions($slot, Page $page, $first = false)
@@ -388,7 +394,9 @@ class WidgetManager
     /**
      * compute the widget map for page
      * @param Page   $page
-     * @param array      $sortedWidgets
+     * @param array  $sortedWidgets
+     *
+     * @throws Exception
      */
     public function updateWidgetMapOrder(Page $page, $sortedWidgets)
     {
@@ -398,7 +406,6 @@ class WidgetManager
         $em = $this->container->get('doctrine.orm.entity_manager');
         $widgetMapBuilder = $this->widgetMapBuilder;
 
-        $widgetMap = array();
         $widgetSlots = array();
 
         //parse the sorted widgets
@@ -457,7 +464,7 @@ class WidgetManager
 
             return (
                 array_key_exists($widgetName, $slots[$slot]['widgets']) &&
-                $slots[$slot]['widgets'][$widgetName] == null) ||
+                $slots[$slot]['widgets'][$widgetName] === null) ||
                 !array_key_exists('themes', $slots[$slot]['widgets'][$widgetName]) ||
                 in_array($widgetType, $slots[$slot]['widgets'][$widgetName]['themes']);
         }
@@ -467,10 +474,14 @@ class WidgetManager
 
     /**
      * build widget form and dispatch event
+     *
      * @param Manager $manager
      * @param Widget  $widget
+     * @param Page    $page
      * @param string  $entityName
      * @param string  $namespace
+     * @param string  $formMode
+     *
      * @return Form
      */
     public function buildForm($manager, $widget, Page $page, $entityName = null, $namespace = null, $formMode = Widget::MODE_STATIC)
@@ -487,11 +498,13 @@ class WidgetManager
      *
      * @param unknown $manager
      * @param unknown $widget
+     * @param Page $page
      * @param string $entityName
      * @param string $namespace
-     * @return multitype:
+     *
+     * @return multitype:\Victoire\Bundle\CoreBundle\Widget\Managers\Form
      */
-    public function buildEntityForms($manager, $widget, Page $page,$entityName = null, $namespace = null)
+    public function buildEntityForms($manager, $widget, Page $page, $entityName = null, $namespace = null)
     {
         $forms = array();
 
