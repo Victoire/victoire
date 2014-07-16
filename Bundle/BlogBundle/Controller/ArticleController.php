@@ -24,7 +24,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ArticleController extends PageController
 {
-
     protected $routes;
 
     /**
@@ -42,9 +41,10 @@ class ArticleController extends PageController
     /**
      * New page
      *
-     * @return template
      * @Route("/new", name="victoire_blog_article_new")
      * @Template()
+     *
+     * @return JsonResponse
      */
     public function newAction($isHomepage = false)
     {

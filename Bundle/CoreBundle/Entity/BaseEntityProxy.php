@@ -77,7 +77,7 @@ abstract class BaseEntityProxy
 
         $functionName = 'get'.ucfirst($entityName);
 
-        $entity = call_user_func(array($entity, $functionName));
+        $entity = call_user_func(array($this, $functionName));
 
         return $entity;
     }
