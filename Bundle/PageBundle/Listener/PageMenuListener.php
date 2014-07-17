@@ -6,7 +6,6 @@ use Victoire\Bundle\PageBundle\Event\Menu\BasePageMenuContextualEvent;
 use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
 use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
 
-
 /**
  * When dispatched, this listener add items to a KnpMenu
  * TODO implements an interface (what name ?) which force to implements addContextual, addGlobal and getMainItem
@@ -14,7 +13,6 @@ use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePa
 class PageMenuListener
 {
     private $menuBuilder;
-
 
     /**
      * Constructor
@@ -29,8 +27,8 @@ class PageMenuListener
     /**
      * add a contextual menu item
      *
-     * @param BasePageMenuContextualEvent $event
-     * @return Ambigous <\Knp\Menu\ItemInterface, NULL>
+     * @param  BasePageMenuContextualEvent $event
+     * @return Ambigous                    <\Knp\Menu\ItemInterface, NULL>
      */
     public function addContextual(BasePageMenuContextualEvent $event)
     {
@@ -73,11 +71,10 @@ class PageMenuListener
         return $mainItem;
     }
 
-
     /**
      * add global menu items
      *
-     * @param Event $event
+     * @param  Event    $event
      * @return Ambigous <\Knp\Menu\ItemInterface, NULL>
      */
     public function addGlobal(Event $event)
@@ -88,6 +85,7 @@ class PageMenuListener
             'route'     => 'victoire_core_page_new'
             )
         )
+        ->setExtra('translation_domain', 'victoire')
         ->setLinkAttribute('data-toggle', 'vic-modal');
 
         return $mainItem;

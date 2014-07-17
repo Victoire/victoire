@@ -5,7 +5,6 @@ use Knp\Menu\FactoryInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Knp\Menu\ItemInterface;
 
-
 /**
  * Build a KnpMenu
  */
@@ -78,7 +77,6 @@ class MenuBuilder
         return $this->leftNavbar;
     }
 
-
     /**
      * {@inheritDoc}
      */
@@ -96,7 +94,8 @@ class MenuBuilder
                     'data-toggle' => 'vic-dropdown'
                 ),
                 'linkAttributes' => array(
-                    'class' => 'vic-dropdown-toggle'
+                    'class' => 'vic-dropdown-toggle',
+                    'data-toggle' => 'vic-dropdown'
                 ),
                 'uri'   => "#",
             ),
