@@ -42,7 +42,7 @@ class PageSeoController extends Controller
         //if the page is a business entity template page
         if ($page instanceof BusinessEntityTemplate) {
             //get the id of the business entity
-            $businessEntityId = $page->getBusinessEntityTemplate()->getBusinessEntityName();
+            $businessEntityId = $page->getBusinessEntityName();
             //we can use the business entity properties on the seo
             $businessEntity = $businessEntityHelper->findById($businessEntityId);
 
