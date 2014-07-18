@@ -1,5 +1,5 @@
 <?php
-namespace victoire\Bundle\PageBundle\Listener;
+namespace Victoire\Bundle\PageBundle\Listener;
 
 use Symfony\Component\EventDispatcher\Event;
 use Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent;
