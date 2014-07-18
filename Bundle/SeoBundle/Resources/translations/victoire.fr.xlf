@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2014-07-08T17:33:09Z" source-language="en" target-language="fr" datatype="plaintext" original="not.available">
+  <file date="2014-07-10T11:24:40Z" source-language="en" target-language="fr" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -9,7 +9,7 @@
       <trans-unit id="f2e5f1243797e0fc89bedab0f0fe5f36df4f8f57" resname=".title">
         <source>.title</source>
         <target>.title</target>
-        <jms:reference-file line="46">views/PageSeo/settings.html.twig</jms:reference-file>
+        <jms:reference-file line="31">views/PageSeo/settings.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="923aba5bd6faee45cae298942b6f495b06dbdbd8" resname="form.pageSeo.fbAdmins.label">
         <source>form.pageSeo.fbAdmins.label</source>
@@ -167,20 +167,15 @@
         <source>menu.page.seoSettings</source>
         <target>Paramètre SEO</target>
       </trans-unit>
-      <trans-unit id="0ff68fe8d3174e7667c67e63fcbec2203c1ec33a" resname="modal.form.pageSeo.settings.businessProperties">
-        <source>modal.form.pageSeo.settings.businessProperties</source>
-        <target>Propriété de l'entité:</target>
-        <jms:reference-file line="15">views/PageSeo/settings.html.twig</jms:reference-file>
-      </trans-unit>
       <trans-unit id="02cfca5e484be77e623b5ff8be9ef843c02cf8b1" resname="modal.form.pageSeo.settings.title">
         <source><![CDATA[%page.title% > Settings]]></source>
         <target>Paramètres SEO de la page "page.title"</target>
-        <jms:reference-file line="37">views/PageSeo/settings.html.twig</jms:reference-file>
+        <jms:reference-file line="22">views/PageSeo/settings.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="9a84dc1132d73a2f0abce302a49337045c823482" resname="modal.mandatory_fields.label">
         <source>Mandatory fields</source>
         <target>Mandatory fields</target>
-        <jms:reference-file line="44">views/PageSeo/settings.html.twig</jms:reference-file>
+        <jms:reference-file line="29">views/PageSeo/settings.html.twig</jms:reference-file>
       </trans-unit>
     </body>
   </file>

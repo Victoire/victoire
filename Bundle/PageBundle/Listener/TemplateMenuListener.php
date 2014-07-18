@@ -3,7 +3,7 @@ namespace Victoire\Bundle\PageBundle\Listener;
 
 use Symfony\Component\EventDispatcher\Event;
 use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
-use Victoire\Bundle\PageBundle\Event\Menu\BasePageMenuContextualEvent;
+use Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent;
 use Victoire\Bundle\PageBundle\Entity\Template;
 
 /**
@@ -27,7 +27,7 @@ class TemplateMenuListener
     /**
      * add a contextual menu item
      */
-    public function addContextual(BasePageMenuContextualEvent $event)
+    public function addContextual(PageMenuContextualEvent $event)
     {
         $page = $event->getPage();
 

@@ -176,7 +176,7 @@ services:
             - "%kernel.environment%"
 
     victoire_core.helper.business_entity_helper:
-        class: Victoire\Bundle\CoreBundle\Helper\BusinessEntityHelper
+        class: Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper
         arguments: 
             - "@victoire_core.annotation_reader"
             - "@doctrine.orm.entity_manager"

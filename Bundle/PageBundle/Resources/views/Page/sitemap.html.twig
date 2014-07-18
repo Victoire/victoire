@@ -40,7 +40,7 @@
 
 {% macro pagesHierarchy(pagesList) %}
     {% for page in pagesList %}
-      <li id="list_{{page.id}}"><div><a href='/{{ page.url }}' title='{{ page.url }}'>{{ page.title }}</a></div>
+      {{ cms_page_sitemap(page) }}
       {% if page.children %}
           <ol>
             {{ _self.pagesHierarchy(page.children) }}

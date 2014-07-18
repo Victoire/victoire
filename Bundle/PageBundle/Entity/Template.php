@@ -3,22 +3,23 @@
 namespace Victoire\Bundle\PageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Victoire\Bundle\PageBundle\Entity\BasePage;
+use Victoire\Bundle\PageBundle\Entity\Page;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Template
  *
+ * @ORM\Table("cms_page_template")
  * @ORM\Entity
  */
-class Template extends BasePage
+class Template extends Page
 {
     const TYPE = 'template';
 
     /**
      * @var string
      *
-     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\PageBundle\Entity\BasePage", mappedBy="template")
+     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\PageBundle\Entity\Page", mappedBy="template")
      */
     protected $pages;
 

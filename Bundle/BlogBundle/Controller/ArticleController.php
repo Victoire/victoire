@@ -10,8 +10,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Victoire\Bundle\BlogBundle\Entity\Post;
 use Victoire\Bundle\BlogBundle\Entity\Article;
 use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\PageBundle\Entity\BasePage;
-use Victoire\Bundle\PageBundle\Controller\BasePageController;
+use Victoire\Bundle\PageBundle\Controller\PageController;
 use Victoire\Bundle\BlogBundle\Form\ArticleType;
 use Victoire\Bundle\BlogBundle\Event\BlogMenuContextualEvent;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,9 +22,8 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @Route("/victoire-dcms/blog")
  */
-class ArticleController extends BasePageController
+class ArticleController extends PageController
 {
-
     protected $routes;
 
     /**
@@ -43,9 +41,10 @@ class ArticleController extends BasePageController
     /**
      * New page
      *
-     * @return template
      * @Route("/new", name="victoire_blog_article_new")
      * @Template()
+     *
+     * @return JsonResponse
      */
     public function newAction($isHomepage = false)
     {
@@ -59,9 +58,9 @@ class ArticleController extends BasePageController
      * @return template
      * @Route("/{id}/settings", name="victoire_blog_article_settings")
      * @Template()
-     * @ParamConverter("article", class="VictoirePageBundle:BasePage")
+     * @ParamConverter("article", class="VictoirePageBundle:Page")
      */
-    public function settingsAction(Request $request, BasePage $page)
+    public function settingsAction(Request $request, Page $page)
     {
         return new JsonResponse(parent::settingsAction($article));
     }
@@ -73,9 +72,9 @@ class ArticleController extends BasePageController
      * @return template
      * @Route("/{id}/delete", name="victoire_core_article_delete")
      * @Template()
-     * @ParamConverter("article", class="VictoirePageBundle:BasePage")
+     * @ParamConverter("article", class="VictoirePageBundle:Page")
      */
-    public function deleteAction(BasePage $article)
+    public function deleteAction(Page $article)
     {
         if (!$this->get('security.context')->isGranted('PAGE_OWNER', $article)) {
             throw new AccessDeniedException("Nop ! you can't do such an action");

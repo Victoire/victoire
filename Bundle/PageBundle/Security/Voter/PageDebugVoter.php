@@ -4,7 +4,7 @@ namespace Victoire\Bundle\PageBundle\Security\Voter;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
-use Victoire\Bundle\PageBundle\Entity\BasePage;
+use Victoire\Bundle\PageBundle\Entity\Page;
 
 /**
  * This class decides yes or no if the user is granted to see the debug

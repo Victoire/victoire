@@ -7,10 +7,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Victoire\Bundle\PageBundle\Entity\BasePage;
+use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\SeoBundle\Entity\PageSeo;
 use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
-use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
 
 /**
  *
@@ -23,15 +22,14 @@ class PageSeoController extends Controller
     /**
      * Page settings
      *
-     * @param BasePage $page
-     * @return template
+     * @param Page $page
      * @Route("/page/{id}", name="victoire_seo_pageSeo_settings")
      * @Template()
-     * @ParamConverter("page", class="VictoirePageBundle:BasePage")
+     * @ParamConverter("page", class="VictoirePageBundle:Page")
      *
      * @return JsonResponse
      */
-    public function settingsAction(BasePage $page)
+    public function settingsAction(Page $page)
     {
         //services
         $em = $this->getDoctrine()->getManager();
@@ -42,16 +40,15 @@ class PageSeoController extends Controller
         $businessProperties = array();
 
         //if the page is a business entity template page
-        if ($page instanceof BusinessEntityTemplatePage) {
+        if ($page instanceof BusinessEntityTemplate) {
             //get the id of the business entity
-            $businessEntityId = $page->getBusinessEntityTemplate()->getBusinessEntityName();
+            $businessEntityId = $page->getBusinessEntityName();
             //we can use the business entity properties on the seo
             $businessEntity = $businessEntityHelper->findById($businessEntityId);
 
             $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
         }
 
-        //@todo should not the seo be created with the page
         $pageSeo = $page->getSeo() ? $page->getSeo() : new PageSeo($page);
 
         //url for the form

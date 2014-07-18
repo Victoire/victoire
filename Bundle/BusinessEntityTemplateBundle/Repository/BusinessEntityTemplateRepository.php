@@ -3,7 +3,7 @@
 namespace Victoire\Bundle\BusinessEntityTemplateBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Victoire\Bundle\CoreBundle\Entity\BusinessEntity;
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 
 
 /**
@@ -33,5 +33,30 @@ class BusinessEntityTemplateRepository extends EntityRepository
         $results = $qb->getQuery()->getResult();
 
         return $results;
+    }
+
+    /**
+     * Find the business entity template that looks like this url
+     *
+     * @param string $url
+     *
+     * @return array The list of templates
+     */
+    public function findOneByLikeUrl($url)
+    {
+        $template = null;
+
+        $qb = $this->createQueryBuilder('businessEntityTemplate');
+        $qb->where($qb->expr()->like('businessEntityTemplate.url', $qb->expr()->literal($url)));
+
+        $qb->orderBy('businessEntityTemplate.updatedAt', 'ASC');
+
+        $results = $qb->getQuery()->getResult();
+
+        if (count($results) > 0) {
+            $template = $results[0];
+        }
+
+        return $template;
     }
 }

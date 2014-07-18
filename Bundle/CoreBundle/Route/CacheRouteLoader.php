@@ -7,20 +7,33 @@ use Symfony\Component\Config\Loader\LoaderResolverInterface;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 
+/**
+ *
+ * @author Paul Andrieux
+ *
+ */
 class CacheRouteLoader extends Loader
 {
-
     protected $cacheRouteRegisterer;
     protected $em;
     private $loaded = false;
 
+    /**
+     * Constructor
+     *
+     * @param unknown $cacheRouteRegisterer
+     * @param unknown $em
+     */
     public function __construct($cacheRouteRegisterer, $em)
     {
         $this->cacheRouteRegisterer = $cacheRouteRegisterer;
         $this->em = $em;
     }
 
-
+    /**
+     * (non-PHPdoc)
+     * @see \Symfony\Component\Config\Loader\LoaderInterface::load()
+     */
     public function load($resource, $type = null)
     {
         if (true === $this->loaded) {
@@ -30,7 +43,7 @@ class CacheRouteLoader extends Loader
         $routes = new RouteCollection();
         $cachedRoutes = $this->cacheRouteRegisterer->getRoutes();
         if (count($cachedRoutes) === 0) {
-            $pages = $this->em->getRepository('VictoirePageBundle:BasePage')->findAll();
+            $pages = $this->em->getRepository('VictoirePageBundle:Page')->findAll();
             $cachedRoutes = $this->cacheRouteRegisterer->registerRoutes($pages);
         }
         foreach ($cachedRoutes as $routeName => $route) {
@@ -44,10 +57,12 @@ class CacheRouteLoader extends Loader
         return $routes;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see \Symfony\Component\Config\Loader\LoaderInterface::supports()
+     */
     public function supports($resource, $type = null)
     {
         return $type === 'cache';
     }
-
-
 }

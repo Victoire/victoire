@@ -6,11 +6,10 @@ use Victoire\Bundle\CoreBundle\Menu\MenuManager;
 use Victoire\Bundle\CoreBundle\Widget\Managers\WidgetManager;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 use Symfony\Component\Security\Core\SecurityContext;
-use Victoire\Bundle\PageBundle\Entity\BasePage;
-use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
+use Victoire\Bundle\PageBundle\Entity\Page;
+use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
 use Victoire\Bundle\CoreBundle\Entity\Widget;
 use Victoire\Bundle\CoreBundle\Form\WidgetType;
-use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\CoreBundle\Helper\WidgetHelper;
 use Victoire\Bundle\PageBundle\WidgetMap\WidgetMapBuilder;
 use Victoire\Bundle\CoreBundle\Handler\WidgetExceptionHandler;
@@ -119,13 +118,13 @@ class CmsExtension extends \Twig_Extension
 
     /**
      *
-     * @param BasePage $page
+     * @param Page $page
      * @param unknown $slot
      * @param string $addContainer
      * @param string $entity
      * @return string
      */
-    public function cmsSlotWidgets(BasePage $page, $slotId, $addContainer = true, $entity = null)
+    public function cmsSlotWidgets(Page $page, $slotId, $addContainer = true, $entity = null)
     {
         //services
         $widgetMapBuilder = $this->widgetMapBuilder;
@@ -212,20 +211,25 @@ class CmsExtension extends \Twig_Extension
 
     /**
      * render all widgets for a page
+     *
+     * @param Page $page
+     * @return \Victoire\Bundle\CoreBundle\Template\template
      */
-    public function cmsPage(BasePage $page)
+    public function cmsPage(Page $page)
     {
         return $this->templating->render(
             'VictoireCoreBundle:Layout:' . $page->getLayout(). '.html.twig',
             array('page' => $page)
         );
-
     }
 
     /**
      * hash some string with given algorithm
+     *
      * @param string $value     The string to hash
      * @param string $algorithm The algorithm we have to use to hash the string
+     *
+     * @return string
      *
      */
     public function hash($value, $algorithm = "md5")
@@ -233,7 +237,7 @@ class CmsExtension extends \Twig_Extension
         try {
             return hash($algorithm, $value);
         } catch (Exception $e) {
-            error_log('Please check that the '.$algorithm.' does exists because it failed when trying to run. We are expecting a valid algorithm such as md5 or sha512 etc.');
+            error_log('Please check that the '.$algorithm.' does exists because it failed when trying to run. We are expecting a valid algorithm such as md5 or sha512 etc. ['.$e->getMessage().']');
 
             return $value;
         }
@@ -256,26 +260,23 @@ class CmsExtension extends \Twig_Extension
     /**
      * Is the business entity type allowed for the widget and the page context
      *
-     * @param string   $formEntityName The business entity name
-     * @param BasePage $page           The page
+     * @param string $formEntityName The business entity name
+     * @param Page   $page           The page
      *
      * @return boolean Does the form allows this kind of business entity in this page
      */
-    public function isBusinessEntityAllowed($formEntityName, BasePage $page)
+    public function isBusinessEntityAllowed($formEntityName, Page $page)
     {
         //the result
         $isBusinessEntityAllowed = false;
 
         //get the page that is a business entity template page (parent included)
-        $businessEntityTemplatePage = $page->getBusinessEntityTemplateLegacyPage();
+        $businessEntityTemplate = $page->getBusinessEntityTemplateLegacyPage();
 
         //if there is a page
-        if ($businessEntityTemplatePage !== null) {
+        if ($businessEntityTemplate !== null) {
             //and a businessEntity name is given
             if ($formEntityName !== null) {
-                //we check that the twi matches
-                $businessEntityTemplate = $businessEntityTemplatePage->getBusinessEntityTemplate();
-
                 //the business entity linked to the page template
                 $pageBusinessEntity = $businessEntityTemplate->getBusinessEntityName();
 
@@ -294,7 +295,8 @@ class CmsExtension extends \Twig_Extension
      *
      * @param Widget $widget The widget displayed
      * @param Page   $page   The page
-     * @throws \Exception
+     * @param Entity $entity The current entity
+     *
      * @return string
      */
     public function cmsWidgetLegacy(Widget $widget, $page, $entity)
@@ -310,7 +312,7 @@ class CmsExtension extends \Twig_Extension
                 if ($widget->getPageId() !== $page->getId()) {
                     $cssClass = 'vic-widget-legacy';
                 } else {
-                    if ($entity !== null && $page instanceof BusinessEntityTemplatePage) {
+                    if ($entity !== null && $page instanceof BusinessEntityTemplate) {
                         $cssClass = 'vic-widget-legacy';
                     }
                 }

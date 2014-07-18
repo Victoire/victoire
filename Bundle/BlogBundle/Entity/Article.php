@@ -21,7 +21,7 @@ class Article extends Page
     const TYPE = 'article';
 
     /**
-     * Title is inherited from BasePage, just add the BusinessProperty annotation
+     * Title is inherited from Page, just add the BusinessProperty annotation
      * @var string
      *
      * @Assert\NotBlank()
@@ -30,7 +30,7 @@ class Article extends Page
     protected $title;
 
     /**
-     * Description is inherited from BasePage, just add the BusinessProperty annotation
+     * Description is inherited from Page, just add the BusinessProperty annotation
      * @var string
      *
      * @Assert\NotBlank()
@@ -55,7 +55,7 @@ class Article extends Page
 
     /**
      * @var string
-     * Title is inherited from BasePage, just add the BusinessProperty annotation
+     * Title is inherited from Page, just add the BusinessProperty annotation
      *
      * @VIC\BusinessProperty("textable")
      */
@@ -63,7 +63,7 @@ class Article extends Page
 
     /**
      * @var string
-     * Author is inherited from BasePage, just add the BusinessProperty annotation
+     * Author is inherited from Page, just add the BusinessProperty annotation
      *
      * @VIC\BusinessProperty("textable")
      */

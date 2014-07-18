@@ -2,7 +2,7 @@
 namespace Victoire\Bundle\BlogBundle\Listener;
 
 use Symfony\Component\EventDispatcher\Event;
-use Victoire\Bundle\PageBundle\Event\Menu\BasePageMenuContextualEvent;
+use Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent;
 use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
 
 
@@ -26,10 +26,10 @@ class BlogMenuListener
     /**
      * add a contextual menu item
      *
-     * @param BasePageMenuContextualEvent $event
+     * @param PageMenuContextualEvent $event
      * @return \Victoire\Bundle\BlogBundle\Listener\MenuItem
      */
-    public function addContextual(BasePageMenuContextualEvent $event)
+    public function addContextual(PageMenuContextualEvent $event)
     {
         $mainItem = $this->getMainItem();
 

@@ -29,8 +29,10 @@ class AnnotationReader extends AnnotationDriver
     /**
      * construct
      *
-     * @return void
-     **/
+     * @param unknown $reader
+     * @param unknown $paths
+     * @param unknown $widgets
+     */
     public function __construct($reader, $paths, $widgets)
     {
         $this->widgets = $widgets;
@@ -40,6 +42,11 @@ class AnnotationReader extends AnnotationDriver
         }
     }
 
+    /**
+     * Set the cache
+     *
+     * @param unknown $cache
+     */
     public function setCache($cache)
     {
         $this->cache = $cache;

@@ -20,13 +20,10 @@ class TemplateMapper
     protected $templates;
 
     /**
-     * construct
+     * constructor
      *
-     * @param bootstrap|foundation $framework  Templating framework used
-     * @param string               $appBundle  Applicative bundle, defined in config
-     * @param array                $templates  templates config
-     * @return void
-     **/
+     * @param ContainerInterface $container
+     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
@@ -71,11 +68,13 @@ class TemplateMapper
      * Execute several strategies to retrive the template file
      *
      * @param string $view The key of requested template
+     *
      * @return Template file
+     *
+     * @throws HttpException
      **/
     public function retrieveTemplate($view)
     {
-
         list($bundle, $element, $view) = array_pad(explode(":", $view), 3, null);
 
         if ($view) {
@@ -120,11 +119,9 @@ class TemplateMapper
     /**
      * Apply strategy to retrive template
      *
-     * @param string $bundle
-     * @param string $view
-     * @return void
-     * @author
-     **/
+     * @param unknown $template
+     * @return string|boolean
+     */
     protected function getTemplate($template)
     {
         $template = implode(':', func_get_args());
@@ -134,6 +131,4 @@ class TemplateMapper
 
         return false;
     }
-
-
 }

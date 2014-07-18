@@ -9,9 +9,8 @@ use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
 use Victoire\Bundle\CoreBundle\Entity\Route;
 use Victoire\Bundle\PageBundle\Entity\Template;
-use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
+use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
 use Victoire\Bundle\PageBundle\Helper\UrlHelper;
 
 /**
@@ -19,7 +18,6 @@ use Victoire\Bundle\PageBundle\Helper\UrlHelper;
  */
 class PageSubscriber implements EventSubscriber
 {
-
     protected $cacheRouteRegisterer;
     protected $router;
     protected $userClass;
@@ -79,20 +77,20 @@ class PageSubscriber implements EventSubscriber
     {
 
         $metadatas = $eventArgs->getClassMetadata();
-        if ($metadatas->name === 'Victoire\Bundle\PageBundle\Entity\BasePage') {
+        if ($metadatas->name === 'Victoire\Bundle\PageBundle\Entity\Page') {
             $metadatas->discriminatorMap[Page::TYPE] = 'Victoire\Bundle\PageBundle\Entity\Page';
             $metadatas->discriminatorMap[Template::TYPE] = 'Victoire\Bundle\PageBundle\Entity\Template';
         }
 
         //set a relation between Page and User to define the page author
         $metaBuilder = new ClassMetadataBuilder($metadatas);
-        if ($this->userClass && $metadatas->name === 'Victoire\Bundle\PageBundle\Entity\BasePage') {
+        if ($this->userClass && $metadatas->name === 'Victoire\Bundle\PageBundle\Entity\Page') {
             $metaBuilder->addManyToOne('author', $this->userClass);
         }
 
         // if $pages property exists, add the inversed side on User
         if ($metadatas->name === $this->userClass && property_exists($this->userClass, 'pages')) {
-            $metaBuilder->addOneToMany('pages', 'Victoire\Bundle\PageBundle\Entity\BasePage', 'author');
+            $metaBuilder->addOneToMany('pages', 'Victoire\Bundle\PageBundle\Entity\Page', 'author');
         }
     }
 
@@ -108,7 +106,7 @@ class PageSubscriber implements EventSubscriber
         $this->uow  = $this->entityManager->getUnitOfWork();
 
         foreach ($this->uow->getScheduledEntityInsertions() as $entity) {
-            if ($entity instanceof BasePage) {
+            if ($entity instanceof Page) {
                 if ($entity->getComputeUrl()) {
                     $this->buildUrl($entity);
                     $meta = $this->entityManager->getClassMetadata(get_class($entity));
@@ -119,7 +117,7 @@ class PageSubscriber implements EventSubscriber
         }
 
         foreach ($this->uow->getScheduledEntityUpdates() as $entity) {
-            if ($entity instanceof BasePage) {
+            if ($entity instanceof Page) {
                 if ($entity->getComputeUrl()) {
                     $meta = $this->entityManager->getClassMetadata(get_class($entity));
                     $this->uow->computeChangeSet($meta, $entity);
@@ -135,11 +133,11 @@ class PageSubscriber implements EventSubscriber
     * Builds the pages children urls with new page slug
     * If page has a custom url, we don't modify it, but we modify children urls
     *
-    * @param BasePage $page
+    * @param Page $page
     * @param bool $depth
     * @return $page
      */
-    public function buildUrl(BasePage $page, $depth = 0)
+    public function buildUrl(Page $page, $depth = 0)
     {
         //services
         $em = $this->entityManager;
@@ -157,6 +155,14 @@ class PageSubscriber implements EventSubscriber
         //the depth is > 0, so this page is a child
         if ($depth !== 0) {
              $buildUrl = true;
+        }
+
+        if ($page instanceof BusinessEntityTemplate) {
+            $buildUrl = false;
+        }
+        $template = $page->getTemplate();
+        if ($template instanceof BusinessEntityTemplate) {
+            $buildUrl = false;
         }
 
         //should we build the url
@@ -178,12 +184,6 @@ class PageSubscriber implements EventSubscriber
             $url = array_reverse($url);
             //build an url based on the slugs
             $url = implode('/', $url);
-
-            //it is a template that accepts to look for entities
-            if ($page instanceof BusinessEntityTemplatePage) {
-                //so we add the identifier to the url
-                $url .= '/{id}';
-            }
 
             //get the next free url
             $url = $urlHelper->getNextAvailaibleUrl($url);
@@ -213,7 +213,7 @@ class PageSubscriber implements EventSubscriber
      *
      * @return array $urlArray The list of slugs
      */
-    protected function getParentSlugs(BasePage $page, $urlArray)
+    protected function getParentSlugs(Page $page, $urlArray)
     {
         $parent = $page->getParent();
 
@@ -233,7 +233,7 @@ class PageSubscriber implements EventSubscriber
      * @param Page   $page
      * @param String $initialUrl
      */
-    protected function addRouteHistory(BasePage $page, $initialUrl)
+    protected function addRouteHistory(Page $page, $initialUrl)
     {
         //services
         $em = $this->entityManager;
@@ -259,7 +259,7 @@ class PageSubscriber implements EventSubscriber
      * @param Page    $page  The page
      * @param Integer $depth The depth
      */
-    protected function rebuildChildrenUrl(BasePage $page, $depth)
+    protected function rebuildChildrenUrl(Page $page, $depth)
     {
         //services
         $em = $this->entityManager;

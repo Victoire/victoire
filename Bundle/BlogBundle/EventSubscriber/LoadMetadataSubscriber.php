@@ -27,7 +27,7 @@ class LoadMetadataSubscriber implements EventSubscriber
      */
     public function loadClassMetadata($class)
     {
-        if ($class->getClassMetadata()->name === 'Victoire\Bundle\PageBundle\Entity\BasePage') {
+        if ($class->getClassMetadata()->name === 'Victoire\Bundle\PageBundle\Entity\Page') {
             $class->getClassMetadata()->discriminatorMap[Article::TYPE] = 'Victoire\Bundle\BlogBundle\Entity\Article';
         }
     }

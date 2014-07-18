@@ -35,6 +35,8 @@ class MenuBuilder
 
     /**
      * create top menu defined in the contructor
+     *
+     * @return \Knp\Menu\ItemInterface
      */
     public function initTopNavbar()
     {
@@ -53,6 +55,8 @@ class MenuBuilder
 
     /**
      * create left menu defined in the contructor
+     *
+     * @return \Knp\Menu\ItemInterface
      */
     public function initLeftNavbar()
     {
@@ -78,7 +82,13 @@ class MenuBuilder
     }
 
     /**
-     * {@inheritDoc}
+     * Create the dropdown menu
+     *
+     * @param ItemInterface $rootItem
+     * @param unknown $title
+     * @param unknown $attributes
+     * @param string $caret
+     * @return \Knp\Menu\ItemInterface
      */
     public function createDropdownMenuItem(ItemInterface $rootItem, $title, $attributes = array(), $caret = true)
     {
@@ -109,6 +119,8 @@ class MenuBuilder
 
     /**
      * return menu
+     *
+     * @return \Knp\Menu\ItemInterface
      */
     public function getMenu()
     {
@@ -117,6 +129,8 @@ class MenuBuilder
 
     /**
      * return topNavbar
+     *
+     * @return \Knp\Menu\ItemInterface
      */
     public function getTopNavbar()
     {
@@ -125,6 +139,8 @@ class MenuBuilder
 
     /**
      * return leftNavbar
+     *
+     * @return \Knp\Menu\ItemInterface
      */
     public function getLeftNavbar()
     {

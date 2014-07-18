@@ -1,7 +1,7 @@
 <?php
 namespace Victoire\Bundle\PageBundle\WidgetMap;
 
-use Victoire\Bundle\PageBundle\Entity\BasePage;
+use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\CoreBundle\Entity\Widget;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 use Victoire\Bundle\PageBundle\Entity\Slot;
@@ -31,7 +31,7 @@ class WidgetMapBuilder
      *
      * @param Page $page
      */
-    public function removeMissingWidgets(BasePage $page)
+    public function removeMissingWidgets(Page $page)
     {
         //get the slots of the page
         $slots = $page->getSlots();
@@ -76,7 +76,7 @@ class WidgetMapBuilder
      * @param Page $page
      *
      */
-    public function removeDuplicateWidgetLegacy(BasePage $page)
+    public function removeDuplicateWidgetLegacy(Page $page)
     {
         //get the template of the page
         $template = $page->getTemplate();
@@ -118,7 +118,7 @@ class WidgetMapBuilder
      *
      * @return array The list of ids
      */
-    protected function getCompleteWidgetIds(BasePage $page)
+    protected function getCompleteWidgetIds(Page $page)
     {
         $ids = array();
 
@@ -168,7 +168,7 @@ class WidgetMapBuilder
      *
      * @throws \Exception
      */
-    public function computeCompleteWidgetMap(BasePage $page, $slotId)
+    public function computeCompleteWidgetMap(Page $page, $slotId)
     {
         $widgetMap = array();
         $parentWidgetMaps = null;
@@ -280,7 +280,7 @@ class WidgetMapBuilder
      * @param Page $page
      * @param array $widgetSlots
      */
-    public function updateWidgetMapsByPage(BasePage $page, $widgetSlots)
+    public function updateWidgetMapsByPage(Page $page, $widgetSlots)
     {
         foreach ($widgetSlots as $slotId => $widgetIds) {
             //the reference to the previous widget map parent
@@ -334,7 +334,7 @@ class WidgetMapBuilder
      *
      * @throws \Exception The slot does not exists
      */
-    public function deleteWidgetFromPage(BasePage $page, Widget $widget)
+    public function deleteWidgetFromPage(Page $page, Widget $widget)
     {
         //the widget page
         $widgetPage = $widget->getPage();
@@ -396,7 +396,7 @@ class WidgetMapBuilder
      *
      * @throws \Exception The slot does not exists
      */
-    public function editWidgetFromPage(BasePage $page, Widget $widget)
+    public function editWidgetFromPage(Page $page, Widget $widget)
     {
         //the widget page
         $widgetPage = $widget->getPage();

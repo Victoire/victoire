@@ -17,6 +17,12 @@ class Cache
     private $cache;
     private $debug;
 
+    /**
+     * Constructor
+     *
+     * @param unknown $cache
+     * @param unknown $debug
+     */
     public function __construct($cache, $debug)
     {
         $this->uniqId = md5(__FILE__);

@@ -17,9 +17,11 @@ class WidgetGenerator extends Generator
     private $templating;
     private $skeletonDirs;
 
-
     /**
-     * {@inheritDoc}
+     * Constructor
+     *
+     * @param Filesystem $filesystem
+     * @param unknown $frameworks
      */
     public function __construct(Filesystem $filesystem, $frameworks)
     {
@@ -29,12 +31,13 @@ class WidgetGenerator extends Generator
 
     /**
      * set templating
+     *
+     * @param unknown $templating
      */
     public function setTemplating($templating)
     {
         $this->templating = $templating;
     }
-
 
     /**
      * build WidgetBundle files
@@ -48,7 +51,7 @@ class WidgetGenerator extends Generator
                 throw new \RuntimeException(sprintf('Unable to generate the bundle as the target directory "%s" exists but is a file.', realpath($dir)));
             }
             $files = scandir($dir);
-            if ($files != array('.', '..')) {
+            if ($files !== array('.', '..')) {
                 throw new \RuntimeException(sprintf('Unable to generate the bundle as the target directory "%s" is not empty.', realpath($dir)));
             }
             if (!is_writable($dir)) {
@@ -114,7 +117,6 @@ class WidgetGenerator extends Generator
 
     }
 
-
     /**
      * write WidgetBundle files
      */
@@ -126,7 +128,6 @@ class WidgetGenerator extends Generator
         return $twig->render($template, $parameters);
     }
 
-
     /**
      * configure available skeletons twig files
      */
@@ -135,6 +136,4 @@ class WidgetGenerator extends Generator
         parent::setSkeletonDirs($skeletonDirs);
         $this->skeletonDirs = $skeletonDirs;
     }
-
-
 }

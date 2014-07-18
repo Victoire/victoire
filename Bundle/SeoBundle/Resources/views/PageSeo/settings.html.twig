@@ -10,27 +10,12 @@
 
 <div class="vic-tab-content vic-modal-tab-content">
     <div class="vic-tab-pane vic-active" id="basics">
-        <div class='businessProperties'>
-            <div class='businessPropertyTitle'>
-                {{ 'modal.form.pageSeo.settings.businessProperties'|trans }}
-            </div>
-            {% for businessProperty in businessProperties %}
-                <div class='businessProperty'>
-                    <a onClick='seo.addPropertyToCurrentInput("{{ businessProperty.entityProperty }}")'>{{ businessProperty.entityProperty }}</a>
-                </div>
-            {% endfor %}
-        </div>
+        {% include 'VictoireBusinessEntityBundle:BusinessProperty:list.html.twig' with { 'businessProperties':businessProperties } %}
         {{form_start(form)}}
             {{form_widget(form)}}
         {{form_end(form)}}
     </div>
 </div>
-
-<script type="text/javascript">
-    //init the event handler for the business entity property
-    seo.initPropertyHelper();
-</script>
-
 {% endblock modal_body_content %}
 
 {% block modal_header_title %}

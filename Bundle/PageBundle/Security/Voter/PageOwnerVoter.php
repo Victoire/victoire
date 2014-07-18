@@ -4,7 +4,7 @@ namespace Victoire\Bundle\PageBundle\Security\Voter;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
-use Victoire\Bundle\PageBundle\Entity\BasePage;
+use Victoire\Bundle\PageBundle\Entity\Page;
 
 /**
  * This class decides yes or no if the user is granted to do some action on a given page
@@ -32,7 +32,7 @@ class PageOwnerVoter implements VoterInterface
      */
     public function supportsClass($page)
     {
-        return $page instanceof BasePage;
+        return $page instanceof Page;
     }
 
     /**
