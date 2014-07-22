@@ -18,12 +18,13 @@ use Doctrine\Common\Cache\Cache,
  **/
 class EntityProxyCacheDriver extends AnnotationDriver
 {
-
     /**
      * construct
      *
-     * @return void
-     **/
+     * @param unknown $reader
+     * @param unknown $rootDir
+     * @param unknown $env
+     */
     public function __construct($reader, $rootDir, $env)
     {
         $this->env = $env;
@@ -36,15 +37,12 @@ class EntityProxyCacheDriver extends AnnotationDriver
     }
 
     /**
-     * {@inheritDoc}
+     * Get all class names
+     *
+     * @return array
      */
     public function getAllClassNames()
     {
-
-
         return array('Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy');
-
     }
-
-
 }

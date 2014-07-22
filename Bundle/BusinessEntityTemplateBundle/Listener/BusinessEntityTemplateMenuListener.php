@@ -2,9 +2,9 @@
 namespace Victoire\Bundle\BusinessEntityTemplateBundle\Listener;
 
 use Symfony\Component\EventDispatcher\Event;
-use Victoire\Bundle\PageBundle\Event\Menu\BasePageMenuContextualEvent;
+use Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent;
 use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
-use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
+use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
 use AppVentus\Awesome\ShortcutsBundle\Service\ShortcutService;
 
 /**
@@ -49,10 +49,10 @@ class BusinessEntityTemplateMenuListener
     /**
      * Add the parent menu for a page that extends another one
      *
-     * @param BasePageMenuContextualEvent $event
+     * @param PageMenuContextualEvent $event
      * @return MenuBuilder
      */
-    public function addContextual(BasePageMenuContextualEvent $event)
+    public function addContextual(PageMenuContextualEvent $event)
     {
         $mainItem = $this->menuBuilder->getTopNavbar();
 

@@ -7,7 +7,7 @@ use Victoire\Bundle\CoreBundle\Widget\Managers\WidgetManager;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Victoire\Bundle\PageBundle\Entity\BasePage;
+use Victoire\Bundle\PageBundle\Entity\Page;
 
 /**
  * Provides some gloval variabls to twig
@@ -20,6 +20,9 @@ class GlobalsExtension extends \Twig_Extension
 
     /**
      * contructor
+     *
+     * @param TemplateMapper $templateMapper
+     * @param unknown $session
      */
     public function __construct(TemplateMapper $templateMapper, $session)
     {
@@ -27,6 +30,11 @@ class GlobalsExtension extends \Twig_Extension
         $this->session = $session;
     }
 
+    /**
+     * Get the globals
+     *
+     * @return array
+     */
     public function getGlobals()
     {
         return array(
@@ -35,9 +43,13 @@ class GlobalsExtension extends \Twig_Extension
         );
     }
 
+    /**
+     * The name of the extension
+     *
+     * @return string
+     */
     public function getName()
     {
         return 'Globals_extention';
     }
-
 }

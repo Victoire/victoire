@@ -28,12 +28,12 @@
         <ul class="vic-userNav">
             {% if page is defined and not page.published %}
             <li class="vic-text-center">
-                {% if page.status == constant('Victoire\\Bundle\\PageBundle\\Entity\\BasePage::STATUS_SCHEDULED') %}
+                {% if page.status == constant('Victoire\\Bundle\\PageBundle\\Entity\\Page::STATUS_SCHEDULED') %}
                     {% set icon = "clock-o" %}
                     {% set tooltip = "victoire.menu.publication.scheduled.tooltip"|trans({'%publication_date%': page.publishedAt|localizeddate('medium', 'none', null, null, "cccc dd/MM/yyyy à hh'h'mm") }, 'victoire') %}
-                {% elseif page.status == constant('Victoire\\Bundle\\PageBundle\\Entity\\BasePage::STATUS_DRAFT') %}
+                {% elseif page.status == constant('Victoire\\Bundle\\PageBundle\\Entity\\Page::STATUS_DRAFT') %}
                     {% set icon = "pencil" %}
-                {% elseif page.status == constant('Victoire\\Bundle\\PageBundle\\Entity\\BasePage::STATUS_UNPUBLISHED') %}
+                {% elseif page.status == constant('Victoire\\Bundle\\PageBundle\\Entity\\Page::STATUS_UNPUBLISHED') %}
                     {% set icon = "moon-o" %}
                 {% endif %}
                 <a href="{{ path('victoire_core_page_settings', {'id' : page.id}) }}" data-toggle="vic-modal"{% if tooltip is defined %}title="{{ tooltip }}"{% endif %} style="font-size:10px;margin-top:5px;">

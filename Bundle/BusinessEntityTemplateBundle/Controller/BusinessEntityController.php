@@ -1,7 +1,7 @@
 <?php
 namespace Victoire\Bundle\BusinessEntityTemplateBundle\Controller;
 
-use Victoire\Bundle\PageBundle\Controller\BasePageController;
+use Victoire\Bundle\PageBundle\Controller\PageController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  *
  * @Route("/victoire-dcms/business-entity-template")
  */
-class BusinessEntityController extends BasePageController
+class BusinessEntityController extends PageController
 {
     /**
      *

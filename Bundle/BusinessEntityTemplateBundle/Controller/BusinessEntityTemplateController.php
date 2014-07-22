@@ -33,6 +33,7 @@ class BusinessEntityTemplateController extends BaseController
     {
         //get the business entity
         $businessEntity = $this->getBusinessEntity($id);
+        $errorMessage = '';
 
         $entity = new BusinessEntityTemplate();
         $entity->setBusinessEntity($businessEntity);
@@ -46,11 +47,8 @@ class BusinessEntityTemplateController extends BaseController
             $em->persist($entity);
             $em->flush();
 
-            //get the associated template
-            $template = $entity->getTemplate();
-
             //get the url of the template
-            $templateUrl = $template->getUrl();
+            $templateUrl = $entity->getUrl();
 
             //the shortcuts service
             $shortcuts = $this->get('av.shortcuts');
@@ -60,13 +58,20 @@ class BusinessEntityTemplateController extends BaseController
 
             $success = true;
         } else {
+            //the form error service
+            $formErrorService = $this->container->get('av.form_error_service');
+
+            //get the errors as a string
+            $errorMessage = $formErrorService->getRecursiveReadableErrors($form);
+
             $success = false;
             $completeUrl = null;
         }
 
         return new JsonResponse(array(
             'success' => $success,
-            'url' => $completeUrl
+            'url'     => $completeUrl,
+            'message' => $errorMessage
         ));
     }
 
@@ -114,9 +119,13 @@ class BusinessEntityTemplateController extends BaseController
 
         $form = $this->createCreateForm($entity);
 
+        $businessEntityHelper = $this->get('victoire_business_entity_template.business_entity_template_helper');
+        $businessProperties = $businessEntityHelper->getBusinessProperties($businessEntity);
+
         $parameters = array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'businessProperties' => $businessProperties
         );
         return new JsonResponse(array(
             'html' => $this->container->get('victoire_templating')->render(
@@ -144,8 +153,11 @@ class BusinessEntityTemplateController extends BaseController
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
+        $businessEntityTemplateHelper = $this->get('victoire_business_entity_template.business_entity_template_helper');
+        $businessEntityHelper = $this->get('victoire_core.helper.business_entity_helper');
 
         $entity = $em->getRepository('VictoireBusinessEntityTemplateBundle:BusinessEntityTemplate')->find($id);
+
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find BusinessEntityTemplate entity.');
@@ -154,10 +166,19 @@ class BusinessEntityTemplateController extends BaseController
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
+        //the business property link to the page
+        $businessEntityId = $entity->getBusinessEntityName();
+        $businessEntity = $businessEntityHelper->findById($businessEntityId);
+
+        $businessEntityTemplateHelper = $this->get('victoire_business_entity_template.business_entity_template_helper');
+
+        $businessProperties = $businessEntityTemplateHelper->getBusinessProperties($businessEntity);
+
         $parameters = array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'businessProperties' => $businessProperties
         );
 
         return new JsonResponse(array(
@@ -205,21 +226,18 @@ class BusinessEntityTemplateController extends BaseController
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('VictoireBusinessEntityTemplateBundle:BusinessEntityTemplate')->find($id);
+        $template = $em->getRepository('VictoireBusinessEntityTemplateBundle:BusinessEntityTemplate')->find($id);
 
-        if (!$entity) {
+        if (!$template) {
             throw $this->createNotFoundException('Unable to find BusinessEntityTemplate entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createEditForm($template);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $em->flush();
-
-            //get the associated template
-            $template = $entity->getTemplate();
 
             //get the url of the template
             $templateUrl = $template->getUrl();

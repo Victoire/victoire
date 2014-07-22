@@ -65,7 +65,7 @@ EOT
         if ($input->getOption('url')) {
             $output->writeln('<info>Get page "' . $input->getOption('url') . '"</info>');
             $pages = array();
-            $pages[] = $page = $em->getRepository('VictoirePageBundle:BasePage')->findOneByUrl($input->getOption('url'));
+            $pages[] = $page = $em->getRepository('VictoirePageBundle:Page')->findOneByUrl($input->getOption('url'));
             if (!$page) {
                 $output->writeln('<error>Page not found. Are you sure the page exists in db ?</error>');
                 return false;
@@ -73,7 +73,7 @@ EOT
             //TODO throw exception if not found
         } elseif ($input->getOption('all')) {
             $output->writeln('<info>Get all pages </info>');
-            $pages = $em->getRepository('VictoirePageBundle:BasePage')->findAll();
+            $pages = $em->getRepository('VictoirePageBundle:Page')->findAll();
         } else {
             throw new \InvalidArgumentException('You should at least pass one url or use the --all option to rebuild all the pages.');
         }

@@ -2,9 +2,9 @@
 namespace Victoire\Bundle\PageBundle\Listener;
 
 use Symfony\Component\EventDispatcher\Event;
-use Victoire\Bundle\PageBundle\Event\Menu\BasePageMenuContextualEvent;
+use Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent;
 use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
-use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
+use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
 
 /**
  * When dispatched, this listener add items to a KnpMenu
@@ -27,10 +27,10 @@ class PageMenuListener
     /**
      * add a contextual menu item
      *
-     * @param  BasePageMenuContextualEvent $event
-     * @return Ambigous                    <\Knp\Menu\ItemInterface, NULL>
+     * @param  PageMenuContextualEvent $event
+     * @return Ambigous                <\Knp\Menu\ItemInterface, NULL>
      */
-    public function addContextual(BasePageMenuContextualEvent $event)
+    public function addContextual(PageMenuContextualEvent $event)
     {
         //get the current page
         $page = $event->getPage();
@@ -51,7 +51,7 @@ class PageMenuListener
         )->setLinkAttribute('data-toggle', 'vic-modal');
 
         //are we in a business entity template with an entity given as parameter
-        if (($page->getType() === BusinessEntityTemplatePage::TYPE)  && ($entity !== null)) {
+        if (($page->getType() === BusinessEntityTemplate::TYPE)  && ($entity !== null)) {
             $template = $page;
         } else {
             //get the parent

@@ -6,6 +6,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Victoire\Bundle\CoreBundle\Form\Builder\EntityProxyFieldsBuilder;
 
+/**
+ *
+ * @author Paul Andrieux
+ *
+ */
 class WidgetFieldsFormType extends AbstractType
 {
     private $entityProxyFieldsBuilder;
@@ -47,9 +52,10 @@ class WidgetFieldsFormType extends AbstractType
         );
     }
 
-
     /**
      * get form name
+     *
+     * @return string The form name
      */
     public function getName()
     {

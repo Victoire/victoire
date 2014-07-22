@@ -58,7 +58,7 @@ class PageType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class'         => 'Victoire\Bundle\PageBundle\Entity\BasePage',
+            'data_class'         => 'Victoire\Bundle\PageBundle\Entity\Page',
             'translation_domain' => 'victoire',
             'layouts' => $this->layouts,
         ));

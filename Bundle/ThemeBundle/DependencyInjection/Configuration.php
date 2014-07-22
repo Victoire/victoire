@@ -13,16 +13,13 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     /**
-     * {@inheritDoc}
+     * (non-PHPdoc)
+     * @see \Symfony\Component\Config\Definition\ConfigurationInterface::getConfigTreeBuilder()
      */
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('victoire_theme');
-
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $treeBuilder->root('victoire_theme');
 
         return $treeBuilder;
     }

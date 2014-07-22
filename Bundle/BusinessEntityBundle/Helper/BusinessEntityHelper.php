@@ -1,11 +1,11 @@
 <?php
-namespace Victoire\Bundle\CoreBundle\Helper;
+namespace Victoire\Bundle\BusinessEntityBundle\Helper;
 
 use Victoire\Bundle\CoreBundle\Annotations\Reader\AnnotationReader;
-use Victoire\Bundle\CoreBundle\Entity\BusinessEntity;
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Doctrine\ORM\EntityManager;
-use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
-use Victoire\Bundle\CoreBundle\Entity\BusinessProperty;
+use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
 
 
 /**
@@ -175,25 +175,21 @@ class BusinessEntityHelper
     /**
      * Get the entity from the page and the id given
      *
-     * @param BusinessEntityTemplatePage $page             The page
-     * @param string                     $entityIdentifier The identifier for the business entity
+     * @param BusinessEntityTemplate $page             The page
+     * @param string                 $entityIdentifier The identifier for the business entity
+     * @param string                 $attributeName    The name of the attribute used to identify an entity
      *
      * @throws \Exception
      *
      * @return The entity
      */
-    public function getEntityByPageAndBusinessIdentifier(BusinessEntityTemplatePage $page, $entityIdentifier)
+    public function getEntityByPageAndBusinessIdentifier(BusinessEntityTemplate $page, $entityIdentifier, $attributeName)
     {
         $entity = null;
 
-        $template = $page->getBusinessEntityTemplate();
-
-        $businessEntityName = $template->getBusinessEntityName();
+        $businessEntityName = $page->getBusinessEntityName();
 
         $businessEntity = $this->findById($businessEntityName);
-
-        //the attribute used for getting the entity instance
-        $attributeName = $template->getEntityIdentifier();
 
         //test the result
         if ($businessEntity === null) {

@@ -15,7 +15,6 @@ class ThemeGenerator extends Generator
     private $templating;
     private $skeletonDirs;
 
-
     /**
      * {@inheritDoc}
      */
@@ -32,7 +31,6 @@ class ThemeGenerator extends Generator
     {
         $this->templating = $templating;
     }
-
 
     /**
      * build ThemeBundle files
@@ -117,7 +115,6 @@ class ThemeGenerator extends Generator
         $this->renderFile('theme/views/show.html.twig.twig', $dir.'/Resources/views/show.html.twig', $parameters);
     }
 
-
     /**
      * write ThemeBundle files
      */
@@ -129,7 +126,6 @@ class ThemeGenerator extends Generator
         return $twig->render($template, $parameters);
     }
 
-
     /**
      * configure available skeletons twig files
      */
@@ -138,6 +134,4 @@ class ThemeGenerator extends Generator
         parent::setSkeletonDirs($skeletonDirs);
         $this->skeletonDirs = $skeletonDirs;
     }
-
-
 }

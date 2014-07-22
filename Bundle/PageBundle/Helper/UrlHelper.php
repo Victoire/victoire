@@ -2,7 +2,7 @@
 namespace Victoire\Bundle\PageBundle\Helper;
 
 use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
+use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Doctrine\ORM\EntityManager;
 
@@ -62,7 +62,7 @@ class UrlHelper
         }
 
         //add the id to the end of the url
-        array_push($keywords, '{id}');
+        array_push($keywords, '{{item.id}}');
 
         //rebuild the url
         $urlMatcher = implode('/', $keywords);
@@ -102,25 +102,31 @@ class UrlHelper
 
         //get the base url
         $router = $this->router;
-        $context = $router->getContext();
-        //the host
-        $host = $context->getHost();
-        //the scheme
-        $scheme = $context->getScheme();
-
-        //get the complete url
-        $completeUrl = $scheme.'://'.$host.'/';
 
         //the referer
         $referer = urldecode($request->server->get('HTTP_REFERER'));
 
-        //remove the base of the url
-        $urlReferer = substr($referer, strlen($completeUrl));
+        // split on the / character
+        $keywords = preg_split("/\//", $referer);
+
+        //it gives an array that looks like
+        //    [0] => http:
+        //    [1] =>
+        //    [2] => sandbox.dev:443
+        //    [3] => renault
+        //    [4] => clio
+
+        unset($keywords[0]);
+        unset($keywords[1]);
+        unset($keywords[2]);
+
+        //so we remove the 3 first entries
+        $urlReferer = implode('/', $keywords);
 
         //remove potential parameters
         $position = stripos($urlReferer, "?");
         if ($position > 0) {
-            $urlReferer = substr($urlReferer, 0, stripos($urlReferer, "?") );
+            $urlReferer = substr($urlReferer, 0, stripos($urlReferer, "?"));
         }
 
         return $urlReferer;
@@ -171,7 +177,7 @@ class UrlHelper
         $em = $this->em;
 
         //the base page repository
-        $repo = $em->getRepository('VictoirePageBundle:BasePage');
+        $repo = $em->getRepository('VictoirePageBundle:Page');
 
         //try to get a page with this url
         $page = $repo->findOneByUrl($url);
@@ -182,5 +188,58 @@ class UrlHelper
         }
 
         return $isUrlAlreadyUsed;
+    }
+
+    /**
+     * Remove the last part of the url
+     *
+     * @param string $url
+     *
+     * @return string The shorten url
+     */
+    public function removeLastPart($url)
+    {
+        $shortenUrl = null;
+
+        if ($url !== null && $url !== '') {
+            // split on the / character
+            $keywords = preg_split("/\//", $url);
+
+            //if there are some words, we pop the last
+            if (count($keywords) > 0) {
+                array_pop($keywords);
+
+                //rebuild the url
+                $shortenUrl = implode('/', $keywords);
+            }
+        }
+
+        return $shortenUrl;
+    }
+
+    /**
+     * Extract a part of the url
+     *
+     * @param string  $url
+     * @param integer $position
+     *
+     * @return string The extracted part
+     */
+    public function extractPartByPosition($url, $position)
+    {
+        $part = null;
+
+        if ($url !== null && $url !== '') {
+            // split on the / character
+            $keywords = preg_split("/\//", $url);
+
+            //if there are some words, we pop the last
+            if (count($keywords) > 0) {
+                //get the part
+                $part = $keywords[$position - 1];
+            }
+        }
+
+        return $part;
     }
 }

@@ -7,6 +7,8 @@
 {% block modal_container_classes %}{{ parent() }} vic-page-modal{% endblock modal_container_classes %}
 
 {% block modal_body_content %}
+    {% include 'VictoireBusinessEntityBundle:BusinessProperty:list.html.twig' with { 'businessProperties':businessProperties } %}
+
     <h1>{{ 'business_entity_template.edit.title'|trans }}</h1>
     {{ form(edit_form) }}
 {% endblock modal_body_content %}

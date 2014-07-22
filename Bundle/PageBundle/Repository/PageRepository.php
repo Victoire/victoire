@@ -2,21 +2,21 @@
 namespace Victoire\Bundle\PageBundle\Repository;
 
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
-use Victoire\Bundle\PageBundle\Entity\BasePage;
+use Victoire\Bundle\PageBundle\Entity\Page;
 
 /**
- * The basePage repository
+ * The Page repository
  *
  * @author Thomas Beaujean thomas@appventus.com
  *
  */
-class BasePageRepository extends NestedTreeRepository
+class PageRepository extends NestedTreeRepository
 {
 
     /**
      * Get the the page that is a homepage and a published one
      *
-     * @return BasePage
+     * @return Page
      */
     public function findOneByHomepage()
     {
@@ -24,7 +24,7 @@ class BasePageRepository extends NestedTreeRepository
         $qb = $this->createQueryBuilder('page');
 
         $qb->where('page.homepage = true');
-        $qb->addWhere('page.status = \''.BasePage::STATUS_PUBLISHED.'\'');
+        $qb->addWhere('page.status = \''.Page::STATUS_PUBLISHED.'\'');
         $qb->setMaxResults(1);
 
         $query = $qb->getQuery();

@@ -4,7 +4,7 @@ namespace Victoire\Bundle\QueryBundle\Helper;
 
 
 use Doctrine\ORM\EntityManager;
-use Victoire\Bundle\CoreBundle\Helper\BusinessEntityHelper;
+use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Doctrine\ORM\QueryBuilder;
 
 /**
@@ -58,7 +58,8 @@ class QueryHelper
 
         //test that there is a business entity name
         if ($businessEntityName === null || $businessEntityName === '') {
-            throw new \Exception('The container entity does not have any businessEntityName.');
+            $containerId = $containerEntity->getId();
+            throw new \Exception('The container entity ['.$containerId.'] does not have any businessEntityName.');
         }
 
         //the business class of the container entity

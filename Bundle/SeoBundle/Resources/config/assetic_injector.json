@@ -5,7 +5,7 @@
         {
             "victoire-edit":
             [
-                "@VictoireSeoBundle/Resources/public/js/seo.js"
+                "@VictoireBusinessEntityBundle/Resources/public/js/businessProperty.js"
             ]
         }
     }

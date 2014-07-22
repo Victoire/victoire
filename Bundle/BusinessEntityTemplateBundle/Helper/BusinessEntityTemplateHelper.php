@@ -1,9 +1,12 @@
 <?php
 namespace Victoire\Bundle\BusinessEntityTemplateBundle\Helper;
 
-use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplatePage;
 use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
 use Victoire\Bundle\QueryBundle\Helper\QueryHelper;
+use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
+use Victoire\Bundle\PageBundle\Entity\Page;
+use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 
 /**
  *
@@ -14,25 +17,32 @@ use Victoire\Bundle\QueryBundle\Helper\QueryHelper;
 class BusinessEntityTemplateHelper
 {
     protected $queryHelper = null;
+    protected $businessEntityHelper = null;
+    protected $parameterConverter = null;
 
     /**
      *
-     * @param QueryHelper $queryHelper
+     * @param QueryHelper          $queryHelper
+     * @param BusinessEntityHelper $businessEntityHelper
+     * @param ParameterConverter   $parameterConverter
+     *
      */
-    public function __construct(QueryHelper $queryHelper)
+    public function __construct(QueryHelper $queryHelper, BusinessEntityHelper $businessEntityHelper, ParameterConverter $parameterConverter)
     {
         $this->queryHelper = $queryHelper;
+        $this->businessEntityHelper = $businessEntityHelper;
+        $this->parameterConverter = $parameterConverter;
     }
 
     /**
      * Is the entity allowed for the business entity template page
      *
-     * @param BusinessEntityTemplatePage $page
+     * @param BusinessEntityTemplate $businessEntityTemplate
      * @param unknown $entity
      * @throws \Exception
      * @return boolean
      */
-    public function isEntityAllowed(BusinessEntityTemplatePage $page, $entity)
+    public function isEntityAllowed(BusinessEntityTemplate $businessEntityTemplate, $entity)
     {
         $allowed = true;
 
@@ -40,8 +50,6 @@ class BusinessEntityTemplateHelper
         if ($entity === null) {
             throw new \Exception('The entity is mandatory.');
         }
-
-        $businessEntityTemplate = $page->getBusinessEntityTemplate();
 
         $queryHelper = $this->queryHelper;
 
@@ -77,7 +85,7 @@ class BusinessEntityTemplateHelper
     /**
      * Get the list of entities allowed for the businessEntityTemplate page
      *
-     * @param BusinessEntityTemplatePage $page
+     * @param BusinessEntityTemplate $page
      * @throws \Exception
      * @return boolean
      */
@@ -96,5 +104,109 @@ class BusinessEntityTemplateHelper
         $items =  $queryHelper->getResultsAddingSubQuery($businessEntityTemplate, $baseQuery);
 
         return $items;
+    }
+
+    /**
+     * Generate update the page parameters with the entity
+     *
+     * @param Page $page
+     * @param Entity   $entity
+     */
+    public function updatePageUrlByEntity(Page $page, $entity)
+    {
+        //if no entity is provided
+        if ($entity === null) {
+            //we look for the entity of the page
+            if ($page->getEntity() !== null) {
+                $entity = $page->getEntity();
+            }
+        }
+
+        //only if we have an entity instance
+        if ($entity !== null) {
+            $className = get_class($entity);
+
+            $businessEntity = $this->businessEntityHelper->findByClassname($className);
+
+            if ($businessEntity !== null) {
+                //the business properties usable in a url
+                $businessProperties = $this->getBusinessProperties($businessEntity);
+
+                //the url of the page
+                $pageUrl = $page->getUrl();
+
+                //parse the business properties
+                foreach ($businessProperties as $businessProperty) {
+                    $pageUrl = $this->parameterConverter->setBusinessPropertyInstance($pageUrl, $businessProperty, $entity);
+                }
+
+                //we update the url of the page
+                $page->setUrl($pageUrl);
+            }
+        }
+    }
+
+    /**
+     * Get the list of business properties usable for the url
+     *
+     * @param BusinessEntity $businessEntity
+     *
+     * @return array The list of business properties
+     */
+    public function getBusinessProperties(BusinessEntity $businessEntity)
+    {
+        //the business properties usable in a url
+        $businessProperties = $businessEntity->getBusinessPropertiesByType('businessIdentifier');
+
+        //the business properties usable in a url
+        $seoBusinessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
+
+        //the business properties are the identifier and the seoables properties
+        $businessProperties = array_merge($businessProperties, $seoBusinessProperties);
+
+        return $businessProperties;
+    }
+
+    /**
+     * Get the position of the identifier in the url of a business entity template
+     *
+     * @param BusinessEntityTemplate $businessEntityTemplate
+     *
+     * @return integer The position
+     */
+    public function getIdentifierPositionInUrl(BusinessEntityTemplate $businessEntityTemplate)
+    {
+        $position = null;
+
+        $url = $businessEntityTemplate->getUrl();
+
+        // split on the / character
+        $keywords = preg_split("/\//", $url);
+
+        //the business property link to the page
+        $businessEntityId = $businessEntityTemplate->getBusinessEntityName();
+
+        $businessEntity = $this->businessEntityHelper->findById($businessEntityId);
+
+        //the business properties usable in a url
+        $businessProperties = $businessEntity->getBusinessPropertiesByType('businessIdentifier');
+
+        //we parse the words of the url
+        foreach ($keywords as $index => $keyword) {
+            foreach ($businessProperties as $businessProperty) {
+                $entityProperty = $businessProperty->getEntityProperty();
+                $searchWord = '{{item.'.$entityProperty.'}}';
+
+                if ($searchWord === $keyword) {
+                    //the array start at index 0 but we want the position to start at 1
+                    $position = array(
+                        'position' => $index + 1,
+                        'businessProperty' => $businessProperty
+                    );
+                }
+            }
+        }
+
+        return $position;
     }
 }
