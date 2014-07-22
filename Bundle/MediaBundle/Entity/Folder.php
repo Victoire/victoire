@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\MediaBundle\Entity;
 
-
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -45,8 +44,8 @@ class Folder
     /**
      * @var Folder
      *
-     * @ORM\ManyToOne(targetEntity="Folder", inversedBy="children", fetch="EAGER")
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Folder", inversedBy="children", fetch="EAGER", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     protected $parent;
 
