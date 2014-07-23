@@ -244,7 +244,7 @@ class Page
      *
      * @param EntityProxy $entity
      */
-    public function setEntityProxy(EntityProxy $entityProxy)
+    public function setEntityProxy($entityProxy)
     {
         $this->entityProxy = $entityProxy;
     }
@@ -1056,7 +1056,9 @@ class Page
     public function preUpdate()
     {
         //we update the widget map by the slots
-        $this->updateWidgetMapBySlots();
+        if (!empty($this->slots)) {
+            $this->updateWidgetMapBySlots();
+        }
     }
 
     /**

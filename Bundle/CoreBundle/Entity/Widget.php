@@ -165,7 +165,9 @@ class Widget extends BaseWidget
      */
     public function setPage($page)
     {
-        $page->addWidget($this);
+        if($page != null) {
+            $page->addWidget($this);
+        }
         $this->page = $page;
 
         return $this;

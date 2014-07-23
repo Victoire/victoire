@@ -24,7 +24,7 @@ abstract class BaseWidget
      *
      * @param EntityProxy $entity
      */
-    public function setEntityProxy(EntityProxy $entityProxy)
+    public function setEntityProxy($entityProxy)
     {
         $this->entityProxy = $entityProxy;
     }
