@@ -24,7 +24,7 @@ class PageRepository extends NestedTreeRepository
         $qb = $this->createQueryBuilder('page');
 
         $qb->where('page.homepage = true');
-        $qb->addWhere('page.status = \''.Page::STATUS_PUBLISHED.'\'');
+        $qb->andWhere('page.status = \''.Page::STATUS_PUBLISHED.'\'');
         $qb->setMaxResults(1);
 
         $query = $qb->getQuery();
