@@ -1,5 +1,7 @@
 # Victoire DCMS #
 
+* Read the [setup guide](http://stash.appventus.com:7990/projects/VIC/repos/victoire/browse/INSTALLATION.md)
+
 Property of AppVentus
 
 
