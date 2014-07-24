@@ -398,7 +398,7 @@ class Media
      *
      * @return Media
      */
-    public function setFolder(Folder $folder)
+    public function setFolder($folder)
     {
         $this->folder = $folder;
 
@@ -429,6 +429,14 @@ class Media
     public function setDeleted($deleted)
     {
         $this->deleted = $deleted;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
     }
 
     /**
