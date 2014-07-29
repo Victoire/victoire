@@ -1,7 +1,7 @@
 services:
     victoire_page.user_callable:
         class: Victoire\Bundle\PageBundle\Helper\UserCallableHelper
-        arguments: 
+        arguments:
             - "@service_container"
 
     page.subscriber:
@@ -40,7 +40,7 @@ services:
             - "@victoire_page.url_helper"
             - "@victoire_business_entity_template.business_entity_template_helper"
             - "@victoire_core.helper.business_entity_helper"
-        
+
     ####################################################################################################################
     # Security voter
     ####################################################################################################################
@@ -84,17 +84,26 @@ services:
     victoire_core.page_menu_listener:
         class: Victoire\Bundle\PageBundle\Listener\PageMenuListener
         arguments: ["@victoire_core.admin_menu_builder"]
+        tags:
+            - { name: kernel.event_listener, event: victoire_core.build_menu, method: addGlobal, priority: 100 }
+    victoire_core.page_menu.contextual:
+        class: Victoire\Bundle\PageBundle\Listener\PageMenuListener
+        arguments: ["@victoire_core.admin_menu_builder"]
+        tags:
+            - { name: kernel.event_listener, event: victoire_core.page_menu.contextual, method: addContextual, priority: 100 }
     victoire_core.template_menu_listener:
         class: Victoire\Bundle\PageBundle\Listener\TemplateMenuListener
         arguments: ["@victoire_core.admin_menu_builder"]
-  
+        tags:
+            - { name: kernel.event_listener, event: victoire_core.build_menu, method: addGlobal, priority: 80 }
+
     ####################################################################################################################
     # twig
     ####################################################################################################################
 
     victoire_page.twig.page_extension:
         class: Victoire\Bundle\PageBundle\Twig\Extension\PageExtension
-        arguments: 
+        arguments:
             - "@victoire_business_entity_template.business_entity_template_helper"
             - "@router"
             - "@victoire_page.page_helper"

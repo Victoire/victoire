@@ -1,16 +1,17 @@
 <?php
 namespace Victoire\Bundle\BusinessEntityTemplateBundle\Listener;
 
-use Symfony\Component\EventDispatcher\Event;
-use Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent;
-use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
-use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
 use AppVentus\Awesome\ShortcutsBundle\Service\ShortcutService;
+use Symfony\Component\EventDispatcher\Event;
+use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
+use Victoire\Bundle\CoreBundle\Listener\MenuListenerInterface;
+use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
+use Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent;
 
 /**
  * When dispatched, this listener add items to a KnpMenu
  */
-class BusinessEntityTemplateMenuListener
+class BusinessEntityTemplateMenuListener implements MenuListenerInterface
 {
     protected $menuBuilder = null;
 
@@ -37,11 +38,17 @@ class BusinessEntityTemplateMenuListener
     {
         $this->mainItem = $this->menuBuilder->getTopNavbar();
 
-        $this->mainItem
-            ->addChild('menu.business_entity_template', array(
-                'route' => 'victoire_businessentitytemplate_businessentity_index'
-            ))
-            ->setLinkAttribute('data-toggle', 'vic-modal');
+        if ($this->menuBuilder->isGranted('ROLE_VICTOIRE_BET')) {
+            $this
+                ->mainItem
+                ->addChild(
+                    'menu.business_entity_template',
+                    array(
+                        'route' => 'victoire_businessentitytemplate_businessentity_index'
+                    )
+                )
+                ->setLinkAttribute('data-toggle', 'vic-modal');
+        }
 
         return $this->mainItem;
     }
@@ -50,6 +57,7 @@ class BusinessEntityTemplateMenuListener
      * Add the parent menu for a page that extends another one
      *
      * @param PageMenuContextualEvent $event
+     *
      * @return MenuBuilder
      */
     public function addContextual(PageMenuContextualEvent $event)

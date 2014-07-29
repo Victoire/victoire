@@ -26,10 +26,6 @@
         <source>form.widget.tab.query.label</source>
         <target>Requête</target>
       </trans-unit>
-      <trans-unit id="19ccbd8b16123d88eb230626a5b1110504c35954" resname="menu.business_entity_template">
-        <source>menu.business_entity_template</source>
-        <target>Business Entity Template</target>
-      </trans-unit>
       <trans-unit id="c4dc18d2f6573e619afaa0cc9696ab1e7fdf29e5" resname="menu.leftnavbar.404.label">
         <source>menu.leftnavbar.404.label</source>
         <target>Page 404</target>
@@ -70,25 +66,9 @@
         <source>menu.leftnavbar.user.label</source>
         <target state="new">menu.leftnavbar.user.label</target>
       </trans-unit>
-      <trans-unit id="67c0389fd251acfac612655ca5e660f7ad153bcb" resname="menu.media">
-        <source>menu.media</source>
-        <target>Media</target>
-      </trans-unit>
       <trans-unit id="1468cdaa5a094e7fc462d045d829d884051439d3" resname="menu.page">
         <source>menu.page</source>
         <target>Page</target>
-      </trans-unit>
-      <trans-unit id="988d30bf1d090a16c4c086005c745ec82dfc20d7" resname="menu.page.new">
-        <source>menu.page.new</source>
-        <target><![CDATA[<i class="vic-menuImg vic-menuImg-new"></i> Nouvelle page]]></target>
-      </trans-unit>
-      <trans-unit id="da05b847ec5c3af60439eddb617f5a682c88963b" resname="menu.page.settings">
-        <source>menu.page.settings</source>
-        <target><![CDATA[<i class="vic-menuImg vic-menuImg-gear"></i> Paramètres de la page]]></target>
-      </trans-unit>
-      <trans-unit id="f6f4243e5ddbf57050e0876a9ad4408dc17a6113" resname="menu.page.template">
-        <source>menu.page.template</source>
-        <target><![CDATA[<i class="vic-menuImg vic-menuImg-gear"></i> Template de la page]]></target>
       </trans-unit>
       <trans-unit id="7269b57341e3d2887e9ff29432859d64756ff595" resname="menu.parent">
         <source>menu.parent</source>
@@ -100,19 +80,7 @@
       </trans-unit>
       <trans-unit id="7143127923e2258df3b91920224c689d170aa155" resname="menu.sitemap">
         <source>menu.sitemap</source>
-        <target>Plan du site</target>
-      </trans-unit>
-      <trans-unit id="eaeab063c6c4371efab54c81387875c285203f54" resname="menu.template">
-        <source>menu.template</source>
-        <target>Modèle</target>
-      </trans-unit>
-      <trans-unit id="eaec515f32ede19c5d5b5048ca8ca296443454ab" resname="menu.template.new">
-        <source>menu.template.new</source>
-        <target>Nouveau</target>
-      </trans-unit>
-      <trans-unit id="6a352f12741976c2b1287940116a2fe66616fa68" resname="menu.template.settings">
-        <source>menu.template.settings</source>
-        <target>Paramètres</target>
+        <target><![CDATA[<i class="vic-menuImg vic-menuImg-sitemap"></i> Plan du site]]></target>
       </trans-unit>
       <trans-unit id="0d78177827ece7fd6e7cf7426c5be1299b611988" resname="modal.button.create.title">
         <source>modal.button.create.title</source>

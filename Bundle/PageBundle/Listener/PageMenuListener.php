@@ -2,15 +2,15 @@
 namespace Victoire\Bundle\PageBundle\Listener;
 
 use Symfony\Component\EventDispatcher\Event;
-use Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent;
-use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
 use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
+use Victoire\Bundle\CoreBundle\Listener\MenuListenerInterface;
+use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
+use Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent;
 
 /**
  * When dispatched, this listener add items to a KnpMenu
- * TODO implements an interface (what name ?) which force to implements addContextual, addGlobal and getMainItem
  */
-class PageMenuListener
+class PageMenuListener implements MenuListenerInterface
 {
     private $menuBuilder;
 
@@ -27,8 +27,9 @@ class PageMenuListener
     /**
      * add a contextual menu item
      *
-     * @param  PageMenuContextualEvent $event
-     * @return Ambigous                <\Knp\Menu\ItemInterface, NULL>
+     * @param PageMenuContextualEvent $event
+     *
+     * @return Ambigous <\Knp\Menu\ItemInterface, NULL>
      */
     public function addContextual(PageMenuContextualEvent $event)
     {
@@ -74,7 +75,8 @@ class PageMenuListener
     /**
      * add global menu items
      *
-     * @param  Event    $event
+     * @param Event $event
+     *
      * @return Ambigous <\Knp\Menu\ItemInterface, NULL>
      */
     public function addGlobal(Event $event)
@@ -96,7 +98,7 @@ class PageMenuListener
      *
      * @return Ambigous <\Knp\Menu\ItemInterface, NULL>|\Knp\Menu\ItemInterface
      */
-    private function getMainItem()
+    public function getMainItem()
     {
         $menuPage = $this->menuBuilder->getTopNavbar()->getChild('menu.page');
 

@@ -1,3 +1,6 @@
+imports:
+    - { resource: security.yml }
+
 knp_menu:
     twig:
         template: VictoireCoreBundle:Menu:knp_menu_main.html.twig
