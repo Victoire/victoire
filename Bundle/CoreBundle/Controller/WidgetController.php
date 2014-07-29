@@ -226,7 +226,7 @@ class WidgetController extends AwesomeController
         $logger = $this->get('logger');
 
         //can we see the debug
-        $isDebugAllowed = $securityContext->isGranted('ROLE_PAGE_DEBUG');
+        $isDebugAllowed = $securityContext->isGranted('ROLE_VICTOIRE_PAGE_DEBUG');
 
         //whatever is the exception, we log it
         $logger->error($ex->getMessage());

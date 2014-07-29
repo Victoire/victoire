@@ -12,7 +12,11 @@
 {% endif %}
 
 <div {{cms_widget_title(widget)}} class="vic-widget {{cms_widget_extra_css_class(widget)}} {{cms_widget_legacy(widget, page, entity)}}" id="widget-{{widget.id}}">
-{% block actions %}{{cms_widget_actions(widget)}}{% endblock actions %}
+{% if is_granted('ROLE_VICTOIRE') %}
+    {% block actions %}
+        {{ cms_widget_actions(widget) }}
+    {% endblock actions %}
+{% endif %}
 
 {% block content %}
 {{content|raw}}
