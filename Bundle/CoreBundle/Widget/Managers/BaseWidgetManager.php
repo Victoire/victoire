@@ -83,8 +83,8 @@ class BaseWidgetManager
     /**
      * Update a widget by the entity
      *
-     * @param Widget $widget
-     * @param unknown $entity
+     * @param  Widget     $widget
+     * @param  unknown    $entity
      * @throws \Exception
      * @return Widget
      */
@@ -100,9 +100,9 @@ class BaseWidgetManager
     /**
      * Create a widget
      *
-     * @param string $slotId
-     * @param Page   $page
-     * @param string $entity
+     * @param  string   $slotId
+     * @param  Page     $page
+     * @param  string   $entity
      * @return template
      *
      * @throws \Exception
@@ -214,8 +214,8 @@ class BaseWidgetManager
 
     /**
      * return widget type
-     * @param widget $widget
-     * @param string $type
+     * @param  widget $widget
+     * @param  string $type
      * @return widget type
      */
     public function getWidgetType($widget, $type = null)
@@ -234,8 +234,8 @@ class BaseWidgetManager
 
     /**
      * check if widget is allowed for slot
-     * @param Widget $widget
-     * @param string $slot
+     * @param  Widget $widget
+     * @param  string $slot
      * @return bool
      */
     public function isWidgetAllowedForSlot($widget, $slot)
@@ -256,7 +256,6 @@ class BaseWidgetManager
 
         return !empty($slots[$slot]) && (array_key_exists($widgetType, $slots[$slot]['widgets']));
     }
-
 
     /**
      * create a new WidgetRedactor
@@ -291,7 +290,7 @@ class BaseWidgetManager
      * Get the content of an attribute of an entity given
      *
      * @param entity $entity
-     * @param strin $functionName
+     * @param strin  $functionName
      *
      * @return mixed
      */
@@ -312,7 +311,7 @@ class BaseWidgetManager
      *
      * @return template
      */
-    public function renderContainer(Widget $widget, $addContainer = false)
+    public function renderContainer(Widget $widget, $addContainer = false, $entity = null)
     {
         $html = '';
         $dispatcher = $this->container->get('event_dispatcher');
@@ -320,7 +319,7 @@ class BaseWidgetManager
 
         $dispatcher->dispatch(VictoireCmsEvents::WIDGET_PRE_RENDER, new WidgetRenderEvent($widget, $html));
 
-        $html .= $this->render($widget);
+        $html .= $this->render($widget, $entity);
 
         if ($securityContext->isGranted('ROLE_VICTOIRE')) {
             $html .= $this->renderActions($widget->getSlot(), $widget->getPage());
@@ -335,15 +334,15 @@ class BaseWidgetManager
         return $html;
     }
 
-
     /**
      * create a form with given widget
      *
-     * @param WidgetRedactor $widget
-     * @param Page       $page
-     * @param string         $entityName
-     * @param string         $namespace
-     * @param string         $formMode
+     * @param WidgetRedactor $widget     the widget
+     * @param Page           $page       the page
+     * @param string         $entityName the entity class
+     * @param string         $namespace  the namespace
+     * @param string         $formMode   the form mode
+     *
      * @return $form
      *
      * @throws \Exception
@@ -444,9 +443,9 @@ class BaseWidgetManager
 
     /**
      * render WidgetRedactor form
-     * @param Form           $form
-     * @param WidgetRedactor $widget
-     * @param BusinessEntity $entity
+     * @param  Form           $form
+     * @param  WidgetRedactor $widget
+     * @param  BusinessEntity $entity
      * @return form
      */
     public function renderForm($form, $widget, $entity = null)
@@ -501,8 +500,20 @@ class BaseWidgetManager
      *
      * @return widget show
      */
-    public function render(Widget $widget)
+    public function render(Widget $widget, $entity = null)
     {
+        //the mode of display of the widget
+        $mode = $widget->getMode();
+
+        //if entty is given and it's not the object, retrive it and set the entity for the widget
+        if (!is_object($entity) && method_exists($widget->getPage(), 'getBusinessEntityName')) {
+
+            $entityNamespaces = $this->container->get('victoire_core.annotation_reader')->getBusinessClasses();
+            $entityNamespace = $entityNamespaces[$widget->getPage()->getBusinessEntityName()];
+            $entity = $this->container->get('doctrine.orm.entity_manager')->getRepository($entityNamespace)->findOneById($entity);
+        }
+        $widget->setEntity($entity);
+
         //the templating service
         $templating = $this->container->get('victoire_templating');
 
@@ -525,7 +536,7 @@ class BaseWidgetManager
      * create a form with given widget
      *
      * @param WidgetRedactor $widget
-     * @param Page       $page
+     * @param Page           $page
      * @param string         $entityName
      * @param string         $namespace
      * @param string         $formMode
@@ -585,13 +596,12 @@ class BaseWidgetManager
         return $form;
     }
 
-
     /**
      * Get content for the widget
      *
-     * @param Widget $widget
+     * @param  Widget     $widget
      * @throws \Exception
-     * @return Ambigous <string, unknown, \Victoire\Bundle\CoreBundle\Widget\Managers\mixed, mixed>
+     * @return Ambigous   <string, unknown, \Victoire\Bundle\CoreBundle\Widget\Managers\mixed, mixed>
      */
     protected function getWidgetContent(Widget $widget)
     {
@@ -615,6 +625,7 @@ class BaseWidgetManager
                 $content = $this->getWidgetEntityContent($widget);
                 break;
             case Widget::MODE_BUSINESS_ENTITY:
+        // print_r(get_class($widget->getEntity()));
                 //get the content of the widget with its entity
                 $content = $this->getWidgetBusinessEntityContent($widget);
                 break;
@@ -631,7 +642,7 @@ class BaseWidgetManager
     /**
      * Get the static content of the widget
      *
-     * @param Widget $widget
+     * @param  Widget $widget
      * @return string The static content
      *
      * @SuppressWarnings checkUnusedFunctionParameters
@@ -643,7 +654,7 @@ class BaseWidgetManager
 
     /**
      * Get the business entity content
-     * @param Widget $widget
+     * @param  Widget   $widget
      * @return Ambigous <string, unknown, \Victoire\Bundle\CoreBundle\Widget\Managers\mixed, mixed>
      *
      * @SuppressWarnings checkUnusedFunctionParameters
@@ -718,7 +729,7 @@ class BaseWidgetManager
     /**
      * Get a service from the container
      *
-     * @param string $serviceId
+     * @param  string  $serviceId
      * @return service
      */
     public function get($serviceId)

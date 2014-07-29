@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\CoreBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -13,7 +12,6 @@ use Victoire\Bundle\CoreBundle\Entity\Widget;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\CoreBundle\Widget\Managers\WidgetManager;
 use Symfony\Component\HttpFoundation\Request;
-use Gedmo\Blameable\ProtectedPropertySupperclassTest;
 
 /**
  * Widget Controller
@@ -25,21 +23,22 @@ class WidgetController extends AwesomeController
     /**
      * Show a widget
      *
-     * @param Widget $widget the widget to show
+     * @param  Widget   $widget the widget to show
      * @return response
-     * @Route("/show/{id}", name="victoire_core_widget_show", options={"expose"=true})
+     * @Route("/show/{id}/{entity}", name="victoire_core_widget_show", options={"expose"=true}, defaults={"entity": null})
      * @Template()
      * @ParamConverter("id", class="VictoireCoreBundle:Widget")
      */
-    public function showAction(Widget $widget)
+    public function showAction(Widget $widget, $entity = null)
     {
         //the response is for the ajax.js from the AppVentus Ajax Bundle
         try {
+
             if ($this->getRequest()->isXmlHttpRequest()) {
                 $widgetManager = $this->getWidgetManager();
 
                  $response = new JsonResponse(array(
-                     'html' => $widgetManager->render($widget),
+                     'html' => $widgetManager->render($widget, false, $entity),
                      'update' => 'vic-widget-'.$widget->getId().'-container',
                      'success' => false
                  ));
@@ -56,20 +55,20 @@ class WidgetController extends AwesomeController
     /**
      * Edit a widget
      *
-     * @param Widget $widget The widget to edit
-     * @param string $type   The type of widget we edit
+     * @param  Widget   $widget The widget to edit
+     * @param  string   $type   The type of widget we edit
      * @return response
      *
-     * @Route("/edit/{id}/{type}", name="victoire_core_widget_edit", defaults={"type": null})
-     * @Route("/update/{id}/{type}", name="victoire_core_widget_update", defaults={"type": null})
+     * @Route("/edit/{id}/{type}/{entity}", name="victoire_core_widget_edit", defaults={"type": null})
+     * @Route("/update/{id}/{type}/{entity}", name="victoire_core_widget_update", defaults={"type": null, "entity": null})
      * @Template()
      * @ParamConverter("id", class="VictoireCoreBundle:Widget")
      */
-    public function editAction(Request $request, Widget $widget, $type = null)
+    public function editAction(Request $request, Widget $widget, $type = null, $entity = null)
     {
         try {
             $widgetManager = $this->getWidgetManager();
-            $response = new JsonResponse($widgetManager->edit($request, $widget, $type));
+            $response = new JsonResponse($widgetManager->edit($request, $widget, $type, $entity));
         } catch (\Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
         }
@@ -80,10 +79,10 @@ class WidgetController extends AwesomeController
     /**
      * New Widget
      *
-     * @param string         $type   The type of the widget we edit
-     * @param Page           $page   The page where attach the widget
-     * @param string         $slot   The slot where attach the widget
-     * @param BusinessEntity $entity The business entity the widget shows on dynamic mode
+     * @param  string         $type   The type of the widget we edit
+     * @param  Page           $page   The page where attach the widget
+     * @param  string         $slot   The slot where attach the widget
+     * @param  BusinessEntity $entity The business entity the widget shows on dynamic mode
      * @return response
      *
      * @Route("/new/{type}/{page}/{slot}/{entity}", name="victoire_core_widget_new", defaults={"slot":null, "entity":null}, options={"expose"=true})
@@ -131,10 +130,10 @@ class WidgetController extends AwesomeController
     /**
      * Create a widget
      *
-     * @param string         $type   The type of the widget we edit
-     * @param Page           $page   The page where attach the widget
-     * @param string         $slot   The slot where attach the widget
-     * @param BusinessEntity $entity The business entity the widget shows on dynamic mode
+     * @param  string         $type   The type of the widget we edit
+     * @param  Page           $page   The page where attach the widget
+     * @param  string         $slot   The slot where attach the widget
+     * @param  BusinessEntity $entity The business entity the widget shows on dynamic mode
      * @return response
      * @Route("/create/{type}/{page}/{slot}/{entity}", name="victoire_core_widget_create", defaults={"slot":null, "entity":null, "_format": "json"})
      * @Template()
@@ -159,8 +158,8 @@ class WidgetController extends AwesomeController
     /**
      * Delete a Widget
      *
-     * @param Widget $widget The widget to delete
-     * @return empty response
+     * @param  Widget $widget The widget to delete
+     * @return empty  response
      * @Route("/delete/{id}", name="victoire_core_widget_delete", defaults={"_format": "json"})
      * @Template()
      * @ParamConverter("id", class="VictoireCoreBundle:Widget")
@@ -179,7 +178,7 @@ class WidgetController extends AwesomeController
     /**
      * Update widget positions accross the page. If moved widget is a Reference, ask to detach the page from template
      *
-     * @param Page $page The page where update widget positions
+     * @param  Page     $page The page where update widget positions
      * @return response
      * @Route("/position/{page}", name="victoire_core_widget_update_position", options={"expose"=true})
      * @ParamConverter("page", class="VictoirePageBundle:Page")
@@ -227,20 +226,14 @@ class WidgetController extends AwesomeController
         $logger = $this->get('logger');
 
         //can we see the debug
-        $isDebugAllowed = $securityContext->isGranted('PAGE_DEBUG');
+        $isDebugAllowed = $securityContext->isGranted('ROLE_PAGE_DEBUG');
 
         //whatever is the exception, we log it
         $logger->error($ex->getMessage());
         $logger->error($ex->getTraceAsString());
 
         if ($isDebugAllowed) {
-            $response = new JsonResponse(
-                array(
-                    'success' => false,
-                    'message' => $ex->getMessage(),
-                    'stackTrace' => $ex->getTrace()
-                )
-            );
+            throw $ex;
         } else {
             //translate the message
             $translator = $this->get('translator');

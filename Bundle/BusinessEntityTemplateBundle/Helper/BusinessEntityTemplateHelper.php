@@ -37,8 +37,8 @@ class BusinessEntityTemplateHelper
     /**
      * Is the entity allowed for the business entity template page
      *
-     * @param BusinessEntityTemplate $businessEntityTemplate
-     * @param unknown $entity
+     * @param  BusinessEntityTemplate $businessEntityTemplate
+     * @param  unknown                $entity
      * @throws \Exception
      * @return boolean
      */
@@ -59,15 +59,10 @@ class BusinessEntityTemplateHelper
         //the base of the query
         $baseQuery = $queryHelper->getQueryBuilder($businessEntityTemplate);
 
-        // add this fake condition to ensure that there is always a "where" clause.
-        // In query mode, usage of "AND" will be always valid instead of "WHERE"
-        $baseQuery->andWhere('1 = 1');
-
-        //we filter on the page id
-        $additionnalDql = 'item.id = '.$entityId;
+        $baseQuery->andWhere('main_item.id = ' . $entityId);
 
         //filter with the query of the page
-        $items =  $queryHelper->getResultsAddingSubQuery($businessEntityTemplate, $baseQuery, $additionnalDql);
+        $items =  $queryHelper->getResultsAddingSubQuery($businessEntityTemplate, $baseQuery);
 
         //only one page can be found because we filter on the
         if (count($items) > 1) {
@@ -81,11 +76,10 @@ class BusinessEntityTemplateHelper
         return $allowed;
     }
 
-
     /**
      * Get the list of entities allowed for the businessEntityTemplate page
      *
-     * @param BusinessEntityTemplate $page
+     * @param  BusinessEntityTemplate $page
      * @throws \Exception
      * @return boolean
      */
@@ -109,8 +103,8 @@ class BusinessEntityTemplateHelper
     /**
      * Generate update the page parameters with the entity
      *
-     * @param Page $page
-     * @param Entity   $entity
+     * @param Page   $page
+     * @param Entity $entity
      */
     public function updatePageUrlByEntity(Page $page, $entity)
     {

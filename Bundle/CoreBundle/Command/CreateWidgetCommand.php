@@ -204,6 +204,7 @@ EOT
                 'See https://github.com/Victoire/CoreBundle/wiki/Best-practices for more',
                 'details on widget conventions.',
                 '',
+                'If you want for example a BlogWidget, the Widget Name should be Blog'
             ));
 
             $name = $dialog->askAndValidate($output, $dialog->getQuestion('Widget name', $input->getOption('bundle-name')), array('Victoire\Bundle\CoreBundle\Command\CreateWidgetCommand', 'validateWidgetName'), false, $input->getOption('namespace'));

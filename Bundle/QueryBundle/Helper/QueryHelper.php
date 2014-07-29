@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\QueryBundle\Helper;
 
-
 use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Doctrine\ORM\QueryBuilder;
@@ -74,15 +73,15 @@ class QueryHelper
 
         $itemsQueryBuilder = $em
             ->createQueryBuilder()
-            ->select('item')
-            ->from($businessClass, 'item');
+            ->select('main_item')
+            ->from($businessClass, 'main_item');
 
         return $itemsQueryBuilder;
     }
 
     /**
      * Check that the object is not null and has the query trait
-     * @param unknown $containerEntity
+     * @param  unknown    $containerEntity
      * @throws \Exception
      */
     protected function checkObjectHasQueryTrait($containerEntity)
@@ -90,7 +89,6 @@ class QueryHelper
         if ($containerEntity === null) {
             throw new \Exception('The container entity parameter must not be null.');
         }
-
 
         //test that the containerEntity has the trait
         if (!method_exists($containerEntity, 'getQuery') || !method_exists($containerEntity, 'getBusinessEntityName')) {
@@ -101,14 +99,14 @@ class QueryHelper
     /**
      * Get the results from the sql after adding the
      *
-     * @param unknown $containerEntity
-     * @param unknown $queryBuilder
-     * @param string  $additionnalDql
+     * @param  unknown    $containerEntity
+     * @param  unknown    $queryBuilder
+     * @param  string     $additionnalDql
      * @throws \Exception
      *
      * @return array The list of objects
      */
-    public function getResultsAddingSubQuery($containerEntity, QueryBuilder $itemsQueryBuilder, $additionnalDql = '')
+    public function getResultsAddingSubQuery($containerEntity, QueryBuilder $itemsQueryBuilder)
     {
         //services
         $em = $this->em;
@@ -123,18 +121,22 @@ class QueryHelper
 
         //get the query of the container entity
         $query = $containerEntity->getQuery();
-
         if ($query !== '' && $query !== null) {
-            $query = 'AND '.$query;
+
+            $subQuery = $this->em->createQueryBuilder()
+                             ->select('item.id')
+                             ->from($itemsQueryBuilder->getRootEntities()[0], 'item');
+
+            $itemsQueryBuilder
+                ->andWhere('main_item.id IN (' . $subQuery->getQuery()->getDql() . ' ' . $query . ')');
         }
-        if ($additionnalDql !== '' && $additionnalDql !== null) {
-            $additionnalDql = 'AND '.$additionnalDql;
+        // print_r(get_class($containerEntity->getEntity()));exit;
+        //if the the keyword ":currentEntity" is found, we are in a businessEntityTemplate, so we set the current entity as a query parameter.
+        if (strpos($query, ":currentEntity") !== false) {
+            $itemsQueryBuilder->setParameter('currentEntity', $containerEntity->getEntity() ? $containerEntity->getEntity()->getId() : null);
         }
 
-        //we add the query
-        $itemsQuery = $itemsQueryBuilder->getQuery()->getDQL() . " " . $query. " ".$additionnalDql;
-
-        $items = $em->createQuery($itemsQuery)->setParameters($itemsQueryBuilder->getParameters())->getResult();
+        $items = $itemsQueryBuilder->getQuery()->getResult();
 
         return $items;
     }
