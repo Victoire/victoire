@@ -48,8 +48,6 @@ class MenuBuilder
             )
         );
 
-        $this->topNavbar->addChild('menu.preview', array('uri' => '#', 'attributes' => array('class' => "vic-pull-left vic-text-center")));
-
         return $this->topNavbar;
     }
 
@@ -87,7 +85,7 @@ class MenuBuilder
      * @param ItemInterface $rootItem
      * @param unknown $title
      * @param unknown $attributes
-     * @param string $caret
+     * @param string  $caret
      * @return \Knp\Menu\ItemInterface
      */
     public function createDropdownMenuItem(ItemInterface $rootItem, $title, $attributes = array(), $caret = true)
@@ -145,5 +143,16 @@ class MenuBuilder
     public function getLeftNavbar()
     {
         return $this->leftNavbar;
+    }
+
+    /**
+     * return leftNavbar
+     * @param string $role The role to check
+     *
+     * @return boolean Is the user granted ?
+     */
+    public function isgranted($role)
+    {
+        return $this->securityContext->isGranted($role);
     }
 }

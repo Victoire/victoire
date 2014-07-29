@@ -38,6 +38,10 @@
         <source>Mandatory fields</source>
         <target>Champ Obligatoire</target>
       </trans-unit>
+      <trans-unit id="19ccbd8b16123d88eb230626a5b1110504c35954" resname="menu.business_entity_template">
+        <source>menu.business_entity_template</source>
+        <target><![CDATA[<i class="vic-menuImg vic-menuImg-sandbox"></i> Représentation métier]]></target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

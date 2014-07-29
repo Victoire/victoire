@@ -3,6 +3,7 @@ namespace Victoire\Bundle\CoreBundle\Listener;
 
 use Symfony\Component\EventDispatcher\Event;
 use Victoire\Bundle\CoreBundle\Event\SiteMapContextualEvent;
+use Victoire\Bundle\CoreBundle\Listener\MenuListenerInterface;
 use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
 
 

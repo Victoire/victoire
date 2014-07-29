@@ -1,15 +1,15 @@
 services:
-    victoire_blog.menu_listener:
-        class: Victoire\Bundle\BlogBundle\Listener\MenuListener
-        arguments:
-            - "@event_dispatcher"
-            - "@victoire_blog.blog_menu_listener"
-        tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
-
     victoire_blog.blog_menu_listener:
         class: Victoire\Bundle\BlogBundle\Listener\BlogMenuListener
         arguments: ["@victoire_core.admin_menu_builder"]
+        tags:
+            - { name: kernel.event_listener, event: victoire_core.build_menu, method: addGlobal, priority: 90 }
+
+    victoire_core.page_menu.contextual:
+        class: Victoire\Bundle\BlogBundle\Listener\BlogMenuListener
+        arguments: ["@victoire_core.admin_menu_builder"]
+        tags:
+            - { name: kernel.event_listener, event: victoire_core.article_menu.contextual, method: addContextual, priority: 100 }
 
     victoire_blog.base_page.subscriber: #REVIEW surement prendre une convention
         class: Victoire\Bundle\BlogBundle\EventSubscriber\LoadMetadataSubscriber

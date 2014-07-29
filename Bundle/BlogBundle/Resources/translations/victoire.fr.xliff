@@ -20,11 +20,11 @@
       </trans-unit>
       <trans-unit id="44ee3ff9b926d8e0fe6e8e356600ad5c77166029" resname="menu.blog.new">
         <source>menu.blog.new</source>
-        <target>Nouvel article</target>
+        <target><![CDATA[<i class="vic-menuImg vic-menuImg-new"></i> Nouvel article]]></target>
       </trans-unit>
       <trans-unit id="604de4ede156d22c87184505b9794ba2ad9c5062" resname="menu.blog.settings">
-        <source>menu.blog.settings</source>
-        <target>Paramètres de l'article</target>
+          <source>menu.blog.settings</source>
+          <target><![CDATA[<i class="vic-menuImg vic-menuImg-gear"></i> Paramètres de l'article]]></target>
       </trans-unit>
       <trans-unit id="604de4ede156d22c87184505b9794ba2ad9c5063" resname="widget_filter.category_filter">
         <source>widget_filter.category_filter</source>

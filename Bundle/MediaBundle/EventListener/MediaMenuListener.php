@@ -2,8 +2,10 @@
 namespace Victoire\Bundle\MediaBundle\EventListener;
 
 use Symfony\Component\EventDispatcher\Event;
-use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Victoire\Bundle\CoreBundle\Listener\MenuListenerInterface;
+use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
+use Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent;
 
 
 /**
@@ -12,31 +14,15 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 class MediaMenuListener
 {
     private $menuBuilder;
-    private $ed;
-
 
     /**
      * {@inheritDoc}
      */
-    public function __construct(MenuBuilder $menuBuilder, $ed)
+    public function __construct(MenuBuilder $menuBuilder)
     {
-        $this->ed = $ed;
         $this->menuBuilder = $menuBuilder;
     }
 
-
-
-    public function onKernelRequest(GetResponseEvent $event)
-    {
-
-        $this->ed->addListener("victoire_core.media_menu.global",
-            array($this, 'addGlobal')
-        );
-
-        $this->ed->dispatch('victoire_core.media_menu.global');
-
-
-    }
     /**
      * add global menu items
      */
@@ -54,17 +40,4 @@ class MediaMenuListener
         return $this->mainItem;
 
     }
-
-    // private function getMainItem()
-    // {
-    //     if ($menuMedia = $this->menuBuilder->getTopNavbar()->getChild(('menu.media'))) {
-    //         return $menuMedia;
-    //     } else {
-    //         return $this->menuBuilder->createDropdownMenuItem(
-    //             $this->menuBuilder->getTopNavBar(),
-    //             "menu.media",
-    //             array("attributes" => array( "class" => "vic-pull-left vic-text-center"))
-    //         );
-    //     }
-    // }
 }

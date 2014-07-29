@@ -66,10 +66,6 @@
                 <source>victoire.menu.publication.scheduled.tooltip</source>
                 <target>Cette page sera publiée à partir du %publication_date%.</target>
             </trans-unit>
-            <trans-unit resname="menu.template.index">
-                <source>menu.template.index</source>
-                <target>Liste des modèles</target>
-            </trans-unit>
             <trans-unit resname="index.template.modal.header">
                 <source>index.template.modal.header</source>
                 <target>Liste des modèles</target>
@@ -93,6 +89,34 @@
             <trans-unit resname="form.template.type.bodyClass.label">
                 <source>form.template.type.bodyClass.label</source>
                 <target>Body class</target>
+            </trans-unit>
+            <trans-unit id="988d30bf1d090a16c4c086005c745ec82dfc20d7" resname="menu.page.new">
+                <source>menu.page.new</source>
+                <target><![CDATA[<i class="vic-menuImg vic-menuImg-new"></i> Nouvelle page]]></target>
+            </trans-unit>
+            <trans-unit id="da05b847ec5c3af60439eddb617f5a682c88963b" resname="menu.page.settings">
+                <source>menu.page.settings</source>
+                <target><![CDATA[<i class="vic-menuImg vic-menuImg-gear"></i> Paramètres de la page]]></target>
+            </trans-unit>
+            <trans-unit id="f6f4243e5ddbf57050e0876a9ad4408dc17a6113" resname="menu.page.template">
+                <source>menu.page.template</source>
+                <target><![CDATA[<i class="vic-menuImg vic-menuImg-gear"></i> Template de la page]]></target>
+            </trans-unit>
+            <trans-unit resname="menu.template.index">
+                <source>menu.template.index</source>
+                <target><![CDATA[<i class="vic-menuImg vic-menuImg-gear"></i> Liste des modèles]]></target>
+            </trans-unit>
+            <trans-unit id="eaeab063c6c4371efab54c81387875c285203f54" resname="menu.template">
+                <source>menu.template</source>
+                <target>Modèle</target>
+            </trans-unit>
+            <trans-unit id="eaec515f32ede19c5d5b5048ca8ca296443454ab" resname="menu.template.new">
+                <source>menu.template.new</source>
+                <target><![CDATA[<i class="vic-menuImg vic-menuImg-new"></i> Nouveau]]></target>
+            </trans-unit>
+            <trans-unit id="6a352f12741976c2b1287940116a2fe66616fa68" resname="menu.template.settings">
+                <source>menu.template.settings</source>
+                <target><![CDATA[<i class="vic-menuImg vic-menuImg-gear"></i> Paramètres]]></target>
             </trans-unit>
         </body>
     </file>

@@ -12,7 +12,7 @@ services:
 #  ==================  Widgets ================== #
     victoire_core.twig.widget_manager:
         class: Victoire\Bundle\CoreBundle\Widget\Managers\WidgetManager
-        arguments: 
+        arguments:
             - "@service_container"
             - "@page.widgetMap.builder"
             - "@av.form_error_service"
@@ -60,20 +60,19 @@ services:
         tags:
             - { name: knp_menu.menu, alias: leftnavbar }
 
-    victoire_core.menu_listener:
-        class: Victoire\Bundle\CoreBundle\Listener\MenuListener
+    victoire_core.menu_dispatcher:
+        class: Victoire\Bundle\CoreBundle\Listener\MenuDispatcher
         arguments:
             - "@event_dispatcher"
-            - "@victoire_core.page_menu_listener"
-            - "@victoire_core.template_menu_listener"
-            - "@victoire_core.sitemap_menu_listener"
-            - "@victoire_business_entity_template.business_entity_template_menu_listener"
+            - "@security.context"
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
     victoire_core.sitemap_menu_listener:
         class: Victoire\Bundle\CoreBundle\Listener\SiteMapMenuListener
         arguments: ["@victoire_core.admin_menu_builder"]
+        tags:
+            - { name: kernel.event_listener, event: victoire_core.build_menu, method: addGlobal, priority: 70 }
 
 #  ==================  Template ================== #
     victoire_core.template_mapper:
@@ -86,7 +85,7 @@ services:
 #  ==================  Twig ================== #
     victoire_core.twig.cms_extension:
         class: Victoire\Bundle\CoreBundle\Twig\Extension\CmsExtension
-        arguments: 
+        arguments:
             - "@widget_manager"
             - "@victoire_templating"
             - "@security.context"
@@ -97,7 +96,7 @@ services:
             - { name: twig.extension }
     victoire_core.twig.globals_extension:
         class: Victoire\Bundle\CoreBundle\Twig\Extension\GlobalsExtension
-        arguments: 
+        arguments:
             - "@victoire_templating"
             - "@session"
         tags:
@@ -107,7 +106,7 @@ services:
 
     victoire_core.apc.cache:
         class: Victoire\Bundle\CoreBundle\Cache\ApcCache
-        arguments: 
+        arguments:
             - "%doctrine.orm.cache.apc.class%"
             - "%kernel.debug%"
 
@@ -115,7 +114,7 @@ services:
 
     victoire_core.routing.loader.cache:
         class: Victoire\Bundle\CoreBundle\Route\CacheRouteLoader
-        arguments: 
+        arguments:
             - "@victoire_core.cache.route_registerer"
             - "@doctrine.orm.entity_manager"
         tags:
@@ -123,15 +122,15 @@ services:
 
     victoire_core.cache.route_registerer:
         class: Victoire\Bundle\CoreBundle\Route\CacheRouteRegisterer
-        arguments: 
+        arguments:
             - "@victoire_core.apc.cache"
 #  ==================  Annotations ================== #
 
     victoire_core.annotation_reader:
         class: Victoire\Bundle\CoreBundle\Annotations\Reader\AnnotationReader
-        arguments: 
+        arguments:
             - "@annotation_reader"
-            - "%kernel.root_dir%" 
+            - "%kernel.root_dir%"
             - "%victoire_core.widgets%"
         calls:
             - [ setCache, ["@victoire_core.apc.cache"] ]
@@ -170,14 +169,14 @@ services:
 
     victoire_core.entity_proxy.cache_driver:
         class: Victoire\Bundle\CoreBundle\CacheWarmer\EntityProxyCacheDriver
-        arguments: 
+        arguments:
             - "@annotation_reader"
             - "%kernel.root_dir%"
             - "%kernel.environment%"
 
     victoire_core.helper.business_entity_helper:
         class: Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper
-        arguments: 
+        arguments:
             - "@victoire_core.annotation_reader"
             - "@doctrine.orm.entity_manager"
 
@@ -185,9 +184,9 @@ services:
 
     victoire_core.widget_exception_handler:
         class: Victoire\Bundle\CoreBundle\Handler\WidgetExceptionHandler
-        arguments: 
+        arguments:
             - "@security.context"
             - "@twig"
             - "%kernel.debug%"
             - "@victoire_templating"
-            
+

@@ -62,7 +62,6 @@ services:
         class: Victoire\Bundle\MediaBundle\EventListener\MediaMenuListener
         arguments:
             - "@victoire_core.admin_menu_builder"
-            - "@event_dispatcher"
         tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+            - { name: kernel.event_listener, event: victoire_core.build_menu, method: addGlobal, priority: 60 }
 

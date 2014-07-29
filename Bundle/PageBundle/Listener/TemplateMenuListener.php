@@ -2,9 +2,10 @@
 namespace Victoire\Bundle\PageBundle\Listener;
 
 use Symfony\Component\EventDispatcher\Event;
+use Victoire\Bundle\CoreBundle\Listener\MenuListenerInterface;
 use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
-use Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent;
 use Victoire\Bundle\PageBundle\Entity\Template;
+use Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent;
 
 /**
  */
@@ -12,7 +13,7 @@ use Victoire\Bundle\PageBundle\Entity\Template;
 /**
  * When dispatched, this listener add items to a KnpMenu
  */
-class TemplateMenuListener
+class TemplateMenuListener implements MenuListenerInterface
 {
     private $menuBuilder;
 
@@ -26,6 +27,10 @@ class TemplateMenuListener
 
     /**
      * add a contextual menu item
+     *
+     * @param PageMenuContextualEvent $event
+     *
+     * @return Ambigous <\Knp\Menu\ItemInterface, NULL>
      */
     public function addContextual(PageMenuContextualEvent $event)
     {
@@ -49,6 +54,10 @@ class TemplateMenuListener
 
     /**
      * add a global menu item
+     *
+     * @param Event $event
+     *
+     * @return Ambigous <\Knp\Menu\ItemInterface, NULL>
      */
     public function addGlobal(Event $event)
     {

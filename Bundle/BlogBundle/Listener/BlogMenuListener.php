@@ -2,14 +2,15 @@
 namespace Victoire\Bundle\BlogBundle\Listener;
 
 use Symfony\Component\EventDispatcher\Event;
-use Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent;
+use Victoire\Bundle\CoreBundle\Listener\MenuListenerInterface;
 use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
+use Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent;
 
 
 /**
  * When dispatched, this listener add items to a KnpMenu
  */
-class BlogMenuListener
+class BlogMenuListener implements MenuListenerInterface
 {
     protected $menuBuilder;
 
