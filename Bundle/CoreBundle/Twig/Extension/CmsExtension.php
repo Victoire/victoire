@@ -2,15 +2,12 @@
 
 namespace Victoire\Bundle\CoreBundle\Twig\Extension;
 
-use Victoire\Bundle\CoreBundle\Menu\MenuManager;
 use Victoire\Bundle\CoreBundle\Widget\Managers\WidgetManager;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 use Symfony\Component\Security\Core\SecurityContext;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
 use Victoire\Bundle\CoreBundle\Entity\Widget;
-use Victoire\Bundle\CoreBundle\Form\WidgetType;
-use Victoire\Bundle\CoreBundle\Helper\WidgetHelper;
 use Victoire\Bundle\PageBundle\WidgetMap\WidgetMapBuilder;
 use Victoire\Bundle\CoreBundle\Handler\WidgetExceptionHandler;
 use Doctrine\ORM\EntityManager;
@@ -118,10 +115,10 @@ class CmsExtension extends \Twig_Extension
 
     /**
      *
-     * @param Page $page
-     * @param unknown $slot
-     * @param string $addContainer
-     * @param string $entity
+     * @param  Page    $page
+     * @param  unknown $slot
+     * @param  string  $addContainer
+     * @param  string  $entity
      * @return string
      */
     public function cmsSlotWidgets(Page $page, $slotId, $addContainer = true, $entity = null)
@@ -156,17 +153,8 @@ class CmsExtension extends \Twig_Extension
                     throw new \Exception('The widget with the id:['.$widgetId.'] was not found.');
                 }
 
-                //the mode of display of the widget
-                $mode = $widget->getMode();
-
-                //in the business entity mode, we override the entity of the widget
-                if ($mode === Widget::MODE_BUSINESS_ENTITY) {
-                    //set the entity for the widget
-                    $widget->setEntity($entity);
-                }
-
                 //render this widget
-                $result .= $this->cmsWidget($widget, $addContainer);
+                $result .= $this->cmsWidget($widget, $addContainer, $entity);
             } catch (\Exception $ex) {
                 $result .= $this->widgetExceptionHandler->handle($ex, $widget);
             }
@@ -195,17 +183,18 @@ class CmsExtension extends \Twig_Extension
     /**
      *
      * @param unknown $widget
-     * @param string $addContainer
+     * @param string  $addContainer
      *
      * @return unknown
      */
-    public function cmsWidget($widget, $addContainer = true)
+    public function cmsWidget($widget, $addContainer = true, $entity = null)
     {
         try {
-            $response = $this->widgetManager->render($widget, $addContainer);
+            $response = $this->widgetManager->render($widget, $addContainer, $entity);
         } catch (\Exception $ex) {
             $response = $this->widgetExceptionHandler->handle($ex, $widget);
         }
+
         return $response;
     }
 
@@ -213,6 +202,7 @@ class CmsExtension extends \Twig_Extension
      * render all widgets for a page
      *
      * @param Page $page
+     *
      * @return \Victoire\Bundle\CoreBundle\Template\template
      */
     public function cmsPage(Page $page)

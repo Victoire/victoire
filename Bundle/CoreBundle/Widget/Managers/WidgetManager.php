@@ -1,13 +1,8 @@
 <?php
 namespace Victoire\Bundle\CoreBundle\Widget\Managers;
 
-use Symfony\Component\Debug\Exception\FatalErrorException;
-use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
-use Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy;
 use Victoire\Bundle\CoreBundle\Entity\Widget;
-use Victoire\Bundle\CoreBundle\Entity\WidgetReference;
 use Victoire\Bundle\CoreBundle\Event\WidgetBuildFormEvent;
-use Victoire\Bundle\CoreBundle\Event\WidgetRenderEvent;
 use Victoire\Bundle\CoreBundle\Theme\ThemeWidgetInterface;
 use Victoire\Bundle\PageBundle\WidgetMap\WidgetMapBuilder;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
@@ -17,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Victoire\Bundle\CoreBundle\VictoireCmsEvents;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\PageBundle\Entity\Template;
-use Victoire\Widget\MenuBundle\Entity\MenuItem;
 use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
 use Behat\Behat\Exception\Exception;
 
@@ -101,10 +95,10 @@ class WidgetManager
     /**
      * Create a widget
      *
-     * @param string $type
-     * @param string $slotId
-     * @param Page   $page
-     * @param string $entity
+     * @param  string   $type
+     * @param  string   $slotId
+     * @param  Page     $page
+     * @param  string   $entity
      * @return template
      */
     public function createWidget($type, $slotId, Page $page, $entity)
@@ -156,9 +150,9 @@ class WidgetManager
 
     /**
      * new widget
-     * @param string   $type
-     * @param string   $slot
-     * @param Page $page
+     * @param  string   $type
+     * @param  string   $slot
+     * @param  Page     $page
      * @return template
      */
     public function newWidget($type, $slot, Page $page)
@@ -242,7 +236,7 @@ class WidgetManager
                 $response = array(
                     'page'     => $page,
                     'success'   => true,
-                    'html'     => $this->render($widget, true),
+                    'html'     => $this->render($widget, true, $entity),
                     'widgetId' => "vic-widget-".$initialWidgetId."-container"
                 );
             } else {
@@ -283,19 +277,19 @@ class WidgetManager
      *
      * @return template
      */
-    public function render(Widget $widget, $addContainer = false)
+    public function render(Widget $widget, $addContainer = false, $entity = false)
     {
         $html = '';
 
-        $html .= $this->getManager($widget)->renderContainer($widget, $addContainer);
+        $html .= $this->getManager($widget)->renderContainer($widget, $addContainer, $entity);
 
         return $html;
     }
 
     /**
      * tells if current widget is a reference
-     * @param Widget   $widget
-     * @param Page $page
+     * @param  Widget  $widget
+     * @param  Page    $page
      * @return boolean
      */
     public function isReference(Widget $widget, Page $page)
@@ -305,7 +299,7 @@ class WidgetManager
 
     /**
      * render widget actions
-     * @param Widget $widget
+     * @param  Widget   $widget
      * @return template
      */
     public function renderWidgetActions(Widget $widget)
@@ -351,8 +345,8 @@ class WidgetManager
 
     /**
      * get specific widget for provided widget type
-     * @param Widget $widget
-     * @param string $type
+     * @param  Widget  $widget
+     * @param  string  $type
      * @return manager
      */
     public function getManager($widget = null, $type = null)
@@ -393,8 +387,8 @@ class WidgetManager
 
     /**
      * compute the widget map for page
-     * @param Page   $page
-     * @param array  $sortedWidgets
+     * @param Page  $page
+     * @param array $sortedWidgets
      *
      * @throws Exception
      */
@@ -449,8 +443,8 @@ class WidgetManager
 
     /**
      * check if widget is allowed for slot
-     * @param Widget $widget
-     * @param string $slot
+     * @param  Widget $widget
+     * @param  string $slot
      * @return bool
      */
     public function isWidgetAllowedForSlot($widget, $slot)
@@ -498,9 +492,9 @@ class WidgetManager
      *
      * @param unknown $manager
      * @param unknown $widget
-     * @param Page $page
-     * @param string $entityName
-     * @param string $namespace
+     * @param Page    $page
+     * @param string  $entityName
+     * @param string  $namespace
      *
      * @return multitype:\Victoire\Bundle\CoreBundle\Widget\Managers\Form
      */
@@ -525,11 +519,11 @@ class WidgetManager
 
     /**
      * render a new form
-     * @param Form   $form
-     * @param Widget $widget
-     * @param string $slot
-     * @param Page   $page
-     * @param string $entityName
+     * @param  Form       $form
+     * @param  Widget     $widget
+     * @param  string     $slot
+     * @param  Page       $page
+     * @param  string     $entityName
      * @return Collection widgets
      */
     public function renderNewForm($form, $widget, $slot, Page $page, $entityName = null)

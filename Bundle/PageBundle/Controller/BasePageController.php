@@ -1,16 +1,12 @@
 <?php
 namespace Victoire\Bundle\PageBundle\Controller;
 
-use Doctrine\ORM\EntityNotFoundException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AppVentus\Awesome\ShortcutsBundle\Controller\AwesomeController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Victoire\Bundle\CoreBundle\Form\PageType;
-use Victoire\Bundle\CoreBundle\Form\TemplateType;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
 use Victoire\Bundle\PageBundle\Helper\UrlHelper;
@@ -65,7 +61,7 @@ class BasePageController extends AwesomeController
     }
 
     /**
-     * @param url $url
+     * @param  url      $url
      * @return Template
      *
      */
@@ -242,8 +238,8 @@ class BasePageController extends AwesomeController
     /**
      * Page settings
      *
-     * @param Request  $request
-     * @param Page $page
+     * @param Request $request
+     * @param Page    $page
      *
      * @return template
      */

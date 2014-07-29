@@ -1,14 +1,11 @@
 <?php
 namespace Victoire\Bundle\CoreBundle\Annotations\Reader;
 
-use Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;
 use Victoire\Bundle\CoreBundle\Annotations\BusinessEntity;
 use Victoire\Bundle\CoreBundle\Annotations\BusinessProperty;
 use Victoire\Bundle\CoreBundle\Annotations\ReceiverProperty;
 use Victoire\Bundle\CoreBundle\Entity\Widget;
-use Doctrine\Common\Annotations\AnnotationReader as BaseAnnotationReader;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
-use Doctrine\ORM\Mapping\Driver\StaticPHPDriver;
 use Doctrine\Common\Annotations\AnnotationException;
 
 use Doctrine\Common\Cache\Cache,
@@ -64,6 +61,7 @@ class AnnotationReader extends AnnotationDriver
             $businessClasses = $this->loadBusinessClasses($classes);
             $this->cache->save('victoire_core_business_classes', $businessClasses);
         }
+
         return $businessClasses;
     }
     /**
@@ -77,7 +75,6 @@ class AnnotationReader extends AnnotationDriver
         $widgetName = strtolower(array_pop($widgetName)); //TODO : Use the class name instead
 
         $businessClassesForWidget = $this->cache->fetch('victoire_core_business_classes_for_widget');
-
         if (!$businessClassesForWidget || (is_array($businessClassesForWidget) && !array_key_exists($widgetName, $businessClassesForWidget))) {
             $businessClasses = $this->getBusinessClasses();
             /* TODO : We shouldn't parse THREE times each class.
@@ -296,7 +293,5 @@ class AnnotationReader extends AnnotationDriver
 
         return $classes;
     }
-
-
 
 }
