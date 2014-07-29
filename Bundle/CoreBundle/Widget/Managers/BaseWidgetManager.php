@@ -337,11 +337,12 @@ class BaseWidgetManager
     /**
      * create a form with given widget
      *
-     * @param WidgetRedactor $widget
-     * @param Page           $page
-     * @param string         $entityName
-     * @param string         $namespace
-     * @param string         $formMode
+     * @param WidgetRedactor $widget     the widget
+     * @param Page           $page       the page
+     * @param string         $entityName the entity class
+     * @param string         $namespace  the namespace
+     * @param string         $formMode   the form mode
+     *
      * @return $form
      *
      * @throws \Exception
