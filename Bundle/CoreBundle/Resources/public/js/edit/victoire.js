@@ -26,6 +26,15 @@ $vic(document).ready(function() {
     if (typeof(gnMenu) != 'undefined' && document.getElementById('vic-admin-menu') !== null) {
         new gnMenu(document.getElementById('vic-admin-menu'));
     }
+
+    //Display all buttons except the disabled after they have been disabled (by updateSlotActions functions)
+    setTimeout(function() {
+        $vic.each($vic('.vic-new-widget'), function() {
+            if (!$vic(this).hasClass("vic-new-widget-disabled")) {
+                $vic(this).fadeIn();
+            }
+        }) ;
+    }, 10);
 });
 
 
