@@ -22,6 +22,8 @@ class VictoireFormExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+
         $xmlLoader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $xmlLoader->load('twig.xml');
 
@@ -29,7 +31,7 @@ class VictoireFormExtension extends Extension
          * Form
          */
 
-        // if (isset($config['form'])) {
+        if (isset($config['form'])) {
             $xmlLoader->load('form.xml');
             foreach ($config['form'] as $key => $value) {
                 if (is_array($value)) {
@@ -41,7 +43,7 @@ class VictoireFormExtension extends Extension
                     );
                 }
             }
-        // }
+        }
 
         /**
          * Icons
