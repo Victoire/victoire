@@ -30,7 +30,7 @@
             [
                 "@VictoireCoreBundle/Resources/public/vendor/font-awesome/4.0.3/css/font-awesome.css",
                 "@VictoireCoreBundle/Resources/public/vendor/vic-bootstrap/3.0.3/css/bootstrap.min.css",
-                "@VictoireCoreBundle/Resources/public/less/victoire.less"
+                "@VictoireCoreBundle/Resources/style/less/victoire.less"
             ]
         }
     }

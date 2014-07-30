@@ -6,12 +6,12 @@ $vic(document).ready(function() {
     //when a theme is selected
     $vic(document).on('change', 'select.theme-choices', function(e) {
         entity = $vic(this).parents('div.vic-tab-pane').attr('id');
-        
+
         item = $vic('div#' + entity + ' select.theme-choices option:selected').val();
-        
+
         //get the slot hidden input
         slot = $vic(this).parents('form').children('input[name$="[slot]"]')
-        
+
         //the value of the slot
         slotValue = $vic(slot).val();
 
@@ -26,6 +26,15 @@ $vic(document).ready(function() {
     if (typeof(gnMenu) != 'undefined' && document.getElementById('vic-admin-menu') !== null) {
         new gnMenu(document.getElementById('vic-admin-menu'));
     }
+
+    //Display all buttons except the disabled after they have been disabled (by updateSlotActions functions)
+    setTimeout(function() {
+        $vic.each($vic('.vic-new-widget'), function() {
+            if (!$vic(this).hasClass("vic-new-widget-disabled")) {
+                $vic(this).fadeIn();
+            }
+        }) ;
+    }, 10);
 });
 
 
