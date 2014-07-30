@@ -13,11 +13,11 @@ services:
         tags:
             - { name: kernel.event_listener, event: victoire_core.build_menu, method: addGlobal, priority: 50 }
 
-    victoire_core.page_menu.contextual:
+    victoire_core.businessEntityTemplate_menu.contextual:
         class: Victoire\Bundle\BusinessEntityTemplateBundle\Listener\BusinessEntityTemplateMenuListener
         arguments: ["@victoire_core.admin_menu_builder"]
         tags:
-            - { name: kernel.event_listener, event: victoire_core.businessEntityTemplate_menu.contextual, method: addContextual, priority: 100 }
+            - { name: kernel.event_listener, event: victoire_core.businessEntityTemplate_menu.contextual, method: addContextual }
 
     victoire_business_entity_template.business_entity_template_helper:
         class: Victoire\Bundle\BusinessEntityTemplateBundle\Helper\BusinessEntityTemplateHelper

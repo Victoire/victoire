@@ -142,7 +142,7 @@ class BasePageController extends AwesomeController
             }
         } else {
             if ($page->getSeo() && $page->getSeo()->getRedirectTo() && !$this->get('session')->get('victoire.edit_mode', false)) {
-                //a redirection is required by the seo
+                //a redirection is required by the seo bundle
                 $seoUrl = $page->getSeo()->getRedirectTo()->getUrl();
 
                 //generate the url
