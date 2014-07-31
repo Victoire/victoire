@@ -7,14 +7,9 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * Description
- * ===========
- * This compiler is used to inject all victoire bundles to the jms traduction user interface
- * It simulates a custom config for all the overwritten Victoire bundle (src/Victoire/{YourBundleName}Bundle)
- * and sets the translation dir in its Resources/translations folder.
+ * This compiler is used to inject the security for routes /victoire-dcms without needs to define it in the application security.yml
  *
  * @author  Paul Andrieux
- * @author  Leny Bernard
  *
  **/
 class AccessMapCompilerPass implements CompilerPassInterface
