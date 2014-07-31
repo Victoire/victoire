@@ -2,18 +2,8 @@
 
 namespace Victoire\Bundle\PageBundle\Twig\Extension;
 
-use Victoire\Bundle\CoreBundle\Menu\MenuManager;
-use Victoire\Bundle\CoreBundle\Widget\Managers\WidgetManager;
-use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
-use Symfony\Component\Security\Core\SecurityContext;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
-use Victoire\Bundle\CoreBundle\Entity\Widget;
-use Victoire\Bundle\CoreBundle\Form\WidgetType;
-use Victoire\Bundle\CoreBundle\Helper\WidgetHelper;
-use Victoire\Bundle\PageBundle\WidgetMap\WidgetMapBuilder;
-use Victoire\Bundle\CoreBundle\Handler\WidgetExceptionHandler;
-use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\BusinessEntityTemplateBundle\Helper\BusinessEntityTemplateHelper;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Victoire\Bundle\SeoBundle\Helper\PageSeoHelper;
@@ -134,7 +124,7 @@ class PageExtension extends \Twig_Extension
                 $pageEntity = clone $businessEntityTemplate;
 
                 //update url using the entity instance
-                $businessEntityTemplateHelper->updatePageUrlByEntity($pageEntity, $item);
+                $pageHelper->updatePageParametersByEntity($pageEntity, $item);
 
                 $url = $pageEntity->getUrl();
 
@@ -164,6 +154,7 @@ class PageExtension extends \Twig_Extension
             $html .= '<ol>';
             foreach ($itemsToAdd as $item) {
                 $itemUrl = $item['url'];
+                $itemUrl = $this->router->generate('victoire_core_page_show', array('url' => $itemUrl));
                 $title = $item['title'];
                 $generated = $item['generated'];
 
@@ -174,7 +165,7 @@ class PageExtension extends \Twig_Extension
                     $class = '';
                 }
 
-                $html .= "<li><div class='".$class."'><a href='/".$itemUrl."' title='".$title."'>".$title."</a></div>";
+                $html .= "<li><div class='".$class."'><a href='".$itemUrl."' title='".$title."'>".$title."</a></div>";
             }
             $html .= '</ol>';
         }

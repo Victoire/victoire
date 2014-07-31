@@ -106,7 +106,7 @@ class BusinessEntityTemplateHelper
      * @param Page   $page
      * @param Entity $entity
      */
-    public function updatePageUrlByEntity(Page $page, $entity)
+    public function fillEntityPageVariables(Page $page, $entity)
     {
         //if no entity is provided
         if ($entity === null) {
@@ -128,14 +128,17 @@ class BusinessEntityTemplateHelper
 
                 //the url of the page
                 $pageUrl = $page->getUrl();
+                $pageTitle = $page->getTitle();
 
                 //parse the business properties
                 foreach ($businessProperties as $businessProperty) {
                     $pageUrl = $this->parameterConverter->setBusinessPropertyInstance($pageUrl, $businessProperty, $entity);
+                    $pageTitle = $this->parameterConverter->setBusinessPropertyInstance($pageTitle, $businessProperty, $entity);
                 }
 
                 //we update the url of the page
                 $page->setUrl($pageUrl);
+                $page->setTitle($pageTitle);
             }
         }
     }

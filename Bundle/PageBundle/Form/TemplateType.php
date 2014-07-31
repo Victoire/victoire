@@ -5,11 +5,6 @@ namespace Victoire\Bundle\PageBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Doctrine\ORM\EntityRepository;
-use Victoire\Bundle\CoreBundle\Entity\Repository\PageRepository;
-use Victoire\Bundle\PageBundle\Form\DataTransformer\PageToTemplateTransformer;
-
-
 
 /**
  * Template type
@@ -43,6 +38,9 @@ class TemplateType extends AbstractType
             ->add('template', null, array(
                 'label' => 'form.template.type.template.label'
             ))
+            ->add('parent', null, array(
+                'label' => 'form.template.type.parent.label'
+            ))
             ->add('layout', 'choice', array(
                 'label' => 'form.template.type.layout.label',
                 'choices' => $options['layouts']
@@ -56,7 +54,6 @@ class TemplateType extends AbstractType
 
         ;
     }
-
 
     /**
      * bind to Template entity
@@ -72,7 +69,6 @@ class TemplateType extends AbstractType
             )
         );
     }
-
 
     /**
      * get form name
