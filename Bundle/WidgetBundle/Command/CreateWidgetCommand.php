@@ -38,6 +38,7 @@ class CreateWidgetCommand extends GenerateBundleCommand
                 new InputOption('structure', '', InputOption::VALUE_NONE, 'Whether to generate the whole directory structure'),
                 new InputOption('fields', '', InputOption::VALUE_REQUIRED, 'The fields to create with the new entity'),
                 new InputOption('entity', '', InputOption::VALUE_REQUIRED, 'The entity class name to initialize (shortcut notation)'),
+                new InputOption('parent', '', InputOption::VALUE_REQUIRED, 'The widget this widget will extends'),
             ))
             ->setDescription('Generate a new widget')
             ->setHelp(<<<EOT
@@ -92,6 +93,12 @@ EOT
             $bundle = strtr($namespace, array('\\' => ''));
         }
 
+        $parent = $input->getOption('parent');
+
+        if (null === $input->getOption('parent')) {
+            $parent = $input->setOption('parent', null);
+        }
+
         $bundle = Validators::validateBundleName($bundle);
         $dir    = Validators::validateTargetDir($input->getOption('dir'), $bundle, $namespace);
 
@@ -111,7 +118,7 @@ EOT
         $fields = $this->parseFields($input->getOption('fields'));
 
         $generator = $this->getGenerator();
-        $generator->generate($namespace, $bundle, $dir, $format, $structure, $fields);
+        $generator->generate($namespace, $bundle, $dir, $format, $structure, $fields, $parent);
 
         $output->writeln('Generating the bundle code: <info>OK</info>');
 
@@ -198,9 +205,6 @@ EOT
                 '',
                 'Each widget is hosted under a namespace (like <comment>Victoire/Widget/YourAwesomeWidgetNameBundle</comment>).',
                 '',
-                'See https://github.com/Victoire/CoreBundle/wiki/Best-practices for more',
-                'details on widget conventions.',
-                '',
                 'If you want for example a BlogWidget, the Widget Name should be Blog'
             ));
 
@@ -209,6 +213,22 @@ EOT
             $input->setOption('bundle-name', $bundle);
             $namespace = "Victoire\\Widget\\".$name."Bundle";
             $input->setOption('namespace', $namespace);
+        }
+
+        $parent = $input->getOption('parent');
+
+        if (null === $parent) {
+            $output->writeln(array(
+                '',
+                'A widget can extends another to reproduce it\'s behavior',
+                '',
+                'If you wabt to do so, please give the name of the widget to extend',
+                '',
+                'If you want to extends the TestWidget, the widget name should be Test'
+            ));
+
+            $parent = $dialog->askAndValidate($output, $dialog->getQuestion('Parent widget name', $input->getOption('parent')), array('Victoire\Bundle\CoreBundle\Command\CreateWidgetCommand', 'validateWidgetName'), false, $input->getOption('namespace'));
+            $input->setOption('parent', $parent);
         }
 
         $dir = dirname($this->getContainer()->getParameter('kernel.root_dir')).'/src';

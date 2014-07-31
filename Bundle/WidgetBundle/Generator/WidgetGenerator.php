@@ -40,7 +40,7 @@ class WidgetGenerator extends Generator
     /**
      * build WidgetBundle files
      */
-    public function generate($namespace, $bundle, $dir, $format, $structure, $fields = null)
+    public function generate($namespace, $bundle, $dir, $format, $structure, $fields = null, $parent = null)
     {
 
         $dir .= '/'.strtr($namespace, '\\', '/');
@@ -78,6 +78,7 @@ class WidgetGenerator extends Generator
         $parameters = array(
             'namespace'         => $namespace,
             'bundle'            => $bundle,
+            'parent'            => $parent,
             'widget'            => $widget,
             'format'            => $format,
             'fields'            => $fields,
