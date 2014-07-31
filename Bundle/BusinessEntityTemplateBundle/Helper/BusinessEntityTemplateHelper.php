@@ -62,7 +62,8 @@ class BusinessEntityTemplateHelper
         $baseQuery->andWhere('main_item.id = ' . $entityId);
 
         //filter with the query of the page
-        $items =  $queryHelper->getResultsAddingSubQuery($businessEntityTemplate, $baseQuery);
+        $items =  $queryHelper->buildWithSubQuery($businessEntityTemplate, $baseQuery)
+            ->getQuery()->getResult();
 
         //only one page can be found because we filter on the
         if (count($items) > 1) {
@@ -95,7 +96,9 @@ class BusinessEntityTemplateHelper
         $baseQuery->andWhere('1 = 1');
 
         //filter with the query of the page
-        $items =  $queryHelper->getResultsAddingSubQuery($businessEntityTemplate, $baseQuery);
+        $items =  $queryHelper->buildWithSubQuery($businessEntityTemplate, $baseQuery)
+            ->getQuery()
+            ->getResult();
 
         return $items;
     }

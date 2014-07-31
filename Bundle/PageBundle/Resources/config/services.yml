@@ -87,11 +87,13 @@ services:
         arguments: ["@victoire_core.admin_menu_builder"]
         tags:
             - { name: kernel.event_listener, event: victoire_core.build_menu, method: addGlobal, priority: 100 }
+
     victoire_core.page_menu.contextual:
         class: Victoire\Bundle\PageBundle\Listener\PageMenuListener
         arguments: ["@victoire_core.admin_menu_builder"]
         tags:
-            - { name: kernel.event_listener, event: victoire_core.page_menu.contextual, method: addContextual, priority: 100 }
+            - { name: kernel.event_listener, event: victoire_core.page_menu.contextual, method: addContextual }
+
     victoire_core.template_menu_listener:
         class: Victoire\Bundle\PageBundle\Listener\TemplateMenuListener
         arguments: ["@victoire_core.admin_menu_builder"]

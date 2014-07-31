@@ -7,7 +7,6 @@ use Victoire\Bundle\CoreBundle\Listener\PageMenuListener;
 use Victoire\Bundle\CoreBundle\DependencyInjection\Compiler\TraductionCompilerPass;
 use Symfony\Component\ClassLoader\UniversalClassLoader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Victoire\Bundle\CoreBundle\DependencyInjection\Compiler\ThemePass;
 
 /**
  * Awesome Cms for Symfony2
@@ -36,6 +35,5 @@ class VictoireCoreBundle extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(new TraductionCompilerPass());
-        $container->addCompilerPass(new ThemePass());
     }
 }

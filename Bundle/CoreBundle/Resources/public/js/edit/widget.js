@@ -65,7 +65,7 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update"]', function(
         } else {
             //inform user there have been an error
             alert(response.message);
-            
+
             if (response.html) {
                 $vic('.vic-modal-body .vic-container').html(response.html);
             }
@@ -73,7 +73,7 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update"]', function(
     });
 });
 
-// Create new widget after submit
+// Delete a widget after submit
 $vic(document).on('click', '.vic-widget-modal a[data-modal="delete"]', function(event) {
     event.preventDefault();
 
@@ -85,9 +85,11 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="delete"]', function(
             //selector for the widget div
             var widgetContainerSelector = 'vic-widget-' + response.widgetId + '-container';
             var widgetDiv = $vic("#" + widgetContainerSelector);
+            var widgetSlot = $vic(widgetDiv).parents('.vic-slot');
             //remove the div
             widgetDiv.remove();
             //close the modal
+            eval("updateSlotActions" + $vic(widgetSlot).data('name') + "()" );
             closeModal();
         } else {
             //log the error

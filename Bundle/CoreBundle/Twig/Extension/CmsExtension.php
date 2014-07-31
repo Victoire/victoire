@@ -162,7 +162,7 @@ class CmsExtension extends \Twig_Extension
 
         if ($addContainer) {
             //the container for the slot
-            $result = "<div class='vic-slot' id='vic-slot-".$slotId."'>".$result."</div>";
+            $result = "<div class='vic-slot' data-name=".$slotId." id='vic-slot-".$slotId."'>".$result."</div>";
         }
 
         return $result;

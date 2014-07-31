@@ -711,7 +711,9 @@ class BaseWidgetManager
         $itemsQueryBuilder->andWhere('1 = 1');
 
         //add the query of the widget
-        $items = $queryHelper->getResultsAddingSubQuery($widget, $itemsQueryBuilder);
+        $items = $queryHelper->buildWithSubQuery($widget, $itemsQueryBuilder)
+            ->getQuery()
+            ->getResult();
 
         return $items;
     }
