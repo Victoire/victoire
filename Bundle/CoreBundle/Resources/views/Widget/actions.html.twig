@@ -13,16 +13,23 @@
         {{ _self.widgetList(widgets, slot, page) }}
     </div>
 {#% endif %#}
-{% macro widgetList(widgets, slot, page) %}
+{% macro widgetList(widgets, slot, page, depth = 0) %}
 
     {% if widgets|length > 0 %}
-    <ul class="vic-dropdown-menu" role="menu" aria-labelledby="dLabel">
+    <ul class="{% if depth == 0 %}vic-dropdown-menu{% endif %} vic-dropdown-newWidget vic-newWidget-{{depth}}" role="menu" aria-labelledby="dLabel">
         {% for name, widget in widgets %}
         <li>
-            <a class="disabled" href="{{ widget.enabled ? path('victoire_core_widget_new', {'page':page.id,'type':name, 'slot':slot} ) : '#' }}">
+        {% if widget.params is defined %}
+            <a href="{{ path('victoire_core_widget_new', {'page':page.id,'type':name, 'slot':slot} )}}">
+        {% else %}
+            <a class="disabled" href="#">
+        {% endif %}
+
                 {{ ("widget."~name|lower~".new.action.label")|trans({}, 'victoire') }}
             </a>
-            {{ _self.widgetList(widget.children, slot, page) }}
+            {% if widget.children is defined and widget.children|length > 0%}
+            {{ _self.widgetList(widget.children, slot, page, depth+1) }}
+            {% endif %}
         </li>
         {% endfor %}
     </ul>

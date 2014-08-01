@@ -324,30 +324,28 @@ class WidgetManager
 
         $availableWidgets = $this->container->getParameter('victoire_core.widgets');
         $widgets = array();
-        foreach ($availableWidgets as $_widget => $widgetParam) {
-            $parent = array_key_exists('parent', $widgetParam) ? $widgetParam['parent'] : null;
-            $enabled = false;
-            if ((array_key_exists($slot, $slots) && array_key_exists($widgetParam['name'], $slots[$slot]['widgets']))
-                || !array_key_exists($slot, $slots)) {
-                    $enabled = true;
-            }
-            $widgets[$widgetParam['name']] = array(
-                'name' => $widgetParam['name'],
-                'parent' => $parent,
-                'enabled' => $enabled,
-                'children' => array(),
-            );
+
+        //If the slot is declared in config
+        if (!empty($slots[$slot]) && !empty($slots[$slot]['widgets'])) {
+            //parse declared widgets
+            $slotWidgets = array_keys($slots[$slot]['widgets']);
+        } else {
+            //parse all widgets
+            $slotWidgets = array_keys($availableWidgets);
         }
 
-        foreach ($widgets as $name => $widgetParams) {
-            if (null !== $parent = $widgetParams['parent']) {
-                $widgets[$parent]['children'][$name] = $widgetParams;
-                unset($widgets[$name]);
+        foreach ($slotWidgets as $slotWidget) {
+            $widgetParams = $availableWidgets[$slotWidget];
+            // if widget has a parent
+            if (!empty($widgetParams['parent'])) {
+                // place widget under its parent
+                $widgets[$widgetParams['parent']]['children'][$slotWidget]['params'] = $widgetParams;
+            } else {
+                $widgets[$slotWidget]['params'] = $widgetParams;
             }
         }
-
         $max = null;
-        if (array_key_exists($slot, $slots) && array_key_exists('max', $slots[$slot])) {
+        if (!empty($slots[$slot]) && !empty($slots[$slot]['max'])) {
             $max = $slots[$slot]['max'];
         }
 
