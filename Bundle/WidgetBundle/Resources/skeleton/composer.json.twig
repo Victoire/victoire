@@ -14,7 +14,9 @@
     "require": {
         "php"                      : ">=5.3.3",
         "symfony/framework-bundle" : "~2.3",
-        "victoire/victoire"        : "dev-master"
+        "victoire/victoire"        : "dev-master"{% if parent %},
+        "victoire/{{parent}}-widget"        : "dev-master"
+{% endif %}
     },
     "autoload": {
         "psr-0": { "Victoire\\Widget\\{{ widget }}Bundle": "" }

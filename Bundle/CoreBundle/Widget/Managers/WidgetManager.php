@@ -23,8 +23,6 @@ class WidgetManager
     protected $container;
     protected $widget;
     protected $page;
-    protected $widgetMapBuilder = null;
-    protected $formErrorService = null;
 
     /**
      * contructor
@@ -32,11 +30,9 @@ class WidgetManager
      * @param WidgetMapBuilder $widgetMapBuilder
      * @param FormErrorService $formErrorService
      */
-    public function __construct($container, WidgetMapBuilder $widgetMapBuilder, FormErrorService $formErrorService)
+    public function __construct($container)
     {
         $this->container = $container;
-        $this->widgetMapBuilder = $widgetMapBuilder;
-        $this->formErrorService = $formErrorService;
     }
 
     /**
@@ -59,7 +55,7 @@ class WidgetManager
     {
         //services
         $em = $this->container->get('doctrine')->getManager();
-        $widgetMapBuilder = $this->widgetMapBuilder;
+        $widgetMapBuilder = $this->container->get('page.widgetMap.builder');
 
         //the widget id
         $widgetId = $widget->getId();
@@ -188,7 +184,7 @@ class WidgetManager
     public function edit(Request $request, Widget $widget, $entity = null)
     {
         //services
-        $widgetMapBuilder = $this->widgetMapBuilder;
+        $widgetMapBuilder = $this->container->get('page.widgetMap.builder');
 
         $classes = $this->container->get('victoire_core.annotation_reader')->getBusinessClassesForWidget($widget);
         $manager = $this->getManager($widget);
@@ -240,7 +236,7 @@ class WidgetManager
                     'widgetId' => "vic-widget-".$initialWidgetId."-container"
                 );
             } else {
-                $formErrorService = $this->formErrorService;
+                $formErrorService = $this->container->get('av.form_error_service');
 
                 $errors = $formErrorService->getRecursiveReadableErrors($form);
 
@@ -326,8 +322,30 @@ class WidgetManager
     {
         $slots = $this->container->getParameter('victoire_core.slots');
 
+        $availableWidgets = $this->container->getParameter('victoire_core.widgets');
+        $widgets = array();
+
+        //If the slot is declared in config
+        if (!empty($slots[$slot]) && !empty($slots[$slot]['widgets'])) {
+            //parse declared widgets
+            $slotWidgets = array_keys($slots[$slot]['widgets']);
+        } else {
+            //parse all widgets
+            $slotWidgets = array_keys($availableWidgets);
+        }
+
+        foreach ($slotWidgets as $slotWidget) {
+            $widgetParams = $availableWidgets[$slotWidget];
+            // if widget has a parent
+            if (!empty($widgetParams['parent'])) {
+                // place widget under its parent
+                $widgets[$widgetParams['parent']]['children'][$slotWidget]['params'] = $widgetParams;
+            } else {
+                $widgets[$slotWidget]['params'] = $widgetParams;
+            }
+        }
         $max = null;
-        if (array_key_exists('max', $slots[$slot])) {
+        if (!empty($slots[$slot]) && !empty($slots[$slot]['max'])) {
             $max = $slots[$slot]['max'];
         }
 
@@ -336,7 +354,7 @@ class WidgetManager
             array(
                 "slot"    => $slot,
                 "page"    => $page,
-                'widgets' => array_keys($slots[$slot]['widgets']),
+                'widgets' => $widgets,
                 'max'     => $max,
                 'first'   => $first,
             )
@@ -377,8 +395,6 @@ class WidgetManager
 
         //we remove the beginning Widget from the namespace
         $widgetName = preg_replace('/^Widget/', '', $widgetName);
-        //or the beginning Theme if it is a theme
-        $widgetName = preg_replace('/^Theme/', '', $widgetName);
 
         $widgetType = "widget_".strtolower($widgetName);
 
@@ -398,7 +414,7 @@ class WidgetManager
         $page = $this->duplicateTemplatePageIfPageInstance($page);
 
         $em = $this->container->get('doctrine.orm.entity_manager');
-        $widgetMapBuilder = $this->widgetMapBuilder;
+        $widgetMapBuilder = $this->container->get('page.widgetMap.builder');
 
         $widgetSlots = array();
 
