@@ -5,16 +5,31 @@
         <img src="/bundles/victoirecore/images/addWidget-icon.png" alt="new widget icon"> {{ "widget.dropdown.action.label"|trans({}, "victoire")|desc("New widget")}}
         <i class="fa fa-angle-down"></i>
     </a>
-    <ul class="vic-dropdown-menu" role="menu" aria-labelledby="dLabel">
-        {% for widget in widgets %}
+    {{ _self.widgetList(widgets, slot, page) }}
+</div>
+
+{% macro widgetList(widgets, slot, page, depth = 0) %}
+
+    {% if widgets|length > 0 %}
+    <ul class="{% if depth == 0 %}vic-dropdown-menu{% endif %} vic-dropdown-newWidget vic-newWidget-{{depth}}" role="menu" aria-labelledby="dLabel">
+        {% for name, widget in widgets %}
         <li>
-            <a href="{{ path('victoire_core_widget_new', {'page':page.id,'type':widget, 'slot':slot} ) }}">
-                {{ ("widget."~widget~".new.action.label")|trans({}, 'victoire') }}
+        {% if widget.params is defined %}
+            <a href="{{ path('victoire_core_widget_new', {'page':page.id,'type':name, 'slot':slot} )}}">
+        {% else %}
+            <a class="disabled" href="#">
+        {% endif %}
+
+                {{ ("widget."~name|lower~".new.action.label")|trans({}, 'victoire') }}
             </a>
+            {% if widget.children is defined and widget.children|length > 0%}
+            {{ _self.widgetList(widget.children, slot, page, depth+1) }}
+            {% endif %}
         </li>
         {% endfor %}
     </ul>
-</div>
+    {% endif %}
+{% endmacro %}
 
 <script type="text/javascript">
 //responsible to hide and organize thanks to js the buttons.

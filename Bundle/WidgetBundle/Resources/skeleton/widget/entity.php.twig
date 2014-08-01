@@ -2,7 +2,11 @@
 namespace {{ namespace }}\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Victoire\Bundle\CoreBundle\Entity\Widget;
+{% if parent %}
+use Victoire\Widget\{{parent}}Bundle\Entity\Widget{{parent}};
+{% else %}
+use Victoire\Widget\CoreBundle\Entity\Widget;
+{% endif %}
 
 /**
  * Widget{{widget}}
@@ -10,7 +14,8 @@ use Victoire\Bundle\CoreBundle\Entity\Widget;
  * @ORM\Table("cms_widget_{{widget|lower}}")
  * @ORM\Entity
  */
-class Widget{{widget}} extends Widget
+class Widget{{widget}} extends {% if parent %}Widget{{parent}}{% else %}Widget{% endif %}
+
 {
 {% for field in fields %}
 

@@ -4,8 +4,11 @@
 {% set cc = "#}" %}
 {% set of = "{%" %}
 {% set cf = "%}" %}
-{{of}} extends 'VictoireCoreBundle:Widget:edit.html.twig' {{cf}}
-
+{% if parent %}
+{{of}} extends 'VictoireCoreBundle:Widget:new.html.twig' {{cf}}
+{% else %}
+{{of}} extends 'Victoire{{parent}}Bundle:Widget:new.html.twig' {{cf}}
+{% endif %}
 {{of}} block form {{cf}}
     {{o}} parent() {{c}}
 {{of}} endblock form {{cf}}
