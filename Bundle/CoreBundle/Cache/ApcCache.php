@@ -1,7 +1,6 @@
 <?php
 namespace Victoire\Bundle\CoreBundle\Cache;
 
-
 /**
  * this class handle cache system
  **/
@@ -23,11 +22,11 @@ class ApcCache
         $this->uniqId = md5(__FILE__);
     }
 
-
     /**
      * Fetches an entry from the cache.
      *
      * @param string $id cache id The id of the cache entry to fetch.
+     *
      * @return mixed The cached data or FALSE, if no cache entry exists for the given id.
      */
     public function fetch($id)
@@ -45,6 +44,7 @@ class ApcCache
      *
      * @param string $id   The cache id.
      * @param mixed  $data The cache entry/data.
+     *
      * @return boolean TRUE if the entry was successfully stored in the cache, FALSE otherwise.
      */
     public function save($id, $data)
@@ -68,11 +68,11 @@ class ApcCache
      * Does the cache contains this key
      *
      * @param unknown $key
+     *
      * @return boolean
      */
     protected function contains($key)
     {
-
         return $this->apcIsEnabled() && $this->cache->contains($key);
     }
 
@@ -86,6 +86,5 @@ class ApcCache
         //consider cache enabled only if apc is loaded and enabled and debug is false
         return extension_loaded('apc') && ini_get('apc.enabled');
     }
-
 
 }

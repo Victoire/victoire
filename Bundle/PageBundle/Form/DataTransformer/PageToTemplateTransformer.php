@@ -3,10 +3,8 @@ namespace Victoire\Bundle\PageBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
-use Doctrine\Common\Persistence\ObjectManager;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\PageBundle\Entity\Template;
-
 
 /**
  * Transforms a page in template
@@ -15,7 +13,6 @@ class PageToTemplateTransformer implements DataTransformerInterface
 {
 
     protected $em;
-
 
     /**
      * construct
@@ -28,7 +25,8 @@ class PageToTemplateTransformer implements DataTransformerInterface
     /**
      * Transforms an object (issue) to a string (number).
      *
-     * @param Page|Template $page
+     * @param Page $page
+     *
      * @return string
      */
     public function transform($page)
@@ -51,8 +49,8 @@ class PageToTemplateTransformer implements DataTransformerInterface
 
     /**
      * unused reverse transform
+     * @param string $template
      *
-     * @param  string $number
      * @return Issue|null
      * @throws TransformationFailedException if object (issue) is not found.
      */

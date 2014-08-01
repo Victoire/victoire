@@ -2,10 +2,7 @@
 namespace Victoire\Bundle\CoreBundle\Listener;
 
 use Symfony\Component\EventDispatcher\Event;
-use Victoire\Bundle\CoreBundle\Event\SiteMapContextualEvent;
-use Victoire\Bundle\CoreBundle\Listener\MenuListenerInterface;
 use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
-
 
 /**
  * When dispatched, this listener add items to a KnpMenu
@@ -28,6 +25,7 @@ class SiteMapMenuListener
      * add global menu items
      *
      * @param Event $event
+     *
      * @return \Knp\Menu\ItemInterface
      *
      * @SuppressWarnings checkUnusedFunctionParameters

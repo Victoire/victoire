@@ -1,12 +1,7 @@
 <?php
 namespace Victoire\Bundle\PageBundle\Form;
 
-
-use Doctrine\ORM\EntityRepository;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Victoire\Bundle\CoreBundle\Entity\Repository\PageRepository;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\PageBundle\Form\PageType;
 
@@ -52,4 +47,3 @@ class PageSettingsType extends PageType
         return 'victoire_page_settings_type';
     }
 }
-

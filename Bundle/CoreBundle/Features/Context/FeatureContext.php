@@ -2,11 +2,7 @@
 namespace Victoire\Bundle\CoreBundle\Features\Context;
 
 use Behat\MinkExtension\Context\MinkContext;
-use Behat\Mink\Driver\Selenium2Driver;
-use Behat\Behat\Context\Step;
-use Behat\Mink\Element\NodeElement;
 use Behat\Mink\Exception\ResponseTextException;
-use Behat\Mink\Exception\ElementTextException;
 
 require_once 'PHPUnit/Autoload.php';
 require_once 'PHPUnit/Framework/Assert/Functions.php';
@@ -222,7 +218,5 @@ class FeatureContext extends MinkContext
         $actionElement->click();
 
     }
-
-
 
 }

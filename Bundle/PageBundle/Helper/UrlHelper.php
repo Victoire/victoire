@@ -2,7 +2,6 @@
 namespace Victoire\Bundle\PageBundle\Helper;
 
 use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Doctrine\ORM\EntityManager;
 
@@ -74,6 +73,7 @@ class UrlHelper
      * Get the entity id from the url
      *
      * @param string $url
+     *
      * @return string The id
      */
     public function getEntityIdFromUrl($url)

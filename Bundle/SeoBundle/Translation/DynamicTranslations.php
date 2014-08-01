@@ -4,7 +4,6 @@ namespace Victoire\Bundle\SeoBundle\Translation;
 
 use JMS\TranslationBundle\Model\Message;
 use JMS\TranslationBundle\Translation\TranslationContainerInterface;
-use JMS\TranslationBundle\Model\FileSource;
 
 /**
  *

@@ -87,8 +87,8 @@ class PageHelper
         //if no entity is provided
         if ($entity === null) {
             //we look for the entity of the page
-            if ($page->getEntity() !== null) {
-                $entity = $page->getEntity();
+            if ($page->getBusinessEntity() !== null) {
+                $entity = $page->getBusinessEntity();
             }
         }
 

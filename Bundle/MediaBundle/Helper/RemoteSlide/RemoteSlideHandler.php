@@ -144,7 +144,7 @@ class RemoteSlideHandler extends AbstractMediaHandler
                 $data = "http://" . $data;
             }
             $parsedUrl = parse_url($data);
-            switch($parsedUrl['host']) {
+            switch ($parsedUrl['host']) {
                 case 'www.slideshare.net':
                 case 'slideshare.net':
                     $result = new Media();

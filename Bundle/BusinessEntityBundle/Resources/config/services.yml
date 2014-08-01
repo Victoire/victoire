@@ -1,4 +1,3 @@
 services:
     victoire_business_entity.converter.parameter_converter:
         class: Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter
-        

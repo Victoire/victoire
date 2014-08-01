@@ -3,7 +3,6 @@
 namespace Victoire\Bundle\PageBundle\EventSubscriber;
 
 use Doctrine\Common\EventSubscriber;
-use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
@@ -27,10 +26,10 @@ class PageSubscriber implements EventSubscriber
     /**
      * Constructor
      *
-     * @param unknown $cacheRouteRegisterer
-     * @param unknown $router
-     * @param unknown $userCallable
-     * @param unknown $userClass
+     * @param unknown   $cacheRouteRegisterer
+     * @param unknown   $router
+     * @param unknown   $userCallable
+     * @param unknown   $userClass
      * @param UrlHelper $urlHelper
      */
     public function __construct($cacheRouteRegisterer, $router, $userCallable, $userClass, $container)
@@ -66,7 +65,6 @@ class PageSubscriber implements EventSubscriber
             'onFlush',
         );
     }
-
 
     /**
      * Insert enabled widgets in base widget DiscriminatorMap
@@ -126,7 +124,6 @@ class PageSubscriber implements EventSubscriber
             }
         }
     }
-
 
     /**
     * Builds the page's url by get all page parents slugs and implode them with "/".
@@ -225,7 +222,6 @@ class PageSubscriber implements EventSubscriber
 
         return $urlArray;
     }
-
 
     /**
      * Record the route history of the page

@@ -1,8 +1,6 @@
 <?php
 namespace Victoire\Bundle\CoreBundle\Annotations;
 
-use Symfony\Component\HttpKernel\Exception\HttpException;
-
 /**
  * Marks a field with text sementical behavior
  *

@@ -2,13 +2,11 @@
 
 namespace Victoire\Bundle\BusinessEntityTemplateBundle\Controller;
 
-use Victoire\Bundle\BusinessEntityTemplateBundle\Controller\BaseController;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
-use Victoire\Bundle\BusinessEntityTemplateBundle\Form\BusinessEntityTemplateType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
@@ -22,12 +20,14 @@ class BusinessEntityTemplateController extends BaseController
     /**
      * Creates a new BusinessEntityTemplate entity.
      *
+     * @param Request $request
+     * @param integer $id
+     *
      * @Route("{id}/create", name="victoire_businessentitytemplate_businessentitytemplate_create")
      * @Method("POST")
      * @Template("VictoireBusinessEntityTemplateBundle:BusinessEntityTemplate:new.html.twig")
      *
-     * @param Request $request
-     * @return multitype:\Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate NULL
+     * @return Ambiguous \Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate NULL
      */
     public function createAction(Request $request, $id)
     {
@@ -100,12 +100,11 @@ class BusinessEntityTemplateController extends BaseController
 
     /**
      * Displays a form to create a new BusinessEntityTemplate entity.
+     * @param string $id The id of the businessEntity
      *
      * @Route("/{id}/new", name="victoire_businessentitytemplate_businessentitytemplate_new")
      * @Method("GET")
      * @Template()
-     *
-     * @param string $id The id of the businessEntity
      *
      * @return array The entity and the form
      */
@@ -127,6 +126,7 @@ class BusinessEntityTemplateController extends BaseController
             'form'   => $form->createView(),
             'businessProperties' => $businessProperties
         );
+
         return new JsonResponse(array(
             'html' => $this->container->get('victoire_templating')->render(
                 'VictoireBusinessEntityTemplateBundle:BusinessEntityTemplate:new.html.twig',
@@ -136,15 +136,13 @@ class BusinessEntityTemplateController extends BaseController
         ));
     }
 
-
     /**
      * Displays a form to edit an existing BusinessEntityTemplate entity.
+     * @param string $id The id of the businessEntity
      *
      * @Route("/{id}/edit", name="victoire_businessentitytemplate_businessentitytemplate_edit")
      * @Method("GET")
      * @Template()
-     *
-     * @param string $id The id of the businessEntity
      *
      * @return array The entity and the form
      *
@@ -157,7 +155,6 @@ class BusinessEntityTemplateController extends BaseController
         $businessEntityHelper = $this->get('victoire_core.helper.business_entity_helper');
 
         $entity = $em->getRepository('VictoireBusinessEntityTemplateBundle:BusinessEntityTemplate')->find($id);
-
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find BusinessEntityTemplate entity.');
@@ -211,13 +208,13 @@ class BusinessEntityTemplateController extends BaseController
     }
     /**
      * Edits an existing BusinessEntityTemplate entity.
+     * @param Request $request
+     * @param string  $id
      *
      * @Route("/{id}", name="victoire_businessentitytemplate_businessentitytemplate_update")
      * @Method("PUT")
      * @Template("VictoireBusinessEntityTemplateBundle:BusinessEntityTemplate:edit.html.twig")
      *
-     * @param Request $request
-     * @param string $id
      * @return array The parameter for the response
      *
      * @throws \Exception
@@ -262,12 +259,11 @@ class BusinessEntityTemplateController extends BaseController
 
     /**
      * Deletes a BusinessEntityTemplate entity.
+     * @param Request $request
+     * @param string  $id
      *
      * @Route("/{id}", name="victoire_businessentitytemplate_businessentitytemplate_delete")
      * @Method("DELETE")
-     *
-     * @param Request $request
-     * @param string $id
      *
      * @throws \Exception
      *
@@ -306,17 +302,15 @@ class BusinessEntityTemplateController extends BaseController
             ->setAction($this->generateUrl('victoire_businessentitytemplate_businessentitytemplate_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
-        ;
+            ->getForm();
     }
 
     /**
      * List the entities that matches the query of the businessEntityTemplate
+     * @param BusinessEntityTemplate $entity
      *
      * @Route("listEntities/{id}", name="victoire_businessentitytemplate_businessentitytemplate_listentities")
      * @ParamConverter("id", class="VictoireBusinessEntityTemplateBundle:BusinessEntityTemplate")
-     * @param Request $request
-     *
      * @return array The list of items for this template
      *
      * @throws Exception
@@ -346,6 +340,7 @@ class BusinessEntityTemplateController extends BaseController
      * Get an array of business properties by the business entity template
      *
      * @param BusinessEntityTemplate $entity
+     *
      * @return array of business properties
      */
     public function getBusinessProperties(BusinessEntityTemplate $entity)

@@ -41,5 +41,4 @@ class CmsExtensionTest extends BaseTestCase
         $this->assertTrue(is_string($response));
     }
 
-
 }

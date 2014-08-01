@@ -21,7 +21,6 @@ class BusinessEntity
         $this->widgets = $widgets;
     }
 
-
     /**
      * Get widgets associated to this businessEntity
      * @return null|array

@@ -6,8 +6,6 @@ use Victoire\Bundle\MediaBundle\Helper\RemoteSlide\RemoteSlideHandler;
 
 use Victoire\Bundle\MediaBundle\Entity\Media;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * Victoire\Bundle\MediaBundle\Entity\Video
  * Class that defines a video in the system

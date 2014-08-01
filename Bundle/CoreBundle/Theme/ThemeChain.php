@@ -2,8 +2,7 @@
 namespace Victoire\Bundle\CoreBundle\Theme;
 
 /**
- *
- *
+ * The theme chain add and give the configurated themes
  * ref: victoire_core.theme_chain
  */
 class ThemeChain
@@ -31,8 +30,9 @@ class ThemeChain
     }
 
     /**
+     * Get all themes tagged with victoire_core.theme
+     * @param string $widgetName
      *
-     * @param string $widget
      * @return array
      */
     public function getThemes($widgetName = null)

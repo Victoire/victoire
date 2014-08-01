@@ -75,10 +75,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('class')->end()
                     ->end()
                 ->end()
-            ->end()
-
-
-;
+            ->end();
 
         return $treeBuilder;
     }

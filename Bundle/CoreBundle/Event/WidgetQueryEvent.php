@@ -20,9 +20,9 @@ class WidgetQueryEvent extends Event
     /**
      * Constructor
      *
-     * @param Widget $widget
+     * @param Widget       $widget
      * @param QueryBuilder $qb
-     * @param Request $request
+     * @param Request      $request
      */
     public function __construct(Widget $widget, QueryBuilder $qb, Request $request)
     {

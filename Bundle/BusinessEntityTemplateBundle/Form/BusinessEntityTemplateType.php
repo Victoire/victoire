@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\BusinessEntityTemplateBundle\Form;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Victoire\Bundle\PageBundle\Form\TemplateType;
@@ -27,7 +26,7 @@ class BusinessEntityTemplateType extends TemplateType
 
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      *
      * @SuppressWarnings checkUnusedFunctionParameters
      */

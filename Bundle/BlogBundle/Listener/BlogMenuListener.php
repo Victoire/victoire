@@ -6,7 +6,6 @@ use Victoire\Bundle\CoreBundle\Listener\MenuListenerInterface;
 use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
 use Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent;
 
-
 /**
  * When dispatched, this listener add items to a KnpMenu
  */
@@ -28,6 +27,7 @@ class BlogMenuListener implements MenuListenerInterface
      * add a contextual menu item
      *
      * @param PageMenuContextualEvent $event
+     *
      * @return \Victoire\Bundle\BlogBundle\Listener\MenuItem
      */
     public function addContextual(PageMenuContextualEvent $event)
@@ -48,6 +48,7 @@ class BlogMenuListener implements MenuListenerInterface
      * add global menu items
      *
      * @param Event $event
+     *
      * @return \Victoire\Bundle\BlogBundle\Listener\MenuItem
      *
      * @SuppressWarnings checkUnusedFunctionParameters

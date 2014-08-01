@@ -109,7 +109,6 @@ EOT
             $dir = getcwd().'/'.$dir;
         }
 
-
         $fields = $this->parseFields($input->getOption('fields'));
 
         $generator = $this->getGenerator();
@@ -144,7 +143,6 @@ EOT
 
         $dialog->writeGeneratorSummary($output, $errors);
     }
-
 
     /**
      * get a generator for given widget and type, and attach it skeleton dirs
@@ -199,13 +197,11 @@ EOT
         $dialog = $this->getDialogHelper();
         $dialog->writeSection($output, 'Welcome to the Victoire widget bundle generator');
 
-
         //////////////////////////////
         //                          //
         //   Create Theme Bundle    //
         //                          //
         //////////////////////////////
-
 
         // namespace
         $namespace = null;
@@ -266,7 +262,6 @@ EOT
 
         $input->setOption('dir', $dir);
 
-
         // format
         $format = null;
         try {
@@ -287,7 +282,6 @@ EOT
 
         $input->setOption('structure', false);
 
-
         ///////////////////////
         //                   //
         //   Create Entity   //
@@ -298,7 +292,6 @@ EOT
         $entity = "Theme".$widgetName.$themeName;
         $input->setOption('entity', $bundle.':'.$entity);
 
-
         // summary
         $output->writeln(array(
             '',
@@ -308,7 +301,6 @@ EOT
             '',
         ));
     }
-
 
     /**
      * Check that provided theme name is correct
@@ -329,7 +321,6 @@ EOT
 
         return $theme;
     }
-
 
     /**
      * Check the namespace entered is correct
@@ -380,7 +371,6 @@ EOT
         return $generator;
     }
 
-
     /**
      * Instanciate a new Entity generator
      *
@@ -391,12 +381,11 @@ EOT
         return new DoctrineEntityGenerator($this->getContainer()->get('filesystem'), $this->getContainer()->get('doctrine'));
     }
 
-
-
     /**
      * transform console's output string fields into an array of fields
      *
      * @param string $input
+     *
      * @return array $fields
      */
     private function parseFields($input)
@@ -429,6 +418,7 @@ EOT
      * @param InputInterface  $input
      * @param OutputInterface $output
      * @param DialogHelper    $dialog
+     *
      * @return $fields
      */
     private function addFields(InputInterface $input, OutputInterface $output, DialogHelper $dialog)
@@ -529,11 +519,10 @@ EOT
         return $fields;
     }
 
-
-
     /**
      * Validate Entity short namepace
      * @param string $shortcut
+     *
      * @return $shortcut
      */
     protected function parseShortcutNotation($shortcut)
@@ -546,6 +535,5 @@ EOT
 
         return array(substr($entity, 0, $pos), substr($entity, $pos + 1));
     }
-
 
 }

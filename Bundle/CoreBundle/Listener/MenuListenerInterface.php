@@ -3,9 +3,6 @@
 namespace Victoire\Bundle\CoreBundle\Listener;
 
 use Symfony\Component\EventDispatcher\Event;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\HttpKernel\HttpKernel;
-use Victoire\Bundle\BusinessEntityTemplateBundle\Listener\BusinessEntityTemplateMenuListener;
 use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
 use Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent;
 
@@ -27,7 +24,7 @@ interface MenuListenerInterface
      *
      * @param PageMenuContextualEvent $event
      *
-     * @return Ambigous                <\Knp\Menu\ItemInterface, NULL>
+     * @return Ambigous <\Knp\Menu\ItemInterface, NULL>
      */
     public function addContextual(PageMenuContextualEvent $event);
 
