@@ -10,17 +10,24 @@
             <img src="/bundles/victoirecore/images/addWidget-icon.png" alt="new widget icon"> {{ "widget.dropdown.action.label"|trans({}, "victoire")|desc("New widget")}}
             <i class="fa fa-angle-down"></i>
         </a>
-        <ul class="vic-dropdown-menu" role="menu" aria-labelledby="dLabel">
-            {% for widget in widgets %}
-            <li>
-                <a href="{{ path('victoire_core_widget_new', {'page':page.id,'type':widget, 'slot':slot} ) }}">
-                    {{ ("widget."~widget~".new.action.label")|trans({}, 'victoire') }}
-                </a>
-            </li>
-            {% endfor %}
-        </ul>
+        {{ _self.widgetList(widgets, slot, page) }}
     </div>
 {#% endif %#}
+{% macro widgetList(widgets, slot, page) %}
+
+    {% if widgets|length > 0 %}
+    <ul class="vic-dropdown-menu" role="menu" aria-labelledby="dLabel">
+        {% for name, widget in widgets %}
+        <li>
+            <a class="disabled" href="{{ widget.enabled ? path('victoire_core_widget_new', {'page':page.id,'type':name, 'slot':slot} ) : '#' }}">
+                {{ ("widget."~name|lower~".new.action.label")|trans({}, 'victoire') }}
+            </a>
+            {{ _self.widgetList(widget.children, slot, page) }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+{% endmacro %}
 
 <script type="text/javascript">
 //responsible to hide and organize thanks to js the buttons.

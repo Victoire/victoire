@@ -22,6 +22,7 @@ class AnnotationReader extends AnnotationDriver
 
     private $cache;
     private $widgets;
+    private $widgetManager;
 
     /**
      * construct
@@ -30,10 +31,11 @@ class AnnotationReader extends AnnotationDriver
      * @param unknown $paths
      * @param unknown $widgets
      */
-    public function __construct($reader, $paths, $widgets)
+    public function __construct($reader, $widgetManager, $paths, $widgets)
     {
         $this->widgets = $widgets;
         $this->reader = $reader;
+        $this->widgetManager = $widgetManager;
         if ($paths) {
             $this->addPaths(array($paths."/../"));
         }
@@ -71,8 +73,7 @@ class AnnotationReader extends AnnotationDriver
      **/
     public function getBusinessClassesForWidget(Widget $widget)
     {
-        $widgetName = explode('\\', get_class($widget));
-        $widgetName = strtolower(array_pop($widgetName)); //TODO : Use the class name instead
+        $widgetName = $this->widgetManager->getManager($widget)->getWidgetName();
 
         $businessClassesForWidget = $this->cache->fetch('victoire_core_business_classes_for_widget');
         if (!$businessClassesForWidget || (is_array($businessClassesForWidget) && !array_key_exists($widgetName, $businessClassesForWidget))) {
