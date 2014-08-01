@@ -79,6 +79,7 @@ class Article extends Page
      * Set description
      *
      * @param string $description
+     *
      * @return PostPage
      */
     public function setDescription($description)
@@ -98,11 +99,11 @@ class Article extends Page
         return $this->description;
     }
 
-
     /**
      * Set category
      *
      * @param string $category
+     *
      * @return Article
      */
     public function setCategory($category)
@@ -152,11 +153,11 @@ class Article extends Page
         $this->title = $title;
     }
 
-
     /**
      * Set tags
      *
      * @param string $tags
+     *
      * @return Article
      */
     public function setTags($tags)
@@ -170,6 +171,7 @@ class Article extends Page
      * Add tag
      *
      * @param string $tag
+     *
      * @return Article
      */
     public function addTag($tag)
@@ -183,6 +185,7 @@ class Article extends Page
      * Remove tag
      *
      * @param string $tag
+     *
      * @return Article
      */
     public function removeTag($tag)
@@ -201,6 +204,5 @@ class Article extends Page
     {
         return $this->tags;
     }
-
 
 }

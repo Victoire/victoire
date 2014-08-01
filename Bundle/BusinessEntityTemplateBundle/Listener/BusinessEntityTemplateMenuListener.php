@@ -1,9 +1,7 @@
 <?php
 namespace Victoire\Bundle\BusinessEntityTemplateBundle\Listener;
 
-use AppVentus\Awesome\ShortcutsBundle\Service\ShortcutService;
 use Symfony\Component\EventDispatcher\Event;
-use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
 use Victoire\Bundle\CoreBundle\Listener\MenuListenerInterface;
 use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
 use Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent;
@@ -18,7 +16,7 @@ class BusinessEntityTemplateMenuListener implements MenuListenerInterface
     /**
      * Constructor
      *
-     * @param MenuBuilder     $menuBuilder
+     * @param MenuBuilder $menuBuilder
      */
     public function __construct(MenuBuilder $menuBuilder)
     {

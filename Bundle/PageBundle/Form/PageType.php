@@ -4,8 +4,6 @@ namespace Victoire\Bundle\PageBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Doctrine\ORM\EntityRepository;
-use Victoire\Bundle\CoreBundle\Entity\Repository\PageRepository;
 use Victoire\Bundle\PageBundle\Entity\Page;
 
 /**
@@ -50,7 +48,6 @@ class PageType extends AbstractType
             ));
     }
 
-
     /**
      * bind to Page entity
      * @param OptionsResolverInterface $resolver
@@ -63,7 +60,6 @@ class PageType extends AbstractType
             'layouts' => $this->layouts,
         ));
     }
-
 
     /**
      * get form name

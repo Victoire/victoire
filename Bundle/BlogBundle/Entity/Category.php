@@ -40,7 +40,6 @@ class Category
      */
     protected $articles;
 
-
     /**
      * undocumented function
      *
@@ -66,6 +65,7 @@ class Category
      * Set title
      *
      * @param string $title
+     *
      * @return Category
      */
     public function setTitle($title)
@@ -89,6 +89,7 @@ class Category
      * Set slug
      *
      * @param string $slug
+     *
      * @return Category
      */
     public function setSlug($slug)
@@ -112,6 +113,7 @@ class Category
      * Set pages
      *
      * @param \stdClass $pages
+     *
      * @return Category
      */
     public function setPages($pages)
@@ -135,6 +137,7 @@ class Category
      * Set articles
      *
      * @param string $articles
+     *
      * @return PostPage
      */
     public function setArticles($articles)

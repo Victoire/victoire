@@ -13,13 +13,12 @@ use Victoire\Bundle\PageBundle\Helper\UrlHelper;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * undocumented class
- *
+ * The base page controller is used to interact with all kind of pages
  **/
 class BasePageController extends AwesomeController
 {
     /**
-     * @param $page
+     * @param Page $page The page to delete
      *
      * @return template
      */
@@ -61,7 +60,8 @@ class BasePageController extends AwesomeController
     }
 
     /**
-     * @param  url      $url
+     * @param string $url The page url
+     *
      * @return Template
      *
      */
@@ -70,7 +70,7 @@ class BasePageController extends AwesomeController
         //the response
         $response = null;
         $entity = null;
-        $BusinessEntityTemplate = null;
+        $businessEntityTemplate = null;
 
         //manager
         $manager = $this->getEntityManager();
@@ -96,12 +96,12 @@ class BasePageController extends AwesomeController
                 $entity = $instance['entity'];
             }
         } else {
-            $entity = $page->getEntity();
+            $entity = $page->getBusinessEntity();
         }
 
         //no page were found, we try to look for an BusinessEntityTemplate
         if ($page === null) {
-            $page = $BusinessEntityTemplate;
+            $page = $businessEntityTemplate;
         }
 
         //override of the seo using the current entity
@@ -114,7 +114,7 @@ class BasePageController extends AwesomeController
         }
 
         //no need for this variable anymore
-        unset($BusinessEntityTemplate);
+        unset($businessEntityTemplate);
 
         //no page found using the url, we look for previous url
         if ($page === null) {

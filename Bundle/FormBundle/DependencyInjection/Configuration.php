@@ -219,8 +219,6 @@ class Configuration implements ConfigurationInterface
             ->end();
     }
 
-
-
     /**
      * Add icon configuration
      * @param ArrayNodeDefinition $rootNode The root node

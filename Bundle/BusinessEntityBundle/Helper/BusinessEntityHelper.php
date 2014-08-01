@@ -7,7 +7,6 @@ use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
 
-
 /**
  * The BusinessEntityHelper
  *

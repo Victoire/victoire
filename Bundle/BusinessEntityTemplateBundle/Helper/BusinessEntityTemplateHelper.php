@@ -9,9 +9,7 @@ use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 
 /**
- *
- * @author Thomas Beaujean
- *
+ * The business entity template helper
  * ref: victoire_business_entity_template.business_entity_template_helper
  */
 class BusinessEntityTemplateHelper
@@ -21,11 +19,9 @@ class BusinessEntityTemplateHelper
     protected $parameterConverter = null;
 
     /**
-     *
      * @param QueryHelper          $queryHelper
      * @param BusinessEntityHelper $businessEntityHelper
      * @param ParameterConverter   $parameterConverter
-     *
      */
     public function __construct(QueryHelper $queryHelper, BusinessEntityHelper $businessEntityHelper, ParameterConverter $parameterConverter)
     {
@@ -37,8 +33,9 @@ class BusinessEntityTemplateHelper
     /**
      * Is the entity allowed for the business entity template page
      *
-     * @param  BusinessEntityTemplate $businessEntityTemplate
-     * @param  unknown                $entity
+     * @param BusinessEntityTemplate $businessEntityTemplate
+     * @param Entity                 $entity
+     *
      * @throws \Exception
      * @return boolean
      */
@@ -80,7 +77,8 @@ class BusinessEntityTemplateHelper
     /**
      * Get the list of entities allowed for the businessEntityTemplate page
      *
-     * @param  BusinessEntityTemplate $page
+     * @param BusinessEntityTemplate $businessEntityTemplate
+     *
      * @throws \Exception
      * @return boolean
      */
@@ -114,8 +112,8 @@ class BusinessEntityTemplateHelper
         //if no entity is provided
         if ($entity === null) {
             //we look for the entity of the page
-            if ($page->getEntity() !== null) {
-                $entity = $page->getEntity();
+            if ($page->getBusinessEntity() !== null) {
+                $entity = $page->getBusinessEntity();
             }
         }
 

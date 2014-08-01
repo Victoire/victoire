@@ -4,8 +4,6 @@ namespace Victoire\Bundle\BlogBundle\Entity;
 
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Doctrine\ORM\Mapping as ORM;
-use Victoire\Bundle\CoreBundle\Annotations as VIC;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * PostPage

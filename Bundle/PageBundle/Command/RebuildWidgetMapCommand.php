@@ -3,16 +3,8 @@ namespace Victoire\Bundle\PageBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Victoire\Bundle\CoreBundle\Generator\WidgetGenerator;
-use Sensio\Bundle\GeneratorBundle\Generator\DoctrineEntityGenerator;
-use Sensio\Bundle\GeneratorBundle\Command\Validators;
-use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
-use Doctrine\DBAL\Types\Type;
-use Symfony\Component\DependencyInjection\Container;
-use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
 /**
  * Rebuild the widget map for a given VictoireCMS page
@@ -68,6 +60,7 @@ EOT
             $pages[] = $page = $em->getRepository('VictoirePageBundle:Page')->findOneByUrl($input->getOption('url'));
             if (!$page) {
                 $output->writeln('<error>Page not found. Are you sure the page exists in db ?</error>');
+
                 return false;
             }
             //TODO throw exception if not found

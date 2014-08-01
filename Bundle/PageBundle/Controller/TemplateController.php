@@ -2,16 +2,12 @@
 
 namespace Victoire\Bundle\PageBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Victoire\Bundle\PageBundle\Entity\Template as TemplateEntity;
-use Victoire\Bundle\PageBundle\Event\Menu\TemplateMenuContextualEvent;
-use Victoire\Bundle\PageBundle\Form\TemplateType;
-
 
 /**
  * Template Controller
@@ -22,10 +18,10 @@ class TemplateController extends Controller
 {
     /**
      * list of all templates
-     *
-     * @return response
      * @Route("/index", name="victoire_core_template_index")
      * @Template()
+     *
+     * @return response
      */
     public function indexAction()
     {
@@ -79,8 +75,8 @@ class TemplateController extends Controller
 
     /**
      * define settings of the template
-     *
      * @param string $slug The slug of page
+     *
      * @return Response
      * @Route("/{slug}/parametres", name="victoire_core_template_settings")
      * @Template()
@@ -92,14 +88,13 @@ class TemplateController extends Controller
 
         $templateForm = $this->container->get('form.factory')->create($this->getNewTemplateType(), $template);
 
-
         $templateForm->handleRequest($this->get('request'));
         if ($templateForm->isValid()) {
             $em->persist($template);
             $em->flush();
 
             return new JsonResponse(
-                    array(
+                array(
                     'success' => true,
                     "url"     => $this->generateUrl('victoire_core_page_show', array('url' => $template->getUrl()))
                 )
@@ -120,8 +115,8 @@ class TemplateController extends Controller
 
     /**
      * edit a Template
-     *
      * @param Template $template The Template to edit
+     *
      * @return Response
      * @Route("/edit/{slug}", name="victoire_core_template_edit")
      * @Template()

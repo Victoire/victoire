@@ -2,15 +2,12 @@
 
 namespace Victoire\Bundle\SeoBundle\Helper;
 
-
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
 
 /**
- *
- * @author Thomas Beaujean
- *
+ * The seo helper brings some seo functions for pages
  * ref: victoire_seo.helper.pageseo_helper
  */
 class PageSeoHelper
@@ -59,16 +56,16 @@ class PageSeoHelper
     /**
      * Generate a seo for the page using the current entity
      *
-     * @param Page $page
-     * @param Entity   $entity
+     * @param Page   $page
+     * @param Entity $entity
      */
     public function updateSeoByEntity(Page $page, $entity)
     {
         //if no entity is provided
         if ($entity === null) {
             //we look for the entity of the page
-            if ($page->getEntity() !== null) {
-                $entity = $page->getEntity();
+            if ($page->getBusinessEntity() !== null) {
+                $entity = $page->getBusinessEntity();
             }
         }
 
@@ -105,7 +102,7 @@ class PageSeoHelper
      * Get the content of an attribute of an entity given
      *
      * @param entity $entity
-     * @param strin $functionName
+     * @param string $field
      *
      * @return mixed
      */
@@ -121,9 +118,9 @@ class PageSeoHelper
     /**
      * Update the value of the entity
      *
-     * @param Object        $entity
-     * @param The attribute $field
-     * @param string        $value
+     * @param Object $entity
+     * @param string $field
+     * @param string $value
      *
      * @return mixed
      */

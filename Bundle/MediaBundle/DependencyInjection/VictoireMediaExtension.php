@@ -31,7 +31,6 @@ class VictoireMediaExtension extends Extension implements PrependExtensionInterf
 
         $config = $processor->processConfiguration($configuration, $configs);
 
-
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
         $container->setParameter('twig.form.resources', array_merge(
@@ -46,7 +45,7 @@ class VictoireMediaExtension extends Extension implements PrependExtensionInterf
     public function prepend(ContainerBuilder $container)
     {
 
-        if(!$container->hasParameter('victoire_media.upload_dir')) {
+        if (!$container->hasParameter('victoire_media.upload_dir')) {
             $container->setParameter('victoire_media.upload_dir', '/uploads/media/');
         }
 

@@ -189,4 +189,3 @@ services:
             - "@twig"
             - "%kernel.debug%"
             - "@victoire_templating"
-

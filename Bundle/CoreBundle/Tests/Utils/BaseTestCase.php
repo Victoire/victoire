@@ -1,7 +1,6 @@
 <?php
 namespace Victoire\Bundle\CoreBundle\Tests\Utils;
 
-use Doctrine\Common\Annotations\AnnotationRegistry;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 /**
  * common behavior for testing
@@ -52,11 +51,9 @@ class BaseTestCase extends WebTestCase
         parent::tearDown();
     }
 
-
     //////////////////////////
     // Menu listeners Mocks //
     //////////////////////////
-
 
     /**
      * Generates a TemplateMenuListener mock
@@ -101,7 +98,6 @@ class BaseTestCase extends WebTestCase
     // TemplateMapper Mocks //
     ////////////////////////
 
-
     /**
      * Generates a TemplateMapper mock
      * @return MenuBuilder
@@ -118,7 +114,6 @@ class BaseTestCase extends WebTestCase
     // MenuBuilder Mocks //
     ////////////////////////
 
-
     /**
      * Generates a MenuBuilder mock
      * @return MenuBuilder
@@ -134,7 +129,6 @@ class BaseTestCase extends WebTestCase
     ////////////////////////
     // CmsExtension Mocks //
     ////////////////////////
-
 
     /**
      * Generates a WidgetManager mock
@@ -195,6 +189,7 @@ class BaseTestCase extends WebTestCase
     /**
      * Generates a Page mock
      * @param int $id page id
+     *
      * @return Page
      */
     public function getPageMock($id = 1)
@@ -209,6 +204,7 @@ class BaseTestCase extends WebTestCase
     /**
      * Generates a Template mock
      * @param int $id Template id
+     *
      * @return Template
      */
     public function getTemplateMock($id = 1)
@@ -224,6 +220,7 @@ class BaseTestCase extends WebTestCase
     /**
      * Generates a WidgetText mock
      * @param int $id widget id
+     *
      * @return WidgetText
      */
     public function getWidgetMock($id = 1)
@@ -236,6 +233,7 @@ class BaseTestCase extends WebTestCase
     /**
      * Generates a WidgetImage mock
      * @param int $id widget id
+     *
      * @return WidgetText
      */
     public function getWidgetImageMock($id = 1)

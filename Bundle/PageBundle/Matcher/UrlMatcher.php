@@ -21,10 +21,10 @@ class UrlMatcher
     /**
      * Constructor
      *
-     * @param EntityManager $entityManager
-     * @param UrlHelper $urlHelper
+     * @param EntityManager                $entityManager
+     * @param UrlHelper                    $urlHelper
      * @param BusinessEntityTemplateHelper $businessEntityTemplateHelper
-     * @param BusinessEntityHelper $businessEntityHelper
+     * @param BusinessEntityHelper         $businessEntityHelper
      */
     public function __construct(EntityManager $entityManager, UrlHelper $urlHelper, BusinessEntityTemplateHelper $businessEntityTemplateHelper, BusinessEntityHelper $businessEntityHelper)
     {

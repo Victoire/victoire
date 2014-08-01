@@ -30,7 +30,6 @@ class PageRepository extends NestedTreeRepository
         $query = $qb->getQuery();
         $page = $query->getOneOrNullResult();
 
-
         return $page;
     }
 

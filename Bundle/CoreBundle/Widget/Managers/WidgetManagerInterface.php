@@ -12,5 +12,5 @@ interface WidgetManagerInterface
     /**
      * The name of the widget
      */
-    function getWidgetName();
+    public function getWidgetName();
 }

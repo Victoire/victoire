@@ -2,12 +2,9 @@
 namespace Victoire\Bundle\CoreBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Victoire\Bundle\PageBundle\Entity\Page;
 
 /**
- *
- * @author Paul Andrieux
- *
+ * The widget Repository
  */
 class WidgetRepository extends EntityRepository
 {
@@ -15,6 +12,7 @@ class WidgetRepository extends EntityRepository
      * Get all the widget within a list of ids
      *
      * @param array $widgetIds
+     *
      * @return \Doctrine\ORM\QueryBuilder
      */
     public function getAllIn(array $widgetIds)
@@ -28,6 +26,7 @@ class WidgetRepository extends EntityRepository
      * Find all the widgets in a list of ids
      *
      * @param array $widgetIds
+     *
      * @return multitype:
      */
     public function findAllIn(array $widgetIds)

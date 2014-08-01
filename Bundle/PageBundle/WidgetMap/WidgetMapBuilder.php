@@ -277,7 +277,7 @@ class WidgetMapBuilder
     /**
      * Get the slots for the page by the sorted slots given by the Screen
      *
-     * @param Page $page
+     * @param Page  $page
      * @param array $widgetSlots
      */
     public function updateWidgetMapsByPage(Page $page, $widgetSlots)

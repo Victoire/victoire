@@ -3,7 +3,6 @@
 namespace Victoire\Bundle\PageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Victoire\Bundle\PageBundle\Entity\Page;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -34,8 +33,8 @@ class Template extends Page
 
     /**
      * Set page
-     *
      * @param string $pages
+     *
      * @return Template
      */
     public function setPages($pages)

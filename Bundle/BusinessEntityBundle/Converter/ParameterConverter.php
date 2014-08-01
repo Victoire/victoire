@@ -5,9 +5,7 @@ namespace Victoire\Bundle\BusinessEntityBundle\Converter;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
 
 /**
- *
- * @author Thomas Beaujean
- *
+ * Parameter Converter
  * ref: victoire_business_entity.converter.parameter_converter
  */
 class ParameterConverter
@@ -15,7 +13,7 @@ class ParameterConverter
     /**
      * Replace the code string with the value of the entity attribute
      *
-     * @param The string       $string
+     * @param string           $string
      * @param BusinessProperty $businessProperty
      * @param Object           $entity
      *
@@ -53,8 +51,8 @@ class ParameterConverter
     /**
      * Get the content of an attribute of an entity given
      *
-     * @param entity $entity
-     * @param strin $functionName
+     * @param Entity $entity
+     * @param string $field
      *
      * @return mixed
      */

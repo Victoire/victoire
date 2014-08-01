@@ -3,7 +3,6 @@
 namespace Victoire\Bundle\MediaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
 
 /**
  * Media
@@ -98,7 +97,6 @@ class Media
      * @ORM\Column(type="string", nullable=true)
      */
     protected $url;
-
 
     /**
      * @var bool
@@ -295,7 +293,7 @@ class Media
      * Set the specified metadata value
      *
      * @param string $key
-     * @param mixed $value
+     * @param mixed  $value
      *
      * @return Media
      */

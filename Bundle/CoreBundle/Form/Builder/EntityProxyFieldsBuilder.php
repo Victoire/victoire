@@ -3,8 +3,6 @@
 namespace Victoire\Bundle\CoreBundle\Form\Builder;
 
 use Victoire\Bundle\CoreBundle\Annotations\Reader\AnnotationReader;
-use Symfony\Component\Form\FormFactory;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 /**
  * Edit Page Type
@@ -55,4 +53,3 @@ class EntityProxyFieldsBuilder
         }
     }
 }
-

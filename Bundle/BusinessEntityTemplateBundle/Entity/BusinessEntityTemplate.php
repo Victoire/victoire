@@ -3,9 +3,7 @@ namespace Victoire\Bundle\BusinessEntityTemplateBundle\Entity;
 
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Victoire\Bundle\PageBundle\Entity\Page;
-use Symfony\Component\Validator\Constraints as Assert;
 use Victoire\Bundle\PageBundle\Entity\Template;
 
 /**
@@ -41,7 +39,6 @@ class BusinessEntityTemplate extends Template
 
     /**
      * contructor
-     *
      **/
     public function __construct()
     {
@@ -158,6 +155,7 @@ class BusinessEntityTemplate extends Template
      * Set layout
      *
      * @param string $layout
+     *
      * @return Page
      */
     public function setLayout($layout)

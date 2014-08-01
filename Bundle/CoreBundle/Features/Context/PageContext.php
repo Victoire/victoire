@@ -4,10 +4,6 @@ namespace Victoire\Bundle\CoreBundle\Features\Context;
 use Behat\Behat\Context\BehatContext,
     Behat\Behat\Context\Step;
 
-use Symfony\Component\HttpKernel\HttpKernelInterface;
-
-use Behat\Symfony2Extension\Context\KernelDictionary;
-
 class PageContext extends BehatContext
 {
 
@@ -56,7 +52,6 @@ class PageContext extends BehatContext
         return new Step\Then(sprintf('I should be on "%s"', $this->getPageUrl($type, $action)));
     }
 
-
     /**
      * @Given /^I am on the "([^"]*)" "([^"]*)" "([^"]*)" page$/
      *
@@ -79,7 +74,6 @@ class PageContext extends BehatContext
         return new Step\Then(sprintf('I should be on "%s"', preg_replace('/{slug}/', $slug, $this->getPageUrl($type, $action))));
     }
 
-
     /**
      * get page url
      *
@@ -91,7 +85,6 @@ class PageContext extends BehatContext
 
         return $base_path;
     }
-
 
     /**
      * @Given /^I am on the "([^"]*)" directory page$/

@@ -62,11 +62,11 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
             if (isset($currentId)) {
                 /* @var Folder $currentFolder */
                 $currentFolder = $this->em->getRepository('VictoireMediaBundle:Folder')->findOneById($currentId);
-            } else if (in_array($request->attributes->get('_route'), $mediaRoutes)) {
+            } elseif (in_array($request->attributes->get('_route'), $mediaRoutes)) {
                 /* @var Media $media */
                 $media     = $this->em->getRepository('VictoireMediaBundle:Media')->getMedia($request->get('mediaId'));
                 $currentFolder = $media->getFolder();
-            } else if (in_array($request->attributes->get('_route'), $createRoutes)) {
+            } elseif (in_array($request->attributes->get('_route'), $createRoutes)) {
                 $currentId = $request->get('folderId');
                 if (isset($currentId)) {
                     $currentFolder = $this->em->getRepository('VictoireMediaBundle:Folder')->findOneById($currentId);
@@ -100,7 +100,7 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
                 }
                 $children[] = $menuitem;
             }
-        } else if ('VictoireMediaBundle_folder_show' == $parent->getRoute()) {
+        } elseif ('VictoireMediaBundle_folder_show' == $parent->getRoute()) {
             $parentRouteParams = $parent->getRouteparams();
             /* @var Folder $parentFolder */
             $parentFolder = $this->em->getRepository('VictoireMediaBundle:Folder')->findOneById($parentRouteParams['folderId']);
@@ -111,10 +111,10 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
             if (isset($currentId)) {
                 /* @var Folder $currentFolder */
                 $currentFolder = $this->em->getRepository('VictoireMediaBundle:Folder')->findOneById($currentId);
-            } else if (in_array($request->attributes->get('_route'), $mediaRoutes)) {
+            } elseif (in_array($request->attributes->get('_route'), $mediaRoutes)) {
                 $media     = $this->em->getRepository('VictoireMediaBundle:Media')->getMedia($request->get('mediaId'));
                 $currentFolder = $media->getFolder();
-            } else if (in_array($request->attributes->get('_route'), $createRoutes)) {
+            } elseif (in_array($request->attributes->get('_route'), $createRoutes)) {
                 $currentId = $request->get('folderId');
                 if (isset($currentId)) {
                     $currentFolder = $this->em->getRepository('VictoireMediaBundle:Folder')->findOneById($currentId);

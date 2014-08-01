@@ -49,6 +49,5 @@ class TraductionCompilerPass implements CompilerPassInterface
             }
         }
 
-
     }
 }

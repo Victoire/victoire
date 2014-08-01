@@ -3,7 +3,6 @@ namespace Victoire\Bundle\CoreBundle\Annotations\Cache;
 
 /**
  * this class handle cache system
- *
  **/
 class Cache
 {
@@ -30,11 +29,11 @@ class Cache
         $this->debug = $debug;
     }
 
-
     /**
      * Fetches an entry from the cache.
      *
      * @param string $id cache id The id of the cache entry to fetch.
+     *
      * @return mixed The cached data or FALSE, if no cache entry exists for the given id.
      */
     public function fetch($id)
@@ -52,6 +51,7 @@ class Cache
      *
      * @param string $id   The cache id.
      * @param mixed  $data The cache entry/data.
+     *
      * @return boolean TRUE if the entry was successfully stored in the cache, FALSE otherwise.
      */
     public function save($id, $data)
@@ -71,7 +71,6 @@ class Cache
             return true;
         }
 
-
         return false;
     }
 
@@ -85,6 +84,5 @@ class Cache
         //consider cache enabled only if apc is loaded and enabled and debug is false
         return extension_loaded('apc') && ini_get('apc.enabled');
     }
-
 
 }

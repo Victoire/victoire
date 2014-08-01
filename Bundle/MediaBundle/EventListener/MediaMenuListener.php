@@ -2,11 +2,7 @@
 namespace Victoire\Bundle\MediaBundle\EventListener;
 
 use Symfony\Component\EventDispatcher\Event;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Victoire\Bundle\CoreBundle\Listener\MenuListenerInterface;
 use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
-use Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent;
-
 
 /**
  * When dispatched, this listener add items to a KnpMenu

@@ -90,7 +90,6 @@ class Widget extends BaseWidget
         return (string) $this->getId();
     }
 
-
     /**
      * Get id
      *
@@ -105,6 +104,7 @@ class Widget extends BaseWidget
      * Set fields
      *
      * @param string $fields
+     *
      * @return EntityProxy
      */
     public function setFields($fields)
@@ -138,6 +138,7 @@ class Widget extends BaseWidget
      * Set slot
      *
      * @param string $slot
+     *
      * @return Widget
      */
     public function setSlot($slot)
@@ -161,11 +162,12 @@ class Widget extends BaseWidget
      * Set page
      *
      * @param string $page
+     *
      * @return Widget
      */
     public function setPage($page)
     {
-        if($page != null) {
+        if ($page != null) {
             $page->addWidget($this);
         }
         $this->page = $page;
@@ -215,7 +217,6 @@ class Widget extends BaseWidget
         return $this->entity;
     }
 
-
     /**
      * Get the content
      *
@@ -231,6 +232,7 @@ class Widget extends BaseWidget
      * Set the current page
      *
      * @param Page $currentPage
+     *
      * @return \Victoire\Bundle\CoreBundle\Entity\Widget
      */
     public function setCurrentPage($currentPage)
@@ -271,7 +273,6 @@ class Widget extends BaseWidget
 
         return strtolower(preg_replace('/Widget/', '', end($type)));
     }
-
 
     /**
      * Set the mode

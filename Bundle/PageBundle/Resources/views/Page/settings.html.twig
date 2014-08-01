@@ -9,7 +9,11 @@
 {% block modal_body_content %}
 
 <div class="vic-tab-content vic-modal-tab-content">
-    {% include 'VictoireBusinessEntityBundle:BusinessProperty:list.html.twig' with { 'businessProperties':businessProperties } %}
+    {# Only display this business entity property list when related to a business entity #}
+    {% if page.businessEntity %}
+        {% include 'VictoireBusinessEntityBundle:BusinessProperty:list.html.twig' with { 'businessProperties': businessProperties } %}
+    {% endif %}
+
     <div class="vic-tab-pane vic-active" id="basics">
         <form method="POST" action="{{path('victoire_core_page_settings', {'id':page.id} )}}">
             <div class="vic-form-group">
@@ -86,5 +90,3 @@
         </div>
     </div>
 {% endblock modal_footer %}
-
-

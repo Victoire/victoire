@@ -9,7 +9,6 @@ use Victoire\Bundle\CoreBundle\Tests\Utils\BaseTestCase;
 class WidgetImageManagerTest extends BaseTestCase
 {
 
-
     /**
      * create a new WidgetImage
      *

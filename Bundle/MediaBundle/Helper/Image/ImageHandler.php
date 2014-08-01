@@ -5,8 +5,6 @@ namespace Victoire\Bundle\MediaBundle\Helper\Image;
 use Symfony\Component\HttpFoundation\File\File;
 
 use Victoire\Bundle\MediaBundle\Helper\File\FileHandler;
-use Symfony\Component\HttpFoundation\File\MimeType\FileBinaryMimeTypeGuesser;
-use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
 use Victoire\Bundle\MediaBundle\Entity\Media;
 
 /**

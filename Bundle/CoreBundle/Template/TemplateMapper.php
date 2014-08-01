@@ -1,15 +1,11 @@
 <?php
 namespace Victoire\Bundle\CoreBundle\Template;
 
-use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-
 /**
- *
- * @author Paul Andrieux
- *
+ * The template mapper
  * ref: victoire_templating
  */
 class TemplateMapper
@@ -37,6 +33,7 @@ class TemplateMapper
      *
      * @param string $view   The requested template key
      * @param array  $params The params to give to the template
+     *
      * @return template
      **/
     public function render($view, $params)
@@ -51,6 +48,7 @@ class TemplateMapper
      *
      * @param string $view   The requested template key
      * @param array  $params The params to give to the template
+     *
      * @return Response
      **/
     public function renderResponse($view, $params)
@@ -119,7 +117,8 @@ class TemplateMapper
     /**
      * Apply strategy to retrive template
      *
-     * @param unknown $template
+     * @param string $template
+     *
      * @return string|boolean
      */
     protected function getTemplate($template)

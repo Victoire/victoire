@@ -25,4 +25,3 @@ services:
             - "@victoire_query.query_helper"
             - "@victoire_core.helper.business_entity_helper"
             - "@victoire_business_entity.converter.parameter_converter"
-

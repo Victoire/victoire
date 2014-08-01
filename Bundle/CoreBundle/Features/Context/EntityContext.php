@@ -6,14 +6,11 @@ use Behat\Behat\Context\BehatContext,
     Behat\Behat\Event\SuiteEvent,
     Behat\Behat\Event\ScenarioEvent;
 
-use Victoire\TextBundle\Entity\WidgetText as EntityWidgetText;
 use Victoire\Bundle\PageBundle\Entity\Page;
 
-use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Behat\Gherkin\Node\TableNode;
 
-use Behat\Symfony2Extension\Context\KernelDictionary;
 use Behat\Symfony2Extension\Context\KernelAwareInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 
@@ -24,8 +21,8 @@ class EntityContext extends BehatContext implements KernelAwareInterface
     /**
      * Constructor
      */
-    public function __construct($a) {
-
+    public function __construct($a)
+    {
     }
 
     /**
@@ -63,8 +60,6 @@ class EntityContext extends BehatContext implements KernelAwareInterface
         }
     }
 
-
-
     public function createPage($data)
     {
 
@@ -72,7 +67,7 @@ class EntityContext extends BehatContext implements KernelAwareInterface
 
         $page = $this->getPageRepository()->findOneBySlug($name);
 
-        if(null === $page){
+        if (null === $page) {
             $page = new Page();
             $page->setName($name);
             $page->setSlug($name);
@@ -82,7 +77,6 @@ class EntityContext extends BehatContext implements KernelAwareInterface
             $em->flush();
         }
     }
-
 
     /**
      * @Given /^the following pages:$/
@@ -133,7 +127,6 @@ class EntityContext extends BehatContext implements KernelAwareInterface
 
         $em->flush();
     }
-
 
     private function asBoolean($value)
     {

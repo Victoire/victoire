@@ -1,11 +1,9 @@
 <?php
 namespace Victoire\Bundle\CoreBundle\Generator;
 
-
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\DependencyInjection\Container;
 use Sensio\Bundle\GeneratorBundle\Generator\Generator;
-
 
 /**
  * This class build all classes, views and config files relative to a WidgetBundle
@@ -21,7 +19,7 @@ class WidgetGenerator extends Generator
      * Constructor
      *
      * @param Filesystem $filesystem
-     * @param unknown $frameworks
+     * @param unknown    $frameworks
      */
     public function __construct(Filesystem $filesystem, $frameworks)
     {

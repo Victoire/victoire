@@ -1,7 +1,6 @@
 <?php
 namespace Victoire\Bundle\BlogBundle\Translation;
 
-
 use JMS\TranslationBundle\Model\Message;
 use JMS\TranslationBundle\Translation\TranslationContainerInterface;
 

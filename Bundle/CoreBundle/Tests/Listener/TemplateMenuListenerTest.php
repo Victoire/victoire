@@ -42,5 +42,4 @@ class TemplateMenuListenerTest extends BaseTestCase
 
     }
 
-
 }

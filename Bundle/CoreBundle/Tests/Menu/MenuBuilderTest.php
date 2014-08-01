@@ -20,7 +20,6 @@ class MenuBuilderTest extends BaseTestCase
         $this->assertEquals("Knp\Menu\MenuItem", get_class($response));
     }
 
-
     /**
      * {@inheritDoc}
      */
@@ -33,7 +32,6 @@ class MenuBuilderTest extends BaseTestCase
         $this->assertEquals("test", $response->getName());
     }
 
-
     /**
      * {@inheritDoc}
      */
@@ -44,7 +42,6 @@ class MenuBuilderTest extends BaseTestCase
 
         $this->assertEquals("Knp\Menu\MenuItem", get_class($response));
     }
-
 
     /**
      * return menu
