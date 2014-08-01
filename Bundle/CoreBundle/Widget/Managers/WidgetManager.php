@@ -95,10 +95,11 @@ class WidgetManager
     /**
      * Create a widget
      *
-     * @param  string   $type
-     * @param  string   $slotId
-     * @param  Page     $page
-     * @param  string   $entity
+     * @param string $type
+     * @param string $slotId
+     * @param Page   $page
+     * @param string $entity
+     *
      * @return template
      */
     public function createWidget($type, $slotId, Page $page, $entity)
@@ -150,9 +151,10 @@ class WidgetManager
 
     /**
      * new widget
-     * @param  string   $type
-     * @param  string   $slot
-     * @param  Page     $page
+     * @param string $type
+     * @param string $slot
+     * @param Page   $page
+     *
      * @return template
      */
     public function newWidget($type, $slot, Page $page)
@@ -274,6 +276,7 @@ class WidgetManager
      *
      * @param Widget  $widget
      * @param boolean $addContainer
+     * @param Entity  $entity
      *
      * @return template
      */
@@ -288,8 +291,9 @@ class WidgetManager
 
     /**
      * tells if current widget is a reference
-     * @param  Widget  $widget
-     * @param  Page    $page
+     * @param Widget $widget
+     * @param Page   $page
+     *
      * @return boolean
      */
     public function isReference(Widget $widget, Page $page)
@@ -299,7 +303,8 @@ class WidgetManager
 
     /**
      * render widget actions
-     * @param  Widget   $widget
+     * @param Widget $widget
+     *
      * @return template
      */
     public function renderWidgetActions(Widget $widget)
@@ -345,8 +350,9 @@ class WidgetManager
 
     /**
      * get specific widget for provided widget type
-     * @param  Widget  $widget
-     * @param  string  $type
+     * @param Widget $widget
+     * @param string $type
+     *
      * @return manager
      */
     public function getManager($widget = null, $type = null)
@@ -390,6 +396,9 @@ class WidgetManager
      * @param Page  $page
      * @param array $sortedWidgets
      *
+     * @todo Be able to move a widget from a slot to another
+     * @todo test if the widget is allowed for the given slot
+     *
      * @throws Exception
      */
     public function updateWidgetMapOrder(Page $page, $sortedWidgets)
@@ -397,34 +406,20 @@ class WidgetManager
         //create a page for the business entity instance if we are currently display an instance for a business entity template
         $page = $this->duplicateTemplatePageIfPageInstance($page);
 
-        $em = $this->container->get('doctrine.orm.entity_manager');
-        $widgetMapBuilder = $this->widgetMapBuilder;
-
         $widgetSlots = array();
 
         //parse the sorted widgets
-        foreach ($sortedWidgets as $slot => $widgetContainers) {
-            //get the slot id removing the prefix
-            $slotId = str_replace('vic-slot-', '', $slot);
+        foreach ($sortedWidgets as $slotId => $widgetContainers) {
 
             //create an array for this slot
             $widgetSlots[$slotId] = array();
 
             //parse the list of div ids
-            foreach ($widgetContainers as $containerId) {
-                //get the widget id from the div id  (remove the text around non numerical characters)
-                $widgetId = preg_replace('/[^0-9]*/', '', $containerId);
+            foreach ($widgetContainers as $widgetId) {
 
                 if ($widgetId === '' || $widgetId === null) {
                     throw new \Exception('The containerId does not have any numerical characters. Containerid:['.$containerId.']');
                 }
-
-                //test if the widget is allowed for the slot
-                //@todo
-//                 $isAllowed = $this->isWidgetAllowedForSlot($widget, $widgetSlots[$id]);
-//                 if (!$isAllowed) {
-//                     throw new \Exception('This widget is not allowed in this slot');
-//                 }
 
                 //add the id of the widget to the slot
                 //cast the id as integer
@@ -432,10 +427,10 @@ class WidgetManager
             }
         }
 
-        $widgetMapBuilder->updateWidgetMapsByPage($page, $widgetSlots);
-
+        $this->widgetMapBuilder->updateWidgetMapsByPage($page, $widgetSlots);
         $page->updateWidgetMapBySlots();
 
+        $em = $this->container->get('doctrine.orm.entity_manager');
         //update the page with the new widget map
         $em->persist($page);
         $em->flush();
@@ -443,8 +438,9 @@ class WidgetManager
 
     /**
      * check if widget is allowed for slot
-     * @param  Widget $widget
-     * @param  string $slot
+     * @param Widget $widget
+     * @param string $slot
+     *
      * @return bool
      */
     public function isWidgetAllowedForSlot($widget, $slot)
@@ -489,7 +485,6 @@ class WidgetManager
     }
 
     /**
-     *
      * @param unknown $manager
      * @param unknown $widget
      * @param Page    $page
@@ -519,11 +514,12 @@ class WidgetManager
 
     /**
      * render a new form
-     * @param  Form       $form
-     * @param  Widget     $widget
-     * @param  string     $slot
-     * @param  Page       $page
-     * @param  string     $entityName
+     * @param Form   $form
+     * @param Widget $widget
+     * @param string $slot
+     * @param Page   $page
+     * @param string $entityName
+     *
      * @return Collection widgets
      */
     public function renderNewForm($form, $widget, $slot, Page $page, $entityName = null)
@@ -558,8 +554,7 @@ class WidgetManager
     /**
      * If the current page is a business entity template and where are displaying an instance
      * We create a new page for this instance
-     *
-     * @param Page $widgetPage The page of the widget
+     * @param Page $page The page of the widget
      *
      * @return Page The page for the entity instance
      */

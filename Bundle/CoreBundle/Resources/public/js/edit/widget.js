@@ -28,7 +28,7 @@ $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(
             if ($vic('.vic-creating').hasClass('vic-first')) {
                 $vic('.vic-creating').after(response.html);
             } else {
-                $vic('.vic-creating').parents('.widget-container').after(response.html);
+                $vic('.vic-creating').parents('.vic-widget-container').after(response.html);
             }
             closeModal();
 

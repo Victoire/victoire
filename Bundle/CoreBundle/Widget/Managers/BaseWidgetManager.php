@@ -331,7 +331,7 @@ class BaseWidgetManager
         }
 
         if ($addContainer) {
-            $html = "<div class='widget-container' id='vic-widget-".$widget->getId()."-container'>".$html.'</div>';
+            $html = "<div class='vic-widget-container' data-id=\"".$widget->getId()."\" id='vic-widget-".$widget->getId()."-container'>".$html.'</div>';
         }
 
         $dispatcher->dispatch(VictoireCmsEvents::WIDGET_POST_RENDER, new WidgetRenderEvent($widget, $html));

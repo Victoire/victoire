@@ -1,26 +1,20 @@
 {% trans_default_domain "victoire" %}
 
-{#% if widgets|length == 1 %}
-      {% set widget = attribute(widgets, 0) %}
-      {% set widget_label = "widget."~widget~".new.action.label" %}
-      <a class="btn add-widget-btn" id="slot-{{slot}}-add-button" data-toggle="add-widget" data-slot="{{slot}}" href="{{path('victoire_core_widget_new', {'page':page.id,'type':widget, 'slot':slot} )}}"><i class="icon icon-{{widget}}"></i>&nbsp;Ajouter un widget {{widget_label|trans}}</a>
-{% else %#}
-    <div class="vic-dropdown vic-undraggable vic-new-widget vic-new-widget-disabled{{ first ? " vic-first" : "" }}">
-        <a data-toggle="vic-dropdown" href="#" class="text-center">
-            <img src="/bundles/victoirecore/images/addWidget-icon.png" alt="new widget icon"> {{ "widget.dropdown.action.label"|trans({}, "victoire")|desc("New widget")}}
-            <i class="fa fa-angle-down"></i>
-        </a>
-        <ul class="vic-dropdown-menu" role="menu" aria-labelledby="dLabel">
-            {% for widget in widgets %}
-            <li>
-                <a href="{{ path('victoire_core_widget_new', {'page':page.id,'type':widget, 'slot':slot} ) }}">
-                    {{ ("widget."~widget~".new.action.label")|trans({}, 'victoire') }}
-                </a>
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
-{#% endif %#}
+<div class="vic-dropdown vic-new-widget vic-new-widget-disabled{{ first ? " vic-first" : "" }}">
+    <a data-toggle="vic-dropdown" href="#" class="text-center">
+        <img src="/bundles/victoirecore/images/addWidget-icon.png" alt="new widget icon"> {{ "widget.dropdown.action.label"|trans({}, "victoire")|desc("New widget")}}
+        <i class="fa fa-angle-down"></i>
+    </a>
+    <ul class="vic-dropdown-menu" role="menu" aria-labelledby="dLabel">
+        {% for widget in widgets %}
+        <li>
+            <a href="{{ path('victoire_core_widget_new', {'page':page.id,'type':widget, 'slot':slot} ) }}">
+                {{ ("widget."~widget~".new.action.label")|trans({}, 'victoire') }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
 
 <script type="text/javascript">
 //responsible to hide and organize thanks to js the buttons.

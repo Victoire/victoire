@@ -1080,8 +1080,7 @@ class Page
         $this->slots = $slots;
 
         //convert the slots object in a widget map array
-        $widgetMap = $this->convertSlotsToWidgetMap();
-        $this->setWidgetMap($widgetMap);
+        $this->updateWidgetMapBySlots();
     }
 
     /**
@@ -1152,7 +1151,7 @@ class Page
             if ($sl->getId() === $slotId) {
                 $slot = $sl;
                 //there no need to continue, we found the slot
-                continue;
+                break;
             }
         }
 
