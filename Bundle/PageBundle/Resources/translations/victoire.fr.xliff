@@ -6,6 +6,10 @@
                 <source>new.page.modal.header</source>
                 <target>Nouvelle page</target>
             </trans-unit>
+            <trans-unit resname="new.template.modal.header">
+                <source>new.template.modal.header</source>
+                <target>Nouveau modèle</target>
+            </trans-unit>
             <trans-unit resname="form.page.type.title.label">
                 <source>form.page.type.title.label</source>
                 <target>Titre</target>
@@ -13,6 +17,10 @@
             <trans-unit resname="form.page.type.parent.label">
                 <source>form.page.type.parent.label</source>
                 <target>Page parente</target>
+            </trans-unit>
+            <trans-unit resname="form.template.type.parent.label">
+                <source>form.template.type.parent.label</source>
+                <target>Modèle parent</target>
             </trans-unit>
             <trans-unit resname="form.page.type.layout.label">
                 <source>form.page.type.layout.label</source>

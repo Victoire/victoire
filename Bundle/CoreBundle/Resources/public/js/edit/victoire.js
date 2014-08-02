@@ -31,7 +31,7 @@ $vic(document).ready(function() {
     setTimeout(function() {
         $vic.each($vic('.vic-new-widget'), function() {
             if (!$vic(this).hasClass("vic-new-widget-disabled")) {
-                $vic(this).fadeIn();
+                $vic(this).removeClass('vic-hidden');
             }
         }) ;
     }, 10);

@@ -56,7 +56,7 @@ class Configuration implements ConfigurationInterface
                             ->defaultValue(true)
                             ->end()
                         ->booleanNode('render_collection_item')
-                            ->defaultValue(true)
+                            ->defaultValue(false)
                         ->end()
                         ->booleanNode('show_legend')
                             ->defaultValue(true)

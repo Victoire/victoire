@@ -198,6 +198,7 @@ class BasePageController extends AwesomeController
         $em = $this->getEntityManager();
         $page = $this->getNewPage();
         $page->setHomepage($isHomepage ? $isHomepage : 0);
+
         $form = $this->container->get('form.factory')->create($this->getNewPageType(), $page);
 
         $form->handleRequest($this->get('request'));

@@ -443,7 +443,7 @@ class WidgetManager
             }
         }
 
-        $this->widgetMapBuilder->updateWidgetMapsByPage($page, $widgetSlots);
+        $this->container->get('page.widgetMap.builder')->updateWidgetMapsByPage($page, $widgetSlots);
         $page->updateWidgetMapBySlots();
 
         $em = $this->container->get('doctrine.orm.entity_manager');
