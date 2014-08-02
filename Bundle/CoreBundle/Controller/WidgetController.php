@@ -54,32 +54,6 @@ class WidgetController extends AwesomeController
     }
 
     /**
-     * Edit a widget
-     * @param Request $request The request
-     * @param Widget  $widget  The widget to edit
-     * @param string  $type    The type of widget we edit
-     * @param Entity  $entity  The Entity
-     *
-     * @return response
-     *
-     * @Route("/edit/{id}/{type}/{entity}", name="victoire_core_widget_edit", defaults={"type": null})
-     * @Route("/update/{id}/{type}/{entity}", name="victoire_core_widget_update", defaults={"type": null, "entity": null})
-     * @Template()
-     * @ParamConverter("id", class="VictoireCoreBundle:Widget")
-     */
-    public function editAction(Request $request, Widget $widget, $type = null, $entity = null)
-    {
-        try {
-            $widgetManager = $this->getWidgetManager();
-            $response = new JsonResponse($widgetManager->edit($request, $widget, $type, $entity));
-        } catch (\Exception $ex) {
-            $response = $this->getJsonReponseFromException($ex);
-        }
-
-        return $response;
-    }
-
-    /**
      * New Widget
      *
      * @param string         $type   The type of the widget we edit
@@ -153,6 +127,32 @@ class WidgetController extends AwesomeController
             $widgetManager = $this->getWidgetManager();
 
             $response = new JsonResponse($widgetManager->createWidget($type, $slot, $page, $entity));
+        } catch (\Exception $ex) {
+            $response = $this->getJsonReponseFromException($ex);
+        }
+
+        return $response;
+    }
+
+    /**
+     * Edit a widget
+     * @param Request $request The request
+     * @param Widget  $widget  The widget to edit
+     * @param string  $type    The type of widget we edit
+     * @param Entity  $entity  The Entity
+     *
+     * @return response
+     *
+     * @Route("/edit/{id}/{type}/{entity}", name="victoire_core_widget_edit", defaults={"type": null})
+     * @Route("/update/{id}/{type}/{entity}", name="victoire_core_widget_update", defaults={"type": null, "entity": null})
+     * @Template()
+     * @ParamConverter("id", class="VictoireCoreBundle:Widget")
+     */
+    public function editAction(Request $request, Widget $widget, $type = null, $entity = null)
+    {
+        try {
+            $widgetManager = $this->getWidgetManager();
+            $response = new JsonResponse($widgetManager->edit($request, $widget, $type, $entity));
         } catch (\Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
         }
