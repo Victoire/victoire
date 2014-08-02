@@ -172,9 +172,12 @@ class BaseWidgetManager
             );
         } else {
             //get the errors as a string
-            $errorMessage = $formErrorService->getRecursiveReadableErrors($form);
+            $response = array(
+                "success" => false,
+                "message" => $formErrorService->getRecursiveReadableErrors($form),
+                "html"    => $this->renderNewForm($form, $widget, $slotId, $page, $entity)
+            );
 
-            throw new \Exception($errorMessage);
         }
 
         return $response;

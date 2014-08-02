@@ -45,107 +45,6 @@ class WidgetManager
     }
 
     /**
-     * Remove a widget
-     *
-     * @param Widget $widget
-     *
-     * @return array The parameter for the view
-     */
-    public function deleteWidget(Widget $widget)
-    {
-        //services
-        $em = $this->container->get('doctrine')->getManager();
-        $widgetMapBuilder = $this->container->get('page.widgetMap.builder');
-
-        //the widget id
-        $widgetId = $widget->getId();
-
-        //the page
-        $widgetPage = $widget->getPage();
-
-        //create a page for the business entity instance if we are currently display an instance for a business entity template
-        $page = $this->duplicateTemplatePageIfPageInstance($widgetPage);
-
-        //update the page deleting the widget
-        $widgetMapBuilder->deleteWidgetFromPage($page, $widget);
-
-        //we update the widget map of the page
-        $page->updateWidgetMapBySlots();
-
-        //the widget is removed only if the current page is the page of the widget
-        if ($page === $widgetPage) {
-            //we remove the widget
-            $em->remove($widget);
-        }
-
-        //we update the page
-        $em->persist($page);
-        $em->flush();
-
-        return array(
-            "success"  => true,
-            "widgetId" => $widgetId
-        );
-    }
-
-    /**
-     * Create a widget
-     *
-     * @param string $type
-     * @param string $slotId
-     * @param Page   $page
-     * @param string $entity
-     *
-     * @return template
-     */
-    public function createWidget($type, $slotId, Page $page, $entity)
-    {
-        //create a page for the business entity instance if we are currently display an instance for a business entity template
-        $page = $this->duplicateTemplatePageIfPageInstance($page);
-
-        $manager = $this->getManager(null, $type);
-
-        return $manager->createWidget($slotId, $page, $entity);
-    }
-
-    /**
-     * Generates new forms for each available business entities
-     *
-     * @param string $slot
-     * @param Page   $page
-     * @param Widget $widget
-     *
-     * @return collection of forms
-     */
-    protected function renderNewWidgetForms($slot, Page $page, Widget $widget)
-    {
-        $annotationReader = $this->container->get('victoire_core.annotation_reader');
-        $classes = $annotationReader->getBusinessClassesForWidget($widget);
-        $manager = $this->getManager($widget);
-
-        //the static form
-        $forms['static'] = array();
-        $forms['static']['main'] = $this->renderNewForm($this->buildForm($manager, $widget, $page), $widget, $slot, $page);
-
-        // Build each form relative to business entities
-        foreach ($classes as $entityName => $namespace) {
-            //get the forms for the business entity (entity/query/businessEntity)
-            $entityForms = $this->buildEntityForms($manager, $widget, $page, $entityName, $namespace);
-
-            //the list of forms
-            $forms[$entityName] = array();
-
-            //foreach of the entity form
-            foreach ($entityForms as $formMode => $entityForm) {
-                //we add the form
-                $forms[$entityName][$formMode] = $this->renderNewForm($entityForm, $widget, $slot, $page, $entityName);
-            }
-        }
-
-        return $forms;
-    }
-
-    /**
      * new widget
      * @param string $type
      * @param string $slot
@@ -172,6 +71,26 @@ class WidgetManager
                 )
             )
         );
+    }
+
+    /**
+     * Create a widget
+     *
+     * @param string $type
+     * @param string $slotId
+     * @param Page   $page
+     * @param string $entity
+     *
+     * @return template
+     */
+    public function createWidget($type, $slotId, Page $page, $entity)
+    {
+        //create a page for the business entity instance if we are currently display an instance for a business entity template
+        $page = $this->duplicateTemplatePageIfPageInstance($page);
+
+        $manager = $this->getManager(null, $type);
+
+        return $manager->createWidget($slotId, $page, $entity);
     }
 
     /**
@@ -233,19 +152,19 @@ class WidgetManager
 
                 $response = array(
                     'page'     => $page,
-                    'success'   => true,
+                    'success'  => true,
                     'html'     => $this->render($widget, true, $entity),
                     'widgetId' => "vic-widget-".$initialWidgetId."-container"
                 );
             } else {
                 $formErrorService = $this->container->get('av.form_error_service');
-
-                $errors = $formErrorService->getRecursiveReadableErrors($form);
-
-                $response =  array(
-                    'success' => false,
-                    'message' => $errors
+                //Return a message for developer in console and form view in order to refresh view and show form errors
+                $response = array(
+                    "success"   => false,
+                    "message"   => $formErrorService->getRecursiveReadableErrors($form),
+                    "html"      => $this->getManager($widget, $widget->getType())->renderForm($form, $widget, $entity)
                 );
+
             }
         } else {
             $forms = $this->renderNewWidgetForms($widget->getSlot(), $page, $widget);
@@ -265,6 +184,87 @@ class WidgetManager
         }
 
         return $response;
+    }
+
+    /**
+     * Remove a widget
+     *
+     * @param Widget $widget
+     *
+     * @return array The parameter for the view
+     */
+    public function deleteWidget(Widget $widget)
+    {
+        //services
+        $em = $this->container->get('doctrine')->getManager();
+        $widgetMapBuilder = $this->container->get('page.widgetMap.builder');
+
+        //the widget id
+        $widgetId = $widget->getId();
+
+        //the page
+        $widgetPage = $widget->getPage();
+
+        //create a page for the business entity instance if we are currently display an instance for a business entity template
+        $page = $this->duplicateTemplatePageIfPageInstance($widgetPage);
+
+        //update the page deleting the widget
+        $widgetMapBuilder->deleteWidgetFromPage($page, $widget);
+
+        //we update the widget map of the page
+        $page->updateWidgetMapBySlots();
+
+        //the widget is removed only if the current page is the page of the widget
+        if ($page === $widgetPage) {
+            //we remove the widget
+            $em->remove($widget);
+        }
+
+        //we update the page
+        $em->persist($page);
+        $em->flush();
+
+        return array(
+            "success"  => true,
+            "widgetId" => $widgetId
+        );
+    }
+
+    /**
+     * Generates new forms for each available business entities
+     *
+     * @param string $slot
+     * @param Page   $page
+     * @param Widget $widget
+     *
+     * @return collection of forms
+     */
+    protected function renderNewWidgetForms($slot, Page $page, Widget $widget)
+    {
+        $annotationReader = $this->container->get('victoire_core.annotation_reader');
+        $classes = $annotationReader->getBusinessClassesForWidget($widget);
+        $manager = $this->getManager($widget);
+
+        //the static form
+        $forms['static'] = array();
+        $forms['static']['main'] = $this->renderNewForm($this->buildForm($manager, $widget, $page), $widget, $slot, $page);
+
+        // Build each form relative to business entities
+        foreach ($classes as $entityName => $namespace) {
+            //get the forms for the business entity (entity/query/businessEntity)
+            $entityForms = $this->buildEntityForms($manager, $widget, $page, $entityName, $namespace);
+
+            //the list of forms
+            $forms[$entityName] = array();
+
+            //foreach of the entity form
+            foreach ($entityForms as $formMode => $entityForm) {
+                //we add the form
+                $forms[$entityName][$formMode] = $this->renderNewForm($entityForm, $widget, $slot, $page, $entityName);
+            }
+        }
+
+        return $forms;
     }
 
     /**
