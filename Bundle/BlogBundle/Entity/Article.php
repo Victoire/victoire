@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * PostPage
  *
  * @ORM\Entity
+ * @ORM\Table("vic_article")
  *
  * @VIC\BusinessEntity({"widgetredactor", "themeredactornewspaper", "widgetlisting", "themelistingblogarticles"})
  */
