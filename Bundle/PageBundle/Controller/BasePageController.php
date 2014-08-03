@@ -17,47 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  **/
 class BasePageController extends AwesomeController
 {
-    /**
-     * @param Page $page The page to delete
-     *
-     * @return template
-     */
-    public function deleteAction(Page $page)
-    {
-        $return = null;
-
-        try {
-            //it should not be allowed to try to delete an undeletable page
-            if ($page->isUndeletable()) {
-                $message = $this->get('translator')->trans('page.undeletable', array(), 'victoire');
-                throw new \Exception($message);
-            }
-
-            //the entity manager
-            $em = $this->getEntityManager();
-
-            //remove the page
-            $em->remove($page);
-
-            //flush the modifications
-            $em->flush();
-
-            //redirect to the homepage
-            $homepageUrl = $this->generateUrl('victoire_core_page_homepage');
-
-            $return = array(
-                'success' => true,
-                'url'     => $homepageUrl
-            );
-        } catch (\Exception $ex) {
-            $return = array(
-                'success' => false,
-                'message' => $ex->getMessage()
-            );
-        }
-
-        return $return;
-    }
 
     /**
      * @param string $url The page url
@@ -312,6 +271,48 @@ class BasePageController extends AwesomeController
         }
 
         return $response;
+    }
+
+    /**
+     * @param Page $page The page to delete
+     *
+     * @return template
+     */
+    public function deleteAction(Page $page)
+    {
+        $return = null;
+
+        try {
+            //it should not be allowed to try to delete an undeletable page
+            if ($page->isUndeletable()) {
+                $message = $this->get('translator')->trans('page.undeletable', array(), 'victoire');
+                throw new \Exception($message);
+            }
+
+            //the entity manager
+            $em = $this->getEntityManager();
+
+            //remove the page
+            $em->remove($page);
+
+            //flush the modifications
+            $em->flush();
+
+            //redirect to the homepage
+            $homepageUrl = $this->generateUrl('victoire_core_page_homepage');
+
+            $return = array(
+                'success' => true,
+                'url'     => $homepageUrl
+            );
+        } catch (\Exception $ex) {
+            $return = array(
+                'success' => false,
+                'message' => $ex->getMessage()
+            );
+        }
+
+        return $return;
     }
 
     /**

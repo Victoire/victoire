@@ -100,6 +100,12 @@ services:
         tags:
             - { name: kernel.event_listener, event: victoire_core.build_menu, method: addGlobal, priority: 80 }
 
+    victoire_core.template_menu.contextual:
+        class: Victoire\Bundle\PageBundle\Listener\TemplateMenuListener
+        arguments: ["@victoire_core.admin_menu_builder"]
+        tags:
+            - { name: kernel.event_listener, event: victoire_core.template_menu.contextual, method: addContextual }
+
     ####################################################################################################################
     # twig
     ####################################################################################################################

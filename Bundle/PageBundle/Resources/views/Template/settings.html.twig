@@ -5,7 +5,7 @@
 {% block modal_container_classes %}{{ parent() }} vic-page-modal{% endblock modal_container_classes %}
 
 {% block modal_header_title %}
-    {{'settings.template.modal.header'|trans({}, 'victoire')}}
+    {{ 'modal.form.template.settings.title'|trans({'template.title' : page.title}, 'victoire')|desc('%template.title% > Settings') }}
 {% endblock modal_header_title %}
 
 {% block modal_body_content %}

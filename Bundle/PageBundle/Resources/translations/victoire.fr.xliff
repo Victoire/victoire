@@ -46,6 +46,10 @@
                 <source>modal.form.page.settings.title</source>
                 <target>Paramètres de la page "page.title"</target>
             </trans-unit>
+            <trans-unit resname="modal.form.template.settings.title">
+                <source>modal.form.template.settings.title</source>
+                <target>Paramètres du modèle "template.title"</target>
+            </trans-unit>
             <trans-unit resname="form.page.type.slug.label">
                 <source>form.page.type.slug.label</source>
                 <target>URL</target>
