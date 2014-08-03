@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Widget
  *
- * @ORM\Table("cms_widget")
+ * @ORM\Table("vic_widget")
  * @ORM\Entity(repositoryClass="Victoire\Bundle\CoreBundle\Repository\WidgetRepository")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")

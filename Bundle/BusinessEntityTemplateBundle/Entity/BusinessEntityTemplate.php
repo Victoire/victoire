@@ -9,7 +9,7 @@ use Victoire\Bundle\PageBundle\Entity\Template;
 /**
  * BusinessEntityTemplate
  *
- * @ORM\Table("cms_page_business_entity_template")
+ * @ORM\Table("vic_page_business_entity_template")
  * @ORM\Entity(repositoryClass="Victoire\Bundle\BusinessEntityTemplateBundle\Repository\BusinessEntityTemplateRepository")
  * @ORM\HasLifecycleCallbacks()
  */

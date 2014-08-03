@@ -96,6 +96,7 @@ function enableSortableSlots(){
         });
     });
 }
+
 function updatePosition(ui){
     var sorted = {};
     $vic(".vic-slot").each(function(key, el){

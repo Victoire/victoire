@@ -22,7 +22,7 @@ use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
  * Page
  *
  * @Gedmo\Tree(type="nested")
- * @ORM\Table("cms_page")
+ * @ORM\Table("vic_page")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\Entity(repositoryClass="Victoire\Bundle\PageBundle\Repository\PageRepository")

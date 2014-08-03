@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Template
  *
- * @ORM\Table("cms_page_template")
+ * @ORM\Table("vic_page_template")
  * @ORM\Entity
  */
 class Template extends Page
