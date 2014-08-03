@@ -19,6 +19,7 @@ class TopMenuItem extends MenuItem
     public function setAppearInSidebar($appearInSidebar)
     {
         $this->appearInSidebar = $appearInSidebar;
+
         return $this;
     }
 

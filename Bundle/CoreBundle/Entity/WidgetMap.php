@@ -24,7 +24,7 @@ class WidgetMap
     //the position of the widget
     protected $position = null;
 
-    //the position of the widget by its parent widgets
+    //the position of the widget according to its template's widgets
     //the widget is after the widget positionned at this position
     //the position 0 is the top of the page
     protected $positionReference = null;
@@ -61,7 +61,7 @@ class WidgetMap
     {
         //test validity of the action
         if ($action !== self::ACTION_CREATE && $action !== self::ACTION_REPLACE && $action !== self::ACTION_DELETE) {
-            throw new \Exception('The action of the widget map is not valid.Action:['.$action.']');
+            throw new \Exception('The action of the widget map is not valid. Action: ['.$action.']');
         }
 
         $this->action = $action;

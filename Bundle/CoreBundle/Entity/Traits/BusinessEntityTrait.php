@@ -21,11 +21,11 @@ trait BusinessEntityTrait
      */
     protected $proxies;
 
-
     /**
      * Set proxy
      *
      * @param \Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy $proxy
+     *
      * @return PostPage
      */
     public function setProxy(\Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy $proxy = null)
@@ -45,11 +45,11 @@ trait BusinessEntityTrait
         return $this->proxy;
     }
 
-
     /**
      * Add proxies
      *
      * @param \Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy $proxies
+     *
      * @return PostPage
      */
     public function addProxie(\Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy $proxies)

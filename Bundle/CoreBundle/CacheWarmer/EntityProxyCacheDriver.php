@@ -1,12 +1,7 @@
 <?php
 namespace Victoire\Bundle\CoreBundle\CacheWarmer;
 
-
-use Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;
-use Victoire\Bundle\CoreBundle\Annotations\BusinessEntity;
-use Doctrine\Common\Annotations\AnnotationReader as BaseAnnotationReader;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
-use Doctrine\ORM\Mapping\Driver\StaticPHPDriver;
 
 use Doctrine\Common\Cache\Cache,
     Doctrine\Common\Cache\ArrayCache,

@@ -1,0 +1,89 @@
+/* Common, default styles for the notification box */
+
+.vic-ns-box {
+	position: fixed;
+	background: rgba(42,45,50,0.85);
+	padding: 22px;
+	line-height: 1.4;
+	z-index: 1000;
+	pointer-events: none;
+	color: rgba(250,251,255,0.95);
+	font-size: 90%;
+	font-family: 'Helvetica Neue', 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+
+.vic-ns-box.vic-ns-show {
+	pointer-events: auto;
+}
+
+.vic-ns-box a {
+	color: inherit;
+	opacity: 0.7;
+	font-weight: 700;
+}
+
+.vic-ns-box a:hover,
+.vic-ns-box a:focus {
+	opacity: 1;
+}
+
+.vic-ns-box p {
+	margin: 0;
+}
+
+.vic-ns-box.vic-ns-show,
+.vic-ns-box.vic-ns-visible {
+	pointer-events: auto;
+}
+
+.vic-ns-close {
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	right: 4px;
+	top: 4px;
+	overflow: hidden;
+	text-indent: 100%;
+	cursor: pointer;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+}
+
+.vic-ns-close:hover,
+.vic-ns-close:focus {
+	outline: none;
+}
+
+.vic-ns-close::before,
+.vic-ns-close::after {
+	content: '';
+	position: absolute;
+	width: 3px;
+	height: 60%;
+	top: 50%;
+	left: 50%;
+	background: #6e6e6e;
+}
+
+.vic-ns-close:hover::before,
+.vic-ns-close:hover::after {
+	background: #fff;
+}
+
+.vic-ns-close::before {
+	-webkit-transform: translate(-50%,-50%) rotate(45deg);
+	transform: translate(-50%,-50%) rotate(45deg);
+}
+
+.vic-ns-close::after {
+	-webkit-transform: translate(-50%,-50%) rotate(-45deg);
+	transform: translate(-50%,-50%) rotate(-45deg);
+}
+
+
+.vic-ns-type-warning, .vic-ns-type-error {
+    &.vic-ns-effect-exploader {
+    	background: #E24C44;
+        color: #fff;
+    }
+}

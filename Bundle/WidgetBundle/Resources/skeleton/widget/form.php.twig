@@ -1,0 +1,61 @@
+<?php
+
+namespace {{ namespace }}\Form;
+
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+{% if parent %}
+use Victoire\Widget\{{parent}}Bundle\Form\Widget{{parent}}Type;
+{% else %}
+use Victoire\Bundle\CoreBundle\Form\WidgetType;
+{% endif %}
+
+
+/**
+ * Widget{{widget}} form type
+ */
+class Widget{{widget}}Type extends {% if parent %}Widget{{parent}}Type{% else %}WidgetType{% endif %}
+
+{
+    /**
+     * define form fields
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        {% for field in fields %}
+        $builder->add('{{field.fieldName}}', null, array(
+            'label' => 'widget_{{widget|lower}}.form.{{field.fieldName}}.label'
+        ));
+        {% endfor %}
+        parent::buildForm($builder, $options);
+
+    }
+
+
+    /**
+     * bind form to Widget{{widget}} entity
+     * @param OptionsResolverInterface $resolver
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        parent::setDefaultOptions($resolver);
+
+        $resolver->setDefaults(array(
+            'data_class'         => '{{ namespace }}\Entity\Widget{{ widget }}',
+            'widget'             => '{{widget|lower}}',
+            'translation_domain' => 'victoire'
+        ));
+    }
+
+    /**
+     * get form name
+     *
+     * @return string The form name
+     */
+    public function getName()
+    {
+        return 'victoire_widget_form_{{widget|lower}}';
+    }
+}

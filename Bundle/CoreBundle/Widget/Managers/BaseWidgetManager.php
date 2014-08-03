@@ -21,22 +21,18 @@ class BaseWidgetManager
     //the widget name set with the configuration of the service
     protected $widgetName = null;
 
-    //the bundle name can be given as parameter
-    protected $bundleName = null;
-
     /**
      * contructor
      *
      * @param Container $container
-     * @param String    $widgetName The name of the widget
-     * @param string    $bundleName The name of the bundle
+     * @param string    $widgetName
+     * @param string    $bundleName
      *
      * @throws \Exception Test of the parameters
      */
-    public function __construct($container, $widgetName, $bundleName = null)
+    public function __construct($container, $widgetName)
     {
         $this->container = $container;
-        $this->bundleName = $bundleName;
 
         //test the widget name
         if ($widgetName === null || $widgetName === '') {
@@ -51,7 +47,7 @@ class BaseWidgetManager
      *
      * @param Widget $widget
      * @param Page   $page
-     * @param Entity $entity
+     * @param string $entityName
      *
      * @throws \Exception
      * @return \Victoire\Bundle\CoreBundle\Widget\Managers\Form
@@ -83,8 +79,9 @@ class BaseWidgetManager
     /**
      * Update a widget by the entity
      *
-     * @param  Widget     $widget
-     * @param  unknown    $entity
+     * @param Widget  $widget
+     * @param unknown $entity
+     *
      * @throws \Exception
      * @return Widget
      */
@@ -100,9 +97,10 @@ class BaseWidgetManager
     /**
      * Create a widget
      *
-     * @param  string   $slotId
-     * @param  Page     $page
-     * @param  string   $entity
+     * @param string $slotId
+     * @param Page   $page
+     * @param string $entity
+     *
      * @return template
      *
      * @throws \Exception
@@ -174,9 +172,12 @@ class BaseWidgetManager
             );
         } else {
             //get the errors as a string
-            $errorMessage = $formErrorService->getRecursiveReadableErrors($form);
+            $response = array(
+                "success" => false,
+                "message" => $formErrorService->getRecursiveReadableErrors($form),
+                "html"    => $this->renderNewForm($form, $widget, $slotId, $page, $entity)
+            );
 
-            throw new \Exception($errorMessage);
         }
 
         return $response;
@@ -193,29 +194,16 @@ class BaseWidgetManager
      */
     public function renderActions($slot, Page $page, $first = false)
     {
-        $slots = $this->container->getParameter('victoire_core.slots');
+        //@todo: remove this method
+        throw new \Exception("The method renderAction from BaseWidgetManager should not be called, see the method renderActions from WidgetManager instead.");
 
-        $max = null;
-        if (array_key_exists('max', $slots[$slot])) {
-            $max = $slots[$slot]['max'];
-        }
-
-        return $this->container->get('victoire_templating')->render(
-            "VictoireCoreBundle:Widget:actions.html.twig",
-            array(
-                "slot"    => $slot,
-                "page"    => $page,
-                'widgets' => array_keys($slots[$slot]['widgets']),
-                'max'     => $max,
-                'first'   => $first,
-            )
-        );
     }
 
     /**
      * return widget type
-     * @param  widget $widget
-     * @param  string $type
+     * @param widget $widget
+     * @param string $type
+     *
      * @return widget type
      */
     public function getWidgetType($widget, $type = null)
@@ -234,8 +222,9 @@ class BaseWidgetManager
 
     /**
      * check if widget is allowed for slot
-     * @param  Widget $widget
-     * @param  string $slot
+     * @param Widget $widget
+     * @param string $slot
+     *
      * @return bool
      */
     public function isWidgetAllowedForSlot($widget, $slot)
@@ -290,7 +279,7 @@ class BaseWidgetManager
      * Get the content of an attribute of an entity given
      *
      * @param entity $entity
-     * @param strin  $functionName
+     * @param string $field
      *
      * @return mixed
      */
@@ -308,6 +297,7 @@ class BaseWidgetManager
      *
      * @param Widget  $widget
      * @param boolean $addContainer
+     * @param Entity  $entity
      *
      * @return template
      */
@@ -322,11 +312,11 @@ class BaseWidgetManager
         $html .= $this->render($widget, $entity);
 
         if ($securityContext->isGranted('ROLE_VICTOIRE')) {
-            $html .= $this->renderActions($widget->getSlot(), $widget->getPage());
+            $html .= $this->container->get('widget_manager')->renderActions($widget->getSlot(), $widget->getPage());
         }
 
         if ($addContainer) {
-            $html = "<div class='widget-container' id='vic-widget-".$widget->getId()."-container'>".$html.'</div>';
+            $html = "<div class='vic-widget-container' data-id=\"".$widget->getId()."\" id='vic-widget-".$widget->getId()."-container'>".$html.'</div>';
         }
 
         $dispatcher->dispatch(VictoireCmsEvents::WIDGET_POST_RENDER, new WidgetRenderEvent($widget, $html));
@@ -395,8 +385,6 @@ class BaseWidgetManager
     public function renderNewForm($form, $widget, $slot, Page $page, $entity = null)
     {
         $router = $this->container->get('router');
-        //the name of the bundle depends of the widget name
-        $bundleName = $this->getBundleName();
 
         //are we updating or creating the widget?
         if ($widget->getId() === null) {
@@ -422,30 +410,11 @@ class BaseWidgetManager
     }
 
     /**
-     * Get the name of the widget bundle
-     *
-     * If you want to override the bundleName, please use the argument of the manager
-     *
-     * @return string
-     */
-    private function getBundleName()
-    {
-        //if the name of the bundle was given as a parameter
-        if ($this->bundleName !== null) {
-            $bundleName = $this->bundleName;
-        } else {
-            //the name of the bundle depends of the widget name
-            $bundleName = 'VictoireWidget'.$this->getWidgetName().'Bundle';
-        }
-
-        return $bundleName;
-    }
-
-    /**
      * render WidgetRedactor form
-     * @param  Form           $form
-     * @param  WidgetRedactor $widget
-     * @param  BusinessEntity $entity
+     * @param Form           $form
+     * @param WidgetRedactor $widget
+     * @param BusinessEntity $entity
+     *
      * @return form
      */
     public function renderForm($form, $widget, $entity = null)
@@ -473,11 +442,8 @@ class BaseWidgetManager
      */
     protected function getTemplateName($action)
     {
-        //the name of the bundle depends of the widget name
-        $bundleName = $this->getBundleName();
-
         //the template displayed is in the widget bundle
-        $templateName = $bundleName.'::'.$action.'.html.twig';
+        $templateName = 'VictoireWidget' . $this->getWidgetName() . 'Bundle::' . $action . '.html.twig';
 
         return $templateName;
     }
@@ -497,6 +463,7 @@ class BaseWidgetManager
     /**
      * render the WidgetRedactor
      * @param WidgetRedactor $widget
+     * @param Entity         $entity
      *
      * @return widget show
      */
@@ -599,9 +566,10 @@ class BaseWidgetManager
     /**
      * Get content for the widget
      *
-     * @param  Widget     $widget
-     * @throws \Exception
+     * @param Widget $widget
+     *
      * @return Ambigous   <string, unknown, \Victoire\Bundle\CoreBundle\Widget\Managers\mixed, mixed>
+     * @throws \Exception
      */
     protected function getWidgetContent(Widget $widget)
     {
@@ -625,7 +593,6 @@ class BaseWidgetManager
                 $content = $this->getWidgetEntityContent($widget);
                 break;
             case Widget::MODE_BUSINESS_ENTITY:
-        // print_r(get_class($widget->getEntity()));
                 //get the content of the widget with its entity
                 $content = $this->getWidgetBusinessEntityContent($widget);
                 break;
@@ -642,7 +609,8 @@ class BaseWidgetManager
     /**
      * Get the static content of the widget
      *
-     * @param  Widget $widget
+     * @param Widget $widget
+     *
      * @return string The static content
      *
      * @SuppressWarnings checkUnusedFunctionParameters
@@ -654,7 +622,8 @@ class BaseWidgetManager
 
     /**
      * Get the business entity content
-     * @param  Widget   $widget
+     * @param Widget $widget
+     *
      * @return Ambigous <string, unknown, \Victoire\Bundle\CoreBundle\Widget\Managers\mixed, mixed>
      *
      * @SuppressWarnings checkUnusedFunctionParameters
@@ -711,7 +680,9 @@ class BaseWidgetManager
         $itemsQueryBuilder->andWhere('1 = 1');
 
         //add the query of the widget
-        $items = $queryHelper->getResultsAddingSubQuery($widget, $itemsQueryBuilder);
+        $items = $queryHelper->buildWithSubQuery($widget, $itemsQueryBuilder)
+            ->getQuery()
+            ->getResult();
 
         return $items;
     }
@@ -729,7 +700,8 @@ class BaseWidgetManager
     /**
      * Get a service from the container
      *
-     * @param  string  $serviceId
+     * @param string $serviceId
+     *
      * @return service
      */
     public function get($serviceId)

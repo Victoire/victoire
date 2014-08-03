@@ -42,7 +42,6 @@ class Tag
      */
     protected $articles;
 
-
     /**
      * undocumented function
      *
@@ -68,6 +67,7 @@ class Tag
      * Set title
      *
      * @param string $title
+     *
      * @return Category
      */
     public function setTitle($title)
@@ -91,6 +91,7 @@ class Tag
      * Set slug
      *
      * @param string $slug
+     *
      * @return Category
      */
     public function setSlug($slug)
@@ -114,6 +115,7 @@ class Tag
      * Set pages
      *
      * @param \stdClass $pages
+     *
      * @return Category
      */
     public function setPages($pages)
@@ -137,6 +139,7 @@ class Tag
      * Set articles
      *
      * @param string $articles
+     *
      * @return PostPage
      */
     public function setArticles($articles)

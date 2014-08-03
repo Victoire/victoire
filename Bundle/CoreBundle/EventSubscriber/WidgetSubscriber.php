@@ -2,10 +2,8 @@
 namespace Victoire\Bundle\CoreBundle\EventSubscriber;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Victoire\Bundle\CoreBundle\Event\WidgetQueryEvent;
 use Victoire\Bundle\CoreBundle\VictoireCmsEvents;
 use Victoire\Bundle\CoreBundle\Event\WidgetBuildFormEvent;
-use Victoire\Bundle\CoreBundle\Theme\ThemeWidgetInterface;
 use Victoire\Bundle\CoreBundle\Entity\Widget;
 use Behat\Behat\Exception\Exception;
 

@@ -22,8 +22,9 @@ class WidgetController extends AwesomeController
 {
     /**
      * Show a widget
+     * @param Widget $widget the widget to show
+     * @param Entity $entity the entity
      *
-     * @param  Widget   $widget the widget to show
      * @return response
      * @Route("/show/{id}/{entity}", name="victoire_core_widget_show", options={"expose"=true}, defaults={"entity": null})
      * @Template()
@@ -53,36 +54,13 @@ class WidgetController extends AwesomeController
     }
 
     /**
-     * Edit a widget
-     *
-     * @param  Widget   $widget The widget to edit
-     * @param  string   $type   The type of widget we edit
-     * @return response
-     *
-     * @Route("/edit/{id}/{type}/{entity}", name="victoire_core_widget_edit", defaults={"type": null})
-     * @Route("/update/{id}/{type}/{entity}", name="victoire_core_widget_update", defaults={"type": null, "entity": null})
-     * @Template()
-     * @ParamConverter("id", class="VictoireCoreBundle:Widget")
-     */
-    public function editAction(Request $request, Widget $widget, $type = null, $entity = null)
-    {
-        try {
-            $widgetManager = $this->getWidgetManager();
-            $response = new JsonResponse($widgetManager->edit($request, $widget, $type, $entity));
-        } catch (\Exception $ex) {
-            $response = $this->getJsonReponseFromException($ex);
-        }
-
-        return $response;
-    }
-
-    /**
      * New Widget
      *
-     * @param  string         $type   The type of the widget we edit
-     * @param  Page           $page   The page where attach the widget
-     * @param  string         $slot   The slot where attach the widget
-     * @param  BusinessEntity $entity The business entity the widget shows on dynamic mode
+     * @param string         $type   The type of the widget we edit
+     * @param Page           $page   The page where attach the widget
+     * @param string         $slot   The slot where attach the widget
+     * @param BusinessEntity $entity The business entity the widget shows on dynamic mode
+     *
      * @return response
      *
      * @Route("/new/{type}/{page}/{slot}/{entity}", name="victoire_core_widget_new", defaults={"slot":null, "entity":null}, options={"expose"=true})
@@ -130,10 +108,11 @@ class WidgetController extends AwesomeController
     /**
      * Create a widget
      *
-     * @param  string         $type   The type of the widget we edit
-     * @param  Page           $page   The page where attach the widget
-     * @param  string         $slot   The slot where attach the widget
-     * @param  BusinessEntity $entity The business entity the widget shows on dynamic mode
+     * @param string         $type   The type of the widget we edit
+     * @param Page           $page   The page where attach the widget
+     * @param string         $slot   The slot where attach the widget
+     * @param BusinessEntity $entity The business entity the widget shows on dynamic mode
+     *
      * @return response
      * @Route("/create/{type}/{page}/{slot}/{entity}", name="victoire_core_widget_create", defaults={"slot":null, "entity":null, "_format": "json"})
      * @Template()
@@ -156,10 +135,36 @@ class WidgetController extends AwesomeController
     }
 
     /**
-     * Delete a Widget
+     * Edit a widget
+     * @param Request $request The request
+     * @param Widget  $widget  The widget to edit
+     * @param string  $type    The type of widget we edit
+     * @param Entity  $entity  The Entity
      *
-     * @param  Widget $widget The widget to delete
-     * @return empty  response
+     * @return response
+     *
+     * @Route("/edit/{id}/{type}/{entity}", name="victoire_core_widget_edit", defaults={"type": null})
+     * @Route("/update/{id}/{type}/{entity}", name="victoire_core_widget_update", defaults={"type": null, "entity": null})
+     * @Template()
+     * @ParamConverter("id", class="VictoireCoreBundle:Widget")
+     */
+    public function editAction(Request $request, Widget $widget, $type = null, $entity = null)
+    {
+        try {
+            $widgetManager = $this->getWidgetManager();
+            $response = new JsonResponse($widgetManager->edit($request, $widget, $type, $entity));
+        } catch (\Exception $ex) {
+            $response = $this->getJsonReponseFromException($ex);
+        }
+
+        return $response;
+    }
+
+    /**
+     * Delete a Widget
+     * @param Widget $widget The widget to delete
+     *
+     * @return empty response
      * @Route("/delete/{id}", name="victoire_core_widget_delete", defaults={"_format": "json"})
      * @Template()
      * @ParamConverter("id", class="VictoireCoreBundle:Widget")
@@ -178,9 +183,10 @@ class WidgetController extends AwesomeController
     /**
      * Update widget positions accross the page. If moved widget is a Reference, ask to detach the page from template
      *
-     * @param  Page     $page The page where update widget positions
+     * @param Page $page The page where update widget positions
+     *
      * @return response
-     * @Route("/position/{page}", name="victoire_core_widget_update_position", options={"expose"=true})
+     * @Route("/updatePosition/{page}", name="victoire_core_widget_update_position", options={"expose"=true})
      * @ParamConverter("page", class="VictoirePageBundle:Page")
      */
     public function updatePositionAction(Page $page)
@@ -226,7 +232,7 @@ class WidgetController extends AwesomeController
         $logger = $this->get('logger');
 
         //can we see the debug
-        $isDebugAllowed = $securityContext->isGranted('ROLE_PAGE_DEBUG');
+        $isDebugAllowed = $securityContext->isGranted('ROLE_VICTOIRE_PAGE_DEBUG');
 
         //whatever is the exception, we log it
         $logger->error($ex->getMessage());

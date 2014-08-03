@@ -4,7 +4,6 @@ namespace Victoire\Bundle\BlogBundle\Filter;
 
 use Victoire\Widget\FilterBundle\Filter\BaseFilter;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 
@@ -48,7 +47,7 @@ class CategoryFilter extends BaseFilter
 
         if (count($parameters['category']) > 0) {
             $qb = $qb
-             ->join('item.category', 'c')
+             ->join('main_item.category', 'c')
              ->andWhere('c.id IN (:category)')
              ->setParameter('category', $parameters['category']);
         }
@@ -59,7 +58,7 @@ class CategoryFilter extends BaseFilter
     /**
      * define form fields
      * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @param array $options
      *
      * @SuppressWarnings checkUnusedFunctionParameters
      *
@@ -94,18 +93,6 @@ class CategoryFilter extends BaseFilter
                     'data' => $selectedCategories
                 )
             );
-    }
-
-    /**
-     * Set the default options
-     *
-     * @param OptionsResolverInterface $resolver
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $resolver->setDefaults(array(
-            'csrf_protection'   => false
-        ));
     }
 
     /**

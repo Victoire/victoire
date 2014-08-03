@@ -41,7 +41,7 @@ class IdToMediaTransformer implements DataTransformerInterface
      *
      * @return mixed The value in the transformed representation
      *
-     * @throws UnexpectedTypeException when the argument is not an object
+     * @throws UnexpectedTypeException   when the argument is not an object
      * @throws \InvalidArgumentException when the parameter is a collection
      */
     public function transform($entity)
@@ -60,7 +60,6 @@ class IdToMediaTransformer implements DataTransformerInterface
 
         $this->currentValueContainer->setCurrentValue($entity);
 
-
         return array(
             "ent"=>$entity,
             "id" => $entity->getId()
@@ -72,12 +71,12 @@ class IdToMediaTransformer implements DataTransformerInterface
      *
      * @return Media
      *
-     * @throws UnexpectedTypeException when the parameter is not numeric
+     * @throws UnexpectedTypeException       when the parameter is not numeric
      * @throws TransformationFailedException when the media item cannot be loaded/found
      */
     public function reverseTransform($key)
     {
-        if ('' === $key || null === $key ) {
+        if ('' === $key || null === $key) {
             return null;
         }
 

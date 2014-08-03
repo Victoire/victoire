@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\PageBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -10,11 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Victoire\Bundle\CoreBundle\Form\TemplateType;
 use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\PageBundle\Form\PageSettingsType;
-use Victoire\Bundle\PageBundle\Form\PageType;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -41,28 +37,27 @@ class PageAdministrationController extends PageController
 
     /**
      * New page
+     * @param boolean $isHomepage Is the page a homepage
      *
-     * @return template
      * @Route("/new", name="victoire_core_page_new", defaults={"isHomepage" : false})
      * @Route("/homepage/new", name="victoire_core_homepage_new", defaults={"isHomepage" : true})
      * @Template()
      *
-     * @param boolean $isHomepage Is the page a homepage
+     * @return template
      */
     public function newAction($isHomepage = false)
     {
-
         return new JsonResponse(parent::newAction($isHomepage));
     }
 
     /**
      * Page settings
+     * @param Request $request
+     * @param Page    $page
      *
      * @Route("/{id}/settings", name="victoire_core_page_settings")
      * @Template()
      * @ParamConverter("page", class="VictoirePageBundle:Page")
-     *
-     * @param Page $page The page
      *
      * @return json The settings
      */
@@ -73,8 +68,8 @@ class PageAdministrationController extends PageController
 
     /**
      * Page delete
-     *
      * @param page $page
+     *
      * @return template
      * @Route("/{id}/delete", name="victoire_core_page_delete")
      * @Template()
@@ -89,17 +84,18 @@ class PageAdministrationController extends PageController
         return new JsonResponse(parent::deleteAction($page));
     }
 
-
     /**
      * Detach a page from a template
      *
      * @param page $page
+     *
      * @return template
      * @Route("/{id}/detach", name="victoire_core_page_detach")
      * @ParamConverter("page", class="VictoirePageBundle:Page")
      */
     public function detachAction(Page $page)
     {
+        throw new \Exception("Not implemented yet");
 
     }
 
@@ -107,6 +103,7 @@ class PageAdministrationController extends PageController
      * Create a Template from a page
      *
      * @param page $page
+     *
      * @return template
      * @Route("/{id}/create-template", name="victoire_core_page_createtemplate")
      * @ParamConverter("page", class="VictoirePageBundle:Page")

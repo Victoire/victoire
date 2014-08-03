@@ -1,7 +1,6 @@
 <?php
 namespace Victoire\Bundle\CoreBundle\Tests\Utils;
 
-
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 

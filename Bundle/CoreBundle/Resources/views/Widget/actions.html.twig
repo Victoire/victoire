@@ -1,36 +1,51 @@
 {% trans_default_domain "victoire" %}
 
-{#% if widgets|length == 1 %}
-      {% set widget = attribute(widgets, 0) %}
-      {% set widget_label = "widget."~widget~".new.action.label" %}
-      <a class="btn add-widget-btn" id="slot-{{slot}}-add-button" data-toggle="add-widget" data-slot="{{slot}}" href="{{path('victoire_core_widget_new', {'page':page.id,'type':widget, 'slot':slot} )}}"><i class="icon icon-{{widget}}"></i>&nbsp;Ajouter un widget {{widget_label|trans}}</a>
-{% else %#}
-    <div class="vic-dropdown vic-undraggable vic-new-widget {{ first ? "vic-first" : "" }}">
-        <a data-toggle="vic-dropdown" href="#" class="text-center">
-            <img src="/bundles/victoirecore/images/addWidget-icon.png" alt="new widget icon"> {{ "widget.dropdown.action.label"|trans({}, "victoire")|desc("New widget")}}
-            <i class="fa fa-angle-down"></i>
-        </a>
-        <ul class="vic-dropdown-menu" role="menu" aria-labelledby="dLabel">
-            {% for widget in widgets %}
-            <li>
-                <a href="{{ path('victoire_core_widget_new', {'page':page.id,'type':widget, 'slot':slot} ) }}">
-                    {{ ("widget."~widget~".new.action.label")|trans({}, 'victoire') }}
-                </a>
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
-{#% endif %#}
+<div class="vic-dropdown vic-new-widget vic-hidden vic-new-widget-disabled{{ first ? " vic-first" : "" }}">
+    <a data-toggle="vic-dropdown" href="#" class="text-center">
+        <img src="/bundles/victoirecore/images/addWidget-icon.png" alt="new widget icon"> {{ "widget.dropdown.action.label"|trans({}, "victoire")|desc("New widget")}}
+        <i class="fa fa-angle-down"></i>
+    </a>
+    {{ _self.widgetList(widgets, slot, page) }}
+</div>
+
+{% macro widgetList(widgets, slot, page, depth = 0) %}
+
+    {% if widgets|length > 0 %}
+    <ul class="{% if depth == 0 %}vic-dropdown-menu{% endif %} vic-dropdown-newWidget vic-newWidget-{{depth}}" role="menu" aria-labelledby="dLabel">
+        {% for name, widget in widgets %}
+        <li>
+        {% if widget.params is defined %}
+            <a href="{{ path('victoire_core_widget_new', {'page':page.id,'type':name, 'slot':slot} )}}">
+        {% else %}
+            <a class="disabled" href="#">
+        {% endif %}
+
+                {{ ("widget."~name|lower~".new.action.label")|trans({}, 'victoire') }}
+            </a>
+            {% if widget.children is defined and widget.children|length > 0%}
+            {{ _self.widgetList(widget.children, slot, page, depth+1) }}
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+{% endmacro %}
 
 <script type="text/javascript">
 //responsible to hide and organize thanks to js the buttons.
 //> This is not a wonderful way but for now, it does the job
     $(document).ready(function() {
-        updateSlotActions("{{ slot }}" {% if max is not null %}, {{max}}{% endif %});
+        updateSlotActions{{ slot }}();
     });
     $(document).ajaxComplete(function() {
-        updateSlotActions("{{ slot }}"{% if max is not null %}, {{max}}{% endif %});
+        updateSlotActions{{ slot }}();
     });
 
-</script>
+    /**
+     * This function is called in widget.js file after deleting a content in order to display a potential hidden button
+     */
+    function updateSlotActions{{ slot }}() {
+        updateSlotActions("{{ slot }}"{% if max is not null %}, {{max}}{% endif %});
+    }
 
+</script>

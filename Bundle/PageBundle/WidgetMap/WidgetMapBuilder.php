@@ -277,7 +277,7 @@ class WidgetMapBuilder
     /**
      * Get the slots for the page by the sorted slots given by the Screen
      *
-     * @param Page $page
+     * @param Page  $page
      * @param array $widgetSlots
      */
     public function updateWidgetMapsByPage(Page $page, $widgetSlots)
@@ -289,19 +289,19 @@ class WidgetMapBuilder
             //get the slot of the page
             $slot = $page->getSlotById($slotId);
 
-            //test slot exists, it might not exists yet
+            //test that slot exists or create it, it could not exists if no widget has been created inside yet
             if ($slot === null) {
-                //so we add it
                 $slot = new Slot();
                 $slot->setId($slotId);
                 $page->addSlot($slot);
             }
 
-            //the widget map position counter
+            //init the widget map position counter
             $positionCounter = 1;
 
             //parse the widget ids
             foreach ($widgetIds as $widgetId) {
+                //get the initial widget map of this widget
                 $widgetMap = $slot->getWidgetMapByWidgetId($widgetId);
 
                 //the slot comes from the parent

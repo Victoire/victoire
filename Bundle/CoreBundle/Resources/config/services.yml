@@ -10,15 +10,13 @@ services:
     #     alias: av_assetic_injector.collector_engine.require_victoire
 
 #  ==================  Widgets ================== #
-    victoire_core.twig.widget_manager:
+    victoire_core.widget_manager:
         class: Victoire\Bundle\CoreBundle\Widget\Managers\WidgetManager
         arguments:
             - "@service_container"
-            - "@page.widgetMap.builder"
-            - "@av.form_error_service"
 
     widget_manager:
-        alias: victoire_core.twig.widget_manager
+        alias: victoire_core.widget_manager
 
     widget.subscriber:
         class: Victoire\Bundle\CoreBundle\EventSubscriber\WidgetSubscriber
@@ -130,6 +128,7 @@ services:
         class: Victoire\Bundle\CoreBundle\Annotations\Reader\AnnotationReader
         arguments:
             - "@annotation_reader"
+            - "@widget_manager"
             - "%kernel.root_dir%"
             - "%victoire_core.widgets%"
         calls:
@@ -189,4 +188,3 @@ services:
             - "@twig"
             - "%kernel.debug%"
             - "@victoire_templating"
-

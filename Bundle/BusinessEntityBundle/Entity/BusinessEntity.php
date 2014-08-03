@@ -1,11 +1,8 @@
 <?php
 namespace Victoire\Bundle\BusinessEntityBundle\Entity;
 
-use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
-
 /**
- *
- * @author Thomas Beaujean
+ * The business Entity
  *
  */
 class BusinessEntity
@@ -96,6 +93,7 @@ class BusinessEntity
      * Get the business properties by type
      *
      * @param string $type
+     *
      * @return array The businnes properties
      */
     public function getBusinessPropertiesByType($type)

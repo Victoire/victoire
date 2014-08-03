@@ -4,7 +4,6 @@ namespace Victoire\Bundle\BlogBundle\Filter;
 
 use Victoire\Widget\FilterBundle\Filter\BaseFilter;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 
@@ -20,7 +19,7 @@ class TagFilter extends BaseFilter
      * Constructor
      *
      * @param EntityManager $em
-     * @param unknown $request
+     * @param unknown       $request
      */
     public function __construct(EntityManager $em, $request)
     {
@@ -48,7 +47,7 @@ class TagFilter extends BaseFilter
 
         if (count($parameters['tags']) > 0) {
             $qb = $qb
-                 ->join('item.tags', 't')
+                 ->join('main_item.tags', 't')
                  ->andWhere('t.id IN (:tags)')
                  ->setParameter('tags', $parameters['tags']);
         }
@@ -59,7 +58,7 @@ class TagFilter extends BaseFilter
     /**
      * define form fields
      * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @param array $options
      *
      * @SuppressWarnings checkUnusedFunctionParameters
      */
@@ -94,18 +93,6 @@ class TagFilter extends BaseFilter
                     'data' => $selectedTags
                 )
             );
-    }
-
-    /**
-     * Set the default options
-     *
-     * @param OptionsResolverInterface $resolver
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $resolver->setDefaults(array(
-            'csrf_protection'   => false
-        ));
     }
 
     /**

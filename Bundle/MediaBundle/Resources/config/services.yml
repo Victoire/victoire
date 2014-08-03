@@ -64,4 +64,3 @@ services:
             - "@victoire_core.admin_menu_builder"
         tags:
             - { name: kernel.event_listener, event: victoire_core.build_menu, method: addGlobal, priority: 60 }
-

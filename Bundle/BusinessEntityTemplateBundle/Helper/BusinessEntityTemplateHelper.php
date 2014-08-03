@@ -9,9 +9,7 @@ use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 
 /**
- *
- * @author Thomas Beaujean
- *
+ * The business entity template helper
  * ref: victoire_business_entity_template.business_entity_template_helper
  */
 class BusinessEntityTemplateHelper
@@ -21,11 +19,9 @@ class BusinessEntityTemplateHelper
     protected $parameterConverter = null;
 
     /**
-     *
      * @param QueryHelper          $queryHelper
      * @param BusinessEntityHelper $businessEntityHelper
      * @param ParameterConverter   $parameterConverter
-     *
      */
     public function __construct(QueryHelper $queryHelper, BusinessEntityHelper $businessEntityHelper, ParameterConverter $parameterConverter)
     {
@@ -37,8 +33,9 @@ class BusinessEntityTemplateHelper
     /**
      * Is the entity allowed for the business entity template page
      *
-     * @param  BusinessEntityTemplate $businessEntityTemplate
-     * @param  unknown                $entity
+     * @param BusinessEntityTemplate $businessEntityTemplate
+     * @param Entity                 $entity
+     *
      * @throws \Exception
      * @return boolean
      */
@@ -62,7 +59,8 @@ class BusinessEntityTemplateHelper
         $baseQuery->andWhere('main_item.id = ' . $entityId);
 
         //filter with the query of the page
-        $items =  $queryHelper->getResultsAddingSubQuery($businessEntityTemplate, $baseQuery);
+        $items =  $queryHelper->buildWithSubQuery($businessEntityTemplate, $baseQuery)
+            ->getQuery()->getResult();
 
         //only one page can be found because we filter on the
         if (count($items) > 1) {
@@ -79,7 +77,8 @@ class BusinessEntityTemplateHelper
     /**
      * Get the list of entities allowed for the businessEntityTemplate page
      *
-     * @param  BusinessEntityTemplate $page
+     * @param BusinessEntityTemplate $businessEntityTemplate
+     *
      * @throws \Exception
      * @return boolean
      */
@@ -95,7 +94,9 @@ class BusinessEntityTemplateHelper
         $baseQuery->andWhere('1 = 1');
 
         //filter with the query of the page
-        $items =  $queryHelper->getResultsAddingSubQuery($businessEntityTemplate, $baseQuery);
+        $items =  $queryHelper->buildWithSubQuery($businessEntityTemplate, $baseQuery)
+            ->getQuery()
+            ->getResult();
 
         return $items;
     }
@@ -106,13 +107,13 @@ class BusinessEntityTemplateHelper
      * @param Page   $page
      * @param Entity $entity
      */
-    public function updatePageUrlByEntity(Page $page, $entity)
+    public function fillEntityPageVariables(Page $page, $entity)
     {
         //if no entity is provided
         if ($entity === null) {
             //we look for the entity of the page
-            if ($page->getEntity() !== null) {
-                $entity = $page->getEntity();
+            if ($page->getBusinessEntity() !== null) {
+                $entity = $page->getBusinessEntity();
             }
         }
 
@@ -128,14 +129,17 @@ class BusinessEntityTemplateHelper
 
                 //the url of the page
                 $pageUrl = $page->getUrl();
+                $pageTitle = $page->getTitle();
 
                 //parse the business properties
                 foreach ($businessProperties as $businessProperty) {
                     $pageUrl = $this->parameterConverter->setBusinessPropertyInstance($pageUrl, $businessProperty, $entity);
+                    $pageTitle = $this->parameterConverter->setBusinessPropertyInstance($pageTitle, $businessProperty, $entity);
                 }
 
                 //we update the url of the page
                 $page->setUrl($pageUrl);
+                $page->setTitle($pageTitle);
             }
         }
     }

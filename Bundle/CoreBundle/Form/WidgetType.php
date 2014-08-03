@@ -4,7 +4,6 @@ namespace Victoire\Bundle\CoreBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Victoire\Bundle\CoreBundle\Form\EntityProxyFormType;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 use Victoire\Bundle\CoreBundle\Entity\Widget;
@@ -18,7 +17,7 @@ class WidgetType extends AbstractType
      * Define form fields
      *
      * @param FormBuilderInterface $builder The builder
-     * @param array                $options The options
+     * @param array $options The options
      *
      * @throws Exception
      */
@@ -65,12 +64,10 @@ class WidgetType extends AbstractType
         //add the slot to the form
         $builder->add('slot', 'hidden', array());
 
-
         //we use the PRE_SUBMIT event to set the mode option
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event)
-            {
+            function (FormEvent $event) {
                 $options = $this->options;
 
                 //we get the raw data for the widget form

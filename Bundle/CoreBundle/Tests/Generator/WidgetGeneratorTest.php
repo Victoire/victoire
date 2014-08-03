@@ -45,7 +45,6 @@ class WidgetGeneratorTest extends BaseTestCase
         $content = file_get_contents($this->tmpDir.'/Victoire/BarBundle/VictoireBarBundle.php');
         $this->assertContains('namespace Victoire\\BarBundle', $content);
 
-
         // $content = file_get_contents($this->tmpDir.'/Victoire/BarBundle/Resources/views/Default/index.html.twig');
         // $this->assertContains('Hello {{ name }}!', $content);
     }

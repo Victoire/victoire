@@ -35,6 +35,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->arrayNode('form')
+                    ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('templating')
                             ->defaultValue("VictoireFormBundle:Form:fields.html.twig")
@@ -55,7 +56,7 @@ class Configuration implements ConfigurationInterface
                             ->defaultValue(true)
                             ->end()
                         ->booleanNode('render_collection_item')
-                            ->defaultValue(true)
+                            ->defaultValue(false)
                         ->end()
                         ->booleanNode('show_legend')
                             ->defaultValue(true)
@@ -179,7 +180,7 @@ class Configuration implements ConfigurationInterface
                                             ->end()
                                         ->end()
                                         ->scalarNode('label')
-                                            ->defaultValue("remove_item")
+                                            ->defaultValue("victoire.collection.button.label.remove_item")
                                         ->end()
                                         ->scalarNode('icon')
                                             ->defaultValue(null)
@@ -201,7 +202,7 @@ class Configuration implements ConfigurationInterface
                                             ->end()
                                         ->end()
                                         ->scalarNode('label')
-                                            ->defaultValue("add_item")
+                                            ->defaultValue("victoire.collection.button.label.add_item")
                                         ->end()
                                         ->scalarNode('icon')
                                             ->defaultValue(null)
@@ -217,8 +218,6 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end();
     }
-
-
 
     /**
      * Add icon configuration

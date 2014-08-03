@@ -36,6 +36,7 @@ interface ManagerInterface
      * @param Form                   $form
      * @param ThemeRedactorNewspaper $widget
      * @param BusinessEntity         $entity
+     *
      * @return form
      */
     public function renderForm($form, $widget, $entity = null);
@@ -45,6 +46,7 @@ interface ManagerInterface
      * @param ThemeRedactorNewspaper $widget
      * @param string                 $entityName
      * @param string                 $namespace
+     *
      * @return $form
      */
     public function buildForm($widget, $entityName = null, $namespace = null);

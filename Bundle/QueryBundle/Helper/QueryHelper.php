@@ -7,9 +7,7 @@ use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Doctrine\ORM\QueryBuilder;
 
 /**
- *
- * @author Thomas Beaujean
- *
+ * The QueryHelper helps to build query in Victoire's components
  * ref: victoire_query.query_helper
  */
 class QueryHelper
@@ -81,7 +79,8 @@ class QueryHelper
 
     /**
      * Check that the object is not null and has the query trait
-     * @param  unknown    $containerEntity
+     * @param unknown $containerEntity
+     *
      * @throws \Exception
      */
     protected function checkObjectHasQueryTrait($containerEntity)
@@ -99,14 +98,14 @@ class QueryHelper
     /**
      * Get the results from the sql after adding the
      *
-     * @param  unknown    $containerEntity
-     * @param  unknown    $queryBuilder
-     * @param  string     $additionnalDql
+     * @param unknown $containerEntity
+     * @param unknown $itemsQueryBuilder
+     *
      * @throws \Exception
      *
-     * @return array The list of objects
+     * @return QueryBuilder The QB to list of objects
      */
-    public function getResultsAddingSubQuery($containerEntity, QueryBuilder $itemsQueryBuilder)
+    public function buildWithSubQuery($containerEntity, QueryBuilder $itemsQueryBuilder)
     {
         //services
         $em = $this->em;
@@ -130,14 +129,12 @@ class QueryHelper
             $itemsQueryBuilder
                 ->andWhere('main_item.id IN (' . $subQuery->getQuery()->getDql() . ' ' . $query . ')');
         }
-        // print_r(get_class($containerEntity->getEntity()));exit;
+
         //if the the keyword ":currentEntity" is found, we are in a businessEntityTemplate, so we set the current entity as a query parameter.
         if (strpos($query, ":currentEntity") !== false) {
-            $itemsQueryBuilder->setParameter('currentEntity', $containerEntity->getEntity() ? $containerEntity->getEntity()->getId() : null);
+            $itemsQueryBuilder->setParameter('currentEntity', $containerEntity->getBusinessEntity() ? $containerEntity->getBusinessEntity()->getId() : null);
         }
 
-        $items = $itemsQueryBuilder->getQuery()->getResult();
-
-        return $items;
+        return $itemsQueryBuilder;
     }
 }

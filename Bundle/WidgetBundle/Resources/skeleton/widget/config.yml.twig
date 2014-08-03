@@ -1,0 +1,6 @@
+victoire_core:
+    widgets:
+        {{ widget|lower }}:
+            class: "Victoire\\Widget\\{{ widget }}Bundle\\Entity\\Widget{{ widget }}"
+            name: {{ widget }}
+            parent: {{parent}}

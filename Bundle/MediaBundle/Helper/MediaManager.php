@@ -40,6 +40,7 @@ class MediaManager
                 return $handler;
             }
         }
+
         return new FileHandler();
     }
 

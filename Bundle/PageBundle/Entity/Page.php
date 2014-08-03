@@ -11,11 +11,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 use Victoire\Bundle\CoreBundle\Annotations as VIC;
 use Victoire\Bundle\CoreBundle\Entity\Route;
-use Victoire\Bundle\PageBundle\Entity\Template;
 use Victoire\Bundle\CoreBundle\Entity\Widget;
 use Victoire\Bundle\SeoBundle\Entity\PageSeo;
 
-use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 use Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy;
 
 use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
@@ -242,7 +240,7 @@ class Page
     /**
      * Set the entity proxy
      *
-     * @param EntityProxy $entity
+     * @param EntityProxy $entityProxy
      */
     public function setEntityProxy($entityProxy)
     {
@@ -270,11 +268,22 @@ class Page
     }
 
     /**
-     * Get the entity
+     * Get the business entity
      *
      * @return number
      */
     public function getEntity()
+    {
+        throw new \Exception("The method getEntity is deprecated, please use getBusinessEntity instead");
+
+    }
+
+    /**
+     * Get the business entity
+     *
+     * @return number
+     */
+    public function getBusinessEntity()
     {
         //if there is no entity
         if ($this->entity === null) {
@@ -290,7 +299,6 @@ class Page
 
         return $this->entity;
     }
-
 
     /**
      * to string
@@ -336,8 +344,8 @@ class Page
 
     /**
      * Set seo
-     *
      * @param PageSeo $seo
+     *
      * @return Page
      */
     public function setSeo($seo)
@@ -363,8 +371,8 @@ class Page
 
     /**
      * Set title
-     *
      * @param string $title
+     *
      * @return Page
      */
     public function setTitle($title)
@@ -386,8 +394,8 @@ class Page
 
     /**
      * Set slug
-     *
      * @param string $slug
+     *
      * @return Page
      */
     public function setSlug($slug)
@@ -409,8 +417,8 @@ class Page
 
     /**
      * Set layout
-     *
      * @param string $layout
+     *
      * @return Page
      */
     public function setLayout($layout)
@@ -432,8 +440,8 @@ class Page
 
     /**
      * Set template
-     *
      * @param Page $template
+     *
      * @return Page
      */
     public function setTemplate($template)
@@ -453,11 +461,10 @@ class Page
         return $this->template;
     }
 
-
     /**
      * Set widgets
-     *
      * @param string $widgets
+     *
      * @return Page
      */
     public function setWidgets($widgets)
@@ -483,8 +490,8 @@ class Page
 
     /**
      * Get widgets
-     *
      * @param string $slot
+     *
      * @return string
      */
     public function getWidgetsForSlot($slot)
@@ -499,10 +506,8 @@ class Page
         return $widgets;
     }
 
-
     /**
      * Add widget
-     *
      * @param Widget $widget
      */
     public function addWidget(Widget $widget)
@@ -511,8 +516,8 @@ class Page
     }
     /**
      * has widget
-     *
      * @param Widget $widget
+     *
      * @return bool
      */
     public function hasWidget(Widget $widget)
@@ -541,8 +546,8 @@ class Page
     }
     /**
      * Set children
-     *
      * @param string $children
+     *
      * @return Page
      */
     public function setChildren($children)
@@ -588,7 +593,8 @@ class Page
     /**
      * Set homepage
      *
-     * @param homepage $homepage
+     * @param boolean $homepage
+     *
      * @return Page
      */
     public function setHomepage($homepage)
@@ -796,11 +802,13 @@ class Page
      * Set author
      *
      * @param string $author
+     *
      * @return $this
      */
     public function setAuthor($author)
     {
         $this->author = $author;
+
         return $this;
     }
 
@@ -836,13 +844,14 @@ class Page
 
     /**
      * Set bodyId
-     *
      * @param string $bodyId
+     *
      * @return $this
      */
     public function setBodyId($bodyId)
     {
         $this->bodyId = $bodyId;
+
         return $this;
     }
 
@@ -858,13 +867,14 @@ class Page
 
     /**
      * Set bodyClass
-     *
      * @param string $bodyClass
+     *
      * @return $this
      */
     public function setBodyClass($bodyClass)
     {
         $this->bodyClass = $bodyClass;
+
         return $this;
     }
 
@@ -1070,8 +1080,7 @@ class Page
         $this->slots = $slots;
 
         //convert the slots object in a widget map array
-        $widgetMap = $this->convertSlotsToWidgetMap();
-        $this->setWidgetMap($widgetMap);
+        $this->updateWidgetMapBySlots();
     }
 
     /**
@@ -1142,7 +1151,7 @@ class Page
             if ($sl->getId() === $slotId) {
                 $slot = $sl;
                 //there no need to continue, we found the slot
-                continue;
+                break;
             }
         }
 

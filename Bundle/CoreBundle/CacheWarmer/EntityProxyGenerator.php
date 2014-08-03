@@ -2,9 +2,6 @@
 namespace Victoire\Bundle\CoreBundle\CacheWarmer;
 
 use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmer;
-use Victoire\Bundle\CoreBundle\CacheWarmer\GeneratedClassLoader;
-use Composer\Autoload\ClassLoader;
-use Symfony\Component\Config\ConfigCache;
 use Sensio\Bundle\GeneratorBundle\Generator\Generator;
 
 /**

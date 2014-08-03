@@ -2,9 +2,6 @@
 namespace Victoire\Bundle\CoreBundle\CacheWarmer;
 
 use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmer;
-use Victoire\Bundle\CoreBundle\CacheWarmer\GeneratedClassLoader;
-use Composer\Autoload\ClassLoader;
-use Symfony\Component\Config\ConfigCache;
 use Sensio\Bundle\GeneratorBundle\Generator\Generator;
 use Behat\Behat\Exception\Exception;
 
@@ -38,7 +35,6 @@ class EntityProxyWarmer extends CacheWarmer
     {
         $dir = $cacheDir.'/victoire/Entity';
         $file = $dir.'/EntityProxy.php';
-
 
         if (!file_exists($dir)) {
             if (false === @mkdir($dir, 0777, true)) {

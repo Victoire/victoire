@@ -6,14 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Victoire\Bundle\BlogBundle\Entity\Post;
 use Victoire\Bundle\BlogBundle\Entity\Article;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\PageBundle\Controller\PageController;
-use Victoire\Bundle\BlogBundle\Form\ArticleType;
-use Victoire\Bundle\BlogBundle\Event\BlogMenuContextualEvent;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -54,13 +49,15 @@ class ArticleController extends PageController
     /**
      * Article settings
      *
-     * @param article $article
+     * @param Request $request
+     * @param Page    $article
+     *
      * @return template
      * @Route("/{id}/settings", name="victoire_blog_article_settings")
      * @Template()
      * @ParamConverter("article", class="VictoirePageBundle:Page")
      */
-    public function settingsAction(Request $request, Page $page)
+    public function settingsAction(Request $request, Page $article)
     {
         return new JsonResponse(parent::settingsAction($article));
     }
@@ -68,7 +65,8 @@ class ArticleController extends PageController
     /**
      * Page delete
      *
-     * @param article $article
+     * @param Page $article
+     *
      * @return template
      * @Route("/{id}/delete", name="victoire_core_article_delete")
      * @Template()

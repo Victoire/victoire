@@ -6,7 +6,8 @@
             "victoire-head":
             [
                 "@VictoireCoreBundle/Resources/public/vendor/jquery/1.10.2/jquery-1.10.2.js",
-                "@VictoireCoreBundle/Resources/public/js/jquery.noConflict.js"
+                "@VictoireCoreBundle/Resources/public/js/jquery.noConflict.js",
+                "@VictoireCoreBundle/Resources/public/vendor/codrops-notification/js/modernizr.custom.js"
             ],
             "victoire-leftnavbar":
             [
@@ -21,6 +22,7 @@
                 "@VictoireCoreBundle/Resources/public/js/edit/modal.js",
                 "@VictoireCoreBundle/Resources/public/js/edit/widget.js",
                 "@VictoireCoreBundle/Resources/public/vendor/vic-bootstrap/3.0.3/js/bootstrap.min.js",
+                "@VictoireCoreBundle/Resources/public/vendor/codrops-notification/js/notificationFx.js",
                 "@VictoireCoreBundle/Resources/public/js/jquery.mjs.nestedSortable.js"
             ]
         },
@@ -30,7 +32,12 @@
             [
                 "@VictoireCoreBundle/Resources/public/vendor/font-awesome/4.0.3/css/font-awesome.css",
                 "@VictoireCoreBundle/Resources/public/vendor/vic-bootstrap/3.0.3/css/bootstrap.min.css",
-                "@VictoireCoreBundle/Resources/public/less/victoire.less"
+                "@VictoireCoreBundle/Resources/public/vendor/codrops-notification/less/ns-default.less",
+                "@VictoireCoreBundle/Resources/public/vendor/codrops-notification/less/ns-style-bar.less",
+                "@VictoireCoreBundle/Resources/public/vendor/codrops-notification/less/ns-style-attached.less",
+                "@VictoireCoreBundle/Resources/public/vendor/codrops-notification/less/ns-style-growl.less",
+                "@VictoireCoreBundle/Resources/public/vendor/codrops-notification/less/ns-style-other.less",
+                "@VictoireCoreBundle/Resources/style/less/victoire.less"
             ]
         }
     }

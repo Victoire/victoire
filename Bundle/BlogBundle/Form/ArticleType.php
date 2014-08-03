@@ -1,7 +1,6 @@
 <?php
 namespace Victoire\Bundle\BlogBundle\Form;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Victoire\Bundle\PageBundle\Form\PageType;
@@ -32,7 +31,6 @@ class ArticleType extends PageType
         ;
     }
 
-
     /**
      * bind to Page entity
      * @param OptionsResolverInterface $resolver
@@ -45,7 +43,6 @@ class ArticleType extends PageType
             'layouts' => $this->layouts
         ));
     }
-
 
     /**
      * get form name

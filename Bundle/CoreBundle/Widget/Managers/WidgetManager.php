@@ -23,8 +23,6 @@ class WidgetManager
     protected $container;
     protected $widget;
     protected $page;
-    protected $widgetMapBuilder = null;
-    protected $formErrorService = null;
 
     /**
      * contructor
@@ -32,11 +30,9 @@ class WidgetManager
      * @param WidgetMapBuilder $widgetMapBuilder
      * @param FormErrorService $formErrorService
      */
-    public function __construct($container, WidgetMapBuilder $widgetMapBuilder, FormErrorService $formErrorService)
+    public function __construct($container)
     {
         $this->container = $container;
-        $this->widgetMapBuilder = $widgetMapBuilder;
-        $this->formErrorService = $formErrorService;
     }
 
     /**
@@ -49,110 +45,11 @@ class WidgetManager
     }
 
     /**
-     * Remove a widget
-     *
-     * @param Widget $widget
-     *
-     * @return array The parameter for the view
-     */
-    public function deleteWidget(Widget $widget)
-    {
-        //services
-        $em = $this->container->get('doctrine')->getManager();
-        $widgetMapBuilder = $this->widgetMapBuilder;
-
-        //the widget id
-        $widgetId = $widget->getId();
-
-        //the page
-        $widgetPage = $widget->getPage();
-
-        //create a page for the business entity instance if we are currently display an instance for a business entity template
-        $page = $this->duplicateTemplatePageIfPageInstance($widgetPage);
-
-        //update the page deleting the widget
-        $widgetMapBuilder->deleteWidgetFromPage($page, $widget);
-
-        //we update the widget map of the page
-        $page->updateWidgetMapBySlots();
-
-        //the widget is removed only if the current page is the page of the widget
-        if ($page === $widgetPage) {
-            //we remove the widget
-            $em->remove($widget);
-        }
-
-        //we update the page
-        $em->persist($page);
-        $em->flush();
-
-        return array(
-            "success"  => true,
-            "widgetId" => $widgetId
-        );
-    }
-
-    /**
-     * Create a widget
-     *
-     * @param  string   $type
-     * @param  string   $slotId
-     * @param  Page     $page
-     * @param  string   $entity
-     * @return template
-     */
-    public function createWidget($type, $slotId, Page $page, $entity)
-    {
-        //create a page for the business entity instance if we are currently display an instance for a business entity template
-        $page = $this->duplicateTemplatePageIfPageInstance($page);
-
-        $manager = $this->getManager(null, $type);
-
-        return $manager->createWidget($slotId, $page, $entity);
-    }
-
-    /**
-     * Generates new forms for each available business entities
-     *
+     * new widget
+     * @param string $type
      * @param string $slot
      * @param Page   $page
-     * @param Widget $widget
      *
-     * @return collection of forms
-     */
-    protected function renderNewWidgetForms($slot, Page $page, Widget $widget)
-    {
-        $annotationReader = $this->container->get('victoire_core.annotation_reader');
-        $classes = $annotationReader->getBusinessClassesForWidget($widget);
-        $manager = $this->getManager($widget);
-
-        //the static form
-        $forms['static'] = array();
-        $forms['static']['main'] = $this->renderNewForm($this->buildForm($manager, $widget, $page), $widget, $slot, $page);
-
-        // Build each form relative to business entities
-        foreach ($classes as $entityName => $namespace) {
-            //get the forms for the business entity (entity/query/businessEntity)
-            $entityForms = $this->buildEntityForms($manager, $widget, $page, $entityName, $namespace);
-
-            //the list of forms
-            $forms[$entityName] = array();
-
-            //foreach of the entity form
-            foreach ($entityForms as $formMode => $entityForm) {
-                //we add the form
-                $forms[$entityName][$formMode] = $this->renderNewForm($entityForm, $widget, $slot, $page, $entityName);
-            }
-        }
-
-        return $forms;
-    }
-
-    /**
-     * new widget
-     * @param  string   $type
-     * @param  string   $slot
-     * @param  Page     $page
      * @return template
      */
     public function newWidget($type, $slot, Page $page)
@@ -177,6 +74,26 @@ class WidgetManager
     }
 
     /**
+     * Create a widget
+     *
+     * @param string $type
+     * @param string $slotId
+     * @param Page   $page
+     * @param string $entity
+     *
+     * @return template
+     */
+    public function createWidget($type, $slotId, Page $page, $entity)
+    {
+        //create a page for the business entity instance if we are currently display an instance for a business entity template
+        $page = $this->duplicateTemplatePageIfPageInstance($page);
+
+        $manager = $this->getManager(null, $type);
+
+        return $manager->createWidget($slotId, $page, $entity);
+    }
+
+    /**
      * edit a widget
      *
      * @param Request $request
@@ -188,7 +105,7 @@ class WidgetManager
     public function edit(Request $request, Widget $widget, $entity = null)
     {
         //services
-        $widgetMapBuilder = $this->widgetMapBuilder;
+        $widgetMapBuilder = $this->container->get('page.widgetMap.builder');
 
         $classes = $this->container->get('victoire_core.annotation_reader')->getBusinessClassesForWidget($widget);
         $manager = $this->getManager($widget);
@@ -235,19 +152,19 @@ class WidgetManager
 
                 $response = array(
                     'page'     => $page,
-                    'success'   => true,
+                    'success'  => true,
                     'html'     => $this->render($widget, true, $entity),
                     'widgetId' => "vic-widget-".$initialWidgetId."-container"
                 );
             } else {
-                $formErrorService = $this->formErrorService;
-
-                $errors = $formErrorService->getRecursiveReadableErrors($form);
-
-                $response =  array(
-                    'success' => false,
-                    'message' => $errors
+                $formErrorService = $this->container->get('av.form_error_service');
+                //Return a message for developer in console and form view in order to refresh view and show form errors
+                $response = array(
+                    "success"   => false,
+                    "message"   => $formErrorService->getRecursiveReadableErrors($form),
+                    "html"      => $this->getManager($widget, $widget->getType())->renderForm($form, $widget, $entity)
                 );
+
             }
         } else {
             $forms = $this->renderNewWidgetForms($widget->getSlot(), $page, $widget);
@@ -270,10 +187,92 @@ class WidgetManager
     }
 
     /**
+     * Remove a widget
+     *
+     * @param Widget $widget
+     *
+     * @return array The parameter for the view
+     */
+    public function deleteWidget(Widget $widget)
+    {
+        //services
+        $em = $this->container->get('doctrine')->getManager();
+        $widgetMapBuilder = $this->container->get('page.widgetMap.builder');
+
+        //the widget id
+        $widgetId = $widget->getId();
+
+        //the page
+        $widgetPage = $widget->getPage();
+
+        //create a page for the business entity instance if we are currently display an instance for a business entity template
+        $page = $this->duplicateTemplatePageIfPageInstance($widgetPage);
+
+        //update the page deleting the widget
+        $widgetMapBuilder->deleteWidgetFromPage($page, $widget);
+
+        //we update the widget map of the page
+        $page->updateWidgetMapBySlots();
+
+        //the widget is removed only if the current page is the page of the widget
+        if ($page === $widgetPage) {
+            //we remove the widget
+            $em->remove($widget);
+        }
+
+        //we update the page
+        $em->persist($page);
+        $em->flush();
+
+        return array(
+            "success"  => true,
+            "widgetId" => $widgetId
+        );
+    }
+
+    /**
+     * Generates new forms for each available business entities
+     *
+     * @param string $slot
+     * @param Page   $page
+     * @param Widget $widget
+     *
+     * @return collection of forms
+     */
+    protected function renderNewWidgetForms($slot, Page $page, Widget $widget)
+    {
+        $annotationReader = $this->container->get('victoire_core.annotation_reader');
+        $classes = $annotationReader->getBusinessClassesForWidget($widget);
+        $manager = $this->getManager($widget);
+
+        //the static form
+        $forms['static'] = array();
+        $forms['static']['main'] = $this->renderNewForm($this->buildForm($manager, $widget, $page), $widget, $slot, $page);
+
+        // Build each form relative to business entities
+        foreach ($classes as $entityName => $namespace) {
+            //get the forms for the business entity (entity/query/businessEntity)
+            $entityForms = $this->buildEntityForms($manager, $widget, $page, $entityName, $namespace);
+
+            //the list of forms
+            $forms[$entityName] = array();
+
+            //foreach of the entity form
+            foreach ($entityForms as $formMode => $entityForm) {
+                //we add the form
+                $forms[$entityName][$formMode] = $this->renderNewForm($entityForm, $widget, $slot, $page, $entityName);
+            }
+        }
+
+        return $forms;
+    }
+
+    /**
      * render a widget
      *
      * @param Widget  $widget
      * @param boolean $addContainer
+     * @param Entity  $entity
      *
      * @return template
      */
@@ -288,8 +287,9 @@ class WidgetManager
 
     /**
      * tells if current widget is a reference
-     * @param  Widget  $widget
-     * @param  Page    $page
+     * @param Widget $widget
+     * @param Page   $page
+     *
      * @return boolean
      */
     public function isReference(Widget $widget, Page $page)
@@ -299,7 +299,8 @@ class WidgetManager
 
     /**
      * render widget actions
-     * @param  Widget   $widget
+     * @param Widget $widget
+     *
      * @return template
      */
     public function renderWidgetActions(Widget $widget)
@@ -326,8 +327,30 @@ class WidgetManager
     {
         $slots = $this->container->getParameter('victoire_core.slots');
 
+        $availableWidgets = $this->container->getParameter('victoire_core.widgets');
+        $widgets = array();
+
+        //If the slot is declared in config
+        if (!empty($slots[$slot]) && !empty($slots[$slot]['widgets'])) {
+            //parse declared widgets
+            $slotWidgets = array_keys($slots[$slot]['widgets']);
+        } else {
+            //parse all widgets
+            $slotWidgets = array_keys($availableWidgets);
+        }
+
+        foreach ($slotWidgets as $slotWidget) {
+            $widgetParams = $availableWidgets[$slotWidget];
+            // if widget has a parent
+            if (!empty($widgetParams['parent'])) {
+                // place widget under its parent
+                $widgets[$widgetParams['parent']]['children'][$slotWidget]['params'] = $widgetParams;
+            } else {
+                $widgets[$slotWidget]['params'] = $widgetParams;
+            }
+        }
         $max = null;
-        if (array_key_exists('max', $slots[$slot])) {
+        if (!empty($slots[$slot]) && !empty($slots[$slot]['max'])) {
             $max = $slots[$slot]['max'];
         }
 
@@ -336,7 +359,7 @@ class WidgetManager
             array(
                 "slot"    => $slot,
                 "page"    => $page,
-                'widgets' => array_keys($slots[$slot]['widgets']),
+                'widgets' => $widgets,
                 'max'     => $max,
                 'first'   => $first,
             )
@@ -345,8 +368,9 @@ class WidgetManager
 
     /**
      * get specific widget for provided widget type
-     * @param  Widget  $widget
-     * @param  string  $type
+     * @param Widget $widget
+     * @param string $type
+     *
      * @return manager
      */
     public function getManager($widget = null, $type = null)
@@ -377,8 +401,6 @@ class WidgetManager
 
         //we remove the beginning Widget from the namespace
         $widgetName = preg_replace('/^Widget/', '', $widgetName);
-        //or the beginning Theme if it is a theme
-        $widgetName = preg_replace('/^Theme/', '', $widgetName);
 
         $widgetType = "widget_".strtolower($widgetName);
 
@@ -390,6 +412,9 @@ class WidgetManager
      * @param Page  $page
      * @param array $sortedWidgets
      *
+     * @todo Be able to move a widget from a slot to another
+     * @todo test if the widget is allowed for the given slot
+     *
      * @throws Exception
      */
     public function updateWidgetMapOrder(Page $page, $sortedWidgets)
@@ -397,34 +422,20 @@ class WidgetManager
         //create a page for the business entity instance if we are currently display an instance for a business entity template
         $page = $this->duplicateTemplatePageIfPageInstance($page);
 
-        $em = $this->container->get('doctrine.orm.entity_manager');
-        $widgetMapBuilder = $this->widgetMapBuilder;
-
         $widgetSlots = array();
 
         //parse the sorted widgets
-        foreach ($sortedWidgets as $slot => $widgetContainers) {
-            //get the slot id removing the prefix
-            $slotId = str_replace('vic-slot-', '', $slot);
+        foreach ($sortedWidgets as $slotId => $widgetContainers) {
 
             //create an array for this slot
             $widgetSlots[$slotId] = array();
 
             //parse the list of div ids
-            foreach ($widgetContainers as $containerId) {
-                //get the widget id from the div id  (remove the text around non numerical characters)
-                $widgetId = preg_replace('/[^0-9]*/', '', $containerId);
+            foreach ($widgetContainers as $widgetId) {
 
                 if ($widgetId === '' || $widgetId === null) {
                     throw new \Exception('The containerId does not have any numerical characters. Containerid:['.$containerId.']');
                 }
-
-                //test if the widget is allowed for the slot
-                //@todo
-//                 $isAllowed = $this->isWidgetAllowedForSlot($widget, $widgetSlots[$id]);
-//                 if (!$isAllowed) {
-//                     throw new \Exception('This widget is not allowed in this slot');
-//                 }
 
                 //add the id of the widget to the slot
                 //cast the id as integer
@@ -432,10 +443,10 @@ class WidgetManager
             }
         }
 
-        $widgetMapBuilder->updateWidgetMapsByPage($page, $widgetSlots);
-
+        $this->container->get('page.widgetMap.builder')->updateWidgetMapsByPage($page, $widgetSlots);
         $page->updateWidgetMapBySlots();
 
+        $em = $this->container->get('doctrine.orm.entity_manager');
         //update the page with the new widget map
         $em->persist($page);
         $em->flush();
@@ -443,8 +454,9 @@ class WidgetManager
 
     /**
      * check if widget is allowed for slot
-     * @param  Widget $widget
-     * @param  string $slot
+     * @param Widget $widget
+     * @param string $slot
+     *
      * @return bool
      */
     public function isWidgetAllowedForSlot($widget, $slot)
@@ -489,7 +501,6 @@ class WidgetManager
     }
 
     /**
-     *
      * @param unknown $manager
      * @param unknown $widget
      * @param Page    $page
@@ -519,11 +530,12 @@ class WidgetManager
 
     /**
      * render a new form
-     * @param  Form       $form
-     * @param  Widget     $widget
-     * @param  string     $slot
-     * @param  Page       $page
-     * @param  string     $entityName
+     * @param Form   $form
+     * @param Widget $widget
+     * @param string $slot
+     * @param Page   $page
+     * @param string $entityName
+     *
      * @return Collection widgets
      */
     public function renderNewForm($form, $widget, $slot, Page $page, $entityName = null)
@@ -558,8 +570,7 @@ class WidgetManager
     /**
      * If the current page is a business entity template and where are displaying an instance
      * We create a new page for this instance
-     *
-     * @param Page $widgetPage The page of the widget
+     * @param Page $page The page of the widget
      *
      * @return Page The page for the entity instance
      */

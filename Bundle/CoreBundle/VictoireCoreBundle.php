@@ -2,12 +2,10 @@
 
 namespace Victoire\Bundle\CoreBundle;
 
-use Symfony\Component\HttpKernel\Bundle\Bundle;
-use Victoire\Bundle\CoreBundle\Listener\PageMenuListener;
-use Victoire\Bundle\CoreBundle\DependencyInjection\Compiler\TraductionCompilerPass;
-use Symfony\Component\ClassLoader\UniversalClassLoader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Victoire\Bundle\CoreBundle\DependencyInjection\Compiler\ThemePass;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Victoire\Bundle\CoreBundle\DependencyInjection\Compiler\AccessMapCompilerPass;
+use Victoire\Bundle\CoreBundle\DependencyInjection\Compiler\TraductionCompilerPass;
 
 /**
  * Awesome Cms for Symfony2
@@ -36,6 +34,6 @@ class VictoireCoreBundle extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(new TraductionCompilerPass());
-        $container->addCompilerPass(new ThemePass());
+        $container->addCompilerPass(new AccessMapCompilerPass());
     }
 }

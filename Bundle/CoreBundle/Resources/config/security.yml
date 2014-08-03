@@ -1,8 +1,6 @@
 security:
-    access_control:
-        - { path: ^/victoire-dcms, roles: ROLE_VICTOIRE }
-
     role_hierarchy:
         ROLE_VICTOIRE_DEVELOPER:
             - ROLE_VICTOIRE
             - ROLE_VICTOIRE_BET
+            - ROLE_VICTOIRE_PAGE_DEBUG

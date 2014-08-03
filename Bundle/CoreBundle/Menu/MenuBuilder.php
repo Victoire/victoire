@@ -18,8 +18,8 @@ class MenuBuilder
 
     /**
      * build a KnpMenu
-     * @param FactoryInterface $factory
-     * @param SecurityContextInterface $securityContext
+     * @param FactoryInterface         $factory
+     * @param SecurityContextInterface $securityContext
      */
     public function __construct(FactoryInterface $factory, $securityContext)
     {
@@ -83,9 +83,10 @@ class MenuBuilder
      * Create the dropdown menu
      *
      * @param ItemInterface $rootItem
-     * @param unknown $title
-     * @param unknown $attributes
-     * @param string  $caret
+     * @param string        $title
+     * @param array         $attributes
+     * @param string        $caret
+     *
      * @return \Knp\Menu\ItemInterface
      */
     public function createDropdownMenuItem(ItemInterface $rootItem, $title, $attributes = array(), $caret = true)

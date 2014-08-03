@@ -5,11 +5,11 @@ services:
         tags:
             - { name: kernel.event_listener, event: victoire_core.build_menu, method: addGlobal, priority: 90 }
 
-    victoire_core.page_menu.contextual:
+    victoire_core.blog_menu.contextual:
         class: Victoire\Bundle\BlogBundle\Listener\BlogMenuListener
         arguments: ["@victoire_core.admin_menu_builder"]
         tags:
-            - { name: kernel.event_listener, event: victoire_core.article_menu.contextual, method: addContextual, priority: 100 }
+            - { name: kernel.event_listener, event: victoire_core.article_menu.contextual, method: addContextual}
 
     victoire_blog.base_page.subscriber: #REVIEW surement prendre une convention
         class: Victoire\Bundle\BlogBundle\EventSubscriber\LoadMetadataSubscriber

@@ -1,6 +1,5 @@
 <?php /*
 
-
 -------------------------------------------------------------------------------------------
   CKEditor - Posted Data
 
@@ -10,12 +9,8 @@
   To save the content created with CKEditor you need to read the POST data on the server
   side and write it to a file or a database.
 
-
   Copyright 2003-2011, CKSource - Frederico Knabben.
   All rights reserved.
 -------------------------------------------------------------------------------------------
 
-
-
-
-*/ include "assets/_posteddata.php"; ?>
+*/ include "assets/_posteddata.php";

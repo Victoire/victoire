@@ -2,9 +2,7 @@
 namespace Victoire\Bundle\CoreBundle\Route;
 
 /**
- *
- * @author Paul Andrieux
- *
+ * The cache route registerer
  */
 class CacheRouteRegisterer
 {
@@ -24,6 +22,7 @@ class CacheRouteRegisterer
      * write the route relative to this page in cache
      *
      * @param unknown $pages
+     *
      * @return multitype:
      */
     public function registerRoutes($pages)
@@ -56,6 +55,7 @@ class CacheRouteRegisterer
      * write the route relative to this page in cache
      *
      * @param unknown $page
+     *
      * @return multitype:multitype:multitype:
      */
     public function registerRoute($page)

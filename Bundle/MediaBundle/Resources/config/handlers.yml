@@ -28,4 +28,3 @@ services:
         class: "%victoire_media.media_handler.file.class%"
         tags:
             -  { name: 'victoire_media.media_handler' }
-

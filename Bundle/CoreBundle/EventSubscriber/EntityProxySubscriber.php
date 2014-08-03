@@ -37,7 +37,7 @@ class EntityProxySubscriber implements EventSubscriber
      * Insert enabled widgets in base widget add relationship between BusinessEntities and EntityProxy
      * @param LoadClassMetadataEventArgs $eventArgs
      */
-    static public function loadClassMetadata($eventArgs)
+    public static function loadClassMetadata($eventArgs)
     {
         //this functions is called during the extract of translations
         //but the argument is not the same
@@ -59,5 +59,3 @@ class EntityProxySubscriber implements EventSubscriber
         }
     }
 }
-
-

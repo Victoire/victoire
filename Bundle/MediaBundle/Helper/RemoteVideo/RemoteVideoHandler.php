@@ -84,7 +84,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
         $video = new RemoteVideoHelper($media);
         $code = $video->getCode();
         //update thumbnail
-        switch($video->getType()) {
+        switch ($video->getType()) {
             case 'youtube':
                 $video->setThumbnailUrl("http://img.youtube.com/vi/" . $code . "/0.jpg");
                 break;
@@ -136,7 +136,6 @@ class RemoteVideoHandler extends AbstractMediaHandler
     public function updateMedia(Media $media)
     {
 
-
     }
 
     /**
@@ -169,7 +168,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
                 $data = "http://" . $data;
             }
             $parsedUrl = parse_url($data);
-            switch($parsedUrl['host']) {
+            switch ($parsedUrl['host']) {
                 case 'www.youtube.com':
                 case 'youtube.com':
                     parse_str($parsedUrl['query'], $queryFields);

@@ -1,11 +1,12 @@
 <?php
 namespace Victoire\Bundle\PageBundle\Helper;
 
-use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
-use Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
+use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
+use Victoire\Bundle\BusinessEntityTemplateBundle\Helper\BusinessEntityTemplateHelper;
+use Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy;
+use Victoire\Bundle\PageBundle\Entity\Page;
 
 /**
  *
@@ -22,7 +23,8 @@ class PageHelper
         'title',
         'bodyId',
         'bodyClass',
-        'slug');
+        'slug',
+        'url');
 
     /**
      * Constructor
@@ -30,10 +32,11 @@ class PageHelper
      * @param ParameterConverter   $parameterConverter
      * @param BusinessEntityHelper $businessEntityHelper
      */
-    public function __construct(ParameterConverter $parameterConverter, BusinessEntityHelper $businessEntityHelper)
+    public function __construct(ParameterConverter $parameterConverter, BusinessEntityHelper $businessEntityHelper, BusinessEntityTemplateHelper $businessEntityTemplateHelper)
     {
         $this->parameterConverter = $parameterConverter;
         $this->businessEntityHelper = $businessEntityHelper;
+        $this->businessEntityTemplateHelper = $businessEntityTemplateHelper;
     }
 
     /**
@@ -76,16 +79,16 @@ class PageHelper
     /**
      * Generate update the page parameters with the entity
      *
-     * @param Page $page
-     * @param Entity   $entity
+     * @param Page   $page
+     * @param Entity $entity
      */
     public function updatePageParametersByEntity(Page $page, $entity)
     {
         //if no entity is provided
         if ($entity === null) {
             //we look for the entity of the page
-            if ($page->getEntity() !== null) {
-                $entity = $page->getEntity();
+            if ($page->getBusinessEntity() !== null) {
+                $entity = $page->getBusinessEntity();
             }
         }
 
@@ -97,7 +100,7 @@ class PageHelper
 
             if ($businessEntity !== null) {
 
-                $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
+                $businessProperties = $this->businessEntityTemplateHelper->getBusinessProperties($businessEntity);
 
                 //parse the business properties
                 foreach ($businessProperties as $businessProperty) {
@@ -116,7 +119,7 @@ class PageHelper
      * Get the content of an attribute of an entity given
      *
      * @param entity $entity
-     * @param strin $functionName
+     * @param strin  $functionName
      *
      * @return mixed
      */
