@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * PostPage
  *
  * @ORM\Entity
+ * @ORM\Table("vic_blog")
  *
  */
 class Blog extends Page
