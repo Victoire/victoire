@@ -94,7 +94,7 @@ class WidgetController extends AwesomeController
 
                 $form = $this->get('widget_manager')->buildForm($widgetManager, $widget, $entity, $namespace);
 
-                $response = JsonResponse($this->get('widget_manager')->renderNewForm($form, $widget, $slot, $page, $entity));
+                $response = new JsonResponse($this->get('widget_manager')->renderNewForm($form, $widget, $slot, $page, $entity));
             } else {
                 $response = new JsonResponse($this->get('widget_manager')->newWidget($type, $slot, $page));
             }
