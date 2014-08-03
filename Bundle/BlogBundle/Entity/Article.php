@@ -73,6 +73,7 @@ class Article extends Page
     /**
      * Tags of the article
      * @ORM\ManyToMany(targetEntity="Tag", inversedBy="articles")
+     * @ORM\JoinTable(name="vic_article_tags")
      */
     protected $tags;
 

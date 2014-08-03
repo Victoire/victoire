@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class that defines a folder from the MediaBundle in the database
  *
  * @ORM\Entity(repositoryClass="Victoire\Bundle\MediaBundle\Repository\FolderRepository")
- * @ORM\Table(name="kuma_folders")
+ * @ORM\Table(name="vic_media_folders")
  * @ORM\HasLifecycleCallbacks
  */
 class Folder

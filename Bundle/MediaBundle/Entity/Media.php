@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Media
  *
  * @ORM\Entity(repositoryClass="Victoire\Bundle\MediaBundle\Repository\MediaRepository")
- * @ORM\Table(name="kuma_media")
+ * @ORM\Table(name="vic_media")
  * @ORM\HasLifecycleCallbacks
  */
 class Media

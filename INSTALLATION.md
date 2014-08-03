@@ -129,7 +129,7 @@ Vérifier les dépendances de victoire:
 - Ajoutez le folder de base du media bundle avec cette instruction sql :
 
 ```sql
-INSERT INTO `kuma_folders` (`id`, `parent_id`, `name`, `created_at`, `updated_at`, `rel`, `internal_name`, `deleted`)
+INSERT INTO `vic_media_folder` (`id`, `parent_id`, `name`, `created_at`, `updated_at`, `rel`, `internal_name`, `deleted`)
 VALUES
     (1, NULL, '/', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, 0);
 
