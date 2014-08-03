@@ -9,7 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * PageSeo
  *
- * @ORM\Table("cms_page_seo")
+ * @ORM\Table("vic_page_seo")
  * @ORM\Entity()
  */
 class PageSeo

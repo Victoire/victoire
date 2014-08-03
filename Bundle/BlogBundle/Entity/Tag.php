@@ -8,7 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * Tag
  *
- * @ORM\Table("cms_tag")
+ * @ORM\Table("vic_tag")
  * @ORM\Entity
  */
 class Tag
