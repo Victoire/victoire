@@ -36,7 +36,8 @@ class CmsExtensionTest extends BaseTestCase
     {
         $cmsExtentionMock = $this->getCmsExtensionMock();
         $pageMock = $this->getPageMock();
-        $pageMock->setLayout('3cols');
+        $templateMock = $this->getPageMock();
+        $pageMock->setTemplate($templateMock);
         $response = $cmsExtentionMock->cmsPage($pageMock);
         $this->assertTrue(is_string($response));
     }

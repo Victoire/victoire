@@ -3,33 +3,30 @@
 namespace Victoire\Bundle\PageBundle\Twig\Extension;
 
 use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
-use Victoire\Bundle\BusinessEntityTemplateBundle\Helper\BusinessEntityTemplateHelper;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
+use Victoire\Bundle\BusinessEntityPageBundle\Helper\BusinessEntityPageHelper;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
-use Victoire\Bundle\SeoBundle\Helper\PageSeoHelper;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
 
 /**
- *
- * @author Thomas Beaujean
- *
+ * Page extension
  */
 class PageExtension extends \Twig_Extension
 {
-    protected $businessEntityTemplateHelper = null;
+    protected $businessEntitiesPagePatternHelper = null;
     protected $router = null;
     protected $pageHelper = null;
 
     /**
      * Constructor
      *
-     * @param BusinessEntityTemplateHelper $businessEntityTemplateHelper
-     * @param Router                       $router
-     * @param PageSeoHelper                $pageSeoHelper
+     * @param BusinessEntityPageHelper $businessEntitiesPagePatternHelper
+     * @param Router                   $router
+     * @param PageHelper               $pageHelper
      */
-    public function __construct(BusinessEntityTemplateHelper $businessEntityTemplateHelper, Router $router, PageHelper $pageHelper)
+    public function __construct(BusinessEntityPageHelper $businessEntitiesPagePatternHelper, Router $router, PageHelper $pageHelper)
     {
-        $this->businessEntityTemplateHelper = $businessEntityTemplateHelper;
+        $this->businessEntitiesPagePatternHelper = $businessEntitiesPagePatternHelper;
         $this->router = $router;
         $this->pageHelper = $pageHelper;
     }
@@ -42,7 +39,7 @@ class PageExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'cms_page_business_template_sitemap' => new \Twig_Function_Method($this, 'cmsPageBusinessTemplateSiteMap', array('is_safe' => array('html'))),
+            'cms_page_business_page_pattern_sitemap' => new \Twig_Function_Method($this, 'cmsPageBusinessPagePatternSiteMap', array('is_safe' => array('html'))),
             'cms_page_sitemap' => new \Twig_Function_Method($this, 'cmsPageSiteMap', array('is_safe' => array('html')))
         );
     }
@@ -92,36 +89,36 @@ class PageExtension extends \Twig_Extension
     }
 
     /**
-     * Get the ol li for the generated page of a business Entity template
+     * Get the ol li for the generated page of a business entity page pattern
      *
      * @param Page $page
      *
      * @return string The html
      */
-    public function cmsPageBusinessTemplateSiteMap(Page $page)
+    public function cmsPageBusinessPagePatternSiteMap(BasePage $page)
     {
         $html = '';
 
         $urls = array();
 
         //the template link to the page
-        $businessEntityTemplate = $page;
+        $businessEntitiesPagePattern = $page;
 
         //
-        if ($page instanceof BusinessEntityTemplate) {
+        if ($page instanceof BusinessEntityPagePattern) {
             //get the list of url of the children to avoid to have it twice.
             $childrenUrls = $this->getChildrenUrls($page);
 
             //services
-            $businessEntityTemplateHelper = $this->businessEntityTemplateHelper;
+            $businessEntitiesPagePatternHelper = $this->businessEntitiesPagePatternHelper;
             $pageHelper = $this->pageHelper;
 
             //the items allowed for the template
-            $items = $businessEntityTemplateHelper->getEntitiesAllowed($businessEntityTemplate);
+            $items = $businessEntitiesPagePatternHelper->getEntitiesAllowed($businessEntitiesPagePattern);
 
             //parse entities
             foreach ($items as $item) {
-                $pageEntity = clone $businessEntityTemplate;
+                $pageEntity = clone $businessEntitiesPagePattern;
 
                 //update url using the entity instance
                 $pageHelper->updatePageParametersByEntity($pageEntity, $item);

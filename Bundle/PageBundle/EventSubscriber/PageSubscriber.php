@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
 use Victoire\Bundle\CoreBundle\Entity\Route;
 use Victoire\Bundle\PageBundle\Entity\Template;
 use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\PageBundle\Helper\UrlHelper;
 
 /**
@@ -25,12 +25,11 @@ class PageSubscriber implements EventSubscriber
 
     /**
      * Constructor
-     *
      * @param unknown   $cacheRouteRegisterer
      * @param unknown   $router
      * @param unknown   $userCallable
-     * @param unknown   $userClass
-     * @param UrlHelper $urlHelper
+     * @param string    $userClass
+     * @param Container $container
      */
     public function __construct($cacheRouteRegisterer, $router, $userCallable, $userClass, $container)
     {
@@ -75,27 +74,28 @@ class PageSubscriber implements EventSubscriber
     {
 
         $metadatas = $eventArgs->getClassMetadata();
-        if ($metadatas->name === 'Victoire\Bundle\PageBundle\Entity\Page') {
+        if ($metadatas->name === 'Victoire\Bundle\CoreBundle\Entity\View') {
             $metadatas->discriminatorMap[Page::TYPE] = 'Victoire\Bundle\PageBundle\Entity\Page';
-            $metadatas->discriminatorMap[Template::TYPE] = 'Victoire\Bundle\PageBundle\Entity\Template';
         }
 
         //set a relation between Page and User to define the page author
         $metaBuilder = new ClassMetadataBuilder($metadatas);
-        if ($this->userClass && $metadatas->name === 'Victoire\Bundle\PageBundle\Entity\Page') {
+
+        //Add author relation on view
+        if ($this->userClass && $metadatas->name === 'Victoire\Bundle\CoreBundle\Entity\View') {
             $metaBuilder->addManyToOne('author', $this->userClass);
         }
 
         // if $pages property exists, add the inversed side on User
         if ($metadatas->name === $this->userClass && property_exists($this->userClass, 'pages')) {
-            $metaBuilder->addOneToMany('pages', 'Victoire\Bundle\PageBundle\Entity\Page', 'author');
+            $metaBuilder->addOneToMany('pages', 'Victoire\Bundle\PageBundle\Entity\View', 'author');
         }
     }
 
     /**
      * This method is called on flush
-     *
     * @param OnFlushEventArgs $eventArgs The flush event args.
+     *
     * @return void
      */
     public function onFlush(OnFlushEventArgs $eventArgs)
@@ -129,9 +129,9 @@ class PageSubscriber implements EventSubscriber
     * Builds the page's url by get all page parents slugs and implode them with "/".
     * Builds the pages children urls with new page slug
     * If page has a custom url, we don't modify it, but we modify children urls
-    *
     * @param Page $page
     * @param bool $depth
+    *
     * @return $page
      */
     public function buildUrl(Page $page, $depth = 0)
@@ -154,11 +154,13 @@ class PageSubscriber implements EventSubscriber
              $buildUrl = true;
         }
 
-        if ($page instanceof BusinessEntityTemplate) {
+        //@todo wtf ?
+        if ($page instanceof BusinessEntityPagePattern) {
             $buildUrl = false;
         }
+
         $template = $page->getTemplate();
-        if ($template instanceof BusinessEntityTemplate) {
+        if ($template instanceof BusinessEntityPagePattern) {
             $buildUrl = false;
         }
 
@@ -204,23 +206,22 @@ class PageSubscriber implements EventSubscriber
 
     /**
      * Get the array of slugs of the parents
-     *
      * @param Page  $page
-     * @param array $urlArray The list of slugs
+     * @param array $slugs
      *
      * @return array $urlArray The list of slugs
      */
-    protected function getParentSlugs(Page $page, $urlArray)
+    protected function getParentSlugs(Page $page, $slugs)
     {
         $parent = $page->getParent();
 
         if ($parent !== null) {
             if (!$parent->isHomepage()) {
-                array_push($urlArray, $parent->getSlug());
+                array_push($slugs, $parent->getSlug());
             }
         }
 
-        return $urlArray;
+        return $slugs;
     }
 
     /**

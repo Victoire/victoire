@@ -6,7 +6,7 @@ composer require victoire/victoire
             //Victoire bundles
             new Victoire\Bundle\CoreBundle\VictoireCoreBundle(),
             new Victoire\Bundle\BlogBundle\VictoireBlogBundle(),
-            new Victoire\Bundle\BusinessEntityTemplateBundle\VictoireBusinessEntityTemplateBundle(),
+            new Victoire\Bundle\BusinessEntityPageBundle\VictoireBusinessEntityPageBundle(),
             new Victoire\Bundle\MediaBundle\VictoireMediaBundle(),
             new Victoire\Bundle\QueryBundle\VictoireQueryBundle(),
             new Victoire\Bundle\ThemeBundle\VictoireThemeBundle(),
@@ -142,8 +142,8 @@ VALUES
             resource: "@VictoireBlogBundle/Controller/"
             type:     annotation
             prefix:   /
-        VictoireBusinessEntityTemplateBundle:
-            resource: "@VictoireBusinessEntityTemplateBundle/Controller/"
+        VictoireBusinessEntityPageBundle:
+            resource: "@VictoireBusinessEntityPageBundle/Controller/"
             type:     annotation
             prefix:   /
         VictoirePageBundle:

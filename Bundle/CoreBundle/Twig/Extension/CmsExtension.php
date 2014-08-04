@@ -6,7 +6,7 @@ use Victoire\Bundle\CoreBundle\Widget\Managers\WidgetManager;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 use Symfony\Component\Security\Core\SecurityContext;
 use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\CoreBundle\Entity\Widget;
 use Victoire\Bundle\PageBundle\WidgetMap\WidgetMapBuilder;
 use Victoire\Bundle\CoreBundle\Handler\WidgetExceptionHandler;
@@ -181,9 +181,10 @@ class CmsExtension extends \Twig_Extension
     }
 
     /**
-     *
+     * Render a widget
      * @param unknown $widget
      * @param string  $addContainer
+     * @param unknown $entity
      *
      * @return unknown
      */
@@ -205,10 +206,10 @@ class CmsExtension extends \Twig_Extension
      *
      * @return \Victoire\Bundle\CoreBundle\Template\template
      */
-    public function cmsPage(Page $page)
+    public function cmsPage(BasePage $page)
     {
         return $this->templating->render(
-            'VictoireCoreBundle:Layout:' . $page->getLayout(). '.html.twig',
+            'VictoireCoreBundle:Layout:' . $page->getTemplate()->getLayout(). '.html.twig',
             array('page' => $page)
         );
     }
@@ -260,15 +261,15 @@ class CmsExtension extends \Twig_Extension
         //the result
         $isBusinessEntityAllowed = false;
 
-        //get the page that is a business entity template page (parent included)
-        $businessEntityTemplate = $page->getBusinessEntityTemplateLegacyPage();
+        //get the page that is a business entity page (parent included)
+        $businessEntitiesPagePattern = $page->getBusinessEntityPagePatternLegacyPage();
 
         //if there is a page
-        if ($businessEntityTemplate !== null) {
+        if ($businessEntitiesPagePattern !== null) {
             //and a businessEntity name is given
             if ($formEntityName !== null) {
-                //the business entity linked to the page template
-                $pageBusinessEntity = $businessEntityTemplate->getBusinessEntityName();
+                //the business entity linked to the page pattern
+                $pageBusinessEntity = $businessEntitiesPagePattern->getBusinessEntityName();
 
                 //are we using the same business entity
                 if ($formEntityName === $pageBusinessEntity) {
@@ -302,7 +303,7 @@ class CmsExtension extends \Twig_Extension
                 if ($widget->getPageId() !== $page->getId()) {
                     $cssClass = 'vic-widget-legacy';
                 } else {
-                    if ($entity !== null && $page instanceof BusinessEntityTemplate) {
+                    if ($entity !== null && $page instanceof BusinessEntityPagePattern) {
                         $cssClass = 'vic-widget-legacy';
                     }
                 }

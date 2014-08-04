@@ -1,0 +1,21 @@
+{% trans_default_domain "victoire" %}
+
+{% extends 'VictoireCoreBundle::_modal.html.twig' %}
+
+{% block modal_container_classes %}{{ parent() }} vic-page-modal{% endblock modal_container_classes %}
+
+{% block modal_header_title %}
+    {{ 'list.entities.title'|trans }}: {{ businessEntitiesPagePattern.name }}
+{% endblock modal_header_title %}
+
+{% block modal_body_content %}
+    {% for item in items %}
+        <div>
+            {{ item.id }}: {{ item }}
+        </div>
+    {% endfor %}
+{% endblock modal_body_content %}
+
+{% block modal_footer_content %}
+    {{ 'list.entities.query'|trans }}: {{ businessEntitiesPagePattern.query }}
+{% endblock modal_footer_content %}

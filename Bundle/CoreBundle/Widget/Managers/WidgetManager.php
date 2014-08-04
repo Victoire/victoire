@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Victoire\Bundle\CoreBundle\VictoireCmsEvents;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\PageBundle\Entity\Template;
-use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
 use Behat\Behat\Exception\Exception;
 
 /**
@@ -85,8 +84,8 @@ class WidgetManager
      */
     public function createWidget($type, $slotId, Page $page, $entity)
     {
-        //create a page for the business entity instance if we are currently display an instance for a business entity template
-        $page = $this->duplicateTemplatePageIfPageInstance($page);
+        //create a page for the business entity instance if we are currently display an instance for a business entity page pattern
+        $page = $this->duplicatePagePatternIfPageInstance($page);
 
         $manager = $this->getManager(null, $type);
 
@@ -115,8 +114,8 @@ class WidgetManager
         //a new widget might be created in the case of a legacy
         $initialWidgetId = $widget->getId();
 
-        //create a page for the business entity instance if we are currently display an instance for a business entity template
-        $page = $this->duplicateTemplatePageIfPageInstance($page);
+        //create a page for the business entity instance if we are currently display an instance for a business entity page pattern
+        $page = $this->duplicatePagePatternIfPageInstance($page);
 
         if (method_exists($manager, 'edit')) {
             return $manager->edit($widget, $entity, $this);
@@ -205,8 +204,8 @@ class WidgetManager
         //the page
         $widgetPage = $widget->getPage();
 
-        //create a page for the business entity instance if we are currently display an instance for a business entity template
-        $page = $this->duplicateTemplatePageIfPageInstance($widgetPage);
+        //create a page for the business entity instance if we are currently display an instance for a business entity page pattern
+        $page = $this->duplicatePagePatternIfPageInstance($widgetPage);
 
         //update the page deleting the widget
         $widgetMapBuilder->deleteWidgetFromPage($page, $widget);
@@ -419,8 +418,8 @@ class WidgetManager
      */
     public function updateWidgetMapOrder(Page $page, $sortedWidgets)
     {
-        //create a page for the business entity instance if we are currently display an instance for a business entity template
-        $page = $this->duplicateTemplatePageIfPageInstance($page);
+        //create a page for the business entity instance if we are currently display an instance for a business entity page pattern
+        $page = $this->duplicatePagePatternIfPageInstance($page);
 
         $widgetSlots = array();
 
@@ -568,13 +567,13 @@ class WidgetManager
     }
 
     /**
-     * If the current page is a business entity template and where are displaying an instance
+     * If the current page is a business entity page pattern and where are displaying an instance
      * We create a new page for this instance
      * @param Page $page The page of the widget
      *
      * @return Page The page for the entity instance
      */
-    public function duplicateTemplatePageIfPageInstance(Page $page)
+    public function duplicatePagePatternIfPageInstance(BasePage $page)
     {
         //we copy the reference to the widget page
         $widgetPage = $page;
@@ -586,7 +585,7 @@ class WidgetManager
         $urlMatcher = $this->container->get('victoire_page.matcher.url_matcher');
 
         //if the url of the referer is not the same as the url of the page of the widget
-        //it means we are in a business entity template page and displaying an instance
+        //it means we are in a business entity page and displaying an instance
         $url = $urlHelper->getAjaxUrlRefererWithoutBase();
         $widgetPageUrl = $widgetPage->getUrl();
 
@@ -600,15 +599,15 @@ class WidgetManager
 
             //no page were found
             if ($page === null) {
-                $instance = $urlMatcher->getBusinessEntityTemplateInstanceByUrl($url);
+                $instance = $urlMatcher->getBusinessEntityPagePatternInstanceByUrl($url);
 
-                //an instance of a business entity template and an entity has been identified
+                //an instance of a business entity page pattern and an entity has been identified
                 if ($instance !== null) {
-                    $template = $instance['businessEntityTemplate'];
+                    $template = $instance['businessEntitiesPagePattern'];
                     $entity = $instance['entity'];
 
-                    //so we duplicate the business entity template page for this current instance
-                    $page = $pageHelper->createPageInstanceFromBusinessEntityTemplate($template, $entity, $url);
+                    //so we duplicate the business entity page for this current instance
+                    $page = $pageHelper->createPageInstanceFromBusinessEntityPagePattern($template, $entity, $url);
 
                     //the page
                     $em->persist($page);

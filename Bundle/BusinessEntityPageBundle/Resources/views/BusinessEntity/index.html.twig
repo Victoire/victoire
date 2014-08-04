@@ -1,0 +1,24 @@
+{% trans_default_domain "victoire" %}
+
+{% extends 'VictoireCoreBundle::_modal.html.twig' %}
+
+{% block modal_container_classes %}{{ parent() }} vic-page-modal{% endblock modal_container_classes %}
+
+{% block modal_body_content %}
+	<div class="vic-container">
+        <ul class="vic-nav vic-nav-tabs vic-modal-nav-tabs">
+            {%  for businessEntity in businessEntities %}
+                <li{% if not loop.last %} class="vic-seperate"{% endif %}>
+                    <a href="#picker-{{ businessEntity.getName }}" data-toggle="vic-tab">{{ businessEntity.getName }}</a>
+                </li>
+    	   {% endfor %}
+        </ul>
+        <div class="vic-tab-content vic-modal-tab-content">
+            {%  for businessEntity in businessEntities %}
+                <div id="picker-{{ businessEntity.getName }}" class="vic-tab-pane">
+                    {% include 'VictoireBusinessEntityPageBundle:BusinessEntity:list.html.twig' with { 'businessEntity' : businessEntity, 'businessEntitiesPagePatterns' : businessEntitiesPagePatterns[businessEntity.getName] } %}
+                </div>
+            {% endfor %}
+        </div>
+	</div>
+{% endblock modal_body_content %}

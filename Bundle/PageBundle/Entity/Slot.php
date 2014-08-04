@@ -3,8 +3,6 @@ namespace Victoire\Bundle\PageBundle\Entity;
 
 /**
  *
- * @author Thomas Beaujean
- *
  */
 class Slot
 {

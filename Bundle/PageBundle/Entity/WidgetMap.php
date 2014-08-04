@@ -2,9 +2,9 @@
 namespace Victoire\Bundle\PageBundle\Entity;
 
 /**
+ * The widgetMap
  *
- * @author Thomas Beaujean
- *
+ * @todo  Should be called WidgetMapItem because a widget map is the complete map of a View
  */
 class WidgetMap
 {

@@ -3,8 +3,6 @@ namespace Victoire\Bundle\CoreBundle\Entity;
 
 /**
  *
- * @author Thomas Beaujean
- *
  */
 class WidgetMap
 {

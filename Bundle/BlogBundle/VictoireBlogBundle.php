@@ -6,8 +6,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
  *
- * @author Thomas Beaujean
- *
  */
 class VictoireBlogBundle extends Bundle
 {

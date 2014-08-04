@@ -1,3 +1,8 @@
 services:
     victoire_business_entity.converter.parameter_converter:
         class: Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter
+
+    victoire_business_entity_page.base_page.subscriber:
+        class: Victoire\Bundle\BusinessEntityPatternBundle\EventSubscriber\LoadMetadataSubscriber
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }

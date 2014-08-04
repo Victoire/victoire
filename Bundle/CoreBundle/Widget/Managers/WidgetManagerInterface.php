@@ -4,8 +4,6 @@ namespace Victoire\Bundle\CoreBundle\Widget\Managers;
 
 /**
  *
- * @author Thomas Beaujean
- *
  */
 interface WidgetManagerInterface
 {

@@ -9,8 +9,6 @@ use Symfony\Component\DependencyInjection\Loader;
 
 /**
  *
- * @author Thomas Beaujean
- *
  */
 class VictoireBusinessEntityExtension extends Extension
 {

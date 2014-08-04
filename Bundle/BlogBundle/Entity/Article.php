@@ -2,22 +2,25 @@
 
 namespace Victoire\Bundle\BlogBundle\Entity;
 
-use Victoire\Bundle\PageBundle\Entity\Page;
 use Doctrine\ORM\Mapping as ORM;
-use Victoire\Bundle\CoreBundle\Annotations as VIC;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
+use Victoire\Bundle\CoreBundle\Annotations as VIC;
+use Victoire\Bundle\CoreBundle\Entity\Traits\BusinessEntityTrait;
+use Victoire\Bundle\PageBundle\Entity\BasePage;
 
 /**
  * PostPage
  *
+ * @Gedmo\Tree(type="nested")
  * @ORM\Entity
  * @ORM\Table("vic_article")
  *
  * @VIC\BusinessEntity({"widgetredactor", "themeredactornewspaper", "widgetlisting", "themelistingblogarticles"})
  */
-class Article extends Page
+class Article extends BasePage
 {
-    use \Victoire\Bundle\CoreBundle\Entity\Traits\BusinessEntityTrait;
+    use BusinessEntityTrait;
 
     const TYPE = 'article';
 

@@ -5,9 +5,7 @@ namespace Victoire\Bundle\QueryBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- *
- * @author Thomas Beaujean
- *
+ * Victoire Query bundle
  */
 class VictoireQueryBundle extends Bundle
 {

@@ -71,7 +71,6 @@ class EntityContext extends BehatContext implements KernelAwareInterface
             $page = new Page();
             $page->setName($name);
             $page->setSlug($name);
-            $page->setLayout("3cols");
 
             $em->persist($page);
             $em->flush();
@@ -89,7 +88,6 @@ class EntityContext extends BehatContext implements KernelAwareInterface
             $page = new Page();
             $page->setTitle($data['title']);
             $page->setSlug($data['title']);
-            $page->setLayout($data['layout']);
             $em->persist($page);
         }
 

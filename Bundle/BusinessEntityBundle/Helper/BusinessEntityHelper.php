@@ -4,7 +4,7 @@ namespace Victoire\Bundle\BusinessEntityBundle\Helper;
 use Victoire\Bundle\CoreBundle\Annotations\Reader\AnnotationReader;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Doctrine\ORM\EntityManager;
-use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
 
 /**
@@ -174,15 +174,15 @@ class BusinessEntityHelper
     /**
      * Get the entity from the page and the id given
      *
-     * @param BusinessEntityTemplate $page             The page
-     * @param string                 $entityIdentifier The identifier for the business entity
-     * @param string                 $attributeName    The name of the attribute used to identify an entity
+     * @param BusinessEntityPagePattern $page             The page
+     * @param string                    $entityIdentifier The identifier for the business entity
+     * @param string                    $attributeName    The name of the attribute used to identify an entity
      *
      * @throws \Exception
      *
      * @return The entity
      */
-    public function getEntityByPageAndBusinessIdentifier(BusinessEntityTemplate $page, $entityIdentifier, $attributeName)
+    public function getEntityByPageAndBusinessIdentifier(BusinessEntityPagePattern $page, $entityIdentifier, $attributeName)
     {
         $entity = null;
 

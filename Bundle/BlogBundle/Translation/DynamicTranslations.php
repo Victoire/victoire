@@ -6,8 +6,6 @@ use JMS\TranslationBundle\Translation\TranslationContainerInterface;
 
 /**
  *
- * @author Thomas Beaujean
- *
  */
 class DynamicTranslations implements TranslationContainerInterface
 {

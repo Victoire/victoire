@@ -3,15 +3,13 @@ namespace Victoire\Bundle\PageBundle\Helper;
 
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
-use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
-use Victoire\Bundle\BusinessEntityTemplateBundle\Helper\BusinessEntityTemplateHelper;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
+use Victoire\Bundle\BusinessEntityPageBundle\Helper\BusinessEntityPageHelper;
 use Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy;
 use Victoire\Bundle\PageBundle\Entity\Page;
 
 /**
- *
- * @author Thomas Beaujean
- *
+ * Page helper
  * ref: victoire_page.page_helper
  */
 class PageHelper
@@ -28,42 +26,38 @@ class PageHelper
 
     /**
      * Constructor
-     *
-     * @param ParameterConverter   $parameterConverter
-     * @param BusinessEntityHelper $businessEntityHelper
+     * @param ParameterConverter       $parameterConverter
+     * @param BusinessEntityHelper     $businessEntityHelper
+     * @param BusinessEntityPageHelper $businessEntitiesPagePatternHelper
      */
-    public function __construct(ParameterConverter $parameterConverter, BusinessEntityHelper $businessEntityHelper, BusinessEntityTemplateHelper $businessEntityTemplateHelper)
+    public function __construct(ParameterConverter $parameterConverter, BusinessEntityHelper $businessEntityHelper, BusinessEntityPageHelper $businessEntitiesPagePatternHelper)
     {
         $this->parameterConverter = $parameterConverter;
         $this->businessEntityHelper = $businessEntityHelper;
-        $this->businessEntityTemplateHelper = $businessEntityTemplateHelper;
+        $this->businessEntitiesPagePatternHelper = $businessEntitiesPagePatternHelper;
     }
 
     /**
-     * Create an instance of the business entity template page
-     *
-     * @param BusinessEntityTemplate $page   The business entity template page
-     * @param entity                 $entity The entity
-     * @param string                 $url    The new url
+     * Create an instance of the business entity page
+     * @param BusinessEntityPagePattern $businessEntityPagePattern The business entity page
+     * @param entity                    $entity                    The entity
+     * @param string                    $url                       The new url
      *
      * @return \Victoire\Bundle\PageBundle\Entity\Page
      */
-    public function createPageInstanceFromBusinessEntityTemplate(BusinessEntityTemplate $template, $entity, $url)
+    public function createPageInstanceFromBusinessEntityPagePattern(BusinessEntityPagePattern $businessEntityPagePattern, $entity, $url)
     {
         //create a new page
         $newPage = new Page();
 
-        $parentPage = $template->getParent();
+        $parentPage = $businessEntityPagePattern->getParent();
 
-        //set the page parameter by the business entity template page
+        //set the page parameter by the business entity page
         $newPage->setParent($parentPage);
-        $newPage->setTemplate($template);
-
-        $newPage->setLayout($template->getLayout());
-
+        $newPage->setTemplate($businessEntityPagePattern);
         $newPage->setUrl($url);
 
-        $newPage->setTitle($template->getTitle());
+        $newPage->setTitle($businessEntityPagePattern->getTitle());
 
         //update the parameters of the page
         $this->updatePageParametersByEntity($newPage, $entity);
@@ -100,7 +94,7 @@ class PageHelper
 
             if ($businessEntity !== null) {
 
-                $businessProperties = $this->businessEntityTemplateHelper->getBusinessProperties($businessEntity);
+                $businessProperties = $this->businessEntitiesPagePatternHelper->getBusinessProperties($businessEntity);
 
                 //parse the business properties
                 foreach ($businessProperties as $businessProperty) {
@@ -119,7 +113,7 @@ class PageHelper
      * Get the content of an attribute of an entity given
      *
      * @param entity $entity
-     * @param strin  $functionName
+     * @param strin  $field
      *
      * @return mixed
      */
@@ -134,10 +128,9 @@ class PageHelper
 
     /**
      * Update the value of the entity
-     *
-     * @param Object        $entity
-     * @param The attribute $field
-     * @param string        $value
+     * @param Object $entity
+     * @param string $field
+     * @param string $value
      *
      * @return mixed
      */

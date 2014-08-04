@@ -1,0 +1,24 @@
+{% trans_default_domain "victoire" %}
+
+<div class="vic-container">
+    <div  style='margin-bottom: 15px;'>
+        <a data-toggle="vic-modal" href="{{ path('victoire_businessentitypagepattern_businessentitypagepattern_new', {'id': businessEntity.getId}) }}">
+            <i class="fa fa-plus-square">{{ 'list.action.add'|trans }}</i>
+	    </a>
+    </div>
+    {%  for pagePattern in businessEntitiesPagePatterns %}
+    <div>
+        <a data-toggle="vic-modal"  href="{{ path('victoire_businessentitypagepattern_businessentitypagepattern_edit', {'id': pagePattern.getId}) }}">
+	        <i class="fa fa-pencil-square-o">{{ 'list.action.edit'|trans }}</i>
+	    </a>
+	    <a data-toggle="vic-modal"  href="{{ path('victoire_businessentitypagepattern_businessentitypagepattern_listentities', {'id': pagePattern.getId}) }}">
+	        <i class="fa fa-list">{{ 'list.action.list'|trans }}</i>
+	    </a>
+	    <span style='margin-left: 15px'>
+            <a href="/{{ pagePattern.getUrl }}">
+                {{ pagePattern.getName }}
+    	    </a>
+	    </span>
+    </div>
+    {% endfor %}
+</div>

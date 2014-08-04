@@ -8,9 +8,6 @@ use Symfony\Component\Debug\Exception\FlattenException;
 use Victoire\Bundle\PageBundle\Entity\Template;
 
 /**
- *
- * @author Thomas Beaujean
- *
  * ref: victoire_core.widget_exception_handler
  */
 class WidgetExceptionHandler

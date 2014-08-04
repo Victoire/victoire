@@ -38,7 +38,7 @@ class PageToTemplateTransformer implements DataTransformerInterface
         $template = new Template();
         $template->setTitle($page->getTitle());
         $template->setSlug($page->getSlug());
-        $template->setLayout($page->getLayout());
+        $template->setLayout($page->getTemplate()->getLayout());
         $template->setWidgets($page->getWidgets());
         $template->setWidgetMap($page->getWidgetMap());
 

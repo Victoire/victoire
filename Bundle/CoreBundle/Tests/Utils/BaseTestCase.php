@@ -213,6 +213,7 @@ class BaseTestCase extends WebTestCase
         $template->setId($id);
         $template->setTitle("test");
         $template->setSlug("test");
+        $template->setLayout("3cols");
 
         return $template;
     }

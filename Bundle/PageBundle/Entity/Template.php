@@ -2,8 +2,9 @@
 
 namespace Victoire\Bundle\PageBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+use Victoire\Bundle\CoreBundle\Entity\View;
 
 /**
  * Template
@@ -11,16 +12,22 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table("vic_page_template")
  * @ORM\Entity
  */
-class Template extends Page
+class Template extends View
 {
-    const TYPE = 'template';
 
     /**
      * @var string
      *
-     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\PageBundle\Entity\Page", mappedBy="template")
+     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\PageBundle\Entity\BasePage", mappedBy="template")
      */
     protected $pages;
+
+    /**
+     * @var string
+     *
+     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\PageBundle\Entity\Template", mappedBy="template")
+     */
+    protected $children;
 
     /**
      * contruct
@@ -52,5 +59,28 @@ class Template extends Page
     public function getPages()
     {
         return $this->pages;
+    }
+
+    /**
+     * Set children
+     * @param string $children
+     *
+     * @return Template
+     */
+    public function setChildren($children)
+    {
+        $this->children = $children;
+
+        return $this;
+    }
+
+    /**
+     * Get children
+     *
+     * @return string
+     */
+    public function getChildren()
+    {
+        return $this->children;
     }
 }

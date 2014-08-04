@@ -130,7 +130,7 @@ class QueryHelper
                 ->andWhere('main_item.id IN (' . $subQuery->getQuery()->getDql() . ' ' . $query . ')');
         }
 
-        //if the the keyword ":currentEntity" is found, we are in a businessEntityTemplate, so we set the current entity as a query parameter.
+        //if the the keyword ":currentEntity" is found, we are in a businessEntitiesPagePattern, so we set the current entity as a query parameter.
         if (strpos($query, ":currentEntity") !== false) {
             $itemsQueryBuilder->setParameter('currentEntity', $containerEntity->getBusinessEntity() ? $containerEntity->getBusinessEntity()->getId() : null);
         }

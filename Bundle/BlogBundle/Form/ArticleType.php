@@ -7,8 +7,6 @@ use Victoire\Bundle\PageBundle\Form\PageType;
 
 /**
  *
- * @author Thomas Beaujean
- *
  */
 class ArticleType extends PageType
 {
