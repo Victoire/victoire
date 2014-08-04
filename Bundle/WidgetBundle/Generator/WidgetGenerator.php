@@ -99,7 +99,7 @@ class WidgetGenerator extends Generator
         $this->renderFile('widget/config.yml.twig', $dir.'/Resources/config/config.yml', $parameters);
         $this->renderFile('widget/services.yml.twig', $dir.'/Resources/config/services.yml', $parameters);
 
-        $this->renderFile('widget/Manager.php.twig', $dir.'/Widget/Manager/Widget'.$widget.'Manager.php', $parameters);
+        $this->renderFile('widget/ContentResolver.php.twig', $dir.'/Widget/Resolver/Widget'.$widget.'ContentResolver.php', $parameters);
         $this->renderFile('widget/victoire.xliff.twig', $dir.'/Resources/translations/victoire.en.xliff', $parameters);
         $this->renderFile('widget/victoire.xliff.twig', $dir.'/Resources/translations/victoire.fr.xliff', $parameters);
 

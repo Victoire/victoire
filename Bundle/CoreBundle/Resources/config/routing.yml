@@ -3,6 +3,10 @@ VictoireCoreBundle:
     resource: "@VictoireCoreBundle/Controller/"
     type:     annotation
     prefix:   /
+VictoireWidgetBundle:
+    resource: "@VictoireWidgetBundle/Controller/"
+    type:     annotation
+    prefix:   /
 
 
 victoire_core_page_show:

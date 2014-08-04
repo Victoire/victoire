@@ -1,11 +1,9 @@
 services:
-    victoire_core.twig.widget_{{ widget|lower }}_manager:
-        class: {{ namespace }}\Widget\Manager\Widget{{ widget }}Manager
-        arguments:
-            - "@service_container"
-            - "{{ widget }}"  #name of the widget
-    widget_{{ widget|lower }}_manager:
-        alias: victoire_core.twig.widget_{{ widget|lower }}_manager
+    victoire_core.widget_{{ widget|lower }}_content_resolver:
+        class: {{ namespace }}\Widget\Resolver\Widget{{ widget }}ContentResolver
+        tags:
+            - { name: victoire_widget.widget_content_resolver, alias: {{widget}} }
+
     #alias to the entity
     victoire.widget.{{ widget|lower }}:
         class: {{ namespace }}\Entity\Widget{{ widget }}

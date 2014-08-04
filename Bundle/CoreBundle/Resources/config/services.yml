@@ -10,14 +10,6 @@ services:
     #     alias: av_assetic_injector.collector_engine.require_victoire
 
 #  ==================  Widgets ================== #
-    victoire_core.widget_manager:
-        class: Victoire\Bundle\CoreBundle\Widget\Managers\WidgetManager
-        arguments:
-            - "@service_container"
-
-    widget_manager:
-        alias: victoire_core.widget_manager
-
     widget.subscriber:
         class: Victoire\Bundle\CoreBundle\EventSubscriber\WidgetSubscriber
         arguments:
@@ -84,7 +76,7 @@ services:
     victoire_core.twig.cms_extension:
         class: Victoire\Bundle\CoreBundle\Twig\Extension\CmsExtension
         arguments:
-            - "@widget_manager"
+            - "@Victoire_widget.widget_renderer"
             - "@victoire_templating"
             - "@security.context"
             - "@doctrine.orm.entity_manager"
@@ -128,7 +120,7 @@ services:
         class: Victoire\Bundle\CoreBundle\Annotations\Reader\AnnotationReader
         arguments:
             - "@annotation_reader"
-            - "@widget_manager"
+            - "@victoire_widget.widget_helper"
             - "%kernel.root_dir%"
             - "%victoire_core.widgets%"
         calls:

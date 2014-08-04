@@ -68,4 +68,20 @@ trait BusinessEntityTrait
     {
         $this->proxies->removeElement($proxies);
     }
+
+    /**
+     * Get the content of an attribute of the current entity
+     *
+     * @param string $field
+     *
+     * @return mixed
+     */
+    protected function getEntityAttributeValue($field)
+    {
+        $functionName = 'get'.ucfirst($field);
+
+        $fieldValue = $this->{$functionName}();
+
+        return $fieldValue;
+    }
 }

@@ -2,15 +2,15 @@
 
 namespace Victoire\Bundle\CoreBundle\Twig\Extension;
 
-use Victoire\Bundle\CoreBundle\Widget\Managers\WidgetManager;
-use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
-use Symfony\Component\Security\Core\SecurityContext;
-use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
-use Victoire\Bundle\CoreBundle\Entity\Widget;
-use Victoire\Bundle\PageBundle\WidgetMap\WidgetMapBuilder;
-use Victoire\Bundle\CoreBundle\Handler\WidgetExceptionHandler;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\Security\Core\SecurityContext;
+use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
+use Victoire\Bundle\WidgetBundle\Entity\Widget;
+use Victoire\Bundle\CoreBundle\Handler\WidgetExceptionHandler;
+use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
+use Victoire\Bundle\PageBundle\Entity\Page;
+use Victoire\Bundle\PageBundle\WidgetMap\WidgetMapBuilder;
+use Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer;
 
 /**
  * PageExtension extends Twig with page capabilities.
@@ -20,7 +20,7 @@ use Doctrine\ORM\EntityManager;
  */
 class CmsExtension extends \Twig_Extension
 {
-    protected $widgetManager;
+    protected $widgetRenderer;
     protected $templating;
     protected $securityContext;
     protected $entityManager;
@@ -30,14 +30,15 @@ class CmsExtension extends \Twig_Extension
     /**
      * Constructor
      *
-     * @param WidgetManager          $widgetManager
+     * @param WidgetRenderer         $widgetRenderer
      * @param TemplateMapper         $templating
      * @param SecurityContext        $securityContext
      * @param EntityManager          $entityManager
      * @param WidgetMapBuilder       $widgetMapBuilder
      * @param WidgetExceptionHandler $widgetExceptionHandler
      */
-    public function __construct(WidgetManager $widgetManager,
+    public function __construct(
+        WidgetRenderer $widgetRenderer,
         TemplateMapper $templating,
         SecurityContext $securityContext,
         EntityManager $entityManager,
@@ -45,7 +46,7 @@ class CmsExtension extends \Twig_Extension
         WidgetExceptionHandler $widgetExceptionHandler
     )
     {
-        $this->widgetManager = $widgetManager;
+        $this->widgetRenderer = $widgetRenderer;
         $this->templating = $templating;
         $this->securityContext = $securityContext;
         $this->entityManager = $entityManager;
@@ -104,7 +105,7 @@ class CmsExtension extends \Twig_Extension
      */
     public function cmsWidgetActions($widget)
     {
-        return $this->widgetManager->renderWidgetActions($widget);
+        return $this->widgetRenderer->renderWidgetActions($widget);
     }
 
     /**
@@ -130,7 +131,7 @@ class CmsExtension extends \Twig_Extension
         $result = "";
 
         if ($this->isRoleVictoireGranted()) {
-            $result .= $this->widgetManager->renderActions($slotId, $page, true);
+            $result .= $this->widgetRenderer->renderActions($slotId, $page, true);
         }
 
         //get the widget map computed with the parent
@@ -145,7 +146,7 @@ class CmsExtension extends \Twig_Extension
                 $widgetId = $widgetMap->getWidgetId();
 
                 //get the widget
-                $widgetRepo = $em->getRepository('VictoireCoreBundle:Widget');
+                $widgetRepo = $em->getRepository('VictoireWidgetBundle:Widget');
                 $widget = $widgetRepo->findOneById($widgetId);
 
                 //test widget
@@ -177,7 +178,7 @@ class CmsExtension extends \Twig_Extension
      */
     public function cmsSlotActions($page, $slot)
     {
-        return $this->widgetManager->renderActions($slot, $page);
+        return $this->widgetRenderer->renderActions($slot, $page);
     }
 
     /**
@@ -187,10 +188,10 @@ class CmsExtension extends \Twig_Extension
      *
      * @return unknown
      */
-    public function cmsWidget($widget, $addContainer = true, $entity = null)
+    public function cmsWidget($widget, $entity = null)
     {
         try {
-            $response = $this->widgetManager->render($widget, $addContainer, $entity);
+            $response = $this->widgetRenderer->render($widget, $entity);
         } catch (\Exception $ex) {
             $response = $this->widgetExceptionHandler->handle($ex, $widget);
         }
@@ -242,7 +243,7 @@ class CmsExtension extends \Twig_Extension
      */
     public function cmsWidgetExtraCssClass(Widget $widget)
     {
-        $extraClass = $this->widgetManager->getExtraCssClass($widget);
+        $extraClass = $this->widgetRenderer->getExtraCssClass($widget);
 
         return $extraClass;
     }

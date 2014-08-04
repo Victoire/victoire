@@ -1,0 +1,50 @@
+services:
+    victoire_widget.widget_map_builder:
+        class: Victoire\Bundle\WidgetBundle\Builder\WidgetFormBuilder
+        arguments: [@doctrine.orm.entity_manager]
+
+    victoire_widget.widget_content_resolver:
+        class: Victoire\Bundle\WidgetBundle\Resolver\WidgetContentResolver
+        arguments:
+            - @victoire_query.query_helper
+            - @victoire_widget.widget_helper
+            - @victoire_widget.widget_content_resolver_chain
+            - @request
+            - ?@victoire_core.filter_chain
+        scope: request
+
+    victoire_widget.widget_helper:
+        class: Victoire\Bundle\WidgetBundle\Helper\WidgetHelper
+        arguments: [@service_container]
+
+    victoire_widget.widget_form_builder:
+        class: Victoire\Bundle\WidgetBundle\Builder\WidgetFormBuilder
+        arguments: [@service_container]
+
+    victoire_widget.widget_renderer:
+        class: Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer
+        arguments: [@service_container]
+
+    victoire_widget.widget_manager:
+        class: Victoire\Bundle\WidgetBundle\Model\WidgetManager
+        arguments:
+            - @victoire_widget.widget_helper
+            - @victoire_widget.widget_form_builder
+            - @victoire_widget.widget_content_resolver
+            - @victoire_widget.widget_renderer
+            - @doctrine.orm.entity_manager
+            - @av.form_error_service
+            - @request
+            - @page.widgetMap.builder
+            - @victoire_core.annotation_reader
+            - @victoire_core.template_mapper
+            - @victoire_page.page_helper
+            - %victoire_core.slots%
+            - @service_container
+        scope: request
+
+    widget_manager:
+        alias: victoire_widget.widget_manager
+
+    victoire_widget.widget_content_resolver_chain:
+        class: Victoire\Bundle\WidgetBundle\Resolver\Chain\WidgetContentResolverChain

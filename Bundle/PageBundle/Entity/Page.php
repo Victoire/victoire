@@ -11,7 +11,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 use Victoire\Bundle\CoreBundle\Annotations as VIC;
 use Victoire\Bundle\CoreBundle\Entity\Route;
-use Victoire\Bundle\CoreBundle\Entity\Widget;
+use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\SeoBundle\Entity\PageSeo;
 
 use Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy;
@@ -111,7 +111,7 @@ class Page
     /**
      * @var string
      *
-     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\CoreBundle\Entity\Widget", mappedBy="page")
+     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\WidgetBundle\Entity\Widget", mappedBy="page")
      * @ORM\OrderBy({"id" = "ASC"})
      */
     protected $widgets;

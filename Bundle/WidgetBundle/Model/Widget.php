@@ -1,20 +1,15 @@
 <?php
 
-namespace Victoire\Bundle\CoreBundle\Entity;
+namespace Victoire\Bundle\WidgetBundle\Model;
 
-use Doctrine\ORM\Mapping as ORM;
+use Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy;
 
 /**
- * Widget
+ * Widget Model
  *
- * @ORM\Table("cms_widget")
- * @ORM\Entity(repositoryClass="Victoire\Bundle\CoreBundle\Repository\WidgetRepository")
- * @ORM\InheritanceType("JOINED")
- * @ORM\DiscriminatorColumn(name="type", type="string")
  */
-class Widget extends BaseWidget
+abstract class Widget
 {
-    use \Victoire\Bundle\QueryBundle\Entity\Traits\QueryTrait;
 
     const MODE_ENTITY = 'entity';
     const MODE_QUERY = 'query';
@@ -28,49 +23,10 @@ class Widget extends BaseWidget
     protected $entity;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="slot", type="string", length=255, nullable=true)
-     */
-    protected $slot;
-
-    /**
-     * @var string
-     *
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\PageBundle\Entity\Page", inversedBy="widgets")
-     * @ORM\JoinColumn(name="page_id", referencedColumnName="id", onDelete="CASCADE")
-     *
-     */
-    protected $page;
-
-    /**
      * This property is not persisted, we use it to remember the page where the widget
      * is actually rendered.
      */
     protected $currentPage;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="fields", type="array")
-     */
-    protected $fields = array();
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="mode", type="string", length=255, nullable=false)
-     */
-    protected $mode = self::MODE_STATIC;
 
     /**
      * Constructor
@@ -78,6 +34,26 @@ class Widget extends BaseWidget
     public function __construct()
     {
         $this->entities = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set the entity proxy
+     *
+     * @param EntityProxy $entityProxy
+     */
+    public function setEntityProxy(EntityProxy $entityProxy)
+    {
+        $this->entityProxy = $entityProxy;
+    }
+
+    /**
+     * Get the entity proxy
+     *
+     * @return EntityProxy
+     */
+    public function getEntityProxy()
+    {
+        return $this->entityProxy;
     }
 
     /**
@@ -233,7 +209,7 @@ class Widget extends BaseWidget
      *
      * @param Page $currentPage
      *
-     * @return \Victoire\Bundle\CoreBundle\Entity\Widget
+     * @return \Victoire\Bundle\WidgetBundle\Entity\Widget
      */
     public function setCurrentPage($currentPage)
     {
