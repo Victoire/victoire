@@ -129,7 +129,7 @@ class BusinessEntityPageHelper
 
                 //the url of the page
                 $pageUrl = $page->getUrl();
-                $pageTitle = $page->getTitle();
+                $pageTitle = $page->getName();
 
                 //parse the business properties
                 foreach ($businessProperties as $businessProperty) {
@@ -139,7 +139,7 @@ class BusinessEntityPageHelper
 
                 //we update the url of the page
                 $page->setUrl($pageUrl);
-                $page->setTitle($pageTitle);
+                $page->setName($pageTitle);
             }
         }
     }

@@ -6,17 +6,17 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
-use Victoire\Bundle\PageBundle\Controller\PageController;
 
 /**
  * BusinessEntityPagePattern controller.
  *
  * @Route("/victoire-dcms/business-entity-page-pattern/businessentitypagepattern")
  */
-class BusinessEntityPagePatternController extends PageController
+class BusinessEntityPagePatternController extends Controller
 {
     /**
      * Creates a new BusinessEntityPagePattern entity.

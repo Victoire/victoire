@@ -3,7 +3,6 @@ namespace Victoire\Bundle\PageBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Victoire\Bundle\PageBundle\Controller\PageController;
 use Victoire\Bundle\PageBundle\Entity\Page;
 
 /**

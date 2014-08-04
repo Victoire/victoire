@@ -32,8 +32,8 @@ class TemplateType extends AbstractType
     {
 
         $builder
-            ->add('title', null, array(
-                'label' => 'form.template.type.title.label'
+            ->add('name', null, array(
+                'label' => 'form.template.type.name.label'
             ))
             ->add('template', null, array(
                 'label' => 'form.template.type.template.label'

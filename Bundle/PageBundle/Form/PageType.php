@@ -12,17 +12,6 @@ use Victoire\Bundle\PageBundle\Entity\Page;
 class PageType extends AbstractType
 {
 
-    protected $layouts;
-
-    /**
-     * Construct function
-     * @param string $layouts
-     */
-    public function __construct($layouts)
-    {
-        $this->layouts = $layouts;
-    }
-
     /**
      * define form fields
      * @param FormBuilderInterface $builder
@@ -31,15 +20,11 @@ class PageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', null, array(
-                'label' => 'form.page.type.title.label'
+            ->add('name', null, array(
+                'label' => 'form.page.type.name.label'
             ))
             ->add('parent', null, array(
                 'label' => 'form.page.type.parent.label'
-            ))
-            ->add('layout', 'choice', array(
-                'label' => 'form.page.type.layout.label',
-                'choices' => $options['layouts']
             ))
             ->add('template', null, array(
                 'label' => 'form.page.type.template.label'
@@ -61,8 +46,7 @@ class PageType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class'         => 'Victoire\Bundle\PageBundle\Entity\Page',
-            'translation_domain' => 'victoire',
-            'layouts'            => $this->layouts,
+            'translation_domain' => 'victoire'
         ));
     }
 

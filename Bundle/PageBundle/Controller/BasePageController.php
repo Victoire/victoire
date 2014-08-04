@@ -143,7 +143,6 @@ class BasePageController extends AwesomeController
 
     /**
      * New page
-     *
      * @param boolean $isHomepage
      *
      * @return template
@@ -180,15 +179,18 @@ class BasePageController extends AwesomeController
                 "success"  => true,
                 "url"      => $this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl()))
             );
-        }
+        } else {
+            $formErrorService = $this->container->get('av.form_error_service');
 
-        return array(
-            "success" => false,
-            'html'    => $this->container->get('victoire_templating')->render(
-                $this->getBaseTemplatePath() . ':new.html.twig',
-                array('form' => $form->createView())
-            )
-        );
+            return array(
+                "success" => false,
+                "message"   => $formErrorService->getRecursiveReadableErrors($form),
+                'html'    => $this->container->get('victoire_templating')->render(
+                    $this->getBaseTemplatePath() . ':new.html.twig',
+                    array('form' => $form->createView())
+                )
+            );
+        }
     }
 
     /**

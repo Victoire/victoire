@@ -2,12 +2,10 @@
 namespace Victoire\Bundle\PageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Page
  *
- * @Gedmo\Tree(type="nested")
  * @ORM\Table("vic_page")
  * @ORM\Entity
  */
@@ -27,7 +25,7 @@ class Page extends BasePage
      **/
     public function __construct()
     {
-        parent::_construct();
+        parent::__construct();
         $this->homepage = false;
     }
 

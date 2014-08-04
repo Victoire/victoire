@@ -61,7 +61,6 @@ services:
 
     victoire_page.page.form.type:
         class: Victoire\Bundle\PageBundle\Form\PageType
-        arguments: ['%victoire_core.layouts%']
         tags:
             - { name: form.type, alias: victoire_page_type }
 
@@ -73,7 +72,6 @@ services:
 
     victoire_page.page_settings.form.type:
         class: Victoire\Bundle\PageBundle\Form\PageSettingsType
-        arguments: ['%victoire_core.layouts%']
         tags:
             - { name: form.type, alias: victoire_page_settings_type }
 

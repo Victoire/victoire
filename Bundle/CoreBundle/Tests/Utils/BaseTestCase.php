@@ -196,7 +196,7 @@ class BaseTestCase extends WebTestCase
     {
         $page = new \Victoire\Bundle\PageBundle\Entity\Page();
         $page->setId($id);
-        $page->setTitle("test");
+        $page->setName("test");
         $page->setSlug("test");
 
         return $page;
@@ -211,7 +211,7 @@ class BaseTestCase extends WebTestCase
     {
         $template = new \Victoire\Bundle\PageBundle\Entity\Template();
         $template->setId($id);
-        $template->setTitle("test");
+        $template->setName("test");
         $template->setSlug("test");
         $template->setLayout("3cols");
 

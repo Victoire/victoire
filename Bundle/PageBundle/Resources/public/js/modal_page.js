@@ -15,7 +15,9 @@ $(document).on('click', '.vic-modal.vic-page-modal *[data-modal="create"]', func
             //redirect to the new page
             window.location.replace(response.url);
             closeModal();
+            congrat(response.message, 10000);
         } else {
+            warn(response.message, 10000);
             $vic('#vic-modal').replaceWith(response.html);
             $vic('#vic-modal').vicmodal({
                 keyboard: true,
@@ -39,7 +41,9 @@ $(document).on('click', '.vic-modal.vic-page-modal a[data-modal="update"]', func
             //@todo Use AvAlertify to warn user that the action succeed
             window.location.replace(response.url);
             closeModal();
+            congrat(response.message, 10000);
         } else {
+            warn(response.message, 10000);
             $('#vic-modal').replaceWith(response.html);
             $('#vic-modal').vicmodal({
                 keyboard: true,
@@ -64,8 +68,9 @@ $(document).on('click', '.vic-modal.vic-page-modal a[data-modal="delete"]', func
         if (true === response.success) {
             //redirect to the new page
             window.location.replace(response.url);
-        } else if (false === response.success) {
-            //@todo Use AvAlertify to warn user that the action failed
+            congrat(response.message, 10000);
+        } else {
+            warn(response.message, 10000);
             alert(response.message);
         }
     });

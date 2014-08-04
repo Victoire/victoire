@@ -86,8 +86,8 @@ class EntityContext extends BehatContext implements KernelAwareInterface
 
         foreach ($table->getHash() as $data) {
             $page = new Page();
-            $page->setTitle($data['title']);
-            $page->setSlug($data['title']);
+            $page->setName($data['name']);
+            $page->setSlug($data['name']);
             $em->persist($page);
         }
 
