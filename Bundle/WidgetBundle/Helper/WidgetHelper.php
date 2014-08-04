@@ -69,8 +69,10 @@ class WidgetHelper
 
     /**
      * Get the name of the template to display for an action
-     *
      * @param string $action
+     * @param Widget $widget
+     *
+     * @todo find a better way to get the requested template
      *
      * @return string
      */

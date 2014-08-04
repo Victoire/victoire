@@ -2,8 +2,9 @@
 namespace Victoire\Bundle\WidgetBundle\Resolver;
 
 use Victoire\Bundle\WidgetBundle\Model\Widget;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 
-abstract class BaseWidgetContentResolver
+class BaseWidgetContentResolver
 {
 
     /**
@@ -15,7 +16,18 @@ abstract class BaseWidgetContentResolver
      */
     public function getWidgetStaticContent(Widget $widget)
     {
-        return '';
+
+        $reflect = new \ReflectionClass($widget);
+        $widgetProperties = $reflect->getProperties();
+        $parameters = array('widget' => $widget);
+        $accessor = PropertyAccess::createPropertyAccessor();
+
+        foreach ($widgetProperties as $property) {
+            $parameters[$property->getName()] = $accessor->getValue($widget, $property->getName());
+
+        }
+
+        return $parameters;
     }
 
     /**
@@ -26,7 +38,30 @@ abstract class BaseWidgetContentResolver
      */
     public function getWidgetBusinessEntityContent(Widget $widget)
     {
-        return '';
+        $entity = $widget->getEntity();
+        $fields = $widget->getFields();
+        $parameters = array('widget' => $widget);
+
+        $reflect = new \ReflectionClass($widget);
+        $widgetProperties = $reflect->getProperties();
+        $accessor = PropertyAccess::createPropertyAccessor();
+
+        foreach ($widgetProperties as $property) {
+            $parameters[$property->getName()] = $accessor->getValue($widget, $property->getName());
+
+        }
+
+        if ($entity !== null) {
+            //parse the field
+            foreach ($fields as $widgetField => $field) {
+                //get the value of the field
+                $attributeValue =  $entity->getEntityAttributeValue($field);
+                
+                $parameters[$widgetField] = $attributeValue;
+            }
+        }
+
+        return $parameters;
     }
 
     /**
@@ -39,7 +74,30 @@ abstract class BaseWidgetContentResolver
      */
     public function getWidgetEntityContent(Widget $widget)
     {
-        return '';
+        $entity = $widget->getEntity();
+        $fields = $widget->getFields();
+        $parameters = array('widget' => $widget);
+
+        $reflect = new \ReflectionClass($widget);
+        $widgetProperties = $reflect->getProperties();
+        $accessor = PropertyAccess::createPropertyAccessor();
+
+        foreach ($widgetProperties as $property) {
+            $parameters[$property->getName()] = $accessor->getValue($widget, $property->getName());
+
+        }
+
+        if ($entity !== null) {
+            //parse the field
+            foreach ($fields as $widgetField => $field) {
+                //get the value of the field
+                $attributeValue =  $entity->getEntityAttributeValue($field);
+                
+                $parameters[$widgetField] = $attributeValue;
+            }
+        }
+
+        return $parameters;
     }
 
     /**
@@ -52,6 +110,15 @@ abstract class BaseWidgetContentResolver
      */
     public function getWidgetQueryContent(Widget $widget)
     {
-        return '';
+        $content = '';
+
+        $entities = $this->getWidgetQueryResults($widget);
+
+        foreach ($entities as $entity) {
+            $content .= $this->getEntityContent($widget, $entity). ' ';
+        }
+        return array(
+            'widget' => $widget
+        );
     }
 }

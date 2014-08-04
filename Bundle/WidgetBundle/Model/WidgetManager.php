@@ -37,8 +37,8 @@ class WidgetManager
 
     /**
      * construct
-     * @param WidgetFormBuilder     $widgetFormBuilder
      * @param WidgetHelper          $widgetHelper
+     * @param WidgetFormBuilder     $widgetFormBuilder
      * @param WidgetContentResolver $widgetContentResolver
      * @param WidgetRenderer        $widgetRenderer
      * @param EntityManager         $em

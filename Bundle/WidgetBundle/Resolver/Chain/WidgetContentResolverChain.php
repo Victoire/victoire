@@ -1,14 +1,19 @@
 <?php
 namespace Victoire\Bundle\WidgetBundle\Resolver\Chain;
 
+use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
+use Victoire\Bundle\WidgetBundle\Model\Widget;
+
 class WidgetContentResolverChain
 {
 
     private $resolvers;
+    private $widgetHelper;
 
-    public function __construct()
+    public function __construct(WidgetHelper $widgetHelper)
     {
         $this->resolvers = array();
+        $this->widgetHelper = $widgetHelper;
     }
 
     public function addResolver($alias, $resolver)
@@ -21,13 +26,25 @@ class WidgetContentResolverChain
         return $this->resolvers;
     }
 
+    public function hasResolverForWidget(Widget $widget)
+    {
+        $alias = $this->widgetHelper->getWidgetName($widget);
+
+        return $this->hasResolver($alias);
+    }
     public function hasResolver($alias)
     {
         if (array_key_exists($alias, $this->resolvers)) {
-            return $this->resolvers[$alias];
+            return true;
         }
 
         return false;
+    }
+    public function getResolverForWidget(Widget $widget)
+    {
+        $alias = $this->widgetHelper->getWidgetName($widget);
+
+        return $this->getResolver($alias);
     }
     public function getResolver($alias)
     {

@@ -42,17 +42,14 @@ class WidgetRenderer
         $templating = $this->container->get('victoire_templating');
 
         //the content of the widget
-        $content = $this->container->get('victoire_widget.widget_content_resolver')->getWidgetContent($widget);
+        $parameters = $this->container->get('victoire_widget.widget_content_resolver')->getWidgetContent($widget);
 
         //the template displayed is in the widget bundle
         $templateName = $this->container->get('victoire_widget.widget_helper')->getTemplateName('show', $widget);
 
         return $templating->render(
             $templateName,
-            array(
-                "widget" => $widget,
-                "content" => $content
-            )
+            $parameters
         );
     }
 

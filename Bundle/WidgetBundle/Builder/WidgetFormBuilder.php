@@ -191,7 +191,7 @@ class WidgetFormBuilder
      *
      * @throws \Exception
      */
-    public function buildWidgetForm(Widget $widget, Page $page, $entityName = null, $namespace = null, $formMode = null)
+    public function buildWidgetForm(Widget $widget, Page $page, $entityName = null, $namespace = null, $formMode = Widget::MODE_STATIC)
     {
         $router = $this->container->get('router');
 
@@ -209,6 +209,7 @@ class WidgetFormBuilder
         $formFactory = $container->get('form.factory');
 
         $formAlias = 'victoire_widget_form_'.strtolower($this->container->get('victoire_widget.widget_helper')->getWidgetName($widget));
+        $filters = $this->container->get('victoire_core.filter_chain')->getFilters();
 
         //are we updating or creating the widget?
         if ($widget->getId() === null) {
@@ -235,7 +236,8 @@ class WidgetFormBuilder
                 'namespace' => $namespace,
                 'mode' => $formMode,
                 'action'  => $formUrl,
-                'method' => 'POST'
+                'method' => 'POST',
+                'filters' => $filters,
             )
         );
 

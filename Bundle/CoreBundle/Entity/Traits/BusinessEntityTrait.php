@@ -76,7 +76,7 @@ trait BusinessEntityTrait
      *
      * @return mixed
      */
-    protected function getEntityAttributeValue($field)
+    public function getEntityAttributeValue($field)
     {
         $functionName = 'get'.ucfirst($field);
 

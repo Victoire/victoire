@@ -48,6 +48,7 @@ class PageHelper
     {
         $this->parameterConverter = $parameterConverter;
         $this->businessEntityHelper = $businessEntityHelper;
+        $this->businessEntityTemplateHelper = $businessEntityTemplateHelper;
         $this->em = $em;
         $this->urlHelper = $urlHelper;
         $this->urlMatcher = $urlMatcher;
