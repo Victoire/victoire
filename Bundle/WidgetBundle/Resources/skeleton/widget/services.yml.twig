@@ -1,14 +1,24 @@
 services:
-    victoire_core.twig.widget_{{ widget|lower }}_manager:
-        class: {{ namespace }}\Widget\Manager\Widget{{ widget }}Manager
-        arguments:
-            - "@service_container"
-            - "{{ widget }}"  #name of the widget
-    widget_{{ widget|lower }}_manager:
-        alias: victoire_core.twig.widget_{{ widget|lower }}_manager
+{% if content_resolver %}
+    victoire_core.widget_{{ widget|lower }}_content_resolver:
+        class: {{ namespace }}\Resolver\Widget{{ widget }}ContentResolver
+        tags:
+            - { name: victoire_widget.widget_content_resolver, alias: {{widget}} }
+{% elseif parent_content_resolver %}
+    victoire_core.widget_{{ widget|lower }}_content_resolver:
+        class: Victoire\Widget\{{ parent }}Bundle\Resolver\Widget{{ parent }}ContentResolver
+        tags:
+            - { name: victoire_widget.widget_content_resolver, alias: {{widget}} }
+{% else %}
+    victoire_core.widget_{{ widget|lower }}_content_resolver:
+        class: Victoire\Bundle\WidgetBundle\Resolver\BaseWidgetContentResolver
+        tags:
+            - { name: victoire_widget.widget_content_resolver, alias: {{widget}} }
+{% endif %}
     #alias to the entity
     victoire.widget.{{ widget|lower }}:
         class: {{ namespace }}\Entity\Widget{{ widget }}
+
     #alias to the form
     victoire.widget.form.{{ widget|lower }}:
         class: {{ namespace }}\Form\Widget{{ widget }}Type

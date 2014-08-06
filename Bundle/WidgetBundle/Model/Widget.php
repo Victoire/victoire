@@ -1,20 +1,15 @@
 <?php
 
-namespace Victoire\Bundle\CoreBundle\Entity;
+namespace Victoire\Bundle\WidgetBundle\Model;
 
-use Doctrine\ORM\Mapping as ORM;
+use Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy;
 
 /**
- * Widget
+ * Widget Model
  *
- * @ORM\Table("vic_widget")
- * @ORM\Entity(repositoryClass="Victoire\Bundle\CoreBundle\Repository\WidgetRepository")
- * @ORM\InheritanceType("JOINED")
- * @ORM\DiscriminatorColumn(name="type", type="string")
  */
-class Widget extends BaseWidget
+abstract class Widget
 {
-    use \Victoire\Bundle\QueryBundle\Entity\Traits\QueryTrait;
 
     const MODE_ENTITY = 'entity';
     const MODE_QUERY = 'query';
@@ -28,56 +23,29 @@ class Widget extends BaseWidget
     protected $entity;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="slot", type="string", length=255, nullable=true)
-     */
-    protected $slot;
-
-    /**
-     * @var string
-     *
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\CoreBundle\Entity\View", inversedBy="widgets")
-     * @ORM\JoinColumn(name="page_id", referencedColumnName="id", onDelete="CASCADE")
-     *
-     */
-    protected $page;
-
-    /**
      * This property is not persisted, we use it to remember the page where the widget
      * is actually rendered.
      */
     protected $currentPage;
 
     /**
-     * @var string
+     * Set the entity proxy
      *
-     * @ORM\Column(name="fields", type="array")
+     * @param EntityProxy $entityProxy
      */
-    protected $fields = array();
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="mode", type="string", length=255, nullable=false)
-     */
-    protected $mode = self::MODE_STATIC;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
+    public function setEntityProxy(EntityProxy $entityProxy)
     {
-        $this->entities = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->entityProxy = $entityProxy;
+    }
+
+    /**
+     * Get the entity proxy
+     *
+     * @return EntityProxy
+     */
+    public function getEntityProxy()
+    {
+        return $this->entityProxy;
     }
 
     /**
@@ -233,7 +201,7 @@ class Widget extends BaseWidget
      *
      * @param Page $currentPage
      *
-     * @return \Victoire\Bundle\CoreBundle\Entity\Widget
+     * @return \Victoire\Bundle\WidgetBundle\Entity\Widget
      */
     public function setCurrentPage($currentPage)
     {
@@ -316,10 +284,19 @@ class Widget extends BaseWidget
      */
     public function __clone()
     {
-        //if there is a proxy
+        // if there is a proxy
         if ($this->entityProxy) {
-            //we clone this one
+            // we clone this one
             $this->entityProxy = clone $this->entityProxy;
+        }
+
+        // This check should be in the __constructor, but Doctrine does not use __constructor to
+        // instanciate entites but __clone method.
+        if (property_exists(get_called_class(), 'widget')) {
+            throw new \Exception(sprintf('A property $widget was found in %s object.
+                The $widget property is reserved for Victoire.
+                You should chose a different property name.', get_called_class()));
+
         }
     }
 }

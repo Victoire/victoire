@@ -2,7 +2,7 @@
 namespace Victoire\Bundle\PageBundle\WidgetMap;
 
 use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\CoreBundle\Entity\Widget;
+use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 use Victoire\Bundle\PageBundle\Entity\Slot;
 use Doctrine\ORM\EntityManager;
@@ -39,7 +39,7 @@ class WidgetMapBuilder
         //the entity manager
         $em = $this->em;
         //the repository
-        $widgetRepo = $em->getRepository('VictoireCoreBundle:Widget');
+        $widgetRepo = $em->getRepository('VictoireWidgetBundle:Widget');
 
         //parse the slots
         foreach ($slots as $slot) {
@@ -127,7 +127,7 @@ class WidgetMapBuilder
         //the entity manager
         $em = $this->em;
         //the repository
-        $widgetRepo = $em->getRepository('VictoireCoreBundle:Widget');
+        $widgetRepo = $em->getRepository('VictoireWidgetBundle:Widget');
 
         //parse the slots
         foreach ($slots as $slot) {
@@ -469,5 +469,50 @@ class WidgetMapBuilder
         }
 
         return $position;
+    }
+
+    /**
+     * compute the widget map for page
+     * @param Page  $page
+     * @param array $sortedWidgets
+     *
+     * @todo Be able to move a widget from a slot to another
+     * @todo test if the widget is allowed for the given slot
+     *
+     * @throws Exception
+     */
+    public function updateWidgetMapOrder(Page $page, $sortedWidgets)
+    {
+        //create a page for the business entity instance if we are currently display an instance for a business entity template
+        $page = $this->duplicatePagePatternIfPageInstance($page);
+
+        $widgetSlots = array();
+
+        //parse the sorted widgets
+        foreach ($sortedWidgets as $slotId => $widgetContainers) {
+
+            //create an array for this slot
+            $widgetSlots[$slotId] = array();
+
+            //parse the list of div ids
+            foreach ($widgetContainers as $widgetId) {
+
+                if ($widgetId === '' || $widgetId === null) {
+                    throw new \Exception('The containerId does not have any numerical characters. Containerid:['.$containerId.']');
+                }
+
+                //add the id of the widget to the slot
+                //cast the id as integer
+                $widgetSlots[$slotId][] = intval($widgetId);
+            }
+        }
+
+        $this->container->get('page.widgetMap.builder')->updateWidgetMapsByPage($page, $widgetSlots);
+        $page->updateWidgetMapBySlots();
+
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        //update the page with the new widget map
+        $em->persist($page);
+        $em->flush();
     }
 }

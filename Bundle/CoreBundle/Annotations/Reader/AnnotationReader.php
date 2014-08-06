@@ -4,7 +4,7 @@ namespace Victoire\Bundle\CoreBundle\Annotations\Reader;
 use Victoire\Bundle\CoreBundle\Annotations\BusinessEntity;
 use Victoire\Bundle\CoreBundle\Annotations\BusinessProperty;
 use Victoire\Bundle\CoreBundle\Annotations\ReceiverProperty;
-use Victoire\Bundle\CoreBundle\Entity\Widget;
+use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Doctrine\Common\Annotations\AnnotationException;
 
@@ -22,20 +22,20 @@ class AnnotationReader extends AnnotationDriver
 
     private $cache;
     private $widgets;
-    private $widgetManager;
+    private $widgetHelper;
 
     /**
      * construct
-     *
-     * @param unknown $reader
-     * @param unknown $paths
-     * @param unknown $widgets
+     * @param unknown      $reader
+     * @param WidgetHelper $widgetHelper
+     * @param unknown      $paths
+     * @param unknown      $widgets
      */
-    public function __construct($reader, $widgetManager, $paths, $widgets)
+    public function __construct($reader, $widgetHelper, $paths, $widgets)
     {
-        $this->widgets = $widgets;
         $this->reader = $reader;
-        $this->widgetManager = $widgetManager;
+        $this->widgetHelper = $widgetHelper;
+        $this->widgets = $widgets;
         if ($paths) {
             $this->addPaths(array($paths."/../"));
         }
@@ -73,7 +73,7 @@ class AnnotationReader extends AnnotationDriver
      **/
     public function getBusinessClassesForWidget(Widget $widget)
     {
-        $widgetName = $this->widgetManager->getManager($widget)->getWidgetName();
+        $widgetName = $this->widgetHelper->getWidgetName($widget);
 
         $businessClassesForWidget = $this->cache->fetch('victoire_core_business_classes_for_widget');
         if (!$businessClassesForWidget || (is_array($businessClassesForWidget) && !array_key_exists($widgetName, $businessClassesForWidget))) {

@@ -40,7 +40,7 @@ class WidgetGenerator extends Generator
     /**
      * build WidgetBundle files
      */
-    public function generate($namespace, $bundle, $dir, $format, $structure, $fields = null, $parent = null)
+    public function generate($namespace, $bundle, $dir, $format, $structure, $fields = null, $parent = null, $contentResolver = false, $parentContentResolver = false)
     {
 
         $dir .= '/'.strtr($namespace, '\\', '/');
@@ -84,6 +84,8 @@ class WidgetGenerator extends Generator
             'fields'            => $fields,
             'toStringProperty' => $toStringProperty,
             'bundle_basename'   => $basename,
+            'content_resolver'   => $contentResolver,
+            'parent_content_resolver'   => $parentContentResolver,
             'extension_alias'   => Container::underscore($basename),
         );
 
@@ -99,7 +101,6 @@ class WidgetGenerator extends Generator
         $this->renderFile('widget/config.yml.twig', $dir.'/Resources/config/config.yml', $parameters);
         $this->renderFile('widget/services.yml.twig', $dir.'/Resources/config/services.yml', $parameters);
 
-        $this->renderFile('widget/Manager.php.twig', $dir.'/Widget/Manager/Widget'.$widget.'Manager.php', $parameters);
         $this->renderFile('widget/victoire.xliff.twig', $dir.'/Resources/translations/victoire.en.xliff', $parameters);
         $this->renderFile('widget/victoire.xliff.twig', $dir.'/Resources/translations/victoire.fr.xliff', $parameters);
 
@@ -108,11 +109,10 @@ class WidgetGenerator extends Generator
         $this->renderFile('widget/views/edit.html.twig.twig', $dir.'/Resources/views/edit.html.twig', $parameters);
         $this->renderFile('widget/views/show.html.twig.twig', $dir.'/Resources/views/show.html.twig', $parameters);
 
-        // TODO : Generate each media size show view
-        // foreach ($this->medias as $media) {
-        //     $parameters['media'] = $media;
-        //     $this->renderFile('widget/views/media/show.html.twig.twig', $dir.'/Resources/views/'.ucfirst($media).'/'.strtolower($widget).'/show.html.twig', $parameters);
-        // }
+        if ($contentResolver) {
+            $parameters['parentResolver'] = class_exists('Victoire\\Widget\\' . $parent . 'Bundle\\Widget\\Resolver\\Widget' . $parent . 'ContentResolver');
+            $this->renderFile('widget/ContentResolver.php.twig', $dir.'/Widget/Resolver/Widget'.$widget.'ContentResolver.php', $parameters);
+        }
 
     }
 

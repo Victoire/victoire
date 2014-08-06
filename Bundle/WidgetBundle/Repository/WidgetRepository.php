@@ -1,5 +1,5 @@
 <?php
-namespace Victoire\Bundle\CoreBundle\Repository;
+namespace Victoire\Bundle\WidgetBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 

@@ -47,7 +47,7 @@ class WidgetDiscriminatorMapSubscriber implements EventSubscriber
         //so to avoid an error during extractions, we test the argument
         if ($eventArgs instanceof LoadClassMetadataEventArgs) {
             $metadatas = $eventArgs->getClassMetadata();
-            if ($metadatas->name === 'Victoire\Bundle\CoreBundle\Entity\Widget') {
+            if ($metadatas->name === 'Victoire\Bundle\WidgetBundle\Entity\Widget') {
                 foreach (self::$widgets as $widget) {
                     $class = $widget['class'];
                     if (!class_exists($class)) {

@@ -138,7 +138,7 @@ class EntityContext extends BehatContext implements KernelAwareInterface
 
     public function getWidgetRepository()
     {
-        return $this->getEntityManager()->getRepository('VictoireCoreBundle:Widget');
+        return $this->getEntityManager()->getRepository('VictoireWidgetBundle:Widget');
     }
 
     public function refresh($entity)

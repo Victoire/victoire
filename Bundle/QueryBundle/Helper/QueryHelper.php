@@ -132,7 +132,8 @@ class QueryHelper
 
         //if the the keyword ":currentEntity" is found, we are in a businessEntitiesPagePattern, so we set the current entity as a query parameter.
         if (strpos($query, ":currentEntity") !== false) {
-            $itemsQueryBuilder->setParameter('currentEntity', $containerEntity->getBusinessEntity() ? $containerEntity->getBusinessEntity()->getId() : null);
+            $itemsQueryBuilder->setParameter('currentEntity', $containerEntity->getEntity() ? $containerEntity->getEntity()->getId() : null);
+            error_log(get_class($containerEntity->getEntity()));
         }
 
         return $itemsQueryBuilder;

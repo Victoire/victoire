@@ -66,7 +66,7 @@ abstract class View
     /**
      * @var string
      *
-     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\CoreBundle\Entity\Widget", mappedBy="page")
+     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\WidgetBundle\Entity\Widget", mappedBy="page")
      * @ORM\OrderBy({"id" = "ASC"})
      */
     protected $widgets;

@@ -35,7 +35,7 @@ class ParameterConverter
         $stringToReplace = '{{item.'.$entityProperty.'}}';
 
         //the value of the attribute
-        $attributeValue = $this->getEntityAttributeValue($entity, $entityProperty);
+        $attributeValue = $entity->getEntityAttributeValue($entityProperty);
 
         //we provide a default value
         if ($attributeValue === null) {
@@ -46,22 +46,5 @@ class ParameterConverter
         $string = str_replace($stringToReplace, $attributeValue, $string);
 
         return $string;
-    }
-
-    /**
-     * Get the content of an attribute of an entity given
-     *
-     * @param Entity $entity
-     * @param string $field
-     *
-     * @return mixed
-     */
-    protected function getEntityAttributeValue($entity, $field)
-    {
-        $functionName = 'get'.ucfirst($field);
-
-        $fieldValue = call_user_func(array($entity, $functionName));
-
-        return $fieldValue;
     }
 }

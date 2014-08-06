@@ -1,15 +1,14 @@
 <?php
 
-namespace {{ namespace }}\Widget\Manager;
+namespace {{ namespace }}\Widget\Resolver;
 
 
 {% block use_statements %}
-use Victoire\Bundle\CoreBundle\Entity\Widget;
-use Victoire\Bundle\CoreBundle\Widget\Managers\WidgetManagerInterface;
-{% if parent %}
-use Victoire\Widget\{{parent}}Bundle\Widget\Manager\Widget{{parent}}Manager;
+use Victoire\Bundle\WidgetBundle\Entity\Widget;
+{% if parent and parentResolver %}
+use Victoire\Widget\{{parent}}Bundle\Widget\Resolver\Widget{{parent}}ContentResolver;
 {% else %}
-use Victoire\Bundle\CoreBundle\Widget\Managers\BaseWidgetManager;
+use Victoire\Bundle\WidgetBundle\Widget\Resolver\BaseWidgetContentResolver;
 {% endif %}
 {% endblock use_statements %}
 
@@ -37,7 +36,7 @@ use Victoire\Bundle\CoreBundle\Widget\Managers\BaseWidgetManager;
  * By default, the methods throws Exception to notice the developer that he should implements it owns logic for the widget
  */
 {% block class_definition %}
-class Widget{{widget}}Manager extends {% if parent %}Widget{{parent}}Manager{% else %}BaseWidgetManager{% endif %}
+class Widget{{widget}}ContentResolver extends {% if parent %}Widget{{parent}}ContentResolver{% else %}BaseWidgetContentResolver{% endif %}
 {% endblock class_definition %}
 
 {
@@ -48,7 +47,7 @@ class Widget{{widget}}Manager extends {% if parent %}Widget{{parent}}Manager{% e
      * @param Widget $widget
      * @return string The static content
      */
-    protected function getWidgetStaticContent(Widget $widget)
+    public function getWidgetStaticContent(Widget $widget)
     {
         return parent::getWidgetStaticContent($widget);
     }
@@ -58,7 +57,7 @@ class Widget{{widget}}Manager extends {% if parent %}Widget{{parent}}Manager{% e
      * @param Widget $widget
      * @return string
      */
-    protected function getWidgetBusinessEntityContent(Widget $widget)
+    public function getWidgetBusinessEntityContent(Widget $widget)
     {
         return parent::getWidgetBusinessEntityContent($widget);
     }
@@ -70,7 +69,7 @@ class Widget{{widget}}Manager extends {% if parent %}Widget{{parent}}Manager{% e
      *
      * @return string
      */
-    protected function getWidgetEntityContent(Widget $widget)
+    public function getWidgetEntityContent(Widget $widget)
     {
         return parent::getWidgetEntityContent($widget);
     }
@@ -81,7 +80,7 @@ class Widget{{widget}}Manager extends {% if parent %}Widget{{parent}}Manager{% e
      * @param Widget $widget
      * @throws \Exception
      */
-    protected function getWidgetQueryContent(Widget $widget)
+    public function getWidgetQueryContent(Widget $widget)
     {
         return parent::getWidgetQueryContent($widget);
     }
