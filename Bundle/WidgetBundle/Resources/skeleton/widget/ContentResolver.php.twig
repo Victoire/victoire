@@ -6,7 +6,7 @@ namespace {{ namespace }}\Widget\Resolver;
 {% block use_statements %}
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\CoreBundle\Widget\Managers\WidgetManagerInterface;
-{% if parent %}
+{% if parent and parentResolver %}
 use Victoire\Widget\{{parent}}Bundle\Widget\Resolver\Widget{{parent}}ContentResolver;
 {% else %}
 use Victoire\Bundle\WidgetBundle\Widget\Resolver\BaseWidgetContentResolver;

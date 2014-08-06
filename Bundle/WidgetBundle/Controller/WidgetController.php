@@ -35,10 +35,9 @@ class WidgetController extends AwesomeController
         try {
 
             if ($this->getRequest()->isXmlHttpRequest()) {
-                $widgetManager = $this->getWidgetManager();
 
                  $response = new JsonResponse(array(
-                     'html' => $widgetManager->render($widget, false, $entity),
+                     'html' => $this->get('victoire_widget.widget_renderer')->render($widget, $entity),
                      'update' => 'vic-widget-'.$widget->getId().'-container',
                      'success' => false
                  ));
@@ -142,12 +141,12 @@ class WidgetController extends AwesomeController
      *
      * @return response
      *
-     * @Route("/victoire-dcms/widget/edit/{id}/{type}/{entity}", name="victoire_core_widget_edit", defaults={"type": null})
-     * @Route("/victoire-dcms/widget/update/{id}/{type}/{entity}", name="victoire_core_widget_update", defaults={"type": null, "entity": null})
+     * @Route("/victoire-dcms/widget/edit/{id}/{entity}", name="victoire_core_widget_edit", defaults={"type": null})
+     * @Route("/victoire-dcms/widget/update/{id}/{entity}", name="victoire_core_widget_update", defaults={"entity": null})
      * @Template()
      * @ParamConverter("id", class="VictoireWidgetBundle:Widget")
      */
-    public function editAction(Request $request, Widget $widget, $type = null, $entity = null)
+    public function editAction(Request $request, Widget $widget, $entity = null)
     {
         try {
             $widgetManager = $this->getWidgetManager();

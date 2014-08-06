@@ -16,39 +16,6 @@ class WidgetFormBuilder
     {
         $this->container = $container;
     }
-    /**
-     * create a form with given widget
-     *
-     * @param WidgetRedactor $widget     the widget
-     * @param Page           $page       the page
-     * @param string         $entityName the entity class
-     * @param string         $namespace  the namespace
-     * @param string         $formMode   the form mode
-     *
-     * @return $form
-     *
-     * @throws \Exception
-     */
-    public function buildForm($widget, Page $page, $entityName = null, $namespace = null, $formMode = Widget::MODE_STATIC)
-    {
-        //test parameters
-        if ($entityName !== null) {
-            if ($namespace === null) {
-                throw new \Exception('The namespace is mandatory if the entityName is given');
-            }
-            if ($formMode === null) {
-                throw new \Exception('The formMode is mandatory if the entityName is given');
-            }
-        }
-
-        $form = $this->buildWidgetForm($widget, $page, $entityName, $namespace, $formMode);
-
-        //send event
-        $dispatcher = $this->container->get('event_dispatcher');
-        $dispatcher->dispatch(VictoireCmsEvents::WIDGET_BUILD_FORM, new WidgetBuildFormEvent($widget, $form));
-
-        return $form;
-    }
 
     /**
      * create form new for WidgetRedactor
@@ -112,7 +79,6 @@ class WidgetFormBuilder
     }
 
     /**
-     * @todo should reside in a WidgetFormBuilder class
      * Generates new forms for each available business entities
      *
      * @param string $slot
@@ -150,14 +116,13 @@ class WidgetFormBuilder
     }
 
     /**
-     * @todo should reside in a WidgetFormBuilder class
      * @param unknown $manager
      * @param unknown $widget
      * @param Page    $page
      * @param string  $entityName
      * @param string  $namespace
      *
-     * @return multitype:\Victoire\Bundle\CoreBundle\Widget\Managers\Form
+     * @return array
      */
     public function buildEntityForms($manager, $widget, Page $page, $entityName = null, $namespace = null)
     {
@@ -225,7 +190,7 @@ class WidgetFormBuilder
             $formUrl = $router->generate('victoire_core_widget_update',
                 array(
                     'id' => $widget->getId(),
-                    'type' => $entityName
+                    'entity' => $entityName,
                 )
             );
         }
@@ -245,7 +210,40 @@ class WidgetFormBuilder
     }
 
     /**
-     * @todo should reside in a WidgetFormBuilder class
+     * create a form with given widget
+     *
+     * @param WidgetRedactor $widget     the widget
+     * @param Page           $page       the page
+     * @param string         $entityName the entity class
+     * @param string         $namespace  the namespace
+     * @param string         $formMode   the form mode
+     *
+     * @return $form
+     *
+     * @throws \Exception
+     */
+    public function buildForm($widget, Page $page, $entityName = null, $namespace = null, $formMode = Widget::MODE_STATIC)
+    {
+        //test parameters
+        if ($entityName !== null) {
+            if ($namespace === null) {
+                throw new \Exception('The namespace is mandatory if the entityName is given');
+            }
+            if ($formMode === null) {
+                throw new \Exception('The formMode is mandatory if the entityName is given');
+            }
+        }
+
+        $form = $this->buildWidgetForm($widget, $page, $entityName, $namespace, $formMode);
+
+        //send event
+        $dispatcher = $this->container->get('event_dispatcher');
+        $dispatcher->dispatch(VictoireCmsEvents::WIDGET_BUILD_FORM, new WidgetBuildFormEvent($widget, $form));
+
+        return $form;
+    }
+
+    /**
      * Call the build form with selected parameter switch the parameters
      * The call is not the same if an entity is provided or not
      *

@@ -158,14 +158,16 @@ class WidgetType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class'         => 'Victoire\RedactorBundle\Entity\Widget',
-            'widget'             => null,
             'translation_domain' => 'victoire'
         ));
 
+        $resolver->setOptional(array('widget'));
+        $resolver->setOptional(array('filters'));
         $resolver->setOptional(array('slot'));
         $resolver->setOptional(array('mode'));
         $resolver->setOptional(array('namespace'));
         $resolver->setOptional(array('entityName'));
+
     }
 
     /**

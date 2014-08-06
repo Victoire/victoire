@@ -35,6 +35,8 @@ class WidgetRenderer
             $entityNamespaces = $this->container->get('victoire_core.annotation_reader')->getBusinessClasses();
             $entityNamespace = $entityNamespaces[$widget->getPage()->getBusinessEntityName()];
             $entity = $this->container->get('doctrine.orm.entity_manager')->getRepository($entityNamespace)->findOneById($entity);
+        } elseif (is_object($widget->getEntity())) {
+            $entity = $widget->getEntity();
         }
         $widget->setEntity($entity);
 

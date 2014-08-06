@@ -39,6 +39,7 @@ class CreateWidgetCommand extends GenerateBundleCommand
                 new InputOption('fields', '', InputOption::VALUE_REQUIRED, 'The fields to create with the new entity'),
                 new InputOption('entity', '', InputOption::VALUE_REQUIRED, 'The entity class name to initialize (shortcut notation)'),
                 new InputOption('parent', '', InputOption::VALUE_REQUIRED, 'The widget this widget will extends'),
+                new InputOption('content-resolver', '', InputOption::VALUE_NONE, 'Whether to generate a blank ContentResolver to customize widget rendering logic'),
             ))
             ->setDescription('Generate a new widget')
             ->setHelp(<<<EOT
@@ -109,6 +110,8 @@ EOT
         $format = Validators::validateFormat($input->getOption('format'));
         $structure = $input->getOption('structure');
 
+        $contentResolver = $input->getOption('content-resolver');
+
         $dialog->writeSection($output, 'Bundle generation');
 
         if (!$this->getContainer()->get('filesystem')->isAbsolutePath($dir)) {
@@ -117,8 +120,10 @@ EOT
 
         $fields = $this->parseFields($input->getOption('fields'));
 
+        $parentContentResolver = $this->getContainer()->has('victoire_core.widget_' . strtolower($parent) . '_content_resolver');
+
         $generator = $this->getGenerator();
-        $generator->generate($namespace, $bundle, $dir, $format, $structure, $fields, $parent);
+        $generator->generate($namespace, $bundle, $dir, $format, $structure, $fields, $parent, $contentResolver, $parentContentResolver);
 
         $output->writeln('Generating the bundle code: <info>OK</info>');
 
@@ -261,6 +266,12 @@ EOT
         }
 
         $input->setOption('structure', false);
+
+        $contentResolver = $input->getOption('content-resolver');
+        if (!$contentResolver && $dialog->askConfirmation($output, $dialog->getQuestion('Do you want to customize widget rendering logic', 'no', '?'), false)) {
+            $contentResolver = true;
+        }
+        $input->setOption('content-resolver', $contentResolver);
 
         ///////////////////////
         //                   //
@@ -425,9 +436,13 @@ EOT
                     throw new \InvalidArgumentException(sprintf('Field "%s" is already defined.', $name));
                 }
 
-                // check reserved words
+                // check reserved words by database
                 if ($generator->isReservedKeyword($name)) {
                     throw new \InvalidArgumentException(sprintf('Name "%s" is a reserved word.', $name));
+                }
+                // check reserved words by victoire
+                if ($this->isReservedKeyword($name)) {
+                    throw new \InvalidArgumentException(sprintf('Name "%s" is a Victoire reserved word.', $name));
                 }
 
                 return $name;
@@ -479,6 +494,11 @@ EOT
         }
 
         return array(substr($entity, 0, $pos), substr($entity, $pos + 1));
+    }
+
+    protected function isReservedKeyword($keyword)
+    {
+        return in_array($keyword, array('widget'));
     }
 
 }

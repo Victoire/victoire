@@ -9,7 +9,6 @@ services:
             - @victoire_query.query_helper
             - @victoire_widget.widget_helper
             - @victoire_widget.widget_content_resolver_chain
-            - @victoire_widget.base_widget_content_resolver
             - @request
             - ?@victoire_core.filter_chain
         scope: request
@@ -47,8 +46,6 @@ services:
     widget_manager:
         alias: victoire_widget.widget_manager
 
-    victoire_widget.base_widget_content_resolver:
-        class: Victoire\Bundle\WidgetBundle\Resolver\BaseWidgetContentResolver
     victoire_widget.widget_content_resolver_chain:
         class: Victoire\Bundle\WidgetBundle\Resolver\Chain\WidgetContentResolverChain
         arguments:

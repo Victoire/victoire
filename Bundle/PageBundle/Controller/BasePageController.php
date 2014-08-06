@@ -1,16 +1,16 @@
 <?php
 namespace Victoire\Bundle\PageBundle\Controller;
 
+use AppVentus\Awesome\ShortcutsBundle\Controller\AwesomeController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use AppVentus\Awesome\ShortcutsBundle\Controller\AwesomeController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
+use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\PageBundle\Helper\UrlHelper;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The base page controller is used to interact with all kind of pages

@@ -29,14 +29,6 @@ abstract class Widget
     protected $currentPage;
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->entities = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
      * Set the entity proxy
      *
      * @param EntityProxy $entityProxy
@@ -292,10 +284,19 @@ abstract class Widget
      */
     public function __clone()
     {
-        //if there is a proxy
+        // if there is a proxy
         if ($this->entityProxy) {
-            //we clone this one
+            // we clone this one
             $this->entityProxy = clone $this->entityProxy;
+        }
+
+        // This check should be in the __constructor, but Doctrine does not use __constructor to
+        // instanciate entites but __clone method.
+        if (property_exists(get_called_class(), 'widget')) {
+            throw new \Exception(sprintf('A property $widget was found in %s object.
+                The $widget property is reserved for Victoire.
+                You should chose a different property name.', get_called_class()));
+
         }
     }
 }

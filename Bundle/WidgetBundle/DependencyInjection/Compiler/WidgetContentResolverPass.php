@@ -19,6 +19,7 @@ class WidgetContentResolverPass implements CompilerPassInterface
             $definition = $container->getDefinition(
                 'victoire_widget.widget_content_resolver_chain'
             );
+            $definition->setScope('request');
 
             $taggedServices = $container->findTaggedServiceIds(
                 'victoire_widget.widget_content_resolver'
@@ -33,6 +34,21 @@ class WidgetContentResolverPass implements CompilerPassInterface
                     'addResolver',
                     array($attributes[0]['alias'], new Reference($id))
                 );
+
+                $resolverDefinition = $container->getDefinition($id);
+                $resolverDefinition->addMethodCall(
+                    'setQueryHelper',
+                    array(new Reference('victoire_query.query_helper'))
+                );
+                $resolverDefinition->addMethodCall(
+                    'setFilterChain',
+                    array(new Reference('victoire_core.filter_chain'))
+                );
+                $resolverDefinition->addMethodCall(
+                    'setRequest',
+                    array(new Reference('request'))
+                );
+                $resolverDefinition->setScope('request');
             }
         }
     }

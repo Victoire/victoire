@@ -112,6 +112,7 @@ class WidgetManager
     /**
      * Create a widget
      *
+     * @param string $type
      * @param string $slotId
      * @param Page   $page
      * @param string $entity
@@ -209,7 +210,7 @@ class WidgetManager
      *
      * @return template
      */
-    public function editWidget(Request $request, Widget $widget, $entity = null)
+    public function editWidget(Request $request, Widget $widget, $entityName = null)
     {
         //services
         $widgetMapBuilder = $this->widgetMapBuilder;
@@ -230,13 +231,13 @@ class WidgetManager
 
         //if the form is posted
         if ($requestMethod === 'POST') {
-            //
+
             $widget = $widgetMapBuilder->editWidgetFromPage($page, $widget);
 
-            if ($entity !== null) {
-                $form = $this->widgetFromBuilder->buildForm($manager, $widget, $page, $entity, $classes[$entity]);
+            if ($entityName !== null) {
+                $form = $this->widgetFormBuilder->buildForm($widget, $page, $entityName, $classes[$entityName]);
             } else {
-                $form = $this->widgetFromBuilder->buildForm($manager, $widget, $page);
+                $form = $this->widgetFormBuilder->buildForm($widget, $page);
             }
 
             $form->handleRequest($request);
@@ -244,7 +245,7 @@ class WidgetManager
             if ($form->isValid()) {
                 $em = $this->em;
 
-                $widget->setBusinessEntityName($entity);
+                $widget->setBusinessEntityName($entityName);
 
                 $em->persist($widget);
 
@@ -256,7 +257,7 @@ class WidgetManager
                 $response = array(
                     'page'     => $page,
                     'success'  => true,
-                    'html'     => $this->widgetRenderer->render($widget, true, $entity),
+                    'html'     => $this->widgetRenderer->render($widget, $entityName),
                     'widgetId' => "vic-widget-".$initialWidgetId."-container"
                 );
             } else {
@@ -265,7 +266,7 @@ class WidgetManager
                 $response = array(
                     "success"   => false,
                     "message"   => $formErrorService->getRecursiveReadableErrors($form),
-                    "html"      => $this->widgetRenderer->renderForm($form, $widget, $entity)
+                    "html"      => $this->widgetRenderer->renderForm($form, $widget, $entityName)
                 );
 
             }

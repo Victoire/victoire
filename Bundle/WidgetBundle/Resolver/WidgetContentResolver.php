@@ -13,7 +13,6 @@ class WidgetContentResolver
     private $queryHelper; // @victoire_query.query_helper
     private $widgetHelper; // @victoire_query.widget_helper
     private $widgetContentResolverChain; // @victoire_widget.widget_content_resolver_chain
-    private $baseWidgetContentResolver; // @victoire_widget.base_widget_content_resolver
     private $request; // @request
     private $filterChain = null; // ?@victoire_core.filter_chain
 
@@ -21,7 +20,6 @@ class WidgetContentResolver
         QueryHelper $queryHelper,
         WidgetHelper $widgetHelper,
         WidgetContentResolverChain $widgetContentResolverChain,
-        BaseWidgetContentResolver $baseWidgetContentResolver,
         Request $request,
         $filterChain
     )
@@ -30,7 +28,6 @@ class WidgetContentResolver
         $this->widgetHelper = $widgetHelper;
         $this->filterChain = $filterChain;
         $this->widgetContentResolverChain = $widgetContentResolverChain;
-        $this->baseWidgetContentResolver = $baseWidgetContentResolver;
         $this->request = $request;
     }
 
@@ -52,11 +49,8 @@ class WidgetContentResolver
             throw new \Exception('The widget ['.$widget->getId().'] has no mode.');
         }
 
-        $resolver = $this->baseWidgetContentResolver;
-        // Use the custom parameters provider if declared for widget
-        if ($this->widgetContentResolverChain->hasResolverForWidget($widget)) {
-            $resolver = $this->widgetContentResolverChain->getResolverForWidget($widget);
-        }
+        $resolver = $this->widgetContentResolverChain->getResolverForWidget($widget);
+
         switch ($mode) {
             case Widget::MODE_STATIC:
                 $parameters = $resolver->getWidgetStaticContent($widget);
