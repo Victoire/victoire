@@ -2,18 +2,17 @@
 
 namespace Victoire\Bundle\DashboardBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppVentus\Awesome\ShortcutsBundle\Controller\AwesomeController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
- *
- * @author Thomas Beaujean thomas@appventus.com
- *
+ * The Victoire scaffolder Controller, when you're building the app
  * @Route("/victoire-dcms/dashboard")
  *
  */
-class DefaultController extends Controller
+class DefaultController extends AwesomeController
 {
     /**
      * Welcome page
@@ -24,6 +23,18 @@ class DefaultController extends Controller
      */
     public function welcomeAction()
     {
-        return array();
+
+        $em = $this->getEntityManager();
+
+        //get the page
+        $templates = $em->getRepository('VictoireTemplateBundle:Template')->findAll();
+        $pages = $em->getRepository('VictoirePageBundle:Page')->findAll();
+        $homepage = $em->getRepository('VictoirePageBundle:Page')->findOneByHomepage();
+
+        return array(
+            "templates" => $templates,
+            "pages"     => $pages,
+            "homepage"  => $homepage
+        );
     }
 }

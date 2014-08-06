@@ -18,10 +18,6 @@
                 <source>form.page.type.parent.label</source>
                 <target>Page parente</target>
             </trans-unit>
-            <trans-unit resname="form.template.type.parent.label">
-                <source>form.template.type.parent.label</source>
-                <target>Modèle parent</target>
-            </trans-unit>
             <trans-unit resname="form.page.type.template.label">
                 <source>form.page.type.template.label</source>
                 <target>Modèle à utiliser</target>
@@ -78,9 +74,9 @@
                 <source>index.template.modal.header</source>
                 <target>Liste des modèles</target>
             </trans-unit>
-            <trans-unit resname="form.template.type.title.label">
-                <source>form.template.type.title.label</source>
-                <target>Titre</target>
+            <trans-unit resname="form.template.type.name.label">
+                <source>form.template.type.name.label</source>
+                <target>Nom</target>
             </trans-unit>
             <trans-unit resname="form.template.type.template.label">
                 <source>form.template.type.template.label</source>

@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Victoire\Bundle\CoreBundle\VictoireCmsEvents;
 use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\PageBundle\Entity\Template;
 use Behat\Behat\Exception\Exception;
 
 /**
@@ -25,9 +24,7 @@ class WidgetManager
 
     /**
      * contructor
-     * @param Container        $container
-     * @param WidgetMapBuilder $widgetMapBuilder
-     * @param FormErrorService $formErrorService
+     * @param Container $container
      */
     public function __construct($container)
     {
@@ -599,7 +596,7 @@ class WidgetManager
 
             //no page were found
             if ($page === null) {
-                $instance = $urlMatcher->getBusinessEntityPagePatternInstanceByUrl($url);
+                $instance = $urlMatcher->getBusinessEntityPageByUrl($url);
 
                 //an instance of a business entity page pattern and an entity has been identified
                 if ($instance !== null) {

@@ -1,8 +1,9 @@
 <?php
-namespace Victoire\Bundle\PageBundle\Event\Menu;
+
+namespace Victoire\Bundle\TemplateBundle\Event\Menu;
 
 use Symfony\Component\EventDispatcher\Event;
-use Victoire\Bundle\PageBundle\Entity\Template;
+use Victoire\Bundle\TemplateBundle\Entity\Template;
 
 /**
  * This Event provides current Page entity to which listen it

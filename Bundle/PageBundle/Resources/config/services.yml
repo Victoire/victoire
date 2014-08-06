@@ -64,12 +64,6 @@ services:
         tags:
             - { name: form.type, alias: victoire_page_type }
 
-    victoire_page.template.form.type:
-        class: Victoire\Bundle\PageBundle\Form\TemplateType
-        arguments: ['%victoire_core.layouts%']
-        tags:
-            - { name: form.type, alias: victoire_template_type }
-
     victoire_page.page_settings.form.type:
         class: Victoire\Bundle\PageBundle\Form\PageSettingsType
         tags:
@@ -91,18 +85,6 @@ services:
         arguments: ["@victoire_core.admin_menu_builder"]
         tags:
             - { name: kernel.event_listener, event: victoire_core.page_menu.contextual, method: addContextual }
-
-    victoire_core.template_menu_listener:
-        class: Victoire\Bundle\PageBundle\Listener\TemplateMenuListener
-        arguments: ["@victoire_core.admin_menu_builder"]
-        tags:
-            - { name: kernel.event_listener, event: victoire_core.build_menu, method: addGlobal, priority: 80 }
-
-    victoire_core.template_menu.contextual:
-        class: Victoire\Bundle\PageBundle\Listener\TemplateMenuListener
-        arguments: ["@victoire_core.admin_menu_builder"]
-        tags:
-            - { name: kernel.event_listener, event: victoire_core.template_menu.contextual, method: addContextual }
 
     ####################################################################################################################
     # twig

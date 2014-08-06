@@ -4,7 +4,7 @@ namespace Victoire\Bundle\PageBundle\Form\DataTransformer;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\PageBundle\Entity\Template;
+use Victoire\Bundle\TemplateBundle\Entity\Template;
 
 /**
  * Transforms a page in template

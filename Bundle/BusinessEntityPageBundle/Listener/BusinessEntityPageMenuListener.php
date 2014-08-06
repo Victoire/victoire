@@ -55,7 +55,7 @@ class BusinessEntityPageMenuListener implements MenuListenerInterface
      *
      * @return MenuBuilder
      */
-    public function addContextual(PageMenuContextualEvent $event)
+    public function addContextual($event)
     {
         $mainItem = $this->menuBuilder->getTopNavbar();
 

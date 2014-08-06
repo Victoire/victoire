@@ -6,10 +6,10 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
-use Victoire\Bundle\CoreBundle\Entity\Route;
-use Victoire\Bundle\PageBundle\Entity\Template;
-use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
+use Victoire\Bundle\CoreBundle\Entity\Route;
+use Victoire\Bundle\PageBundle\Entity\BasePage;
+use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\PageBundle\Helper\UrlHelper;
 
 /**
@@ -104,7 +104,7 @@ class PageSubscriber implements EventSubscriber
         $this->uow  = $this->entityManager->getUnitOfWork();
 
         foreach ($this->uow->getScheduledEntityInsertions() as $entity) {
-            if ($entity instanceof Page) {
+            if ($entity instanceof BasePage) {
                 if ($entity->getComputeUrl()) {
                     $this->buildUrl($entity);
                     $meta = $this->entityManager->getClassMetadata(get_class($entity));
@@ -115,7 +115,7 @@ class PageSubscriber implements EventSubscriber
         }
 
         foreach ($this->uow->getScheduledEntityUpdates() as $entity) {
-            if ($entity instanceof Page) {
+            if ($entity instanceof BasePage) {
                 if ($entity->getComputeUrl()) {
                     $meta = $this->entityManager->getClassMetadata(get_class($entity));
                     $this->uow->computeChangeSet($meta, $entity);
@@ -156,11 +156,6 @@ class PageSubscriber implements EventSubscriber
 
         //@todo wtf ?
         if ($page instanceof BusinessEntityPagePattern) {
-            $buildUrl = false;
-        }
-
-        $template = $page->getTemplate();
-        if ($template instanceof BusinessEntityPagePattern) {
             $buildUrl = false;
         }
 

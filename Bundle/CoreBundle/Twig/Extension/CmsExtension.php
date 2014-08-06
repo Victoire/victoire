@@ -2,15 +2,16 @@
 
 namespace Victoire\Bundle\CoreBundle\Twig\Extension;
 
-use Victoire\Bundle\CoreBundle\Widget\Managers\WidgetManager;
-use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
-use Symfony\Component\Security\Core\SecurityContext;
-use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
-use Victoire\Bundle\CoreBundle\Entity\Widget;
-use Victoire\Bundle\PageBundle\WidgetMap\WidgetMapBuilder;
-use Victoire\Bundle\CoreBundle\Handler\WidgetExceptionHandler;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\Security\Core\SecurityContext;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
+use Victoire\Bundle\CoreBundle\Entity\View;
+use Victoire\Bundle\CoreBundle\Entity\Widget;
+use Victoire\Bundle\CoreBundle\Handler\WidgetExceptionHandler;
+use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
+use Victoire\Bundle\CoreBundle\Widget\Managers\WidgetManager;
+use Victoire\Bundle\PageBundle\Entity\Page;
+use Victoire\Bundle\PageBundle\WidgetMap\WidgetMapBuilder;
 
 /**
  * PageExtension extends Twig with page capabilities.
@@ -65,7 +66,6 @@ class CmsExtension extends \Twig_Extension
             'cms_slot_widgets'           => new \Twig_Function_Method($this, 'cmsSlotWidgets', array('is_safe' => array('html'))),
             'cms_slot_actions'           => new \Twig_Function_Method($this, 'cmsSlotActions', array('is_safe' => array('html'))),
             'cms_widget'                 => new \Twig_Function_Method($this, 'cmsWidget', array('is_safe' => array('html'))),
-            'cms_page'                   => new \Twig_Function_Method($this, 'cmsPage', array('is_safe' => array('html'))),
             'cms_widget_legacy'          => new \Twig_Function_Method($this, 'cmsWidgetLegacy', array('is_safe' => array('html'))),
             'cms_widget_extra_css_class' => new \Twig_Function_Method($this, 'cmsWidgetExtraCssClass', array('is_safe' => array('html'))),
             'is_business_entity_allowed' => new \Twig_Function_Method($this, 'isBusinessEntityAllowed', array('is_safe' => array('html'))),
@@ -110,18 +110,14 @@ class CmsExtension extends \Twig_Extension
     /**
      * render all widgets in a slot
      *
+     * @param View    $view
+     * @param unknown $slot
+     * @param string  $addContainer
+     * @param string  $entity
+     *
      * @return string HTML markup of the widget with action button if needed
      */
-
-    /**
-     *
-     * @param  Page    $page
-     * @param  unknown $slot
-     * @param  string  $addContainer
-     * @param  string  $entity
-     * @return string
-     */
-    public function cmsSlotWidgets(Page $page, $slotId, $addContainer = true, $entity = null)
+    public function cmsSlotWidgets(View $view, $slotId, $addContainer = true, $entity = null)
     {
         //services
         $widgetMapBuilder = $this->widgetMapBuilder;
@@ -130,11 +126,11 @@ class CmsExtension extends \Twig_Extension
         $result = "";
 
         if ($this->isRoleVictoireGranted()) {
-            $result .= $this->widgetManager->renderActions($slotId, $page, true);
+            $result .= $this->widgetManager->renderActions($slotId, $view, true);
         }
 
         //get the widget map computed with the parent
-        $widgetMaps = $widgetMapBuilder->computeCompleteWidgetMap($page, $slotId);
+        $widgetMaps = $widgetMapBuilder->computeCompleteWidgetMap($view, $slotId);
 
         //parse the widget maps
         foreach ($widgetMaps as $widgetMap) {
@@ -170,14 +166,14 @@ class CmsExtension extends \Twig_Extension
 
     /**
      * render all slot actions
-     * @param Page   $page The current page
+     * @param View   $view The current view
      * @param string $slot The current slot
      *
      * @return string HTML markup of the actions
      */
-    public function cmsSlotActions($page, $slot)
+    public function cmsSlotActions($view, $slot)
     {
-        return $this->widgetManager->renderActions($slot, $page);
+        return $this->widgetManager->renderActions($slot, $view);
     }
 
     /**
@@ -197,21 +193,6 @@ class CmsExtension extends \Twig_Extension
         }
 
         return $response;
-    }
-
-    /**
-     * render all widgets for a page
-     *
-     * @param Page $page
-     *
-     * @return \Victoire\Bundle\CoreBundle\Template\template
-     */
-    public function cmsPage(BasePage $page)
-    {
-        return $this->templating->render(
-            'VictoireCoreBundle:Layout:' . $page->getTemplate()->getLayout(). '.html.twig',
-            array('page' => $page)
-        );
     }
 
     /**
@@ -252,27 +233,27 @@ class CmsExtension extends \Twig_Extension
      * Is the business entity type allowed for the widget and the page context
      *
      * @param string $formEntityName The business entity name
-     * @param Page   $page           The page
+     * @param View   $view           The page
      *
      * @return boolean Does the form allows this kind of business entity in this page
      */
-    public function isBusinessEntityAllowed($formEntityName, Page $page)
+    public function isBusinessEntityAllowed($formEntityName, View $view)
     {
         //the result
         $isBusinessEntityAllowed = false;
 
         //get the page that is a business entity page (parent included)
-        $businessEntitiesPagePattern = $page->getBusinessEntityPagePatternLegacyPage();
+        $businessEntitiesPagePattern = $view->getBusinessEntityPagePatternLegacyPage();
 
         //if there is a page
         if ($businessEntitiesPagePattern !== null) {
             //and a businessEntity name is given
             if ($formEntityName !== null) {
                 //the business entity linked to the page pattern
-                $pageBusinessEntity = $businessEntitiesPagePattern->getBusinessEntityName();
+                $viewBusinessEntity = $businessEntitiesPagePattern->getBusinessEntityName();
 
                 //are we using the same business entity
-                if ($formEntityName === $pageBusinessEntity) {
+                if ($formEntityName === $viewBusinessEntity) {
                     $isBusinessEntityAllowed = true;
                 }
             }
@@ -285,12 +266,12 @@ class CmsExtension extends \Twig_Extension
      * If the widget is a legacy, we add the widget-legacy css class to the div
      *
      * @param Widget $widget The widget displayed
-     * @param Page   $page   The page
+     * @param View   $view   The View
      * @param Entity $entity The current entity
      *
      * @return string
      */
-    public function cmsWidgetLegacy(Widget $widget, $page, $entity)
+    public function cmsWidgetLegacy(Widget $widget, View $view, $entity)
     {
         //the css class used
         $cssClass = '';
@@ -298,12 +279,12 @@ class CmsExtension extends \Twig_Extension
         //only the developer can have the orange aura
         if ($this->isRoleVictoireDeveloperGranted()) {
             //the page context was given
-            if ($page !== null) {
-                //the page of the widget is not the current page
-                if ($widget->getPageId() !== $page->getId()) {
+            if ($view !== null) {
+                //the view of the widget is not the current view
+                if ($widget->getPageId() !== $view->getId()) {
                     $cssClass = 'vic-widget-legacy';
                 } else {
-                    if ($entity !== null && $page instanceof BusinessEntityPagePattern) {
+                    if ($entity !== null && $view instanceof BusinessEntityPagePattern) {
                         $cssClass = 'vic-widget-legacy';
                     }
                 }

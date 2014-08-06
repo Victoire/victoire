@@ -66,7 +66,7 @@ class BaseTestCase extends WebTestCase
 
         $menuBuilder = new \Victoire\Bundle\CoreBundle\Menu\MenuBuilder($factory, $security);
 
-        return new \Victoire\Bundle\CoreBundle\Listener\TemplateMenuListener($menuBuilder);
+        return new \Victoire\Bundle\TemplateBundle\Listener\TemplateMenuListener($menuBuilder);
     }
     /**
      * Generates a PageMenuListener mock
@@ -209,7 +209,7 @@ class BaseTestCase extends WebTestCase
      */
     public function getTemplateMock($id = 1)
     {
-        $template = new \Victoire\Bundle\PageBundle\Entity\Template();
+        $template = new \Victoire\Bundle\TemplateBundle\Entity\Template();
         $template->setId($id);
         $template->setName("test");
         $template->setSlug("test");

@@ -4,23 +4,13 @@ namespace Victoire\Bundle\BusinessEntityPageBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Victoire\Bundle\PageBundle\Form\TemplateType;
+use Victoire\Bundle\PageBundle\Form\PageType;
 
 /**
  *
  */
-class BusinessEntityPagePatternType extends TemplateType
+class BusinessEntityPagePatternType extends PageType
 {
-    protected $layouts;
-
-    /**
-     *
-     * @param unknown $layouts
-     */
-    public function __construct($layouts)
-    {
-        $this->layouts = $layouts;
-    }
 
     /**
      * @param FormBuilderInterface $builder
@@ -35,10 +25,6 @@ class BusinessEntityPagePatternType extends TemplateType
         $builder
             ->add('businessEntityName', 'hidden')
             ->add('name')
-            ->add('layout', 'choice', array(
-                'label' => 'form.page.type.layout.label',
-                'choices' => $this->layouts
-            ))
             ->add('query')
             ->add('url');
 

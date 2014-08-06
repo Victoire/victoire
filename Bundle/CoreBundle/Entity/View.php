@@ -6,13 +6,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
+use Victoire\Bundle\PageBundle\Entity\Slot;
+use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 
 /**
  * Victoire View
  * A victoire view is a visual representation with a widget map
  *
  * @Gedmo\Tree(type="nested")
- * @ORM\InheritanceType("JOINED")
+ * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * The discriminator map is injected with loadClassMetadata event
  * @ORM\Entity
@@ -72,7 +74,7 @@ abstract class View
     /**
      * @var string
      *
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\PageBundle\Entity\Template", inversedBy="pages")
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\TemplateBundle\Entity\Template", inversedBy="pages")
      * @ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="CASCADE")
      *
      */
@@ -200,7 +202,9 @@ abstract class View
      */
     public function setName($name)
     {
-        return $this->name;
+        $this->name = $name;
+
+        return $this;
     }
 
     /**
@@ -299,7 +303,7 @@ abstract class View
      *
      * @param child $child
      */
-    public function addChild(Page $child)
+    public function addChild(View $child)
     {
         $this->children[] = $child;
     }

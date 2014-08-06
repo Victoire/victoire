@@ -31,7 +31,7 @@ class PageMenuListener implements MenuListenerInterface
      *
      * @return Ambigous <\Knp\Menu\ItemInterface, NULL>
      */
-    public function addContextual(PageMenuContextualEvent $event)
+    public function addContextual($event)
     {
         //get the current page
         $page = $event->getPage();
@@ -64,8 +64,8 @@ class PageMenuListener implements MenuListenerInterface
         if ($template !== null) {
             $mainItem->addChild('menu.page.template',
                 array(
-                    'route' => 'victoire_core_page_show',
-                    'routeParameters' => array('url' => $template->getUrl())
+                    'route'           => 'victoire_template_show',
+                    'routeParameters' => array('slug' => $template->getSlug())
                 )
             )->setLinkAttribute('data-toggle', 'vic-none');//there is no modal for this menu entry
         }

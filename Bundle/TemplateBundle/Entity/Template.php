@@ -1,19 +1,20 @@
 <?php
 
-namespace Victoire\Bundle\PageBundle\Entity;
+namespace Victoire\Bundle\TemplateBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Victoire\Bundle\CoreBundle\Entity\View;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Template
  *
- * @ORM\Table("vic_page_template")
  * @ORM\Entity
  */
 class Template extends View
 {
+    const TYPE = 'template';
 
     /**
      * @var string
@@ -25,9 +26,17 @@ class Template extends View
     /**
      * @var string
      *
-     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\PageBundle\Entity\Template", mappedBy="template")
+     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\TemplateBundle\Entity\Template", mappedBy="template")
      */
     protected $children;
+
+    /**
+     * @var string
+     *
+     * @Assert\NotBlank()
+     * @ORM\Column(name="layout", type="string", length=255)
+     */
+    protected $layout;
 
     /**
      * contruct
@@ -82,5 +91,28 @@ class Template extends View
     public function getChildren()
     {
         return $this->children;
+    }
+
+    /**
+     * Set layout
+     * @param string $layout
+     *
+     * @return Template
+     */
+    public function setLayout($layout)
+    {
+        $this->layout = $layout;
+
+        return $this;
+    }
+
+    /**
+     * Get layout
+     *
+     * @return string
+     */
+    public function getLayout()
+    {
+        return $this->layout;
     }
 }

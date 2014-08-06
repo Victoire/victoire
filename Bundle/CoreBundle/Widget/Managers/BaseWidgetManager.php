@@ -3,7 +3,7 @@ namespace Victoire\Bundle\CoreBundle\Widget\Managers;
 
 use Victoire\Bundle\CoreBundle\Entity\Widget;
 use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\PageBundle\Entity\Template;
+use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\CoreBundle\VictoireCmsEvents;
 use Victoire\Bundle\CoreBundle\Event\WidgetRenderEvent;
 use Victoire\Bundle\CoreBundle\Event\WidgetBuildFormEvent;
@@ -26,7 +26,6 @@ class BaseWidgetManager
      *
      * @param Container $container
      * @param string    $widgetName
-     * @param string    $bundleName
      *
      * @throws \Exception Test of the parameters
      */

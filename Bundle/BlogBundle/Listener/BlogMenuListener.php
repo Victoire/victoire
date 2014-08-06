@@ -30,7 +30,7 @@ class BlogMenuListener implements MenuListenerInterface
      *
      * @return \Victoire\Bundle\BlogBundle\Listener\MenuItem
      */
-    public function addContextual(PageMenuContextualEvent $event)
+    public function addContextual($event)
     {
         $mainItem = $this->getMainItem();
 

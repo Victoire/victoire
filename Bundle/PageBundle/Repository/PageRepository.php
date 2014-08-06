@@ -2,13 +2,10 @@
 namespace Victoire\Bundle\PageBundle\Repository;
 
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
-use Victoire\Bundle\PageBundle\Entity\Page;
+use Victoire\Bundle\PageBundle\Entity\BasePage;
 
 /**
  * The Page repository
- *
- * @author Thomas Beaujean thomas@appventus.com
- *
  */
 class PageRepository extends NestedTreeRepository
 {
@@ -24,7 +21,7 @@ class PageRepository extends NestedTreeRepository
         $qb = $this->createQueryBuilder('page');
 
         $qb->where('page.homepage = true');
-        $qb->andWhere('page.status = \''.Page::STATUS_PUBLISHED.'\'');
+        $qb->andWhere('page.status = \''.BasePage::STATUS_PUBLISHED.'\'');
         $qb->setMaxResults(1);
 
         $query = $qb->getQuery();

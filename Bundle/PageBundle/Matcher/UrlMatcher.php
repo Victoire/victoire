@@ -37,7 +37,7 @@ class UrlMatcher
      *
      * @return array of businessEntitiesPagePattern and entity
      */
-    public function getBusinessEntityPagePatternInstanceByUrl($url)
+    public function getBusinessEntityPageByUrl($url)
     {
         $businessEntitiesPagePatternInstance = null;
 

@@ -29,12 +29,6 @@ class PageType extends AbstractType
             ->add('template', null, array(
                 'label' => 'form.page.type.template.label'
             ))
-            ->add('bodyId', null, array(
-                'label' => 'form.page.type.bodyId.label'
-            ))
-            ->add('bodyClass', null, array(
-                'label' => 'form.page.type.bodyClass.label'
-            ))
             ->add('homepage', 'hidden');
     }
 

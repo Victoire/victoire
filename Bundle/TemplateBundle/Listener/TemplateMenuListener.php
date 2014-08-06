@@ -1,10 +1,11 @@
 <?php
-namespace Victoire\Bundle\PageBundle\Listener;
+
+namespace Victoire\Bundle\TemplateBundle\Listener;
 
 use Symfony\Component\EventDispatcher\Event;
 use Victoire\Bundle\CoreBundle\Listener\MenuListenerInterface;
 use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
-use Victoire\Bundle\PageBundle\Entity\Template;
+use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent;
 
 /**
@@ -32,22 +33,18 @@ class TemplateMenuListener implements MenuListenerInterface
      *
      * @return Ambigous <\Knp\Menu\ItemInterface, NULL>
      */
-    public function addContextual(PageMenuContextualEvent $event)
+    public function addContextual($event)
     {
-        $page = $event->getPage();
-
         $mainItem = $this->getMainItem();
+        $template = $event->getTemplate();
 
         //this contextual menu appears only for template
-        if ($page instanceof Template) {
-
-            $mainItem->addChild('menu.template.settings',
-                array(
-                    'route' => 'victoire_core_template_settings',
-                    'routeParameters' => array('slug' => $page->getSlug())
-                    )
-            )->setLinkAttribute('data-toggle', 'vic-modal');
-        }
+        $mainItem->addChild('menu.template.settings',
+            array(
+                'route' => 'victoire_template_settings',
+                'routeParameters' => array('slug' => $template->getSlug())
+                )
+        )->setLinkAttribute('data-toggle', 'vic-modal');
 
         return $mainItem;
     }
@@ -63,12 +60,12 @@ class TemplateMenuListener implements MenuListenerInterface
     {
         $mainItem = $this->getMainItem();
         $mainItem->addChild('menu.template.new', array(
-            'route' => 'victoire_core_template_new'
+            'route' => 'victoire_template_new'
             )
         )->setLinkAttribute('data-toggle', 'vic-modal');
 
         $mainItem->addChild('menu.template.index', array(
-            'route' => 'victoire_core_template_index'
+            'route' => 'victoire_template_index'
             )
         )->setLinkAttribute('data-toggle', 'vic-modal');
 

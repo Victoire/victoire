@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Page
  *
  * @ORM\Table("vic_page")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Victoire\Bundle\PageBundle\Repository\PageRepository")
  */
 class Page extends BasePage
 {

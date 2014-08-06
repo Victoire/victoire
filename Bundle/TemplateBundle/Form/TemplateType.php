@@ -1,6 +1,6 @@
 <?php
 
-namespace Victoire\Bundle\PageBundle\Form;
+namespace Victoire\Bundle\TemplateBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -38,21 +38,10 @@ class TemplateType extends AbstractType
             ->add('template', null, array(
                 'label' => 'form.template.type.template.label'
             ))
-            ->add('parent', null, array(
-                'label' => 'form.template.type.parent.label'
-            ))
             ->add('layout', 'choice', array(
                 'label' => 'form.template.type.layout.label',
                 'choices' => $options['layouts']
-            ))
-            ->add('bodyId', null, array(
-                'label' => 'form.template.type.bodyId.label'
-            ))
-            ->add('bodyClass', null, array(
-                'label' => 'form.template.type.bodyClass.label'
             ));
-
-        ;
     }
 
     /**
@@ -63,9 +52,9 @@ class TemplateType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class'         => 'Victoire\Bundle\PageBundle\Entity\Template',
+                'data_class'         => 'Victoire\Bundle\TemplateBundle\Entity\Template',
                 'translation_domain' => 'victoire',
-                'layouts' => $this->layouts,
+                'layouts'            => $this->layouts
             )
         );
     }
