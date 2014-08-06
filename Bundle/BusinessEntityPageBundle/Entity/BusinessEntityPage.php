@@ -7,13 +7,21 @@ use Victoire\Bundle\PageBundle\Entity\BasePage;
 /**
  * BusinessEntityPagePattern
  *
- * @ORM\Table("vic_page_business_entity_page")
  * @ORM\Entity(repositoryClass="Victoire\Bundle\BusinessEntityPageBundle\Repository\BusinessEntityPageRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class BusinessEntityPage extends BasePage
 {
     const TYPE = 'business_entity_page';
+
+    /**
+     * @var string
+     *
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern", inversedBy="instances")
+     * @ORM\JoinColumn(name="business_entity_page_pattern_id", referencedColumnName="id", onDelete="CASCADE")
+     *
+     */
+    protected $pattern;
 
     /**
      * Auto simple mode: joined entity
@@ -80,6 +88,9 @@ class BusinessEntityPage extends BasePage
 
         return $this->businessEntity;
     }
+
+    public function setPattern(BusinessEntityPagePattern $businessEntityPagePattern) { $this->businessEntityPagePattern = $businessEntityPagePattern; return $this; }
+    public function getPattern() { return $this->businessEntityPagePattern; }
 
     /**
      * Get the page that is a legacy and a business entity page pattern

@@ -1,6 +1,6 @@
 services:
     victoire_widget.widget_map_builder:
-        class: Victoire\Bundle\WidgetBundle\Builder\WidgetFormBuilder
+        class: Victoire\Bundle\PageBundle\WidgetMap\WidgetMapBuilder
         arguments: [@doctrine.orm.entity_manager]
 
     victoire_widget.widget_content_resolver:
@@ -35,7 +35,7 @@ services:
             - @doctrine.orm.entity_manager
             - @av.form_error_service
             - @request
-            - @page.widgetMap.builder
+            - @view.widgetMap.builder
             - @victoire_core.annotation_reader
             - @victoire_core.template_mapper
             - @victoire_page.page_helper

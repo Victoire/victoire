@@ -80,7 +80,7 @@ services:
             - "@victoire_templating"
             - "@security.context"
             - "@doctrine.orm.entity_manager"
-            - "@page.widgetMap.builder"
+            - "@view.widgetMap.builder"
             - "@victoire_core.widget_exception_handler"
         tags:
             - { name: twig.extension }
@@ -100,20 +100,6 @@ services:
             - "%doctrine.orm.cache.apc.class%"
             - "%kernel.debug%"
 
-#  ==================  Routing ================== #
-
-    victoire_core.routing.loader.cache:
-        class: Victoire\Bundle\CoreBundle\Route\CacheRouteLoader
-        arguments:
-            - "@victoire_core.cache.route_registerer"
-            - "@doctrine.orm.entity_manager"
-        tags:
-            - { name: routing.loader }
-
-    victoire_core.cache.route_registerer:
-        class: Victoire\Bundle\CoreBundle\Route\CacheRouteRegisterer
-        arguments:
-            - "@victoire_core.apc.cache"
 #  ==================  Annotations ================== #
 
     victoire_core.annotation_reader:

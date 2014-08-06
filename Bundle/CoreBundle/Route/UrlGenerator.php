@@ -8,9 +8,6 @@ use Symfony\Component\Routing\RequestContext;
 use Psr\Log\LoggerInterface;
 
 /**
- *
- * @author Paul Andrieux
- *
  */
 class UrlGenerator extends BaseUrlGenerator
 {

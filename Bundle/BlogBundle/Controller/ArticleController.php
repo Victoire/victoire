@@ -2,15 +2,15 @@
 
 namespace Victoire\Bundle\BlogBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Victoire\Bundle\BlogBundle\Entity\Article;
-use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\PageBundle\Controller\PageController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Victoire\Bundle\BlogBundle\Entity\Article;
+use Victoire\Bundle\PageBundle\Controller\PageController;
+use Victoire\Bundle\PageBundle\Entity\BasePage;
 
 /**
  * blog Controller
@@ -57,7 +57,7 @@ class ArticleController extends PageController
      * @Template()
      * @ParamConverter("article", class="VictoirePageBundle:Page")
      */
-    public function settingsAction(Request $request, Page $article)
+    public function settingsAction(Request $request, BasePage $article)
     {
         return new JsonResponse(parent::settingsAction($article));
     }
@@ -65,14 +65,14 @@ class ArticleController extends PageController
     /**
      * Page delete
      *
-     * @param Page $article
+     * @param BasePage $article
      *
      * @return template
      * @Route("/{id}/delete", name="victoire_core_article_delete")
      * @Template()
      * @ParamConverter("article", class="VictoirePageBundle:Page")
      */
-    public function deleteAction(Page $article)
+    public function deleteAction(BasePage $article)
     {
         if (!$this->get('security.context')->isGranted('PAGE_OWNER', $article)) {
             throw new AccessDeniedException("Nop ! you can't do such an action");

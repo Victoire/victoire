@@ -7,7 +7,6 @@ services:
     page.subscriber:
         class: Victoire\Bundle\PageBundle\EventSubscriber\PageSubscriber
         arguments:
-            - "@victoire_core.cache.route_registerer"
             - "@router"
             - "@victoire_page.user_callable"
             - "%victoire_core.user_class%"
@@ -15,7 +14,7 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default, priority: -1 }
 
-    page.widgetMap.builder:
+    view.widgetMap.builder:
         class: Victoire\Bundle\PageBundle\WidgetMap\WidgetMapBuilder
         arguments:
             - "@doctrine.orm.entity_manager"

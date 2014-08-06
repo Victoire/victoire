@@ -26,7 +26,7 @@ class TemplateController extends Controller
      */
     public function indexAction()
     {
-        $templates = $this->get('doctrine.orm.entity_manager')->getRepository('VictoireTemplateBundle:Template')->findByParent(null, array('position' => 'ASC'));
+        $templates = $this->get('doctrine.orm.entity_manager')->getRepository('VictoireTemplateBundle:Template')->findByTemplate(null, array('position' => 'ASC'));
 
         return new JsonResponse(
             array(
@@ -51,7 +51,7 @@ class TemplateController extends Controller
      */
     public function showAction(Template $template)
     {
-        //add the page to twig
+        //add the view to twig
         $this->get('twig')->addGlobal('view', $template);
 
         $event = new TemplateMenuContextualEvent($template);
@@ -66,7 +66,7 @@ class TemplateController extends Controller
         $layout = 'AppBundle:Layout:' . $template->getLayout() . '.html.twig';
 
         $parameters = array(
-            'page' => $template,
+            'view' => $template,
             'id'   => $template->getId()
         );
 
@@ -90,7 +90,7 @@ class TemplateController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $template = new TemplateEntity();
-        $form = $this->container->get('form.factory')->create($this->getNewTemplateType(), $template); //TODO utiliser un service
+        $form = $this->container->get('form.factory')->create($this->getNewTemplateType(), $template); //@todo utiliser un service
 
         $form->handleRequest($this->get('request'));
         if ($form->isValid()) {
@@ -99,7 +99,7 @@ class TemplateController extends Controller
 
             return new JsonResponse( array(
                 "success"  => true,
-                "url"      => $this->generateUrl('victoire_core_page_show', array('url' => $template->getUrl()))
+                "url"      => $this->generateUrl('victoire_template_show', array('slug' => $template->getSlug()))
             ));
         }
 
@@ -116,7 +116,7 @@ class TemplateController extends Controller
 
     /**
      * define settings of the template
-     * @param string $slug The slug of page
+     * @param string $slug The slug of view
      *
      * @return Response
      * @Route("/{slug}/parametres", name="victoire_template_settings")
@@ -137,7 +137,7 @@ class TemplateController extends Controller
             return new JsonResponse(
                 array(
                     'success' => true,
-                    "url"     => $this->generateUrl('victoire_core_page_show', array('url' => $template->getUrl()))
+                    "url"     => $this->generateUrl('victoire_template_show', array('slug' => $template->getSlug()))
                 )
             );
 
@@ -148,7 +148,7 @@ class TemplateController extends Controller
                 "success" => true,
                 'html'    => $this->container->get('victoire_templating')->render(
                     'VictoireTemplateBundle:Template:settings.html.twig',
-                    array('page' => $template,'form' => $templateForm->createView())
+                    array('view' => $template,'form' => $templateForm->createView())
                 )
             )
         );
@@ -174,7 +174,7 @@ class TemplateController extends Controller
             $em->persist($template);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $template->getUrl())));
+            return $this->redirect($this->generateUrl('victoire_template_show', array('slug' => $template->getSlug())));
         }
 
         return $this->redirect($this->generateUrl('victoire_template_settings', array("slug" => $template->getSlug())));
@@ -182,7 +182,7 @@ class TemplateController extends Controller
     }
 
     /**
-     * getNewPageType
+     * get "new" Template Type
      *
      * @return string
      */

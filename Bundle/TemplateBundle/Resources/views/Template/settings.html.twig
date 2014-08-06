@@ -2,7 +2,7 @@
 
 {% trans_default_domain "victoire" %}
 
-{% block modal_container_classes %}{{ parent() }} vic-page-modal{% endblock modal_container_classes %}
+{% block modal_container_classes %}{{ parent() }} vic-view-modal{% endblock modal_container_classes %}
 
 {% block modal_header_title %}
     {{ 'modal.form.template.settings.title'|trans({'template.name' : template.name}, 'victoire')|desc('%template.name% > Settings') }}

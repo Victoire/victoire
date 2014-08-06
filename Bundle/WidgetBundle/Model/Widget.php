@@ -23,10 +23,10 @@ abstract class Widget
     protected $entity;
 
     /**
-     * This property is not persisted, we use it to remember the page where the widget
+     * This property is not persisted, we use it to remember the view where the widget
      * is actually rendered.
      */
-    protected $currentPage;
+    protected $currentView;
 
     /**
      * Set the entity proxy
@@ -127,30 +127,30 @@ abstract class Widget
     }
 
     /**
-     * Set page
+     * Set view
      *
-     * @param string $page
+     * @param string $view
      *
      * @return Widget
      */
-    public function setPage($page)
+    public function setView($view)
     {
-        if ($page != null) {
-            $page->addWidget($this);
+        if ($view != null) {
+            $view->addWidget($this);
         }
-        $this->page = $page;
+        $this->view = $view;
 
         return $this;
     }
 
     /**
-     * Get page
+     * Get view
      *
      * @return string
      */
-    public function getPage()
+    public function getView()
     {
-        return $this->page;
+        return $this->view;
     }
 
     /**
@@ -197,27 +197,27 @@ abstract class Widget
     }
 
     /**
-     * Set the current page
+     * Set the current view
      *
-     * @param Page $currentPage
+     * @param View $currentView
      *
      * @return \Victoire\Bundle\WidgetBundle\Entity\Widget
      */
-    public function setCurrentPage($currentPage)
+    public function setCurrentView($currentView)
     {
-        $this->currentPage = $currentPage;
+        $this->currentView = $currentView;
 
         return $this;
     }
 
     /**
-     * Get the current page
+     * Get the current view
      *
-     * @return Page The current page
+     * @return View The current view
      */
-    public function getCurrentPage()
+    public function getCurrentView()
     {
-        return $this->currentPage;
+        return $this->currentView;
     }
 
     /**
@@ -262,21 +262,21 @@ abstract class Widget
     }
 
     /**
-     * Get the page id
+     * Get the view id
      *
-     * @return integer The page id
+     * @return integer The view id
      */
-    public function getPageId()
+    public function getViewId()
     {
-        $pageId = null;
+        $viewId = null;
 
-        $page = $this->getPage();
+        $view = $this->getView();
 
-        if ($page !== null) {
-            $pageId = $page->getId();
+        if ($view !== null) {
+            $viewId = $view->getId();
         }
 
-        return $pageId;
+        return $viewId;
     }
 
     /**

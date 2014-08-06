@@ -8,13 +8,12 @@ use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Handler\WidgetExceptionHandler;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
-use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\PageBundle\WidgetMap\WidgetMapBuilder;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer;
 
 /**
- * PageExtension extends Twig with page capabilities.
+ * CmsExtension extends Twig with view capabilities.
  *
  * @author Fabien Potencier <fabien@symfony.com>
  * @author Bernhard Schussek <bschussek@gmail.com>
@@ -70,7 +69,6 @@ class CmsExtension extends \Twig_Extension
             'cms_widget_legacy'          => new \Twig_Function_Method($this, 'cmsWidgetLegacy', array('is_safe' => array('html'))),
             'cms_widget_extra_css_class' => new \Twig_Function_Method($this, 'cmsWidgetExtraCssClass', array('is_safe' => array('html'))),
             'is_business_entity_allowed' => new \Twig_Function_Method($this, 'isBusinessEntityAllowed', array('is_safe' => array('html'))),
-            'cms_widget_title'           => new \Twig_Function_Method($this, 'cmsWidgetTitle', array('is_safe' => array('html'))),
         );
     }
 
@@ -230,26 +228,26 @@ class CmsExtension extends \Twig_Extension
     }
 
     /**
-     * Is the business entity type allowed for the widget and the page context
+     * Is the business entity type allowed for the widget and the view context
      *
      * @param string $formEntityName The business entity name
-     * @param View   $view           The page
+     * @param View   $view           The view
      *
-     * @return boolean Does the form allows this kind of business entity in this page
+     * @return boolean Does the form allows this kind of business entity in this view
      */
     public function isBusinessEntityAllowed($formEntityName, View $view)
     {
         //the result
         $isBusinessEntityAllowed = false;
 
-        //get the page that is a business entity page (parent included)
+        //get the view that is a business entity view (parent included)
         $businessEntitiesPagePattern = $view->getBusinessEntityPagePatternLegacyPage();
 
-        //if there is a page
+        //if there is a view
         if ($businessEntitiesPagePattern !== null) {
             //and a businessEntity name is given
             if ($formEntityName !== null) {
-                //the business entity linked to the page pattern
+                //the business entity linked to the view pattern
                 $viewBusinessEntity = $businessEntitiesPagePattern->getBusinessEntityName();
 
                 //are we using the same business entity
@@ -278,10 +276,10 @@ class CmsExtension extends \Twig_Extension
 
         //only the developer can have the orange aura
         if ($this->isRoleVictoireDeveloperGranted()) {
-            //the page context was given
+            //the view context was given
             if ($view !== null) {
                 //the view of the widget is not the current view
-                if ($widget->getPageId() !== $view->getId()) {
+                if ($widget->getViewId() !== $view->getId()) {
                     $cssClass = 'vic-widget-legacy';
                 } else {
                     if ($entity !== null && $view instanceof BusinessEntityPagePattern) {
@@ -292,33 +290,6 @@ class CmsExtension extends \Twig_Extension
         }
 
         return $cssClass;
-    }
-
-    /**
-     * Get the title for a widget
-     *
-     * @param Widget $widget
-     *
-     * @return string The title text
-     */
-    public function cmsWidgetTitle(Widget $widget)
-    {
-        $title = '';
-
-        if ($this->isRoleVictoireGranted()) {
-            //the title markup
-            $title = 'title="';
-
-            //the description of the widget
-            $description = $widget->getType().' - '.$widget->getMode();
-            //add the description to the title
-            $title .= $description;
-
-            //close the markup
-            $title .= '"';
-        }
-
-        return $title;
     }
 
     /**

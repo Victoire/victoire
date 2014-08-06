@@ -2,7 +2,7 @@
 
 {% block body %}
 
-<div {{cms_widget_title(widget)}} class="vic-widget {{cms_widget_extra_css_class(widget)}} {{cms_widget_legacy(widget, page, entity)}}" id="widget-{{widget.id}}">
+<div class="vic-widget {{cms_widget_extra_css_class(widget)}} {{cms_widget_legacy(widget, view, entity)}}" id="widget-{{widget.id}}">
 {% if is_granted('ROLE_VICTOIRE') %}
     {% block actions %}
         {{ cms_widget_actions(widget) }}

@@ -8,7 +8,7 @@ use Victoire\Bundle\WidgetBundle\Model\Widget as BaseWidget;
 /**
  * Widget
  *
- * @ORM\Table("cms_widget")
+ * @ORM\Table("vic_widget")
  * @ORM\Entity(repositoryClass="Victoire\Bundle\WidgetBundle\Repository\WidgetRepository")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
@@ -36,11 +36,11 @@ class Widget extends BaseWidget
     /**
      * @var string
      *
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\PageBundle\Entity\Page", inversedBy="widgets")
-     * @ORM\JoinColumn(name="page_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\CoreBundle\Entity\View", inversedBy="widgets")
+     * @ORM\JoinColumn(name="view_id", referencedColumnName="id", onDelete="CASCADE")
      *
      */
-    protected $page;
+    protected $view;
 
     /**
      * @var string

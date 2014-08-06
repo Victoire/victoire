@@ -1,16 +1,16 @@
 <?php
 namespace Victoire\Bundle\PageBundle\WidgetMap;
 
-use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\WidgetBundle\Entity\Widget;
-use Victoire\Bundle\PageBundle\Entity\WidgetMap;
-use Victoire\Bundle\PageBundle\Entity\Slot;
 use Doctrine\ORM\EntityManager;
+use Victoire\Bundle\CoreBundle\Entity\View;
+use Victoire\Bundle\PageBundle\Entity\Slot;
+use Victoire\Bundle\PageBundle\Entity\WidgetMap;
+use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
- * Page WidgetMap builder
+ * View WidgetMap builder
  *
- * ref: page.widgetMap.builder
+ * ref: view.widgetMap.builder
  */
 class WidgetMapBuilder
 {
@@ -27,14 +27,14 @@ class WidgetMapBuilder
     }
 
     /**
-     * Remove the missing widgets from the widget map of a page
+     * Remove the missing widgets from the widget map of a view
      *
-     * @param Page $page
+     * @param View $view
      */
-    public function removeMissingWidgets(Page $page)
+    public function removeMissingWidgets(View $view)
     {
-        //get the slots of the page
-        $slots = $page->getSlots();
+        //get the slots of the view
+        $slots = $view->getSlots();
 
         //the entity manager
         $em = $this->em;
@@ -67,27 +67,25 @@ class WidgetMapBuilder
         }
 
         //we update the serialized widget map
-        $page->updateWidgetMapBySlots();
+        $view->updateWidgetMapBySlots();
     }
 
     /**
      * remove the widget ids from the widget map if any of the parents has it in its widget map
-     *
-     * @param Page $page
-     *
+     * @param View $view
      */
-    public function removeDuplicateWidgetLegacy(Page $page)
+    public function removeDuplicateWidgetLegacy(View $view)
     {
-        //get the template of the page
-        $template = $page->getTemplate();
+        //get the template of the view
+        $template = $view->getTemplate();
 
         //if there is one
         if ($template !== null) {
             //get the list of ids of the parent
             $parentIds = $this->getCompleteWidgetIds($template);
 
-            //get the slots of the page
-            $slots = $page->getSlots();
+            //get the slots of the view
+            $slots = $view->getSlots();
 
             //parse the slots
             foreach ($slots as $slot) {
@@ -107,22 +105,22 @@ class WidgetMapBuilder
             }
 
             //we update the serialized widget map
-            $page->updateWidgetMapBySlots();
+            $view->updateWidgetMapBySlots();
         }
     }
 
     /**
-     * Get the complete list of widget ids of the page and its parents
+     * Get the complete list of widget ids of the view and its parents
      *
-     * @param Page $page
+     * @param View $view
      *
      * @return array The list of ids
      */
-    protected function getCompleteWidgetIds(Page $page)
+    protected function getCompleteWidgetIds(View $view)
     {
         $ids = array();
 
-        $slots = $page->getSlots();
+        $slots = $view->getSlots();
 
         //the entity manager
         $em = $this->em;
@@ -142,7 +140,7 @@ class WidgetMapBuilder
             }
         }
 
-        $template = $page->getTemplate();
+        $template = $view->getTemplate();
 
         //if there is one
         if ($template !== null) {
@@ -159,32 +157,31 @@ class WidgetMapBuilder
     }
 
     /**
-     * Compute the complete widget map for a page by its parents
-     *
-     * @param Page   $page The page
-     * @param string $slot The slot to get
+     * Compute the complete widget map for a view by its parents
+     * @param View   $view   The view
+     * @param string $slotId The slot to get
      *
      * @return array The computed widgetMap
      *
      * @throws \Exception
      */
-    public function computeCompleteWidgetMap(Page $page, $slotId)
+    public function computeCompleteWidgetMap(View $view, $slotId)
     {
         $widgetMap = array();
         $parentWidgetMaps = null;
-        $pageWidgetMaps = null;
+        $viewWidgetMaps = null;
 
         //get the template widget map
-        $template = $page->getTemplate();
+        $template = $view->getTemplate();
 
         if ($template !== null) {
             $parentWidgetMaps = $this->computeCompleteWidgetMap($template, $slotId);
         }
 
-        $slot = $page->getSlotById($slotId);
+        $slot = $view->getSlotById($slotId);
 
         if ($slot !== null) {
-            $pageWidgetMaps = $slot->getWidgetMaps();
+            $viewWidgetMaps = $slot->getWidgetMaps();
         }
 
         //this array gives the position of the widget maps by its id
@@ -210,19 +207,19 @@ class WidgetMapBuilder
             unset($index);
         }
 
-        //if the current page have some widget maps
-        if ($pageWidgetMaps !== null) {
+        //if the current view have some widget maps
+        if ($viewWidgetMaps !== null) {
             //we parse the widget maps
-            foreach ($pageWidgetMaps as $pageWidgetMap) {
+            foreach ($viewWidgetMaps as $viewWidgetMap) {
                 //depending on the action
-                $action = $pageWidgetMap->getAction();
+                $action = $viewWidgetMap->getAction();
 
                 switch ($action) {
                     case WidgetMap::ACTION_CREATE:
-                        $position = $pageWidgetMap->getPosition();
-                        $reference = $pageWidgetMap->getPositionReference();
+                        $position = $viewWidgetMap->getPosition();
+                        $reference = $viewWidgetMap->getPositionReference();
 
-                        //the 0 reference means the top of the page
+                        //the 0 reference means the top of the view
                         if ($reference === 0) {
                             $parentPosition = 0;
                         } else {
@@ -231,7 +228,7 @@ class WidgetMapBuilder
                                 $parentPosition = $widgetMapPositionIndex[$reference];
                             } else {
                                 //the widget of the parent has been deleted
-                                //the widget comes at the top of the page
+                                //the widget comes at the top of the view
                                 $parentPosition = 0;
                             }
                         }
@@ -241,21 +238,21 @@ class WidgetMapBuilder
 
                         $position = $this->getNextAvailaiblePosition($position, $widgetMap);
 
-                        $widgetMap[$position] = $pageWidgetMap;
+                        $widgetMap[$position] = $viewWidgetMap;
                         break;
                     case WidgetMap::ACTION_REPLACE:
                         //parse the widget maps
                         foreach ($widgetMap as $index => $wm) {
-                            if ($wm->getId() === $pageWidgetMap->getReplacedWidgetId()) {
+                            if ($wm->getId() === $viewWidgetMap->getReplacedWidgetId()) {
                                 //replace the widget map from the list
-                                $widgetMap[$index] = $pageWidgetMap;
+                                $widgetMap[$index] = $viewWidgetMap;
                             }
                         }
                         break;
                     case WidgetMap::ACTION_DELETE:
                         //parse the widget maps
                         foreach ($widgetMap as $index => $wm) {
-                            if ($wm->getId() === $pageWidgetMap->getId()) {
+                            if ($wm->getId() === $viewWidgetMap->getId()) {
                                 //remove the widget map from the list
                                 unset($widgetMap[$index]);
                             }
@@ -275,25 +272,25 @@ class WidgetMapBuilder
     }
 
     /**
-     * Get the slots for the page by the sorted slots given by the Screen
+     * Get the slots for the view by the sorted slots given by the Screen
      *
-     * @param Page  $page
+     * @param View  $view
      * @param array $widgetSlots
      */
-    public function updateWidgetMapsByPage(Page $page, $widgetSlots)
+    public function updateWidgetMapsByView(View $view, $widgetSlots)
     {
         foreach ($widgetSlots as $slotId => $widgetIds) {
             //the reference to the previous widget map parent
             $lastParentWidgetMapId = null;
 
-            //get the slot of the page
-            $slot = $page->getSlotById($slotId);
+            //get the slot of the view
+            $slot = $view->getSlotById($slotId);
 
             //test that slot exists or create it, it could not exists if no widget has been created inside yet
             if ($slot === null) {
                 $slot = new Slot();
                 $slot->setId($slotId);
-                $page->addSlot($slot);
+                $view->addSlot($slot);
             }
 
             //init the widget map position counter
@@ -327,17 +324,17 @@ class WidgetMapBuilder
     }
 
     /**
-     * Delete the widget from the page
+     * Delete the widget from the view
      *
-     * @param Page   $page
+     * @param View   $view
      * @param Widget $widget
      *
      * @throws \Exception The slot does not exists
      */
-    public function deleteWidgetFromPage(Page $page, Widget $widget)
+    public function deleteWidgetFromView(View $view, Widget $widget)
     {
-        //the widget page
-        $widgetPage = $widget->getPage();
+        //the widget view
+        $widgetView = $widget->getView();
 
         //the widget slot
         $widgetSlotId = $widget->getSlot();
@@ -346,13 +343,13 @@ class WidgetMapBuilder
         $widgetId = $widget->getId();
 
         //get the slot
-        $slot = $page->getSlotById($widgetSlotId);
+        $slot = $view->getSlotById($widgetSlotId);
 
-        //we remove the widget from the current page
-        if ($widgetPage === $page) {
+        //we remove the widget from the current view
+        if ($widgetView === $view) {
             //test that the slot for the widget exists
             if ($slot === null) {
-                throw new \Exception('The slot['.$widgetSlotId.'] for the widget ['.$widgetId.'] of the page ['.$page->getId().'] was not found.');
+                throw new \Exception('The slot['.$widgetSlotId.'] for the widget ['.$widgetId.'] of the view ['.$view->getId().'] was not found.');
             }
 
             //get the widget map
@@ -360,23 +357,23 @@ class WidgetMapBuilder
 
             //check that the widget map exists
             if ($widgetMap === null) {
-                throw new \Exception('The widgetMap for the widget ['.$widgetId.'] and the page ['.$page->getId().'] does not exists.');
+                throw new \Exception('The widgetMap for the widget ['.$widgetId.'] and the view ['.$view->getId().'] does not exists.');
             }
 
             //remove the widget map from the slot
             $slot->removeWidgetMap($widgetMap);
         } else {
-            //there might be no slot yet for the child page
+            //there might be no slot yet for the child view
             if ($slot === null) {
                 //create a new slot
                 $slot = new Slot();
                 $slot->setId($widgetSlotId);
 
-                //add the new slot to the page
-                $page->addSlot($slot);
+                //add the new slot to the view
+                $view->addSlot($slot);
             }
 
-            //the widget is owned by another page (a parent)
+            //the widget is owned by another view (a parent)
             //so we add a new widget map that indicates we delete this widget
             $widgetMap = new WidgetMap();
             $widgetMap->setAction(WidgetMap::ACTION_DELETE);
@@ -387,27 +384,27 @@ class WidgetMapBuilder
     }
 
     /**
-     * Edit the widget from the page, if the widget is not linked to the current page, a copy is created
+     * Edit the widget from the view, if the widget is not linked to the current view, a copy is created
      *
-     * @param Page   $page
+     * @param View   $view
      * @param Widget $widget
      *
      * @return Widget The widget
      *
      * @throws \Exception The slot does not exists
      */
-    public function editWidgetFromPage(Page $page, Widget $widget)
+    public function editWidgetFromView(View $view, Widget $widget)
     {
-        //the widget page
-        $widgetPage = $widget->getPage();
+        //the widget view
+        $widgetView = $widget->getView();
 
-        //we only copy the widget if the page of the widget is not the current page
-        if ($widgetPage !== $page) {
+        //we only copy the widget if the view of the widget is not the current view
+        if ($widgetView !== $view) {
             //services
             $em = $this->em;
 
             $widgetCopy = clone $widget;
-            $widgetCopy->setPage($page);
+            $widgetCopy->setView($view);
 
             //we have to persist the widget to get its id
             $em->persist($widgetCopy);
@@ -423,19 +420,19 @@ class WidgetMapBuilder
             $replacedWidgetId = $widget->getId();
 
             //get the slot
-            $slot = $page->getSlotById($widgetSlotId);
+            $slot = $view->getSlotById($widgetSlotId);
 
-            //there might be no slot yet for the child page
+            //there might be no slot yet for the child view
             if ($slot === null) {
                 //create a new slot
                 $slot = new Slot();
                 $slot->setId($widgetSlotId);
 
-                //add the new slot to the page
-                $page->addSlot($slot);
+                //add the new slot to the view
+                $view->addSlot($slot);
             }
 
-            //the widget is owned by another page (a parent)
+            //the widget is owned by another view (a parent)
             //so we add a new widget map that indicates we delete this widget
             $widgetMap = new WidgetMap();
             $widgetMap->setAction(WidgetMap::ACTION_REPLACE);
@@ -472,8 +469,8 @@ class WidgetMapBuilder
     }
 
     /**
-     * compute the widget map for page
-     * @param Page  $page
+     * compute the widget map for view
+     * @param View  $view
      * @param array $sortedWidgets
      *
      * @todo Be able to move a widget from a slot to another
@@ -481,10 +478,10 @@ class WidgetMapBuilder
      *
      * @throws Exception
      */
-    public function updateWidgetMapOrder(Page $page, $sortedWidgets)
+    public function updateWidgetMapOrder(View $view, $sortedWidgets)
     {
-        //create a page for the business entity instance if we are currently display an instance for a business entity template
-        $page = $this->duplicatePagePatternIfPageInstance($page);
+        //create a view for the business entity instance if we are currently display an instance for a business entity template
+        $view = $this->duplicateViewPatternIfViewInstance($view);
 
         $widgetSlots = array();
 
@@ -507,12 +504,12 @@ class WidgetMapBuilder
             }
         }
 
-        $this->container->get('page.widgetMap.builder')->updateWidgetMapsByPage($page, $widgetSlots);
-        $page->updateWidgetMapBySlots();
+        $this->container->get('view.widgetMap.builder')->updateWidgetMapsByView($view, $widgetSlots);
+        $view->updateWidgetMapBySlots();
 
         $em = $this->container->get('doctrine.orm.entity_manager');
-        //update the page with the new widget map
-        $em->persist($page);
+        //update the view with the new widget map
+        $em->persist($view);
         $em->flush();
     }
 }

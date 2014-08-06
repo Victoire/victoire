@@ -51,17 +51,17 @@ class WidgetHelper
     /**
      * create a new WidgetRedactor
      * @param string $type
-     * @param Page   $page
+     * @param View   $view
      * @param string $slot
      *
      * @return $widget
      */
-    public function newWidgetInstance($type, $page, $slot)
+    public function newWidgetInstance($type, $view, $slot)
     {
         $widgetAlias = 'victoire.widget.'. strtolower($type);
         $widget = $this->container->get($widgetAlias);
 
-        $widget->setPage($page);
+        $widget->setView($view);
         $widget->setSlot($slot);
 
         return $widget;

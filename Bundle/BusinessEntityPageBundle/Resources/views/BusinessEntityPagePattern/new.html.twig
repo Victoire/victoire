@@ -4,7 +4,7 @@
 
 {% extends 'VictoireCoreBundle::_modal.html.twig' %}
 
-{% block modal_container_classes %}{{ parent() }} vic-page-modal{% endblock modal_container_classes %}
+{% block modal_container_classes %}{{ parent() }} vic-view-modal{% endblock modal_container_classes %}
 
 {% block modal_body_content %}
     {% include 'VictoireBusinessEntityBundle:BusinessProperty:list.html.twig' with { 'businessProperties':businessProperties } %}

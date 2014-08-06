@@ -10,11 +10,11 @@ use Victoire\Bundle\WidgetBundle\Resolver\Chain\WidgetContentResolverChain;
 class WidgetContentResolver
 {
 
-    private $queryHelper; // @victoire_query.query_helper
-    private $widgetHelper; // @victoire_query.widget_helper
-    private $widgetContentResolverChain; // @victoire_widget.widget_content_resolver_chain
-    private $request; // @request
-    private $filterChain = null; // ?@victoire_core.filter_chain
+    private $queryHelper;
+    private $widgetHelper;
+    private $widgetContentResolverChain;
+    private $request;
+    private $filterChain = null;
 
     public function __construct(
         QueryHelper $queryHelper,

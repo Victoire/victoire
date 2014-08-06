@@ -19,16 +19,16 @@ class Template extends View
     /**
      * @var string
      *
-     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\PageBundle\Entity\BasePage", mappedBy="template")
+     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\TemplateBundle\Entity\Template", mappedBy="template")
      */
-    protected $pages;
+    protected $inheritors;
 
     /**
      * @var string
      *
-     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\TemplateBundle\Entity\Template", mappedBy="template")
+     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\PageBundle\Entity\BasePage", mappedBy="template")
      */
-    protected $children;
+    protected $pages;
 
     /**
      * @var string
@@ -61,7 +61,7 @@ class Template extends View
     }
 
     /**
-     * Get pages
+     * Get pages (all Pages having this object as Template)
      *
      * @return string
      */
@@ -71,26 +71,26 @@ class Template extends View
     }
 
     /**
-     * Set children
-     * @param string $children
+     * Set page
+     * @param string $inheritors
      *
      * @return Template
      */
-    public function setChildren($children)
+    public function setInheritors($inheritors)
     {
-        $this->children = $children;
+        $this->inheritors = $inheritors;
 
         return $this;
     }
 
     /**
-     * Get children
+     * Get inheritors (all Templates having this object as Template)
      *
      * @return string
      */
-    public function getChildren()
+    public function getInheritors()
     {
-        return $this->children;
+        return $this->inheritors;
     }
 
     /**

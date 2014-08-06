@@ -2,10 +2,10 @@
 
 namespace Victoire\Bundle\PageBundle\Twig\Extension;
 
-use Victoire\Bundle\PageBundle\Entity\Page;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\BusinessEntityPageBundle\Helper\BusinessEntityPageHelper;
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
 
 /**
@@ -66,12 +66,11 @@ class PageExtension extends \Twig_Extension
 
     /**
      * Get the link for a page in the sitemap
-     *
-     * @param Page $page
+     * @param BasePage $page
      *
      * @return string The html
      */
-    public function cmsPageSiteMap(Page $page)
+    public function cmsPageSiteMap(BasePage $page)
     {
         $html = '';
 
@@ -91,7 +90,7 @@ class PageExtension extends \Twig_Extension
     /**
      * Get the ol li for the generated page of a business entity page pattern
      *
-     * @param Page $page
+     * @param BasePage $page
      *
      * @return string The html
      */
@@ -173,11 +172,11 @@ class PageExtension extends \Twig_Extension
     /**
      * Get the list of urls of the children
      *
-     * @param Page $page
+     * @param BasePage $page
      *
      * @return aray of strings The list of urls
      */
-    protected function getChildrenUrls(Page $page)
+    protected function getChildrenUrls(BasePage $page)
     {
         $urls = array();
 

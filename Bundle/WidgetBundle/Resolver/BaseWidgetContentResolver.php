@@ -25,7 +25,7 @@ class BaseWidgetContentResolver
         $widgetProperties = $reflect->getProperties();
         $parameters = array('widget' => $widget);
         $accessor = PropertyAccess::createPropertyAccessor();
-        $plop;
+
         foreach ($widgetProperties as $property) {
             $value = $accessor->getValue($widget, $property->getName());
             $parameters[$property->getName()] = $value;

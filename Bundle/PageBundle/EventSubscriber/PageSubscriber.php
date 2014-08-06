@@ -17,7 +17,6 @@ use Victoire\Bundle\PageBundle\Helper\UrlHelper;
  */
 class PageSubscriber implements EventSubscriber
 {
-    protected $cacheRouteRegisterer;
     protected $router;
     protected $userClass;
     protected $userCallable;
@@ -25,15 +24,13 @@ class PageSubscriber implements EventSubscriber
 
     /**
      * Constructor
-     * @param unknown   $cacheRouteRegisterer
      * @param unknown   $router
      * @param unknown   $userCallable
      * @param string    $userClass
      * @param Container $container
      */
-    public function __construct($cacheRouteRegisterer, $router, $userCallable, $userClass, $container)
+    public function __construct($router, $userCallable, $userClass, $container)
     {
-        $this->cacheRouteRegisterer = $cacheRouteRegisterer;
         $this->router = $router;
         $this->userClass = $userClass;
         $this->userCallable = $userCallable;

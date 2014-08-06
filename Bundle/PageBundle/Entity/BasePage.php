@@ -145,18 +145,6 @@ abstract class BasePage extends View
     }
 
     /**
-     * Get discriminator type
-     *
-     * @return integer
-     */
-    public function getType()
-    {
-        $class = get_called_class();
-
-        return $class::TYPE;
-    }
-
-    /**
      * Set routes
      *
      * @param routes $routes

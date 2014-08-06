@@ -1,6 +1,6 @@
 {#_meta.html.twig #}
 
-{% if view.seo is defined %}
+{% if view.seo is defined and view.seo %}
     <!-- Basics -->
     {% if view.seo.metaTitle %}<title>{{ view.seo.metaTitle }}</title>{% endif %}
     {% if view.seo.metaDescription %}<meta name="description" content="{{ view.seo.metaDescription }}"/>{% endif %}

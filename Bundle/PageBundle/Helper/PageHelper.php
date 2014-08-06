@@ -136,7 +136,7 @@ class PageHelper
      *
      * @return Page The page for the entity instance
      */
-    public function duplicatePagePatternIfPageInstance(BasePage $page)
+    public function duplicatePagePatternIfPageInstance(View $page)
     {
         //we copy the reference to the widget page
         $widgetPage = $page;

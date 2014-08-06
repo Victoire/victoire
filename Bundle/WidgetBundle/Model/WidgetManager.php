@@ -9,9 +9,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Victoire\Bundle\CoreBundle\Annotations\Reader\AnnotationReader;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
+use Victoire\Bundle\PageBundle\Entity\Slot;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
 use Victoire\Bundle\PageBundle\WidgetMap\WidgetMapBuilder;
+use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\WidgetBundle\Builder\WidgetFormBuilder;
 use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
 use Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer;
@@ -90,7 +92,7 @@ class WidgetManager
      *
      * @return template
      */
-    public function newWidget($type, $slot, View $view)
+    public function newWidget($type, $slot, $view)
     {
         $widget = $this->widgetHelper->newWidgetInstance($type, $view, $slot);
 
@@ -142,7 +144,9 @@ class WidgetManager
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $view = $this->pageHelper->duplicatePagePatternIfPageInstance($view);
+            if ($view instanceof Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage) {
+                $view = $this->pageHelper->duplicatePagePatternIfPageInstance($view);
+            }
 
             //get the widget from the form
             $widget = $form->getData();
@@ -217,14 +221,11 @@ class WidgetManager
 
         $classes = $this->annotationReader->getBusinessClassesForWidget($widget);
 
-        $view = $widget->getPage();
+        $view = $widget->getView();
 
         //the id of the edited widget
         //a new widget might be created in the case of a legacy
         $initialWidgetId = $widget->getId();
-
-        //create a view for the business entity instance if we are currently display an instance for a business entity template
-        $view = $this->pageHelper->duplicatePagePatternIfPageInstance($view);
 
         //the type of method used
         $requestMethod = $request->getMethod();
@@ -232,7 +233,12 @@ class WidgetManager
         //if the form is posted
         if ($requestMethod === 'POST') {
 
-            $widget = $widgetMapBuilder->editWidgetFromPage($view, $widget);
+            //create a view for the business entity instance if we are currently display an instance for a business entity template
+            if ($view instanceof Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage) {
+                $view = $this->pageHelper->duplicatePagePatternIfPageInstance($view);
+            }
+
+            $widget = $widgetMapBuilder->editWidgetFromView($view, $widget);
 
             if ($entityName !== null) {
                 $form = $this->widgetFormBuilder->buildForm($widget, $view, $entityName, $classes[$entityName]);
@@ -307,19 +313,20 @@ class WidgetManager
         $widgetId = $widget->getId();
 
         //the view
-        $widgetPage = $widget->getPage();
+        $view = $widgetView = $widget->getView();
 
-        //create a view for the business entity instance if we are currently display an instance for a business entity template
-        $view = $this->pageHelper->duplicatePagePatternIfPageInstance($widgetPage);
-
+        //create a view for the business entity instance if we are currently display an instance for a business entity page pattern
+        if ($widgetView instanceof Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage) {
+            $view = $this->pageHelper->duplicatePagePatternIfPageInstance($widgetView);
+        }
         //update the view deleting the widget
-        $widgetMapBuilder->deleteWidgetFromPage($view, $widget);
+        $widgetMapBuilder->deleteWidgetFromView($view, $widget);
 
         //we update the widget map of the view
         $view->updateWidgetMapBySlots();
 
         //the widget is removed only if the current view is the view of the widget
-        if ($view === $widgetPage) {
+        if ($view === $widgetView) {
             //we remove the widget
             $em->remove($widget);
         }

@@ -34,12 +34,12 @@
                 <source>page.undeletable</source>
                 <target>Cette page n'est pas supprimable.</target>
             </trans-unit>
-            <trans-unit resname="modal.form.page.settings.name">
-                <source>modal.form.page.settings.name</source>
+            <trans-unit resname="modal.form.page.settings.title">
+                <source>modal.form.page.settings.title</source>
                 <target>Paramètres de la page "page.name"</target>
             </trans-unit>
-            <trans-unit resname="modal.form.template.settings.name">
-                <source>modal.form.template.settings.name</source>
+            <trans-unit resname="modal.form.template.settings.title">
+                <source>modal.form.template.settings.title</source>
                 <target>Paramètres du modèle "template.name"</target>
             </trans-unit>
             <trans-unit resname="form.page.type.slug.label">

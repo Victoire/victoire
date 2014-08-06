@@ -8,6 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Victoire\Bundle\PageBundle\Entity\Slot;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
+use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
  * Victoire View
@@ -19,6 +20,7 @@ use Victoire\Bundle\PageBundle\Entity\WidgetMap;
  * The discriminator map is injected with loadClassMetadata event
  * @ORM\Entity
  * @ORM\Table("vic_view")
+ * @ORM\HasLifecycleCallbacks
  */
 abstract class View
 {
@@ -74,7 +76,7 @@ abstract class View
     /**
      * @var string
      *
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\TemplateBundle\Entity\Template", inversedBy="pages")
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\TemplateBundle\Entity\Template", inversedBy="inheritors")
      * @ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="CASCADE")
      *
      */
@@ -137,7 +139,7 @@ abstract class View
     protected $undeletable = false;
 
     /**
-     * @ORM\Column(name="widgetMap", type="array")
+     * @ORM\Column(name="widget_map", type="array")
      */
     protected $widgetMap;
 
@@ -574,25 +576,24 @@ abstract class View
      */
     public function postLoad()
     {
-        $widgetMap = $this->getWidgetMap();
-
+        $widgetMap = $this->widgetMap;
         //the slots of the page
         $slots = array();
 
         //convert the widget map array as objects
-        foreach ($widgetMap as $slotId => $widgetMapEntries) {
+        foreach ($widgetMap as $slotId => $_widgetMapEntries) {
             $slot = new Slot();
             $slot->setId($slotId);
 
-            foreach ($widgetMapEntries as $widgetMapEntry) {
-                $widgetMapTemp = new WidgetMap();
-                $widgetMapTemp->setAction($widgetMapEntry['action']);
-                $widgetMapTemp->setPosition($widgetMapEntry['position']);
-                $widgetMapTemp->setPositionReference($widgetMapEntry['positionReference']);
-                $widgetMapTemp->setReplacedWidgetId($widgetMapEntry['replacedWidgetId']);
-                $widgetMapTemp->setWidgetId(intval($widgetMapEntry['widgetId']));
+            foreach ($_widgetMapEntries as $_widgetMapEntry) {
+                $_widgetMap = new WidgetMap();
+                $_widgetMap->setAction($_widgetMapEntry['action']);
+                $_widgetMap->setPosition($_widgetMapEntry['position']);
+                $_widgetMap->setPositionReference($_widgetMapEntry['positionReference']);
+                $_widgetMap->setReplacedWidgetId($_widgetMapEntry['replacedWidgetId']);
+                $_widgetMap->setWidgetId(intval($_widgetMapEntry['widgetId']));
 
-                $slot->addWidgetMap($widgetMapTemp);
+                $slot->addWidgetMap($_widgetMap);
             }
 
             $slots[] = $slot;
@@ -648,13 +649,13 @@ abstract class View
             $widgetMaps = $slot->getWidgetMaps();
 
             //parse the widget map objects
-            foreach ($widgetMaps as $widgetMapTemp) {
+            foreach ($widgetMaps as $_widgetMap) {
                 $widgetMapEntry = array();
-                $widgetMapEntry['action'] = $widgetMapTemp->getAction();
-                $widgetMapEntry['position'] = $widgetMapTemp->getPosition();
-                $widgetMapEntry['positionReference'] = $widgetMapTemp->getPositionReference();
-                $widgetMapEntry['replacedWidgetId'] = $widgetMapTemp->getReplacedWidgetId();
-                $widgetMapEntry['widgetId'] = $widgetMapTemp->getWidgetId();
+                $widgetMapEntry['action'] = $_widgetMap->getAction();
+                $widgetMapEntry['position'] = $_widgetMap->getPosition();
+                $widgetMapEntry['positionReference'] = $_widgetMap->getPositionReference();
+                $widgetMapEntry['replacedWidgetId'] = $_widgetMap->getReplacedWidgetId();
+                $widgetMapEntry['widgetId'] = $_widgetMap->getWidgetId();
 
                 //add the temp slot to the widget map
                 $widgetMap[$slotId][] = $widgetMapEntry;
@@ -668,7 +669,7 @@ abstract class View
      * This function update the widgetMap array using the slots entities array
      *
      */
-    public function updateWidgetMapBySlots()
+    protected function updateWidgetMapBySlots()
     {
         //generate widget map by the slots
         $widgetMap = $this->convertSlotsToWidgetMap();
@@ -721,5 +722,17 @@ abstract class View
     public function getSlots()
     {
         return $this->slots;
+    }
+
+    /**
+     * Get discriminator type
+     *
+     * @return integer
+     */
+    public function getType()
+    {
+        $class = get_called_class();
+
+        return $class::TYPE;
     }
 }

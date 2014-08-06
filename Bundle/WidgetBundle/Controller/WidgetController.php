@@ -25,7 +25,7 @@ class WidgetController extends AwesomeController
      * @param Entity $entity the entity
      *
      * @return response
-     * @Route("/show/{id}/{entity}", name="victoire_core_widget_show", options={"expose"=true}, defaults={"entity": null})
+     * @Route("/victoire-dcms/widget/show/{id}/{entity}", name="victoire_core_widget_show", options={"expose"=true}, defaults={"entity": null})
      * @Template()
      * @ParamConverter("id", class="VictoireWidgetBundle:Widget")
      */
@@ -42,7 +42,7 @@ class WidgetController extends AwesomeController
                      'success' => false
                  ));
             } else {
-                $response = $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $widget->getPage()->getUrl())));
+                $response = $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $widget->getView()->getUrl())));
             }
         } catch (\Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
@@ -55,23 +55,23 @@ class WidgetController extends AwesomeController
      * New Widget
      *
      * @param string         $type   The type of the widget we edit
-     * @param Page           $page   The page where attach the widget
+     * @param Page           $view   The view where attach the widget
      * @param string         $slot   The slot where attach the widget
      * @param BusinessEntity $entity The business entity the widget shows on dynamic mode
      *
      * @return response
      *
-     * @Route("/victoire-dcms/widget/new/{type}/{page}/{slot}/{entity}", name="victoire_core_widget_new", defaults={"slot":null, "entity":null}, options={"expose"=true})
+     * @Route("/victoire-dcms/widget/new/{type}/{view}/{slot}/{entity}", name="victoire_core_widget_new", defaults={"slot":null, "entity":null}, options={"expose"=true})
      * @Template()
      */
-    public function newAction($type, $page, $slot = null, $entity = null)
+    public function newAction($type, $view, $slot = null, $entity = null)
     {
         try {
-            $page = $this->get('doctrine.orm.entity_manager')->getRepository('VictoirePageBundle:Page')->findOneById($page);
+            $view = $this->get('doctrine.orm.entity_manager')->getRepository('VictoireCoreBundle:View')->findOneById($view);
 
             if ($entity) {
                 $widgetManager = $this->get('widget_manager')->getManager(null, $type);
-                $widget = $widgetManager->newWidget($type, $page, $slot);
+                $widget = $widgetManager->newWidget($type, $view, $slot);
 
                 $namespace = null;
 
@@ -92,9 +92,9 @@ class WidgetController extends AwesomeController
 
                 $form = $this->get('widget_manager')->buildForm($widgetManager, $widget, $entity, $namespace);
 
-                $response = new JsonResponse($this->get('widget_manager')->renderNewForm($form, $widget, $slot, $page, $entity));
+                $response = new JsonResponse($this->get('widget_manager')->renderNewForm($form, $widget, $slot, $view, $entity));
             } else {
-                $response = new JsonResponse($this->get('widget_manager')->newWidget($type, $slot, $page));
+                $response = new JsonResponse($this->get('widget_manager')->newWidget($type, $slot, $view));
             }
         } catch (\Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
@@ -107,24 +107,24 @@ class WidgetController extends AwesomeController
      * Create a widget
      *
      * @param string         $type   The type of the widget we edit
-     * @param Page           $page   The page where attach the widget
+     * @param Page           $view   The view where attach the widget
      * @param string         $slot   The slot where attach the widget
      * @param BusinessEntity $entity The business entity the widget shows on dynamic mode
      *
      * @return response
-     * @Route("/victoire-dcms/widget/create/{type}/{page}/{slot}/{entity}", name="victoire_core_widget_create", defaults={"slot":null, "entity":null, "_format": "json"})
+     * @Route("/victoire-dcms/widget/create/{type}/{view}/{slot}/{entity}", name="victoire_core_widget_create", defaults={"slot":null, "entity":null, "_format": "json"})
      * @Template()
      */
-    public function createAction($type, $page, $slot = null, $entity = null)
+    public function createAction($type, $view, $slot = null, $entity = null)
     {
         try {
             //services
             $em = $this->getEntityManager();
 
-            $page = $em->getRepository('VictoirePageBundle:Page')->findOneById($page);
+            $view = $em->getRepository('VictoireCoreBundle:View')->findOneById($view);
             $widgetManager = $this->getWidgetManager();
 
-            $response = new JsonResponse($widgetManager->createWidget($type, $slot, $page, $entity));
+            $response = new JsonResponse($widgetManager->createWidget($type, $slot, $view, $entity));
         } catch (\Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
         }
@@ -179,22 +179,22 @@ class WidgetController extends AwesomeController
     }
 
     /**
-     * Update widget positions accross the page. If moved widget is a Reference, ask to detach the page from template
+     * Update widget positions accross the view. If moved widget is a Reference, ask to detach the view from template
      *
-     * @param Page $page The page where update widget positions
+     * @param Page $view The view where update widget positions
      *
      * @return response
-     * @Route("/victoire-dcms/widget/updatePosition/{page}", name="victoire_core_widget_update_position", options={"expose"=true})
-     * @ParamConverter("page", class="VictoirePageBundle:Page")
+     * @Route("/victoire-dcms/widget/updatePosition/{view}", name="victoire_core_widget_update_position", options={"expose"=true})
+     * @ParamConverter("view", class="VictoireCoreBundle:View")
      */
-    public function updatePositionAction(Page $page)
+    public function updatePositionAction(Page $view)
     {
         try {
             //the sorted order for the widgets
             $sortedWidgets = $this->getRequest()->request->get('sorted');
 
             //recompute the order for the widgets
-            $this->get('page.widgetMap.builder')->updateWidgetMapOrder($page, $sortedWidgets);
+            $this->get('view.widgetMap.builder')->updateWidgetMapOrder($view, $sortedWidgets);
 
             $response = new JsonResponse(array('success' => true));
         } catch (\Exception $ex) {

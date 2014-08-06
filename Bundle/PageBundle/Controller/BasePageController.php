@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
-use Victoire\Bundle\PageBundle\Entity\Page;
+use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Helper\UrlHelper;
 
 /**
@@ -165,12 +165,12 @@ class BasePageController extends AwesomeController
     /**
      * Page settings
      *
-     * @param Request $request
-     * @param Page    $page
+     * @param Request  $request
+     * @param BasePage $page
      *
      * @return template
      */
-    protected function settingsAction(Request $request, Page $page)
+    protected function settingsAction(Request $request, BasePage $page)
     {
         $em = $this->getEntityManager();
 
@@ -243,7 +243,7 @@ class BasePageController extends AwesomeController
      *
      * @return template
      */
-    public function deleteAction(Page $page)
+    public function deleteAction(BasePage $page)
     {
         $return = null;
 

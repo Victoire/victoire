@@ -4,7 +4,7 @@ namespace Victoire\Bundle\WidgetBundle\Renderer;
 use Symfony\Component\DependencyInjection\Container;
 use Victoire\Bundle\CoreBundle\Event\WidgetRenderEvent;
 use Victoire\Bundle\CoreBundle\VictoireCmsEvents;
-use Victoire\Bundle\PageBundle\Entity\Page;
+use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\WidgetBundle\Model\Widget;
 
 class WidgetRenderer
@@ -30,10 +30,10 @@ class WidgetRenderer
         $mode = $widget->getMode();
 
         //if entty is given and it's not the object, retrive it and set the entity for the widget
-        if (!is_object($entity) && method_exists($widget->getPage(), 'getBusinessEntityName')) {
+        if (!is_object($entity) && method_exists($widget->getView(), 'getBusinessEntityName')) {
 
             $entityNamespaces = $this->container->get('victoire_core.annotation_reader')->getBusinessClasses();
-            $entityNamespace = $entityNamespaces[$widget->getPage()->getBusinessEntityName()];
+            $entityNamespace = $entityNamespaces[$widget->getView()->getBusinessEntityName()];
             $entity = $this->container->get('doctrine.orm.entity_manager')->getRepository($entityNamespace)->findOneById($entity);
         } elseif (is_object($widget->getEntity())) {
             $entity = $widget->getEntity();
@@ -77,7 +77,7 @@ class WidgetRenderer
         $html .= $this->render($widget, $entity);
 
         if ($securityContext->isGranted('ROLE_VICTOIRE')) {
-            $html .= $this->renderActions($widget->getSlot(), $widget->getPage());
+            $html .= $this->renderActions($widget->getSlot(), $widget->getView());
         }
 
         if ($addContainer) {
@@ -102,7 +102,7 @@ class WidgetRenderer
             'VictoireCoreBundle:Widget:widgetActions.html.twig',
             array(
                 "widget" => $widget,
-                "page" => $widget->getCurrentPage(),
+                "view" => $widget->getCurrentView(),
             )
         );
     }
@@ -112,12 +112,12 @@ class WidgetRenderer
      * render slot actions
      *
      * @param string  $slot
-     * @param Page    $page
+     * @param Page    $view
      * @param boolean $first
      *
      * @return template
      */
-    public function renderActions($slot, Page $page, $first = false)
+    public function renderActions($slot, View $view, $first = false)
     {
         $slots = $this->container->getParameter('victoire_core.slots');
 
@@ -152,7 +152,7 @@ class WidgetRenderer
             "VictoireCoreBundle:Widget:actions.html.twig",
             array(
                 "slot"    => $slot,
-                "page"    => $page,
+                "view"    => $view,
                 'widgets' => $widgets,
                 'max'     => $max,
                 'first'   => $first,
