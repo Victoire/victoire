@@ -1,15 +1,15 @@
 <?php
 namespace Victoire\Bundle\PageBundle\Form;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Victoire\Bundle\CoreBundle\Form\ViewType;
 use Victoire\Bundle\PageBundle\Entity\Page;
 
 /**
  * Page Type
  */
-class PageType extends AbstractType
+class PageType extends ViewType
 {
 
     /**
@@ -19,16 +19,8 @@ class PageType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        parent::buildForm($build, $options);
         $builder
-            ->add('name', null, array(
-                'label' => 'form.page.type.name.label'
-            ))
-            ->add('parent', null, array(
-                'label' => 'form.page.type.parent.label'
-            ))
-            ->add('template', null, array(
-                'label' => 'form.page.type.template.label'
-            ))
             ->add('homepage', 'hidden');
     }
 

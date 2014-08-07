@@ -90,11 +90,15 @@ class BusinessEntityPagePatternController extends Controller
         $businessEntityName = $entity->getBusinessEntityName();
         $businessProperty = $this->getBusinessProperties($entity);
 
-        $form = $this->createForm('victoire_business_entity_page_type', $entity, array(
-            'action' => $this->generateUrl('victoire_businessentitypagepattern_businessentitypagepattern_create', array('id' => $businessEntityName)),
-            'method' => 'POST',
-            'businessProperty' => $businessProperty
-        ));
+        $form = $this->createForm(
+            'victoire_business_entity_page_type',
+            $entity,
+            array(
+                'action'           => $this->generateUrl('victoire_businessentitypagepattern_businessentitypagepattern_create', array('id' => $businessEntityName)),
+                'method'           => 'POST',
+                'businessProperty' => $businessProperty
+            )
+        );
 
         return $form;
     }

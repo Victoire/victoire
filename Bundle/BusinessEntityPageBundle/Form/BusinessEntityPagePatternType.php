@@ -4,12 +4,12 @@ namespace Victoire\Bundle\BusinessEntityPageBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Victoire\Bundle\PageBundle\Form\PageType;
+use Victoire\Bundle\CoreBundle\Form\ViewType;
 
 /**
  *
  */
-class BusinessEntityPagePatternType extends PageType
+class BusinessEntityPagePatternType extends ViewType
 {
 
     /**
@@ -20,15 +20,14 @@ class BusinessEntityPagePatternType extends PageType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        parent::buildForm($builder, $options);
         $businessProperty = $options['businessProperty'];
 
         $builder
             ->add('businessEntityName', 'hidden')
-            ->add('name')
             ->add('query')
             ->add('url');
 
-        parent::buildForm($builder, $options);
     }
 
     /**

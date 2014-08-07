@@ -10,16 +10,16 @@
                 <source>new.template.modal.header</source>
                 <target>Nouveau modèle</target>
             </trans-unit>
-            <trans-unit resname="form.page.type.name.label">
-                <source>form.page.type.name.label</source>
+            <trans-unit resname="form.view.type.name.label">
+                <source>form.view.type.name.label</source>
                 <target>Nom</target>
             </trans-unit>
-            <trans-unit resname="form.page.type.parent.label">
-                <source>form.page.type.parent.label</source>
+            <trans-unit resname="form.view.type.parent.label">
+                <source>form.view.type.parent.label</source>
                 <target>Page parente</target>
             </trans-unit>
-            <trans-unit resname="form.page.type.template.label">
-                <source>form.page.type.template.label</source>
+            <trans-unit resname="form.view.type.template.label">
+                <source>form.view.type.template.label</source>
                 <target>Modèle à utiliser</target>
             </trans-unit>
             <trans-unit resname="form.page.type.bodyClass.label">

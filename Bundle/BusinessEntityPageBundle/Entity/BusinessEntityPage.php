@@ -57,38 +57,6 @@ class BusinessEntityPage extends BasePage
         return $this->entityProxy;
     }
 
-    /**
-     * Set the businessEntity
-     *
-     * @param unknown $businessEntity
-     */
-    public function setBusinessEntity($businessEntity)
-    {
-        $this->businessEntity = $businessEntity;
-    }
-
-    /**
-     * Get the business entity
-     *
-     * @return number
-     */
-    public function getBusinessEntity()
-    {
-        //if there is no entity
-        if ($this->businessEntity === null) {
-            //we try to get one from the proxy
-            $entityProxy = $this->getEntityProxy();
-
-            //if there is a proxy
-            if ($entityProxy !== null) {
-                $businessEntity = $entityProxy->getEntity();
-                $this->businessEntity = $entityProxy;
-            }
-        }
-
-        return $this->businessEntity;
-    }
-
     public function setPattern(BusinessEntityPagePattern $businessEntityPagePattern) { $this->businessEntityPagePattern = $businessEntityPagePattern; return $this; }
     public function getPattern() { return $this->businessEntityPagePattern; }
 
