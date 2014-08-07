@@ -54,18 +54,26 @@ label {
  // Input //
 ///////////
 
-.vic-form-control {
-    border-width: 1px;
-    border-style: solid;
-    border-color: @vic-formControl-borderColor;
-    height: @vic-formControl-height;
-    .box-shadow(@vic-formControl-boxShadow);
-    .placeholderColor(@vic-formControl-placeholderColor);
+input {
+    &.vic-form-control {
+        border-width: 1px;
+        border-style: solid;
+        border-color: @vic-formControl-borderColor;
+        .box-shadow(@vic-formControl-boxShadow);
+        .placeholderColor(@vic-formControl-placeholderColor);
 
-    &:focus {
-        .box-shadow;
-        border-color: @vic-formControl-focus-borderColor;
-        .placeholderColor(@vic-formControl-focus-placeholderColor);
+        &:focus {
+            .box-shadow;
+            border-color: @vic-formControl-focus-borderColor;
+            .placeholderColor(@vic-formControl-focus-placeholderColor);
+        }
+    }
+}
+
+input,
+select {
+    &.vic-form-control {
+        height: @vic-formControl-height;
     }
 }
 

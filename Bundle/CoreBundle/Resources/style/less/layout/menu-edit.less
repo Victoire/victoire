@@ -1,0 +1,91 @@
+@vic-menuWidget-subLevelItemList-space: 70px;
+@vic-menuWidget-formControl: 170px;
+@vic-menuWidget-formControl-horizontalSpace: 10px;
+@vic-menuWidget-formControl-verticalSpace: 10px;
+@vic-menuWidget-btn-width: 40px;
+@vic-menuWidget-btn-height: @vic-menuWidget-btn-width;
+@vic-add_menu_link-width: 22px;
+@vic-add_menu_link-height: @vic-add_menu_link-width;
+
+.vic-menuWidget {
+}
+
+.vic-menuWidget-itemList {
+    margin-left: -1 * @vic-menuWidget-subLevelItemList-space;
+
+    li {
+        padding-left: @vic-menuWidget-subLevelItemList-space;
+    }
+}
+
+.vic-menuWidget-item-formGroup {
+    margin-left: -1 * @vic-menuWidget-formControl-horizontalSpace / 2;
+    margin-right: -1 * @vic-menuWidget-formControl-horizontalSpace / 2;
+    margin-bottom: 0;
+    position: relative;
+}
+
+.vic-menuWidget-formControl {
+    width: @vic-menuWidget-formControl;
+    float: left;
+    margin-left: @vic-menuWidget-formControl-horizontalSpace / 2;
+    margin-right: @vic-menuWidget-formControl-horizontalSpace / 2;
+    margin-bottom: @vic-menuWidget-formControl-verticalSpace;
+}
+
+
+.add_menu_link {
+    text-align: 0;
+
+    &:not(.add_menu_sibling) {
+        .transform(rotate(90deg));
+        text-align: center;
+
+        &:before {
+            text-shadow: 0;
+            font-family: FontAwesome;
+            content: "\f148";
+        }
+    }
+}
+
+.add_menu_link-container {
+    height: @vic-add_menu_link-height;
+    width: @vic-add_menu_link-width;
+    position: absolute;
+    top: 0;
+    left: (@vic-menuWidget-formControl-horizontalSpace * 3.5) + @vic-menuWidget-formControl * 3;
+}
+
+.vic-menuWidget-btn {
+    height: @vic-menuWidget-btn-height;
+    width: @vic-menuWidget-btn-width;
+    line-height: 40px;
+    padding: 0;
+    text-align: center;
+}
+
+.vic-menuWidget-deleteRow {
+    margin-left: @vic-menuWidget-btn-width + @vic-menuWidget-formControl-horizontalSpace * 1.5;
+}
+
+.vic-menuWidget-name,
+.vic-menuWidget-rest {
+    width: @vic-menuWidget-formControl * 2 + @vic-menuWidget-formControl-horizontalSpace;
+    margin-bottom: @vic-menuWidget-formControl-horizontalSpace * 2;
+    overflow: hidden;
+
+    .vic-col-lg-9 {
+        padding: 0;
+    }
+
+    label {
+        display: block;
+        padding: 0;
+        width: 100%;
+    }
+}
+
+.vic-add_menu_sibling-Container {
+    padding-left: @vic-menuWidget-subLevelItemList-space;
+}
