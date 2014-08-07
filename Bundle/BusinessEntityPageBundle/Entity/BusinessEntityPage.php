@@ -93,26 +93,12 @@ class BusinessEntityPage extends BasePage
     public function getPattern() { return $this->businessEntityPagePattern; }
 
     /**
-     * Get the page that is a legacy and a business entity page pattern
+     * Get the business entity name (PagePattern proxy)
      *
-     * @return Page The page that is a business entity page pattern
-     */
-    public function getBusinessEntityPagePatternLegacyPage()
+     * @return string
+     **/
+    public function getBusinessEntityName()
     {
-        $page = null;
-
-        //is the page a business entity page pattern
-        if ($this->getType() === BusinessEntityPagePattern::TYPE) {
-            $page = $this;
-        } else {
-            //we check if the parent is a business entity page pattern
-            $parent = $this->getParent();
-
-            if ($parent !== null) {
-                $page = $parent->getBusinessEntityPagePatternLegacyPage();
-            }
-        }
-
-        return $page;
+        return $this->getPattern()->getBusinessEntityName();
     }
 }

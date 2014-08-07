@@ -4,6 +4,7 @@ namespace Victoire\Bundle\CoreBundle\Twig\Extension;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\SecurityContext;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Handler\WidgetExceptionHandler;
@@ -240,20 +241,10 @@ class CmsExtension extends \Twig_Extension
         //the result
         $isBusinessEntityAllowed = false;
 
-        //get the view that is a business entity view (parent included)
-        $businessEntitiesPagePattern = $view->getBusinessEntityPagePatternLegacyPage();
-
-        //if there is a view
-        if ($businessEntitiesPagePattern !== null) {
-            //and a businessEntity name is given
-            if ($formEntityName !== null) {
-                //the business entity linked to the view pattern
-                $viewBusinessEntity = $businessEntitiesPagePattern->getBusinessEntityName();
-
-                //are we using the same business entity
-                if ($formEntityName === $viewBusinessEntity) {
-                    $isBusinessEntityAllowed = true;
-                }
+        if ($view instanceof BusinessEntityPagePattern || $view instanceof BusinessEntityPage) {
+            //are we using the same business entity
+            if ($formEntityName === $view->getBusinessEntityName()) {
+                $isBusinessEntityAllowed = true;
             }
         }
 
