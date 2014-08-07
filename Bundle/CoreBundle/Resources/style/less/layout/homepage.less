@@ -1,0 +1,78 @@
+/*
+ * Homepage
+ *
+ * Tweaks to the custom homepage and the masthead (main jumbotron).
+ */
+
+ /* Masthead (headings and download button) */
+ body.welcome {
+    background-image: url('/bundles/victoirecore/images/background/nebu-full.jpg');
+    background-position: center center;
+}
+.vic-masthead {
+    position: relative;
+    padding: 30px 15px;
+    text-align: center;
+    text-shadow: 0 1px 0 rgba(0,0,0,.15);
+}
+.vic-masthead h1 {
+    font-size: 50px;
+    line-height: 1;
+    color: #fff;
+    font-family: Verlag, Josefin Sans, Arial, Verdana, Geneva, Helvetica, sans-serif;
+}
+.vic-masthead .vic-btn-outline-inverse {
+    margin: 10px;
+    border-color: #E5F9F5;
+    color: #E5F9F5;
+    &:hover {
+        background-color: #E5F9F5;
+        color: @black;
+    }
+}
+
+/* Links to project-level content like the repo, Expo, etc */
+.vic-masthead-links {
+    margin-top: 20px;
+    margin-bottom: 40px;
+    padding: 0 15px;
+    list-style: none;
+    text-align: center;
+}
+.vic-masthead-links li {
+    display: inline;
+}
+.vic-masthead-links li + li {
+    margin-left: 20px;
+}
+.vic-masthead-links a {
+    color: #fff;
+}
+.vic-masthead .vic-lead {
+    color: #E5F9F5;
+}
+
+@media (min-width: 768px) {
+  .vic-masthead {
+    text-align: left;
+    padding-top:    140px;
+    padding-bottom: 140px;
+  }
+  .vic-masthead h1 {
+    font-size: 100px;
+  }
+  .vic-masthead .vic-lead {
+    margin-right: 25%;
+    font-size: 30px;
+  }
+  .vic-masthead .vic-btn-outline-inverse {
+    width: auto;
+    margin: 20px 5px 20px 0;
+    padding: 18px 24px;
+    font-size: 21px;
+  }
+  .vic-masthead-links {
+    padding: 0;
+    text-align: left;
+  }
+}

@@ -1,0 +1,47 @@
+  /////////////
+ // btn-add //
+/////////////
+
+.vic-btn-add {
+    border-style: @vic-btnAdd-borderStyle;
+    background: @vic-btnAdd-background;
+    border-color: @vic-btnAdd-borderColor;
+    color: @vic-btnAdd-color;
+    font-weight: 600;
+    display: block;
+    font-family: @victoire-fontFamily;
+
+    &:before {
+        &:extend(.vic-new-widget > a span:before);
+        margin-top: 0;
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: @vic-btnAdd-color;
+        border-color: @vic-btnAdd-hover-borderColor;
+
+        &:before {
+            &:extend(.vic-new-widget > a:hover span:before);
+        }
+    }
+
+    img {
+        display: none;
+    }
+}
+
+
+
+  /////////////////
+ // add request //
+/////////////////
+
+.add-request {
+    width: @vic-addRequest-width;
+}
+
+.add-request-block {
+    margin-bottom: @vic-addRequest-marginBottom;
+}

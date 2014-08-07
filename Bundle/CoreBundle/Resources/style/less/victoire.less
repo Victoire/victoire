@@ -1,25 +1,61 @@
-// Less feature
-///////////////
+  /////////////////
+ // Get Started //
+/////////////////
 
-@import url(variables.less);
-@import url(mixins.less);
-@import url(https://fonts.googleapis.com/css?family=Josefin+Sans:100,400,700,100italic,400italic,700italic);
-
-
-
-// Smacss stylesheet
-////////////////////
-
-@import url(smacss/base.less);
-@import url(smacss/layout.less);
-@import url(smacss/module.less);
-@import url(smacss/state.less);
-@import url(smacss/theme.less);
-@import url(smacss/sitemap.less);
-@import url(smacss/seo.less);
+@imagesPath: "img";
+@layoutPath: "layout";
+@vendorPath: "/vendor";
+@globalsPath: "globals";
+@bricksPath: "bricks";
 
 
-// WIP
-//////
+
+  ////////////
+ // Global //
+////////////
+
+@import "@{globalsPath}/variables";
+@import "@{globalsPath}/mixins";
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic); // put in a typography.less file
+
+
+
+  ////////////
+ // Bricks //
+////////////
+
+@import '@{bricksPath}/victoire/victoire';
+@import '@{bricksPath}/vic-menu/vic-menu';
+@import '@{bricksPath}/vic-menu-dropdown/vic-menu-dropdown';
+@import '@{bricksPath}/vic-menu-leftNavbar/vic-menu-leftNavbar';
+@import '@{bricksPath}/vic-switcher/vic-switcher';
+@import '@{bricksPath}/vic-forms/vic-forms';
+@import '@{bricksPath}/vic-dropdown-newWidget/vic-dropdown-newWidget';
+@import '@{bricksPath}/vic-modal/vic-modal';
+@import '@{bricksPath}/vic-widget/vic-widget';
+@import '@{bricksPath}/vic-circled/vic-circled';
+@import '@{bricksPath}/vic-btn/vic-btn';
+@import '@{bricksPath}/vic-dragAndDrop/vic-dragAndDrop';
+@import '@{bricksPath}/vic-images/vic-images';
+@import '@{bricksPath}/vic-tab/vic-tab';
+@import '@{bricksPath}/vic-panel/vic-panel';
+@import '@{bricksPath}/vic-naturalLanguageSelect/vic-naturalLanguageSelect';
+
+
+
+  ////////////
+ // Layout //
+////////////
+
+@import '@{layoutPath}/general';
+@import '@{layoutPath}/login';
+@import '@{layoutPath}/homepage';
+
+
+
+  /////////
+ // WIP //
+/////////
 
 @import url(ugly.less);
+@import url(cleanup.less);

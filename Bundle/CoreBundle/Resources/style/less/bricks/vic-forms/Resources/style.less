@@ -1,0 +1,390 @@
+  /////////////
+ // General //
+/////////////
+
+.vic-modal {
+    select,
+    input[type="text"],
+    input[type="password"],
+    input[type="datetime"],
+    input[type="datetime-local"],
+    input[type="date"],
+    input[type="month"],
+    input[type="time"],
+    input[type="week"],
+    input[type="number"],
+    input[type="email"],
+    input[type="url"],
+    input[type="search"],
+    input[type="tel"],
+    input[type="color"],
+    .uneditable-input {
+        &:invalid {
+            all: none;
+            border-width: 1px;
+            border-style: solid;
+            border-color: @vic-formGeneral-invalid-borderColor;
+            .radius(@vic-formGeneral-invalid-radius);
+        }
+    }
+
+    input,
+    textarea,
+    select {
+        &:focus {
+            &:invalid {
+                &:focus {
+                    border-color: @vic-formGeneral-focus-borderColor;
+                    .box-shadow(@vic-formGeneral-focus-boxShadow);
+                }
+            }
+        }
+    }
+}
+
+label {
+    font-size: @vic-label-fontSize;
+    font-weight: @vic-label-fontWeight;
+}
+
+
+
+
+  ///////////
+ // Input //
+///////////
+
+.vic-form-control {
+    border-width: 1px;
+    border-style: solid;
+    border-color: @vic-formControl-borderColor;
+    height: @vic-formControl-height;
+    .box-shadow(@vic-formControl-boxShadow);
+    .placeholderColor(@vic-formControl-placeholderColor);
+
+    &:focus {
+        .box-shadow;
+        border-color: @vic-formControl-focus-borderColor;
+        .placeholderColor(@vic-formControl-focus-placeholderColor);
+    }
+}
+
+.vic-help-block {
+    color: #999999;
+    padding: @vic-helpBlock-horizontalPadding 10px;
+
+    a {
+        color: #e74c3c;
+    }
+}
+
+
+
+  ////////////
+ // Select //
+////////////
+
+.vic-select {
+    .box-sizing;
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    height: @vic-select-height;
+    width: @vic-select-width;
+    border-width: 1px;
+    border-style: solid;
+    border-color: @vic-select-borderColor;
+    .radius(@vic-select-radius);
+    background: @vic-select-background;
+
+
+    .fa-caret-down {
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        width: 26px;
+        font-size: 20px;
+        text-align: center;
+        padding: 9px;
+        font-size: 14px;
+        color: @black;
+        background: @green;
+    }
+
+    select {
+        .box-sizing;
+        .border;
+        position: absolute;
+        height: 33px;
+        width: 103%;
+        margin: -1px -1px -1px 5px;
+        padding: 8px 0 8px 4px;
+        line-height: 18px;
+        .appearance;
+        .radius;
+        background: transparent;
+        color: @black;
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
+.vic-form-group {
+    float: left;
+    width: 100%;
+
+    .vic-select {
+        width: 100%;
+    }
+}
+
+.vic-select.vic-form-control {
+    width: 100%;
+    padding: 0;
+}
+
+
+
+  //////////////
+ // Select 2 //
+//////////////
+
+.select2-drop-active {
+    padding: 4px 0 0 0;
+}
+
+.select2-container {
+    width: 100%;
+
+    .select2-choice {
+        border: 1px solid;
+        padding: 6px 10px;
+        height: auto;
+        line-height: inherit;
+        background-image: none;
+        border-color: @grey;
+
+        .select2-arrow {
+            width: 26px;
+            background: @green;
+            background-image: url(/img/caret-down.png);
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 8px 4px;
+            .radius(0 2px 2px 0);
+
+            b {
+                display: none;
+            }
+        }
+    }
+}
+
+.select2-container-active {
+    .select2-choice,
+    .select2-choices {
+        .box-shadow;
+    }
+}
+
+.select2-dropdown-open {
+    .select2-choice {
+        background-color: @white;
+    }
+}
+
+.select2-drop-active {
+    border-color: @grey;
+    .box-shadow;
+}
+
+.select2-results {
+    .select2-highlighted {
+        background: @green;
+    }
+}
+
+
+
+  ///////////
+ // Radio //
+///////////
+
+.vic-radio-custom {
+    label {
+        input[type=radio] {
+            width: 12px;
+            height: 12px;
+            appearance: none;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            background: @black;
+            .radius(12px);
+
+            &:checked {
+                border: 3px solid;
+                background: @green;
+                border-color: @black;
+            }
+
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+}
+
+
+
+  //////////////
+ // Checkbox //
+//////////////
+
+.vic-checkbox {
+    .radius(2px);
+
+    &:checked:after {
+        color: @green;
+    }
+
+    &:focus,
+    &:checked:focus {
+        outline: 0 !important;
+    }
+}
+
+
+
+  /////////////////////
+ // Custom Checkbox //
+/////////////////////
+
+.customCheckbox {
+    display: none;
+
+    + label {
+        line-height: @customCheckbox-height;
+        display: inline-block;
+        position: relative;
+        padding-left: @customCheckbox-label-leftSpace + @customCheckbox-width;
+        cursor: pointer;
+        font-size: @customCheckbox-label-fontSize;
+
+        &:before {
+            .box-sizing;
+            font-family: FontAwesome;
+            font-size: @customCheckbox-witness-fontSize;
+            position: absolute;
+            left: 0;
+            content: '';
+            display: inline-block;
+            height: @customCheckbox-height;
+            width: @customCheckbox-width;
+            background-image: -webkit-linear-gradient(bottom, @customCheckbox-backgroundColor-bottom, @customCheckbox-backgroundColor-top);
+            background-image: -moz-linear-gradient(bottom, @customCheckbox-backgroundColor-bottom, @customCheckbox-backgroundColor-top);
+            background-image: -o-linear-gradient(bottom, @customCheckbox-backgroundColor-bottom, @customCheckbox-backgroundColor-top);
+            background-image: linear-gradient(to top, @customCheckbox-backgroundColor-bottom, @customCheckbox-backgroundColor-top);
+            border-width: @customCheckbox-borderWidth;
+            border-style: solid;
+            border-color: @customCheckbox-borderColor;
+            text-align: center;
+            color: @customCheckbox-witness-color;
+            .radius(@customCheckbox-radius);
+            .box-shadow(@customCheckbox-boxShadow);
+        }
+
+        &:hover,
+        &:focus {
+            &:before {
+                .box-shadow(@customCheckbox-hover-boxShadow);
+                background-image: -webkit-linear-gradient(bottom, @customCheckbox-backgroundColor-bottom, @customCheckbox-backgroundColor-top);
+                background-image: -moz-linear-gradient(bottom, @customCheckbox-backgroundColor-bottom, @customCheckbox-backgroundColor-top);
+                background-image: -o-linear-gradient(bottom, @customCheckbox-backgroundColor-bottom, @customCheckbox-backgroundColor-top);
+                background-image: linear-gradient(to top, @customCheckbox-backgroundColor-bottom, @customCheckbox-backgroundColor-top);
+                border-color: @customCheckbox-hover-borderColor;
+            }
+        }
+    }
+
+
+    &:checked {
+        + label {
+            &:before {
+                content: "\f00c";
+                .box-shadow(@customCheckbox-checked-boxShadow);
+                background-image: -webkit-linear-gradient(bottom, @customCheckbox-backgroundColor-bottom, @customCheckbox-backgroundColor-top);
+                background-image: -moz-linear-gradient(bottom, @customCheckbox-backgroundColor-bottom, @customCheckbox-backgroundColor-top);
+                background-image: -o-linear-gradient(bottom, @customCheckbox-backgroundColor-bottom, @customCheckbox-backgroundColor-top);
+                background-image: linear-gradient(to top, @customCheckbox-backgroundColor-bottom, @customCheckbox-backgroundColor-top);
+                border-color: @customCheckbox-checked-borderColor;
+            }
+
+            &:hover,
+            &:focus {
+                &:before {
+                    .box-shadow(@customCheckbox-hover-checked-boxShadow);
+                    background-image: -webkit-linear-gradient(bottom, @customCheckbox-backgroundColor-bottom, @customCheckbox-backgroundColor-top);
+                    background-image: -moz-linear-gradient(bottom, @customCheckbox-backgroundColor-bottom, @customCheckbox-backgroundColor-top);
+                    background-image: -o-linear-gradient(bottom, @customCheckbox-backgroundColor-bottom, @customCheckbox-backgroundColor-top);
+                    background-image: linear-gradient(to top, @customCheckbox-backgroundColor-bottom, @customCheckbox-backgroundColor-top);
+                    border-color: @customCheckbox-hover-checked-borderColor;
+                }
+            }
+        }
+    }
+}
+
+
+
+  /////////
+ // Btn //
+/////////
+
+.vic-btn {
+    color: @vic-btn-color;
+    font-weight: @vic-btn-fontWeight;
+    text-shadow: @vic-btn-textShadow;
+    font-size: @vic-btn-fontSize;
+}
+
+
+// Success
+//////////
+
+.vic-btn-success {
+    background-color: @vic-btn-success-backgroundColor;
+    border-color: darken(@vic-btn-success-backgroundColor, 10%);
+
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: darken(@vic-btn-success-backgroundColor, 5%);
+        border-color: darken(@vic-btn-success-backgroundColor, 15%);
+        outline: 0;
+    }
+}
+
+
+// Remove
+/////////
+
+.vic-btn-remove {
+    padding: 0;
+    background: transparent;
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: @icon-hover;
+        background: none;
+        .box-shadow;
+        outline: 0;
+    }
+
+    &.vic-btn-large {
+        font-size: 22px;
+    }
+}

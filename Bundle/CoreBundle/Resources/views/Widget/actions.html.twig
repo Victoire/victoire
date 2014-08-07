@@ -7,8 +7,12 @@
 {% else %#}
     <div class="vic-dropdown vic-undraggable vic-new-widget vic-new-widget-disabled{{ first ? " vic-first" : "" }}">
         <a data-toggle="vic-dropdown" href="#" class="text-center">
-            <img src="/bundles/victoirecore/images/addWidget-icon.png" alt="new widget icon"> {{ "widget.dropdown.action.label"|trans({}, "victoire")|desc("New widget")}}
-            <i class="fa fa-angle-down"></i>
+            {#
+            <img src="/bundles/victoirecore/images/addWidget-icon.png" alt="new widget icon">
+            #}
+            <span>
+                {{ "widget.dropdown.action.label"|trans({}, "victoire")|desc("New widget")}}
+            </span>
         </a>
         <ul class="vic-dropdown-menu" role="menu" aria-labelledby="dLabel">
             {% for widget in widgets %}

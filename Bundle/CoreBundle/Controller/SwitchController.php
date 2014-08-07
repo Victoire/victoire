@@ -28,6 +28,12 @@ class SwitchController extends Controller
         //the session
         $session = $this->get('session');
 
+        if ($mode == 'enable') {
+            $mode = true;
+        } else {
+            $mode = false;
+        }
+
         //memorize that we are in edit mode
         $session->set('victoire.edit_mode', $mode);
 

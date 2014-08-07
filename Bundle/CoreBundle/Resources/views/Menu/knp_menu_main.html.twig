@@ -6,7 +6,7 @@
 {% import 'knp_menu.html.twig' as macros %}
 {% if item.extras.caret|default(false) %}
     <div class="vic-dropdown">
-        <a class="vic-btn vic-dropdown-toggle" data-toggle="vic-dropdown">
+        <a data-toggle="vic-dropdown">
             {{ block('label') }}
             <span class="vic-caret"></span>
         </a>
