@@ -669,7 +669,7 @@ abstract class View
      * This function update the widgetMap array using the slots entities array
      *
      */
-    protected function updateWidgetMapBySlots()
+    public function updateWidgetMapBySlots()
     {
         //generate widget map by the slots
         $widgetMap = $this->convertSlotsToWidgetMap();
