@@ -174,8 +174,10 @@ class WidgetFormBuilder
         $formFactory = $container->get('form.factory');
 
         $formAlias = 'victoire_widget_form_'.strtolower($this->container->get('victoire_widget.widget_helper')->getWidgetName($widget));
-        $filters = $this->container->get('victoire_core.filter_chain')->getFilters();
-
+        $filters = array();
+        if ($this->container->has('victoire_core.filter_chain')) {
+            $filters = $this->container->get('victoire_core.filter_chain')->getFilters();
+        }
         //are we updating or creating the widget?
         if ($widget->getId() === null) {
             $formUrl = $router->generate('victoire_core_widget_create',
