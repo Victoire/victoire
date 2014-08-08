@@ -40,14 +40,19 @@ class WidgetContentResolverPass implements CompilerPassInterface
                     'setQueryHelper',
                     array(new Reference('victoire_query.query_helper'))
                 );
-                $resolverDefinition->addMethodCall(
-                    'setFilterChain',
-                    array(new Reference('victoire_core.filter_chain'))
-                );
+
                 $resolverDefinition->addMethodCall(
                     'setRequest',
                     array(new Reference('request'))
                 );
+
+                if ($container->hasDefinition('victoire_core.filter_chain')) {
+                    $resolverDefinition->addMethodCall(
+                        'setFilterChain',
+                        array(new Reference('victoire_core.filter_chain'))
+                    );
+                }
+
                 $resolverDefinition->setScope('request');
             }
         }
