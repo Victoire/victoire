@@ -11,7 +11,7 @@ use Victoire\Bundle\SeoBundle\Entity\PageSeo;
 /**
  * Page
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Victoire\Bundle\PageBundle\Repository\BasePageRepository")
  * @ORM\Table("vic_base_page")
  * @UniqueEntity("url")
  * @ORM\HasLifecycleCallbacks
@@ -153,6 +153,17 @@ abstract class BasePage extends View
     {
         $this->routes = $routes;
     }
+
+    /**
+     * Remove route
+     *
+     * @param route $route
+     */
+    public function removeRoute($route)
+    {
+        $this->routes->remove($route);
+    }
+
     /**
      * Add route
      *

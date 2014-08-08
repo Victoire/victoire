@@ -13,21 +13,21 @@ class UrlMatcher
 {
     protected $urlHelper = null;
     protected $entityManager = null;
-    protected $businessEntitiesPagePatternHelper = null;
+    protected $businessEntityPagePatternHelper = null;
     protected $businessEntityHelper = null;
 
     /**
      * Constructor
      * @param EntityManager            $entityManager
      * @param UrlHelper                $urlHelper
-     * @param BusinessEntityPageHelper $businessEntitiesPagePatternHelper
+     * @param BusinessEntityPageHelper $businessEntityPagePatternHelper
      * @param BusinessEntityHelper     $businessEntityHelper
      */
-    public function __construct(EntityManager $entityManager, UrlHelper $urlHelper, BusinessEntityPageHelper $businessEntitiesPagePatternHelper, BusinessEntityHelper $businessEntityHelper)
+    public function __construct(EntityManager $entityManager, UrlHelper $urlHelper, BusinessEntityPageHelper $businessEntityPagePatternHelper, BusinessEntityHelper $businessEntityHelper)
     {
         $this->entityManager = $entityManager;
         $this->urlHelper = $urlHelper;
-        $this->businessEntitiesPagePatternHelper = $businessEntitiesPagePatternHelper;
+        $this->businessEntityPagePatternHelper = $businessEntityPagePatternHelper;
         $this->businessEntityHelper = $businessEntityHelper;
     }
 
@@ -35,28 +35,28 @@ class UrlMatcher
      * Get the business entity page pattern instance (an array of a business entity page pattern and an entity)
      * @param string $url
      *
-     * @return array of businessEntitiesPagePattern and entity
+     * @return array of businessEntityPagePattern and entity
      */
     public function getBusinessEntityPageByUrl($url)
     {
-        $businessEntitiesPagePatternInstance = null;
+        $businessEntityPagePatternInstance = null;
 
         //services
         $manager = $this->entityManager;
         $urlHelper = $this->urlHelper;
-        $businessEntitiesPagePatternRepository = $manager->getRepository('VictoireBusinessEntityPageBundle:BusinessEntityPagePattern');
-        $businessEntitiesPagePatternHelper = $this->businessEntitiesPagePatternHelper;
+        $businessEntityPagePatternRepository = $manager->getRepository('VictoireBusinessEntityPageBundle:BusinessEntityPagePattern');
+        $businessEntityPagePatternHelper = $this->businessEntityPagePatternHelper;
         $businessEntityHelper = $this->businessEntityHelper;
 
         //
         $shorterUrl = $url;
         $shorterCount = 0;
-        $businessEntitiesPagePattern = null;
+        $businessEntityPagePattern = null;
 
         $watchDog = 1;
 
         //until we try to remove all parts
-        while ($shorterUrl !== null && $businessEntitiesPagePattern === null) {
+        while ($shorterUrl !== null && $businessEntityPagePattern === null) {
             //we remove the last part to look for a business entity page pattern
             $shorterUrl = $urlHelper->removeLastPart($shorterUrl);
             //the number of time the short has been done
@@ -70,12 +70,12 @@ class UrlMatcher
             }
 
             //we look for a business entity page pattern that looks like this url
-            $businessEntitiesPagePattern = $businessEntitiesPagePatternRepository->findOneByLikeUrl($searchUrl);
+            $businessEntityPagePattern = $businessEntityPagePatternRepository->findOneByLikeUrl($searchUrl);
 
             //does a business entity page pattern fit the url
-            if ($businessEntitiesPagePattern !== null) {
+            if ($businessEntityPagePattern !== null) {
                 //we want the identifier
-                $positionProperty = $businessEntitiesPagePatternHelper->getIdentifierPositionInUrl($businessEntitiesPagePattern);
+                $positionProperty = $businessEntityPagePatternHelper->getIdentifierPositionInUrl($businessEntityPagePattern);
 
                 if ($positionProperty !== null) {
 
@@ -92,19 +92,19 @@ class UrlMatcher
                     $attributeName = $businessProperty->getEntityProperty();
 
                     //get the entity
-                    $entity = $businessEntityHelper->getEntityByPageAndBusinessIdentifier($businessEntitiesPagePattern, $entityIdentifier, $attributeName);
+                    $entity = $businessEntityHelper->getEntityByPageAndBusinessIdentifier($businessEntityPagePattern, $entityIdentifier, $attributeName);
 
                     if ($entity === null) {
                         throw new \Exception('The entity with the identifier ['.$entityIdentifier.'] was not found');
                     }
 
                     //information found
-                    $businessEntitiesPagePatternInstance = array(
-                        'businessEntitiesPagePattern' => $businessEntitiesPagePattern,
+                    $businessEntityPagePatternInstance = array(
+                        'businessEntityPagePattern' => $businessEntityPagePattern,
                         'entity'                      => $entity
                     );
                 } else {
-                    throw new \Exception('The business entity page pattern ['.$businessEntitiesPagePattern->getId().'] has no identifier.');
+                    throw new \Exception('The business entity page pattern ['.$businessEntityPagePattern->getId().'] has no identifier.');
                 }
             }
 
@@ -116,6 +116,6 @@ class UrlMatcher
             }
         }
 
-        return $businessEntitiesPagePatternInstance;
+        return $businessEntityPagePatternInstance;
     }
 }

@@ -35,7 +35,7 @@ class BasePageController extends AwesomeController
         $em = $this->getEntityManager();
 
         //get the page
-        $page = $em->getRepository('VictoirePageBundle:Page')->findOneByUrl($url);
+        $page = $em->getRepository('VictoirePageBundle:BasePage')->findOneByUrl($url);
 
         //if page is not found, it could be that the page is a BusinessEntityPage, let's try to get it
         if ($page === null) {
@@ -43,7 +43,7 @@ class BasePageController extends AwesomeController
 
             //an instance of a business entity page pattern and an entity has been identified
             if ($instance !== null) {
-                $page = $instance['businessEntitiesPagePattern'];
+                $page = $instance['businessEntityPagePattern'];
                 $entity = $instance['entity'];
                 //override of the seo using the current entity
                 //only if the page was found
@@ -75,15 +75,14 @@ class BasePageController extends AwesomeController
                 //generate the url
                 $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $seoUrl)));
             } else {
-                //add the page to twig
-                $this->get('twig')->addGlobal('view', $page);
-                $this->get('twig')->addGlobal('entity', $entity);
+
+                if ($entity) {
+                    $page = $this->get('victoire_business_entity_page.business_entity_page_helper')->generateEntityPageFromPattern($page, $entity);
+                }
 
                 $event = new \Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent($page, $entity);
 
-                //TODO : il serait bon de faire des constantes pour les noms d'évents
                 $eventName = 'victoire_core.' . $page->getType() . '_menu.contextual';
-
                 $this->get('event_dispatcher')->dispatch($eventName, $event);
 
                 //the victoire templating
@@ -91,10 +90,13 @@ class BasePageController extends AwesomeController
                 $layout = 'AppBundle:Layout:' . $page->getTemplate()->getLayout() . '.html.twig';
 
                 $parameters = array(
-                    'page' => $page,
-                    'id' => $page->getId(),
+                    'page'   => $page,
+                    'id'     => $page->getId(),
                     'entity' => $entity
                 );
+                //add the page to twig
+                $this->get('twig')->addGlobal('view', $page);
+                $this->get('twig')->addGlobal('entity', $entity);
 
                 //create the response
                 $response = $victoireTemplating->renderResponse(
@@ -129,7 +131,7 @@ class BasePageController extends AwesomeController
             if ($page->getParent()) {
                 $pageNb = count($page->getParent()->getChildren());
             } else {
-                $pageNb = count($em->getRepository('VictoirePageBundle:Page')->findByParent(null));
+                $pageNb = count($em->getRepository('VictoirePageBundle:BasePage')->findByParent(null));
             }
             // + 1 because position start at 1, not 0
             $page->setPosition($pageNb + 1);
@@ -282,7 +284,7 @@ class BasePageController extends AwesomeController
 
     /**
      * If the valid is not valid, an exception is thrown
-     *
+     * @todo  REFACTOR
      * @param Page   $page
      * @param Entity $entity
      *
@@ -317,8 +319,8 @@ class BasePageController extends AwesomeController
             }
         } elseif ($page instanceof BusinessEntityPage) {
             if ($entity !== null) {
-                $businessEntitiesPagePatternHelper = $this->get('victoire_business_entity_page.business_entity_page_helper');
-                $entityAllowed = $businessEntitiesPagePatternHelper->isEntityAllowed($page, $entity);
+                $businessEntityPagePatternHelper = $this->get('victoire_business_entity_page.business_entity_page_helper');
+                $entityAllowed = $businessEntityPagePatternHelper->isEntityAllowed($page, $entity);
 
                 if ($entityAllowed === false) {
                     throw $this->createNotFoundException('The entity ['.$entity->getId().'] is not allowed for the page pattern ['.$page->getId().']');

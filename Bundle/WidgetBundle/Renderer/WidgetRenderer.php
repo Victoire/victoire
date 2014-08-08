@@ -2,9 +2,10 @@
 namespace Victoire\Bundle\WidgetBundle\Renderer;
 
 use Symfony\Component\DependencyInjection\Container;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
+use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Event\WidgetRenderEvent;
 use Victoire\Bundle\CoreBundle\VictoireCmsEvents;
-use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\WidgetBundle\Model\Widget;
 
 class WidgetRenderer
@@ -20,25 +21,19 @@ class WidgetRenderer
     /**
      * render the WidgetRedactor
      * @param WidgetRedactor $widget
-     * @param Entity         $entity
+     * @param View           $view
      *
      * @return widget show
      */
-    public function render(Widget $widget, $entity = null)
+    public function render(Widget $widget, View $view)
     {
         //the mode of display of the widget
         $mode = $widget->getMode();
 
         //if entty is given and it's not the object, retrive it and set the entity for the widget
-        if (!is_object($entity) && method_exists($widget->getView(), 'getBusinessEntityName')) {
-
-            $entityNamespaces = $this->container->get('victoire_core.annotation_reader')->getBusinessClasses();
-            $entityNamespace = $entityNamespaces[$widget->getView()->getBusinessEntityName()];
-            $entity = $this->container->get('doctrine.orm.entity_manager')->getRepository($entityNamespace)->findOneById($entity);
-        } elseif (is_object($widget->getEntity())) {
-            $entity = $widget->getEntity();
+        if ($mode == Widget::MODE_BUSINESS_ENTITY && $view instanceof BusinessEntityPage) {
+            $widget->setEntity($view->getBusinessEntity());
         }
-        $widget->setEntity($entity);
 
         //the templating service
         $templating = $this->container->get('victoire_templating');
@@ -62,11 +57,11 @@ class WidgetRenderer
      *
      * @param Widget  $widget
      * @param boolean $addContainer
-     * @param Entity  $entity
+     * @param View    $view
      *
      * @return template
      */
-    public function renderContainer(Widget $widget, $addContainer = false, $entity = null)
+    public function renderContainer(Widget $widget, $addContainer = false, View $view = null)
     {
         $html = '';
         $dispatcher = $this->container->get('event_dispatcher');
@@ -74,7 +69,7 @@ class WidgetRenderer
 
         $dispatcher->dispatch(VictoireCmsEvents::WIDGET_PRE_RENDER, new WidgetRenderEvent($widget, $html));
 
-        $html .= $this->render($widget, $entity);
+        $html .= $this->render($widget, $view);
 
         if ($securityContext->isGranted('ROLE_VICTOIRE')) {
             $html .= $this->renderActions($widget->getSlot(), $widget->getView());

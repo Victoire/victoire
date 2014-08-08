@@ -2,14 +2,14 @@
 
 namespace Victoire\Bundle\TemplateBundle\Form;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Victoire\Bundle\CoreBundle\Form\ViewType;
 
 /**
  * Template type
  */
-class TemplateType extends AbstractType
+class TemplateType extends ViewType
 {
 
     protected $layouts;
@@ -25,23 +25,18 @@ class TemplateType extends AbstractType
 
     /**
      * define form fields
-     * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param FormBuilderInterface $builder
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        parent::buildForm($builder, $options);
 
-        $builder
-            ->add('name', null, array(
-                'label' => 'form.template.type.name.label'
-            ))
-            ->add('template', null, array(
-                'label' => 'form.template.type.template.label'
-            ))
-            ->add('layout', 'choice', array(
+        $builder->add('layout', 'choice', array(
                 'label' => 'form.template.type.layout.label',
                 'choices' => $options['layouts']
-            ));
+            )
+        );
     }
 
     /**

@@ -150,7 +150,7 @@ class CmsExtension extends \Twig_Extension
                 }
 
                 //render this widget
-                $result .= $this->cmsWidget($widget, $entity);
+                $result .= $this->cmsWidget($widget, $view);
             } catch (\Exception $ex) {
                 $result .= $this->widgetExceptionHandler->handle($ex, $widget);
             }
@@ -183,10 +183,10 @@ class CmsExtension extends \Twig_Extension
      *
      * @return unknown
      */
-    public function cmsWidget($widget, $entity = null)
+    public function cmsWidget($widget, View $view)
     {
         try {
-            $response = $this->widgetRenderer->renderContainer($widget, true, $entity);
+            $response = $this->widgetRenderer->renderContainer($widget, true, $view);
         } catch (\Exception $ex) {
             $response = $this->widgetExceptionHandler->handle($ex, $widget);
         }

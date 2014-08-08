@@ -2,7 +2,6 @@
 namespace Victoire\Bundle\PageBundle\Listener;
 
 use Symfony\Component\EventDispatcher\Event;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\CoreBundle\Listener\MenuListenerInterface;
 use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
 use Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent;
@@ -50,25 +49,6 @@ class PageMenuListener implements MenuListenerInterface
                 'routeParameters' => array('id' => $page->getId())
             )
         )->setLinkAttribute('data-toggle', 'vic-modal');
-
-        //@todo I don't get it, what does it stand for ?
-        //are we in a business entity page pattern with an entity given as parameter
-        if (($page->getType() === BusinessEntityPagePattern::TYPE)  && ($entity !== null)) {
-            $template = $page;
-        } else {
-            //get the parent
-            $template = $page->getTemplate();
-        }
-
-        //if there is a template, we add the link in the top bar
-        if ($template !== null) {
-            $mainItem->addChild('menu.page.template',
-                array(
-                    'route'           => 'victoire_template_show',
-                    'routeParameters' => array('slug' => $template->getSlug())
-                )
-            )->setLinkAttribute('data-toggle', 'vic-none');//there is no modal for this menu entry
-        }
 
         return $mainItem;
     }

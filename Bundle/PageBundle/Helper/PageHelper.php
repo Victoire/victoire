@@ -1,14 +1,15 @@
 <?php
 namespace Victoire\Bundle\PageBundle\Helper;
 
+use Doctrine\Orm\EntityManager;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\BusinessEntityPageBundle\Helper\BusinessEntityPageHelper;
 use Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy;
+use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\PageBundle\Matcher\UrlMatcher;
-use Doctrine\Orm\EntityManager;
 
 /**
  * Page helper
@@ -22,14 +23,14 @@ class PageHelper
     protected $urlHelper; // @victoire_page.url_helper'
     protected $urlMatcher; // @victoire_page.matcher.url_matcher'
 
+    //@todo Make it dynamic please
     protected $pageParameters = array(
-        'title',
+        'name',
         'bodyId',
         'bodyClass',
         'slug',
-        'url');
-
-
+        'url'
+    );
 
     /**
      * Constructor
@@ -93,10 +94,10 @@ class PageHelper
     /**
      * Generate update the page parameters with the entity
      *
-     * @param Page   $page
-     * @param Entity $entity
+     * @param BasePage $page
+     * @param Entity   $entity
      */
-    public function updatePageParametersByEntity(Page $page, $entity)
+    public function updatePageParametersByEntity(BasePage $page, $entity)
     {
         //if no entity is provided
         if ($entity === null) {
@@ -163,7 +164,7 @@ class PageHelper
 
                 //an instance of a business entity page pattern and an entity has been identified
                 if ($instance !== null) {
-                    $template = $instance['businessEntitiesPagePattern'];
+                    $template = $instance['businessEntityPagePattern'];
                     $entity = $instance['entity'];
                     //so we duplicate the business entity page for this current instance
                     $page = $this->createPageInstanceFromBusinessEntityPagePattern($template, $entity, $url);

@@ -71,9 +71,6 @@ class PageSubscriber implements EventSubscriber
     {
 
         $metadatas = $eventArgs->getClassMetadata();
-        if ($metadatas->name === 'Victoire\Bundle\CoreBundle\Entity\View') {
-            $metadatas->discriminatorMap[Page::TYPE] = 'Victoire\Bundle\PageBundle\Entity\Page';
-        }
 
         //set a relation between Page and User to define the page author
         $metaBuilder = new ClassMetadataBuilder($metadatas);
@@ -123,13 +120,13 @@ class PageSubscriber implements EventSubscriber
     }
 
     /**
-    * Builds the page's url by get all page parents slugs and implode them with "/".
-    * Builds the pages children urls with new page slug
-    * If page has a custom url, we don't modify it, but we modify children urls
-    * @param Page $page
-    * @param bool $depth
-    *
-    * @return $page
+     * Builds the page's url by get all page parents slugs and implode them with "/".
+     * Builds the pages children urls with new page slug
+     * If page has a custom url, we don't modify it, but we modify children urls
+     * @param Page $page
+     * @param bool $depth
+     *
+     * @return $page
      */
     public function buildUrl(BasePage $page, $depth = 0)
     {

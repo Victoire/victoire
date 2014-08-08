@@ -156,7 +156,7 @@ class BusinessEntityPagePatternController extends Controller
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $businessEntitiesPagePatternHelper = $this->get('victoire_business_entity_page.business_entity_page_helper');
+        $businessEntityPagePatternHelper = $this->get('victoire_business_entity_page.business_entity_page_helper');
         $businessEntityHelper = $this->get('victoire_core.helper.business_entity_helper');
 
         $entity = $em->getRepository('VictoireBusinessEntityPageBundle:BusinessEntityPagePattern')->find($id);
@@ -172,9 +172,9 @@ class BusinessEntityPagePatternController extends Controller
         $businessEntityId = $entity->getBusinessEntityName();
         $businessEntity = $businessEntityHelper->findById($businessEntityId);
 
-        $businessEntitiesPagePatternHelper = $this->get('victoire_business_entity_page.business_entity_page_helper');
+        $businessEntityPagePatternHelper = $this->get('victoire_business_entity_page.business_entity_page_helper');
 
-        $businessProperties = $businessEntitiesPagePatternHelper->getBusinessProperties($businessEntity);
+        $businessProperties = $businessEntityPagePatternHelper->getBusinessProperties($businessEntity);
 
         $parameters = array(
             'entity'      => $entity,
@@ -291,7 +291,7 @@ class BusinessEntityPagePatternController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('businessentitypagepattern'));
+        return $this->redirect($this->generateUrl('victoire_businessentitypage_businessentity_index'));
     }
 
     /**
@@ -311,7 +311,7 @@ class BusinessEntityPagePatternController extends Controller
     }
 
     /**
-     * List the entities that matches the query of the businessEntitiesPagePattern
+     * List the entities that matches the query of the businessEntityPagePattern
      * @param BusinessEntityPagePattern $entity
      *
      * @Route("listEntities/{id}", name="victoire_businessentitypagepattern_businessentitypagepattern_listentities")
@@ -323,13 +323,13 @@ class BusinessEntityPagePatternController extends Controller
     public function listEntitiesAction(BusinessEntityPagePattern $entity)
     {
         //services
-        $businessEntitiesPagePatternHelper = $this->get('victoire_business_entity_page.business_entity_page_helper');
+        $businessEntityPagePatternHelper = $this->get('victoire_business_entity_page.business_entity_page_helper');
 
-        $entities = $businessEntitiesPagePatternHelper->getEntitiesAllowed($entity);
+        $entities = $businessEntityPagePatternHelper->getEntitiesAllowed($entity);
 
         //parameters for the view
         $parameters = array(
-            'businessEntitiesPagePattern' => $entity,
+            'businessEntityPagePattern' => $entity,
             'items' => $entities);
 
         return new JsonResponse(array(

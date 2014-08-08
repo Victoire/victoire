@@ -2,6 +2,8 @@
 
 {% trans_default_domain "victoire" %}
 
+{% form_theme form 'VictoireFormBundle:Form:fields.html.twig' %}
+
 {% block modal_container_classes %}{{ parent() }} vic-view-modal{% endblock modal_container_classes %}
 
 {% block modal_header_title %}
@@ -10,7 +12,9 @@
 
 {% block modal_body_content %}
     <form method="POST" action="{{path('victoire_template_settings', {'slug':template.slug} )}}">
-        {{form_widget(form)}}
+        {{form_row(form.name)}}
+        {{form_row(form.template)}}
+        {{form_row(form.layout)}}
         {{form_errors(form)}}
         {{form_rest(form)}}
     </form>

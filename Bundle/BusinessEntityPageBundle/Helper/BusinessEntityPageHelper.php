@@ -1,12 +1,14 @@
 <?php
 namespace Victoire\Bundle\BusinessEntityPageBundle\Helper;
 
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
-use Victoire\Bundle\QueryBundle\Helper\QueryHelper;
-use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
-use Victoire\Bundle\PageBundle\Entity\Page;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
+use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
+use Victoire\Bundle\PageBundle\Entity\Page;
+use Victoire\Bundle\QueryBundle\Helper\QueryHelper;
 
 /**
  * The business entity page pattern helper
@@ -33,13 +35,13 @@ class BusinessEntityPageHelper
     /**
      * Is the entity allowed for the business entity page
      *
-     * @param BusinessEntityPagePattern $businessEntitiesPagePattern
+     * @param BusinessEntityPagePattern $businessEntityPagePattern
      * @param Entity                    $entity
      *
      * @throws \Exception
      * @return boolean
      */
-    public function isEntityAllowed(BusinessEntityPagePattern $businessEntitiesPagePattern, $entity)
+    public function isEntityAllowed(BusinessEntityPagePattern $businessEntityPagePattern, $entity)
     {
         $allowed = true;
 
@@ -54,12 +56,12 @@ class BusinessEntityPageHelper
         $entityId = $entity->getId();
 
         //the base of the query
-        $baseQuery = $queryHelper->getQueryBuilder($businessEntitiesPagePattern);
+        $baseQuery = $queryHelper->getQueryBuilder($businessEntityPagePattern);
 
         $baseQuery->andWhere('main_item.id = ' . $entityId);
 
         //filter with the query of the page
-        $items =  $queryHelper->buildWithSubQuery($businessEntitiesPagePattern, $baseQuery)
+        $items =  $queryHelper->buildWithSubQuery($businessEntityPagePattern, $baseQuery)
             ->getQuery()->getResult();
 
         //only one page can be found because we filter on the
@@ -75,26 +77,26 @@ class BusinessEntityPageHelper
     }
 
     /**
-     * Get the list of entities allowed for the businessEntitiesPagePattern page
+     * Get the list of entities allowed for the businessEntityPagePattern page
      *
-     * @param BusinessEntityPagePattern $businessEntitiesPagePattern
+     * @param BusinessEntityPagePattern $businessEntityPagePattern
      *
      * @throws \Exception
      * @return boolean
      */
-    public function getEntitiesAllowed(BusinessEntityPagePattern $businessEntitiesPagePattern)
+    public function getEntitiesAllowed(BusinessEntityPagePattern $businessEntityPagePattern)
     {
         $queryHelper = $this->queryHelper;
 
         //the base of the query
-        $baseQuery = $queryHelper->getQueryBuilder($businessEntitiesPagePattern);
+        $baseQuery = $queryHelper->getQueryBuilder($businessEntityPagePattern);
 
         // add this fake condition to ensure that there is always a "where" clause.
         // In query mode, usage of "AND" will be always valid instead of "WHERE"
         $baseQuery->andWhere('1 = 1');
 
         //filter with the query of the page
-        $items =  $queryHelper->buildWithSubQuery($businessEntitiesPagePattern, $baseQuery)
+        $items =  $queryHelper->buildWithSubQuery($businessEntityPagePattern, $baseQuery)
             ->getQuery()
             ->getResult();
 
@@ -107,41 +109,47 @@ class BusinessEntityPageHelper
      * @param Page   $page
      * @param Entity $entity
      */
-    public function fillEntityPageVariables(Page $page, $entity)
+    public function generateEntityPageFromPattern(BusinessEntityPagePattern $businessEntityPagePattern, $entity)
     {
-        //if no entity is provided
-        if ($entity === null) {
-            //we look for the entity of the page
-            if ($page->getBusinessEntity() !== null) {
-                $entity = $page->getBusinessEntity();
+        $className = get_class($entity);
+        $page = new BusinessEntityPage();
+
+        $reflect = new \ReflectionClass($businessEntityPagePattern);
+        $patternProperties = $reflect->getProperties();
+        $parameters = array('pattern' => $businessEntityPagePattern);
+        $accessor = PropertyAccess::createPropertyAccessor();
+
+        foreach ($patternProperties as $property) {
+            $value = $accessor->getValue($businessEntityPagePattern, $property->getName());
+            $setMethod = 'set'.ucfirst($property->getName());
+            if (method_exists($page, $setMethod)) {
+                $accessor->setValue($page, $property->getName(), $value);
             }
         }
 
-        //only if we have an entity instance
-        if ($entity !== null) {
-            $className = get_class($entity);
+        $businessEntity = $this->businessEntityHelper->findByClassname($className);
 
-            $businessEntity = $this->businessEntityHelper->findByClassname($className);
+        if ($businessEntity !== null) {
+            //the business properties usable in a url
+            $businessProperties = $this->getBusinessProperties($businessEntity);
 
-            if ($businessEntity !== null) {
-                //the business properties usable in a url
-                $businessProperties = $this->getBusinessProperties($businessEntity);
+            //the url of the page
+            $pageUrl = $page->getUrl();
+            $pageName = $page->getName();
 
-                //the url of the page
-                $pageUrl = $page->getUrl();
-                $pageTitle = $page->getName();
-
-                //parse the business properties
-                foreach ($businessProperties as $businessProperty) {
-                    $pageUrl = $this->parameterConverter->setBusinessPropertyInstance($pageUrl, $businessProperty, $entity);
-                    $pageTitle = $this->parameterConverter->setBusinessPropertyInstance($pageTitle, $businessProperty, $entity);
-                }
-
-                //we update the url of the page
-                $page->setUrl($pageUrl);
-                $page->setName($pageTitle);
+            //parse the business properties
+            foreach ($businessProperties as $businessProperty) {
+                $pageUrl = $this->parameterConverter->setBusinessPropertyInstance($pageUrl, $businessProperty, $entity);
+                $pageName = $this->parameterConverter->setBusinessPropertyInstance($pageName, $businessProperty, $entity);
             }
+
+            //we update the url of the page
+            $page->setUrl($pageUrl);
+            $page->setName($pageName);
         }
+        $page->setBusinessEntity($entity);
+
+        return $page;
     }
 
     /**
@@ -168,21 +176,22 @@ class BusinessEntityPageHelper
     /**
      * Get the position of the identifier in the url of a business entity page pattern
      *
-     * @param BusinessEntityPagePattern $businessEntitiesPagePattern
+     * @param BusinessEntityPagePattern $businessEntityPagePattern
      *
      * @return integer The position
      */
-    public function getIdentifierPositionInUrl(BusinessEntityPagePattern $businessEntitiesPagePattern)
+    public function getIdentifierPositionInUrl(BusinessEntityPagePattern $businessEntityPagePattern)
     {
         $position = null;
 
-        $url = $businessEntitiesPagePattern->getUrl();
+        $url = $businessEntityPagePattern->getUrl();
 
         // split on the / character
         $keywords = preg_split("/\//", $url);
+        // preg_match_all('/\{\%\s*([^\%\}]*)\s*\%\}|\{\{\s*([^\}\}]*)\s*\}\}/i', $url, $matches);
 
         //the business property link to the page
-        $businessEntityId = $businessEntitiesPagePattern->getBusinessEntityName();
+        $businessEntityId = $businessEntityPagePattern->getBusinessEntityName();
 
         $businessEntity = $this->businessEntityHelper->findById($businessEntityId);
 
@@ -198,7 +207,7 @@ class BusinessEntityPageHelper
                 if ($searchWord === $keyword) {
                     //the array start at index 0 but we want the position to start at 1
                     $position = array(
-                        'position' => $index + 1,
+                        'position'         => $index + 1,
                         'businessProperty' => $businessProperty
                     );
                 }

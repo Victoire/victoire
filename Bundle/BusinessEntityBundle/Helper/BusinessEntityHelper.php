@@ -157,7 +157,6 @@ class BusinessEntityHelper
     {
         //retrieve the class of the business entity
         $class = $businessEntity->getClass();
-
         $em = $this->em;
 
         //get the repository

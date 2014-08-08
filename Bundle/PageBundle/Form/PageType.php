@@ -3,13 +3,12 @@ namespace Victoire\Bundle\PageBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Victoire\Bundle\CoreBundle\Form\ViewType;
 use Victoire\Bundle\PageBundle\Entity\Page;
 
 /**
  * Page Type
  */
-class PageType extends ViewType
+class PageType extends BasePageType
 {
 
     /**
@@ -19,7 +18,7 @@ class PageType extends ViewType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        parent::buildForm($build, $options);
+        parent::buildForm($builder, $options);
         $builder
             ->add('homepage', 'hidden');
     }

@@ -6,18 +6,6 @@ services:
         tags:
             - { name: form.type, alias: victoire_business_entity_page_type }
 
-    victoire_business_entity_page.business_entity_page_pattern_menu_listener:
-        class: Victoire\Bundle\BusinessEntityPageBundle\Listener\BusinessEntityPageMenuListener
-        arguments:
-            - "@victoire_core.admin_menu_builder"
-        tags:
-            - { name: kernel.event_listener, event: victoire_core.build_menu, method: addGlobal, priority: 50 }
-
-    victoire_core.businessEntitiesPagePattern_menu.contextual:
-        class: Victoire\Bundle\BusinessEntityPageBundle\Listener\BusinessEntityPageMenuListener
-        arguments: ["@victoire_core.admin_menu_builder"]
-        tags:
-            - { name: kernel.event_listener, event: victoire_core.businessEntitiesPagePattern_menu.contextual, method: addContextual }
 
     victoire_business_entity_page.business_entity_page_helper:
         class: Victoire\Bundle\BusinessEntityPageBundle\Helper\BusinessEntityPageHelper
@@ -26,7 +14,18 @@ services:
             - "@victoire_core.helper.business_entity_helper"
             - "@victoire_business_entity.converter.parameter_converter"
 
-    victoire_business_entity_page.base_page.subscriber:
-        class: Victoire\Bundle\BusinessEntityPageBundle\EventSubscriber\LoadMetadataSubscriber
+    ####################################################################################################################
+    # Menu
+    ####################################################################################################################
+    victoire_business_entity_page.business_entity_page_pattern_menu_listener:
+        class: Victoire\Bundle\BusinessEntityPageBundle\Listener\BusinessEntityPageMenuListener
+        arguments:
+            - "@victoire_core.admin_menu_builder"
         tags:
-            - { name: doctrine.event_subscriber, connection: default }
+            - { name: kernel.event_listener, event: victoire_core.build_menu, method: addGlobal, priority: 50 }
+
+    victoire_core.business_entity_page_pattern_menu.contextual:
+        class: Victoire\Bundle\BusinessEntityPageBundle\Listener\BusinessEntityPageMenuListener
+        arguments: ["@victoire_core.admin_menu_builder"]
+        tags:
+            - { name: kernel.event_listener, event: victoire_core.business_entity_page_pattern_menu.contextual, method: addContextual }

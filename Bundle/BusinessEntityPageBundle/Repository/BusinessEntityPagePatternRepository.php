@@ -19,12 +19,12 @@ class BusinessEntityPagePatternRepository extends EntityRepository
     public function findPagePatternByBusinessEntity(BusinessEntity $businessEntity)
     {
 
-        $qb = $this->createQueryBuilder('businessEntitiesPagePattern');
-        $qb->where('businessEntitiesPagePattern.businessEntityName = :businessEntityName');
+        $qb = $this->createQueryBuilder('businessEntityPagePattern');
+        $qb->where('businessEntityPagePattern.businessEntityName = :businessEntityName');
 
         $qb->setParameter(':businessEntityName', $businessEntity->getId());
 
-        $qb->orderBy('businessEntitiesPagePattern.updatedAt', 'ASC');
+        $qb->orderBy('businessEntityPagePattern.updatedAt', 'ASC');
 
         $results = $qb->getQuery()->getResult();
 
@@ -41,10 +41,10 @@ class BusinessEntityPagePatternRepository extends EntityRepository
     {
         $pagePattern = null;
 
-        $qb = $this->createQueryBuilder('businessEntitiesPagePattern');
-        $qb->where($qb->expr()->like('businessEntitiesPagePattern.url', $qb->expr()->literal($url)));
+        $qb = $this->createQueryBuilder('businessEntityPagePattern');
+        $qb->where($qb->expr()->like('businessEntityPagePattern.url', $qb->expr()->literal($url)));
 
-        $qb->orderBy('businessEntitiesPagePattern.updatedAt', 'ASC');
+        $qb->orderBy('businessEntityPagePattern.updatedAt', 'ASC');
 
         $results = $qb->getQuery()->getResult();
 

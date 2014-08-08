@@ -104,7 +104,7 @@ class WidgetType extends AbstractType
         $options = $this->options;
 
         $form->add('fields', 'widget_fields', array(
-            'label' => 'widget.form.fields.label',
+            'label' => 'widget.form.entity.fields.label',
             'namespace' => $options['namespace'],
             'widget'    => $options['widget']
         ));
@@ -121,7 +121,7 @@ class WidgetType extends AbstractType
 
         $form
         ->add('fields', 'widget_fields', array(
-            'label' => 'widget.form.fields.label',
+            'label' => 'widget.form.entity.fields.label',
             'namespace' => $options['namespace'],
             'widget'    => $options['widget']
         ))
@@ -143,7 +143,7 @@ class WidgetType extends AbstractType
 
         $form->add('query');
         $form->add('fields', 'widget_fields', array(
-            'label' => 'widget.form.fields.label',
+            'label' => 'widget.form.entity.fields.label',
             'namespace' => $options['namespace'],
             'widget'    => $options['widget']
         ));

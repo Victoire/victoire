@@ -222,6 +222,7 @@ class UrlHelper
         if ($url !== null && $url !== '') {
             // split on the / character
             $keywords = preg_split("/\//", $url);
+            // preg_match_all('/\{\%\s*([^\%\}]*)\s*\%\}|\{\{\s*([^\}\}]*)\s*\}\}/i', $url, $matches);
 
             //if there are some words, we pop the last
             if (count($keywords) > 0) {

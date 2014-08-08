@@ -68,7 +68,7 @@ abstract class View
     /**
      * @var string
      *
-     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\WidgetBundle\Entity\Widget", mappedBy="page")
+     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\WidgetBundle\Entity\Widget", mappedBy="view")
      * @ORM\OrderBy({"id" = "ASC"})
      */
     protected $widgets;
@@ -311,6 +311,16 @@ abstract class View
     }
 
     /**
+     * Remove child
+     *
+     * @param child $child
+     */
+    public function removeChild(View $child)
+    {
+        $this->children->remove($child);
+    }
+
+    /**
      * Get the left value
      *
      * @return integer
@@ -538,6 +548,16 @@ abstract class View
     {
         $this->widgets[] = $widget;
     }
+
+    /**
+     * Remove widget
+     * @param Widget $widget
+     */
+    public function removeWidget(Widget $widget)
+    {
+        $this->widgets->remove($widget);
+    }
+
     /**
      * has widget
      * @param Widget $widget
@@ -712,6 +732,15 @@ abstract class View
     public function addSlot(Slot $slot)
     {
         $this->slots[] = $slot;
+    }
+
+    /**
+     * Remove slots
+     * @param Widget $slots
+     */
+    public function removeSlot(Slot $slots)
+    {
+        $this->slots->remove($slots);
     }
 
     /**

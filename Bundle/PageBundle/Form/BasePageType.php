@@ -1,28 +1,27 @@
 <?php
-
-namespace Victoire\Bundle\CoreBundle\Form;
+namespace Victoire\Bundle\PageBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Victoire\Bundle\CoreBundle\Form\ViewType;
 
 /**
  * Page Type
  */
-abstract class ViewType extends AbstractType
+abstract class BasePageType extends ViewType
 {
 
     /**
      * define form fields
      * @param FormBuilderInterface $builder
      * @param array                $options
-     *
-     * @return null
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        parent::buildForm($builder, $options);
+
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             $view = $event->getData();
             $form = $event->getForm();
@@ -31,28 +30,21 @@ abstract class ViewType extends AbstractType
             // Si aucune donnée n'est passée au formulaire, la donnée est "null".
             // Ce doit être considéré comme une nouvelle "View"
             if (!$view || null === $view->getId()) {
-
-                $getAllTemplateWithoutMe = function (EntityRepository $tr) {
-                    return $tr->getAll();
+                $getAllPageWithoutMe = function (EntityRepository $bpr) {
+                    return $bpr->getAll();
                 };
             } else {
-                $getAllTemplateWithoutMe = function (EntityRepository $tr) use ($view) {
-                    return $tr->getAll()
-                        ->andWhere('template.id != :templateId')
-                        ->setParameter('templateId', $view->getId());
+                $getAllPageWithoutMe = function (EntityRepository $bpr) use ($view) {
+                    return $bpr->getAll()
+                        ->andWhere('page.id != :pageId')
+                        ->setParameter('pageId', $view->getId());
                 };
             }
 
-            $form->add('template', null, array(
-                'label'         => 'form.view.type.template.label',
-                'query_builder' => $getAllTemplateWithoutMe,
+            $form->add('parent', null, array(
+                'label'         => 'form.view.type.parent.label',
+                'query_builder' => $getAllPageWithoutMe,
             ));
         });
-
-        $builder
-            ->add('name', null, array(
-                'label' => 'form.view.type.name.label'
-            ));
     }
-
 }

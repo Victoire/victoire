@@ -89,7 +89,7 @@ class TemplateController extends Controller
     public function newAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $template = new TemplateEntity();
+        $template = new Template();
         $form = $this->container->get('form.factory')->create($this->getNewTemplateType(), $template); //@todo utiliser un service
 
         $form->handleRequest($this->get('request'));
@@ -148,7 +148,7 @@ class TemplateController extends Controller
                 "success" => true,
                 'html'    => $this->container->get('victoire_templating')->render(
                     'VictoireTemplateBundle:Template:settings.html.twig',
-                    array('view' => $template,'form' => $templateForm->createView())
+                    array('template' => $template,'form' => $templateForm->createView())
                 )
             )
         );

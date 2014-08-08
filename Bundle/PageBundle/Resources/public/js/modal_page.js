@@ -2,7 +2,7 @@
 
 // PAGE MODAL EVENTS
 // Create new page after submit
-$(document).on('click', '.vic-modal.vic-page-modal *[data-modal="create"]', function(event) {
+$(document).on('click', '.vic-modal.vic-view-modal *[data-modal="create"]', function(event) {
     event.preventDefault();
     var form = $(this).parents('.vic-modal-content').find('form');;
 
@@ -28,7 +28,7 @@ $(document).on('click', '.vic-modal.vic-page-modal *[data-modal="create"]', func
 });
 
 // Update an existing page
-$(document).on('click', '.vic-modal.vic-page-modal a[data-modal="update"]', function(event) {
+$(document).on('click', '.vic-modal.vic-view-modal a[data-modal="update"]', function(event) {
     event.preventDefault();
         var form = $(this).parents('.vic-modal-content').find('form');
 
@@ -54,7 +54,7 @@ $(document).on('click', '.vic-modal.vic-page-modal a[data-modal="update"]', func
 });
 
 // Create new page after submit
-$(document).on('click', '.vic-modal.vic-page-modal a[data-modal="delete"]', function(event) {
+$(document).on('click', '.vic-modal.vic-view-modal a[data-modal="delete"]', function(event) {
 
     event.preventDefault();
     if (!confirm('Action dangereuse, Vous allez supprimer la page. Vous confirmez ?')) {

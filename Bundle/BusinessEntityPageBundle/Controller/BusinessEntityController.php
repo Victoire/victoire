@@ -29,7 +29,7 @@ class BusinessEntityController extends PageController
         //the repository
         $repository = $em->getRepository('VictoireBusinessEntityPageBundle:BusinessEntityPagePattern');
 
-        $businessEntitiesPagePatterns = array();
+        $businessEntityPagePatterns = array();
 
         $businessEntities = $businessEntityManager->getBusinessEntities();
 
@@ -39,15 +39,15 @@ class BusinessEntityController extends PageController
             //retrieve the pagePatterns
             $pagePatterns = $repository->findPagePatternByBusinessEntity($businessEntity);
 
-            $businessEntitiesPagePatterns[$name] = $pagePatterns;
+            $businessEntityPagePatterns[$name] = $pagePatterns;
         }
 
         return new JsonResponse(array(
             'html'    => $this->container->get('victoire_templating')->render(
                 'VictoireBusinessEntityPageBundle:BusinessEntity:index.html.twig',
                 array(
-                    'businessEntities'             => $businessEntities,
-                    'businessEntitiesPagePatterns' => $businessEntitiesPagePatterns
+                    'businessEntities'           => $businessEntities,
+                    'businessEntityPagePatterns' => $businessEntityPagePatterns
                 )
             ),
             'success' => true

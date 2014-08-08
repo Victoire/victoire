@@ -16,7 +16,7 @@
         <div class="vic-tab-content vic-modal-tab-content">
             {%  for businessEntity in businessEntities %}
                 <div id="picker-{{ businessEntity.getName }}" class="vic-tab-pane">
-                    {% include 'VictoireBusinessEntityPageBundle:BusinessEntity:list.html.twig' with { 'businessEntity' : businessEntity, 'businessEntitiesPagePatterns' : businessEntitiesPagePatterns[businessEntity.getName] } %}
+                    {% include 'VictoireBusinessEntityPageBundle:BusinessEntity:list.html.twig' with { 'businessEntity' : businessEntity, 'businessEntityPagePatterns' : businessEntityPagePatterns[businessEntity.getName] } %}
                 </div>
             {% endfor %}
         </div>

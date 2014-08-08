@@ -2,9 +2,10 @@
 
 namespace Victoire\Bundle\SeoBundle\Helper;
 
-use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
+use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
+use Victoire\Bundle\PageBundle\Entity\BasePage;
+use Victoire\Bundle\PageBundle\Entity\Page;
 
 /**
  * The seo helper brings some seo functions for pages
@@ -59,7 +60,7 @@ class PageSeoHelper
      * @param Page   $page
      * @param Entity $entity
      */
-    public function updateSeoByEntity(Page $page, $entity)
+    public function updateSeoByEntity(BasePage $page, $entity)
     {
         //if no entity is provided
         if ($entity === null) {

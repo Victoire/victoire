@@ -13,20 +13,20 @@ use Victoire\Bundle\PageBundle\Helper\PageHelper;
  */
 class PageExtension extends \Twig_Extension
 {
-    protected $businessEntitiesPagePatternHelper = null;
+    protected $businessEntityPagePatternHelper = null;
     protected $router = null;
     protected $pageHelper = null;
 
     /**
      * Constructor
      *
-     * @param BusinessEntityPageHelper $businessEntitiesPagePatternHelper
+     * @param BusinessEntityPageHelper $businessEntityPagePatternHelper
      * @param Router                   $router
      * @param PageHelper               $pageHelper
      */
-    public function __construct(BusinessEntityPageHelper $businessEntitiesPagePatternHelper, Router $router, PageHelper $pageHelper)
+    public function __construct(BusinessEntityPageHelper $businessEntityPagePatternHelper, Router $router, PageHelper $pageHelper)
     {
-        $this->businessEntitiesPagePatternHelper = $businessEntitiesPagePatternHelper;
+        $this->businessEntityPagePatternHelper = $businessEntityPagePatternHelper;
         $this->router = $router;
         $this->pageHelper = $pageHelper;
     }
@@ -101,7 +101,7 @@ class PageExtension extends \Twig_Extension
         $urls = array();
 
         //the template link to the page
-        $businessEntitiesPagePattern = $page;
+        $businessEntityPagePattern = $page;
 
         //
         if ($page instanceof BusinessEntityPagePattern) {
@@ -109,15 +109,15 @@ class PageExtension extends \Twig_Extension
             $childrenUrls = $this->getChildrenUrls($page);
 
             //services
-            $businessEntitiesPagePatternHelper = $this->businessEntitiesPagePatternHelper;
+            $businessEntityPagePatternHelper = $this->businessEntityPagePatternHelper;
             $pageHelper = $this->pageHelper;
 
             //the items allowed for the template
-            $items = $businessEntitiesPagePatternHelper->getEntitiesAllowed($businessEntitiesPagePattern);
+            $items = $businessEntityPagePatternHelper->getEntitiesAllowed($businessEntityPagePattern);
 
             //parse entities
             foreach ($items as $item) {
-                $pageEntity = clone $businessEntitiesPagePattern;
+                $pageEntity = clone $businessEntityPagePattern;
 
                 //update url using the entity instance
                 $pageHelper->updatePageParametersByEntity($pageEntity, $item);

@@ -57,8 +57,35 @@ class BusinessEntityPageMenuListener implements MenuListenerInterface
      */
     public function addContextual($event)
     {
-        $mainItem = $this->menuBuilder->getTopNavbar();
+        $mainItem = $this->getMainItem();
+
+        //if there is a template, we add the link in the top bar
+        $mainItem->addChild('menu.page.settings',
+            array(
+                'route'           => 'victoire_businessentitypagepattern_businessentitypagepattern_edit',
+                'routeParameters' => array('id' => $event->getPage()->getId())
+            )
+        )->setLinkAttribute('data-toggle', 'vic-modal');
 
         return $mainItem;
+    }
+
+    /**
+     * Get the main item
+     *
+     * @return Ambigous <\Knp\Menu\ItemInterface, NULL>|\Knp\Menu\ItemInterface
+     */
+    public function getMainItem()
+    {
+        $menuPage = $this->menuBuilder->getTopNavbar()->getChild('menu.page');
+
+        if ($menuPage) {
+            return $menuPage;
+        } else {
+            return $this->menuBuilder->createDropdownMenuItem(
+                $this->menuBuilder->getTopNavbar(),
+                "menu.page"
+            );
+        }
     }
 }
