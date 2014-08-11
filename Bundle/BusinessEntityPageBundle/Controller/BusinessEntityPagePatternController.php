@@ -330,7 +330,8 @@ class BusinessEntityPagePatternController extends Controller
         //parameters for the view
         $parameters = array(
             'businessEntityPagePattern' => $entity,
-            'items' => $entities);
+            'items'                     => $entities
+        );
 
         return new JsonResponse(array(
             'html' => $this->container->get('victoire_templating')->render(

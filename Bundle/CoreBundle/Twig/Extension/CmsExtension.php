@@ -186,7 +186,7 @@ class CmsExtension extends \Twig_Extension
     public function cmsWidget($widget, View $view)
     {
         try {
-            $response = $this->widgetRenderer->renderContainer($widget, true, $view);
+            $response = $this->widgetRenderer->renderContainer($widget, $view);
         } catch (\Exception $ex) {
             $response = $this->widgetExceptionHandler->handle($ex, $widget);
         }

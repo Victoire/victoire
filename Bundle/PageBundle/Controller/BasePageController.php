@@ -61,7 +61,8 @@ class BasePageController extends AwesomeController
                 //the page linked to the old url
                 $page = $route->getPage();
                 $router = $this->container->get('router');
-                $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl())));
+
+                return $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl())));
             }
         } else {
             if (
@@ -135,12 +136,6 @@ class BasePageController extends AwesomeController
             }
             // + 1 because position start at 1, not 0
             $page->setPosition($pageNb + 1);
-
-            $template = $page->getTemplate();
-
-            if ($template) {
-                $page->setWidgetMap($template->getWidgetMap());
-            }
 
             $page->setAuthor($this->getUser());
             $em->persist($page);

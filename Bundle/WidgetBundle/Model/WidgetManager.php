@@ -186,7 +186,7 @@ class WidgetManager
             $em->flush();
 
             //get the html for the widget
-            $hmltWidget = $this->widgetRenderer->renderContainer($widget, true);
+            $hmltWidget = $this->widgetRenderer->renderContainer($widget, $view);
 
             $response = array(
                 "success" => true,
@@ -263,7 +263,7 @@ class WidgetManager
                 $response = array(
                     'view'     => $view,
                     'success'  => true,
-                    'html'     => $this->widgetRenderer->render($widget, $entityName),
+                    'html'     => $this->widgetRenderer->render($widget, $view),
                     'widgetId' => "vic-widget-".$initialWidgetId."-container"
                 );
             } else {

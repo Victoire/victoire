@@ -61,7 +61,7 @@ class WidgetRenderer
      *
      * @return template
      */
-    public function renderContainer(Widget $widget, $addContainer = false, View $view = null)
+    public function renderContainer(Widget $widget, View $view = null)
     {
         $html = '';
         $dispatcher = $this->container->get('event_dispatcher');
@@ -75,9 +75,7 @@ class WidgetRenderer
             $html .= $this->renderActions($widget->getSlot(), $widget->getView());
         }
 
-        if ($addContainer) {
-            $html = "<div class='vic-widget-container' data-id=\"".$widget->getId()."\" id='vic-widget-".$widget->getId()."-container'>".$html.'</div>';
-        }
+        $html = "<div class='vic-widget-container' data-id=\"".$widget->getId()."\" id='vic-widget-".$widget->getId()."-container'>".$html.'</div>';
 
         $dispatcher->dispatch(VictoireCmsEvents::WIDGET_POST_RENDER, new WidgetRenderEvent($widget, $html));
 

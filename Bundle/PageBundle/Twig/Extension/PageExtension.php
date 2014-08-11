@@ -134,7 +134,7 @@ class PageExtension extends \Twig_Extension
                 //update the parameters of the page
                 $pageHelper->updatePageParametersByEntity($pageEntity, $item);
 
-                $title = $pageEntity->getTitle();
+                $title = $pageEntity->getName();
 
                 $itemsToAdd[$url] = array(
                     'item'      => $item,
@@ -180,7 +180,7 @@ class PageExtension extends \Twig_Extension
     {
         $urls = array();
 
-        $children = $page->getPages();
+        $children = $page->getInstances();
 
         //parse the children
         foreach ($children as $child) {
