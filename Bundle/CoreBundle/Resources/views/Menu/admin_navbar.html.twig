@@ -1,32 +1,44 @@
-<nav id="vic-admin-menu" class="vic-menu-main vic-list-unstyled vic-clearfix vic-navbar-fixed-top" role="navigation">
+<section id="vic-admin-menu" class="victoire vic-menu-main vic-list-unstyled vic-clearfix vic-navbar-fixed-top" role="navigation">
 
     {% block header %}
-    <div class="vic-navbar-header">
-        {% block leftMenu %}
-        {% if is_granted('ROLE_VICTOIRE_LEFTNAVBAR') %}
-        <div class="vic-trigger vic-pull-left vic-text-center">
-            <a class="vic-icon-menu"><i class="fa fa-bars"></i></a>
-            <nav class="vic-menu-wrapper">
-                <div class="vic-scroller">
-                    {#<ul id="vic-menu" class="vic-menu-main vic-list-unstyled vic-clearfix"></ul>#}
-                        {{ knp_menu_render('leftnavbar') }}
-                </div>
+    {% block leftMenu %}
+    {% if is_granted('ROLE_VICTOIRE_LEFTNAVBAR') %}
+    <div class="vic-trigger vic-pull-left">
+        <a class="vic-menu-leftnavbar-trigger" id="vic-menu-leftnavbar-trigger">
+            <i></i>
+        </a>
 
-            </nav>
-        </div>
-        {% endif %}
-        {% endblock %}
-        {% block brand %}
-        <div class="vic-pull-left vic-text-center vic-logo">
-            <a href="#"><i class="vic-menuImg vic-menuImg-logo"></i></a>
-        </div>
-        {% endblock %}
+        <nav class="vic-menu-leftnavbar">
+            <div class="vic-scroller">
+                {#
+                <ul id="vic-menu" class="vic-menu-main vic-list-unstyled vic-clearfix"></ul>
+                #}
+                {{ knp_menu_render('leftnavbar') }}
+            </div>
+        </nav>
+    </div>
+    {% endif %}
+    {% endblock %}
+
+    {% block brand %}
+    <div class="vic-topNavbar-logo">
+        <a href="#">
+            <img src="{{ asset('bundles/victoirecore/images/menu/vic-logo-menu-main.png') }}" alt="Logo Victoire DCMS" />
+        </a>
     </div>
     {% endblock %}
+    {% endblock %}
+
     {% block menu_container %}
+
     <div class="vic-collapse vic-navbar-collapse vic-navbar-responsive-collapse">
-        <ul class="vic-userNav">
+            {% block menu %}
+                {{ knp_menu_render('topnavbar') }}
+            {% endblock %}
+
+        <ul class="vic-userNav vic-menu-main-list" id="vic-topNavbar-right">
             {# Add a publication representation of the view (only for BasePage))  #}
+
             {% if view is defined and (view.published is defined and not view.published) %}
             <li class="vic-text-center">
                 {% if view.status == constant('Victoire\\Bundle\\PageBundle\\Entity\\BasePage::STATUS_SCHEDULED') %}
@@ -46,50 +58,57 @@
                 </a>
             </li>
             {% endif %}
-            <li class="vic-text-center">
-                <div class="vic-toggle vic-pull-left">
-                    <label class="vic-toggle-radio" for="toggleAdmin2"></label>
-                    <input type="radio" name="toggleAdmin" id="toggleAdmin1" value="1" {{ edit_mode ? 'checked="checked"' : ''}}>
-                    <label class="vic-toggle-radio" for="toggleAdmin1"></label>
-                    <input type="radio" name="toggleAdmin" id="toggleAdmin2" value="0" {{ not edit_mode ? 'checked="checked"' : ''}}>
-                </div>
-                <div class="vic-toggle-label">{{"victoire_core.edit_mode_switch"|trans({}, 'victoire')}}</div>
+
+            {#
+            <li>
+                <input class="vic-switcher vic-switcher-stat" type="checkbox" id="vic-switcher-statMode">
+                <label for="vic-switcher-statMode">Statistiques</label>
             </li>
-            <li class="vic-text-center vic-last-child">
-                <a href="" class="vic-pull-left">
-                    <img src="http://www.gravatar.com/avatar/{{ app.user.email|hash }}?s=35" class="vic-img-circle" alt="avatar">
-                </a>
-                <a href="{{ path('_logout') }}" class="vic-pull-left"><i class="fa fa-power-off"></i></a>
+            #}
+
+            <li>
+                <input class="vic-switcher vic-switcher-edit vic-navBar-switcher" type="checkbox" id="vic-switcher-editMode" {{ edit_mode ? 'checked="checked"' : ''}}>
+                <label for="vic-switcher-editMode">Édition</label>
+            </li>
+
+            <li class="vic-menu-main-list-lastItem">
+                <div class="vic-dropdown">
+                    <a class="vic-dropdown-toggle" id="dropdownMenu1" data-toggle="vic-dropdown">
+                        <img src="http://www.gravatar.com/avatar/{{ app.user.email|hash }}?s=35" class="vic-img-circle" alt="avatar" height="36">
+
+                        <span class="vic-caret"></span>
+                    </a>
+
+                    <ul class="vic-dropdown-menu vic-pull-right" role="menu" aria-labelledby="dropdownMenu1">
+                        <li role="presentation">
+                            <a role="menuitem" tabindex="-1" href="{{ path('_logout') }}" class="vic-pull-left">Se déconnecter</i></a>
+                        </li>
+                    </ul>
+                </div>
             </li>
         </ul>
-
-        {% block menu %}
-        {{ knp_menu_render('topnavbar') }}
-        {% endblock %}
-
     </div>
     {% endblock %}
-</nav>
+</section>
 
+{% for item in knp_menu_get('topnavbar') %}
 
-    {#% for item in knp_menu_get('topnavbar') %}
-
-            {% if item.hasChildren %}
-            <li class="vic-pull-left vic-dropdown">
-                <a href="#" class="vic-dropdown-toggle vic-pull-left" data-toggle="vic-dropdown">{{ item.label|trans({}, 'victoire')|raw }} <b class="vic-caret"></b></a>
-                <ul class="vic-dropdown-menu">
-                    {% for subitem in item %}
-                    <li><a href="{{ subitem.uri }}">{{ subitem.label|trans({}, 'victoire')|raw }}</a></li>
-                    {% endfor %}
-                </ul>
-            </li>
-            {% else %}
-            <li class="vic-pull-left">
-                <a href="{{ item.uri }}" class="vic-pull-left">{{ item.label|trans({}, 'victoire')|raw }}</a>
-            </li>
-            {% endif %}
-
-
+        {% if item.hasChildren %}
+        <li class="vic-pull-left vic-dropdown">
+            <a href="#" class="vic-dropdown-toggle vic-pull-left" data-toggle="vic-dropdown">{{ item.label|trans({}, 'victoire')|raw }} <b class="vic-caret"></b></a>
+            <ul class="vic-dropdown-menu">
+                {% for subitem in item %}
+                <li><a href="{{ subitem.uri }}">{{ subitem.label|trans({}, 'victoire')|raw }}</a></li>
+                {% endfor %}
+            </ul>
         </li>
+        {% else %}
+        <li class="vic-pull-left">
+            <a href="{{ item.uri }}" class="vic-pull-left">{{ item.label|trans({}, 'victoire')|raw }}</a>
+        </li>
+        {% endif %}
 
-    {% endfor %#}
+
+    </li>
+
+{% endfor %}

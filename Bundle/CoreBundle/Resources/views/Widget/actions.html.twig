@@ -1,15 +1,15 @@
 {% trans_default_domain "victoire" %}
 
-<div class="vic-dropdown vic-new-widget vic-hidden vic-new-widget-disabled{{ first ? " vic-first" : "" }}">
+<div class="vic-dropdown vic-undraggable vic-new-widget vic-new-widget-disabled{{ first ? " vic-first" : "" }}">
     <a data-toggle="vic-dropdown" href="#" class="text-center">
-        <img src="/bundles/victoirecore/images/addWidget-icon.png" alt="new widget icon"> {{ "widget.dropdown.action.label"|trans({}, "victoire")|desc("New widget")}}
-        <i class="fa fa-angle-down"></i>
+        <span>
+            {{ "widget.dropdown.action.label"|trans({}, "victoire")|desc("New widget")}}
+        </span>
     </a>
     {{ _self.widgetList(widgets, slot, view) }}
 </div>
 
 {% macro widgetList(widgets, slot, view, depth = 0) %}
-
     {% if widgets|length > 0 %}
     <ul class="{% if depth == 0 %}vic-dropdown-menu{% endif %} vic-dropdown-newWidget vic-newWidget-{{depth}}" role="menu" aria-labelledby="dLabel">
         {% for name, widget in widgets %}

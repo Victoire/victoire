@@ -1,9 +1,0 @@
-*.sublime-project
-*.sublime-workspace
-/phpunit.xml
-*~
-composer.lock
-composer.phar
-/vendor/
-.DS_Store
-/Tests/Utils/cache

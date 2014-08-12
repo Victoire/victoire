@@ -1,0 +1,97 @@
+.vic-modal {
+    z-index: 999;
+    width: 100%;
+    height: 100%;
+    display: block;
+    font-family: @victoire-fontFamily !important;
+
+    &.vic-in {
+        display: block;
+        opacity: 1;
+    }
+
+    .vic-modal-dialog {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+    }
+
+    .vic-modal-content {
+        width: 100%;
+        height: 100%;
+        padding-top: @vic-menu-main-height;
+        border-width: 0;
+    }
+
+    .vic-modal-header {
+        height: @vic-modal-header-height;
+        padding: 0;
+        border-width: 0;
+        background-color: @vic-modal-header-backgroundColor;
+        color: @white;
+
+        .vic-close {
+            font-size: @vic-modal-header-close-fontSize;
+            line-height: @vic-modal-header-height - 1px;
+            color: @vic-modal-header-close-color;
+            opacity: 1;
+            text-shadow: none;
+            margin-right: 12px;
+
+            &:hover {
+                color: @vic-modal-header-closeHover-color;
+                text-shadow: none;
+            }
+        }
+    }
+
+    .vic-modal-title {
+        line-height: @vic-modal-header-height - 1px;
+        font-family: @victoire-fontFamily !important;
+        font-size: @vic-modal-title-fontSize;
+        font-weight: @vic-modal-title-fontWeight;
+    }
+
+    .vic-modal-body {
+        position: absolute;
+        width: 100%;
+        top: @vic-menu-main-height + @vic-modal-header-height;
+        bottom: @vic-modal-footer-height;
+        overflow: scroll;
+    }
+
+    .vic-modal-footer {
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+        height: @vic-modal-footer-height;
+        margin: 0;
+        padding: 0;
+        background: @vic-modal-footer-backgroundColor;
+        color: @vic-modal-footer-color;
+        border-width: 0;
+
+        .vic-container {
+            span {
+                line-height: @vic-modal-footer-height
+            }
+        }
+
+        *[data-modal="create"],
+        *[data-modal="update"],
+        *[data-modal="delete"] {
+            width: @vic-modal-footer-actionButton-width;
+            height: @vic-modal-footer-actionButton-height;
+            display: inline-block;
+            background-image: url(/bundles/victoirecore/images/sprite@2x.png);
+            background-size: 459px 285px;
+            background-position: 0 -102px;
+            margin-top: (@vic-modal-footer-height - @vic-modal-footer-actionButton-height) / 2;
+            margin-left: @vic-modal-footer-actionButton-marginLeft;
+        }
+
+        *[data-modal="delete"] {
+            background-position: -35px -102px;
+        }
+    }
+}

@@ -16,6 +16,8 @@ class SwitchController extends Controller
 {
     /**
      * @Route("/{mode}", name="victoire_core_switch", options={"expose"=true})
+     * @Route("/disable", name="victoire_core_switchDisable", options={"expose"=true}, defaults={"mode"=false})
+     * @Route("/enable", name="victoire_core_switchEnable", options={"expose"=true}, defaults={"mode"=true})
      *
      * @param string $mode The mode
      *
@@ -29,6 +31,10 @@ class SwitchController extends Controller
         //memorize that we are in edit mode
         $session->set('victoire.edit_mode', $mode);
 
-        return new JsonResponse();
+        return new JsonResponse(
+            array(
+                'response' => true
+            )
+        );
     }
 }
