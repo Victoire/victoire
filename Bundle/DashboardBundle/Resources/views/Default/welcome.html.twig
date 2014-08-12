@@ -14,14 +14,27 @@
     <h1>{{ 'dashboard.welcome.title'|trans({}, 'victoire')|desc('Welcome aboard !') }}</h1>
     <p class="vic-lead">{{ 'dashboard.welcome.title'|trans({}, 'victoire')|desc('Congratulation, you are ready to rock on !') }}</p>
     <p>
-        <a href="{{ path('victoire_core_homepage_new') }}" data-toggle="vic-modal" class="vic-btn vic-btn-outline-inverse vic-btn-lg">
-            {{ 'dashboard.welcome.action.homepage.new'|trans({}, 'victoire')|desc('Create the homepage') }}
+
+        {% if templates|length == 0 %}
+        <a href="{{ path('victoire_template_new') }}" data-toggle="vic-modal" class="vic-btn vic-btn-outline-inverse vic-btn-lg">
+            {{ 'dashboard.welcome.invite.template.new'|trans({}, 'victoire')|desc('1. First, create the base template') }}
         </a>
+        {% else %}
+        {% if homepage|length < 1 %}
+            {% if templates|length > 0 %}
+            <a href="{{ path('victoire_core_homepage_new') }}" data-toggle="vic-modal" class="vic-btn vic-btn-outline-inverse vic-btn-lg">
+                {{ 'dashboard.welcome.action.homepage.new'|trans({}, 'victoire')|desc('Create the homepage') }}
+            </a>
+            {% else %}
+            <a href="#" onclick='warn("{{ 'dashboard.welcome.title'|trans({}, 'victoire')|desc('Please create a model first') }}", 10000)' data-toggle="vic-modal" class="vic-btn vic-btn-outline-inverse vic-btn-lg">
+                {{ 'dashboard.welcome.action.homepage.new'|trans({}, 'victoire')|desc('Create the homepage') }}
+            </a>
+            {% endif %}
+        {% endif %}
         <a href="{{ path('victoire_core_page_new') }}" data-toggle="vic-modal" class="vic-btn vic-btn-outline-inverse vic-btn-lg">
             {{ 'dashboard.welcome.action.page.new'|trans({}, 'victoire')|desc('Create a new page') }}
         </a>
-      <a href="#" class="vic-btn vic-btn-outline-inverse vic-btn-lg">
-            {{ 'dashboard.welcome.action.aboutus'|trans({}, 'victoire')|desc('Learn more about Victoire') }}</a>
+        {% endif %}
     </p>
 </div>
 {% endblock content %}

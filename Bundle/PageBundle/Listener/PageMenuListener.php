@@ -2,7 +2,6 @@
 namespace Victoire\Bundle\PageBundle\Listener;
 
 use Symfony\Component\EventDispatcher\Event;
-use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
 use Victoire\Bundle\CoreBundle\Listener\MenuListenerInterface;
 use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
 use Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent;
@@ -31,7 +30,7 @@ class PageMenuListener implements MenuListenerInterface
      *
      * @return Ambigous <\Knp\Menu\ItemInterface, NULL>
      */
-    public function addContextual(PageMenuContextualEvent $event)
+    public function addContextual($event)
     {
         //get the current page
         $page = $event->getPage();
@@ -50,24 +49,6 @@ class PageMenuListener implements MenuListenerInterface
                 'routeParameters' => array('id' => $page->getId())
             )
         )->setLinkAttribute('data-toggle', 'vic-modal');
-
-        //are we in a business entity template with an entity given as parameter
-        if (($page->getType() === BusinessEntityTemplate::TYPE)  && ($entity !== null)) {
-            $template = $page;
-        } else {
-            //get the parent
-            $template = $page->getTemplate();
-        }
-
-        //if there is a template, we add the link in the top bar
-        if ($template !== null) {
-            $mainItem->addChild('menu.page.template',
-                array(
-                    'route' => 'victoire_core_page_show',
-                    'routeParameters' => array('url' => $template->getUrl())
-                )
-            )->setLinkAttribute('data-toggle', 'vic-none');//there is no modal for this menu entry
-        }
 
         return $mainItem;
     }

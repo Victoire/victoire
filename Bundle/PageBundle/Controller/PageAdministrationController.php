@@ -2,20 +2,16 @@
 
 namespace Victoire\Bundle\PageBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Victoire\Bundle\CoreBundle\Form\TemplateType;
-use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\PageBundle\Form\PageSettingsType;
-use Victoire\Bundle\PageBundle\Form\PageType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Victoire\Bundle\PageBundle\Entity\BasePage;
+use Victoire\Bundle\PageBundle\Entity\Page;
 
 /**
  * Page Administration Controller
@@ -41,46 +37,45 @@ class PageAdministrationController extends PageController
 
     /**
      * New page
+     * @param boolean $isHomepage Is the page a homepage
      *
-     * @return template
      * @Route("/new", name="victoire_core_page_new", defaults={"isHomepage" : false})
      * @Route("/homepage/new", name="victoire_core_homepage_new", defaults={"isHomepage" : true})
      * @Template()
      *
-     * @param boolean $isHomepage Is the page a homepage
+     * @return template
      */
     public function newAction($isHomepage = false)
     {
-
         return new JsonResponse(parent::newAction($isHomepage));
     }
 
     /**
      * Page settings
+     * @param Request  $request
+     * @param BasePage $page
      *
      * @Route("/{id}/settings", name="victoire_core_page_settings")
      * @Template()
      * @ParamConverter("page", class="VictoirePageBundle:Page")
      *
-     * @param Page $page The page
-     *
      * @return json The settings
      */
-    public function settingsAction(Request $request, Page $page)
+    public function settingsAction(Request $request, BasePage $page)
     {
         return new JsonResponse(parent::settingsAction($request, $page));
     }
 
     /**
      * Page delete
+     * @param BasePage $page
      *
-     * @param page $page
      * @return template
      * @Route("/{id}/delete", name="victoire_core_page_delete")
      * @Template()
      * @ParamConverter("page", class="VictoirePageBundle:Page")
      */
-    public function deleteAction(Page $page)
+    public function deleteAction(BasePage $page)
     {
         if (!$this->get('security.context')->isGranted('PAGE_OWNER', $page)) {
             throw new AccessDeniedException("Nop ! you can't do such an action");
@@ -89,56 +84,26 @@ class PageAdministrationController extends PageController
         return new JsonResponse(parent::deleteAction($page));
     }
 
-
     /**
      * Detach a page from a template
+     * @param BasePage $page
      *
-     * @param page $page
      * @return template
      * @Route("/{id}/detach", name="victoire_core_page_detach")
      * @ParamConverter("page", class="VictoirePageBundle:Page")
      */
-    public function detachAction(Page $page)
+    public function detachAction(BasePage $page)
     {
+        throw new \Exception("Not implemented yet");
 
-    }
-
-    /**
-     * Create a Template from a page
-     *
-     * @param page $page
-     * @return template
-     * @Route("/{id}/create-template", name="victoire_core_page_createtemplate")
-     * @ParamConverter("page", class="VictoirePageBundle:Page")
-     */
-    public function createTemplateAction(Page $page)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $form = $this->container->get('form.factory')->create(new TemplateType($em), $page);
-        $form->handleRequest($this->get('request'));
-        if ($form->isValid()) {
-            $template = $form->getData();
-
-            $em->remove($page);
-            $em->persist($template);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('victoire_core_page_show', array("url" => $template->getUrl())));
-        }
-
-        return $this->container->get('victoire_templating')->renderResponse(
-            'VictoirePageBundle:Page:settings.html.twig',
-            array('page' => $page, 'form' => $form->createView())
-        );
     }
 
     /**
      * Show and edit sitemap
      *
-     * @return template
      * @Route("/sitemap", name="victoire_core_page_sitemap")
      * @Template()
+     * @return template
      */
     public function siteMapAction()
     {

@@ -3,8 +3,6 @@ namespace Victoire\Bundle\BusinessEntityBundle\Entity;
 
 /**
  *
- * @author Thomas Beaujean
- *
  */
 class BusinessProperty
 {

@@ -3,7 +3,6 @@ namespace Victoire\Bundle\CoreBundle\Translation;
 
 use JMS\TranslationBundle\Model\Message;
 use JMS\TranslationBundle\Translation\TranslationContainerInterface;
-use JMS\TranslationBundle\Model\FileSource;
 
 /**
  *
@@ -30,7 +29,7 @@ class DynamicTranslations implements TranslationContainerInterface
             new Message('menu.sitemap', 'victoire'),
             new Message('menu.media', 'victoire'),
             new Message('menu.parent', 'victoire'),
-            new Message('menu.business_entity_template', 'victoire'),
+            new Message('menu.business_entity_page_pattern', 'victoire'),
             new Message('widget.form.theme.label', 'victoire'),
             new Message('widget.form.theme.default', 'victoire'),
             new Message('modal.button.create.title', 'victoire'),

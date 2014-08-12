@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\MediaBundle\Controller;
 
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Victoire\Bundle\MediaBundle\Entity\Folder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

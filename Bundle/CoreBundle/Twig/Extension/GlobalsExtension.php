@@ -2,12 +2,8 @@
 
 namespace Victoire\Bundle\CoreBundle\Twig\Extension;
 
-use Victoire\Bundle\CoreBundle\Menu\MenuManager;
-use Victoire\Bundle\CoreBundle\Widget\Managers\WidgetManager;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
-use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Victoire\Bundle\PageBundle\Entity\Page;
 
 /**
  * Provides some gloval variabls to twig
@@ -22,7 +18,7 @@ class GlobalsExtension extends \Twig_Extension
      * contructor
      *
      * @param TemplateMapper $templateMapper
-     * @param unknown $session
+     * @param unknown        $session
      */
     public function __construct(TemplateMapper $templateMapper, $session)
     {

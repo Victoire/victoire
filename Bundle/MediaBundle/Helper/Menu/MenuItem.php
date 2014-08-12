@@ -148,7 +148,7 @@ class MenuItem
     /**
      * Set parent menu item
      *
-     * @param MenuItem|null  $parent
+     * @param MenuItem|null $parent
      *
      * @return MenuItem
      */

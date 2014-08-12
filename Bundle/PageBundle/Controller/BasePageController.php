@@ -1,67 +1,27 @@
 <?php
 namespace Victoire\Bundle\PageBundle\Controller;
 
+use AppVentus\Awesome\ShortcutsBundle\Controller\AwesomeController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use AppVentus\Awesome\ShortcutsBundle\Controller\AwesomeController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
+use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Helper\UrlHelper;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
- * undocumented class
- *
+ * The base page controller is used to interact with all kind of pages
  **/
 class BasePageController extends AwesomeController
 {
+
     /**
-     * @param $page
+     * @param string $url The page url
      *
-     * @return template
-     */
-    public function deleteAction(Page $page)
-    {
-        $return = null;
-
-        try {
-            //it should not be allowed to try to delete an undeletable page
-            if ($page->isUndeletable()) {
-                $message = $this->get('translator')->trans('page.undeletable', array(), 'victoire');
-                throw new \Exception($message);
-            }
-
-            //the entity manager
-            $em = $this->getEntityManager();
-
-            //remove the page
-            $em->remove($page);
-
-            //flush the modifications
-            $em->flush();
-
-            //redirect to the homepage
-            $homepageUrl = $this->generateUrl('victoire_core_page_homepage');
-
-            $return = array(
-                'success' => true,
-                'url'     => $homepageUrl
-            );
-        } catch (\Exception $ex) {
-            $return = array(
-                'success' => false,
-                'message' => $ex->getMessage()
-            );
-        }
-
-        return $return;
-    }
-
-    /**
-     * @param  url      $url
+     * @todo  WTf !!! A huge way too long
      * @return Template
      *
      */
@@ -70,106 +30,74 @@ class BasePageController extends AwesomeController
         //the response
         $response = null;
         $entity = null;
-        $BusinessEntityTemplate = null;
 
         //manager
-        $manager = $this->getEntityManager();
-        $pageRepository = $manager->getRepository('VictoirePageBundle:Page');
-        $routeRepository = $manager->getRepository('VictoireCoreBundle:Route');
-        $businessEntityHelper = $this->get('victoire_core.helper.business_entity_helper');
-        $businessEntityTemplateHelper = $this->get('victoire_business_entity_template.business_entity_template_helper');
-        $pageSeoHelper = $this->get('victoire_seo.helper.pageseo_helper');
-        $pageHelper = $this->get('victoire_page.page_helper');
-
-        $urlMatcher = $this->get('victoire_page.matcher.url_matcher');
+        $em = $this->getEntityManager();
 
         //get the page
-        $page = $pageRepository->findOneByUrl($url);
+        $page = $em->getRepository('VictoirePageBundle:BasePage')->findOneByUrl($url);
 
-        //we do not try to retrieve an entity for the business entity template page
+        //if page is not found, it could be that the page is a BusinessEntityPage, let's try to get it
         if ($page === null) {
-            $instance = $urlMatcher->getBusinessEntityTemplateInstanceByUrl($url);
+            $instance = $this->get('victoire_page.matcher.url_matcher')->getBusinessEntityPageByUrl($url);
 
-            //an instance of a business entity template and an entity has been identified
+            //an instance of a business entity page pattern and an entity has been identified
             if ($instance !== null) {
-                $page = $instance['businessEntityTemplate'];
+                $page = $instance['businessEntityPagePattern'];
                 $entity = $instance['entity'];
+                //override of the seo using the current entity
+                //only if the page was found
+                $this->get('victoire_seo.helper.pageseo_helper')->updateSeoByEntity($page, $entity);
+
+                //update the parameters of the page
+                $this->get('victoire_page.page_helper')->updatePageParametersByEntity($page, $entity);
             }
-        } else {
-            $entity = $page->getEntity();
         }
 
-        //no page were found, we try to look for an BusinessEntityTemplate
+        //no page found using the url, we look for a previous url
         if ($page === null) {
-            $page = $BusinessEntityTemplate;
-        }
-
-        //override of the seo using the current entity
-        if ($page !== null) {
-            //only if the page was found
-            $pageSeoHelper->updateSeoByEntity($page, $entity);
-
-            //update the parameters of the page
-            $pageHelper->updatePageParametersByEntity($page, $entity);
-        }
-
-        //no need for this variable anymore
-        unset($BusinessEntityTemplate);
-
-        //no page found using the url, we look for previous url
-        if ($page === null) {
-            $route = $routeRepository->findOneMostRecentByUrl($url);
+            $route = $em->getRepository('VictoireCoreBundle:Route')->findOneMostRecentByUrl($url);
             if ($route !== null) {
                 //the page linked to the old url
                 $page = $route->getPage();
-
-                //the current url
-                $url = $page->getUrl();
-
-                //get the base url
                 $router = $this->container->get('router');
-                $context = $router->getContext();
-                //the host
-                $host = $context->getHost();
-                //the scheme
-                $scheme = $context->getScheme();
 
-                //get the complete url
-                $completeUrl = $scheme.'://'.$host.'/'.$url;
-
-                //redirect to the current url
-                $response = $this->redirect($completeUrl);
+                return $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl())));
             }
         } else {
-            if ($page->getSeo() && $page->getSeo()->getRedirectTo() && !$this->get('session')->get('victoire.edit_mode', false)) {
-                //a redirection is required by the seo bundle
+            if (
+                $page->getSeo()
+                && $page->getSeo()->getRedirectTo()
+                && !$this->get('session')->get('victoire.edit_mode', false)
+            ) {
+                //a redirection is wanted by the seo bundle
                 $seoUrl = $page->getSeo()->getRedirectTo()->getUrl();
 
                 //generate the url
-                $url = $this->generateUrl('victoire_core_page_show', array('url' => $seoUrl));
-                //generate the redirect
-                $response = $this->redirect($url);
+                $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $seoUrl)));
             } else {
-                //add the page to twig
-                $this->get('twig')->addGlobal('page', $page);
-                $this->get('twig')->addGlobal('entity', $entity);
+
+                if ($entity) {
+                    $page = $this->get('victoire_business_entity_page.business_entity_page_helper')->generateEntityPageFromPattern($page, $entity);
+                }
 
                 $event = new \Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent($page, $entity);
 
-                //TODO : il serait bon de faire des constantes pour les noms d'évents
                 $eventName = 'victoire_core.' . $page->getType() . '_menu.contextual';
-
                 $this->get('event_dispatcher')->dispatch($eventName, $event);
 
                 //the victoire templating
                 $victoireTemplating = $this->container->get('victoire_templating');
-                $layout = 'AppBundle:Layout:' . $page->getLayout() . '.html.twig';
+                $layout = 'AppBundle:Layout:' . $page->getTemplate()->getLayout() . '.html.twig';
 
                 $parameters = array(
-                    'page' => $page,
-                    'id' => $page->getId(),
+                    'page'   => $page,
+                    'id'     => $page->getId(),
                     'entity' => $entity
                 );
+                //add the page to twig
+                $this->get('twig')->addGlobal('view', $page);
+                $this->get('twig')->addGlobal('entity', $entity);
 
                 //create the response
                 $response = $victoireTemplating->renderResponse(
@@ -185,10 +113,8 @@ class BasePageController extends AwesomeController
         return $response;
     }
 
-
     /**
      * New page
-     *
      * @param boolean $isHomepage
      *
      * @return template
@@ -198,6 +124,7 @@ class BasePageController extends AwesomeController
         $em = $this->getEntityManager();
         $page = $this->getNewPage();
         $page->setHomepage($isHomepage ? $isHomepage : 0);
+
         $form = $this->container->get('form.factory')->create($this->getNewPageType(), $page);
 
         $form->handleRequest($this->get('request'));
@@ -205,16 +132,10 @@ class BasePageController extends AwesomeController
             if ($page->getParent()) {
                 $pageNb = count($page->getParent()->getChildren());
             } else {
-                $pageNb = count($em->getRepository('VictoirePageBundle:Page')->findByParent(null));
+                $pageNb = count($em->getRepository('VictoirePageBundle:BasePage')->findByParent(null));
             }
             // + 1 because position start at 1, not 0
             $page->setPosition($pageNb + 1);
-
-            $template = $page->getTemplate();
-
-            if ($template) {
-                $page->setWidgetMap($template->getWidgetMap());
-            }
 
             $page->setAuthor($this->getUser());
             $em->persist($page);
@@ -224,26 +145,29 @@ class BasePageController extends AwesomeController
                 "success"  => true,
                 "url"      => $this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl()))
             );
-        }
+        } else {
+            $formErrorService = $this->container->get('av.form_error_service');
 
-        return array(
-            "success" => false,
-            'html'    => $this->container->get('victoire_templating')->render(
-                $this->getBaseTemplatePath() . ':new.html.twig',
-                array('form' => $form->createView())
-            )
-        );
+            return array(
+                "success" => false,
+                "message" => $formErrorService->getRecursiveReadableErrors($form),
+                'html'    => $this->container->get('victoire_templating')->render(
+                    $this->getBaseTemplatePath() . ':new.html.twig',
+                    array('form' => $form->createView())
+                )
+            );
+        }
     }
 
     /**
      * Page settings
      *
-     * @param Request $request
-     * @param Page    $page
+     * @param Request  $request
+     * @param BasePage $page
      *
      * @return template
      */
-    protected function settingsAction(Request $request, Page $page)
+    protected function settingsAction(Request $request, BasePage $page)
     {
         $em = $this->getEntityManager();
 
@@ -252,14 +176,13 @@ class BasePageController extends AwesomeController
         $formFactory = $this->container->get('form.factory');
         $form = $formFactory->create($this->getPageSettingsType(), $page);
 
-
         //services
         $businessEntityHelper = $this->get('victoire_core.helper.business_entity_helper');
 
         $businessProperties = array();
 
-        //if the page is a business entity template page
-        if ($page instanceof BusinessEntityTemplate) {
+        //if the page is a business entity page
+        if ($page instanceof BusinessEntityPagePattern) {
             //get the id of the business entity
             $businessEntityId = $page->getBusinessEntityName();
             //we can use the business entity properties on the seo
@@ -267,7 +190,6 @@ class BasePageController extends AwesomeController
 
             $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
         }
-
 
         //the type of method used
         $requestMethod = $request->getMethod();
@@ -314,8 +236,50 @@ class BasePageController extends AwesomeController
     }
 
     /**
-     * If the valid is not valid, an exception is thrown
+     * @param Page $page The page to delete
      *
+     * @return template
+     */
+    public function deleteAction(BasePage $page)
+    {
+        $return = null;
+
+        try {
+            //it should not be allowed to try to delete an undeletable page
+            if ($page->isUndeletable()) {
+                $message = $this->get('translator')->trans('page.undeletable', array(), 'victoire');
+                throw new \Exception($message);
+            }
+
+            //the entity manager
+            $em = $this->getEntityManager();
+
+            //remove the page
+            $em->remove($page);
+
+            //flush the modifications
+            $em->flush();
+
+            //redirect to the homepage
+            $homepageUrl = $this->generateUrl('victoire_core_page_homepage');
+
+            $return = array(
+                'success' => true,
+                'url'     => $homepageUrl
+            );
+        } catch (\Exception $ex) {
+            $return = array(
+                'success' => false,
+                'message' => $ex->getMessage()
+            );
+        }
+
+        return $return;
+    }
+
+    /**
+     * If the valid is not valid, an exception is thrown
+     * @todo  REFACTOR
      * @param Page   $page
      * @param Entity $entity
      *
@@ -341,21 +305,20 @@ class BasePageController extends AwesomeController
             throw new NotFoundHttpException($errorMessage);
         }
 
-        //if the page is a BusinessEntityTemplate and the entity is not allowed for this template
-        if ($page instanceof BusinessEntityTemplate) {
-            $hasRoleVictoire = $securityContext->isGranted('ROLE_VICTOIRE');
+        //if the page is a BusinessEntityPagePattern and the entity is not allowed for this page pattern
+        if ($page instanceof BusinessEntityPagePattern) {
 
-            //a not victoire user can not access a business template page
-            if (!$hasRoleVictoire) {
+            //only victoire users are able to access a business page
+            if (!$securityContext->isGranted('ROLE_VICTOIRE')) {
                 throw $this->createAccessDeniedException('You are not allowed to see this page');
             }
-
+        } elseif ($page instanceof BusinessEntityPage) {
             if ($entity !== null) {
-                $businessEntityTemplateHelper = $this->get('victoire_business_entity_template.business_entity_template_helper');
-                $entityAllowed = $businessEntityTemplateHelper->isEntityAllowed($page, $entity);
+                $businessEntityPagePatternHelper = $this->get('victoire_business_entity_page.business_entity_page_helper');
+                $entityAllowed = $businessEntityPagePatternHelper->isEntityAllowed($page, $entity);
 
                 if ($entityAllowed === false) {
-                    throw $this->createNotFoundException('The entity ['.$entity->getId().'] is not allowed for the template ['.$page->getId().']');
+                    throw $this->createNotFoundException('The entity ['.$entity->getId().'] is not allowed for the page pattern ['.$page->getId().']');
                 }
             }
         }

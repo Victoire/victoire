@@ -21,11 +21,11 @@ trait BusinessEntityTrait
      */
     protected $proxies;
 
-
     /**
      * Set proxy
      *
      * @param \Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy $proxy
+     *
      * @return PostPage
      */
     public function setProxy(\Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy $proxy = null)
@@ -45,11 +45,11 @@ trait BusinessEntityTrait
         return $this->proxy;
     }
 
-
     /**
      * Add proxies
      *
      * @param \Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy $proxies
+     *
      * @return PostPage
      */
     public function addProxie(\Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy $proxies)
@@ -67,5 +67,21 @@ trait BusinessEntityTrait
     public function removeProxie(\Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy $proxies)
     {
         $this->proxies->removeElement($proxies);
+    }
+
+    /**
+     * Get the content of an attribute of the current entity
+     *
+     * @param string $field
+     *
+     * @return mixed
+     */
+    public function getEntityAttributeValue($field)
+    {
+        $functionName = 'get'.ucfirst($field);
+
+        $fieldValue = $this->{$functionName}();
+
+        return $fieldValue;
     }
 }

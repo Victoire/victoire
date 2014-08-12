@@ -1,11 +1,7 @@
 <?php
 namespace Victoire\Bundle\PageBundle\Entity;
 
-use Victoire\Bundle\PageBundle\Entity\WidgetMap;
-
 /**
- *
- * @author Thomas Beaujean
  *
  */
 class Slot
@@ -89,7 +85,7 @@ class Slot
             if ($wm->getWidgetId() === $widgetId) {
                 $widgetMap = $wm;
                 //entity found, there is no need to continue
-                continue;
+                break;
             }
         }
 
@@ -110,7 +106,7 @@ class Slot
             if ($wm->getId() === $widgetMap->getId()) {
                 unset($this->widgetMaps[$index]);
                 //entity found, there is no need to continue
-                continue;
+                break;
             }
         }
 

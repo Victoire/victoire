@@ -6,20 +6,20 @@
                 <source>new.page.modal.header</source>
                 <target>Nouvelle page</target>
             </trans-unit>
-            <trans-unit resname="form.page.type.title.label">
-                <source>form.page.type.title.label</source>
-                <target>Titre</target>
+            <trans-unit resname="new.template.modal.header">
+                <source>new.template.modal.header</source>
+                <target>Nouveau modèle</target>
             </trans-unit>
-            <trans-unit resname="form.page.type.parent.label">
-                <source>form.page.type.parent.label</source>
+            <trans-unit resname="form.view.type.name.label">
+                <source>form.view.type.name.label</source>
+                <target>Nom</target>
+            </trans-unit>
+            <trans-unit resname="form.view.type.parent.label">
+                <source>form.view.type.parent.label</source>
                 <target>Page parente</target>
             </trans-unit>
-            <trans-unit resname="form.page.type.layout.label">
-                <source>form.page.type.layout.label</source>
-                <target>Architecture</target>
-            </trans-unit>
-            <trans-unit resname="form.page.type.template.label">
-                <source>form.page.type.template.label</source>
+            <trans-unit resname="form.view.type.template.label">
+                <source>form.view.type.template.label</source>
                 <target>Modèle à utiliser</target>
             </trans-unit>
             <trans-unit resname="form.page.type.bodyClass.label">
@@ -36,7 +36,11 @@
             </trans-unit>
             <trans-unit resname="modal.form.page.settings.title">
                 <source>modal.form.page.settings.title</source>
-                <target>Paramètres de la page "page.title"</target>
+                <target>Paramètres de la page "page.name"</target>
+            </trans-unit>
+            <trans-unit resname="modal.form.template.settings.title">
+                <source>modal.form.template.settings.title</source>
+                <target>Paramètres du modèle "template.name"</target>
             </trans-unit>
             <trans-unit resname="form.page.type.slug.label">
                 <source>form.page.type.slug.label</source>
@@ -70,9 +74,9 @@
                 <source>index.template.modal.header</source>
                 <target>Liste des modèles</target>
             </trans-unit>
-            <trans-unit resname="form.template.type.title.label">
-                <source>form.template.type.title.label</source>
-                <target>Titre</target>
+            <trans-unit resname="form.template.type.name.label">
+                <source>form.template.type.name.label</source>
+                <target>Nom</target>
             </trans-unit>
             <trans-unit resname="form.template.type.template.label">
                 <source>form.template.type.template.label</source>

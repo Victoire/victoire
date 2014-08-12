@@ -11,11 +11,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: victoire_core.article_menu.contextual, method: addContextual}
 
-    victoire_blog.base_page.subscriber: #REVIEW surement prendre une convention
-        class: Victoire\Bundle\BlogBundle\EventSubscriber\LoadMetadataSubscriber
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
-
     victoire_blog.category_filters.form.type:
         class: Victoire\Bundle\BlogBundle\Filter\CategoryFilter
         arguments:

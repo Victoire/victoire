@@ -9,7 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * PageSeo
  *
- * @ORM\Table("cms_page_seo")
+ * @ORM\Table("vic_page_seo")
  * @ORM\Entity()
  */
 class PageSeo
@@ -224,7 +224,6 @@ class PageSeo
 
     /**
      * contructor
-     *
      * @param Page $page
      *
      **/
@@ -234,7 +233,6 @@ class PageSeo
         $this->updatedAt = new \DateTime();
         $this->page = $page;
     }
-
 
     /**
      * Get id
@@ -248,8 +246,8 @@ class PageSeo
 
     /**
      * Set page
-     *
      * @param Page $page
+     *
      * @return PageSeo
      */
     public function setPage(Page $page)
@@ -271,8 +269,8 @@ class PageSeo
 
     /**
      * Set redirectTo
-     *
      * @param Page $redirectTo
+     *
      * @return PageSeo
      */
     public function setRedirectTo(Page $redirectTo)
@@ -294,8 +292,8 @@ class PageSeo
 
     /**
      * Set metaTitle
-     *
      * @param string $metaTitle
+     *
      * @return PageSeo
      */
     public function setMetaTitle($metaTitle)
@@ -317,8 +315,8 @@ class PageSeo
 
     /**
      * Set metaDescription
-     *
      * @param string $metaDescription
+     *
      * @return PageSeo
      */
     public function setMetaDescription($metaDescription)
@@ -340,8 +338,8 @@ class PageSeo
 
     /**
      * Set relAuthor
-     *
      * @param string $relAuthor
+     *
      * @return PageSeo
      */
     public function setRelAuthor($relAuthor)
@@ -363,8 +361,8 @@ class PageSeo
 
     /**
      * Set relPublisher
-     *
      * @param string $relPublisher
+     *
      * @return PageSeo
      */
     public function setRelPublisher($relPublisher)
@@ -386,8 +384,8 @@ class PageSeo
 
     /**
      * Set ogTitle
-     *
      * @param string $ogTitle
+     *
      * @return PageSeo
      */
     public function setOgTitle($ogTitle)
@@ -409,8 +407,8 @@ class PageSeo
 
     /**
      * Set ogType
-     *
      * @param string $ogType
+     *
      * @return PageSeo
      */
     public function setOgType($ogType)
@@ -432,8 +430,8 @@ class PageSeo
 
     /**
      * Set ogImage
-     *
      * @param string $ogImage
+     *
      * @return PageSeo
      */
     public function setOgImage($ogImage)
@@ -455,8 +453,8 @@ class PageSeo
 
     /**
      * Set ogUrl
-     *
      * @param string $ogUrl
+     *
      * @return PageSeo
      */
     public function setOgUrl($ogUrl)
@@ -478,8 +476,8 @@ class PageSeo
 
     /**
      * Set ogDescription
-     *
      * @param string $ogDescription
+     *
      * @return PageSeo
      */
     public function setOgDescription($ogDescription)
@@ -501,8 +499,8 @@ class PageSeo
 
     /**
      * Set fbAdmins
-     *
      * @param string $fbAdmins
+     *
      * @return PageSeo
      */
     public function setFbAdmins($fbAdmins)
@@ -524,8 +522,8 @@ class PageSeo
 
     /**
      * Set twitterCard
-     *
      * @param string $twitterCard
+     *
      * @return PageSeo
      */
     public function setTwitterCard($twitterCard)
@@ -547,8 +545,8 @@ class PageSeo
 
     /**
      * Set twitterUrl
-     *
      * @param string $twitterUrl
+     *
      * @return PageSeo
      */
     public function setTwitterUrl($twitterUrl)
@@ -570,8 +568,8 @@ class PageSeo
 
     /**
      * Set twitterTitle
-     *
      * @param string $twitterTitle
+     *
      * @return PageSeo
      */
     public function setTwitterTitle($twitterTitle)
@@ -593,8 +591,8 @@ class PageSeo
 
     /**
      * Set twitterDescription
-     *
      * @param string $twitterDescription
+     *
      * @return PageSeo
      */
     public function setTwitterDescription($twitterDescription)
@@ -616,8 +614,8 @@ class PageSeo
 
     /**
      * Set twitterImage
-     *
      * @param string $twitterImage
+     *
      * @return PageSeo
      */
     public function setTwitterImage($twitterImage)
@@ -639,8 +637,8 @@ class PageSeo
 
     /**
      * Set schemaPageType
-     *
      * @param string $schemaPageType
+     *
      * @return PageSeo
      */
     public function setSchemaPageType($schemaPageType)
@@ -662,8 +660,8 @@ class PageSeo
 
     /**
      * Set schemaName
-     *
      * @param string $schemaName
+     *
      * @return PageSeo
      */
     public function setSchemaName($schemaName)
@@ -685,8 +683,8 @@ class PageSeo
 
     /**
      * Set schemaDescription
-     *
      * @param string $schemaDescription
+     *
      * @return PageSeo
      */
     public function setSchemaDescription($schemaDescription)
@@ -708,8 +706,8 @@ class PageSeo
 
     /**
      * Set schemaImage
-     *
      * @param string $schemaImage
+     *
      * @return PageSeo
      */
     public function setSchemaImage($schemaImage)
@@ -731,8 +729,8 @@ class PageSeo
 
     /**
      * Set metaRobotsIndex
-     *
      * @param string $metaRobotsIndex
+     *
      * @return PageSeo
      */
     public function setMetaRobotsIndex($metaRobotsIndex)
@@ -754,8 +752,8 @@ class PageSeo
 
     /**
      * Set metaRobotsFollow
-     *
      * @param string $metaRobotsFollow
+     *
      * @return PageSeo
      */
     public function setMetaRobotsFollow($metaRobotsFollow)
@@ -777,8 +775,8 @@ class PageSeo
 
     /**
      * Set metaRobotsAdvanced
-     *
      * @param string $metaRobotsAdvanced
+     *
      * @return PageSeo
      */
     public function setMetaRobotsAdvanced($metaRobotsAdvanced)
@@ -800,8 +798,8 @@ class PageSeo
 
     /**
      * Set sitemapIndexed
-     *
      * @param boolean $sitemapIndexed
+     *
      * @return PageSeo
      */
     public function setSitemapIndexed($sitemapIndexed)
@@ -823,8 +821,8 @@ class PageSeo
 
     /**
      * Set sitemapPriority
-     *
      * @param float $sitemapPriority
+     *
      * @return PageSeo
      */
     public function setSitemapPriority($sitemapPriority)
@@ -846,8 +844,8 @@ class PageSeo
 
     /**
      * Set relCanonical
-     *
      * @param string $relCanonical
+     *
      * @return PageSeo
      */
     public function setRelCanonical($relCanonical)
@@ -869,8 +867,8 @@ class PageSeo
 
     /**
      * Set keyword
-     *
      * @param string $keyword
+     *
      * @return PageSeo
      */
     public function setKeyword($keyword)

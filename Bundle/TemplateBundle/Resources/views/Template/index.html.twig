@@ -1,0 +1,26 @@
+{% extends 'VictoireCoreBundle::_modal.html.twig' %}
+{% trans_default_domain "victoire" %}
+{% block modal_container_classes %}{{ parent() }} vic-view-modal{% endblock modal_container_classes %}
+
+{% block modal_header_title %}
+    {{'index.template.modal.header'|trans({}, 'victoire')}}
+{% endblock modal_header_title %}
+
+{% block modal_body_content %}
+    {{ _self.templatesHierarchy(templates) }}
+{% endblock modal_body_content %}
+
+{% macro templatesHierarchy(templates) %}
+    {% for template in templates %}
+      <li id="list_{{template.id}}"><a href="{{path('victoire_template_show', {'slug' : template.slug })}}">{{ template.name }}</a>
+      {% if template.inheritors %}
+          <ol>
+            {{ _self.templatesHierarchy(template.inheritors) }}
+          </ol>
+      {% endif %}
+      </li>
+    {% endfor %}
+{% endmacro %}
+
+{% block modal_footer_content %}
+{% endblock modal_footer_content %}

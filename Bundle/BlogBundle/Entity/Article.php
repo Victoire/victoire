@@ -2,21 +2,23 @@
 
 namespace Victoire\Bundle\BlogBundle\Entity;
 
-use Victoire\Bundle\PageBundle\Entity\Page;
 use Doctrine\ORM\Mapping as ORM;
-use Victoire\Bundle\CoreBundle\Annotations as VIC;
 use Symfony\Component\Validator\Constraints as Assert;
+use Victoire\Bundle\CoreBundle\Annotations as VIC;
+use Victoire\Bundle\CoreBundle\Entity\Traits\BusinessEntityTrait;
+use Victoire\Bundle\PageBundle\Entity\BasePage;
 
 /**
  * PostPage
  *
  * @ORM\Entity
+ * @ORM\Table("vic_article")
  *
  * @VIC\BusinessEntity({"widgetredactor", "themeredactornewspaper", "widgetlisting", "themelistingblogarticles"})
  */
-class Article extends Page
+class Article extends BasePage
 {
-    use \Victoire\Bundle\CoreBundle\Entity\Traits\BusinessEntityTrait;
+    use BusinessEntityTrait;
 
     const TYPE = 'article';
 
@@ -72,6 +74,7 @@ class Article extends Page
     /**
      * Tags of the article
      * @ORM\ManyToMany(targetEntity="Tag", inversedBy="articles")
+     * @ORM\JoinTable(name="vic_article_tags")
      */
     protected $tags;
 
@@ -79,6 +82,7 @@ class Article extends Page
      * Set description
      *
      * @param string $description
+     *
      * @return PostPage
      */
     public function setDescription($description)
@@ -98,11 +102,11 @@ class Article extends Page
         return $this->description;
     }
 
-
     /**
      * Set category
      *
      * @param string $category
+     *
      * @return Article
      */
     public function setCategory($category)
@@ -152,11 +156,11 @@ class Article extends Page
         $this->title = $title;
     }
 
-
     /**
      * Set tags
      *
      * @param string $tags
+     *
      * @return Article
      */
     public function setTags($tags)
@@ -170,6 +174,7 @@ class Article extends Page
      * Add tag
      *
      * @param string $tag
+     *
      * @return Article
      */
     public function addTag($tag)
@@ -183,6 +188,7 @@ class Article extends Page
      * Remove tag
      *
      * @param string $tag
+     *
      * @return Article
      */
     public function removeTag($tag)
@@ -201,6 +207,5 @@ class Article extends Page
     {
         return $this->tags;
     }
-
 
 }

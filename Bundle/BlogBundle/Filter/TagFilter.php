@@ -31,7 +31,7 @@ class TagFilter extends BaseFilter
      * Build the query
      *
      * @param QueryBuilder &$qb
-     * @param array $parameters
+     * @param array        $parameters
      *
      * @return queryBuilder
      */

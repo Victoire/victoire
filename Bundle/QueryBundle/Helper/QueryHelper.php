@@ -7,9 +7,7 @@ use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Doctrine\ORM\QueryBuilder;
 
 /**
- *
- * @author Thomas Beaujean
- *
+ * The QueryHelper helps to build query in Victoire's components
  * ref: victoire_query.query_helper
  */
 class QueryHelper
@@ -81,7 +79,8 @@ class QueryHelper
 
     /**
      * Check that the object is not null and has the query trait
-     * @param  unknown    $containerEntity
+     * @param unknown $containerEntity
+     *
      * @throws \Exception
      */
     protected function checkObjectHasQueryTrait($containerEntity)
@@ -99,9 +98,9 @@ class QueryHelper
     /**
      * Get the results from the sql after adding the
      *
-     * @param  unknown    $containerEntity
-     * @param  unknown    $queryBuilder
-     * @param  string     $additionnalDql
+     * @param unknown $containerEntity
+     * @param unknown $itemsQueryBuilder
+     *
      * @throws \Exception
      *
      * @return QueryBuilder The QB to list of objects
@@ -131,9 +130,10 @@ class QueryHelper
                 ->andWhere('main_item.id IN (' . $subQuery->getQuery()->getDql() . ' ' . $query . ')');
         }
 
-        //if the the keyword ":currentEntity" is found, we are in a businessEntityTemplate, so we set the current entity as a query parameter.
+        //if the the keyword ":currentEntity" is found, we are in a businessEntityPagePattern, so we set the current entity as a query parameter.
         if (strpos($query, ":currentEntity") !== false) {
             $itemsQueryBuilder->setParameter('currentEntity', $containerEntity->getEntity() ? $containerEntity->getEntity()->getId() : null);
+            error_log(get_class($containerEntity->getEntity()));
         }
 
         return $itemsQueryBuilder;

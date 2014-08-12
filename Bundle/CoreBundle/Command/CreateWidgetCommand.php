@@ -127,7 +127,6 @@ EOT
         $dialog->writeGeneratorSummary($output, $errors);
     }
 
-
     /**
      * get a generator for given widget and type, and attach it skeleton dirs
      * @return $generator
@@ -148,6 +147,7 @@ EOT
     }
     /**
      * get a generator for given widget and type, and attach it skeleton dirs
+     * @param BundleInterface $bundle
      *
      * @return $generator
      */
@@ -170,6 +170,7 @@ EOT
      * Collect options and arguments
      * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @return void
      */
     protected function interact(InputInterface $input, OutputInterface $output)
@@ -177,13 +178,11 @@ EOT
         $dialog = $this->getDialogHelper();
         $dialog->writeSection($output, 'Welcome to the Victoire widget bundle generator');
 
-
         ///////////////////////
         //                   //
         //   Create Bundle   //
         //                   //
         ///////////////////////
-
 
         // namespace
         $namespace = null;
@@ -214,8 +213,6 @@ EOT
             $input->setOption('namespace', $namespace);
         }
 
-
-
         $dir = dirname($this->getContainer()->getParameter('kernel.root_dir')).'/src';
 
         $output->writeln(array(
@@ -224,9 +221,17 @@ EOT
             'the standard conventions.',
             '',
         ));
-        $dir = $dialog->askAndValidate($output, $dialog->getQuestion('Target directory', $dir), function ($dir) use ($bundle, $namespace) { return Validators::validateTargetDir($dir, $bundle, $namespace); }, false, $dir);
-        $input->setOption('dir', $dir);
+        $dir = $dialog->askAndValidate(
+            $output,
+            $dialog->getQuestion('Target directory', $dir),
+            function ($dir) use ($bundle, $namespace) {
+                return Validators::validateTargetDir($dir, $bundle, $namespace);
+            },
+            false,
+            $dir
+        );
 
+        $input->setOption('dir', $dir);
 
         // format
         $format = null;
@@ -248,7 +253,6 @@ EOT
 
         $input->setOption('structure', false);
 
-
         ///////////////////////
         //                   //
         //   Create Entity   //
@@ -258,7 +262,6 @@ EOT
         $input->setOption('fields', $this->addFields($input, $output, $dialog));
         $entity = "Widget".$name;
         $input->setOption('entity', $bundle.':'.$entity);
-
 
         // summary
         $output->writeln(array(
@@ -270,11 +273,11 @@ EOT
         ));
     }
 
-
     /**
      * Check that provided widget name is correct
      *
      * @param string $widget
+     *
      * @return string $widget
      */
     public static function validateWidgetName($widget)
@@ -289,7 +292,6 @@ EOT
 
         return $widget;
     }
-
 
     /**
      * Instanciate a new WidgetGenerator
@@ -307,7 +309,6 @@ EOT
         return $generator;
     }
 
-
     /**
      * Instanciate a new Entity generator
      *
@@ -318,12 +319,11 @@ EOT
         return new DoctrineEntityGenerator($this->getContainer()->get('filesystem'), $this->getContainer()->get('doctrine'));
     }
 
-
-
     /**
      * transform console's output string fields into an array of fields
      *
      * @param string $input
+     *
      * @return array $fields
      */
     private function parseFields($input)
@@ -356,6 +356,7 @@ EOT
      * @param InputInterface  $input
      * @param OutputInterface $output
      * @param DialogHelper    $dialog
+     *
      * @return $fields
      */
     private function addFields(InputInterface $input, OutputInterface $output, DialogHelper $dialog)
@@ -461,6 +462,7 @@ EOT
     /**
      * Validate Entity short namepace
      * @param string $shortcut
+     *
      * @return $shortcut
      */
     protected function parseShortcutNotation($shortcut)
@@ -473,6 +475,5 @@ EOT
 
         return array(substr($entity, 0, $pos), substr($entity, $pos + 1));
     }
-
 
 }

@@ -2,14 +2,10 @@
 namespace Victoire\Bundle\PageBundle\Helper;
 
 use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Doctrine\ORM\EntityManager;
 
 /**
- *
- * @author Thomas Beaujean
- *
  * ref: victoire_page.url_helper
  */
 class UrlHelper
@@ -20,7 +16,6 @@ class UrlHelper
 
     /**
      * Constructor
-     *
      * @param unknown       $router
      * @param EntityManager $entityManager
      */
@@ -44,7 +39,6 @@ class UrlHelper
      * Get the urlMatcher for the template generator
      * It removes what is after the last /
      * and add /{id} to the url
-     *
      * @param string $url
      *
      * @return string The url
@@ -72,8 +66,8 @@ class UrlHelper
 
     /**
      * Get the entity id from the url
-     *
      * @param string $url
+     *
      * @return string The id
      */
     public function getEntityIdFromUrl($url)
@@ -134,7 +128,6 @@ class UrlHelper
 
     /**
      * Is this url is already used
-     *
      * @param string  $url     The url to test
      * @param integer $suffixe The suffixe
      *
@@ -165,7 +158,6 @@ class UrlHelper
 
     /**
      * Test is the url is already used
-     *
      * @param string $url
      *
      * @return boolean Is the url free
@@ -192,7 +184,6 @@ class UrlHelper
 
     /**
      * Remove the last part of the url
-     *
      * @param string $url
      *
      * @return string The shorten url
@@ -219,7 +210,6 @@ class UrlHelper
 
     /**
      * Extract a part of the url
-     *
      * @param string  $url
      * @param integer $position
      *
@@ -232,6 +222,7 @@ class UrlHelper
         if ($url !== null && $url !== '') {
             // split on the / character
             $keywords = preg_split("/\//", $url);
+            // preg_match_all('/\{\%\s*([^\%\}]*)\s*\%\}|\{\{\s*([^\}\}]*)\s*\}\}/i', $url, $matches);
 
             //if there are some words, we pop the last
             if (count($keywords) > 0) {

@@ -31,7 +31,7 @@ $vic(document).ready(function() {
     setTimeout(function() {
         $vic.each($vic('.vic-new-widget'), function() {
             if (!$vic(this).hasClass("vic-new-widget-disabled")) {
-                $vic(this).fadeIn();
+                $vic(this).removeClass('vic-hidden');
             }
         }) ;
     }, 10);
@@ -69,7 +69,7 @@ function trackChange(elem)
  */
 function updateSlotActions(slot, max)
 {
-    var count = $vic('.widget-container', "#vic-slot-"+slot).size();
+    var count = $vic('.vic-widget-container', "#vic-slot-"+slot).size();
     if ( max == undefined || count < max ) {
         $vic(".vic-new-widget", "#vic-slot-"+slot).removeClass('vic-new-widget-disabled');
     } else {
@@ -81,9 +81,8 @@ function enableSortableSlots(){
     $vic(".vic-slot").each(function(){
         $vic(this).sortable({
             revert: true,
-            connectWith: '.vic-slot',
             handle: '.vic-hover-widget',
-            items: ".widget-container:not(.undraggable)",
+            items: ".vic-widget-container:not(.vic-undraggable)",
             placeholder: "vic-ui-state-highlight",
 
             forcePlaceholderSize: true,
@@ -104,10 +103,11 @@ function enableSortableSlots(){
         });
     });
 }
+
 function updatePosition(ui){
     var sorted = {};
     $vic(".vic-slot").each(function(key, el){
-        sorted[$vic(el).attr('id')] = $vic(el).sortable('toArray');
+        sorted[$vic(el).data('name')] = $vic(el).sortable('toArray', { attribute: 'data-id' });
     });
 
     return $vic.post(Routing.generate('victoire_core_widget_update_position', {'page': pageId}),
@@ -116,7 +116,7 @@ function updatePosition(ui){
 }
 
 function replaceDropdown(ui) {
-    $(ui.item).children('.vic-undraggable').remove();
+    $(ui.item).children('.vic-dropdown').remove();
     $(ui.item).append($(ui.item).parents('.vic-slot').children('.vic-dropdown').clone());
 }
 

@@ -7,7 +7,6 @@ services:
     page.subscriber:
         class: Victoire\Bundle\PageBundle\EventSubscriber\PageSubscriber
         arguments:
-            - "@victoire_core.cache.route_registerer"
             - "@router"
             - "@victoire_page.user_callable"
             - "%victoire_core.user_class%"
@@ -15,7 +14,7 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default, priority: -1 }
 
-    page.widgetMap.builder:
+    view.widgetMap.builder:
         class: Victoire\Bundle\PageBundle\WidgetMap\WidgetMapBuilder
         arguments:
             - "@doctrine.orm.entity_manager"
@@ -25,7 +24,10 @@ services:
         arguments:
             - "@victoire_business_entity.converter.parameter_converter"
             - "@victoire_core.helper.business_entity_helper"
-            - "@victoire_business_entity_template.business_entity_template_helper"
+            - "@victoire_business_entity_page.business_entity_page_helper"
+            - "@doctrine.orm.entity_manager"
+            - "@victoire_page.url_helper"
+            - "@victoire_page.matcher.url_matcher"
     victoire_page.url_helper:
         class: Victoire\Bundle\PageBundle\Helper\UrlHelper
         arguments:
@@ -39,7 +41,7 @@ services:
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@victoire_page.url_helper"
-            - "@victoire_business_entity_template.business_entity_template_helper"
+            - "@victoire_business_entity_page.business_entity_page_helper"
             - "@victoire_core.helper.business_entity_helper"
 
     ####################################################################################################################
@@ -61,19 +63,11 @@ services:
 
     victoire_page.page.form.type:
         class: Victoire\Bundle\PageBundle\Form\PageType
-        arguments: ['%victoire_core.layouts%']
         tags:
             - { name: form.type, alias: victoire_page_type }
 
-    victoire_page.template.form.type:
-        class: Victoire\Bundle\PageBundle\Form\TemplateType
-        arguments: ['%victoire_core.layouts%']
-        tags:
-            - { name: form.type, alias: victoire_template_type }
-
     victoire_page.page_settings.form.type:
         class: Victoire\Bundle\PageBundle\Form\PageSettingsType
-        arguments: ['%victoire_core.layouts%']
         tags:
             - { name: form.type, alias: victoire_page_settings_type }
 
@@ -94,12 +88,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: victoire_core.page_menu.contextual, method: addContextual }
 
-    victoire_core.template_menu_listener:
-        class: Victoire\Bundle\PageBundle\Listener\TemplateMenuListener
-        arguments: ["@victoire_core.admin_menu_builder"]
-        tags:
-            - { name: kernel.event_listener, event: victoire_core.build_menu, method: addGlobal, priority: 80 }
-
     ####################################################################################################################
     # twig
     ####################################################################################################################
@@ -107,7 +95,7 @@ services:
     victoire_page.twig.page_extension:
         class: Victoire\Bundle\PageBundle\Twig\Extension\PageExtension
         arguments:
-            - "@victoire_business_entity_template.business_entity_template_helper"
+            - "@victoire_business_entity_page.business_entity_page_helper"
             - "@router"
             - "@victoire_page.page_helper"
         tags:

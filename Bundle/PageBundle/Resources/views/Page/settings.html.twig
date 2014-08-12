@@ -4,21 +4,23 @@
 
 {% form_theme form 'VictoireFormBundle:Form:fields.html.twig' %}
 
-{% block modal_container_classes %}{{ parent() }} vic-page-modal{% endblock modal_container_classes %}
+{% block modal_container_classes %}{{ parent() }} vic-view-modal{% endblock modal_container_classes %}
 
 {% block modal_body_content %}
 
 <div class="vic-tab-content vic-modal-tab-content">
-    {% include 'VictoireBusinessEntityBundle:BusinessProperty:list.html.twig' with { 'businessProperties':businessProperties } %}
+    {# Only display this business entity property list when related to a business entity #}
+    {% if page.businessEntity is defined %}
+        {% include 'VictoireBusinessEntityBundle:BusinessProperty:list.html.twig' with { 'businessProperties': businessProperties } %}
+    {% endif %}
+
     <div class="vic-tab-pane vic-active" id="basics">
         <form method="POST" action="{{path('victoire_core_page_settings', {'id':page.id} )}}">
             <div class="vic-form-group">
                 <div class="vic-col-lg-8">
-                    {{ form_row(form.title) }}
+                    {{ form_row(form.name) }}
                     {{ form_row(form.parent) }}
                     {{ form_row(form.template) }}
-                    {{ form_row(form.bodyId) }}
-                    {{ form_row(form.bodyClass) }}
                     <div class="vic-form-group">
                          <label for="victoire_page_settings_type_bodyClass" class="vic-control-label vic-col-lg-3 control-label vic-optional">
                             {{ 'form.page.type.slug.label'|trans({}, 'victoire') }}
@@ -40,7 +42,7 @@
                 <div class="vic-col-lg-4">
                     {{ form_row(form.status) }}
                     <div class="vic-form-group">
-                        <div class="publication-date-container{{ form.vars.value.status != constant('Victoire\\Bundle\\PageBundle\\Entity\\Page::STATUS_SCHEDULED') ? ' vic-hidden' }}">
+                        <div class="publication-date-container{{ form.vars.value.status != constant('Victoire\\Bundle\\PageBundle\\Entity\\BasePage::STATUS_SCHEDULED') ? ' vic-hidden' }}">
                             {{ form_widget(form.publishedAt) }}
                         </div>
                     </div>
@@ -53,7 +55,7 @@
 
 <script type="text/javascript">
     $vic('#victoire_page_settings_type_status').on('change', function(){
-        if ($vic(this).val() == '{{ constant('Victoire\\Bundle\\PageBundle\\Entity\\Page::STATUS_SCHEDULED') }}') {
+        if ($vic(this).val() == '{{ constant('Victoire\\Bundle\\PageBundle\\Entity\\BasePage::STATUS_SCHEDULED') }}') {
             $vic('.publication-date-container').removeClass('vic-hidden');
         } else {
             $vic('.publication-date-container').addClass('vic-hidden');
@@ -70,7 +72,7 @@
 {% endblock modal_body_content %}
 
 {% block modal_header_title %}
-    {{ 'modal.form.page.settings.title'|trans({'page.title' : page.title}, 'victoire')|desc('%page.title% > Settings') }}
+    {{ 'modal.form.page.settings.title'|trans({'page.name' : page.name}, 'victoire')|desc('%page.name% > Settings') }}
 {% endblock modal_header_title %}
 
 {% block modal_footer %}
@@ -86,5 +88,3 @@
         </div>
     </div>
 {% endblock modal_footer %}
-
-

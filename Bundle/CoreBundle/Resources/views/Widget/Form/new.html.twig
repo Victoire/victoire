@@ -20,7 +20,7 @@
                 <li class="vic-active vic-seperate"><a href="#picker-{{class}}-entity" data-toggle="vic-tab">{{ ('form.widget.tab.picker.label')|trans({}, 'victoire') }}</a></li>
                 <li><a href="#picker-{{class}}-query" data-toggle="vic-tab">{{ ('form.widget.tab.query.label')|trans({}, 'victoire') }}</a></li>
 
-                {% if is_business_entity_allowed(class, page) %}
+                {% if is_business_entity_allowed(class, view) %}
                     <li><a href="#picker-{{class}}-businessEntity" data-toggle="vic-tab">{{ ('form.widget.tab.entity_instance.label')|trans({}, 'victoire') }}</a></li>
                 {% endif %}
             </ul>

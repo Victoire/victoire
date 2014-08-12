@@ -44,19 +44,19 @@ class Configuration implements ConfigurationInterface
                             ->defaultTrue()
                             ->end()
                         ->scalarNode('horizontal_label_class')
-                            ->defaultValue("vic-col-lg-3")
+                            ->defaultValue("")
                             ->end()
                         ->scalarNode('horizontal_label_offset_class')
                             ->defaultValue("vic-col-lg-offset-3")
                             ->end()
                         ->scalarNode('horizontal_input_wrapper_class')
-                            ->defaultValue("vic-col-lg-9")
+                            ->defaultValue("")
                             ->end()
                         ->booleanNode('render_fieldset')
                             ->defaultValue(true)
                             ->end()
                         ->booleanNode('render_collection_item')
-                            ->defaultValue(true)
+                            ->defaultValue(false)
                         ->end()
                         ->booleanNode('show_legend')
                             ->defaultValue(true)
@@ -74,7 +74,7 @@ class Configuration implements ConfigurationInterface
                             ->defaultValue(true)
                             ->end()
                         ->booleanNode('render_required_asterisk')
-                            ->defaultValue(false)
+                            ->defaultValue(true)
                             ->end()
                         ->scalarNode('error_type')
                             ->defaultValue(null)
@@ -218,8 +218,6 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end();
     }
-
-
 
     /**
      * Add icon configuration

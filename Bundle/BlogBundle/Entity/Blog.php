@@ -2,18 +2,17 @@
 
 namespace Victoire\Bundle\BlogBundle\Entity;
 
-use Victoire\Bundle\PageBundle\Entity\Page;
 use Doctrine\ORM\Mapping as ORM;
-use Victoire\Bundle\CoreBundle\Annotations as VIC;
-use Symfony\Component\Validator\Constraints as Assert;
+use Victoire\Bundle\PageBundle\Entity\BasePage;
 
 /**
  * PostPage
  *
  * @ORM\Entity
+ * @ORM\Table("vic_blog")
  *
  */
-class Blog extends Page
+class Blog extends BasePage
 {
     const TYPE = 'blog';
 

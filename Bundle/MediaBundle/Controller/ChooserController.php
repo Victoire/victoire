@@ -2,14 +2,12 @@
 
 namespace Victoire\Bundle\MediaBundle\Controller;
 
-use Victoire\Bundle\MediaBundle\Form\Type\MediaType;
 use Victoire\Bundle\MediaBundle\Helper\MediaManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Victoire\Bundle\MediaBundle\Entity\Folder;
 use Victoire\Bundle\MediaBundle\Entity\Media;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**

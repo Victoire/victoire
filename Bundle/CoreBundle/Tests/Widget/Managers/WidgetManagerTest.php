@@ -38,7 +38,6 @@ class WidgetManagerTest extends BaseTestCase
         $this->assertTrue(is_string($response));
     }
 
-
     /**
      * Tests if this renderWidgetActions method return espected template
      * @return void
@@ -100,9 +99,5 @@ class WidgetManagerTest extends BaseTestCase
         $this->setExpectedException('Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException');
         $response = $widgetManagerMock->getManager(null, 'foo');
     }
-
-
-
-
 
 }

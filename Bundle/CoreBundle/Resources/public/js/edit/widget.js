@@ -28,19 +28,23 @@ $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(
             if ($vic('.vic-creating').hasClass('vic-first')) {
                 $vic('.vic-creating').after(response.html);
             } else {
-                $vic('.vic-creating').parents('.widget-container').after(response.html);
+                $vic('.vic-creating').parents('.vic-widget-container').after(response.html);
             }
             closeModal();
 
             //save the positions of the widgets
             updatePosition();
+            congrat(response.message, 10000);
         } else {
+            warn(response.message, 10000);
             //inform user there have been an error
-            alert(response.message);
             if (response.html) {
                 $vic('.vic-modal-body .vic-container').html(response.html);
             }
         }
+    }).fail(function(response) {
+        console.log(response);
+        error('Oups, une erreur est apparue', 10000);
     });
 });
 
@@ -62,14 +66,20 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update"]', function(
         if (true === response.success) {
             $vic("#"+response.widgetId).replaceWith(response.html);
             closeModal();
+            congrat(response.message, 10000);
         } else {
+
             //inform user there have been an error
-            alert(response.message);
+            warn(response.message, 10000);
+
 
             if (response.html) {
-                $vic('.vic-modal-body .vic-container').html(response.html);
+                $vic(form).parent('div').replaceWith(response.html);
             }
         }
+    }).fail(function(response) {
+        console.log(response);
+        error('Oups, une erreur est apparue', 10000);
     });
 });
 

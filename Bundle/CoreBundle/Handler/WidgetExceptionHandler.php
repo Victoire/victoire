@@ -1,17 +1,13 @@
 <?php
 namespace Victoire\Bundle\CoreBundle\Handler;
 
-use Symfony\Component\Security\Core\SecurityContext;
-use Symfony\Bundle\TwigBundle\TwigEngine;
-use Victoire\Bundle\FormBundle\Form\Extension\ErrorTypeFormTypeExtension;
 use Symfony\Bundle\FrameworkBundle\Templating\TemplateReference;
+use Symfony\Bundle\TwigBundle\TwigEngine;
 use Symfony\Component\Debug\Exception\FlattenException;
-use Victoire\Bundle\PageBundle\Entity\Template;
+use Symfony\Component\Security\Core\SecurityContext;
+use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 
 /**
- *
- * @author Thomas Beaujean
- *
  * ref: victoire_core.widget_exception_handler
  */
 class WidgetExceptionHandler
@@ -25,11 +21,11 @@ class WidgetExceptionHandler
      * Constructor
      *
      * @param SecurityContext $security
-     * @param TwigEngine $templating
-     * @param boolean $debug The debug variable environment
-     * @param Template $templating The victoire templating
+     * @param TwigEngine      $twig
+     * @param boolean         $debug      The debug variable environment
+     * @param TemplateMapper  $templating The victoire templating
      */
-    public function __construct(SecurityContext $security,  $twig, $debug, $templating)
+    public function __construct(SecurityContext $security,  $twig, $debug, TemplateMapper $templating)
     {
         $this->security = $security;
         $this->twig = $twig;
@@ -41,7 +37,7 @@ class WidgetExceptionHandler
      * Handle response for an exception for a widget
      *
      * @param \Exception $exception
-     * @param Widget $widget The widget that throwed an error
+     * @param Widget     $widget    The widget that throwed an error
      *
      * @return string The html with the Error
      */

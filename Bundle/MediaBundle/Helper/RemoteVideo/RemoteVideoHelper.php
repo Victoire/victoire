@@ -3,8 +3,6 @@
 namespace Victoire\Bundle\MediaBundle\Helper\RemoteVideo;
 use Victoire\Bundle\MediaBundle\Entity\Media;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * Victoire\Bundle\MediaBundle\Entity\Video
  * Class that defines a video in the system

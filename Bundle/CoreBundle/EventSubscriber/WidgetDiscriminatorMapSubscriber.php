@@ -3,7 +3,6 @@ namespace Victoire\Bundle\CoreBundle\EventSubscriber;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
-use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Behat\Behat\Exception\Exception;
 
 /**
@@ -11,7 +10,7 @@ use Behat\Behat\Exception\Exception;
  */
 class WidgetDiscriminatorMapSubscriber implements EventSubscriber
 {
-    static protected $widgets;
+    protected static $widgets;
 
     /**
      * contructor
@@ -41,14 +40,14 @@ class WidgetDiscriminatorMapSubscriber implements EventSubscriber
      *
      * @throws Exception
      */
-    static public function loadClassMetadata($eventArgs)
+    public static function loadClassMetadata($eventArgs)
     {
         //this functions is called during the extract of translations
         //but the argument is not the same
         //so to avoid an error during extractions, we test the argument
         if ($eventArgs instanceof LoadClassMetadataEventArgs) {
             $metadatas = $eventArgs->getClassMetadata();
-            if ($metadatas->name === 'Victoire\Bundle\CoreBundle\Entity\Widget') {
+            if ($metadatas->name === 'Victoire\Bundle\WidgetBundle\Entity\Widget') {
                 foreach (self::$widgets as $widget) {
                     $class = $widget['class'];
                     if (!class_exists($class)) {

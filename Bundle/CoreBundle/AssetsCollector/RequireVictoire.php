@@ -10,7 +10,6 @@ class RequireVictoire
      protected $widgetTypes;
 
      /**
-      *
       * @param unknown $container
       */
      public function __construct($container)
@@ -24,6 +23,7 @@ class RequireVictoire
     /**
      * This function computes the assets from assetic_injector.json require_victoire's tag
      * @param array $assets This assets as array
+     *
      * @return void
      */
     public function compute($assets)
@@ -52,6 +52,7 @@ class RequireVictoire
      * This function inform the collector that we need to include assets for widget of given $widgetType and for given $mode
      * @param string $widgetType The widget type (widget_*)
      * @param string $mode       The widget mode (show|edit)
+     *
      * @return void
      */
     public function addWidgetMode($widgetType, $mode)

@@ -2,34 +2,31 @@
 
 namespace Victoire\Bundle\SeoBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Victoire\Bundle\PageBundle\Entity\Page;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
+use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\SeoBundle\Entity\PageSeo;
-use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
 
 /**
- *
- * @author Thomas Beaujean <thomas@appventus.com>
+ * The Page seo controller
  *
  * @Route("/victoire-dcms/seo")
  */
 class PageSeoController extends Controller
 {
     /**
-     * Page settings
+     * BasePage settings
+     * @param BasePage $page
      *
-     * @param Page $page
-     * @Route("/page/{id}", name="victoire_seo_pageSeo_settings")
+     * @Route("/{id}", name="victoire_seo_pageSeo_settings")
      * @Template()
-     * @ParamConverter("page", class="VictoirePageBundle:Page")
      *
      * @return JsonResponse
      */
-    public function settingsAction(Page $page)
+    public function settingsAction(BasePage $page)
     {
         //services
         $em = $this->getDoctrine()->getManager();
@@ -40,7 +37,7 @@ class PageSeoController extends Controller
         $businessProperties = array();
 
         //if the page is a business entity template page
-        if ($page instanceof BusinessEntityTemplate) {
+        if ($page instanceof BusinessEntityPage) {
             //get the id of the business entity
             $businessEntityId = $page->getBusinessEntityName();
             //we can use the business entity properties on the seo

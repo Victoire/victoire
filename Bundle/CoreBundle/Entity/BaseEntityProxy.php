@@ -3,7 +3,6 @@
 namespace Victoire\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Victoire\Bundle\CoreBundle\Entity\Widget;
 use Behat\Behat\Exception\Exception;
 
 /**
@@ -19,7 +18,7 @@ abstract class BaseEntityProxy
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected  $id;
+    protected $id;
 
     /**
      *  Auto list mode: businessentity type

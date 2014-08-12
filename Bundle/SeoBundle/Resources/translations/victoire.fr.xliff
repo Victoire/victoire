@@ -168,8 +168,8 @@
         <target><![CDATA[<i class="vic-menuImg vic-menuImg-target"></i> Paramètres SEO]]></target>
       </trans-unit>
       <trans-unit id="02cfca5e484be77e623b5ff8be9ef843c02cf8b1" resname="modal.form.pageSeo.settings.title">
-        <source><![CDATA[%page.title% > Settings]]></source>
-        <target>Paramètres SEO de la page "page.title"</target>
+        <source><![CDATA[%page.name% > Settings]]></source>
+        <target>Paramètres SEO de la page "page.name"</target>
         <jms:reference-file line="22">views/PageSeo/settings.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="9a84dc1132d73a2f0abce302a49337045c823482" resname="modal.mandatory_fields.label">

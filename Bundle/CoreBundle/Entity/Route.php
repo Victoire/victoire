@@ -6,11 +6,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Gedmo\Mapping\Annotation as Gedmo;
 
-
 /**
  * Route
  *
- * @ORM\Table("cms_route_history")
+ * @ORM\Table("vic_route_history")
  * @ORM\Entity(repositoryClass="Victoire\Bundle\CoreBundle\Repository\RouteRepository")
  */
 class Route
@@ -33,7 +32,6 @@ class Route
      */
     protected $page;
 
-
     /**
      * @var string
      *
@@ -43,7 +41,6 @@ class Route
 
     /**
      * contructor
-     *
      **/
     public function __construct()
     {
@@ -75,6 +72,7 @@ class Route
      * Set page
      *
      * @param \stdClass $page
+     *
      * @return Route
      */
     public function setPage($page)
@@ -94,11 +92,11 @@ class Route
         return $this->page;
     }
 
-
     /**
      * Set url
      *
      * @param string $url
+     *
      * @return Route
      */
     public function setUrl($url)

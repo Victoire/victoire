@@ -3,11 +3,7 @@
 namespace Victoire\Bundle\CoreBundle\Listener;
 
 use Symfony\Component\EventDispatcher\Event;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\HttpKernel\HttpKernel;
-use Victoire\Bundle\BusinessEntityTemplateBundle\Listener\BusinessEntityTemplateMenuListener;
 use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
-use Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent;
 
 /**
  * This class add items in admin menu
@@ -24,12 +20,11 @@ interface MenuListenerInterface
 
     /**
      * add a contextual menu item
+     * @param Event $event
      *
-     * @param PageMenuContextualEvent $event
-     *
-     * @return Ambigous                <\Knp\Menu\ItemInterface, NULL>
+     * @return Ambigous <\Knp\Menu\ItemInterface, NULL>
      */
-    public function addContextual(PageMenuContextualEvent $event);
+    public function addContextual($event);
 
     /**
      * add global menu items

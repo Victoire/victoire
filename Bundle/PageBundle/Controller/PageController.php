@@ -1,16 +1,8 @@
 <?php
 namespace Victoire\Bundle\PageBundle\Controller;
 
-use Doctrine\ORM\EntityNotFoundException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Victoire\Bundle\PageBundle\Controller\PageController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Victoire\Bundle\CoreBundle\Form\PageType;
-use Victoire\Bundle\CoreBundle\Form\TemplateType;
 use Victoire\Bundle\PageBundle\Entity\Page;
 
 /**

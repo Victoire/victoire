@@ -118,8 +118,8 @@
         <source>widget.dropdown.action.label</source>
         <target>Nouveau contenu</target>
       </trans-unit>
-      <trans-unit id="e73f4ed23832568330c963f0e40ac22daa9ab2c9" resname="widget.form.fields.label">
-        <source>widget.form.fields.label</source>
+      <trans-unit id="e73f4ed23832568330c963f0e40ac22daa9ab2c9" resname="widget.form.entity.fields.label">
+        <source>widget.form.entity.fields.label</source>
         <target>Champs</target>
       </trans-unit>
       <trans-unit id="baa2a4733047849f29b3c0f2093e33f58fcfc8ea" resname="widget.form.theme.default">

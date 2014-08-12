@@ -2,7 +2,7 @@
 namespace Victoire\Bundle\CoreBundle\Tests\Listener;
 
 use Victoire\Bundle\CoreBundle\Tests\Utils\BaseTestCase;
-use Victoire\Bundle\PageBundle\Event\Menu\TemplateMenuContextualEvent;
+use Victoire\Bundle\TemplateBundle\Event\Menu\TemplateMenuContextualEvent;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
@@ -41,6 +41,5 @@ class TemplateMenuListenerTest extends BaseTestCase
         $this->assertEquals('menu.template', $response->getName());
 
     }
-
 
 }

@@ -49,7 +49,7 @@ class MediaCreatorService
     /**
      * @param $filePath string  The full filepath of the asset you want to upload. The filetype will be automatically detected.
      * @param $folderId integer For now you still have to manually pass the correct folder ID.
-     * @param string $context   This is needed because the Filesystem basepath differs between web & console application env.
+     * @param string $context This is needed because the Filesystem basepath differs between web & console application env.
      *
      * @return Media
      */

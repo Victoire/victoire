@@ -6,7 +6,7 @@ composer require victoire/victoire
             //Victoire bundles
             new Victoire\Bundle\CoreBundle\VictoireCoreBundle(),
             new Victoire\Bundle\BlogBundle\VictoireBlogBundle(),
-            new Victoire\Bundle\BusinessEntityTemplateBundle\VictoireBusinessEntityTemplateBundle(),
+            new Victoire\Bundle\BusinessEntityPageBundle\VictoireBusinessEntityPageBundle(),
             new Victoire\Bundle\MediaBundle\VictoireMediaBundle(),
             new Victoire\Bundle\QueryBundle\VictoireQueryBundle(),
             new Victoire\Bundle\ThemeBundle\VictoireThemeBundle(),
@@ -16,8 +16,6 @@ composer require victoire/victoire
             new Victoire\Bundle\SeoBundle\VictoireSeoBundle(),
 
 - créer le fichier de config  victoire.yml suivant
-
-
 
         victoire_core:
             user_class: APE\AppBundle\Entity\User\User
@@ -102,70 +100,6 @@ composer require victoire/victoire
                         render: ~
 
 
-        victoire_form:
-            form:
-                templating:           VictoireFormBundle:Form:fields.html.twig
-                horizontal:           true
-                horizontal_label_class:  vic-col-lg-3 vic-control-label
-                horizontal_label_offset_class:  vic-col-lg-offset-3
-                horizontal_input_wrapper_class:  vic-col-lg-9
-                render_fieldset:      false
-                render_collection_item:  true
-                show_legend:          false
-                show_child_legend:    false
-                checkbox_label:       both
-                render_optional_text:  false
-                render_required_asterisk:  false
-                error_type:           ~
-                tabs:
-                    class:                vic-nav vic-nav-tabs
-                help_widget:
-                    popover:
-                        title:                ~
-                        content:              ~
-                        trigger:              hover
-                        toggle:               vic-popover
-                        placement:            right
-                        selector:             ~
-                help_label:
-                    tooltip:
-                        title:                ~
-                        text:                 ~
-                        icon:                 vic-info-sign
-                        placement:            top
-                    popover:
-                        title:                ~
-                        content:              ~
-                        text:                 ~
-                        icon:                 vic-info-sign
-                        placement:            top
-                collection:
-                    widget_remove_btn:
-                        attr:
-                            class:                vic-btn vic-btn-default
-                        label:                remove_item
-                        icon:                 ~
-                        icon_inverted:        ~
-                    widget_add_btn:
-                        attr:
-                            class:                vic-btn vic-btn-default
-                        label:                add_item
-                        icon:                 ~
-                        icon_inverted:        ~
-            icons:
-
-                # Icon set to use: ['glyphicons','fontawesome','fontawesome4']
-                icon_set:             glyphicons
-
-                # Alias for mopa_bootstrap_icon()
-                shortcut:             icon
-
-
-
-
-
-
-
 - ajouter les widgets requis:
 
             "victoire/text-widget": "dev-master",
@@ -192,14 +126,24 @@ Vérifier les dépendances de victoire:
 
         php app/console do:sc:up —force
 
+- Ajoutez le folder de base du media bundle avec cette instruction sql :
+
+```sql
+INSERT INTO `vic_media_folder` (`id`, `parent_id`, `name`, `created_at`, `updated_at`, `rel`, `internal_name`, `deleted`)
+VALUES
+    (1, NULL, '/', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, 0);
+
+```
+
+
 - setup routing:
 
         VictoireBlogBundle:
             resource: "@VictoireBlogBundle/Controller/"
             type:     annotation
             prefix:   /
-        VictoireBusinessEntityTemplateBundle:
-            resource: "@VictoireBusinessEntityTemplateBundle/Controller/"
+        VictoireBusinessEntityPageBundle:
+            resource: "@VictoireBusinessEntityPageBundle/Controller/"
             type:     annotation
             prefix:   /
         VictoirePageBundle:

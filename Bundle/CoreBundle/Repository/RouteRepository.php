@@ -4,9 +4,7 @@ namespace Victoire\Bundle\CoreBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 
 /**
- *
- * @author Thomas Beaujean
- *
+ * The route repository
  */
 class RouteRepository extends EntityRepository
 {
@@ -14,6 +12,7 @@ class RouteRepository extends EntityRepository
      * Get the most recent route by url
      *
      * @param string $url The url to search
+     *
      * @return Route
      */
     public function findOneMostRecentByUrl($url)

@@ -2,34 +2,31 @@
 
 namespace Victoire\Bundle\PageBundle\Twig\Extension;
 
-use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\BusinessEntityTemplateBundle\Entity\BusinessEntityTemplate;
-use Victoire\Bundle\BusinessEntityTemplateBundle\Helper\BusinessEntityTemplateHelper;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
-use Victoire\Bundle\SeoBundle\Helper\PageSeoHelper;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
+use Victoire\Bundle\BusinessEntityPageBundle\Helper\BusinessEntityPageHelper;
+use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
 
 /**
- *
- * @author Thomas Beaujean
- *
+ * Page extension
  */
 class PageExtension extends \Twig_Extension
 {
-    protected $businessEntityTemplateHelper = null;
+    protected $businessEntityPagePatternHelper = null;
     protected $router = null;
     protected $pageHelper = null;
 
     /**
      * Constructor
      *
-     * @param BusinessEntityTemplateHelper $businessEntityTemplateHelper
-     * @param Router                       $router
-     * @param PageSeoHelper                $pageSeoHelper
+     * @param BusinessEntityPageHelper $businessEntityPagePatternHelper
+     * @param Router                   $router
+     * @param PageHelper               $pageHelper
      */
-    public function __construct(BusinessEntityTemplateHelper $businessEntityTemplateHelper, Router $router, PageHelper $pageHelper)
+    public function __construct(BusinessEntityPageHelper $businessEntityPagePatternHelper, Router $router, PageHelper $pageHelper)
     {
-        $this->businessEntityTemplateHelper = $businessEntityTemplateHelper;
+        $this->businessEntityPagePatternHelper = $businessEntityPagePatternHelper;
         $this->router = $router;
         $this->pageHelper = $pageHelper;
     }
@@ -42,7 +39,7 @@ class PageExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'cms_page_business_template_sitemap' => new \Twig_Function_Method($this, 'cmsPageBusinessTemplateSiteMap', array('is_safe' => array('html'))),
+            'cms_page_business_page_pattern_sitemap' => new \Twig_Function_Method($this, 'cmsPageBusinessPagePatternSiteMap', array('is_safe' => array('html'))),
             'cms_page_sitemap' => new \Twig_Function_Method($this, 'cmsPageSiteMap', array('is_safe' => array('html')))
         );
     }
@@ -69,59 +66,58 @@ class PageExtension extends \Twig_Extension
 
     /**
      * Get the link for a page in the sitemap
-     *
-     * @param Page $page
+     * @param BasePage $page
      *
      * @return string The html
      */
-    public function cmsPageSiteMap(Page $page)
+    public function cmsPageSiteMap(BasePage $page)
     {
         $html = '';
 
         $pageId = $page->getId();
         $pageUrl = $page->getUrl();
-        $pageTitle = $page->getTitle();
+        $pageName = $page->getName();
 
         $router = $this->router;
 
         $url = $router->generate('victoire_core_page_show', array('url' => $pageUrl));
 
-        $html = '<li id="'.$pageId.'"><div><a href="'.$url.'" title="'.$url.'">'.$pageTitle.'</a></div>';
+        $html = '<li id="'.$pageId.'"><div><a href="'.$url.'" title="'.$url.'">'.$pageName.'</a></div>';
 
         return $html;
     }
 
     /**
-     * Get the ol li for the generated page of a business Entity template
+     * Get the ol li for the generated page of a business entity page pattern
      *
-     * @param Page $page
+     * @param BasePage $page
      *
      * @return string The html
      */
-    public function cmsPageBusinessTemplateSiteMap(Page $page)
+    public function cmsPageBusinessPagePatternSiteMap(BasePage $page)
     {
         $html = '';
 
         $urls = array();
 
         //the template link to the page
-        $businessEntityTemplate = $page;
+        $businessEntityPagePattern = $page;
 
         //
-        if ($page instanceof BusinessEntityTemplate) {
+        if ($page instanceof BusinessEntityPagePattern) {
             //get the list of url of the children to avoid to have it twice.
             $childrenUrls = $this->getChildrenUrls($page);
 
             //services
-            $businessEntityTemplateHelper = $this->businessEntityTemplateHelper;
+            $businessEntityPagePatternHelper = $this->businessEntityPagePatternHelper;
             $pageHelper = $this->pageHelper;
 
             //the items allowed for the template
-            $items = $businessEntityTemplateHelper->getEntitiesAllowed($businessEntityTemplate);
+            $items = $businessEntityPagePatternHelper->getEntitiesAllowed($businessEntityPagePattern);
 
             //parse entities
             foreach ($items as $item) {
-                $pageEntity = clone $businessEntityTemplate;
+                $pageEntity = clone $businessEntityPagePattern;
 
                 //update url using the entity instance
                 $pageHelper->updatePageParametersByEntity($pageEntity, $item);
@@ -138,7 +134,7 @@ class PageExtension extends \Twig_Extension
                 //update the parameters of the page
                 $pageHelper->updatePageParametersByEntity($pageEntity, $item);
 
-                $title = $pageEntity->getTitle();
+                $title = $pageEntity->getName();
 
                 $itemsToAdd[$url] = array(
                     'item'      => $item,
@@ -176,15 +172,15 @@ class PageExtension extends \Twig_Extension
     /**
      * Get the list of urls of the children
      *
-     * @param Page $page
+     * @param BasePage $page
      *
      * @return aray of strings The list of urls
      */
-    protected function getChildrenUrls(Page $page)
+    protected function getChildrenUrls(BasePage $page)
     {
         $urls = array();
 
-        $children = $page->getPages();
+        $children = $page->getInstances();
 
         //parse the children
         foreach ($children as $child) {

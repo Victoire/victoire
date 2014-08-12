@@ -1,0 +1,15 @@
+{% set o = "{{" %}
+{% set c = "}}" %}
+{% set oc = "{#" %}
+{% set cc = "#}" %}
+{% set of = "{%" %}
+{% set cf = "%}" %}
+{% if parent %}
+{{of}} extends 'VictoireCoreBundle:Widget:edit.html.twig' {{cf}}
+{% else %}
+{{of}} extends 'Victoire{{parent}}Bundle:Widget:edit.html.twig' {{cf}}
+{% endif %}
+
+{{of}} block form {{cf}}
+    {{o}} parent() {{c}}
+{{of}} endblock form {{cf}}

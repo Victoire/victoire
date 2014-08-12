@@ -1,14 +1,8 @@
 <?php
 namespace Victoire\Bundle\PageBundle\Form;
 
-
-use Doctrine\ORM\EntityRepository;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Victoire\Bundle\CoreBundle\Entity\Repository\PageRepository;
-use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\PageBundle\Form\PageType;
+use Victoire\Bundle\PageBundle\Entity\BasePage;
 
 /**
  * Edit Page Type
@@ -31,10 +25,10 @@ class PageSettingsType extends PageType
             ->add('status', 'choice', array(
                 'label'   => 'form.page.type.status.label',
                 'choices' => array(
-                    Page::STATUS_DRAFT       => 'form.page.type.status.choice.label.draft',
-                    Page::STATUS_PUBLISHED   => 'form.page.type.status.choice.label.published',
-                    Page::STATUS_UNPUBLISHED => 'form.page.type.status.choice.label.unpublished',
-                    Page::STATUS_SCHEDULED   => 'form.page.type.status.choice.label.scheduled',
+                    BasePage::STATUS_DRAFT       => 'form.page.type.status.choice.label.draft',
+                    BasePage::STATUS_PUBLISHED   => 'form.page.type.status.choice.label.published',
+                    BasePage::STATUS_UNPUBLISHED => 'form.page.type.status.choice.label.unpublished',
+                    BasePage::STATUS_SCHEDULED   => 'form.page.type.status.choice.label.scheduled',
                 )
             ))
             ->add('publishedAt', null, array(
@@ -52,4 +46,3 @@ class PageSettingsType extends PageType
         return 'victoire_page_settings_type';
     }
 }
-
