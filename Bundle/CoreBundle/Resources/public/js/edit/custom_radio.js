@@ -1,16 +1,14 @@
 $vic(document).on('change', '#vic-switcher-editMode', function(event) {
-    var val = $vic(this).is(':checked');
+    var mode = $vic(this).is(':checked');
 
-    if (val == false) {
+    if (mode == false) {
         $vic('body').removeAttr('role');
-        var action = 'disable';
     } else {
         $vic('body').attr('role','admin');
-        var action = 'enable';
     }
 
     $vic.ajax({
-        url: Routing.generate('victoire_core_switch', {'mode': action }),
+        url: Routing.generate('victoire_core_switch', {'mode': mode.toString() }),
         context: document.body,
         type: "GET",
         error: function(jsonResponse) {
@@ -18,9 +16,10 @@ $vic(document).on('change', '#vic-switcher-editMode', function(event) {
                 alert("Il semble s'être produit une erreur");
             } else {
                 toastr.options = {
-                  "positionClass": "toast-bottom-left",
-              }
-              toastr.error("Il semble s'être produit une erreur");
+                    "positionClass": "toast-bottom-left",
+                }
+
+                toastr.error("Il semble s'être produit une erreur");
           }
           $vic('#canvasloader-container').fadeOut();
       }

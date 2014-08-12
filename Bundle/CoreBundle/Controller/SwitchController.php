@@ -26,14 +26,8 @@ class SwitchController extends Controller
         //the session
         $session = $this->get('session');
 
-        if ($mode == 'enable') {
-            $mode = true;
-        } else {
-            $mode = false;
-        }
-
         //memorize that we are in edit mode
-        $session->set('victoire.edit_mode', $mode);
+        $session->set('victoire.edit_mode', filter_var($mode, FILTER_VALIDATE_BOOLEAN));
 
         return new JsonResponse();
     }

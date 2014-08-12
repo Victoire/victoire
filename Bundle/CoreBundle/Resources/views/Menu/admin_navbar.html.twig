@@ -32,8 +32,13 @@
     {% block menu_container %}
 
     <div class="vic-collapse vic-navbar-collapse vic-navbar-responsive-collapse">
+            {% block menu %}
+                {{ knp_menu_render('topnavbar') }}
+            {% endblock %}
+
         <ul class="vic-userNav vic-menu-main-list" id="vic-topNavbar-right">
             {# Add a publication representation of the view (only for BasePage))  #}
+
             {% if view is defined and (view.published is defined and not view.published) %}
             <li class="vic-text-center">
                 {% if view.status == constant('Victoire\\Bundle\\PageBundle\\Entity\\BasePage::STATUS_SCHEDULED') %}
@@ -86,26 +91,24 @@
     {% endblock %}
 </section>
 
-{#
-    {% for item in knp_menu_get('topnavbar') %}
+{% for item in knp_menu_get('topnavbar') %}
 
-            {% if item.hasChildren %}
-            <li class="vic-pull-left vic-dropdown">
-                <a href="#" class="vic-dropdown-toggle vic-pull-left" data-toggle="vic-dropdown">{{ item.label|trans({}, 'victoire')|raw }} <b class="vic-caret"></b></a>
-                <ul class="vic-dropdown-menu">
-                    {% for subitem in item %}
-                    <li><a href="{{ subitem.uri }}">{{ subitem.label|trans({}, 'victoire')|raw }}</a></li>
-                    {% endfor %}
-                </ul>
-            </li>
-            {% else %}
-            <li class="vic-pull-left">
-                <a href="{{ item.uri }}" class="vic-pull-left">{{ item.label|trans({}, 'victoire')|raw }}</a>
-            </li>
-            {% endif %}
-
-
+        {% if item.hasChildren %}
+        <li class="vic-pull-left vic-dropdown">
+            <a href="#" class="vic-dropdown-toggle vic-pull-left" data-toggle="vic-dropdown">{{ item.label|trans({}, 'victoire')|raw }} <b class="vic-caret"></b></a>
+            <ul class="vic-dropdown-menu">
+                {% for subitem in item %}
+                <li><a href="{{ subitem.uri }}">{{ subitem.label|trans({}, 'victoire')|raw }}</a></li>
+                {% endfor %}
+            </ul>
         </li>
+        {% else %}
+        <li class="vic-pull-left">
+            <a href="{{ item.uri }}" class="vic-pull-left">{{ item.label|trans({}, 'victoire')|raw }}</a>
+        </li>
+        {% endif %}
 
-    {% endfor %}
-#}
+
+    </li>
+
+{% endfor %}
