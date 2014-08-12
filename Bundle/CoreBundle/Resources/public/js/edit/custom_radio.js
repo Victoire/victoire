@@ -1,14 +1,15 @@
 $vic(document).on('change', '#vic-switcher-editMode', function(event) {
-    var mode = $vic(this).is(':checked');
 
-    if (mode == false) {
-        $vic('body').removeAttr('role');
-    } else {
+    if ($vic(this).is(':checked')) {
         $vic('body').attr('role','admin');
+        var route = Routing.generate('victoire_core_switchEnable');
+    } else {
+        $vic('body').removeAttr('role');
+        var route = Routing.generate('victoire_core_switchDisable');
     }
 
     $vic.ajax({
-        url: Routing.generate('victoire_core_switch', {'mode': mode.toString() }),
+        url: route,
         context: document.body,
         type: "GET",
         error: function(jsonResponse) {
