@@ -51,25 +51,58 @@
             }
         }
     }
+}
 
-    .vic-dropdown-menu {
-        border-color: @vic-newWidget-link-borderColor;
+.vic-dropdown-newWidget {
+    border-color: @vic-newWidget-link-borderColor;
 
-        > li {
-            > a {
-                font-family: @victoire-fontFamily !important;
+    a {
+        display: block;
+        padding: @vic-newWidget-dropdown-item-verticalPadding @vic-newWidget-dropdown-item-horizontalPadding;
+        clear: both;
+        font-weight: normal;
+        line-height: 1.428571429;
+        color: @vic-newWidget-dropdown-item-color;
+        white-space: nowrap;
+        font-family: @victoire-fontFamily !important;
 
-                &:hover {
-                    color: @vic-newWidget-link-hover-color;
-                    background-image: -webkit-linear-gradient(top, @vic-newWidget-link-hover-topColor, @vic-newWidget-link-hover-bottomColor);
-                    background-image: -moz-linear-gradient(top, @vic-newWidget-link-hover-topColor, @vic-newWidget-link-hover-bottomColor);
-                    background-image: -o-linear-gradient(top, @vic-newWidget-link-hover-topColor, @vic-newWidget-link-hover-bottomColor);
-                    background-image: linear-gradient(to bottom, @vic-newWidget-link-hover-topColor, @vic-newWidget-link-hover-bottomColor);
-                }
+        &:not(.disabled) {
+            &:hover {
+                color: @vic-newWidget-link-hover-color !important; // go through bootstrap property with ugly deepness selector
+                background-color: transparent !important; // reset bootstrap property with ugly deepness selector
+                text-decoration: none;
+                background-image: -webkit-linear-gradient(top, @vic-newWidget-link-hover-topColor, @vic-newWidget-link-hover-bottomColor);
+                background-image: -moz-linear-gradient(top, @vic-newWidget-link-hover-topColor, @vic-newWidget-link-hover-bottomColor);
+                background-image: -o-linear-gradient(top, @vic-newWidget-link-hover-topColor, @vic-newWidget-link-hover-bottomColor);
+                background-image: linear-gradient(to bottom, @vic-newWidget-link-hover-topColor, @vic-newWidget-link-hover-bottomColor);
+            }
+        }
+
+        &.disabled {
+            color: @vic-newWidget-dropdown-item-disabled-color;
+            cursor: default;
+
+            &:hover {
+                color: @vic-newWidget-dropdown-item-disabled-color;
+                background: none;
             }
         }
     }
 }
+
+.vic-dropdown-newWidget-loop (@counter) when (@counter > 0) {
+    .vic-dropdown-newWidget-loop((@counter - 1)); // next iteration
+
+    .vic-dropdown-newWidget-@{counter} {
+        > li {
+            > a {
+                padding-left: @vic-newWidget-dropdown-item-horizontalPadding + (@vic-newWidget-dropdown-item-loop-horizontalPadding * @counter);
+            }
+        }
+    }
+}
+
+.vic-dropdown-newWidget-loop(@vic-newWidget-dropdown-item-loopNumber);
 
 .vic-darkZone {
     .vic-new-widget {
