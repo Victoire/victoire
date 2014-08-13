@@ -77,21 +77,38 @@
             }
         }
 
-        *[data-modal="create"],
-        *[data-modal="update"],
-        *[data-modal="delete"] {
-            width: @vic-modal-footer-actionButton-width;
-            height: @vic-modal-footer-actionButton-height;
-            display: inline-block;
-            background-image: url(/bundles/victoirecore/images/sprite@2x.png);
-            background-size: 459px 285px;
-            background-position: 0 -102px;
-            margin-top: (@vic-modal-footer-height - @vic-modal-footer-actionButton-height) / 2;
-            margin-left: @vic-modal-footer-actionButton-marginLeft;
-        }
+        * {
+            &:not(.vic-btn) {
+                &[data-modal="create"],
+                &[data-modal="update"],
+                &[data-modal="delete"] {
+                    width: @vic-modal-footer-actionButton-width;
+                    height: @vic-modal-footer-actionButton-height;
+                    display: inline-block;
+                    background-image: url(/bundles/victoirecore/images/sprite@2x.png);
+                    background-size: 459px 285px;
+                    background-position: 0 -102px;
+                    margin-top: (@vic-modal-footer-height - @vic-modal-footer-actionButton-height) / 2;
+                    margin-left: @vic-modal-footer-actionButton-marginLeft;
+                }
 
-        *[data-modal="delete"] {
-            background-position: -35px -102px;
+                &[data-modal="delete"] {
+                    background-position: -35px -102px;
+                }
+                
+            }
         }
+    }
+}
+
+.vic-modal-footer-content {
+    margin: 5px -4px;
+    height: 50px - 5px * 2;
+}
+
+.vic-modal-footer {
+    .vic-btn {
+        margin-left: 4px;
+        margin-right: 4px;
     }
 }
