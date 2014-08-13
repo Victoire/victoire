@@ -193,8 +193,10 @@ class WidgetController extends AwesomeController
             //the sorted order for the widgets
             $sortedWidgets = $this->getRequest()->request->get('sorted');
 
-            //create a view for the business entity instance if we are currently display an instance for a business entity template
-            $view = $this->get('victoire_page.page_helper')->duplicatePagePatternIfPageInstance($view);
+            if ($view instanceof Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage) {
+                //create a view for the business entity instance if we are currently display an instance for a business entity template
+                $view = $this->get('victoire_page.page_helper')->duplicatePagePatternIfPageInstance($view);
+            }
 
             //recompute the order for the widgets
             $this->get('view.widgetMap.builder')->updateWidgetMapOrder($view, $sortedWidgets);
