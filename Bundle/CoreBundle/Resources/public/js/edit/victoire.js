@@ -46,9 +46,15 @@ function trackChange(elem)
     if ($vic(elem).val() === 'url') {
         $vic(elem).parent('li').children('.url-type').show();
         $vic(elem).parent('li').children('.page-type').hide();
-    } else {
+        $vic(elem).parent('li').children('.route-type').hide();
+    } else if ($vic(elem).val() === 'page') {
         $vic(elem).parent('li').children('.page-type').show();
         $vic(elem).parent('li').children('.url-type').hide();
+        $vic(elem).parent('li').children('.route-type').hide();
+    } else if ($vic(elem).val() === 'route') {
+        $vic(elem).parent('li').children('.page-type').hide();
+        $vic(elem).parent('li').children('.url-type').hide();
+        $vic(elem).parent('li').children('.route-type').show();
     }
 }
 

@@ -90,25 +90,3 @@
     </div>
     {% endblock %}
 </section>
-
-{% for item in knp_menu_get('topnavbar') %}
-
-        {% if item.hasChildren %}
-        <li class="vic-pull-left vic-dropdown">
-            <a href="#" class="vic-dropdown-toggle vic-pull-left" data-toggle="vic-dropdown">{{ item.label|trans({}, 'victoire')|raw }} <b class="vic-caret"></b></a>
-            <ul class="vic-dropdown-menu">
-                {% for subitem in item %}
-                <li><a href="{{ subitem.uri }}">{{ subitem.label|trans({}, 'victoire')|raw }}</a></li>
-                {% endfor %}
-            </ul>
-        </li>
-        {% else %}
-        <li class="vic-pull-left">
-            <a href="{{ item.uri }}" class="vic-pull-left">{{ item.label|trans({}, 'victoire')|raw }}</a>
-        </li>
-        {% endif %}
-
-
-    </li>
-
-{% endfor %}
