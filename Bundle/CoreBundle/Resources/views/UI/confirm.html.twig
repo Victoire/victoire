@@ -1,0 +1,71 @@
+{% extends 'VictoireCoreBundle::_modal.html.twig' %}
+
+{% trans_default_domain "victoire" %}
+
+{% block modal_container_id %}{{ id }}{% endblock modal_container_id %}
+{% block modal_container_classes %}{{ parent() }} vic-danger-modal{% endblock %}
+{% block modal_header_title %}{{title}}{% endblock modal_header_title %}
+
+{% block modal_body_content %}
+{% spaceless %}
+    <div class="vic-row">
+        <div class="vic-col-md-12 vic-text-center">
+            {{ body|raw }}
+        </div>
+    </div>
+    <hr/>
+    <div class="vic-row">
+        <div class="vic-col-md-8 vic-col-md-offset-2 vic-text-center">
+            <button class="vic-btn {{ cancel_button_class }}" data-modal="close" aria-hidden="true"><i class="fa fa-times-circle"></i> {{ 'modal.button.delete.confirm.cancel.label'|trans }}</button>&nbsp;
+            <button class="vic-btn {{ confirm_button_class }}" aria-hidden="true"><i class="fa fa-trash-o"></i> {{ 'modal.button.delete.confirm.ok.label'|trans }}</button>
+        </div>
+    </div>
+{% endspaceless %}
+{% endblock modal_body_content %}
+
+{% block modal_footer %}{% endblock modal_footer %}
+
+{% block modal_container %}
+{{ parent() }}
+
+<script>
+$vic('#{{ id }}').vicmodal({ show : true, keyboard: true, backdrop: false });
+$vic('#{{ id }} .{{ confirm_button_class }}').focus();
+$vic('#{{ id }}').on('hide',function(){
+    $vic('.vic-confirm-waiting').removeClass('vic-confirm-waiting');
+    $vic('#{{ id }}').remove();
+});
+
+$vic('#{{ id }} .{{ cancel_button_class }}').click(function(){
+    $vic('.vic-confirm-waiting').removeClass('vic-confirm-waiting');
+});
+
+{# if no callback were given, we submit or go to the url of given as parameter #}
+{% if confirmCallback == null %}
+$vic('#{{ id }} .{{ confirm_button_class }}').click(function(){
+    elem = $vic('.vic-confirm-waiting');
+    elem.removeAttr('data-toggle');
+    elem.removeClass('vic-confirm-waiting');
+    elem.addClass('vic-confirmed');
+    {% if type == "form" %}
+        elem.submit();
+    {% else %}
+        elem.click();
+    {% endif %}
+    $vic('#{{ id }}').vicmodal('hide');
+});
+{% else %}
+    $vic('#{{ id }} .{{ confirm_button_class }}').click(function(){
+        {{ confirmCallback }};
+        $vic('#{{ id }}').vicmodal('hide');
+    });
+{% endif %}
+
+//Focus on confirm button
+$vic('#{{ id }}').focus(function(){
+    $vic('#{{ id }} .{{ confirm_button_class }}').focus();
+});
+</script>
+{% endblock modal_container %}
+
+

@@ -1,0 +1,32 @@
+Confirm Modal :
+=========
+
+Victoire embed a system to generate dialog box to protect link or form and add a confirmation step.
+
+Use:
+
+Just add attributes like below :
+
+- data-toggle="vic-confirm"
+- data-title="Êtes vous sur ?"
+- data-body="Cette action irreversible ! Souhaitez vous confirmer ?"
+- data-cancel-button-class="vic-btn-cancel"
+- data-confirm-button-class="vic-btn-danger"
+
+If the link or form has the following attribute :
+
+- confirm-callback="someFunctionToRunIfTheConfirmButtonIsClicked();"
+
+the function will be ran instead of just following the href for a link or action for a form.
+
+Here is an example :
+
+    <form action="/your_url" data-toggle="vic-confirm" data-title="Are you sure ?" data-body="This action cannot be undone !" data-cancel-button-class="vic-btn-cancel" data-confirm-button-class="vic-btn-danger" method="POST" {{ form_enctype(delete_form) }}>
+        {{ form_errors(delete_form) }}
+        {{ form_widget(delete_form) }}
+        <input type="submit" class="btn btn-danger span4" style="width:100%" value="Delete"/>
+    </form>
+
+Here is another example for a link :
+
+<a href="/your_url" data-toggle="vic-confirm" class="vic-btn vic-btn-danger" data-title="Are you sure ?" data-body="This action cannot be undone !" data-cancel-button-class="vic-btn-cancel" data-confirm-button-class="vic-btn-danger">Delete</a>

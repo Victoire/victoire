@@ -91,8 +91,16 @@
         <target>Cette action va supprimer définitivement ce contenu. Cette action est irréversible. Etes vous sûr ?</target>
       </trans-unit>
       <trans-unit id="131320710e98bb9e085c0b3eecb26ebcdd8dc5a8" resname="modal.button.delete.confirm.title">
-        <source>Are you sure ?</source>
-        <target>Etes vous sûr ?</target>
+        <source>Is it your last word ?</source>
+        <target>C'est votre dernier mot ?</target>
+      </trans-unit>
+      <trans-unit resname="modal.button.delete.confirm.ok.label">
+        <source>modal.button.delete.confirm.ok.label</source>
+        <target>Confirmer</target>
+      </trans-unit>
+      <trans-unit resname="modal.button.delete.confirm.cancel.label">
+        <source>modal.button.delete.confirm.cancel.label</source>
+        <target>Annuler</target>
       </trans-unit>
       <trans-unit id="71923cd8ca737329416b829fdb8663e532457a2c" resname="modal.button.delete.title">
         <source>Delete</source>

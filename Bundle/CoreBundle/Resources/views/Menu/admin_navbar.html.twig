@@ -21,9 +21,10 @@
     {% endblock %}
 
     {% block brand %}
-    <div class="vic-topNavbar-logo">
+    <div class="vic-topNavbar-logo vic-loading">
         <a href="#">
-            <img src="{{ asset('bundles/victoirecore/images/menu/vic-logo-menu-main.png') }}" alt="Logo Victoire DCMS" />
+            <img class="vic-picto" src="{{ asset('bundles/victoirecore/images/menu/vic-logo-menu-main-picto.png') }}" alt="Logo Victoire DCMS" />
+            <img src="{{ asset('bundles/victoirecore/images/menu/vic-logo-menu-main-label.png') }}" alt="Logo Victoire DCMS" />
         </a>
     </div>
     {% endblock %}

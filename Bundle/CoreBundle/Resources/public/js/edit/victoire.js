@@ -1,6 +1,6 @@
 
 $vic(document).ready(function() {
-
+    loading(false);
     enableSortableSlots();
 
     //Display all buttons except the disabled after they have been disabled (by updateSlotActions functions)
@@ -93,5 +93,15 @@ function updatePosition(ui){
 function replaceDropdown(ui) {
     $(ui.item).children('.vic-dropdown').remove();
     $(ui.item).append($(ui.item).parents('.vic-slot').children('.vic-dropdown').clone());
+}
+
+function loading(value) {
+    if (value == undefined) { //Switch mode
+        $vic('.vic-topNavbar-logo').toggleClass('vic-loading');
+    } else if (value === true) { //Run
+        $vic('.vic-topNavbar-logo').addClass('vic-loading');
+    } else if (value === false) { //Stop
+        $vic('.vic-topNavbar-logo').removeClass('vic-loading');
+    }
 }
 

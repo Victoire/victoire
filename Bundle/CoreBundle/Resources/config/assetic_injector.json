@@ -21,6 +21,7 @@
                 "@VictoireCoreBundle/Resources/public/js/edit/victoire.js",
                 "@VictoireCoreBundle/Resources/public/js/edit/modal.js",
                 "@VictoireCoreBundle/Resources/public/js/edit/widget.js",
+                "@VictoireCoreBundle/Resources/public/vendor/vic-confirm/js/confirm.js",
                 "@VictoireCoreBundle/Resources/public/vendor/vic-bootstrap/3.0.3/js/bootstrap.min.js",
                 "@VictoireCoreBundle/Resources/public/vendor/codrops-notification/js/notificationFx.js",
                 "@VictoireCoreBundle/Resources/public/js/jquery.mjs.nestedSortable.js"

@@ -95,7 +95,17 @@
                 &[data-modal="delete"] {
                     background-position: -35px -102px;
                 }
-                
+
+            }
+        }
+    }
+    &.vic-danger-modal {
+        .vic-modal-header {
+            background-color: @vic-modal-header-danger-backgroundColor;
+            .vic-close {
+                &:hover {
+                    color: @vic-modal-header-danger-closeHover-color;
+                }
             }
         }
     }
@@ -112,3 +122,4 @@
         margin-right: 4px;
     }
 }
+

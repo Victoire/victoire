@@ -19,6 +19,7 @@ $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(
     //we look for the form currently active and visible
     var form = $vic(this).parents('.vic-modal-content').find('.vic-tab-pane.vic-active form').filter(":visible");
 
+    loading(true);
     $vic.ajax({
         type: form.attr('method'),
         url : form.attr('action'),
@@ -31,6 +32,7 @@ $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(
                 $vic('.vic-creating').parents('.vic-widget-container').after(response.html);
             }
             closeModal();
+            loading(false);
 
             //save the positions of the widgets
             updatePosition();
@@ -58,6 +60,8 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update"]', function(
         $("select.picker_entity_select").remove();
     }
     var form = $vic(this).parents('.vic-modal-content').find('.vic-tab-pane.vic-active form').filter(":visible");
+
+    loading(true);
     $vic.ajax({
         type: form.attr('method'),
         url : form.attr('action'),
@@ -66,6 +70,7 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update"]', function(
         if (true === response.success) {
             $vic("#"+response.widgetId).replaceWith(response.html);
             closeModal();
+            loading(false);
             congrat(response.message, 10000);
         } else {
 
@@ -85,28 +90,33 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update"]', function(
 
 // Delete a widget after submit
 $vic(document).on('click', '.vic-widget-modal a[data-modal="delete"]', function(event) {
-    event.preventDefault();
+    //Check that there isn't a data-toggle="vic-confirm" on it !
+    if ($vic(event.target).data('toggle') != "vic-confirm" || $vic(event.target).hasClass('vic-confirmed')) {
+        event.preventDefault();
 
-    $vic.ajax({
-        type: "GET",
-        url : $vic(this).attr('href')
-    }).done(function(response) {
-        if (true === response.success) {
-            //selector for the widget div
-            var widgetContainerSelector = 'vic-widget-' + response.widgetId + '-container';
-            var widgetDiv = $vic("#" + widgetContainerSelector);
-            var widgetSlot = $vic(widgetDiv).parents('.vic-slot');
-            //remove the div
-            widgetDiv.remove();
-            //close the modal
-            eval("updateSlotActions" + $vic(widgetSlot).data('name') + "()" );
-            closeModal();
-        } else {
-            //log the error
-            console.log('An error occured during the deletion of the widget.');
-            console.log(response.message);
-        }
-    });
+        loading(true);
+        $vic.ajax({
+            type: "GET",
+            url : $vic(this).attr('href')
+        }).done(function(response) {
+            if (true === response.success) {
+                //selector for the widget div
+                var widgetContainerSelector = 'vic-widget-' + response.widgetId + '-container';
+                var widgetDiv = $vic("#" + widgetContainerSelector);
+                var widgetSlot = $vic(widgetDiv).parents('.vic-slot');
+                //remove the div
+                widgetDiv.remove();
+                //close the modal
+                eval("updateSlotActions" + $vic(widgetSlot).data('name') + "()" );
+                closeModal();
+                loading(false);
+            } else {
+                //log the error
+                console.log('An error occured during the deletion of the widget.');
+                console.log(response.message);
+            }
+        });
+    };
 });
 
 
