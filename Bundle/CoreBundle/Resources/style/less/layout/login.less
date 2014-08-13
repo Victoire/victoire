@@ -1,6 +1,7 @@
 // Login
 
 @vic-login-backgroundImage: "/bundles/victoirecore/images/background/nebu.jpg";
+@vic-login-backgroundColor: #000;
 @vic-login-logo-width: 334px;
 @vic-login-logo-height: 235px;
 @vic-login-logo-marginTop: 50px;
@@ -12,7 +13,10 @@
 .vic-login {
     padding: 0;
     background-image: url(@vic-login-backgroundImage);
-    background-size: cover;
+    background-size: auto;
+    background-position: top center;
+    background-repeat: repeat-x;
+    background-color: @vic-login-backgroundColor;
 
     &,
     * {
