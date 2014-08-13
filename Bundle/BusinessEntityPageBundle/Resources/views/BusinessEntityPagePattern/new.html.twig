@@ -15,6 +15,7 @@
 {% endblock modal_body_content %}
 
 {% block modal_footer_content %}
-    <span class="vic-pull-left"><sup>*</sup>{{ 'modal.mandatory_fields.label'|trans({}, 'victoire')|desc('Mandatory fields') }}</span>
-    <a href="#" data-modal="{% block action %}create{% endblock action %}" title="{{ ('modal.button.'~ block('action') ~'.title')|trans({}, 'victoire') }}"></a>
+    <div class="vic-modal-footer-content">
+        <a href="#" class="vic-btn vic-btn-success" data-modal="{% block action %}create{% endblock action %}" title="{{ ('modal.button.'~ block('action') ~'.title')|trans({}, 'victoire') }}"><i class="fa fa-check-circle"></i> {{ ('modal.button.'~ block('action') ~'.title')|trans({}, 'victoire') }}</a>
+    </div>
 {% endblock modal_footer_content %}

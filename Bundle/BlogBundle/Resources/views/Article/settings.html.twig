@@ -27,12 +27,13 @@
 {% block modal_footer %}
     <div class="vic-modal-footer">
         <div class="vic-container">
-        {% block modal_footer_content %}
-            <span class="vic-pull-left"><sup>*</sup>{{ 'modal.mandatory_fields.label'|trans({}, 'victoire')|desc('Mandatory fields') }}</span>
-            {% if not view.undeletable %}
-            {% endif %}
-            <a href="#" data-modal="{% block action %}update{% endblock action %}" title="{{ 'modal.button.'~ block('action') ~'.title'|trans({}, 'victoire') }}"></a>
-        {% endblock modal_footer_content %}
+            <div class="vic-modal-footer-content">
+                {% block modal_footer_content %}
+                    {% if not view.undeletable %}
+                    {% endif %}
+                    <a href="#" class="vic-btn vic-btn-success" data-modal="{% block action %}update{% endblock action %}" title="{{ 'modal.button.'~ block('action') ~'.title'|trans({}, 'victoire') }}"><i class="fa fa-check-circle"></i> {{ 'modal.button.'~ block('action') ~'.title'|trans({}, 'victoire') }}</a>
+                {% endblock modal_footer_content %}
+            </div>
         </div>
     </div>
 {% endblock modal_footer %}
