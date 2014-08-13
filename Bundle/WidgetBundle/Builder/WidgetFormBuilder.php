@@ -65,7 +65,7 @@ class WidgetFormBuilder
     public function renderForm($form, $widget, $entity = null)
     {
         //the template displayed is in the widget bundle
-        $templateName = $this->container->get('widget_helper')->getTemplateName('edit', $widget);
+        $templateName = $this->container->get('victoire_widget.widget_helper')->getTemplateName('edit', $widget);
 
         return $this->container->get('victoire_templating')->render(
             $templateName,

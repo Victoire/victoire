@@ -42,8 +42,8 @@ class MenuBuilder
     {
         $this->topNavbar = $this->factory->createItem('root', array(
                 'childrenAttributes' => array(
-                    'id'    => "vic-topNavbar",
-                    'class' => "vic-list-unstyled"
+                    'id'    => "vic-topNavbar-left",
+                    'class' => "vic-list-unstyled vic-menu-main-list vic-hidden-xs vic-hidden-sm"
                 )
             )
         );
@@ -60,7 +60,7 @@ class MenuBuilder
     {
         $this->leftNavbar = $this->factory->createItem('root', array(
             'childrenAttributes' => array(
-                'class' => "vic-left-menu vic-list-unstyled vic-text-left"
+                'class' => ""
                 )
             )
         );

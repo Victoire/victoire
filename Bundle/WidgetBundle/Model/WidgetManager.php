@@ -272,7 +272,7 @@ class WidgetManager
                 $response = array(
                     "success"   => false,
                     "message"   => $formErrorService->getRecursiveReadableErrors($form),
-                    "html"      => $this->widgetRenderer->renderForm($form, $widget, $entityName)
+                    "html"      => $this->widgetFormBuilder->renderForm($form, $widget, $entityName)
                 );
 
             }

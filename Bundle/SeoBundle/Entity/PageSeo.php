@@ -216,7 +216,7 @@ class PageSeo
     /**
      * @var string
      *
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\PageBundle\Entity\Page", inversedBy="referer", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\PageBundle\Entity\Page", inversedBy="referers", cascade={"persist"})
      * @ORM\JoinColumn(name="redirect_to", referencedColumnName="id")
      *
      */

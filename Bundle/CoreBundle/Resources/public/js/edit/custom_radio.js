@@ -1,49 +1,28 @@
-var toggleHandler = function(toggle) {
-    var toggle = toggle;
-    var radio = $vic(toggle).find("input");
+$vic(document).on('change', '#vic-switcher-editMode', function(event) {
 
-    var checkToggleState = function() {
-        if (radio.eq(0).is(":checked")) {
-            $vic(toggle).removeClass("vic-toggle-off");
-        } else {
-            $vic(toggle).addClass("vic-toggle-off");
-        }
-    };
+    if ($vic(this).is(':checked')) {
+        $vic('body').attr('role','admin');
+        var route = Routing.generate('victoire_core_switchEnable');
+    } else {
+        $vic('body').removeAttr('role');
+        var route = Routing.generate('victoire_core_switchDisable');
+    }
 
-    checkToggleState();
-
-    radio.each(function() {
-        $vic(this).click(function() {
-            $vic(toggle).toggleClass("vic-toggle-off");
-
-            if ($vic(this).val() == 0) {
-                $vic('body').removeAttr('role');
+    $vic.ajax({
+        url: route,
+        context: document.body,
+        type: "GET",
+        error: function(jsonResponse) {
+            if (typeof toastr === 'undefined') {
+                alert("Il semble s'être produit une erreur");
             } else {
-                $vic('body').attr('role','admin');
-            }
-
-            $vic.ajax({
-                url: Routing.generate('victoire_core_switch', {'mode': $vic(this).val() }),
-                context: document.body,
-                type: "GET",
-                error: function(jsonResponse) {
-                    if (typeof toastr === 'undefined') {
-                        alert("Il semble s'êre produit une erreur");
-                    } else {
-                        toastr.options = {
-                          "positionClass": "toast-bottom-left",
-                        }
-                        toastr.error("Il semble s'êre produit une erreur");
-                    }
-                    $vic('#canvasloader-container').fadeOut();
+                toastr.options = {
+                    "positionClass": "toast-bottom-left",
                 }
-            });
-        });
-    });
-};
 
-$vic(document).ready(function() {
-    $vic(".vic-toggle").each(function(index, toggle) {
-        toggleHandler(toggle);
-    });
+                toastr.error("Il semble s'être produit une erreur");
+          }
+          $vic('#canvasloader-container').fadeOut();
+      }
+  });
 });
