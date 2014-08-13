@@ -90,20 +90,12 @@ class BasePageController extends AwesomeController
                 $victoireTemplating = $this->container->get('victoire_templating');
                 $layout = 'AppBundle:Layout:' . $page->getTemplate()->getLayout() . '.html.twig';
 
-                $parameters = array(
-                    'page'   => $page,
-                    'id'     => $page->getId(),
-                    'entity' => $entity
-                );
                 //add the page to twig
                 $this->get('twig')->addGlobal('view', $page);
                 $this->get('twig')->addGlobal('entity', $entity);
 
                 //create the response
-                $response = $victoireTemplating->renderResponse(
-                    $layout,
-                    $parameters
-                );
+                $response = $victoireTemplating->renderResponse($layout);
             }
         }
 

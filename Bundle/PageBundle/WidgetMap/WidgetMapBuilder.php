@@ -480,9 +480,6 @@ class WidgetMapBuilder
      */
     public function updateWidgetMapOrder(View $view, $sortedWidgets)
     {
-        //create a view for the business entity instance if we are currently display an instance for a business entity template
-        $view = $this->duplicateViewPatternIfViewInstance($view);
-
         $widgetSlots = array();
 
         //parse the sorted widgets
@@ -504,12 +501,11 @@ class WidgetMapBuilder
             }
         }
 
-        $this->container->get('view.widgetMap.builder')->updateWidgetMapsByView($view, $widgetSlots);
+        $this->updateWidgetMapsByView($view, $widgetSlots);
         $view->updateWidgetMapBySlots();
 
-        $em = $this->container->get('doctrine.orm.entity_manager');
         //update the view with the new widget map
-        $em->persist($view);
-        $em->flush();
+        $this->em->persist($view);
+        $this->em->flush();
     }
 }

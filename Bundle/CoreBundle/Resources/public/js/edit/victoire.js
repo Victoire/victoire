@@ -3,30 +3,6 @@ $vic(document).ready(function() {
 
     enableSortableSlots();
 
-    //when a theme is selected
-    $vic(document).on('change', 'select.theme-choices', function(e) {
-        entity = $vic(this).parents('div.vic-tab-pane').attr('id');
-
-        item = $vic('div#' + entity + ' select.theme-choices option:selected').val();
-
-        //get the slot hidden input
-        slot = $vic(this).parents('form').children('input[name$="[slot]"]')
-
-        //the value of the slot
-        slotValue = $vic(slot).val();
-
-        //generate the url to get the content of the modal
-        var url = Routing.generate('victoire_core_widget_new', {'type': item, 'page': pageId, 'slot': slotValue});
-
-        //open the modal for the new kind of widget
-        openModal(url);
-    });
-
-    //creates the left navbar
-    if (typeof(gnMenu) != 'undefined' && document.getElementById('vic-admin-menu') !== null) {
-        new gnMenu(document.getElementById('vic-admin-menu'));
-    }
-
     //Display all buttons except the disabled after they have been disabled (by updateSlotActions functions)
     setTimeout(function() {
         $vic.each($vic('.vic-new-widget'), function() {
@@ -109,7 +85,7 @@ function updatePosition(ui){
         sorted[$vic(el).data('name')] = $vic(el).sortable('toArray', { attribute: 'data-id' });
     });
 
-    return $vic.post(Routing.generate('victoire_core_widget_update_position', {'page': pageId}),
+    return $vic.post(Routing.generate('victoire_core_widget_update_position', {'view': viewId}),
         { 'sorted': sorted }
     );
 }

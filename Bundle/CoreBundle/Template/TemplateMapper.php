@@ -51,7 +51,7 @@ class TemplateMapper
      *
      * @return Response
      **/
-    public function renderResponse($view, $params)
+    public function renderResponse($view, $params = array())
     {
         //the template
         $template = $this->retrieveTemplate($view);

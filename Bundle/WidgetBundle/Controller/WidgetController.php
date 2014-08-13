@@ -2,16 +2,16 @@
 
 namespace Victoire\Bundle\WidgetBundle\Controller;
 
+use AppVentus\Awesome\ShortcutsBundle\Controller\AwesomeController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use AppVentus\Awesome\ShortcutsBundle\Controller\AwesomeController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
-use Victoire\Bundle\WidgetBundle\Entity\Widget;
-use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\CoreBundle\Widget\Managers\WidgetManager;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Victoire\Bundle\CoreBundle\Entity\View;
+use Victoire\Bundle\CoreBundle\Widget\Managers\WidgetManager;
+use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
  * Widget Controller
@@ -55,7 +55,7 @@ class WidgetController extends AwesomeController
      * New Widget
      *
      * @param string         $type   The type of the widget we edit
-     * @param Page           $view   The view where attach the widget
+     * @param View           $view   The view where attach the widget
      * @param string         $slot   The slot where attach the widget
      * @param BusinessEntity $entity The business entity the widget shows on dynamic mode
      *
@@ -107,7 +107,7 @@ class WidgetController extends AwesomeController
      * Create a widget
      *
      * @param string         $type   The type of the widget we edit
-     * @param Page           $view   The view where attach the widget
+     * @param View           $view   The view where attach the widget
      * @param string         $slot   The slot where attach the widget
      * @param BusinessEntity $entity The business entity the widget shows on dynamic mode
      *
@@ -181,17 +181,20 @@ class WidgetController extends AwesomeController
     /**
      * Update widget positions accross the view. If moved widget is a Reference, ask to detach the view from template
      *
-     * @param Page $view The view where update widget positions
+     * @param View $view The view where update widget positions
      *
      * @return response
      * @Route("/victoire-dcms/widget/updatePosition/{view}", name="victoire_core_widget_update_position", options={"expose"=true})
      * @ParamConverter("view", class="VictoireCoreBundle:View")
      */
-    public function updatePositionAction(Page $view)
+    public function updatePositionAction(View $view)
     {
         try {
             //the sorted order for the widgets
             $sortedWidgets = $this->getRequest()->request->get('sorted');
+
+            //create a view for the business entity instance if we are currently display an instance for a business entity template
+            $view = $this->get('victoire_page.page_helper')->duplicatePagePatternIfPageInstance($view);
 
             //recompute the order for the widgets
             $this->get('view.widgetMap.builder')->updateWidgetMapOrder($view, $sortedWidgets);

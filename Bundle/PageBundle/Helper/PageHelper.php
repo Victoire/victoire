@@ -7,6 +7,7 @@ use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\BusinessEntityPageBundle\Helper\BusinessEntityPageHelper;
 use Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy;
+use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\PageBundle\Matcher\UrlMatcher;
@@ -160,7 +161,7 @@ class PageHelper
 
             //no page were found
             if ($page === null) {
-                $instance = $this->urlMatcher->getBusinessEntityPagePatternInstanceByUrl($url);
+                $instance = $this->urlMatcher->getBusinessEntityPageByUrl($url);
 
                 //an instance of a business entity page pattern and an entity has been identified
                 if ($instance !== null) {
