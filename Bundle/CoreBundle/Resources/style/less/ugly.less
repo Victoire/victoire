@@ -1,0 +1,12 @@
+ul.vic-items {
+    margin: 0;
+    padding: 0;
+    counter-reset: listingCounter;
+}
+ul.vic-items li {
+    list-style: none;
+    counter-increment: listingCounter;
+}
+ul.vic-items li .request-number:before {
+    content: counter(listingCounter);
+}
