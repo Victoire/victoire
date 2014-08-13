@@ -108,3 +108,19 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="delete"]', function(
         }
     });
 });
+
+
+  //////////////////////////////////
+ // New Widget dropdown position //
+//////////////////////////////////
+
+$vic(document).on('click', '[data-toggle="vic-dropdown"]', function() {
+    var dropdown = $vic(this).siblings('.vic-dropdown-menu.vic-dropdown-newWidget');
+    var dropdownWidth = dropdown.outerWidth();
+    var dropdownHeight = dropdown.outerHeight();
+
+    dropdown.css({
+        marginTop: -0.5 * dropdownHeight,
+        marginLeft: -0.5 * dropdownWidth,
+    });
+});

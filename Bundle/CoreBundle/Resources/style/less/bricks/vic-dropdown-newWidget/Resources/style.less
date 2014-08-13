@@ -55,6 +55,8 @@
 
 .vic-dropdown-newWidget {
     border-color: @vic-newWidget-link-borderColor;
+    top: 50%;
+    left: 50%;
 
     a {
         display: block;
@@ -93,7 +95,7 @@
 .vic-dropdown-newWidget-loop (@counter) when (@counter > 0) {
     .vic-dropdown-newWidget-loop((@counter - 1)); // next iteration
 
-    .vic-dropdown-newWidget-@{counter} {
+    .vic-newWidget-@{counter} {
         > li {
             > a {
                 padding-left: @vic-newWidget-dropdown-item-horizontalPadding + (@vic-newWidget-dropdown-item-loop-horizontalPadding * @counter);
