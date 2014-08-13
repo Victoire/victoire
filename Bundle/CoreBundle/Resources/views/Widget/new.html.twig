@@ -4,6 +4,13 @@
 
 {% block form_container %}
     {% block body %}
+        {# @todo We should display a message to warn admin that this widget is owned by a top template, we do not have the currentView so we are not able to do this for now
+        {% if currentView != widget.view %}
+        <div class="vic-alert vic-alert-warning vic-alert-dismissible">
+            {{ 'victoire.widget.inherited.notice'|trans({'templateName': widget.view.template.name}, 'victoire') }}
+        </div>
+        {% endif %}
+        #}
         {% block form %}
             {% if entity != null %}
                 <div id="picker-{{entity}}-{{ form.mode.vars.data }}" class="vic-tab-pane {% if form.mode.vars.data == 'entity' %}vic-active{% endif %}">
