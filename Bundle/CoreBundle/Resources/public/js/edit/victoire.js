@@ -35,11 +35,6 @@ $vic(document).ready(function() {
             }
         }) ;
     }, 10);
-
-    // For new widget dropdown
-    $vic('.vic-dropdown-menu').each(function(index, vicDropdownMenu) {
-        vicDropdownMenu.height();
-    });
 });
 
 
