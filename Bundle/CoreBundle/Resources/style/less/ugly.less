@@ -10,3 +10,11 @@ ul.vic-items li {
 ul.vic-items li .request-number:before {
     content: counter(listingCounter);
 }
+
+select[id^='victoire_widget_form_'][id$='date_day'],
+select[id^='victoire_widget_form_'][id$='date_month'],
+select[id^='victoire_widget_form_'][id$='date_year'] {
+    float: left;
+    width: auto;
+    margin-left: 5px;
+}
