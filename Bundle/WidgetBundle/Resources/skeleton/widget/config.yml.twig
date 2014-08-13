@@ -1,6 +1,12 @@
 victoire_core:
     widgets:
-        {{ widget|lower }}:
+        {{ widget }}:
             class: "Victoire\\Widget\\{{ widget }}Bundle\\Entity\\Widget{{ widget }}"
             name: {{ widget }}
-            parent: {{parent}}
+            {% if parent %}parent: {{parent}}{% endif %}
+
+jms_translation:
+    configs:
+        victoire_{{ widget|lower }}_bundle:
+            dirs: ["@Victoire{{ widget }}Bundle"]
+            output_dir: "@Victoire{{ widget }}Bundle/Resources/translations"
