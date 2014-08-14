@@ -13,6 +13,43 @@
 // Resources
 ////////////
 
-@import 'resources/style';
-@import 'resources/parameters/module';
-@import 'resources/parameters/theme';
+@import 'parameters/module';
+@import 'parameters/theme';
+
+
+
+// Style
+////////
+
+.businessProperties {
+    background-color: @vic-businessProperties-backgroundColor;
+    float: left;
+    position: fixed;
+    top: @vic-businessProperties-top;
+    z-index: 1;
+
+    .businessProperty,
+    .businessPropertyTitle {
+        float: left;
+        margin: @vic-businessProperty-marginVertical @vic-businessProperty-marginHorizontal;
+        padding: @vic-businessProperty-padding;
+    }
+
+    .businessProperty {
+        border-width: @vic-businessProperty-borderWidth;
+        border-solid: @vic-businessProperty-borderStyle;
+        border-color: @vic-businessProperty-borderColor;
+        .radius(@vic-businessProperty-borderRadius);
+        cursor: pointer;
+    }
+
+    .businessIdentifier {
+        border-width: @vic-businessIdentifier-borderWidth;
+        border-style: @vic-businessIdentifier-borderStyle;
+        border-color: @vic-businessIdentifier-color;
+
+        a {
+            color: @vic-businessIdentifier-color;
+        }
+    }
+}

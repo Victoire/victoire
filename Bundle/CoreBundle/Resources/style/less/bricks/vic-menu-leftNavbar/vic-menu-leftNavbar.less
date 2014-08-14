@@ -13,6 +13,83 @@
 // Resources
 ////////////
 
-@import 'resources/style';
-@import 'resources/parameters/module';
-@import 'resources/parameters/theme';
+@import 'parameters/module';
+@import 'parameters/theme';
+
+
+
+// Style
+////////
+
+.vic-menu-leftnavbar-trigger {
+    i {
+        width: @vic-menu-leftnavbar-trigger-width;
+        height: 100%;
+        display: inline-block;
+        background-image: url(@vic-menu-leftnavbar-trigger-icon);
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    &:hover {
+        i {
+            background-image: url(@vic-menu-leftnavbar-trigger-iconHover);
+        }
+    }
+
+    &.is-in {
+        i {
+            background-image: url(@vic-menu-leftnavbar-trigger-iconIsIn);
+        }
+
+        &:hover {
+            i {
+                background-image: url(@vic-menu-leftnavbar-trigger-iconIsInHover);
+            }
+        }
+    }
+}
+
+#vic-menu-leftnavbar-trigger {
+    &:extend(.vic-menu-main-list > *);
+    &:extend(.vic-menu-main-list > *:not(.vic-menu-main-list-lastItem));
+}
+
+.vic-menu-leftnavbar {
+    overflow: hidden;
+    position: fixed;
+    top: @vic-menu-main-height;
+    bottom: 0;
+    left: @vic-menu-leftnavbar-width * -1 - 10px;
+    width: @vic-menu-leftnavbar-width;
+    padding-top: @vic-menu-leftnavbar-paddingTop;
+    background-color: @vic-menu-main-backgroundColor;
+    background-image: url(@vic-menu-main-boxShadow-img);
+    background-repeat: repeat-x;
+    background-position: top;
+    .transition(@vic-menu-leftnavbar-animation);
+    .box-shadow(@vic-menu-leftnavbar-shadow);
+
+    &.is-in {
+        left: 0;
+        .transition(@vic-menu-leftnavbar-animation);
+    }
+
+    ul {
+        &:extend(.vic-list-unstyled);
+        border-bottom-width: @vic-menu-leftnavbar-link-separatorWidth;
+        border-bottom-style: @vic-menu-leftnavbar-link-separatorStyle;
+        border-bottom-color: @vic-menu-leftnavbar-link-separatorColor;
+
+        a {
+            line-height: @vic-menu-leftnavbar-link-height;
+            border-top-width: @vic-menu-leftnavbar-link-separatorWidth;
+            border-top-style: @vic-menu-leftnavbar-link-separatorStyle;
+            border-top-color: @vic-menu-leftnavbar-link-separatorColor;
+            display: block;
+            padding-left: @vic-menu-leftnavbar-link-horizontalPadding;
+            padding-right: @vic-menu-leftnavbar-link-horizontalPadding;
+            word-break: initial;
+        }
+    }
+}
