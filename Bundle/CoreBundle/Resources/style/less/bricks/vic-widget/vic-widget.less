@@ -13,6 +13,71 @@
 // Resources
 ////////////
 
-@import 'resources/style';
-@import 'resources/parameters/module';
-@import 'resources/parameters/theme';
+@import 'parameters/module';
+@import 'parameters/theme';
+
+
+
+// Style
+////////
+
+.vic-widget {
+    position: relative;
+    min-height: 20px;
+}
+
+.vic-widget-img {
+    margin-bottom: 30px;
+    text-align: center;
+    overflow: hidden;
+}
+
+.vic-widget-text {
+    margin-bottom: 30px;
+}
+
+body {
+    &[role=admin] {
+        .vic-hover-widget {
+            display: inline-block;
+        }
+    }
+}
+
+.vic-hover-widget {
+    position: absolute;
+    display: none;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    opacity: 0;
+
+    i {
+        background-image: url(/bundles/victoirecore/images/edit-widget-icon.png);
+        background-position: center;
+        background-repeat: no-repeat;
+        position: absolute;
+        width: 82px;
+        left: 50%;
+        margin-left: 82px * -0.5;
+        height: 82px;
+        top: 50%;
+        margin-top: 82px * -0.5;
+        display: inline-block;
+    }
+
+    &:hover {
+        opacity: 1;
+        background-color: fade(@white, 70%);
+    }
+}
+
+.vic-darkZone {
+    .vic-hover-widget {
+        &:hover {
+            background-color: fade(@black, 10%);
+        }
+    }
+}

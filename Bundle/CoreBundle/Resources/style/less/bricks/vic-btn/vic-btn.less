@@ -13,6 +13,120 @@
 // Resources
 ////////////
 
-@import 'resources/style';
-@import 'resources/parameters/module';
-@import 'resources/parameters/theme';
+@import 'parameters/module';
+@import 'parameters/theme';
+
+
+
+// Style
+////////
+
+// Btn
+.vic-btn {
+    color: @vic-btn-color;
+    font-weight: @vic-btn-fontWeight;
+    text-shadow: @vic-btn-textShadow;
+    font-size: @vic-btn-fontSize;
+    font-family: @victoire-fontFamily;
+    border-width: @vic-btn-borderWidth;
+    line-height: @vic-btn-height - (@vic-btn-borderWidth * 2);
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+
+// btn success
+.vic-btn-success {
+    background-color: @vic-btn-success-borderColor;
+    border-color: @vic-btn-success-backgroundColor;
+}
+
+
+// btn default
+.vic-btn-default {
+    color: @vic-btn-default-color;
+}
+
+
+// btn danger
+.vic-btn-danger {
+    border-color: @vic-btn-default-borderColor;
+    background-color: @vic-btn-default-backgroundColor;
+}
+
+
+// btn remove
+.vic-btn-remove {
+    padding: 0;
+    background: transparent;
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: @icon-hover;
+        background: none;
+        .box-shadow;
+        outline: 0;
+    }
+
+    &.vic-btn-large {
+        font-size: 22px;
+    }
+}
+
+
+// btn Success
+.vic-btn-success {
+    background-color: @vic-btn-success-backgroundColor;
+    border-color: darken(@vic-btn-success-backgroundColor, 10%);
+
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: darken(@vic-btn-success-backgroundColor, 5%);
+        border-color: darken(@vic-btn-success-backgroundColor, 15%);
+        outline: 0;
+    }
+}
+
+
+// btn-add
+.vic-btn-add {
+    border-style: @vic-btnAdd-borderStyle;
+    background: @vic-btnAdd-background;
+    border-color: @vic-btnAdd-borderColor;
+    color: @vic-btnAdd-color;
+    font-weight: 600;
+    display: block;
+    font-family: @victoire-fontFamily;
+
+    &:before {
+        &:extend(.vic-new-widget > a span:before);
+        margin-top: 0;
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: @vic-btnAdd-color;
+        border-color: @vic-btnAdd-hover-borderColor;
+
+        &:before {
+            &:extend(.vic-new-widget > a:hover span:before);
+        }
+    }
+
+    img {
+        display: none;
+    }
+}
+
+
+// add request
+.add-request {
+    width: @vic-addRequest-width;
+}
+
+.add-request-block {
+    margin-bottom: @vic-addRequest-marginBottom;
+}
