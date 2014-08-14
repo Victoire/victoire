@@ -37,7 +37,7 @@ class WidgetController extends AwesomeController
             if ($this->getRequest()->isXmlHttpRequest()) {
 
                  $response = new JsonResponse(array(
-                     'html' => $this->get('victoire_widget.widget_renderer')->render($widget, $entity),
+                     'html' => $this->get('victoire_widget.widget_renderer')->render($widget, $widget->getView()),
                      'update' => 'vic-widget-'.$widget->getId().'-container',
                      'success' => false
                  ));

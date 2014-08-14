@@ -33,11 +33,6 @@ class EntityProxyFormType extends AbstractType
                     'class' => 'add_' .$options['entity_name'] . '_link picker_entity_select',
                 )
             ));
-
-        //set the business entity name in an hidden field
-        $builder->add('business_entity_name', 'hidden', array(
-            'data' => $options['entity_name']
-        ));
     }
 
     /**

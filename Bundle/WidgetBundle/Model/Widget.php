@@ -177,7 +177,7 @@ abstract class Widget
 
             //if there is a proxy
             if ($entityProxy !== null) {
-                $entity = $entityProxy->getEntity();
+                $entity = $entityProxy->getEntity($this->getBusinessEntityName());
                 $this->entity = $entity;
             }
         }

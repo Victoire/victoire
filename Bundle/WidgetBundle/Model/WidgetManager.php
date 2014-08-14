@@ -210,7 +210,7 @@ class WidgetManager
      *
      * @param Request $request
      * @param Widget  $widget
-     * @param string  $entityName
+     * @param string  $entityName The entity name is used to know which form to submit
      *
      * @return template
      */
