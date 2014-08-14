@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class SwitchController extends Controller
 {
     /**
-     * @Route("/{mode}", name="victoire_core_switch", options={"expose"=true})
      * @Route("/disable", name="victoire_core_switchDisable", options={"expose"=true}, defaults={"mode"=false})
      * @Route("/enable", name="victoire_core_switchEnable", options={"expose"=true}, defaults={"mode"=true})
      *

@@ -74,7 +74,7 @@ class BasePageController extends AwesomeController
                 $seoUrl = $page->getSeo()->getRedirectTo()->getUrl();
 
                 //generate the url
-                $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $seoUrl)));
+                return $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $seoUrl)));
             } else {
 
                 if ($entity) {
