@@ -210,18 +210,19 @@ class WidgetManager
      *
      * @param Request $request
      * @param Widget  $widget
-     * @param string  $entityName The entity name is used to know which form to submit
+     * @param View    $currentView
+     * @param string  $entityName  The entity name is used to know which form to submit
      *
      * @return template
      */
-    public function editWidget(Request $request, Widget $widget, $entityName = null)
+    public function editWidget(Request $request, Widget $widget, View $currentView, $entityName = null)
     {
         //services
         $widgetMapBuilder = $this->widgetMapBuilder;
 
         $classes = $this->annotationReader->getBusinessClassesForWidget($widget);
 
-        $view = $widget->getView();
+        $widget->setCurrentView($currentView);
 
         //the id of the edited widget
         //a new widget might be created in the case of a legacy
@@ -234,16 +235,16 @@ class WidgetManager
         if ($requestMethod === 'POST') {
 
             //create a view for the business entity instance if we are currently display an instance for a business entity template
-            if ($view instanceof Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage) {
-                $view = $this->pageHelper->duplicatePagePatternIfPageInstance($view);
+            if ($currentView instanceof Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern) {
+                $currentView = $this->pageHelper->duplicatePagePatternIfPageInstance($currentView);
             }
 
-            $widget = $widgetMapBuilder->editWidgetFromView($view, $widget);
+            $widget = $widgetMapBuilder->editWidgetFromView($currentView, $widget);
 
             if ($entityName !== null) {
-                $form = $this->widgetFormBuilder->buildForm($widget, $view, $entityName, $classes[$entityName]);
+                $form = $this->widgetFormBuilder->buildForm($widget, $currentView, $entityName, $classes[$entityName]);
             } else {
-                $form = $this->widgetFormBuilder->buildForm($widget, $view);
+                $form = $this->widgetFormBuilder->buildForm($widget, $currentView);
             }
 
             $form->handleRequest($request);
@@ -256,35 +257,35 @@ class WidgetManager
                 $em->persist($widget);
 
                 //update the widget map by the slots
-                $view->updateWidgetMapBySlots();
-                $em->persist($view);
+                $currentView->updateWidgetMapBySlots();
+                $em->persist($currentView);
                 $em->flush();
 
                 $response = array(
-                    'view'     => $view,
-                    'success'  => true,
-                    'html'     => $this->widgetRenderer->render($widget, $view),
-                    'widgetId' => "vic-widget-".$initialWidgetId."-container"
+                    'view'        => $currentView,
+                    'success'     => true,
+                    'html'        => $this->widgetRenderer->render($widget, $currentView),
+                    'widgetId'    => "vic-widget-".$initialWidgetId."-container"
                 );
             } else {
                 $formErrorService = $this->formErrorService;
                 //Return a message for developer in console and form view in order to refresh view and show form errors
                 $response = array(
-                    "success"   => false,
-                    "message"   => $formErrorService->getRecursiveReadableErrors($form),
-                    "html"      => $this->widgetFormBuilder->renderForm($form, $widget, $entityName)
+                    "success" => false,
+                    "message" => $formErrorService->getRecursiveReadableErrors($form),
+                    "html"    => $this->widgetFormBuilder->renderForm($form, $widget, $entityName)
                 );
 
             }
         } else {
-            $forms = $this->widgetFormBuilder->renderNewWidgetForms($widget->getSlot(), $view, $widget);
+            $forms = $this->widgetFormBuilder->renderNewWidgetForms($widget->getSlot(), $currentView, $widget);
 
             $response = array(
                 "success"  => true,
                 "html"     => $this->victoireTemplating->render(
                     "VictoireCoreBundle:Widget:Form/edit.html.twig",
                     array(
-                        'view'    => $view,
+                        'view'    => $currentView,
                         'classes' => $classes,
                         'forms'   => $forms,
                         'widget'  => $widget

@@ -70,6 +70,8 @@ class TemplateController extends Controller
             'id'   => $template->getId()
         );
 
+        $this->container->get('victoire_core.current_view')->setCurrentView($template);
+
         //create the response
         $response = $victoireTemplating->renderResponse(
             $layout,

@@ -77,6 +77,8 @@ class BasePageController extends AwesomeController
                 return $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $seoUrl)));
             } else {
 
+                $this->container->get('victoire_core.current_view')->setCurrentView($page);
+
                 if ($entity) {
                     $page = $this->get('victoire_business_entity_page.business_entity_page_helper')->generateEntityPageFromPattern($page, $entity);
                 }
@@ -90,9 +92,7 @@ class BasePageController extends AwesomeController
                 $victoireTemplating = $this->container->get('victoire_templating');
                 $layout = 'AppBundle:Layout:' . $page->getTemplate()->getLayout() . '.html.twig';
 
-                $this->container->get('victoire_page.current_view')->setCurrentView($page);
-
-                //add the page to twig
+                //@todo cleanup if doublon regarding victoire_core.current_view service
                 $this->get('twig')->addGlobal('view', $page);
                 $this->get('twig')->addGlobal('entity', $entity);
 

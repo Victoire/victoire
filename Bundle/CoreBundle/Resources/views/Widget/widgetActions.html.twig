@@ -1,2 +1,2 @@
 {% trans_default_domain "victoire" %}
-<a href="{{path('victoire_core_widget_edit', {'id':widget.id})}}" class="vic-hover-widget"><i></i></a>
+<a href="{{path('victoire_core_widget_edit', {'id':widget.id, 'view_id': widget.currentView.id}) }}" class="vic-hover-widget"><i></i></a>

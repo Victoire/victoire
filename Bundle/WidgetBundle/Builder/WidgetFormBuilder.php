@@ -185,14 +185,15 @@ class WidgetFormBuilder
                     'view'   => $view->getId(),
                     'slot'   => $widget->getSlot(),
                     'type'   => $widget->getType(),
-                    'entity' => $entityName
+                    'entityName' => $entityName
                 )
             );
         } else {
             $formUrl = $router->generate('victoire_core_widget_update',
                 array(
-                    'id' => $widget->getId(),
-                    'entity' => $entityName,
+                    'id'         => $widget->getId(),
+                    'view_id'    => $widget->getCurrentView()->getId(),
+                    'entityName' => $entityName,
                 )
             );
         }

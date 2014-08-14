@@ -82,6 +82,7 @@ services:
             - "@doctrine.orm.entity_manager"
             - "@view.widgetMap.builder"
             - "@victoire_core.widget_exception_handler"
+            - "@victoire_core.current_view"
         tags:
             - { name: twig.extension }
     victoire_core.twig.globals_extension:
@@ -157,7 +158,7 @@ services:
             - "@victoire_core.annotation_reader"
             - "@doctrine.orm.entity_manager"
 
-    #  ==================  Error handler =================== #
+#  ==================  Error handler =================== #
 
     victoire_core.widget_exception_handler:
         class: Victoire\Bundle\CoreBundle\Handler\WidgetExceptionHandler
@@ -166,3 +167,8 @@ services:
             - "@twig"
             - "%kernel.debug%"
             - "@victoire_templating"
+
+#  ==================  View ================== #
+
+    victoire_core.current_view:
+        class: Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper

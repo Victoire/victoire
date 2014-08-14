@@ -99,21 +99,23 @@ class PageSubscriber implements EventSubscriber
 
         foreach ($this->uow->getScheduledEntityInsertions() as $entity) {
             if ($entity instanceof BasePage) {
-                if ($entity->getComputeUrl()) {
+                //the slug of the page has been modified
+                if (array_key_exists('slug', $this->uow->getEntityChangeSet($entity))) {
                     $this->buildUrl($entity);
-                    $meta = $this->entityManager->getClassMetadata(get_class($entity));
-                    $this->uow->recomputeSingleEntityChangeSet($meta, $entity);
-                    $entity->setAuthor($this->userCallable->getCurrentUser());
                 }
+                $meta = $this->entityManager->getClassMetadata(get_class($entity));
+                $this->uow->recomputeSingleEntityChangeSet($meta, $entity);
+                $entity->setAuthor($this->userCallable->getCurrentUser());
             }
         }
 
         foreach ($this->uow->getScheduledEntityUpdates() as $entity) {
             if ($entity instanceof BasePage) {
-                if ($entity->getComputeUrl()) {
+                //the slug of the page has been modified
+                if (array_key_exists('slug', $this->uow->getEntityChangeSet($entity))) {
+                    $this->buildUrl($entity);
                     $meta = $this->entityManager->getClassMetadata(get_class($entity));
                     $this->uow->computeChangeSet($meta, $entity);
-                    $this->buildUrl($entity);
                 }
             }
         }
@@ -130,23 +132,8 @@ class PageSubscriber implements EventSubscriber
      */
     public function buildUrl(BasePage $page, $depth = 0)
     {
-        //services
-        $em = $this->entityManager;
-        $uow = $this->uow;
-        $urlHelper = $this->getUrlHelper();
-
         //if slug changed or child page
         $buildUrl = false;
-
-        //the slug of the page has been modified
-        if (array_key_exists('slug', $uow->getEntityChangeSet($page))) {
-            $buildUrl = true;
-        }
-
-        //the depth is > 0, so this page is a child
-        if ($depth !== 0) {
-             $buildUrl = true;
-        }
 
         //@todo wtf ?
         if ($page instanceof BusinessEntityPagePattern) {
@@ -174,18 +161,18 @@ class PageSubscriber implements EventSubscriber
             $url = implode('/', $url);
 
             //get the next free url
-            $url = $urlHelper->getNextAvailaibleUrl($url);
+            $url = $this->getUrlHelper()->getNextAvailaibleUrl($url);
 
             //update url of the page
             $page->setUrl($url);
 
             //the metadata of the page
-            $meta = $em->getClassMetadata(get_class($page));
+            $meta = $this->entityManager->getClassMetadata(get_class($page));
 
             if ($depth === 0) {
-                $uow->recomputeSingleEntityChangeSet($meta, $page);
+                $this->uow->recomputeSingleEntityChangeSet($meta, $page);
             } else {
-                $uow->computeChangeSet($meta, $page);
+                $this->uow->computeChangeSet($meta, $page);
             }
 
             $this->rebuildChildrenUrl($page, $depth);

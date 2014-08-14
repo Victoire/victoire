@@ -1,7 +1,4 @@
 services:
-    victoire_page.current_view:
-        class: Victoire\Bundle\PageBundle\Helper\CurrentViewHelper
-
     victoire_page.user_callable:
         class: Victoire\Bundle\PageBundle\Helper\UserCallableHelper
         arguments:
