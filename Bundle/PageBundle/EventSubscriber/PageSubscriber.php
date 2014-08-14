@@ -132,52 +132,46 @@ class PageSubscriber implements EventSubscriber
      */
     public function buildUrl(BasePage $page, $depth = 0)
     {
-        //if slug changed or child page
-        $buildUrl = false;
-
-        //@todo wtf ?
+        //@todo implements BusinessEntityPagePattern urls
         if ($page instanceof BusinessEntityPagePattern) {
-            $buildUrl = false;
+            return false;
         }
 
-        //should we build the url
-        if ($buildUrl) {
-            //Get Initial url to historize it
-            $initialUrl = $page->getUrl();
+        //Get Initial url to historize it
+        $initialUrl = $page->getUrl();
 
-            // build url binded with parents url
-            if ($page->isHomepage()) {
-                $url = array('');
-            } else {
-                $url = array($page->getSlug());
-            }
-
-            //get the slug of the parents
-            $url = $this->getParentSlugs($page, $url);
-
-            //reorder the list of slugs
-            $url = array_reverse($url);
-            //build an url based on the slugs
-            $url = implode('/', $url);
-
-            //get the next free url
-            $url = $this->getUrlHelper()->getNextAvailaibleUrl($url);
-
-            //update url of the page
-            $page->setUrl($url);
-
-            //the metadata of the page
-            $meta = $this->entityManager->getClassMetadata(get_class($page));
-
-            if ($depth === 0) {
-                $this->uow->recomputeSingleEntityChangeSet($meta, $page);
-            } else {
-                $this->uow->computeChangeSet($meta, $page);
-            }
-
-            $this->rebuildChildrenUrl($page, $depth);
-            $this->addRouteHistory($page, $initialUrl);
+        // build url binded with parents url
+        if ($page->isHomepage()) {
+            $url = array('');
+        } else {
+            $url = array($page->getSlug());
         }
+
+        //get the slug of the parents
+        $url = $this->getParentSlugs($page, $url);
+
+        //reorder the list of slugs
+        $url = array_reverse($url);
+        //build an url based on the slugs
+        $url = implode('/', $url);
+
+        //get the next free url
+        $url = $this->getUrlHelper()->getNextAvailaibleUrl($url);
+
+        //update url of the page
+        $page->setUrl($url);
+
+        //the metadata of the page
+        $meta = $this->entityManager->getClassMetadata(get_class($page));
+
+        if ($depth === 0) {
+            $this->uow->recomputeSingleEntityChangeSet($meta, $page);
+        } else {
+            $this->uow->computeChangeSet($meta, $page);
+        }
+
+        $this->rebuildChildrenUrl($page, $depth);
+        $this->addRouteHistory($page, $initialUrl);
     }
 
     /**

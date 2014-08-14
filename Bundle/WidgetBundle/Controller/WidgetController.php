@@ -112,16 +112,17 @@ class WidgetController extends AwesomeController
      * @param BusinessEntity $entityName The business entity name the widget shows on dynamic mode
      *
      * @return response
-     * @Route("/victoire-dcms/widget/create/{type}/{view}/{slot}/{entityName}", name="victoire_core_widget_create", defaults={"slot":null, "entityName":null, "_format": "json"})
+     * @Route("/victoire-dcms/widget/create/{type}/{view_id}/{slot}/{entityName}", name="victoire_core_widget_create", defaults={"slot":null, "entityName":null, "_format": "json"})
      * @Template()
      */
-    public function createAction($type, $view, $slot = null, $entityName = null)
+    public function createAction($type, $view_id, $slot = null, $entityName = null)
     {
         try {
             //services
             $em = $this->getEntityManager();
 
-            $view = $em->getRepository('VictoireCoreBundle:View')->findOneById($view);
+            $view = $em->getRepository('VictoireCoreBundle:View')->findOneById($view_id);
+            $this->get('victoire_core.current_view')->setCurrentView($view);
             $widgetManager = $this->getWidgetManager();
 
             $response = new JsonResponse($widgetManager->createWidget($type, $slot, $view, $entityName));

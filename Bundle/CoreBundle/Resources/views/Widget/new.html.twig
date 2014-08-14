@@ -4,7 +4,7 @@
 
 {% block form_container %}
     {% block body %}
-        {% if widget.currentView != widget.view %}
+        {% if widget.id and widget.currentView != widget.view %}
         <div class="vic-alert vic-alert-warning vic-alert-dismissible">
             {{ 'victoire.widget.inherited.notice'|trans({'%templateName%': widget.view.name, '%templateEditLink%': path('victoire_core_widget_edit', {'id': widget.id, 'view_id': widget.view.id })}, 'victoire')|raw }}
         </div>

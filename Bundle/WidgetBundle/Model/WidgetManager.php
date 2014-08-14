@@ -185,6 +185,8 @@ class WidgetManager
             $em->persist($view);
             $em->flush();
 
+            $widget->setCurrentView($view);
+
             //get the html for the widget
             $hmltWidget = $this->widgetRenderer->renderContainer($widget, $view);
 

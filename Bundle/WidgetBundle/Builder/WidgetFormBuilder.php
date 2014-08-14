@@ -182,9 +182,9 @@ class WidgetFormBuilder
         if ($widget->getId() === null) {
             $formUrl = $router->generate('victoire_core_widget_create',
                 array(
-                    'view'   => $view->getId(),
-                    'slot'   => $widget->getSlot(),
-                    'type'   => $widget->getType(),
+                    'view_id'    => $view->getId(),
+                    'slot'       => $widget->getSlot(),
+                    'type'       => $widget->getType(),
                     'entityName' => $entityName
                 )
             );
