@@ -13,6 +13,26 @@
 // Resources
 ////////////
 
-@import 'resources/style';
-@import 'resources/parameters/module';
-@import 'resources/parameters/theme';
+@import 'parameters/module';
+@import 'parameters/theme';
+
+
+
+// Style
+////////
+
+// Drag & drop state highlight
+.vic-ui-state-highlight {
+    font-family: @victoire-fontFamily;
+    overflow: hidden;
+    text-align: center;
+    font-size: @vic-newWidget-fontSize;
+    box-shadow: @vic-moveWidgetShadow-boxShadow;
+    font-weight: @vic-moveWidgetShadow-fontWeight;
+    color: @vic-moveWidgetShadow-color;
+    line-height: @vic-newWidget-height;
+
+    &:after {
+        content: "déposez ici";
+    }
+}

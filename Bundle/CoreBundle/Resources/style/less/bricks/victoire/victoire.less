@@ -13,7 +13,49 @@
 // Resources
 ////////////
 
-@import 'resources/style';
-@import 'resources/state';
-@import 'resources/parameters/module';
-@import 'resources/parameters/theme';
+@import 'parameters/module';
+@import 'parameters/theme';
+
+
+
+// Style
+////////
+
+*,
+*:after,
+*::before {
+    .box-sizing;
+}
+
+body {
+    padding-top: 40px;
+}
+
+.victoire {
+    font-size: @victoire-fontSize;
+    font-weight: @victoire-fontWeight;
+
+    &,
+    * {
+        font-family: @victoire-fontFamily !important;
+        color: @victoire-color;
+    }
+}
+
+.vic-container {
+    .ui-sortable {
+        li {
+            cursor:  move;
+            div {
+                background-color: #EDE9ED;
+                margin: 2px;
+                padding-bottom: 3px;
+                padding-left: 5px;
+                
+            }
+            div.generated {
+                background-color: #d7f3ff;
+            }
+        }    
+    }
+}

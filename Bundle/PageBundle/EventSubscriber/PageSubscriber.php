@@ -205,12 +205,13 @@ class PageSubscriber implements EventSubscriber
         $parent = $page->getParent();
 
         if ($parent !== null) {
-            if (!$parent->isHomepage()) {
-                array_push($slugs, $parent->getSlug());
+            array_push($slugs, $parent->getSlug());
+            if ($parent->getParent() !== null) {
+                $slugs = array_merge($slugs, $this->getParentSlugs($parent, $slugs));
             }
         }
 
-        return $slugs;
+        return array_unique($slugs);
     }
 
     /**
