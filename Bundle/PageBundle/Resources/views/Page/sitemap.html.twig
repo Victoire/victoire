@@ -4,7 +4,11 @@
 
 {% block modal_container_classes %}{{ parent() }} vic-view-modal{% endblock modal_container_classes %}
 
+{% block modal_header_title %}
+{{ 'modal.sitemap.title'|trans({}, 'victoire')}}
+{% endblock modal_header_title %}
 {% block modal_body_content %}
+<div class="vic-alert vic-alert-info"><i class="fa fa-info"></i>&nbsp;&nbsp;{{ 'modal.sitemap.caption'|trans({}, 'victoire') }}</div>
 <ol id="sortable">
    {{ _self.pagesHierarchy(pages) }}
 </ol>
@@ -16,18 +20,29 @@
             toleranceElement: '> div',
             update: function (event, ui )
             {
-             updatePosition($('#sortable'), ui);
-         }
-     });
+                updatePosition($vic('#sortable'), ui);
+            }
+        });
 
         function updatePosition(element, ui)
         {
-            var sorted = element.nestedSortable("toArray");
-            $vic.post("{{path('victoire_core_page_sitemap')}}",
-            {
-                sorted: sorted
-            }
-            );
+            var sorted = $vic(element).nestedSortable("toArray");
+            loading(true);
+            $vic.post(
+                "{{path('victoire_core_page_sitemap')}}",
+                {
+                    sorted: sorted
+                }
+            ).done(function(response) {
+                loading(false);
+                congrat(response.message);
+
+                $vic('#vic-modal').replaceWith(response.html);
+                $vic('#vic-modal').vicmodal({
+                    keyboard: true,
+                    backdrop: false
+                });
+            });
         };
 
         $vic('.modal').on('hidden', function () {

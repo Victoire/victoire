@@ -142,6 +142,18 @@
         <source>victoire.widget.inherited.notice</source>
         <target><![CDATA[<strong>Attention</strong><br/>Ce contenu appartient à un modèle parent (<i>%templateName%</i>). Si vous voulez uniquement modifier le contenu sur cette page, continuez, vous êtes au bon endroit. Si toutefois vous voulez que cette modification soit répercutée sur toutes les pages utilisant le modèle <i>%templateName%</i>, cliquez sur ce lien <a href="%templateEditLink%" data-modal="close" data-toggle="vic-modal">Modifier le contenu original</a>.]]></target>
       </trans-unit>
+      <trans-unit resname="modal.sitemap.title">
+        <source>modal.sitemap.title</source>
+        <target>Plan du site</target>
+      </trans-unit>
+      <trans-unit resname="sitemap.changed.success">
+        <source>sitemap.changed.success</source>
+        <target>Le plan du site a été mis à jour avec succès.</target>
+      </trans-unit>
+      <trans-unit resname="modal.sitemap.caption">
+        <source>modal.sitemap.caption</source>
+        <target>Visualisez l'arborescence du site et glissez/déposez les pages pour les réorganiser à votre gré</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

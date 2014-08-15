@@ -99,8 +99,9 @@ class PageSubscriber implements EventSubscriber
 
         foreach ($this->uow->getScheduledEntityInsertions() as $entity) {
             if ($entity instanceof BasePage) {
-                //the slug of the page has been modified
-                if (array_key_exists('slug', $this->uow->getEntityChangeSet($entity))) {
+                $computeUrl = (array_key_exists('slug', $this->uow->getEntityChangeSet($entity)) //the slug of the page has been modified
+                            || array_key_exists('parent', $this->uow->getEntityChangeSet($entity))); //the parent has been modified
+                if ($computeUrl) {
                     $this->buildUrl($entity);
                 }
                 $meta = $this->entityManager->getClassMetadata(get_class($entity));
@@ -111,8 +112,9 @@ class PageSubscriber implements EventSubscriber
 
         foreach ($this->uow->getScheduledEntityUpdates() as $entity) {
             if ($entity instanceof BasePage) {
-                //the slug of the page has been modified
-                if (array_key_exists('slug', $this->uow->getEntityChangeSet($entity))) {
+                $computeUrl = (array_key_exists('slug', $this->uow->getEntityChangeSet($entity)) //the slug of the page has been modified
+                            || array_key_exists('parent', $this->uow->getEntityChangeSet($entity))); //the parent has been modified
+                if ($computeUrl) {
                     $this->buildUrl($entity);
                     $meta = $this->entityManager->getClassMetadata(get_class($entity));
                     $this->uow->computeChangeSet($meta, $entity);
