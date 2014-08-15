@@ -32,7 +32,7 @@ class BusinessEntityPageMenuListener implements MenuListenerInterface
      */
     public function addGlobal(Event $event)
     {
-        $this->mainItem = $this->menuBuilder->getTopNavbar();
+        $this->mainItem = $this->menuBuilder->getLeftNavbar();
 
         if ($this->menuBuilder->isGranted('ROLE_VICTOIRE_BET')) {
             $this

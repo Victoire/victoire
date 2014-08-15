@@ -65,17 +65,6 @@ class MenuBuilder
             )
         );
 
-        $this->leftNavbar->addChild('menu.leftnavbar.stats.label', array('uri' => '#'));
-        $this->leftNavbar->addChild('menu.leftnavbar.target.label', array('uri' => '#'));
-        $this->leftNavbar->addChild('menu.leftnavbar.lang.label', array('uri' => '#'));
-        $this->leftNavbar->addChild('menu.leftnavbar.network.label', array('uri' => '#'));
-        $this->leftNavbar->addChild('menu.leftnavbar.todo.label', array('uri' => '#'));
-        $this->leftNavbar->addChild('menu.leftnavbar.img.label', array('uri' => '#'));
-        $this->leftNavbar->addChild('menu.leftnavbar.user.label', array('uri' => '#'));
-        $this->leftNavbar->addChild('menu.leftnavbar.404.label', array('uri' => '#'));
-        $this->leftNavbar->addChild('menu.leftnavbar.sitemap.label', array('uri' => '#'));
-        $this->leftNavbar->addChild('menu.leftnavbar.sandbox.label', array('uri' => '#'));
-
         return $this->leftNavbar;
     }
 

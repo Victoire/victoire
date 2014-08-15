@@ -48,7 +48,7 @@
       </trans-unit>
       <trans-unit id="e95f29317df6a1d8c7a9a560b0aadbe231c601fe" resname="menu.leftnavbar.sitemap.label">
         <source>menu.leftnavbar.sitemap.label</source>
-        <target>Plan du site</target>
+        <target><![CDATA[<i class="vic-menuImg vic-menuImg-sitemap"></i> Plan du site]]></target>
       </trans-unit>
       <trans-unit id="5e00d320d8d96443529379885f9d7b1f42c91e63" resname="menu.leftnavbar.stats.label">
         <source>menu.leftnavbar.stats.label</source>
@@ -96,7 +96,7 @@
       </trans-unit>
       <trans-unit resname="modal.button.delete.confirm.ok.label">
         <source>modal.button.delete.confirm.ok.label</source>
-        <target>Confirmer</target>
+        <target>J'ai bien compris, je confirme la suppression</target>
       </trans-unit>
       <trans-unit resname="modal.button.delete.confirm.cancel.label">
         <source>modal.button.delete.confirm.cancel.label</source>

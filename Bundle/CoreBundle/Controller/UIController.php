@@ -34,7 +34,7 @@ class UIController extends Controller
             'title'                => $request->get('title'),
             'body'                 => $request->get('body'),
             'id'                   => $request->get('id').'-'.uniqid().'-modal',
-            'cancel_button_class'  => $request->get('cancel_button_class', 'vic-btn-cancel'),
+            'cancel_button_class'  => $request->get('cancel_button_class', 'vic-btn-default'),
             'confirm_button_class' => $request->get('confirm_button_class', 'vic-btn-danger'),
             'type'                 => $request->get('type'),
             'confirmCallback'      => $confirmCallback,
