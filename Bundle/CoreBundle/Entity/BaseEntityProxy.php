@@ -21,14 +21,6 @@ abstract class BaseEntityProxy
     protected $id;
 
     /**
-     *  Auto list mode: businessentity type
-     * @var string
-     * @ORM\Column(name="business_entity_name", type="string", nullable=true)
-     *
-     */
-    protected $businessEntityName;
-
-    /**
      * Get id
      *
      * @return integer
@@ -39,43 +31,20 @@ abstract class BaseEntityProxy
     }
 
     /**
-     * Get businessEntity
-     *
-     * @return integer
-     */
-    public function getBusinessEntityName()
-    {
-        return $this->businessEntityName;
-    }
-
-    /**
-     * Set businessEntityName
-     *
-     * @param String $businessEntityName The business entity name
-     */
-    public function setBusinessEntityName($businessEntityName)
-    {
-        $this->businessEntityName = $businessEntityName;
-    }
-
-    /**
      * Get the entity of the proxy
      *
      * @return Entity
      *
      * @throws Exception
      */
-    public function getEntity()
+    public function getEntity($entityName)
     {
-        $entityName = $this->getBusinessEntityName();
-
         //test the entity name
-        if ($entityName === null || $entityName === '') {
+        if ($entityName == null) {
             throw new \Exception('The businessEntityName is not defined for the entityProxy with the id:'.$this->getId());
         }
 
         $functionName = 'get'.ucfirst($entityName);
-
         $entity = call_user_func(array($this, $functionName));
 
         return $entity;
@@ -100,11 +69,6 @@ abstract class BaseEntityProxy
         if ($businessEntityName === null) {
             throw new \Exception('No business entity name were found for the entity.');
         }
-
-        $businessEntityName = strtolower($businessEntityName);
-
-        //set the business entity name
-        $this->setBusinessEntityName($businessEntityName);
 
         //set the entity
         $method = 'set'.ucfirst($businessEntityName);

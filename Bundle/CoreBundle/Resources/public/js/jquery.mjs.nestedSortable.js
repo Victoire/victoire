@@ -11,9 +11,9 @@
  * http://www.opensource.org/licenses/mit-license.php
  */
 
-(function($) {
+(function($vic) {
 
-    $.widget("mjs.nestedSortable", $.extend({}, $.ui.sortable.prototype, {
+    $vic.widget("mjs.nestedSortable", $vic.extend({}, $vic.ui.sortable.prototype, {
 
         options: {
             tabSize: 20,
@@ -34,14 +34,14 @@
             if (!this.element.is(this.options.listType))
                 throw new Error('nestedSortable: Please check the listType option is set to your actual list type');
 
-            return $.ui.sortable.prototype._create.apply(this, arguments);
+            return $vic.ui.sortable.prototype._create.apply(this, arguments);
         },
 
         destroy: function() {
             this.element
                 .removeData("nestedSortable")
                 .unbind(".nestedSortable");
-            return $.ui.sortable.prototype.destroy.apply(this, arguments);
+            return $vic.ui.sortable.prototype.destroy.apply(this, arguments);
         },
 
         _mouseDrag: function(event) {
@@ -73,20 +73,20 @@
 
                 } else {
 
-                    if(event.pageY - $(document).scrollTop() < o.scrollSensitivity)
-                        scrolled = $(document).scrollTop($(document).scrollTop() - o.scrollSpeed);
-                    else if($(window).height() - (event.pageY - $(document).scrollTop()) < o.scrollSensitivity)
-                        scrolled = $(document).scrollTop($(document).scrollTop() + o.scrollSpeed);
+                    if(event.pageY - $vic(document).scrollTop() < o.scrollSensitivity)
+                        scrolled = $vic(document).scrollTop($vic(document).scrollTop() - o.scrollSpeed);
+                    else if($vic(window).height() - (event.pageY - $vic(document).scrollTop()) < o.scrollSensitivity)
+                        scrolled = $vic(document).scrollTop($vic(document).scrollTop() + o.scrollSpeed);
 
-                    if(event.pageX - $(document).scrollLeft() < o.scrollSensitivity)
-                        scrolled = $(document).scrollLeft($(document).scrollLeft() - o.scrollSpeed);
-                    else if($(window).width() - (event.pageX - $(document).scrollLeft()) < o.scrollSensitivity)
-                        scrolled = $(document).scrollLeft($(document).scrollLeft() + o.scrollSpeed);
+                    if(event.pageX - $vic(document).scrollLeft() < o.scrollSensitivity)
+                        scrolled = $vic(document).scrollLeft($vic(document).scrollLeft() - o.scrollSpeed);
+                    else if($vic(window).width() - (event.pageX - $vic(document).scrollLeft()) < o.scrollSensitivity)
+                        scrolled = $vic(document).scrollLeft($vic(document).scrollLeft() + o.scrollSpeed);
 
                 }
 
-                if(scrolled !== false && $.ui.ddmanager && !o.dropBehaviour)
-                    $.ui.ddmanager.prepareOffsets(this, event);
+                if(scrolled !== false && $vic.ui.ddmanager && !o.dropBehaviour)
+                    $vic.ui.ddmanager.prepareOffsets(this, event);
             }
 
             //Regenerate the absolute position used for position checks
@@ -108,17 +108,17 @@
 
                 if(itemElement != this.currentItem[0] //cannot intersect with itself
                     &&  this.placeholder[intersection == 1 ? "next" : "prev"]()[0] != itemElement //no useless actions that have been done before
-                    &&  !$.contains(this.placeholder[0], itemElement) //no action if the item moved is the parent of the item checked
-                    && (this.options.type == 'semi-dynamic' ? !$.contains(this.element[0], itemElement) : true)
+                    &&  !$vic.contains(this.placeholder[0], itemElement) //no action if the item moved is the parent of the item checked
+                    && (this.options.type == 'semi-dynamic' ? !$vic.contains(this.element[0], itemElement) : true)
                     //&& itemElement.parentNode == this.placeholder[0].parentNode // only rearrange items within the same container
                 ) {
 
-                    $(itemElement).mouseenter();
+                    $vic(itemElement).mouseenter();
 
                     this.direction = intersection == 1 ? "down" : "up";
 
                     if (this.options.tolerance == "pointer" || this._intersectsWithSides(item)) {
-                        $(itemElement).mouseleave();
+                        $vic(itemElement).mouseleave();
                         this._rearrange(event, item);
                     } else {
                         break;
@@ -133,18 +133,18 @@
             }
 
             var parentItem = (this.placeholder[0].parentNode.parentNode &&
-                             $(this.placeholder[0].parentNode.parentNode).closest('.ui-sortable').length)
-                                ? $(this.placeholder[0].parentNode.parentNode)
+                             $vic(this.placeholder[0].parentNode.parentNode).closest('.ui-sortable').length)
+                                ? $vic(this.placeholder[0].parentNode.parentNode)
                                 : null,
                 level = this._getLevel(this.placeholder),
                 childLevels = this._getChildLevels(this.helper);
 
       // To find the previous sibling in the list, keep backtracking until we hit a valid list item.
-            var previousItem = this.placeholder[0].previousSibling ? $(this.placeholder[0].previousSibling) : null;
+            var previousItem = this.placeholder[0].previousSibling ? $vic(this.placeholder[0].previousSibling) : null;
             if (previousItem != null) {
                 while (previousItem[0].nodeName.toLowerCase() != 'li' || previousItem[0] == this.currentItem[0] || previousItem[0] == this.helper[0]) {
                     if (previousItem[0].previousSibling) {
-                        previousItem = $(previousItem[0].previousSibling);
+                        previousItem = $vic(previousItem[0].previousSibling);
                     } else {
                         previousItem = null;
                         break;
@@ -153,11 +153,11 @@
             }
 
       // To find the next sibling in the list, keep stepping forward until we hit a valid list item.
-      var nextItem = this.placeholder[0].nextSibling ? $(this.placeholder[0].nextSibling) : null;
+      var nextItem = this.placeholder[0].nextSibling ? $vic(this.placeholder[0].nextSibling) : null;
       if (nextItem != null) {
         while (nextItem[0].nodeName.toLowerCase() != 'li' || nextItem[0] == this.currentItem[0] || nextItem[0] == this.helper[0]) {
           if (nextItem[0].nextSibling) {
-            nextItem = $(nextItem[0].nextSibling);
+            nextItem = $vic(nextItem[0].nextSibling);
           } else {
             nextItem = null;
             break;
@@ -203,7 +203,7 @@
             this._contactContainers(event);
 
             //Interconnect with droppables
-            if($.ui.ddmanager) $.ui.ddmanager.drag(this, event);
+            if($vic.ui.ddmanager) $vic.ui.ddmanager.drag(this, event);
 
             //Call callbacks
             this._trigger('sort', event, this._uiHash());
@@ -221,9 +221,9 @@
                 this.placeholder.removeClass(this.options.errorClass);
 
                 if (this.domPosition.prev) {
-                    $(this.domPosition.prev).after(this.placeholder);
+                    $vic(this.domPosition.prev).after(this.placeholder);
                 } else {
-                    $(this.domPosition.parent).prepend(this.placeholder);
+                    $vic(this.domPosition.parent).prepend(this.placeholder);
                 }
 
                 this._trigger("revert", event, this._uiHash());
@@ -236,20 +236,20 @@
                 this._clearEmpty(item);
             }
 
-            $.ui.sortable.prototype._mouseStop.apply(this, arguments);
+            $vic.ui.sortable.prototype._mouseStop.apply(this, arguments);
 
         },
 
         serialize: function(options) {
 
-            var o = $.extend({}, this.options, options),
+            var o = $vic.extend({}, this.options, options),
                 items = this._getItemsAsjQuery(o && o.connected),
                 str = [];
 
-            $(items).each(function() {
-                var res = ($(o.item || this).attr(o.attribute || 'id') || '')
+            $vic(items).each(function() {
+                var res = ($vic(o.item || this).attr(o.attribute || 'id') || '')
                         .match(o.expression || (/(.+)[-=_](.+)/)),
-                    pid = ($(o.item || this).parent(o.listType)
+                    pid = ($vic(o.item || this).parent(o.listType)
                         .parent(o.items)
                         .attr(o.attribute || 'id') || '')
                         .match(o.expression || (/(.+)[-=_](.+)/));
@@ -271,11 +271,11 @@
 
         toHierarchy: function(options) {
 
-            var o = $.extend({}, this.options, options),
+            var o = $vic.extend({}, this.options, options),
                 sDepth = o.startDepthCount || 0,
                 ret = [];
 
-            $(this.element).children(o.items).each(function () {
+            $vic(this.element).children(o.items).each(function () {
                 var level = _recursiveItems(this);
                 ret.push(level);
             });
@@ -283,12 +283,12 @@
             return ret;
 
             function _recursiveItems(item) {
-                var id = ($(item).attr(o.attribute || 'id') || '').match(o.expression || (/(.+)[-=_](.+)/));
+                var id = ($vic(item).attr(o.attribute || 'id') || '').match(o.expression || (/(.+)[-=_](.+)/));
                 if (id) {
                     var currentItem = {"id" : id[2]};
-                    if ($(item).children(o.listType).children(o.items).length > 0) {
+                    if ($vic(item).children(o.listType).children(o.items).length > 0) {
                         currentItem.children = [];
-                        $(item).children(o.listType).children(o.items).each(function() {
+                        $vic(item).children(o.listType).children(o.items).each(function() {
                             var level = _recursiveItems(this);
                             currentItem.children.push(level);
                         });
@@ -300,7 +300,7 @@
 
         toArray: function(options) {
 
-            var o = $.extend({}, this.options, options),
+            var o = $vic.extend({}, this.options, options),
                 sDepth = o.startDepthCount || 0,
                 ret = [],
                 left = 2;
@@ -310,10 +310,10 @@
                 "parent_id": 'none',
                 "depth": sDepth,
                 "left": '1',
-                "right": ($(o.items, this.element).length + 1) * 2
+                "right": ($vic(o.items, this.element).length + 1) * 2
             });
 
-            $(this.element).children(o.items).each(function () {
+            $vic(this.element).children(o.items).each(function () {
                 left = _recursiveArray(this, sDepth + 1, left);
             });
 
@@ -327,20 +327,20 @@
                     id,
                     pid;
 
-                if ($(item).children(o.listType).children(o.items).length > 0) {
+                if ($vic(item).children(o.listType).children(o.items).length > 0) {
                     depth ++;
-                    $(item).children(o.listType).children(o.items).each(function () {
-                        right = _recursiveArray($(this), depth, right);
+                    $vic(item).children(o.listType).children(o.items).each(function () {
+                        right = _recursiveArray($vic(this), depth, right);
                     });
                     depth --;
                 }
 
-                id = ($(item).attr(o.attribute || 'id')).match(o.expression || (/(.+)[-=_](.+)/));
+                id = ($vic(item).attr(o.attribute || 'id')).match(o.expression || (/(.+)[-=_](.+)/));
 
                 if (depth === sDepth + 1) {
                     pid = o.rootID;
                 } else {
-                    var parentItem = ($(item).parent(o.listType)
+                    var parentItem = ($vic(item).parent(o.listType)
                                              .parent(o.items)
                                              .attr(o.attribute || 'id'))
                                              .match(o.expression || (/(.+)[-=_](.+)/));
@@ -359,7 +359,7 @@
 
         _clearEmpty: function(item) {
 
-            var emptyList = $(item).children(this.options.listType);
+            var emptyList = $vic(item).children(this.options.listType);
             if (emptyList.length && !emptyList.children().length && !this.options.doNotClear) {
                 emptyList.remove();
             }
@@ -388,7 +388,7 @@
                 result = 0;
             depth = depth || 0;
 
-            $(parent).children(o.listType).children(o.items).each(function (index, child) {
+            $vic(parent).children(o.listType).children(o.items).each(function (index, child) {
                     result = Math.max(self._getChildLevels(child, depth + 1), result);
             });
 
@@ -397,7 +397,7 @@
 
         _isAllowed: function(parentItem, level, levels) {
             var o = this.options,
-                isRoot = $(this.domPosition.parent).hasClass('ui-sortable') ? true : false,
+                isRoot = $vic(this.domPosition.parent).hasClass('ui-sortable') ? true : false,
                 maxLevels = this.placeholder.closest('.ui-sortable').nestedSortable('option', 'maxLevels'); // this takes into account the maxLevels set to the recipient list
 
             // Is the root protected?
@@ -425,5 +425,5 @@
 
     }));
 
-    $.mjs.nestedSortable.prototype.options = $.extend({}, $.ui.sortable.prototype.options, $.mjs.nestedSortable.prototype.options);
+    $vic.mjs.nestedSortable.prototype.options = $vic.extend({}, $vic.ui.sortable.prototype.options, $vic.mjs.nestedSortable.prototype.options);
 })($vic);

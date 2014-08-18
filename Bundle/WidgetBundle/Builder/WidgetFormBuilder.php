@@ -182,17 +182,18 @@ class WidgetFormBuilder
         if ($widget->getId() === null) {
             $formUrl = $router->generate('victoire_core_widget_create',
                 array(
-                    'view'   => $view->getId(),
-                    'slot'   => $widget->getSlot(),
-                    'type'   => $widget->getType(),
-                    'entity' => $entityName
+                    'view_id'    => $view->getId(),
+                    'slot'       => $widget->getSlot(),
+                    'type'       => $widget->getType(),
+                    'entityName' => $entityName
                 )
             );
         } else {
             $formUrl = $router->generate('victoire_core_widget_update',
                 array(
-                    'id' => $widget->getId(),
-                    'entity' => $entityName,
+                    'id'         => $widget->getId(),
+                    'view_id'    => $widget->getCurrentView()->getId(),
+                    'entityName' => $entityName,
                 )
             );
         }

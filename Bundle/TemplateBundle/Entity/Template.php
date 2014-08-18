@@ -48,6 +48,16 @@ class Template extends View
     }
 
     /**
+     * to string
+     *
+     * @return string
+     **/
+    public function __toString()
+    {
+        return 'Modèle > '.$this->name;
+    }
+
+    /**
      * Set page
      * @param string $pages
      *

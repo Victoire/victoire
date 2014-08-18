@@ -94,7 +94,7 @@ class BusinessEntityPage extends BasePage
 
             //if there is a proxy
             if ($entityProxy !== null) {
-                $businessEntity = $entityProxy->getEntity();
+                $businessEntity = $entityProxy->getEntity($this->getBusinessEntityName());
                 $this->businessEntity = $entityProxy;
             }
         }

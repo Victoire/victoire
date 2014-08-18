@@ -9,6 +9,7 @@ use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Handler\WidgetExceptionHandler;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
+use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 use Victoire\Bundle\PageBundle\WidgetMap\WidgetMapBuilder;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer;
@@ -27,6 +28,7 @@ class CmsExtension extends \Twig_Extension
     protected $entityManager;
     protected $widgetMapBuilder;
     protected $widgetExceptionHandler;
+    protected $currentViewHelper;
 
     /**
      * Constructor
@@ -37,6 +39,7 @@ class CmsExtension extends \Twig_Extension
      * @param EntityManager          $entityManager
      * @param WidgetMapBuilder       $widgetMapBuilder
      * @param WidgetExceptionHandler $widgetExceptionHandler
+     * @param CurrentViewHelper      $currentViewHelper
      */
     public function __construct(
         WidgetRenderer $widgetRenderer,
@@ -44,7 +47,8 @@ class CmsExtension extends \Twig_Extension
         SecurityContext $securityContext,
         EntityManager $entityManager,
         WidgetMapBuilder $widgetMapBuilder,
-        WidgetExceptionHandler $widgetExceptionHandler
+        WidgetExceptionHandler $widgetExceptionHandler,
+        CurrentViewHelper $currentViewHelper
     )
     {
         $this->widgetRenderer = $widgetRenderer;
@@ -53,6 +57,7 @@ class CmsExtension extends \Twig_Extension
         $this->entityManager = $entityManager;
         $this->widgetMapBuilder = $widgetMapBuilder;
         $this->widgetExceptionHandler = $widgetExceptionHandler;
+        $this->currentViewHelper = $currentViewHelper;
     }
 
     /**
@@ -104,21 +109,23 @@ class CmsExtension extends \Twig_Extension
      */
     public function cmsWidgetActions($widget)
     {
+        $widget->setCurrentView($this->currentViewHelper->getCurrentView());
+
         return $this->widgetRenderer->renderWidgetActions($widget);
     }
 
     /**
      * render all widgets in a slot
      *
-     * @param View    $view
      * @param unknown $slotId
      * @param string  $addContainer
      * @param string  $entity
      *
      * @return string HTML markup of the widget with action button if needed
      */
-    public function cmsSlotWidgets(View $view, $slotId, $addContainer = true, $entity = null)
+    public function cmsSlotWidgets($slotId, $addContainer = true, $entity = null)
     {
+        $currentView = $this->currentViewHelper->getCurrentView();
         //services
         $widgetMapBuilder = $this->widgetMapBuilder;
         $em = $this->entityManager;
@@ -126,15 +133,14 @@ class CmsExtension extends \Twig_Extension
         $result = "";
 
         if ($this->isRoleVictoireGranted()) {
-            $result .= $this->widgetRenderer->renderActions($slotId, $view, true);
+            $result .= $this->widgetRenderer->renderActions($slotId, $currentView, true);
         }
 
         //get the widget map computed with the parent
-        $widgetMaps = $widgetMapBuilder->computeCompleteWidgetMap($view, $slotId);
+        $widgetMaps = $widgetMapBuilder->computeCompleteWidgetMap($currentView, $slotId);
 
         //parse the widget maps
         foreach ($widgetMaps as $widgetMap) {
-
             $widget = null;
             try {
                 //get the widget id
@@ -150,7 +156,7 @@ class CmsExtension extends \Twig_Extension
                 }
 
                 //render this widget
-                $result .= $this->cmsWidget($widget, $view);
+                $result .= $this->cmsWidget($widget);
             } catch (\Exception $ex) {
                 $result .= $this->widgetExceptionHandler->handle($ex, $widget);
             }
@@ -183,10 +189,12 @@ class CmsExtension extends \Twig_Extension
      *
      * @return unknown
      */
-    public function cmsWidget($widget, View $view)
+    public function cmsWidget($widget)
     {
+        $widget->setCurrentView($this->currentViewHelper->getCurrentView());
+
         try {
-            $response = $this->widgetRenderer->renderContainer($widget, $view);
+            $response = $this->widgetRenderer->renderContainer($widget, $widget->getCurrentView());
         } catch (\Exception $ex) {
             $response = $this->widgetExceptionHandler->handle($ex, $widget);
         }

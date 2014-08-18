@@ -3,8 +3,9 @@
 namespace Victoire\Bundle\QueryBundle\Helper;
 
 use Doctrine\ORM\EntityManager;
-use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Doctrine\ORM\QueryBuilder;
+use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 
 /**
  * The QueryHelper helps to build query in Victoire's components
@@ -14,6 +15,7 @@ class QueryHelper
 {
     protected $em = null;
     protected $businessEntityHelper = null;
+    protected $currentView;
 
     /**
      * Constructor
@@ -21,10 +23,11 @@ class QueryHelper
      * @param EntityManager        $em
      * @param BusinessEntityHelper $businessEntityHelper
      */
-    public function __construct(EntityManager $em, BusinessEntityHelper $businessEntityHelper)
+    public function __construct(EntityManager $em, BusinessEntityHelper $businessEntityHelper, $currentView)
     {
         $this->em = $em;
         $this->businessEntityHelper = $businessEntityHelper;
+        $this->currentView = $currentView;
     }
 
     /**
@@ -129,11 +132,17 @@ class QueryHelper
             $itemsQueryBuilder
                 ->andWhere('main_item.id IN (' . $subQuery->getQuery()->getDql() . ' ' . $query . ')');
         }
+        $currentView = $this->currentView;
 
         //if the the keyword ":currentEntity" is found, we are in a businessEntityPagePattern, so we set the current entity as a query parameter.
         if (strpos($query, ":currentEntity") !== false) {
-            $itemsQueryBuilder->setParameter('currentEntity', $containerEntity->getEntity() ? $containerEntity->getEntity()->getId() : null);
-            error_log(get_class($containerEntity->getEntity()));
+            if ($currentView() instanceof BusinessEntityPagePattern) {
+                $currentEntity = null;
+            } else {
+                $currentEntity = $currentView()->getBusinessEntity() ? $currentView()->getBusinessEntity()->getId() : null;
+            }
+
+            $itemsQueryBuilder->setParameter('currentEntity', $currentEntity);
         }
 
         return $itemsQueryBuilder;

@@ -83,7 +83,6 @@ class WidgetRenderer
     }
 
     /**
-     * @todo should reside in a WidgetRenderer class
      * render widget actions
      * @param Widget $widget
      *
@@ -94,17 +93,15 @@ class WidgetRenderer
         return $this->container->get('victoire_templating')->render(
             'VictoireCoreBundle:Widget:widgetActions.html.twig',
             array(
-                "widget" => $widget,
-                "view" => $widget->getCurrentView(),
+                "widget" => $widget
             )
         );
     }
 
     /**
-     * @todo should reside in a WidgetRenderer class
      * render slot actions
      *
-     * @param string  $slot
+     * @param Slot    $slot
      * @param Page    $view
      * @param boolean $first
      *
@@ -152,6 +149,7 @@ class WidgetRenderer
             )
         );
     }
+
     /**
      * Get the extra classes for the css
      *
@@ -163,5 +161,4 @@ class WidgetRenderer
 
         return $cssClass;
     }
-
 }

@@ -32,7 +32,7 @@ class SiteMapMenuListener
      */
     public function addGlobal(Event $event)
     {
-        $this->mainItem = $this->menuBuilder->getTopNavbar();
+        $this->mainItem = $this->menuBuilder->getLeftNavbar();
 
         $this->mainItem
             ->addChild('menu.sitemap', array(

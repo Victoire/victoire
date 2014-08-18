@@ -28,7 +28,7 @@
  * ========================================================== */
 
 
-!function ( $, window, undefined){
+!function ( $vic, window, undefined){
   var eventNames,
   pluginName = 'sortable',
   containerDefaults = {

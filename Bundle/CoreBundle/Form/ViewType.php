@@ -45,6 +45,7 @@ abstract class ViewType extends AbstractType
 
             $form->add('template', null, array(
                 'label'         => 'form.view.type.template.label',
+                'property'      => 'name',
                 'query_builder' => $getAllTemplateWithoutMe,
             ));
         });

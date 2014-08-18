@@ -25,7 +25,7 @@ class MediaMenuListener
     public function addGlobal(Event $event)
     {
 
-        $this->mainItem = $this->menuBuilder->getTopNavbar();
+        $this->mainItem = $this->menuBuilder->getLeftNavbar();
 
         $this->mainItem
             ->addChild('menu.media', array(

@@ -22,11 +22,12 @@
 ////////
 
 .vic-modal {
-    z-index: 999;
+    z-index: 900;
     width: 100%;
     height: 100%;
     display: block;
     font-family: @victoire-fontFamily !important;
+    .transition(@vic-menu-leftnavbar-animation);
 
     &.vic-in {
         display: block;
@@ -51,7 +52,6 @@
         padding: 0;
         border-width: 0;
         background-color: @vic-modal-header-backgroundColor;
-        color: @white;
 
         .vic-close {
             font-size: @vic-modal-header-close-fontSize;
@@ -68,7 +68,8 @@
         }
     }
 
-    .vic-modal-title {
+    h4.vic-modal-title {
+        color: @white !important;
         line-height: @vic-modal-header-height - 1px;
         font-family: @victoire-fontFamily !important;
         font-size: @vic-modal-title-fontSize;
@@ -131,6 +132,12 @@
                 }
             }
         }
+    }
+}
+body.leftNavbar-in {
+    .vic-modal {
+        padding-left: @vic-menu-leftnavbar-width;
+        .transition(@vic-menu-leftnavbar-animation);
     }
 }
 

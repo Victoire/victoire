@@ -190,6 +190,9 @@ function error(content, ttl, icon) {
 }
 
 function notify(content, ttl, layout, effect, type, icon) {
+    if (ttl == undefined) {
+        ttl = 10000; //10 seconds
+    }
 	var notification = new NotificationFx({
         message : '<div><i class="fa ' + icon + '"></i> ' + content + '</div>',
         layout  : layout,

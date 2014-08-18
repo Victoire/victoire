@@ -106,25 +106,26 @@ class WidgetController extends AwesomeController
     /**
      * Create a widget
      *
-     * @param string         $type   The type of the widget we edit
-     * @param View           $view   The view where attach the widget
-     * @param string         $slot   The slot where attach the widget
-     * @param BusinessEntity $entity The business entity the widget shows on dynamic mode
+     * @param string         $type       The type of the widget we edit
+     * @param View           $view       The view where attach the widget
+     * @param string         $slot       The slot where attach the widget
+     * @param BusinessEntity $entityName The business entity name the widget shows on dynamic mode
      *
      * @return response
-     * @Route("/victoire-dcms/widget/create/{type}/{view}/{slot}/{entity}", name="victoire_core_widget_create", defaults={"slot":null, "entity":null, "_format": "json"})
+     * @Route("/victoire-dcms/widget/create/{type}/{view_id}/{slot}/{entityName}", name="victoire_core_widget_create", defaults={"slot":null, "entityName":null, "_format": "json"})
      * @Template()
      */
-    public function createAction($type, $view, $slot = null, $entity = null)
+    public function createAction($type, $view_id, $slot = null, $entityName = null)
     {
         try {
             //services
             $em = $this->getEntityManager();
 
-            $view = $em->getRepository('VictoireCoreBundle:View')->findOneById($view);
+            $view = $em->getRepository('VictoireCoreBundle:View')->findOneById($view_id);
+            $this->get('victoire_core.current_view')->setCurrentView($view);
             $widgetManager = $this->getWidgetManager();
 
-            $response = new JsonResponse($widgetManager->createWidget($type, $slot, $view, $entity));
+            $response = new JsonResponse($widgetManager->createWidget($type, $slot, $view, $entityName));
         } catch (\Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
         }
@@ -134,23 +135,23 @@ class WidgetController extends AwesomeController
 
     /**
      * Edit a widget
-     * @param Request $request The request
-     * @param Widget  $widget  The widget to edit
-     * @param string  $type    The type of widget we edit
-     * @param Entity  $entity  The Entity
+     * @param Widget $widget      The widget to edit
+     * @param View   $currentView The current view
+     * @param string $entityName  The entity name (could be null is the submitted form is in static mode)
      *
      * @return response
      *
-     * @Route("/victoire-dcms/widget/edit/{id}/{entity}", name="victoire_core_widget_edit", defaults={"type": null})
-     * @Route("/victoire-dcms/widget/update/{id}/{entity}", name="victoire_core_widget_update", defaults={"entity": null})
+     * @Route("/victoire-dcms/widget/edit/{id}/{view_id}/{entityName}", name="victoire_core_widget_edit")
+     * @Route("/victoire-dcms/widget/update/{id}/{view_id}/{entityName}", name="victoire_core_widget_update", defaults={"entityName": null})
      * @Template()
-     * @ParamConverter("id", class="VictoireWidgetBundle:Widget")
+     * @ParamConverter("currentView", class="VictoireCoreBundle:View", options={"id" = "view_id"})
      */
-    public function editAction(Request $request, Widget $widget, $entity = null)
+    public function editAction(Widget $widget, View $currentView, $entityName = null)
     {
+        $this->get('victoire_core.current_view')->setCurrentView($currentView);
         try {
             $widgetManager = $this->getWidgetManager();
-            $response = new JsonResponse($widgetManager->editWidget($request, $widget, $entity));
+            $response = new JsonResponse($widgetManager->editWidget($this->get('request'), $widget, $currentView, $entityName));
         } catch (\Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
         }

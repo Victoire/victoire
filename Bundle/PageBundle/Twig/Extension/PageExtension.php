@@ -82,7 +82,7 @@ class PageExtension extends \Twig_Extension
 
         $url = $router->generate('victoire_core_page_show', array('url' => $pageUrl));
 
-        $html = '<li id="'.$pageId.'"><div><a href="'.$url.'" title="'.$url.'">'.$pageName.'</a></div>';
+        $html = '<li id="page-'.$pageId.'"><div><a href="'.$url.'" title="'.$url.'">'.$pageName.'</a></div>';
 
         return $html;
     }

@@ -108,7 +108,10 @@ class PageAdministrationController extends PageController
     public function siteMapAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $pageRepo = $em->getRepository('VictoirePageBundle:Page');
+        $pageRepo = $em->getRepository('VictoirePageBundle:BasePage');
+        $response = array(
+            'success' => false
+        );
         if ($this->get('request')->getMethod() === "POST") {
             $sorted = $this->getRequest()->request->get('sorted');
             $depths = array();
@@ -129,18 +132,19 @@ class PageAdministrationController extends PageController
             }
             $em->flush();
 
-            return new Response();
-        } else {
-            $pages = $em->getRepository('VictoirePageBundle:Page')->findByParent(null, array('position' => 'ASC'));
-
-            return new JsonResponse(array(
-                'html' => $this->container->get('victoire_templating')->render(
-                    'VictoirePageBundle:Page:sitemap.html.twig',
-                    array('pages' => $pages)
-                ),
-                'success' => false
-            ));
+            $response = array(
+                'success' => true,
+                'message' => $this->get('translator')->trans('sitemap.changed.success', array(), 'victoire')
+            );
         }
+
+        $pages = $em->getRepository('VictoirePageBundle:BasePage')->findByParent(null, array('position' => 'ASC'));
+        $response['html'] = $this->container->get('victoire_templating')->render(
+            'VictoirePageBundle:Page:sitemap.html.twig',
+            array('pages' => $pages)
+        );
+
+        return new JsonResponse($response);
     }
 
     /**

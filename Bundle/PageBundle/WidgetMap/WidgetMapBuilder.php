@@ -192,7 +192,7 @@ class WidgetMapBuilder
             $index = 1;
             foreach ($parentWidgetMaps as $parentWidgetMap) {
                 //id of the widget map
-                $id = $parentWidgetMap->getId();
+                $id = $parentWidgetMap->getWidgetId();
                 //save the position of the widget map
                 //the widget maps of the parent are each 100 units
                 //so we can insert 99 widget map of the child between each widget map of the parent
@@ -243,7 +243,7 @@ class WidgetMapBuilder
                     case WidgetMap::ACTION_REPLACE:
                         //parse the widget maps
                         foreach ($widgetMap as $index => $wm) {
-                            if ($wm->getId() === $viewWidgetMap->getReplacedWidgetId()) {
+                            if ($wm->getWidgetId() === $viewWidgetMap->getReplacedWidgetId()) {
                                 //replace the widget map from the list
                                 $widgetMap[$index] = $viewWidgetMap;
                             }
@@ -252,7 +252,7 @@ class WidgetMapBuilder
                     case WidgetMap::ACTION_DELETE:
                         //parse the widget maps
                         foreach ($widgetMap as $index => $wm) {
-                            if ($wm->getId() === $viewWidgetMap->getId()) {
+                            if ($wm->getWidgetId() === $viewWidgetMap->getWidgetId()) {
                                 //remove the widget map from the list
                                 unset($widgetMap[$index]);
                             }
