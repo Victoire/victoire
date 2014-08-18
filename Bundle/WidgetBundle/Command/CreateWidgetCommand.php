@@ -222,7 +222,7 @@ EOT
 
         $parent = $input->getOption('parent');
 
-        if (null === $parent && !$dialog->askConfirmation($output, $dialog->getQuestion('Does your widget extends another widget ?', 'no', '?'))) {
+        if (null === $parent && $dialog->askConfirmation($output, $dialog->getQuestion('Does your widget extends another widget ?', 'no', '?'))) {
             $output->writeln(array(
                 '',
                 'A widget can extends another to reproduce it\'s behavior',
