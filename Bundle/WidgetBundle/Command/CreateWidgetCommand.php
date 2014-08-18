@@ -222,7 +222,7 @@ EOT
 
         $parent = $input->getOption('parent');
 
-        if (null === $parent) {
+        if (null === $parent && !$dialog->askConfirmation($output, $dialog->getQuestion('Does your widget extends another widget ?', 'no', '?'))) {
             $output->writeln(array(
                 '',
                 'A widget can extends another to reproduce it\'s behavior',
@@ -232,7 +232,14 @@ EOT
                 'If you want to extends the TestWidget, the widget name should be Test'
             ));
 
-            $parent = $dialog->askAndValidate($output, $dialog->getQuestion('Parent widget name', $input->getOption('parent')), array('Victoire\Bundle\CoreBundle\Command\CreateWidgetCommand', 'validateWidgetName'), false, $input->getOption('namespace'));
+            $parent = $dialog->askAndValidate(
+                $output, 
+                $dialog->getQuestion('Parent widget name', null), 
+                array('Victoire\Bundle\CoreBundle\Command\CreateWidgetCommand', 'validateWidgetName'), 
+                false,
+                null);
+            
+
             $input->setOption('parent', $parent);
         }
 

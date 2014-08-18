@@ -37,7 +37,7 @@ class BusinessEntityPagePatternController extends Controller
         $errorMessage = '';
 
         $entity = new BusinessEntityPagePattern();
-        $entity->setBusinessEntity($businessEntity);
+        $entity->setBusinessEntityName($businessEntity->getName());
 
         $form = $this->createCreateForm($entity);
 
@@ -119,7 +119,7 @@ class BusinessEntityPagePatternController extends Controller
         $businessEntity = $this->getBusinessEntity($id);
 
         $entity = new BusinessEntityPagePattern();
-        $entity->setBusinessEntity($businessEntity);
+        $entity->setBusinessEntityName($businessEntity->getName());
 
         $form = $this->createCreateForm($entity);
 
