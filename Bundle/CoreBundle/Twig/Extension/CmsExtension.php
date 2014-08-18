@@ -72,7 +72,6 @@ class CmsExtension extends \Twig_Extension
             'cms_slot_widgets'           => new \Twig_Function_Method($this, 'cmsSlotWidgets', array('is_safe' => array('html'))),
             'cms_slot_actions'           => new \Twig_Function_Method($this, 'cmsSlotActions', array('is_safe' => array('html'))),
             'cms_widget'                 => new \Twig_Function_Method($this, 'cmsWidget', array('is_safe' => array('html'))),
-            'cms_widget_legacy'          => new \Twig_Function_Method($this, 'cmsWidgetLegacy', array('is_safe' => array('html'))),
             'cms_widget_extra_css_class' => new \Twig_Function_Method($this, 'cmsWidgetExtraCssClass', array('is_safe' => array('html'))),
             'is_business_entity_allowed' => new \Twig_Function_Method($this, 'isBusinessEntityAllowed', array('is_safe' => array('html'))),
         );
@@ -257,38 +256,6 @@ class CmsExtension extends \Twig_Extension
         }
 
         return $isBusinessEntityAllowed;
-    }
-
-    /**
-     * If the widget is a legacy, we add the widget-legacy css class to the div
-     *
-     * @param Widget $widget The widget displayed
-     * @param View   $view   The View
-     * @param Entity $entity The current entity
-     *
-     * @return string
-     */
-    public function cmsWidgetLegacy(Widget $widget, View $view, $entity)
-    {
-        //the css class used
-        $cssClass = '';
-
-        //only the developer can have the orange aura
-        if ($this->isRoleVictoireDeveloperGranted()) {
-            //the view context was given
-            if ($view !== null) {
-                //the view of the widget is not the current view
-                if ($widget->getViewId() !== $view->getId()) {
-                    $cssClass = 'vic-widget-legacy';
-                } else {
-                    if ($entity !== null && $view instanceof BusinessEntityPagePattern) {
-                        $cssClass = 'vic-widget-legacy';
-                    }
-                }
-            }
-        }
-
-        return $cssClass;
     }
 
     /**
