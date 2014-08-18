@@ -36,6 +36,13 @@ class Widget extends BaseWidget
     /**
      * @var string
      *
+     * @ORM\Column(name="theme", type="string", length=255, nullable=true)
+     */
+    protected $theme;
+
+    /**
+     * @var string
+     *
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\CoreBundle\Entity\View", inversedBy="widgets")
      * @ORM\JoinColumn(name="view_id", referencedColumnName="id", onDelete="CASCADE")
      *

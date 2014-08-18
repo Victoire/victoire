@@ -1,14 +1,14 @@
 <?php
 
-namespace {{ namespace }}\Widget\Resolver;
+namespace {{ namespace }}\Resolver;
 
 
 {% block use_statements %}
-use Victoire\Bundle\WidgetBundle\Entity\Widget;
+use Victoire\Bundle\WidgetBundle\Model\Widget;
 {% if parent and parentResolver %}
-use Victoire\Widget\{{parent}}Bundle\Widget\Resolver\Widget{{parent}}ContentResolver;
+use Victoire\Widget\{{parent}}Bundle\Resolver\Widget{{parent}}ContentResolver;
 {% else %}
-use Victoire\Bundle\WidgetBundle\Widget\Resolver\BaseWidgetContentResolver;
+use Victoire\Bundle\WidgetBundle\Resolver\BaseWidgetContentResolver;
 {% endif %}
 {% endblock use_statements %}
 

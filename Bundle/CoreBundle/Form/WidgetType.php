@@ -60,6 +60,7 @@ class WidgetType extends AbstractType
         $builder->add('mode', 'hidden', array(
             'data' => $mode
         ));
+        $builder->add('theme', 'text');
 
         //add the slot to the form
         $builder->add('slot', 'hidden', array());

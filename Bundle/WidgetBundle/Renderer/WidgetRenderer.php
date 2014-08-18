@@ -19,9 +19,9 @@ class WidgetRenderer
     }
 
     /**
-     * render the WidgetRedactor
-     * @param WidgetRedactor $widget
-     * @param View           $view
+     * render the Widget
+     * @param Widget $widget
+     * @param View   $view
      *
      * @return widget show
      */
@@ -41,8 +41,9 @@ class WidgetRenderer
         //the content of the widget
         $parameters = $this->container->get('victoire_widget.widget_content_resolver')->getWidgetContent($widget);
 
-        //the template displayed is in the widget bundle
-        $templateName = $this->container->get('victoire_widget.widget_helper')->getTemplateName('show', $widget);
+        //the template displayed is in the widget bundle (with the potential theme)
+        $showView = 'show'.ucfirst($widget->getTheme());
+        $templateName = $this->container->get('victoire_widget.widget_helper')->getTemplateName($showView, $widget);
 
         return $templating->render(
             $templateName,

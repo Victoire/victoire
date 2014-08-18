@@ -16,7 +16,7 @@
       </trans-unit>
       <trans-unit id="5388360d9636ad4b61bf60291deb7d679b6ff2c3" resname="form.widget.tab.entity_instance.label">
         <source>form.widget.tab.entity_instance.label</source>
-        <target>Instance de Business Entité</target>
+        <target>Objet courant</target>
       </trans-unit>
       <trans-unit id="b7c8b58d12f169a6040d907e356a133de28b5eee" resname="form.widget.tab.picker.label">
         <source>form.widget.tab.picker.label</source>
