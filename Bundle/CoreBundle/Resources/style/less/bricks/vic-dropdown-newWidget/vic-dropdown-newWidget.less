@@ -81,22 +81,27 @@
     border-color: @vic-newWidget-link-borderColor;
     top: 50%;
     left: 50%;
+    margin: 0;
+    list-style: none;
 
     a {
         display: block;
         padding: @vic-newWidget-dropdown-item-verticalPadding @vic-newWidget-dropdown-item-horizontalPadding;
         clear: both;
-        font-weight: normal;
+        font-weight: normal !important;
         line-height: 1.428571429;
-        color: @vic-newWidget-dropdown-item-color;
+        color: @vic-newWidget-dropdown-item-color !important;
         white-space: nowrap;
         font-family: @victoire-fontFamily !important;
+
+        &:hover {
+            text-decoration: none !important;
+        }
 
         &:not(.disabled) {
             &:hover {
                 color: @vic-newWidget-link-hover-color !important; // go through bootstrap property with ugly deepness selector
                 background-color: transparent !important; // reset bootstrap property with ugly deepness selector
-                text-decoration: none;
                 background-image: -webkit-linear-gradient(top, @vic-newWidget-link-hover-topColor, @vic-newWidget-link-hover-bottomColor);
                 background-image: -moz-linear-gradient(top, @vic-newWidget-link-hover-topColor, @vic-newWidget-link-hover-bottomColor);
                 background-image: -o-linear-gradient(top, @vic-newWidget-link-hover-topColor, @vic-newWidget-link-hover-bottomColor);
@@ -105,11 +110,11 @@
         }
 
         &.disabled {
-            color: @vic-newWidget-dropdown-item-disabled-color;
+            color: @vic-newWidget-dropdown-item-disabled-color !important;
             cursor: default;
 
             &:hover {
-                color: @vic-newWidget-dropdown-item-disabled-color;
+                color: @vic-newWidget-dropdown-item-disabled-color !important;
                 background: none;
             }
         }
@@ -122,7 +127,7 @@
     .vic-newWidget-@{counter} {
         > li {
             > a {
-                padding-left: @vic-newWidget-dropdown-item-horizontalPadding + (@vic-newWidget-dropdown-item-loop-horizontalPadding * @counter);
+                padding-left: @vic-newWidget-dropdown-item-horizontalPadding + (@vic-newWidget-dropdown-item-loop-horizontalPadding * @counter) !important;
             }
         }
     }
