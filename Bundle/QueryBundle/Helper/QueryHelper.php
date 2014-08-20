@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
+use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 
 /**
  * The QueryHelper helps to build query in Victoire's components
@@ -22,8 +23,9 @@ class QueryHelper
      *
      * @param EntityManager        $em
      * @param BusinessEntityHelper $businessEntityHelper
+     * @param CurrentViewHelper    $currentView
      */
-    public function __construct(EntityManager $em, BusinessEntityHelper $businessEntityHelper, $currentView)
+    public function __construct(EntityManager $em, BusinessEntityHelper $businessEntityHelper, CurrentViewHelper $currentView)
     {
         $this->em = $em;
         $this->businessEntityHelper = $businessEntityHelper;

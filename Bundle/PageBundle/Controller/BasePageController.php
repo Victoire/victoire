@@ -94,12 +94,12 @@ class BasePageController extends AwesomeController
                 $victoireTemplating = $this->container->get('victoire_templating');
                 $layout = 'AppBundle:Layout:' . $page->getTemplate()->getLayout() . '.html.twig';
 
-                //@todo cleanup if doublon regarding victoire_core.current_view service
-                $this->get('twig')->addGlobal('view', $page);
-                $this->get('twig')->addGlobal('entity', $entity);
+                $this->container->get('victoire_core.current_view')->setCurrentView($page);
 
                 //create the response
-                $response = $victoireTemplating->renderResponse($layout);
+                $response = $victoireTemplating->renderResponse($layout, array(
+                    "view" => $page
+                ));
             }
         }
 
