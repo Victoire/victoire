@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
+use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\PageBundle\Helper\UrlHelper;
 
 /**
@@ -118,7 +119,9 @@ class BasePageController extends AwesomeController
     {
         $em = $this->getEntityManager();
         $page = $this->getNewPage();
-        $page->setHomepage($isHomepage ? $isHomepage : 0);
+        if ($page instanceof Page) {
+            $page->setHomepage($isHomepage ? $isHomepage : 0);
+        }
 
         $form = $this->container->get('form.factory')->create($this->getNewPageType(), $page);
 
@@ -313,7 +316,7 @@ class BasePageController extends AwesomeController
                 $entityAllowed = $businessEntityPagePatternHelper->isEntityAllowed($page, $entity);
 
                 if ($entityAllowed === false) {
-                    throw $this->createNotFoundException('The entity ['.$entity->getId().'] is not allowed for the page pattern ['.$page->getId().']');
+                    throw $this->createNotFoundException('The entity ['.$entity->getId().'] is not allowed for the page pattern ['.$page->getId().']');
                 }
             }
         }

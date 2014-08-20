@@ -33,11 +33,12 @@ abstract class ViewType extends AbstractType
             if (!$view || null === $view->getId()) {
 
                 $getAllTemplateWithoutMe = function (EntityRepository $tr) {
-                    return $tr->getAll();
+                    return $tr->getAll()->getInstance();
                 };
             } else {
                 $getAllTemplateWithoutMe = function (EntityRepository $tr) use ($view) {
                     return $tr->getAll()
+                        ->getInstance()
                         ->andWhere('template.id != :templateId')
                         ->setParameter('templateId', $view->getId());
                 };

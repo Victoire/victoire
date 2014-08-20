@@ -34,9 +34,37 @@ class BlogMenuListener implements MenuListenerInterface
     {
         $mainItem = $this->getMainItem();
 
-        $mainItem->addChild('menu.blog.settings',
+        $mainItem->addChild('menu.blog.article.settings',
             array(
                 'route' => 'victoire_blog_article_settings',
+                'routeParameters' => array('id' => $event->getPage()->getId())
+                )
+        )->setLinkAttribute('data-toggle', 'vic-modal');
+
+        return $mainItem;
+    }
+
+    /**
+     * add a blog contextual menu item
+     *
+     * @param PageMenuContextualEvent $event
+     *
+     * @return \Victoire\Bundle\BlogBundle\Listener\MenuItem
+     */
+    public function addBlogContextual($event)
+    {
+        $mainItem = $this->getMainItem();
+
+        $mainItem->addChild('menu.blog.settings',
+            array(
+                'route'           => 'victoire_blog_settings',
+                'routeParameters' => array('id' => $event->getPage()->getId())
+                )
+        )->setLinkAttribute('data-toggle', 'vic-modal');
+
+        $mainItem->addChild('menu.blog.article.new',
+            array(
+                'route'           => 'victoire_blog_article_new',
                 'routeParameters' => array('id' => $event->getPage()->getId())
                 )
         )->setLinkAttribute('data-toggle', 'vic-modal');
@@ -55,14 +83,13 @@ class BlogMenuListener implements MenuListenerInterface
      */
     public function addGlobal(Event $event)
     {
-        $mainItem = $this->getMainItem();
-
-        $mainItem->addChild('menu.blog.new', array(
-            'route' => 'victoire_blog_article_new'
-            )
-        )->setLinkAttribute('data-toggle', 'vic-modal');
-
-        return $mainItem;
+        if ($this->menuBuilder->isGranted('ROLE_VICTOIRE_BLOG')) {
+            $this->menuBuilder->getLeftNavbar()->addChild(
+                'menu.blog', array(
+                    'route' => 'victoire_blog_index'
+                )
+            )->setLinkAttribute('data-toggle', 'vic-modal');
+        }
     }
 
     /**

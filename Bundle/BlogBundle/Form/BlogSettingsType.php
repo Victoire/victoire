@@ -1,13 +1,13 @@
 <?php
-namespace Victoire\Bundle\PageBundle\Form;
+namespace Victoire\Bundle\BlogBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 
 /**
- * Edit Page Type
+ * Edit Blog Type
  */
-class PageSettingsType extends PageType
+class BlogSettingsType extends BlogType
 {
 
     /**
@@ -34,8 +34,7 @@ class PageSettingsType extends PageType
             ->add('publishedAt', null, array(
                 'widget'         => 'single_text',
                 'datetimepicker' => true
-            ))
-            ->remove('layout');
+            ));
     }
 
     /**
@@ -43,6 +42,6 @@ class PageSettingsType extends PageType
      */
     public function getName()
     {
-        return 'victoire_page_settings_type';
+        return 'victoire_blog_settings_type';
     }
 }

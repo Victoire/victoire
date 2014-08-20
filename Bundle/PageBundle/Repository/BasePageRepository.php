@@ -1,6 +1,7 @@
 <?php
 namespace Victoire\Bundle\PageBundle\Repository;
 
+use Doctrine\ORM\Query;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 
@@ -58,11 +59,11 @@ class BasePageRepository extends NestedTreeRepository
      */
     public function getAll($excludeUnpublished = false)
     {
-        $qb = $this->getInstance();
+        $this->qb = $this->getInstance();
 
         //If $excludeUnpublished === true, we exclude the non published results
         if ($excludeUnpublished) {
-            $qb
+            $this->qb
                 ->andWhere('page.status = :status')
                 ->orWhere('page.status = :scheduled_status AND page.publishedAt > :publicationDate')
                 ->setParameter('status', BasePage::STATUS_PUBLISHED)
@@ -70,6 +71,18 @@ class BasePageRepository extends NestedTreeRepository
                 ->setParameter('publicationDate', new \DateTime());
         }
 
-        return $qb;
+        return $this;
+    }
+
+    /**
+     * Get very next festivals query builder
+     * @param method        $method        The method to run
+     * @param hydrationMode $hydrationMode How the results will be (Object ? Array )
+     *
+     * @return array()
+     */
+    public function run($method = 'getResult', $hydrationMode = Query::HYDRATE_OBJECT)
+    {
+        return $this->getInstance()->getQuery()->$method($hydrationMode);
     }
 }

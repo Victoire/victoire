@@ -57,8 +57,8 @@ class CategoryFilter extends BaseFilter
 
     /**
      * define form fields
-     * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param FormBuilderInterface $builder
+     * @param array                $options
      *
      * @SuppressWarnings checkUnusedFunctionParameters
      *

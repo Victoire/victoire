@@ -9,15 +9,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Victoire\Bundle\BlogBundle\Entity\Article;
-use Victoire\Bundle\PageBundle\Controller\PageController;
+use Victoire\Bundle\BlogBundle\Entity\Blog;
+use Victoire\Bundle\PageBundle\Controller\BasePageController;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 
 /**
- * blog Controller
+ * article Controller
  *
- * @Route("/victoire-dcms/blog")
+ * @Route("/victoire-dcms/article")
  */
-class ArticleController extends PageController
+class ArticleController extends BasePageController
 {
     protected $routes;
 
@@ -41,9 +42,34 @@ class ArticleController extends PageController
      *
      * @return JsonResponse
      */
-    public function newAction($isHomepage = false)
+    public function createAction()
     {
         return new JsonResponse(parent::newAction());
+    }
+
+    /**
+     * New article
+     *
+     * @Route("/new/{id}", name="victoire_blog_article_newBlogArticle")
+     * @Template()
+     *
+     * @return JsonResponse
+     */
+    public function newBlogArticleAction(Blog $blog)
+    {
+        $em = $this->getEntityManager();
+        $article = new Article();
+        $article->setBlog($blog);
+        $form = $this->container->get('form.factory')->create($this->getNewPageType(), $article);
+
+        return new JsonResponse(
+            array(
+                'html' => $this->container->get('victoire_templating')->render(
+                    $this->getBaseTemplatePath() . ':new.html.twig',
+                    array('form' => $form->createView())
+                )
+            )
+        );
     }
 
     /**
@@ -55,11 +81,11 @@ class ArticleController extends PageController
      * @return template
      * @Route("/{id}/settings", name="victoire_blog_article_settings")
      * @Template()
-     * @ParamConverter("article", class="VictoirePageBundle:Page")
+     * @ParamConverter("article", class="VictoireBlogBundle:Article")
      */
     public function settingsAction(Request $request, BasePage $article)
     {
-        return new JsonResponse(parent::settingsAction($article));
+        return new JsonResponse(parent::settingsAction($request, $article));
     }
 
     /**
@@ -87,7 +113,7 @@ class ArticleController extends PageController
      */
     protected function getPageSettingsType()
     {
-        return 'victoire_article_type';
+        return 'victoire_article_settings_type';
     }
 
     /**

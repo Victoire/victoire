@@ -7,18 +7,12 @@
 {% block modal_container_classes %}{{ parent() }} vic-view-modal{% endblock modal_container_classes %}
 
 {% block modal_header_title %}
-    {{"modal.article.new.title"|trans()}}
+    {{"modal.blog.new.title"|trans()}}
 {% endblock modal_header_title %}
 
 {% block modal_body_content %}
-    <form method="POST" action="{{path('victoire_blog_article_new')}}">
-        {{ form_errors(form) }}
-        {{ form_row(form.name) }}
-        {{ form_row(form.description) }}
-        {{ form_row(form.category) }}
-        {{ form_row(form.tags) }}
-        {{ form_row(form.template) }}
-        {{ form_rest(form) }}
+    <form method="POST" action="{{ path('victoire_blog_new') }}">
+        {{form_widget(form)}}
     </form>
 {% endblock modal_body_content %}
 

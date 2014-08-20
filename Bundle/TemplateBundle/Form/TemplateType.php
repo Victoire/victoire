@@ -41,7 +41,7 @@ class TemplateType extends ViewType
 
     /**
      * bind to Template entity
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {

@@ -2,6 +2,7 @@ security:
     role_hierarchy:
         ROLE_VICTOIRE_DEVELOPER:
             - ROLE_VICTOIRE
+            - ROLE_VICTOIRE_BLOG
             - ROLE_VICTOIRE_LEFTNAVBAR
             - ROLE_VICTOIRE_BET
             - ROLE_VICTOIRE_PAGE_DEBUG

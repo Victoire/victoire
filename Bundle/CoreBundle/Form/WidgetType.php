@@ -16,8 +16,8 @@ class WidgetType extends AbstractType
     /**
      * Define form fields
      *
-     * @param FormBuilderInterface $builder The builder
-     * @param array $options The options
+     * @param FormBuilderInterface $builder The builder
+     * @param array                $options The options
      *
      * @throws Exception
      */
@@ -152,7 +152,7 @@ class WidgetType extends AbstractType
 
     /**
      * bind form to WidgetRedactor entity
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolverInterface $resolver
      *
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)

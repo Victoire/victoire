@@ -1,0 +1,57 @@
+<div class="vic-accordion-group">
+    <div class="vic-accordion-heading">
+        <div class="vic-row">
+            <div class="vic-col-md-12">
+                <a class="vic-accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                    {{ blog.name }}
+                </a>
+                <a data-toggle="vic-modal" href="{{ path('victoire_blog_settings', {'id' : blog.id}) }}">
+                    <i class="fa fa-cog"></i>
+                </a>
+                <a href="{{ path('victoire_core_page_show', {'url' : blog.url}) }}">
+                    <i class="fa fa-external-link-square"></i>
+                </a>
+            </div>
+            {% if blog.seo and blog.seo.metaDescription %}
+            <div class="vic-col-md-12">
+                {{ blog.seo.metaDescription }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div id="collapseOne" class="vic-accordion-body vic-collapse{% if loop.first %} vic-in{% endif %}" style="margin-left:15px">
+        <div class="vic-accordion-inner">
+        <h3 class="vic-h3">{{ 'modal.blog.list.articlesList.title'|trans({}, 'victoire') }}</h3>
+        {% if blog.articles|length %}
+            <ul class="vic-list-unstyled">
+                {% for article in blog.articles %}
+                    <li>
+                        <div class="vic-row">
+                            <div class="vic-col-md-12">
+                                <a href="{{ path('victoire_core_page_show', {'url' : article.url}) }}">
+                                    {{ article.name }}
+                                </a>&nbsp;
+                                <a data-toggle="vic-modal" href="{{ path('victoire_blog_article_settings', {'id' : article.id}) }}">
+                                    <i class="fa fa-cog"></i>
+                                </a>&nbsp;
+                                <a href="{{ path('victoire_core_page_show', {'url' : article.url}) }}">
+                                    <i class="fa fa-external-link-square"></i>
+                                </a>
+                            </div>
+                            {% if article.seo and article.seo.metaDescription %}
+                            <div class="vic-col-md-12">
+                                {{ article.seo.metaDescription }}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+        <div class="vic-alert vic-alert-info">
+            {{ 'modal.blog.list.articlesList.empty.notice'|trans({'%creationLink%' : path('victoire_blog_article_newBlogArticle', {'id' : blog.id})}, 'victoire')|raw }}
+        </div>
+        {% endif %}
+        </div>
+    </div>
+</div>

@@ -106,7 +106,7 @@
         <source>Delete</source>
         <target>Supprimer</target>
       </trans-unit>
-      <trans-unit id="fa43c246404596586f4f3ad7c55654c5f75f6de4" resname="modal.button.update.title">
+      <trans-unit resname="modal.button.update.title">
         <source>modal.button.update.title</source>
         <target>Mettre à jour</target>
       </trans-unit>
