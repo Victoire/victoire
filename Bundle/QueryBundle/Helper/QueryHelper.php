@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
-use Victoire\Bundle\PageBundle\Helper\CurrentViewHelper;
+use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 
 /**
  * The QueryHelper helps to build query in Victoire's components
