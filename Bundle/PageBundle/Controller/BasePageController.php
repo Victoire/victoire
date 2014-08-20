@@ -77,11 +77,12 @@ class BasePageController extends AwesomeController
                 return $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $seoUrl)));
             } else {
 
-                $this->container->get('victoire_core.current_view')->setCurrentView($page);
 
                 if ($entity) {
                     $page = $this->get('victoire_business_entity_page.business_entity_page_helper')->generateEntityPageFromPattern($page, $entity);
                 }
+                //Define current view
+                $this->container->get('victoire_core.current_view')->setCurrentView($page);
 
                 $event = new \Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent($page, $entity);
 

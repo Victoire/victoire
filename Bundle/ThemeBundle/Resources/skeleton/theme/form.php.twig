@@ -35,7 +35,7 @@ class Theme{{ widget }}{{ theme }}Type extends Widget{{ widget }}Type
 
         $resolver->setDefaults(array(
             'data_class'         => '{{ namespace }}\Entity\Theme{{ widget }}{{ theme }}',
-            'widget'             => '{{widget|lower}}',
+            'widget'             => '{{widget}}',
             'translation_domain' => 'victoire'
         ));
     }

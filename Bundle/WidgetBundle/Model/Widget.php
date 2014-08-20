@@ -127,6 +127,30 @@ abstract class Widget
     }
 
     /**
+     * Set theme
+     *
+     * @param string $theme
+     *
+     * @return Widget
+     */
+    public function setTheme($theme)
+    {
+        $this->theme = $theme;
+
+        return $this;
+    }
+
+    /**
+     * Get theme
+     *
+     * @return string
+     */
+    public function getTheme()
+    {
+        return $this->theme;
+    }
+
+    /**
      * Set view
      *
      * @param string $view

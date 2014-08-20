@@ -25,7 +25,7 @@ class WidgetController extends AwesomeController
      * @param Entity $entity the entity
      *
      * @return response
-     * @Route("/victoire-dcms/widget/show/{id}/{entity}", name="victoire_core_widget_show", options={"expose"=true}, defaults={"entity": null})
+     * @Route("/victoire-dcms-public/widget/show/{id}/{entity}", name="victoire_core_widget_show", options={"expose"=true}, defaults={"entity": null})
      * @Template()
      * @ParamConverter("id", class="VictoireWidgetBundle:Widget")
      */
