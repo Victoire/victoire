@@ -67,6 +67,18 @@ label {
     font-weight: @vic-label-fontWeight;
 }
 
+select {
+    &[id^='victoire_widget_form_'] {
+        &[id$='date_day'],
+        &[id$='date_month'],
+        &[id$='date_year'] {
+            float: left;
+            width: auto;
+            margin-left: 5px;
+        }
+    }
+}
+
 
 
 
