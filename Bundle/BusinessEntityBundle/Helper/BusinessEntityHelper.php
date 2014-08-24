@@ -204,11 +204,4 @@ class BusinessEntityHelper
         return $entity;
     }
 
-    public function getEntitiesRelatedToPattern(BusinessEntityPagePattern $pattern)
-    {
-        $businessEntity = $this->findById($pattern->getBusinessEntityName);
-
-        return $this->em->getRepository($businessEntity->getClass())->findAll();
-
-    }
 }
