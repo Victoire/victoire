@@ -1,3 +1,10 @@
 services:
     victoire_business_entity.converter.parameter_converter:
         class: Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter
+
+    victoire_business_entity.business_entity_subscriber:
+        class: Victoire\Bundle\BusinessEntityBundle\EventSubscriber\BusinessEntitySubscriber
+        arguments:
+            - "@service_container"
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }

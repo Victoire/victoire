@@ -3,6 +3,7 @@
 namespace Victoire\Bundle\PageBundle\EventSubscriber;
 
 use Doctrine\Common\EventSubscriber;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
@@ -20,33 +21,24 @@ class PageSubscriber implements EventSubscriber
     protected $router;
     protected $userClass;
     protected $userCallable;
-    protected $container;
+    protected $pageCacheHelper;
+    protected $container; // container is given here because of "em" circular reference of UrlHelper
 
     /**
      * Constructor
-     * @param unknown   $router
-     * @param unknown   $userCallable
-     * @param string    $userClass
-     * @param Container $container
+     * @param unknown         $router          @router
+     * @param unknown         $userCallable    @victoire_page.user_callable
+     * @param string          $userClass       %victoire_core.user_class%
+     * @param PageCacheHelper $pageCacheHelper @victoire_page.page_cache_helper
+     * @param Container       $container       @service_container
      */
-    public function __construct($router, $userCallable, $userClass, $container)
+    public function __construct($router, $userCallable, $userClass, $pageCacheHelper, $container)
     {
-        $this->router = $router;
-        $this->userClass = $userClass;
-        $this->userCallable = $userCallable;
-        $this->container = $container;
-    }
-
-    /**
-     * Get the url helper
-     *
-     * @return UrlHelper
-     */
-    public function getUrlHelper()
-    {
-        $urlHelper = $this->container->get('victoire_page.url_helper');
-
-        return $urlHelper;
+        $this->router               = $router;
+        $this->userClass            = $userClass;
+        $this->userCallable         = $userCallable;
+        $this->pageCacheHelper      = $pageCacheHelper;
+        $this->container            = $container;
     }
 
     /**
@@ -59,6 +51,7 @@ class PageSubscriber implements EventSubscriber
         return array(
             'loadClassMetadata',
             'onFlush',
+            'postPersist',
         );
     }
 
@@ -123,6 +116,32 @@ class PageSubscriber implements EventSubscriber
         }
     }
 
+    public function postPersist(LifecycleEventArgs $eventArgs)
+    {
+        $entity = $eventArgs->getEntity();
+        if ($entity instanceof BasePage) {
+            $this->updateCache($entity);
+        }
+    }
+
+    /**
+     * There is changes in the Page, we have to update the page references cache file
+     * @param BasePage $page the page
+     *
+     * @return void
+     */
+    protected function updateCache(BasePage $page)
+    {
+
+        if ($page instanceof BusinessEntityPagePattern) {
+            foreach ($entities as $entity) {
+                $this->pageCacheHelper->updatePageCache($page, $entity);
+            }
+        } else {
+            $this->pageCacheHelper->updatePageCache($page, null);
+
+        }
+    }
     /**
      * Builds the page's url by get all page parents slugs and implode them with "/".
      * Builds the pages children urls with new page slug
@@ -158,7 +177,7 @@ class PageSubscriber implements EventSubscriber
         $url = implode('/', $url);
 
         //get the next free url
-        $url = $this->getUrlHelper()->getNextAvailaibleUrl($url);
+        $url = $this->container->get('victoire_page.url_helper')->getNextAvailaibleUrl($url);
 
         //update url of the page
         $page->setUrl($url);

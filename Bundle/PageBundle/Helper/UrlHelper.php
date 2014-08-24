@@ -1,9 +1,9 @@
 <?php
 namespace Victoire\Bundle\PageBundle\Helper;
 
-use Victoire\Bundle\PageBundle\Entity\Page;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Doctrine\ORM\EntityManager;
+use Victoire\Bundle\PageBundle\Entity\Page;
+use Victoire\Bundle\PageBundle\Repository\PageRepository;
 
 /**
  * ref: victoire_page.url_helper
@@ -12,17 +12,17 @@ class UrlHelper
 {
     protected $request = null;
     protected $router = null;
-    protected $em = null;
+    protected $pageRepository = null;
 
     /**
      * Constructor
-     * @param unknown       $router
-     * @param EntityManager $entityManager
+     * @param unknown        $router
+     * @param PageRepository $pageRepository
      */
-    public function __construct($router, EntityManager $entityManager)
+    public function __construct($router, PageRepository $pageRepository)
     {
         $this->router = $router;
-        $this->em = $entityManager;
+        $this->pageRepository = $pageRepository;
     }
 
     /**
@@ -166,13 +166,8 @@ class UrlHelper
     {
         $isUrlAlreadyUsed = false;
 
-        $em = $this->em;
-
-        //the base page repository
-        $repo = $em->getRepository('VictoirePageBundle:Page');
-
         //try to get a page with this url
-        $page = $repo->findOneByUrl($url);
+        $page = $this->pageRepository->findOneByUrl($url);
 
         //a page use this url
         if ($page !== null) {

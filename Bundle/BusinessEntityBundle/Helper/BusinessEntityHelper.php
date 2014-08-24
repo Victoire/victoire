@@ -1,11 +1,11 @@
 <?php
 namespace Victoire\Bundle\BusinessEntityBundle\Helper;
 
-use Victoire\Bundle\CoreBundle\Annotations\Reader\AnnotationReader;
-use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Doctrine\ORM\EntityManager;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
+use Victoire\Bundle\CoreBundle\Annotations\Reader\AnnotationReader;
 
 /**
  * The BusinessEntityHelper
@@ -202,5 +202,13 @@ class BusinessEntityHelper
         }
 
         return $entity;
+    }
+
+    public function getEntitiesRelatedToPattern(BusinessEntityPagePattern $pattern)
+    {
+        $businessEntity = $this->findById($pattern->getBusinessEntityName);
+
+        return $this->em->getRepository($businessEntity->getClass())->findAll();
+
     }
 }
