@@ -44,7 +44,7 @@ class Widget{{widget}}Type extends {% if parent %}Widget{{parent}}Type{% else %}
 
         $resolver->setDefaults(array(
             'data_class'         => '{{ namespace }}\Entity\Widget{{ widget }}',
-            'widget'             => '{{widget|lower}}',
+            'widget'             => '{{ widget }}',
             'translation_domain' => 'victoire'
         ));
     }

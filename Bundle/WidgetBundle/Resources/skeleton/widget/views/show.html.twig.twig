@@ -4,10 +4,10 @@
 {% set cc = "#}" %}
 {% set of = "{%" %}
 {% set cf = "%}" %}
-{% if parent %}
-{{of}} extends 'VictoireCoreBundle:Widget:show.html.twig' {{cf}}
-{% else %}
+{% if parent is defined and parent != "" %}
 {{of}} extends 'Victoire{{parent}}Bundle:Widget:show.html.twig' {{cf}}
+{% else %}
+{{of}} extends 'VictoireCoreBundle:Widget:show.html.twig' {{cf}}
 {% endif %}
 
 {{of}} block content {{cf}}
