@@ -6,7 +6,7 @@ use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\BusinessEntityPageBundle\Helper\BusinessEntityPageHelper;
-use Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy;
+use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
@@ -182,6 +182,64 @@ class PageHelper
         }
 
         return $page;
+    }
+
+    /**
+     * This method get all pages in DB, including instancified patterns related to it's entity
+     * @return array the computed pages as array
+     */
+    public function getAllPages()
+    {
+        $pages = array();
+        //This query is not optimized because we need the property "businessEntityName" later, and it's only present in Pattern pages
+        $basePages = $this->em->createQuery("select bp from VictoirePageBundle:BasePage bp")->getResult();
+        $businessEntities = $this->businessEntityHelper->getBusinessEntities();
+
+        foreach ($businessEntities as $businessEntity) {
+            $properties = $this->businessEntityPageHelper->getBusinessProperties($businessEntity);
+
+            //find businessEdietifiers of the current businessEntity
+            $selectableProperties = array('id');
+            foreach ($properties as $property) {
+                if ($property->getType() === 'businessIdentifier') {
+                    $selectableProperties[] = $property->getEntityProperty();
+                }
+            }
+            // This query retrieve business entity object, without useless properties for performance optimisation
+            $entities = $this->em->createQuery("select partial
+                e.{" . implode(', ', $selectableProperties) . "}
+                from ". $businessEntity->getClass() ." e")
+                ->getResult();
+            // for each business entity
+            foreach ($entities as $entity) {
+                //and for each page
+                foreach ($basePages as $page) {
+                    // if page is a pattern, compute it's bep
+                    if ($page instanceof BusinessEntityPagePattern) {
+                        // only if related pattern entity is the current entity
+                        if ($page->getBusinessEntityName() === $businessEntity->getId()) {
+                            $currentPattern = clone $page;
+                            $this->updatePageParametersByEntity($currentPattern, $entity);
+                            $pages['victoire_page_' . $currentPattern->getId() . '_' . $entity->getId()] = array(
+                                'url' => $currentPattern->getUrl(),
+                                'view' => $currentPattern->getId(),
+                                'entity' => $entity->getId(),
+                                'entityNamespace' => get_class($entity)
+                            );
+                        }
+                    } else {
+                        $pages['victoire_page_' . $page->getId()] = array(
+                                'url' => $page->getUrl(),
+                                'view' => $page->getId(),
+                                'entity' => null,
+                                'entityNamespace' => null
+                            );
+                    }
+                }
+            }
+        }
+
+        return $pages;
     }
 
     /**

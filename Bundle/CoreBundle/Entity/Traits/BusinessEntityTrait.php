@@ -11,24 +11,24 @@ trait BusinessEntityTrait
     /**
      * @var string
      *
-     * @ORM\OneToOne(targetEntity="\Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy")
+     * @ORM\OneToOne(targetEntity="\Victoire\Bundle\CoreBundle\Entity\EntityProxy")
      */
     protected $proxy;
 
     /**
      * proxies relation is inejcted by Victoire\Bundle\CoreBundle\EventSubscriber\EntityProxySubscriber
-     * like : OneToMany(targetEntity="\Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy", mappedBy="{{businessEntityName}}")
+     * like : OneToMany(targetEntity="\Victoire\Bundle\CoreBundle\Entity\EntityProxy", mappedBy="{{businessEntityName}}")
      */
     protected $proxies;
 
     /**
      * Set proxy
      *
-     * @param \Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy $proxy
+     * @param \Victoire\Bundle\CoreBundle\Entity\EntityProxy $proxy
      *
      * @return PostPage
      */
-    public function setProxy(\Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy $proxy = null)
+    public function setProxy(\Victoire\Bundle\CoreBundle\Entity\EntityProxy $proxy = null)
     {
         $this->proxy = $proxy;
 
@@ -38,7 +38,7 @@ trait BusinessEntityTrait
     /**
      * Get proxy
      *
-     * @return \Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy
+     * @return \Victoire\Bundle\CoreBundle\Entity\EntityProxy
      */
     public function getProxy()
     {
@@ -48,11 +48,11 @@ trait BusinessEntityTrait
     /**
      * Add proxies
      *
-     * @param \Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy $proxies
+     * @param \Victoire\Bundle\CoreBundle\Entity\EntityProxy $proxies
      *
      * @return PostPage
      */
-    public function addProxie(\Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy $proxies)
+    public function addProxie(\Victoire\Bundle\CoreBundle\Entity\EntityProxy $proxies)
     {
         $this->proxies[] = $proxies;
 
@@ -62,9 +62,9 @@ trait BusinessEntityTrait
     /**
      * Remove proxies
      *
-     * @param \Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy $proxies
+     * @param \Victoire\Bundle\CoreBundle\Entity\EntityProxy $proxies
      */
-    public function removeProxie(\Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy $proxies)
+    public function removeProxie(\Victoire\Bundle\CoreBundle\Entity\EntityProxy $proxies)
     {
         $this->proxies->removeElement($proxies);
     }

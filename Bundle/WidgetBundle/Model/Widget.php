@@ -2,7 +2,7 @@
 
 namespace Victoire\Bundle\WidgetBundle\Model;
 
-use Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy;
+use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 
 /**
  * Widget Model

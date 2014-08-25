@@ -27,7 +27,7 @@ class BusinessEntityPage extends BasePage
      * Auto simple mode: joined entity
      * @var EntityProxy
      *
-     * @ORM\OneToOne(targetEntity="\Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="\Victoire\Bundle\CoreBundle\Entity\EntityProxy", cascade={"persist", "remove"})
      */
     protected $entityProxy;
 

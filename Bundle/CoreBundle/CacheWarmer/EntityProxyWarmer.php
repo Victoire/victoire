@@ -47,6 +47,9 @@ class EntityProxyWarmer extends CacheWarmer
         $cacheContent = $generator->generate();
 
         $this->writeCacheFile($file, $cacheContent);
+        if (!class_exists("Victoire\Bundle\CoreBundle\Entity\EntityProxy")) {
+            include_once $file;
+        }
     }
 
     /**
