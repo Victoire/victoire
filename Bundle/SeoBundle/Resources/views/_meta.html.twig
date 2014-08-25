@@ -32,5 +32,5 @@
     {% if view.seo.relCanonical %}<link rel="canonical" href="{{ view.seo.relCanonical }}"/>{% endif %}
     {% if view.seo.keyword %}<meta name="keyword" content="{{ view.seo.keyword }}"/>{% endif %}
 {% else %}
-<title>{{ view }}</title>
+<title>{{ view|default('Victoire DCMS') }}</title>
 {% endif %}
