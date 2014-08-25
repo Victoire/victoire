@@ -28,7 +28,7 @@ class Route
     /**
      * @var \stdClass
      *
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\PageBundle\Entity\Page", inversedBy="routes")
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\PageBundle\Entity\BasePage", inversedBy="routes")
      */
     protected $page;
 

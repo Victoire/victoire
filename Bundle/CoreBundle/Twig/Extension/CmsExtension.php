@@ -117,12 +117,11 @@ class CmsExtension extends \Twig_Extension
      * render all widgets in a slot
      *
      * @param unknown $slotId
-     * @param string  $addContainer
-     * @param string  $entity
+     * @param string  $slotOptions
      *
      * @return string HTML markup of the widget with action button if needed
      */
-    public function cmsSlotWidgets($slotId, $addContainer = true, $entity = null)
+    public function cmsSlotWidgets($slotId, $slotOptions = array(), $addContainer = true)
     {
         $currentView = $this->currentViewHelper->getCurrentView();
         //services
@@ -132,7 +131,7 @@ class CmsExtension extends \Twig_Extension
         $result = "";
 
         if ($this->isRoleVictoireGranted()) {
-            $result .= $this->widgetRenderer->renderActions($slotId, $currentView, true);
+            $result .= $this->widgetRenderer->renderActions($slotId, $currentView, $slotOptions, true);
         }
 
         //get the widget map computed with the parent

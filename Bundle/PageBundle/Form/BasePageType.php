@@ -31,11 +31,12 @@ abstract class BasePageType extends ViewType
             // Ce doit être considéré comme une nouvelle "View"
             if (!$view || null === $view->getId()) {
                 $getAllPageWithoutMe = function (EntityRepository $bpr) {
-                    return $bpr->getAll();
+                    return $bpr->getAll()->getInstance();
                 };
             } else {
                 $getAllPageWithoutMe = function (EntityRepository $bpr) use ($view) {
                     return $bpr->getAll()
+                        ->getInstance()
                         ->andWhere('page.id != :pageId')
                         ->setParameter('pageId', $view->getId());
                 };

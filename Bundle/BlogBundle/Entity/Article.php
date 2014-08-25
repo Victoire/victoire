@@ -14,7 +14,7 @@ use Victoire\Bundle\PageBundle\Entity\BasePage;
  * @ORM\Entity
  * @ORM\Table("vic_article")
  *
- * @VIC\BusinessEntity({"widgetredactor", "themeredactornewspaper", "widgetlisting", "themelistingblogarticles"})
+ * @VIC\BusinessEntity({"widgetredactor", "themeredactornewspaper", "widgetlisting", "BlogArticles"})
  */
 class Article extends BasePage
 {
@@ -29,7 +29,7 @@ class Article extends BasePage
      * @Assert\NotBlank()
      * @VIC\BusinessProperty("textable")
      */
-    protected $title;
+    protected $name;
 
     /**
      * Description is inherited from Page, just add the BusinessProperty annotation
@@ -75,8 +75,15 @@ class Article extends BasePage
      * Tags of the article
      * @ORM\ManyToMany(targetEntity="Tag", inversedBy="articles")
      * @ORM\JoinTable(name="vic_article_tags")
+     * @Assert\Valid()
      */
     protected $tags;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\BlogBundle\Entity\Blog", inversedBy="children", cascade={"persist"})
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected $blog;
 
     /**
      * Set description
@@ -137,23 +144,24 @@ class Article extends BasePage
     }
 
     /**
-     * Get the title
+     * Get the blog
      *
      * @return String
      */
-    public function getTitle()
+    public function getBlog()
     {
-        return $this->title;
+        return $this->blog;
     }
 
     /**
-     * Set the title
+     * Set the blog
      *
-     * @param string $title
+     * @param string $blog
      */
-    public function setTitle($title)
+    public function setBlog($blog)
     {
-        $this->title = $title;
+        $this->blog = $blog;
+        $this->setParent($blog);
     }
 
     /**

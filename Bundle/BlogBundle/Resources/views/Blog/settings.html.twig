@@ -11,13 +11,14 @@
     {% endif %}
 
     <div class="vic-tab-pane vic-active" id="basics">
-        <form method="POST" action="{{path('victoire_blog_article_settings', {'id':page.id} )}}">
+        <form method="POST" action="{{path('victoire_blog_settings', {'id':page.id} )}}">
             <div class="vic-form-group">
                 <div class="vic-col-lg-8">
                     {{ form_row(form.name) }}
+                    {{ form_row(form.parent) }}
                     {{ form_row(form.template) }}
                     <div class="vic-form-group">
-                         <label for="victoire_article_settings_type_bodyClass" class="vic-control-label vic-col-lg-3 control-label vic-optional">
+                         <label for="victoire_blog_settings_type_bodyClass" class="vic-control-label vic-col-lg-3 control-label vic-optional">
                             {{ 'form.page.type.slug.label'|trans({}, 'victoire') }}
                          </label>
                          <div class="vic-col-lg-9">
@@ -49,7 +50,7 @@
 </div>
 
 <script type="text/javascript">
-    $vic('#victoire_article_settings_type_status').on('change', function(){
+    $vic('#victoire_blog_settings_type_status').on('change', function(){
         if ($vic(this).val() == '{{ constant('Victoire\\Bundle\\PageBundle\\Entity\\BasePage::STATUS_SCHEDULED') }}') {
             $vic('.publication-date-container').removeClass('vic-hidden');
         } else {
@@ -67,5 +68,5 @@
 {% endblock modal_body_content %}
 
 {% block modal_header_title %}
-    {{ 'modal.form.article.settings.title'|trans({'%articleName%' : page.name}, 'victoire')|raw }}
+    {{ 'modal.form.blog.settings.title'|trans({'%blogName%' : page.name}, 'victoire')|raw }}
 {% endblock modal_header_title %}

@@ -27,7 +27,18 @@ class TemplateRepository extends NestedTreeRepository
      */
     public function getAll()
     {
-        return $this->getInstance();
+        return $this;
+    }
 
+    /**
+     * Run query builder instance
+     * @param method        $method        The method to run
+     * @param hydrationMode $hydrationMode How the results will be (Object ? Array )
+     *
+     * @return array()
+     */
+    public function run($method = 'getResult', $hydrationMode = Query::HYDRATE_OBJECT)
+    {
+        return $this->getInstance()->getQuery()->$method($hydrationMode);
     }
 }

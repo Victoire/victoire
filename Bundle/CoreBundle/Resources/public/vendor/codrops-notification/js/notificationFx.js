@@ -174,7 +174,7 @@ function congrat(content, ttl, icon) {
 		icon = 'fa-rocket';
 	}
 	if (content == undefined) {
-		content = 'OK';
+		content = 'Victoire !';
 	}
 	notify(content, ttl, 'growl', 'jelly', 'success', icon);
 }

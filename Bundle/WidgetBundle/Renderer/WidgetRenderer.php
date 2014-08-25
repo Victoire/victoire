@@ -101,14 +101,14 @@ class WidgetRenderer
 
     /**
      * render slot actions
-     *
      * @param Slot    $slot
      * @param Page    $view
+     * @param array   $options
      * @param boolean $first
      *
      * @return template
      */
-    public function renderActions($slot, View $view, $first = false)
+    public function renderActions($slot, View $view, $options = array(), $first = false)
     {
         $slots = $this->container->getParameter('victoire_core.slots');
 
@@ -119,6 +119,8 @@ class WidgetRenderer
         if (!empty($slots[$slot]) && !empty($slots[$slot]['widgets'])) {
             //parse declared widgets
             $slotWidgets = array_keys($slots[$slot]['widgets']);
+        } elseif (!empty($options['availableWidgets'])) {
+            $slotWidgets = $options['availableWidgets'];
         } else {
             //parse all widgets
             $slotWidgets = array_keys($availableWidgets);

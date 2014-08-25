@@ -16,8 +16,8 @@ class WidgetType extends AbstractType
     /**
      * Define form fields
      *
-     * @param FormBuilderInterface $builder The builder
-     * @param array $options The options
+     * @param FormBuilderInterface $builder The builder
+     * @param array                $options The options
      *
      * @throws Exception
      */
@@ -60,7 +60,7 @@ class WidgetType extends AbstractType
         $builder->add('mode', 'hidden', array(
             'data' => $mode
         ));
-        $builder->add('theme', 'text');
+        $builder->add('theme', 'hidden');
 
         //add the slot to the form
         $builder->add('slot', 'hidden', array());
@@ -152,7 +152,7 @@ class WidgetType extends AbstractType
 
     /**
      * bind form to WidgetRedactor entity
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolverInterface $resolver
      *
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)

@@ -162,7 +162,7 @@ class PageSubscriber implements EventSubscriber
         $initialUrl = $page->getUrl();
 
         // build url binded with parents url
-        if ($page->isHomepage()) {
+        if ($page instanceof Page && $page->isHomepage()) {
             $url = array('');
         } else {
             $url = array($page->getSlug());

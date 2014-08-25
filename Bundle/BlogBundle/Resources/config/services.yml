@@ -5,12 +5,47 @@ services:
         tags:
             - { name: kernel.event_listener, event: victoire_core.build_menu, method: addGlobal, priority: 90 }
 
-    victoire_core.blog_menu.contextual:
+    victoire_core.article_menu.contextual:
         class: Victoire\Bundle\BlogBundle\Listener\BlogMenuListener
         arguments: ["@victoire_core.admin_menu_builder"]
         tags:
             - { name: kernel.event_listener, event: victoire_core.article_menu.contextual, method: addContextual}
 
+    victoire_core.blog_menu.contextual:
+        class: Victoire\Bundle\BlogBundle\Listener\BlogMenuListener
+        arguments: ["@victoire_core.admin_menu_builder"]
+        tags:
+            - { name: kernel.event_listener, event: victoire_core.blog_menu.contextual, method: addBlogContextual}
+
+    ####################################################################################################################
+    # Forms
+    ####################################################################################################################
+
+    #ARTICLE
+    victoire_blog.article.form.type:
+        class: Victoire\Bundle\BlogBundle\Form\ArticleType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type, alias: victoire_article_type }
+
+    victoire_blog.article_settings.form.type:
+        class: Victoire\Bundle\BlogBundle\Form\ArticleSettingsType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type, alias: victoire_article_settings_type }
+
+    #BLOG
+    victoire_blog.blog.form.type:
+        class: Victoire\Bundle\BlogBundle\Form\BlogType
+        tags:
+            - { name: form.type, alias: victoire_blog_type }
+
+    victoire_blog.blog_settings.form.type:
+        class: Victoire\Bundle\BlogBundle\Form\BlogSettingsType
+        tags:
+            - { name: form.type, alias: victoire_blog_settings_type }
+
+    #CATEGORY FILTER
     victoire_blog.category_filters.form.type:
         class: Victoire\Bundle\BlogBundle\Filter\CategoryFilter
         arguments:
@@ -19,6 +54,8 @@ services:
         tags:
             - { name: form.type, alias: category_filter }
             - { name: victoire_core.filter }
+
+    #TAG FILTER
     victoire_blog.tag_filters.form.type:
         class: Victoire\Bundle\BlogBundle\Filter\TagFilter
         arguments:
@@ -27,13 +64,3 @@ services:
         tags:
             - { name: form.type, alias: tag_filter }
             - { name: victoire_core.filter }
-
-    ####################################################################################################################
-    # Forms
-    ####################################################################################################################
-
-    victoire_blog.article.form.type:
-        class: Victoire\Bundle\BlogBundle\Form\ArticleType
-        arguments: ['%victoire_core.layouts%']
-        tags:
-            - { name: form.type, alias: victoire_article_type }

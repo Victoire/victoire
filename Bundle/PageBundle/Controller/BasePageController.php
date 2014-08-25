@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
+use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\PageBundle\Helper\UrlHelper;
 
 /**
@@ -34,7 +35,9 @@ class BasePageController extends AwesomeController
     {
         $em = $this->getEntityManager();
         $page = $this->getNewPage();
-        $page->setHomepage($isHomepage ? $isHomepage : 0);
+        if ($page instanceof Page) {
+            $page->setHomepage($isHomepage ? $isHomepage : 0);
+        }
 
         $form = $this->container->get('form.factory')->create($this->getNewPageType(), $page);
 

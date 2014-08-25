@@ -1,20 +1,9 @@
-ul.vic-items {
-    margin: 0;
-    padding: 0;
-    counter-reset: listingCounter;
-}
-ul.vic-items li {
-    list-style: none;
-    counter-increment: listingCounter;
-}
-ul.vic-items li .request-number:before {
-    content: counter(listingCounter);
-}
-
-select[id^='victoire_widget_form_'][id$='date_day'],
-select[id^='victoire_widget_form_'][id$='date_month'],
-select[id^='victoire_widget_form_'][id$='date_year'] {
-    float: left;
-    width: auto;
-    margin-left: 5px;
+.vic-mini-slot {
+    .vic-new-widget {
+        a {
+            span {
+                margin-left: -8px;
+            }
+        }
+    }
 }

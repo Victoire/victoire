@@ -27,8 +27,8 @@ class WidgetFieldsFormType extends AbstractType
 
     /**
      * define form fields
-     * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param FormBuilderInterface $builder
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -37,7 +37,7 @@ class WidgetFieldsFormType extends AbstractType
 
     /**
      * bind to Menu entity
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {

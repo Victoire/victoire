@@ -18,13 +18,49 @@
         <source>menu.blog</source>
         <target>Blog</target>
       </trans-unit>
-      <trans-unit id="44ee3ff9b926d8e0fe6e8e356600ad5c77166029" resname="menu.blog.new">
-        <source>menu.blog.new</source>
+      <trans-unit id="44ee3ff9b926d8e0fe6e8e356600ad5c77166029" resname="menu.blog.article.new">
+        <source>menu.blog.article.new</source>
         <target><![CDATA[<i class="vic-menuImg vic-menuImg-new"></i> Nouvel article]]></target>
       </trans-unit>
-      <trans-unit id="604de4ede156d22c87184505b9794ba2ad9c5062" resname="menu.blog.settings">
-          <source>menu.blog.settings</source>
+      <trans-unit resname="victoire_blog.index.title">
+        <source>victoire_blog.index.title</source>
+        <target>Gestion des blogs</target>
+      </trans-unit>
+      <trans-unit resname="menu.blog.new">
+        <source>menu.blog.new</source>
+        <target><![CDATA[<i class="vic-menuImg vic-menuImg-new"></i> Nouveau blog]]></target>
+      </trans-unit>
+      <trans-unit resname="modal.blog.button.new.label">
+        <source>modal.blog.button.new.label</source>
+        <target><![CDATA[<i class="fa fa-check-circle"></i> Créer un nouveau blog]]></target>
+      </trans-unit>
+      <trans-unit resname="modal.blog.list.empty.notice">
+        <source>modal.blog.list.empty.notice</source>
+        <target>Vous n'avez pas encore créé de blog. C'est le moment :)</target>
+      </trans-unit>
+      <trans-unit resname="modal.blog.list.title">
+        <source>modal.blog.list.title</source>
+        <target>Liste des blogs</target>
+      </trans-unit>
+      <trans-unit resname="modal.blog.list.articlesList.title">
+        <source>modal.blog.list.articlesList.title</source>
+        <target>Liste des articles</target>
+      </trans-unit>
+      <trans-unit resname="modal.blog.list.articlesList.empty.notice">
+        <source>modal.blog.list.articlesList.empty.notice</source>
+        <target><![CDATA[Vous n'avez pas encore créé d'article dans ce blog. C'est le moment :)<br/><br/><a href="%creationLink%" data-toggle="vic-modal" class="vic-btn vic-btn-primary"><i class="fa fa-plus"></i> Créer un article maintenant.</a>]]></target>
+      </trans-unit>
+      <trans-unit resname="modal.blog.button.new.title">
+        <source>modal.blog.button.new.title</source>
+        <target>Créer un nouveau blog</target>
+      </trans-unit>
+      <trans-unit id="604de4ede156d22c87184505b9794ba2ad9c5062" resname="menu.blog.article.settings">
+          <source>menu.blog.article.settings</source>
           <target><![CDATA[<i class="vic-menuImg vic-menuImg-gear"></i> Paramètres de l'article]]></target>
+      </trans-unit>
+      <trans-unit resname="menu.blog.settings">
+          <source>menu.blog.settings</source>
+          <target><![CDATA[<i class="vic-menuImg vic-menuImg-gear"></i> Paramètres du blog]]></target>
       </trans-unit>
       <trans-unit id="604de4ede156d22c87184505b9794ba2ad9c5063" resname="widget_filter.category_filter">
         <source>widget_filter.category_filter</source>
@@ -33,6 +69,22 @@
       <trans-unit id="604de4ede156d22c87184505b9794ba2ad9c5063" resname="widget_filter.tag_filter">
         <source>widget_filter.tag_filter</source>
         <target>Etiquettes</target>
+      </trans-unit>
+      <trans-unit resname="modal.blog.new.title">
+        <source>modal.blog.new.title</source>
+        <target>Créer un nouveau blog</target>
+      </trans-unit>
+      <trans-unit resname="modal.article.new.title">
+        <source>modal.article.new.title</source>
+        <target>Créer un nouvel article</target>
+      </trans-unit>
+      <trans-unit resname="modal.form.article.settings.title">
+        <source>modal.form.article.settings.title</source>
+        <target><![CDATA[Paramètres de l'article <strong>%articleName%</strong>]]></target>
+      </trans-unit>
+      <trans-unit resname="modal.form.blog.settings.title">
+        <source>modal.form.blog.settings.title</source>
+        <target><![CDATA[Paramètres du blog <strong>%blogName%</strong>]]></target>
       </trans-unit>
     </body>
   </file>
