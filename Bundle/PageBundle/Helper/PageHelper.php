@@ -109,10 +109,10 @@ class PageHelper
         $page = $this->findPageByUrl($url);
         $entity = $this->findEntityByPageUrl($url);
         if ($entity) {
+            $this->isPageValid($page, $entity);
             $page = $this->updatePageWithEntity($page, $entity);
         }
 
-        $this->isPageValid($page, $entity);
         //Define current view
         $this->currentViewHelper->setCurrentView($page);
 

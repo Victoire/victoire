@@ -6,7 +6,7 @@ services:
             - { name: victoire_widget.widget_content_resolver, alias: {{widget}} }
 {% elseif parent_content_resolver %}
     victoire_core.widget_{{ widget|lower }}_content_resolver:
-        class: Victoire\Widget\{{ parent }}Bundle\Resolver\Widget{{ parent }}ContentResolver
+        alias: victoire_core.widget_{{ parent|lower }}_content_resolver
         tags:
             - { name: victoire_widget.widget_content_resolver, alias: {{widget}} }
 {% else %}
