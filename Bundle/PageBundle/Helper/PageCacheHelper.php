@@ -29,14 +29,16 @@ class PageCacheHelper
      */
     public function writeCache($pages)
     {
-        $rootNode = new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8' ?><pages></pages>");
+        $rootNode = new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8' ?><references></references>");
         foreach ($pages as $name => $page) {
-            $itemNode = $rootNode->addChild('page');
+            $itemNode = $rootNode->addChild('reference');
             $itemNode->addAttribute('name', $name);
             $itemNode->addAttribute('url', $page['url']);
-            $itemNode->addAttribute('view', $page['view']);
-            $itemNode->addAttribute('entity', $page['entity']);
-            $itemNode->addAttribute('entityNamespace', $page['entityNamespace']);
+            $itemNode->addAttribute('pageId', $page['pageId']);
+            if (!empty($page['entityId'])) {
+                $itemNode->addAttribute('entityId', $page['entityId']);
+                $itemNode->addAttribute('entityNamespace', $page['entityNamespace']);
+            }
         }
 
         $this->writeFile($rootNode);
@@ -64,25 +66,40 @@ class PageCacheHelper
         $rootNode = $this->readCache();
         $name = $this->getPageCacheName($page, $entity);
 
-        $itemNode = $rootNode->xpath("//page[@name='" . $name . "']");
+        $itemNode = $rootNode->xpath("//reference[@name='" . $name . "']");
 
         if (array_key_exists(0, $itemNode)) {
             $itemNode[0]->attributes()->url = $page->getUrl();
             $itemNode[0]->attributes()->view = $page->getId();
-            $itemNode[0]->attributes()->entity = $entity ? $entity->getId() : null;
-            $itemNode[0]->attributes()->entity = $entity ? get_class($entity) : null;
+            if ($entity) {
+                $itemNode[0]->attributes()->entity = $entity->getId();
+                $itemNode[0]->attributes()->entity = get_class($entity);
+            }
         } else {
-            $itemNode = $rootNode->addChild('page');
+            $itemNode = $rootNode->addChild('reference');
             $itemNode->addAttribute('name', $name);
             $itemNode->addAttribute('url', $page->getUrl());
-            $itemNode->addAttribute('view', $page->getId());
-            $itemNode->addAttribute('entity', $entity ? $entity->getId() : null);
-            $itemNode->addAttribute('entityNamespace', $entity ? get_class($entity) : null);
+            $itemNode->addAttribute('pageId', $page->getId());
+            if ($entity) {
+                $itemNode->addAttribute('entityId', $entity->getId());
+                $itemNode->addAttribute('entityNamespace', get_class($entity));
+            }
         }
 
         $this->writeFile($rootNode);
     }
+    public function getPageParameters($url)
+    {
+        $pageParameters = array();
+        $pageCache = $this->readCache()->xpath("//reference[@url='" . $url . "']");
+        if ($pageCache) {
+            $pageParameters['pageId'] = $pageCache[0]->getAttributeAsPhp('pageId');
+            $pageParameters['entityId'] = $pageCache[0]->getAttributeAsPhp('entityId');
+            $pageParameters['entityNamespace'] = $pageCache[0]->getAttributeAsPhp('entityNamespace');
+        }
 
+        return $pageParameters;
+    }
     protected function getPageCacheName(BasePage $page, $entity)
     {
         $twigEnv = new \Twig_Environment(new \Twig_Loader_String());

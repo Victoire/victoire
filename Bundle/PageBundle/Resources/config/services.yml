@@ -34,6 +34,13 @@ services:
             - "@doctrine.orm.entity_manager"
             - "@victoire_page.url_helper"
             - "@victoire_page.matcher.url_matcher"
+            - "@victoire_core.current_view"
+            - "@event_dispatcher"
+            - "@victoire_templating"
+            - "@victoire_seo.helper.pageseo_helper"
+            - "@victoire_page.page_cache_helper"
+            - "@session"
+            - "@security.context"
     victoire_page.url_helper:
         class: Victoire\Bundle\PageBundle\Helper\UrlHelper
         arguments:
