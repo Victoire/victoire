@@ -2,8 +2,8 @@
 namespace Victoire\Bundle\PageBundle\Helper;
 
 use Doctrine\Orm\EntityManager;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\SecurityContext;
@@ -59,7 +59,7 @@ class PageHelper
      * @param UrlHelper                $urlHelper
      * @param UrlMatcher               $urlMatcher
      * @param CurrentViewHelper        $currentViewHelper
-     * @param EventDispatcher          $eventDispatcher
+     * @param EventDispatcherInterface $eventDispatcher
      * @param VictoireTemplating       $victoireTemplating
      * @param PageSeoHelper            $pageSeoHelper
      * @param PageCacheHelper          $pageCacheHelper
@@ -74,7 +74,7 @@ class PageHelper
         UrlHelper $urlHelper,
         UrlMatcher $urlMatcher,
         CurrentViewHelper $currentViewHelper,
-        TraceableEventDispatcher $eventDispatcher,
+        EventDispatcherInterface $eventDispatcher,
         TemplateMapper $victoireTemplating,
         PageSeoHelper $pageSeoHelper,
         PageCacheHelper $pageCacheHelper,
