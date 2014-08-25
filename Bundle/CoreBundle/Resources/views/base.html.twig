@@ -2,8 +2,9 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block meta %}
+            {% include 'VictoireSeoBundle::_meta.html.twig' %}
+        {% endblock meta %}
         {% block head_script %}
         {% endblock %}
         {% block head_style %}

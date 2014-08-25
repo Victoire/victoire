@@ -47,14 +47,14 @@ class EntityProxySubscriber implements EventSubscriber
 
             $metadatas = $eventArgs->getClassMetadata();
             $metaBuilder = new ClassMetadataBuilder($metadatas);
-            if ($metadatas->name === 'Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy') {
+            if ($metadatas->name === 'Victoire\Bundle\CoreBundle\Entity\EntityProxy') {
                 foreach ($annotationReader->getBusinessClasses() as $field => $entity) {
                     $metaBuilder->addManyToOne($field, $entity, "proxies");
                 }
             }
             $key = array_search($metadatas->name, $annotationReader->getBusinessClasses());
             if ($key) {
-                $metaBuilder->addOneToMany('proxies', 'Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy', $key);
+                $metaBuilder->addOneToMany('proxies', 'Victoire\Bundle\CoreBundle\Entity\EntityProxy', $key);
             }
         }
     }

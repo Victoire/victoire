@@ -42,7 +42,7 @@ class EntityProxyFormType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class'         => 'Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy',
+            'data_class'         => 'Victoire\Bundle\CoreBundle\Entity\EntityProxy',
             'entity_name'        => null,
             'namespace'          => null,
             'widget'             => null,

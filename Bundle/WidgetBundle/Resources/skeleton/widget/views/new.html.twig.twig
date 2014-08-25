@@ -5,7 +5,7 @@
 {% set of = "{%" %}
 {% set cf = "%}" %}
 {% if parent is defined and parent != "" %}
-{{of}} extends 'Victoire{{parent}}Bundle:Widget:new.html.twig' {{cf}}
+{{of}} extends 'VictoireWidget{{parent}}Bundle::new.html.twig' {{cf}}
 {% else %}
 {{of}} extends 'VictoireCoreBundle:Widget:new.html.twig' {{cf}}
 {% endif %}
