@@ -38,6 +38,6 @@ class EntityProxyCacheDriver extends AnnotationDriver
      */
     public function getAllClassNames()
     {
-        return array('Victoire\Bundle\CoreBundle\Cached\Entity\EntityProxy');
+        return array('Victoire\Bundle\CoreBundle\Entity\EntityProxy');
     }
 }

@@ -141,7 +141,7 @@ abstract class View
     /**
      * @ORM\Column(name="widget_map", type="array")
      */
-    protected $widgetMap;
+    protected $widgetMap = array();
 
     //the slot contains the widget maps entities
     protected $slots = array();

@@ -233,12 +233,11 @@ EOT
             ));
 
             $parent = $dialog->askAndValidate(
-                $output, 
-                $dialog->getQuestion('Parent widget name', null), 
-                array('Victoire\Bundle\CoreBundle\Command\CreateWidgetCommand', 'validateWidgetName'), 
+                $output,
+                $dialog->getQuestion('Parent widget name', null),
+                array('Victoire\Bundle\CoreBundle\Command\CreateWidgetCommand', 'validateWidgetName'),
                 false,
                 null);
-            
 
             $input->setOption('parent', $parent);
         }
