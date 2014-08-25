@@ -393,27 +393,29 @@ class PageHelper
         $basePages = $this->em->createQuery("select bp from VictoirePageBundle:BasePage bp")->getResult();
         $businessEntities = $this->businessEntityHelper->getBusinessEntities();
 
-        foreach ($businessEntities as $businessEntity) {
-            $properties = $this->businessEntityPageHelper->getBusinessProperties($businessEntity);
+        foreach ($basePages as $page) {
+            // if page is a pattern, compute it's bep
+            if ($page instanceof BusinessEntityPagePattern) {
 
-            //find businessEdietifiers of the current businessEntity
-            $selectableProperties = array('id');
-            foreach ($properties as $property) {
-                if ($property->getType() === 'businessIdentifier') {
-                    $selectableProperties[] = $property->getEntityProperty();
-                }
-            }
-            // This query retrieve business entity object, without useless properties for performance optimisation
-            $entities = $this->em->createQuery("select partial
-                e.{" . implode(', ', $selectableProperties) . "}
-                from ". $businessEntity->getClass() ." e")
-                ->getResult();
-            // for each business entity
-            foreach ($entities as $entity) {
-                //and for each page
-                foreach ($basePages as $page) {
-                    // if page is a pattern, compute it's bep
-                    if ($page instanceof BusinessEntityPagePattern) {
+                foreach ($businessEntities as $businessEntity) {
+                    $properties = $this->businessEntityPageHelper->getBusinessProperties($businessEntity);
+
+                    //find businessEdietifiers of the current businessEntity
+                    $selectableProperties = array('id');
+                    foreach ($properties as $property) {
+                        if ($property->getType() === 'businessIdentifier') {
+                            $selectableProperties[] = $property->getEntityProperty();
+                        }
+                    }
+                    // This query retrieve business entity object, without useless properties for performance optimisation
+                    $entities = $this->em->createQuery("select partial
+                        e.{" . implode(', ', $selectableProperties) . "}
+                        from ". $businessEntity->getClass() ." e")
+                        ->getResult();
+                    // for each business entity
+                    foreach ($entities as $entity) {
+                        //and for each page
+
                         // only if related pattern entity is the current entity
                         if ($page->getBusinessEntityName() === $businessEntity->getId()) {
                             $currentPattern = clone $page;
@@ -425,15 +427,15 @@ class PageHelper
                                 'entityNamespace' => get_class($entity)
                             );
                         }
-                    } else {
-                        $pages['victoire_page_' . $page->getId()] = array(
-                                'url' => $page->getUrl(),
-                                'pageId' => $page->getId(),
-                                'entityId' => null,
-                                'entityNamespace' => null
-                            );
                     }
                 }
+            } else {
+                $pages['victoire_page_' . $page->getId()] = array(
+                        'url' => $page->getUrl(),
+                        'pageId' => $page->getId(),
+                        'entityId' => null,
+                        'entityNamespace' => null
+                    );
             }
         }
 
