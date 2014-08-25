@@ -108,8 +108,8 @@ class PageHelper
     {
         $page = $this->findPageByUrl($url);
         $entity = $this->findEntityByPageUrl($url);
+        $this->isPageValid($page, $entity);
         if ($entity) {
-            $this->isPageValid($page, $entity);
             $page = $this->updatePageWithEntity($page, $entity);
         }
 
