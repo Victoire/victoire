@@ -96,10 +96,34 @@ class PageCacheHelper
             $pageParameters['pageId'] = $pageCache[0]->getAttributeAsPhp('pageId');
             $pageParameters['entityId'] = $pageCache[0]->getAttributeAsPhp('entityId');
             $pageParameters['entityNamespace'] = $pageCache[0]->getAttributeAsPhp('entityNamespace');
+            $pageParameters['url'] = $pageCache[0]->getAttributeAsPhp('url');
         }
 
         return $pageParameters;
     }
+
+    public function findPageCacheByParameters($parameters)
+    {
+        $arguments = array();
+        $pageParameters = array();
+        foreach ($parameters as $key => $value) {
+            if ($value !== null) {
+                $arguments[] = '@' . $key . '="' . $value . '"';
+            }
+        }
+
+        $pageCache = $this->readCache()->xpath("//reference[" . implode(' and ', $arguments) . "]");
+        if ($pageCache) {
+            $pageParameters['pageId'] = $pageCache[0]->getAttributeAsPhp('pageId');
+            $pageParameters['entityId'] = $pageCache[0]->getAttributeAsPhp('entityId');
+            $pageParameters['entityNamespace'] = $pageCache[0]->getAttributeAsPhp('entityNamespace');
+            $pageParameters['url'] = $pageCache[0]->getAttributeAsPhp('url');
+        }
+
+        return $pageParameters;
+
+    }
+
     protected function getPageCacheName(BasePage $page, $entity)
     {
         $twigEnv = new \Twig_Environment(new \Twig_Loader_String());

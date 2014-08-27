@@ -6,12 +6,12 @@ services:
             - { name: victoire_widget.widget_content_resolver, alias: {{widget}} }
 {% elseif parent_content_resolver %}
     victoire_core.widget_{{ widget|lower }}_content_resolver:
-        alias: victoire_core.widget_{{ parent|lower }}_content_resolver
+        parent: victoire_core.widget_{{ parent|lower }}_content_resolver
         tags:
             - { name: victoire_widget.widget_content_resolver, alias: {{widget}} }
 {% else %}
     victoire_core.widget_{{ widget|lower }}_content_resolver:
-        class: Victoire\Bundle\WidgetBundle\Resolver\BaseWidgetContentResolver
+        parent: victoire_widget.base_widget_content_resolver
         tags:
             - { name: victoire_widget.widget_content_resolver, alias: {{widget}} }
 {% endif %}

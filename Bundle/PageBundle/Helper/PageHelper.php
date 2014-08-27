@@ -112,7 +112,6 @@ class PageHelper
         if ($entity) {
             $page = $this->updatePageWithEntity($page, $entity);
         }
-
         //Define current view
         $this->currentViewHelper->setCurrentView($page);
 
@@ -131,6 +130,7 @@ class PageHelper
         return $response;
 
     }
+
     /**
      * populate the page with given entity
      * @param View           $page
@@ -166,6 +166,20 @@ class PageHelper
 
         return $entity;
 
+    }
+
+    public function findPageByParameters($parameters)
+    {
+        $pageCache = $this->pageCacheHelper->findPageCacheByParameters($parameters);
+
+        $page = $this->findPageByUrl($pageCache['url']);
+        $entity = $this->findEntityByPageUrl($pageCache['url']);
+        $this->isPageValid($page, $entity);
+        if ($entity) {
+            $page = $this->updatePageWithEntity($page, $entity);
+        }
+
+        return $page;
     }
 
     /**

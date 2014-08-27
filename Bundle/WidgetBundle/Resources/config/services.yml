@@ -6,12 +6,12 @@ services:
     victoire_widget.widget_content_resolver:
         class: Victoire\Bundle\WidgetBundle\Resolver\WidgetContentResolver
         arguments:
-            - @victoire_query.query_helper
-            - @victoire_widget.widget_helper
             - @victoire_widget.widget_content_resolver_chain
-            - @request
-            - ?@victoire_core.filter_chain
-        scope: request
+
+    victoire_widget.base_widget_content_resolver:
+        class: Victoire\Bundle\WidgetBundle\Resolver\BaseWidgetContentResolver
+        calls:
+            - [setQueryHelper, ["@victoire_query.query_helper"]]
 
     victoire_widget.widget_helper:
         class: Victoire\Bundle\WidgetBundle\Helper\WidgetHelper

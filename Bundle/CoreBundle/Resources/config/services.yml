@@ -172,3 +172,11 @@ services:
 
     victoire_core.current_view:
         class: Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper
+
+
+    twig.extension.routing:
+        class: 'Victoire\Bundle\CoreBundle\Twig\Extension\RoutingExtention'
+        public: false
+        arguments:
+            - '@victoire_page.page_helper'
+            - '@router'

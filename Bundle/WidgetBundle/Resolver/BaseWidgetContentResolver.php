@@ -2,11 +2,9 @@
 
 namespace Victoire\Bundle\WidgetBundle\Resolver;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Victoire\Bundle\QueryBundle\Helper\QueryHelper;
 use Victoire\Bundle\WidgetBundle\Model\Widget;
-use Victoire\Widget\FilterBundle\Filter\Chain\FilterChain;
 
 class BaseWidgetContentResolver
 {
@@ -27,8 +25,10 @@ class BaseWidgetContentResolver
         $accessor = PropertyAccess::createPropertyAccessor();
 
         foreach ($widgetProperties as $property) {
-            $value = $accessor->getValue($widget, $property->getName());
-            $parameters[$property->getName()] = $value;
+            if (!$property->isStatic()) {
+                $value = $accessor->getValue($widget, $property->getName());
+                $parameters[$property->getName()] = $value;
+            }
 
         }
 
@@ -108,29 +108,6 @@ class BaseWidgetContentResolver
         //get the base query
         $itemsQueryBuilder = $queryHelper->getQueryBuilder($widget);
 
-        if ($this->filterChain !== null) {
-            $request = $this->request;
-            $filters = $request->query->get('victoire_form_filter');
-
-            //the id is an integer
-            $listId = intval($filters['listing']);
-
-            //if the filters is the widget id
-            if ($listId === $widget->getId()) {
-                unset($filters['listing']);
-
-                $filterChains = $this->filterChain;
-
-                //we parse the filters
-                foreach ($filterChains->getFilters() as $name => $filter) {
-                    if (!empty($filters[$name])) {
-                        $filter->buildQuery($itemsQueryBuilder, $filters[$name]);
-                        $widget->filters[$name] = $filter->getFilters($filters[$name]);
-                    }
-                }
-            }
-        }
-
         //add the query of the widget
         return $queryHelper->buildWithSubQuery($widget, $itemsQueryBuilder);
     }
@@ -154,13 +131,5 @@ class BaseWidgetContentResolver
     public function setQueryHelper(QueryHelper $queryHelper)
     {
         $this->queryHelper = $queryHelper;
-    }
-    public function setFilterChain($filterChain)
-    {
-        $this->filterChain = $filterChain;
-    }
-    public function setRequest($request)
-    {
-        $this->request = $request;
     }
 }

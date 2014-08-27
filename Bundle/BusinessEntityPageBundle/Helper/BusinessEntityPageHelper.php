@@ -120,10 +120,12 @@ class BusinessEntityPageHelper
         $accessor = PropertyAccess::createPropertyAccessor();
 
         foreach ($patternProperties as $property) {
-            $value = $accessor->getValue($businessEntityPagePattern, $property->getName());
-            $setMethod = 'set'.ucfirst($property->getName());
-            if (method_exists($page, $setMethod)) {
-                $accessor->setValue($page, $property->getName(), $value);
+            if (!$property->isStatic()) {
+                $value = $accessor->getValue($businessEntityPagePattern, $property->getName());
+                $setMethod = 'set'.ucfirst($property->getName());
+                if (method_exists($page, $setMethod)) {
+                    $accessor->setValue($page, $property->getName(), $value);
+                }
             }
         }
 

@@ -19,11 +19,20 @@ class BasePageController extends AwesomeController
 
     public function showAction($url)
     {
-
         $response = $this->container->get('victoire_page.page_helper')->renderPageByUrl($url);
 
         //throw an exception is the page is not valid
         return $response;
+    }
+
+    public function showByIdAction($viewId, $entityId = null)
+    {
+        $page = $this->container->get('victoire_page.page_helper')->findPageByParameters(array(
+            'pageId' => $viewId,
+            'entityId' => $entityId
+        ));
+
+        return $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl())));
     }
     /**
      * New page
