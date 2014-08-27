@@ -83,6 +83,7 @@ services:
             - "@view.widgetMap.builder"
             - "@victoire_core.widget_exception_handler"
             - "@victoire_core.current_view"
+            - "@twig"
         tags:
             - { name: twig.extension }
     victoire_core.twig.globals_extension:
