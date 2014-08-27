@@ -8,6 +8,13 @@ VictoireWidgetBundle:
     type:     annotation
     prefix:   /
 
+victoire_core_page_show_by_id:
+    path:      /victoire-dcms-public/show-page-by-id/{viewId}/{entityId}
+    defaults:  { _controller: VictoirePageBundle:Page:showById, entityId: ~ }
+    requirements:
+        viewId:  \d+
+        viewId:  \d+
+
 victoire_core_page_show:
     path:      /{url}
     defaults:  { _controller: VictoirePageBundle:Page:show }

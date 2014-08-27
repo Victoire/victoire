@@ -183,6 +183,20 @@ class PageHelper extends ViewHelper
 
     }
 
+    public function findPageByParameters($parameters)
+    {
+        $pageCache = $this->pageCacheHelper->findPageCacheByParameters($parameters);
+
+        $page = $this->findPageByUrl($pageCache['url']);
+        $entity = $this->findEntityByPageUrl($pageCache['url']);
+        $this->isPageValid($page, $entity);
+        if ($entity) {
+            $page = $this->updatePageWithEntity($page, $entity);
+        }
+
+        return $page;
+    }
+
     /**
      * Search a page in the route history according to giver url
      * @param string $url

@@ -84,6 +84,7 @@ services:
             - "@victoire_core.widget_exception_handler"
             - "@victoire_core.current_view"
             - "@victoire_core.view_cache_helper"
+            - "@twig"
         tags:
             - { name: twig.extension }
     victoire_core.twig.globals_extension:
@@ -197,3 +198,11 @@ services:
 
     victoire_core.current_view:
         class: Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper
+
+
+    twig.extension.routing:
+        class: 'Victoire\Bundle\CoreBundle\Twig\Extension\RoutingExtention'
+        public: false
+        arguments:
+            - '@victoire_page.page_helper'
+            - '@router'

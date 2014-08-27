@@ -1,34 +1,17 @@
 <?php
 namespace Victoire\Bundle\WidgetBundle\Resolver;
 
-use Symfony\Component\HttpFoundation\Request;
-use Victoire\Bundle\QueryBundle\Helper\QueryHelper;
-use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
 use Victoire\Bundle\WidgetBundle\Model\Widget;
 use Victoire\Bundle\WidgetBundle\Resolver\Chain\WidgetContentResolverChain;
 
 class WidgetContentResolver
 {
 
-    private $queryHelper;
-    private $widgetHelper;
     private $widgetContentResolverChain;
-    private $request;
-    private $filterChain = null;
 
-    public function __construct(
-        QueryHelper $queryHelper,
-        WidgetHelper $widgetHelper,
-        WidgetContentResolverChain $widgetContentResolverChain,
-        Request $request,
-        $filterChain
-    )
+    public function __construct(WidgetContentResolverChain $widgetContentResolverChain)
     {
-        $this->queryHelper = $queryHelper;
-        $this->widgetHelper = $widgetHelper;
-        $this->filterChain = $filterChain;
         $this->widgetContentResolverChain = $widgetContentResolverChain;
-        $this->request = $request;
     }
 
     /**

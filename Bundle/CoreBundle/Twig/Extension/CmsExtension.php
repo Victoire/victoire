@@ -21,7 +21,7 @@ use Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer;
  * @author Fabien Potencier <fabien@symfony.com>
  * @author Bernhard Schussek <bschussek@gmail.com>
  */
-class CmsExtension extends \Twig_Extension
+class CmsExtension extends \Twig_Extension_Core
 {
     protected $widgetRenderer;
     protected $templating;
@@ -30,6 +30,7 @@ class CmsExtension extends \Twig_Extension
     protected $widgetMapBuilder;
     protected $widgetExceptionHandler;
     protected $currentViewHelper;
+    protected $twig;
 
     /**
      * Constructor
@@ -42,6 +43,7 @@ class CmsExtension extends \Twig_Extension
      * @param WidgetExceptionHandler $widgetExceptionHandler
      * @param CurrentViewHelper      $currentViewHelper
      * @param ViewCacheHelper        $viewCacheHelper
+     * @param TwigEnvironment        $twig
      */
     public function __construct(
         WidgetRenderer $widgetRenderer,
@@ -51,7 +53,8 @@ class CmsExtension extends \Twig_Extension
         WidgetMapBuilder $widgetMapBuilder,
         WidgetExceptionHandler $widgetExceptionHandler,
         CurrentViewHelper $currentViewHelper,
-        ViewCacheHelper $viewCacheHelper
+        ViewCacheHelper $viewCacheHelper,
+        \Twig_Environment $twig
     )
     {
         $this->widgetRenderer = $widgetRenderer;
@@ -62,6 +65,7 @@ class CmsExtension extends \Twig_Extension
         $this->widgetExceptionHandler = $widgetExceptionHandler;
         $this->currentViewHelper = $currentViewHelper;
         $this->pageCacheHelper = $viewCacheHelper;
+        $this->twig = $twig;
     }
 
     /**
@@ -90,6 +94,8 @@ class CmsExtension extends \Twig_Extension
     {
         return array(
             'hash' => new \Twig_Filter_Method($this, 'hash'),
+            'date' => new \Twig_Filter_Method($this, 'twig_vic_date_format_filter'),
+
         );
     }
 
@@ -219,6 +225,29 @@ class CmsExtension extends \Twig_Extension
         } catch (Exception $e) {
             error_log('Please check that the '.$algorithm.' does exists because it failed when trying to run. We are expecting a valid algorithm such as md5 or sha512 etc. ['.$e->getMessage().']');
 
+            return $value;
+        }
+    }
+
+    /**
+     * Converts a date to the given format.
+     *
+     * <pre>
+     *   {{ post.published_at|date("m/d/Y") }}
+     * </pre>
+     *
+     * @param Twig_Environment             $env      A Twig_Environment instance
+     * @param DateTime|DateInterval|string $date     A date
+     * @param string                       $format   A format
+     * @param DateTimeZone|string          $timezone A timezone
+     *
+     * @return string The formatted date
+     */
+    public function twig_vic_date_format_filter($value, $format = 'F j, Y H:i', $timezone = null)
+    {
+        if ($value instanceof \DateTime || $value instanceof DateInterval) {
+            return twig_date_format_filter($this->twig, $value, $format, $timezone);
+        } else {
             return $value;
         }
     }
