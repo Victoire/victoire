@@ -10,18 +10,15 @@ use Victoire\Bundle\PageBundle\Entity\BasePage;
 class PageMenuContextualEvent extends Event
 {
     protected $page;
-    protected $entity;
 
     /**
      * Constructor
      *
-     * @param Page   $page
-     * @param string $entity
+     * @param Page $page
      */
-    public function __construct(BasePage $page, $entity = null)
+    public function __construct(BasePage $page)
     {
         $this->page = $page;
-        $this->entity = $entity;
     }
 
     /**
@@ -32,15 +29,5 @@ class PageMenuContextualEvent extends Event
     public function getPage()
     {
         return $this->page;
-    }
-
-    /**
-     * Get the entity
-     *
-     * @return Entity
-     */
-    public function getEntity()
-    {
-        return $this->entity;
     }
 }

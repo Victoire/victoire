@@ -7,6 +7,7 @@ use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
+use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\QueryBundle\Helper\QueryHelper;
 
@@ -105,25 +106,28 @@ class BusinessEntityPageHelper
 
     /**
      * Generate update the page parameters with the entity
+     * @param BusinessEntityPagePattern $businessEntityPagePattern
+     * @param Entity                    $entity
      *
-     * @param Page   $page
-     * @param Entity $entity
      */
     public function generateEntityPageFromPattern(BusinessEntityPagePattern $businessEntityPagePattern, $entity)
     {
         $className = get_class($entity);
         $page = new BusinessEntityPage();
+        $page->setPattern($businessEntityPagePattern);
+        $page->setBusinessEntityName($className);
 
         $reflect = new \ReflectionClass($businessEntityPagePattern);
         $patternProperties = $reflect->getProperties();
-        $parameters = array('pattern' => $businessEntityPagePattern);
         $accessor = PropertyAccess::createPropertyAccessor();
 
         foreach ($patternProperties as $property) {
-            $value = $accessor->getValue($businessEntityPagePattern, $property->getName());
-            $setMethod = 'set'.ucfirst($property->getName());
-            if (method_exists($page, $setMethod)) {
-                $accessor->setValue($page, $property->getName(), $value);
+            if (!in_array($property->getName(), array('id', 'slug'))) {
+                $value = $accessor->getValue($businessEntityPagePattern, $property->getName());
+                $setMethod = 'set'.ucfirst($property->getName());
+                if (method_exists($page, $setMethod)) {
+                    $accessor->setValue($page, $property->getName(), $value);
+                }
             }
         }
 
@@ -147,7 +151,10 @@ class BusinessEntityPageHelper
             $page->setUrl($pageUrl);
             $page->setName($pageName);
         }
-        $page->setBusinessEntity($entity);
+
+        $entityProxy = new EntityProxy();
+        $entityProxy->setEntity($entity);
+        $page->setEntityProxy($entityProxy);
 
         return $page;
     }

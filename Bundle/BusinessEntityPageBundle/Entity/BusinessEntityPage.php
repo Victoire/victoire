@@ -57,8 +57,8 @@ class BusinessEntityPage extends BasePage
         return $this->entityProxy;
     }
 
-    public function setPattern(BusinessEntityPagePattern $businessEntityPagePattern) { $this->businessEntityPagePattern = $businessEntityPagePattern; return $this; }
-    public function getPattern() { return $this->businessEntityPagePattern; }
+    public function setPattern(BusinessEntityPagePattern $pattern) { $this->pattern = $pattern; return $this; }
+    public function getPattern() { return $this->pattern; }
 
     /**
      * Get the business entity name (PagePattern proxy)
@@ -68,16 +68,6 @@ class BusinessEntityPage extends BasePage
     public function getBusinessEntityName()
     {
         return $this->getPattern()->getBusinessEntityName();
-    }
-
-    /**
-     * Set the businessEntity
-     *
-     * @param unknown $businessEntity
-     */
-    public function setBusinessEntity($businessEntity)
-    {
-        $this->businessEntity = $businessEntity;
     }
 
     /**
@@ -95,7 +85,7 @@ class BusinessEntityPage extends BasePage
             //if there is a proxy
             if ($entityProxy !== null) {
                 $businessEntity = $entityProxy->getEntity($this->getBusinessEntityName());
-                $this->businessEntity = $entityProxy;
+                $this->businessEntity = $businessEntity;
             }
         }
 

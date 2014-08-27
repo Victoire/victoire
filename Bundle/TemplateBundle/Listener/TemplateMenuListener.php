@@ -6,7 +6,7 @@ use Symfony\Component\EventDispatcher\Event;
 use Victoire\Bundle\CoreBundle\Listener\MenuListenerInterface;
 use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
-use Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent;
+use Victoire\Bundle\TemplateBundle\Event\Menu\TemplateMenuContextualEvent;
 
 /**
  */
@@ -29,7 +29,7 @@ class TemplateMenuListener implements MenuListenerInterface
     /**
      * add a contextual menu item
      *
-     * @param PageMenuContextualEvent $event
+     * @param TemplateMenuContextualEvent $event
      *
      * @return Ambigous <\Knp\Menu\ItemInterface, NULL>
      */

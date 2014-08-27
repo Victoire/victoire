@@ -54,20 +54,20 @@ class WidgetController extends AwesomeController
     /**
      * New Widget
      *
-     * @param string         $type   The type of the widget we edit
-     * @param View           $view   The view where attach the widget
-     * @param string         $slot   The slot where attach the widget
-     * @param BusinessEntity $entity The business entity the widget shows on dynamic mode
+     * @param string         $type          The type of the widget we edit
+     * @param integer        $viewReference The view reference where attach the widget
+     * @param string         $slot          The slot where attach the widget
+     * @param BusinessEntity $entity        The business entity the widget shows on dynamic mode
      *
      * @return response
      *
-     * @Route("/victoire-dcms/widget/new/{type}/{view}/{slot}/{entity}", name="victoire_core_widget_new", defaults={"slot":null, "entity":null}, options={"expose"=true})
+     * @Route("/victoire-dcms/widget/new/{type}/{viewReference}/{slot}/{entity}", name="victoire_core_widget_new", defaults={"slot":null, "entity":null}, options={"expose"=true})
      * @Template()
      */
-    public function newAction($type, $view, $slot = null, $entity = null)
+    public function newAction($type, $viewReference, $slot = null, $entity = null)
     {
         try {
-            $view = $this->get('doctrine.orm.entity_manager')->getRepository('VictoireCoreBundle:View')->findOneById($view);
+            $view = $this->getViewByReferenceId($viewReference);
 
             if ($entity) {
                 $widgetManager = $this->get('widget_manager')->getManager(null, $type);
@@ -105,23 +105,21 @@ class WidgetController extends AwesomeController
 
     /**
      * Create a widget
-     *
-     * @param string         $type       The type of the widget we edit
-     * @param View           $view       The view where attach the widget
-     * @param string         $slot       The slot where attach the widget
-     * @param BusinessEntity $entityName The business entity name the widget shows on dynamic mode
+     * @param string         $type          The type of the widget we edit
+     * @param integer        $viewReference The view reference where attach the widget
+     * @param string         $slot          The slot where attach the widget
+     * @param BusinessEntity $entityName    The business entity name the widget shows on dynamic mode
      *
      * @return response
-     * @Route("/victoire-dcms/widget/create/{type}/{view_id}/{slot}/{entityName}", name="victoire_core_widget_create", defaults={"slot":null, "entityName":null, "_format": "json"})
+     * @Route("/victoire-dcms/widget/create/{type}/{viewReference}/{slot}/{entityName}", name="victoire_core_widget_create", defaults={"slot":null, "entityName":null, "_format": "json"})
      * @Template()
      */
-    public function createAction($type, $view_id, $slot = null, $entityName = null)
+    public function createAction($type, $viewReference, $slot = null, $entityName = null)
     {
         try {
             //services
             $em = $this->getEntityManager();
-
-            $view = $em->getRepository('VictoireCoreBundle:View')->findOneById($view_id);
+            $view = $this->getViewByReferenceId($viewReference);
             $this->get('victoire_core.current_view')->setCurrentView($view);
             $widgetManager = $this->getWidgetManager();
 
@@ -135,23 +133,23 @@ class WidgetController extends AwesomeController
 
     /**
      * Edit a widget
-     * @param Widget $widget      The widget to edit
-     * @param View   $currentView The current view
-     * @param string $entityName  The entity name (could be null is the submitted form is in static mode)
+     * @param Widget  $widget        The widget to edit
+     * @param integer $viewReference The current view
+     * @param string  $entityName    The entity name (could be null is the submitted form is in static mode)
      *
      * @return response
      *
-     * @Route("/victoire-dcms/widget/edit/{id}/{view_id}/{entityName}", name="victoire_core_widget_edit")
-     * @Route("/victoire-dcms/widget/update/{id}/{view_id}/{entityName}", name="victoire_core_widget_update", defaults={"entityName": null})
+     * @Route("/victoire-dcms/widget/edit/{id}/{viewReference}/{entityName}", name="victoire_core_widget_edit")
+     * @Route("/victoire-dcms/widget/update/{id}/{viewReference}/{entityName}", name="victoire_core_widget_update", defaults={"entityName": null})
      * @Template()
-     * @ParamConverter("currentView", class="VictoireCoreBundle:View", options={"id" = "view_id"})
      */
-    public function editAction(Widget $widget, View $currentView, $entityName = null)
+    public function editAction(Widget $widget, $viewReference, $entityName = null)
     {
-        $this->get('victoire_core.current_view')->setCurrentView($currentView);
+        $view = $this->getViewByReferenceId($viewReference);
+        $this->get('victoire_core.current_view')->setCurrentView($view);
         try {
             $widgetManager = $this->getWidgetManager();
-            $response = new JsonResponse($widgetManager->editWidget($this->get('request'), $widget, $currentView, $entityName));
+            $response = new JsonResponse($widgetManager->editWidget($this->get('request'), $widget, $view, $entityName));
         } catch (\Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
         }
@@ -164,14 +162,14 @@ class WidgetController extends AwesomeController
      * @param Widget $widget The widget to delete
      *
      * @return empty response
-     * @Route("/victoire-dcms/widget/delete/{id}", name="victoire_core_widget_delete", defaults={"_format": "json"})
+     * @Route("/victoire-dcms/widget/delete/{id}/{viewReference}", name="victoire_core_widget_delete", defaults={"_format": "json"})
      * @Template()
-     * @ParamConverter("id", class="VictoireWidgetBundle:Widget")
      */
-    public function deleteAction(Widget $widget)
+    public function deleteAction(Widget $widget, $viewReference)
     {
+        $view = $this->getViewByReferenceId($viewReference);
         try {
-            $response = new JsonResponse($this->get('widget_manager')->deleteWidget($widget));
+            $response = new JsonResponse($this->get('widget_manager')->deleteWidget($widget, $view));
         } catch (\Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
         }
@@ -185,18 +183,18 @@ class WidgetController extends AwesomeController
      * @param View $view The view where update widget positions
      *
      * @return response
-     * @Route("/victoire-dcms/widget/updatePosition/{view}", name="victoire_core_widget_update_position", options={"expose"=true})
-     * @ParamConverter("view", class="VictoireCoreBundle:View")
+     * @Route("/victoire-dcms/widget/updatePosition/{viewReference}", name="victoire_core_widget_update_position", options={"expose"=true})
      */
-    public function updatePositionAction(View $view)
+    public function updatePositionAction($viewReference)
     {
+        $view = $this->getViewByReferenceId($viewReference);
         try {
             //the sorted order for the widgets
             $sortedWidgets = $this->getRequest()->request->get('sorted');
 
-            if ($view instanceof Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage) {
+            if (!$view->getId()) {
                 //create a view for the business entity instance if we are currently display an instance for a business entity template
-                $view = $this->get('victoire_page.page_helper')->duplicatePagePatternIfPageInstance($view);
+                $view = $this->get('victoire_page.page_helper')->forkBusinessEntityPage($view);
             }
 
             //recompute the order for the widgets
@@ -260,5 +258,10 @@ class WidgetController extends AwesomeController
         }
 
         return $response;
+    }
+
+    protected function getViewByReferenceId($referenceId)
+    {
+        return $this->get('victoire_page.page_helper')->getPageByParameters(array('id' => $referenceId));
     }
 }

@@ -73,7 +73,7 @@ class WidgetRenderer
         $html .= $this->render($widget, $view);
 
         if ($securityContext->isGranted('ROLE_VICTOIRE')) {
-            $html .= $this->renderActions($widget->getSlot(), $widget->getView());
+            $html .= $this->renderActions($widget->getSlot(), $view);
         }
 
         $html = "<div class='vic-widget-container' data-id=\"".$widget->getId()."\" id='vic-widget-".$widget->getId()."-container'>".$html.'</div>';

@@ -1,11 +1,11 @@
 <?php
-namespace Victoire\Bundle\PageBundle\Command;
+namespace Victoire\Bundle\CoreBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class PageCacheCommand extends ContainerAwareCommand
+class GenerateViewCacheCommand extends ContainerAwareCommand
 {
 
     /**
@@ -16,8 +16,8 @@ class PageCacheCommand extends ContainerAwareCommand
         parent::configure();
 
         $this
-            ->setName('victoire:page:write-cache')
-            ->setDescription('write page references in a xml cache file');
+            ->setName('victoire:generate:view-cache')
+            ->setDescription('write view references in a xml cache file');
     }
 
     /**
@@ -29,8 +29,8 @@ class PageCacheCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $pages = $this->getContainer()->get('victoire_page.page_helper')->getAllPages();
-        $this->getContainer()->get('victoire_page.page_cache_helper')->writeCache($pages);
+        $viewsReferences = $this->getContainer()->get('victoire_core.view_helper')->getAllViewsReferences();
+        $this->getContainer()->get('victoire_core.view_cache_helper')->write($viewsReferences);
     }
 
 }

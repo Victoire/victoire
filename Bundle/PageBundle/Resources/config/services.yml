@@ -10,7 +10,7 @@ services:
             - "@router"
             - "@victoire_page.user_callable"
             - "%victoire_core.user_class%"
-            - "@victoire_page.page_cache_helper"
+            - "@victoire_core.view_cache_helper"
             - "@service_container"
         tags:
             - { name: doctrine.event_subscriber, connection: default, priority: -1 }
@@ -19,11 +19,6 @@ services:
         class: Victoire\Bundle\PageBundle\WidgetMap\WidgetMapBuilder
         arguments:
             - "@doctrine.orm.entity_manager"
-
-    victoire_page.page_cache_helper:
-        class: Victoire\Bundle\PageBundle\Helper\PageCacheHelper
-        arguments:
-            - %kernel.cache_dir%
 
     victoire_page.page_helper:
         class: Victoire\Bundle\PageBundle\Helper\PageHelper
@@ -38,9 +33,10 @@ services:
             - "@event_dispatcher"
             - "@victoire_templating"
             - "@victoire_seo.helper.pageseo_helper"
-            - "@victoire_page.page_cache_helper"
+            - "@victoire_core.view_cache_helper"
             - "@session"
             - "@security.context"
+            - "@gedmo.urlizer"
     victoire_page.url_helper:
         class: Victoire\Bundle\PageBundle\Helper\UrlHelper
         arguments:
@@ -120,11 +116,3 @@ services:
         factory_service: doctrine.orm.default_entity_manager
         factory_method: getRepository
         arguments: ['VictoirePageBundle:Page']
-
-    victoire_page.page_cache_warmer:
-        class: Victoire\Bundle\PageBundle\Cache\PageCacheWarmer
-        arguments:
-            - @victoire_page.page_helper
-            - @victoire_page.page_cache_helper
-        tags:
-        - { name: kernel.cache_warmer, priority: 0 }

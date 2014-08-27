@@ -180,20 +180,22 @@ class WidgetFormBuilder
         }
         //are we updating or creating the widget?
         if ($widget->getId() === null) {
+            $viewReference = $view->getReference();
             $formUrl = $router->generate('victoire_core_widget_create',
                 array(
-                    'view_id'    => $view->getId(),
+                    'viewReference'    => $viewReference['id'],
                     'slot'       => $widget->getSlot(),
                     'type'       => $widget->getType(),
                     'entityName' => $entityName
                 )
             );
         } else {
+            $viewReference = $widget->getCurrentView()->getReference();
             $formUrl = $router->generate('victoire_core_widget_update',
                 array(
-                    'id'         => $widget->getId(),
-                    'view_id'    => $widget->getCurrentView()->getId(),
-                    'entityName' => $entityName,
+                    'id'            => $widget->getId(),
+                    'viewReference' => $viewReference['id'],
+                    'entityName'    => $entityName,
                 )
             );
         }
@@ -201,11 +203,11 @@ class WidgetFormBuilder
         $form = $formFactory->create($formAlias, $widget,
             array(
                 'entityName' => $entityName,
-                'namespace' => $namespace,
-                'mode' => $formMode,
-                'action'  => $formUrl,
-                'method' => 'POST',
-                'filters' => $filters,
+                'namespace'  => $namespace,
+                'mode'       => $formMode,
+                'action'     => $formUrl,
+                'method'     => 'POST',
+                'filters'    => $filters,
             )
         );
 

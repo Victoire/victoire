@@ -21,7 +21,7 @@ class PageSubscriber implements EventSubscriber
     protected $router;
     protected $userClass;
     protected $userCallable;
-    protected $pageCacheHelper;
+    protected $viewCacheHelper;
     protected $container; // container is given here because of "em" circular reference of UrlHelper
 
     /**
@@ -29,16 +29,16 @@ class PageSubscriber implements EventSubscriber
      * @param unknown         $router          @router
      * @param unknown         $userCallable    @victoire_page.user_callable
      * @param string          $userClass       %victoire_core.user_class%
-     * @param PageCacheHelper $pageCacheHelper @victoire_page.page_cache_helper
+     * @param ViewCacheHelper $viewCacheHelper @victoire_core.view_cache_helper
      * @param Container       $container       @service_container
      */
-    public function __construct($router, $userCallable, $userClass, $pageCacheHelper, $container)
+    public function __construct($router, $userCallable, $userClass, $viewCacheHelper, $container)
     {
-        $this->router               = $router;
-        $this->userClass            = $userClass;
-        $this->userCallable         = $userCallable;
-        $this->pageCacheHelper      = $pageCacheHelper;
-        $this->container            = $container;
+        $this->router          = $router;
+        $this->userClass       = $userClass;
+        $this->userCallable    = $userCallable;
+        $this->viewCacheHelper = $viewCacheHelper;
+        $this->container       = $container;
     }
 
     /**
@@ -135,10 +135,10 @@ class PageSubscriber implements EventSubscriber
 
         if ($page instanceof BusinessEntityPagePattern) {
             foreach ($entities as $entity) {
-                $this->pageCacheHelper->updatePageCache($page, $entity);
+                $this->viewCacheHelper->update($page, $entity);
             }
         } else {
-            $this->pageCacheHelper->updatePageCache($page, null);
+            $this->viewCacheHelper->update($page, null);
 
         }
     }

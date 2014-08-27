@@ -34,7 +34,6 @@ class PageMenuListener implements MenuListenerInterface
     {
         //get the current page
         $page = $event->getPage();
-        $entity = $event->getEntity();
 
         $mainItem = $this->getMainItem();
         $mainItem->addChild('menu.page.settings',

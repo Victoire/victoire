@@ -6,6 +6,7 @@ use AppVentus\Awesome\ShortcutsBundle\Service\FormErrorService;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
 use Victoire\Bundle\CoreBundle\Annotations\Reader\AnnotationReader;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
@@ -127,7 +128,6 @@ class WidgetManager
     {
         //services
         $formErrorService = $this->formErrorService;
-        $em = $this->em;
         $request = $this->request;
 
         //the default response
@@ -142,10 +142,11 @@ class WidgetManager
         $form = $this->widgetFormBuilder->callBuildFormSwitchParameters($widget, $view, $entity);
 
         $form->handleRequest($request);
-
         if ($form->isValid()) {
-            if ($view instanceof Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage) {
-                $view = $this->pageHelper->duplicatePagePatternIfPageInstance($view);
+
+            if (!$view->getId()) {
+                //create a view for the business entity instance if we are currently display an instance for a business entity template
+                $this->em->persist($view);
             }
 
             //get the widget from the form
@@ -155,8 +156,8 @@ class WidgetManager
             $widget->setBusinessEntityName($entity);
 
             //persist the widget
-            $em->persist($widget);
-            $em->flush();
+            $this->em->persist($widget);
+            $this->em->flush();
 
             //the id of the widget
             $widgetId = $widget->getId();
@@ -182,8 +183,8 @@ class WidgetManager
             //update the widget map
             $view->updateWidgetMapBySlots();
 
-            $em->persist($view);
-            $em->flush();
+            $this->em->persist($view);
+            $this->em->flush();
 
             $widget->setCurrentView($view);
 
@@ -238,7 +239,7 @@ class WidgetManager
 
             //create a view for the business entity instance if we are currently display an instance for a business entity template
             if ($currentView instanceof Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern) {
-                $currentView = $this->pageHelper->duplicatePagePatternIfPageInstance($currentView);
+                $currentView = $this->pageHelper->forkBusinessEntityPage($currentView);
             }
 
             $widget = $widgetMapBuilder->editWidgetFromView($currentView, $widget);
@@ -306,22 +307,17 @@ class WidgetManager
      *
      * @return array The parameter for the view
      */
-    public function deleteWidget(Widget $widget)
+    public function deleteWidget(Widget $widget, View $view)
     {
         //services
         $em = $this->em;
         $widgetMapBuilder = $this->widgetMapBuilder;
 
-        //the widget id
-        $widgetId = $widget->getId();
-
-        //the view
-        $view = $widgetView = $widget->getView();
-
-        //create a view for the business entity instance if we are currently display an instance for a business entity page pattern
-        if ($widgetView instanceof Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage) {
-            $view = $this->pageHelper->duplicatePagePatternIfPageInstance($widgetView);
+        //instanciate and persist BEP if currentView is a virtual one (Pattern representation)
+        if ($view instanceof Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage) {
+            $view = $this->pageHelper->forkBusinessEntityPage($widgetView);
         }
+
         //update the view deleting the widget
         $widgetMapBuilder->deleteWidgetFromView($view, $widget);
 
@@ -340,7 +336,7 @@ class WidgetManager
 
         return array(
             "success"  => true,
-            "widgetId" => $widgetId
+            "widgetId" => $widget->getId()
         );
     }
 

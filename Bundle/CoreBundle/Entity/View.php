@@ -146,6 +146,10 @@ abstract class View
     //the slot contains the widget maps entities
     protected $slots = array();
 
+    //The reference is related to views.xml fil which list all app views.
+    //This is used to speed up the routing system and to identify virtual pages (BusinessEntityPage)
+    protected $reference;
+
     /**
      * contruct
      **/
@@ -763,5 +767,28 @@ abstract class View
         $class = get_called_class();
 
         return $class::TYPE;
+    }
+
+    /**
+     * Get reference
+     *
+     * @return string
+     */
+    public function getReference()
+    {
+        return $this->reference;
+    }
+
+    /**
+     * Set reference
+     * @param string $reference
+     *
+     * @return $this
+     */
+    public function setReference($reference)
+    {
+        $this->reference = $reference;
+
+        return $this;
     }
 }

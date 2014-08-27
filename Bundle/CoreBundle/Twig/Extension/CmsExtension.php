@@ -8,8 +8,9 @@ use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Handler\WidgetExceptionHandler;
-use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
+use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
+use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 use Victoire\Bundle\PageBundle\WidgetMap\WidgetMapBuilder;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer;
@@ -40,6 +41,7 @@ class CmsExtension extends \Twig_Extension
      * @param WidgetMapBuilder       $widgetMapBuilder
      * @param WidgetExceptionHandler $widgetExceptionHandler
      * @param CurrentViewHelper      $currentViewHelper
+     * @param ViewCacheHelper        $viewCacheHelper
      */
     public function __construct(
         WidgetRenderer $widgetRenderer,
@@ -48,7 +50,8 @@ class CmsExtension extends \Twig_Extension
         EntityManager $entityManager,
         WidgetMapBuilder $widgetMapBuilder,
         WidgetExceptionHandler $widgetExceptionHandler,
-        CurrentViewHelper $currentViewHelper
+        CurrentViewHelper $currentViewHelper,
+        ViewCacheHelper $viewCacheHelper
     )
     {
         $this->widgetRenderer = $widgetRenderer;
@@ -58,6 +61,7 @@ class CmsExtension extends \Twig_Extension
         $this->widgetMapBuilder = $widgetMapBuilder;
         $this->widgetExceptionHandler = $widgetExceptionHandler;
         $this->currentViewHelper = $currentViewHelper;
+        $this->pageCacheHelper = $viewCacheHelper;
     }
 
     /**
@@ -183,7 +187,6 @@ class CmsExtension extends \Twig_Extension
     /**
      * Render a widget
      * @param unknown $widget
-     * @param unknown $entity
      *
      * @return unknown
      */
