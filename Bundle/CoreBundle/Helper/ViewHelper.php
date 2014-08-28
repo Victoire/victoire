@@ -82,7 +82,7 @@ class ViewHelper
                     'viewId'          => $view->getId(),
                     'entityId'        => null,
                     'entityNamespace' => null,
-                    'viewNamespace'   => get_class($view),
+                    'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
                 );
 
                 foreach ($businessEntities as $businessEntity) {
@@ -114,8 +114,8 @@ class ViewHelper
                                 'url'             => $currentPattern->getUrl(),
                                 'viewId'          => $currentPattern->getId(),
                                 'entityId'        => $entity->getId(),
-                                'entityNamespace' => get_class($entity),
-                                'viewNamespace'   => get_class($view),
+                                'entityNamespace' => $this->em->getClassMetadata(get_class($entity))->name,
+                                'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
                             );
                         }
                     }
@@ -127,8 +127,8 @@ class ViewHelper
                     'viewId'          => $view->getId(),
                     'url'             => $view->getUrl(),
                     'entityId'        => $view->getBusinessEntity()->getId(),
-                    'entityNamespace' => get_class($view->getBusinessEntity()),
-                    'viewNamespace'   => get_class($view),
+                    'entityNamespace' => $this->em->getClassMetadata(get_class($view->getBusinessEntity()))->name,
+                    'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
                 );
             } elseif ($view instanceof Template) {
                 $referenceId = $this->viewCacheHelper->getViewCacheId($view);
@@ -138,7 +138,7 @@ class ViewHelper
                     'url'             => null,
                     'entityId'        => null,
                     'entityNamespace' => null,
-                    'viewNamespace'   => get_class($view),
+                    'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
                 );
             } else {
                 $referenceId = $this->viewCacheHelper->getViewCacheId($view);
@@ -148,7 +148,7 @@ class ViewHelper
                     'url'             => $view->getUrl(),
                     'entityId'        => null,
                     'entityNamespace' => null,
-                    'viewNamespace'   => get_class($view),
+                    'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
                 );
             }
         }

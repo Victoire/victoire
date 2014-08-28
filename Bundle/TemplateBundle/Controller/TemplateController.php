@@ -53,7 +53,9 @@ class TemplateController extends Controller
     {
         //add the view to twig
         $this->get('twig')->addGlobal('view', $template);
-
+        $viewParameters = array('viewId' => $template->getId());
+        $viewReference = $this->container->get('victoire_core.view_cache_helper')->getReferenceByParameters($viewParameters);
+        $template->setReference($viewReference);
         $event = new TemplateMenuContextualEvent($template);
 
         //TODO : il serait bon de faire des constantes pour les noms d'évents
