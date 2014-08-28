@@ -108,6 +108,15 @@ services:
         arguments:
             - %kernel.cache_dir%
 
+    victoire_core.view_cache_listener:
+        class: Victoire\Bundle\CoreBundle\Listener\ViewCacheListener
+        arguments:
+            - "@victoire_core.view_helper"
+            - "@victoire_core.view_cache_helper"
+            - "%kernel.debug%"
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
 #  ==================  Annotations ================== #
 
     victoire_core.annotation_reader:
