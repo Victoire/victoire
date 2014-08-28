@@ -103,12 +103,11 @@ class Slot
 
         //parse the widgets maps
         foreach ($widgetMaps as $index => $wm) {
-            if ($wm->getId() === $widgetMap->getId()) {
+            if ($wm->getWidgetId() === $widgetMap->getWidgetId()) {
                 unset($this->widgetMaps[$index]);
                 //entity found, there is no need to continue
                 break;
             }
         }
-
     }
 }

@@ -6,7 +6,6 @@ use AppVentus\Awesome\ShortcutsBundle\Service\FormErrorService;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
 use Victoire\Bundle\CoreBundle\Annotations\Reader\AnnotationReader;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
@@ -145,7 +144,7 @@ class WidgetManager
         if ($form->isValid()) {
 
             if (!$view->getId()) {
-                //create a view for the business entity instance if we are currently display an instance for a business entity template
+                //create a view for the business entity instance if we are currently display a virtual one
                 $this->em->persist($view);
             }
 
@@ -237,11 +236,6 @@ class WidgetManager
         //if the form is posted
         if ($requestMethod === 'POST') {
 
-            //create a view for the business entity instance if we are currently display an instance for a business entity template
-            if ($currentView instanceof Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern) {
-                $currentView = $this->pageHelper->forkBusinessEntityPage($currentView);
-            }
-
             $widget = $widgetMapBuilder->editWidgetFromView($currentView, $widget);
 
             if ($entityName !== null) {
@@ -253,16 +247,15 @@ class WidgetManager
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                $em = $this->em;
 
                 $widget->setBusinessEntityName($entityName);
 
-                $em->persist($widget);
+                $this->em->persist($widget);
 
                 //update the widget map by the slots
                 $currentView->updateWidgetMapBySlots();
-                $em->persist($currentView);
-                $em->flush();
+                $this->em->persist($currentView);
+                $this->em->flush();
 
                 $response = array(
                     'view'        => $currentView,
@@ -309,34 +302,26 @@ class WidgetManager
      */
     public function deleteWidget(Widget $widget, View $view)
     {
-        //services
-        $em = $this->em;
-        $widgetMapBuilder = $this->widgetMapBuilder;
-
-        //instanciate and persist BEP if currentView is a virtual one (Pattern representation)
-        if ($view instanceof Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage) {
-            $view = $this->pageHelper->forkBusinessEntityPage($widgetView);
-        }
-
         //update the view deleting the widget
-        $widgetMapBuilder->deleteWidgetFromView($view, $widget);
+        $this->widgetMapBuilder->deleteWidgetFromView($view, $widget);
 
         //we update the widget map of the view
         $view->updateWidgetMapBySlots();
-
+        //Used to update view in callback (we do it before delete it else it'll not exists anymore)
+        $widgetId = $widget->getId();
         //the widget is removed only if the current view is the view of the widget
-        if ($view === $widgetView) {
+        if ($view === $widget->getView()) {
             //we remove the widget
-            $em->remove($widget);
+            $this->em->remove($widget);
         }
 
         //we update the view
-        $em->persist($view);
-        $em->flush();
+        $this->em->persist($view);
+        $this->em->flush();
 
         return array(
             "success"  => true,
-            "widgetId" => $widget->getId()
+            "widgetId" => $widgetId
         );
     }
 

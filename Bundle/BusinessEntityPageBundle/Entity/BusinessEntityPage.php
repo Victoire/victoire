@@ -15,15 +15,6 @@ class BusinessEntityPage extends BasePage
     const TYPE = 'business_entity_page';
 
     /**
-     * @var string
-     *
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern", inversedBy="instances")
-     * @ORM\JoinColumn(name="business_entity_page_pattern_id", referencedColumnName="id", onDelete="CASCADE")
-     *
-     */
-    protected $pattern;
-
-    /**
      * Auto simple mode: joined entity
      * @var EntityProxy
      *
@@ -57,9 +48,6 @@ class BusinessEntityPage extends BasePage
         return $this->entityProxy;
     }
 
-    public function setPattern(BusinessEntityPagePattern $pattern) { $this->pattern = $pattern; return $this; }
-    public function getPattern() { return $this->pattern; }
-
     /**
      * Get the business entity name (PagePattern proxy)
      *
@@ -67,7 +55,7 @@ class BusinessEntityPage extends BasePage
      **/
     public function getBusinessEntityName()
     {
-        return $this->getPattern()->getBusinessEntityName();
+        return $this->getTemplate()->getBusinessEntityName();
     }
 
     /**

@@ -6,7 +6,7 @@
     {% block body %}
         {% if widget.id and widget.currentView != widget.view %}
         <div class="vic-alert vic-alert-warning vic-alert-dismissible">
-            {{ 'victoire.widget.inherited.notice'|trans({'%templateName%': widget.view.name, '%templateEditLink%': path('victoire_core_widget_edit', {'id': widget.id, 'viewReference': widget.currentView.reference.id })}, 'victoire')|raw }}
+            {{ 'victoire.widget.inherited.notice'|trans({'%templateName%': widget.view.name, '%templateEditLink%': path('victoire_core_widget_edit', {'id': widget.id, 'viewReference': widget.view.reference.id })}, 'victoire')|raw }}
         </div>
         {% endif %}
 

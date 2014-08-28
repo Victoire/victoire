@@ -146,6 +146,9 @@ class WidgetController extends AwesomeController
     public function editAction(Widget $widget, $viewReference, $entityName = null)
     {
         $view = $this->getViewByReferenceId($viewReference);
+        $widgetView = $widget->getView();
+        $widgetViewReference = $this->get('victoire_core.view_cache_helper')->getReferenceByParameters(array('url' => $widgetView->getUrl()));
+        $widgetView->setReference($widgetViewReference);
         $this->get('victoire_core.current_view')->setCurrentView($view);
         try {
             $widgetManager = $this->getWidgetManager();
@@ -193,8 +196,9 @@ class WidgetController extends AwesomeController
             $sortedWidgets = $this->getRequest()->request->get('sorted');
 
             if (!$view->getId()) {
-                //create a view for the business entity instance if we are currently display an instance for a business entity template
-                $view = $this->get('victoire_page.page_helper')->forkBusinessEntityPage($view);
+                //This view does not have an id, so it's a non persisted BEP. To keep this new order, well have to persist it.
+                $this->em->persist($view);
+                $this->em->flush();
             }
 
             //recompute the order for the widgets

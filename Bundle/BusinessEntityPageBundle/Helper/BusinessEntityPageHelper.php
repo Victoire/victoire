@@ -114,15 +114,13 @@ class BusinessEntityPageHelper
     {
         $className = get_class($entity);
         $page = new BusinessEntityPage();
-        $page->setPattern($businessEntityPagePattern);
-        $page->setBusinessEntityName($className);
 
         $reflect = new \ReflectionClass($businessEntityPagePattern);
         $patternProperties = $reflect->getProperties();
         $accessor = PropertyAccess::createPropertyAccessor();
 
         foreach ($patternProperties as $property) {
-            if (!in_array($property->getName(), array('id', 'slug')) && !$property->isStatic()) {
+            if (!in_array($property->getName(), array('id', 'slug', 'widgetMap', 'slots')) && !$property->isStatic()) {
                 $value = $accessor->getValue($businessEntityPagePattern, $property->getName());
                 $setMethod = 'set'.ucfirst($property->getName());
                 if (method_exists($page, $setMethod)) {
@@ -155,6 +153,7 @@ class BusinessEntityPageHelper
         $entityProxy = new EntityProxy();
         $entityProxy->setEntity($entity);
         $page->setEntityProxy($entityProxy);
+        $page->setTemplate($businessEntityPagePattern);
 
         return $page;
     }

@@ -76,11 +76,19 @@ abstract class View
     /**
      * @var string
      *
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\TemplateBundle\Entity\Template", inversedBy="inheritors")
+     * Could be Template or BusinessEntityPagePattern
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\CoreBundle\Entity\View", inversedBy="inheritors")
      * @ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="CASCADE")
      *
      */
     protected $template;
+
+    /**
+     * @var string
+     *
+     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\TemplateBundle\Entity\Template", mappedBy="template")
+     */
+    protected $inheritors;
 
     /**
      * @Gedmo\TreeParent
@@ -257,6 +265,29 @@ abstract class View
     public function getTemplate()
     {
         return $this->template;
+    }
+
+    /**
+     * Set page
+     * @param string $inheritors
+     *
+     * @return Template
+     */
+    public function setInheritors($inheritors)
+    {
+        $this->inheritors = $inheritors;
+
+        return $this;
+    }
+
+    /**
+     * Get inheritors (all Templates having this object as Template)
+     *
+     * @return string
+     */
+    public function getInheritors()
+    {
+        return $this->inheritors;
     }
 
     /**

@@ -26,4 +26,6 @@ class BusinessEntityPagePattern extends BasePage
 
     public function getInstances() { return $this->instances; }
     public function setInstances($instances) { $this->instances = $instances; return $this; }
+    public function getLayout() { return $this->getTemplate()->getLayout(); }
+
 }

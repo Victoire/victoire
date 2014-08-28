@@ -92,11 +92,6 @@ class ViewCacheHelper
         $this->writeFile($rootNode);
     }
 
-    public function getReference($url)
-    {
-        return $this->getReferenceByParameters(array('url' => $url));
-    }
-
     public function getReferenceByParameters($parameters)
     {
         $arguments = array();
