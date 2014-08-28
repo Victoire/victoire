@@ -198,8 +198,8 @@ class WidgetController extends AwesomeController
 
             if (!$view->getId()) {
                 //This view does not have an id, so it's a non persisted BEP. To keep this new order, well have to persist it.
-                $this->em->persist($view);
-                $this->em->flush();
+                $this->getEntityManager()->persist($view);
+                $this->getEntityManager()->flush();
             }
 
             //recompute the order for the widgets
