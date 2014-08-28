@@ -85,7 +85,7 @@ function updatePosition(ui){
         sorted[$vic(el).data('name')] = $vic(el).sortable('toArray', { attribute: 'data-id' });
     });
 
-    return $vic.post(Routing.generate('victoire_core_widget_update_position', {'view': viewId}),
+    return $vic.post(Routing.generate('victoire_core_widget_update_position', {'viewReference': viewId}),
         { 'sorted': sorted }
     );
 }

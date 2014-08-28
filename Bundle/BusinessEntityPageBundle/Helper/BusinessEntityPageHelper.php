@@ -115,7 +115,6 @@ class BusinessEntityPageHelper
         $className = get_class($entity);
         $page = new BusinessEntityPage();
         $page->setPattern($businessEntityPagePattern);
-        $page->setBusinessEntityName($className);
 
         $reflect = new \ReflectionClass($businessEntityPagePattern);
         $patternProperties = $reflect->getProperties();

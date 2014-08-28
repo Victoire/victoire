@@ -21,28 +21,29 @@ class WidgetController extends AwesomeController
 {
     /**
      * Show a widget
-     * @param Widget $widget the widget to show
-     * @param Entity $entity the entity
+     * @param Widget  $widget          the widget to show
+     * @param integer $viewReferenceId The id of the view
      *
      * @return response
-     * @Route("/victoire-dcms-public/widget/show/{id}/{entity}", name="victoire_core_widget_show", options={"expose"=true}, defaults={"entity": null})
+     * @Route("/victoire-dcms-public/widget/show/{id}/{viewReferenceId}", name="victoire_core_widget_show", options={"expose"=true})
      * @Template()
      * @ParamConverter("id", class="VictoireWidgetBundle:Widget")
      */
-    public function showAction(Widget $widget, $entity = null)
+    public function showAction(Widget $widget, $viewReferenceId)
     {
         //the response is for the ajax.js from the AppVentus Ajax Bundle
         try {
-
+            $view = $this->container->get('victoire_page.page_helper')->getPageByParameters(array('id' => $viewReferenceId));
+            $this->container->get('victoire_core.current_view')->setCurrentView($view);
             if ($this->getRequest()->isXmlHttpRequest()) {
 
                  $response = new JsonResponse(array(
-                     'html' => $this->get('victoire_widget.widget_renderer')->render($widget, $entity),
+                     'html' => $this->get('victoire_widget.widget_renderer')->render($widget, $view),
                      'update' => 'vic-widget-'.$widget->getId().'-container',
                      'success' => false
                  ));
             } else {
-                $response = $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $widget->getView()->getUrl())));
+                $response = $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $view->getUrl())));
             }
         } catch (\Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);

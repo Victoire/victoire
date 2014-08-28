@@ -25,6 +25,7 @@ class MenuDispatcher
     {
         $this->eventDispatcher = $eventDispatcher;
         $this->securityContext = $securityContext;
+
     }
 
     /**

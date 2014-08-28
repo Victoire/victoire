@@ -135,6 +135,7 @@ class PageHelper extends ViewHelper
 
         $layout = 'AppBundle:Layout:' . $page->getTemplate()->getLayout() . '.html.twig';
 
+        $this->currentViewHelper->setCurrentView($page);
         //create the response
         $response = $this->victoireTemplating->renderResponse($layout, array(
             "view" => $page
@@ -185,14 +186,8 @@ class PageHelper extends ViewHelper
 
     public function findPageByParameters($parameters)
     {
-        $pageCache = $this->pageCacheHelper->findPageCacheByParameters($parameters);
-
-        $page = $this->findPageByUrl($pageCache['url']);
-        $entity = $this->findEntityByPageUrl($pageCache['url']);
-        $this->isPageValid($page, $entity);
-        if ($entity) {
-            $page = $this->updatePageWithEntity($page, $entity);
-        }
+        $viewReference = $this->viewCacheHelper->getReferenceByParameters($parameters);
+        $page = $this->findPageByReference($viewReference);
 
         return $page;
     }
@@ -248,9 +243,6 @@ class PageHelper extends ViewHelper
         if ($entity && $page instanceof BusinessEntityPagePattern) {
             $page = $this->updatePageWithEntity($page, $entity);
         }
-
-        //Define current view
-        $this->currentViewHelper->setCurrentView($page);
 
         return $page;
     }
