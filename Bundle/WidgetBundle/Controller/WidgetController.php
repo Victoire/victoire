@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Widget\Managers\WidgetManager;
-use Victoire\Bundle\TemplateBundle\Entity\Template;
+use Victoire\Bundle\TemplateBundle\Entity\Template as VicTemplate;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
@@ -123,7 +123,7 @@ class WidgetController extends AwesomeController
         $view = $this->getViewByReferenceId($viewReference);
         $widgetView = $widget->getView();
 
-        if ($widgetView instanceof Template) {
+        if ($widgetView instanceof VicTemplate) {
             $widgetViewReference = $this->get('victoire_core.view_cache_helper')->getReferenceByParameters(array('viewId' => $widgetView->getId()));
         } else {
             $widgetViewReference = $this->get('victoire_core.view_cache_helper')->getReferenceByParameters(array('url' => $widgetView->getUrl()));
