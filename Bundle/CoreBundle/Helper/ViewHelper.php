@@ -107,12 +107,13 @@ class ViewHelper
                         // only if related pattern entity is the current entity
                         if ($view->getBusinessEntityName() === $businessEntity->getId()) {
                             $currentPattern = clone $view;
-                            $this->updatePageParametersByEntity($currentPattern, $entity);
+                            $page = $this->businessEntityPageHelper->generateEntityPageFromPattern($currentPattern, $entity);
+                            $this->updatePageParametersByEntity($page, $entity);
                             $referenceId = $this->viewCacheHelper->getViewCacheId($view, $entity);
-                            $viewsReferences[$currentPattern->getUrl()] = array(
+                            $viewsReferences[$page->getUrl()] = array(
                                 'id'              => $referenceId,
-                                'url'             => $currentPattern->getUrl(),
-                                'viewId'          => $currentPattern->getId(),
+                                'url'             => $page->getUrl(),
+                                'viewId'          => $page->getTemplate()->getId(),
                                 'entityId'        => $entity->getId(),
                                 'entityNamespace' => $this->em->getClassMetadata(get_class($entity))->name,
                                 'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
@@ -162,7 +163,7 @@ class ViewHelper
      * @param BasePage $page
      * @param Entity   $entity
      */
-    public function updatePageParametersByEntity(BusinessEntityPagePattern $page, $entity)
+    public function updatePageParametersByEntity(BusinessEntityPage $page, $entity)
     {
         //if no entity is provided
         if ($entity === null) {
