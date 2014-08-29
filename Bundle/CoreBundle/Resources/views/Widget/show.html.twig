@@ -2,14 +2,14 @@
 
 {% block body %}
 
-<div class="vic-widget {{cms_widget_extra_css_class(widget)}}" id="widget-{{widget.id}}">
+<div class="vic-widget {{ cms_widget_extra_css_class(widget) }}" id="widget-{{widget.id}}">
 {% if is_granted('ROLE_VICTOIRE') %}
     {% block actions %}
         {{ cms_widget_actions(widget) }}
     {% endblock actions %}
 {% endif %}
 {% block content %}
-{{content|raw}}
+{{ content|raw }}
 {% endblock content %}
 </div>
 

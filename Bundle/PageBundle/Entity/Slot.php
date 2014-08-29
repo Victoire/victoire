@@ -64,6 +64,12 @@ class Slot
      */
     public function addWidgetMap(WidgetMap $widgetMap)
     {
+        //Shift up others widgetsMaps's position
+        foreach ($this->widgetMaps as $key => $_widgetMap) {
+            if ($_widgetMap->getPosition() >= $widgetMap->getPosition()) {
+                $_widgetMap->setPosition($_widgetMap->getPosition() + 1);
+            }
+        }
         $this->widgetMaps[] = $widgetMap;
     }
 

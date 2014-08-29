@@ -1,21 +1,26 @@
 {% trans_default_domain "victoire" %}
 
-<div class="vic-dropdown vic-undraggable vic-new-widget vic-new-widget-disabled{{ first ? " vic-first" : "" }}">
+<div data-position="{{ position }}" class="vic-dropdown vic-undraggable vic-new-widget vic-new-widget-disabled{{ position == 1 ? " vic-first" : "" }}">
     <a data-toggle="vic-dropdown" href="#" class="text-center">
         <span>
             {{ "widget.dropdown.action.label"|trans({}, "victoire")|desc("New widget")}}
         </span>
     </a>
-    {{ _self.widgetList(widgets, slot, view) }}
+    {{ _self.widgetList(widgets, slot, view, position) }}
 </div>
 
-{% macro widgetList(widgets, slot, view, depth = 0) %}
+{% macro widgetList(widgets, slot, view, position, depth = 0) %}
     {% if widgets|length > 0 %}
     <ul class="{% if depth == 0 %}vic-dropdown-menu{% endif %} vic-dropdown-newWidget vic-newWidget-{{depth}}" role="menu" aria-labelledby="dLabel">
         {% for name, widget in widgets %}
         <li>
             {% if widget.params is defined %}
-                <a href="{{ path('victoire_core_widget_new', {'viewReference': view.reference.id, 'type':name, 'slot':slot} )}}">
+                <a href="{{ path('victoire_core_widget_new', {
+                        'viewReference': view.reference.id,
+                        'type'         : name,
+                        'slot'         : slot,
+                        'position'     : position
+                    } )}}">
                     {{ ("widget."~name|lower~".new.action.label")|trans({}, 'victoire') }}
                 </a>
             {% else %}
@@ -25,7 +30,7 @@
             {% endif %}
 
             {% if widget.children is defined and widget.children|length > 0%}
-                {{ _self.widgetList(widget.children, slot, view, depth+1) }}
+                {{ _self.widgetList(widget.children, slot, view, position, depth+1) }}
             {% endif %}
         </li>
         {% endfor %}
@@ -43,9 +48,7 @@
         updateSlotActions{{ slot }}();
     });
 
-    /**
-     * This function is called in widget.js file after deleting a content in order to display a potential hidden button
-     */
+    {# This function is called in widget.js file after deleting a content in order to display a potential hidden button #}
     function updateSlotActions{{ slot }}() {
         updateSlotActions("{{ slot }}"{% if max is not null %}, {{max}}{% endif %});
     }

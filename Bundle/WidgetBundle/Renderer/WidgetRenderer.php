@@ -53,30 +53,27 @@ class WidgetRenderer
 
 
     /**
-     * @todo should reside in a WidgetRenderer class
      * render a widget
-     *
      * @param Widget  $widget
      * @param boolean $addContainer
      * @param View    $view
      *
      * @return template
      */
-    public function renderContainer(Widget $widget, View $view = null)
+    public function renderContainer(Widget $widget, View $view, $position = 0)
     {
-        $html = '';
         $dispatcher = $this->container->get('event_dispatcher');
         $securityContext = $this->container->get('security.context');
 
-        $dispatcher->dispatch(VictoireCmsEvents::WIDGET_PRE_RENDER, new WidgetRenderEvent($widget, $html));
+        $dispatcher->dispatch(VictoireCmsEvents::WIDGET_PRE_RENDER, new WidgetRenderEvent($widget));
 
-        $html .= $this->render($widget, $view);
+        $html = $this->render($widget, $view);
 
         if ($securityContext->isGranted('ROLE_VICTOIRE')) {
-            $html .= $this->renderActions($widget->getSlot(), $view);
+            $html .= $this->renderActions($widget->getSlot(), $view, array(), $position);
         }
 
-        $html = "<div class='vic-widget-container' data-id=\"".$widget->getId()."\" id='vic-widget-".$widget->getId()."-container'>".$html.'</div>';
+        $html = "<div class='vic-widget-container' data-position=\"".($position-1)."\" data-id=\"".$widget->getId()."\" id='vic-widget-".$widget->getId()."-container'>".$html.'</div>';
 
         $dispatcher->dispatch(VictoireCmsEvents::WIDGET_POST_RENDER, new WidgetRenderEvent($widget, $html));
 
@@ -104,11 +101,11 @@ class WidgetRenderer
      * @param Slot    $slot
      * @param Page    $view
      * @param array   $options
-     * @param boolean $first
+     * @param integer $position
      *
      * @return template
      */
-    public function renderActions($slot, View $view, $options = array(), $first = false)
+    public function renderActions($slot, View $view, $options = array(), $position = 0)
     {
         $slots = $this->container->getParameter('victoire_core.slots');
 
@@ -144,11 +141,11 @@ class WidgetRenderer
         return $this->container->get('victoire_templating')->render(
             "VictoireCoreBundle:Widget:actions.html.twig",
             array(
-                "slot"    => $slot,
-                "view"    => $view,
-                'widgets' => $widgets,
-                'max'     => $max,
-                'first'   => $first,
+                "slot"     => $slot,
+                "view"     => $view,
+                'widgets'  => $widgets,
+                'max'      => $max,
+                'position' => $position
             )
         );
     }

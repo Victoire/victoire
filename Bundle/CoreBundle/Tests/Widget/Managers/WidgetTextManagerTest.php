@@ -101,12 +101,11 @@ class WidgetTextManagerTest extends BaseTestCase
         $html = $this->container->get('victoire_templating')->render(
             "VictoireTextBundle:new.html.twig",
             array(
-                "widget"          => $widgetMock,
-                'form'            => $form->createView(),
-                "slot"            => '3cols_left',
-                "renderContainer" => true,
-                "page"            => $pageMock,
-                "entity"          => null
+                "widget" => $widgetMock,
+                'form'   => $form->createView(),
+                "slot"   => '3cols_left',
+                "page"   => $pageMock,
+                "entity" => null
             )
         );
 

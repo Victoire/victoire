@@ -86,18 +86,19 @@ class WidgetManager
 
     /**
      * new widget
-     * @param string $type
-     * @param string $slot
-     * @param View   $view
+     * @param string  $type
+     * @param string  $slot
+     * @param View    $view
+     * @param integer $position
      *
      * @return template
      */
-    public function newWidget($type, $slot, $view)
+    public function newWidget($type, $slot, $view, $position)
     {
         $widget = $this->widgetHelper->newWidgetInstance($type, $view, $slot);
 
         $classes = $this->annotationReader->getBusinessClassesForWidget($widget);
-        $forms = $this->widgetFormBuilder->renderNewWidgetForms($slot, $view, $widget);
+        $forms = $this->widgetFormBuilder->renderNewWidgetForms($slot, $view, $widget, $position);
 
         return array(
             "html" => $this->victoireTemplating->render(
@@ -113,17 +114,17 @@ class WidgetManager
     }
     /**
      * Create a widget
-     *
-     * @param string $type
-     * @param string $slotId
-     * @param View   $view
-     * @param string $entity
+     * @param string  $type
+     * @param string  $slotId
+     * @param View    $view
+     * @param string  $entity
+     * @param integer $position
      *
      * @return template
      *
      * @throws \Exception
      */
-    public function createWidget($type, $slotId, View $view, $entity)
+    public function createWidget($type, $slotId, View $view, $entity, $position)
     {
         //services
         $formErrorService = $this->formErrorService;
@@ -138,13 +139,13 @@ class WidgetManager
         //create a new widget
         $widget = $this->widgetHelper->newWidgetInstance($type, $view, $slotId);
 
-        $form = $this->widgetFormBuilder->callBuildFormSwitchParameters($widget, $view, $entity);
+        $form = $this->widgetFormBuilder->callBuildFormSwitchParameters($widget, $view, $entity, $position);
 
         $form->handleRequest($request);
         if ($form->isValid()) {
 
             if (!$view->getId()) {
-                //create a view for the business entity instance if we are currently display a virtual one
+                //create a view for the business entity instance if we are currently on a virtual one
                 $this->em->persist($view);
             }
 
@@ -158,13 +159,11 @@ class WidgetManager
             $this->em->persist($widget);
             $this->em->flush();
 
-            //the id of the widget
-            $widgetId = $widget->getId();
-
             //create the new widget map
             $widgetMapEntry = new WidgetMap();
             $widgetMapEntry->setAction(WidgetMap::ACTION_CREATE);
-            $widgetMapEntry->setWidgetId($widgetId);
+            $widgetMapEntry->setWidgetId($widget->getId());
+            $widgetMapEntry->setPosition($position);
 
             //get the slot
             $slot = $view->getSlotById($slotId);

@@ -131,7 +131,7 @@ class CmsExtension extends \Twig_Extension_Core
      *
      * @return string HTML markup of the widget with action button if needed
      */
-    public function cmsSlotWidgets($slotId, $slotOptions = array(), $addContainer = true)
+    public function cmsSlotWidgets($slotId, $slotOptions = array())
     {
         $currentView = $this->currentViewHelper->getCurrentView();
         //services
@@ -141,7 +141,7 @@ class CmsExtension extends \Twig_Extension_Core
         $result = "";
 
         if ($this->isRoleVictoireGranted()) {
-            $result .= $this->widgetRenderer->renderActions($slotId, $currentView, $slotOptions, true);
+            $result .= $this->widgetRenderer->renderActions($slotId, $currentView, $slotOptions, 0);
         }
 
         //get the widget map computed with the parent
@@ -164,44 +164,30 @@ class CmsExtension extends \Twig_Extension_Core
                 }
 
                 //render this widget
-                $result .= $this->cmsWidget($widget);
+                $result .= $this->cmsWidget($widget, $widgetMap->getPosition()+1);
             } catch (\Exception $ex) {
                 $result .= $this->widgetExceptionHandler->handle($ex, $widget);
             }
         }
 
-        if ($addContainer) {
-            //the container for the slot
-            $result = "<div class='vic-slot' data-name=".$slotId." id='vic-slot-".$slotId."'>".$result."</div>";
-        }
+        //the container for the slot
+        $result = "<div class='vic-slot' data-name=".$slotId." id='vic-slot-".$slotId."'>".$result."</div>";
 
         return $result;
     }
 
     /**
-     * render all slot actions
-     * @param View   $view The current view
-     * @param string $slot The current slot
-     *
-     * @return string HTML markup of the actions
-     */
-    public function cmsSlotActions($view, $slot)
-    {
-        return $this->widgetRenderer->renderActions($slot, $view);
-    }
-
-    /**
      * Render a widget
-     * @param unknown $widget
+     * @param Widget $widget
      *
      * @return unknown
      */
-    public function cmsWidget($widget)
+    public function cmsWidget($widget, $position = 0)
     {
         $widget->setCurrentView($this->currentViewHelper->getCurrentView());
 
         try {
-            $response = $this->widgetRenderer->renderContainer($widget, $widget->getCurrentView());
+            $response = $this->widgetRenderer->renderContainer($widget, $widget->getCurrentView(), $position);
         } catch (\Exception $ex) {
             $response = $this->widgetExceptionHandler->handle($ex, $widget);
         }
@@ -231,15 +217,15 @@ class CmsExtension extends \Twig_Extension_Core
 
     /**
      * Converts a date to the given format.
+     * @param Twig_Environment             $env      A Twig_Environment instance
+     * @param DateTime|DateInterval|string $date     A date
+     * @param string                       $format   A format
+     * @param DateTimeZone|string          $timezone A timezone
      *
      * <pre>
      *   {{ post.published_at|date("m/d/Y") }}
      * </pre>
      *
-     * @param Twig_Environment             $env      A Twig_Environment instance
-     * @param DateTime|DateInterval|string $date     A date
-     * @param string                       $format   A format
-     * @param DateTimeZone|string          $timezone A timezone
      *
      * @return string The formatted date
      */
