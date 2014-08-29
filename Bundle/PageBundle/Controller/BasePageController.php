@@ -28,7 +28,7 @@ class BasePageController extends AwesomeController
     public function showByIdAction($viewId, $entityId = null)
     {
         $page = $this->container->get('victoire_page.page_helper')->findPageByParameters(array(
-            'pageId' => $viewId,
+            'viewId' => $viewId,
             'entityId' => $entityId
         ));
 

@@ -2,7 +2,7 @@
 namespace Victoire\Bundle\BusinessEntityPageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Victoire\Bundle\PageBundle\Entity\BasePage;
+use Victoire\Bundle\TemplateBundle\Entity\Template;
 
 /**
  * BusinessEntityPagePattern
@@ -10,10 +10,11 @@ use Victoire\Bundle\PageBundle\Entity\BasePage;
  * @ORM\Entity(repositoryClass="Victoire\Bundle\BusinessEntityPageBundle\Repository\BusinessEntityPagePatternRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class BusinessEntityPagePattern extends BasePage
+class BusinessEntityPagePattern extends Template
 {
     //This trait add the query and business_entity_name columns
     use \Victoire\Bundle\QueryBundle\Entity\Traits\QueryTrait;
+    use \Victoire\Bundle\PageBundle\Entity\Traits\WebViewTrait;
 
     const TYPE = 'business_entity_page_pattern';
 
@@ -23,6 +24,16 @@ class BusinessEntityPagePattern extends BasePage
      * @ORM\OneToMany(targetEntity="\Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage", mappedBy="pattern")
      */
     protected $instances;
+
+    /**
+     * contruct
+     **/
+    public function __construct()
+    {
+        parent::__construct();
+        $this->publishedAt = new \DateTime();
+        $this->status = self::$statusPublished;
+    }
 
     public function getInstances() { return $this->instances; }
     public function setInstances($instances) { $this->instances = $instances; return $this; }

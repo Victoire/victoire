@@ -220,7 +220,7 @@ class PageHelper extends ViewHelper
         $page = null;
         //get the page
         if (!empty($viewReference['viewId'])) {
-            $page = $this->em->getRepository('VictoirePageBundle:BasePage')->findOneById($viewReference['viewId']);
+            $page = $this->em->getRepository('VictoireCoreBundle:View')->findOneById($viewReference['viewId']);
         }
 
         if (!$page) {
@@ -234,7 +234,7 @@ class PageHelper extends ViewHelper
             $page =  $page->getSeo()->getRedirectTo();
         }
 
-        if ($viewReference && $page instanceof BasePage) {
+        if ($viewReference && $page instanceof View) {
             $page->setReference($viewReference);
         }
 

@@ -37,7 +37,7 @@
                 <div class="vic-col-lg-4">
                     {{ form_row(form.status) }}
                     <div class="vic-form-group">
-                        <div class="publication-date-container{{ form.vars.value.status != constant('Victoire\\Bundle\\PageBundle\\Entity\\BasePage::STATUS_SCHEDULED') ? ' vic-hidden' }}">
+                        <div class="publication-date-container{{ form.vars.value.status != page.statusScheduled ? ' vic-hidden' }}">
                             {{ form_widget(form.publishedAt) }}
                         </div>
                     </div>
@@ -50,7 +50,7 @@
 
 <script type="text/javascript">
     $vic('#victoire_article_settings_type_status').on('change', function(){
-        if ($vic(this).val() == '{{ constant('Victoire\\Bundle\\PageBundle\\Entity\\BasePage::STATUS_SCHEDULED') }}') {
+        if ($vic(this).val() == '{{ page.statusScheduled }}') {
             $vic('.publication-date-container').removeClass('vic-hidden');
         } else {
             $vic('.publication-date-container').addClass('vic-hidden');

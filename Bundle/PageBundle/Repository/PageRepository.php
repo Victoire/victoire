@@ -20,7 +20,7 @@ class PageRepository extends BasePageRepository
         $qb = $this->createQueryBuilder('page');
 
         $qb->where('page.homepage = true');
-        $qb->andWhere('page.status = \''.BasePage::STATUS_PUBLISHED.'\'');
+        $qb->andWhere('page.status = \''.BasePage::$statusPublished.'\'');
         $qb->setMaxResults(1);
 
         $query = $qb->getQuery();

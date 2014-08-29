@@ -162,7 +162,7 @@ class ViewHelper
      * @param BasePage $page
      * @param Entity   $entity
      */
-    public function updatePageParametersByEntity(BasePage $page, $entity)
+    public function updatePageParametersByEntity(BusinessEntityPagePattern $page, $entity)
     {
         //if no entity is provided
         if ($entity === null) {
