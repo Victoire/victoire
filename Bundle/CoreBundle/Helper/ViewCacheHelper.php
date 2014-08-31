@@ -34,12 +34,22 @@ class ViewCacheHelper
         $rootNode = new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8' ?><viewReferences></viewReferences>");
         foreach ($views as $key => $view) {
             $itemNode = $rootNode->addChild('viewReference');
-            $itemNode->addAttribute('id', $view['id']);
-            $itemNode->addAttribute('url', $view['url']);
-            $itemNode->addAttribute('viewId', $view['viewId']);
-            $itemNode->addAttribute('viewNamespace', $view['viewNamespace']);
-            if (!empty($view['entityId'])) {
+            if (array_key_exists('id', $view)) {
+                $itemNode->addAttribute('id', $view['id']);
+            }
+            if (array_key_exists('url', $view)) {
+                $itemNode->addAttribute('url', $view['url']);
+            }
+            if (array_key_exists('viewId', $view)) {
+                $itemNode->addAttribute('viewId', $view['viewId']);
+            }
+            if (array_key_exists('viewNamespace', $view)) {
+                $itemNode->addAttribute('viewNamespace', $view['viewNamespace']);
+            }
+            if (array_key_exists('entityId', $view)) {
                 $itemNode->addAttribute('entityId', $view['entityId']);
+            }
+            if (array_key_exists('entityNamespace', $view)) {
                 $itemNode->addAttribute('entityNamespace', $view['entityNamespace']);
             }
         }

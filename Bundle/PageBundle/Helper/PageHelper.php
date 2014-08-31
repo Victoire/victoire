@@ -226,7 +226,6 @@ class PageHelper extends ViewHelper
         if (!$page) {
             $page = $this->findPageInRouteHistory($viewReference['url']);
         }
-
         if ($page
             && $page->getSeo()
             && $page->getSeo()->getRedirectTo()
@@ -239,10 +238,10 @@ class PageHelper extends ViewHelper
         }
 
         $entity = $this->findEntityByReference($viewReference);
-        $this->checkPageValidity($page, $entity);
         if ($entity && $page instanceof BusinessEntityPagePattern) {
             $page = $this->updatePageWithEntity($page, $entity);
         }
+        $this->checkPageValidity($page, $entity);
 
         return $page;
     }
@@ -280,7 +279,7 @@ class PageHelper extends ViewHelper
                 throw new AccessDeniedException('You are not allowed to see this page');
             }
         } elseif ($page instanceof BusinessEntityPage && !$page->getId()) {
-            $entityAllowed = $this->businessEntityPageHelper->isEntityAllowed($page->getPattern(), $entity);
+            $entityAllowed = $this->businessEntityPageHelper->isEntityAllowed($page->getTemplate(), $entity);
 
             if ($entityAllowed === false) {
                 throw new NotFoundHttpException('The entity ['.$entity->getId().'] is not allowed for the page pattern ['.$page->getId().']');

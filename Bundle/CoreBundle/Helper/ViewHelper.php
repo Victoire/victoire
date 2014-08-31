@@ -80,8 +80,6 @@ class ViewHelper
                     'id'              => $referenceId,
                     'url'             => $view->getUrl(),
                     'viewId'          => $view->getId(),
-                    'entityId'        => null,
-                    'entityNamespace' => null,
                     'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
                 );
 
@@ -136,9 +134,6 @@ class ViewHelper
                 $viewsReferences[$referenceId] = array(
                     'id'              => $referenceId,
                     'viewId'          => $view->getId(),
-                    'url'             => null,
-                    'entityId'        => null,
-                    'entityNamespace' => null,
                     'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
                 );
             } else {
@@ -147,8 +142,6 @@ class ViewHelper
                     'id'              => $referenceId,
                     'viewId'          => $view->getId(),
                     'url'             => $view->getUrl(),
-                    'entityId'        => null,
-                    'entityNamespace' => null,
                     'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
                 );
             }
