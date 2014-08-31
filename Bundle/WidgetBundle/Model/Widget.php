@@ -241,7 +241,7 @@ abstract class Widget
      */
     public function getCurrentView()
     {
-        return $this->currentView;
+        return $this->currentView ? $this->currentView : $this->getView();
     }
 
     /**
