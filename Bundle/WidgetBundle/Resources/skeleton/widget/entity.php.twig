@@ -36,7 +36,7 @@ class Widget{{widget}} extends {% if parent %}Widget{{parent}}{% else %}Widget{%
      */
     public function __toString()
     {
-        return '#'.$this->id.' - '.$this->{{ toStringProperty }};
+        return '{{ widget }} #'.$this->id{% if toStringProperty != 'id' %}.' - '.$this->{{ toStringProperty }}{% endif %};
     }
 
 {% for field in fields %}

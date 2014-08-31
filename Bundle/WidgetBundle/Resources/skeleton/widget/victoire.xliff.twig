@@ -8,12 +8,18 @@
     <body>
       <trans-unit resname="widget.{{ widget|lower }}.new.action.label">
         <source>widget.{{ widget|lower }}.new.action.label</source>
-        <target>{{ widget }}</target>
+        <target state="new">{{ widget }}</target>
       </trans-unit>
       <trans-unit resname="modal.form.widget.type.{{ widget|lower }}.label">
         <source>modal.form.widget.type.{{ widget|lower }}.label</source>
-        <target>{{ widget }}</target>
+        <target state="new">{{ widget }}</target>
       </trans-unit>
+{% for field in fields %}
+      <trans-unit resname="widget_{{ widget|lower }}.form.{{ field.fieldName }}.label">
+        <source>widget_{{widget|lower}}.form.{{field.fieldName}}.label</source>
+        <target state="new">{{ field.fieldName }}</target>
+      </trans-unit>
+{% endfor %}
     </body>
   </file>
 </xliff>
