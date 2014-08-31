@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="twig.controller.exception.class">Victoire\Bundle\TwigBundle\Controller\ExceptionController</parameter>
+    </parameters>
+
+    <services>
+        <service id="twig.controller.exception" class="%twig.controller.exception.class%">
+            <argument type="service" id="twig" />
+            <argument>%kernel.debug%</argument>
+            <argument type="service" id="doctrine.orm.entity_manager"></argument>
+            <argument type="service" id="http_kernel"></argument>
+            <argument type="service" id="request_stack"></argument>
+        </service>
+    </services>
+</container>
