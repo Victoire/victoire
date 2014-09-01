@@ -86,6 +86,10 @@
         <source>modal.button.create.title</source>
         <target>Créer</target>
       </trans-unit>
+      <trans-unit resname="modal.button.cancel.title">
+        <source>modal.button.cancel.title</source>
+        <target>Annuler</target>
+      </trans-unit>
       <trans-unit id="07b2988c1c5daf0bdf6be270bede6fc8424cd688" resname="modal.button.delete.confirm.body">
         <source>This actions will permanently delete this content from the database. This action is irreversible so you have to understand this message. Do you ?</source>
         <target>Cette action va supprimer définitivement ce contenu. Cette action est irréversible. Etes vous sûr ?</target>
