@@ -164,7 +164,7 @@ class CmsExtension extends \Twig_Extension_Core
                 }
 
                 //render this widget
-                $result .= $this->cmsWidget($widget, $widgetMap->getPosition()+1);
+                $result .= $this->cmsWidget($widget, $widgetMap->getPosition()+1, $slotOptions);
             } catch (\Exception $ex) {
                 $result .= $this->widgetExceptionHandler->handle($ex, $widget);
             }
@@ -182,12 +182,12 @@ class CmsExtension extends \Twig_Extension_Core
      *
      * @return unknown
      */
-    public function cmsWidget($widget, $position = 0)
+    public function cmsWidget($widget, $position = 0, $slotOptions = array())
     {
         $widget->setCurrentView($this->currentViewHelper->getCurrentView());
 
         try {
-            $response = $this->widgetRenderer->renderContainer($widget, $widget->getCurrentView(), $position);
+            $response = $this->widgetRenderer->renderContainer($widget, $widget->getCurrentView(), $position, $slotOptions);
         } catch (\Exception $ex) {
             $response = $this->widgetExceptionHandler->handle($ex, $widget);
         }

@@ -187,7 +187,7 @@ class WidgetManager
             $widget->setCurrentView($view);
 
             //get the html for the widget
-            $hmltWidget = $this->widgetRenderer->renderContainer($widget, $view);
+            $hmltWidget = $this->widgetRenderer->renderContainer($widget, $view, $position);
 
             $response = array(
                 "success" => true,

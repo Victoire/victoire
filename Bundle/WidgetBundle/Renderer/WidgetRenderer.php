@@ -60,7 +60,7 @@ class WidgetRenderer
      *
      * @return template
      */
-    public function renderContainer(Widget $widget, View $view, $position = 0)
+    public function renderContainer(Widget $widget, View $view, $position = 0, $slotOptions = array())
     {
         $dispatcher = $this->container->get('event_dispatcher');
         $securityContext = $this->container->get('security.context');
@@ -70,7 +70,7 @@ class WidgetRenderer
         $html = $this->render($widget, $view);
 
         if ($securityContext->isGranted('ROLE_VICTOIRE')) {
-            $html .= $this->renderActions($widget->getSlot(), $view, array(), $position);
+            $html .= $this->renderActions($widget->getSlot(), $view, $slotOptions, $position);
         }
 
         $html = "<div class='vic-widget-container' data-position=\"".($position-1)."\" data-id=\"".$widget->getId()."\" id='vic-widget-".$widget->getId()."-container'>".$html.'</div>';

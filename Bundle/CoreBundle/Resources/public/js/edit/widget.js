@@ -4,8 +4,9 @@
 // Create modal for new widget
 $vic(document).on('click', '.vic-new-widget > .vic-dropdown-menu a', function(event) {
     event.preventDefault();
-    openModal($vic(this).attr('href'));
-    $vic(this).closest('.vic-dropdown.vic-new-widget').addClass('vic-creating');
+    var url = generateNewWidgetUrl(event.target);
+    openModal(url);
+    $vic(this).parents('.vic-dropdown.vic-new-widget').addClass('vic-creating');
 });
 
 
@@ -33,11 +34,12 @@ $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(
             } else {
                 $vic('.vic-creating').parents('.vic-widget-container').after(response.html);
             }
+            var slotId = $vic('.vic-creating').parents('vic-slot').data('name');
+            //update the positions of the widgets
+            updateWidgetPositions(slotId);
             closeModal();
             loading(false);
 
-            //save the positions of the widgets
-            updatePosition();
             congrat(response.message, 10000);
         } else {
             warn(response.message, 10000);
@@ -108,12 +110,15 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="delete"]', function(
             if (true === response.success) {
                 //selector for the widget div
                 var widgetContainerSelector = 'vic-widget-' + response.widgetId + '-container';
-                var widgetDiv = $vic("#" + widgetContainerSelector);
-                var widgetSlot = $vic(widgetDiv).parents('.vic-slot');
-                var slotFunction = "updateSlotActions" + $vic(widgetSlot).data('name');
+                var widgetDiv               = $vic("#" + widgetContainerSelector);
+                var widgetSlot              = $vic(widgetDiv).parents('.vic-slot');
+                var slotId                  = $vic(widgetSlot).data('name');
+                var slotFunction            = "updateSlotActions" + slotId;
 
                 //remove the div
                 widgetDiv.remove();
+                //update the data-position attribute of the slot's widgets
+                updateWidgetPositions(slotId);
 
                 //close the modal
                 eval(slotFunction + "()");
@@ -121,7 +126,7 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="delete"]', function(
                 loading(false);
             } else {
                 //log the error
-                console.log('An error occured during the deletion of the widget.');
+                console.info('An error occured during the deletion of the widget.');
                 console.log(response.message);
             }
         });
@@ -144,3 +149,25 @@ $vic(document).on('click', '[data-toggle="vic-dropdown"]', function() {
         marginLeft: -0.5 * dropdownWidth,
     });
 });
+
+function generateNewWidgetUrl(link){
+    var widgetName = $vic(link).data('widget-name');
+    var slotId = $vic(link).parents('.vic-slot').data('name');
+    if ($vic('.vic-creating').hasClass('vic-first')) {
+        var position = 1;
+    } else {
+        var position = parseInt($vic(link).parents('.vic-widget-container').data('position') + 1);
+    }
+
+    var url = Routing.generate(
+        'victoire_core_widget_new',
+        {
+            'viewReference': viewReferenceId,
+            'type'         : widgetName,
+            'slot'         : slotId,
+            'position'     : position
+        }
+    );
+
+    return url;
+}

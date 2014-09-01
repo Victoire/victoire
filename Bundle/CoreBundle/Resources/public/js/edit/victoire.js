@@ -79,6 +79,19 @@ function enableSortableSlots(){
     });
 }
 
+function updateWidgetPositions(slotId){
+    if (slotId == undefined || slotId == "") {
+        $vic(".vic-slot").each(function() {
+            updateWidgetPositions($vic(this).data('name'));
+        });
+    }
+    var position = 1;
+    $vic(".vic-slot[data-name='" + slotId + "'] > .vic-widget-container").each(function() {
+        $vic(this).attr('data-position', position);
+        position = parseInt(position + 1);
+    });
+}
+
 function updatePosition(ui){
     var sorted = {};
     $vic(".vic-slot").each(function(key, el){
