@@ -108,9 +108,7 @@ class ViewCacheHelper
         $arguments = array();
         $viewReference = array();
         foreach ($parameters as $key => $value) {
-            if ($value !== null) {
-                $arguments[] = '@' . $key . '="' . $value . '"';
-            }
+            $arguments[] = '@' . $key . '="' . $value . '"';
         }
 
         if ($xmlReference = $this->readCache()->xpath("//viewReference[" . implode(' and ', $arguments) . "]")) {
