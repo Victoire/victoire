@@ -226,7 +226,8 @@ class PageHelper extends ViewHelper
         if (!$page) {
             $page = $this->findPageInRouteHistory($viewReference['url']);
         }
-        if ($page
+
+        if ($page instanceof BasePage
             && $page->getSeo()
             && $page->getSeo()->getRedirectTo()
             && !$this->session->get('victoire.edit_mode', false)) {
@@ -264,11 +265,10 @@ class PageHelper extends ViewHelper
             throw new NotFoundHttpException($errorMessage);
         }
 
-        $isPublished = $page->isPublished();
         $isPageOwner = $this->securityContext->isGranted('PAGE_OWNER', $page);
 
         //a page not published, not owned, nor granted throw an exception
-        if (!$isPublished && !$isPageOwner) {
+        if (($page instanceof BasePage && !$page->isPublished()) && !$isPageOwner) {
             throw new NotFoundHttpException($errorMessage);
         }
 
