@@ -57,7 +57,7 @@ function enableSortableSlots(){
         $vic(this).sortable({
             revert: true,
             handle: '.vic-hover-widget',
-            items: ".vic-widget-container:not(.vic-undraggable)",
+            items: "> .vic-widget-container:not(.vic-undraggable)",
             placeholder: "vic-ui-state-highlight",
 
             forcePlaceholderSize: true,
