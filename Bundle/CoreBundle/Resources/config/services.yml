@@ -114,6 +114,7 @@ services:
             - "@victoire_core.view_helper"
             - "@victoire_core.view_cache_helper"
             - "%kernel.debug%"
+            - "%victoire_core.watch_view_cache%"
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 

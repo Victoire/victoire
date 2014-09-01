@@ -15,12 +15,14 @@ class ViewCacheListener
      * @param ViewHelper      $viewHelper      victoire_core.view_helper
      * @param ViewCacheHelper $viewCacheHelper victoire_core.view_cache_helper
      * @param boolean         $debug           %kernel.debug%
+     * @param boolean         $watchViewCache  %victoire_core.watch_view_cache%
      */
-    public function __construct(ViewHelper $viewHelper, ViewCacheHelper $viewCacheHelper, $debug)
+    public function __construct(ViewHelper $viewHelper, ViewCacheHelper $viewCacheHelper, $debug, $watchViewCache)
     {
         $this->viewHelper = $viewHelper;
         $this->viewCacheHelper = $viewCacheHelper;
         $this->debug = $debug;
+        $this->watchViewCache = $watchViewCache;
 
     }
 
@@ -32,7 +34,7 @@ class ViewCacheListener
      */
     public function onKernelRequest(GetResponseEvent $event)
     {
-        if ($this->debug) {
+        if ($this->debug && $this->watchViewCache) {
             $viewsReferences = $this->viewHelper->getAllViewsReferences();
             $this->viewCacheHelper->write($viewsReferences);
         }

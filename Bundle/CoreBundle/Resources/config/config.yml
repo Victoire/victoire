@@ -17,6 +17,7 @@ stof_doctrine_extensions:
           sluggable: true
 
 victoire_core:
+    watch_view_cache: true
     widgets: ~
     slots:
         default_menu_bar:
