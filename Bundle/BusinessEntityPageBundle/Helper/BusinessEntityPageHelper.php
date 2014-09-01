@@ -112,7 +112,6 @@ class BusinessEntityPageHelper
      */
     public function generateEntityPageFromPattern(BusinessEntityPagePattern $businessEntityPagePattern, $entity)
     {
-        $className = get_class($entity);
         $page = new BusinessEntityPage();
 
         $reflect = new \ReflectionClass($businessEntityPagePattern);
@@ -129,7 +128,7 @@ class BusinessEntityPageHelper
             }
         }
 
-        $businessEntity = $this->businessEntityHelper->findByClassname($className);
+        $businessEntity = $this->businessEntityHelper->findByEntityInstance($entity);
 
         if ($businessEntity !== null) {
             //the business properties usable in a url

@@ -111,19 +111,18 @@ class BusinessEntityHelper
     }
 
     /**
-     * Get a business entity by its classname
+     * Get a business entity
      *
-     * @param string $classname
+     * @param Entity $entity
      *
      * @throws \Exception
      *
      * @return BusinessEntity
      */
-    public function findByClassname($classname)
+    public function findByEntityInstance($entity)
     {
-        if ($classname === null) {
-            throw new \Exception('The parameter $$classname is mandatory');
-        }
+
+        $classname = $this->em->getClassMetadata(get_class($entity))->getName();
 
         //get all the business entities
         $businessEntities = $this->getBusinessEntities();

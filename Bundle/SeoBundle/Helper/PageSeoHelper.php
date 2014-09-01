@@ -77,9 +77,8 @@ class PageSeoHelper
 
             //the page seo might not exist yet
             if ($pageSeo !== null) {
-                $className = get_class($entity);
 
-                $businessEntity = $this->businessEntityHelper->findByClassname($className);
+                $businessEntity = $this->businessEntityHelper->findByEntityInstance($entity);
 
                 if ($businessEntity !== null) {
 
