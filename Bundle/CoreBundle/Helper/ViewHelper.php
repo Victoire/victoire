@@ -94,13 +94,14 @@ class ViewHelper
                         }
                     }
                     // This query retrieve business entity object, without useless properties for performance optimisation
+
                     $entities = $this->em->createQuery("SELECT partial
                         e.{" . implode(', ', $selectableProperties) . "}
                         FROM ". $businessEntity->getClass() ." e")
                         ->getResult();
+
                     // for each business entity
                     foreach ($entities as $entity) {
-                        //and for each page
 
                         // only if related pattern entity is the current entity
                         if ($view->getBusinessEntityName() === $businessEntity->getId()) {
@@ -117,6 +118,8 @@ class ViewHelper
                                 'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
                             );
                         }
+                        //I detach this partial entity from em. If I don't do it, everytime I'll request this entity from em it'll be partially populated
+                        $this->em->detach($entity);
                     }
                 }
             } elseif ($view instanceof BusinessEntityPage) {
