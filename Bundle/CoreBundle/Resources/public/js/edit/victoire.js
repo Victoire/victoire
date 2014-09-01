@@ -64,6 +64,9 @@ function enableSortableSlots(){
             revert: true,
             stop: function( event, ui ) {
                 var ajaxCall = updatePosition(ui);
+
+                //update the positions of the widgets
+                updateWidgetPositions();
                 var fail = false;
                 ajaxCall.fail(function(){
                     $vic(".vic-slot").each(function(){
