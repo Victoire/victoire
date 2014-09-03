@@ -76,6 +76,7 @@ abstract class View
     /**
      * @var string
      *
+     * @Assert\NotNull()
      * Could be Template or BusinessEntityPagePattern
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\TemplateBundle\Entity\Template", inversedBy="inheritors")
      * @ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="CASCADE")
