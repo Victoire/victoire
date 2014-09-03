@@ -136,24 +136,11 @@ VALUES
 ```
 
 
-- setup routing:
+- To setup routing, add the following at the bottom of your routing.yml:
 
-        VictoireBlogBundle:
-            resource: "@VictoireBlogBundle/Controller/"
-            type:     annotation
-            prefix:   /
-        VictoireBusinessEntityPageBundle:
-            resource: "@VictoireBusinessEntityPageBundle/Controller/"
-            type:     annotation
-            prefix:   /
-        VictoirePageBundle:
-            resource: "@VictoirePageBundle/Controller/"
-            type:     annotation
-            prefix:   /
-
-        VictoireCmsBundle:
-            resource: "@VictoireCoreBundle/Resources/config/routing.yml"
-            prefix:   /
+        VictoireCoreBundle:
+            resource: .
+            type: victoire
 
 
 - Enable StofDoctrineExtensions in AppKernel
