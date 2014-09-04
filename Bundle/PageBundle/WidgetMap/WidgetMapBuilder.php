@@ -2,6 +2,8 @@
 namespace Victoire\Bundle\PageBundle\WidgetMap;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping\ClassMetadataInfo;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\PageBundle\Entity\Slot;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
@@ -400,15 +402,30 @@ class WidgetMapBuilder
 
         //we only copy the widget if the view of the widget is not the current view
         if ($widgetView !== $view) {
-            //services
-            $em = $this->em;
 
             $widgetCopy = clone $widget;
             $widgetCopy->setView($view);
 
+            //Look for on_to_many relations, if found, duplicate related entities.
+            //It is necessary for 'list' widgets, this algo duplicates and persists list items.
+            $associations = $this->em->getClassMetadata(get_class($widget))->getAssociationMappings();
+            $accessor = PropertyAccess::createPropertyAccessor();
+            foreach ($associations as $name => $values) {
+                if ($values['type'] === ClassMetadataInfo::ONE_TO_MANY) {
+                    $relatedEntities = $accessor->getValue($widget, $values['fieldName']);
+                    $relatedEntitiesCopies = array();
+                    foreach ($relatedEntities as $relatedEntity) {
+                        $relatedEntityCopy = clone $relatedEntity;
+                        $this->em->persist($relatedEntity);
+                        $relatedEntitiesCopies[] = $relatedEntityCopy;
+                    }
+                    $accessor->setValue($widgetCopy, $name, $relatedEntitiesCopies);
+                }
+            }
+
             //we have to persist the widget to get its id
-            $em->persist($widgetCopy);
-            $em->flush();
+            $this->em->persist($widgetCopy);
+            $this->em->flush();
 
             //the id of the new widget
             $widgetId = $widgetCopy->getId();
