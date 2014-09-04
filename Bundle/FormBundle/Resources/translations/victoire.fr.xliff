@@ -14,6 +14,74 @@
         <source>victoire.collection.button.label.remove_item</source>
         <target>Supprimer un élément</target>
       </trans-unit>
+      <trans-unit resname="Link">
+        <source>Link</source>
+        <target>Lien</target>
+      </trans-unit>
+      <trans-unit resname="form.link_type.linkType.label">
+        <source>form.link_type.linkType.label</source>
+        <target>Type de lien</target>
+      </trans-unit>
+      <trans-unit resname="form.link_type.linkType.page">
+        <source>form.link_type.linkType.page</source>
+        <target>Page</target>
+      </trans-unit>
+      <trans-unit resname="form.link_type.linkType.route">
+        <source>form.link_type.linkType.route</source>
+        <target>Route</target>
+      </trans-unit>
+      <trans-unit resname="form.link_type.linkType.url">
+        <source>form.link_type.linkType.url</source>
+        <target>URL</target>
+      </trans-unit>
+      <trans-unit resname="form.link_type.linkType.widget">
+        <source>form.link_type.linkType.widget</source>
+        <target>Ancre (Widget)</target>
+      </trans-unit>
+      <trans-unit resname="form.link_type.url.label">
+        <source>form.link_type.url.label</source>
+        <target>URL</target>
+      </trans-unit>
+      <trans-unit resname="form.link_type.page.label">
+        <source>form.link_type.page.label</source>
+        <target>Page</target>
+      </trans-unit>
+      <trans-unit resname="form.link_type.page.blank">
+        <source>form.link_type.page.blank</source>
+        <target>Choisissez une page</target>
+      </trans-unit>
+      <trans-unit resname="form.link_type.attachedWidget.label">
+        <source>form.link_type.attachedWidget.label</source>
+        <target>Ancre (Widget)</target>
+      </trans-unit>
+      <trans-unit resname="form.link_type.attachedWidget.blank">
+        <source>form.link_type.attachedWidget.blank</source>
+        <target>Choisissez une ancre</target>
+      </trans-unit>
+      <trans-unit resname="form.link_type.route.label">
+        <source>form.link_type.route.label</source>
+        <target>Route</target>
+      </trans-unit>
+      <trans-unit resname="form.link_type.route_parameters.label">
+        <source>form.link_type.route_parameters.label</source>
+        <target>Paramètres de la route</target>
+      </trans-unit>
+      <trans-unit resname="form.link_type.target.label">
+        <source>form.link_type.target.label</source>
+        <target>Comportement de la cible</target>
+      </trans-unit>
+      <trans-unit resname="form.link_type.choice.target.parent">
+        <source>form.link_type.choice.target.parent</source>
+        <target>Même page (parent)</target>
+      </trans-unit>
+      <trans-unit resname="form.link_type.choice.target.blank">
+        <source>form.link_type.choice.target.blank</source>
+        <target>Nouvel onglet (blank)</target>
+      </trans-unit>
+      <trans-unit resname="form.link_type.choice.target.ajax-modal">
+        <source>form.link_type.choice.target.ajax-modal</source>
+        <target>Fenètre modale</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -7,7 +7,8 @@
             [
                 "@VictoireFormBundle/Resources/public/components/smalot-bootstrap-datetimepicker/js/bootstrap-datetimepicker.js",
                 "@VictoireFormBundle/Resources/public/components/smalot-bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.fr.js",
-                "@VictoireFormBundle/Resources/public/js/mopabootstrap-collection.js"
+                "@VictoireFormBundle/Resources/public/js/mopabootstrap-collection.js",
+                "@VictoireFormBundle/Resources/public/js/link.js"
             ]
          },
         "stylesheets":
