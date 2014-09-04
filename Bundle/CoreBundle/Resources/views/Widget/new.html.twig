@@ -3,12 +3,12 @@
 {% trans_default_domain "victoire" %}
 
 {% block form_container %}
+    {% if widget.id and widget.currentView != widget.view %}
+    <div class="vic-alert vic-alert-warning vic-alert-dismissible">
+        {{ 'victoire.widget.inherited.notice'|trans({'%templateName%': widget.view.name, '%templateEditLink%': path('victoire_core_widget_edit', {'id': widget.id, 'viewReference': widget.view.reference.id })}, 'victoire')|raw }}
+    </div>
+    {% endif %}
     {% block body %}
-        {% if widget.id and widget.currentView != widget.view %}
-        <div class="vic-alert vic-alert-warning vic-alert-dismissible">
-            {{ 'victoire.widget.inherited.notice'|trans({'%templateName%': widget.view.name, '%templateEditLink%': path('victoire_core_widget_edit', {'id': widget.id, 'viewReference': widget.view.reference.id })}, 'victoire')|raw }}
-        </div>
-        {% endif %}
 
         {% block form %}
             {% if entity != null %}
