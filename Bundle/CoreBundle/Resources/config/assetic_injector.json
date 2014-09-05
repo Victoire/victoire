@@ -29,6 +29,10 @@
         },
         "stylesheets":
         {
+            "head":
+            [
+                "@VictoireCoreBundle/Resources/style/less/victoire-head.less"
+            ],
             "victoire-edit":
             [
                 "@VictoireCoreBundle/Resources/style/less/globals/typography.less",
