@@ -2,6 +2,12 @@
 {% use 'form_div_layout.html.twig' %}
 
 {# Buttons #}
+{% block victoire_link_widget %}
+{{ block('form_widget') }}
+<script type="text/javascript">
+    showSelectedLinkType($vic('.vic-linkType-select'));
+</script>
+{% endblock victoire_link_widget %}
 {% block button_attributes %}
     {% set attr = attr|merge({class: 'vic-btn ' ~ attr.class | default("")}) %}
     {{ parent() }}

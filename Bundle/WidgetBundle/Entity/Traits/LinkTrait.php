@@ -55,6 +55,20 @@ trait LinkTrait
      */
     protected $linkType;
 
+    protected $linkParameters;
+
+    public function getLinkParameters()
+    {
+        return $this->linkParameters = array(
+            'linkType' => $this->linkType,
+            'url' => $this->url,
+            'page' => $this->page,
+            'route' => $this->route,
+            'routeParameters' => $this->routeParameters,
+            'attachedWidget'=> $this->attachedWidget,
+        );
+    }
+
     /**
      * Set url
      *

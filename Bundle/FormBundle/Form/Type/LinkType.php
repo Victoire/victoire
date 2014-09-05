@@ -40,7 +40,7 @@ class LinkType extends AbstractType
                 'attachedWidget'   => 'form.link_type.linkType.widget'
             ),
             'attr'        => array(
-                'class'    => 'linkType-select',
+                'class'    => 'vic-linkType-select',
                 'onchange'    => 'showSelectedLinkType($vic(this));',
             )
         ))
