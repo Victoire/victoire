@@ -129,20 +129,3 @@ function slideTo(element) {
     //goto that anchor by setting the body scroll top to anchor top
     $vic('html, body').animate({scrollTop:target_top}, 1500, 'easeInSine');
 }
-
-//Smooth scrolling
-//http://css-tricks.com/snippets/jquery/smooth-scrolling/
-$vic(function() {
-  $vic('a[href*=#]:not([href=#])').click(function() {
-    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
-      var target = $vic(this.hash);
-      target = target.length ? target : $vic('[name=' + this.hash.slice(1) +']');
-      if (target.length) {
-        $vic('html,body').animate({
-          scrollTop: target.offset().top
-        }, 1000);
-        return false;
-      }
-    }
-  });
-});
