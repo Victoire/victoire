@@ -44,12 +44,22 @@ class Page extends BasePage
     }
 
     /**
-     * Set homepage
+     * is homepage
      *
      * @return bool is homepage
      */
     public function isHomepage()
     {
         return $this->homepage;
+    }
+
+    /**
+     * get url
+     *
+     * @return string override to test if page is homepage
+     */
+    public function getUrl()
+    {
+        return $this->homepage ? "" : parent::getUrl();
     }
 }
