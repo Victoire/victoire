@@ -6,6 +6,10 @@
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
     </header>
     <body>
+      <trans-unit resname="(optional)">
+        <source>(optional)</source>
+        <target><![CDATA[<em>(Optionnel)</em>]]></target>
+      </trans-unit>
       <trans-unit resname="victoire.collection.button.label.add_item">
         <source>victoire.collection.button.label.add_item</source>
         <target>Ajouter un élément</target>

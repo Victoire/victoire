@@ -34,10 +34,19 @@ $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(
             } else {
                 $vic('.vic-creating').parents('.vic-widget-container').after(response.html);
             }
-            var slotId = $vic('.vic-creating').parents('vic-slot').data('name');
+            var slot = $vic('.vic-creating').parents('vic-slot');
+            var slotId = $vic(slot).data('name');
             //update the positions of the widgets
             updateWidgetPositions(slotId);
             closeModal();
+
+            //get the top offset of the target anchor
+            var target_offset = $vic('> .vic-anchor', '#' + response.widgetId).offset();
+            var target_top = target_offset.top;
+
+            //goto that anchor by setting the body scroll top to anchor top
+            $vic('html, body').animate({scrollTop:target_top}, 1500, 'easeInSine');
+
             loading(false);
 
             congrat(response.message, 10000);

@@ -547,7 +547,7 @@
 {% if required %}
     {%- if render_required_asterisk %} <span class="vic-asterisk">*</span>{% endif %}
 {% else %}
-    {%- if render_optional_text %} <span>{{ "(optional)"|trans({}, translation_domain) }}</span>{% endif %}
+    {%- if render_optional_text %} <span>{{ "(optional)"|trans({}, translation_domain)|raw }}</span>{% endif %}
 {% endif %}
 {% endblock label_asterisk %}
 

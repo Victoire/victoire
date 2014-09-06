@@ -107,8 +107,8 @@ function updatePosition(ui){
 }
 
 function replaceDropdown(ui) {
-    $(ui.item).children('.vic-dropdown').remove();
-    $(ui.item).append($(ui.item).parents('.vic-slot').children('.vic-dropdown').clone());
+    $vic(ui.item).children('.vic-dropdown').remove();
+    $vic(ui.item).append($vic(ui.item).parents('.vic-slot').children('.vic-dropdown').clone());
 }
 
 function loading(value) {
@@ -121,3 +121,19 @@ function loading(value) {
     }
 }
 
+//Smooth scrolling
+//http://css-tricks.com/snippets/jquery/smooth-scrolling/
+$vic(function() {
+  $vic('a[href*=#]:not([href=#])').click(function() {
+    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+      var target = $vic(this.hash);
+      target = target.length ? target : $vic('[name=' + this.hash.slice(1) +']');
+      if (target.length) {
+        $vic('html,body').animate({
+          scrollTop: target.offset().top
+        }, 1000);
+        return false;
+      }
+    }
+  });
+});
