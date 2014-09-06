@@ -46,7 +46,7 @@ class LinkType extends AbstractType
         ))
         ->add('url', null, array(
             'label' => 'form.link_type.url.label',
-            'widget_form_group_attr' => array('class' => 'vic-form-group vic-hidden url-type'),
+            'vic_vic_widget_form_group_attr' => array('class' => 'vic-form-group vic-hidden url-type'),
         ))
         ->add('page', 'entity', array(
             'label'       => 'form.link_type.page.label',
@@ -54,22 +54,22 @@ class LinkType extends AbstractType
             'empty_value' => 'form.link_type.page.blank',
             'class'       => 'VictoirePageBundle:Page',
             'property'    => 'name',
-            'widget_form_group_attr' => array('class' => 'vic-form-group vic-hidden page-type'),
+            'vic_vic_widget_form_group_attr' => array('class' => 'vic-form-group vic-hidden page-type'),
         ))
         ->add('attachedWidget', 'entity', array(
             'label'       => 'form.link_type.attachedWidget.label',
             'required'    => false,
             'empty_value' => 'form.link_type.attachedWidget.blank',
             'class'       => 'VictoireWidgetBundle:Widget',
-            'widget_form_group_attr' => array('class' => 'vic-form-group vic-hidden attachedWidget-type'),
+            'vic_vic_widget_form_group_attr' => array('class' => 'vic-form-group vic-hidden attachedWidget-type'),
         ))
         ->add('route', null, array(
             'label' => 'form.link_type.route.label',
-            'widget_form_group_attr' => array('class' => 'vic-form-group vic-hidden route-type'),
+            'vic_vic_widget_form_group_attr' => array('class' => 'vic-form-group vic-hidden route-type'),
         ))
         ->add($builder->create('route_parameters', 'text', array(
                 'label'      => 'form.link_type.route_parameters.label',
-                'widget_form_group_attr' => array('class' => 'vic-form-group vic-hidden route-type'),
+                'vic_vic_widget_form_group_attr' => array('class' => 'vic-form-group vic-hidden route-type'),
             ))->addModelTransformer($transformer)
         )
 

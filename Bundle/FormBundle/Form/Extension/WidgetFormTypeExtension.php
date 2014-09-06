@@ -43,24 +43,24 @@ class WidgetFormTypeExtension extends AbstractTypeExtension
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        if (in_array('percent', $view->vars['block_prefixes']) && null === $options['widget_addon_append']) {
-            $options['widget_addon_append'] = array();
+        if (in_array('percent', $view->vars['block_prefixes']) && null === $options['vic_widget_addon_append']) {
+            $options['vic_widget_addon_append'] = array();
         }
 
-        if (in_array('money', $view->vars['block_prefixes']) && null === $options['widget_addon_prepend']) {
-            $options['widget_addon_prepend'] = array();
+        if (in_array('money', $view->vars['block_prefixes']) && null === $options['vic_widget_addon_prepend']) {
+            $options['vic_widget_addon_prepend'] = array();
         }
 
-        $view->vars['widget_form_control_class'] = $options['widget_form_control_class'];
-        $view->vars['widget_form_group'] = $options['widget_form_group'];
-        $view->vars['widget_addon_prepend'] = $options['widget_addon_prepend'];
-        $view->vars['widget_addon_append'] = $options['widget_addon_append'];
-        $view->vars['widget_prefix'] = $options['widget_prefix'];
-        $view->vars['widget_suffix'] = $options['widget_suffix'];
-        $view->vars['widget_type'] = $options['widget_type'];
-        $view->vars['widget_items_attr'] = $options['widget_items_attr'];
-        $view->vars['widget_form_group_attr'] = $options['widget_form_group_attr'];
-        $view->vars['widget_checkbox_label'] = $options['widget_checkbox_label'];
+        $view->vars['vic_widget_form_control_class'] = $options['vic_widget_form_control_class'];
+        $view->vars['vic_widget_form_group'] = $options['vic_widget_form_group'];
+        $view->vars['vic_widget_addon_prepend'] = $options['vic_widget_addon_prepend'];
+        $view->vars['vic_widget_addon_append'] = $options['vic_widget_addon_append'];
+        $view->vars['vic_widget_prefix'] = $options['vic_widget_prefix'];
+        $view->vars['vic_widget_suffix'] = $options['vic_widget_suffix'];
+        $view->vars['vic_widget_type'] = $options['vic_widget_type'];
+        $view->vars['vic_widget_items_attr'] = $options['vic_widget_items_attr'];
+        $view->vars['vic_vic_widget_form_group_attr'] = $options['vic_vic_widget_form_group_attr'];
+        $view->vars['vic_widget_vic_checkbox_label'] = $options['vic_widget_vic_checkbox_label'];
     }
 
     /**
@@ -69,25 +69,25 @@ class WidgetFormTypeExtension extends AbstractTypeExtension
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'widget_form_control_class' => 'vic-form-control',
-            'widget_form_group' => true,
-            'widget_addon_prepend' => null,
-            'widget_addon_append' => null,
-            'widget_prefix' => null,
-            'widget_suffix' => null,
-            'widget_type' => '',
-            'widget_items_attr' => array(),
-            'widget_form_group_attr' => array(
+            'vic_widget_form_control_class' => 'vic-form-control',
+            'vic_widget_form_group' => true,
+            'vic_widget_addon_prepend' => null,
+            'vic_widget_addon_append' => null,
+            'vic_widget_prefix' => null,
+            'vic_widget_suffix' => null,
+            'vic_widget_type' => '',
+            'vic_widget_items_attr' => array(),
+            'vic_vic_widget_form_group_attr' => array(
                 'class' => 'vic-form-group'
             ),
-            'widget_checkbox_label' => $this->options['checkbox_label'],
+            'vic_widget_vic_checkbox_label' => $this->options['vic_checkbox_label'],
         ));
         $resolver->setAllowedValues(array(
-            'widget_type' => array(
+            'vic_widget_type' => array(
                 'inline',
                 '',
             ),
-            'widget_checkbox_label' => array(
+            'vic_widget_vic_checkbox_label' => array(
                 'label',
                 'widget',
                 'both',

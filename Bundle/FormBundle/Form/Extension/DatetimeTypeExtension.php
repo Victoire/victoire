@@ -28,8 +28,8 @@ class DatetimeTypeExtension extends AbstractTypeExtension
      */
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
-        if ('single_text' === $options['widget'] && isset($options['datetimepicker'])) {
-            $view->vars['datetimepicker'] = $options['datetimepicker'];
+        if ('single_text' === $options['widget'] && isset($options['vic_datetimepicker'])) {
+            $view->vars['vic_datetimepicker'] = $options['vic_datetimepicker'];
         }
     }
 
@@ -39,7 +39,7 @@ class DatetimeTypeExtension extends AbstractTypeExtension
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setOptional(array(
-            'datetimepicker'
+            'vic_datetimepicker'
         ));
     }
 

@@ -39,7 +39,7 @@ class StaticTextExtension extends AbstractTypeExtension
     {
         $resolver->setDefaults(
             array(
-                'static_text' => null,
+                'vic_static_text' => null,
             )
         );
     }
@@ -49,8 +49,8 @@ class StaticTextExtension extends AbstractTypeExtension
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['static_text'] = $options['static_text'];
-        if ($options['static_text'] == true) {
+        $view->vars['vic_static_text'] = $options['vic_static_text'];
+        if ($options['vic_static_text'] == true) {
             $view->vars['disabled'] = true;
         }
     }

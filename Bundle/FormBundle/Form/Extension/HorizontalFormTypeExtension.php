@@ -43,10 +43,10 @@ class HorizontalFormTypeExtension extends AbstractTypeExtension
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['horizontal']                     = $options['horizontal'];
-        $view->vars['horizontal_label_class']         = $options['horizontal_label_class'];
-        $view->vars['horizontal_label_offset_class']  = $options['horizontal_label_offset_class'];
-        $view->vars['horizontal_input_wrapper_class'] = $options['horizontal_input_wrapper_class'];
+        $view->vars['vic_horizontal']                     = $options['vic_horizontal'];
+        $view->vars['vic_horizontal_label_class']         = $options['vic_horizontal_label_class'];
+        $view->vars['vic_horizontal_label_offset_class']  = $options['vic_horizontal_label_offset_class'];
+        $view->vars['vic_horizontal_input_wrapper_class'] = $options['vic_horizontal_input_wrapper_class'];
     }
 
     /**
@@ -56,10 +56,10 @@ class HorizontalFormTypeExtension extends AbstractTypeExtension
     {
         $resolver->setDefaults(
             array(
-                'horizontal'                     => $this->options['horizontal'],
-                'horizontal_label_class'         => $this->options['horizontal_label_class'],
-                'horizontal_label_offset_class'  => $this->options['horizontal_label_offset_class'],
-                'horizontal_input_wrapper_class' => $this->options['horizontal_input_wrapper_class'],
+                'vic_horizontal'                     => $this->options['vic_horizontal'],
+                'vic_horizontal_label_class'         => $this->options['vic_horizontal_label_class'],
+                'vic_horizontal_label_offset_class'  => $this->options['vic_horizontal_label_offset_class'],
+                'vic_horizontal_input_wrapper_class' => $this->options['vic_horizontal_input_wrapper_class'],
             )
         );
     }

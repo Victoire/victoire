@@ -47,7 +47,7 @@ class PageSeoType extends AbstractType
             ))
             ->add('ogTitle', null, array(
                 'label'      => 'form.pageSeo.ogTitle.label',
-                'help_block' => 'form.pageSeo.ogTitle.help_block',
+                'vic_help_block' => 'form.pageSeo.ogTitle.vic_help_block',
             ))
             ->add('ogType', null, array(
                 'label' => 'form.pageSeo.ogType.label',
@@ -66,7 +66,7 @@ class PageSeoType extends AbstractType
             ))
             ->add('twitterCard', null, array(
                 'label'      => 'form.pageSeo.twitterCard.label',
-                'help_block' => 'form.pageSeo.twitterCard.help_block',
+                'vic_help_block' => 'form.pageSeo.twitterCard.vic_help_block',
             ))
             ->add('twitterUrl', null, array(
                 'label' => 'form.pageSeo.twitterUrl.label',
@@ -115,7 +115,7 @@ class PageSeoType extends AbstractType
             ))
             ->add('redirectTo', null, array(
                 'label'      => 'form.pageSeo.redirectTo.label',
-                'help_block' => 'form.pageSeo.redirectTo.help_block',
+                'vic_help_block' => 'form.pageSeo.redirectTo.vic_help_block',
             ))
 
             ->add(

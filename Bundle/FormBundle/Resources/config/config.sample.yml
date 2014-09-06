@@ -2,17 +2,17 @@ victoire_form:
     form:
         templating:                     VictoireFormBundle:Form:fields.html.twig
         horizontal:                     true
-        horizontal_label_class:         vic-col-lg-3 control-label
-        horizontal_label_offset_class:  vic-col-lg-offset-3
-        horizontal_input_wrapper_class: vic-col-lg-9
-        render_fieldset:                false
-        render_collection_item:         true
-        show_legend:                    false
-        show_child_legend:              false
-        checkbox_label:                 both
-        render_optional_text:           false
-        render_required_asterisk:       false
-        error_type:                     ~
+        vic_horizontal_label_class:         vic-col-lg-3 control-label
+        vic_horizontal_label_offset_class:  vic-col-lg-offset-3
+        vic_horizontal_input_wrapper_class: vic-col-lg-9
+        vic_render_fieldset:                false
+        vic_render_collection_item:         true
+        vic_show_legend:                    false
+        vic_show_child_legend:              false
+        vic_checkbox_label:                 both
+        vic_render_optional_text:           false
+        vic_render_required_asterisk:       false
+        vic_error_type:                     ~
         tabs:
             class: vic-nav vic-nav-tabs
         help_widget:
@@ -36,18 +36,18 @@ victoire_form:
                 icon:      vic-info-sign
                 placement: top
         collection:
-            widget_remove_btn:
+            vic_widget_remove_btn:
                 attr:
                     class: vic-btn vic-btn-default
                 label:         victoire.collection.button.label.remove_item
                 icon:          ~
-                icon_inverted: ~
-            widget_add_btn:
+                vic_icon_inverted: ~
+            vic_widget_add_btn:
                 attr:
                     class: vic-btn vic-btn-default
                 label:         victoire.collection.button.label.add_item
                 icon:          ~
-                icon_inverted: ~
+                vic_icon_inverted: ~
     icons:
 
         # Icon set to use: ['glyphicons','fontawesome','fontawesome4']

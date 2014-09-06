@@ -68,7 +68,7 @@ class TabbedFormTypeExtension extends AbstractTypeExtension
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['tabbed'] = false;
+        $view->vars['vic_tabbed'] = false;
     }
 
     /**
@@ -76,7 +76,7 @@ class TabbedFormTypeExtension extends AbstractTypeExtension
      */
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
-        if (!$view->vars['tabbed']) {
+        if (!$view->vars['vic_tabbed']) {
             return;
         }
 
@@ -118,7 +118,7 @@ class TabbedFormTypeExtension extends AbstractTypeExtension
         ));
 
         $view->vars['tabs']     = $tabs;
-        $view->vars['tabbed']   = true;
+        $view->vars['vic_tabbed']   = true;
         $view->vars['tabsView'] = $tabsForm->createView();
     }
 }

@@ -56,8 +56,8 @@
         <target>Fb - Image</target>
         <jms:reference-file line="56">SeoBundle/Form/PageSeoType.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="193128bf45239a9b151a60184db3678e87c803a0" resname="form.pageSeo.ogTitle.help_block">
-        <source>form.pageSeo.ogTitle.help_block</source>
+      <trans-unit id="193128bf45239a9b151a60184db3678e87c803a0" resname="form.pageSeo.ogTitle.vic_help_block">
+        <source>form.pageSeo.ogTitle.vic_help_block</source>
         <target>Titre</target>
       </trans-unit>
       <trans-unit id="fd776a6ac301728d22d0a7a20418db1106e9f6fa" resname="form.pageSeo.ogTitle.label">
@@ -80,8 +80,8 @@
         <target>form.pageSeo.page.label</target>
         <jms:reference-file line="123">SeoBundle/Form/PageSeoType.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="80a407248802ef25ba49a89d78c518bc37036f8b" resname="form.pageSeo.redirectTo.help_block">
-        <source>form.pageSeo.redirectTo.help_block</source>
+      <trans-unit id="80a407248802ef25ba49a89d78c518bc37036f8b" resname="form.pageSeo.redirectTo.vic_help_block">
+        <source>form.pageSeo.redirectTo.vic_help_block</source>
         <target>Redirection permanente</target>
       </trans-unit>
       <trans-unit id="16a1310d9050a9320cccdcbfb4d64533ad75d054" resname="form.pageSeo.redirectTo.label">
@@ -134,8 +134,8 @@
         <target>Sitemap - Priorité</target>
         <jms:reference-file line="108">SeoBundle/Form/PageSeoType.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="df44e71281b87399f0293a79d8155c3491415011" resname="form.pageSeo.twitterCard.help_block">
-        <source>form.pageSeo.twitterCard.help_block</source>
+      <trans-unit id="df44e71281b87399f0293a79d8155c3491415011" resname="form.pageSeo.twitterCard.vic_help_block">
+        <source>form.pageSeo.twitterCard.vic_help_block</source>
         <target>Carte Twitter</target>
       </trans-unit>
       <trans-unit id="15c542c8b3d81dbb50ec4aa75921437eadc46619" resname="form.pageSeo.twitterCard.label">
