@@ -39,14 +39,7 @@ $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(
             //update the positions of the widgets
             updateWidgetPositions(slotId);
             closeModal();
-
-            //get the top offset of the target anchor
-            var target_offset = $vic('> .vic-anchor', '#' + response.widgetId).offset();
-            var target_top = target_offset.top;
-
-            //goto that anchor by setting the body scroll top to anchor top
-            $vic('html, body').animate({scrollTop:target_top}, 1500, 'easeInSine');
-
+            slideTo($vic('> .vic-anchor', '#' + response.widgetId));
             loading(false);
 
             congrat(response.message, 10000);
@@ -83,8 +76,9 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update"]', function(
         data: form.serialize(),
     }).done(function(response){
         if (true === response.success) {
-            $vic("#"+response.widgetId).html(response.html);
+            $vic(".vic-widget", "#"+response.widgetId).replaceWith(response.html);
             closeModal();
+            slideTo($vic('> .vic-anchor', '#' + response.widgetId));
             loading(false);
             congrat(response.message, 10000);
         } else {

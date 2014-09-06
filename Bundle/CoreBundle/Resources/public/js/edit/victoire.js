@@ -121,6 +121,15 @@ function loading(value) {
     }
 }
 
+function slideTo(element) {
+    //get the top offset of the target anchor
+    var target_offset = $vic(element).offset();
+    var target_top = target_offset.top;
+
+    //goto that anchor by setting the body scroll top to anchor top
+    $vic('html, body').animate({scrollTop:target_top}, 1500, 'easeInSine');
+}
+
 //Smooth scrolling
 //http://css-tricks.com/snippets/jquery/smooth-scrolling/
 $vic(function() {
