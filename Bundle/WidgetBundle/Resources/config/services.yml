@@ -54,5 +54,6 @@ services:
         class: Victoire\Bundle\WidgetBundle\Twig\LinkExtension
         arguments:
             - @router
+            - @request_stack
         tags:
             - { name: twig.extension }

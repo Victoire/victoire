@@ -107,8 +107,8 @@ function updatePosition(ui){
 }
 
 function replaceDropdown(ui) {
-    $(ui.item).children('.vic-dropdown').remove();
-    $(ui.item).append($(ui.item).parents('.vic-slot').children('.vic-dropdown').clone());
+    $vic(ui.item).children('.vic-dropdown').remove();
+    $vic(ui.item).append($vic(ui.item).parents('.vic-slot').children('.vic-dropdown').clone());
 }
 
 function loading(value) {
@@ -121,3 +121,11 @@ function loading(value) {
     }
 }
 
+function slideTo(element) {
+    //get the top offset of the target anchor
+    var target_offset = $vic(element).offset();
+    var target_top = target_offset.top;
+
+    //goto that anchor by setting the body scroll top to anchor top
+    $vic('html, body').animate({scrollTop:target_top}, 1500, 'easeInSine');
+}

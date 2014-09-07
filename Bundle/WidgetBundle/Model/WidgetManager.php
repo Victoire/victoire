@@ -190,8 +190,9 @@ class WidgetManager
             $hmltWidget = $this->widgetRenderer->renderContainer($widget, $view, $position);
 
             $response = array(
-                "success" => true,
-                "html"    => $hmltWidget
+                "success"  => true,
+                "widgetId" => "vic-widget-".$widget->getId()."-container",
+                "html"     => $hmltWidget
             );
         } else {
             //get the errors as a string

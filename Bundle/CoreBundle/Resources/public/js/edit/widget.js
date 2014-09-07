@@ -34,10 +34,12 @@ $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(
             } else {
                 $vic('.vic-creating').parents('.vic-widget-container').after(response.html);
             }
-            var slotId = $vic('.vic-creating').parents('vic-slot').data('name');
+            var slot = $vic('.vic-creating').parents('vic-slot');
+            var slotId = $vic(slot).data('name');
             //update the positions of the widgets
             updateWidgetPositions(slotId);
             closeModal();
+            slideTo($vic('> .vic-anchor', '#' + response.widgetId));
             loading(false);
 
             congrat(response.message, 10000);
@@ -74,8 +76,9 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update"]', function(
         data: form.serialize(),
     }).done(function(response){
         if (true === response.success) {
-            $vic("#"+response.widgetId).html(response.html);
+            $vic(".vic-widget", "#"+response.widgetId).replaceWith(response.html);
             closeModal();
+            slideTo($vic('> .vic-anchor', '#' + response.widgetId));
             loading(false);
             congrat(response.message, 10000);
         } else {
