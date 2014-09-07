@@ -34,14 +34,14 @@ class LinkType extends AbstractType
             'label'       => 'form.link_type.linkType.label',
             'required'    => true,
             'choices'     => array(
-                'page'  => 'form.link_type.linkType.page',
-                'route' => 'form.link_type.linkType.route',
-                'url'   => 'form.link_type.linkType.url',
-                'attachedWidget'   => 'form.link_type.linkType.widget'
+                'page'           => 'form.link_type.linkType.page',
+                'route'          => 'form.link_type.linkType.route',
+                'url'            => 'form.link_type.linkType.url',
+                'attachedWidget' => 'form.link_type.linkType.widget'
             ),
             'attr'        => array(
                 'class'    => 'vic-linkType-select',
-                'onchange'    => 'showSelectedLinkType($vic(this));',
+                'onchange' => 'showSelectedLinkType($vic(this));',
             )
         ))
         ->add('url', null, array(
@@ -76,9 +76,9 @@ class LinkType extends AbstractType
         ->add('target', 'choice', array(
             'label'   => 'form.link_type.target.label',
             'choices' => array(
-                '_parent' => 'form.link_type.choice.target.parent',
-                '_blank'  => 'form.link_type.choice.target.blank',
-                'ajax-modal'  => 'form.link_type.choice.target.ajax-modal',
+                '_parent'    => 'form.link_type.choice.target.parent',
+                '_blank'     => 'form.link_type.choice.target.blank',
+                'ajax-modal' => 'form.link_type.choice.target.ajax-modal',
             ),
             'required'  => true))
         ;

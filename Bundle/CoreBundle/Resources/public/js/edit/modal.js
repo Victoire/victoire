@@ -56,7 +56,11 @@ function closeModal(modal) {
 //provides such a feature but it doesn't works as well
 $vic(document).on('keyup', function(e) {
     if (e.keyCode == 27) {
-        closeModal($vic('.vic-modal').last());
+        if (!$vic('body').hasClass('page-unloading')) {
+            closeModal($vic('.vic-modal').last());
+        } else {
+            $vic('body').removeClass('page-unloading');
+        }
     }
 });
 

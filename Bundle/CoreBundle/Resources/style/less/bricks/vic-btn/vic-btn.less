@@ -55,10 +55,13 @@
 }
 
 
-// btn remove
-.vic-btn-remove {
+// btn remove | move
+.vic-btn-remove, .vic-btn-move {
     padding: 0;
     background: transparent;
+    color: @vic-btn-default-color;
+    margin-top: -30px;
+    margin-left: 10px;
 
     &:hover,
     &:active,
@@ -71,6 +74,15 @@
 
     &.vic-btn-large {
         font-size: 22px;
+    }
+}
+
+// btn move
+.vic-btn-move {
+    &:hover,
+    &:active,
+    &:focus {
+        color: @green;
     }
 }
 
