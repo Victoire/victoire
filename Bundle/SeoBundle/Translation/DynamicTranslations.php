@@ -21,9 +21,9 @@ class DynamicTranslations implements TranslationContainerInterface
     {
         return array(
             new Message('menu.page.seoSettings', 'victoire'),
-            new Message('form.pageSeo.ogTitle.help_block', 'victoire'),
-            new Message('form.pageSeo.twitterCard.help_block', 'victoire'),
-            new Message('form.pageSeo.redirectTo.help_block', 'victoire')
+            new Message('form.pageSeo.ogTitle.vic_help_block', 'victoire'),
+            new Message('form.pageSeo.twitterCard.vic_help_block', 'victoire'),
+            new Message('form.pageSeo.redirectTo.vic_help_block', 'victoire')
         );
     }
 }

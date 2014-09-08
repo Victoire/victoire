@@ -216,3 +216,10 @@ services:
         arguments:
             - '@victoire_page.page_helper'
             - '@router'
+
+    victoire_core.routing_loader:
+        class: Victoire\Bundle\CoreBundle\Route\RouteLoader
+        arguments:
+            - '%victoire_core.widgets%'
+        tags:
+            - { name: routing.loader }

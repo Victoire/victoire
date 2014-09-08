@@ -73,6 +73,7 @@ class WidgetRenderer
             $html .= $this->renderActions($widget->getSlot(), $view, $slotOptions, $position);
         }
 
+        $html = '<a class="vic-anchor" id="vic-widget-'.$widget->getId().'-container-anchor"></a>' . $html;
         $html = "<div class='vic-widget-container' data-position=\"".($position-1)."\" data-id=\"".$widget->getId()."\" id='vic-widget-".$widget->getId()."-container'>".$html.'</div>';
 
         $dispatcher->dispatch(VictoireCmsEvents::WIDGET_POST_RENDER, new WidgetRenderEvent($widget, $html));

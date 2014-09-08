@@ -50,3 +50,10 @@ services:
         class: Victoire\Bundle\WidgetBundle\Resolver\Chain\WidgetContentResolverChain
         arguments:
             - @victoire_widget.widget_helper
+    victoire_widget.twig.link_extension:
+        class: Victoire\Bundle\WidgetBundle\Twig\LinkExtension
+        arguments:
+            - @router
+            - @request_stack
+        tags:
+            - { name: twig.extension }

@@ -38,8 +38,8 @@ class IconButtonExtension extends AbstractTypeExtension
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'icon' => null,
-            'icon_inverted' => false,
+            'vic_icon' => null,
+            'vic_icon_inverted' => false,
         ));
     }
 
@@ -48,7 +48,7 @@ class IconButtonExtension extends AbstractTypeExtension
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['icon'] = $options['icon'];
-        $view->vars['icon_inverted'] = $options['icon_inverted'];
+        $view->vars['vic_icon'] = $options['vic_icon'];
+        $view->vars['vic_icon_inverted'] = $options['vic_icon_inverted'];
     }
 }

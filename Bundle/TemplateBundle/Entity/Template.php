@@ -32,6 +32,13 @@ class Template extends View
     protected $layout;
 
     /**
+     * @var string
+     *
+     * @Assert\Valid()
+     */
+    protected $template;
+
+    /**
      * contruct
      **/
     public function __construct()

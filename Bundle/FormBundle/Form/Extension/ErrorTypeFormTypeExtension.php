@@ -35,7 +35,7 @@ class ErrorTypeFormTypeExtension extends AbstractTypeExtension
      */
     public function __construct(array $options)
     {
-        $this->errorType = $options['error_type'];
+        $this->errorType = $options['vic_error_type'];
     }
 
     /**
@@ -43,8 +43,8 @@ class ErrorTypeFormTypeExtension extends AbstractTypeExtension
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['error_type'] = $options['error_type'];
-        $view->vars['error_delay'] = $options['error_delay'];
+        $view->vars['vic_error_type'] = $options['vic_error_type'];
+        $view->vars['vic_error_delay'] = $options['vic_error_delay'];
     }
 
     /**
@@ -53,8 +53,8 @@ class ErrorTypeFormTypeExtension extends AbstractTypeExtension
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'error_type' => $this->errorType,
-            'error_delay'=> false
+            'vic_error_type' => $this->errorType,
+            'vic_error_delay'=> false
        ));
     }
 

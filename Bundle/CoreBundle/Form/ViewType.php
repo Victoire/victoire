@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Victoire\Bundle\TemplateBundle\Entity\Template;
 
 /**
  * Page Type
@@ -47,6 +48,7 @@ abstract class ViewType extends AbstractType
             $form->add('template', null, array(
                 'label'         => 'form.view.type.template.label',
                 'property'      => 'name',
+                'required'      => !$view instanceof Template,
                 'query_builder' => $getAllTemplateWithoutMe,
             ));
         });

@@ -13,6 +13,37 @@ $vic(document).ready(function() {
     }, 10);
 });
 
+//Used to know when user is leaving or page is refreshing
+//->when a victoire user is editing or creating a widget and he refresh the page by error, he press ESC. This class allows victoire to know which action to do
+$vic(window).on('beforeunload',function() {
+    $vic('body').addClass('page-unloading');
+});
+
+$vic(document).on("dblclick", function (e){
+    $vic('.vic-ns-show').remove();
+    $vic('#vic-switcher-editMode').click();
+
+    if ($vic('#vic-switcher-editMode').is(':checked')) {
+
+        //Are we targeting a widget ? If so find it to click on the link to edit it and auto scroll.
+        if ($vic(e.target).hasClass('.vic-widget')) {
+            var widget = $vic(e.target);
+        } else if ($vic(e.target).hasClass('.vic-widget-container')) {
+            var widget = $vic('> .vic-widget', e.target);
+        } else if ($vic(e.target).parents('.vic-widget:first') != undefined) {
+            var widget = $vic(e.target).parents('.vic-widget').first(); //Because it could be an embed widget
+        }
+
+        if (widget != undefined) {
+            //Automatic open the widget modal
+            $vic('> a.vic-hover-widget', widget).click();
+            //Automatic scroll to the widget
+            slideTo('#' + $vic('> .vic-anchor', $vic(widget).parent()).attr('id'), 0);
+        }
+
+        congrat('Hey Victoire');
+    }
+});
 
 // Functions
 ////////////
@@ -107,8 +138,8 @@ function updatePosition(ui){
 }
 
 function replaceDropdown(ui) {
-    $(ui.item).children('.vic-dropdown').remove();
-    $(ui.item).append($(ui.item).parents('.vic-slot').children('.vic-dropdown').clone());
+    $vic(ui.item).children('.vic-dropdown').remove();
+    $vic(ui.item).append($vic(ui.item).parents('.vic-slot').children('.vic-dropdown').clone());
 }
 
 function loading(value) {
@@ -121,3 +152,14 @@ function loading(value) {
     }
 }
 
+function slideTo(element, duration, effect) {
+    if (duration == undefined) { var duration = 1500; }
+    if (effect == undefined) { var effect = 'easeInSine'; }
+
+    //get the top offset of the target anchor
+    var target_offset = $vic(element).offset();
+    var target_top = target_offset.top;
+
+    //goto that anchor by setting the body scroll top to anchor top
+    $vic('html, body').animate({scrollTop:target_top}, duration, effect);
+}

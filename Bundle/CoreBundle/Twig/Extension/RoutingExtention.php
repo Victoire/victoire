@@ -34,7 +34,7 @@ class RoutingExtention extends RoutingExtension
 
         foreach ($parameters as $_key => $_value) {
             //if the value contains a curly bracket, it means that there is no entity to render with
-            if (strstr($_value, '{') != null) {
+            if (is_string($_value) && strstr($_value, '{') != null) {
                 return $this->generator->generate('vic_widget_render_getStaticContent', array('path' => $name), $relative ? UrlGeneratorInterface::RELATIVE_PATH : UrlGeneratorInterface::ABSOLUTE_PATH);
             }
         }

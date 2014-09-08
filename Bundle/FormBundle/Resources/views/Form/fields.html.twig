@@ -2,6 +2,12 @@
 {% use 'form_div_layout.html.twig' %}
 
 {# Buttons #}
+{% block victoire_link_widget %}
+{{ block('form_widget') }}
+<script type="text/javascript">
+    showSelectedLinkType($vic('.vic-linkType-select'));
+</script>
+{% endblock victoire_link_widget %}
 {% block button_attributes %}
     {% set attr = attr|merge({class: 'vic-btn ' ~ attr.class | default("")}) %}
     {{ parent() }}
@@ -13,17 +19,17 @@
         {% set label = name|humanize %}
     {% endif %}
     <button type="{{ type|default('button') }}" {{ block('button_attributes') }}>
-    {% if icon is not empty %}
-            {{ victoire_icon(icon, icon_inverted|default(false)) }}
+    {% if vic_icon is not empty %}
+            {{ victoire_icon(vic_icon, vic_icon_inverted|default(false)) }}
     {% endif %}
-    {{ label|trans({}, translation_domain) }}</button>
+    {{ label|trans({}, translation_domain)|raw }}</button>
 {% endspaceless %}
 {% endblock button_widget %}
 
 {% block button_row %}
     {% spaceless %}
-        {% if button_offset is not empty %}
-            {% set attr = attr|merge({'for': id, 'class': button_offset }) %}
+        {% if vic_button_offset is not empty %}
+            {% set attr = attr|merge({'for': id, 'class': vic_button_offset }) %}
             <div class="vic-form-group">
                 <div {% for attrname, attrvalue in attr %} {{attrname}}="{{attrvalue}}"{% endfor %}>
                 {{ form_widget(form) }}
@@ -40,30 +46,30 @@
 {# Widgets #}
 
 {% block choice_widget_collapsed %}
-    {% set attr = attr|merge({'class': attr.class|default('') ~ ' ' ~ widget_form_control_class}) %}
+    {% set attr = attr|merge({'class': attr.class|default('') ~ ' ' ~ vic_widget_form_control_class}) %}
     {{ parent() }}
-    {% if horizontal %}
+    {% if vic_horizontal %}
         {{ block('form_message') }}
     {% endif %}
 {% endblock choice_widget_collapsed %}
 
 {% block textarea_widget %}
     {% set type = type|default('text') %}
-    {% if type != 'hidden' and ( widget_addon_prepend|default(null) is not null or widget_addon_append|default(null) is not null ) %}
+    {% if type != 'hidden' and ( vic_widget_addon_prepend|default(null) is not null or vic_widget_addon_append|default(null) is not null ) %}
     <div class="vic-input-group">
-        {% if widget_addon_prepend|default(null) is not null %}
-            {% set widget_addon = widget_addon_prepend %}
+        {% if vic_widget_addon_prepend|default(null) is not null %}
+            {% set widget_addon = vic_widget_addon_prepend %}
             {{ block('widget_addon') }}
         {% endif %}
     {% endif %}
-    {% set attr = attr|merge({'class': attr.class|default('') ~ ' ' ~ widget_form_control_class}) %}
+    {% set attr = attr|merge({'class': attr.class|default('') ~ ' ' ~ vic_widget_form_control_class}) %}
     {{ parent() }}
-    {% if horizontal %}
+    {% if vic_horizontal %}
             {{ block('form_message') }}
     {% endif %}
-    {% if type != 'hidden' and ( widget_addon_prepend|default(null) is not null or widget_addon_append|default(null) is not null ) %}
-        {% if widget_addon_append|default(null) is not null %}
-        {% set widget_addon = widget_addon_append %}
+    {% if type != 'hidden' and ( vic_widget_addon_prepend|default(null) is not null or vic_widget_addon_append|default(null) is not null ) %}
+        {% if vic_widget_addon_append|default(null) is not null %}
+        {% set widget_addon = vic_widget_addon_append %}
         {{ block('widget_addon') }}
         {% endif %}
     </div>
@@ -73,30 +79,30 @@
 {% block form_widget_simple %}
 {% spaceless %}
     {% set type = type|default('text') %}
-    {% if type != 'hidden' and ( widget_addon_prepend|default(null) is not null or widget_addon_append|default(null) is not null ) %}
+    {% if type != 'hidden' and ( vic_widget_addon_prepend|default(null) is not null or vic_widget_addon_append|default(null) is not null ) %}
     <div class="vic-input-group">
-        {% if widget_addon_prepend|default(null) is not null %}
-            {% set widget_addon = widget_addon_prepend %}
+        {% if vic_widget_addon_prepend|default(null) is not null %}
+            {% set widget_addon = vic_widget_addon_prepend %}
             {{ block('widget_addon') }}
         {% endif %}
     {% endif %}
-    {% if not widget_remove_btn|default(null) %}
+    {% if not vic_widget_remove_btn|default(null) %}
         {% set attr = attr|merge({'class': attr.class|default('') ~ ' vic-not-removable'}) %}
     {% endif %}
-    {% set attr = attr|merge({'class': attr.class|default('') ~ ' ' ~ widget_form_control_class}) %}
-    {% if static_text is sameas(true) %}
+    {% set attr = attr|merge({'class': attr.class|default('') ~ ' ' ~ vic_widget_form_control_class}) %}
+    {% if vic_static_text is sameas(true) %}
         <p class="vic-form-control-static">{{ value }}</p>
     {% else %}
         {{ parent() }}
     {% endif %}
-    {% if type != 'hidden' and ( widget_addon_prepend|default(null) is not null or widget_addon_append|default(null) is not null ) %}
-        {% if widget_addon_append|default(null) is not null %}
-        {% set widget_addon = widget_addon_append %}
+    {% if type != 'hidden' and ( vic_widget_addon_prepend|default(null) is not null or vic_widget_addon_append|default(null) is not null ) %}
+        {% if vic_widget_addon_append|default(null) is not null %}
+        {% set widget_addon = vic_widget_addon_append %}
         {{ block('widget_addon') }}
         {% endif %}
     </div>
     {% endif %}
-    {% if type != 'hidden' and horizontal %}
+    {% if type != 'hidden' and vic_horizontal %}
         {{ block('form_message') }}
     {% endif %}
 {% endspaceless %}
@@ -105,25 +111,25 @@
 {% block form_widget_compound %}
 {% spaceless %}
     {% if form.parent == null %}
-        {% if render_fieldset %}<fieldset>{% endif %}
-        {% if show_legend %}{{ block('form_legend') }}{% endif %}
+        {% if vic_render_fieldset %}<fieldset>{% endif %}
+        {% if vic_show_legend %}{{ block('form_legend') }}{% endif %}
     {% endif %}
 
-    {% if form.vars.tabbed %}
+    {% if form.vars.vic_tabbed %}
         {{ form_tabs(form) }}
         <div class="vic-tab-content">
     {% endif %}
 
     {{ block('form_rows_visible') }}
 
-    {% if form.vars.tabbed %}
+    {% if form.vars.vic_tabbed %}
         </div>
     {% endif %}
 
     {{ form_rest(form) }}
 
     {% if form.parent == null %}
-        {% if render_fieldset %}</fieldset>{% endif %}
+        {% if vic_render_fieldset %}</fieldset>{% endif %}
     {% endif %}
 {% endspaceless %}
 {% endblock form_widget_compound %}
@@ -161,7 +167,7 @@
         {% set prototype_markup = form_row(prototype) %}
         {% set data_prototype_name = form.vars.form.vars.prototype.vars.name|default('__name__') %}
         {% set data_prototype_label = form.vars.form.vars.prototype.vars.label|default('__name__label__') %}
-        {% set widget_form_group_attr = widget_form_group_attr|merge({
+        {% set vic_vic_widget_form_group_attr = vic_vic_widget_form_group_attr|merge({
             'data-prototype': prototype_markup,
             'data-prototype-name': data_prototype_name,
             'data-prototype-label': data_prototype_label
@@ -169,15 +175,15 @@
     {% endif %}
     {# Add row by default use attr.class to change#}
     {% if 'collection' in form.vars.block_prefixes and attr.class is defined %}
-        {% set widget_form_group_attr = widget_form_group_attr|merge({'class': widget_form_group_attr.class|default('row') ~ ' ' ~ attr.class}) %}
+        {% set vic_vic_widget_form_group_attr = vic_vic_widget_form_group_attr|merge({'class': vic_vic_widget_form_group_attr.class|default('row') ~ ' ' ~ attr.class}) %}
     {% endif %}
     {# collection item adds class {form_id}_form-group  too #}
-    {% set widget_form_group_attr = widget_form_group_attr|merge({'id': 'collection' ~ id ~ '_form_group', 'class': widget_form_group_attr.class ~ ' vic-collection-items ' ~ id ~ '_form_group'}) %}
+    {% set vic_vic_widget_form_group_attr = vic_vic_widget_form_group_attr|merge({'id': 'collection' ~ id ~ '_form_group', 'class': vic_vic_widget_form_group_attr.class ~ ' vic-collection-items ' ~ id ~ '_form_group'}) %}
 
-    <div {% for attrname,attrvalue in widget_form_group_attr %} {{attrname}}="{{attrvalue}}"{% endfor %}>
+    <div {% for attrname,attrvalue in vic_vic_widget_form_group_attr %} {{attrname}}="{{attrvalue}}"{% endfor %}>
     {# Add initial prototype form #}
     {% if form.vars.value|length == 0 and prototype is defined %}
-        {% for name in prototype_names %}
+        {% for name in vic_prototype_names %}
             {{ prototype_markup|replace({'__name__': name})|raw }}
         {% endfor %}
     {% endif %}
@@ -189,19 +195,19 @@
 {% block choice_widget_expanded %}
 {% spaceless %}
     {% set label_attr = label_attr|merge({'class': (label_attr.class|default(''))}) %}
-    {% set label_attr = label_attr|merge({'class': (label_attr.class ~ ' ' ~ (widget_type != '' ? (multiple ? 'vic-checkbox' : 'vic-radio') ~ '-' ~ widget_type : ''))}) %}
+    {% set label_attr = label_attr|merge({'class': (label_attr.class ~ ' ' ~ (vic_widget_type != '' ? (multiple ? 'vic-checkbox' : 'vic-radio') ~ '-' ~ vic_widget_type : ''))}) %}
     {% if expanded %}
-        {% set attr = attr|merge({'class': attr.class|default(horizontal_input_wrapper_class)}) %}
+        {% set attr = attr|merge({'class': attr.class|default(vic_horizontal_input_wrapper_class)}) %}
     {% endif %}
     {% for child in form %}
-        {% if widget_type != 'inline' %}
+        {% if vic_widget_type != 'inline' %}
         <div class="{{ multiple ? 'vic-checkbox' : 'vic-radio' }}">
         {% endif %}
             <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-                {{ form_widget(child, {'horizontal_label_class': horizontal_label_class, 'horizontal_input_wrapper_class': horizontal_input_wrapper_class, 'attr': {'class': attr.widget_class|default('')}}) }}
+                {{ form_widget(child, {'vic_horizontal_label_class': vic_horizontal_label_class, 'vic_horizontal_input_wrapper_class': vic_horizontal_input_wrapper_class, 'attr': {'class': attr.widget_class|default('')}}) }}
                 {{ child.vars.label|trans({}, translation_domain) }}
             </label>
-        {% if widget_type != 'inline' %}
+        {% if vic_widget_type != 'inline' %}
         </div>
         {% endif %}
     {% endfor %}
@@ -220,12 +226,12 @@
     <div class="vic-checkbox">
 {% endif %}
 
-{% if form.parent != null and 'choice' not in form.parent.vars.block_prefixes and label_render %}
-    <label {% if not horizontal %}class="vic-checkbox-inline"{% endif %}>
+{% if form.parent != null and 'choice' not in form.parent.vars.block_prefixes and vic_label_render %}
+    <label {% if not vic_horizontal %}class="vic-checkbox-inline"{% endif %}>
 {% endif %}
         <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %}/>
 {% if form.parent != null and 'choice' not in form.parent.vars.block_prefixes %}
-    {% if label_render and widget_checkbox_label in ['both', 'widget'] %}
+    {% if vic_label_render and vic_widget_vic_checkbox_label in ['both', 'widget'] %}
         {{ label|trans({}, translation_domain) }}
     </label>
     {% endif %}
@@ -242,7 +248,7 @@
 {% if widget == 'single_text' %}
     {% if datepicker is defined %}
         <div data-provider="datepicker" class="vic-input-group vic-date" data-date="{{ value }}" data-link-field="{{ id }}" data-link-format="dd-mm-yyyy">
-            <input {% if widget_form_control_class is not sameas(false) %}class="{{ widget_form_control_class }}" {% endif %}type="text" {% if read_only %} readonly="readonly"{% endif %}{% if disabled %} disabled="disabled"{% endif %}{% if required %} required="required"{% endif %}>
+            <input {% if vic_widget_form_control_class is not sameas(false) %}class="{{ vic_widget_form_control_class }}" {% endif %}type="text" {% if read_only %} readonly="readonly"{% endif %}{% if vic_disabled %} disabled="disabled"{% endif %}{% if required %} required="required"{% endif %}>
             <input type="hidden" value="{{ value }}" {{ block('widget_attributes') }}>
             <span class="vic-input-group-addon">{{ victoire_icon('calendar') }}</span>
         </div>
@@ -253,9 +259,9 @@
     {% set attr = attr|merge({'class': attr.class|default('inline')}) %}
         <div class="vic-row">
         {{ date_pattern|replace({
-            '{{ year }}':  form_widget(form.year, {'attr': {'class': attr.widget_class|default('') ~ ''}, 'horizontal_input_wrapper_class': horizontal_input_wrapper_class|default('vic-col-lg-3')}),
-            '{{ month }}': form_widget(form.month, {'attr': {'class': attr.widget_class|default('') ~ ''}, 'horizontal_input_wrapper_class': horizontal_input_wrapper_class|default('vic-col-lg-3')}),
-            '{{ day }}':   form_widget(form.day, {'attr': {'class': attr.widget_class|default('') ~ ''}, 'horizontal_input_wrapper_class': horizontal_input_wrapper_class|default('vic-col-lg-3')}),
+            '{{ year }}':  form_widget(form.year, {'attr': {'class': attr.widget_class|default('') ~ ''}, 'vic_horizontal_input_wrapper_class': vic_horizontal_input_wrapper_class|default('vic-col-lg-3')}),
+            '{{ month }}': form_widget(form.month, {'attr': {'class': attr.widget_class|default('') ~ ''}, 'vic_horizontal_input_wrapper_class': vic_horizontal_input_wrapper_class|default('vic-col-lg-3')}),
+            '{{ day }}':   form_widget(form.day, {'attr': {'class': attr.widget_class|default('') ~ ''}, 'vic_horizontal_input_wrapper_class': vic_horizontal_input_wrapper_class|default('vic-col-lg-3')}),
         })|raw }}
         </div>
     {{ block('form_message') }}
@@ -268,7 +274,7 @@
 {% if widget == 'single_text' %}
     {% if timepicker is defined %}
         <div data-provider="timepicker" class="vic-input-group vic-date" data-date="{{ value }}" data-link-field="{{ id }}" data-link-format="hh:ii">
-            <input class="vic-form-control" type="text" {% if read_only %} readonly="readonly"{% endif %}{% if disabled %} disabled="disabled"{% endif %}{% if required %} required="required"{% endif %}>
+            <input class="vic-form-control" type="text" {% if read_only %} readonly="readonly"{% endif %}{% if vic_disabled %} disabled="disabled"{% endif %}{% if required %} required="required"{% endif %}>
             <input type="hidden" value="{{ value }}" {{ block('widget_attributes') }}>
             <span class="vic-input-group-addon">{{ victoire_icon('time') }}</span>
         </div>
@@ -278,10 +284,10 @@
 {% else %}
     {% set attr = attr|merge({'class': attr.class|default('')}) %}
     {% spaceless %}
-    {{ form_widget(form.hour, { 'attr': {  'size': '1'}, 'horizontal_input_wrapper_class': horizontal_input_wrapper_class|default('vic-col-lg-2')}) }}
-    {{ form_widget(form.minute, { 'attr': { 'size': '1' }, 'horizontal_input_wrapper_class': horizontal_input_wrapper_class|default('vic-col-lg-2')}) }}
+    {{ form_widget(form.hour, { 'attr': {  'size': '1'}, 'vic_horizontal_input_wrapper_class': vic_horizontal_input_wrapper_class|default('vic-col-lg-2')}) }}
+    {{ form_widget(form.minute, { 'attr': { 'size': '1' }, 'vic_horizontal_input_wrapper_class': vic_horizontal_input_wrapper_class|default('vic-col-lg-2')}) }}
     {% if with_seconds %}
-        :{{ form_widget(form.second, { 'attr': { 'size': '1' }, 'horizontal_input_wrapper_class': horizontal_input_wrapper_class|default('vic-col-lg-2') }) }}
+        :{{ form_widget(form.second, { 'attr': { 'size': '1' }, 'vic_horizontal_input_wrapper_class': vic_horizontal_input_wrapper_class|default('vic-col-lg-2') }) }}
     {% endif %}
     {% endspaceless %}
     {{ block('form_message') }}
@@ -292,9 +298,9 @@
 {% block datetime_widget %}
 {% spaceless %}
     {% if widget == 'single_text' %}
-        {% if datetimepicker is defined %}
+        {% if vic_datetimepicker is defined %}
             <div data-provider="datetimepicker" class="vic-input-group vic-date" data-date="{% if value %}{{ value|date('d-m-Y H:i') }}{% endif %}" data-link-field="{{ id }}" data-link-format="dd-mm-yyyy hh:ii">
-                <input class="vic-form-control" type="text" {% if read_only %} readonly="readonly"{% endif %}{% if disabled %} disabled="disabled"{% endif %}{% if required %} required="required"{% endif %} value="{% if value %}{{ value|date('d-m-Y H:i') }}{% endif %}">
+                <input class="vic-form-control" type="text" {% if read_only %} readonly="readonly"{% endif %}{% if vic_disabled %} disabled="disabled"{% endif %}{% if required %} required="required"{% endif %} value="{% if value %}{{ value|date('d-m-Y H:i') }}{% endif %}">
                 <input type="hidden" value="{% if value %}{{ value|date('d-m-Y H:i') }}{% endif %}" {{ block('widget_attributes') }}>
                 <span class="vic-input-group-addon">{{ victoire_icon('th') }}</span>
             </div>
@@ -306,8 +312,8 @@
             <div {{ block('widget_container_attributes') }}>
                 {{ form_errors(form.date) }}
                 {{ form_errors(form.time) }}
-                {{ form_widget(form.date, {'attr': {'class': attr.widget_class|default('')}, 'horizontal_input_wrapper_class': horizontal_input_wrapper_class|default('vic-col-lg-3')}) }}
-                {{ form_widget(form.time, {'attr': {'class': attr.widget_class|default('')}, 'horizontal_input_wrapper_class': horizontal_input_wrapper_class|default('vic-col-lg-2')}) }}
+                {{ form_widget(form.date, {'attr': {'class': attr.widget_class|default('')}, 'vic_horizontal_input_wrapper_class': vic_horizontal_input_wrapper_class|default('vic-col-lg-3')}) }}
+                {{ form_widget(form.time, {'attr': {'class': attr.widget_class|default('')}, 'vic_horizontal_input_wrapper_class': vic_horizontal_input_wrapper_class|default('vic-col-lg-2')}) }}
                 {{ block('form_message') }}
             </div>
     {% endif %}
@@ -316,14 +322,14 @@
 
 {% block percent_widget %}
 {% spaceless %}
-    {% set widget_addon_append = widget_addon_append|merge({'text': widget_addon_append.text|default('%')}) %}
+    {% set vic_widget_addon_append = vic_widget_addon_append|merge({'text': vic_widget_addon_append.text|default('%')}) %}
     {{ block('form_widget_simple') }}
 {% endspaceless %}
 {% endblock percent_widget %}
 
 {% block money_widget %}
 {% spaceless %}
-    {% set widget_addon_prepend = (widget_addon_prepend != false or widget_addon_prepend == null) and money_pattern != '{{ widget }}' ? {'text': money_pattern|replace({ '{{ widget }}': ''})} : widget_addon_prepend|default(null) %}
+    {% set vic_widget_addon_prepend = (vic_widget_addon_prepend != false or vic_widget_addon_prepend == null) and money_pattern != '{{ widget }}' ? {'text': money_pattern|replace({ '{{ widget }}': ''})} : vic_widget_addon_prepend|default(null) %}
     {{ block('form_widget_simple') }}
 {% endspaceless %}
 {% endblock money_widget %}
@@ -331,19 +337,19 @@
 {% block file_widget %}
 {% spaceless %}
 {% set type = type|default('file') %}
-{% set attr = attr|merge({'class': attr.class|default('') ~ ' ' ~ widget_form_control_class}) %}
-    {% if widget_addon_prepend|default(null) is not null %}
-        {% set widget_addon = widget_addon_prepend %}
+{% set attr = attr|merge({'class': attr.class|default('') ~ ' ' ~ vic_widget_form_control_class}) %}
+    {% if vic_widget_addon_prepend|default(null) is not null %}
+        {% set widget_addon = vic_widget_addon_prepend %}
         {{ block('widget_addon') }}
     {% endif %}
 <input type="{{ type }}" {{ block('widget_attributes') }}/>
 {% if type != 'hidden' and  widget_addon.type|default(null) is not null %}
-    {% if widget_addon_append|default(null) is not null %}
-        {% set widget_addon = widget_addon_append %}
+    {% if vic_widget_addon_append|default(null) is not null %}
+        {% set widget_addon = vic_widget_addon_append %}
         {{ block('widget_addon') }}
     {% endif %}
 {% endif %}
-    {% if horizontal %}
+    {% if vic_horizontal %}
         {{ block('form_message') }}
     {% endif %}
 {% endspaceless %}
@@ -356,12 +362,12 @@
     {% if label is empty %}
         {% set label = name|humanize %}
     {% endif %}
-    <{{ legend_tag }}>{{ label|trans({}, translation_domain) }}</{{ legend_tag }}>
+    <{{ vic_legend_tag }}>{{ label|trans({}, translation_domain) }}</{{ vic_legend_tag }}>
 {% endspaceless %}
 {% endblock form_legend %}
 
 {% block form_label %}
-{% if 'checkbox' not in block_prefixes or widget_checkbox_label in ['label', 'both'] %}
+{% if 'checkbox' not in block_prefixes or vic_widget_vic_checkbox_label in ['label', 'both'] %}
 {% spaceless %}
     {% if label is not sameas(false) %}
         {% if label is empty %}
@@ -371,24 +377,24 @@
             {% set label_attr = label_attr|merge({'for': id}) %}
         {% endif %}
         {% set label_attr_class = '' %}
-        {% if horizontal %}
-            {% set label_attr_class = 'vic-control-label ' ~ label_attr_class ~ horizontal_label_class %}
+        {% if vic_horizontal %}
+            {% set label_attr_class = 'vic-control-label ' ~ label_attr_class ~ vic_horizontal_label_class %}
         {% endif %}
         {% set label_attr = label_attr|merge({'class': label_attr.class|default('') ~ label_attr_class ~ (required ? ' vic-required' : ' vic-optional') }) %}
         <label{% for attrname,attrvalue in label_attr %} {{attrname}}="{{attrvalue}}"{% endfor %}>
-        {{ label|trans }}
+        {{ label|trans|raw }}
         {{- block('label_asterisk') }}
-        {% if 'collection' in form.vars.block_prefixes and widget_add_btn|default(null) and form.vars.allow_add == true %}
-            {{ block('form_widget_add_btn') }}
+        {% if 'collection' in form.vars.block_prefixes and vic_widget_add_btn|default(null) and form.vars.allow_add == true %}
+            {{ block('form_vic_widget_add_btn') }}
         {% endif %}
-        {% if help_label %}
-            {{ block('help_label') }}
+        {% if vic_help_label %}
+            {{ block('vic_help_label') }}
         {% endif %}
-        {% if help_label_tooltip.title %}
-            {{ block('help_label_tooltip') }}
+        {% if vic_help_label_tooltip.title %}
+            {{ block('vic_help_label_tooltip') }}
         {% endif %}
-        {% if help_label_popover.title %}
-            {{ block('help_label_popover') }}
+        {% if vic_help_label_popover.title %}
+            {{ block('vic_help_label_popover') }}
         {% endif %}
         </label>
     {% endif %}
@@ -396,35 +402,35 @@
 {% endif %}
 {% endblock form_label %}
 
-{% block help_label %}
+{% block vic_help_label %}
     <span class="vic-help-block">{{ help_label|trans({}, translation_domain) }}</span>
-{% endblock help_label %}
+{% endblock vic_help_label %}
 
-{% block help_label_tooltip %}
+{% block vic_help_label_tooltip %}
     <span class="vic-help-block">
-        <a href="#" data-toggle="vic-tooltip" data-placement="{{ help_label_tooltip.placement}}" data-title="{{ help_label_tooltip.title|trans({}, translation_domain) }}">
-            {% if help_label_tooltip.icon is not sameas(false) %}
-                {{ victoire_icon(help_label_tooltip.icon) }}
+        <a href="#" data-toggle="vic-tooltip" data-placement="{{ vic_help_label_tooltip.placement}}" data-title="{{ vic_help_label_tooltip.title|trans({}, translation_domain) }}">
+            {% if vic_help_label_tooltip.icon is not sameas(false) %}
+                {{ victoire_icon(vic_help_label_tooltip.icon) }}
             {% endif %}
-            {% if help_label_tooltip.text is not sameas(null) %}
-            {{ help_label_tooltip.text }}
+            {% if vic_help_label_tooltip.text is not sameas(null) %}
+            {{ vic_help_label_tooltip.text }}
             {% endif %}
         </a>
     </span>
-{% endblock help_label_tooltip %}
+{% endblock vic_help_label_tooltip %}
 
-{% block help_label_popover %}
+{% block vic_help_label_popover %}
     <span class="vic-help-block">
-        <a href="#" data-toggle="vic-popover" data-trigger="hover" data-placement="{{ help_label_popover.placement}}" data-title="{{ help_label_popover.title|trans({}, translation_domain) }}" data-content="{{ help_label_popover.content|trans({}, translation_domain) }}" >
-            {% if help_label_popover.icon is not sameas(false) %}
-                {{ victoire_icon(help_label_popover.icon) }}
+        <a href="#" data-toggle="vic-popover" data-trigger="hover" data-placement="{{ vic_help_label_popover.placement}}" data-title="{{ vic_help_label_popover.title|trans({}, translation_domain) }}" data-content="{{ vic_help_label_popover.content|trans({}, translation_domain) }}" >
+            {% if vic_help_label_popover.icon is not sameas(false) %}
+                {{ victoire_icon(vic_help_label_popover.icon) }}
             {% endif %}
-            {% if help_label_popover.text is not sameas(null) %}
-            {{ help_label_popover.text }}
+            {% if vic_help_label_popover.text is not sameas(null) %}
+            {{ vic_help_label_popover.text }}
             {% endif %}
         </a>
     </span>
-{% endblock help_label_popover %}
+{% endblock vic_help_label_popover %}
 
 {% block form_actions_widget %}
     {% for button in buttons %}
@@ -457,27 +463,27 @@
     {% if 'tab' in form.vars.block_prefixes %}
         {{ block('form_tab') }}
     {% else %}
-        {{ block('widget_form_group_start') }}
+        {{ block('vic_widget_form_group_start') }}
 
-        {% set show_horizontal_wrapper = horizontal and not (form.parent is not null and 'collection' in form.parent.vars.block_prefixes) %}
+        {% set show_horizontal_wrapper = vic_horizontal and not (form.parent is not null and 'collection' in form.parent.vars.block_prefixes) %}
 
-        {% if horizontal and not label_render %}
-            {% set horizontal_input_wrapper_class = horizontal_input_wrapper_class ~ ' ' ~ horizontal_label_offset_class %}
+        {% if vic_horizontal and not vic_label_render %}
+            {% set vic_horizontal_input_wrapper_class = vic_horizontal_input_wrapper_class ~ ' ' ~ vic_horizontal_label_offset_class %}
         {% endif %}
 
         {% if show_horizontal_wrapper %}
-        <div class="{{ horizontal_input_wrapper_class }}">
+        <div class="{{ vic_horizontal_input_wrapper_class }}">
         {% endif %}
-        {{ widget_prefix|trans({}, translation_domain)|raw }} {{ form_widget(form, _context) }} {{ widget_suffix|trans({}, translation_domain)|raw }}
+        {{ vic_widget_prefix|trans({}, translation_domain)|raw }} {{ form_widget(form, _context) }} {{ vic_widget_suffix|trans({}, translation_domain)|raw }}
 
         {% if show_horizontal_wrapper %}
         </div>
         {% endif %}
 
-        {% if form.parent is not null and 'collection' in form.parent.vars.block_prefixes and widget_remove_btn|default(null) and form.parent.vars.allow_delete|default(false) %}
-            {{ block('form_widget_remove_btn') }}
+        {% if form.parent is not null and 'collection' in form.parent.vars.block_prefixes and vic_widget_remove_btn|default(null) and form.parent.vars.allow_delete|default(false) %}
+            {{ block('form_vic_widget_remove_btn') }}
         {% endif -%}
-        {{ block('widget_form_group_end') }}
+        {{ block('vic_widget_form_group_end') }}
     {% endif %}
 {% endspaceless %}
 {% endblock form_row %}
@@ -495,42 +501,42 @@
 
 {% block form_help %}
 {% spaceless %}
-{% if help_block %}<p class="vic-help-block">{{ help_block|trans({}, translation_domain)|raw }}</p>{%endif %}
+{% if vic_help_block %}<p class="vic-help-block">{{ vic_help_block|trans({}, translation_domain)|raw }}</p>{%endif %}
 {% endspaceless %}
 {% endblock form_help %}
 
-{% block form_widget_add_btn %}
+{% block form_vic_widget_add_btn %}
 {% spaceless %}
-    {% if widget_add_btn|default(null) %}
+    {% if vic_widget_add_btn|default(null) %}
         {% set button_type = 'add' %}
-        {% set button_values = widget_add_btn %}
+        {% set button_values = vic_widget_add_btn %}
         {{ block('collection_button') }}
     {% endif %}
 {% endspaceless %}
-{% endblock form_widget_add_btn %}
+{% endblock form_vic_widget_add_btn %}
 
-{% block form_widget_remove_btn %}
+{% block form_vic_widget_remove_btn %}
 {% spaceless %}
-    {% if widget_remove_btn.wrapper_div is not sameas(false) %}
+    {% if vic_widget_remove_btn.wrapper_div is not sameas(false) %}
         <div class="vic-form-group">
-            <div class="{{ widget_remove_btn.wrapper_div.class }} vic-col-lg-offset-3">
+            <div class="{{ vic_widget_remove_btn.wrapper_div.class }} vic-col-lg-offset-3">
     {% endif %}
-    {% if widget_remove_btn|default(null) %}
+    {% if vic_widget_remove_btn|default(null) %}
     {% set button_type = 'remove' %}
-    {% set button_values = widget_remove_btn %}
+    {% set button_values = vic_widget_remove_btn %}
     {{ block('collection_button') }}
     {% endif %}
-    {% if widget_remove_btn.wrapper_div is not sameas(false) %}
+    {% if vic_widget_remove_btn.wrapper_div is not sameas(false) %}
             </div>
         </div>
     {% endif %}
 {% endspaceless %}
-{% endblock form_widget_remove_btn %}
+{% endblock form_vic_widget_remove_btn %}
 
 {% block collection_button %}
 <a {% for attrname,attrvalue in button_values.attr %} {{attrname}}="{{attrvalue}}"{% endfor %} data-collection-vic-{{ button_type }}-btn=".{{ form.vars['id'] }}_form_group">
-{% if button_values.icon is not null %}
-    {{ victoire_icon(button_values.icon, button_values.icon_inverted|default(false)) }}
+{% if button_values.vic_icon is not null %}
+    {{ victoire_icon(button_values.vic_icon, button_values.vic_icon_inverted|default(false)) }}
 {% endif %}
 {{ button_values.label|trans({}, translation_domain) }}
 </a>
@@ -539,17 +545,17 @@
 
 {% block label_asterisk %}
 {% if required %}
-    {%- if render_required_asterisk %} <span class="vic-asterisk">*</span>{% endif %}
+    {%- if vic_render_required_asterisk %} <span class="vic-asterisk">*</span>{% endif %}
 {% else %}
-    {%- if render_optional_text %} <span>{{ "(optional)"|trans({}, translation_domain) }}</span>{% endif %}
+    {%- if vic_render_optional_text %} <span>{{ "(optional)"|trans({}, translation_domain)|raw }}</span>{% endif %}
 {% endif %}
 {% endblock label_asterisk %}
 
 {% block widget_addon %}
 {% spaceless %}
-{% set widget_addon_icon = widget_addon.icon is defined ? widget_addon.icon : null  %}
-{% set widget_addon_icon_inverted = widget_addon.icon_inverted is defined ? widget_addon.icon_inverted : false  %}
-    <span class="vic-input-group-addon">{{ (widget_addon.text|default(false) ? widget_addon.text|trans({}, translation_domain)|raw : victoire_icon(widget_addon_icon, widget_addon_icon_inverted)) }}</span>
+{% set widget_addon_icon = widget_addon.vic_icon is defined ? widget_addon.vic_icon : null  %}
+{% set widget_addon_vic_icon_inverted = widget_addon.vic_icon_inverted is defined ? widget_addon.vic_icon_inverted : false  %}
+    <span class="vic-input-group-addon">{{ (widget_addon.text|default(false) ? widget_addon.text|trans({}, translation_domain)|raw : victoire_icon(widget_addon_icon, widget_addon_vic_icon_inverted)) }}</span>
 {% endspaceless %}
 {% endblock widget_addon %}
 
@@ -557,7 +563,7 @@
 
 {% block form_errors %}
 {% spaceless %}
-{% if error_delay %}
+{% if vic_error_delay %}
     {% for child in form %}
         {% if loop.index == 1 %}
             {% if child.set('errors', errors) %}{% endif %}
@@ -576,7 +582,7 @@
                 }}
             {% endfor %}
         {% else %}
-            <span class="vic-help-{{ block('error_type') }}">
+            <span class="vic-help-{{ block('vic_error_type') }}">
             {% for error in errors %}
                 {{
                     error.messagePluralization is null
@@ -593,70 +599,70 @@
 
 {# used to determine which type of error #}
 
-{% block error_type %}
+{% block vic_error_type %}
 {% spaceless %}
-{% if error_type %}
-    {{ error_type }}
+{% if vic_error_type %}
+    {{ vic_error_type }}
 {% elseif form.parent == null %}
-    {{ form.vars.error_type | default('inline') }}
+    {{ form.vars.vic_error_type | default('inline') }}
 {% else %}
     block
 {% endif %}
 {% endspaceless %}
-{% endblock error_type %}
+{% endblock vic_error_type %}
 
 {# widget helper blocks #}
 
-{% block widget_form_group_start %}
-{% if widget_form_group|default(false) or form.parent == null %}
+{% block vic_widget_form_group_start %}
+{% if vic_widget_form_group|default(false) or form.parent == null %}
     {% if form.parent is not null and 'collection' in form.parent.vars.block_prefixes %} {# i am a collection child #}
-        {% if not omit_collection_item %}
+        {% if not vic_omit_collection_item %}
             {# collection item wrapper doesnt need form-group it gets added to childs anyways #}
-            {% set widget_form_group_attr = widget_form_group_attr|merge({class: 'vic-collection-item'}) %}
+            {% set vic_vic_widget_form_group_attr = vic_vic_widget_form_group_attr|merge({class: 'vic-collection-item'}) %}
         {% endif %}
     {% endif %}
     {% if errors|length > 0 %}
         {# Add Error Class to Widget Wrapper#}
-        {% set widget_form_group_attr = widget_form_group_attr|merge({'class': widget_form_group_attr.class|default('') ~ ' has-error'}) %}
+        {% set vic_vic_widget_form_group_attr = vic_vic_widget_form_group_attr|merge({'class': vic_vic_widget_form_group_attr.class|default('') ~ ' has-error'}) %}
     {% endif %}
-    {% if help_widget_popover.selector is sameas(null) %}
-        {% set help_widget_popover = help_widget_popover|merge({'selector': '#' ~ id }) %}
+    {% if vic_help_widget_popover.selector is sameas(null) %}
+        {% set vic_help_widget_popover = vic_help_widget_popover|merge({'selector': '#' ~ id }) %}
     {% endif %}
-    <div{% if help_widget_popover.title is not sameas(null) %}{{ block('help_widget_popover') }}{% endif %} {% for attrname,attrvalue in widget_form_group_attr %} {{attrname}}="{{attrvalue}}"{% endfor %}>
+    <div{% if vic_help_widget_popover.title is not sameas(null) %}{{ block('vic_help_widget_popover') }}{% endif %} {% for attrname,attrvalue in vic_vic_widget_form_group_attr %} {{attrname}}="{{attrvalue}}"{% endfor %}>
     {# a form item containing the field in block_prefixes is a near subform or a field directly #}
     {% if (form|length > 0 and form.parent != null)
         and 'field' not in form.vars.block_prefixes
         and 'date' not in form.vars.block_prefixes %}
-        {% if show_child_legend%}
+        {% if vic_show_child_legend%}
             {{ block('form_legend') }}
-        {% elseif label_render %}
+        {% elseif vic_label_render %}
             {{ form_label(form, label|default(null)) }}
         {% else %}
         {% endif %}
     {% else %}
-        {% if label_render %}
+        {% if vic_label_render %}
             {{ form_label(form, label|default(null)) }}
         {% endif %}
     {% endif %}
 {% else %}
-    {% if label_render %}
+    {% if vic_label_render %}
         {{ form_label(form, label|default(null)) }}
     {% endif %}
 {% endif %}
-{% endblock widget_form_group_start %}
+{% endblock vic_widget_form_group_start %}
 
-{% block help_widget_popover %}
+{% block vic_help_widget_popover %}
  {% spaceless %}
- {% for attrname,attrvalue in help_widget_popover %}
+ {% for attrname,attrvalue in vic_help_widget_popover %}
  data-{{attrname}}="{{attrvalue}}"
  {% endfor %}
  {% endspaceless %}
-{% endblock help_widget_popover %}
+{% endblock vic_help_widget_popover %}
 
-{% block widget_form_group_end %}
+{% block vic_widget_form_group_end %}
 {% spaceless %}
-{% if widget_form_group|default(false) or form.parent == null %}
+{% if vic_widget_form_group|default(false) or form.parent == null %}
     </div>
 {% endif %}
 {% endspaceless %}
-{% endblock widget_form_group_end %}
+{% endblock vic_widget_form_group_end %}

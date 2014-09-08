@@ -39,7 +39,7 @@ class OffsetButtonExtension extends AbstractTypeExtension
     {
         $resolver->setDefaults(
             array(
-                'button_offset' => null,
+                'vic_button_offset' => null,
             )
         );
     }
@@ -49,7 +49,7 @@ class OffsetButtonExtension extends AbstractTypeExtension
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['button_offset'] = $options['button_offset'];
+        $view->vars['vic_button_offset'] = $options['vic_button_offset'];
 
     }
 }

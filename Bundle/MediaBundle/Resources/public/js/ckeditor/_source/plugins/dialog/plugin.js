@@ -990,7 +990,7 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 		},
 
 		/**
-		 * Adds a tabbed page into the dialog.
+		 * Adds a vic_tabbed page into the dialog.
 		 * @param {Object} contents Content definition.
 		 * @example
 		 */

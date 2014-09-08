@@ -43,7 +43,7 @@ class TabType extends AbstractType
         $view->vars['icon'] = $valid ? $options['icon'] : $options['error_icon'];
         $view->vars['tab_active'] = false;
 
-        $view->parent->vars['tabbed'] = true;
+        $view->parent->vars['vic_tabbed'] = true;
     }
 
     /**

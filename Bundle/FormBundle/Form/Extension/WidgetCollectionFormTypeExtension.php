@@ -45,35 +45,35 @@ class WidgetCollectionFormTypeExtension extends AbstractTypeExtension
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         if (in_array('collection', $view->vars['block_prefixes'])) {
-            if ($options['widget_add_btn'] != null && !is_array($options['widget_add_btn'])) {
-                throw new InvalidArgumentException('The "widget_add_btn" option must be an "array".');
+            if ($options['vic_widget_add_btn'] != null && !is_array($options['vic_widget_add_btn'])) {
+                throw new InvalidArgumentException('The "vic_widget_add_btn" option must be an "array".');
             }
 
-            if ((isset($options['allow_add']) && true === $options['allow_add']) && $options['widget_add_btn']) {
-                if (isset($options['widget_add_btn']['attr']) && !is_array($options['widget_add_btn']['attr'])) {
-                    throw new InvalidArgumentException('The "widget_add_btn.attr" option must be an "array".');
+            if ((isset($options['allow_add']) && true === $options['allow_add']) && $options['vic_widget_add_btn']) {
+                if (isset($options['vic_widget_add_btn']['attr']) && !is_array($options['vic_widget_add_btn']['attr'])) {
+                    throw new InvalidArgumentException('The "vic_widget_add_btn.attr" option must be an "array".');
                 }
-                $options['widget_add_btn'] = array_replace_recursive($this->options['widget_add_btn'], $options['widget_add_btn']);
+                $options['vic_widget_add_btn'] = array_replace_recursive($this->options['vic_widget_add_btn'], $options['vic_widget_add_btn']);
             }
         }
 
         if ($view->parent && in_array('collection', $view->parent->vars['block_prefixes'])) {
-            if ($options['widget_remove_btn'] != null && !is_array($options['widget_remove_btn'])) {
-                throw new InvalidArgumentException('The "widget_remove_btn" option must be an "array".');
+            if ($options['vic_widget_remove_btn'] != null && !is_array($options['vic_widget_remove_btn'])) {
+                throw new InvalidArgumentException('The "vic_widget_remove_btn" option must be an "array".');
             }
 
-            if ((isset($options['allow_delete']) && true === $options['allow_delete']) && $options['widget_remove_btn']) {
-                if (isset($options['widget_remove_btn']) && !is_array($options['widget_remove_btn'])) {
-                    throw new InvalidArgumentException('The "widget_remove_btn" option must be an "array".');
+            if ((isset($options['allow_delete']) && true === $options['allow_delete']) && $options['vic_widget_remove_btn']) {
+                if (isset($options['vic_widget_remove_btn']) && !is_array($options['vic_widget_remove_btn'])) {
+                    throw new InvalidArgumentException('The "vic_widget_remove_btn" option must be an "array".');
                 }
-                $options['widget_remove_btn'] = array_replace_recursive($this->options['widget_remove_btn'], $options['widget_remove_btn']);
+                $options['vic_widget_remove_btn'] = array_replace_recursive($this->options['vic_widget_remove_btn'], $options['vic_widget_remove_btn']);
             }
         }
 
-        $view->vars['omit_collection_item'] = $options['omit_collection_item'];
-        $view->vars['widget_add_btn'] = $options['widget_add_btn'];
-        $view->vars['widget_remove_btn'] = $options['widget_remove_btn'];
-        $view->vars['prototype_names'] = $options['prototype_names'];
+        $view->vars['vic_omit_collection_item'] = $options['vic_omit_collection_item'];
+        $view->vars['vic_widget_add_btn'] = $options['vic_widget_add_btn'];
+        $view->vars['vic_widget_remove_btn'] = $options['vic_widget_remove_btn'];
+        $view->vars['vic_prototype_names'] = $options['vic_prototype_names'];
     }
 
     /**
@@ -82,10 +82,10 @@ class WidgetCollectionFormTypeExtension extends AbstractTypeExtension
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'omit_collection_item' => true === $this->options['render_collection_item'] ? false : true,
-            'widget_add_btn' => $this->options['widget_add_btn'],
-            'widget_remove_btn' => $this->options['widget_remove_btn'],
-            'prototype_names' => array()
+            'vic_omit_collection_item' => true === $this->options['vic_render_collection_item'] ? false : true,
+            'vic_widget_add_btn' => $this->options['vic_widget_add_btn'],
+            'vic_widget_remove_btn' => $this->options['vic_widget_remove_btn'],
+            'vic_prototype_names' => array()
         ));
     }
 

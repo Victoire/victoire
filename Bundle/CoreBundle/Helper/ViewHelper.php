@@ -171,9 +171,7 @@ class ViewHelper
 
         //only if we have an entity instance
         if ($entity !== null) {
-            $className = get_class($entity);
-
-            $businessEntity = $this->businessEntityHelper->findByClassname($className);
+            $businessEntity = $this->businessEntityHelper->findByEntityInstance($entity);
 
             if ($businessEntity !== null) {
 
