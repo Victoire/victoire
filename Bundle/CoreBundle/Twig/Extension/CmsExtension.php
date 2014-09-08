@@ -231,11 +231,14 @@ class CmsExtension extends \Twig_Extension_Core
      */
     public function twig_vic_date_format_filter($value, $format = 'F j, Y H:i', $timezone = null)
     {
-        if ($value instanceof \DateTime || $value instanceof DateInterval) {
-            return twig_date_format_filter($this->twig, $value, $format, $timezone);
-        } else {
+        try {
+            $result = twig_date_format_filter($this->twig, $value, $format, $timezone);
+        } catch (\Exception $e) {
             return $value;
         }
+
+        return $result;
+
     }
 
     /**
