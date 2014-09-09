@@ -1,9 +1,14 @@
 <?php
 namespace Victoire\Bundle\WidgetBundle\Entity\Traits;
 
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\ExecutionContextInterface;
+
 /**
  * Link trait adds fields to create a link to a page, widget, url or route
  *
+ * @Assert\Callback(methods={"validateLink"})
  */
 trait LinkTrait
 {
@@ -60,12 +65,12 @@ trait LinkTrait
     public function getLinkParameters()
     {
         return $this->linkParameters = array(
-            'linkType' => $this->linkType,
-            'url' => $this->url,
-            'page' => $this->page,
-            'route' => $this->route,
+            'linkType'        => $this->linkType,
+            'url'             => $this->url,
+            'page'            => $this->page,
+            'route'           => $this->route,
             'routeParameters' => $this->routeParameters,
-            'attachedWidget'=> $this->attachedWidget,
+            'attachedWidget'  => $this->attachedWidget,
         );
     }
 
@@ -235,4 +240,44 @@ trait LinkTrait
         return $this;
     }
 
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addConstraint(new Assert\Callback('checkLink'));
+    }
+
+    /**
+     * undocumented function
+     *
+     * @return void
+     * @author
+     **/
+    public function checkLink(ExecutionContextInterface $context)
+    {
+        // check if the name is actually a fake name
+        switch ($this->getLinkType()) {
+            case 'page':
+            $violation = $this->getPage() == null;
+                break;
+            case 'route':
+            $violation = $this->getRoute() == null;
+                break;
+            case 'url':
+            $violation = $this->getUrl() == null;
+                break;
+            case 'attachedWidget':
+            $violation = $this->getAttachedWidget() == null;
+                break;
+            default:
+                break;
+        }
+
+        if ($violation) {
+            $context->addViolationAt(
+                'firstName',
+                'validator.link.error.message.'.$this->getLinkType().'Missing',
+                array(),
+                null
+            );
+        }
+    }
 }

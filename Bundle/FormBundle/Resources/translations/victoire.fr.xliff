@@ -86,6 +86,22 @@
         <source>form.link_type.choice.target.ajax-modal</source>
         <target>Fenètre modale</target>
       </trans-unit>
+      <trans-unit resname="validator.link.error.message.pageMissing">
+        <source>validator.link.error.message.pageMissing</source>
+        <target>Veuillez sélectionner une valeur pour la page liée</target>
+      </trans-unit>
+      <trans-unit resname="validator.link.error.message.routeMissing">
+        <source>validator.link.error.message.routeMissing</source>
+        <target>Veuillez sélectionner une valeur pour la route</target>
+      </trans-unit>
+      <trans-unit resname="validator.link.error.message.urlMissing">
+        <source>validator.link.error.message.urlMissing</source>
+        <target>Veuillez sélectionner une valeur pour la url</target>
+      </trans-unit>
+      <trans-unit resname="validator.link.error.message.attachedWidgetMissing">
+        <source>validator.link.error.message.attachedWidgetMissing</source>
+        <target>Veuillez sélectionner une valeur pour le widget lié</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

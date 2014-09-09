@@ -45,42 +45,51 @@ class LinkType extends AbstractType
             )
         ))
         ->add('url', null, array(
-            'label' => 'form.link_type.url.label',
+            'label'                          => 'form.link_type.url.label',
             'vic_vic_widget_form_group_attr' => array('class' => 'vic-form-group vic-hidden url-type'),
+            'required'                       => true,
+            'attr' => array('novalidate' => 'novalidate'),
         ))
         ->add('page', 'entity', array(
-            'label'       => 'form.link_type.page.label',
-            'required'    => false,
-            'empty_value' => 'form.link_type.page.blank',
-            'class'       => 'VictoirePageBundle:Page',
-            'property'    => 'name',
+            'label'                          => 'form.link_type.page.label',
+            'required'                       => true,
+            'attr' => array('novalidate' => 'novalidate'),
+            'empty_value'                    => 'form.link_type.page.blank',
+            'class'                          => 'VictoirePageBundle:Page',
+            'property'                       => 'name',
             'vic_vic_widget_form_group_attr' => array('class' => 'vic-form-group vic-hidden page-type'),
         ))
         ->add('attachedWidget', 'entity', array(
-            'label'       => 'form.link_type.attachedWidget.label',
-            'required'    => false,
-            'empty_value' => 'form.link_type.attachedWidget.blank',
-            'class'       => 'VictoireWidgetBundle:Widget',
+            'label'                          => 'form.link_type.attachedWidget.label',
+            'empty_value'                    => 'form.link_type.attachedWidget.blank',
+            'class'                          => 'VictoireWidgetBundle:Widget',
             'vic_vic_widget_form_group_attr' => array('class' => 'vic-form-group vic-hidden attachedWidget-type'),
+            'required'                       => true,
+            'attr' => array('novalidate' => 'novalidate'),
         ))
         ->add('route', null, array(
-            'label' => 'form.link_type.route.label',
+            'label'                          => 'form.link_type.route.label',
             'vic_vic_widget_form_group_attr' => array('class' => 'vic-form-group vic-hidden route-type'),
+            'required'                       => true,
+            'attr' => array('novalidate' => 'novalidate'),
         ))
         ->add($builder->create('route_parameters', 'text', array(
-                'label'      => 'form.link_type.route_parameters.label',
+                'label'                          => 'form.link_type.route_parameters.label',
                 'vic_vic_widget_form_group_attr' => array('class' => 'vic-form-group vic-hidden route-type'),
+                'required'  => true,
+                'attr' => array('novalidate' => 'novalidate'),
             ))->addModelTransformer($transformer)
         )
 
         ->add('target', 'choice', array(
-            'label'   => 'form.link_type.target.label',
-            'choices' => array(
+            'label'     => 'form.link_type.target.label',
+            'required'  => true,
+            'choices'   => array(
                 '_parent'    => 'form.link_type.choice.target.parent',
                 '_blank'     => 'form.link_type.choice.target.blank',
                 'ajax-modal' => 'form.link_type.choice.target.ajax-modal',
             ),
-            'required'  => true))
+        ))
         ;
     }
 
