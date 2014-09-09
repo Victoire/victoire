@@ -4,6 +4,7 @@ namespace Victoire\Bundle\CoreBundle\Helper;
 
 use Symfony\Component\DependencyInjection\SimpleXMLElement;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
 use Victoire\Bundle\CoreBundle\Entity\View;
 
 /**
@@ -42,6 +43,9 @@ class ViewCacheHelper
             }
             if (array_key_exists('viewId', $view)) {
                 $itemNode->addAttribute('viewId', $view['viewId']);
+            }
+            if (array_key_exists('bepId', $view)) {
+                $itemNode->addAttribute('bepId', $view['bepId']);
             }
             if (array_key_exists('viewNamespace', $view)) {
                 $itemNode->addAttribute('viewNamespace', $view['viewNamespace']);
@@ -93,10 +97,15 @@ class ViewCacheHelper
             $itemNode->addAttribute('id', $id);
             $itemNode->addAttribute('url', $view->getUrl());
             $itemNode->addAttribute('viewNamespace', get_class($view));
-            $itemNode->addAttribute('viewId', $view->getId());
             if ($entity) {
                 $itemNode->addAttribute('entityId', $entity->getId());
                 $itemNode->addAttribute('entityNamespace', get_class($entity));
+            }
+            if ($view instanceof BusinessEntityPage) {
+                $itemNode->addAttribute('viewId', $view->getTemplate()->getId());
+                $itemNode->addAttribute('bepId', $view->getId());
+            } else {
+                $itemNode->addAttribute('viewId', $view->getId());
             }
         }
 
@@ -118,6 +127,8 @@ class ViewCacheHelper
             $viewReference['url']             = $xmlReference[0]->getAttributeAsPhp('url');
             $viewReference['viewId']          = $xmlReference[0]->getAttributeAsPhp('viewId');
             $viewReference['viewNamespace']   = $xmlReference[0]->getAttributeAsPhp('viewNamespace');
+            $viewReference['patternId']       = $xmlReference[0]->getAttributeAsPhp('patternId');
+            $viewReference['bepId']           = $xmlReference[0]->getAttributeAsPhp('bepId');
         } else {
             throw new NotFoundHttpException("The page with following parameters was not found: " . implode(' and ', $arguments));
         }

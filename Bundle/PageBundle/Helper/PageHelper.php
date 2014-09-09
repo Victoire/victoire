@@ -219,7 +219,9 @@ class PageHelper extends ViewHelper
     {
         $page = null;
         //get the page
-        if (!empty($viewReference['viewId'])) {
+        if (!empty($viewReference['bepId'])) {
+            $page = $this->em->getRepository('VictoireCoreBundle:View')->findOneById($viewReference['bepId']);
+        } elseif (!empty($viewReference['viewId'])) {
             $page = $this->em->getRepository('VictoireCoreBundle:View')->findOneById($viewReference['viewId']);
         }
 

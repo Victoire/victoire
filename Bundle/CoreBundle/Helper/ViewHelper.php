@@ -126,7 +126,8 @@ class ViewHelper
                 $referenceId = $this->viewCacheHelper->getViewCacheId($view);
                 $viewsReferences[$view->getUrl()] = array(
                     'id'              => $referenceId,
-                    'viewId'          => $view->getId(),
+                    'bepId'           => $view->getId(),
+                    'viewId'          => $view->getTemplate()->getId(),
                     'url'             => $view->getUrl(),
                     'entityId'        => $view->getBusinessEntity()->getId(),
                     'entityNamespace' => $this->em->getClassMetadata(get_class($view->getBusinessEntity()))->name,
