@@ -1,0 +1,8 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% form_theme form with 'MopaBootstrapBundle:Form:fields.html.twig' %}
+<div class="form-group">
+    {{ form_errors(form) }}
+    {{ form_row(form.plainPassword)}}
+    {{ form_rest(form) }}
+</div>

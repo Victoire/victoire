@@ -1,0 +1,45 @@
+{% trans_default_domain "FOSUserBundle" %}
+
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% form_theme form with ['MopaBootstrapBundle:Form:fields.html.twig', _self] %}
+
+{% block form_label %}
+{% spaceless %}
+    {% if label is not sameas(false) %}
+        {% if not compound %}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {% endif %}
+        {% if required %}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {% endif %}
+        {% if label is empty %}
+            {% set label = name|humanize %}
+        {% endif %}
+        <label class="strong" {% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}</label>
+    {% endif %}
+{% endspaceless %}
+{% endblock form_label %}
+
+{% block modal_header %}
+    <h1 class="modal-title" id="myModalLabel">Créer un compte</h1>
+{% endblock modal_header %}
+
+{% block fos_user_content %}
+    {{ form_errors(form) }}
+    {{ form_widget(form) }}
+
+    <p>
+        En cliquant sur "Inscription", vous êtes d'accord avec les <a href="#">conditions d'utilisation</a> de l'association Agissons Pour l'Emploi.
+    </p>
+{% endblock fos_user_content %}
+
+{% block modal_footer %}
+    <button type="button" class="btn btn-info btn-block">Inscription</button>
+{% endblock modal_footer %}
+
+{% block modal_redirection %}
+    <p class="text-center under-account-modal">
+        J'ai déjà un compte, <a href="#" data-toggle="modal" data-target="#connectCandidateTarget">se connecter</a>.
+    </p>
+{% endblock %}

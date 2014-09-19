@@ -1,10 +1,11 @@
 <?php
 namespace Victoire\Bundle\PageBundle\Entity\Traits;
 
+use Doctrine\ORM\Mapping as ORM;
 use Victoire\Bundle\CoreBundle\Annotations as VIC;
 use Victoire\Bundle\CoreBundle\Entity\Route;
+use Victoire\Bundle\PageBundle\Entity\PageStatus;
 use Victoire\Bundle\SeoBundle\Entity\PageSeo;
-use Doctrine\ORM\Mapping as ORM;
 
 /**
  * This trait make a view displayable for public
@@ -12,11 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 trait WebViewTrait
 {
-    public static $statusDraft = "draft";
-    public static $statusPublished = "published";
-    public static $statusUnpublished = "unpublished";
-    public static $statusScheduled = "scheduled";
-
     /**
      * @ORM\OneToOne(targetEntity="\Victoire\Bundle\SeoBundle\Entity\PageSeo", inversedBy="page", cascade={"persist"})
      * @ORM\JoinColumn(name="seo_id", referencedColumnName="id", onDelete="CASCADE")
@@ -55,7 +51,7 @@ trait WebViewTrait
     /**
      * @ORM\Column(name="status", type="string", nullable=false)
      */
-    protected $status;
+    protected $status = PageStatus::PUBLISHED;
 
     /**
     * @var datetime $publishedAt
@@ -220,8 +216,8 @@ trait WebViewTrait
     public function isPublished()
     {
         if (
-            $this->getStatus() === self::$statusPublished ||
-            $this->getStatus() === self::$statusScheduled &&
+            $this->getStatus() === PageStatus::PUBLISHED ||
+            $this->getStatus() === PageStatus::SCHEDULED &&
             $this->getPublishedAt() < new \DateTime()
             ) {
             return true;
