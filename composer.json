@@ -27,6 +27,7 @@
 
         "doctrine/doctrine-fixtures-bundle"   : "dev-master",
         "doctrine/data-fixtures"              : "dev-master",
+        "nelmio/alice"                        : "1.5.2",
         "knplabs/knp-menu"                    : "2.0.*@dev",
         "knplabs/knp-menu-bundle"             : "2.0.*@dev",
         "jms/translation-bundle"              : "1.1.*@dev",

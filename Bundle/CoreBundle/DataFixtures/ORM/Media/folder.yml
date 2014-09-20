@@ -1,0 +1,15 @@
+Victoire\Bundle\MediaBundle\Entity\Folder:
+    root:
+        parent_id: NULL
+        name: '/'
+        created_at: <dateTime('now')>
+        updated_at: <dateTime('now')>
+        rel: NULL
+        internal_name: NULL
+        deleted: 0
+
+
+'
+'
+
+
