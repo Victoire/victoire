@@ -1,0 +1,18 @@
+{% trans_default_domain "FOSUserBundle" %}
+
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block modal_header %}
+    <h1 class="modal-title" id="myModalLabel">Réinitialiser son mot de passe</h1>
+{% endblock modal_header %}
+{% block fos_user_form_start %}
+    <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
+{% endblock fos_user_form_start %}
+
+{% block fos_user_content %}
+{% include "FOSUserBundle:Resetting:request_content.html.twig" %}
+{% endblock fos_user_content %}
+
+{% block modal_footer %}
+    <input type="submit" class="btn btn-info btn-block" value="{{ 'resetting.request.submit'|trans }}" />
+{% endblock modal_footer %}

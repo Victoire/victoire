@@ -2,6 +2,7 @@
 namespace Victoire\Bundle\BusinessEntityPageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Victoire\Bundle\PageBundle\Entity\PageStatus;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 
 /**
@@ -32,7 +33,7 @@ class BusinessEntityPagePattern extends Template
     {
         parent::__construct();
         $this->publishedAt = new \DateTime();
-        $this->status = self::$statusPublished;
+        $this->status = PageStatus::PUBLISHED;
     }
 
     public function getInstances() { return $this->instances; }

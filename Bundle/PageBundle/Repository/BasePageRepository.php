@@ -3,7 +3,7 @@ namespace Victoire\Bundle\PageBundle\Repository;
 
 use Doctrine\ORM\Query;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
-use Victoire\Bundle\PageBundle\Entity\BasePage;
+use Victoire\Bundle\PageBundle\Entity\PageStatus;
 
 /**
  * The Page repository
@@ -66,8 +66,8 @@ class BasePageRepository extends NestedTreeRepository
             $this->qb
                 ->andWhere('page.status = :status')
                 ->orWhere('page.status = :scheduled_status AND page.publishedAt > :publicationDate')
-                ->setParameter('status', BasePage::$statusPublished)
-                ->setParameter('scheduled_status', BasePage::$statusScheduled)
+                ->setParameter('status', PageStatus::PUBLISHED)
+                ->setParameter('scheduled_status', PageStatus::SCHEDULED)
                 ->setParameter('publicationDate', new \DateTime());
         }
 

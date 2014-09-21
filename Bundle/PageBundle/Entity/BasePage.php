@@ -24,6 +24,6 @@ abstract class BasePage extends View
     {
         parent::__construct();
         $this->publishedAt = new \DateTime();
-        $this->status = self::$statusPublished;
+        $this->status = PageStatus::PUBLISHED;
     }
 }

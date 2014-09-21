@@ -1,0 +1,11 @@
+{% extends '::frontLayout.html.twig' %}
+
+{% block body %}
+{% block content %}
+    <img class="vic-login-logo" src="/bundles/victoirecore/images/vic-login-logo.png" alt="Logo Victoire DCMS">
+    <div class="vic-login-panel">
+        {% block fos_user_content %}
+        {% endblock %}
+    </div>
+{% endblock %}
+{% endblock body %}

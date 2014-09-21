@@ -12,22 +12,22 @@
 {% block content %}
 <div class="vic-container vic-masthead">
     <h1>{{ 'dashboard.welcome.title'|trans({}, 'victoire')|desc('Welcome aboard !') }}</h1>
-    <p class="vic-lead">{{ 'dashboard.welcome.title'|trans({}, 'victoire')|desc('Congratulation, you are ready to rock on !') }}</p>
+    <p class="vic-lead">{{ 'dashboard.welcome.baseline'|trans({}, 'victoire')|desc('Congratulation, you are ready to rock on !') }}</p>
     <p>
 
         {% if templates|length == 0 %}
         <a href="{{ path('victoire_template_new') }}" data-toggle="vic-modal" class="vic-btn vic-btn-outline-inverse vic-btn-lg">
-            {{ 'dashboard.welcome.invite.template.new'|trans({}, 'victoire')|desc('1. First, create the base template') }}
+            {{ 'dashboard.welcome.invite.template.new'|trans({}, 'victoire') }}
         </a>
         {% else %}
         {% if homepage|length < 1 %}
             {% if templates|length > 0 %}
             <a href="{{ path('victoire_core_homepage_new') }}" data-toggle="vic-modal" class="vic-btn vic-btn-outline-inverse vic-btn-lg">
-                {{ 'dashboard.welcome.action.homepage.new'|trans({}, 'victoire')|desc('Create the homepage') }}
+                {{ 'dashboard.welcome.action.homepage.new'|trans({}, 'victoire') }}
             </a>
             {% else %}
             <a href="#" onclick='warn("{{ 'dashboard.welcome.title'|trans({}, 'victoire')|desc('Please create a model first') }}", 10000)' data-toggle="vic-modal" class="vic-btn vic-btn-outline-inverse vic-btn-lg">
-                {{ 'dashboard.welcome.action.homepage.new'|trans({}, 'victoire')|desc('Create the homepage') }}
+                {{ 'dashboard.welcome.action.homepage.new'|trans({}, 'victoire') }}
             </a>
             {% endif %}
         {% endif %}

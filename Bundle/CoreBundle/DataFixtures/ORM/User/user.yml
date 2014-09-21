@@ -1,0 +1,15 @@
+Victoire\UserBundle\Entity\User:
+    admin:
+        username (unique): admin@appventus.com
+        email (unique):    admin@appventus.com
+        plainPassword:     test
+        firstname:         Leny
+        lastname:          Bernard
+        enabled:           true
+        locked:            false
+        expired:           false
+        deleted:           false
+        roles:
+            ROLE_ADMIN: ROLE_ADMIN
+            ROLE_VICTOIRE_DEVELOPER: ROLE_VICTOIRE_DEVELOPER
+

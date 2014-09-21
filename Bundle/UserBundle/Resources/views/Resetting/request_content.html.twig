@@ -1,0 +1,9 @@
+{% trans_default_domain "FOSUserBundle" %}
+
+<div class="form-group">
+    {% if invalid_username is defined %}
+        <p>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}</p>
+    {% endif %}
+    <label for="username">{{ 'security.login.username'|trans }}</label>
+    <input type="text" id="username" name="username" class="form-control" required="required" />
+</div>
