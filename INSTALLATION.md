@@ -14,11 +14,12 @@ composer require victoire/victoire
             new Victoire\Bundle\FormBundle\VictoireFormBundle(),
             new Victoire\Bundle\PageBundle\VictoirePageBundle(),
             new Victoire\Bundle\SeoBundle\VictoireSeoBundle(),
+            new Victoire\Bundle\TwigBundle\VictoireTwigBundle(),
 
 - créer le fichier de config  victoire.yml suivant
 
         victoire_core:
-            user_class: Victoire\Bundle\UserBundle\Entity
+            user_class: Victoire\Bundle\UserBundle\Entity\User
             applicative_bundle: AppBundle #Optional
             templates:
                 layout: "::layout.html.twig"

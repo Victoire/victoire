@@ -30,12 +30,15 @@ class LoadFixtureData extends AbstractFixture implements ContainerAwareInterface
     public function load(ObjectManager $manager)
     {
 
-        // Load seeds and fixtures
+        // Load fixtures files
         $files = array();
 
         if ('test' != $this->container->getParameter('kernel.environment')) {
             $files[] = __DIR__ . '/User/user.yml';
             $files[] = __DIR__ . '/Media/folder.yml';
+            $files[] = __DIR__ . '/View/template.yml';
+            $files[] = __DIR__ . '/View/page.yml';
+            $files[] = __DIR__ . '/View/errorPage.yml';
         }
 
         $objects = Fixtures::load($files, $manager, array(
@@ -45,10 +48,6 @@ class LoadFixtureData extends AbstractFixture implements ContainerAwareInterface
         ));
 
         $manager->flush();
-
-        if ('test' != $this->container->getParameter('kernel.environment')) {
-            $this->afterLoadFixture($manager);
-        }
     }
 
     /**
