@@ -1,0 +1,28 @@
+{% extends "FOSUserBundle:Registration:register.html.twig" %}
+
+{% block fos_user_form_start %}
+    <form action="{{ path('company_registration') }}" {{ form_enctype(form) }} method="POST">
+{% endblock fos_user_form_start %}
+
+{% block fos_user_content %}
+    {{ form_errors(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.plainPassword.first) }}
+    {{ form_row(form.plainPassword.second) }}
+    {{ form_rest(form) }}
+
+    <p>
+        En cliquant sur "Inscription", vous êtes d'accord avec les <a target="_blank" href="{{path('victoire_core_page_show', {url: 'accueil/conditions-generales-d-utilisation'})}}">conditions d'utilisation</a> de l'association Agissons Pour l'Emploi.
+    </p>
+{% endblock fos_user_content %}
+
+{% block modal_footer %}
+    <button type="submit" class="btn btn-success btn-block">Inscription</button>
+{% endblock modal_footer %}
+
+{% block modal_redirection %}
+    <p class="text-center under-account-modal">
+        J'ai déjà un compte, <a href="{{ path('fos_user_security_login_company') }}">se connecter</a>.
+    </p>
+{% endblock %}

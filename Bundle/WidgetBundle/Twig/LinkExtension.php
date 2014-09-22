@@ -35,6 +35,11 @@ class LinkExtension extends \Twig_Extension
         extract($parameters);
         switch ($linkType) {
             case 'page':
+                //fallback when a page is deleted cascading the relation as null (page_id = null)
+                if (!$page) {
+                    $url = '#';
+                    break;
+                }
                 $url = $this->router->generate('victoire_core_page_show', array('url' => $page->getUrl() ));
                 if ($this->request->getRequestUri() == $url) {
                     $url = "#"; //avoid to refresh page when not needed
@@ -44,6 +49,11 @@ class LinkExtension extends \Twig_Extension
                 $url = $this->router->generate($route, $routeParameters);
                 break;
             case 'attachedWidget':
+                //fallback when a widget is deleted cascading the relation as null (widget_id = null)
+                if (!$attachedWidget) {
+                    $url = '#';
+                    break;
+                }
                 //create base url
                 $url = $this->router->generate('victoire_core_page_show', array('url' => $attachedWidget->getView()->getUrl() ));
 
@@ -52,6 +62,9 @@ class LinkExtension extends \Twig_Extension
                 }
                 //Add anchor part
                 $url .= "#vic-widget-" . $attachedWidget->getId() . "-container-anchor";
+                break;
+            case 'none':
+                $url = '#';
                 break;
 
         }

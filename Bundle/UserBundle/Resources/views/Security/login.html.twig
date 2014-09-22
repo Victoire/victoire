@@ -1,0 +1,40 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block meta %}<title>{{ 'layout.login'|trans }}</title>{% endblock meta %}
+{% block container_class %}vic-login{% endblock container_class %}
+{% block head_style %}
+    {% stylesheets filter='less, cssrewrite' injector="victoire-edit"
+    %}
+        <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+    {% endstylesheets %}
+{% endblock head_style %}
+
+{% block fos_user_content %}
+{% if error %}
+    <div>{{ error|trans }}</div>
+{% endif %}
+
+<form action="{{ path("fos_user_security_check") }}" method="post">
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+    <div class="vic-form-group">
+        <label for="username">{{ 'security.login.username'|trans }}</label>
+        <input class="vic-form-control" type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+    </div>
+
+    <div class="vic-form-group">
+        <label for="password">{{ 'security.login.password'|trans }}</label>
+        <input class="vic-form-control" type="password" id="password" name="_password" required="required" />
+        {#
+            <p class="vic-help-block">J'ai oublié mon <a href="{{ path('fos_user_resetting_request') }}">mot de passe</a></p>
+        #}
+    </div>
+
+    <input class="customCheckbox" type="checkbox" id="remember_me" name="_remember_me" value="on" />
+    <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+
+    <button class="vic-btn vic-btn-success vic-pull-right" type="submit" id="_submit" name="_submit"><i class="fa fa-check-circle"></i> {{ 'security.login.submit'|trans }}</button>
+</form>
+{% endblock fos_user_content %}

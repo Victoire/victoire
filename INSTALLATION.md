@@ -14,12 +14,13 @@ composer require victoire/victoire
             new Victoire\Bundle\FormBundle\VictoireFormBundle(),
             new Victoire\Bundle\PageBundle\VictoirePageBundle(),
             new Victoire\Bundle\SeoBundle\VictoireSeoBundle(),
+            new Victoire\Bundle\TwigBundle\VictoireTwigBundle(),
 
 - créer le fichier de config  victoire.yml suivant
 
         victoire_core:
-            user_class: APE\AppBundle\Entity\User\User
-            applicative_bundle: AppBundle
+            user_class: Victoire\Bundle\UserBundle\Entity\User
+            applicative_bundle: AppBundle #Optional
             templates:
                 layout: "::layout.html.twig"
             layouts:
@@ -29,94 +30,24 @@ composer require victoire/victoire
                     max: 1
                     widgets:
                         image: ~
-                header_top_link:
-                    max: 1
-                    widgets:
-                        button: ~
-                        redactor: ~
-                header_col1:
-                    max: 1
-                    widgets:
-                        redactor: ~
-                        inputsearchform: ~
-                header_col2:
-                    max: 1
-                    widgets:
-                        button: ~
-                        redactor: ~
-                header_col3:
-                    max: 1
-                    widgets:
-                        button: ~
-                        redactor: ~
-                header_col4:
-                    max: 1
-                    widgets:
-                        button: ~
-                        redactor: ~
-
-                footer_col1:
-                    widgets:
-                        redactor: ~
-                footer_col2:
-                    widgets:
-                        redactor: ~
-                footer_col3:
-                    widgets:
-                        redactor: ~
-                footer_sub_col1:
-                    widgets:
-                        redactor: ~
-                footer_sub_col2:
-                    widgets:
-                        redactor: ~
-                footer_sub_col3:
-                    widgets:
-                        redactor: ~
-                footer_bottom:
-                    max: 1
-                    widgets:
-                        redactor: ~
-                main_content:
-                    widgets:
-                        render: ~
-                        redactor: ~
-                        button: ~
-                        image: ~
-                breadcrumb:
-                    max: 1
-                    widgets:
-                        breadcrumb: ~
-                dashboard_menu:
-                    widgets:
-                        redactor: ~
-                        dashboardmenu: ~
-                top_fullWidth_content:
-                    widgets:
-                        redactor: ~
-                        render: ~
-                bottom_fullWidth_content:
-                    widgets:
-                        render: ~
-
 
 - ajouter les widgets requis:
 
-            "victoire/text-widget": "dev-master",
-            "victoire/redactor-widget": "dev-master",
-            "victoire/button-widget": "dev-master",
-            "victoire/image-widget": "dev-master",
-            "victoire/render-widget": "dev-master",
-            "victoire/breadcrumb-widget": "dev-master »,
+            "victoire/text-widget"      : "dev-master",
+            "victoire/redactor-widget"  : "dev-master",
+            "victoire/button-widget"    : "dev-master",
+            "victoire/image-widget"     : "dev-master",
+            "victoire/render-widget"    : "dev-master",
+            "victoire/breadcrumb-widget": "dev-master",
 
 
 Vérifier les dépendances de victoire:
 
         "knplabs/knp-menu"                       : "2.0.0-alpha1",
-        "knplabs/knp-menu-bundle"                : "2.0.0-alpha1 »,
-        "friendsofsymfony/user-bundle"           : "dev-master »,
-        "appventus/assetic-injector-bundle"      : "dev-master »,
-        "appventus/alertify-bundle"              : "dev-master »,
+        "knplabs/knp-menu-bundle"                : "2.0.0-alpha1",
+        "friendsofsymfony/user-bundle"           : "dev-master",
+        "appventus/assetic-injector-bundle"      : "dev-master",
+        "appventus/alertify-bundle"              : "dev-master",
         "appventus/shortcuts-bundle"             : "dev-master",
 
         "knplabs/gaufrette"                      : "v0.1.7",
@@ -124,28 +55,33 @@ Vérifier les dépendances de victoire:
         "knplabs/knp-components"                 : "dev-master",
 - mise à jour de la base
 
-        php app/console do:sc:up —force
+        php bin/console do:sc:up —force
 
-- Ajoutez le folder de base du media bundle avec cette instruction sql :
+- Lancez les fixtures pour peupler la base de données
 
-```sql
-INSERT INTO `vic_media_folder` (`id`, `parent_id`, `name`, `created_at`, `updated_at`, `rel`, `internal_name`, `deleted`)
-VALUES
-    (1, NULL, '/', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, 0);
+        php bin/console doctrine:fixtures:load --fixtures="vendor/victoire/victoire/Victoire/Bundle/CoreBundle/DataFixtures/ORM"
 
-```
+- setup routing:
 
+        fos_user_security:
+            resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 
-- To setup routing, add the following at the bottom of your routing.yml:
+        fos_user_resetting:
+            resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+            prefix: /resetting
+
+        fos_js_routing:
+            resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
 
         VictoireCoreBundle:
             resource: .
             type: victoire
 
 
+
 - Enable StofDoctrineExtensions in AppKernel
 
-- add add this config in doctrine.yml:
+- add this config in doctrine.yml:
 
         orm:
            [...]
@@ -156,7 +92,7 @@ VALUES
                     dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Tree/Entity"
                     is_bundle: false
 
-- add this config in config.yml
+- add this config in stof_doctrine_extensions (imported in config.yml)
     stof_doctrine_extensions:
         default_locale: fr_FR
         orm:
@@ -176,5 +112,5 @@ VALUES
 imports:
         - { resource: @VictoireCoreBundle/Resources/config/config.yml }
 
-- Aller sur «  /victoire-dcms/dashboard/welcome » en étant connecté avec un user ayant le rôle ROLE_VICTOIRE
+- Aller sur «  /victoire-dcms/dashboard/welcome" en étant connecté avec un user ayant le rôle ROLE_VICTOIRE
 

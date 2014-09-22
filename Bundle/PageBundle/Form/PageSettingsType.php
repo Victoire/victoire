@@ -2,7 +2,7 @@
 namespace Victoire\Bundle\PageBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
-use Victoire\Bundle\PageBundle\Entity\BasePage;
+use Victoire\Bundle\PageBundle\Entity\PageStatus;
 
 /**
  * Edit Page Type
@@ -25,10 +25,10 @@ class PageSettingsType extends PageType
             ->add('status', 'choice', array(
                 'label'   => 'form.page.type.status.label',
                 'choices' => array(
-                    BasePage::$statusDraft       => 'form.page.type.status.choice.label.draft',
-                    BasePage::$statusPublished   => 'form.page.type.status.choice.label.published',
-                    BasePage::$statusUnpublished => 'form.page.type.status.choice.label.unpublished',
-                    BasePage::$statusScheduled   => 'form.page.type.status.choice.label.scheduled',
+                    PageStatus::DRAFT       => 'form.page.type.status.choice.label.draft',
+                    PageStatus::PUBLISHED   => 'form.page.type.status.choice.label.published',
+                    PageStatus::UNPUBLISHED => 'form.page.type.status.choice.label.unpublished',
+                    PageStatus::SCHEDULED   => 'form.page.type.status.choice.label.scheduled',
                 )
             ))
             ->add('publishedAt', null, array(

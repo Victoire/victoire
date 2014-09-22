@@ -1,7 +1,7 @@
 <?php
 namespace Victoire\Bundle\PageBundle\Repository;
 
-use Victoire\Bundle\PageBundle\Entity\BasePage;
+use Victoire\Bundle\PageBundle\Entity\PageStatus;
 
 /**
  * The Page repository
@@ -20,7 +20,7 @@ class PageRepository extends BasePageRepository
         $qb = $this->createQueryBuilder('page');
 
         $qb->where('page.homepage = true');
-        $qb->andWhere('page.status = \''.BasePage::$statusPublished.'\'');
+        $qb->andWhere('page.status = \''.PageStatus::PUBLISHED.'\'');
         $qb->setMaxResults(1);
 
         $query = $qb->getQuery();
