@@ -135,11 +135,10 @@ class PageSubscriber implements EventSubscriber
 
         if ($page instanceof BusinessEntityPagePattern) {
             foreach ($entities as $entity) {
-                $this->viewCacheHelper->update($page, $entity);
+                $this->viewCacheHelper->update($page, $entity, $viewsReference);
             }
         } else {
             $this->viewCacheHelper->update($page, null);
-
         }
     }
     /**

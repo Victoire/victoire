@@ -107,6 +107,9 @@ services:
         class: Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper
         arguments:
             - %kernel.cache_dir%
+        calls:
+            - [ setContainer, ["@service_container"] ]
+
 
     victoire_core.view_cache_listener:
         class: Victoire\Bundle\CoreBundle\Listener\ViewCacheListener
