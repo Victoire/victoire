@@ -1,0 +1,12 @@
+Victoire\Bundle\PageBundle\Entity\Page:
+    home:
+        template: @template_home
+        author: @admin
+        name: Page d'accueil
+        slug: home
+        homepage: true
+        undeletable: true
+        status: published
+        publishedAt: <dateTime('now')>
+        createdAt: <dateTime('now')>
+        updatedAt: <dateTime('now')>

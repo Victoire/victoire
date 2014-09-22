@@ -1,0 +1,23 @@
+{% trans_default_domain "FOSUserBundle" %}
+
+{% if not app.request.xmlHttpRequest %}
+    {{render(url('victoire_core_page_show', {'url': ''}))}}
+<div class="modal fade" id="fos-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {% endif %}
+
+    <div class="modal-dialog modal-sm account-modal">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                {% block fos_user_content %}
+                {% endblock fos_user_content %}
+            </div>
+        {% if not app.request.xmlHttpRequest %}
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("#fos-modal").modal();
+            });
+        </script>
+    </div>
+</div>
+    {% endif %}

@@ -2,9 +2,9 @@
 
 namespace Victoire\Bundle\CoreBundle\Helper;
 
+use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\SimpleXMLElement;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
 use Victoire\Bundle\CoreBundle\Entity\View;
 
 /**
@@ -15,6 +15,7 @@ class ViewCacheHelper
 {
     private $xmlFile;
     private $viewNamePattern = 'ref_{{view.id}}{{entity ? "_" ~ entity.id}}';
+    private $container;
 
     /**
      * @param string $cacheDir
@@ -30,32 +31,42 @@ class ViewCacheHelper
      *
      * @return void
      */
-    public function write($views)
+    public function buildItemNode($viewReference, $itemNode)
+    {
+        if (array_key_exists('id', $viewReference)) {
+            $itemNode->addAttribute('id', $viewReference['id']);
+        }
+        if (array_key_exists('url', $viewReference)) {
+            $itemNode->addAttribute('url', $viewReference['url']);
+        }
+        if (array_key_exists('viewId', $viewReference)) {
+            $itemNode->addAttribute('viewId', $viewReference['viewId']);
+        }
+        if (array_key_exists('patternId', $viewReference)) {
+            $itemNode->addAttribute('patternId', $viewReference['patternId']);
+        }
+        if (array_key_exists('viewNamespace', $viewReference)) {
+            $itemNode->addAttribute('viewNamespace', $viewReference['viewNamespace']);
+        }
+        if (array_key_exists('entityId', $viewReference)) {
+            $itemNode->addAttribute('entityId', $viewReference['entityId']);
+        }
+        if (array_key_exists('entityNamespace', $viewReference)) {
+            $itemNode->addAttribute('entityNamespace', $viewReference['entityNamespace']);
+        }
+    }
+    /**
+     * Write given views references in a xml file
+     * @param array $views
+     *
+     * @return void
+     */
+    public function write($viewsReferences)
     {
         $rootNode = new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8' ?><viewReferences></viewReferences>");
-        foreach ($views as $key => $view) {
+        foreach ($viewsReferences as $key => $viewReference) {
             $itemNode = $rootNode->addChild('viewReference');
-            if (array_key_exists('id', $view)) {
-                $itemNode->addAttribute('id', $view['id']);
-            }
-            if (array_key_exists('url', $view)) {
-                $itemNode->addAttribute('url', $view['url']);
-            }
-            if (array_key_exists('viewId', $view)) {
-                $itemNode->addAttribute('viewId', $view['viewId']);
-            }
-            if (array_key_exists('patternId', $view)) {
-                $itemNode->addAttribute('patternId', $view['patternId']);
-            }
-            if (array_key_exists('viewNamespace', $view)) {
-                $itemNode->addAttribute('viewNamespace', $view['viewNamespace']);
-            }
-            if (array_key_exists('entityId', $view)) {
-                $itemNode->addAttribute('entityId', $view['entityId']);
-            }
-            if (array_key_exists('entityNamespace', $view)) {
-                $itemNode->addAttribute('entityNamespace', $view['entityNamespace']);
-            }
+            $this->buildItemNode($viewReference, $itemNode);
         }
 
         $this->writeFile($rootNode);
@@ -80,34 +91,22 @@ class ViewCacheHelper
      */
     public function update(View $view, $entity = null)
     {
+
         $rootNode = $this->readCache();
         $id = $this->getViewCacheId($view, $entity);
 
         $itemNode = $rootNode->xpath("//viewReference[@id='" . $id . "']");
 
-        if (array_key_exists(0, $itemNode)) {
-            $itemNode[0]->attributes()->url = $view->getUrl();
-            $itemNode[0]->attributes()->view = $view->getId();
-            if ($entity) {
-                $itemNode[0]->attributes()->entity = $entity->getId();
-                $itemNode[0]->attributes()->entity = get_class($entity);
-            }
-        } else {
-            $itemNode = $rootNode->addChild('viewReference');
-            $itemNode->addAttribute('id', $id);
-            $itemNode->addAttribute('url', $view->getUrl());
-            $itemNode->addAttribute('viewNamespace', get_class($view));
-            $itemNode->addAttribute('viewId', $view->getId());
-            if ($entity) {
-                $itemNode->addAttribute('entityId', $entity->getId());
-                $itemNode->addAttribute('entityNamespace', get_class($entity));
-            }
-            if ($view instanceof BusinessEntityPage) {
-                $itemNode->addAttribute('patternId', $view->getTemplate()->getId());
-            }
-        }
+        unset($itemNode);
 
+        $viewReferences = $this->container->get('victoire_core.view_helper')->buildViewReference($view, $entity);
+
+        foreach ($viewReferences as $key => $viewReference) {
+            $itemNode = $rootNode->addChild('viewReference');
+            $this->buildItemNode($viewReference, $itemNode);
+        }
         $this->writeFile($rootNode);
+
     }
 
     public function getReferenceByParameters($parameters)
@@ -167,4 +166,8 @@ class ViewCacheHelper
         $dom->save($this->xmlFile);
     }
 
+    public function setContainer(Container $container)
+    {
+        $this->container = $container;
+    }
 }
