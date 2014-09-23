@@ -8,3 +8,10 @@ services:
             - "@service_container"
         tags:
             - { name: doctrine.event_subscriber, connection: default }
+
+    victoire_business_entity.business_entity_type_extension:
+        class: Victoire\Bundle\BusinessEntityBundle\Form\Extension\BusinessEntityTypeExtension
+        arguments:
+            - "@victoire_core.helper.business_entity_helper"
+        tags:
+            - { name: form.type_extension, alias: form }

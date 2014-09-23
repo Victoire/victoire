@@ -14,11 +14,12 @@ composer require victoire/victoire
             new Victoire\Bundle\FormBundle\VictoireFormBundle(),
             new Victoire\Bundle\PageBundle\VictoirePageBundle(),
             new Victoire\Bundle\SeoBundle\VictoireSeoBundle(),
+            new Victoire\Bundle\TwigBundle\VictoireTwigBundle(),
 
 - créer le fichier de config  victoire.yml suivant
 
         victoire_core:
-            user_class: Victoire\Bundle\UserBundle\Entity
+            user_class: Victoire\Bundle\UserBundle\Entity\User
             applicative_bundle: AppBundle #Optional
             templates:
                 layout: "::layout.html.twig"
@@ -54,17 +55,11 @@ Vérifier les dépendances de victoire:
         "knplabs/knp-components"                 : "dev-master",
 - mise à jour de la base
 
-        php app/console do:sc:up —force
+        php bin/console do:sc:up —force
 
-- Ajoutez le folder de base du media bundle avec cette instruction sql :
+- Lancez les fixtures pour peupler la base de données
 
-```sql
-INSERT INTO `vic_media_folder` (`id`, `parent_id`, `name`, `created_at`, `updated_at`, `rel`, `internal_name`, `deleted`)
-VALUES
-    (1, NULL, '/', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, 0);
-
-```
-
+        php bin/console doctrine:fixtures:load --fixtures="vendor/victoire/victoire/Victoire/Bundle/CoreBundle/DataFixtures/ORM"
 
 - setup routing:
 

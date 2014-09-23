@@ -69,86 +69,9 @@ class ViewHelper
         $viewsReferences = array();
         //This query is not optimized because we need the property "businessEntityName" later, and it's only present in Pattern pages
         $views = $this->em->createQuery("SELECT v FROM VictoireCoreBundle:View v")->getResult();
-        $businessEntities = $this->businessEntityHelper->getBusinessEntities();
 
         foreach ($views as $view) {
-            // if page is a pattern, compute it's bep
-            if ($view instanceof BusinessEntityPagePattern) {
-
-                $referenceId = $this->viewCacheHelper->getViewCacheId($view);
-                $viewsReferences[$view->getUrl()] = array(
-                    'id'              => $referenceId,
-                    'url'             => $view->getUrl(),
-                    'viewId'          => $view->getId(),
-                    'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
-                );
-
-                foreach ($businessEntities as $businessEntity) {
-                    $properties = $this->businessEntityPageHelper->getBusinessProperties($businessEntity);
-
-                    //find businessEdietifiers of the current businessEntity
-                    $selectableProperties = array('id');
-                    foreach ($properties as $property) {
-                        if ($property->getType() === 'businessIdentifier') {
-                            $selectableProperties[] = $property->getEntityProperty();
-                        }
-                    }
-                    // This query retrieve business entity object, without useless properties for performance optimisation
-
-                    $entities = $this->em->createQuery("SELECT partial
-                        e.{" . implode(', ', $selectableProperties) . "}
-                        FROM ". $businessEntity->getClass() ." e")
-                        ->getResult();
-
-                    // for each business entity
-                    foreach ($entities as $entity) {
-
-                        // only if related pattern entity is the current entity
-                        if ($view->getBusinessEntityName() === $businessEntity->getId()) {
-                            $currentPattern = clone $view;
-                            $page = $this->businessEntityPageHelper->generateEntityPageFromPattern($currentPattern, $entity);
-                            $this->updatePageParametersByEntity($page, $entity);
-                            $referenceId = $this->viewCacheHelper->getViewCacheId($view, $entity);
-                            $viewsReferences[$page->getUrl()] = array(
-                                'id'              => $referenceId,
-                                'url'             => $page->getUrl(),
-                                'viewId'          => $page->getTemplate()->getId(),
-                                'entityId'        => $entity->getId(),
-                                'entityNamespace' => $this->em->getClassMetadata(get_class($entity))->name,
-                                'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
-                            );
-                        }
-                        //I detach this partial entity from em. If I don't do it, everytime I'll request this entity from em it'll be partially populated
-                        $this->em->detach($entity);
-                    }
-                }
-            } elseif ($view instanceof BusinessEntityPage) {
-                $referenceId = $this->viewCacheHelper->getViewCacheId($view);
-                $viewsReferences[$view->getUrl()] = array(
-                    'id'              => $referenceId,
-                    'viewId'          => $view->getId(),
-                    'patternId'       => $view->getTemplate()->getId(),
-                    'url'             => $view->getUrl(),
-                    'entityId'        => $view->getBusinessEntity()->getId(),
-                    'entityNamespace' => $this->em->getClassMetadata(get_class($view->getBusinessEntity()))->name,
-                    'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
-                );
-            } elseif ($view instanceof Template) {
-                $referenceId = $this->viewCacheHelper->getViewCacheId($view);
-                $viewsReferences[$referenceId] = array(
-                    'id'              => $referenceId,
-                    'viewId'          => $view->getId(),
-                    'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
-                );
-            } else {
-                $referenceId = $this->viewCacheHelper->getViewCacheId($view);
-                $viewsReferences[$view->getUrl()] = array(
-                    'id'              => $referenceId,
-                    'viewId'          => $view->getId(),
-                    'url'             => $view->getUrl(),
-                    'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
-                );
-            }
+            $viewsReferences = array_merge($viewsReferences, $this->buildViewReference($view));
         }
 
         return $viewsReferences;
@@ -223,4 +146,116 @@ class ViewHelper
 
         call_user_func(array($entity, $functionName), $value);
     }
+
+    /**
+     * compute the viewReference relative to a View + entity
+     * @param View                $view
+     * @param BusinessEntity|null $entity
+     *
+     * @return void
+     */
+    public function buildViewReference(View $view, $entity = null)
+    {
+        $viewsReferences = array();
+        // if page is a pattern, compute it's bep
+        if ($view instanceof BusinessEntityPagePattern) {
+
+            if ($entity) {
+                $currentPattern = clone $view;
+                $page = $this->businessEntityPageHelper->generateEntityPageFromPattern($currentPattern, $entity);
+                $this->updatePageParametersByEntity($page, $entity);
+                $referenceId = $this->viewCacheHelper->getViewCacheId($view, $entity);
+                $viewsReferences[$page->getUrl()] = array(
+                    'id'              => $referenceId,
+                    'url'             => $page->getUrl(),
+                    'viewId'          => $page->getTemplate()->getId(),
+                    'entityId'        => $entity->getId(),
+                    'entityNamespace' => $this->em->getClassMetadata(get_class($entity))->name,
+                    'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
+                );
+            } else {
+
+                $referenceId = $this->viewCacheHelper->getViewCacheId($view);
+                $viewsReferences[$view->getUrl()] = array(
+                    'id'              => $referenceId,
+                    'url'             => $view->getUrl(),
+                    'viewId'          => $view->getId(),
+                    'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
+                );
+                $businessEntities = $this->businessEntityHelper->getBusinessEntities();
+
+
+                foreach ($businessEntities as $businessEntity) {
+                    $properties = $this->businessEntityPageHelper->getBusinessProperties($businessEntity);
+
+                    //find businessEdietifiers of the current businessEntity
+                    $selectableProperties = array('id');
+                    foreach ($properties as $property) {
+                        if ($property->getType() === 'businessIdentifier') {
+                            $selectableProperties[] = $property->getEntityProperty();
+                        }
+                    }
+                    // This query retrieve business entity object, without useless properties for performance optimisation
+
+                    $entities = $this->em->createQuery("SELECT partial
+                        e.{" . implode(', ', $selectableProperties) . "}
+                        FROM ". $businessEntity->getClass() ." e")
+                        ->getResult();
+
+                    // for each business entity
+                    foreach ($entities as $entity) {
+
+                        // only if related pattern entity is the current entity
+                        if ($view->getBusinessEntityName() === $businessEntity->getId()) {
+                            $currentPattern = clone $view;
+                            $page = $this->businessEntityPageHelper->generateEntityPageFromPattern($currentPattern, $entity);
+                            $this->updatePageParametersByEntity($page, $entity);
+                            $referenceId = $this->viewCacheHelper->getViewCacheId($view, $entity);
+                            $viewsReferences[$page->getUrl()] = array(
+                                'id'              => $referenceId,
+                                'url'             => $page->getUrl(),
+                                'viewId'          => $page->getTemplate()->getId(),
+                                'entityId'        => $entity->getId(),
+                                'entityNamespace' => $this->em->getClassMetadata(get_class($entity))->name,
+                                'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
+                            );
+                        }
+                        //I detach this partial entity from em. If I don't do it, everytime I'll request this entity from em it'll be partially populated
+                        $this->em->detach($entity);
+                    }
+                }
+            }
+
+        } elseif ($view instanceof BusinessEntityPage) {
+            $referenceId = $this->viewCacheHelper->getViewCacheId($view);
+            $viewsReferences[$view->getUrl()] = array(
+                'id'              => $referenceId,
+                'viewId'          => $view->getId(),
+                'patternId'       => $view->getTemplate()->getId(),
+                'url'             => $view->getUrl(),
+                'entityId'        => $view->getBusinessEntity()->getId(),
+                'entityNamespace' => $this->em->getClassMetadata(get_class($view->getBusinessEntity()))->name,
+                'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
+            );
+        } elseif ($view instanceof Template) {
+            $referenceId = $this->viewCacheHelper->getViewCacheId($view);
+            $viewsReferences[$referenceId] = array(
+                'id'              => $referenceId,
+                'viewId'          => $view->getId(),
+                'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
+            );
+        } else {
+            $referenceId = $this->viewCacheHelper->getViewCacheId($view);
+            $viewsReferences[$view->getUrl()] = array(
+                'id'              => $referenceId,
+                'viewId'          => $view->getId(),
+                'url'             => $view->getUrl(),
+                'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
+            );
+        }
+
+        return $viewsReferences;
+
+    }
+
 }

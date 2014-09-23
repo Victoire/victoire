@@ -55,8 +55,7 @@ class BusinessEntitySubscriber implements EventSubscriber
             $em = $this->container->get('doctrine.orm.entity_manager');
             $patterns = $em->getRepository('VictoireBusinessEntityPageBundle:BusinessEntityPagePattern')->findPagePatternByBusinessEntity($businessEntity);
             foreach ($patterns as $pattern) {
-                $page = $this->container->get('victoire_business_entity_page.business_entity_page_helper')->generateEntityPageFromPattern($pattern, $entity);
-                $this->container->get('victoire_core.view_cache_helper')->update($page, $entity);
+                $this->container->get('victoire_core.view_cache_helper')->update($pattern, $entity);
             }
         }
     }

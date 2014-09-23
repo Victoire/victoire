@@ -144,6 +144,7 @@ class QueryHelper
                 $currentEntity = $currentView()->getBusinessEntity() ? $currentView()->getBusinessEntity()->getId() : null;
             }
 
+            $itemsQueryBuilder->andWhere('main_item.visibleOnFront = true');
             $itemsQueryBuilder->setParameter('currentEntity', $currentEntity);
         }
 

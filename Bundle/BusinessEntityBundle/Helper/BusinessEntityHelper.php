@@ -121,9 +121,19 @@ class BusinessEntityHelper
      */
     public function findByEntityInstance($entity)
     {
-
         $classname = $this->em->getClassMetadata(get_class($entity))->getName();
 
+        return $this->findByEntityClassname($classname);
+    }
+    /**
+     * Get a business entity by classname
+     *
+     * @param string $classname
+     *
+     * @return BusinessEntity
+     */
+    public function findByEntityClassname($classname)
+    {
         //get all the business entities
         $businessEntities = $this->getBusinessEntities();
 
@@ -202,5 +212,4 @@ class BusinessEntityHelper
 
         return $entity;
     }
-
 }

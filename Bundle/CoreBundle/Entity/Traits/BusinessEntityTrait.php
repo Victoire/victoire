@@ -22,6 +22,13 @@ trait BusinessEntityTrait
     protected $proxies;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="visible_on_front", type="boolean")
+     */
+    private $visibleOnFront = true;
+
+    /**
      * Set proxy
      *
      * @param \Victoire\Bundle\CoreBundle\Entity\EntityProxy $proxy
@@ -67,6 +74,30 @@ trait BusinessEntityTrait
     public function removeProxie(\Victoire\Bundle\CoreBundle\Entity\EntityProxy $proxies)
     {
         $this->proxies->removeElement($proxies);
+    }
+
+    /**
+     * Is visibleOnFront
+     *
+     * @return string
+     */
+    public function isVisibleOnFront()
+    {
+        return $this->visibleOnFront;
+    }
+
+    /**
+     * Set visibleOnFront
+     *
+     * @param string $visibleOnFront
+     *
+     * @return $this
+     */
+    public function setVisibleOnFront($visibleOnFront)
+    {
+        $this->visibleOnFront = $visibleOnFront;
+
+        return $this;
     }
 
     /**

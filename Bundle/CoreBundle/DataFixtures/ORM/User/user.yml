@@ -1,0 +1,74 @@
+Victoire\Bundle\UserBundle\Entity\User:
+    admin:
+        username (unique): admin@appventus.com
+        email (unique):    admin@appventus.com
+        plainPassword:     test
+        firstname:         Nimba
+        lastname:          Admin
+        enabled:           true
+        locked:            false
+        expired:           false
+        roles:
+            ROLE_ADMIN: ROLE_ADMIN
+            ROLE_VICTOIRE_DEVELOPER: ROLE_VICTOIRE_DEVELOPER
+    leny:
+        username (unique): leny@appventus.com
+        email (unique):    leny@appventus.com
+        plainPassword:     test
+        firstname:         Leny
+        lastname:          Bernard
+        enabled:           true
+        locked:            false
+        expired:           false
+        roles:
+            ROLE_ADMIN: ROLE_ADMIN
+            ROLE_VICTOIRE_DEVELOPER: ROLE_VICTOIRE_DEVELOPER
+    paul:
+        username (unique): paul@appventus.com
+        email (unique):    paul@appventus.com
+        plainPassword:     test
+        firstname:         Paul
+        lastname:          Andrieux
+        enabled:           true
+        locked:            false
+        expired:           false
+        roles:
+            ROLE_ADMIN: ROLE_ADMIN
+            ROLE_VICTOIRE_DEVELOPER: ROLE_VICTOIRE_DEVELOPER
+    loic:
+        username (unique): loic@appventus.com
+        email (unique):    loic@appventus.com
+        plainPassword:     test
+        firstname:         Loïc
+        lastname:          Goyet
+        enabled:           true
+        locked:            false
+        expired:           false
+        roles:
+            ROLE_ADMIN: ROLE_ADMIN
+            ROLE_VICTOIRE_DEVELOPER: ROLE_VICTOIRE_DEVELOPER
+    charlie:
+        username (unique): charlie@appventus.com
+        email (unique):    charlie@appventus.com
+        plainPassword:     test
+        firstname:         Charlie
+        lastname:          Lucas
+        enabled:           true
+        locked:            false
+        expired:           false
+        roles:
+            ROLE_ADMIN: ROLE_ADMIN
+            ROLE_VICTOIRE_DEVELOPER: ROLE_VICTOIRE_DEVELOPER
+    clement:
+        username (unique): clement@appventus.com
+        email (unique):    clement@appventus.com
+        plainPassword:     test
+        firstname:         Clément
+        lastname:          Menant
+        enabled:           true
+        locked:            false
+        expired:           false
+        roles:
+            ROLE_ADMIN: ROLE_ADMIN
+            ROLE_VICTOIRE_DEVELOPER: ROLE_VICTOIRE_DEVELOPER
+

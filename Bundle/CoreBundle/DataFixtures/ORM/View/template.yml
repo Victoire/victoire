@@ -1,0 +1,18 @@
+Victoire\Bundle\TemplateBundle\Entity\Template:
+    template_base:
+        layout: fullWidth
+        author: @admin
+        name: Modèle de base
+        slug: base
+        undeletable: true
+        createdAt: <dateTime('now')>
+        updatedAt: <dateTime('now')>
+    template_home:
+        layout: home
+        template: @template_base
+        author: @admin
+        name: Modèle de page d'accueil
+        slug: home
+        undeletable: true
+        createdAt: <dateTime('now')>
+        updatedAt: <dateTime('now')>

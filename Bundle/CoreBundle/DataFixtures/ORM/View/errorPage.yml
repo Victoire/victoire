@@ -1,0 +1,12 @@
+Victoire\Bundle\TwigBundle\Entity\ErrorPage:
+    404:
+        template: @template_base
+        author: @admin
+        name: Page introuvable
+        slug: erreur404
+        undeletable: true
+        status: published
+        publishedAt: <dateTime('now')>
+        createdAt: <dateTime('now')>
+        updatedAt: <dateTime('now')>
+

@@ -10,6 +10,18 @@
         <source>modal.form.businessEntity.settings.businessProperties</source>
         <target>Propriété de l'entité:</target>
       </trans-unit>
+      <trans-unit id="ae09b10bb421ce0836f15dd43ee191805ab8e3db" resname="businessEntity.form.visibleOnFront.label">
+        <source>businessEntity.form.visibleOnFront.label</source>
+        <target>Visible sur le site ?</target>
+      </trans-unit>
+      <trans-unit id="ae09b10bb421ce0836f15dd43ee191805ab8e3dc" resname="businessEntity.form.visibleOnFront.yes">
+        <source>businessEntity.form.visibleOnFront.yes</source>
+        <target>Oui</target>
+      </trans-unit>
+      <trans-unit id="ae09b10bb421ce0836f15dd43ee191805ab8e3dd" resname="businessEntity.form.visibleOnFront.no">
+        <source>businessEntity.form.visibleOnFront.no</source>
+        <target>Non</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
