@@ -77,11 +77,11 @@ trait BusinessEntityTrait
     }
 
     /**
-     * Get visibleOnFront
+     * Is visibleOnFront
      *
      * @return string
      */
-    public function getVisibleOnFront()
+    public function isVisibleOnFront()
     {
         return $this->visibleOnFront;
     }

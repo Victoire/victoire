@@ -27,18 +27,10 @@ class BasePageController extends AwesomeController
 
     public function showByIdAction($viewId, $entityId = null)
     {
-
-        try {
-            $page = $this->container->get('victoire_page.page_helper')->findPageByParameters(array(
-                'viewId' => $viewId,
-                'entityId' => $entityId
-            ));
-        } catch (\Exception $e) {
-            $page = $this->container->get('victoire_page.page_helper')->findPageByParameters(array(
-                'patternId' => $viewId,
-                'entityId' => $entityId
-            ));
-        }
+        $page = $this->container->get('victoire_page.page_helper')->findPageByParameters(array(
+            'viewId' => $viewId,
+            'entityId' => $entityId
+        ));
 
         return $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl())));
     }

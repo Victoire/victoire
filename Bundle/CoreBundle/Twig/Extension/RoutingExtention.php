@@ -26,11 +26,7 @@ class RoutingExtention extends RoutingExtension
         if ($name == 'victoire_core_page_show_by_id') {
             $viewId = $parameters['viewId'];
             $entityId = $parameters['entityId'];
-            try {
-                $page = $this->pageHelper->findPageByParameters(array('viewId' => $viewId, 'entityId' => $entityId));
-            } catch (\Exception $e) {
-                $page = $this->pageHelper->findPageByParameters(array('patternId' => $viewId, 'entityId' => $entityId));
-            }
+            $page = $this->pageHelper->findPageByParameters(array('viewId' => $viewId, 'entityId' => $entityId));
 
             return $this->generator->generate('victoire_core_page_show', array('url' => $page->getUrl()));
         }

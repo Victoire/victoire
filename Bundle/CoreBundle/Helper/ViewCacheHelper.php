@@ -4,7 +4,6 @@ namespace Victoire\Bundle\CoreBundle\Helper;
 
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\SimpleXMLElement;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Victoire\Bundle\CoreBundle\Entity\View;
 
 /**
@@ -126,7 +125,7 @@ class ViewCacheHelper
             $viewReference['viewNamespace']   = $xmlReference[0]->getAttributeAsPhp('viewNamespace');
             $viewReference['patternId']       = $xmlReference[0]->getAttributeAsPhp('patternId');
         } else {
-            throw new NotFoundHttpException("The page with following parameters was not found: " . implode(' and ', $arguments));
+            $viewReference = null;
         }
 
         return $viewReference;

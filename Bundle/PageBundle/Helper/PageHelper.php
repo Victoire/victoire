@@ -187,6 +187,11 @@ class PageHelper extends ViewHelper
     public function findPageByParameters($parameters)
     {
         $viewReference = $this->viewCacheHelper->getReferenceByParameters($parameters);
+        if ($viewReference === null && !empty($parameters['viewId'])) {
+            $parameters['patternId'] = $parameters['viewId'];
+            unset($parameters['viewId']);
+            $viewReference = $this->viewCacheHelper->getReferenceByParameters($parameters);
+        }
         $page = $this->findPageByReference($viewReference);
 
         return $page;
@@ -219,10 +224,10 @@ class PageHelper extends ViewHelper
     {
         $page = null;
         //get the page
-        if (!empty($viewReference['bepId'])) {
-            $page = $this->em->getRepository('VictoireCoreBundle:View')->findOneById($viewReference['bepId']);
-        } elseif (!empty($viewReference['viewId'])) {
+        if (!empty($viewReference['viewId'])) {
             $page = $this->em->getRepository('VictoireCoreBundle:View')->findOneById($viewReference['viewId']);
+        } elseif (!empty($viewReference['patternId'])) {
+            $page = $this->em->getRepository('VictoireCoreBundle:View')->findOneById($viewReference['patternId']);
         }
 
         if (!$page) {
@@ -281,6 +286,9 @@ class PageHelper extends ViewHelper
                 throw new AccessDeniedException('You are not allowed to see this page');
             }
         } elseif ($page instanceof BusinessEntityPage && !$page->getId()) {
+            if (!$entity->isVisibleOnFront()) {
+                throw new NotFoundHttpException('The BusinessEntityPage for '.get_class($entity).'#'.$entity->getId().' is not visible on front.');
+            }
             $entityAllowed = $this->businessEntityPageHelper->isEntityAllowed($page->getTemplate(), $entity);
 
             if ($entityAllowed === false) {
