@@ -47,7 +47,7 @@ victoire_form:
                     class: vic-btn vic-btn-default
                 label:         victoire.collection.button.label.add_item
                 icon:          ~
-                vic_icon_inverted: ~
+                icon_inverted: ~
     icons:
 
         # Icon set to use: ['glyphicons','fontawesome','fontawesome4']
