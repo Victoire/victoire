@@ -19,8 +19,8 @@
         {% set label = name|humanize %}
     {% endif %}
     <button type="{{ type|default('button') }}" {{ block('button_attributes') }}>
-    {% if vic_icon is not empty %}
-            {{ victoire_icon(vic_icon, vic_icon_inverted|default(false)) }}
+    {% if icon is not empty %}
+            {{ victoire_icon(icon, icon_inverted|default(false)) }}
     {% endif %}
     {{ label|trans({}, translation_domain)|raw }}</button>
 {% endspaceless %}
@@ -535,8 +535,8 @@
 
 {% block collection_button %}
 <a {% for attrname,attrvalue in button_values.attr %} {{attrname}}="{{attrvalue}}"{% endfor %} data-collection-vic-{{ button_type }}-btn=".{{ form.vars['id'] }}_form_group">
-{% if button_values.vic_icon is not null %}
-    {{ victoire_icon(button_values.vic_icon, button_values.vic_icon_inverted|default(false)) }}
+{% if button_values.icon is not null %}
+    {{ victoire_icon(button_values.icon, button_values.icon_inverted|default(false)) }}
 {% endif %}
 {{ button_values.label|trans({}, translation_domain) }}
 </a>
@@ -553,9 +553,9 @@
 
 {% block widget_addon %}
 {% spaceless %}
-{% set widget_addon_icon = widget_addon.vic_icon is defined ? widget_addon.vic_icon : null  %}
-{% set widget_addon_vic_icon_inverted = widget_addon.vic_icon_inverted is defined ? widget_addon.vic_icon_inverted : false  %}
-    <span class="vic-input-group-addon">{{ (widget_addon.text|default(false) ? widget_addon.text|trans({}, translation_domain)|raw : victoire_icon(widget_addon_icon, widget_addon_vic_icon_inverted)) }}</span>
+{% set widget_addon_icon = widget_addon.icon is defined ? widget_addon.icon : null  %}
+{% set widget_addon_icon_inverted = widget_addon.icon_inverted is defined ? widget_addon.icon_inverted : false  %}
+    <span class="vic-input-group-addon">{{ (widget_addon.text|default(false) ? widget_addon.text|trans({}, translation_domain)|raw : victoire_icon(widget_addon_icon, widget_addon_icon_inverted)) }}</span>
 {% endspaceless %}
 {% endblock widget_addon %}
 
