@@ -71,6 +71,7 @@ trait LinkTrait
             'route'           => $this->route,
             'routeParameters' => $this->routeParameters,
             'attachedWidget'  => $this->attachedWidget,
+            'target'          => $this->target,
         );
     }
 
