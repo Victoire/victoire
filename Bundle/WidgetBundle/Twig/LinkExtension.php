@@ -58,7 +58,7 @@ class LinkExtension extends \Twig_Extension
                 //create base url
                 $url = $this->router->generate('victoire_core_page_show', array('url' => $attachedWidget->getView()->getUrl() ));
 
-                if ($this->request->getRequestUri() == $url) {
+                if (rtrim($this->request->getRequestUri(), '/') == rtrim($url, '/')) {
                     $url = "";
                 }
                 //Add anchor part
@@ -84,6 +84,17 @@ class LinkExtension extends \Twig_Extension
     public function victoireLink($parameters, $label, $attr = array())
     {
         extract($parameters);
+
+        if ($linkType == 'attachedWidget') {
+            //create base url
+            $url = $this->router->generate('victoire_core_page_show', array('url' => $attachedWidget->getView()->getUrl() ));
+
+            if (rtrim($this->request->getRequestUri(), '/') == rtrim($url, '/')) {
+                $attr["data-scroll"] = "smooth" ;
+            }
+        }
+
+        //Avoid to refresh page if not needed
         if ($this->request->getRequestUri() == $this->victoireLinkUrl($parameters, false)) {
             if (!isset($attr['class'])) {
                 $attr['class'] = "";
