@@ -286,7 +286,7 @@ class PageHelper extends ViewHelper
                 throw new AccessDeniedException('You are not allowed to see this page');
             }
         } elseif ($page instanceof BusinessEntityPage && !$page->getId()) {
-            if (!$entity->isVisibleOnFront()) {
+            if (!$entity->isVisibleOnFront() && !$this->securityContext->isGranted('ROLE_VICTOIRE')) {
                 throw new NotFoundHttpException('The BusinessEntityPage for '.get_class($entity).'#'.$entity->getId().' is not visible on front.');
             }
             $entityAllowed = $this->businessEntityPageHelper->isEntityAllowed($page->getTemplate(), $entity);
