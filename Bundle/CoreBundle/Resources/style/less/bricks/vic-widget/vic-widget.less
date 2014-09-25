@@ -23,7 +23,6 @@
 
 .vic-widget {
     position: relative;
-    min-height: 20px;
 }
 
 .vic-widget-img {
@@ -40,6 +39,9 @@ body {
     &[role=admin] {
         .vic-hover-widget {
             display: inline-block;
+        }
+        .vic-widget {
+            min-height: 20px;
         }
     }
 }

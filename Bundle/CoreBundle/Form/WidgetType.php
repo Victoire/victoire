@@ -158,7 +158,7 @@ class WidgetType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class'         => 'Victoire\RedactorBundle\Entity\Widget',
+            'data_class'         => 'Victoire\Bundle\WidgetBundle\Entity\Widget',
             'translation_domain' => 'victoire'
         ));
 
