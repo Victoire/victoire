@@ -285,14 +285,16 @@ class PageHelper extends ViewHelper
             if (!$this->securityContext->isGranted('ROLE_VICTOIRE')) {
                 throw new AccessDeniedException('You are not allowed to see this page');
             }
-        } elseif ($page instanceof BusinessEntityPage && !$page->getId()) {
+        } elseif ($page instanceof BusinessEntityPage) {
             if (!$entity->isVisibleOnFront() && !$this->securityContext->isGranted('ROLE_VICTOIRE')) {
                 throw new NotFoundHttpException('The BusinessEntityPage for '.get_class($entity).'#'.$entity->getId().' is not visible on front.');
             }
-            $entityAllowed = $this->businessEntityPageHelper->isEntityAllowed($page->getTemplate(), $entity);
+            if (!$page->getId()) {
+                $entityAllowed = $this->businessEntityPageHelper->isEntityAllowed($page->getTemplate(), $entity);
 
-            if ($entityAllowed === false) {
-                throw new NotFoundHttpException('The entity ['.$entity->getId().'] is not allowed for the page pattern ['.$page->getId().']');
+                if ($entityAllowed === false) {
+                    throw new NotFoundHttpException('The entity ['.$entity->getId().'] is not allowed for the page pattern ['.$page->getId().']');
+                }
             }
         }
     }
