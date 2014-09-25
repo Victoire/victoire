@@ -16,13 +16,14 @@ class ExceptionController extends BaseExceptionController
 
     private $em;
 
-    public function __construct(\Twig_Environment $twig, $debug, $em, $httpKernel, $requestStack)
+    public function __construct(\Twig_Environment $twig, $debug, $em, $httpKernel, $requestStack, $router)
     {
         $this->twig = $twig;
         $this->debug = $debug;
         $this->em = $em;
         $this->kernel = $httpKernel;
         $this->request = $requestStack->getCurrentRequest();
+        $this->router = $router;
     }
 
     /**
