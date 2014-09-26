@@ -14,6 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
  * folder controller.
+ * @Route("/victoire-media/folder")
  *
  */
 class FolderController extends Controller

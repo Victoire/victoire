@@ -12,13 +12,14 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * chooser controller.
+ * @Route("/victoire-media/chooser")
  *
  */
 class ChooserController extends Controller
 {
 
     /**
-     * @Route("/chooser", name="VictoireMediaBundle_chooser", options={"expose"=true})
+     * @Route("/", name="VictoireMediaBundle_chooser", options={"expose"=true})
      *
      * @return RedirectResponse
      */
@@ -38,7 +39,7 @@ class ChooserController extends Controller
     /**
      * @param int $folderId The filder id
      *
-     * @Route("/chooser/{folderId}", requirements={"folderId" = "\d+"}, name="VictoireMediaBundle_chooser_show_folder")
+     * @Route("/{folderId}", requirements={"folderId" = "\d+"}, name="VictoireMediaBundle_chooser_show_folder")
      * @Template()
      *
      * @return array

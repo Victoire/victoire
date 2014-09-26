@@ -17,6 +17,7 @@ use Victoire\Bundle\MediaBundle\Helper\MediaManager;
 
 /**
  * MediaController
+ * @Route("/victoire-media/media")
  */
 class MediaController extends Controller
 {

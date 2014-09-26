@@ -6,6 +6,7 @@
 
     <parameters>
         <parameter key="twig.controller.exception.class">Victoire\Bundle\TwigBundle\Controller\ExceptionController</parameter>
+        <parameter key="security.exception_listener.class">Victoire\Bundle\TwigBundle\Listener\ExceptionListener</parameter>
     </parameters>
 
     <services>
@@ -15,6 +16,7 @@
             <argument type="service" id="doctrine.orm.entity_manager"></argument>
             <argument type="service" id="http_kernel"></argument>
             <argument type="service" id="request_stack"></argument>
+            <argument type="service" id="router"></argument>
         </service>
     </services>
 </container>

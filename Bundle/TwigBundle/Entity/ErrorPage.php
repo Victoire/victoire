@@ -8,7 +8,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * Error Page
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Victoire\Bundle\TwigBundle\Repository\ErrorPageRepository")
  * @UniqueEntity("code")
  */
 class ErrorPage extends BasePage
