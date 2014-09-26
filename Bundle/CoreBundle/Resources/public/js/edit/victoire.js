@@ -77,9 +77,9 @@ function updateSlotActions(slot, max)
 {
     var count = $vic('> .vic-widget-container', "#vic-slot-"+slot).size();
     if ( max == undefined || count < max ) {
-        $vic("> .vic-new-widget", "#vic-slot-"+slot).removeClass('vic-new-widget-disabled');
+        $vic("> .vic-new-widget, > .vic-widget-container > .vic-new-widget", "#vic-slot-"+slot).removeClass('vic-new-widget-disabled');
     } else {
-        $vic("> .vic-new-widget", "#vic-slot-"+slot).addClass('vic-new-widget-disabled');
+        $vic("> .vic-new-widget, > .vic-widget-container > .vic-new-widget", "#vic-slot-"+slot).addClass('vic-new-widget-disabled');
     }
 }
 
