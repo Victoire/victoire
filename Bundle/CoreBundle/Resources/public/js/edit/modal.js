@@ -6,8 +6,6 @@
 // Open a modal
 function openModal(url) {
     loading(true);
-    //trick to hide the dropdown (not hidden because of the preventDefault use)
-    $vic('.vic-dropdown').removeClass('vic-open');
     $vic.ajax({
         type: "GET",
         url: url
@@ -23,6 +21,8 @@ function openModal(url) {
         });
         loading(false);
     });
+
+    return $vic('#vic-modal');
 }
 
 //redirect to the direct links of the menu

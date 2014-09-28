@@ -1,8 +1,19 @@
 .vic-mini-slot {
     .vic-new-widget {
-        a {
+        width: 0px;
+        label, a {
+            background: -webkit-linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), url('/bundles/victoirecore/images/sprite@2x.png');
+            background: -o-linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), url('/bundles/victoirecore/images/sprite@2x.png');
+            background: linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), url('/bundles/victoirecore/images/sprite@2x.png');
+            &:hover {
+                background: url('/bundles/victoirecore/images/sprite@2x.png');
+                background-position: 0 165px;
+            }
+            background-position: 0 165px;
+            border: 0px;
             span {
                 margin-left: -8px;
+                text-indent: -1000px;
             }
         }
     }

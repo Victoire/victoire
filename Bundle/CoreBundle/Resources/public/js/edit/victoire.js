@@ -138,8 +138,8 @@ function updatePosition(ui){
 }
 
 function replaceDropdown(ui) {
-    $vic(ui.item).children('.vic-dropdown').remove();
-    $vic(ui.item).append($vic(ui.item).parents('.vic-slot').children('.vic-dropdown').clone());
+    $vic(ui.item).children('.vic-new-widget').remove();
+    $vic(ui.item).append($vic(ui.item).parents('.vic-slot').children('.vic-new-widget').clone());
 }
 
 function loading(value) {

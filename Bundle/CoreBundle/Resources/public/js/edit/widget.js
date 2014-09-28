@@ -1,12 +1,23 @@
 // Event
 ////////
 
+
+// Open select when click on dropdown link
+$vic(document).on('focus', '.vic-new-widget select', function(event) {
+    $vic(this).addClass('vic-open');
+});
+$vic(document).on('blur', '.vic-new-widget select', function(event) {
+    $vic(event.target).prop('selectedIndex', 0);
+    $vic(event.target).removeClass('vic-open');
+});
+
 // Create modal for new widget
-$vic(document).on('click', '.vic-new-widget > .vic-dropdown-menu a', function(event) {
+$vic(document).on('change', '.vic-new-widget select', function(event) {
     event.preventDefault();
     var url = generateNewWidgetUrl(event.target);
-    openModal(url);
-    $vic(this).parents('.vic-dropdown.vic-new-widget').addClass('vic-creating');
+    $vic(event.target).blur();
+    var modal = openModal(url);
+    $vic(this).parents('.vic-new-widget').addClass('vic-creating');
 });
 
 
@@ -137,36 +148,19 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="delete"]', function(
     };
 });
 
-
-  //////////////////////////////////
- // New Widget dropdown position //
-//////////////////////////////////
-
-$vic(document).on('click', '[data-toggle="vic-dropdown"]', function() {
-    var dropdown = $vic(this).siblings('.vic-dropdown-menu.vic-dropdown-newWidget');
-    var dropdownWidth = dropdown.outerWidth();
-    var dropdownHeight = dropdown.outerHeight();
-
-    dropdown.css({
-        marginTop: -0.5 * dropdownHeight,
-        marginLeft: -0.5 * dropdownWidth,
-    });
-});
-
-function generateNewWidgetUrl(link){
-    var widgetName = $vic(link).data('widget-name');
-    var slotId = $vic(link).parents('.vic-slot').data('name');
+function generateNewWidgetUrl(select){
+    var slotId = $vic(select).parents('.vic-slot').data('name');
     if ($vic('.vic-creating').hasClass('vic-first')) {
         var position = 1;
     } else {
-        var position = parseInt($vic(link).parents('.vic-widget-container').data('position') + 1);
+        var position = parseInt($vic(select).parents('.vic-widget-container').data('position') + 1);
     }
 
     var url = Routing.generate(
         'victoire_core_widget_new',
         {
             'viewReference': viewReferenceId,
-            'type'         : widgetName,
+            'type'         : $vic(select).val(),
             'slot'         : slotId,
             'position'     : position
         }
