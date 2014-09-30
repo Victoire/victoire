@@ -28,10 +28,11 @@ class LinkExtension extends \Twig_Extension
         return array(
             new \Twig_SimpleFunction('vic_link_url', array($this, 'victoireLinkUrl')),
             new \Twig_SimpleFunction('vic_link', array($this, 'victoireLink'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('vic_menu_link', array($this, 'victoireMenuLink'), array('is_safe' => array('html'))),
         );
     }
 
-    public function victoireLinkUrl($parameters, $avoidRefresh = true)
+    public function victoireLinkUrl($parameters, $avoidRefresh = true, $avoidUrl = "#")
     {
         extract($parameters);
         switch ($linkType) {
@@ -43,7 +44,7 @@ class LinkExtension extends \Twig_Extension
                 }
                 $url = $this->router->generate('victoire_core_page_show', array('url' => $page->getUrl() ));
                 if ($this->request->getRequestUri() == $url && $avoidRefresh) {
-                    $url = "#"; //avoid to refresh page when not needed
+                    $url = $avoidUrl; //avoid to refresh page when not needed
                 }
                 break;
             case 'route':
@@ -74,14 +75,14 @@ class LinkExtension extends \Twig_Extension
     }
 
     /**
-     * Generate the complete link (with the tag)
+     * Generate the complete link (with the a tag)
      * @param array  $parameters The link parameters (go to LinkTrait to have the list)
      * @param string $label      link label
      * @param array  $attr       custom attributes
      *
      * @return string
      */
-    public function victoireLink($parameters, $label, $attr = array())
+    public function victoireLink($parameters, $label, $attr = array(), $currentClass = 'active', $avoidUrl = "#")
     {
         extract($parameters);
 
@@ -99,7 +100,8 @@ class LinkExtension extends \Twig_Extension
             if (!isset($attr['class'])) {
                 $attr['class'] = "";
             }
-            $attr['class'] .= "active"; //avoid to refresh page when not needed
+            $attr['class'] .= $currentClass; //avoid to refresh page when not needed
+            $attr["data-scroll"] = "smooth" ;
         }
 
         //Build the target attribute
@@ -120,11 +122,44 @@ class LinkExtension extends \Twig_Extension
             $attributes[] = $key.'="'.$attr.'"';
         }
 
-        $url = $this->victoireLinkUrl($parameters);
+        $url = $this->victoireLinkUrl($parameters, true, $avoidUrl);
         //Creates a new twig environment
         $twigEnv = new \Twig_Environment(new \Twig_Loader_String());
 
         return $twigEnv->render('{{ link|raw }}', array('link' => '<a href="'.$url.'" '.implode($attributes, ' ').'>'.$label.'</a>'));
+    }
+
+    /**
+     * Generate the complete menu link item (with the li tag)
+     * @param array  $parameters The link parameters (go to LinkTrait to have the list)
+     * @param string $label      link label
+     * @param array  $attr       custom attributes
+     *
+     * @return string
+     */
+    public function victoireMenuLink($parameters, $label, $attr = array())
+    {
+        $linkAttr = array();
+        //is the link is active
+        if ($this->request->getRequestUri() == $this->victoireLinkUrl($parameters, false)) {
+            if (!isset($attr['class'])) {
+                $linkAttr['class'] = "";
+            }
+            $linkAttr['class'] .= "active"; //avoid to refresh page when not needed
+        }
+
+        $linkAttributes = array();
+        foreach ($linkAttr as $key => $_attr) {
+            if (is_array($_attr)) {
+                $linkAttr = implode($_attr, ' ');
+            } else {
+                $linkAttr = $_attr;
+            }
+            $linkAttributes[] = $key.'="'.$linkAttr.'"';
+        }
+
+        return '<li '.implode($linkAttributes, ' ').'>'.$this->victoireLink($parameters, $label, $attr, false, '#top').'</li>';
+
     }
 
     /**

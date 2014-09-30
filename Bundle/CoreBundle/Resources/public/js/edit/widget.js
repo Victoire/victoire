@@ -17,7 +17,7 @@ $vic(document).on('change', '.vic-new-widget select', function(event) {
     var url = generateNewWidgetUrl(event.target);
     $vic(event.target).blur();
     var modal = openModal(url);
-    $vic(this).parents('.vic-new-widget').addClass('vic-creating');
+    $vic(this).parents('.vic-new-widget').first().addClass('vic-creating');
 });
 
 
@@ -43,9 +43,9 @@ $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(
             if ($vic('.vic-creating').hasClass('vic-first')) {
                 $vic('.vic-creating').after(response.html);
             } else {
-                $vic('.vic-creating').parents('.vic-widget-container').after(response.html);
+                $vic('.vic-creating').parents('.vic-widget-container').first().after(response.html);
             }
-            var slot = $vic('.vic-creating').parents('vic-slot');
+            var slot = $vic('.vic-creating').parents('vic-slot').first();
             var slotId = $vic(slot).data('name');
             //update the positions of the widgets
             updateWidgetPositions(slotId);
@@ -125,7 +125,7 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="delete"]', function(
                 //selector for the widget div
                 var widgetContainerSelector = 'vic-widget-' + response.widgetId + '-container';
                 var widgetDiv               = $vic("#" + widgetContainerSelector);
-                var widgetSlot              = $vic(widgetDiv).parents('.vic-slot');
+                var widgetSlot              = $vic(widgetDiv).parents('.vic-slot').first();
                 var slotId                  = $vic(widgetSlot).data('name');
                 var slotFunction            = "updateSlotActions" + slotId;
 
@@ -149,7 +149,7 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="delete"]', function(
 });
 
 function generateNewWidgetUrl(select){
-    var slotId = $vic(select).parents('.vic-slot').data('name');
+    var slotId = $vic(select).parents('.vic-slot').first().data('name');
     if ($vic('.vic-creating').hasClass('vic-first')) {
         var position = 1;
     } else {
