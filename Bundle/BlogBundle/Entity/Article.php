@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Victoire\Bundle\CoreBundle\Annotations as VIC;
 use Victoire\Bundle\CoreBundle\Entity\Traits\BusinessEntityTrait;
+use Victoire\Bundle\MediaBundle\Entity\Media;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 
 /**
@@ -14,7 +15,7 @@ use Victoire\Bundle\PageBundle\Entity\BasePage;
  * @ORM\Entity
  * @ORM\Table("vic_article")
  *
- * @VIC\BusinessEntity({"widgetredactor", "themeredactornewspaper", "widgetlisting", "BlogArticles"})
+ * @VIC\BusinessEntity({"widgetredactor", "themeredactornewspaper", "widgetlisting", "BlogArticles", "widgettitle"})
  */
 class Article extends BasePage
 {
@@ -84,6 +85,16 @@ class Article extends BasePage
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $blog;
+
+    /**
+     * @var string
+     *
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\MediaBundle\Entity\Media")
+     * @ORM\JoinColumn(name="image_id", referencedColumnName="id", onDelete="CASCADE")
+     * @VIC\BusinessProperty("imageable")
+     *
+     */
+    protected $image;
 
     /**
      * Set description
@@ -214,6 +225,29 @@ class Article extends BasePage
     public function getTags()
     {
         return $this->tags;
+    }
+
+    /**
+     * Set image
+     * @param string $image
+     *
+     * @return WidgetImage
+     */
+    public function setImage(Media $image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 
 }

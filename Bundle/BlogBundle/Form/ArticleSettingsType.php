@@ -34,7 +34,9 @@ class ArticleSettingsType extends ArticleType
             ->add('publishedAt', null, array(
                 'widget'         => 'single_text',
                 'datetimepicker' => true
-            ));
+            ))
+            ->add('image', 'media')
+            ;
     }
 
     /**

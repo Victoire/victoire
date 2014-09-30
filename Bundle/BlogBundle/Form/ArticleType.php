@@ -31,6 +31,7 @@ class ArticleType extends ViewType
         $viewToIdTransformer = new ViewToIdTransformer($this->em);
         $builder
             ->add('description')
+            ->add('image', 'media')
             ->add('category')
             ->add(
                 $builder->create('blog', 'hidden', array(
