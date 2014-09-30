@@ -424,6 +424,7 @@ class WidgetMapBuilder
             }
 
             //we have to persist the widget to get its id
+            $this->em->persist($view);
             $this->em->persist($widgetCopy);
             $this->em->flush();
 
