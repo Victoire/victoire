@@ -67,7 +67,7 @@ class TagFilter extends BaseFilter
         $tags = $this->em->getRepository('VictoireBlogBundle:Tag')->findAll();
 
         //the blank value
-        $tagsChoices = array(null => '');
+        $tagsChoices = array();
 
         foreach ($tags as $tag) {
             $tagsChoices[$tag->getId()] = $tag->getTitle();
