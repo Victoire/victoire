@@ -4,8 +4,9 @@ namespace Victoire\Bundle\TemplateBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Victoire\Bundle\CoreBundle\Entity\View;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\ExecutionContextInterface;
+use Victoire\Bundle\CoreBundle\Entity\View;
 
 /**
  * Template
@@ -26,7 +27,6 @@ class Template extends View
     /**
      * @var string
      *
-     * @Assert\NotBlank()
      * @ORM\Column(name="layout", type="string", length=255)
      */
     protected $layout;
@@ -34,7 +34,6 @@ class Template extends View
     /**
      * @var string
      *
-     * @Assert\Valid()
      */
     protected $template;
 
@@ -102,4 +101,33 @@ class Template extends View
     {
         return $this->layout;
     }
+
+    /**
+     * @Assert\Callback(groups={"victoire"})
+     */
+    public function validate(ExecutionContextInterface $context)
+    {
+        $template = $this;
+        $templateHasLayout = false;
+        while ($template != null) {
+            if ($template->getLayout() != null) {
+                $templateHasLayout = true;
+                break;
+            }
+            $template = $template->getTemplate();
+        }
+        if ($templateHasLayout === false
+            && $this->getLayout() == null) {
+            $context->addViolationAt(
+                'layout',
+                'data.template.templateform.view.type.template.layout.validator_message',
+                array(),
+                null
+            );
+
+        }
+    }
 }
+
+
+
