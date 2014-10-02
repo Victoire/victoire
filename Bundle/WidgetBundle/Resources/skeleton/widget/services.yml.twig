@@ -1,20 +1,16 @@
 services:
+    victoire_core.widget_{{ widget|lower }}_content_resolver:
 {% if content_resolver %}
-    victoire_core.widget_{{ widget|lower }}_content_resolver:
         class: {{ namespace }}\Resolver\Widget{{ widget }}ContentResolver
-        tags:
-            - { name: victoire_widget.widget_content_resolver, alias: {{widget}} }
-{% elseif parent_content_resolver %}
-    victoire_core.widget_{{ widget|lower }}_content_resolver:
-        parent: victoire_core.widget_{{ parent|lower }}_content_resolver
-        tags:
-            - { name: victoire_widget.widget_content_resolver, alias: {{widget}} }
-{% else %}
-    victoire_core.widget_{{ widget|lower }}_content_resolver:
         parent: victoire_widget.base_widget_content_resolver
+{% elseif parent_content_resolver %}
+        parent: victoire_core.widget_{{ parent|lower }}_content_resolver
+{% else %}
+        parent: victoire_widget.base_widget_content_resolver
+{% endif %}
         tags:
             - { name: victoire_widget.widget_content_resolver, alias: {{widget}} }
-{% endif %}
+
     #alias to the entity
     victoire.widget.{{ widget|lower }}:
         class: {{ namespace }}\Entity\Widget{{ widget }}

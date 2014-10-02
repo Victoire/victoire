@@ -127,7 +127,7 @@ class BusinessEntityPageHelper
                 }
             }
         }
-
+        //find Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity object according to the given $entity
         $businessEntity = $this->businessEntityHelper->findByEntityInstance($entity);
 
         if ($businessEntity !== null) {
@@ -147,6 +147,17 @@ class BusinessEntityPageHelper
             //we update the url of the page
             $page->setUrl($pageUrl);
             $page->setName($pageName);
+        }
+        //Check that all twig variables in pattern url was removed for it's generated BusinessEntityPage
+        preg_match_all('/\{\%\s*([^\%\}]*)\s*\%\}|\{\{\s*([^\}\}]*)\s*\}\}/i', $pageUrl, $matches);
+
+        if (count($matches[2])) {
+            throw new \Exception(sprintf(
+                'The following identifiers are not defined as well, (%s)
+                you need to add the following lines on your businessEntity properties:
+                <br> <pre>@VIC\BusinessProperty("businessIdentifier")</pre>',
+                implode($matches[2], ', ')
+            ));
         }
 
         $entityProxy = new EntityProxy();
