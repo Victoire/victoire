@@ -15,7 +15,7 @@ use Victoire\Bundle\PageBundle\Entity\BasePage;
  * @ORM\Entity
  * @ORM\Table("vic_article")
  *
- * @VIC\BusinessEntity({"widgetredactor", "themeredactornewspaper", "widgetlisting", "BlogArticles", "widgettitle"})
+ * @VIC\BusinessEntity({"Redactor", "Listing", "BlogArticles", "Title", "CKEditor", "Text", "UnderlineTitle", "Cover", "Image", "Authorship", "ArticleList"})
  */
 class Article extends BasePage
 {
@@ -31,6 +31,18 @@ class Article extends BasePage
      * @VIC\BusinessProperty("textable")
      */
     protected $name;
+    /**
+     * @var string
+     *
+     * @VIC\BusinessProperty("businessIdentifier")
+     */
+    protected $slug;
+    /**
+     * @var string
+     *
+     * @VIC\BusinessProperty("businessIdentifier")
+     */
+    protected $id;
 
     /**
      * Description is inherited from Page, just add the BusinessProperty annotation
@@ -53,6 +65,7 @@ class Article extends BasePage
     *
     * @ORM\Column(name="publishedAt", type="datetime")
     * @VIC\BusinessProperty("datable")
+    * @VIC\BusinessProperty("textable")
     */
     protected $publishedAt;
 
@@ -95,6 +108,26 @@ class Article extends BasePage
      *
      */
     protected $image;
+
+    /**
+     * @VIC\BusinessProperty("textable")
+     */
+    protected $categoryTitle;
+
+    /**
+    * @VIC\BusinessProperty("textable")
+    */
+    protected $publishedAtString;
+
+    /**
+    * @VIC\BusinessProperty("textable")
+    */
+    protected $authorAvatar;
+
+    /**
+    * @VIC\BusinessProperty("textable")
+    */
+    protected $authorFullName;
 
     /**
      * Set description
@@ -250,4 +283,44 @@ class Article extends BasePage
         return $this->image;
     }
 
+    /**
+     * Get businessEntity
+     *
+     * @return string
+     */
+    public function getBusinessEntity()
+    {
+        return $this;
+    }
+
+    /**
+     * Get categoryTitle
+     *
+     * @return string
+     */
+    public function getCategoryTitle()
+    {
+        return $this->category->getTitle();
+    }
+
+    /**
+     * Get publishedAtString
+     *
+     * @return string
+     */
+    public function getPublishedAtString()
+    {
+        setlocale(LC_TIME, "fr_FR");
+        return strftime('%d %B %Y', $this->publishedAt->getTimestamp());
+    }
+
+    public function getAuthorAvatar()
+    {
+        $email = $this->author->getEmail();
+        return "http://www.gravatar.com/avatar/" . md5($email) . "?s=70";
+    }
+    public function getAuthorFullname()
+    {
+        return $this->author->getFullname();
+    }
 }
