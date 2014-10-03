@@ -136,16 +136,24 @@ class QueryHelper
         }
         $currentView = $this->currentView;
 
+
         //if the the keyword ":currentEntity" is found, we are in a businessEntityPagePattern, so we set the current entity as a query parameter.
-        if (strpos($query, ":currentEntity") !== false) {
-            if ($currentView() instanceof BusinessEntityPagePattern) {
-                $currentEntity = null;
-            } else {
-                $currentEntity = $currentView()->getBusinessEntity() ? $currentView()->getBusinessEntity()->getId() : null;
+        if ($currentView() && !$currentView() instanceof BusinessEntityPagePattern && null !== $currentEntity = $currentView()->getBusinessEntity()) {
+            // NEW
+            $metadatas = $this->em->getClassMetadata(get_class($currentEntity));
+            foreach ($metadatas->fieldMappings as $fieldName => $field) {
+                if (strpos($query, ":" . $fieldName) !== false) {
+                    $itemsQueryBuilder->setParameter($fieldName, $metadatas->getFieldValue($currentEntity, $fieldName));
+                }
+            }
+            foreach ($metadatas->associationMappings as $fieldName => $field) {
+                if (strpos($query, ":" . $fieldName) !== false) {
+                    $itemsQueryBuilder->setParameter($fieldName, $metadatas->getFieldValue($currentEntity, $fieldName)->getId());
+                }
             }
 
             $itemsQueryBuilder->andWhere('main_item.visibleOnFront = true');
-            $itemsQueryBuilder->setParameter('currentEntity', $currentEntity);
+
         }
 
         return $itemsQueryBuilder;
