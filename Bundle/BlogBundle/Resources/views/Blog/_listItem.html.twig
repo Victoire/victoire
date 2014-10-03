@@ -46,6 +46,11 @@
                         </div>
                     </li>
                 {% endfor %}
+                    <li>
+                        <a class="vic-btn vic-btn-success" data-toggle="vic-modal" href="{{ path('victoire_blog_article_newBlogArticle', {'id' : blog.id}) }}">
+                            {{'modal.blog.list.articlesList.new_article'|trans({}, 'victoire')}}
+                        </a>
+                    </li>
             </ul>
         {% else %}
         <div class="vic-alert vic-alert-info">

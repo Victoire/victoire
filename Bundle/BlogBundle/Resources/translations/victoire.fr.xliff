@@ -46,6 +46,10 @@
         <source>modal.blog.list.articlesList.title</source>
         <target>Liste des articles</target>
       </trans-unit>
+      <trans-unit resname="modal.blog.list.articlesList.new_article">
+        <source>modal.blog.list.articlesList.new_article</source>
+        <target>Ajouter un article</target>
+      </trans-unit>
       <trans-unit resname="modal.blog.list.articlesList.empty.notice">
         <source>modal.blog.list.articlesList.empty.notice</source>
         <target><![CDATA[Vous n'avez pas encore créé d'article dans ce blog. C'est le moment :)<br/><br/><a href="%creationLink%" data-toggle="vic-modal" class="vic-btn vic-btn-primary"><i class="fa fa-plus"></i> Créer un article maintenant.</a>]]></target>
