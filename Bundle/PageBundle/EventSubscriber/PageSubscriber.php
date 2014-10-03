@@ -7,6 +7,7 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\CoreBundle\Entity\Route;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
@@ -92,8 +93,10 @@ class PageSubscriber implements EventSubscriber
 
         foreach ($this->uow->getScheduledEntityInsertions() as $entity) {
             if ($entity instanceof BasePage) {
-                $computeUrl = (array_key_exists('slug', $this->uow->getEntityChangeSet($entity)) //the slug of the page has been modified
-                            || array_key_exists('parent', $this->uow->getEntityChangeSet($entity))); //the parent has been modified
+                $computeUrl = ((array_key_exists('slug', $this->uow->getEntityChangeSet($entity)) //the slug of the page has been modified
+                            || array_key_exists('parent', $this->uow->getEntityChangeSet($entity)))
+                            && !$entity instanceof BusinessEntityPage // The url of a BusinessEntityPage has already been generated
+                            ); //the parent has been modified
                 if ($computeUrl) {
                     $this->buildUrl($entity);
                 }
@@ -105,8 +108,10 @@ class PageSubscriber implements EventSubscriber
 
         foreach ($this->uow->getScheduledEntityUpdates() as $entity) {
             if ($entity instanceof BasePage) {
-                $computeUrl = (array_key_exists('slug', $this->uow->getEntityChangeSet($entity)) //the slug of the page has been modified
-                            || array_key_exists('parent', $this->uow->getEntityChangeSet($entity))); //the parent has been modified
+                $computeUrl = ((array_key_exists('slug', $this->uow->getEntityChangeSet($entity)) //the slug of the page has been modified
+                            || array_key_exists('parent', $this->uow->getEntityChangeSet($entity)))
+                            && !$entity instanceof BusinessEntityPage // The url of a BusinessEntityPage has already been generated
+                            ); //the parent has been modified
                 if ($computeUrl) {
                     $this->buildUrl($entity);
                     $meta = $this->entityManager->getClassMetadata(get_class($entity));
