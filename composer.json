@@ -32,7 +32,7 @@
         "knplabs/knp-menu-bundle"             : "2.0.*@dev",
         "jms/translation-bundle"              : "1.1.*@dev",
         "jms/di-extra-bundle"                 : "1.4.*@dev",
-        "stof/doctrine-extensions-bundle"     : "1.1.*@dev",
+        "stof/doctrine-extensions-bundle"     : "1.1.0",
         "liip/imagine-bundle"                 : "1.0.*@dev",
         "knplabs/knp-gaufrette-bundle"        : ">=0.1.7",
         "friendsofsymfony/jsrouting-bundle"   : "~1.1",
