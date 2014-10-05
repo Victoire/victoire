@@ -67,8 +67,13 @@ class ViewHelper
     public function getAllViewsReferences()
     {
         $viewsReferences = array();
-        //This query is not optimized because we need the property "businessEntityName" later, and it's only present in Pattern pages
-        $views = $this->em->createQuery("SELECT v FROM VictoireCoreBundle:View v")->getResult();
+        $schemaManager = $this->em->getConnection()->getSchemaManager();
+        if ($schemaManager->tablesExist(array('vic_view')) == true) {
+            //This query is not optimized because we need the property "businessEntityName" later, and it's only present in Pattern pages
+            $views = $this->em->createQuery("SELECT v FROM VictoireCoreBundle:View v")->getResult();
+        } else {
+            $views = array();
+        }
 
         foreach ($views as $view) {
             $viewsReferences = array_merge($viewsReferences, $this->buildViewReference($view));
