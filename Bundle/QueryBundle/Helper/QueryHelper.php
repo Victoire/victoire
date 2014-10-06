@@ -137,8 +137,8 @@ class QueryHelper
         $currentView = $this->currentView;
 
 
-        //if the the keyword ":currentEntity" is found, we are in a businessEntityPagePattern, so we set the current entity as a query parameter.
-        if ($currentView() && !$currentView() instanceof BusinessEntityPagePattern && null !== $currentEntity = $currentView()->getBusinessEntity()) {
+        // If the current page is a BEP, we parse all its properties and inject them as query parameters
+        if ($currentView() && $currentView() instanceof BusinessEntityPage && null !== $currentEntity = $currentView()->getBusinessEntity()) {
             // NEW
             $metadatas = $this->em->getClassMetadata(get_class($currentEntity));
             foreach ($metadatas->fieldMappings as $fieldName => $field) {
