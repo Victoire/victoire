@@ -17,15 +17,13 @@ class EntityProxyCacheDriver extends AnnotationDriver
      * construct
      *
      * @param unknown $reader
-     * @param unknown $rootDir
-     * @param unknown $env
+     * @param string  $cacheDir
      */
-    public function __construct($reader, $rootDir, $env)
+    public function __construct($reader, $cacheDir)
     {
-        $this->env = $env;
         $this->reader = $reader;
-        $this->rootDir = $rootDir;
-        $entityProxy = $this->rootDir . "/cache/" . $this->env . "/victoire/Entity/EntityProxy.php";
+        $this->cacheDir = $cacheDir;
+        $entityProxy = $this->cacheDir . "/victoire/Entity/EntityProxy.php";
         if (file_exists($entityProxy)) {
             include_once $entityProxy;
         }
