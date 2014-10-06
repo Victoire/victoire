@@ -24,7 +24,7 @@ class EntityProxyCacheDriver extends AnnotationDriver
         $this->reader = $reader;
         $this->cacheDir = $cacheDir;
         $entityProxy = $this->cacheDir . "/victoire/Entity/EntityProxy.php";
-        if (file_exists($entityProxy)) {
+        if (file_exists($entityProxy) && !class_exists("Victoire\Bundle\CoreBundle\Entity\EntityProxy")) {
             include_once $entityProxy;
         }
     }
