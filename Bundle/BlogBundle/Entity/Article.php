@@ -64,7 +64,7 @@ class Article extends BasePage
     * @var datetime $publishedAt
     *
     * @ORM\Column(name="publishedAt", type="datetime")
-    * @VIC\BusinessProperty("datable")
+    * @VIC\BusinessProperty("dateable")
     * @VIC\BusinessProperty("textable")
     */
     protected $publishedAt;
