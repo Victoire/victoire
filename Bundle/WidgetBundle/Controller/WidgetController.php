@@ -83,6 +83,7 @@ class WidgetController extends AwesomeController
      * @param string         $type          The type of the widget we edit
      * @param integer        $viewReference The view reference where attach the widget
      * @param string         $slot          The slot where attach the widget
+     * @param string         $position      Position of the widget
      * @param BusinessEntity $entityName    The business entity name the widget shows on dynamic mode
      *
      * @return response
@@ -95,10 +96,22 @@ class WidgetController extends AwesomeController
             //services
             $em = $this->getEntityManager();
             $view = $this->getViewByReferenceId($viewReference);
+
+            $isNewPage = $view->getId() == null ? true : false;
+
             $this->get('victoire_core.current_view')->setCurrentView($view);
             $widgetManager = $this->getWidgetManager();
 
-            $response = new JsonResponse($widgetManager->createWidget($type, $slot, $view, $entityName, $position));
+            $response = $widgetManager->createWidget($type, $slot, $view, $entityName, $position);
+
+            if ($isNewPage) {
+                $response = new JsonResponse(array(
+                    'success' => true,
+                    'redirect' => $this->generateUrl('victoire_core_page_show', array('url' => $view->getUrl())),
+                ));
+            } else {
+                $response = new JsonResponse($response);
+            }
         } catch (\Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
         }

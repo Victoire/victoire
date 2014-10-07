@@ -93,14 +93,14 @@ class ViewCacheHelper
 
         $rootNode = $this->readCache();
         $id = $this->getViewCacheId($view, $entity);
-
-        $itemNode = $rootNode->xpath("//viewReference[@id='" . $id . "']");
-
-        unset($itemNode);
+        $oldItemNode = $rootNode->xpath("//viewReference[@id='" . $id . "']");
+        unset($oldItemNode[0][0]);
 
         $viewReferences = $this->container->get('victoire_core.view_helper')->buildViewReference($view, $entity);
 
         foreach ($viewReferences as $key => $viewReference) {
+            $oldItemNode = $rootNode->xpath("//viewReference[@url='" . $key . "']");
+            unset($oldItemNode[0][0]);
             $itemNode = $rootNode->addChild('viewReference');
             $this->buildItemNode($viewReference, $itemNode);
         }

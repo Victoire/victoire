@@ -40,20 +40,25 @@ $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(
         data: form.serialize(),
     }).done(function(response){
         if (true === response.success) {
-            if ($vic('.vic-creating').hasClass('vic-first')) {
-                $vic('.vic-creating').after(response.html);
+            if (response.hasOwnProperty("redirect")) {
+                window.location.replace(response.redirect);
             } else {
-                $vic('.vic-creating').parents('.vic-widget-container').first().after(response.html);
+                if ($vic('.vic-creating').hasClass('vic-first')) {
+                    $vic('.vic-creating').after(response.html);
+                } else {
+                    $vic('.vic-creating').parents('.vic-widget-container').first().after(response.html);
+                }
+                var slot = $vic('.vic-creating').parents('vic-slot').first();
+                var slotId = $vic(slot).data('name');
+                //update the positions of the widgets
+                updateWidgetPositions(slotId);
+                closeModal();
+                slideTo($vic('> .vic-anchor', '#' + response.widgetId));
+                congrat(response.message, 10000);
             }
-            var slot = $vic('.vic-creating').parents('vic-slot').first();
-            var slotId = $vic(slot).data('name');
-            //update the positions of the widgets
-            updateWidgetPositions(slotId);
-            closeModal();
-            slideTo($vic('> .vic-anchor', '#' + response.widgetId));
+
             loading(false);
 
-            congrat(response.message, 10000);
         } else {
             warn(response.message, 10000);
             //inform user there have been an error
@@ -87,11 +92,15 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update"]', function(
         data: form.serialize(),
     }).done(function(response){
         if (true === response.success) {
-            $vic(".vic-widget", "#"+response.widgetId).replaceWith(response.html);
-            closeModal();
-            slideTo($vic('> .vic-anchor', '#' + response.widgetId));
+            if (response.hasOwnProperty("redirect")) {
+                window.location.replace(response.redirect);
+            } else {
+                $vic(".vic-widget", "#"+response.widgetId).replaceWith(response.html);
+                closeModal();
+                slideTo($vic('> .vic-anchor', '#' + response.widgetId));
+                congrat(response.message, 10000);
+            }
             loading(false);
-            congrat(response.message, 10000);
         } else {
 
             //inform user there have been an error
@@ -122,21 +131,25 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="delete"]', function(
             url : $vic(this).attr('href')
         }).done(function(response) {
             if (true === response.success) {
-                //selector for the widget div
-                var widgetContainerSelector = 'vic-widget-' + response.widgetId + '-container';
-                var widgetDiv               = $vic("#" + widgetContainerSelector);
-                var widgetSlot              = $vic(widgetDiv).parents('.vic-slot').first();
-                var slotId                  = $vic(widgetSlot).data('name');
-                var slotFunction            = "updateSlotActions" + slotId;
+                if (response.hasOwnProperty("redirect")) {
+                    window.location.replace(response.redirect);
+                } else {
+                    //selector for the widget div
+                    var widgetContainerSelector = 'vic-widget-' + response.widgetId + '-container';
+                    var widgetDiv               = $vic("#" + widgetContainerSelector);
+                    var widgetSlot              = $vic(widgetDiv).parents('.vic-slot').first();
+                    var slotId                  = $vic(widgetSlot).data('name');
+                    var slotFunction            = "updateSlotActions" + slotId;
 
-                //remove the div
-                widgetDiv.remove();
-                //update the data-position attribute of the slot's widgets
-                updateWidgetPositions(slotId);
+                    //remove the div
+                    widgetDiv.remove();
+                    //update the data-position attribute of the slot's widgets
+                    updateWidgetPositions(slotId);
 
-                //close the modal
-                eval(slotFunction + "()");
-                closeModal();
+                    //close the modal
+                    eval(slotFunction + "()");
+                    closeModal();
+                }
                 loading(false);
             } else {
                 //log the error
