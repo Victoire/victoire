@@ -94,8 +94,8 @@ class Article extends BasePage
     protected $tags;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\BlogBundle\Entity\Blog", inversedBy="children", cascade={"persist"})
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\BlogBundle\Entity\Blog", inversedBy="articles", cascade={"persist"})
+     * @ORM\JoinColumn(name="blog_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $blog;
 
