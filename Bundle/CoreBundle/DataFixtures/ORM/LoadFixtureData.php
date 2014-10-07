@@ -6,7 +6,7 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Nelmio\Alice\Fixtures;
+use Victoire\Bundle\CoreBundle\DataFixtures\Fixtures;
 
 /**
  * Load fixtures
@@ -34,17 +34,18 @@ class LoadFixtureData extends AbstractFixture implements ContainerAwareInterface
         $files = array();
 
         if ('test' != $this->container->getParameter('kernel.environment')) {
-            $files[] = __DIR__ . '/User/user.yml';
-            $files[] = __DIR__ . '/Media/folder.yml';
-            $files[] = __DIR__ . '/View/template.yml';
-            $files[] = __DIR__ . '/View/page.yml';
-            $files[] = __DIR__ . '/View/errorPage.yml';
+            $files['user']      = __DIR__ . '/User/user.yml';
+            $files['folder']    = __DIR__ . '/Media/folder.yml';
+            $files['template']  = __DIR__ . '/View/template.yml';
+            $files['page']      = __DIR__ . '/View/page.yml';
+            $files['errorPage'] = __DIR__ . '/View/errorPage.yml';
         }
 
         $objects = Fixtures::load($files, $manager, array(
-            'providers'    => array($this),
-            'locale'       => 'fr_FR',
-            'persist_once' => false,
+                'providers'    => array($this),
+                'locale'       => 'fr_FR',
+                'persist_once' => false,
+                'user_class'   => $this->container->getParameter('victoire_core.user_class'), //loader will change user class
         ));
 
         $manager->flush();
