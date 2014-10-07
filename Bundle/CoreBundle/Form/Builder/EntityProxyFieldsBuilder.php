@@ -46,7 +46,7 @@ class EntityProxyFieldsBuilder
                             'choices' => $businessProperties[$key]
                         ));
                     } else {
-                        throw new \Exception(sprintf('The Entity %s doesn\'t have a %s property, which is required by this kind of widget', $namespace, $widgetType));
+                        throw new \Exception(sprintf('The Entity %s doesn\'t have a %s property, which is required by %s widget', $namespace, $key, $widgetType));
                     }
                 }
             }
