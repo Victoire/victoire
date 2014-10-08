@@ -3,23 +3,17 @@
 {% trans_default_domain "victoire" %}
 
 {% block form_container %}
-    {% if widget.id and widget.currentView != widget.view %}
-    <div class="vic-alert vic-alert-warning vic-alert-dismissible">
-        {{ 'victoire.widget.inherited.notice'|trans({'%templateName%': widget.view.name, '%templateEditLink%': path('victoire_core_widget_edit', {'id': widget.id, 'viewReference': widget.view.reference.id })}, 'victoire')|raw }}
-    </div>
-    {% endif %}
     {% block body %}
-
         {% block form %}
             {% if entity != null %}
-                <div id="picker-{{entity}}-{{ form.mode.vars.data }}" class="vic-tab-pane {% if form.mode.vars.data == 'entity' %}vic-active{% endif %}">
+                <div id="picker-{{entity}}-{{ form.mode.vars.data }}" class="vic-tab-pane {% if form.mode.vars.data == widget.mode %}vic-active{% endif %}">
                     {{ form_start(form) }}
                         {{form_rest(form)}}
                     {{ form_end(form) }}
                 </div>
             {% else %}
                 {% block form_static %}
-                    <div id="picker-{{ form.mode.vars.data }}" class="vic-tab-pane vic-active">
+                    <div id="picker-{{ form.mode.vars.data }}" class="vic-tab-pane {% if form.mode.vars.data == widget.mode %}vic-active{% endif %}">
                         {{ form_start(form) }}
                             {{form_rest(form)}}
                         {{ form_end(form) }}
