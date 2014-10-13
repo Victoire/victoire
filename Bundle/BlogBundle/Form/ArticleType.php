@@ -2,10 +2,12 @@
 namespace Victoire\Bundle\BlogBundle\Form;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Victoire\Bundle\CoreBundle\DataTransformer\ViewToIdTransformer;
 use Victoire\Bundle\CoreBundle\Form\ViewType;
+use Victoire\Bundle\TemplateBundle\Entity\Template;
 
 /**
  *
@@ -48,6 +50,19 @@ class ArticleType extends ViewType
                     'multiple' => true
                 )
             );
+
+            $getAllArticleTemplates = function (EntityRepository $tr) {
+                return $tr->getPatterns()
+                    ->getInstance()
+                    ->andWhere("pattern.businessEntityName = 'article'");
+            };
+            $builder->add('template', null, array(
+                'label'         => 'form.view.type.template.label',
+                'property'      => 'name',
+                'required'      => true,
+                'query_builder' => $getAllArticleTemplates,
+            ));
+
     }
 
     /**

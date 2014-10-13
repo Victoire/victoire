@@ -44,13 +44,14 @@ abstract class ViewType extends AbstractType
                         ->setParameter('templateId', $view->getId());
                 };
             }
-
-            $form->add('template', null, array(
-                'label'         => 'form.view.type.template.label',
-                'property'      => 'name',
-                'required'      => !$view instanceof Template,
-                'query_builder' => $getAllTemplateWithoutMe,
-            ));
+            if (!$form->has('template')) {
+                $form->add('template', null, array(
+                    'label'         => 'form.view.type.template.label',
+                    'property'      => 'name',
+                    'required'      => !$view instanceof Template,
+                    'query_builder' => $getAllTemplateWithoutMe,
+                ));
+            }
         });
 
         $builder
