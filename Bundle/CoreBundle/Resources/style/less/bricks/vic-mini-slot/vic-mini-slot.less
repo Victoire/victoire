@@ -1,0 +1,47 @@
+  ///////////////////
+ // Vic Mini Slot //
+///////////////////
+
+// Requirements
+///////////////
+
+/**
+ * No vendors or defined variables are required for this bricks.
+**/
+
+
+// Resources
+////////////
+
+@import 'parameters/module';
+@import 'parameters/theme';
+
+
+
+// Style
+////////
+
+.vic-mini-slot {
+    .vic-new-widget {
+        width: 0px;
+
+        label,
+        a {
+            background: -webkit-linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), url('/bundles/victoirecore/images/sprite@2x.png');
+            background: -o-linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), url('/bundles/victoirecore/images/sprite@2x.png');
+            background: linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), url('/bundles/victoirecore/images/sprite@2x.png');
+            background-position: 0 165px;
+            border: 0px;
+
+            &:hover {
+                background: url('/bundles/victoirecore/images/sprite@2x.png');
+                background-position: 0 165px;
+            }
+
+            span {
+                margin-left: -8px;
+                text-indent: -1000px;
+            }
+        }
+    }
+}
