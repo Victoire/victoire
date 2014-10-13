@@ -300,7 +300,7 @@ class Article extends BasePage
      */
     public function getCategoryTitle()
     {
-        return $this->category->getTitle();
+        return $this->category ? $this->category->getTitle() : null;
     }
 
     /**
@@ -311,12 +311,14 @@ class Article extends BasePage
     public function getPublishedAtString()
     {
         setlocale(LC_TIME, "fr_FR");
+
         return strftime('%d %B %Y', $this->publishedAt->getTimestamp());
     }
 
     public function getAuthorAvatar()
     {
         $email = $this->author->getEmail();
+
         return "http://www.gravatar.com/avatar/" . md5($email) . "?s=70";
     }
     public function getAuthorFullname()
