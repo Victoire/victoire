@@ -28,15 +28,12 @@
                     <li>
                         <div class="vic-row">
                             <div class="vic-col-md-12">
-                                <a href="{{ path('victoire_core_page_show', {'url' : article.url}) }}">
+                                <a href="#">
                                     {{ article.name }}
                                 </a>&nbsp;
                                 <a data-toggle="vic-modal" href="{{ path('victoire_blog_article_settings', {'id' : article.id}) }}">
                                     <i class="fa fa-cog"></i>
                                 </a>&nbsp;
-                                <a href="{{ path('victoire_core_page_show', {'url' : article.url}) }}">
-                                    <i class="fa fa-external-link-square"></i>
-                                </a>
                             </div>
                             {% if article.seo and article.seo.metaDescription %}
                             <div class="vic-col-md-12">

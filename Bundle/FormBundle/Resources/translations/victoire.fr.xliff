@@ -30,6 +30,10 @@
         <source>form.link_type.linkType.page</source>
         <target>Page</target>
       </trans-unit>
+      <trans-unit resname="form.link_type.linkType.none">
+        <source>form.link_type.linkType.none</source>
+        <target>Aucun lien</target>
+      </trans-unit>
       <trans-unit resname="form.link_type.linkType.route">
         <source>form.link_type.linkType.route</source>
         <target>Route</target>
