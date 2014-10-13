@@ -57,7 +57,7 @@ class PageAdministrationController extends PageController
      *
      * @Route("/{id}/settings", name="victoire_core_page_settings")
      * @Template()
-     * @ParamConverter("page", class="VictoirePageBundle:Page")
+     * @ParamConverter("page", class="VictoirePageBundle:BasePage")
      *
      * @return json The settings
      */
@@ -73,7 +73,7 @@ class PageAdministrationController extends PageController
      * @return template
      * @Route("/{id}/delete", name="victoire_core_page_delete")
      * @Template()
-     * @ParamConverter("page", class="VictoirePageBundle:Page")
+     * @ParamConverter("page", class="VictoirePageBundle:BasePage")
      */
     public function deleteAction(BasePage $page)
     {
@@ -90,7 +90,7 @@ class PageAdministrationController extends PageController
      *
      * @return template
      * @Route("/{id}/detach", name="victoire_core_page_detach")
-     * @ParamConverter("page", class="VictoirePageBundle:Page")
+     * @ParamConverter("page", class="VictoirePageBundle:BasePage")
      */
     public function detachAction(BasePage $page)
     {
