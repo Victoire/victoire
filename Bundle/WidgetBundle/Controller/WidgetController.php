@@ -34,7 +34,7 @@ class WidgetController extends AwesomeController
     {
         //the response is for the ajax.js from the AppVentus Ajax Bundle
         try {
-            $view = $this->container->get('victoire_page.page_helper')->getPageByParameters(array('id' => $viewReferenceId));
+            $view = $this->container->get('victoire_page.page_helper')->findPageByParameters(array('id' => $viewReferenceId));
             $this->container->get('victoire_core.current_view')->setCurrentView($view);
             if ($this->getRequest()->isXmlHttpRequest()) {
 
@@ -260,6 +260,6 @@ class WidgetController extends AwesomeController
 
     protected function getViewByReferenceId($referenceId)
     {
-        return $this->get('victoire_page.page_helper')->getPageByParameters(array('id' => $referenceId));
+        return $this->get('victoire_page.page_helper')->findPageByParameters(array('id' => $referenceId));
     }
 }

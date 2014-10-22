@@ -35,7 +35,7 @@ services:
             - @doctrine.orm.entity_manager
             - @av.form_error_service
             - @request
-            - @view.widgetMap.builder
+            - @victoire_widget_map.manager
             - @victoire_core.annotation_reader
             - @victoire_core.template_mapper
             - @victoire_page.page_helper

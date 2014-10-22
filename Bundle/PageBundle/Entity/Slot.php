@@ -54,8 +54,6 @@ class Slot
      */
     public function getWidgetMaps()
     {
-        $this->reorderWidgetMaps();
-
         return $this->widgetMaps;
     }
 
@@ -70,6 +68,7 @@ class Slot
         foreach ($this->widgetMaps as $key => $_widgetMap) {
             if ($_widgetMap->getPosition() >= $widgetMap->getPosition()) {
                 $_widgetMap->setPosition($_widgetMap->getPosition() + 1);
+                $_widgetMap->setPositionReference($_widgetMap->getPosition());
             }
         }
         $this->widgetMaps[] = $widgetMap;

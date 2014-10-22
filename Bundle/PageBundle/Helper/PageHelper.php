@@ -24,6 +24,7 @@ use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\PageBundle\Matcher\UrlMatcher;
 use Victoire\Bundle\SeoBundle\Helper\PageSeoHelper;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
+use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
 
 /**
  * Page helper
@@ -44,6 +45,7 @@ class PageHelper extends ViewHelper
     protected $session; // @session
     protected $securityContex; // @security.context
     protected $urlizer; // @gedmo.urlizer
+    protected $widgetMapBuilder; // @victoire_widget_map.builder
 
     //@todo Make it dynamic please
     protected $pageParameters = array(
@@ -85,7 +87,8 @@ class PageHelper extends ViewHelper
         ViewCacheHelper $viewCacheHelper,
         Session $session,
         SecurityContext $securityContext,
-        Urlizer $urlizer
+        Urlizer $urlizer,
+        WidgetMapBuilder $widgetMapBuilder
     )
     {
         $this->parameterConverter = $parameterConverter;
@@ -102,6 +105,7 @@ class PageHelper extends ViewHelper
         $this->session = $session;
         $this->securityContext = $securityContext;
         $this->urlizer = $urlizer;
+        $this->widgetMapBuilder = $widgetMapBuilder;
 
     }
 
@@ -111,11 +115,17 @@ class PageHelper extends ViewHelper
      *
      * @return Response
      */
-    public function getPageByParameters($parameters)
+    public function findPageByParameters($parameters)
     {
         $viewReference = $this->viewCacheHelper->getReferenceByParameters($parameters);
+        if ($viewReference === null && !empty($parameters['viewId'])) {
+            $parameters['patternId'] = $parameters['viewId'];
+            unset($parameters['viewId']);
+            $viewReference = $this->viewCacheHelper->getReferenceByParameters($parameters);
+        }
+        $page = $this->findPageByReference($viewReference);
 
-        return $this->findPageByReference($viewReference);
+        return $page;
     }
 
     /**
@@ -126,7 +136,7 @@ class PageHelper extends ViewHelper
      */
     public function renderPageByUrl($url)
     {
-        $page = $this->getPageByParameters(array('url' => $url));
+        $page = $this->findPageByParameters(array('url' => $url));
 
         $event = new \Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent($page);
 
@@ -135,6 +145,7 @@ class PageHelper extends ViewHelper
 
         $layout = 'AppBundle:Layout:' . $page->getTemplate()->getLayout() . '.html.twig';
 
+        error_log(var_export($this->widgetMapBuilder->build($page), true));
         $this->currentViewHelper->setCurrentView($page);
         //create the response
         $response = $this->victoireTemplating->renderResponse($layout, array(
@@ -184,18 +195,6 @@ class PageHelper extends ViewHelper
 
     }
 
-    public function findPageByParameters($parameters)
-    {
-        $viewReference = $this->viewCacheHelper->getReferenceByParameters($parameters);
-        if ($viewReference === null && !empty($parameters['viewId'])) {
-            $parameters['patternId'] = $parameters['viewId'];
-            unset($parameters['viewId']);
-            $viewReference = $this->viewCacheHelper->getReferenceByParameters($parameters);
-        }
-        $page = $this->findPageByReference($viewReference);
-
-        return $page;
-    }
 
     /**
      * Search a page in the route history according to giver url
