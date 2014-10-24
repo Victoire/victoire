@@ -66,7 +66,8 @@ class Slot
     {
         //Shift up others widgetsMaps's position
         foreach ($this->widgetMaps as $key => $_widgetMap) {
-            if ($_widgetMap->getPosition() >= $widgetMap->getPosition()) {
+            if ($_widgetMap->getPosition() >= $widgetMap->getPosition()
+                && $_widgetMap->getPositionReference() === $widgetMap->getPositionReference()) {
                 $_widgetMap->setPosition($_widgetMap->getPosition() + 1);
                 $_widgetMap->setPositionReference($_widgetMap->getPosition());
             }

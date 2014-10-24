@@ -60,7 +60,7 @@ class WidgetMapHelper
                 if ($_widgetMap->getWidgetId() === (int) $positionReference) {
                     $position = $_widgetMap->getPosition() + 1;
                     $widgetMapEntry->setPosition($position);
-                    $widgetMapEntry->setPositionReference($_widgetMap->getPositionReference());
+                    $widgetMapEntry->setPositionReference($positionReference);
                     break;
                 }
             }

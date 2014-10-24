@@ -45,7 +45,6 @@ class WidgetMapBuilder
 
             $widgetMap = array();
             if ($slot !== null) {
-                $slot->reorderWidgetMaps();
                 $viewWidgetMaps = $slot->getWidgetMaps();
             }
             //if the current view have some widget maps
@@ -75,6 +74,7 @@ class WidgetMapBuilder
                             $position += $parentPosition;
 
                             $position = $this->helper->getNextAvailaiblePosition($position, $widgetMap);
+                            $viewWidgetMap->setPosition($position);
 
                             $widgetMap[$position] = $viewWidgetMap;
                             break;

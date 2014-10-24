@@ -176,7 +176,6 @@ class WidgetManager
             $widgetMap = $this->widgetMapBuilder->build($view, false);
             $position = $this->widgetMapHelper->generateWidgetPosition($widgetMapEntry, $widget, $widgetMap, $positionReference);
 
-            $widgetMapEntry->setPosition($position);
             //get the slot
             $slot = $view->getSlotById($slotId);
 

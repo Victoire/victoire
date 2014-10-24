@@ -163,7 +163,12 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="delete"]', function(
 
 function generateNewWidgetUrl(select){
     var slotId = $vic(select).parents('.vic-slot').first().data('name');
-    var positionReference = parseInt($vic(select).parents('.vic-widget-container').data('id'));
+
+    if ($vic(select).parents('.vic-new-widget').first().hasClass('vic-first')) {
+        var positionReference = 0;
+    } else {
+        var positionReference = parseInt($vic(select).parents('.vic-widget-container').data('id'));
+    }
 
 
     var url = Routing.generate(
