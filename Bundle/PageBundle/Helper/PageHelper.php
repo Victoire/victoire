@@ -145,7 +145,6 @@ class PageHelper extends ViewHelper
 
         $layout = 'AppBundle:Layout:' . $page->getTemplate()->getLayout() . '.html.twig';
 
-        error_log(var_export($this->widgetMapBuilder->build($page), true));
         $this->currentViewHelper->setCurrentView($page);
         //create the response
         $response = $this->victoireTemplating->renderResponse($layout, array(

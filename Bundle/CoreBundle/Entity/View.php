@@ -639,8 +639,6 @@ abstract class View
     public function postLoad()
     {
         $widgetMap = $this->widgetMap;
-        // error_log($this->getId());
-        // error_log(var_export($widgetMap, true));
 
         //the slots of the page
         $slots = array();

@@ -27,7 +27,7 @@ class WidgetMapBuilder
         $this->helper = $helper;
     }
 
-    public function build(View $view)
+    public function build(View $view, $updatePage = true)
     {
         $viewWidgetMaps = null;
         $parentWidgetMap = null;
@@ -121,8 +121,9 @@ class WidgetMapBuilder
             }
             $finalWidgetMap = $parentWidgetMap;
         }
-
-        $view->setBuiltWidgetMap($finalWidgetMap);
+        if ($updatePage) {
+            $view->setBuiltWidgetMap($finalWidgetMap);
+        }
 
         return $finalWidgetMap;
     }

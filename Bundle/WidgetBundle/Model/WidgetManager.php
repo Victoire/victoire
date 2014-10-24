@@ -17,6 +17,8 @@ use Victoire\Bundle\WidgetBundle\Builder\WidgetFormBuilder;
 use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
 use Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer;
 use Victoire\Bundle\WidgetBundle\Resolver\WidgetContentResolver;
+use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
+use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 use Victoire\Bundle\WidgetMapBundle\Manager\WidgetMapManager;
 
 /**
@@ -47,6 +49,8 @@ class WidgetManager
      * @param FormErrorService      $formErrorService
      * @param Request               $request
      * @param WidgetMapManager      $widgetMapManager
+     * @param WidgetMapHelper       $widgetMapHelper
+     * @param WidgetMapBuilder      $widgetMapBuilder
      * @param AnnotationReader      $annotationReader
      * @param TemplateMapper        $victoireTemplating
      * @param PageHelper            $pageHelper
@@ -62,6 +66,8 @@ class WidgetManager
         FormErrorService $formErrorService,
         Request $request,
         WidgetMapManager $widgetMapManager,
+        WidgetMapHelper $widgetMapHelper,
+        WidgetMapBuilder $widgetMapBuilder,
         AnnotationReader $annotationReader,
         TemplateMapper $victoireTemplating,
         PageHelper $pageHelper,
@@ -77,6 +83,8 @@ class WidgetManager
         $this->formErrorService = $formErrorService;
         $this->request = $request;
         $this->widgetMapManager = $widgetMapManager;
+        $this->widgetMapHelper = $widgetMapHelper;
+        $this->widgetMapBuilder = $widgetMapBuilder;
         $this->annotationReader = $annotationReader;
         $this->victoireTemplating = $victoireTemplating;
         $this->pageHelper = $pageHelper;
@@ -112,19 +120,20 @@ class WidgetManager
             )
         );
     }
+
     /**
      * Create a widget
      * @param string  $type
      * @param string  $slotId
      * @param View    $view
      * @param string  $entity
-     * @param integer $position
+     * @param integer $positionReference
      *
      * @return template
      *
      * @throws \Exception
      */
-    public function createWidget($type, $slotId, View $view, $entity, $position)
+    public function createWidget($type, $slotId, View $view, $entity, $positionReference)
     {
         //services
         $formErrorService = $this->formErrorService;
@@ -139,7 +148,7 @@ class WidgetManager
         //create a new widget
         $widget = $this->widgetHelper->newWidgetInstance($type, $view, $slotId);
 
-        $form = $this->widgetFormBuilder->callBuildFormSwitchParameters($widget, $view, $entity, $position);
+        $form = $this->widgetFormBuilder->callBuildFormSwitchParameters($widget, $view, $entity, $positionReference);
 
         $form->handleRequest($request);
         if ($form->isValid()) {
@@ -163,9 +172,11 @@ class WidgetManager
             $widgetMapEntry = new WidgetMap();
             $widgetMapEntry->setAction(WidgetMap::ACTION_CREATE);
             $widgetMapEntry->setWidgetId($widget->getId());
+
+            $widgetMap = $this->widgetMapBuilder->build($view, false);
+            $position = $this->widgetMapHelper->generateWidgetPosition($widgetMapEntry, $widget, $widgetMap, $positionReference);
+
             $widgetMapEntry->setPosition($position);
-            error_log("======POSITION==========");
-            error_log($position);
             //get the slot
             $slot = $view->getSlotById($slotId);
 

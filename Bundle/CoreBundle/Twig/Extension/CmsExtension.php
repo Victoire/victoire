@@ -139,9 +139,6 @@ class CmsExtension extends \Twig_Extension_Core
             $result .= $this->widgetRenderer->renderActions($slotId, $currentView, $slotOptions, 1 /* Add a new widget in 1st position */);
         }
 
-        // error_log($slotId);
-        // error_log(var_export($currentView->getWidgetMap(), true));exit;
-        // error_log(var_export($currentView->getSlotById($slotId)->getWidgetMaps(), true));
         if (!empty($currentView->getWidgetMap()[$slotId])) {
             //parse the widget maps
             foreach ($currentView->getWidgetMap()[$slotId] as $widgetMap) {

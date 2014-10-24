@@ -11,3 +11,5 @@ services:
 
     victoire_widget_map.helper:
         class: Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper
+        arguments:
+            - "@doctrine.orm.entity_manager"
