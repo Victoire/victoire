@@ -34,7 +34,7 @@ class WidgetController extends AwesomeController
     {
         //the response is for the ajax.js from the AppVentus Ajax Bundle
         try {
-            $view = $this->container->get('victoire_page.page_helper')->getPageByParameters(array('id' => $viewReferenceId));
+            $view = $this->container->get('victoire_page.page_helper')->findPageByParameters(array('id' => $viewReferenceId));
             $this->container->get('victoire_core.current_view')->setCurrentView($view);
             if ($this->getRequest()->isXmlHttpRequest()) {
 
@@ -56,21 +56,21 @@ class WidgetController extends AwesomeController
     /**
      * New Widget
      *
-     * @param string  $type          The type of the widget we edit
-     * @param integer $viewReference The view reference where attach the widget
-     * @param string  $slot          The slot where attach the widget
-     * @param integer $position      The position in the widgetMap
+     * @param string  $type              The type of the widget we edit
+     * @param integer $viewReference     The view reference where attach the widget
+     * @param string  $slot              The slot where attach the widget
+     * @param integer $positionReference The positionReference in the widgetMap
      *
      * @return response
      *
-     * @Route("/victoire-dcms/widget/new/{type}/{viewReference}/{slot}/{position}", name="victoire_core_widget_new", defaults={"slot":null}, options={"expose"=true})
+     * @Route("/victoire-dcms/widget/new/{type}/{viewReference}/{slot}/{positionReference}", name="victoire_core_widget_new", defaults={"slot":null}, options={"expose"=true})
      * @Template()
      */
-    public function newAction($type, $viewReference, $slot = null, $position = 0)
+    public function newAction($type, $viewReference, $slot = null, $positionReference = 0)
     {
         try {
             $view = $this->getViewByReferenceId($viewReference);
-            $response = new JsonResponse($this->get('widget_manager')->newWidget($type, $slot, $view, $position));
+            $response = new JsonResponse($this->get('widget_manager')->newWidget($type, $slot, $view, $positionReference));
         } catch (\Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
         }
@@ -80,17 +80,17 @@ class WidgetController extends AwesomeController
 
     /**
      * Create a widget
-     * @param string         $type          The type of the widget we edit
-     * @param integer        $viewReference The view reference where attach the widget
-     * @param string         $slot          The slot where attach the widget
-     * @param string         $position      Position of the widget
-     * @param BusinessEntity $entityName    The business entity name the widget shows on dynamic mode
+     * @param string         $type              The type of the widget we edit
+     * @param integer        $viewReference     The view reference where attach the widget
+     * @param string         $slot              The slot where attach the widget
+     * @param string         $positionReference Position of the widget
+     * @param BusinessEntity $entityName        The business entity name the widget shows on dynamic mode
      *
      * @return response
-     * @Route("/victoire-dcms/widget/create/{type}/{viewReference}/{slot}/{position}/{entityName}", name="victoire_core_widget_create", defaults={"slot":null, "entityName":null, "position": 0, "_format": "json"})
+     * @Route("/victoire-dcms/widget/create/{type}/{viewReference}/{slot}/{positionReference}/{entityName}", name="victoire_core_widget_create", defaults={"slot":null, "entityName":null, "positionReference": 0, "_format": "json"})
      * @Template()
      */
-    public function createAction($type, $viewReference, $slot = null, $position = 0, $entityName = null)
+    public function createAction($type, $viewReference, $slot = null, $positionReference = 0, $entityName = null)
     {
         try {
             //services
@@ -102,7 +102,7 @@ class WidgetController extends AwesomeController
             $this->get('victoire_core.current_view')->setCurrentView($view);
             $widgetManager = $this->getWidgetManager();
 
-            $response = $widgetManager->createWidget($type, $slot, $view, $entityName, $position);
+            $response = $widgetManager->createWidget($type, $slot, $view, $entityName, $positionReference);
 
             if ($isNewPage) {
                 $response = new JsonResponse(array(
@@ -260,6 +260,6 @@ class WidgetController extends AwesomeController
 
     protected function getViewByReferenceId($referenceId)
     {
-        return $this->get('victoire_page.page_helper')->getPageByParameters(array('id' => $referenceId));
+        return $this->get('victoire_page.page_helper')->findPageByParameters(array('id' => $referenceId));
     }
 }

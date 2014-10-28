@@ -15,11 +15,6 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default, priority: -1 }
 
-    view.widgetMap.builder:
-        class: Victoire\Bundle\PageBundle\WidgetMap\WidgetMapBuilder
-        arguments:
-            - "@doctrine.orm.entity_manager"
-
     victoire_page.page_helper:
         class: Victoire\Bundle\PageBundle\Helper\PageHelper
         arguments:
@@ -37,6 +32,7 @@ services:
             - "@session"
             - "@security.context"
             - "@gedmo.urlizer"
+            - "@victoire_widget_map.builder"
     victoire_page.url_helper:
         class: Victoire\Bundle\PageBundle\Helper\UrlHelper
         arguments:

@@ -179,7 +179,7 @@ class WidgetFormBuilder
                     'slot'          => $widget->getSlot(),
                     'type'          => $widget->getType(),
                     'entityName'    => $entityName,
-                    'position'      => $position
+                    'positionReference'      => $position
                 )
             );
         } else {
