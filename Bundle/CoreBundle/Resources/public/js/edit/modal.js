@@ -11,7 +11,7 @@ function openModal(url) {
         url: url
     }).done(function(response){
         //remove the previous instance of the modal
-        $('#vic-modal').remove();
+        $vic('#vic-modal').remove();
         //add the html of the modal
         $vic('body').append(response.html);
         //display the modal

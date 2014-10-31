@@ -30,6 +30,15 @@ class TemplateRepository extends NestedTreeRepository
         return $this;
     }
 
+    public function getPatterns()
+    {
+        $this->qb = $this->_em->createQueryBuilder()
+            ->select('pattern')
+            ->from('Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern', 'pattern');
+
+        return $this;
+    }
+
     /**
      * Run query builder instance
      * @param method        $method        The method to run

@@ -109,6 +109,7 @@ select {
 .vic-help-block {
     color: #999999;
     padding: @vic-helpBlock-horizontalPadding 10px;
+    display: inline-block;
 
     a {
         color: #e74c3c;
@@ -163,6 +164,13 @@ select {
             outline: none;
         }
     }
+}
+
+select[id$="_day"],
+select[id$="_month"],
+select[id$="_year"] {
+    width: auto;
+    margin-left: 15px;
 }
 
 .vic-form-group {
@@ -350,6 +358,28 @@ select {
                     border-color: @customCheckbox-hover-checked-borderColor;
                 }
             }
+        }
+    }
+}
+
+
+// url slug control
+.vic-form-url-slug {
+    .vic-form-control {
+        display: inline-block;
+        width: @vic-form-url-slug-control-width;
+        margin-left: @vic-form-url-slug-control-margin-left;
+    }
+}
+
+
+
+//input media
+.input_media {
+    .preview {
+        img {
+            max-width: 150px;
+            max-height: 100px;
         }
     }
 }

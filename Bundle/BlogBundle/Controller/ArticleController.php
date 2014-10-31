@@ -96,7 +96,7 @@ class ArticleController extends BasePageController
      * @return template
      * @Route("/{id}/delete", name="victoire_core_article_delete")
      * @Template()
-     * @ParamConverter("article", class="VictoirePageBundle:Page")
+     * @ParamConverter("article", class="VictoireBlogBundle:Article")
      */
     public function deleteAction(BasePage $article)
     {

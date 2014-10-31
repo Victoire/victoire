@@ -52,12 +52,13 @@ class LinkExtension extends \Twig_Extension
                 break;
             case 'attachedWidget':
                 //fallback when a widget is deleted cascading the relation as null (widget_id = null)
-                if (!$attachedWidget) {
+                if (!$attachedWidget || !method_exists($attachedWidget->getView(), 'getUrl')) {
                     $url = '#';
                     break;
                 }
+
                 //create base url
-                $url = $this->router->generate('victoire_core_page_show', array('url' => $attachedWidget->getView()->getUrl() ));
+                $url = $this->router->generate('victoire_core_page_show', array('url' => $attachedWidget->getView()->getUrl()));
 
                 if (rtrim($this->request->getRequestUri(), '/') == rtrim($url, '/')) {
                     $url = "";
@@ -88,7 +89,11 @@ class LinkExtension extends \Twig_Extension
 
         if ($linkType == 'attachedWidget') {
             //create base url
-            $url = $this->router->generate('victoire_core_page_show', array('url' => $attachedWidget->getView()->getUrl() ));
+
+            $url = '#';
+            if ($attachedWidget && method_exists($attachedWidget->getView(), 'getUrl')) {
+                $url = $this->router->generate('victoire_core_page_show', array('url' => $attachedWidget->getView()->getUrl() ));
+            }
 
             if (rtrim($this->request->getRequestUri(), '/') == rtrim($url, '/')) {
                 $attr["data-scroll"] = "smooth" ;

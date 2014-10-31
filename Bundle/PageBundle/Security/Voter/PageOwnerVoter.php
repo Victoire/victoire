@@ -45,7 +45,7 @@ class PageOwnerVoter implements VoterInterface
                 $userClass = $this->userClass;
                 if ($token->getUser() instanceof $userClass
                     &&
-                    $token->getUser()->hasRole('ROLE_VICTOIRE')
+                    $token->getUser()->hasRole('ROLE_VICTOIRE') //Use security context here
                     || $page->getAuthor() === $token->getUser()
                     ) {
                     return VoterInterface::ACCESS_GRANTED;

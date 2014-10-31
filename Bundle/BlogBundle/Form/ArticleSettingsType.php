@@ -36,7 +36,7 @@ class ArticleSettingsType extends ArticleType
                 'datetimepicker' => true
             ))
             ->add('image', 'media')
-            ;
+            ->add('author', null);
     }
 
     /**

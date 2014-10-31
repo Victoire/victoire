@@ -5,6 +5,7 @@ namespace Victoire\Bundle\QueryBundle\Helper;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 
@@ -136,9 +137,9 @@ class QueryHelper
         }
         $currentView = $this->currentView;
 
-
         // If the current page is a BEP, we parse all its properties and inject them as query parameters
         if ($currentView() && $currentView() instanceof BusinessEntityPage && null !== $currentEntity = $currentView()->getBusinessEntity()) {
+
             // NEW
             $metadatas = $this->em->getClassMetadata(get_class($currentEntity));
             foreach ($metadatas->fieldMappings as $fieldName => $field) {
@@ -150,6 +151,10 @@ class QueryHelper
                 if (strpos($query, ":" . $fieldName) !== false) {
                     $itemsQueryBuilder->setParameter($fieldName, $metadatas->getFieldValue($currentEntity, $fieldName)->getId());
                 }
+            }
+
+            if (strpos($query, ":currentEntity") !== false) {
+                $itemsQueryBuilder->setParameter('currentEntity', $currentEntity->getId());
             }
 
             $itemsQueryBuilder->andWhere('main_item.visibleOnFront = true');

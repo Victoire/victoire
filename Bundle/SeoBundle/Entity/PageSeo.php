@@ -252,6 +252,7 @@ class PageSeo
      */
     public function setPage(Page $page)
     {
+        $page->setPageSeo($this);
         $this->page = $page;
 
         return $this;

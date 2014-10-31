@@ -64,6 +64,13 @@ class BasePageController extends AwesomeController
             $em->persist($page);
             $em->flush();
 
+            // If the $page is a BusinessEntity (eg. an Article), compute it's url
+            if (null !== $this->container->get('victoire_core.helper.business_entity_helper')->findByEntityInstance($page)) {
+                $page = $this->container
+                     ->get('victoire_business_entity_page.business_entity_page_helper')
+                     ->generateEntityPageFromPattern($page->getTemplate(), $page);
+            }
+
             return array(
                 "success"  => true,
                 "url"      => $this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl()))
