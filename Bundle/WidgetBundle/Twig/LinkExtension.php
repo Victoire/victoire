@@ -99,6 +99,8 @@ class LinkExtension extends \Twig_Extension
         if ($this->request->getRequestUri() == $this->victoireLinkUrl($parameters, false)) {
             if (!isset($attr['class'])) {
                 $attr['class'] = "";
+            } else {
+                $attr['class'] .= " ";
             }
             $attr['class'] .= $currentClass; //avoid to refresh page when not needed
             $attr["data-scroll"] = "smooth" ;
