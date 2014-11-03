@@ -12,10 +12,12 @@ class WidgetMapManager
 {
 
     private $em;
+    private $builder;
 
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, $builder)
     {
         $this->em = $em;
+        $this->builder = $builder;
     }
     /**
      * compute the widget map for view
@@ -126,6 +128,10 @@ class WidgetMapManager
      */
     protected function updateWidgetMapsFromView(View $view, $widgetSlots)
     {
+
+        // $this->builder->build($view);
+        // error_log(var_export($view->getSlots(), true));
+        // error_log(var_export($widgetSlots, true));
         foreach ($widgetSlots as $slotId => $widgetIds) {
             //the reference to the previous widget map parent
             $lastParentWidgetMapId = null;

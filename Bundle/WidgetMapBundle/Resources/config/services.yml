@@ -8,6 +8,7 @@ services:
         class: Victoire\Bundle\WidgetMapBundle\Manager\WidgetMapManager
         arguments:
             - "@doctrine.orm.entity_manager"
+            - "@victoire_widget_map.builder"
 
     victoire_widget_map.helper:
         class: Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper

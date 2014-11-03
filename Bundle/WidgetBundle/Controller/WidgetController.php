@@ -196,7 +196,7 @@ class WidgetController extends AwesomeController
             }
 
             //recompute the order for the widgets
-            $this->get('view.widgetMap.builder')->updateWidgetMapOrder($view, $sortedWidgets);
+            $this->get('victoire_widget_map.manager')->updateWidgetMapOrder($view, $sortedWidgets);
 
             $response = new JsonResponse(array('success' => true));
         } catch (\Exception $ex) {
