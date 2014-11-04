@@ -136,7 +136,7 @@ class CmsExtension extends \Twig_Extension_Core
         $result = "";
 
         if ($this->isRoleVictoireGranted()) {
-            $result .= $this->widgetRenderer->renderActions($slotId, $currentView, $slotOptions, 1 /* Add a new widget in 1st position */);
+            $result .= $this->widgetRenderer->renderActions($slotId, $currentView, $slotOptions, 0);
         }
 
         if (!empty($currentView->getWidgetMap()[$slotId])) {

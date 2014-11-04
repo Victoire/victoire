@@ -72,6 +72,7 @@ class TemplateController extends Controller
             'id'   => $template->getId()
         );
 
+        $this->get('victoire_widget_map.builder')->build($template);
         $this->container->get('victoire_core.current_view')->setCurrentView($template);
 
         //create the response

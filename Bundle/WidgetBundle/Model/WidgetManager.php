@@ -174,21 +174,12 @@ class WidgetManager
             $widgetMapEntry->setWidgetId($widget->getId());
 
             $widgetMap = $this->widgetMapBuilder->build($view, false);
-            $position = $this->widgetMapHelper->generateWidgetPosition($widgetMapEntry, $widget, $widgetMap, $positionReference);
 
-            //get the slot
-            $slot = $view->getSlotById($slotId);
-
-            //test that slot exists
-            if ($slot === null) {
-                $slot = new Slot();
-                $slot->setId($slotId);
-                $view->addSlot($slot);
-            }
-            $slot->addWidgetMap($widgetMapEntry);
-
-            //update the widget map
-            $view->updateWidgetMapBySlots();
+            elve($view->getSlots());
+            $widgetMapEntry = $this->widgetMapHelper->generateWidgetPosition($widgetMapEntry, $widget, $widgetMap, $positionReference);
+            elve($view->getSlots());
+            $this->widgetMapHelper->insertWidgetMapInSlot($slotId, $widgetMapEntry, $view);
+            elve($view->getSlots());
 
             $this->em->persist($view);
             $this->em->flush();
@@ -196,7 +187,7 @@ class WidgetManager
             $widget->setCurrentView($view);
 
             //get the html for the widget
-            $hmltWidget = $this->widgetRenderer->renderContainer($widget, $view, $position);
+            $hmltWidget = $this->widgetRenderer->renderContainer($widget, $view, $widgetMapEntry->getPosition());
 
             $response = array(
                 "success"  => true,
@@ -228,8 +219,6 @@ class WidgetManager
      */
     public function editWidget(Request $request, Widget $widget, View $currentView, $entityName = null)
     {
-        //services
-        $widgetMapManager = $this->widgetMapManager;
 
         $classes = $this->annotationReader->getBusinessClassesForWidget($widget);
 

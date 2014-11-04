@@ -64,15 +64,29 @@ class Slot
      */
     public function addWidgetMap(WidgetMap $widgetMap)
     {
-        //Shift up others widgetsMaps's position
+        $this->widgetMaps[] = $widgetMap;
+    }
+
+    /**
+     * Update the given widgetMap
+     *
+     * @param WidgetMap $widgetMap
+     *
+     * @return this
+     */
+    public function updateWidgetMap($widgetMap)
+    {
+        //parse all widfgetMaps
         foreach ($this->widgetMaps as $key => $_widgetMap) {
-            if ($_widgetMap->getPosition() >= $widgetMap->getPosition()
-                && $_widgetMap->getPositionReference() === $widgetMap->getPositionReference()) {
-                $_widgetMap->setPosition($_widgetMap->getPosition() + 1);
-                $_widgetMap->setPositionReference($_widgetMap->getPosition());
+            //if this the widgetMap we are looking for
+            if ($_widgetMap->getWidgetId() === $widgetMap->getWidgetId()) {
+                $this->widgetMaps[$key] = $widgetMap;
+                //there no need to continue, we found the slot
+                break;
             }
         }
-        $this->widgetMaps[] = $widgetMap;
+
+        return $this;
     }
 
     /**

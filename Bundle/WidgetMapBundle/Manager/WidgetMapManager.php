@@ -128,10 +128,6 @@ class WidgetMapManager
      */
     protected function updateWidgetMapsFromView(View $view, $widgetSlots)
     {
-
-        // $this->builder->build($view);
-        // error_log(var_export($view->getSlots(), true));
-        // error_log(var_export($widgetSlots, true));
         foreach ($widgetSlots as $slotId => $widgetIds) {
             //the reference to the previous widget map parent
             $lastParentWidgetMapId = null;

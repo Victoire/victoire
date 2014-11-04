@@ -152,8 +152,6 @@ class PageHelper extends ViewHelper
             "view" => $page
         ));
 
-        error_log(var_export($page->getWidgetMap(), true));
-
         return $response;
     }
 

@@ -784,6 +784,31 @@ abstract class View
 
         return $slot;
     }
+    /**
+     * Update the given slot
+     *
+     * @param Slot $slot
+     *
+     * @return this
+     */
+    public function updateSlot($slot)
+    {
+        $slot = null;
+
+        $slots = $this->slots;
+
+        //parse all slots
+        foreach ($slots as $key => $_slot) {
+            //if this the slot we are looking for
+            if ($_slot->getId() === $slot->getId()) {
+                $this->slots[$key] = $slot;
+                //there no need to continue, we found the slot
+                break;
+            }
+        }
+
+        return $this;
+    }
 
     /**
      * Add a slot to the slots array
