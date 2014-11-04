@@ -7,6 +7,7 @@
     <parameters>
         <parameter key="twig.controller.exception.class">Victoire\Bundle\TwigBundle\Controller\ExceptionController</parameter>
         <parameter key="security.exception_listener.class">Victoire\Bundle\TwigBundle\Listener\ExceptionListener</parameter>
+        <parameter key="victoire_twig.kernel_request_listener.class">Victoire\Bundle\TwigBundle\Listener\KernelRequestListener</parameter>
     </parameters>
 
     <services>
@@ -17,6 +18,11 @@
             <argument type="service" id="http_kernel"></argument>
             <argument type="service" id="request_stack"></argument>
             <argument type="service" id="router"></argument>
+        </service>
+        <service id="victoire_twig.kernelrequest.listener" class="%victoire_twig.kernel_request_listener.class%">
+            <argument type="service" id="twig" />
+            <argument>%victoire_twig.responsive%</argument>
+            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" />
         </service>
     </services>
 </container>
