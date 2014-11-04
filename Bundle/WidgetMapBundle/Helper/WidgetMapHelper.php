@@ -58,15 +58,10 @@ class WidgetMapHelper
         $slot = $widgetMap[$slotId];
         $referenceWidget = $this->em->getRepository('Victoire\Bundle\WidgetBundle\Entity\Widget')->findOneById($positionReference);
 
+        //If we added a widget just after a parent widget
+        //The position of the new widget is the one just after the parent widget
         if ($referenceWidget && $widget->getView() !== $referenceWidget->getView()) {
             $position = 1;
-
-            foreach ($slot as $key => $_widgetMap) {
-                if ($_widgetMap->getPositionReference() === $positionReference
-                    && $_widgetMap->getPosition() > $position) {
-                    $position = $_widgetMap->getPosition() + 1;
-                }
-            }
             $widgetMapEntry->setPosition($position);
             $widgetMapEntry->setPositionReference($positionReference);
         } else {
@@ -104,18 +99,18 @@ class WidgetMapHelper
         }
 
         // Iterate over slot's widgetMaps
-        foreach ($slot->getWidgetMaps() as $key => $_widgetMap) {
+        // foreach ($slot->getWidgetMaps() as $key => $_widgetMap) {
 
-            // Handle positionReference
-            // If $_widgetMap has same $positionReference (use "==" because we want "null" equals 0)
-            // AND $_widgetMap's $position >= $widgetMapEntry's position
-            // if ($_widgetMap->getPositionReference() == $widgetMapEntry->getPositionReference()
-            if ($_widgetMap->getPosition() >= $widgetMapEntry->getPosition()) {
-                // increment $_widgetMap's position
-                $_widgetMap->setPosition($_widgetMap->getPosition() + 1);
-                $slot->updateWidgetMap($_widgetMap);
-            }
-        }
+        //     // Handle positionReference
+        //     // If $_widgetMap has same $positionReference (use "==" because we want "null" equals 0)
+        //     // AND $_widgetMap's $position >= $widgetMapEntry's position
+        //     // if ($_widgetMap->getPositionReference() == $widgetMapEntry->getPositionReference()
+        //     if ($_widgetMap->getPosition() >= $widgetMapEntry->getPosition()) {
+        //         // increment $_widgetMap's position
+        //         $_widgetMap->setPosition($_widgetMap->getPosition() + 1);
+        //         $slot->updateWidgetMap($_widgetMap);
+        //     }
+        // }
 
         $slot->addWidgetMap($widgetMapEntry);
         //update the widget map

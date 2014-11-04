@@ -175,11 +175,8 @@ class WidgetManager
 
             $widgetMap = $this->widgetMapBuilder->build($view, false);
 
-            elve($view->getSlots());
             $widgetMapEntry = $this->widgetMapHelper->generateWidgetPosition($widgetMapEntry, $widget, $widgetMap, $positionReference);
-            elve($view->getSlots());
             $this->widgetMapHelper->insertWidgetMapInSlot($slotId, $widgetMapEntry, $view);
-            elve($view->getSlots());
 
             $this->em->persist($view);
             $this->em->flush();
