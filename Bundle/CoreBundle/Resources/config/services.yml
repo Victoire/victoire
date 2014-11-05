@@ -163,7 +163,7 @@ services:
         arguments:
             - "@victoire_core.annotation_reader"
         tags:
-            - { name: kernel.cache_warmer, priority: 255}
+            - { name: kernel.cache_warmer, priority: 1}
 
     victoire_core.cache_warmer.view_warmer:
         class: Victoire\Bundle\CoreBundle\CacheWarmer\ViewCacheWarmer
