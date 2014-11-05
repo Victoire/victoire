@@ -254,6 +254,7 @@ trait LinkTrait
      **/
     public function checkLink(ExecutionContextInterface $context)
     {
+        $violation = false;
         // check if the name is actually a fake name
         switch ($this->getLinkType()) {
             case 'page':

@@ -171,7 +171,7 @@ services:
             - @victoire_core.view_helper
             - @victoire_core.view_cache_helper
         tags:
-        - { name: kernel.cache_warmer, priority: 0 }
+        - { name: kernel.cache_warmer, priority: -1 }
 
     victoire_core.entity_proxy.cache_driver:
         class: Victoire\Bundle\CoreBundle\CacheWarmer\EntityProxyCacheDriver
