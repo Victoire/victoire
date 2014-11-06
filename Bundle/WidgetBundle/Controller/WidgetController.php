@@ -187,7 +187,7 @@ class WidgetController extends AwesomeController
         $view = $this->getViewByReferenceId($viewReference);
         try {
             //the sorted order for the widgets
-            $sortedWidgets = $this->getRequest()->request->get('sorted');
+            $sortedWidget = $this->getRequest()->request->get('sorted');
 
             if (!$view->getId()) {
                 //This view does not have an id, so it's a non persisted BEP. To keep this new order, well have to persist it.
@@ -196,7 +196,7 @@ class WidgetController extends AwesomeController
             }
 
             //recompute the order for the widgets
-            $this->get('victoire_widget_map.manager')->updateWidgetMapOrder($view, $sortedWidgets);
+            $this->get('victoire_widget_map.manager')->updateWidgetMapOrder($view, $sortedWidget);
 
             $response = new JsonResponse(array('success' => true));
         } catch (\Exception $ex) {

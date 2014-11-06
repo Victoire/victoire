@@ -127,12 +127,14 @@ function updateWidgetPositions(slotId){
 }
 
 function updatePosition(ui){
-    var sorted = {};
-    $vic(".vic-slot").each(function(key, el){
-        sorted[$vic(el).data('name')] = $vic(el).sortable('toArray', { attribute: 'data-id' });
-    });
+    var sorted = {
+        'parentWidget': ui.item.prev('.vic-widget-container').data('id'),
+        'slot': ui.item.parents('.vic-slot').first().data('name'),
+        'widget': ui.item.data('id')
+    }
 
-    return $vic.post(Routing.generate('victoire_core_widget_update_position', {'viewReference': viewReferenceId}),
+    return $vic.post(
+        Routing.generate('victoire_core_widget_update_position', {'viewReference': viewReferenceId}),
         { 'sorted': sorted }
     );
 }

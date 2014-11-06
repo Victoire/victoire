@@ -30,23 +30,21 @@ class WidgetMapBuilder
     public function build(View $view, $updatePage = true)
     {
         $viewWidgetMaps = null;
-        $parentWidgetMap = array();
-        $finalWidgetMap = array();
+        $widgetMap = array();
 
         //get the template widget map
         $template = $view->getTemplate();
 
         if ($template !== null) {
-            $parentWidgetMap = $this->build($template);
+            $widgetMap = $this->build($template);
         }
 
         // build the view widgetMpas for each its slots
         foreach ($view->getSlots() as $slot) {
-            if (empty($parentWidgetMap[$slot->getId()])) {
-                $parentWidgetMap[$slot->getId()] = array();
+            if (empty($widgetMap[$slot->getId()])) {
+                $widgetMap[$slot->getId()] = array();
             }
 
-            $widgetMap = array();
             if ($slot !== null) {
                 $viewWidgetMaps = $slot->getWidgetMaps();
             }
@@ -63,25 +61,9 @@ class WidgetMapBuilder
                         case WidgetMap::ACTION_CREATE:
                             $position = (int) $viewWidgetMap->getPosition();
                             $reference = (int) $viewWidgetMap->getPositionReference();
-                            //the 0 reference means the top of the view
-                            // if ($reference != 0) {
-                            //     if (isset($parentWidgetMap[$slot->getId()])) {
-                            //         foreach ($parentWidgetMap[$slot->getId()] as $key => $_widgetMap) {
-                            //             if ($_widgetMap->getWidgetId() === $reference) {
-                            //                 $position += $_widgetMap->getPosition();
-                            //             }
-                            //         }
-                            //     }
-                            // }
-
-                            // $position = $this->helper->getNextAvailaiblePosition($position, $widgetMap);
-                            // // $viewWidgetMap->setPosition($position);
-
-                            // $widgetMap[$position - 1] = $viewWidgetMap;
-
                             if ($reference != 0) {
-                                if (isset($parentWidgetMap[$slot->getId()])) {
-                                    foreach ($parentWidgetMap[$slot->getId()] as $key => $_widgetMap) {
+                                if (isset($widgetMap[$slot->getId()])) {
+                                    foreach ($widgetMap[$slot->getId()] as $key => $_widgetMap) {
                                         if ($_widgetMap->getWidgetId() === $reference) {
                                             $position += $_widgetMap->getPosition();
                                         }
@@ -89,29 +71,42 @@ class WidgetMapBuilder
                                 }
                             }
 
-                            array_splice($parentWidgetMap[$slot->getId()], $position - 1, 0, array($viewWidgetMap));
-                            array_map(function ($key, $_widgetMap) {
+                            array_splice($widgetMap[$slot->getId()], $position - 1, 0, array($viewWidgetMap));
+                            array_map(
+                                function ($key, $_widgetMap) {
                                     $_widgetMap->setPosition($key + 1);
-                            },
-                                array_keys($parentWidgetMap[$slot->getId()]),
-                                $parentWidgetMap[$slot->getId()]);
+                                },
+                                array_keys($widgetMap[$slot->getId()]),
+                                $widgetMap[$slot->getId()]
+                            );
 
                             break;
                         case WidgetMap::ACTION_OVERWRITE:
                             //parse the widget maps
-                            foreach ($parentWidgetMap as $index => $wm) {
+                            $position = null;
+                            foreach ($widgetMap[$slot->getId()] as $index => $wm) {
                                 if ($wm->getWidgetId() === $viewWidgetMap->getReplacedWidgetId()) {
                                     //replace the widget map from the list
-                                    $parentWidgetMap[$index] = $viewWidgetMap;
+                                    unset($widgetMap[$slot->getId()][$index]);
+                                    break;
                                 }
                             }
+                            array_splice($widgetMap[$slot->getId()], $viewWidgetMap->getPosition() - 1, 0, array($viewWidgetMap));
+                            array_map(
+                                function ($key, $_widgetMap) {
+                                    $_widgetMap->setPosition($key + 1);
+                                },
+                                array_keys($widgetMap[$slot->getId()]),
+                                $widgetMap[$slot->getId()]
+                            );
+
                             break;
                         case WidgetMap::ACTION_DELETE:
                             //parse the widget maps
-                            foreach ($parentWidgetMap as $index => $wm) {
+                            foreach ($widgetMap[$slot->getId()] as $index => $wm) {
                                 if ($wm->getWidgetId() === $viewWidgetMap->getWidgetId()) {
                                     //remove the widget map from the list
-                                    unset($parentWidgetMap[$index]);
+                                    unset($widgetMap[$slot->getId()][$index]);
                                 }
                             }
                             break;
@@ -120,32 +115,15 @@ class WidgetMapBuilder
                             break;
                     }
                 }
-                ksort($parentWidgetMap[$slot->getId()]);
-                // $finalWidgetMap[$slot->getId()] = $parentWidgetMap;
+                ksort($widgetMap[$slot->getId()]);
             }
 
         }
-        //If the template of current view had widgets
-        // if (null !== $parentWidgetMap) {
-        //     // Iterate over the widgetmap we just built and detect if widgets are at the same position than parent's widgetmaps
-        //     foreach ($finalWidgetMap as $_slotId => $_widgetMaps) {
-        //         foreach ($_widgetMaps as $_position => $_widgetMap) {
-
-        //             if (!empty($parentWidgetMap[$_slotId][$_position])) {
-        //                 //insert the widgetmap at the computed position and move following widget
-        //                 array_splice($parentWidgetMap[$_slotId], $_position, 0, array($_widgetMap));
-        //             } else {
-        //                 $parentWidgetMap[$_slotId][$_position] = $_widgetMap;
-        //             }
-        //         }
-        //     }
-        //     $finalWidgetMap = $parentWidgetMap;
-        // }
         if ($updatePage) {
-            $view->setBuiltWidgetMap($parentWidgetMap);
+            $view->setBuiltWidgetMap($widgetMap);
         }
 
-        return $parentWidgetMap;
+        return $widgetMap;
     }
 
 }

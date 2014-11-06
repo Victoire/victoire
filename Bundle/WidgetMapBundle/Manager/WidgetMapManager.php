@@ -7,17 +7,21 @@ use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\PageBundle\Entity\Slot;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 use Victoire\Bundle\WidgetBundle\Model\Widget;
+use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
+use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 
 class WidgetMapManager
 {
 
     private $em;
     private $builder;
+    private $helper;
 
-    public function __construct(EntityManager $em, $builder)
+    public function __construct(EntityManager $em, WidgetMapBuilder $builder, WidgetMapHelper $helper)
     {
         $this->em = $em;
         $this->builder = $builder;
+        $this->helper = $helper;
     }
     /**
      * compute the widget map for view
@@ -29,30 +33,9 @@ class WidgetMapManager
      *
      * @throws Exception
      */
-    public function updateWidgetMapOrder(View $view, $sortedWidgets)
+    public function updateWidgetMapOrder(View $view, $sortedWidget)
     {
-        $widgetSlots = array();
-
-        //parse the sorted widgets
-        foreach ($sortedWidgets as $slotId => $widgetContainers) {
-
-            //create an array for this slot
-            $widgetSlots[$slotId] = array();
-
-            //parse the list of div ids
-            foreach ($widgetContainers as $widgetId) {
-
-                if ($widgetId === '' || $widgetId === null) {
-                    throw new \Exception('The containerId does not have any numerical characters. Containerid:['.$containerId.']');
-                }
-
-                //add the id of the widget to the slot
-                //cast the id as integer
-                $widgetSlots[$slotId][] = intval($widgetId);
-            }
-        }
-
-        $this->updateWidgetMapsFromView($view, $widgetSlots);
+        $this->updateWidgetMapsFromView($view, $sortedWidget);
         $view->updateWidgetMapBySlots();
 
         //update the view with the new widget map
@@ -126,50 +109,60 @@ class WidgetMapManager
      * @param View  $view
      * @param array $widgetSlots
      */
-    protected function updateWidgetMapsFromView(View $view, $widgetSlots)
+    protected function updateWidgetMapsFromView(View $view, $sortedWidget)
     {
-        foreach ($widgetSlots as $slotId => $widgetIds) {
-            //the reference to the previous widget map parent
-            $lastParentWidgetMapId = null;
+        $parentWidgetId = (int) $sortedWidget['parentWidget'];
+        $slotId = $sortedWidget['slot'];
+        $widgetId = (int) $sortedWidget['widget'];
+        $slot = $view->getSlotById($slotId);
+        $originalWidgetMap = $slot->getWidgetMapByWidgetId($widgetId);
+        // If the moved widget belongs to the current page
 
-            //get the slot of the view
-            $slot = $view->getSlotById($slotId);
-
-            //test that slot exists or create it, it could not exists if no widget has been created inside yet
-            if ($slot === null) {
-                $slot = new Slot();
-                $slot->setId($slotId);
-                $view->addSlot($slot);
-            }
-
-            //init the widget map position counter
-            $positionCounter = 1;
-
-            //parse the widget ids
-            foreach ($widgetIds as $widgetId) {
-                //get the initial widget map of this widget
-                $widgetMap = $slot->getWidgetMapByWidgetId($widgetId);
-
-                //the slot comes from the parent
-                if ($widgetMap === null) {
-                    $lastParentWidgetMapId = $widgetId;
-                    //we reset the widget map position counter
-                    $positionCounter = 1;
-                } else {
-                    //the parent widget map reference
-                    if ($lastParentWidgetMapId === null) {
-                        $reference = 0;
-                    } else {
-                        $reference = $lastParentWidgetMapId;
-                    }
-                    $widgetMap->setPositionReference($reference);
-                    //update the position
-                    $widgetMap->setPosition($positionCounter);
-                    //incremente the position widget map counter
-                    $positionCounter++;
-                }
-            }
+        while (!$originalWidgetMap) {
+            $parentView = $view->getTemplate();
+            $parentSlot = $parentView->getSlotById($slotId);
+            $originalWidgetMap = $parentSlot->getWidgetMapByWidgetId($widgetId);
         }
+
+        // If parentWidgetId is null, the widget was places on first position
+        if ($parentWidgetId == null) {
+            $widgetMapEntry = new WidgetMap();
+            $widgetMapEntry->setPosition(1);
+            $widgetMapEntry->setAction($originalWidgetMap->getAction());
+            $widgetMapEntry->setWidgetId($widgetId);
+            $widgetMapEntry->setPositionReference(0);
+
+        // If the parent of the sorted widget is from the current page
+        } elseif ($parentWidgetMapEntry = $slot->getWidgetMapByWidgetId($parentWidgetId)) {
+            // Place the widget just under the parent widget
+            $widgetMapEntry = new WidgetMap();
+            $widgetMapEntry->setPosition($parentWidgetMapEntry->getPosition() + 1);
+            $widgetMapEntry->setAction($originalWidgetMap->getAction());
+            $widgetMapEntry->setWidgetId($widgetId);
+            $widgetMapEntry->setPositionReference($parentWidgetMapEntry->getPositionReference());
+
+        // If the parent of the sorted widget is not from the current page
+        } else {
+            $widgetMapEntry = new WidgetMap();
+            $widgetMapEntry->setPosition(1);
+            $widgetMapEntry->setAction($originalWidgetMap->getAction());
+            $widgetMapEntry->setPositionReference($parentWidgetId);
+            $widgetMapEntry->setWidgetId($widgetId);
+        }
+        // OK
+        // If this WidgetMapEntry already in the page, remove it
+        if ($oldWidgetMapEntry = $slot->getWidgetMapByWidgetId($widgetId)) {
+            $slot->removeWidgetMap($oldWidgetMapEntry);
+        // Else, the new widgetMap is an overwrite
+        } elseif ($originalWidgetMap->getAction() !== WidgetMap::ACTION_OVERWRITE) {
+            $widgetMapEntry->setAction(WidgetMap::ACTION_OVERWRITE);
+            $widgetMapEntry->setReplacedWidgetId($widgetId);
+        }
+        // Insert the new one in page slot
+        $this->helper->insertWidgetMapInSlot($slotId, $widgetMapEntry, $view);
+
+        return null;
+
     }
 
     /**
