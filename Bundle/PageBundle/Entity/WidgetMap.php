@@ -8,7 +8,7 @@ namespace Victoire\Bundle\PageBundle\Entity;
 class WidgetMap
 {
     const ACTION_CREATE = 'create';
-    const ACTION_REPLACE = 'replace';
+    const ACTION_OVERWRITE = 'overwrite';
     const ACTION_DELETE = 'delete';
 
     //the action
@@ -28,27 +28,6 @@ class WidgetMap
     //the position 0 is the top of the page
     protected $positionReference = null;
 
-    //the id
-    protected $id = null;
-
-    /**
-     * Get the id
-     *
-     * @return string The id
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set the id
-     * @param string $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
     /**
      * Set the action
      *
@@ -59,7 +38,7 @@ class WidgetMap
     public function setAction($action)
     {
         //test validity of the action
-        if ($action !== self::ACTION_CREATE && $action !== self::ACTION_REPLACE && $action !== self::ACTION_DELETE) {
+        if ($action !== self::ACTION_CREATE && $action !== self::ACTION_OVERWRITE && $action !== self::ACTION_DELETE) {
             throw new \Exception('The action of the widget map is not valid. Action: ['.$action.']');
         }
 

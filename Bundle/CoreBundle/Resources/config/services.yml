@@ -80,7 +80,6 @@ services:
             - "@victoire_templating"
             - "@security.context"
             - "@doctrine.orm.entity_manager"
-            - "@view.widgetMap.builder"
             - "@victoire_core.widget_exception_handler"
             - "@victoire_core.current_view"
             - "@victoire_core.view_cache_helper"

@@ -31,6 +31,7 @@ class BasePageController extends AwesomeController
             'viewId' => $viewId,
             'entityId' => $entityId
         ));
+        $this->get('victoire_widget_map.builder')->build($page);
 
         return $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl())));
     }

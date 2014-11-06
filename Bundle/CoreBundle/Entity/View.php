@@ -152,6 +152,8 @@ abstract class View
      */
     protected $widgetMap = array();
 
+    protected $builtWidgetMap = array();
+
     //the slot contains the widget maps entities
     protected $slots = array();
 
@@ -620,8 +622,12 @@ abstract class View
      *
      * @return widgetMap
      */
-    public function getWidgetMap()
+    public function getWidgetMap($built = true)
     {
+        if ($built) {
+            return $this->builtWidgetMap;
+        }
+
         return $this->widgetMap;
     }
 
@@ -633,6 +639,7 @@ abstract class View
     public function postLoad()
     {
         $widgetMap = $this->widgetMap;
+
         //the slots of the page
         $slots = array();
 
@@ -685,6 +692,25 @@ abstract class View
         $this->updateWidgetMapBySlots();
     }
 
+    public function computeCompleteSlot($slotId)
+    {
+        $slot = $this->getSlotById($slotId);
+        if (null !== $template = $this->getTemplate()) {
+            // Is the parent has the slot in it's widgetMaps ?
+            if (null !== $templateSlot = $template->computeCompleteSlot($slotId)) {
+                foreach ($templateSlot->getWidgetMaps() as $widgetMap) {
+                    //
+                    $widgetMap->setAction(WidgetMap::ACTION_OVERWRITE);
+                    $widgetMap->setReplacedWidgetId($widgetMap->getWidgetId());
+                    $slot->addWidgetMap($widgetMap);
+                }
+            }
+        }
+        $this->slots[$slotId] = $slot;
+
+        return $slot;
+
+    }
     /**
      * Convert slots to a widget map
      *
@@ -699,7 +725,6 @@ abstract class View
         //parse the slots
         foreach ($slots as $slot) {
             $slotId = $slot->getId();
-
             $widgetMap[$slotId] = array();
 
             $widgetMaps = $slot->getWidgetMaps();
@@ -758,6 +783,31 @@ abstract class View
         }
 
         return $slot;
+    }
+    /**
+     * Update the given slot
+     *
+     * @param Slot $slot
+     *
+     * @return this
+     */
+    public function updateSlot($slot)
+    {
+        $slot = null;
+
+        $slots = $this->slots;
+
+        //parse all slots
+        foreach ($slots as $key => $_slot) {
+            //if this the slot we are looking for
+            if ($_slot->getId() === $slot->getId()) {
+                $this->slots[$key] = $slot;
+                //there no need to continue, we found the slot
+                break;
+            }
+        }
+
+        return $this;
     }
 
     /**
@@ -820,6 +870,29 @@ abstract class View
     public function setReference($reference)
     {
         $this->reference = $reference;
+
+        return $this;
+    }
+
+    /**
+     * Get builtWidgetMap
+     *
+     * @return string
+     */
+    public function getBuiltWidgetMap()
+    {
+        return $this->builtWidgetMap;
+    }
+
+    /**
+     * Set builtWidgetMap
+     *
+     * @param  string $builtWidgetMap
+     * @return $this
+     */
+    public function setBuiltWidgetMap($builtWidgetMap)
+    {
+        $this->builtWidgetMap = $builtWidgetMap;
 
         return $this;
     }

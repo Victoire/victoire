@@ -12,12 +12,14 @@ use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 use Victoire\Bundle\PageBundle\Entity\Slot;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
-use Victoire\Bundle\PageBundle\WidgetMap\WidgetMapBuilder;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\WidgetBundle\Builder\WidgetFormBuilder;
 use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
 use Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer;
 use Victoire\Bundle\WidgetBundle\Resolver\WidgetContentResolver;
+use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
+use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
+use Victoire\Bundle\WidgetMapBundle\Manager\WidgetMapManager;
 
 /**
 * This manager handles crud operations on a Widget
@@ -30,7 +32,7 @@ class WidgetManager
     protected $em;
     protected $formErrorService; // @av.form_error_service
     protected $request; // @request
-    protected $widgetMapBuilder;
+    protected $widgetMapManager;
     protected $annotationReader;
     protected $victoireTemplating;
     protected $pageHelper;
@@ -46,6 +48,8 @@ class WidgetManager
      * @param EntityManager         $em
      * @param FormErrorService      $formErrorService
      * @param Request               $request
+     * @param WidgetMapManager      $widgetMapManager
+     * @param WidgetMapHelper       $widgetMapHelper
      * @param WidgetMapBuilder      $widgetMapBuilder
      * @param AnnotationReader      $annotationReader
      * @param TemplateMapper        $victoireTemplating
@@ -61,6 +65,8 @@ class WidgetManager
         EntityManager $em,
         FormErrorService $formErrorService,
         Request $request,
+        WidgetMapManager $widgetMapManager,
+        WidgetMapHelper $widgetMapHelper,
         WidgetMapBuilder $widgetMapBuilder,
         AnnotationReader $annotationReader,
         TemplateMapper $victoireTemplating,
@@ -76,6 +82,8 @@ class WidgetManager
         $this->em = $em;
         $this->formErrorService = $formErrorService;
         $this->request = $request;
+        $this->widgetMapManager = $widgetMapManager;
+        $this->widgetMapHelper = $widgetMapHelper;
         $this->widgetMapBuilder = $widgetMapBuilder;
         $this->annotationReader = $annotationReader;
         $this->victoireTemplating = $victoireTemplating;
@@ -112,19 +120,20 @@ class WidgetManager
             )
         );
     }
+
     /**
      * Create a widget
      * @param string  $type
      * @param string  $slotId
      * @param View    $view
      * @param string  $entity
-     * @param integer $position
+     * @param integer $positionReference
      *
      * @return template
      *
      * @throws \Exception
      */
-    public function createWidget($type, $slotId, View $view, $entity, $position)
+    public function createWidget($type, $slotId, View $view, $entity, $positionReference)
     {
         //services
         $formErrorService = $this->formErrorService;
@@ -139,7 +148,7 @@ class WidgetManager
         //create a new widget
         $widget = $this->widgetHelper->newWidgetInstance($type, $view, $slotId);
 
-        $form = $this->widgetFormBuilder->callBuildFormSwitchParameters($widget, $view, $entity, $position);
+        $form = $this->widgetFormBuilder->callBuildFormSwitchParameters($widget, $view, $entity, $positionReference);
 
         $form->handleRequest($request);
         if ($form->isValid()) {
@@ -163,23 +172,11 @@ class WidgetManager
             $widgetMapEntry = new WidgetMap();
             $widgetMapEntry->setAction(WidgetMap::ACTION_CREATE);
             $widgetMapEntry->setWidgetId($widget->getId());
-            $widgetMapEntry->setPosition($position);
 
-            //get the slot
-            $slot = $view->getSlotById($slotId);
+            $widgetMap = $this->widgetMapBuilder->build($view, false);
 
-            //test that slot exists
-            if ($slot === null) {
-                $slot = new Slot();
-                $slot->setId($slotId);
-                $view->addSlot($slot);
-            }
-
-            //update the slot
-            $slot->addWidgetMap($widgetMapEntry);
-
-            //update the widget map
-            $view->updateWidgetMapBySlots();
+            $widgetMapEntry = $this->widgetMapHelper->generateWidgetPosition($widgetMapEntry, $widget, $widgetMap, $positionReference);
+            $this->widgetMapHelper->insertWidgetMapInSlot($slotId, $widgetMapEntry, $view);
 
             $this->em->persist($view);
             $this->em->flush();
@@ -187,7 +184,7 @@ class WidgetManager
             $widget->setCurrentView($view);
 
             //get the html for the widget
-            $hmltWidget = $this->widgetRenderer->renderContainer($widget, $view, $position);
+            $hmltWidget = $this->widgetRenderer->renderContainer($widget, $view, $widgetMapEntry->getPosition());
 
             $response = array(
                 "success"  => true,
@@ -219,8 +216,6 @@ class WidgetManager
      */
     public function editWidget(Request $request, Widget $widget, View $currentView, $entityName = null)
     {
-        //services
-        $widgetMapBuilder = $this->widgetMapBuilder;
 
         $classes = $this->annotationReader->getBusinessClassesForWidget($widget);
 
@@ -236,8 +231,13 @@ class WidgetManager
         //if the form is posted
         if ($requestMethod === 'POST') {
 
-            $widget = $widgetMapBuilder->editWidgetFromView($currentView, $widget);
+            //the widget view
+            $widgetView = $widget->getView();
 
+            //we only copy the widget if the view of the widget is not the current view
+            if ($widgetView !== $currentView) {
+                $widget = $this->overwriteWidget($currentView, $widget);
+            }
             if ($entityName !== null) {
                 $form = $this->widgetFormBuilder->buildForm($widget, $currentView, $entityName, $classes[$entityName]);
             } else {
@@ -303,7 +303,7 @@ class WidgetManager
     public function deleteWidget(Widget $widget, View $view)
     {
         //update the view deleting the widget
-        $this->widgetMapBuilder->deleteWidgetFromView($view, $widget);
+        $this->widgetMapManager->deleteWidgetFromView($view, $widget);
 
         //we update the widget map of the view
         $view->updateWidgetMapBySlots();
@@ -323,6 +323,48 @@ class WidgetManager
             "success"  => true,
             "widgetId" => $widgetId
         );
+    }
+
+    /**
+     * Overwrite the widget for the current view because the widget is not linked to the current view, a copy is created
+     *
+     * @param View   $view
+     * @param Widget $widget
+     *
+     * @return Widget The widget
+     *
+     * @throws \Exception The slot does not exists
+     */
+    public function overwriteWidget(View $view, Widget $widget)
+    {
+        $widgetCopy = clone $widget;
+        $widgetCopy->setView($view);
+
+        //Look for on_to_many relations, if found, duplicate related entities.
+        //It is necessary for 'list' widgets, this algo duplicates and persists list items.
+        $associations = $this->em->getClassMetadata(get_class($widget))->getAssociationMappings();
+        $accessor = PropertyAccess::createPropertyAccessor();
+        foreach ($associations as $name => $values) {
+            if ($values['type'] === ClassMetadataInfo::ONE_TO_MANY) {
+                $relatedEntities = $accessor->getValue($widget, $values['fieldName']);
+                $relatedEntitiesCopies = array();
+                foreach ($relatedEntities as $relatedEntity) {
+                    $relatedEntityCopy = clone $relatedEntity;
+                    $this->em->persist($relatedEntity);
+                    $relatedEntitiesCopies[] = $relatedEntityCopy;
+                }
+                $accessor->setValue($widgetCopy, $name, $relatedEntitiesCopies);
+            }
+        }
+
+        //we have to persist the widget to get its id
+        $this->em->persist($view);
+        $this->em->persist($widgetCopy);
+        $this->em->flush();
+
+        $this->widgetMapManager->overwriteWidgetMap($widgetCopy, $widget, $slot, $view);
+
+        return $widgetCopy;
     }
 
 }

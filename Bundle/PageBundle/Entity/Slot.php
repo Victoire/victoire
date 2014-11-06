@@ -54,8 +54,6 @@ class Slot
      */
     public function getWidgetMaps()
     {
-        $this->reorderWidgetMaps();
-
         return $this->widgetMaps;
     }
 
@@ -66,13 +64,29 @@ class Slot
      */
     public function addWidgetMap(WidgetMap $widgetMap)
     {
-        //Shift up others widgetsMaps's position
+        $this->widgetMaps[] = $widgetMap;
+    }
+
+    /**
+     * Update the given widgetMap
+     *
+     * @param WidgetMap $widgetMap
+     *
+     * @return this
+     */
+    public function updateWidgetMap($widgetMap)
+    {
+        //parse all widfgetMaps
         foreach ($this->widgetMaps as $key => $_widgetMap) {
-            if ($_widgetMap->getPosition() >= $widgetMap->getPosition()) {
-                $_widgetMap->setPosition($_widgetMap->getPosition() + 1);
+            //if this the widgetMap we are looking for
+            if ($_widgetMap->getWidgetId() === $widgetMap->getWidgetId()) {
+                $this->widgetMaps[$key] = $widgetMap;
+                //there no need to continue, we found the slot
+                break;
             }
         }
-        $this->widgetMaps[] = $widgetMap;
+
+        return $this;
     }
 
     /**
@@ -117,27 +131,6 @@ class Slot
                 break;
             }
         }
-        $this->reorderWidgetMaps();
     }
 
-    /**
-     * Redefine the widgetMap order (position)
-     */
-    public function reorderWidgetMaps()
-    {
-        $newWidgetMapsOrder = array(); //manipulation var
-        $widgetMaps = array();         //Final widget Map var (reordered)
-        //check and set the correct order
-        foreach ($this->widgetMaps as $_widgetMap) {
-            $newWidgetMapsOrder[$_widgetMap->getPosition()] = $_widgetMap;
-        }
-
-        //assign a following number for position 1, 2, 3, not 1, 3, 10
-        ksort($newWidgetMapsOrder);
-        foreach (array_values($newWidgetMapsOrder) as $key => $_widgetMap) {
-            $_widgetMap->setPosition($key + 1); //+1 because position start to 1, not 0
-            $widgetMaps[] = $_widgetMap;
-        }
-        $this->setWidgetMaps($widgetMaps);
-    }
 }
