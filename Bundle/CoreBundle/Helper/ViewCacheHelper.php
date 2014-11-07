@@ -100,6 +100,7 @@ class ViewCacheHelper
 
         foreach ($viewReferences as $key => $viewReference) {
             $oldItemNode = $rootNode->xpath("//viewReference[@url='" . $key . "']");
+            elve($oldItemNode);
             unset($oldItemNode[0][0]);
             $itemNode = $rootNode->addChild('viewReference');
             $this->buildItemNode($viewReference, $itemNode);

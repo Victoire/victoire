@@ -34,30 +34,57 @@ class BusinessEntitySubscriber implements EventSubscriber
 
     public function postPersist(LifecycleEventArgs $eventArgs)
     {
-        $this->updateCache($eventArgs->getEntity());
+        $this->updateBusinessEntityPagesAndRegerateCache($eventArgs->getEntity());
     }
     public function postUpdate(LifecycleEventArgs $eventArgs)
     {
-        $this->updateCache($eventArgs->getEntity());
+        $this->updateBusinessEntityPagesAndRegerateCache($eventArgs->getEntity());
     }
 
-    protected function updateCache($entity)
+    protected function updateBusinessEntityPagesAndRegerateCache($entity)
     {
-
+        $em = $this->container->get('doctrine.orm.entity_manager');
         $businessEntities = array();
+        $businessEntitiesArray = array();
         $businessEntities = $this->container->get('victoire_core.helper.business_entity_helper')->getBusinessEntities();
         foreach ($businessEntities as $businessEntity) {
-            $businessEntities[$businessEntity->getClass()] = $businessEntity;
+            $businessEntitiesArray[$businessEntity->getClass()] = $businessEntity;
         }
-
-        if (array_key_exists(get_class($entity), $businessEntities)) {
-            $businessEntity = $businessEntities[get_class($entity)];
+        $entityClass = $em->getClassMetadata(get_class($entity))->getName();
+        if (array_key_exists($entityClass, $businessEntitiesArray)) {
+            $businessEntity = $businessEntitiesArray[$entityClass];
             $em = $this->container->get('doctrine.orm.entity_manager');
             $patterns = $em->getRepository('VictoireBusinessEntityPageBundle:BusinessEntityPagePattern')->findPagePatternByBusinessEntity($businessEntity);
             foreach ($patterns as $pattern) {
-                $this->container->get('victoire_core.view_cache_helper')->update($pattern, $entity);
+                $this->updateCache($pattern, $entity);
+                $this->updateBusinessEntityPages($pattern, $entity, $businessEntity);
             }
         }
+
+        // die(json_encode(array('success'=>false)));
+    }
+
+    protected function updateBusinessEntityPages($pattern, $entity, $businessEntity)
+    {
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $bepRepo = $em->getRepository('Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage');
+        $computedPage = $this->container->get('victoire_business_entity_page.business_entity_page_helper')->generateEntityPageFromPattern($pattern, $entity);
+        // Get the BusinessEntityPage if exists for the given entity
+        $persistedPage = $bepRepo->findPageByBusinessEntityAndPattern($pattern, $entity, $businessEntity);
+        elve($computedPage->getUrl());
+        elve($persistedPage->getUrl());
+        if ($persistedPage && $computedPage->getUrl() !== $persistedPage->getUrl()) {
+            $persistedPage->setUrl($computedPage->getUrl());
+            $em->persist($persistedPage);
+            $em->flush();
+        }
+
+        // call BusinessEntityPageHelper->generateEntityPageFromPattern to compute url with modified entity
+        // If there is diff netween persisted BEP and computed, persist the change
+    }
+    protected function updateCache($pattern, $entity)
+    {
+        $this->container->get('victoire_core.view_cache_helper')->update($pattern, $entity);
     }
 
 }

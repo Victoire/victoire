@@ -56,7 +56,6 @@ class WidgetMapBuilder
                     $viewWidgetMap = clone $viewWidgetMap;
                     //depending on the action
                     $action = $viewWidgetMap->getAction();
-
                     switch ($action) {
                         case WidgetMap::ACTION_CREATE:
                             $position = (int) $viewWidgetMap->getPosition();
@@ -85,7 +84,8 @@ class WidgetMapBuilder
                             //parse the widget maps
                             $position = null;
                             foreach ($widgetMap[$slot->getId()] as $index => $wm) {
-                                if ($wm->getWidgetId() === $viewWidgetMap->getReplacedWidgetId()) {
+                                elve($wm->getWidgetId());
+                                if ($wm->getWidgetId() == $viewWidgetMap->getReplacedWidgetId()) {
                                     //replace the widget map from the list
                                     unset($widgetMap[$slot->getId()][$index]);
                                     break;
