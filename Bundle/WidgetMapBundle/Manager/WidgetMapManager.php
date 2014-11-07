@@ -195,12 +195,21 @@ class WidgetMapManager
             $view->addSlot($slot);
         }
 
+        $originalWidgetMap = $slot->getWidgetMapByWidgetId($replacedWidgetId);
+        while (!$originalWidgetMap) {
+            $parentView = $view->getTemplate();
+            $parentSlot = $parentView->getSlotById($widgetSlotId);
+            $originalWidgetMap = $parentSlot->getWidgetMapByWidgetId($replacedWidgetId);
+        }
+
         //the widget is owned by another view (a parent)
         //so we add a new widget map that indicates we delete this widget
         $widgetMap = new WidgetMap();
         $widgetMap->setAction(WidgetMap::ACTION_OVERWRITE);
         $widgetMap->setReplacedWidgetId($replacedWidgetId);
         $widgetMap->setWidgetId($widgetId);
+        $widgetMap->setPosition($originalWidgetMap->getPosition());
+        $widgetMap->setPositionReference($originalWidgetMap->getPositionReference());
 
         $slot->addWidgetMap($widgetMap);
     }
