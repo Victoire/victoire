@@ -71,8 +71,6 @@ class BusinessEntitySubscriber implements EventSubscriber
         $computedPage = $this->container->get('victoire_business_entity_page.business_entity_page_helper')->generateEntityPageFromPattern($pattern, $entity);
         // Get the BusinessEntityPage if exists for the given entity
         $persistedPage = $bepRepo->findPageByBusinessEntityAndPattern($pattern, $entity, $businessEntity);
-        elve($computedPage->getUrl());
-        elve($persistedPage->getUrl());
         if ($persistedPage && $computedPage->getUrl() !== $persistedPage->getUrl()) {
             $persistedPage->setUrl($computedPage->getUrl());
             $em->persist($persistedPage);

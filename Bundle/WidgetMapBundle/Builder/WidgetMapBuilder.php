@@ -84,7 +84,6 @@ class WidgetMapBuilder
                             //parse the widget maps
                             $position = null;
                             foreach ($widgetMap[$slot->getId()] as $index => $wm) {
-                                elve($wm->getWidgetId());
                                 if ($wm->getWidgetId() == $viewWidgetMap->getReplacedWidgetId()) {
                                     //replace the widget map from the list
                                     unset($widgetMap[$slot->getId()][$index]);
