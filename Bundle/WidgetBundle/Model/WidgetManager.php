@@ -4,8 +4,10 @@ namespace Victoire\Bundle\WidgetBundle\Model;
 
 use AppVentus\Awesome\ShortcutsBundle\Service\FormErrorService;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 use Victoire\Bundle\CoreBundle\Annotations\Reader\AnnotationReader;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
