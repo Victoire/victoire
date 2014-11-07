@@ -364,7 +364,7 @@ class WidgetManager
         $this->em->persist($widgetCopy);
         $this->em->flush();
 
-        $this->widgetMapManager->overwriteWidgetMap($widgetCopy, $widget, $slot, $view);
+        $this->widgetMapManager->overwriteWidgetMap($widgetCopy, $widget, $view);
 
         return $widgetCopy;
     }

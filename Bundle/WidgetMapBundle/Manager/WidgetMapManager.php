@@ -170,7 +170,7 @@ class WidgetMapManager
      *
      * @return void
      **/
-    public function overwriteWidgetMap(Widget $widgetCopy, Widget $widget, Slot $slot, View $view)
+    public function overwriteWidgetMap(Widget $widgetCopy, Widget $widget, View $view)
     {
 
         //the id of the new widget
