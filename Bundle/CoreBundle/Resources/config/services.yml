@@ -169,8 +169,9 @@ services:
         arguments:
             - @victoire_core.view_helper
             - @victoire_core.view_cache_helper
-        tags:
-        - { name: kernel.cache_warmer, priority: -1 }
+        # DISABLED. @TODO, fix this process
+        # tags:
+        # - { name: kernel.cache_warmer, priority: -1 }
 
     victoire_core.entity_proxy.cache_driver:
         class: Victoire\Bundle\CoreBundle\CacheWarmer\EntityProxyCacheDriver
