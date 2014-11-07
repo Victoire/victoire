@@ -56,12 +56,11 @@ class BusinessEntitySubscriber implements EventSubscriber
             $em = $this->container->get('doctrine.orm.entity_manager');
             $patterns = $em->getRepository('VictoireBusinessEntityPageBundle:BusinessEntityPagePattern')->findPagePatternByBusinessEntity($businessEntity);
             foreach ($patterns as $pattern) {
-                $this->updateCache($pattern, $entity);
                 $this->updateBusinessEntityPages($pattern, $entity, $businessEntity);
+                $this->updateCache($pattern, $entity);
             }
         }
 
-        // die(json_encode(array('success'=>false)));
     }
 
     protected function updateBusinessEntityPages($pattern, $entity, $businessEntity)
@@ -71,14 +70,13 @@ class BusinessEntitySubscriber implements EventSubscriber
         $computedPage = $this->container->get('victoire_business_entity_page.business_entity_page_helper')->generateEntityPageFromPattern($pattern, $entity);
         // Get the BusinessEntityPage if exists for the given entity
         $persistedPage = $bepRepo->findPageByBusinessEntityAndPattern($pattern, $entity, $businessEntity);
+        // If there is diff netween persisted BEP and computed, persist the change
         if ($persistedPage && $computedPage->getUrl() !== $persistedPage->getUrl()) {
             $persistedPage->setUrl($computedPage->getUrl());
             $em->persist($persistedPage);
             $em->flush();
         }
 
-        // call BusinessEntityPageHelper->generateEntityPageFromPattern to compute url with modified entity
-        // If there is diff netween persisted BEP and computed, persist the change
     }
     protected function updateCache($pattern, $entity)
     {
