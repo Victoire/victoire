@@ -7,6 +7,10 @@
     "license": "MIT",
     "authors": [
         {
+            "name": "Paul Andrieux",
+            "email": "paul@appventus.com"
+        },
+        {
             "name": "Leny Bernard",
             "email": "leny@appventus.com"
         }
