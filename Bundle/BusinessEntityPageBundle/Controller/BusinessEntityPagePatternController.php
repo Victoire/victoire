@@ -356,7 +356,7 @@ class BusinessEntityPagePatternController extends Controller
         $businessEntityName = $entity->getBusinessEntityName();
 
         $businessEntity = $businessEntityHelper->findById($businessEntityName);
-        $businessProperties = $businessEntity->getBusinessPropertiesByType('businessIdentifier');
+        $businessProperties = $businessEntity->getBusinessPropertiesByType('businessParameter');
 
         $businessProperty = array();
 

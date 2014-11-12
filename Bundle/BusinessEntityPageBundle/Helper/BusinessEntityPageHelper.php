@@ -155,7 +155,7 @@ class BusinessEntityPageHelper
             throw new \Exception(sprintf(
                 'The following identifiers are not defined as well, (%s)
                 you need to add the following lines on your businessEntity properties:
-                <br> <pre>@VIC\BusinessProperty("businessIdentifier")</pre>',
+                <br> <pre>@VIC\BusinessProperty("businessParameter")</pre>',
                 implode($matches[2], ', ')
             ));
         }
@@ -178,7 +178,7 @@ class BusinessEntityPageHelper
     public function getBusinessProperties(BusinessEntity $businessEntity)
     {
         //the business properties usable in a url
-        $businessProperties = $businessEntity->getBusinessPropertiesByType('businessIdentifier');
+        $businessProperties = $businessEntity->getBusinessPropertiesByType('businessParameter');
 
         //the business properties usable in a url
         $seoBusinessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
@@ -212,7 +212,7 @@ class BusinessEntityPageHelper
         $businessEntity = $this->businessEntityHelper->findById($businessEntityId);
 
         //the business properties usable in a url
-        $businessProperties = $businessEntity->getBusinessPropertiesByType('businessIdentifier');
+        $businessProperties = $businessEntity->getBusinessPropertiesByType('businessParameter');
 
         //we parse the words of the url
         foreach ($keywords as $index => $keyword) {

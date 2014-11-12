@@ -28,19 +28,19 @@ class Article extends BasePage
      * @var string
      *
      * @Assert\NotBlank()
-     * @VIC\BusinessProperty("textable")
+     * @VIC\BusinessProperty({"textable", "businessParameter"})
      */
     protected $name;
     /**
      * @var string
      *
-     * @VIC\BusinessProperty("businessIdentifier")
+     * @VIC\BusinessProperty("businessParameter")
      */
     protected $slug;
     /**
      * @var string
      *
-     * @VIC\BusinessProperty("businessIdentifier")
+     * @VIC\BusinessProperty("businessParameter")
      */
     protected $id;
 

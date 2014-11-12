@@ -196,7 +196,7 @@ class ViewHelper
                     //find businessEdietifiers of the current businessEntity
                     $selectableProperties = array('id');
                     foreach ($properties as $property) {
-                        if ($property->getType() === 'businessIdentifier') {
+                        if ($property->getType() === 'businessParameter') {
                             $selectableProperties[] = $property->getEntityProperty();
                         }
                     }
