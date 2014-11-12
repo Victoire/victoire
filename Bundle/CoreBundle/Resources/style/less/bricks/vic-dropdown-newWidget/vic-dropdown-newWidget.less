@@ -29,14 +29,23 @@
         display: block;
         border-width: @vic-newWidget-borderWidth;
         border-style: @vic-newWidget-style;
+        .radius(@vic-newWidget-borderRadius);
         height: @vic-newWidget-height - (@vic-newWidget-borderWidth * 2);
         text-align: center;
         font-family: @victoire-fontFamily !important;
         font-size: @vic-newWidget-fontSize;
-        color: @vic-newWidget-color !important;
+        color: fade(@vic-newWidget-color, 50%) !important;
         overflow: hidden;
         position: relative;
         min-width: 45px;
+        background-color: fade(@vic-newWidget-backgroundColor, 50%);
+
+        &:hover,
+        &:active,
+        &:focus {
+            background-color: @vic-newWidget-backgroundColor;
+            color: @vic-newWidget-color !important;
+        }
 
         span {
             word-break: initial;
