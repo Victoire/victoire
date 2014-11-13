@@ -31,13 +31,18 @@ class AnnotationReader extends AnnotationDriver
      * @param unknown      $paths
      * @param unknown      $widgets
      */
-    public function __construct($reader, $widgetHelper, $paths, $widgets)
+    public function __construct($reader, $widgetHelper, $paths, $widgets, $cacheDir)
     {
         $this->reader = $reader;
         $this->widgetHelper = $widgetHelper;
         $this->widgets = $widgets;
         if ($paths) {
             $this->addPaths(array($paths."/../"));
+        }
+
+        $entityProxy = $cacheDir . "/victoire/Entity/EntityProxy.php";
+        if (file_exists($entityProxy) && !class_exists("Victoire\Bundle\CoreBundle\Entity\EntityProxy")) {
+            include_once $entityProxy;
         }
     }
 
@@ -291,6 +296,8 @@ class AnnotationReader extends AnnotationDriver
                 $classes[] = $className;
             }
         }
+
+        $classes[] = 'Victoire\Bundle\CoreBundle\Entity\EntityProxy';
 
         return $classes;
     }

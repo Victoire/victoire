@@ -129,6 +129,7 @@ services:
             - "@victoire_widget.widget_helper"
             - "%kernel.root_dir%"
             - "%victoire_core.widgets%"
+            - "%kernel.cache_dir%"
         calls:
             - [ setCache, ["@victoire_core.apc.cache"] ]
 
@@ -172,12 +173,6 @@ services:
         # DISABLED. @TODO, fix this process
         # tags:
         # - { name: kernel.cache_warmer, priority: -1 }
-
-    victoire_core.entity_proxy.cache_driver:
-        class: Victoire\Bundle\CoreBundle\CacheWarmer\EntityProxyCacheDriver
-        arguments:
-            - "@annotation_reader"
-            - "%kernel.cache_dir%"
 
     victoire_core.helper.business_entity_helper:
         class: Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper
