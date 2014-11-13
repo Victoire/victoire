@@ -12,6 +12,18 @@ use Victoire\Bundle\CoreBundle\DependencyInjection\Compiler\TraductionCompilerPa
  */
 class VictoireCoreBundle extends Bundle
 {
+    /**
+     * create admin menu, add listeners for generate contextual menu item and dispatch globals item menus
+     */
+    public function boot()
+    {
+
+        $driverChain = $this->container->get('doctrine.orm.entity_manager')->getConfiguration()->getMetadataDriverImpl();
+
+        $proxyDriver = $this->container->get('victoire_core.entity_proxy.cache_driver');
+        $driverChain->addDriver($proxyDriver, 'Victoire\Bundle\CoreBundle\Entity');
+
+    }
 
     /**
      * Build bundle
