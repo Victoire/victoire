@@ -85,11 +85,6 @@ trait WebViewTrait
      */
     public function getSeo()
     {
-        //Create a page seo if it doesn't exist 
-        if (!$this->seo) {
-            $this->setSeo(new PageSeo($this));
-        }
-        
         return $this->seo;
     }
 
@@ -256,7 +251,7 @@ trait WebViewTrait
      *
      * @return boolean The compute url
      */
-    public function getComputeUrl()
+    public function isComputeUrl()
     {
         return $this->computeUrl;
     }

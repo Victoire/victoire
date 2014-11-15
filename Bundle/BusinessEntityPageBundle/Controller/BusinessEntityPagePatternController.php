@@ -43,7 +43,6 @@ class BusinessEntityPagePatternController extends Controller
 
         $form->handleRequest($request);
 
-
         $success = false;
         $completeUrl = null;
 

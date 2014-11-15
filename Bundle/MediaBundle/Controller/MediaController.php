@@ -243,5 +243,4 @@ class MediaController extends Controller
             'folder' => $folder
         );
     }
-
 }
