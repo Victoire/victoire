@@ -3,8 +3,9 @@
 namespace Victoire\Bundle\SeoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Victoire\Bundle\PageBundle\Entity\Page;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Victoire\Bundle\CoreBundle\Entity\View;
+use Victoire\Bundle\PageBundle\Entity\Page;
 
 /**
  * PageSeo
@@ -26,7 +27,7 @@ class PageSeo
     protected $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="\Victoire\Bundle\PageBundle\Entity\Page", mappedBy="seo", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="\Victoire\Bundle\CoreBundle\Entity\View", mappedBy="seo", cascade={"persist"})
      * @ORM\JoinColumn(name="page_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $page;
@@ -246,13 +247,13 @@ class PageSeo
 
     /**
      * Set page
-     * @param Page $page
+     * @param View $page
      *
      * @return PageSeo
      */
-    public function setPage(Page $page)
+    public function setPage(View $page)
     {
-        $page->setPageSeo($this);
+        $page->setSeo($this);
         $this->page = $page;
 
         return $this;
@@ -270,11 +271,11 @@ class PageSeo
 
     /**
      * Set redirectTo
-     * @param Page $redirectTo
+     * @param View $redirectTo
      *
      * @return PageSeo
      */
-    public function setRedirectTo(Page $redirectTo)
+    public function setRedirectTo(View $redirectTo)
     {
         $this->redirectTo = $redirectTo;
 

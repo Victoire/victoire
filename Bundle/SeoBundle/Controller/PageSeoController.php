@@ -30,7 +30,7 @@ class PageSeoController extends Controller
     {
         //services
         $em = $this->getDoctrine()->getManager();
-        
+
         $businessProperties = array();
 
         //if the page is a business entity template page
@@ -43,7 +43,7 @@ class PageSeoController extends Controller
             $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
         }
 
-        $pageSeo = $page->getSeo();
+        $pageSeo = $page->getSeo() ? $page->getSeo() : new PageSeo($page);
 
         //url for the form
         $formUrl = $this->container->get('router')->generate('victoire_seo_pageSeo_settings',
