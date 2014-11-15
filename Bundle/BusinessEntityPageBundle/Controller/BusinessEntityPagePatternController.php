@@ -345,7 +345,7 @@ class BusinessEntityPagePatternController extends Controller
      *
      * @return array of business properties
      */
-    public function getBusinessProperties(BusinessEntityPagePattern $entity)
+    private function getBusinessProperties(BusinessEntityPagePattern $entity)
     {
         $businessEntityHelper = $this->get('victoire_core.helper.business_entity_helper');
         //the name of the business entity link to the business entity page pattern
@@ -373,7 +373,7 @@ class BusinessEntityPagePatternController extends Controller
      * @throws Exception If the business entity was not found
      *
      */
-    public function getBusinessEntity($id)
+    private function getBusinessEntity($id)
     {
         //services
         $businessEntityManager = $this->get('victoire_core.helper.business_entity_helper');
