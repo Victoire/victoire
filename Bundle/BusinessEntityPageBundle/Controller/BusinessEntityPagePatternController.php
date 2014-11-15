@@ -43,30 +43,26 @@ class BusinessEntityPagePatternController extends Controller
 
         $form->handleRequest($request);
 
+
+        $success = false;
+        $completeUrl = null;
+
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
-            //get the url of the pagePattern
-            $pagePatternUrl = $entity->getUrl();
-
             //the shortcuts service
             $shortcuts = $this->get('av.shortcuts');
 
             //redirect to the page of the pagePattern
-            $completeUrl = $shortcuts->generateUrl('victoire_core_page_show', array('url' => $pagePatternUrl));
+            $completeUrl = $shortcuts->generateUrl('victoire_core_page_show', array('url' => $entity->getUrl()));
 
             $success = true;
         } else {
-            //the form error service
-            $formErrorService = $this->container->get('av.form_error_service');
 
             //get the errors as a string
-            $errorMessage = $formErrorService->getRecursiveReadableErrors($form);
-
-            $success = false;
-            $completeUrl = null;
+            $errorMessage = $this->container->get('av.form_error_service')->getRecursiveReadableErrors($form);
         }
 
         return new JsonResponse(array(

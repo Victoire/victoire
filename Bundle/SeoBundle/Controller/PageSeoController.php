@@ -30,10 +30,7 @@ class PageSeoController extends Controller
     {
         //services
         $em = $this->getDoctrine()->getManager();
-        $formFactory = $this->container->get('form.factory');
-        $router = $this->container->get('router');
-        $businessEntityHelper = $this->get('victoire_core.helper.business_entity_helper');
-
+        
         $businessProperties = array();
 
         //if the page is a business entity template page
@@ -41,22 +38,22 @@ class PageSeoController extends Controller
             //get the id of the business entity
             $businessEntityId = $page->getBusinessEntityName();
             //we can use the business entity properties on the seo
-            $businessEntity = $businessEntityHelper->findById($businessEntityId);
+            $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($businessEntityId);
 
             $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
         }
 
-        $pageSeo = $page->getSeo() ? $page->getSeo() : new PageSeo($page);
+        $pageSeo = $page->getSeo();
 
         //url for the form
-        $formUrl = $router->generate('victoire_seo_pageSeo_settings',
+        $formUrl = $this->container->get('router')->generate('victoire_seo_pageSeo_settings',
             array(
                 'id' => $page->getId()
             )
         );
 
         //create the form
-        $form = $formFactory->create('seo_page', $pageSeo,
+        $form = $this->container->get('form.factory')->create('seo_page', $pageSeo,
             array(
                 'action'  => $formUrl,
                 'method' => 'POST'
