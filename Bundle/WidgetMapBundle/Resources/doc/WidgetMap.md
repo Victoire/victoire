@@ -1,3 +1,5 @@
+# WidgetMap
+
 #WidgetMaps
 
 ##Qu'est ce qu'une WidgetMap
@@ -57,9 +59,11 @@ Manager (victoire_widget_map.manager)
 ##Actions
 
 |CREATE|OVERWRITE|DELETE|
-|--|--|--|
+|--    | --      |--    |
+|Cette action est utilisée pour définir un widget comme ayant été créé dans la vue courante.    |Utilisé pour définir que le widget est une surcharge d'un widget hérité depuis le modèle|Utilisé pour cacher un widget appartenant au modèle de page|
 
 ##Position Reference
 
-La positionReference est utilisée dans le cas 
+La positionReference est une notion apparue pour réussir à positionner les widgets d'une vue en composant avec l'ordre de la vue et ceux des modèles parents.
+
 
