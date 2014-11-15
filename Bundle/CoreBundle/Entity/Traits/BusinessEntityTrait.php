@@ -3,6 +3,7 @@ namespace Victoire\Bundle\CoreBundle\Entity\Traits;
 
 /**
  * BusinessEntity trait adds relationship with the entity proxies
+ * @todo Move this into the BusinessEntityBundle
  *
  */
 trait BusinessEntityTrait
