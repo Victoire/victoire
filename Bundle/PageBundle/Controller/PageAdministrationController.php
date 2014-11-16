@@ -5,11 +5,8 @@ namespace Victoire\Bundle\PageBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 
@@ -82,20 +79,6 @@ class PageAdministrationController extends PageController
             // throw new AccessDeniedException("Nop ! you can't do such an action");
         // }
         return new JsonResponse(parent::deleteAction($page));
-    }
-
-    /**
-     * Detach a page from a template
-     * @param BasePage $page
-     *
-     * @return template
-     * @Route("/{id}/detach", name="victoire_core_page_detach")
-     * @ParamConverter("page", class="VictoirePageBundle:BasePage")
-     */
-    public function detachAction(BasePage $page)
-    {
-        throw new \Exception("Not implemented yet");
-
     }
 
     /**

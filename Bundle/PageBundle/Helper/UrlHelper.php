@@ -2,7 +2,6 @@
 namespace Victoire\Bundle\PageBundle\Helper;
 
 use Symfony\Component\HttpFoundation\RequestStack;
-use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\PageBundle\Repository\PageRepository;
 
 /**

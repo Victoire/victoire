@@ -2,7 +2,6 @@
 namespace Victoire\Bundle\CoreBundle\CacheWarmer;
 
 use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmer;
-use Sensio\Bundle\GeneratorBundle\Generator\Generator;
 use Behat\Behat\Exception\Exception;
 
 /**
