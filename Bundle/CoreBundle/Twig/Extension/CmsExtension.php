@@ -202,7 +202,7 @@ class CmsExtension extends \Twig_Extension_Core
     {
         try {
             return hash($algorithm, $value);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             error_log('Please check that the '.$algorithm.' does exists because it failed when trying to run. We are expecting a valid algorithm such as md5 or sha512 etc. ['.$e->getMessage().']');
 
             return $value;

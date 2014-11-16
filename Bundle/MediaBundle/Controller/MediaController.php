@@ -153,7 +153,7 @@ class MediaController extends Controller
         $folder = $em->getRepository('VictoireMediaBundle:Folder')->getFolder($folderId);
 
         $drop = null;
-        if (array_key_exists('files', $_FILES) && $_FILES['files']['error'] == 0 ) {
+        if (isset($this->getRequest()->files) && array_key_exists('files', $this->getRequest()->files)) {
             $drop = $this->getRequest()->files->get('files');
         } else {
             $drop = $this->getRequest()->get('text');
