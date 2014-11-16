@@ -44,9 +44,7 @@
         "appventus/ajax-bundle"               : ">=1.1.0",
         "appventus/alertify-bundle"           : "2.3.*@dev",
         "appventus/shortcuts-bundle"          : "dev-master",
-        "appventus/assetic-injector-bundle"   : "dev-master",
-
-        "victoire/filter-widget"              : "dev-master"
+        "appventus/assetic-injector-bundle"   : "dev-master"
     },
     "require-dev": {
         "behat/behat":                              "2.4.*@dev",
