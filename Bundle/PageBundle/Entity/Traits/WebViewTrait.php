@@ -1,7 +1,6 @@
 <?php
 namespace Victoire\Bundle\PageBundle\Entity\Traits;
 
-use Doctrine\ORM\Mapping as ORM;
 use Victoire\Bundle\CoreBundle\Annotations as VIC;
 use Victoire\Bundle\CoreBundle\Entity\Route;
 use Victoire\Bundle\PageBundle\Entity\PageStatus;
@@ -251,7 +250,7 @@ trait WebViewTrait
      *
      * @return boolean The compute url
      */
-    public function getComputeUrl()
+    public function isComputeUrl()
     {
         return $this->computeUrl;
     }

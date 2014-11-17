@@ -1,7 +1,6 @@
 <?php
 namespace Victoire\Bundle\CoreBundle\CacheWarmer;
 
-use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmer;
 use Sensio\Bundle\GeneratorBundle\Generator\Generator;
 
 /**

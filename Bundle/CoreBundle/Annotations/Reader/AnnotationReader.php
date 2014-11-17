@@ -1,12 +1,13 @@
 <?php
 namespace Victoire\Bundle\CoreBundle\Annotations\Reader;
 
+use Doctrine\Common\Annotations\AnnotationException;
+use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
+use Doctrine\ORM\Mapping\MappingException;
 use Victoire\Bundle\CoreBundle\Annotations\BusinessEntity;
 use Victoire\Bundle\CoreBundle\Annotations\BusinessProperty;
 use Victoire\Bundle\CoreBundle\Annotations\ReceiverProperty;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
-use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
-use Doctrine\Common\Annotations\AnnotationException;
 
 use Doctrine\Common\Cache\Cache,
     Doctrine\Common\Cache\ArrayCache,

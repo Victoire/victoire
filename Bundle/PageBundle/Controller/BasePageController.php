@@ -207,16 +207,4 @@ class BasePageController extends AwesomeController
 
         return $return;
     }
-
-    /**
-     * Get the url helper
-     *
-     * @return UrlHelper
-     */
-    public function getUrlHelper()
-    {
-        $helper = $this->get('victoire_page.url_helper');
-
-        return $helper;
-    }
 }

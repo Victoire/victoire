@@ -3,9 +3,7 @@
 namespace Victoire\Bundle\WidgetMapBundle\Builder;
 
 use Victoire\Bundle\CoreBundle\Entity\View;
-use Victoire\Bundle\PageBundle\Entity\Slot;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
-use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 
 /**

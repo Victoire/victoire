@@ -8,7 +8,6 @@ use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
-use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\QueryBundle\Helper\QueryHelper;
 
 /**
@@ -36,13 +35,13 @@ class BusinessEntityPageHelper
     /**
      * Is the entity allowed for the business entity page
      *
-     * @param BusinessEntityPagePattern $businessEntityPagePattern
+     * @param BusinessEntityPagePattern $bepPattern
      * @param Entity                    $entity
      *
      * @throws \Exception
      * @return boolean
      */
-    public function isEntityAllowed(BusinessEntityPagePattern $businessEntityPagePattern, $entity)
+    public function isEntityAllowed(BusinessEntityPagePattern $bepPattern, $entity)
     {
         $allowed = true;
 
@@ -57,12 +56,12 @@ class BusinessEntityPageHelper
         $entityId = $entity->getId();
 
         //the base of the query
-        $baseQuery = $queryHelper->getQueryBuilder($businessEntityPagePattern);
+        $baseQuery = $queryHelper->getQueryBuilder($bepPattern);
 
         $baseQuery->andWhere('main_item.id = ' . $entityId);
 
         //filter with the query of the page
-        $items =  $queryHelper->buildWithSubQuery($businessEntityPagePattern, $baseQuery)
+        $items =  $queryHelper->buildWithSubQuery($bepPattern, $baseQuery)
             ->getQuery()->getResult();
 
         //only one page can be found because we filter on the
@@ -80,24 +79,24 @@ class BusinessEntityPageHelper
     /**
      * Get the list of entities allowed for the businessEntityPagePattern page
      *
-     * @param BusinessEntityPagePattern $businessEntityPagePattern
+     * @param BusinessEntityPagePattern $bepPattern
      *
      * @throws \Exception
-     * @return boolean
+     * @return array
      */
-    public function getEntitiesAllowed(BusinessEntityPagePattern $businessEntityPagePattern)
+    public function getEntitiesAllowed(BusinessEntityPagePattern $bepPattern)
     {
         $queryHelper = $this->queryHelper;
 
         //the base of the query
-        $baseQuery = $queryHelper->getQueryBuilder($businessEntityPagePattern);
+        $baseQuery = $queryHelper->getQueryBuilder($bepPattern);
 
         // add this fake condition to ensure that there is always a "where" clause.
         // In query mode, usage of "AND" will be always valid instead of "WHERE"
         $baseQuery->andWhere('1 = 1');
 
         //filter with the query of the page
-        $items =  $queryHelper->buildWithSubQuery($businessEntityPagePattern, $baseQuery)
+        $items =  $queryHelper->buildWithSubQuery($bepPattern, $baseQuery)
             ->getQuery()
             ->getResult();
 
@@ -106,21 +105,21 @@ class BusinessEntityPageHelper
 
     /**
      * Generate update the page parameters with the entity
-     * @param BusinessEntityPagePattern $businessEntityPagePattern
+     * @param BusinessEntityPagePattern $bepPattern
      * @param Entity                    $entity
      *
      */
-    public function generateEntityPageFromPattern(BusinessEntityPagePattern $businessEntityPagePattern, $entity)
+    public function generateEntityPageFromPattern(BusinessEntityPagePattern $bepPattern, $entity)
     {
         $page = new BusinessEntityPage();
 
-        $reflect = new \ReflectionClass($businessEntityPagePattern);
+        $reflect = new \ReflectionClass($bepPattern);
         $patternProperties = $reflect->getProperties();
         $accessor = PropertyAccess::createPropertyAccessor();
 
         foreach ($patternProperties as $property) {
             if (!in_array($property->getName(), array('id', 'slug', 'widgetMap', 'slots')) && !$property->isStatic()) {
-                $value = $accessor->getValue($businessEntityPagePattern, $property->getName());
+                $value = $accessor->getValue($bepPattern, $property->getName());
                 $setMethod = 'set'.ucfirst($property->getName());
                 if (method_exists($page, $setMethod)) {
                     $accessor->setValue($page, $property->getName(), $value);
@@ -163,7 +162,7 @@ class BusinessEntityPageHelper
         $entityProxy = new EntityProxy();
         $entityProxy->setEntity($entity);
         $page->setEntityProxy($entityProxy);
-        $page->setTemplate($businessEntityPagePattern);
+        $page->setTemplate($bepPattern);
 
         return $page;
     }
@@ -181,10 +180,10 @@ class BusinessEntityPageHelper
         $businessProperties = $businessEntity->getBusinessPropertiesByType('businessParameter');
 
         //the business properties usable in a url
-        $seoBusinessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
+        $seoBusinessProps = $businessEntity->getBusinessPropertiesByType('seoable');
 
         //the business properties are the identifier and the seoables properties
-        $businessProperties = array_merge($businessProperties, $seoBusinessProperties);
+        $businessProperties = array_merge($businessProperties, $seoBusinessProps);
 
         return $businessProperties;
     }
@@ -192,22 +191,22 @@ class BusinessEntityPageHelper
     /**
      * Get the position of the identifier in the url of a business entity page pattern
      *
-     * @param BusinessEntityPagePattern $businessEntityPagePattern
+     * @param BusinessEntityPagePattern $bepPattern
      *
      * @return integer The position
      */
-    public function getIdentifierPositionInUrl(BusinessEntityPagePattern $businessEntityPagePattern)
+    public function getIdentifierPositionInUrl(BusinessEntityPagePattern $bepPattern)
     {
         $position = null;
 
-        $url = $businessEntityPagePattern->getUrl();
+        $url = $bepPattern->getUrl();
 
         // split on the / character
         $keywords = preg_split("/\//", $url);
         // preg_match_all('/\{\%\s*([^\%\}]*)\s*\%\}|\{\{\s*([^\}\}]*)\s*\}\}/i', $url, $matches);
 
         //the business property link to the page
-        $businessEntityId = $businessEntityPagePattern->getBusinessEntityName();
+        $businessEntityId = $bepPattern->getBusinessEntityName();
 
         $businessEntity = $this->businessEntityHelper->findById($businessEntityId);
 

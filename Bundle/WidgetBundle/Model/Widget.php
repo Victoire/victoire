@@ -159,7 +159,7 @@ abstract class Widget
      */
     public function setView($view)
     {
-        if ($view != null) {
+        if ($view !== null) {
             $view->addWidget($this);
         }
         $this->view = $view;

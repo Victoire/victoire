@@ -16,5 +16,8 @@
         {% block foot_script %}{% endblock %}
         {% block foot_script_additional %}{% endblock %}
         {% block javascript %}{% endblock %}
+        {% if is_granted('ROLE_VICTOIRE') %}
+            {% include 'VictoireCoreBundle::_userVoice.html.twig' %}
+        {% endif %}
     </body>
 </html>

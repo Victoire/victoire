@@ -6,7 +6,7 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Victoire\Bundle\CoreBundle\DataFixtures\Fixtures;
+use Nelmio\Alice\Fixtures;
 
 /**
  * Load fixtures
