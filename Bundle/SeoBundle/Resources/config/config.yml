@@ -1,0 +1,5 @@
+victoire_seo:
+    analytics:
+        google:
+            enabled: false
+            key: UA-xxxxxxxx-x
