@@ -57,5 +57,6 @@ services:
         arguments:
             - @router
             - @request_stack
+            - %victoire_seo.analytics%
         tags:
             - { name: twig.extension }

@@ -12,11 +12,13 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class LinkExtension extends \Twig_Extension
 {
     private $router;
+    private $analytics;
 
-    public function __construct(Router $router, RequestStack $requestStack)
+    public function __construct(Router $router, RequestStack $requestStack, $analytics)
     {
         $this->router = $router;
         $this->request = $requestStack->getCurrentRequest();
+        $this->analytics = $analytics;
     }
     /**
      * Returns a list of functions to add to the existing list.
@@ -34,6 +36,13 @@ class LinkExtension extends \Twig_Extension
 
     public function victoireLinkUrl($parameters, $avoidRefresh = true, $avoidUrl = "#")
     {
+        $linkType =
+        $attachedWidget =
+        $routeParameters =
+        $route =
+        $page =
+        null;
+
         extract($parameters);
         switch ($linkType) {
             case 'page':
@@ -85,6 +94,11 @@ class LinkExtension extends \Twig_Extension
      */
     public function victoireLink($parameters, $label, $attr = array(), $currentClass = 'active', $avoidUrl = "#")
     {
+        $linkType =
+        $analyticsTrackCode =
+        $target =
+        $attachedWidget =
+        null;
         extract($parameters);
 
         if ($linkType == 'attachedWidget') {
@@ -118,6 +132,11 @@ class LinkExtension extends \Twig_Extension
             $attr['target'] = '_parent';
         } else {
             $attr['target'] = $target;
+        }
+
+
+        if (!empty($this->analytics['google']) && $this->analytics['google']['enabled']) {
+            $attr['onclick'] = $analyticsTrackCode;
         }
         $attributes = array();
         foreach ($attr as $key => $_attr) {
