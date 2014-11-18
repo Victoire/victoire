@@ -2,17 +2,17 @@
 
 namespace Victoire\Bundle\MediaBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
-
-use Victoire\Bundle\MediaBundle\Form\BulkUploadType;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Victoire\Bundle\MediaBundle\Entity\Media;
-use Victoire\Bundle\MediaBundle\Helper\BulkUploadHelper;
-use Victoire\Bundle\MediaBundle\Entity\Folder;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Victoire\Bundle\MediaBundle\Entity\Folder;
+use Victoire\Bundle\MediaBundle\Entity\Media;
+use Victoire\Bundle\MediaBundle\Form\BulkUploadType;
+use Victoire\Bundle\MediaBundle\Helper\BulkUploadHelper;
 use Victoire\Bundle\MediaBundle\Helper\MediaManager;
 
 /**
@@ -97,14 +97,13 @@ class MediaController extends Controller
      *
      * @return array|RedirectResponse
      */
-    public function bulkUploadAction($folderId)
+    public function bulkUploadAction(Request $request, $folderId)
     {
         $em = $this->getDoctrine()->getManager();
 
         /* @var Folder $folder */
         $folder = $em->getRepository('VictoireMediaBundle:Folder')->getFolder($folderId);
 
-        $request = $this->getRequest();
         $helper  = new BulkUploadHelper();
 
         $form = $this->createForm(new BulkUploadType('*/*'), $helper);
@@ -154,7 +153,7 @@ class MediaController extends Controller
         $folder = $em->getRepository('VictoireMediaBundle:Folder')->getFolder($folderId);
 
         $drop = null;
-        if (array_key_exists('files', $_FILES) && $_FILES['files']['error'] == 0 ) {
+        if (isset($this->getRequest()->files) && array_key_exists('files', $this->getRequest()->files)) {
             $drop = $this->getRequest()->files->get('files');
         } else {
             $drop = $this->getRequest()->get('text');
@@ -244,5 +243,4 @@ class MediaController extends Controller
             'folder' => $folder
         );
     }
-
 }

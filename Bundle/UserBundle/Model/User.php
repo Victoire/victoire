@@ -4,12 +4,15 @@ namespace Victoire\Bundle\UserBundle\Model;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Victoire User model
  */
 class User extends BaseUser
 {
+    use \Gedmo\Timestampable\Traits\TimestampableEntity;
+    
     /**
     * @ORM\Id
     * @ORM\Column(type="integer")

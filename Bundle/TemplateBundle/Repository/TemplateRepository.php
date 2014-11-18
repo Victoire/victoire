@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\TemplateBundle\Repository;
 
+use Doctrine\ORM\Query;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 
 /**

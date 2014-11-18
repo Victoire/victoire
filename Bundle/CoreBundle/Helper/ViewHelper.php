@@ -10,7 +10,6 @@ use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\BusinessEntityPageBundle\Helper\BusinessEntityPageHelper;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
-use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 
 /**
@@ -21,32 +20,32 @@ class ViewHelper
 {
     protected $parameterConverter = null;
     protected $businessEntityHelper = null;
-    protected $businessEntityPageHelper;
-    protected $em; // @doctrine.orm.entity_manager'
+    protected $bepHelper;
+    protected $entityManager; // @doctrine.orm.entity_manager'
     protected $urlizer; // @gedmo.urlizer
 
     /**
      * Constructor
      * @param BETParameterConverter    $parameterConverter
      * @param BusinessEntityHelper     $businessEntityHelper
-     * @param BusinessEntityPageHelper $businessEntityPageHelper
-     * @param EntityManager            $em
+     * @param BusinessEntityPageHelper $bepHelper
+     * @param EntityManager            $entityManager
      * @param ViewCacheHelper          $viewCacheHelper
      * @param Urlizer                  $urlizer
      */
     public function __construct(
         BETParameterConverter $parameterConverter,
         BusinessEntityHelper $businessEntityHelper,
-        BusinessEntityPageHelper $businessEntityPageHelper,
-        EntityManager $em,
+        BusinessEntityPageHelper $bepHelper,
+        EntityManager $entityManager,
         ViewCacheHelper $viewCacheHelper,
         Urlizer $urlizer
     )
     {
         $this->parameterConverter = $parameterConverter;
         $this->businessEntityHelper = $businessEntityHelper;
-        $this->businessEntityPageHelper = $businessEntityPageHelper;
-        $this->em = $em;
+        $this->businessEntityPageHelper = $bepHelper;
+        $this->em = $entityManager;
         $this->viewCacheHelper = $viewCacheHelper;
         $this->urlizer = $urlizer;
     }
@@ -200,11 +199,12 @@ class ViewHelper
                             $selectableProperties[] = $property->getEntityProperty();
                         }
                     }
-                    // This query retrieve business entity object, without useless properties for performance optimisation
 
-                    $entities = $this->em->createQuery("SELECT partial
-                        e.{" . implode(', ', $selectableProperties) . "}
-                        FROM ". $businessEntity->getClass() ." e")
+                    // This query retrieve business entity object, without useless properties for performance optimisation
+                    $entities = $this->em->getRepository($businessEntity->getClass())
+                        ->createQueryBuilder('e')
+                        ->addSelect('partial e.{'. implode(', ', $selectableProperties). '}')
+                        ->getQuery()
                         ->getResult();
 
                     // for each business entity

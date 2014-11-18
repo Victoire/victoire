@@ -90,7 +90,7 @@ class CmsExtension extends \Twig_Extension_Core
     {
         return array(
             'hash' => new \Twig_Filter_Method($this, 'hash'),
-            'date' => new \Twig_Filter_Method($this, 'twig_vic_date_format_filter'),
+            'date' => new \Twig_Filter_Method($this, 'twigVicDateFormatFilter'),
 
         );
     }
@@ -202,7 +202,7 @@ class CmsExtension extends \Twig_Extension_Core
     {
         try {
             return hash($algorithm, $value);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             error_log('Please check that the '.$algorithm.' does exists because it failed when trying to run. We are expecting a valid algorithm such as md5 or sha512 etc. ['.$e->getMessage().']');
 
             return $value;
@@ -223,7 +223,7 @@ class CmsExtension extends \Twig_Extension_Core
      *
      * @return string The formatted date
      */
-    public function twig_vic_date_format_filter($value, $format = 'F j, Y H:i', $timezone = null)
+    public function twigVicDateFormatFilter($value, $format = 'F j, Y H:i', $timezone = null)
     {
         try {
             $result = twig_date_format_filter($this->twig, $value, $format, $timezone);
