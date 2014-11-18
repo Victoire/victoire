@@ -56,7 +56,8 @@ class ViewHelper
         'bodyId',
         'bodyClass',
         'slug',
-        'url'
+        'url',
+        'locale'
     );
 
     /**
@@ -172,6 +173,7 @@ class ViewHelper
                 $viewsReferences[$page->getUrl()] = array(
                     'id'              => $referenceId,
                     'url'             => $page->getUrl(),
+                    'locale'          => $entity->getLocale(),
                     'viewId'          => $page->getTemplate()->getId(),
                     'entityId'        => $entity->getId(),
                     'entityNamespace' => $this->em->getClassMetadata(get_class($entity))->name,
@@ -183,6 +185,7 @@ class ViewHelper
                 $viewsReferences[$view->getUrl()] = array(
                     'id'              => $referenceId,
                     'url'             => $view->getUrl(),
+                    'locale'          => $view->getLocale(),
                     'viewId'          => $view->getId(),
                     'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
                 );
@@ -219,6 +222,7 @@ class ViewHelper
                             $viewsReferences[$page->getUrl()] = array(
                                 'id'              => $referenceId,
                                 'url'             => $page->getUrl(),
+                                'locale'          => $entity->getLocale(),
                                 'viewId'          => $page->getTemplate()->getId(),
                                 'entityId'        => $entity->getId(),
                                 'entityNamespace' => $this->em->getClassMetadata(get_class($entity))->name,
@@ -235,6 +239,7 @@ class ViewHelper
             $referenceId = $this->viewCacheHelper->getViewCacheId($view);
             $viewsReferences[$view->getUrl()] = array(
                 'id'              => $referenceId,
+                'locale'          => $view->getLocale(),
                 'viewId'          => $view->getId(),
                 'patternId'       => $view->getTemplate()->getId(),
                 'url'             => $view->getUrl(),
@@ -246,6 +251,7 @@ class ViewHelper
             $referenceId = $this->viewCacheHelper->getViewCacheId($view);
             $viewsReferences[$referenceId] = array(
                 'id'              => $referenceId,
+                'locale'          => $view->getLocale(),
                 'viewId'          => $view->getId(),
                 'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
             );
@@ -253,6 +259,7 @@ class ViewHelper
             $referenceId = $this->viewCacheHelper->getViewCacheId($view);
             $viewsReferences[$view->getUrl()] = array(
                 'id'              => $referenceId,
+                'locale'          => $view->getLocale(),
                 'viewId'          => $view->getId(),
                 'url'             => $view->getUrl(),
                 'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,

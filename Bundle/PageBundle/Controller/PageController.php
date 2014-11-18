@@ -4,6 +4,7 @@ namespace Victoire\Bundle\PageBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Victoire\Bundle\PageBundle\Entity\Page;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * undocumented class
@@ -26,7 +27,7 @@ class PageController extends BasePageController
      * @return template
      *
      */
-    public function homepageAction()
+    public function homepageAction(Request $request)
     {
         //services
         $em = $this->getEntityManager();
@@ -35,7 +36,7 @@ class PageController extends BasePageController
         $homepage = $em->getRepository('VictoirePageBundle:Page')->findOneByHomepage(true);
 
         if ($homepage !== null) {
-            return $this->showAction($homepage->getUrl());
+            return $this->showAction($request, $homepage->getUrl());
         } else {
             return $this->redirect($this->generateUrl('victoire_dashboard_default_welcome'));
         }

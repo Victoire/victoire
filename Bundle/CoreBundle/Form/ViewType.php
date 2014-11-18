@@ -15,6 +15,13 @@ use Victoire\Bundle\TemplateBundle\Entity\Template;
 abstract class ViewType extends AbstractType
 {
 
+    protected $applicationLocales;
+
+    public function __construct($applicationLocales)
+    {
+        $this->applicationLocales = $applicationLocales;
+    }
+
     /**
      * define form fields
      * @param FormBuilderInterface $builder
@@ -51,6 +58,14 @@ abstract class ViewType extends AbstractType
                     'required'      => !$view instanceof Template,
                     'query_builder' => $getAllTemplateWithoutMe,
                 ));
+            }
+            if (!$form->has('locale')) {
+
+                $form->add('locale', 'choice', array(
+                    'expanded' => false,
+                    'multiple' => false,
+                    'choices'  => $this->applicationLocales,
+                    'label'    => 'form.view.type.local.label'));
             }
         });
 

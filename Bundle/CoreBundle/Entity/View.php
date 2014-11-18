@@ -162,6 +162,11 @@ abstract class View
     protected $reference;
 
     /**
+     * @ORM\Column(name="locale", type="string")
+     */
+    protected $locale;
+
+    /**
      * contruct
      **/
     public function __construct()
@@ -199,6 +204,25 @@ abstract class View
     public function setId($id)
     {
         $this->id = $id;
+    }
+
+    /**
+     * Get locale
+     *
+     * @return integer
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    /**
+     * Set locale
+     * @param $locale
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
     }
 
     /**

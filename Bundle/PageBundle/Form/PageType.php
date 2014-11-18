@@ -11,6 +11,14 @@ use Victoire\Bundle\PageBundle\Entity\Page;
 class PageType extends BasePageType
 {
 
+    /*
+    * Constructor
+    */
+    public function __construct($applicationLocales) 
+    {
+        parent::__construct($applicationLocales);
+    }
+    
     /**
      * define form fields
      * @param FormBuilderInterface $builder

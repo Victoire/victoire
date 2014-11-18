@@ -18,8 +18,9 @@ class TemplateType extends ViewType
      * constructor
      * @param EntityManager $layouts
      */
-    public function __construct($layouts)
+    public function __construct($layouts, $applicationLocales)
     {
+        parent::__construct($applicationLocales);
         $this->layouts = $layouts;
     }
 

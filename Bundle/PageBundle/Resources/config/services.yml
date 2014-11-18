@@ -68,11 +68,13 @@ services:
 
     victoire_page.page.form.type:
         class: Victoire\Bundle\PageBundle\Form\PageType
+        arguments: ['%application_locales%']
         tags:
             - { name: form.type, alias: victoire_page_type }
 
     victoire_page.page_settings.form.type:
         class: Victoire\Bundle\PageBundle\Form\PageSettingsType
+        arguments: ['%application_locales%']
         tags:
             - { name: form.type, alias: victoire_page_settings_type }
 
