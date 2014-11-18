@@ -134,9 +134,9 @@ class PageHelper extends ViewHelper
      *
      * @return Response
      */
-    public function renderPageByUrl($url)
+    public function renderPageByUrl($url, $locale)
     {
-        $page = $this->findPageByParameters(array('url' => $url));
+        $page = $this->findPageByParameters(array('url' => $url, 'locale' => $locale));
 
         $event = new \Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent($page);
 

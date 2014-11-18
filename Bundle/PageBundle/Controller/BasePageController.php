@@ -17,9 +17,9 @@ use Victoire\Bundle\PageBundle\Helper\UrlHelper;
 class BasePageController extends AwesomeController
 {
 
-    public function showAction($url)
+    public function showAction(Request $request, $url)
     {
-        $response = $this->container->get('victoire_page.page_helper')->renderPageByUrl($url);
+        $response = $this->container->get('victoire_page.page_helper')->renderPageByUrl($url, $request->getLocale());
 
         //throw an exception is the page is not valid
         return $response;

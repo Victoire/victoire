@@ -53,6 +53,10 @@ class ViewCacheHelper
         if (array_key_exists('entityNamespace', $viewReference)) {
             $itemNode->addAttribute('entityNamespace', $viewReference['entityNamespace']);
         }
+        if (array_key_exists('locale', $viewReference)) {
+            $itemNode->addAttribute('locale', $viewReference['locale']);
+        }
+
     }
     /**
      * Write given views references in a xml file
@@ -118,6 +122,7 @@ class ViewCacheHelper
 
         if ($xmlReference = $this->readCache()->xpath("//viewReference[" . implode(' and ', $arguments) . "]")) {
             $viewReference['id']              = $xmlReference[0]->getAttributeAsPhp('id');
+            $viewReference['locale']          = $xmlReference[0]->getAttributeAsPhp('locale'); 
             $viewReference['entityId']        = $xmlReference[0]->getAttributeAsPhp('entityId');
             $viewReference['entityNamespace'] = $xmlReference[0]->getAttributeAsPhp('entityNamespace');
             $viewReference['url']             = $xmlReference[0]->getAttributeAsPhp('url');
