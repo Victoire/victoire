@@ -59,6 +59,12 @@ trait LinkTrait
      * @ORM\Column(name="link_type", type="string", length=255)
      */
     protected $linkType;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="analytics_track_code", type="text")
+     */
+    protected $analyticsTrackCode;
 
     protected $linkParameters;
 
@@ -281,5 +287,29 @@ trait LinkTrait
                 null
             );
         }
+    }
+
+    /**
+     * Get analyticsTrackCode
+     *
+     * @return string
+     */
+    public function getAnalyticsTrackCode()
+    {
+        return $this->analyticsTrackCode;
+    }
+
+    /**
+     * Set analyticsTrackCode
+     *
+     * @param string $analyticsTrackCode
+     *
+     * @return $this
+     */
+    public function setAnalyticsTrackCode($analyticsTrackCode)
+    {
+        $this->analyticsTrackCode = $analyticsTrackCode;
+
+        return $this;
     }
 }
