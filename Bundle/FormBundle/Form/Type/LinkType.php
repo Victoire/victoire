@@ -24,6 +24,13 @@ use Victoire\Widget\RenderBundle\DataTransformer\JsonToArrayTransformer;
 class LinkType extends AbstractType
 {
 
+    private $analytics;
+
+    public function __construct($analytics)
+    {
+        $this->analytics = $analytics;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -91,8 +98,14 @@ class LinkType extends AbstractType
                 'ajax-modal' => 'form.link_type.choice.target.ajax-modal',
             ),
             'vic_vic_widget_form_group_attr' => array('class' => 'vic-form-group page-type url-type route-type attachedWidget-type'),
-        ))
-        ;
+        ));
+
+        if (!empty($this->analytics['google']) && $this->analytics['google']['enabled']) {
+            $builder->add('analytics_track_code', array(
+                'label'    => 'form.link_type.analytics_track_code.label',
+                'required' => false,
+            ));
+        }
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
