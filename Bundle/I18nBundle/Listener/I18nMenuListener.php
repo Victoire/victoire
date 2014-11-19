@@ -43,7 +43,7 @@ class I18nMenuListener extends PageMenuListener
                 'routeParameters' => array('id' => $page->getId())
             )
         )->setLinkAttribute('data-toggle', 'vic-modal');
-        $mainItem->addChild('menu.page.i18n',
+        $mainItem->addChild('menu.page.i18n.addTranslation',
             array(
                 'route' => 'victoire_i18n_page_translation',
                 'routeParameters' => array('pageId' => $page->getId())
