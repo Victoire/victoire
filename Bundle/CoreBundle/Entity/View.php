@@ -166,6 +166,11 @@ abstract class View
      */
     protected $locale;
 
+     /**
+     * @ORM\Column(name="translation_source", type="int", nullable=true)
+     */
+    protected $translationSource;
+
     /**
      * contruct
      **/
@@ -209,7 +214,7 @@ abstract class View
     /**
      * Get locale
      *
-     * @return integer
+     * @return string
      */
     public function getLocale()
     {
@@ -223,6 +228,25 @@ abstract class View
     public function setLocale($locale)
     {
         $this->locale = $locale;
+    }
+
+    /**
+     * Get translationSource
+     *
+     * @return integer
+     */
+    public function getTranslationSource()
+    {
+        return $this->translationSource;
+    }
+
+    /**
+     * Set translationSource
+     * @param $translationSource
+     */
+    public function setTranslationSource($translationSource)
+    {
+        $this->translationSource = $translationSource;
     }
 
     /**
