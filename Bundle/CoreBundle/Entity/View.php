@@ -167,7 +167,7 @@ abstract class View
     protected $locale;
 
      /**
-     * @ORM\Column(name="translation_source", type="int", nullable=true)
+     * @ORM\Column(name="translation_source", type="integer", nullable=true)
      */
     protected $translationSource;
 
@@ -180,6 +180,7 @@ abstract class View
         $this->updatedAt = new \DateTime();
         $this->widgets = new ArrayCollection();
         $this->widgetMap = array();
+        $this->translationSource = null;
     }
 
     /**

@@ -22,6 +22,9 @@ class I18nController extends AwesomeController
      */
     public function addTranslationAction(Request $request, BasePage $page)
     {
+        $originalPageId = $page->getId();
+        $page = clone $page;
+        $page->setTranslationSource($originalPageId);
         $em = $this->getEntityManager();
 
         $response = array();
@@ -75,7 +78,7 @@ class I18nController extends AwesomeController
             $response = array(
                 'success' => false,
                 'html' => $this->container->get('victoire_templating')->render(
-                    'VictoireI18nBundle:I18n:addtranslation.html.twig',
+                    'VictoirePageBundle:Page:settings.html.twig',
                     array(
                         'page' => $page,
                         'form' => $form->createView(),

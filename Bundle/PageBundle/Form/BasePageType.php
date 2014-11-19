@@ -29,7 +29,6 @@ abstract class BasePageType extends ViewType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             $view = $event->getData();
             $form = $event->getForm();

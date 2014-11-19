@@ -72,7 +72,8 @@ abstract class ViewType extends AbstractType
         $builder
             ->add('name', null, array(
                 'label' => 'form.view.type.name.label'
-            ));
+            ))
+            ->add('translationSource', 'hidden');
     }
 
 }
