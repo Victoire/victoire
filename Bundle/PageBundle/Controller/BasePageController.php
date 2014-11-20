@@ -98,8 +98,9 @@ class BasePageController extends AwesomeController
      *
      * @return template
      */
-    protected function settingsAction(Request $request, BasePage $page)
+    protected function settingsAction(Request $request, BasePage $page, $newTranslation = false)
     {
+        $originalPageId = $newTranslation ? $page->getId(): null;
         $em = $this->getEntityManager();
 
         $response = array();
@@ -132,7 +133,8 @@ class BasePageController extends AwesomeController
 
             //the form should be valid
             if ($form->isValid()) {
-                $em->persist($page);
+                $toPersist = $newTranslation ? clone $page: $page;
+                $em->persist($toPersist);
                 $em->flush();
 
                 $response =  array(
@@ -155,6 +157,8 @@ class BasePageController extends AwesomeController
                 'html' => $this->container->get('victoire_templating')->render(
                     $this->getBaseTemplatePath() . ':settings.html.twig',
                     array(
+                        'newTranslation' => $newTranslation,
+                        'originalPageId' => $originalPageId,
                         'page' => $page,
                         'form' => $form->createView(),
                         'businessProperties' => $businessProperties

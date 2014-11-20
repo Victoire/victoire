@@ -79,13 +79,13 @@ class BlogController extends BasePageController
      * @param Page    $blog
      *
      * @return template
-     * @Route("/{id}/settings", name="victoire_blog_settings")
+     * @Route("/{id}/{newTranslation}/settings", name="victoire_blog_settings", defaults={"newTranslation"=false})
      * @Template()
      * @ParamConverter("blog", class="VictoirePageBundle:BasePage")
      */
-    public function settingsAction(Request $request, BasePage $blog)
+    public function settingsAction(Request $request, BasePage $blog, $newTranslation = false)
     {
-        return new JsonResponse(parent::settingsAction($request, $blog));
+        return new JsonResponse(parent::settingsAction($request, $blog, $newTranslation));
     }
 
     /**

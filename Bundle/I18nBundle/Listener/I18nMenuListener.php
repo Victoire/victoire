@@ -34,7 +34,7 @@ class I18nMenuListener extends PageMenuListener
         $mainItem->addChild('menu.page.settings',
             array(
                 'route' => 'victoire_core_page_settings',
-                'routeParameters' => array('id' => $page->getId())
+                'routeParameters' => array('id' => $page->getId(), 'newTranslation' => false)
             )
         )->setLinkAttribute('data-toggle', 'vic-modal');
         $mainItem->addChild('menu.page.seoSettings',
@@ -45,8 +45,8 @@ class I18nMenuListener extends PageMenuListener
         )->setLinkAttribute('data-toggle', 'vic-modal');
         $mainItem->addChild('menu.page.i18n.addTranslation',
             array(
-                'route' => 'victoire_i18n_page_translation',
-                'routeParameters' => array('page' => $page->getId())
+                'route' => 'victoire_core_page_settings',
+                'routeParameters' => array('id' => $page->getId(), 'newTranslation' => true)
             )
         )->setLinkAttribute('data-toggle', 'vic-modal');
 
