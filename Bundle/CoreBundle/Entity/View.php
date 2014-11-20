@@ -345,9 +345,9 @@ abstract class View
     /**
      * Set parent
      *
-     * @param parent $parent
+     * @param \Victoire\Bundle\PageBundle\Entity\BasePage $parent
      */
-    public function setParent($parent)
+    public function setParent(\Victoire\Bundle\PageBundle\Entity\BasePage $parent = null)
     {
         $this->parent = $parent;
     }
@@ -355,7 +355,7 @@ abstract class View
     /**
      * Get parent
      *
-     * @return parent
+     * @return \Victoire\Bundle\PageBundle\Entity\BasePage parent
      */
     public function getParent()
     {
@@ -944,5 +944,19 @@ abstract class View
         $this->builtWidgetMap = $builtWidgetMap;
 
         return $this;
+    }
+
+    public function __clone() {
+        if ($this->id) {
+            $this->id = null;            
+            if ($this->widgets instanceof PersistentCollection) {
+                $this->widgets = clone $this->widgets;
+                $this->widgets->setOwner($this, $this->widgets->getMapping());
+            }
+            if ($this->parent instanceof PersistentCollection) {
+                $this->parent = clone $this->parent;
+                $this->parent->setOwner($this, $this->parent->getMapping());
+            }
+        }
     }
 }

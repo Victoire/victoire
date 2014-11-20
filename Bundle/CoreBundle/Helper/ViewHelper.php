@@ -170,7 +170,7 @@ class ViewHelper
                 $page = $this->businessEntityPageHelper->generateEntityPageFromPattern($currentPattern, $entity);
                 $this->updatePageParametersByEntity($page, $entity);
                 $referenceId = $this->viewCacheHelper->getViewCacheId($view, $entity);
-                $viewsReferences[$page->getUrl()] = array(
+                $viewsReferences[$page->getUrl().$view->getLocale()] = array(
                     'id'              => $referenceId,
                     'url'             => $page->getUrl(),
                     'locale'          => $entity->getLocale(),
@@ -182,7 +182,7 @@ class ViewHelper
             } else {
 
                 $referenceId = $this->viewCacheHelper->getViewCacheId($view);
-                $viewsReferences[$view->getUrl()] = array(
+                $viewsReferences[$view->getUrl().$view->getLocale()] = array(
                     'id'              => $referenceId,
                     'url'             => $view->getUrl(),
                     'locale'          => $view->getLocale(),
@@ -219,7 +219,7 @@ class ViewHelper
                             $page = $this->businessEntityPageHelper->generateEntityPageFromPattern($currentPattern, $entity);
                             $this->updatePageParametersByEntity($page, $entity);
                             $referenceId = $this->viewCacheHelper->getViewCacheId($view, $entity);
-                            $viewsReferences[$page->getUrl()] = array(
+                            $viewsReferences[$page->getUrl().$view->getLocale()] = array(
                                 'id'              => $referenceId,
                                 'url'             => $page->getUrl(),
                                 'locale'          => $entity->getLocale(),
@@ -237,7 +237,7 @@ class ViewHelper
 
         } elseif ($view instanceof BusinessEntityPage) {
             $referenceId = $this->viewCacheHelper->getViewCacheId($view);
-            $viewsReferences[$view->getUrl()] = array(
+            $viewsReferences[$view->getUrl().$view->getLocale()] = array(
                 'id'              => $referenceId,
                 'locale'          => $view->getLocale(),
                 'viewId'          => $view->getId(),
@@ -249,7 +249,7 @@ class ViewHelper
             );
         } elseif ($view instanceof Template) {
             $referenceId = $this->viewCacheHelper->getViewCacheId($view);
-            $viewsReferences[$referenceId] = array(
+            $viewsReferences[$referenceId.$view->getLocale()] = array(
                 'id'              => $referenceId,
                 'locale'          => $view->getLocale(),
                 'viewId'          => $view->getId(),
@@ -257,7 +257,7 @@ class ViewHelper
             );
         } else {
             $referenceId = $this->viewCacheHelper->getViewCacheId($view);
-            $viewsReferences[$view->getUrl()] = array(
+            $viewsReferences[$view->getUrl().$view->getLocale()] = array(
                 'id'              => $referenceId,
                 'locale'          => $view->getLocale(),
                 'viewId'          => $view->getId(),

@@ -5,9 +5,9 @@ namespace Victoire\Bundle\I18nBundle\Controller;
 use AppVentus\Awesome\ShortcutsBundle\Controller\AwesomeController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 
@@ -23,14 +23,12 @@ class I18nController extends AwesomeController
     public function addTranslationAction(Request $request, BasePage $page)
     {
         $originalPageId = $page->getId();
-        $page = clone $page;
-        $page->setTranslationSource($originalPageId);
         $em = $this->getEntityManager();
 
         $response = array();
 
         $formFactory = $this->container->get('form.factory');
-        $form = $formFactory->create('victoire_page_settings_type', $page);
+        $form = $formFactory->create('victoire_page_settings_type',  $page);
 
         //services
         $businessEntityHelper = $this->get('victoire_core.helper.business_entity_helper');
@@ -57,7 +55,9 @@ class I18nController extends AwesomeController
 
             //the form should be valid
             if ($form->isValid()) {
-                $em->persist($page);
+
+                $translatedPage = clone $page;
+                $em->persist($translatedPage);
                 $em->flush();
 
                 $response =  array(
@@ -78,8 +78,9 @@ class I18nController extends AwesomeController
             $response = array(
                 'success' => false,
                 'html' => $this->container->get('victoire_templating')->render(
-                    'VictoirePageBundle:Page:settings.html.twig',
+                    'VictoireI18nBundle:I18n:addtranslation.html.twig',
                     array(
+                        'id' => $originalPageId,
                         'page' => $page,
                         'form' => $form->createView(),
                         'businessProperties' => $businessProperties
