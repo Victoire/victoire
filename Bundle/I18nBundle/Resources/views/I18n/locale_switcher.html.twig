@@ -1,0 +1,11 @@
+<div class="btn-group">
+    <button class="btn flag-lang"><span class="{{ app.session.get('victoire_locale') }}"></span></button>
+    <button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
+        <ul class="dropdown-menu">
+        {% for locale in locales %}
+            {% if  locale != app.session.get('victoire_locale') %}
+                <li><a href="{{ path(victoire_i18n_switch_locale, { 'targetLocale': locale }) }}" title="{{ locale }}" class="flag-{{ locale}}" >{{ locale }}</a></li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>

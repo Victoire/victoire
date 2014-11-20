@@ -19,7 +19,7 @@ class BasePageController extends AwesomeController
 
     public function showAction(Request $request, $url)
     {
-        $response = $this->container->get('victoire_page.page_helper')->renderPageByUrl($url, $request->getLocale());
+        $response = $this->container->get('victoire_page.page_helper')->renderPageByUrl($url, $request->getSession()->get('victoire_locale'));
 
         //throw an exception is the page is not valid
         return $response;

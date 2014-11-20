@@ -92,7 +92,7 @@ class ArticleController extends BasePageController
 
         $page = $this->container->get('victoire_page.page_helper')->findPageByParameters(array(
             'viewId' => $pattern->getId(),
-            'locale' => $request->getLocale(),
+            'locale' => $request->getSession()->get('victoire_locale'),
             'entityId' => $article->getId()
         ));
         $response['url'] = $this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl()));

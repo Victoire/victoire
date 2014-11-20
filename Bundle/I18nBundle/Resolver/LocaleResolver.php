@@ -41,19 +41,22 @@ class LocaleResolver
             return;
         } else {
         	$request = $event->getRequest();
+        	$victoireLocale = $request->getSession()->get('victoire_locale');
+        	if (!isset($victoireLocale)) {
 
-        	switch ($this->localePattern) {
-        		case self::PATTERNDOMAIN : 
-        		    $locale = $this->resolveFromDomain($request);
-        		    $request->setLocale($locale);
-        	        break;
+	        	switch ($this->localePattern) {
+	        		case self::PATTERNDOMAIN : 
+	        		    $locale = $this->resolveFromDomain($request);
+	        		    $request->getSession()->set('victoire_locale', $locale);
+	        	        break;
 
-        	     case self::PATTERNPARAMETERINURL : 
-        		    $locale = $this->resolveAsParameterInUrl($request);
-        		    $request->setLocale($locale);
-        	        break;
-        	    default : 
-        	        break;    
+	        	     case self::PATTERNPARAMETERINURL : 
+	        		    $locale = $this->resolveAsParameterInUrl($request);
+	        		    $request->getSession()->set('victoire_locale', $locale);
+	        	        break;
+	        	    default : 
+	        	        break; 
+        	    }   
         	}
         }
     }
@@ -79,7 +82,6 @@ class LocaleResolver
 	public function resolveAsParameterInUrl(Request $request) 
 	{
 		$uri = $request->getRequestUri();
-		$initialLocale = $request->getLocale();
 		if(strstr($uri, '/app_dev.php/')) {
 			$uri = str_replace('/app_dev.php/', '', $uri);
 		} else {
@@ -90,8 +92,6 @@ class LocaleResolver
 		if (!empty($domain)) {
 		   $domain = substr($uri, 0, $endLocale);
 		   return $this->localePatternTable[$domain];
-		} else if (isset($initialLocale)) {
-			return $request->getLocale(); 
 		} else {
 			return $this->defaultLocale;
 		}
