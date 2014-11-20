@@ -945,18 +945,4 @@ abstract class View
 
         return $this;
     }
-
-    public function __clone() {
-        if ($this->id) {
-            $this->id = null;            
-            if ($this->widgets instanceof PersistentCollection) {
-                $this->widgets = clone $this->widgets;
-                $this->widgets->setOwner($this, $this->widgets->getMapping());
-            }
-            if ($this->parent instanceof PersistentCollection) {
-                $this->parent = clone $this->parent;
-                $this->parent->setOwner($this, $this->parent->getMapping());
-            }
-        }
-    }
 }

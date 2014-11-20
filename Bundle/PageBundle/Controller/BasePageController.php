@@ -98,7 +98,7 @@ class BasePageController extends AwesomeController
      *
      * @return template
      */
-    protected function settingsAction(Request $request, BasePage $page, $newTranslation = false)
+    protected function settingsAction(Request $request, BasePage $page, $newTranslation= false)
     {
         $originalPageId = $newTranslation ? $page->getId(): null;
         $em = $this->getEntityManager();
@@ -133,7 +133,21 @@ class BasePageController extends AwesomeController
 
             //the form should be valid
             if ($form->isValid()) {
-                $toPersist = $newTranslation ? clone $page: $page;
+                $toPersist = $page;
+                if ($newTranslation) {
+                    $toPersist = clone $page;
+                    if ($toPersist->getId()) {
+                        $toPersist->setId(null);            
+                        if ($toPersist->getWidgets() instanceof PersistentCollection) {
+                            $toPersist->setWidgets(clone $toPersist->getWidgets());
+                            foreach ($toPersist->getWidgets() as $widget) {
+                                $widget->setId(null);
+                            }
+                            $toPersist->widgets->setOwner($toPersist, $toPersist->widgets->getMapping());
+                        }
+                    }
+                    $em->refresh($page);
+                } 
                 $em->persist($toPersist);
                 $em->flush();
 
