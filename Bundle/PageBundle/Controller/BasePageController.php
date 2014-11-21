@@ -133,13 +133,12 @@ class BasePageController extends AwesomeController
 
             //the form should be valid
             if ($form->isValid()) {
-                $toPersist = $page;
-                if ($newTranslation) {
+                if (true == $newTranslation) {
                     $this->get('victoire_page.page_helper')->cloneView($page);
-                    $em->refresh($page);
-                } 
-                $em->persist($page);
-                $em->flush();
+                } else {
+                    $em->persist($page);
+                    $em->flush();
+                }
 
                 $response =  array(
                     'success' => true,

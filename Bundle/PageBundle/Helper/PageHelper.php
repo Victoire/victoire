@@ -340,20 +340,21 @@ class PageHelper extends ViewHelper
         $originalWidgetMap = $view->getWidgetMap();
 
         $clonedView->setId(null);            
-        if ($clonedView->getWidgets() instanceof PersistentCollection) {
-            $clonedView->setWidgets(clone $clonedView->getWidgets());
-            foreach ($clonedView->getWidgets() as $widget) {
-                $arrayMapOfWidget[$widget->getId()] = $widget;
-                $widget->setId(null);
-            }
-            $clonedView->getWidgets()->setOwner($clonedView, $clonedView->getWidgets()->getMapping());
+        $clonedView->setWidgets(clone $view->getWidgets());
+        foreach ($clonedView->getWidgets() as $widget) {
+            $arrayMapOfWidget[$widget->getId()] = $widget;
+            $widget->setId(null);
+            $this->em->persist($widget);
         }
+        $clonedView->getWidgets()->setOwner($clonedView, $clonedView->getWidgets()->getMapping());
+        
 
         $this->em->persist($clonedView);
+        $this->em->refresh($view);
         $this->em->flush();
 
-        foreach ($widgetMapToClone->getWidget() as $widgetKeyToChange => $widgetValTochange) {
-            foreach ($originalWidgetMap->getWidgets() as $originalWidget) {
+        foreach ($widgetMapToClone as $widgetKeyToChange => $widgetValTochange) {
+            foreach ($originalWidgetMap as $originalWidget) {
                 if ($originalWidget->getId() === $widgetValToChange->getId()) {
                     $newWidget = $originalWidgetMap[$originalWidget->getId()];
                     $widgetValToChange->setId($newWidget->getId());
@@ -364,6 +365,6 @@ class PageHelper extends ViewHelper
         $this->em->persist($clonedView);
         $this->em->flush();
 
-        return $cloneView;
+        return $clonedView;
     }
 }
