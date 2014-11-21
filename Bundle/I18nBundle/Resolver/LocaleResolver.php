@@ -5,6 +5,7 @@ namespace Victoire\Bundle\I18nBundle\Resolver;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManager;
 
 /**
 * A class to guess the locale form URL
@@ -17,6 +18,7 @@ class LocaleResolver
 	protected $localePattern;
 	protected $localePatternTable;
 	protected $defaultLocale;
+	protected $em;Ò
 
 	/**
 	* Constructor
@@ -25,11 +27,12 @@ class LocaleResolver
 	* @param string $localPatternTable
 	* @param string $defaultLocale
 	*/
-	public function __construct($localePattern, $localePatternTable, $defaultLocale) 
+	public function __construct($localePattern, $localePatternTable, $defaultLocale, EntityManager $em) 
 	{
 		$this->localePattern = $localePattern;
 		$this->localePatternTable = $localePatternTable;
 		$this->defaultLocale = $defaultLocale;
+		$this->em = $em;
 	}
 
 	/**

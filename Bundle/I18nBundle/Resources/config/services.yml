@@ -2,7 +2,7 @@ services:
 
     victoire_i18n.locale_resolver:
         class: Victoire\Bundle\I18nBundle\Resolver\LocaleResolver
-        arguments: ['%locale_pattern%', '%locale_pattern_table%', '%locale%']
+        arguments: ['%locale_pattern%', '%locale_pattern_table%', '%locale%', '@doctrine.orm.entity_manager']
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
@@ -11,3 +11,7 @@ services:
         arguments: ["@victoire_core.admin_menu_builder"]
         tags:
             - { name: kernel.event_listener, event: victoire_core.page_menu.contextual, method: addContextual, priority: 100 }
+
+    victoire_i18n.url.resolver:
+        class: Victoire\Bundle\I18nBundle\Resolver\UrlResolver
+        arguments: ["@doctrine.orm.entity_manager"]

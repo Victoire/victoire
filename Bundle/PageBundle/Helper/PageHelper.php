@@ -338,7 +338,7 @@ class PageHelper extends ViewHelper
         $widgetMapToClone = $clonedView->getWidgetMap();
         $arrayMapOfWidgetMap = array();
         $originalWidgetMap = $view->getWidgetMap();
-
+        $clonedView->setTranslationSource($view->getId());
         $clonedView->setId(null);            
         $clonedView->setWidgets(clone $view->getWidgets());
         foreach ($clonedView->getWidgets() as $widget) {
