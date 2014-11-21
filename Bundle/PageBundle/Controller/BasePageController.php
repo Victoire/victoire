@@ -135,20 +135,10 @@ class BasePageController extends AwesomeController
             if ($form->isValid()) {
                 $toPersist = $page;
                 if ($newTranslation) {
-                    $toPersist = clone $page;
-                    if ($toPersist->getId()) {
-                        $toPersist->setId(null);            
-                        if ($toPersist->getWidgets() instanceof PersistentCollection) {
-                            $toPersist->setWidgets(clone $toPersist->getWidgets());
-                            foreach ($toPersist->getWidgets() as $widget) {
-                                $widget->setId(null);
-                            }
-                            $toPersist->widgets->setOwner($toPersist, $toPersist->widgets->getMapping());
-                        }
-                    }
+                    $this->get('victoire_page.page_helper')->cloneView($page);
                     $em->refresh($page);
                 } 
-                $em->persist($toPersist);
+                $em->persist($page);
                 $em->flush();
 
                 $response =  array(

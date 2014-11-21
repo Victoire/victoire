@@ -25,6 +25,7 @@ use Victoire\Bundle\PageBundle\Matcher\UrlMatcher;
 use Victoire\Bundle\SeoBundle\Helper\PageSeoHelper;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
+use Doctrine\ORM\PersistentCollection;
 
 /**
  * Page helper
@@ -329,5 +330,40 @@ class PageHelper extends ViewHelper
         $newPage->setEntityProxy($entityProxy);
 
         return $newPage;
+    }
+
+    public function cloneView(View $view)
+    {
+        $clonedView = clone $view;
+        $widgetMapToClone = $clonedView->getWidgetMap();
+        $arrayMapOfWidgetMap = array();
+        $originalWidgetMap = $view->getWidgetMap();
+
+        $clonedView->setId(null);            
+        if ($clonedView->getWidgets() instanceof PersistentCollection) {
+            $clonedView->setWidgets(clone $clonedView->getWidgets());
+            foreach ($clonedView->getWidgets() as $widget) {
+                $arrayMapOfWidget[$widget->getId()] = $widget;
+                $widget->setId(null);
+            }
+            $clonedView->getWidgets()->setOwner($clonedView, $clonedView->getWidgets()->getMapping());
+        }
+
+        $this->em->persist($clonedView);
+        $this->em->flush();
+
+        foreach ($widgetMapToClone->getWidget() as $widgetKeyToChange => $widgetValTochange) {
+            foreach ($originalWidgetMap->getWidgets() as $originalWidget) {
+                if ($originalWidget->getId() === $widgetValToChange->getId()) {
+                    $newWidget = $originalWidgetMap[$originalWidget->getId()];
+                    $widgetValToChange->setId($newWidget->getId());
+                } 
+            }
+        }
+
+        $this->em->persist($clonedView);
+        $this->em->flush();
+
+        return $cloneView;
     }
 }
