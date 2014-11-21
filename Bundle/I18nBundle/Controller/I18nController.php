@@ -1,5 +1,5 @@
 <?php
-namespace Victoire\Bundle\i18nBundle\Controller;
+namespace Victoire\Bundle\I18nBundle\Controller;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

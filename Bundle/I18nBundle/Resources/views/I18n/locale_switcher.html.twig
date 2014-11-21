@@ -4,7 +4,7 @@
         <ul class="dropdown-menu">
         {% for locale in locales %}
             {% if  locale != app.session.get('victoire_locale') %}
-                <li><a href="{{ path(victoire_i18n_switch_locale, { 'targetLocale': locale }) }}" title="{{ locale }}" class="flag-{{ locale}}" >{{ locale }}</a></li>
+                <li><a href="{{ path('victoire_i18n_switch_locale', { 'targetLocale': locale }) }}" title="{{ locale }}" class="flag-{{ locale}}" >{{ locale }}</a></li>
             {% endif %}
         {% endfor %}
     </ul>

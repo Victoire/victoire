@@ -42,6 +42,7 @@ class LocaleResolver
         } else {
         	$request = $event->getRequest();
         	$victoireLocale = $request->getSession()->get('victoire_locale');
+        	
         	if (!isset($victoireLocale)) {
 
 	        	switch ($this->localePattern) {
