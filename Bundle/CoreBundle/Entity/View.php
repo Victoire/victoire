@@ -544,7 +544,7 @@ abstract class View
         $this->widgets = $widgets;
 
         foreach ($widgets as $widget) {
-            $widget->setPage($this);
+            $widget->setView($this);
         }
 
         return $this;
