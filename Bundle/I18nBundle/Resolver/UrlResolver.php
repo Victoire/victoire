@@ -2,19 +2,22 @@
 
 namespace Victoire\Bundle\I18nBundle\Resolver;
 
-use Doctrine\Orm\EntityManager;
+use Doctrine\ORM\EntityManager;
+use Victoire\Bundle\PageBundle\Helper\PageHelper;
 
 class UrlResolver
 {
 	
+	protected $pageHelper;
 	protected $em;
 
 	/**
 	* Constructor
 	*/
-	public function __construct(EntityManager $em)
+	public function __construct(PageHelper $pageHelper, EntityManager $em)
 	{
-		$this->em = $em;
+		$this->pageHelper = $pageHelper;
+		$this->em =$em;
 	}
 
 	/**
@@ -27,7 +30,13 @@ class UrlResolver
 	*/
 	public function findUrlForTargetLocale($currentUrl, $currentLocale, $targetLocale)
 	{
+		$currentPage = $this->pageHelper->findPageByParameters(array('url' => $currentUrl, 'locale' => $currentLocale));
 
-		return $targetUrl;
+		if (null === $currentPage->getTranslationSource()) {
+			$targetPage = $this->em->getRepository('VictoireCoreBundle:View')->findBy(array('translationSource' => $currentPage->getId(), 'locale' => $targetLocale));
+		} else {
+			$targetPage = $this->em->getRepository('VictoireCoreBundle:View')->find($currentPage->getTranslationSource());
+		}
+		return $targetPage->getUrl();
 	}
 }

@@ -20,10 +20,14 @@ class I18nController extends Controller
      */
     public function switchLocaleAction(Request $request,  $targetLocale)
     {
+        $currentLocale = $request->getSession()->get('victoire_locale');
     	$request->getSession()->set('victoire_locale', $targetLocale);
     	$referer = $request->request->get('referer', $request->headers->get('referer'));
 
-        return new RedirectResponse($referer);
+        $targetUrl = $this->get('victoire_i18n.url.resolver')->findUrlForTargetLocale($referer, $currentLocale, $targetLocale);
+
+        $response = $this->get('victoire_page.page_helper')->renderPageByUrl($targetUrl, $locale);
+        return $response;
     }
 
     /**
