@@ -6,7 +6,7 @@ namespace Victoire\Bundle\CoreBundle\Annotations\Cache;
  **/
 class Cache
 {
-    // This is the usiqId of this app, based on current file path
+    // This is the uniqId of this app, based on current file path
     // This hash will be prepended on apc cached entry keys
     // to avoid cache concurency if several Victoire apps
     // run on same server.
@@ -24,7 +24,9 @@ class Cache
      */
     public function __construct($cache, $debug)
     {
-        $this->uniqId = md5(__FILE__);
+
+        $reflClass = new \ReflectionClass($this);
+        $this->uniqId = md5(dirname($reflClass->getFileName()));
         $this->cache = $cache;
         $this->debug = $debug;
     }
