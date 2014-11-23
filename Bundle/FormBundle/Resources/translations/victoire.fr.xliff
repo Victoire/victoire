@@ -86,6 +86,18 @@
         <source>form.link_type.choice.target.blank</source>
         <target>Nouvel onglet (blank)</target>
       </trans-unit>
+      <trans-unit resname="form.link_type.analytics_track_code.label">
+        <source>form.link_type.analytics_track_code.label</source>
+        <target>Code de tracking</target>
+      </trans-unit>
+      <trans-unit resname="form.link_type.analytics_track_code.help_block">
+        <source>form.link_type.analytics_track_code.help_block</source>
+        <target>Doit/Peut commencer par _gaq.push...</target>
+      </trans-unit>
+      <trans-unit resname="form.link_type.analytics_track_code.placeholder">
+        <source>form.link_type.analytics_track_code.placeholder</source>
+        <target>Tracking (onclick)</target>
+      </trans-unit>
       <trans-unit resname="form.link_type.choice.target.ajax-modal">
         <source>form.link_type.choice.target.ajax-modal</source>
         <target>Fenètre modale</target>

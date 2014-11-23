@@ -26,7 +26,13 @@ class Configuration implements ConfigurationInterface
             ->addDefaultsIfNotSet()
             ->children()
                 ->arrayNode('analytics')
+                    ->useAttributeAsKey(true)
                     ->prototype('array')
+                    ->children()
+                        ->booleanNode('enabled')->cannotBeEmpty()->end()
+                        ->scalarNode('key')->cannotBeEmpty()->end()
+                    ->end()
+                ->end()
                 ->end()
             ->end();
 

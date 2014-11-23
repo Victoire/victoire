@@ -59,6 +59,7 @@ trait LinkTrait
      * @ORM\Column(name="link_type", type="string", length=255)
      */
     protected $linkType;
+
     /**
      * @var string
      *
@@ -71,13 +72,14 @@ trait LinkTrait
     public function getLinkParameters()
     {
         return $this->linkParameters = array(
-            'linkType'        => $this->linkType,
-            'url'             => $this->url,
-            'page'            => $this->page,
-            'route'           => $this->route,
-            'routeParameters' => $this->routeParameters,
-            'attachedWidget'  => $this->attachedWidget,
-            'target'          => $this->target,
+            'linkType'           => $this->linkType,
+            'url'                => $this->url,
+            'page'               => $this->page,
+            'route'              => $this->route,
+            'routeParameters'    => $this->routeParameters,
+            'attachedWidget'     => $this->attachedWidget,
+            'target'             => $this->target,
+            'analyticsTrackCode' => $this->analyticsTrackCode,
         );
     }
 

@@ -101,9 +101,12 @@ class LinkType extends AbstractType
         ));
 
         if (!empty($this->analytics['google']) && $this->analytics['google']['enabled']) {
-            $builder->add('analytics_track_code', array(
-                'label'    => 'form.link_type.analytics_track_code.label',
-                'required' => false,
+            $builder->add('analytics_track_code', null, array(
+                'label'          => 'form.link_type.analytics_track_code.label',
+                'required'       => false,
+                'attr'           => array(
+                    'placeholder' => 'form.link_type.analytics_track_code.placeholder',
+                )
             ));
         }
     }

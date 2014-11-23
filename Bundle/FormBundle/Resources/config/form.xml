@@ -126,7 +126,7 @@
         </service>
 
         <service id="victoire_form.form.type.vic_link" class="%victoire_form.form.type.vic_link.class%">
-            <argument type="collection">?%victoire_seo.analytics%</argument>
+            <argument>%victoire_seo.analytics%</argument>
             <tag name="form.type" alias="victoire_link" />
         </service>
     </services>

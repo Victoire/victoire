@@ -34,26 +34,26 @@ class LinkExtension extends \Twig_Extension
         );
     }
 
-    public function victoireLinkUrl($parameters, $avoidRefresh = true, $avoidUrl = "#")
+    /**
+     * Generate the complete link (with the a tag)
+     * @param array  $parameters   The link parameters (go to LinkTrait to have the list)
+     * @param string $avoidRefresh Do we have to refresh or not ?
+     * @param array  $url          Fallback url
+     *
+     * @return string
+     */
+    public function victoireLinkUrl($parameters, $avoidRefresh = true, $url = "#")
     {
-        $linkType =
-        $attachedWidget =
-        $routeParameters =
-        $route =
-        $page =
-        null;
-
-        extract($parameters);
+        extract($parameters); //will assign $linkType, $attachedWidget, $routeParameters, $route, $page, $analyticsTrackCode
         switch ($linkType) {
             case 'page':
                 //fallback when a page is deleted cascading the relation as null (page_id = null)
-                if (!$page) {
-                    $url = '#';
-                    break;
-                }
-                $url = $this->router->generate('victoire_core_page_show', array('url' => $page->getUrl() ));
-                if ($this->request->getRequestUri() == $url && $avoidRefresh) {
-                    $url = $avoidUrl; //avoid to refresh page when not needed
+                if ($page) {
+                    //avoid to refresh page when not needed
+                    $linkUrl = $this->router->generate('victoire_core_page_show', array('url' => $page->getUrl() ));
+                    if ($this->request->getRequestUri() != $linkUrl || !$avoidRefresh) {
+                        $url = $linkUrl;
+                    }
                 }
                 break;
             case 'route':
@@ -61,24 +61,19 @@ class LinkExtension extends \Twig_Extension
                 break;
             case 'attachedWidget':
                 //fallback when a widget is deleted cascading the relation as null (widget_id = null)
-                if (!$attachedWidget || !method_exists($attachedWidget->getView(), 'getUrl')) {
-                    $url = '#';
-                    break;
+                if ($attachedWidget && method_exists($attachedWidget->getView(), 'getUrl')) {
+
+                    //create base url
+                    $url = $this->router->generate('victoire_core_page_show', array('url' => $attachedWidget->getView()->getUrl()));
+
+                    //If widget in the same view
+                    if (rtrim($this->request->getRequestUri(), '/') == rtrim($url, '/')) {
+                        $url = "";
+                    }
+                    //Add anchor part
+                    $url .= "#vic-widget-" . $attachedWidget->getId() . "-container-anchor";
                 }
-
-                //create base url
-                $url = $this->router->generate('victoire_core_page_show', array('url' => $attachedWidget->getView()->getUrl()));
-
-                if (rtrim($this->request->getRequestUri(), '/') == rtrim($url, '/')) {
-                    $url = "";
-                }
-                //Add anchor part
-                $url .= "#vic-widget-" . $attachedWidget->getId() . "-container-anchor";
                 break;
-            case 'none':
-                $url = '#';
-                break;
-
         }
 
         return $url;
@@ -92,37 +87,20 @@ class LinkExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function victoireLink($parameters, $label, $attr = array(), $currentClass = 'active', $avoidUrl = "#")
+    public function victoireLink($parameters, $label, $attr = array(), $currentClass = 'active', $url = "#")
     {
-        $linkType =
-        $analyticsTrackCode =
-        $target =
-        $attachedWidget =
-        null;
-        extract($parameters);
+        extract($parameters); //will assign $linkType, $attachedWidget, $routeParameters, $route, $page, $analyticsTrackCode
 
-        if ($linkType == 'attachedWidget') {
-            //create base url
-
-            $url = '#';
-            if ($attachedWidget && method_exists($attachedWidget->getView(), 'getUrl')) {
-                $url = $this->router->generate('victoire_core_page_show', array('url' => $attachedWidget->getView()->getUrl() ));
-            }
-
-            if (rtrim($this->request->getRequestUri(), '/') == rtrim($url, '/')) {
+        if ($linkType == 'attachedWidget' && $attachedWidget && method_exists($attachedWidget->getView(), 'getUrl')) {
+            $viewUrl = $this->router->generate('victoire_core_page_show', array('url' => $attachedWidget->getView()->getUrl() ));
+            if (rtrim($this->request->getRequestUri(), '/') == rtrim($viewUrl, '/')) {
                 $attr["data-scroll"] = "smooth" ;
             }
         }
 
         //Avoid to refresh page if not needed
         if ($this->request->getRequestUri() == $this->victoireLinkUrl($parameters, false)) {
-            if (!isset($attr['class'])) {
-                $attr['class'] = "";
-            } else {
-                $attr['class'] .= " ";
-            }
-            $attr['class'] .= $currentClass; //avoid to refresh page when not needed
-            $attr["data-scroll"] = "smooth" ;
+            $this->addAttr('class', $currentClass, $attr);
         }
 
         //Build the target attribute
@@ -134,10 +112,12 @@ class LinkExtension extends \Twig_Extension
             $attr['target'] = $target;
         }
 
-
-        if (!empty($this->analytics['google']) && $this->analytics['google']['enabled']) {
-            $attr['onclick'] = $analyticsTrackCode;
+        //Add the analytics tracking code attribute
+        if (isset($analyticsTrackCode)) {
+            $this->addAttr('onclick', $analyticsTrackCode, $attr);
         }
+
+        //Assemble and prepare attributes
         $attributes = array();
         foreach ($attr as $key => $_attr) {
             if (is_array($_attr)) {
@@ -148,7 +128,7 @@ class LinkExtension extends \Twig_Extension
             $attributes[] = $key.'="'.$attr.'"';
         }
 
-        $url = $this->victoireLinkUrl($parameters, true, $avoidUrl);
+        $url = $this->victoireLinkUrl($parameters, true, $url);
         //Creates a new twig environment
         $twigEnv = new \Twig_Environment(new \Twig_Loader_String());
 
@@ -186,6 +166,26 @@ class LinkExtension extends \Twig_Extension
 
         return '<li '.implode($linkAttributes, ' ').'>'.$this->victoireLink($parameters, $label, $attr, false, '#top').'</li>';
 
+    }
+
+    /**
+     * Add a given attribute to given attributes
+     * @param string $label
+     * @param string $value
+     * @param array  $attr  The current attributes array
+     *
+     * @return LinkExtension
+     **/
+    private function addAttr($label, $value, $attr)
+    {
+        if (!isset($attr[$label])) {
+            $attr[$label] = "";
+        } else {
+            $attr[$label] .= " ";
+        }
+        $attr[$label] .= $value;
+
+        return $this;
     }
 
     /**
