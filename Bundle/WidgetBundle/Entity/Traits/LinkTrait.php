@@ -60,18 +60,26 @@ trait LinkTrait
      */
     protected $linkType;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="analytics_track_code", type="text")
+     */
+    protected $analyticsTrackCode;
+
     protected $linkParameters;
 
     public function getLinkParameters()
     {
         return $this->linkParameters = array(
-            'linkType'        => $this->linkType,
-            'url'             => $this->url,
-            'page'            => $this->page,
-            'route'           => $this->route,
-            'routeParameters' => $this->routeParameters,
-            'attachedWidget'  => $this->attachedWidget,
-            'target'          => $this->target,
+            'linkType'           => $this->linkType,
+            'url'                => $this->url,
+            'page'               => $this->page,
+            'route'              => $this->route,
+            'routeParameters'    => $this->routeParameters,
+            'attachedWidget'     => $this->attachedWidget,
+            'target'             => $this->target,
+            'analyticsTrackCode' => $this->analyticsTrackCode,
         );
     }
 
@@ -281,5 +289,29 @@ trait LinkTrait
                 null
             );
         }
+    }
+
+    /**
+     * Get analyticsTrackCode
+     *
+     * @return string
+     */
+    public function getAnalyticsTrackCode()
+    {
+        return $this->analyticsTrackCode;
+    }
+
+    /**
+     * Set analyticsTrackCode
+     *
+     * @param string $analyticsTrackCode
+     *
+     * @return $this
+     */
+    public function setAnalyticsTrackCode($analyticsTrackCode)
+    {
+        $this->analyticsTrackCode = $analyticsTrackCode;
+
+        return $this;
     }
 }

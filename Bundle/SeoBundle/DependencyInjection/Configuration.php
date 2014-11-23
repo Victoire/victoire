@@ -20,7 +20,21 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $treeBuilder->root('victoire_seo');
+        $rootNode = $treeBuilder->root('victoire_seo');
+
+        $rootNode
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->arrayNode('analytics')
+                    ->useAttributeAsKey(true)
+                    ->prototype('array')
+                    ->children()
+                        ->booleanNode('enabled')->cannotBeEmpty()->end()
+                        ->scalarNode('key')->cannotBeEmpty()->end()
+                    ->end()
+                ->end()
+                ->end()
+            ->end();
 
         return $treeBuilder;
     }
