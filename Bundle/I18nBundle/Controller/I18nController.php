@@ -23,10 +23,11 @@ class I18nController extends Controller
         $currentLocale = $request->getSession()->get('victoire_locale');
     	$request->getSession()->set('victoire_locale', $targetLocale);
     	$referer = $request->request->get('referer', $request->headers->get('referer'));
+        $lastPath = substr($referer, strpos($referer, $request->getBaseUrl()));
+        $lastPath = str_replace($request->getBaseUrl().'/', '', $lastPath);
 
-        $targetUrl = $this->get('victoire_i18n.url.resolver')->findUrlForTargetLocale($referer, $currentLocale, $targetLocale);
-
-        $response = $this->get('victoire_page.page_helper')->renderPageByUrl($targetUrl, $locale);
+        $targetUrl = $this->get('victoire_i18n.url.resolver')->findUrlForTargetLocale($lastPath, $currentLocale, $targetLocale);
+        $response = $this->get('victoire_page.page_helper')->renderPageByUrl($targetUrl, $targetLocale);
         return $response;
     }
 

@@ -33,10 +33,11 @@ class UrlResolver
 		$currentPage = $this->pageHelper->findPageByParameters(array('url' => $currentUrl, 'locale' => $currentLocale));
 
 		if (null === $currentPage->getTranslationSource()) {
-			$targetPage = $this->em->getRepository('VictoireCoreBundle:View')->findBy(array('translationSource' => $currentPage->getId(), 'locale' => $targetLocale));
+			$targetPage = $this->em->getRepository('VictoirePageBundle:Page')->findOneBy(array('translationSource' => $currentPage->getId(), 'locale' => $targetLocale));
 		} else {
-			$targetPage = $this->em->getRepository('VictoireCoreBundle:View')->find($currentPage->getTranslationSource());
+			$targetPage = $this->em->getRepository('VictoirePageBundle:Page')->findOneById($currentPage->getTranslationSource());
 		}
+		
 		return $targetPage->getUrl();
 	}
 }

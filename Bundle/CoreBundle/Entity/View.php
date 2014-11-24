@@ -166,10 +166,19 @@ abstract class View
      */
     protected $locale;
 
-     /**
-     * @ORM\Column(name="translation_source", type="integer", nullable=true)
+   /**
+     * @ORM\ManyToMany(targetEntity="View", mappedBy="translation", cascade={"persist"})
      */
-    protected $translationSource;
+    private $source;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="View", inversedBy="source")
+     * @ORM\JoinTable(name="ViewTranslation",
+     *      joinColumns={@ORM\JoinColumn(name="source_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="translation_id", referencedColumnName="id")}
+     *      )
+     */
+    private $translation;
 
     /**
      * contruct
@@ -180,7 +189,8 @@ abstract class View
         $this->updatedAt = new \DateTime();
         $this->widgets = new ArrayCollection();
         $this->widgetMap = array();
-        $this->translationSource = null;
+        $this->source = new ArrayCollection();
+        $this->translation = new ArrayCollection()
     }
 
     /**
@@ -232,22 +242,41 @@ abstract class View
     }
 
     /**
-     * Get translationSource
+     * Get translation
      *
-     * @return integer
+     * @return View
      */
-    public function getTranslationSource()
+    public function getTranslation()
     {
-        return $this->translationSource;
+        return $this->translation;
     }
 
     /**
-     * Set translationSource
-     * @param $translationSource
+     * Set translation
+     * @param View $translation
      */
-    public function setTranslationSource($translationSource)
+    public function setTranslation(View $translation)
     {
-        $this->translationSource = $translationSource;
+        $this->translation = $translation;
+    }
+
+    /**
+     * Get source
+     *
+     * @return View
+     */
+    public function getSource()
+    {
+        return $this->source;
+    }
+
+    /**
+     * Set source
+     * @param View $source
+     */
+    public function setSource(View $source)
+    {
+        $this->source = $source;
     }
 
     /**
