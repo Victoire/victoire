@@ -166,20 +166,6 @@ abstract class View
      */
     protected $locale;
 
-   /**
-     * @ORM\ManyToMany(targetEntity="View", mappedBy="translation", cascade={"persist"})
-     */
-    private $source;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="View", inversedBy="source")
-     * @ORM\JoinTable(name="ViewTranslation",
-     *      joinColumns={@ORM\JoinColumn(name="source_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="translation_id", referencedColumnName="id")}
-     *      )
-     */
-    private $translation;
-
     /**
      * contruct
      **/
@@ -189,8 +175,6 @@ abstract class View
         $this->updatedAt = new \DateTime();
         $this->widgets = new ArrayCollection();
         $this->widgetMap = array();
-        $this->source = new ArrayCollection();
-        $this->translation = new ArrayCollection()
     }
 
     /**
@@ -239,44 +223,6 @@ abstract class View
     public function setLocale($locale)
     {
         $this->locale = $locale;
-    }
-
-    /**
-     * Get translation
-     *
-     * @return View
-     */
-    public function getTranslation()
-    {
-        return $this->translation;
-    }
-
-    /**
-     * Set translation
-     * @param View $translation
-     */
-    public function setTranslation(View $translation)
-    {
-        $this->translation = $translation;
-    }
-
-    /**
-     * Get source
-     *
-     * @return View
-     */
-    public function getSource()
-    {
-        return $this->source;
-    }
-
-    /**
-     * Set source
-     * @param View $source
-     */
-    public function setSource(View $source)
-    {
-        $this->source = $source;
     }
 
     /**

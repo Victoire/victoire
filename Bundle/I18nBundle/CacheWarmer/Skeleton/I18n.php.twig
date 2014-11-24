@@ -1,0 +1,43 @@
+<?php
+
+namespace Victoire\Bundle\I18nBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Victoire\Bundle\WidgetBundle\Entity\Widget;
+use Victoire\Bundle\CoreBundle\Entity\BaseEntityProxy;
+
+/**
+ * EntityProxy
+ *
+ * @ORM\Entity
+ * @ORM\Table("vic_view_i18n")
+ */
+class i18n extends BaseEntityProxy
+{
+
+{% for locale in locales %}
+    protected ${{ locale }};
+{% endfor %}
+{% for locale in locales %}
+
+    public function set{{ locale|capitalize }}(${{ locale }})
+    {
+        $this->{{ locale }} = ${{ locale}};
+    }
+    public function get{{ locale|capitalize }}()
+    {
+        return $this->{{ locale }};
+    }
+{% endfor %}
+
+	public function getTranslation($locale) 
+	{
+		return call_user_func(ucfirst("get".$locale());
+	}
+
+	public function getTranslation($locale) 
+	{
+		return call_user_func(ucfirst("set".$locale(), $locale);
+	}
+
+}

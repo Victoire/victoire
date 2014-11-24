@@ -15,3 +15,16 @@ services:
     victoire_i18n.url.resolver:
         class: Victoire\Bundle\I18nBundle\Resolver\UrlResolver
         arguments: ["@victoire_page.page_helper", "@doctrine.orm.entity_manager"]
+
+    victoire_i18n.cache_warmer.i18n_warmer:
+        class: Victoire\Bundle\I18nBundle\CacheWarmer\I18nWarmer
+        arguments:
+            - "@victoire_core.annotation_reader"
+        tags:
+            - { name: kernel.cache_warmer, priority: 1}
+
+    victoire_i18n.i18n.cache_driver:
+        class: Victoire\Bundle\I18nBundle\CacheWarmer\I18nCacheDriver
+        arguments:
+            - "@annotation_reader"
+            - "%kernel.cache_dir%"

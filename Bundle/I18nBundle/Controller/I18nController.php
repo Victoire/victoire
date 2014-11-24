@@ -43,10 +43,11 @@ class I18nController extends Controller
     {
     	$locales = $this->container->getParameter('application_locales');
         
+        
+        
         return $this->render(
     		'VictoireI18nBundle:I18n:locale_switcher.html.twig',
     		array('locales' => $locales)
 		);
     }
-
 }
