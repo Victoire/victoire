@@ -5,7 +5,6 @@ namespace Victoire\Bundle\I18nBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use \Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
-use Victoire\Bundle\CoreBundle\Entity\BaseEntityProxy;
 
 /**
  * EntityProxy
@@ -13,14 +12,31 @@ use Victoire\Bundle\CoreBundle\Entity\BaseEntityProxy;
  * @ORM\Entity
  * @ORM\Table("vic_view_i18n")
  */
-class i18n extends BaseEntityProxy
+class i18n
 {
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
 {% for locale in locales %}
-    
     /**
-     * @OneToOne(targetEntity="View")
-     * @JoinColumn(name="{{locale}}_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="View")
+     * @ORM\JoinColumn(name="{{locale}}_id", referencedColumnName="id")
      **/
     protected ${{ locale }};
 {% endfor %}

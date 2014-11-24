@@ -29,3 +29,10 @@ services:
         arguments:
             - "@annotation_reader"
             - "%kernel.cache_dir%"
+
+    victoire_i18n.i18n.subscriber:
+        class: Victoire\Bundle\I18nBundle\EventSubscriber\I18nSubscriber
+        calls:
+            - [ setAnnotationReader, ["@victoire_core.annotation_reader"] ]
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
