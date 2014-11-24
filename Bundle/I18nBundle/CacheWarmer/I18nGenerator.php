@@ -1,5 +1,5 @@
 <?php
-namespace Victoire\Bundle\I18Bundle\CacheWarmer;
+namespace Victoire\Bundle\I18nBundle\CacheWarmer;
 
 use Sensio\Bundle\GeneratorBundle\Generator\Generator;
 
@@ -11,14 +11,16 @@ use Sensio\Bundle\GeneratorBundle\Generator\Generator;
 class I18nGenerator extends Generator
 {
     private $annotationReader;
+    protected $applicationLocales; 
 
     /**
      *
      * @param unknown $annotationReader
      */
-    public function __construct($annotationReader)
+    public function __construct($annotationReader, $applicationLocales)
     {
         $this->annotationReader = $annotationReader;
+        $this->applicationLocales = $applicationLocales;
     }
 
     /**
@@ -28,10 +30,9 @@ class I18nGenerator extends Generator
      */
     public function generate()
     {
-        $i18n= $this->annotationReader->getI18nlasses();
 
         $this->setSkeletonDirs(__DIR__."/skeleton/");
 
-        return $this->render('I18n.php.twig', array('locales' => array_keys($locales)));
+        return $this->render('I18n.php.twig', array('locales' => $this->applicationLocales));
     }
 }

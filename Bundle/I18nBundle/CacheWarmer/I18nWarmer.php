@@ -12,15 +12,17 @@ use Behat\Behat\Exception\Exception;
 class I18nWarmer extends CacheWarmer
 {
     private $annotationReader;
+    protected $applicationLocales;
 
     /**
      * Constructor
      *
      * @param unknown $annotationReader
      */
-    public function __construct($annotationReader)
+    public function __construct($annotationReader, $applicationLocales)
     {
         $this->annotationReader = $annotationReader;
+        $this->applicationLocales = $applicationLocales;
     }
 
     /**
@@ -41,7 +43,7 @@ class I18nWarmer extends CacheWarmer
             }
         }
 
-        $generator = new EntityProxyGenerator($this->annotationReader);
+        $generator = new I18nGenerator($this->annotationReader, $this->applicationLocales);
         $generator->setSkeletonDirs(__DIR__."/skeleton/");
         $cacheContent = $generator->generate();
 
