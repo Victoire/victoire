@@ -19,7 +19,7 @@ services:
     victoire_i18n.cache_warmer.i18n_warmer:
         class: Victoire\Bundle\I18nBundle\CacheWarmer\I18nWarmer
         arguments:
-            - "@victoire_i18n.annotation_reader"
+            - "@victoire_core.annotation_reader"
             - "%application_locales%"
         tags:
             - { name: kernel.cache_warmer, priority: 1}
@@ -29,18 +29,3 @@ services:
         arguments:
             - "@annotation_reader"
             - "%kernel.cache_dir%"
-
-    victoire_i18n.i18n.subscriber:
-        class: Victoire\Bundle\I18nBundle\EventSubscriber\I18nSubscriber
-        calls:
-            - [ setAnnotationReader, ["@victoire_i18n.annotation_reader"] ]
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
-
-    victoire_i18n.annotation_reader:
-        class: Victoire\Bundle\I18nBundle\Annotations\Reader\AnnotationReader
-        arguments:
-            - "@annotation_reader"
-            - "%kernel.root_dir%"
-        calls:
-            - [ setCache, ["@victoire_core.apc.cache"] ]
