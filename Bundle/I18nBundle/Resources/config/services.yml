@@ -33,6 +33,14 @@ services:
     victoire_i18n.i18n.subscriber:
         class: Victoire\Bundle\I18nBundle\EventSubscriber\I18nSubscriber
         calls:
-            - [ setAnnotationReader, ["@victoire_core.annotation_reader"] ]
+            - [ setAnnotationReader, ["@victoire_i18n.annotation_reader"] ]
         tags:
             - { name: doctrine.event_subscriber, connection: default }
+
+      victoire_i18n.annotation_reader:
+        class: Victoire\Bundle\I18nBundle\Annotations\Reader\AnnotationReader
+        arguments:
+            - "@annotation_reader"
+            - "%kernel.root_dir%"
+        calls:
+            - [ setCache, ["@victoire_core.apc.cache"] ]

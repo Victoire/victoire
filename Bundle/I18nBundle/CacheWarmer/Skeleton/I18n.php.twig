@@ -7,12 +7,12 @@ use \Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
- * EntityProxy
+ * I18n
  *
  * @ORM\Entity
  * @ORM\Table("vic_view_i18n")
  */
-class i18n
+class I18n
 {
     /**
      * @var integer
@@ -37,15 +37,21 @@ class i18n
     /**
      * @ORM\OneToOne(targetEntity="View")
      * @ORM\JoinColumn(name="{{locale}}_id", referencedColumnName="id")
-     **/
+     */
     protected ${{ locale }};
+    
 {% endfor %}
 {% for locale in locales %}
-
+    
+    /**
+    * function set{{ locale|capitalize }}
+    * @param View ${{ locale}} 
+    */
     public function set{{ locale|capitalize }}(View ${{ locale }})
     {
         $this->{{ locale }} = ${{ locale}};
     }
+
     /**
     * @return View 
     */
