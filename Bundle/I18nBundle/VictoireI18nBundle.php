@@ -16,7 +16,7 @@ class VictoireI18nBundle extends Bundle
     {
         $driverChain = $this->container->get('doctrine.orm.entity_manager')->getConfiguration()->getMetadataDriverImpl();
         $proxyDriver = $this->container->get('victoire_i18n.i18n.cache_driver');
-        $driverChain->addDriver($proxyDriver, 'VictoireI18n');
+        $driverChain->addDriver($proxyDriver, 'Victoire\\Bundle\\I18nBundle');
     }
 
     /**

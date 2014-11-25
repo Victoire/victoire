@@ -43,7 +43,6 @@ class I18nSubscriber implements EventSubscriber
             return;
         } else {
 
-            die('ok');
         }
     }
 }
