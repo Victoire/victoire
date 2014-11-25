@@ -3,8 +3,8 @@
 namespace Victoire\Bundle\I18nBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use \Victoire\Bundle\CoreBundle\Entity\View;
-use Victoire\Bundle\WidgetBundle\Entity\Widget;
+use Victoire\Bundle\CoreBundle\Entity\View;
+use Victoire\Bundle\I18nBundle\Entity\BaseI18n;
 
 /**
  * I18n
@@ -12,26 +12,8 @@ use Victoire\Bundle\WidgetBundle\Entity\Widget;
  * @ORM\Entity
  * @ORM\Table("vic_view_i18n")
  */
-class I18n
+class I18n extends BaseI18n
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
 {% for locale in locales %}
     /**

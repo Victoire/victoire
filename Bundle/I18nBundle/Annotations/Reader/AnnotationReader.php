@@ -18,8 +18,7 @@ class AnnotationReader extends AnnotationDriver
 {
 
     private $cache;
-    private $widgets;
-    private $widgetHelper;
+    protected $reader;
 
     /**
      * construct

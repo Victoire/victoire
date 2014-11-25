@@ -34,26 +34,16 @@ class I18nSubscriber implements EventSubscriber
     }
 
     /**
-     * Insert enabled widgets in base widget add relationship between BusinessEntities and EntityProxy
      * @param LoadClassMetadataEventArgs $eventArgs
      */
-    public static function loadClassMetadata($eventArgs)
+    public static function loadClassMetadata(LoadClassMetadataEventArgs $eventArgs)
     {
-        //this functions is called during the extract of translations
-        //but the argument is not the same
-        //so to avoid an error during extractions, we test the argument
-        if ($eventArgs instanceof LoadClassMetadataEventArgs) {
-            $annotationReader = self::$annotationReader;
+        $metadata = $eventArgs->getClassMetadata();
+        if ($metadata->getName() != 'Victoire\Bundle\I18nBundle\Entity\I18n') {
+            return;
+        } else {
 
-            $metadatas = $eventArgs->getClassMetadata();
-            $metaBuilder = new ClassMetadataBuilder($metadatas);
-            if ($metadatas->name === 'Victoire\Bundle\I18nBundle\Entity\I18n') {
-                die('tst');
-                exit;
-                foreach ($annotationReader->getLocales() as $field => $entity) {
-                    $metaBuilder->addOneToOne($field, $entity, "View");
-                }
-            }
+            die('ok');
         }
     }
 }
