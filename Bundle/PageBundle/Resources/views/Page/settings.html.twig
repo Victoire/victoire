@@ -23,7 +23,6 @@
             <form method="POST" action="{{path('victoire_core_page_settings', {'id':page.id, 'newTranslation': newTranslation} )}}">
                 <div class="vic-form-group">
                     <div class="vic-col-lg-8">
-                        {{ form_row(form.translationSource) }}
                         {{ form_row(form.name) }}
                         {{ form_row(form.parent) }}
                         {{ form_row(form.template) }}

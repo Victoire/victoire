@@ -26,6 +26,7 @@ use Victoire\Bundle\SeoBundle\Helper\PageSeoHelper;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
 use Doctrine\ORM\PersistentCollection;
+use Victoire\Bundle\I18nBundle\Entity\I18n;
 
 /**
  * Page helper
@@ -338,8 +339,7 @@ class PageHelper extends ViewHelper
         $widgetMapToClone = $clonedView->getWidgetMap();
         $arrayMapOfWidgetMap = array();
         $originalWidgetMap = $view->getWidgetMap();
- 
-        (null !== $view->getTranslationSource())? $clonedView->setTranslationSource($view->getTranslationSource()): $clonedView->setTranslationSource($view->getId());
+
         $clonedView->setId(null);            
         $clonedView->setWidgets(clone $view->getWidgets());
         foreach ($clonedView->getWidgets() as $widget) {
@@ -353,6 +353,9 @@ class PageHelper extends ViewHelper
         $this->em->persist($clonedView);
         $this->em->refresh($view);
         $this->em->flush();
+        
+        $i18n = $view->getI18n();
+        $i18n->setTranslation($clonedView->getLocale(), $clonedView);
 
         foreach ($widgetMapToClone as $widgetKeyToChange => $widgetValTochange) {
             foreach ($originalWidgetMap as $originalWidget) {

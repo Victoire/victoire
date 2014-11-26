@@ -9,6 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Victoire\Bundle\PageBundle\Entity\Slot;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
+use Victoire\Bundle\I18NBundle\Entity\I18n;
 
 /**
  * Victoire View
@@ -167,14 +168,39 @@ abstract class View
     protected $locale;
 
     /**
+     * @var string
+     *
+     * @ORM\OneToOne(targetEntity="\Victoire\Bundle\I18NBundle\Entity\I18n")
+     */
+    protected $i18n;
+
+    /**
      * contruct
      **/
-    public function __construct()
+    public function __construct($locale = "fr")
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
         $this->widgets = new ArrayCollection();
         $this->widgetMap = array();
+        $this->locale = $locale;
+        $this->initI18n();
+    }
+
+    public function initI18N() 
+    {
+        $this->i18n = new I18n();
+        $this->i18n->setTranslation($this->locale, $this);
+    }
+    public function getI18n() 
+    {
+        return $this->i18n;
+    }
+
+    public function setI18n(I18n $i18n) 
+    {
+        $this->i18n = $i18n;
+        return $this;
     }
 
     /**
