@@ -1,4 +1,0 @@
-Lorsque je clique le l'action "Nouveau modele", j'accede au formulaire de crétion d'un template.
-Je remplis le formulaire et vérifie que je suis redirigé vers la page d'edition du template avec les bonnes informations.
-Je vérifie son bon fonctionnement (CF page.feature)
-
