@@ -1,3 +1,7 @@
+imports:
+    - { resource: @VictoireCoreBundle/Resources/config/config.yml }
+    - { resource: @VictoireTwigBundle/Resources/config/config.yml }
+
 framework:
     secret:          "s3cr3t"
     router:
@@ -42,6 +46,19 @@ doctrine:
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
+        mappings:
+            gedmo_tree:
+                type: annotation
+                prefix: Gedmo\Tree\Entity
+                dir: "%kernel.root_dir%/../../../vendor/gedmo/doctrine-extensions/lib/Gedmo/Tree/Entity"
+                is_bundle: false
+
+stof_doctrine_extensions:
+    default_locale: fr_FR
+    orm:
+        default:
+            tree: true
+            sluggable: true
 
 fos_user:
     db_driver: orm
@@ -49,14 +66,35 @@ fos_user:
     user_class: Victoire\Bundle\UserBundle\Entity\User
 
 security:
+    encoders:
+        Victoire\Bundle\UserBundle\Entity\User: sha512
+
     providers:
-        in_memory:
-            memory: ~
+        fos_userbundle:
+            id: fos_user.user_provider.username
 
     firewalls:
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
+        main:
+            pattern: ^/
+            form_login:
+                provider:        fos_userbundle
+                csrf_provider:   form.csrf_provider
+                failure_path: /login
+                check_path: /login_check
+                default_target_path: /
+            logout: true
+            anonymous: true
+            switch_user: ~
+    access_control:
+        - { path: ^/admin/, role: ROLE_ADMIN }
 
-        default:
-            anonymous: ~
+victoire_core:
+    applicative_bundle: FrontTemplateBundle
+    watch_view_cache: false
+    user_class: "Victoire\Bundle\UserBundle\Entity\User"
+    templates:
+        layout: "::layout.html.twig"
+    layouts:
+        fullWidth: "Contenu unique"
+        home: "Accueil"
+    slots: ~

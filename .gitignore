@@ -1,4 +1,6 @@
 /.buildpath
 /.project
 /composer.lock
+/composer.phar
 /vendor/*
+/Tests/Functionnal/web/bundles/*
