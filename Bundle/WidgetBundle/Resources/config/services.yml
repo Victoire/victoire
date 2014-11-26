@@ -33,7 +33,7 @@ services:
             - @victoire_widget.widget_content_resolver
             - @victoire_widget.widget_renderer
             - @doctrine.orm.entity_manager
-            - @av.form_error_service
+            - @victoire_form.error_helper
             - @request
             - @victoire_widget_map.manager
             - @victoire_widget_map.helper

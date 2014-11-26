@@ -1,0 +1,6 @@
+services:
+    victoire_form.error_helper:
+        class: Victoire\Bundle\FormBundle\Helper\FormErrorHelper
+        arguments:
+            - "@translator"
+            - "%kernel.debug%"

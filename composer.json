@@ -39,7 +39,8 @@
         "friendsofsymfony/jsrouting-bundle"   : "2.0.*@dev",
         "friendsofsymfony/user-bundle"        : "2.0.*@dev",
         "appventus/assetic-injector-bundle"   : "dev-master",
-        "knplabs/gaufrette"                   : "v0.1.7"
+        "knplabs/gaufrette"                   : "v0.1.7",
+        "liip/imagine-bundle": "1.0.*@dev"
     },
     "require-dev": {
         "phpunit/phpunit"               : "3.7.*",

@@ -33,7 +33,9 @@ class VictoireCoreBundle extends Bundle
     {
         parent::build($container);
 
-        $container->addCompilerPass(new TraductionCompilerPass());
+        if ($container->hasDefinition('jms_translation.config_factory')) {
+            $container->addCompilerPass(new TraductionCompilerPass());
+        }
         $container->addCompilerPass(new AccessMapCompilerPass());
     }
 }

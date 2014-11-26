@@ -2,7 +2,6 @@
 namespace Victoire\Bundle\PageBundle\Helper;
 
 use Doctrine\Orm\EntityManager;
-use Gedmo\Sluggable\Util\Urlizer;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -44,7 +43,6 @@ class PageHelper extends ViewHelper
     protected $viewCacheHelper; // @victoire_core.view_cache_helper
     protected $session; // @session
     protected $securityContex; // @security.context
-    protected $urlizer; // @gedmo.urlizer
     protected $widgetMapBuilder; // @victoire_widget_map.builder
 
     //@todo Make it dynamic please
@@ -71,7 +69,7 @@ class PageHelper extends ViewHelper
      * @param ViewCacheHelper          $viewCacheHelper
      * @param Session                  $session
      * @param SecurityContext          $securityContext
-     * @param Urlizer                  $urlizer
+     * @param WidgetMapBuilder         $widgetMapBuilder
      */
     public function __construct(
         BETParameterConverter $parameterConverter,
@@ -87,7 +85,6 @@ class PageHelper extends ViewHelper
         ViewCacheHelper $viewCacheHelper,
         Session $session,
         SecurityContext $securityContext,
-        Urlizer $urlizer,
         WidgetMapBuilder $widgetMapBuilder
     )
     {
@@ -104,7 +101,6 @@ class PageHelper extends ViewHelper
         $this->viewCacheHelper = $viewCacheHelper;
         $this->session = $session;
         $this->securityContext = $securityContext;
-        $this->urlizer = $urlizer;
         $this->widgetMapBuilder = $widgetMapBuilder;
 
     }

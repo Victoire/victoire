@@ -2,10 +2,10 @@
 
 namespace Victoire\Bundle\WidgetBundle\Controller;
 
-use AppVentus\Awesome\ShortcutsBundle\Controller\AwesomeController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +18,7 @@ use Victoire\Bundle\WidgetBundle\Entity\Widget;
  * Widget Controller
  *
  */
-class WidgetController extends AwesomeController
+class WidgetController extends Controller
 {
     /**
      * Show a widget
