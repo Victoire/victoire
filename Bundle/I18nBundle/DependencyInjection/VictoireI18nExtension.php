@@ -25,6 +25,8 @@ class VictoireI18nExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+        
+        $container->setAlias('translator', 'victoire_i18n.translator');
 
     }
 }

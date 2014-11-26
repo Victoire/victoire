@@ -29,3 +29,8 @@ services:
         arguments:
             - "@annotation_reader"
             - "%kernel.cache_dir%"
+
+    victoire_i18n.translator:
+        class: Victoire\Bundle\I18nBundle\Translation\Translator
+        arguments: ["@service_container", "@translator.selector", "%kernel.cache_dir%", "true"]
+           

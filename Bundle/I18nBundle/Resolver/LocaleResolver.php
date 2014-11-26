@@ -42,18 +42,22 @@ class LocaleResolver
         } else {
         	$request = $event->getRequest();
         	$victoireLocale = $request->getSession()->get('victoire_locale');
-        	
         	if (!isset($victoireLocale)) {
+        		$request->getSessions()->set('victoire_locale', 'fr');
+        	}
+        	$locale = $request->getLocale();
+        	
+        	if (!isset($locale)) {
 
 	        	switch ($this->localePattern) {
 	        		case self::PATTERNDOMAIN : 
 	        		    $locale = $this->resolveFromDomain($request);
-	        		    $request->getSession()->set('victoire_locale', $locale);
+	        		    $request->setLocale($locale);
 	        	        break;
 
 	        	     case self::PATTERNPARAMETERINURL : 
 	        		    $locale = $this->resolveAsParameterInUrl($request);
-	        		    $request->getSession()->set('victoire_locale', $locale);
+	        		    $request->setLocale($locale);
 	        	        break;
 	        	    default : 
 	        	        break; 

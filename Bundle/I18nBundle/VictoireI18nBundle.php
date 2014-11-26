@@ -25,6 +25,7 @@ class VictoireI18nBundle extends Bundle
      */
     public function build(ContainerBuilder $container)
     {
+        parent::build($container);
         $container->addCompilerPass(new I18nCompilerPass());
     }
     
