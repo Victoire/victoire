@@ -1,0 +1,7 @@
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+VictoireCoreBundle:
+    resource: .
+    type: victoire
+
