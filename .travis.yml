@@ -9,8 +9,10 @@ before_script:
   - npm install less
   - composer install --dev --prefer-dist
   # Prepare database
+  - php Tests/Functionnal/bin/console cache:clear --env=test
   - php Tests/Functionnal/bin/console doctrine:database:create --env=test
   - php Tests/Functionnal/bin/console doctrine:schema:create --env=test
+  - php Tests/Functionnal/bin/console victoire:generate:view --env=test
   - php Tests/Functionnal/bin/console doctrine:fixtures:load --fixtures="Bundle/CoreBundle/DataFixtures/ORM" -n --append --env=test
   # Run selenium server
   - "sh -e /etc/init.d/xvfb start"
