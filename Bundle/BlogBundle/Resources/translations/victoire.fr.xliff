@@ -6,11 +6,11 @@
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
     </header>
     <body>
-      <trans-unit resname="form.widget.tab.article.label">
+      <trans-unit id="1" resname="form.widget.tab.article.label">
         <source>form.widget.tab.article.label</source>
         <target state="new">Article</target>
       </trans-unit>
-      <trans-unit resname="entity_proxy.form.article.label">
+      <trans-unit id="2" resname="entity_proxy.form.article.label">
         <source>entity_proxy.form.article.label</source>
         <target>Article</target>
       </trans-unit>
@@ -22,39 +22,39 @@
         <source>menu.blog.article.new</source>
         <target><![CDATA[<i class="vic-menuImg vic-menuImg-new"></i> Nouvel article]]></target>
       </trans-unit>
-      <trans-unit resname="victoire_blog.index.title">
+      <trans-unit id="3" resname="victoire_blog.index.title">
         <source>victoire_blog.index.title</source>
         <target>Gestion des blogs</target>
       </trans-unit>
-      <trans-unit resname="menu.blog.new">
+      <trans-unit id="4" resname="menu.blog.new">
         <source>menu.blog.new</source>
         <target><![CDATA[<i class="vic-menuImg vic-menuImg-new"></i> Nouveau blog]]></target>
       </trans-unit>
-      <trans-unit resname="modal.blog.button.new.label">
+      <trans-unit id="5" resname="modal.blog.button.new.label">
         <source>modal.blog.button.new.label</source>
         <target><![CDATA[<i class="fa fa-check-circle"></i> Créer un nouveau blog]]></target>
       </trans-unit>
-      <trans-unit resname="modal.blog.list.empty.notice">
+      <trans-unit id="6" resname="modal.blog.list.empty.notice">
         <source>modal.blog.list.empty.notice</source>
         <target>Vous n'avez pas encore créé de blog. C'est le moment :)</target>
       </trans-unit>
-      <trans-unit resname="modal.blog.list.title">
+      <trans-unit id="7" resname="modal.blog.list.title">
         <source>modal.blog.list.title</source>
         <target>Liste des blogs</target>
       </trans-unit>
-      <trans-unit resname="modal.blog.list.articlesList.title">
+      <trans-unit id="8" resname="modal.blog.list.articlesList.title">
         <source>modal.blog.list.articlesList.title</source>
         <target>Liste des articles</target>
       </trans-unit>
-      <trans-unit resname="modal.blog.list.articlesList.new_article">
+      <trans-unit id="9" resname="modal.blog.list.articlesList.new_article">
         <source>modal.blog.list.articlesList.new_article</source>
         <target>Ajouter un article</target>
       </trans-unit>
-      <trans-unit resname="modal.blog.list.articlesList.empty.notice">
+      <trans-unit id="10" resname="modal.blog.list.articlesList.empty.notice">
         <source>modal.blog.list.articlesList.empty.notice</source>
         <target><![CDATA[Vous n'avez pas encore créé d'article dans ce blog. C'est le moment :)<br/><br/><a href="%creationLink%" data-toggle="vic-modal" class="vic-btn vic-btn-primary"><i class="fa fa-plus"></i> Créer un article maintenant.</a>]]></target>
       </trans-unit>
-      <trans-unit resname="modal.blog.button.new.title">
+      <trans-unit id="11" resname="modal.blog.button.new.title">
         <source>modal.blog.button.new.title</source>
         <target>Créer un nouveau blog</target>
       </trans-unit>
@@ -62,11 +62,11 @@
           <source>menu.blog.article.settings</source>
           <target><![CDATA[<i class="vic-menuImg vic-menuImg-gear"></i> Paramètres de l'article]]></target>
       </trans-unit>
-      <trans-unit resname="menu.blog.settings">
+      <trans-unit id="12" resname="menu.blog.settings">
           <source>menu.blog.settings</source>
           <target><![CDATA[<i class="vic-menuImg vic-menuImg-gear"></i> Paramètres du blog]]></target>
       </trans-unit>
-      <trans-unit id="604de4ede156d22c87184505b9794ba2ad9c5063" resname="widget_filter.category_filter">
+      <trans-unit id="604de4ede156d22c87184505b9794ba2ad9c5064" resname="widget_filter.category_filter">
         <source>widget_filter.category_filter</source>
         <target>Catégories</target>
       </trans-unit>
@@ -74,19 +74,19 @@
         <source>widget_filter.tag_filter</source>
         <target>Etiquettes</target>
       </trans-unit>
-      <trans-unit resname="modal.blog.new.title">
+      <trans-unit id="13" resname="modal.blog.new.title">
         <source>modal.blog.new.title</source>
         <target>Créer un nouveau blog</target>
       </trans-unit>
-      <trans-unit resname="modal.article.new.title">
+      <trans-unit id="14" resname="modal.article.new.title">
         <source>modal.article.new.title</source>
         <target>Créer un nouvel article</target>
       </trans-unit>
-      <trans-unit resname="modal.form.article.settings.title">
+      <trans-unit id="15" resname="modal.form.article.settings.title">
         <source>modal.form.article.settings.title</source>
         <target><![CDATA[Paramètres de l'article <strong>%articleName%</strong>]]></target>
       </trans-unit>
-      <trans-unit resname="modal.form.blog.settings.title">
+      <trans-unit id="16" resname="modal.form.blog.settings.title">
         <source>modal.form.blog.settings.title</source>
         <target><![CDATA[Paramètres du blog <strong>%blogName%</strong>]]></target>
       </trans-unit>

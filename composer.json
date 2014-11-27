@@ -28,7 +28,6 @@
         "sensio/framework-extra-bundle"       : "~3.0",
         "sensio/generator-bundle"             : "~2.3",
         "incenteev/composer-parameter-handler": "~2.0",
-
         "doctrine/doctrine-fixtures-bundle"   : "dev-master",
         "doctrine/data-fixtures"              : "dev-master",
         "nelmio/alice"                        : "1.5.2",
@@ -40,7 +39,8 @@
         "friendsofsymfony/user-bundle"        : "2.0.*@dev",
         "appventus/assetic-injector-bundle"   : "dev-master",
         "knplabs/gaufrette"                   : "v0.1.7",
-        "liip/imagine-bundle": "1.0.*@dev"
+	"liip/imagine-bundle"                 : "1.0.*@dev",
+	"jms/translation-bundle"              : "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit"               : "3.7.*",
