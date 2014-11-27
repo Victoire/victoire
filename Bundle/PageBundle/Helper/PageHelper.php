@@ -340,15 +340,16 @@ class PageHelper extends ViewHelper
         $arrayMapOfWidgetMap = array();
         $originalWidgetMap = $view->getWidgetMap();
 
-        $clonedView->setId(null);            
-        $clonedView->setWidgets(clone $view->getWidgets());
-        foreach ($clonedView->getWidgets() as $widget) {
+        $clonedView->setId(null);
+        $this->em->persist($clonedView);
+
+        foreach ($view->getWidgets() as $widget) {
             $arrayMapOfWidget[$widget->getId()] = $widget;
-            $widget->setId(null);
-            $this->em->persist($widget);
+            $clonedWidged = clone $widget;
+            $clonedWidged->setId(null);
+            $clonedWidget->setView($clonedView);
+            $this->em->persist($clonedWidged);
         }
-        $clonedView->getWidgets()->setOwner($clonedView, $clonedView->getWidgets()->getMapping());
-        
 
         $this->em->persist($clonedView);
         $this->em->refresh($view);
@@ -365,7 +366,7 @@ class PageHelper extends ViewHelper
                 } 
             }
         }
-
+        $clonedView->setWidgetMap($widgetMapToClone);
         $this->em->persist($clonedView);
         $this->em->flush();
 
