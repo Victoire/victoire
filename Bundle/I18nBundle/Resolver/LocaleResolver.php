@@ -41,31 +41,22 @@ class LocaleResolver
             return;
         } else {
         	$request = $event->getRequest();
-        	$victoireLocale = $request->getSession()->get('victoire_locale');
-        	if (!isset($victoireLocale)) {
-        		$request->getSessions()->set('victoire_locale', 'fr');
-        	}
-        	$locale = $request->getLocale();
+        	switch ($this->localePattern) {
+        		case self::PATTERNDOMAIN : 
+        		    $locale = $this->resolveFromDomain($request);
+        		    $request->setLocale($locale);
+        	        break;
+
+        	     case self::PATTERNPARAMETERINURL : 
+        		    $locale = $this->resolveAsParameterInUrl($request);
+        		    $request->setLocale($locale);
+        	        break;
+        	    default : 
+        	        break; 
+        	}  
         	
-        	if (!isset($locale)) {
-
-	        	switch ($this->localePattern) {
-	        		case self::PATTERNDOMAIN : 
-	        		    $locale = $this->resolveFromDomain($request);
-	        		    $request->setLocale($locale);
-	        	        break;
-
-	        	     case self::PATTERNPARAMETERINURL : 
-	        		    $locale = $this->resolveAsParameterInUrl($request);
-	        		    $request->setLocale($locale);
-	        	        break;
-	        	    default : 
-	        	        break; 
-        	    }   
-        	}
         }
     }
-
     /**
     * @param Request $request
     *
@@ -74,9 +65,25 @@ class LocaleResolver
 	public function resolveFromDomain(Request $request) 
 	{
 		$host = $request->getHttpHost();
-        $domain = substr($host, strrpos($host, '.')+1);
 
-        return $this->localePatternTable[$domain];
+        return $this->localePatternTable[$host];
+	}
+
+	/**
+    * @param Request $request
+    *
+    * @return string 
+    */
+	public function resolveDomainForLocale($locale) 
+	{
+		foreach ($this->localePatternTable as $domain => $domainLocale) {
+			if ($locale === $domainLocale) 
+			{
+				return $domain;
+			}	
+		}
+
+        return 'fr';
 	}
 
 	/**
