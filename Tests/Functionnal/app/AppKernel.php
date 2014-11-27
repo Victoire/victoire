@@ -25,6 +25,7 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new JMS\AopBundle\JMSAopBundle(),
+            new JMS\TranslationBundle\JMSTranslationBundle(),
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new Liip\ImagineBundle\LiipImagineBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
@@ -46,6 +47,8 @@ class AppKernel extends Kernel
             new Victoire\Bundle\UserBundle\VictoireUserBundle(),
             new Victoire\Bundle\WidgetBundle\VictoireWidgetBundle(),
             new Victoire\Bundle\WidgetMapBundle\VictoireWidgetMapBundle(),
+            //Victoire test widget
+            new Victoire\Widget\AnakinBundle\VictoireWidgetAnakinBundle(),
             //AppVentus Bundles
             new AppVentus\AsseticInjectorBundle\AvAsseticInjectorBundle()
         );
