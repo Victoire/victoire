@@ -1,0 +1,3 @@
+services:
+    victoire_core.filter_chain:
+        class: Victoire\Bundle\FilterBundle\Filter\Chain\FilterChain
