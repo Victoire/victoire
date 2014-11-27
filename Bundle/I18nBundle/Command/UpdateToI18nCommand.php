@@ -1,5 +1,5 @@
 <?php
-namespace Victoire\Bundle\I18Bundle\Command;
+namespace Victoire\Bundle\I18nBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -26,7 +26,6 @@ class UpdateToI18nCommand extends ContainerAwareCommand
     {
         $defaultLocale = $input->getArgument('default-locale');
         $defaultLocale = $defaultLocale ? $defaultLocale : 'fr';
-
         $this->doUpdate($defaultLocale);
     }
 
@@ -42,7 +41,7 @@ class UpdateToI18nCommand extends ContainerAwareCommand
     		$view->setTranslation($locale, $locale);
     		$em->persist($view);
     	}
-    	
+
     	$em->flush();
     }
 }
