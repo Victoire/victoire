@@ -9,8 +9,8 @@ before_script:
   - npm install less
   - composer install --dev --prefer-dist
   # Prepare database
-  - php Tests/Functionnal/bin/console --env=test cache:clear
   - php Tests/Functionnal/bin/console --env=test doctrine:database:create
+  - php Tests/Functionnal/bin/console --env=test cache:clear
   - php Tests/Functionnal/bin/console --env=test doctrine:schema:create
   - php Tests/Functionnal/bin/console --env=test victoire:generate:view
   - php Tests/Functionnal/bin/console --env=test doctrine:fixtures:load --fixtures="Bundle/CoreBundle/DataFixtures/ORM" -n --append
@@ -24,6 +24,9 @@ before_script:
   - "java -jar selenium-server-standalone-2.44.0.jar > /dev/null &"
   - sleep 5
 
+
+after_script:
+  - php Tests/Functionnal/bin/console --env=test doctrine:database:drop --force
 
 script:
   - 'phpunit --coverage-text'
