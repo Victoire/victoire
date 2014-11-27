@@ -9,12 +9,13 @@ before_script:
   - npm install less
   - composer install --dev --prefer-dist
   # Prepare database
-  - mysql -e 'CREATE DATABASE victoire;'
   - php Tests/Functionnal/bin/console --env=test cache:clear
   - php Tests/Functionnal/bin/console --env=test doctrine:database:create
   - php Tests/Functionnal/bin/console --env=test doctrine:schema:create
   - php Tests/Functionnal/bin/console --env=test victoire:generate:view
   - php Tests/Functionnal/bin/console --env=test doctrine:fixtures:load --fixtures="Bundle/CoreBundle/DataFixtures/ORM" -n --append
+  - php Tests/Functionnal/bin/console --env=test assets:install Tests/Functionnal/web
+  - php Tests/Functionnal/bin/console --env=test assetic:dum
   - php Tests/Functionnal/bin/console --env=test server:run -r Tests/Functionnal/app/config/router_test.php
   # Run selenium server
   - "sh -e /etc/init.d/xvfb start"

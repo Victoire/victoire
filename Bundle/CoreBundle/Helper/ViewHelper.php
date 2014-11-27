@@ -1,5 +1,5 @@
 <?php
-namespace Victoire\Bundle\CoreBundle\Helper;
+namespace victoire\Bundle\CoreBundle\Helper;
 
 use Doctrine\Orm\EntityManager;
 use Gedmo\Sluggable\Util\Urlizer;
@@ -62,13 +62,8 @@ class ViewHelper
     public function getAllViewsReferences()
     {
         $viewsReferences = array();
-        $schemaManager = $this->em->getConnection()->getSchemaManager();
-        if ($schemaManager->tablesExist(array('vic_view')) == true) {
-            //This query is not optimized because we need the property "businessEntityName" later, and it's only present in Pattern pages
-            $views = $this->em->createQuery("SELECT v FROM VictoireCoreBundle:View v")->getResult();
-        } else {
-            $views = array();
-        }
+        //@todo This query is not optimized because we need the property "businessEntityName" later, and it's only present in Pattern pages
+        $views = $this->em->createQuery("SELECT v FROM VictoireCoreBundle:View v")->getResult();
 
         foreach ($views as $view) {
             $viewsReferences = array_merge($viewsReferences, $this->buildViewReference($view));
