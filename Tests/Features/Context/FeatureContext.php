@@ -6,8 +6,8 @@ use Behat\MinkExtension\Context\MinkContext;
 use Behat\Mink\Exception\UnsupportedDriverActionException;
 use Behat\Symfony2Extension\Context\KernelDictionary;
 use Behat\Symfony2Extension\Driver\KernelDriver;
-use Victoire\Bundle\TestsBundle\Features\Context\SubContext\AjaxSubContextTrait;
-use Victoire\Bundle\TestsBundle\Features\Context\SubContext\VictoireSubContextTrait;
+use Victoire\Tests\Features\Context\SubContext\AjaxSubContextTrait;
+use Victoire\Tests\Features\Context\SubContext\VictoireSubContextTrait;
 
 /**
  * Feature context.
@@ -15,7 +15,6 @@ use Victoire\Bundle\TestsBundle\Features\Context\SubContext\VictoireSubContextTr
 class FeatureContext extends MinkContext
 {
     private $parameters = array();
-    private $defaultDriver;
     use KernelDictionary;
     use AjaxSubContextTrait;
     use VictoireSubContextTrait;
@@ -35,12 +34,11 @@ class FeatureContext extends MinkContext
      */
     public function importVictoireSeed()
     {
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
+
         //clean db
-        $kernel = $this->getContainer()->get('kernel');
-        $seedsVictoire = $kernel->locateResource('@VictoireTestsBundle/Resources/seeds/seeds.sql');
-        $seedsVictoireQuery = file_get_contents($seedsVictoire);
-        $em->getConnection()->executeUpdate($seedsVictoireQuery);
+        $seedsVictoireQuery = file_get_contents(__DIR__.'/../seeds.sql');
+        $entityManager->getConnection()->executeUpdate($seedsVictoireQuery);
     }
 
     /**
@@ -74,6 +72,7 @@ class FeatureContext extends MinkContext
 
         return $profile;
     }
+
     /**
      * Checks, that page contains specified text.
      * @param string  $text    the text to check
@@ -83,6 +82,8 @@ class FeatureContext extends MinkContext
     {
         $element = $this->findAfterAjax($this->getSession()->getPage(), $text, $timeout);
         if (!$element) {
+
+            var_dump($this->getSession()->getPage()->getContent());
             $message = sprintf('The text "%s" was not found anywhere in the text of the current page.', $text);
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
@@ -132,33 +133,38 @@ class FeatureContext extends MinkContext
        }
     }
 
-   /**
-    * Try to select element, return null after 15 sec
-     * @param string  $element the element where search
-     * @param string  $value   the value to check
-     * @param integer $timeout in milliseconds
-     *
-     * @return boolean
-    */
-   public function findAfterAjax($element, $value, $timeout = 5000)
-   {
-       if ($timeout <= 0) {
-           return false;
-       }
+    /**
+     * Try to select element, return null after 15 sec
+      * @param string  $element the element where search
+      * @param string  $value   the value to check
+      * @param integer $timeout in milliseconds
+      *
+      * @return boolean
+     */
+    public function findAfterAjax($element, $value, $timeout = 5000)
+    {
+        if ($timeout <= 0) {
 
-       // Hack to be able to get an element case insensitively... How amazing is this code ? hu ?
-       $alphabetLower = '"'.implode('', range('a', 'z')).'"';
-       $alphabetUpper = '"'.implode('', range('A', 'Z')).'"';
+            //If the xpath method didn't worked (for example <div><i/> My sentence to find</div>) retry with simple search (no visibility handling... nevermind)
+            $actual = $element->getText();
+            $actual = preg_replace('/\s+/u', ' ', $actual);
+            $regex  = '/'.preg_quote($value, '/').'/ui';
 
-       $item = $element->find('xpath', '/descendant-or-self::*[contains(translate(text(), '.$alphabetUpper.', '.$alphabetLower.'), translate("' . $value. '", '.$alphabetUpper.', '.$alphabetLower.'))]');
+            return preg_match($regex, $actual);
+        }
 
-       if ($item) {
+        // Hack to be able to get an element case insensitively by xpath method
+        $alphabetLower = '"'.implode('', range('a', 'z')).'šœÿàáâãäåæçèéêëìíîïðñòóôõøùúûüýþö"';
+        $alphabetUpper = '"'.implode('', range('A', 'Z')).'ŠŒŸÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕØÙÚÛÜÝÞÖ"';
+
+        $item = $element->find('xpath', '/descendant-or-self::*[contains(translate(text(), '.$alphabetUpper.', '.$alphabetLower.'), translate("' . $value. '", '.$alphabetUpper.', '.$alphabetLower.'))]');
+
+        if ($item) {
            return $item;
-       } else {
+        } else {
            $this->getSession()->wait(100);
 
            return $this->findAfterAjax($element, $value, $timeout-100);
-       }
-
+        }
    }
 }

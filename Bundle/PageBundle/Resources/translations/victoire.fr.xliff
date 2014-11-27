@@ -2,95 +2,95 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
-            <trans-unit resname="new.page.modal.header">
+            <trans-unit id="1" resname="new.page.modal.header">
                 <source>new.page.modal.header</source>
                 <target>Nouvelle page</target>
             </trans-unit>
-            <trans-unit resname="new.template.modal.header">
+            <trans-unit id="2" resname="new.template.modal.header">
                 <source>new.template.modal.header</source>
                 <target>Nouveau modèle</target>
             </trans-unit>
-            <trans-unit resname="form.view.type.name.label">
+            <trans-unit id="3" resname="form.view.type.name.label">
                 <source>form.view.type.name.label</source>
                 <target>Nom</target>
             </trans-unit>
-            <trans-unit resname="form.view.type.parent.label">
+            <trans-unit id="4" resname="form.view.type.parent.label">
                 <source>form.view.type.parent.label</source>
                 <target>Page parente</target>
             </trans-unit>
-            <trans-unit resname="form.view.type.template.label">
+            <trans-unit id="5" resname="form.view.type.template.label">
                 <source>form.view.type.template.label</source>
                 <target>Modèle à utiliser</target>
             </trans-unit>
-            <trans-unit resname="form.page.type.bodyClass.label">
+            <trans-unit id="6" resname="form.page.type.bodyClass.label">
                 <source>form.page.type.bodyClass.label</source>
                 <target>Body Class</target>
             </trans-unit>
-            <trans-unit resname="form.page.type.bodyId.label">
+            <trans-unit id="7" resname="form.page.type.bodyId.label">
                 <source>form.page.type.bodyId.label</source>
                 <target>Body Id</target>
             </trans-unit>
-            <trans-unit resname="page.undeletable">
+            <trans-unit id="8" resname="page.undeletable">
                 <source>page.undeletable</source>
                 <target>Cette page n'est pas supprimable.</target>
             </trans-unit>
-            <trans-unit resname="modal.form.page.settings.title">
+            <trans-unit id="9" resname="modal.form.page.settings.title">
                 <source>modal.form.page.settings.title</source>
                 <target><![CDATA[Paramètres de la page  <strong>%pageName%</strong>]]></target>
             </trans-unit>
-            <trans-unit resname="modal.form.template.settings.title">
+            <trans-unit id="10" resname="modal.form.template.settings.title">
                 <source>modal.form.template.settings.title</source>
                 <target><![CDATA[Paramètres du modèle <strong>%templateName%</strong>]]></target>
             </trans-unit>
-            <trans-unit resname="form.page.type.slug.label">
+            <trans-unit id="11" resname="form.page.type.slug.label">
                 <source>form.page.type.slug.label</source>
                 <target>URL</target>
             </trans-unit>
-            <trans-unit resname="form.page.type.status.label">
+            <trans-unit id="12" resname="form.page.type.status.label">
                 <source>form.page.type.status.label</source>
                 <target>Statut de publication</target>
             </trans-unit>
-            <trans-unit resname="form.page.type.status.choice.label.draft">
+            <trans-unit id="13" resname="form.page.type.status.choice.label.draft">
                 <source>form.page.type.status.choice.label.draft</source>
                 <target>Brouillon</target>
             </trans-unit>
-            <trans-unit resname="form.page.type.status.choice.label.published">
+            <trans-unit id="14" resname="form.page.type.status.choice.label.published">
                 <source>form.page.type.status.choice.label.published</source>
                 <target>Publié</target>
             </trans-unit>
-            <trans-unit resname="form.page.type.status.choice.label.unpublished">
+            <trans-unit id="15" resname="form.page.type.status.choice.label.unpublished">
                 <source>form.page.type.status.choice.label.unpublished</source>
                 <target>Non publié</target>
             </trans-unit>
-            <trans-unit resname="form.page.type.status.choice.label.scheduled">
+            <trans-unit id="16" resname="form.page.type.status.choice.label.scheduled">
                 <source>form.page.type.status.choice.label.scheduled</source>
                 <target>Publier à partir du</target>
             </trans-unit>
-            <trans-unit resname="victoire.menu.publication.scheduled.tooltip">
+            <trans-unit id="17" resname="victoire.menu.publication.scheduled.tooltip">
                 <source>victoire.menu.publication.scheduled.tooltip</source>
                 <target>Cette page sera publiée à partir du %publication_date%.</target>
             </trans-unit>
-            <trans-unit resname="index.template.modal.header">
+            <trans-unit id="18" resname="index.template.modal.header">
                 <source>index.template.modal.header</source>
                 <target>Liste des modèles</target>
             </trans-unit>
-            <trans-unit resname="form.template.type.name.label">
+            <trans-unit id="19" resname="form.template.type.name.label">
                 <source>form.template.type.name.label</source>
                 <target>Nom</target>
             </trans-unit>
-            <trans-unit resname="form.template.type.template.label">
+            <trans-unit id="20" resname="form.template.type.template.label">
                 <source>form.template.type.template.label</source>
                 <target>Modèle à utiliser</target>
             </trans-unit>
-            <trans-unit resname="form.template.type.layout.label">
+            <trans-unit id="21" resname="form.template.type.layout.label">
                 <source>form.template.type.layout.label</source>
                 <target>Architecture</target>
             </trans-unit>
-            <trans-unit resname="form.template.type.bodyId.label">
+            <trans-unit id="22" resname="form.template.type.bodyId.label">
                 <source>form.template.type.bodyId.label</source>
                 <target>Body id</target>
             </trans-unit>
-            <trans-unit resname="form.template.type.bodyClass.label">
+            <trans-unit id="23" resname="form.template.type.bodyClass.label">
                 <source>form.template.type.bodyClass.label</source>
                 <target>Body class</target>
             </trans-unit>
@@ -106,7 +106,7 @@
                 <source>menu.page.template</source>
                 <target><![CDATA[<i class="vic-menuImg vic-menuImg-gear"></i> Template de la page]]></target>
             </trans-unit>
-            <trans-unit resname="menu.template.index">
+            <trans-unit id="24" resname="menu.template.index">
                 <source>menu.template.index</source>
                 <target><![CDATA[<i class="vic-menuImg vic-menuImg-gear"></i> Liste des modèles]]></target>
             </trans-unit>

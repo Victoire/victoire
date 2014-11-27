@@ -1,6 +1,6 @@
 <?php
 
-namespace Victoire\Bundle\TestsBundle\Features\Context\SubContext;
+namespace Victoire\Tests\Features\Context\SubContext;
 
 /**
  * This trait give some usefull methods for ajax navigation

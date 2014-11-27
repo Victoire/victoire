@@ -94,7 +94,6 @@ class WidgetController extends Controller
     {
         try {
             //services
-            $em = $this->getEntityManager();
             $view = $this->getViewByReferenceId($viewReference);
 
             $isNewPage = $view->getId() == null ? true : false;
@@ -191,8 +190,8 @@ class WidgetController extends Controller
 
             if (!$view->getId()) {
                 //This view does not have an id, so it's a non persisted BEP. To keep this new order, well have to persist it.
-                $this->getEntityManager()->persist($view);
-                $this->getEntityManager()->flush();
+                $this->get('doctrine.orm.entity_manager')->persist($view);
+                $this->get('doctrine.orm.entity_manager')->flush();
             }
 
             //recompute the order for the widgets

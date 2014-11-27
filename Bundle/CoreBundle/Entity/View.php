@@ -136,7 +136,7 @@ abstract class View
     protected $children;
 
     /**
-    * This relation it dynamicly added by PageSubscriber
+    * This relation is dynamicly added by PageSubscriber
     */
     protected $author;
 

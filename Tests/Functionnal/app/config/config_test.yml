@@ -12,12 +12,14 @@ framework:
     templating:
         engines: ['twig']
     default_locale:  "fr"
+    translator:      { fallback: "fr" }
     trusted_hosts:   ~
     trusted_proxies: ~
     session:
         handler_id:  ~
     fragments:       ~
     http_method_override: true
+    test: ~
 
 # Twig Configuration
 twig:
@@ -28,9 +30,15 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ ]
     filters:
         cssrewrite: ~
+        less:
+            node: "/usr/bin/node"
+            node_paths:
+                - "/usr/lib/node_modules"
+                - "%kernel.root_dir%/../../../node_modules"
+            apply_to: "\.less$"
+
 
 # Doctrine Configuration
 doctrine:
@@ -89,7 +97,6 @@ security:
         - { path: ^/admin/, role: ROLE_ADMIN }
 
 victoire_core:
-    applicative_bundle: FrontTemplateBundle
     watch_view_cache: false
     user_class: "Victoire\Bundle\UserBundle\Entity\User"
     templates:
@@ -98,3 +105,13 @@ victoire_core:
         fullWidth: "Contenu unique"
         home: "Accueil"
     slots: ~
+
+services:
+    twig.extension.text:
+       class: Twig_Extensions_Extension_Text
+       tags:
+           - { name: twig.extension }
+    twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl
+        tags:
+            - { name: twig.extension }

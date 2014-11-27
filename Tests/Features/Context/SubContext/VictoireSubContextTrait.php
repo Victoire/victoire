@@ -1,6 +1,6 @@
 <?php
 
-namespace Victoire\Bundle\TestsBundle\Features\Context\SubContext;
+namespace Victoire\Tests\Features\Context\SubContext;
 
 use Behat\Behat\Context\Step;
 
