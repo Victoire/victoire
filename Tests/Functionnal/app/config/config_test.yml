@@ -33,7 +33,7 @@ assetic:
     filters:
         cssrewrite: ~
         less:
-            node: "/usr/bin/node"
+            node: "/home/travis/.nvm/v0.10.32/bin/node"
             node_paths:
                 - "/usr/lib/node_modules"
                 - "%kernel.root_dir%/../../../node_modules"
