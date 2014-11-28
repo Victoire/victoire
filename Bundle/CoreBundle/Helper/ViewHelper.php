@@ -1,5 +1,5 @@
 <?php
-namespace victoire\Bundle\CoreBundle\Helper;
+namespace Victoire\Bundle\CoreBundle\Helper;
 
 use Doctrine\Orm\EntityManager;
 use Gedmo\Sluggable\Util\Urlizer;

@@ -4,7 +4,6 @@
     "description": "Victoire Bundles components",
     "keywords": ["cms", "victoire", "bundle"],
     "homepage": "http://appventus.com",
-    "license": "MIT",
     "authors": [
         {
             "name": "Paul Andrieux",
