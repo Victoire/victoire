@@ -9,8 +9,8 @@ before_script:
   - npm install less
   - composer install --dev --prefer-dist
   # Prepare database
-  - php Tests/Functionnal/bin/console --env=test cache:clear
   - php Tests/Functionnal/bin/console --env=test doctrine:database:create
+  - php Tests/Functionnal/bin/console --env=test cache:warmup
   - php Tests/Functionnal/bin/console --env=test doctrine:schema:create
   - php Tests/Functionnal/bin/console --env=test victoire:generate:view
   - php Tests/Functionnal/bin/console --env=test doctrine:fixtures:load --fixtures="Bundle/CoreBundle/DataFixtures/ORM" -n --append
