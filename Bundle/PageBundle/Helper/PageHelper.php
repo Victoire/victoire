@@ -335,21 +335,30 @@ class PageHelper extends ViewHelper
 
     public function cloneView(View $view)
     {
-        $this->widgetMapBuilder->build($view);
+        /**
+        * @Todo algo récursif
+        */
         $clonedView = clone $view;
-        $widgetMapToClone = $clonedView->getWidgetMap();
+        $widgetSlotsToClone = $clonedView->getSlots();
         $arrayMapOfWidgetMap = array();
-        $originalWidgetMap = $view->getWidgetMap();
+        $originalSlots = $view->getSlots();
 
         $clonedView->setId(null);
         $this->em->persist($clonedView);
-
-        foreach ($view->getWidgets() as $widget) {
-            $arrayMapOfWidget[$widget->getId()] = $widget;
-            $clonedWidget = clone $widget;
-            $clonedWidget->setId(null);
-            $clonedWidget->setView($clonedView);
-            $this->em->persist($clonedWidget);
+        foreach ($view->getSlots() as $slotKey => $slotVal) {
+            $arrayMapOfWidget[$slotKey] = array();
+            $clonedSlot = clone $slotVal;
+            $clonedSlot->setId(null);
+            foreach ($slotVal->getWidgetMaps() as $widgetMapKey => $widgetMapVal) {
+                $arrayMapOfWidget[$slotKey][$widgetMapKey] = array ();
+                foreach ($widgetMapVal as $widget) {
+                    $arrayMapOfWidget[$slotKey][$widgetMapKey][$widget->getId()] = $widget;
+                    $clonedWidget = clone $widget;
+                    $clonedWidget->setId(null);
+                    $clonedWidget->setView($clonedView);
+                    $this->em->persist($clonedWidget);
+                }
+            }
         }
 
         $this->em->persist($clonedView);
@@ -358,16 +367,23 @@ class PageHelper extends ViewHelper
         
         $i18n = $view->getI18n();
         $i18n->setTranslation($clonedView->getLocale(), $clonedView);
-
-        foreach ($widgetMapToClone as $widgetToChange) {
-            foreach ($originalWidgetMap as $originalWidgetKey => $originalWidgetVal) {
-                if ($originalWidgetVal->getId() === $widgetToChange->getId()) {
-                    $widgetMapToClone[$originalWidgetKey] = $widgetToChange;
-                } 
+        foreach ($widgetSlotsToClone as $slotCloneKey => $slotCloneVal) {
+            foreach($slotCloneVal->getWidgetMaps() as $widgetMapCloneKey => $widgetMapCloneVal) {
+                foreach ($widgetMapCloneVal->getWidgets() as $widgetCloneKey => $widgetCloneVal) {
+                    foreach ($originalSlots as $originalSlotKey => $originalSlotVal) {
+                        foreach($originalSlotVal->getWidgetMaps() as $originalMapKey => $originalMapVal) {
+                            foreach ($originalMapVal->getWidgets() as $originalWidgetKey => $originalWidgetVal) {
+                                if ($originalWidgetVal->getId() === $widgetCloneVal->getId()) {
+                                    $widgetSlotsToClone[$slotCloneKey][$widgetMapCloneKey][$widgetCloneKey] = $widgetCloneVal->getId();
+                                } 
+                            }
+                        }
+                    }
+                }
             }
         }
-
-        $clonedView->setWidgetMap($widgetMapToClone);
+            
+        $clonedView->setWidgetMap($widgetSlotsToClone);
         $this->em->persist($clonedView);
         $this->em->flush();
 
