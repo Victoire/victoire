@@ -16,7 +16,7 @@ use Symfony\Component\Debug\Debug;
 
 $input = new ArgvInput();
 
-$debug = getenv('SYMFONY_DEBUG') !== '0' && !$input->hasParameterOption(array('--no-debug', '')) && $env !== 'prod';
+$debug = getenv('SYMFONY_DEBUG') !== '0' && !$input->hasParameterOption(array('--no-debug', ''));
 
 if ($debug) {
     Debug::enable();
