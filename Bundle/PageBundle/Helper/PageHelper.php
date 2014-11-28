@@ -335,6 +335,7 @@ class PageHelper extends ViewHelper
 
     public function cloneView(View $view)
     {
+        $this->widgetMapBuilder->build($view);
         $clonedView = clone $view;
         $widgetMapToClone = $clonedView->getWidgetMap();
         $arrayMapOfWidgetMap = array();
@@ -345,10 +346,10 @@ class PageHelper extends ViewHelper
 
         foreach ($view->getWidgets() as $widget) {
             $arrayMapOfWidget[$widget->getId()] = $widget;
-            $clonedWidged = clone $widget;
-            $clonedWidged->setId(null);
+            $clonedWidget = clone $widget;
+            $clonedWidget->setId(null);
             $clonedWidget->setView($clonedView);
-            $this->em->persist($clonedWidged);
+            $this->em->persist($clonedWidget);
         }
 
         $this->em->persist($clonedView);
@@ -358,14 +359,14 @@ class PageHelper extends ViewHelper
         $i18n = $view->getI18n();
         $i18n->setTranslation($clonedView->getLocale(), $clonedView);
 
-        foreach ($widgetMapToClone as $widgetKeyToChange => $widgetValTochange) {
-            foreach ($originalWidgetMap as $originalWidget) {
-                if ($originalWidget->getId() === $widgetValToChange->getId()) {
-                    $newWidget = $originalWidgetMap[$originalWidget->getId()];
-                    $widgetValToChange->setId($newWidget->getId());
+        foreach ($widgetMapToClone as $widgetToChange) {
+            foreach ($originalWidgetMap as $originalWidgetKey => $originalWidgetVal) {
+                if ($originalWidgetVal->getId() === $widgetToChange->getId()) {
+                    $widgetMapToClone[$originalWidgetKey] = $widgetToChange;
                 } 
             }
         }
+
         $clonedView->setWidgetMap($widgetMapToClone);
         $this->em->persist($clonedView);
         $this->em->flush();
