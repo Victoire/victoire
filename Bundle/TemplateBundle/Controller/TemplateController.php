@@ -127,7 +127,7 @@ class TemplateController extends Controller
      * @Route("/{slug}/parametres", name="victoire_template_settings")
      * @Configuration\Template()
      */
-    public function settingsAction($slug)
+    public function settingsAction($slug, $newTranslation = false)
     {
         $em = $this->getDoctrine()->getManager();
         $template = $em->getRepository('VictoireTemplateBundle:Template')->findOneBySlug($slug);
@@ -136,8 +136,13 @@ class TemplateController extends Controller
 
         $templateForm->handleRequest($this->get('request'));
         if ($templateForm->isValid()) {
-            $em->persist($template);
-            $em->flush();
+            if (true == $newTranslation) {
+                    $this->get('victoire_core.view_helper')->addTranslation($template);
+            } else {
+                $em->persist($template);
+                $em->flush();
+            }
+
 
             return new JsonResponse(
                 array(

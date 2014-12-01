@@ -332,49 +332,4 @@ class PageHelper extends ViewHelper
 
         return $newPage;
     }
-
-    public function cloneView(View $view)
-    {
-
-        $clonedView = clone $view;
-        $widgetMapClone= $clonedView->getWidgetMap(false);
-        $arrayMapOfWidgetMap = array();
-
-        $clonedView->setId(null);
-        $this->em->persist($clonedView);
-
-        foreach ($clonedView->getWidgets() as $widgetKey => $widgetVal) {
-            $clonedWidget = clone $widgetVal;
-            $clonedWidget->setId(null);
-            $clonedWidget->setView($clonedView);
-            $this->em->persist($clonedWidget);
-            $arrayMapOfWidgetMap[$widgetVal->getId()] = $clonedWidget;
-        }
-
-        $this->em->persist($clonedView);
-        $this->em->refresh($view);
-        $this->em->flush();
-
-        foreach($widgetMapClone as $wigetSlotCloneKey => $widgetSlotCloneVal) {
-            foreach($widgetSlotCloneVal as $widgetMapItemKey => $widgetMapItemVal) {
-                $widgetId = $arrayMapOfWidgetMap[$widgetMapItemVal['widgetId']]->getId();
-                $widgetMapItemVal['widgetId'] = $widgetId;
-                $widgetMapClone[$wigetSlotCloneKey][$widgetMapItemKey] = $widgetMapItemVal;
-            }
-        } 
-        
-        $clonedView->setSlots(array()); 
-        $clonedView->setWidgetMap($widgetMapClone); 
-        
-        $i18n = $view->getI18n();
-        $i18n->setTranslation($clonedView->getLocale(), $clonedView);
-        
-
-        $this->em->persist($clonedView);
-        $this->em->flush();
-
-        return $clonedView;
-        
-    }
-
 }

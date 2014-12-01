@@ -7,7 +7,7 @@ services:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
     victoire_i18n.menu_listener:
-        class: Victoire\Bundle\I18nBundle\Listener\I18nMenuListener
+        class: Victoire\Bundle\I18nBundle\Listener\I18nPageMenuListener
         arguments: ["@victoire_core.admin_menu_builder"]
         tags:
             - { name: kernel.event_listener, event: victoire_core.page_menu.contextual, method: addContextual, priority: 100 }
@@ -39,3 +39,10 @@ services:
         arguments: ["%kernel.default_locale%"]
         tags:
             - { name: kernel.event_subscriber }
+
+
+    victoire_i18n.template_menu.contextual:
+        class: Victoire\Bundle\I18nBundle\Listener\I18nTemplateMenuListener
+        arguments: ["@victoire_core.admin_menu_builder"]
+        tags:
+            - { name: kernel.event_listener, event: victoire_core.template_menu.contextual, method: addContextual }

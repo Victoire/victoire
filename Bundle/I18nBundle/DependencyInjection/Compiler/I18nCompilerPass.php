@@ -15,7 +15,10 @@ class I18nCompilerPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
         $definition = $container->getDefinition('victoire_core.page_menu_listener');
-        $definition->setClass('Victoire\Bundle\I18nBundle\Listener\I18nMenuListener');
+        $definition->setClass('Victoire\Bundle\I18nBundle\Listener\I18nPageMenuListener');
+
+        $definition = $container->getDefinition('victoire_core.template_menu.contextual');
+        $definition->setClass('Victoire\Bundle\I18nBundle\Listener\I18nTemplateMenuListener');
         
     }
 }

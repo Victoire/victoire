@@ -5,7 +5,7 @@ namespace Victoire\Bundle\I18nBundle\Listener;
 use Victoire\Bundle\PageBundle\Listener\PageMenuListener;
 use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
 
-class I18nMenuListener extends PageMenuListener
+class I18nPageMenuListener extends PageMenuListener
 {
 
 	/**

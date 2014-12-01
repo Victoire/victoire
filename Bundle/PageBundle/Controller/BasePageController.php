@@ -135,7 +135,7 @@ class BasePageController extends AwesomeController
             //the form should be valid
             if ($form->isValid()) {
                 if (true == $newTranslation) {
-                    $this->get('victoire_page.page_helper')->cloneView($page);
+                    $this->get('victoire_core.view_helper')->addTranslation($page);
                 } else {
                     $em->persist($page);
                     $em->flush();
