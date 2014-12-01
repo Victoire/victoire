@@ -280,12 +280,17 @@ class ViewHelper
         $this->em->flush();
     }
 
-    public function cloneView($view)
+    public function cloneView($view, $templateName = null)
     {
 
         $clonedView = clone $view;
         $widgetMapClone= $clonedView->getWidgetMap(false);
         $arrayMapOfWidgetMap = array();
+
+        if(null !== $templateName) 
+        {
+            $clonedView->setName($templateName);
+        }
 
         $clonedView->setId(null);
         $this->em->persist($clonedView);
@@ -315,6 +320,12 @@ class ViewHelper
         
         $this->em->persist($clonedView);
         $this->em->flush();
+
+        if ($view instanceof BasePage) {
+            $template = $clonedView->getTemplate();
+            $templateName = $template->getName()." - ".$clonedView->getLocale(); 
+            $this->cloneView($template, $templateName);
+        }
 
         return $clonedView;
         
