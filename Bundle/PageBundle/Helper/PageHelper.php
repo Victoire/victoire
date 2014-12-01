@@ -337,9 +337,8 @@ class PageHelper extends ViewHelper
     {
 
         $clonedView = clone $view;
-        $widgetSlotsClone = $clonedView->getSlots();
+        $widgetMapClone= $clonedView->getWidgetMap(false);
         $arrayMapOfWidgetMap = array();
-        $originalSlots = $view->getSlots();
 
         $clonedView->setId(null);
         $this->em->persist($clonedView);
@@ -348,33 +347,34 @@ class PageHelper extends ViewHelper
             $clonedWidget = clone $widgetVal;
             $clonedWidget->setId(null);
             $clonedWidget->setView($clonedView);
-            $arrayMapOfWidgetMap[$widgetVal->getId()] = $clonedWidget; 
             $this->em->persist($clonedWidget);
+            $arrayMapOfWidgetMap[$widgetVal->getId()] = $clonedWidget;
         }
 
         $this->em->persist($clonedView);
         $this->em->refresh($view);
         $this->em->flush();
+
+        foreach($widgetMapClone as $wigetSlotCloneKey => $widgetSlotCloneVal) {
+            foreach($widgetSlotCloneVal as $widgetMapItemKey => $widgetMapItemVal) {
+                $widgetId = $arrayMapOfWidgetMap[$widgetMapItemVal['widgetId']]->getId();
+                $widgetMapItemVal['widgetId'] = $widgetId;
+                $widgetMapClone[$wigetSlotCloneKey][$widgetMapItemKey] = $widgetMapItemVal;
+            }
+        } 
+        
+        $clonedView->setSlots(array()); 
+        $clonedView->setWidgetMap($widgetMapClone); 
         
         $i18n = $view->getI18n();
         $i18n->setTranslation($clonedView->getLocale(), $clonedView);
         
-        foreach ($widgetSlotsClone as $widgetSlotCloneKey => $widgetSlotCloneVal) {
-            $widgetMapItemClone = $widgetSlotCloneVal->getWidgetMaps();
-            foreach ($originalSlots as $originalSlotKey => $originalSlotVal) {
-                $originalMapItem = $originalSlotVal->getWidgetMaps();
-                if ($originalMapItem->getWidgetId() === $widgetMapItemClone->getWidgetId()) {
-                    $widget = $arrayMapOfWidget[$originalMapItem->getWidgetId()];
-                    $widgetMapItemClone->setWidgetId($widget->getId());
-                }
-            }
-        }
-            
-        $clonedView->setSlots($widgetSlotsClone);
+
         $this->em->persist($clonedView);
         $this->em->flush();
 
         return $clonedView;
         
     }
+
 }
