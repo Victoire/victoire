@@ -17,6 +17,7 @@ class LocaleResolver
 	protected $localePattern;
 	protected $localePatternTable;
 	protected $defaultLocale;
+	protected $victoireLocale;
 
 	/**
 	* Constructor
@@ -25,11 +26,12 @@ class LocaleResolver
 	* @param string $localPatternTable
 	* @param string $defaultLocale
 	*/
-	public function __construct($localePattern, $localePatternTable, $defaultLocale) 
+	public function __construct($localePattern, $localePatternTable, $defaultLocale, $victoireLocale) 
 	{
 		$this->localePattern = $localePattern;
 		$this->localePatternTable = $localePatternTable;
 		$this->defaultLocale = $defaultLocale;
+		$this->victoireLocale = $victoireLocale;
 	}
 
 	/**
@@ -40,6 +42,7 @@ class LocaleResolver
 		if (HttpKernel::MASTER_REQUEST != $event->getRequestType()) {
             return;
         } else {
+        	//locale
         	$request = $event->getRequest();
         	switch ($this->localePattern) {
         		case self::PATTERNDOMAIN : 
@@ -53,8 +56,12 @@ class LocaleResolver
         	        break;
         	    default : 
         	        break; 
-        	}  
-        	
+        	} 
+
+        	//victoireLocale
+        	if (!$request->getSession()->get('victoire_locale')) {
+        		$request->getSession()->set('victoire_locale', $this->victoireLocale);
+        	}
         }
     }
     /**

@@ -3,23 +3,16 @@
 namespace Victoire\Bundle\I18nBundle\Translation;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Translation\Translator as BaseTranslator;
+use Symfony\Bundle\FrameworkBundle\Translation\Translator as BaseTranslator;
 use Symfony\Component\Translation\MessageSelector;
 
 class Translator extends BaseTranslator 
 {
-	
-    protected $container;
-    protected $selector;
-    protected $locale;
     protected $victoireLocale;
 
-    public function __construct(ContainerInterface $container, MessageSelector $selector = null, $cacheDir = null, $debug = false)
+    public function __construct(ContainerInterface $container, MessageSelector $selector, $loaderIds = array(), array $options = array())
     {
-        $this->container = $container;
-        $this->selector = $selector ?: new MessageSelector();
-        $this->cacheDir = $cacheDir;
-        $this->debug = $debug;
+        parent::__construct($container, $selector, $loaderIds, $options);
     }
 
 	/**
@@ -74,19 +67,27 @@ class Translator extends BaseTranslator
         return strtr($this->selector->choose($catalogue->get($id, $domain), (int) $number, $locale), $parameters);
     }
 
+    public function setContainer(ContainerInterface $container) 
+    {
+        $this->container = $container;
+    }
+
     public function getLocale()
     {
         if (null === $this->locale && $this->container->isScopeActive('request') && $this->container->has('request')) {
             $this->locale = $this->container->get('request')->getLocale();
         }
+    
         return $this->locale;
     }
-
+    
     public function getVictoireLocale() 
     {
     	if (null === $this->victoireLocale && $this->container->isScopeActive('request') && $this->container->has('request')) {
-            $this->victoireLocale = $this->container->get('request')->getSession()->get('victoire_locale');
+           $this->victoireLocale = $this->container->get('request')->getSession()->get('victoire_locale');
         }
+    
         return $this->victoireLocale;
     }
+    
 }

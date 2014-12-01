@@ -19,6 +19,11 @@ class I18nCompilerPass implements CompilerPassInterface
 
         $definition = $container->getDefinition('victoire_core.template_menu.contextual');
         $definition->setClass('Victoire\Bundle\I18nBundle\Listener\I18nTemplateMenuListener');
+
+        $definition = $container->getDefinition('translator.default');
+        $definition->setClass('Victoire\Bundle\I18nBundle\Translation\Translator');
+
+
         
     }
 }

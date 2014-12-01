@@ -2,7 +2,7 @@ services:
 
     victoire_i18n.locale_resolver:
         class: Victoire\Bundle\I18nBundle\Resolver\LocaleResolver
-        arguments: ['%locale_pattern%', '%locale_pattern_table%', '%locale%']
+        arguments: ['%locale_pattern%', '%locale_pattern_table%', '%locale%', '%victoire_locale%']
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
@@ -32,7 +32,7 @@ services:
 
     victoire_i18n.translator:
         class: Victoire\Bundle\I18nBundle\Translation\Translator
-        arguments: ["@service_container", "@translator.selector", "%kernel.cache_dir%", "true"]
+        arguments: ["@service_container", "@translator.selector", "%kernel.cache_dir%/translations%", "%kernel.debug%"]
     
     victoire_i18n.locale_listener:
         class: Victoire\Bundle\I18nBundle\Listener\LocaleListener
