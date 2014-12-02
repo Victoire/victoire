@@ -130,12 +130,14 @@ class BasePageController extends AwesomeController
         //if the form is posted
         if ($requestMethod === 'POST') {
             //bind data to the form
-            $form->handleRequest($this->get('request'));
+            $form->handleRequest($request);
 
             //the form should be valid
             if ($form->isValid()) {
-                if (true == $newTranslation) {
-                    $this->get('victoire_core.view_helper')->addTranslation($page);
+                if ('true' === $newTranslation) {
+                    $targetLocale = $page->getLocale();
+                    $page = $this->get('victoire_core.view_helper')->addTranslation($page);
+                    $request->setLocale($targetLocale);
                 } else {
                     $em->persist($page);
                     $em->flush();

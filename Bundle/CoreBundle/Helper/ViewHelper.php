@@ -270,28 +270,53 @@ class ViewHelper
 
     }
 
-    public function addTranslation($view) 
+    public function addTranslation(View $view, $loopIndex = 0, $locale = null) 
     {
+        if ($loopIndex === 0) {
+            $loopIndex+=1;
+            $locale = $view->getLocale();
+            $this->em->detach($view);
+        }        
+
+
+        if(null !== $view->getTemplate()) {
+            $template = $view->getTemplate();
+            if(null !== $template->getI18n()->getTranslation($locale)) {
+                $template = $template->getI18n()->getTranslation($viewLocale);
+            } else {
+                $templateName = $template->getName()." - ".$locale; 
+                $template = $this->addTranslation($template, $templateName, $locale);
+            }
+        }
+
         $clonedView = $this->cloneView($view);
+
+
+        if ($clonedView instanceof Template) {
+            $view->setTemplate($template);
+        }
+
         $i18n = $view->getI18n();
-        $i18n->setTranslation($clonedView->getLocale(), $clonedView);
+        $i18n->setTranslation($locale, $clonedView);
 
         $this->em->persist($clonedView);
         $this->em->flush();
+
+        return $clonedView;
     }
 
-    public function cloneView($view, $templateName = null)
+    public function cloneView(View $view, $templateName = null)
     {
-
         $clonedView = clone $view;
         $widgetMapClone= $clonedView->getWidgetMap(false);
         $arrayMapOfWidgetMap = array();
+
 
         if(null !== $templateName) 
         {
             $clonedView->setName($templateName);
         }
-
+        
         $clonedView->setId(null);
         $this->em->persist($clonedView);
 
@@ -304,7 +329,6 @@ class ViewHelper
         }
 
         $this->em->persist($clonedView);
-        $this->em->refresh($view);
         $this->em->flush();
 
         foreach($widgetMapClone as $wigetSlotCloneKey => $widgetSlotCloneVal) {
@@ -320,12 +344,6 @@ class ViewHelper
         
         $this->em->persist($clonedView);
         $this->em->flush();
-
-        if ($view instanceof BasePage) {
-            $template = $clonedView->getTemplate();
-            $templateName = $template->getName()." - ".$clonedView->getLocale(); 
-            $this->cloneView($template, $templateName);
-        }
 
         return $clonedView;
         

@@ -28,7 +28,6 @@ class UpdateToI18nCommand extends ContainerAwareCommand
         $defaultLocale = $input->getArgument('default-locale');
         $defaultLocale = $defaultLocale ? $defaultLocale : 'fr';
         $this->doUpdate($output, $defaultLocale);
-        exit;
     }
 
     protected function doUpdate(OutputInterface $output, $locale) 
