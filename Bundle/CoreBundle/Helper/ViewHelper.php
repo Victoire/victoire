@@ -276,22 +276,24 @@ class ViewHelper
             $locale = $view->getLocale();
             $this->em->detach($view);
         }
-         $loopIndex+=1;        
-
+        $loopIndex+=1; 
+        $template = null;
         if($view->getTemplate()) {
             $template = $view->getTemplate();
             if($template->getI18n()->getTranslation($locale)) {
                 $template = $template->getI18n()->getTranslation($locale);
             } else {
-                $templateName = $template->getName()." - ".$locale; 
+                $templateName = $template->getName()."-".$locale; 
                 $template = $this->addTranslation($template, $templateName, $loopIndex, $locale);
-                $template->setPages($view);
             }
-        } 
+        } else {
+            $templateName = $view->getName().'-'.$locale;
+        }
 
-        $clonedView = $this->cloneView($view, $templateName, $loopIndex);
-        if($clonedView instanceof Template) {
-            $view->setTemplate($clonedView);
+        $clonedView = $this->cloneView($view, $templateName);
+        if($clonedView instanceof Template && $view->getTemplate()) {
+           $clonedView->setTemplate($template);
+           $template->setPages($clonedView);          
         }
 
         $i18n = $view->getI18n();
@@ -303,9 +305,8 @@ class ViewHelper
         return $clonedView;
     }
 
-    public function cloneView(View $view, $templateName = null, $loopIndex = 0)
+    public function cloneView(View $view, $templateName = null)
     {
-        print_r('loopIndex = '.$loopIndex);
         $clonedView = clone $view;
         $widgetMapClone= $clonedView->getWidgetMap(false);
         $arrayMapOfWidgetMap = array();
@@ -327,7 +328,6 @@ class ViewHelper
         }
 
         $this->em->persist($clonedView);
-        $this->em->detach($view);
         $this->em->flush();
 
         foreach($widgetMapClone as $wigetSlotCloneKey => $widgetSlotCloneVal) {
