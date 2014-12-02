@@ -270,30 +270,28 @@ class ViewHelper
 
     }
 
-    public function addTranslation(View $view, $loopIndex = 0, $locale = null) 
+    public function addTranslation(View $view, $templateName = null, $loopIndex = 0, $locale = null) 
     {
         if ($loopIndex === 0) {
-            $loopIndex+=1;
             $locale = $view->getLocale();
             $this->em->detach($view);
-        }        
+        }
+         $loopIndex+=1;        
 
-
-        if(null !== $view->getTemplate()) {
+        if($view->getTemplate()) {
             $template = $view->getTemplate();
-            if(null !== $template->getI18n()->getTranslation($locale)) {
-                $template = $template->getI18n()->getTranslation($viewLocale);
+            if($template->getI18n()->getTranslation($locale)) {
+                $template = $template->getI18n()->getTranslation($locale);
             } else {
                 $templateName = $template->getName()." - ".$locale; 
-                $template = $this->addTranslation($template, $templateName, $locale);
+                $template = $this->addTranslation($template, $templateName, $loopIndex, $locale);
+                $template->setPages($view);
             }
-        }
+        } 
 
-        $clonedView = $this->cloneView($view);
-
-
-        if ($clonedView instanceof Template) {
-            $view->setTemplate($template);
+        $clonedView = $this->cloneView($view, $templateName, $loopIndex);
+        if($clonedView instanceof Template) {
+            $view->setTemplate($clonedView);
         }
 
         $i18n = $view->getI18n();
@@ -305,12 +303,12 @@ class ViewHelper
         return $clonedView;
     }
 
-    public function cloneView(View $view, $templateName = null)
+    public function cloneView(View $view, $templateName = null, $loopIndex = 0)
     {
+        print_r('loopIndex = '.$loopIndex);
         $clonedView = clone $view;
         $widgetMapClone= $clonedView->getWidgetMap(false);
         $arrayMapOfWidgetMap = array();
-
 
         if(null !== $templateName) 
         {
@@ -329,13 +327,16 @@ class ViewHelper
         }
 
         $this->em->persist($clonedView);
+        $this->em->detach($view);
         $this->em->flush();
 
         foreach($widgetMapClone as $wigetSlotCloneKey => $widgetSlotCloneVal) {
             foreach($widgetSlotCloneVal as $widgetMapItemKey => $widgetMapItemVal) {
-                $widgetId = $arrayMapOfWidgetMap[$widgetMapItemVal['widgetId']]->getId();
-                $widgetMapItemVal['widgetId'] = $widgetId;
-                $widgetMapClone[$wigetSlotCloneKey][$widgetMapItemKey] = $widgetMapItemVal;
+                if(isset($arrayMapOfWidgetMap[$widgetMapItemVal['widgetId']])) {
+                    $widgetId = $arrayMapOfWidgetMap[$widgetMapItemVal['widgetId']]->getId();
+                    $widgetMapItemVal['widgetId'] = $widgetId;
+                    $widgetMapClone[$wigetSlotCloneKey][$widgetMapItemKey] = $widgetMapItemVal;
+                }
             }
         } 
         

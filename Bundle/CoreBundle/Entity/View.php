@@ -79,7 +79,7 @@ abstract class View
      *
      * @Assert\NotNull()
      * Could be Template or BusinessEntityPagePattern
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\TemplateBundle\Entity\Template", inversedBy="inheritors")
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\TemplateBundle\Entity\Template", inversedBy="inheritors", cascade={"persist"})
      * @ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="CASCADE")
      *
      */

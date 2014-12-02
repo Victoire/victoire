@@ -136,7 +136,7 @@ class BasePageController extends AwesomeController
             if ($form->isValid()) {
                 if ('true' === $newTranslation) {
                     $targetLocale = $page->getLocale();
-                    $page = $this->get('victoire_core.view_helper')->addTranslation($page);
+                    $page = $this->get('victoire_core.view_helper')->addTranslation($page, $page->getName().'-'.$targetLocale);
                     $request->setLocale($targetLocale);
                 } else {
                     $em->persist($page);
