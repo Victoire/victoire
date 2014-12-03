@@ -26,5 +26,18 @@ class VictoireI18nExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
+        $container->setParameter(
+            'victoire_i18n.application_locales', $config['application_locales']
+        );
+        $container->setParameter(
+            'victoire_i18n.locale_pattern_table', $config['locale_pattern_table']
+        );
+        $container->setParameter(
+            'victoire_i18n.victoire_locale', $config['victoire_locale']
+        );
+        $container->setParameter(
+            'victoire_i18n.locale_pattern', $config['locale_pattern']
+        ); 
+
     }
 }

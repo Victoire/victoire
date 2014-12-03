@@ -18,11 +18,34 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $treeBuilder->root('victoire_i18n');
+        $rootNode = $treeBuilder->root('victoire_i18n');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+                ->scalarNode('victoire_locale')->defaultValue('fr')->end()
+            ->end()
+            ->children()
+                ->scalarNode('locale_pattern')->defaultValue('domain')->end()
+            ->end()
+            ->children()
+                ->arrayNode('locale_pattern_table')
+                    ->useAttributeAsKey(true)
+                    ->prototype('array')
+                        ->children()
+                            ->scalarNode('locale')->end()
+                        ->end()
+                    ->end()
+                ->defaultValue(array())
+                ->end()
+            ->end()
+            ->children()
+                ->arrayNode('application_locales')
+                    ->useAttributeAsKey(true)
+                    ->prototype('array')
+                    ->end()
+                ->defaultValue(array())
+                ->end()
+            ->end();
 
         return $treeBuilder;
     }

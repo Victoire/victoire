@@ -24,7 +24,7 @@ services:
     #ARTICLE
     victoire_blog.article.form.type:
         class: Victoire\Bundle\BlogBundle\Form\ArticleType
-        arguments: ["@doctrine.orm.entity_manager", "%application_locales%"]
+        arguments: ["@doctrine.orm.entity_manager", "%victoire_i18n.application_locales%"]
         tags:
             - { name: form.type, alias: victoire_article_type }
 
