@@ -59,7 +59,7 @@ trait VictoireSubContextTrait
      */
     public function iSwitchToEditMode($edit)
     {
-        $element = $this->getSession()->getPage()->find('xpath', 'descendant-or-self::*[@id="vic-topNavbar-right"]/li[1]');
+        $element = $this->getSession()->getPage()->find('xpath', 'descendant-or-self::*[@for="vic-switcher-editMode"]');
         $element->click();
     }
         /**
