@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
+use Victoire\Bundle\CoreBundle\Entity\View;
 
 /**
  * Page Type
@@ -64,7 +65,7 @@ abstract class ViewType extends AbstractType
                 $form->add('locale', 'choice', array(
                     'expanded' => false,
                     'multiple' => false,
-                    'choices'  => $this->applicationLocales,
+                    'choices'  => $this->getAvailableLocales($view),
                     'label'    => 'form.view.type.local.label'));
             }
         });
@@ -74,5 +75,19 @@ abstract class ViewType extends AbstractType
                 'label' => 'form.view.type.name.label'
             ));
     }
+
+    protected function getAvailableLocales(View $view) 
+    {
+        $choices = array();
+        $i18n = $view->getI18n();
+
+        foreach($this->applicationLocales as $localeKey => $localeVal) {
+            if($i18n->getTranslation($localeVal) === null ) {
+                array_push($choices, $this->applicationLocales[$localeKey]);
+            }
+        }
+
+        return $choices;
+    } 
 
 }
