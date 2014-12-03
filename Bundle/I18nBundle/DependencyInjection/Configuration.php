@@ -30,10 +30,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->arrayNode('locale_pattern_table')
                     ->useAttributeAsKey(true)
-                    ->prototype('array')
-                        ->children()
-                            ->scalarNode('locale')->end()
-                        ->end()
+                    ->prototype('scalar')
                     ->end()
                 ->defaultValue(array())
                 ->end()
@@ -41,9 +38,8 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->arrayNode('application_locales')
                     ->useAttributeAsKey(true)
-                    ->prototype('array')
+                    ->prototype('scalar')
                     ->end()
-                ->defaultValue(array())
                 ->end()
             ->end();
 
