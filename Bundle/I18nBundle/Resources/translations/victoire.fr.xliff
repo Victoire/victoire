@@ -10,6 +10,10 @@
         <source>menu.page.i18n.addTranslation</source>
         <target><![CDATA[<i class="vic-menuImg vic-menuImg-target"></i> Nouvelle Traduction]]></target>
       </trans-unit>
+      <trans-unit id="2b4bc58f7a180eda6e7a9dbd9fcd4b683464b611" resname="menu.template.i18n.addTranslation">
+        <source>menu.template.i18n.addTranslation</source>
+        <target state="new"><![CDATA[<i class="vic-menuImg vic-menuImg-target"></i> Nouvelle Traduction]]></target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

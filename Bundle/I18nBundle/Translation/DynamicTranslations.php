@@ -20,7 +20,8 @@ class DynamicTranslations implements TranslationContainerInterface
     public static function getTranslationMessages()
     {
         return array(
-            new Message('menu.page.i18n.addTranslation', 'victoire')
+            new Message('menu.page.i18n.addTranslation', 'victoire'),
+            new Message('menu.template.i18n.addTranslation', 'victoire')
         );
     }
 }
