@@ -25,5 +25,6 @@ abstract class BasePage extends View
         parent::__construct();
         $this->publishedAt = new \DateTime();
         $this->status = PageStatus::PUBLISHED;
+        $this->homepage = false;
     }
 }

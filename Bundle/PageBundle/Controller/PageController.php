@@ -32,7 +32,7 @@ class PageController extends BasePageController
         $em = $this->getEntityManager();
 
         //get the homepage
-        $homepage = $em->getRepository('VictoirePageBundle:Page')->findOneByHomepage(true);
+        $homepage = $em->getRepository('VictoirePageBundle:BasePage')->findOneByHomepage(true);
 
         if ($homepage !== null) {
             return $this->showAction($homepage->getUrl());

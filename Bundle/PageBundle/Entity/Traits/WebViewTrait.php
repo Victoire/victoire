@@ -61,6 +61,13 @@ trait WebViewTrait
     protected $publishedAt;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="homepage", type="boolean", nullable=false)
+     */
+    protected $homepage;
+
+    /**
      * Set seo
      * @param PageSeo $seo
      *
@@ -264,4 +271,28 @@ trait WebViewTrait
     {
         $this->computeUrl = $computeUrl;
     }
+
+    /**
+     * Get homepage
+     *
+     * @return boolean
+     */
+    public function isHomepage()
+    {
+        return $this->homepage;
+    }
+
+    /**
+     * Set homepage
+     *
+     * @param  string $homepage
+     * @return $this
+     */
+    public function setHomepage($homepage)
+    {
+        $this->homepage = $homepage;
+
+        return $this;
+    }
+
 }
