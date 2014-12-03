@@ -14,15 +14,24 @@ use Symfony\Component\Console\Input\ArrayInput;
  */
 class UpdateToI18nCommand extends ContainerAwareCommand
 {
+    /**
+    * this method is the configuration of the command
+    */
 	protected function configure()
     {
         $this
-            ->setName('victoire:update:i18n')
+            ->setName('victoire:migrate:i18n')
             ->setDescription('updater la base de donnée en I18n')
             ->addArgument('default-locale', InputArgument::OPTIONAL, 'Quelle est la langue de votre site?')
         ;
     }
 
+    /**
+    * @param InputInterface $input
+    * @param OutpuInterface $output
+    *
+    * this method is executed when we launch the command
+    */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $defaultLocale = $input->getArgument('default-locale');
@@ -30,6 +39,13 @@ class UpdateToI18nCommand extends ContainerAwareCommand
         $this->doUpdate($output, $defaultLocale);
     }
 
+    /**
+    * @param OutputInterface $output
+    * @param $locale the current locale of the application
+    * 
+    * this method allow you to update the schema with the new i18n entity and its relations.
+    *  it also sets all your views to the locale given in parameter and build the links
+    */
     protected function doUpdate(OutputInterface $output, $locale) 
     {
     	$container = $this->getApplication()->getKernel()->getContainer();
@@ -59,7 +75,11 @@ class UpdateToI18nCommand extends ContainerAwareCommand
     	$em->flush();
         $this->doGenerateViewCache($output);
     }
-
+    /**
+    * @param OutputInterface $output
+    *
+    * this call the command victoire:generate:view-cache
+    */
     protected function doGenerateViewCache(OutputInterface $output) 
     {
         $command = $this->getApplication()->find('victoire:generate:view-cache');

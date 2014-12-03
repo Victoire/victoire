@@ -36,13 +36,16 @@ services:
     
     victoire_i18n.locale_listener:
         class: Victoire\Bundle\I18nBundle\Listener\LocaleListener
-        arguments: ["%kernel.default_locale%"]
+        arguments: ["%kernel.default_locale%", "@service_container"]
         tags:
             - { name: kernel.event_subscriber }
-
 
     victoire_i18n.template_menu.contextual:
         class: Victoire\Bundle\I18nBundle\Listener\I18nTemplateMenuListener
         arguments: ["@victoire_core.admin_menu_builder"]
         tags:
             - { name: kernel.event_listener, event: victoire_core.template_menu.contextual, method: addContextual }
+    
+    victoire_i18n.i18nhelper:
+        class: Victoire\Bundle\I18nBundle\Helper\I18nHelper
+        arguments: ["@service_container"]

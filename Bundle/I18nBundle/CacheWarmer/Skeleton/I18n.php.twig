@@ -17,7 +17,7 @@ class I18n extends BaseI18n
 
 {% for locale in locales %}
     /**
-     * @ORM\OneToOne(targetEntity="Victoire\Bundle\CoreBundle\Entity\View")
+     * @ORM\OneToOne(targetEntity="Victoire\Bundle\CoreBundle\Entity\View", cascade={"persist"})
      * @ORM\JoinColumn(name="{{locale}}_id", referencedColumnName="id")
      */
     protected ${{ locale }};

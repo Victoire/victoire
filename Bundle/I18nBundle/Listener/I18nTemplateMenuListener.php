@@ -17,7 +17,7 @@ class I18nTemplateMenuListener extends TemplateMenuListener
     }
 
     /**
-     * add a contextual menu item
+     * This method is call to replace the base contextual TemplateMenuListener to add a new item in the menu when I18n is activated
      *
      * @param TemplateMenuContextualEvent $event
      *
@@ -32,7 +32,7 @@ class I18nTemplateMenuListener extends TemplateMenuListener
         $mainItem->addChild('menu.template.settings',
             array(
                 'route' => 'victoire_template_settings',
-                'routeParameters' => array('slug' => $template->getSlug(),'newTranslation' => false)
+                'routeParameters' => array('slug' => $template->getSlug())
                 )
         )->setLinkAttribute('data-toggle', 'vic-modal');
         $mainItem->addChild('menu.template.i18n.addTranslation',

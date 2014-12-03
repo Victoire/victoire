@@ -83,7 +83,7 @@ abstract class ViewType extends AbstractType
 
         foreach($this->applicationLocales as $localeKey => $localeVal) {
             if($i18n->getTranslation($localeVal) === null ) {
-                array_push($choices, $this->applicationLocales[$localeKey]);
+                $choices[$localeVal] = $localeVal;
             }
         }
 

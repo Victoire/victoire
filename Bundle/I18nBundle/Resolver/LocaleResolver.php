@@ -36,6 +36,8 @@ class LocaleResolver
 
 	/**
 	* @param GetResponseEvent $event
+	* method called on kernelRequest it sets the local in request depending on patterns
+	* it also set the victoire_locale wich is the locale of the application admin
 	*/
 	public function onKernelRequest(GetResponseEvent $event)
     {
@@ -68,6 +70,8 @@ class LocaleResolver
     * @param Request $request
     *
     * @return string 
+    *
+    * resolves the locale from host
     */
 	public function resolveFromDomain(Request $request) 
 	{
@@ -79,7 +83,9 @@ class LocaleResolver
 	/**
     * @param Request $request
     *
-    * @return string 
+    * @return string
+    *
+    * This method resolves the domain from locale 
     */
 	public function resolveDomainForLocale($locale) 
 	{
@@ -97,6 +103,8 @@ class LocaleResolver
     * @param Request $request
     *
     * @return string 
+	*
+    * this method resolves the locale from parameters pass in the url
     */
 	public function resolveAsParameterInUrl(Request $request) 
 	{

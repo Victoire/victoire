@@ -60,6 +60,7 @@ class PageAdministrationController extends PageController
      */
     public function settingsAction(Request $request, BasePage $page, $newTranslation = false)
     {
+       
         return new JsonResponse(parent::settingsAction($request, $page, $newTranslation));
     }
 

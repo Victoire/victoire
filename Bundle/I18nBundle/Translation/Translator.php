@@ -17,9 +17,15 @@ class Translator extends BaseTranslator
     );
     protected $loaderIds;
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     */
     public function __construct(ContainerInterface $container, MessageSelector $selector, $loaderIds = array(), array $options = array())
     {
         parent::__construct($container, $selector, $loaderIds, $options);
+        $this->container = $container;
     }
 
 	/**
@@ -43,6 +49,7 @@ class Translator extends BaseTranslator
 
         return strtr($this->catalogues[$locale]->get((string) $id, $domain), $parameters);
     }
+
     /**
      * {@inheritdoc}
      *
@@ -73,12 +80,10 @@ class Translator extends BaseTranslator
         }
         return strtr($this->selector->choose($catalogue->get($id, $domain), (int) $number, $locale), $parameters);
     }
-
-    public function setContainer(ContainerInterface $container) 
-    {
-        $this->container = $container;
-    }
-
+    
+    /**
+    * get the local in the session
+    */
     public function getLocale()
     {
         $this->locale = $this->container->get('request')->getLocale();
@@ -86,6 +91,9 @@ class Translator extends BaseTranslator
         return $this->locale;
     }
     
+    /**
+    * get the locale of the administration template
+    */
     public function getVictoireLocale() 
     {
         $this->locale = $this->container->get('request')->getSession()->get('victoire_locale');

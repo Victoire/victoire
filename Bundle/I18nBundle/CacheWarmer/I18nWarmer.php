@@ -18,6 +18,7 @@ class I18nWarmer extends CacheWarmer
      * Constructor
      *
      * @param unknown $annotationReader
+     * @param $applicationLocales the configures locales for the applicaton in I18n config
      */
     public function __construct($annotationReader, $applicationLocales)
     {
@@ -31,6 +32,8 @@ class I18nWarmer extends CacheWarmer
      * @param string $cacheDir The cache directory
      *
      * @throws Exception
+     *
+     * this method Read the cache and if the entity does not exists it loads it 
      */
     public function warmUp($cacheDir)
     {

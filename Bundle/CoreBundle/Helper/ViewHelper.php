@@ -270,6 +270,15 @@ class ViewHelper
 
     }
 
+    /**
+    * @param View $view, the view to translatate  
+    * @param $templatename the new name of the view
+    * @param $loopindex the current loop of iteration in recursion
+    * @param $locale the target locale to translate view
+    * 
+    * this methods allow you to add a translation to any view
+    * recursively to its subview
+    */
     public function addTranslation(View $view, $templateName = null, $loopIndex = 0, $locale = null) 
     {
         if ($loopIndex === 0) {
@@ -305,6 +314,13 @@ class ViewHelper
         return $clonedView;
     }
 
+    /**
+    * @param View $view
+    * @param $etmplateName the future name of the clone 
+    *
+    * this methods allows you to clone a view and its widgets and also the widgetmap
+    *
+    */
     public function cloneView(View $view, $templateName = null)
     {
         $clonedView = clone $view;

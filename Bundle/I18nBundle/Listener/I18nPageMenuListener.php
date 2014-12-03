@@ -19,7 +19,7 @@ class I18nPageMenuListener extends PageMenuListener
 	}
 
 	/**
-     * add a contextual menu item
+     * This method is call to replace the base contextual PageMenuListener to add a new item in the menu when I18n is activated
      *
      * @param PageMenuContextualEvent $event
      *
@@ -34,7 +34,7 @@ class I18nPageMenuListener extends PageMenuListener
         $mainItem->addChild('menu.page.settings',
             array(
                 'route' => 'victoire_core_page_settings',
-                'routeParameters' => array('id' => $page->getId(), 'newTranslation' => false)
+                'routeParameters' => array('id' => $page->getId())
             )
         )->setLinkAttribute('data-toggle', 'vic-modal');
         $mainItem->addChild('menu.page.seoSettings',

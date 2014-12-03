@@ -5,16 +5,29 @@ namespace Victoire\Bundle\I18nBundle\Listener;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class LocaleListener implements EventSubscriberInterface
 {
     private $defaultLocale;
+    protected $container;
 
-    public function __construct($defaultLocale = 'en')
+    /**
+    * Constructor
+    * @param $defaultLocale the default locale of the application
+    * @param ContainerInterface $container 
+    */
+    public function __construct($defaultLocale = 'fr', ContainerInterface $container)
     {
+        $this->container = $container;
         $this->defaultLocale = $defaultLocale;
     }
 
+    /**
+    * @param GetResponseEvent $event
+    *
+    * method called on kernel request used only to persist locale in session
+    */
     public function onKernelRequest(GetResponseEvent $event)
     {
         $request = $event->getRequest();
@@ -22,15 +35,24 @@ class LocaleListener implements EventSubscriberInterface
             return;
         }
         // on essaie de voir si la locale a été fixée dans le paramètre de routing _locale
-        if ($locale = $request->query->get('_locale')) {
+        if ($locale = $request->getLocale()) {
             $request->getSession()->set('_locale', $locale);
             $request->setLocale($locale);
         } else {
             // si aucune locale n'a été fixée explicitement dans la requête, on utilise celle de la session
             $request->setLocale($request->getSession()->get('_locale', $this->defaultLocale));
         }
+
+        $i18nHelper = $this->container->get('victoire_i18n.i18nhelper');
+        $host = $i18nHelper->getHost($request->getLocale());
+        if (null !== $host) {
+            $this->container->get('router')->getContext()->setHost($host);
+        }  
     }
 
+    /**
+    * method to set the event suscribed by the listener 
+    */
     public static function getSubscribedEvents()
     {
         return array(
