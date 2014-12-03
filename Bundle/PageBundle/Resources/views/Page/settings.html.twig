@@ -6,8 +6,6 @@
 {% form_theme form 'VictoireFormBundle:Form:fields.html.twig' %}
 {% block modal_container_classes %}{{ parent() }} vic-view-modal{% endblock modal_container_classes %}
 
-
-
 {% block modal_body_content %}
     <div class="vic-tab-content vic-modal-tab-content">
         {# Only display this business entity property list when related to a business entity #}
@@ -77,7 +75,11 @@
 
 
 {% block modal_header_title %}
-    {{ 'modal.form.page.settings.title'|trans({'%pageName%' : page.name}, 'victoire')|raw }}
+    {% if newTranslation == true %}
+        {{ 'modal.form.page.newtranslation.title'|trans({'%pageName%' : page.name}, 'victoire')|raw }}
+    {% else %}
+        {{ 'modal.form.page.settings.title'|trans({'%pageName%' : page.name}, 'victoire')|raw }}
+    {% endif %}
 {% endblock modal_header_title %}
 
 

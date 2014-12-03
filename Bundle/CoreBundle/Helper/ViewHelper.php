@@ -346,8 +346,6 @@ class ViewHelper
         $this->em->persist($clonedView);
         $this->em->flush();
 
-        return $clonedView;
-        
+        return $clonedView;   
     }
-
 }

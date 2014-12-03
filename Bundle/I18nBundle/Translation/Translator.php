@@ -5,10 +5,17 @@ namespace Victoire\Bundle\I18nBundle\Translation;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator as BaseTranslator;
 use Symfony\Component\Translation\MessageSelector;
+use Symfony\Component\Config\ConfigCache;
 
 class Translator extends BaseTranslator 
 {
-    protected $victoireLocale;
+
+    protected $container;
+    protected $options = array(
+        'cache_dir' => 'test',
+        'debug'     => true,
+    );
+    protected $loaderIds;
 
     public function __construct(ContainerInterface $container, MessageSelector $selector, $loaderIds = array(), array $options = array())
     {
@@ -74,20 +81,16 @@ class Translator extends BaseTranslator
 
     public function getLocale()
     {
-        if (null === $this->locale && $this->container->isScopeActive('request') && $this->container->has('request')) {
-            $this->locale = $this->container->get('request')->getLocale();
-        }
-    
+        $this->locale = $this->container->get('request')->getLocale();
+
         return $this->locale;
     }
     
     public function getVictoireLocale() 
     {
-    	if (null === $this->victoireLocale && $this->container->isScopeActive('request') && $this->container->has('request')) {
-           $this->victoireLocale = $this->container->get('request')->getSession()->get('victoire_locale');
-        }
-    
-        return $this->victoireLocale;
+        $this->locale = $this->container->get('request')->getSession()->get('victoire_locale');
+
+        return $this->locale;
     }
     
 }
