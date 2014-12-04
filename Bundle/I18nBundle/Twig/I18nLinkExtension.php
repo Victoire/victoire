@@ -1,40 +1,28 @@
 <?php
 
-namespace Victoire\Bundle\WidgetBundle\Twig;
+namespace Victoire\Bundle\I18nBundle\Twig;
 
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Victoire\Bundle\WidgetBundle\Twig\LinkExtension as BaseLinkExtension;
+use Victoire\Bundle\I18nBundle\Resolver\LocaleResolver;
 
 /**
  * Twig extension for rendering a link.
  *
  */
-class LinkExtension extends \Twig_Extension
+class I18nLinkExtension extends BaseLinkExtension
 {
-    protected $router;
-    protected $analytics;
 
-    public function __construct(Router $router, RequestStack $requestStack, $analytics)
+	protected $localeResolver;
+
+	public function __construct(Router $router, RequestStack $requestStack, $analytics, LocaleResolver $localeResolver)
     {
-        $this->router = $router;
-        $this->request = $requestStack->getCurrentRequest();
-        $this->analytics = $analytics;
-    }
-    /**
-     * Returns a list of functions to add to the existing list.
-     *
-     * @return array An array of functions
-     */
-    public function getFunctions()
-    {
-        return array(
-            new \Twig_SimpleFunction('vic_link_url', array($this, 'victoireLinkUrl')),
-            new \Twig_SimpleFunction('vic_link', array($this, 'victoireLink'), array('is_safe' => array('html'))),
-            new \Twig_SimpleFunction('vic_menu_link', array($this, 'victoireMenuLink'), array('is_safe' => array('html'))),
-        );
+        parent::__construct($router, $requestStack, $analytics);
+        $this->localeResolver = $localeResolver;
     }
 
-    /**
+	/**
      * Generate the complete link (with the a tag)
      * @param array  $parameters   The link parameters (go to LinkTrait to have the list)
      * @param string $avoidRefresh Do we have to refresh or not ?
@@ -44,13 +32,14 @@ class LinkExtension extends \Twig_Extension
      */
     public function victoireLinkUrl($parameters, $avoidRefresh = true, $url = "#")
     {
+        $locale = $this->request->getLocale();
         extract($parameters); //will assign $linkType, $attachedWidget, $routeParameters, $route, $page, $analyticsTrackCode
         switch ($linkType) {
             case 'page':
                 //fallback when a page is deleted cascading the relation as null (page_id = null)
                 if ($page) {
                     //avoid to refresh page when not needed
-                    $linkUrl = $this->router->generate('victoire_core_page_show', array('url' => $page->getUrl() ));
+                    $linkUrl = $this->router->generate('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl() ));
                     if ($this->request->getRequestUri() != $linkUrl || !$avoidRefresh) {
                         $url = $linkUrl;
                     }
@@ -64,7 +53,7 @@ class LinkExtension extends \Twig_Extension
                 if ($attachedWidget && method_exists($attachedWidget->getView(), 'getUrl')) {
 
                     //create base url
-                    $url = $this->router->generate('victoire_core_page_show', array('url' => $attachedWidget->getView()->getUrl()));
+                    $url = $this->router->generate('victoire_core_page_show', array('_locale'=> $locale, 'url' => $attachedWidget->getView()->getUrl()));
 
                     //If widget in the same view
                     if (rtrim($this->request->getRequestUri(), '/') == rtrim($url, '/')) {
@@ -89,10 +78,12 @@ class LinkExtension extends \Twig_Extension
      */
     public function victoireLink($parameters, $label, $attr = array(), $currentClass = 'active', $url = "#")
     {
+
+        $locale = $this->request->getLocale();
         extract($parameters); //will assign $linkType, $attachedWidget, $routeParameters, $route, $page, $analyticsTrackCode
 
         if ($linkType == 'attachedWidget' && $attachedWidget && method_exists($attachedWidget->getView(), 'getUrl')) {
-            $viewUrl = $this->router->generate('victoire_core_page_show', array('url' => $attachedWidget->getView()->getUrl() ));
+            $viewUrl = $this->router->generate('victoire_core_page_show', array('_locale' => $locale, 'url' => $attachedWidget->getView()->getUrl() ));
             if (rtrim($this->request->getRequestUri(), '/') == rtrim($viewUrl, '/')) {
                 $attr["data-scroll"] = "smooth" ;
             }
@@ -133,68 +124,5 @@ class LinkExtension extends \Twig_Extension
         $twigEnv = new \Twig_Environment(new \Twig_Loader_String());
 
         return $twigEnv->render('{{ link|raw }}', array('link' => '<a href="'.$url.'" '.implode($attributes, ' ').'>'.$label.'</a>'));
-    }
-
-    /**
-     * Generate the complete menu link item (with the li tag)
-     * @param array  $parameters The link parameters (go to LinkTrait to have the list)
-     * @param string $label      link label
-     * @param array  $attr       custom attributes
-     *
-     * @return string
-     */
-    public function victoireMenuLink($parameters, $label, $attr = array())
-    {
-        $linkAttr = array();
-        //is the link is active
-        if ($this->request->getRequestUri() == $this->victoireLinkUrl($parameters, false)) {
-            if (!isset($attr['class'])) {
-                $linkAttr['class'] = "";
-            }
-            $linkAttr['class'] .= "active"; //avoid to refresh page when not needed
-        }
-
-        $linkAttributes = array();
-        foreach ($linkAttr as $key => $_attr) {
-            if (is_array($_attr)) {
-                $linkAttr = implode($_attr, ' ');
-            } else {
-                $linkAttr = $_attr;
-            }
-            $linkAttributes[] = $key.'="'.$linkAttr.'"';
-        }
-
-        return '<li '.implode($linkAttributes, ' ').'>'.$this->victoireLink($parameters, $label, $attr, false, '#top').'</li>';
-
-    }
-
-    /**
-     * Add a given attribute to given attributes
-     * @param string $label
-     * @param string $value
-     * @param array  $attr  The current attributes array
-     *
-     * @return LinkExtension
-     **/
-    protected function addAttr($label, $value, $attr)
-    {
-        if (!isset($attr[$label])) {
-            $attr[$label] = "";
-        } else {
-            $attr[$label] .= " ";
-        }
-        $attr[$label] .= $value;
-
-        return $this;
-    }
-
-    /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
-     */
-    public function getName()
-    {
-        return 'victoire_link_extention';
     }
 }

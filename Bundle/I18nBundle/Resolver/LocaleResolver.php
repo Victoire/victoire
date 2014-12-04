@@ -57,7 +57,6 @@ class LocaleResolver
         	     case self::PATTERNPARAMETERINURL : 
         		    $locale = $this->resolveAsParameterInUrl($request);
         		    $request->setLocale($locale);
-        		    //$this->addLocaleInUrl($request);
 
         	        break;
         	    default : 
@@ -125,15 +124,5 @@ class LocaleResolver
 		} else {
 			return $this->defaultLocale;
 		}
-	}
-
-	public function getVictoireUrl($url) 
-	{
-		if($this->localePattern === self::PATTERNPARAMETERINURL) 
-		{
-			$url = substr($url, 3);
-		}
-
-		return $url;
 	}
 }

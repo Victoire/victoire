@@ -47,3 +47,21 @@ services:
         arguments: ["@service_container"]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+    victoire_i18n.routing_loader:
+        class: Victoire\Bundle\i18nBundle\Route\I18nRouteLoader
+        arguments:
+            - '%victoire_core.widgets%'
+            - '@victoire_i18n.locale_resolver'
+        tags:
+            - { name: routing.loader }
+
+    victoire_i18n.twig.link_extension:
+        class: Victoire\Bundle\I18NBundle\Twig\I18nLinkExtension
+        arguments:
+            - @router
+            - @request_stack
+            - %victoire_seo.analytics%
+            - "@victoire_i18n.locale_resolver"
+        tags:
+            - { name: twig.extension }
