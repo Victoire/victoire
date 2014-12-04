@@ -26,15 +26,19 @@
                         {{ form_row(form.template) }}
 
                         <div class="vic-form-group">
-                             <label for="victoire_page_settings_type_bodyClass" class="vic-control-label control-label vic-optional">
-                                {{ 'form.page.type.slug.label'|trans({}, 'victoire') }}
-                             </label>
 
-                             <div class="vic-form-url-slug">
-                                {{ url('victoire_core_page_show', {'url' : page.url })|replace({(page.slug): ''}) }}
+                             {% if newTranslation == false %}
+                                 <label for="victoire_page_settings_type_bodyClass" class="vic-control-label control-label vic-optional">
+                                    {{ 'form.page.type.slug.label'|trans({}, 'victoire') }}
+                                 </label>
 
-                                {{ form_widget(form.slug) }}
-                             </div>
+                                 <div class="vic-form-url-slug">
+                                    {{ url('victoire_core_page_show', {'url' : page.url })|replace({(page.slug): ''}) }}
+
+                                    {{ form_widget(form.slug) }}
+                                 </div>
+
+                            {% endif %}
                         </div>
                         {{form_row(form.locale)}}
                     </div>

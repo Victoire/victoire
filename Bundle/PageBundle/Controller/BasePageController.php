@@ -142,11 +142,10 @@ class BasePageController extends AwesomeController
                 } 
                 $em->persist($page);
                 $em->flush();
-                
 
                 $response =  array(
                     'success' => true,
-                    'url'     => $this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl()))
+                    'url'     => $this->generateUrl('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl()))
                 );
             } else {
                 $formErrorService = $this->get('av.form_error_service');
