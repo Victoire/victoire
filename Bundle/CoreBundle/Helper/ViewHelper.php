@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\CoreBundle\Helper;
 
 use Doctrine\Orm\EntityManager;
@@ -11,6 +12,7 @@ use Victoire\Bundle\BusinessEntityPageBundle\Helper\BusinessEntityPageHelper;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
+use Victoire\Widget\LayoutBundle\Entity\WidgetLayout;
 
 /**
  * Page helper
@@ -317,9 +319,8 @@ class ViewHelper
     public function cloneView(View $view, $templateName = null)
     {
         $clonedView = clone $view;
-        $widgetMapClone= $clonedView->getWidgetMap(false);
+        $widgetMapClone = $clonedView->getWidgetMap(false);
         $arrayMapOfWidgetMap = array();
-
         if(null !== $templateName) 
         {
             $clonedView->setName($templateName);
@@ -327,24 +328,45 @@ class ViewHelper
         
         $clonedView->setId(null);
         $this->em->persist($clonedView);
-
+        $widgetLayoutSlots = [];
+        $newWidgets = [];
         foreach ($clonedView->getWidgets() as $widgetKey => $widgetVal) {
             $clonedWidget = clone $widgetVal;
             $clonedWidget->setId(null);
             $clonedWidget->setView($clonedView);
             $this->em->persist($clonedWidget);
+            $newWidgets[] = $clonedWidget;
             $arrayMapOfWidgetMap[$widgetVal->getId()] = $clonedWidget;
+            if ($widgetVal instanceof WidgetLayout) {
+                $id = $widgetVal->getId();
+                $widgetLayoutSlots[$id] = $clonedWidget;
+            }
         }
+        $clonedView->setWidgets($newWidgets);
+        $this->em->persist($clonedView);
+        $this->em->refresh($view);
+        $this->em->flush();
+        $widgetSlotMap = [];
+        foreach ($widgetLayoutSlots as $_id => $_widget) {
+            foreach ($clonedView->getWidgets() as $_clonedWidget) {
+                if (preg_match('/^' . $_id . '_(.)/', $_clonedWidget->getSlot(), $matches)) {
+                    $newSlot = $_widget->getId() . '_' . $matches[1];
+                    $oldSlot = $_clonedWidget->getSlot();
+                    $_clonedWidget->setSlot($newSlot);
+                    $widgetSlotMap[$oldSlot] = $newSlot;
 
-         $this->em->persist($clonedView);
-         $this->em->refresh($view);
-         $this->em->flush();
-
+                }
+            }
+        }
+        $this->em->flush();
         foreach($widgetMapClone as $wigetSlotCloneKey => $widgetSlotCloneVal) {
             foreach($widgetSlotCloneVal as $widgetMapItemKey => $widgetMapItemVal) {
                 if(isset($arrayMapOfWidgetMap[$widgetMapItemVal['widgetId']])) {
                     $widgetId = $arrayMapOfWidgetMap[$widgetMapItemVal['widgetId']]->getId();
                     $widgetMapItemVal['widgetId'] = $widgetId;
+                    if (array_key_exists($wigetSlotCloneKey, $widgetSlotMap)) {
+                        $wigetSlotCloneKey = $widgetSlotMap[$wigetSlotCloneKey];
+                    }
                     $widgetMapClone[$wigetSlotCloneKey][$widgetMapItemKey] = $widgetMapItemVal;
                 }
             }

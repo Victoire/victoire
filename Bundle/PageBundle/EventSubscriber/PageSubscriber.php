@@ -12,6 +12,7 @@ use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\CoreBundle\Entity\Route;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
+use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\PageBundle\Helper\UrlHelper;
 
 /**
@@ -124,7 +125,7 @@ class PageSubscriber implements EventSubscriber
     public function postPersist(LifecycleEventArgs $eventArgs)
     {
         $entity = $eventArgs->getEntity();
-        if ($entity instanceof BasePage) {
+        if ($entity instanceof View) {
             $this->updateCache($entity);
         }
     }
@@ -135,7 +136,7 @@ class PageSubscriber implements EventSubscriber
      *
      * @return void
      */
-    protected function updateCache(BasePage $page)
+    protected function updateCache(View $page)
     {
 
         if ($page instanceof BusinessEntityPagePattern) {
