@@ -42,12 +42,6 @@ class LocaleListener implements EventSubscriberInterface
             // si aucune locale n'a été fixée explicitement dans la requête, on utilise celle de la session
             $request->setLocale($request->getSession()->get('_locale', $this->defaultLocale));
         }
-
-        $i18nHelper = $this->container->get('victoire_i18n.i18nhelper');
-        $host = $i18nHelper->getHost($request->getLocale());
-        if (null !== $host) {
-            $this->container->get('router')->getContext()->setHost($host);
-        }  
     }
 
     /**

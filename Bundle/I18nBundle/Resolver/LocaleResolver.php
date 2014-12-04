@@ -18,6 +18,7 @@ class LocaleResolver
 	protected $localePatternTable;
 	protected $defaultLocale;
 	protected $victoireLocale;
+	protected $applicationLocales;
 
 	/**
 	* Constructor
@@ -26,12 +27,13 @@ class LocaleResolver
 	* @param string $localPatternTable
 	* @param string $defaultLocale
 	*/
-	public function __construct($localePattern, $localePatternTable, $defaultLocale, $victoireLocale) 
+	public function __construct($localePattern, $localePatternTable, $defaultLocale, $victoireLocale, $applicationLocales) 
 	{
 		$this->localePattern = $localePattern;
 		$this->localePatternTable = $localePatternTable;
 		$this->defaultLocale = $defaultLocale;
 		$this->victoireLocale = $victoireLocale;
+		$this->applicationLocales = $applicationLocales;
 	}
 
 	/**
@@ -55,6 +57,8 @@ class LocaleResolver
         	     case self::PATTERNPARAMETERINURL : 
         		    $locale = $this->resolveAsParameterInUrl($request);
         		    $request->setLocale($locale);
+        		    //$this->addLocaleInUrl($request);
+
         	        break;
         	    default : 
         	        break; 
@@ -114,13 +118,22 @@ class LocaleResolver
 		} else {
 			$uri = ltrim ($uri, '/');
 		}
-
-		$endLocale  = strpos($uri, '/');
-		if (!empty($domain)) {
-		   $domain = substr($uri, 0, $endLocale);
-		   return $this->localePatternTable[$domain];
+		$endLocalePos  = strpos($uri, '/');
+		if (!empty($uri)) {
+		   $endLocale = substr($uri, 0, $endLocalePos);
+		   return $endLocale;
 		} else {
 			return $this->defaultLocale;
 		}
+	}
+
+	public function getVictoireUrl($url) 
+	{
+		if($this->localePattern === self::PATTERNPARAMETERINURL) 
+		{
+			$url = substr($url, 3);
+		}
+
+		return $url;
 	}
 }

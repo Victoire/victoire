@@ -33,6 +33,7 @@ services:
             - "@security.context"
             - "@gedmo.urlizer"
             - "@victoire_widget_map.builder"
+            - "@victoire_i18n.locale_resolver"
     victoire_page.url_helper:
         class: Victoire\Bundle\PageBundle\Helper\UrlHelper
         arguments:

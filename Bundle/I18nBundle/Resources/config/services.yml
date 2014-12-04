@@ -2,7 +2,7 @@ services:
 
     victoire_i18n.locale_resolver:
         class: Victoire\Bundle\I18nBundle\Resolver\LocaleResolver
-        arguments: ['%victoire_i18n.locale_pattern%', '%victoire_i18n.locale_pattern_table%', '%locale%', '%victoire_i18n.victoire_locale%']
+        arguments: ['%victoire_i18n.locale_pattern%', '%victoire_i18n.locale_pattern_table%', '%locale%', '%victoire_i18n.victoire_locale%', '%victoire_i18n.application_locales%']
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
@@ -11,10 +11,6 @@ services:
         arguments: ["@victoire_core.admin_menu_builder"]
         tags:
             - { name: kernel.event_listener, event: victoire_core.page_menu.contextual, method: addContextual, priority: 100 }
-
-    victoire_i18n.url.resolver:
-        class: Victoire\Bundle\I18nBundle\Resolver\UrlResolver
-        arguments: ["@victoire_page.page_helper", "@doctrine.orm.entity_manager"]
 
     victoire_i18n.cache_warmer.i18n_warmer:
         class: Victoire\Bundle\I18nBundle\CacheWarmer\I18nWarmer
@@ -33,7 +29,7 @@ services:
     victoire_i18n.translator:
         class: Victoire\Bundle\I18nBundle\Translation\Translator
         arguments: ["@service_container", "@translator.selector",{}, {cache_dir:"%kernel.cache_dir%/translations%", debug: "%kernel.debug%"}]
-    
+
     victoire_i18n.locale_listener:
         class: Victoire\Bundle\I18nBundle\Listener\LocaleListener
         arguments: ["%kernel.default_locale%", "@service_container"]
@@ -45,7 +41,9 @@ services:
         arguments: ["@victoire_core.admin_menu_builder"]
         tags:
             - { name: kernel.event_listener, event: victoire_core.template_menu.contextual, method: addContextual }
-    
-    victoire_i18n.i18nhelper:
-        class: Victoire\Bundle\I18nBundle\Helper\I18nHelper
+
+    victoire_i18n.domainResolver:
+        class: Victoire\Bundle\I18nBundle\Resolver\DomainResolver
         arguments: ["@service_container"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

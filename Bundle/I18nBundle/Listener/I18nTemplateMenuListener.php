@@ -32,7 +32,7 @@ class I18nTemplateMenuListener extends TemplateMenuListener
         $mainItem->addChild('menu.template.settings',
             array(
                 'route' => 'victoire_template_settings',
-                'routeParameters' => array('slug' => $template->getSlug())
+                'routeParameters' => array('slug' => $template->getSlug(), 'newTranslation' => false)
                 )
         )->setLinkAttribute('data-toggle', 'vic-modal');
         $mainItem->addChild('menu.template.i18n.addTranslation',

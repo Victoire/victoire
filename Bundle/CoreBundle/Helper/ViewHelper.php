@@ -279,12 +279,8 @@ class ViewHelper
     * this methods allow you to add a translation to any view
     * recursively to its subview
     */
-    public function addTranslation(View $view, $templateName = null, $loopIndex = 0, $locale = null) 
+    public function addTranslation(View $view, $viewName = null, $loopIndex = 0, $locale = null) 
     {
-        if ($loopIndex === 0) {
-            $locale = $view->getLocale();
-            $this->em->detach($view);
-        }
         $loopIndex+=1; 
         $template = null;
         if($view->getTemplate()) {
@@ -293,16 +289,14 @@ class ViewHelper
                 $template = $template->getI18n()->getTranslation($locale);
             } else {
                 $templateName = $template->getName()."-".$locale; 
-                $template = $this->addTranslation($template, $templateName, $loopIndex, $locale);
+                $template = $this->addTranslation($template, $templateName, $loopIndex, $locale);   
             }
-        } else {
-            $templateName = $view->getName().'-'.$locale;
-        }
-
-        $clonedView = $this->cloneView($view, $templateName);
+        } 
+        $clonedView = $this->cloneView($view, $view->getName().'-'.$locale);
+        $clonedView->setLocale($locale);
         if($clonedView instanceof Template && $view->getTemplate()) {
            $clonedView->setTemplate($template);
-           $template->setPages($clonedView);          
+           $template->setPages($clonedView);    
         }
 
         $i18n = $view->getI18n();
@@ -343,8 +337,9 @@ class ViewHelper
             $arrayMapOfWidgetMap[$widgetVal->getId()] = $clonedWidget;
         }
 
-        $this->em->persist($clonedView);
-        $this->em->flush();
+         $this->em->persist($clonedView);
+         $this->em->refresh($view);
+         $this->em->flush();
 
         foreach($widgetMapClone as $wigetSlotCloneKey => $widgetSlotCloneVal) {
             foreach($widgetSlotCloneVal as $widgetMapItemKey => $widgetMapItemVal) {
@@ -359,8 +354,8 @@ class ViewHelper
         $clonedView->setSlots(array()); 
         $clonedView->setWidgetMap($widgetMapClone); 
         
-        $this->em->persist($clonedView);
-        $this->em->flush();
+        // $this->em->persist($clonedView);
+        // $this->em->flush();
 
         return $clonedView;   
     }
