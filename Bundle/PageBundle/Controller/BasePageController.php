@@ -99,7 +99,7 @@ class BasePageController extends AwesomeController
      *
      * @return template
      */
-    protected function settingsAction(Request $request, BasePage $page, $newTranslation= false)
+    protected function settingsAction(Request $request, BasePage $page, $newTranslation = false)
     {
         $originalPageId = $newTranslation ? $page->getId(): null;
         $em = $this->getEntityManager();
@@ -139,10 +139,10 @@ class BasePageController extends AwesomeController
                     $this->getDoctrine()->getEntityManager()->refresh($page);
                     $page = $this->get('victoire_core.view_helper')->addTranslation($page, $page->getName().'-'.$targetLocale, $targetLocale);
                     $request->setLocale($targetLocale);
-                } else {
-                    $em->persist($page);
-                    $em->flush();
-                }
+                } 
+                $em->persist($page);
+                $em->flush();
+                
 
                 $response =  array(
                     'success' => true,

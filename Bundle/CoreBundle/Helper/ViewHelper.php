@@ -170,7 +170,7 @@ class ViewHelper
                 $page = $this->businessEntityPageHelper->generateEntityPageFromPattern($currentPattern, $entity);
                 $this->updatePageParametersByEntity($page, $entity);
                 $referenceId = $this->viewCacheHelper->getViewCacheId($view, $entity);
-                $viewsReferences[$page->getUrl().$view->getLocale()] = array(
+                $viewsReferences[$page->getUrl().$entity->getLocale()] = array(
                     'id'              => $referenceId,
                     'url'             => $page->getUrl(),
                     'locale'          => $entity->getLocale(),
@@ -290,11 +290,11 @@ class ViewHelper
                 $templateName = $template->getName()."-".$locale; 
                 $template = $this->addTranslation($template, $templateName, $locale);   
             }
-        } 
-        $clonedView = $this->cloneView($view, $view->getName().'-'.$locale);
-        $clonedView->setLocale($locale);
+        }
+        $view->setLocale($locale);
+        $view->setTemplate($template); 
+        $clonedView = $this->cloneView($view, $view->getName().'-'.$locale, $locale);
         if($clonedView instanceof Template && $view->getTemplate()) {
-           $clonedView->setTemplate($template);
            $template->setPages($clonedView);    
         }
 
