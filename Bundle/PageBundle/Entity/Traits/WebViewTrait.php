@@ -29,7 +29,7 @@ trait WebViewTrait
      * @var string
      * This property is computed by the method PageSubscriber::buildUrl
      *
-     * @ORM\Column(name="url", type="string", unique=true)
+     * @ORM\Column(name="url", type="string")
      */
     protected $url;
 

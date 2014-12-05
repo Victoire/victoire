@@ -11,7 +11,13 @@ use Victoire\Bundle\CoreBundle\Form\ViewType;
  */
 class BusinessEntityPagePatternType extends ViewType
 {
-
+    /**
+    * Constructor
+    */
+    public function __construct($applicationLocales) 
+    {
+        parent::__construct($application_locales);
+    }
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options

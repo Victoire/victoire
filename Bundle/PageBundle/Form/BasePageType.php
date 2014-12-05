@@ -13,6 +13,14 @@ use Victoire\Bundle\CoreBundle\Form\ViewType;
 abstract class BasePageType extends ViewType
 {
 
+    /*
+    * Constructor
+    */
+    public function __construct($applicationLocales) 
+    {
+        parent::__construct($applicationLocales);
+    }
+    
     /**
      * define form fields
      * @param FormBuilderInterface $builder
@@ -21,7 +29,6 @@ abstract class BasePageType extends ViewType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             $view = $event->getData();
             $form = $event->getForm();

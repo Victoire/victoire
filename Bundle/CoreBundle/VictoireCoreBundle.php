@@ -17,7 +17,6 @@ class VictoireCoreBundle extends Bundle
      */
     public function boot()
     {
-
         $driverChain = $this->container->get('doctrine.orm.entity_manager')->getConfiguration()->getMetadataDriverImpl();
 
         $proxyDriver = $this->container->get('victoire_core.entity_proxy.cache_driver');
@@ -31,8 +30,6 @@ class VictoireCoreBundle extends Bundle
      */
     public function build(ContainerBuilder $container)
     {
-        parent::build($container);
-
         $container->addCompilerPass(new TraductionCompilerPass());
         $container->addCompilerPass(new AccessMapCompilerPass());
     }

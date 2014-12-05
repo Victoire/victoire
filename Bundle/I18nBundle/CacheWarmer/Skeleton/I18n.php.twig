@@ -1,0 +1,65 @@
+<?php
+
+namespace Victoire\Bundle\I18nBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Victoire\Bundle\CoreBundle\Entity\View;
+use Victoire\Bundle\I18nBundle\Entity\BaseI18n;
+
+/**
+ * I18n
+ *
+ * @ORM\Entity
+ * @ORM\Table("vic_view_i18n")
+ */
+class I18n extends BaseI18n
+{
+
+{% for locale in locales %}
+    /**
+     * @ORM\OneToOne(targetEntity="Victoire\Bundle\CoreBundle\Entity\View", cascade={"persist"})
+     * @ORM\JoinColumn(name="{{locale}}_id", referencedColumnName="id")
+     */
+    protected ${{ locale }};
+    
+{% endfor %}
+{% for locale in locales %}
+    
+    /**
+    * function set{{ locale|capitalize }}
+    * @param View ${{ locale}} 
+    */
+    public function set{{ locale|capitalize }}(View ${{ locale }})
+    {
+        $this->{{ locale }} = ${{ locale}};
+    }
+
+    /**
+    * @return View 
+    */
+    public function get{{ locale|capitalize }}()
+    {
+        return $this->{{ locale }};
+    }
+{% endfor %}
+
+    /**
+    * @return View
+    */
+	public function getTranslation($locale) 
+	{
+		$callback = "get".ucfirst($locale);
+        return call_user_func_array(array($this, $callback), array());
+	}
+
+    /**
+    * @param string $locale
+    * @param View $view
+    */
+	public function setTranslation($locale, View $view) 
+	{
+		$callback = "set".ucfirst($locale);
+        return call_user_func_array(array($this, $callback), array($view));
+	}
+
+}

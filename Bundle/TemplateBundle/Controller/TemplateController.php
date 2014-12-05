@@ -124,10 +124,10 @@ class TemplateController extends Controller
      * @param string $slug The slug of view
      *
      * @return Response
-     * @Route("/{slug}/parametres", name="victoire_template_settings")
+     * @Route("/{slug}/{newTranslation}parametres", name="victoire_template_settings")
      * @Configuration\Template()
      */
-    public function settingsAction($slug)
+    public function settingsAction($slug, $newTranslation = false)
     {
         $em = $this->getDoctrine()->getManager();
         $template = $em->getRepository('VictoireTemplateBundle:Template')->findOneBySlug($slug);
@@ -136,8 +136,13 @@ class TemplateController extends Controller
 
         $templateForm->handleRequest($this->get('request'));
         if ($templateForm->isValid()) {
-            $em->persist($template);
-            $em->flush();
+            if (true == $newTranslation) {
+                $this->get('victoire_core.view_helper')->addTranslation($template);
+            } else {
+                $em->persist($template);
+                $em->flush();
+            }
+
 
             return new JsonResponse(
                 array(
@@ -153,7 +158,7 @@ class TemplateController extends Controller
                 "success" => true,
                 'html'    => $this->container->get('victoire_templating')->render(
                     'VictoireTemplateBundle:Template:settings.html.twig',
-                    array('template' => $template,'form' => $templateForm->createView())
+                    array('template' => $template,'form' => $templateForm->createView(), 'newTranslation' => $newTranslation)
                 )
             )
         );

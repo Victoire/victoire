@@ -9,6 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Victoire\Bundle\PageBundle\Entity\Slot;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
+use Victoire\Bundle\I18NBundle\Entity\I18n;
 
 /**
  * Victoire View
@@ -78,7 +79,7 @@ abstract class View
      *
      * @Assert\NotNull()
      * Could be Template or BusinessEntityPagePattern
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\TemplateBundle\Entity\Template", inversedBy="inheritors")
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\TemplateBundle\Entity\Template", inversedBy="inheritors", cascade={"persist"})
      * @ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="CASCADE")
      *
      */
@@ -162,14 +163,44 @@ abstract class View
     protected $reference;
 
     /**
+     * @ORM\Column(name="locale", type="string")
+     */
+    protected $locale;
+
+    /**
+     * @var string
+     *
+     * @ORM\OneToOne(targetEntity="\Victoire\Bundle\I18NBundle\Entity\I18n")
+     */
+    protected $i18n;
+
+    /**
      * contruct
      **/
-    public function __construct()
+    public function __construct($locale = "fr")
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
         $this->widgets = new ArrayCollection();
         $this->widgetMap = array();
+        $this->locale = $locale;
+        $this->initI18n();
+    }
+
+    public function initI18N() 
+    {
+        $this->i18n = new I18n();
+        $this->i18n->setTranslation($this->locale, $this);
+    }
+    public function getI18n() 
+    {
+        return $this->i18n;
+    }
+
+    public function setI18n(I18n $i18n) 
+    {
+        $this->i18n = $i18n;
+        return $this;
     }
 
     /**
@@ -199,6 +230,25 @@ abstract class View
     public function setId($id)
     {
         $this->id = $id;
+    }
+
+    /**
+     * Get locale
+     *
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    /**
+     * Set locale
+     * @param $locale
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
     }
 
     /**
@@ -296,9 +346,9 @@ abstract class View
     /**
      * Set parent
      *
-     * @param parent $parent
+     * @param \Victoire\Bundle\PageBundle\Entity\BasePage $parent
      */
-    public function setParent($parent)
+    public function setParent(\Victoire\Bundle\PageBundle\Entity\BasePage $parent = null)
     {
         $this->parent = $parent;
     }
@@ -306,7 +356,7 @@ abstract class View
     /**
      * Get parent
      *
-     * @return parent
+     * @return \Victoire\Bundle\PageBundle\Entity\BasePage parent
      */
     public function getParent()
     {

@@ -16,8 +16,12 @@ class ArticleType extends ViewType
 {
     private $em;
 
-    public function __construct(EntityManager $em)
+    /**
+    * Constructor
+    */
+    public function __construct(EntityManager $em, $applicationLocales)
     {
+        parent::__construct($applicationLocales);
         $this->em = $em;
     }
 

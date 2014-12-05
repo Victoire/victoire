@@ -6,8 +6,6 @@
 {% form_theme form 'VictoireFormBundle:Form:fields.html.twig' %}
 {% block modal_container_classes %}{{ parent() }} vic-view-modal{% endblock modal_container_classes %}
 
-
-
 {% block modal_body_content %}
     <div class="vic-tab-content vic-modal-tab-content">
         {# Only display this business entity property list when related to a business entity #}
@@ -20,7 +18,7 @@
         {% endif %}
 
         <div class="vic-tab-pane vic-active" id="basics">
-            <form method="POST" action="{{path('victoire_core_page_settings', {'id':page.id} )}}">
+            <form method="POST" action="{{path('victoire_core_page_settings', {'id':page.id, 'newTranslation': newTranslation} )}}">
                 <div class="vic-form-group">
                     <div class="vic-col-lg-8">
                         {{ form_row(form.name) }}
@@ -28,16 +26,21 @@
                         {{ form_row(form.template) }}
 
                         <div class="vic-form-group">
-                             <label for="victoire_page_settings_type_bodyClass" class="vic-control-label control-label vic-optional">
-                                {{ 'form.page.type.slug.label'|trans({}, 'victoire') }}
-                             </label>
 
-                             <div class="vic-form-url-slug">
-                                {{ url('victoire_core_page_show', {'url' : page.url })|replace({(page.slug): ''}) }}
+                             {% if newTranslation == false %}
+                                 <label for="victoire_page_settings_type_bodyClass" class="vic-control-label control-label vic-optional">
+                                    {{ 'form.page.type.slug.label'|trans({}, 'victoire') }}
+                                 </label>
 
-                                {{ form_widget(form.slug) }}
-                             </div>
+                                 <div class="vic-form-url-slug">
+                                    {{ url('victoire_core_page_show', {'url' : page.url })|replace({(page.slug): ''}) }}
+
+                                    {{ form_widget(form.slug) }}
+                                 </div>
+
+                            {% endif %}
                         </div>
+                        {{form_row(form.locale)}}
                     </div>
 
                     <div class="vic-col-lg-4">
@@ -76,7 +79,11 @@
 
 
 {% block modal_header_title %}
-    {{ 'modal.form.page.settings.title'|trans({'%pageName%' : page.name}, 'victoire')|raw }}
+    {% if newTranslation == true %}
+        {{ 'modal.form.page.newtranslation.title'|trans({'%pageName%' : page.name}, 'victoire')|raw }}
+    {% else %}
+        {{ 'modal.form.page.settings.title'|trans({'%pageName%' : page.name}, 'victoire')|raw }}
+    {% endif %}
 {% endblock modal_header_title %}
 
 

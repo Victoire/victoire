@@ -72,7 +72,7 @@ class TemplateMenuListener implements MenuListenerInterface
         return $mainItem;
     }
 
-    private function getMainItem()
+    public function getMainItem()
     {
         if ($menuTemplate = $this->menuBuilder->getTopNavbar()->getChild('menu.template')) {
             return $menuTemplate;

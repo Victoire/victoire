@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\CoreBundle\Helper;
 
 use Doctrine\Orm\EntityManager;
@@ -11,6 +12,7 @@ use Victoire\Bundle\BusinessEntityPageBundle\Helper\BusinessEntityPageHelper;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
+use Victoire\Widget\LayoutBundle\Entity\WidgetLayout;
 
 /**
  * Page helper
@@ -56,7 +58,8 @@ class ViewHelper
         'bodyId',
         'bodyClass',
         'slug',
-        'url'
+        'url',
+        'locale'
     );
 
     /**
@@ -169,9 +172,10 @@ class ViewHelper
                 $page = $this->businessEntityPageHelper->generateEntityPageFromPattern($currentPattern, $entity);
                 $this->updatePageParametersByEntity($page, $entity);
                 $referenceId = $this->viewCacheHelper->getViewCacheId($view, $entity);
-                $viewsReferences[$page->getUrl()] = array(
+                $viewsReferences[$page->getUrl().$entity->getLocale()] = array(
                     'id'              => $referenceId,
                     'url'             => $page->getUrl(),
+                    'locale'          => $entity->getLocale(),
                     'viewId'          => $page->getTemplate()->getId(),
                     'entityId'        => $entity->getId(),
                     'entityNamespace' => $this->em->getClassMetadata(get_class($entity))->name,
@@ -180,9 +184,10 @@ class ViewHelper
             } else {
 
                 $referenceId = $this->viewCacheHelper->getViewCacheId($view);
-                $viewsReferences[$view->getUrl()] = array(
+                $viewsReferences[$view->getUrl().$view->getLocale()] = array(
                     'id'              => $referenceId,
                     'url'             => $view->getUrl(),
+                    'locale'          => $view->getLocale(),
                     'viewId'          => $view->getId(),
                     'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
                 );
@@ -216,9 +221,10 @@ class ViewHelper
                             $page = $this->businessEntityPageHelper->generateEntityPageFromPattern($currentPattern, $entity);
                             $this->updatePageParametersByEntity($page, $entity);
                             $referenceId = $this->viewCacheHelper->getViewCacheId($view, $entity);
-                            $viewsReferences[$page->getUrl()] = array(
+                            $viewsReferences[$page->getUrl().$view->getLocale()] = array(
                                 'id'              => $referenceId,
                                 'url'             => $page->getUrl(),
+                                'locale'          => $entity->getLocale(),
                                 'viewId'          => $page->getTemplate()->getId(),
                                 'entityId'        => $entity->getId(),
                                 'entityNamespace' => $this->em->getClassMetadata(get_class($entity))->name,
@@ -233,8 +239,9 @@ class ViewHelper
 
         } elseif ($view instanceof BusinessEntityPage) {
             $referenceId = $this->viewCacheHelper->getViewCacheId($view);
-            $viewsReferences[$view->getUrl()] = array(
+            $viewsReferences[$view->getUrl().$view->getLocale()] = array(
                 'id'              => $referenceId,
+                'locale'          => $view->getLocale(),
                 'viewId'          => $view->getId(),
                 'patternId'       => $view->getTemplate()->getId(),
                 'url'             => $view->getUrl(),
@@ -244,15 +251,17 @@ class ViewHelper
             );
         } elseif ($view instanceof Template) {
             $referenceId = $this->viewCacheHelper->getViewCacheId($view);
-            $viewsReferences[$referenceId] = array(
+            $viewsReferences[$referenceId.$view->getLocale()] = array(
                 'id'              => $referenceId,
+                'locale'          => $view->getLocale(),
                 'viewId'          => $view->getId(),
                 'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
             );
         } else {
             $referenceId = $this->viewCacheHelper->getViewCacheId($view);
-            $viewsReferences[$view->getUrl()] = array(
+            $viewsReferences[$view->getUrl().$view->getLocale()] = array(
                 'id'              => $referenceId,
+                'locale'          => $view->getLocale(),
                 'viewId'          => $view->getId(),
                 'url'             => $view->getUrl(),
                 'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
@@ -263,4 +272,112 @@ class ViewHelper
 
     }
 
+    /**
+    * @param View $view, the view to translatate  
+    * @param $templatename the new name of the view
+    * @param $loopindex the current loop of iteration in recursion
+    * @param $locale the target locale to translate view
+    * 
+    * this methods allow you to add a translation to any view
+    * recursively to its subview
+    */
+    public function addTranslation(View $view, $viewName = null, $locale) 
+    {
+        $template = null;
+        if($view->getTemplate()) {
+            $template = $view->getTemplate();
+            if($template->getI18n()->getTranslation($locale)) {
+                $template = $template->getI18n()->getTranslation($locale);
+            } else {
+                $templateName = $template->getName()."-".$locale; 
+                $template = $this->addTranslation($template, $templateName, $locale);   
+            }
+        }
+        $view->setLocale($locale);
+        $view->setTemplate($template); 
+        $clonedView = $this->cloneView($view, $view->getName().'-'.$locale, $locale);
+        if($clonedView instanceof Template && $view->getTemplate()) {
+           $template->setPages($clonedView);    
+        }
+
+        $i18n = $view->getI18n();
+        $i18n->setTranslation($locale, $clonedView);
+
+        $this->em->persist($clonedView);
+        $this->em->flush();
+
+        return $clonedView;
+    }
+
+    /**
+    * @param View $view
+    * @param $etmplateName the future name of the clone 
+    *
+    * this methods allows you to clone a view and its widgets and also the widgetmap
+    *
+    */
+    public function cloneView(View $view, $templateName = null)
+    {
+        $clonedView = clone $view;
+        $widgetMapClone = $clonedView->getWidgetMap(false);
+        $arrayMapOfWidgetMap = array();
+        if(null !== $templateName) 
+        {
+            $clonedView->setName($templateName);
+        }
+        
+        $clonedView->setId(null);
+        $this->em->persist($clonedView);
+        $widgetLayoutSlots = [];
+        $newWidgets = [];
+        foreach ($clonedView->getWidgets() as $widgetKey => $widgetVal) {
+            $clonedWidget = clone $widgetVal;
+            $clonedWidget->setId(null);
+            $clonedWidget->setView($clonedView);
+            $this->em->persist($clonedWidget);
+            $newWidgets[] = $clonedWidget;
+            $arrayMapOfWidgetMap[$widgetVal->getId()] = $clonedWidget;
+            if ($widgetVal instanceof WidgetLayout) {
+                $id = $widgetVal->getId();
+                $widgetLayoutSlots[$id] = $clonedWidget;
+            }
+        }
+        $clonedView->setWidgets($newWidgets);
+        $this->em->persist($clonedView);
+        $this->em->refresh($view);
+        $this->em->flush();
+        $widgetSlotMap = [];
+        foreach ($widgetLayoutSlots as $_id => $_widget) {
+            foreach ($clonedView->getWidgets() as $_clonedWidget) {
+                if (preg_match('/^' . $_id . '_(.)/', $_clonedWidget->getSlot(), $matches)) {
+                    $newSlot = $_widget->getId() . '_' . $matches[1];
+                    $oldSlot = $_clonedWidget->getSlot();
+                    $_clonedWidget->setSlot($newSlot);
+                    $widgetSlotMap[$oldSlot] = $newSlot;
+
+                }
+            }
+        }
+        $this->em->flush();
+        foreach($widgetMapClone as $wigetSlotCloneKey => $widgetSlotCloneVal) {
+            foreach($widgetSlotCloneVal as $widgetMapItemKey => $widgetMapItemVal) {
+                if(isset($arrayMapOfWidgetMap[$widgetMapItemVal['widgetId']])) {
+                    $widgetId = $arrayMapOfWidgetMap[$widgetMapItemVal['widgetId']]->getId();
+                    $widgetMapItemVal['widgetId'] = $widgetId;
+                    if (array_key_exists($wigetSlotCloneKey, $widgetSlotMap)) {
+                        $wigetSlotCloneKey = $widgetSlotMap[$wigetSlotCloneKey];
+                    }
+                    $widgetMapClone[$wigetSlotCloneKey][$widgetMapItemKey] = $widgetMapItemVal;
+                }
+            }
+        } 
+        
+        $clonedView->setSlots(array()); 
+        $clonedView->setWidgetMap($widgetMapClone); 
+        
+        $this->em->persist($clonedView);
+        $this->em->flush();
+
+        return $clonedView;   
+    }
 }

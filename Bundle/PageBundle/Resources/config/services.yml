@@ -33,6 +33,7 @@ services:
             - "@security.context"
             - "@gedmo.urlizer"
             - "@victoire_widget_map.builder"
+            - "@victoire_i18n.locale_resolver"
     victoire_page.url_helper:
         class: Victoire\Bundle\PageBundle\Helper\UrlHelper
         arguments:
@@ -68,11 +69,13 @@ services:
 
     victoire_page.page.form.type:
         class: Victoire\Bundle\PageBundle\Form\PageType
+        arguments: ['%victoire_i18n.application_locales%']
         tags:
             - { name: form.type, alias: victoire_page_type }
 
     victoire_page.page_settings.form.type:
         class: Victoire\Bundle\PageBundle\Form\PageSettingsType
+        arguments: ['%victoire_i18n.application_locales%']
         tags:
             - { name: form.type, alias: victoire_page_settings_type }
 

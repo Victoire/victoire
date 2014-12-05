@@ -79,19 +79,20 @@ class ArticleController extends BasePageController
      * @param Request $request
      * @param Page    $article
      *
-     * @return template
-     * @Route("/{id}/settings", name="victoire_blog_article_settings")
-     * @Template()
+     * @Route("/{id}/{newTranslation}/settings", name="victoire_blog_article_settings", defaults={"newTranslation"=false})
+     * 
      * @ParamConverter("article", class="VictoireBlogBundle:Article")
+     * @return template
      */
-    public function settingsAction(Request $request, BasePage $article)
+    public function settingsAction(Request $request, BasePage $article, $newTranslation=false)
     {
-        $response = parent::settingsAction($request, $article);
+        $response = parent::settingsAction($request, $article, $newTranslation);
 
         $pattern = $article->getTemplate();
 
         $page = $this->container->get('victoire_page.page_helper')->findPageByParameters(array(
             'viewId' => $pattern->getId(),
+            'locale' => $request->getSession()->get('victoire_locale'),
             'entityId' => $article->getId()
         ));
         $response['url'] = $this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl()));
