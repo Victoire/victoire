@@ -136,7 +136,7 @@ class TemplateController extends Controller
 
         $templateForm->handleRequest($this->get('request'));
         if ($templateForm->isValid()) {
-            if (true == $newTranslation) {
+            if (true === $newTranslation) {
                 $this->get('victoire_core.view_helper')->addTranslation($template);
             } else {
                 $em->persist($template);

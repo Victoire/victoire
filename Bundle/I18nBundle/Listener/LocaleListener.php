@@ -10,16 +10,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class LocaleListener implements EventSubscriberInterface
 {
     private $defaultLocale;
-    protected $container;
 
     /**
     * Constructor
     * @param $defaultLocale the default locale of the application
-    * @param ContainerInterface $container 
     */
-    public function __construct($defaultLocale = 'fr', ContainerInterface $container)
+    public function __construct($defaultLocale = 'fr')
     {
-        $this->container = $container;
         $this->defaultLocale = $defaultLocale;
     }
 

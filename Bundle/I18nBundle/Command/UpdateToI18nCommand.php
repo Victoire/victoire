@@ -4,7 +4,6 @@ namespace Victoire\Bundle\I18nBundle\Command;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Victoire\Bundle\I18nBundle\Entity\I18n;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -60,7 +59,7 @@ class UpdateToI18nCommand extends ContainerAwareCommand
                                             '--force' => true
                                             )
                                         );
-        $resultCode = $command->run($doctrineInput, $output);
+        $command->run($doctrineInput, $output);
     	$views = $em->getRepository('VictoireCoreBundle:View')->findAll();
 
     	foreach ($views as $view) {
@@ -88,6 +87,6 @@ class UpdateToI18nCommand extends ContainerAwareCommand
                                             'command' => 'victoire:generate:view-cache'
                                             )
                                         );
-        $resultCode = $command->run($doctrineInput, $output);
+        $command->run($doctrineInput, $output);
     }
 }

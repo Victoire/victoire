@@ -9,7 +9,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DomainResolver
 {
-	
+	protected $localePattern;
+	protected $localePatternTable;
+
 	protected $container;
 
 	/**
@@ -31,14 +33,8 @@ class DomainResolver
     {
     	if (HttpKernel::MASTER_REQUEST != $event->getRequestType()) {
             return;
-        } else {
-        	$request = $event->getRequest();
-        	$locale = $request->getLocale();
-        	$host = $this->getHost($locale);
-        	if (null!== $host) {
-				$this->container->get('router')->getContext()->setHost($host);
-			} 
         }
+        //Todo implement 
     }
 
 	/**
