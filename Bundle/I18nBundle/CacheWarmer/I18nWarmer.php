@@ -47,7 +47,7 @@ class I18nWarmer extends CacheWarmer
         }
 
         $generator = new I18nGenerator($this->annotationReader, $this->applicationLocales);
-        $generator->setSkeletonDirs(__DIR__."/skeleton/");
+        $generator->setSkeletonDirs(__DIR__."/Skeleton/");
         $cacheContent = $generator->generate();
 
         $this->writeCacheFile($file, $cacheContent);
