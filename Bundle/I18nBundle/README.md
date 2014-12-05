@@ -3,21 +3,23 @@
 intégré a victoire c'est un composant pour gérer les sites multilingues. Il permet de traduire toutes les pages dcms de victoire en quelques clic.
 
 #Configuration type
+
+
     victoire_i18n:
-    victoire_locale: en
-    application_locales:
-        fr: fr
-        en: en
-        it: it
-        de: de
-        es: es 
-    locale_pattern: domain
-    locale_pattern_table:
-        example.fr: fr
-        example.en: en
-        example.it: it
-        example.de: de
-        example.es: es
+        victoire_locale: en
+        application_locales:
+            fr: fr
+            en: en
+            it: it
+            de: de
+            es: es 
+        locale_pattern: domain
+        locale_pattern_table:
+            example.fr: fr
+            example.en: en
+            example.it: it
+            example.de: de
+            example.es: es
   
   la ligne
   
@@ -35,7 +37,7 @@ au pattern domain il faut rajouter le local pattern table qui permet de faire co
 
 #commandes
 
-I18NBundle dispose d'une commande de migration vers i18n.
+I18nBundle dispose d'une commande de migration vers i18n.
 
 pour l'appeler dans la console tappez
 

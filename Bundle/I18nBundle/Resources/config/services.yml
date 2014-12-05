@@ -57,7 +57,7 @@ services:
             - { name: routing.loader }
 
     victoire_i18n.twig.link_extension:
-        class: Victoire\Bundle\I18NBundle\Twig\I18nLinkExtension
+        class: Victoire\Bundle\I18nBundle\Twig\I18nLinkExtension
         arguments:
             - @router
             - @request_stack
