@@ -31,7 +31,7 @@ class I18nGenerator extends Generator
     public function generate()
     {
 
-        $this->setSkeletonDirs(__DIR__."/skeleton/");
+        $this->setSkeletonDirs(__DIR__."/Skeleton/");
 
         return $this->render('I18n.php.twig', array('locales' => $this->applicationLocales));
     }
