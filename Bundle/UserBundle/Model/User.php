@@ -2,17 +2,17 @@
 
 namespace Victoire\Bundle\UserBundle\Model;
 
-use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Victoire User model
  */
-class User extends BaseUser
+class User extends BaseUser implements VictoireUserInterface
 {
     use \Gedmo\Timestampable\Traits\TimestampableEntity;
-    
+
     /**
     * @ORM\Id
     * @ORM\Column(type="integer")
@@ -33,6 +33,13 @@ class User extends BaseUser
      * @ORM\Column(name="lastname", type="string", length=255, nullable=true)
      */
     protected $lastname;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="locale", type="string", length=255, nullable=true)
+     */
+    protected $locale;
 
     /**
      * Get firstname
@@ -88,6 +95,29 @@ class User extends BaseUser
     public function getFullName()
     {
         return $this->firstname . " " . $this->lastname;
+    }
+
+    /**
+     * Get locale
+     *
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    /**
+     * Set locale
+     * @param string $locale
+     *
+     * @return $this
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+
+        return $this;
     }
 
 }
