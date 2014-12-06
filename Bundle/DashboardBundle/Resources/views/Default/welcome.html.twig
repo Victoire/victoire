@@ -11,8 +11,8 @@
 
 {% block content %}
 <div class="vic-container vic-masthead">
-    <h1>{{ 'dashboard.welcome.title'|trans({}, 'victoire')|desc('Welcome aboard !') }}</h1>
-    <p class="vic-lead">{{ 'dashboard.welcome.baseline'|trans({}, 'victoire')|desc('Congratulation, you are ready to rock on !') }}</p>
+    <h1>{{ 'dashboard.welcome.title'|trans({}, 'victoire') }}</h1>
+    <p class="vic-lead">{{ 'dashboard.welcome.baseline'|trans({}, 'victoire') }}</p>
     <p>
 
         {% if templates|length == 0 %}
@@ -26,13 +26,13 @@
                 {{ 'dashboard.welcome.action.homepage.new'|trans({}, 'victoire') }}
             </a>
             {% else %}
-            <a href="#" onclick='warn("{{ 'dashboard.welcome.title'|trans({}, 'victoire')|desc('Please create a model first') }}", 10000)' data-toggle="vic-modal" class="vic-btn vic-btn-outline-inverse vic-btn-lg">
+            <a href="#" onclick='warn("{{ 'dashboard.welcome.title'|trans({}, 'victoire') }}", 10000)' data-toggle="vic-modal" class="vic-btn vic-btn-outline-inverse vic-btn-lg">
                 {{ 'dashboard.welcome.action.homepage.new'|trans({}, 'victoire') }}
             </a>
             {% endif %}
         {% endif %}
         <a href="{{ path('victoire_core_page_new') }}" data-toggle="vic-modal" class="vic-btn vic-btn-outline-inverse vic-btn-lg">
-            {{ 'dashboard.welcome.action.page.new'|trans({}, 'victoire')|desc('Create a new page') }}
+            {{ 'dashboard.welcome.action.page.new'|trans({}, 'victoire') }}
         </a>
         {% endif %}
     </p>

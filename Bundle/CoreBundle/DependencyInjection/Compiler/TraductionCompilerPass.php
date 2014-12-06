@@ -22,11 +22,6 @@ class TraductionCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('jms_translation.config_factory')) {
-            error_log('Oups ! The service jms_translation.config_factory does not exists, you probably should install JMS Translation Bundle.');
-
-            return;
-        }
 
         $definition = $container->getDefinition('jms_translation.config_factory');
         $victoireBasePath = $container->getParameterBag()->get('kernel.root_dir').'/../src/Victoire';

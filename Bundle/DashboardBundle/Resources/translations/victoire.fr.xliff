@@ -6,27 +6,27 @@
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
     </header>
     <body>
-      <trans-unit resname="dashboard.welcome.title">
+      <trans-unit id="1" resname="dashboard.welcome.title">
         <source>dashboard.welcome.title</source>
         <target>Bienvenue à bord !</target>
       </trans-unit>
-      <trans-unit resname="dashboard.welcome.baseline">
+      <trans-unit id="2" resname="dashboard.welcome.baseline">
         <source>dashboard.welcome.baseline</source>
         <target>Merci d'avoir installé VictoireDCMS</target>
       </trans-unit>
-      <trans-unit resname="dashboard.welcome.baseline">
+      <trans-unit id="3" resname="dashboard.welcome.baseline">
         <source>dashboard.welcome.baseline</source>
         <target>Merci d'avoir installé VictoireDCMS</target>
       </trans-unit>
-      <trans-unit resname="dashboard.welcome.invite.template.new">
+      <trans-unit id="4" resname="dashboard.welcome.invite.template.new">
         <source>dashboard.welcome.invite.template.new</source>
         <target>Tout d'abord, créez le modèle de base</target>
       </trans-unit>
-      <trans-unit resname="dashboard.welcome.action.homepage.new">
+      <trans-unit id="5" resname="dashboard.welcome.action.homepage.new">
         <source>dashboard.welcome.action.homepage.new</source>
         <target>Créer la page d'accueil</target>
       </trans-unit>
-      <trans-unit resname="dashboard.welcome.action.page.new">
+      <trans-unit id="6" resname="dashboard.welcome.action.page.new">
         <source>dashboard.welcome.action.page.new</source>
         <target>Créer une nouvelle page</target>
       </trans-unit>

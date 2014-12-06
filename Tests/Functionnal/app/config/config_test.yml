@@ -1,0 +1,124 @@
+imports:
+    - { resource: @VictoireCoreBundle/Resources/config/config.yml }
+    - { resource: @VictoireTwigBundle/Resources/config/config.yml }
+
+framework:
+    secret:          "s3cr3t"
+    router:
+        resource: "%kernel.root_dir%/config/routing_test.yml"
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+    default_locale:  "fr"
+    translator:      { fallback: "fr" }
+    trusted_hosts:   ~
+    trusted_proxies: ~
+    session:
+        handler_id:  ~
+    fragments:       ~
+    http_method_override: true
+    test: ~
+
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+
+# Assetic Configuration
+assetic:
+    debug:          "%kernel.debug%"
+    use_controller: false
+    filters:
+        cssrewrite: ~
+        less:
+            node: "/home/travis/.nvm/v0.10.32/bin/node"
+            node_paths:
+                - "/usr/lib/node_modules"
+                - "%kernel.root_dir%/../../../node_modules"
+            apply_to: "\.less$"
+
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   "pdo_mysql"
+        host:     "localhost"
+        port:     "3306"
+        dbname:   "victoire"
+        user:     "travis"
+        password: ~
+        charset:  UTF8
+
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        auto_mapping: true
+        mappings:
+            gedmo_tree:
+                type: annotation
+                prefix: Gedmo\Tree\Entity
+                dir: "%kernel.root_dir%/../../../vendor/gedmo/doctrine-extensions/lib/Gedmo/Tree/Entity"
+                is_bundle: false
+
+stof_doctrine_extensions:
+    default_locale: fr_FR
+    orm:
+        default:
+            tree: true
+            sluggable: true
+
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: Victoire\Bundle\UserBundle\Entity\User
+
+security:
+    encoders:
+        Victoire\Bundle\UserBundle\Entity\User: sha512
+
+    providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username
+
+    firewalls:
+        main:
+            pattern: ^/
+            form_login:
+                provider:        fos_userbundle
+                csrf_provider:   form.csrf_provider
+                failure_path: /login
+                check_path: /login_check
+                default_target_path: /
+            logout: true
+            anonymous: true
+            switch_user: ~
+    access_control:
+        - { path: ^/admin/, role: ROLE_ADMIN }
+
+victoire_core:
+    watch_view_cache: false
+    user_class: "Victoire\Bundle\UserBundle\Entity\User"
+    templates:
+        layout: "::layout.html.twig"
+    layouts:
+        fullWidth: "Contenu unique"
+        home: "Accueil"
+    slots: ~
+
+services:
+    twig.extension.text:
+       class: Twig_Extensions_Extension_Text
+       tags:
+           - { name: twig.extension }
+    twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl
+        tags:
+            - { name: twig.extension }
+
+victoire_i18n:
+    victoire_locale: fr
+    available_locales:
+        fr: fr
+        en: en
+    locale_pattern: parameter

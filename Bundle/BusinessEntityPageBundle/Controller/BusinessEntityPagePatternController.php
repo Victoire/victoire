@@ -51,17 +51,14 @@ class BusinessEntityPagePatternController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            //the shortcuts service
-            $shortcuts = $this->get('av.shortcuts');
-
             //redirect to the page of the pagePattern
-            $completeUrl = $shortcuts->generateUrl('victoire_core_page_show', array('url' => $entity->getUrl()));
+            $completeUrl = $this->generateUrl('victoire_core_page_show', array('url' => $entity->getUrl()));
 
             $success = true;
         } else {
 
             //get the errors as a string
-            $errorMessage = $this->container->get('av.form_error_service')->getRecursiveReadableErrors($form);
+            $errorMessage = $this->container->get('victoire_form.error_helper')->getRecursiveReadableErrors($form);
         }
 
         return new JsonResponse(array(

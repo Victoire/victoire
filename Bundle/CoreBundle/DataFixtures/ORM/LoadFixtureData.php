@@ -1,6 +1,6 @@
 <?php
 
-namespace Victoire\Bundle\CoreBundle\DataFixtures\ORM;
+namespace victoire\Bundle\CoreBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -31,17 +31,14 @@ class LoadFixtureData extends AbstractFixture implements ContainerAwareInterface
      */
     public function load(ObjectManager $manager)
     {
-
         // Load fixtures files
         $files = array();
 
-        if ('test' != $this->container->getParameter('kernel.environment')) {
-            $files['user']      = $this->fileLocator->locate('@VictoireCoreBundle/DataFixtures/ORM/User/user.yml');
-            $files['folder']    = $this->fileLocator->locate('@VictoireCoreBundle/DataFixtures/ORM/Media/folder.yml');
-            $files['template']  = $this->fileLocator->locate('@VictoireCoreBundle/DataFixtures/ORM/View/template.yml');
-            $files['page']      = $this->fileLocator->locate('@VictoireCoreBundle/DataFixtures/ORM/View/page.yml');
-            $files['errorPage'] = $this->fileLocator->locate('@VictoireCoreBundle/DataFixtures/ORM/View/errorPage.yml');
-        }
+        $files['user']      = $this->fileLocator->locate('@VictoireCoreBundle/DataFixtures/ORM/User/user.yml');
+        $files['folder']    = $this->fileLocator->locate('@VictoireCoreBundle/DataFixtures/ORM/Media/folder.yml');
+        $files['template']  = $this->fileLocator->locate('@VictoireCoreBundle/DataFixtures/ORM/View/template.yml');
+        $files['page']      = $this->fileLocator->locate('@VictoireCoreBundle/DataFixtures/ORM/View/page.yml');
+        $files['errorPage'] = $this->fileLocator->locate('@VictoireCoreBundle/DataFixtures/ORM/View/errorPage.yml');
 
         Fixtures::load(
             $files,
@@ -49,9 +46,9 @@ class LoadFixtureData extends AbstractFixture implements ContainerAwareInterface
             array(
                 'providers'    => array($this),
                 'locale'       => 'fr_FR',
-                'persist_once' => false,
-                'user_class'   => $this->container->getParameter('victoire_core.user_class'), //loader will change user class
-        ));
+                'persist_once' => false
+            )
+        );
 
         $manager->flush();
     }

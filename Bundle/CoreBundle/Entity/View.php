@@ -136,7 +136,7 @@ abstract class View
     protected $children;
 
     /**
-    * This relation it dynamicly added by PageSubscriber
+    * This relation is dynamicly added by PageSubscriber
     */
     protected $author;
 
@@ -169,7 +169,7 @@ abstract class View
     /**
      * @var string
      *
-     * @ORM\OneToOne(targetEntity="\Victoire\Bundle\I18nBundle\Entity\I18n")
+     * @ORM\OneToOne(targetEntity="\Victoire\Bundle\I18nBundle\Entity\I18n", cascade={"persist", "remove"})
      */
     protected $i18n;
 
@@ -180,24 +180,6 @@ abstract class View
     {
         $this->widgets = new ArrayCollection();
         $this->widgetMap = array();
-        $this->initI18n();
-    }
-
-    public function initI18n()
-    {
-        $this->i18n = new I18n();
-        $this->i18n->setTranslation($this->locale, $this);
-    }
-    public function getI18n()
-    {
-        return $this->i18n;
-    }
-
-    public function setI18n(I18n $i18n)
-    {
-        $this->i18n = $i18n;
-
-        return $this;
     }
 
     /**
@@ -576,6 +558,40 @@ abstract class View
     public function setBodyClass($bodyClass)
     {
         $this->bodyClass = $bodyClass;
+
+        return $this;
+    }
+
+    /**
+     * Initialize I18n table
+     * @ORM\PrePersist
+     */
+    public function initI18n()
+    {
+        $this->i18n = new I18n();
+        $this->i18n->setTranslation($this->getLocale(), $this);
+    }
+
+    /**
+     * Get i18n
+     *
+     * @return string
+     */
+    public function getI18n()
+    {
+        return $this->i18n;
+    }
+
+    /**
+     * Set i18n
+     * @param string $i18n
+     *
+     * @return $this
+     */
+    public function setI18n(I18n $i18n)
+    {
+        $this->i18n = $i18n;
+        $this->i18n->setTranslation($this->getLocale(), $this);
 
         return $this;
     }

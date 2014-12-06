@@ -49,7 +49,9 @@ class I18n extends BaseI18n
 	public function getTranslation($locale) 
 	{
 		$callback = "get".ucfirst($locale);
-        return call_user_func_array(array($this, $callback), array());
+        if (method_exists($this, $callback)) {
+            return call_user_func_array(array($this, $callback), array());
+        }
 	}
 
     /**
@@ -59,7 +61,9 @@ class I18n extends BaseI18n
 	public function setTranslation($locale, View $view) 
 	{
 		$callback = "set".ucfirst($locale);
-        return call_user_func_array(array($this, $callback), array($view));
+        if (method_exists($this, $callback)) {
+            return call_user_func_array(array($this, $callback), array($view));
+        }
 	}
 
 }

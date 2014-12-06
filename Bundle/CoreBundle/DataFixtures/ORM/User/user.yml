@@ -6,8 +6,11 @@ Victoire\Bundle\UserBundle\Entity\User:
         firstname:         Nimba
         lastname:          Admin
         enabled:           true
+        locale:            fr
         locked:            false
         expired:           false
+        createdAt:         <dateTime('now')>
+        updatedAt:         <dateTime('now')>
         roles:
             ROLE_ADMIN: ROLE_ADMIN
             ROLE_VICTOIRE_DEVELOPER: ROLE_VICTOIRE_DEVELOPER
@@ -18,8 +21,11 @@ Victoire\Bundle\UserBundle\Entity\User:
         firstname:         Leny
         lastname:          Bernard
         enabled:           true
+        locale:            fr
         locked:            false
         expired:           false
+        createdAt:         <dateTime('now')>
+        updatedAt:         <dateTime('now')>
         roles:
             ROLE_ADMIN: ROLE_ADMIN
             ROLE_VICTOIRE_DEVELOPER: ROLE_VICTOIRE_DEVELOPER
@@ -30,8 +36,11 @@ Victoire\Bundle\UserBundle\Entity\User:
         firstname:         Paul
         lastname:          Andrieux
         enabled:           true
+        locale:            fr
         locked:            false
         expired:           false
+        createdAt:         <dateTime('now')>
+        updatedAt:         <dateTime('now')>
         roles:
             ROLE_ADMIN: ROLE_ADMIN
             ROLE_VICTOIRE_DEVELOPER: ROLE_VICTOIRE_DEVELOPER
@@ -42,8 +51,11 @@ Victoire\Bundle\UserBundle\Entity\User:
         firstname:         Loïc
         lastname:          Goyet
         enabled:           true
+        locale:            fr
         locked:            false
         expired:           false
+        createdAt:         <dateTime('now')>
+        updatedAt:         <dateTime('now')>
         roles:
             ROLE_ADMIN: ROLE_ADMIN
             ROLE_VICTOIRE_DEVELOPER: ROLE_VICTOIRE_DEVELOPER
@@ -54,8 +66,11 @@ Victoire\Bundle\UserBundle\Entity\User:
         firstname:         Charlie
         lastname:          Lucas
         enabled:           true
+        locale:            fr
         locked:            false
         expired:           false
+        createdAt:         <dateTime('now')>
+        updatedAt:         <dateTime('now')>
         roles:
             ROLE_ADMIN: ROLE_ADMIN
             ROLE_VICTOIRE_DEVELOPER: ROLE_VICTOIRE_DEVELOPER
@@ -66,8 +81,11 @@ Victoire\Bundle\UserBundle\Entity\User:
         firstname:         Clément
         lastname:          Menant
         enabled:           true
+        locale:            fr
         locked:            false
         expired:           false
+        createdAt:         <dateTime('now')>
+        updatedAt:         <dateTime('now')>
         roles:
             ROLE_ADMIN: ROLE_ADMIN
             ROLE_VICTOIRE_DEVELOPER: ROLE_VICTOIRE_DEVELOPER

@@ -3,6 +3,7 @@ Victoire\Bundle\TemplateBundle\Entity\Template:
         layout: fullWidth
         author: @admin
         name: Modèle de base
+        locale: fr
         slug: base
         undeletable: true
         createdAt: <dateTime('now')>
@@ -12,6 +13,7 @@ Victoire\Bundle\TemplateBundle\Entity\Template:
         template: @template_base
         author: @admin
         name: Modèle de page d'accueil
+        locale: fr
         slug: home
         undeletable: true
         createdAt: <dateTime('now')>

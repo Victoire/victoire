@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\Security\Core\Authentication\AuthenticationTrustResolverInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -65,8 +64,6 @@ class ExceptionListener extends BaseExceptionListener
                 return $this->handleAccessDeniedException($event, $exception);
             } elseif ($exception instanceof LogoutException) {
                 return $this->handleLogoutException($event, $exception);
-            } elseif ($exception instanceof NotFoundHttpException) {
-                return $this->handleNotFoundException($event, $exception);
             }
         } while (null !== $exception = $exception->getPrevious());
     }

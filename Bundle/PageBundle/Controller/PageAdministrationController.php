@@ -74,7 +74,7 @@ class PageAdministrationController extends PageController
      */
     public function deleteAction(BasePage $page)
     {
-        //@FIXME Disable this since the voter does not work properly
+        //@todo Disable this since the voter does not work properly
         // if (!$this->get('security.context')->isGranted('PAGE_OWNER', $page)) {
             // throw new AccessDeniedException("Nop ! you can't do such an action");
         // }

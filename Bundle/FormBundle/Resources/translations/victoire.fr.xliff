@@ -6,115 +6,115 @@
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
     </header>
     <body>
-      <trans-unit resname="(optional)">
+      <trans-unit id="1" resname="(optional)">
         <source>(optional)</source>
         <target><![CDATA[<em>(Optionnel)</em>]]></target>
       </trans-unit>
-      <trans-unit resname="victoire.collection.button.label.add_item">
+      <trans-unit id="2" resname="victoire.collection.button.label.add_item">
         <source>victoire.collection.button.label.add_item</source>
         <target>Ajouter un élément</target>
       </trans-unit>
-      <trans-unit resname="victoire.collection.button.label.remove_item">
+      <trans-unit id="3" resname="victoire.collection.button.label.remove_item">
         <source>victoire.collection.button.label.remove_item</source>
         <target>Supprimer un élément</target>
       </trans-unit>
-      <trans-unit resname="Link">
+      <trans-unit id="4" resname="Link">
         <source>Link</source>
         <target>Lien</target>
       </trans-unit>
-      <trans-unit resname="form.link_type.linkType.label">
+      <trans-unit id="5" resname="form.link_type.linkType.label">
         <source>form.link_type.linkType.label</source>
         <target>Type de lien</target>
       </trans-unit>
-      <trans-unit resname="form.link_type.linkType.page">
+      <trans-unit id="6" resname="form.link_type.linkType.page">
         <source>form.link_type.linkType.page</source>
         <target>Page</target>
       </trans-unit>
-      <trans-unit resname="form.link_type.linkType.none">
+      <trans-unit id="7" resname="form.link_type.linkType.none">
         <source>form.link_type.linkType.none</source>
         <target>Aucun lien</target>
       </trans-unit>
-      <trans-unit resname="form.link_type.linkType.route">
+      <trans-unit id="8" resname="form.link_type.linkType.route">
         <source>form.link_type.linkType.route</source>
         <target>Route</target>
       </trans-unit>
-      <trans-unit resname="form.link_type.linkType.url">
+      <trans-unit id="9" resname="form.link_type.linkType.url">
         <source>form.link_type.linkType.url</source>
         <target>URL</target>
       </trans-unit>
-      <trans-unit resname="form.link_type.linkType.widget">
+      <trans-unit id="10" resname="form.link_type.linkType.widget">
         <source>form.link_type.linkType.widget</source>
         <target>Ancre (Widget)</target>
       </trans-unit>
-      <trans-unit resname="form.link_type.url.label">
+      <trans-unit id="11" resname="form.link_type.url.label">
         <source>form.link_type.url.label</source>
         <target>URL</target>
       </trans-unit>
-      <trans-unit resname="form.link_type.page.label">
+      <trans-unit id="12" resname="form.link_type.page.label">
         <source>form.link_type.page.label</source>
         <target>Page</target>
       </trans-unit>
-      <trans-unit resname="form.link_type.page.blank">
+      <trans-unit id="13" resname="form.link_type.page.blank">
         <source>form.link_type.page.blank</source>
         <target>Choisissez une page</target>
       </trans-unit>
-      <trans-unit resname="form.link_type.attachedWidget.label">
+      <trans-unit id="14" resname="form.link_type.attachedWidget.label">
         <source>form.link_type.attachedWidget.label</source>
         <target>Ancre (Widget)</target>
       </trans-unit>
-      <trans-unit resname="form.link_type.attachedWidget.blank">
+      <trans-unit id="15" resname="form.link_type.attachedWidget.blank">
         <source>form.link_type.attachedWidget.blank</source>
         <target>Choisissez une ancre</target>
       </trans-unit>
-      <trans-unit resname="form.link_type.route.label">
+      <trans-unit id="16" resname="form.link_type.route.label">
         <source>form.link_type.route.label</source>
         <target>Route</target>
       </trans-unit>
-      <trans-unit resname="form.link_type.route_parameters.label">
+      <trans-unit id="17" resname="form.link_type.route_parameters.label">
         <source>form.link_type.route_parameters.label</source>
         <target>Paramètres de la route</target>
       </trans-unit>
-      <trans-unit resname="form.link_type.target.label">
+      <trans-unit id="18" resname="form.link_type.target.label">
         <source>form.link_type.target.label</source>
         <target>Comportement de la cible</target>
       </trans-unit>
-      <trans-unit resname="form.link_type.choice.target.parent">
+      <trans-unit id="19" resname="form.link_type.choice.target.parent">
         <source>form.link_type.choice.target.parent</source>
         <target>Même page (parent)</target>
       </trans-unit>
-      <trans-unit resname="form.link_type.choice.target.blank">
+      <trans-unit id="20" resname="form.link_type.choice.target.blank">
         <source>form.link_type.choice.target.blank</source>
         <target>Nouvel onglet (blank)</target>
       </trans-unit>
-      <trans-unit resname="form.link_type.analytics_track_code.label">
+      <trans-unit id="21" resname="form.link_type.analytics_track_code.label">
         <source>form.link_type.analytics_track_code.label</source>
         <target>Code de tracking</target>
       </trans-unit>
-      <trans-unit resname="form.link_type.analytics_track_code.help_block">
+      <trans-unit id="22" resname="form.link_type.analytics_track_code.help_block">
         <source>form.link_type.analytics_track_code.help_block</source>
         <target>Doit/Peut commencer par _gaq.push...</target>
       </trans-unit>
-      <trans-unit resname="form.link_type.analytics_track_code.placeholder">
+      <trans-unit id="23" resname="form.link_type.analytics_track_code.placeholder">
         <source>form.link_type.analytics_track_code.placeholder</source>
         <target>Tracking (onclick)</target>
       </trans-unit>
-      <trans-unit resname="form.link_type.choice.target.ajax-modal">
+      <trans-unit id="24" resname="form.link_type.choice.target.ajax-modal">
         <source>form.link_type.choice.target.ajax-modal</source>
         <target>Fenètre modale</target>
       </trans-unit>
-      <trans-unit resname="validator.link.error.message.pageMissing">
+      <trans-unit id="25" resname="validator.link.error.message.pageMissing">
         <source>validator.link.error.message.pageMissing</source>
         <target>Veuillez sélectionner une valeur pour la page liée</target>
       </trans-unit>
-      <trans-unit resname="validator.link.error.message.routeMissing">
+      <trans-unit id="26" resname="validator.link.error.message.routeMissing">
         <source>validator.link.error.message.routeMissing</source>
         <target>Veuillez sélectionner une valeur pour la route</target>
       </trans-unit>
-      <trans-unit resname="validator.link.error.message.urlMissing">
+      <trans-unit id="27" resname="validator.link.error.message.urlMissing">
         <source>validator.link.error.message.urlMissing</source>
         <target>Veuillez sélectionner une valeur pour la url</target>
       </trans-unit>
-      <trans-unit resname="validator.link.error.message.attachedWidgetMissing">
+      <trans-unit id="28" resname="validator.link.error.message.attachedWidgetMissing">
         <source>validator.link.error.message.attachedWidgetMissing</source>
         <target>Veuillez sélectionner une valeur pour le widget lié</target>
       </trans-unit>

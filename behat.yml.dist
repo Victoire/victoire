@@ -1,0 +1,24 @@
+default:
+    context:
+        class: Victoire\Tests\Features\Context\FeatureContext
+        parameters:
+            wd_host: 'http://localhost:4444/wd/hub'
+            capabilities: { "browser": "firefox", "version": "33"}
+    extensions:
+        Behat\Symfony2Extension\Extension:
+            mink_driver: true
+            kernel:
+                path: Tests/Functionnal/app/AppKernel.php
+                bootstrap: Tests/Functionnal/bootstrap.php
+        Behat\MinkExtension\Extension:
+            default_session: 'symfony2'
+            javascript_session: 'selenium2'
+            base_url:     'http://127.0.0.1:8000/app_test.php/'
+            browser_name: firefox
+            goutte: ~
+            selenium2:
+                wd_host: 'http://localhost:4444/wd/hub'
+                capabilities: { "browser": "firefox", "version": "33"}
+    paths:
+        features: Tests/Features/
+        bootstrap: %behat.paths.features%/bootstrap

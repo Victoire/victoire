@@ -2,43 +2,35 @@
  // Get Started //
 /////////////////
 
-@imagesPath: "img";
-@layoutPath: "layout";
-@vendorPath: "/vendor";
-@globalsPath: "globals";
-@bricksPath: "bricks";
-
-
-
   ////////////
  // Global //
 ////////////
 
-@import "@{globalsPath}/variables";
-@import "@{globalsPath}/mixins";
+@import "globals/variables";
+@import "globals/mixins";
 
   ////////////
  // Bricks //
 ////////////
 
-@import '@{bricksPath}/victoire/victoire';
-@import '@{bricksPath}/vic-menu/vic-menu';
-@import '@{bricksPath}/vic-menu-dropdown/vic-menu-dropdown';
-@import '@{bricksPath}/vic-menu-leftNavbar/vic-menu-leftNavbar';
-@import '@{bricksPath}/vic-switcher/vic-switcher';
-@import '@{bricksPath}/vic-forms/vic-forms';
-@import '@{bricksPath}/vic-dropdown-newWidget/vic-dropdown-newWidget';
-@import '@{bricksPath}/vic-modal/vic-modal';
-@import '@{bricksPath}/vic-widget/vic-widget';
-@import '@{bricksPath}/vic-circled/vic-circled';
-@import '@{bricksPath}/vic-btn/vic-btn';
-@import '@{bricksPath}/vic-dragAndDrop/vic-dragAndDrop';
-@import '@{bricksPath}/vic-images/vic-images';
-@import '@{bricksPath}/vic-tab/vic-tab';
-@import '@{bricksPath}/vic-panel/vic-panel';
-@import '@{bricksPath}/vic-naturalLanguageSelect/vic-naturalLanguageSelect';
-@import '@{bricksPath}/vic-items/vic-items';
-@import '@{bricksPath}/vic-mini-slot/vic-mini-slot';
+@import "bricks/victoire/victoire";
+@import "bricks/vic-menu/vic-menu";
+@import "bricks/vic-menu-dropdown/vic-menu-dropdown";
+@import "bricks/vic-menu-leftNavbar/vic-menu-leftNavbar";
+@import "bricks/vic-switcher/vic-switcher";
+@import "bricks/vic-forms/vic-forms";
+@import "bricks/vic-dropdown-newWidget/vic-dropdown-newWidget";
+@import "bricks/vic-modal/vic-modal";
+@import "bricks/vic-widget/vic-widget";
+@import "bricks/vic-circled/vic-circled";
+@import "bricks/vic-btn/vic-btn";
+@import "bricks/vic-dragAndDrop/vic-dragAndDrop";
+@import "bricks/vic-images/vic-images";
+@import "bricks/vic-tab/vic-tab";
+@import "bricks/vic-panel/vic-panel";
+@import "bricks/vic-naturalLanguageSelect/vic-naturalLanguageSelect";
+@import "bricks/vic-items/vic-items";
+@import "bricks/vic-mini-slot/vic-mini-slot";
 
 
 
@@ -46,9 +38,9 @@
  // Layout //
 ////////////
 
-@import '@{layoutPath}/general';
-@import '@{layoutPath}/login';
-@import '@{layoutPath}/homepage';
+@import "layout/general";
+@import "layout/login";
+@import "layout/homepage";
 
 
 
@@ -56,5 +48,5 @@
  // WIP //
 /////////
 
-@import 'ugly';
-@import 'cleanup';
+@import "ugly";
+@import "cleanup";

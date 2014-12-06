@@ -4,6 +4,7 @@ Victoire\Bundle\TwigBundle\Entity\ErrorPage:
         template: @template_base
         author: @admin
         name: Mauvaise Requete
+        locale: fr
         slug: mauvaise-requete
         undeletable: false
         status: published
@@ -15,6 +16,7 @@ Victoire\Bundle\TwigBundle\Entity\ErrorPage:
         template: @template_base
         author: @admin
         name: Interdit
+        locale: fr
         slug: erreur403
         undeletable: false
         status: published
@@ -26,6 +28,7 @@ Victoire\Bundle\TwigBundle\Entity\ErrorPage:
         template: @template_base
         author: @admin
         name: Page introuvable
+        locale: fr
         slug: erreur404
         undeletable: false
         status: published
@@ -37,6 +40,7 @@ Victoire\Bundle\TwigBundle\Entity\ErrorPage:
         template: @template_base
         author: @admin
         name: Erreur serveur
+        locale: fr
         slug: erreur500
         undeletable: false
         status: published
@@ -48,6 +52,7 @@ Victoire\Bundle\TwigBundle\Entity\ErrorPage:
         template: @template_base
         author: @admin
         name: Service indisponible
+        locale: fr
         slug: erreur503
         undeletable: false
         status: published
