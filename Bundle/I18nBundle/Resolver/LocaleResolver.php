@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
 * A class to guess the locale form URL
+* ref: victoire_i18n.locale_resolver
 */
 class LocaleResolver
 {

@@ -34,6 +34,7 @@ class PageHelper extends ViewHelper
 {
     protected $parameterConverter = null;
     protected $businessEntityHelper = null;
+    protected $bepHelper = null;
     protected $entityManager; // @doctrine.orm.entity_manager'
     protected $urlHelper; // @victoire_page.url_helper'
     protected $urlMatcher; // @victoire_page.matcher.url_matcher'
@@ -45,7 +46,9 @@ class PageHelper extends ViewHelper
     protected $session; // @session
     protected $securityContex; // @security.context
     protected $widgetMapBuilder; // @victoire_widget_map.builder
-    protected $localeResolver;
+    protected $localeResolver;   // @victoire_i18n.locale_resolver
+
+
 
     //@todo Make it dynamic please
     protected $pageParameters = array(
@@ -72,6 +75,7 @@ class PageHelper extends ViewHelper
      * @param Session                  $session
      * @param SecurityContext          $securityContext
      * @param WidgetMapBuilder         $widgetMapBuilder
+     * @param LocalResolver            $localeResolver
      */
     public function __construct(
         BETParameterConverter $parameterConverter,
@@ -88,8 +92,7 @@ class PageHelper extends ViewHelper
         Session $session,
         SecurityContext $securityContext,
         WidgetMapBuilder $widgetMapBuilder,
-        LocaleResolver $localeResolver,
-        WidgetMapBuilder $widgetMapBuilder
+        LocaleResolver $localeResolver
     )
     {
         $this->parameterConverter = $parameterConverter;
