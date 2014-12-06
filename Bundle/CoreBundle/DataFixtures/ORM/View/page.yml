@@ -3,6 +3,7 @@ Victoire\Bundle\PageBundle\Entity\Page:
         template: @template_home
         author: @admin
         name: Page d'accueil
+        locale: fr
         slug: home
         homepage: true
         undeletable: true
