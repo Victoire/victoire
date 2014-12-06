@@ -1,9 +1,9 @@
 <?php
 namespace Victoire\Bundle\PageBundle\Controller;
 
-use AppVentus\Awesome\ShortcutsBundle\Controller\AwesomeController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
@@ -13,7 +13,7 @@ use Victoire\Bundle\PageBundle\Entity\Page;
 /**
  * The base page controller is used to interact with all kind of pages
  **/
-class BasePageController extends AwesomeController
+class BasePageController extends Controller
 {
 
     public function showAction(Request $request, $url)
@@ -77,11 +77,11 @@ class BasePageController extends AwesomeController
                 "url"      => $this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl()))
             );
         } else {
-            $formErrorService = $this->container->get('av.form_error_service');
+            $formErrorHelper = $this->container->get('victoire_form.error_helper');
 
             return array(
                 "success" => false,
-                "message" => $formErrorService->getRecursiveReadableErrors($form),
+                "message" => $formErrorHelper->getRecursiveReadableErrors($form),
                 'html'    => $this->container->get('victoire_templating')->render(
                     $this->getBaseTemplatePath() . ':new.html.twig',
                     array('form' => $form->createView())
@@ -147,8 +147,8 @@ class BasePageController extends AwesomeController
                     'url'     => $this->generateUrl('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl()))
                 );
             } else {
-                $formErrorService = $this->get('av.form_error_service');
-                $errors = $formErrorService->getRecursiveReadableErrors($form);
+                $formErrorHelper = $this->get('victoire_form.error_helper');
+                $errors = $formErrorHelper->getRecursiveReadableErrors($form);
 
                 $response =  array(
                     'success' => false,

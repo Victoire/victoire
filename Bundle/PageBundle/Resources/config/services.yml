@@ -31,7 +31,6 @@ services:
             - "@victoire_core.view_cache_helper"
             - "@session"
             - "@security.context"
-            - "@gedmo.urlizer"
             - "@victoire_widget_map.builder"
             - "@victoire_i18n.locale_resolver"
     victoire_page.url_helper:

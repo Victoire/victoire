@@ -210,7 +210,6 @@ services:
             - "@victoire_business_entity_page.business_entity_page_helper"
             - "@doctrine.orm.entity_manager"
             - "@victoire_core.view_cache_helper"
-            - "@gedmo.urlizer"
 
     victoire_core.current_view:
         class: Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper

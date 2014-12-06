@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\WidgetBundle\Model;
 
-use AppVentus\Awesome\ShortcutsBundle\Service\FormErrorService;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Symfony\Component\DependencyInjection\Container;
@@ -11,6 +10,7 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 use Victoire\Bundle\CoreBundle\Annotations\Reader\AnnotationReader;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
+use Victoire\Bundle\FormBundle\Helper\FormErrorHelper;
 use Victoire\Bundle\PageBundle\Entity\Slot;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
@@ -32,7 +32,7 @@ class WidgetManager
     protected $widgetHelper;
     protected $widgetContentResolver;
     protected $em;
-    protected $formErrorService; // @av.form_error_service
+    protected $formErrorHelper; // @victoire_form.error_helper
     protected $request; // @request
     protected $widgetMapManager;
     protected $annotationReader;
@@ -48,7 +48,7 @@ class WidgetManager
      * @param WidgetContentResolver $widgetContentResolver
      * @param WidgetRenderer        $widgetRenderer
      * @param EntityManager         $em
-     * @param FormErrorService      $formErrorService
+     * @param FormErrorHelper       $formErrorHelper
      * @param Request               $request
      * @param WidgetMapManager      $widgetMapManager
      * @param WidgetMapHelper       $widgetMapHelper
@@ -65,7 +65,7 @@ class WidgetManager
         WidgetContentResolver $widgetContentResolver,
         WidgetRenderer $widgetRenderer,
         EntityManager $em,
-        FormErrorService $formErrorService,
+        FormErrorHelper $formErrorHelper,
         Request $request,
         WidgetMapManager $widgetMapManager,
         WidgetMapHelper $widgetMapHelper,
@@ -82,7 +82,7 @@ class WidgetManager
         $this->widgetContentResolver = $widgetContentResolver;
         $this->widgetRenderer = $widgetRenderer;
         $this->em = $em;
-        $this->formErrorService = $formErrorService;
+        $this->formErrorHelper = $formErrorHelper;
         $this->request = $request;
         $this->widgetMapManager = $widgetMapManager;
         $this->widgetMapHelper = $widgetMapHelper;
@@ -138,7 +138,7 @@ class WidgetManager
     public function createWidget($type, $slotId, View $view, $entity, $positionReference)
     {
         //services
-        $formErrorService = $this->formErrorService;
+        $formErrorHelper = $this->formErrorHelper;
         $request = $this->request;
 
         //the default response
@@ -197,7 +197,7 @@ class WidgetManager
             //get the errors as a string
             $response = array(
                 "success" => false,
-                "message" => $formErrorService->getRecursiveReadableErrors($form),
+                "message" => $formErrorHelper->getRecursiveReadableErrors($form),
                 "html"    => $this->widgetFormBuilder->renderNewForm($form, $widget, $slotId, $view, $entity)
             );
 
@@ -266,11 +266,11 @@ class WidgetManager
                     'widgetId'    => "vic-widget-".$initialWidgetId."-container"
                 );
             } else {
-                $formErrorService = $this->formErrorService;
+                $formErrorHelper = $this->formErrorHelper;
                 //Return a message for developer in console and form view in order to refresh view and show form errors
                 $response = array(
                     "success" => false,
-                    "message" => $formErrorService->getRecursiveReadableErrors($form),
+                    "message" => $formErrorHelper->getRecursiveReadableErrors($form),
                     "html"    => $this->widgetFormBuilder->renderForm($form, $widget, $entityName)
                 );
 
