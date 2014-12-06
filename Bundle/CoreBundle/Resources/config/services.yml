@@ -102,6 +102,7 @@ services:
         arguments:
             - "%doctrine.orm.cache.apc.class%"
             - "%kernel.debug%"
+            - "@file_locator"
 
     victoire_core.view_cache_helper:
         class: Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper
@@ -163,6 +164,7 @@ services:
         class: Victoire\Bundle\CoreBundle\CacheWarmer\EntityProxyWarmer
         arguments:
             - "@victoire_core.annotation_reader"
+            - "@file_locator"
         tags:
             - { name: kernel.cache_warmer, priority: 1}
 

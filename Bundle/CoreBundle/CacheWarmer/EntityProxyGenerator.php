@@ -2,6 +2,7 @@
 namespace Victoire\Bundle\CoreBundle\CacheWarmer;
 
 use Sensio\Bundle\GeneratorBundle\Generator\Generator;
+use Symfony\Component\HttpKernel\Config\FileLocator;
 
 /**
  *
@@ -11,14 +12,16 @@ use Sensio\Bundle\GeneratorBundle\Generator\Generator;
 class EntityProxyGenerator extends Generator
 {
     private $annotationReader;
+    private $fileLocator;
 
     /**
      *
      * @param unknown $annotationReader
      */
-    public function __construct($annotationReader)
+    public function __construct($annotationReader, FileLocator $fileLocator)
     {
         $this->annotationReader = $annotationReader;
+        $this->fileLocator = $fileLocator;
     }
 
     /**
@@ -30,7 +33,8 @@ class EntityProxyGenerator extends Generator
     {
         $businessEntities = $this->annotationReader->getBusinessClasses();
 
-        $this->setSkeletonDirs(__DIR__."/skeleton/");
+        $skeletonDirs = $this->fileLocator->locate('@VictoireCoreBundle/CacheWarmer/skeleton/');
+        $this->setSkeletonDirs($skeletonDirs);
 
         return $this->render('EntityProxy.php.twig', array('businessEntities' => array_keys($businessEntities)));
     }
