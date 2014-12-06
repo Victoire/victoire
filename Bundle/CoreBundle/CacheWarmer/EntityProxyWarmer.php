@@ -2,7 +2,7 @@
 namespace Victoire\Bundle\CoreBundle\CacheWarmer;
 
 use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmer;
-use Behat\Behat\Exception\Exception;
+use Symfony\Component\HttpKernel\Config\FileLocator;
 
 /**
  *
@@ -12,15 +12,17 @@ use Behat\Behat\Exception\Exception;
 class EntityProxyWarmer extends CacheWarmer
 {
     private $annotationReader;
+    private $fileLocator;
 
     /**
      * Constructor
      *
      * @param unknown $annotationReader
      */
-    public function __construct($annotationReader)
+    public function __construct($annotationReader, FileLocator $fileLocator)
     {
         $this->annotationReader = $annotationReader;
+        $this->fileLocator = $fileLocator;
     }
 
     /**
@@ -41,8 +43,7 @@ class EntityProxyWarmer extends CacheWarmer
             }
         }
 
-        $generator = new EntityProxyGenerator($this->annotationReader);
-        $generator->setSkeletonDirs(__DIR__."/skeleton/");
+        $generator = new EntityProxyGenerator($this->annotationReader, $this->fileLocator);
         $cacheContent = $generator->generate();
 
         $this->writeCacheFile($file, $cacheContent);

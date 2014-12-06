@@ -50,7 +50,7 @@
                 {% elseif view.status == constant('Victoire\\Bundle\\PageBundle\\Entity\\PageStatus::UNPUBLISHED') %}
                     {% set icon = "moon-o" %}
                 {% endif %}
-                <a href="{{ path('victoire_core_page_settings', {'id' : view.id}) }}" data-toggle="vic-modal"{% if tooltip is defined %}title="{{ tooltip }}"{% endif %} style="font-size:10px;margin-top:5px;">
+                <a href="{{ path('victoire_core_page_settings', {'id' : view.id, 'newTranslation': newTranslation}) }}" data-toggle="vic-modal"{% if tooltip is defined %}title="{{ tooltip }}"{% endif %} style="font-size:10px;margin-top:5px;">
                 {# todo use vic tooltips #}
                 {# todo kick style inline #}
                 {# todo add unpublished and draft tooltip #}
@@ -66,7 +66,6 @@
                 <label for="vic-switcher-statMode">Statistiques</label>
             </li>
             #}
-
             <li>
                 <input class="vic-switcher vic-switcher-edit vic-navBar-switcher" type="checkbox" id="vic-switcher-editMode" {{ edit_mode ? 'checked="checked"' : ''}}>
                 <label for="vic-switcher-editMode">Édition</label>

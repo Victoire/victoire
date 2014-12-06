@@ -86,6 +86,7 @@ services:
             - "@twig"
         tags:
             - { name: twig.extension }
+
     victoire_core.twig.globals_extension:
         class: Victoire\Bundle\CoreBundle\Twig\Extension\GlobalsExtension
         arguments:
@@ -101,11 +102,13 @@ services:
         arguments:
             - "%doctrine.orm.cache.apc.class%"
             - "%kernel.debug%"
+            - "@file_locator"
 
     victoire_core.view_cache_helper:
         class: Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper
         arguments:
-            - %kernel.cache_dir%
+            - "%kernel.cache_dir%"
+            - "@request_stack"
         calls:
             - [ setContainer, ["@service_container"] ]
 
@@ -161,6 +164,7 @@ services:
         class: Victoire\Bundle\CoreBundle\CacheWarmer\EntityProxyWarmer
         arguments:
             - "@victoire_core.annotation_reader"
+            - "@file_locator"
         tags:
             - { name: kernel.cache_warmer, priority: 1}
 

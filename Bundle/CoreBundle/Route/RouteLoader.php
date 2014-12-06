@@ -7,7 +7,7 @@ use Symfony\Component\Routing\Route;
 
 class RouteLoader extends Loader
 {
-    private $widgets;
+    protected $widgets;
 
     public function __construct($widgets)
     {

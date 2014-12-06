@@ -4,6 +4,7 @@ namespace Victoire\Bundle\CoreBundle\Helper;
 
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\SimpleXMLElement;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Victoire\Bundle\CoreBundle\Entity\View;
 
 /**
@@ -15,13 +16,15 @@ class ViewCacheHelper
     private $xmlFile;
     private $viewNamePattern = 'ref_{{view.id}}{{entity ? "_" ~ entity.id}}';
     private $container;
+    private $requestStack;
 
     /**
      * @param string $cacheDir
      */
-    public function __construct($cacheDir)
+    public function __construct($cacheDir, RequestStack $requestStack)
     {
         $this->xmlFile = $cacheDir . '/victoire/viewsReferences.xml';
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -53,6 +56,10 @@ class ViewCacheHelper
         if (array_key_exists('entityNamespace', $viewReference)) {
             $itemNode->addAttribute('entityNamespace', $viewReference['entityNamespace']);
         }
+        if (array_key_exists('locale', $viewReference)) {
+            $itemNode->addAttribute('locale', $viewReference['locale']);
+        }
+
     }
     /**
      * Write given views references in a xml file
@@ -63,7 +70,8 @@ class ViewCacheHelper
     public function write($viewsReferences)
     {
         $rootNode = new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8' ?><viewReferences></viewReferences>");
-        foreach ($viewsReferences as $key => $viewReference) {
+
+        foreach ($viewsReferences as $viewReference) {
             $itemNode = $rootNode->addChild('viewReference');
             $this->buildItemNode($viewReference, $itemNode);
         }
@@ -105,19 +113,21 @@ class ViewCacheHelper
             $this->buildItemNode($viewReference, $itemNode);
         }
         $this->writeFile($rootNode);
-
     }
 
     public function getReferenceByParameters($parameters)
     {
-        $arguments = array();
+        $arguments = array(
+            'locale' => '@locale="' . $this->requestStack->getCurrentRequest()->getLocale() . '"'
+        );
         $viewReference = array();
         foreach ($parameters as $key => $value) {
-            $arguments[] = '@' . $key . '="' . $value . '"';
+            $arguments[$key] = '@' . $key . '="' . $value . '"';
         }
 
         if ($xmlReference = $this->readCache()->xpath("//viewReference[" . implode(' and ', $arguments) . "]")) {
             $viewReference['id']              = $xmlReference[0]->getAttributeAsPhp('id');
+            $viewReference['locale']          = $xmlReference[0]->getAttributeAsPhp('locale');
             $viewReference['entityId']        = $xmlReference[0]->getAttributeAsPhp('entityId');
             $viewReference['entityNamespace'] = $xmlReference[0]->getAttributeAsPhp('entityNamespace');
             $viewReference['url']             = $xmlReference[0]->getAttributeAsPhp('url');
@@ -129,7 +139,6 @@ class ViewCacheHelper
         }
 
         return $viewReference;
-
     }
 
     public function getViewCacheId(View $view, $entity = null)
@@ -143,6 +152,7 @@ class ViewCacheHelper
 
         return $id;
     }
+
     /**
      * write SimpleXMLElement in the cache file
      * @param SimpleXMLElement $rootNode

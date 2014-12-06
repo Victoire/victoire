@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\PageBundle\Helper\UrlHelper;
 
 /**
  * The base page controller is used to interact with all kind of pages
@@ -17,9 +16,10 @@ use Victoire\Bundle\PageBundle\Helper\UrlHelper;
 class BasePageController extends AwesomeController
 {
 
-    public function showAction($url)
+    public function showAction(Request $request, $url)
     {
-        $response = $this->container->get('victoire_page.page_helper')->renderPageByUrl($url);
+
+        $response = $this->container->get('victoire_page.page_helper')->renderPageByUrl($url, $request->getLocale());
 
         //throw an exception is the page is not valid
         return $response;
@@ -98,8 +98,9 @@ class BasePageController extends AwesomeController
      *
      * @return template
      */
-    protected function settingsAction(Request $request, BasePage $page)
+    protected function settingsAction(Request $request, BasePage $page, $newTranslation = false)
     {
+        $originalPageId = $newTranslation ? $page->getId(): null;
         $em = $this->getEntityManager();
 
         $response = array();
@@ -128,16 +129,22 @@ class BasePageController extends AwesomeController
         //if the form is posted
         if ($requestMethod === 'POST') {
             //bind data to the form
-            $form->handleRequest($this->get('request'));
+            $form->handleRequest($request);
 
             //the form should be valid
             if ($form->isValid()) {
+                if ('true' === $newTranslation) {
+                    $targetLocale = $page->getLocale();
+                    $this->getDoctrine()->getEntityManager()->refresh($page);
+                    $page = $this->get('victoire_core.view_helper')->addTranslation($page, $page->getName().'-'.$targetLocale, $targetLocale);
+                    $request->setLocale($targetLocale);
+                }
                 $em->persist($page);
                 $em->flush();
 
                 $response =  array(
                     'success' => true,
-                    'url'     => $this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl()))
+                    'url'     => $this->generateUrl('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl()))
                 );
             } else {
                 $formErrorService = $this->get('av.form_error_service');
@@ -155,6 +162,8 @@ class BasePageController extends AwesomeController
                 'html' => $this->container->get('victoire_templating')->render(
                     $this->getBaseTemplatePath() . ':settings.html.twig',
                     array(
+                        'newTranslation' => $newTranslation,
+                        'originalPageId' => $originalPageId,
                         'page' => $page,
                         'form' => $form->createView(),
                         'businessProperties' => $businessProperties

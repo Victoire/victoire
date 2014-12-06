@@ -11,8 +11,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 class LinkExtension extends \Twig_Extension
 {
-    private $router;
-    private $analytics;
+    protected $router;
+    protected $analytics;
 
     public function __construct(Router $router, RequestStack $requestStack, $analytics)
     {
@@ -176,7 +176,7 @@ class LinkExtension extends \Twig_Extension
      *
      * @return LinkExtension
      **/
-    private function addAttr($label, $value, $attr)
+    protected function addAttr($label, $value, $attr)
     {
         if (!isset($attr[$label])) {
             $attr[$label] = "";

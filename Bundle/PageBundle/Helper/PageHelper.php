@@ -25,6 +25,9 @@ use Victoire\Bundle\PageBundle\Matcher\UrlMatcher;
 use Victoire\Bundle\SeoBundle\Helper\PageSeoHelper;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
+use Doctrine\ORM\PersistentCollection;
+use Victoire\Bundle\I18nBundle\Entity\I18n;
+use Victoire\Bundle\i18nBUndle\Resolver\LocaleResolver;
 
 /**
  * Page helper
@@ -46,6 +49,7 @@ class PageHelper extends ViewHelper
     protected $securityContex; // @security.context
     protected $urlizer; // @gedmo.urlizer
     protected $widgetMapBuilder; // @victoire_widget_map.builder
+    protected $localeResolver;
 
     //@todo Make it dynamic please
     protected $pageParameters = array(
@@ -88,7 +92,8 @@ class PageHelper extends ViewHelper
         Session $session,
         SecurityContext $securityContext,
         Urlizer $urlizer,
-        WidgetMapBuilder $widgetMapBuilder
+        WidgetMapBuilder $widgetMapBuilder,
+        LocaleResolver $localeResolver
     )
     {
         $this->parameterConverter = $parameterConverter;
@@ -106,6 +111,7 @@ class PageHelper extends ViewHelper
         $this->securityContext = $securityContext;
         $this->urlizer = $urlizer;
         $this->widgetMapBuilder = $widgetMapBuilder;
+        $this->localeResolver = $localeResolver;
 
     }
 
@@ -134,9 +140,9 @@ class PageHelper extends ViewHelper
      *
      * @return Response
      */
-    public function renderPageByUrl($url)
+    public function renderPageByUrl($url, $locale)
     {
-        $page = $this->findPageByParameters(array('url' => $url));
+        $page = $this->findPageByParameters(array('url' => $url, 'locale' => $locale));
 
         $event = new \Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent($page);
 

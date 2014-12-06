@@ -43,7 +43,7 @@ class Widget extends BaseWidget
     /**
      * @var string
      *
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\CoreBundle\Entity\View", inversedBy="widgets")
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\CoreBundle\Entity\View", inversedBy="widgets", cascade={"persist"})
      * @ORM\JoinColumn(name="view_id", referencedColumnName="id", onDelete="CASCADE")
      *
      */
