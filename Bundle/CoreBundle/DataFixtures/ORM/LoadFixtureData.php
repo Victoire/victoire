@@ -15,6 +15,7 @@ class LoadFixtureData extends AbstractFixture implements ContainerAwareInterface
 {
     /** @var ContainerInterface */
     private $container;
+    private $fileLocator;
 
     /**
      * {@inheritDoc}
@@ -22,6 +23,7 @@ class LoadFixtureData extends AbstractFixture implements ContainerAwareInterface
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
+        $this->fileLocator = $this->container->get('file_locator');
     }
 
     /**
@@ -34,14 +36,17 @@ class LoadFixtureData extends AbstractFixture implements ContainerAwareInterface
         $files = array();
 
         if ('test' != $this->container->getParameter('kernel.environment')) {
-            $files['user']      = __DIR__ . '/User/user.yml';
-            $files['folder']    = __DIR__ . '/Media/folder.yml';
-            $files['template']  = __DIR__ . '/View/template.yml';
-            $files['page']      = __DIR__ . '/View/page.yml';
-            $files['errorPage'] = __DIR__ . '/View/errorPage.yml';
+            $files['user']      = $this->fileLocator->locate('@VictoireCoreBundle/DataFixtures/ORM/User/user.yml');
+            $files['folder']    = $this->fileLocator->locate('@VictoireCoreBundle/DataFixtures/ORM/Media/folder.yml');
+            $files['template']  = $this->fileLocator->locate('@VictoireCoreBundle/DataFixtures/ORM/View/template.yml');
+            $files['page']      = $this->fileLocator->locate('@VictoireCoreBundle/DataFixtures/ORM/View/page.yml');
+            $files['errorPage'] = $this->fileLocator->locate('@VictoireCoreBundle/DataFixtures/ORM/View/errorPage.yml');
         }
 
-        $objects = Fixtures::load($files, $manager, array(
+        Fixtures::load(
+            $files,
+            $manager,
+            array(
                 'providers'    => array($this),
                 'locale'       => 'fr_FR',
                 'persist_once' => false,
@@ -121,9 +126,9 @@ class LoadFixtureData extends AbstractFixture implements ContainerAwareInterface
 
         $fileName = uniqid();
         $pdfName = sprintf($rootDir . '/%s/%s.pdf', $dir, $fileName);
-        $pdf = __DIR__ . "/lorem.pdf";
+        $pdf = $this->fileLocator->locate('@VictoireCoreBundle/DataFixtures/ORM/lorem.pdf');
 
-        if (! is_dir(dirname($pdfName))) {
+        if (!is_dir(dirname($pdfName))) {
             mkdir(dirname($pdfName), 0777, true);
         }
         file_put_contents($pdfName, file_get_contents($pdf));
@@ -154,7 +159,7 @@ class LoadFixtureData extends AbstractFixture implements ContainerAwareInterface
                             return @unlink($str);
                         } elseif (is_dir($str)) {
                             $scan = glob(rtrim($str,'/').'/*');
-                            foreach ($scan as $index=>$path) {
+                            foreach ($scan as $path) {
                                 $recursiveDelete($path);
                             }
 

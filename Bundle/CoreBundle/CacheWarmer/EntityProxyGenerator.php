@@ -3,6 +3,7 @@ namespace Victoire\Bundle\CoreBundle\CacheWarmer;
 
 use Sensio\Bundle\GeneratorBundle\Generator\Generator;
 use Symfony\Component\HttpKernel\Config\FileLocator;
+use Victoire\Bundle\CoreBundle\Annotations\Reader\AnnotationReader;
 
 /**
  *
@@ -15,10 +16,11 @@ class EntityProxyGenerator extends Generator
     private $fileLocator;
 
     /**
-     *
-     * @param unknown $annotationReader
+     * Constructor
+     * @param AnnotationReader $annotationReader
+     * @param FileLocator      $fileLocator
      */
-    public function __construct($annotationReader, FileLocator $fileLocator)
+    public function __construct(AnnotationReader $annotationReader, FileLocator $fileLocator)
     {
         $this->annotationReader = $annotationReader;
         $this->fileLocator = $fileLocator;

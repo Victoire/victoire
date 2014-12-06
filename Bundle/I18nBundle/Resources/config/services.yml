@@ -2,7 +2,11 @@ services:
 
     victoire_i18n.locale_resolver:
         class: Victoire\Bundle\I18nBundle\Resolver\LocaleResolver
-        arguments: ['%victoire_i18n.locale_pattern%', '%victoire_i18n.locale_pattern_table%', '%locale%', '%victoire_i18n.available_locales%']
+        arguments:
+            - '%victoire_i18n.locale_pattern%'
+            - '%victoire_i18n.locale_pattern_table%'
+            - '%kernel.default_locale%'
+            - '%victoire_i18n.available_locales%'
 
     victoire_i18n.menu_listener:
         class: Victoire\Bundle\I18nBundle\Listener\I18nPageMenuListener
@@ -16,6 +20,7 @@ services:
         arguments:
             - "@victoire_core.annotation_reader"
             - "%victoire_i18n.available_locales%"
+            - "@file_locator"
         tags:
             - { name: kernel.cache_warmer, priority: 1}
 

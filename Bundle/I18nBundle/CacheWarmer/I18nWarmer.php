@@ -1,8 +1,10 @@
 <?php
 namespace Victoire\Bundle\I18nBundle\CacheWarmer;
 
-use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmer;
 use Behat\Behat\Exception\Exception;
+use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmer;
+use Symfony\Component\HttpKernel\Config\FileLocator;
+use Victoire\Bundle\CoreBundle\Annotations\Reader\AnnotationReader;
 
 /**
  *
@@ -13,16 +15,19 @@ class I18nWarmer extends CacheWarmer
 {
     private $annotationReader;
     protected $availableLocales;
+    protected $fileLocator;
 
     /**
      * Constructor
-     * @param unknown $annotationReader
-     * @param $availableLocales the configures locales for the applicaton in I18n config
+     * @param AnnotationReader $annotationReader
+     * @param array            $availableLocales Got from I18n config
+     * @param FileLocator      $fileLocator
      */
-    public function __construct($annotationReader, $availableLocales)
+    public function __construct(AnnotationReader $annotationReader, $availableLocales, FileLocator $fileLocator)
     {
         $this->annotationReader = $annotationReader;
         $this->applicationLocales = $availableLocales;
+        $this->fileLocator = $fileLocator;
     }
 
     /**
@@ -45,8 +50,7 @@ class I18nWarmer extends CacheWarmer
             }
         }
 
-        $generator = new I18nGenerator($this->annotationReader, $this->applicationLocales);
-        $generator->setSkeletonDirs(__DIR__."/Skeleton/");
+        $generator = new I18nGenerator($this->annotationReader, $this->applicationLocales, $this->fileLocator);
         $cacheContent = $generator->generate();
 
         $this->writeCacheFile($file, $cacheContent);
