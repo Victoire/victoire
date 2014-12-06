@@ -115,3 +115,10 @@ services:
         class: Twig_Extensions_Extension_Intl
         tags:
             - { name: twig.extension }
+
+victoire_i18n:
+    victoire_locale: fr
+    available_locales:
+        fr: fr
+        en: en
+    locale_pattern: parameter

@@ -27,7 +27,7 @@ class I18nWarmer extends CacheWarmer
     {
         $this->annotationReader = $annotationReader;
         $this->applicationLocales = $availableLocales;
-	$this->fileLocator = $fileLocator;
+        $this->fileLocator = $fileLocator;
     }
 
     /**
@@ -50,7 +50,7 @@ class I18nWarmer extends CacheWarmer
             }
         }
 
-	$generator = new I18nGenerator($this->annotationReader, $this->applicationLocales, $this->fileLocator);
+        $generator = new I18nGenerator($this->annotationReader, $this->applicationLocales, $this->fileLocator);
         $cacheContent = $generator->generate();
 
         $this->writeCacheFile($file, $cacheContent);

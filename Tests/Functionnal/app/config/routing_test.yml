@@ -6,5 +6,4 @@ fos_js_routing:
 
 VictoireCoreBundle:
     resource: .
-    type: victoire
-
+    type: victoire_i18n

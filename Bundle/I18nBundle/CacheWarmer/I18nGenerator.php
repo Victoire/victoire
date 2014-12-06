@@ -25,7 +25,7 @@ class I18nGenerator extends Generator
     public function __construct(AnnotationReader $annotationReader, $availableLocales, FileLocator $fileLocator)
     {
         $this->annotationReader = $annotationReader;
-	$this->fileLocator = $fileLocator;
+        $this->fileLocator = $fileLocator;
         $this->applicationLocales = $availableLocales;
     }
 
@@ -36,8 +36,8 @@ class I18nGenerator extends Generator
      */
     public function generate()
     {
-	$skeletonDirs = $this->fileLocator->locate('@VictoireI18nBundle/CacheWarmer/Skeleton/');
-	$this->setSkeletonDirs($skeletonDirs);
+        $skeletonDirs = $this->fileLocator->locate('@VictoireI18nBundle/CacheWarmer/Skeleton/');
+        $this->setSkeletonDirs($skeletonDirs);
 
         return $this->render('I18n.php.twig', array('locales' => $this->applicationLocales));
     }
