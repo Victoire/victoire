@@ -38,6 +38,7 @@ class AppKernel extends Kernel
             new Victoire\Bundle\BusinessEntityPageBundle\VictoireBusinessEntityPageBundle(),
             new Victoire\Bundle\DashboardBundle\VictoireDashboardBundle(),
             new Victoire\Bundle\FilterBundle\VictoireFilterBundle(),
+            new Victoire\Bundle\I18nBundle\VictoireI18nBundle(),
             new Victoire\Bundle\FormBundle\VictoireFormBundle(),
             new Victoire\Bundle\PageBundle\VictoirePageBundle(),
             new Victoire\Bundle\QueryBundle\VictoireQueryBundle(),
