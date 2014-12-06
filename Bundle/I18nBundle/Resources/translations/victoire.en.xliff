@@ -8,19 +8,19 @@
     <body>
       <trans-unit id="ec620ad0b357d5751d8445071bd8d33f77a47caa" resname="menu.page.i18n.addTranslation">
         <source>menu.page.i18n.addTranslation</source>
-        <target><![CDATA[<i class="vic-menuImg vic-menuImg-lang"></i> Traduire]]></target>
+        <target><![CDATA[<i class="vic-menuImg vic-menuImg-lang"></i> Translate]]></target>
       </trans-unit>
       <trans-unit id="2b4bc58f7a180eda6e7a9dbd9fcd4b683464b611" resname="menu.template.i18n.addTranslation">
         <source>menu.template.i18n.addTranslation</source>
-        <target><![CDATA[<i class="vic-menuImg vic-menuImg-lang"></i> Traduire]]></target>
+        <target><![CDATA[<i class="vic-menuImg vic-menuImg-lang"></i> Translate]]></target>
       </trans-unit>
       <trans-unit id="49rcgyxQhptjDvkJZfJ2hUr5CyuFD9SF8DSFDS9F" resname="victoire.i18n.viewType.locale.fr">
         <source>menu.template.i18n.addTranslation</source>
-        <target>Français</target>
+        <target>French</target>
       </trans-unit>
       <trans-unit id="GZZrYPX7jDcUbZum.9g79QtvEr3qdyVVSx4F7Cr4" resname="victoire.i18n.viewType.locale.en">
         <source>menu.template.i18n.addTranslation</source>
-        <target>Anglais</target>
+        <target>English</target>
       </trans-unit>
     </body>
   </file>

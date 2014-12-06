@@ -273,31 +273,31 @@ class ViewHelper
     }
 
     /**
-    * @param View $view, the view to translatate  
+    * @param View $view, the view to translatate
     * @param $templatename the new name of the view
     * @param $loopindex the current loop of iteration in recursion
     * @param $locale the target locale to translate view
-    * 
+    *
     * this methods allow you to add a translation to any view
     * recursively to its subview
     */
-    public function addTranslation(View $view, $viewName = null, $locale) 
+    public function addTranslation(View $view, $viewName = null, $locale)
     {
         $template = null;
-        if($view->getTemplate()) {
+        if ($view->getTemplate()) {
             $template = $view->getTemplate();
-            if($template->getI18n()->getTranslation($locale)) {
+            if ($template->getI18n()->getTranslation($locale)) {
                 $template = $template->getI18n()->getTranslation($locale);
             } else {
-                $templateName = $template->getName()."-".$locale; 
-                $template = $this->addTranslation($template, $templateName, $locale);   
+                $templateName = $template->getName()."-".$locale;
+                $template = $this->addTranslation($template, $templateName, $locale);
             }
         }
         $view->setLocale($locale);
-        $view->setTemplate($template); 
+        $view->setTemplate($template);
         $clonedView = $this->cloneView($view, $view->getName().'-'.$locale, $locale);
-        if($clonedView instanceof Template && $view->getTemplate()) {
-           $template->setPages($clonedView);    
+        if ($clonedView instanceof Template && $view->getTemplate()) {
+           $template->setPages($clonedView);
         }
 
         $i18n = $view->getI18n();
@@ -311,7 +311,7 @@ class ViewHelper
 
     /**
     * @param View $view
-    * @param $etmplateName the future name of the clone 
+    * @param $etmplateName the future name of the clone
     *
     * this methods allows you to clone a view and its widgets and also the widgetmap
     *
@@ -321,11 +321,10 @@ class ViewHelper
         $clonedView = clone $view;
         $widgetMapClone = $clonedView->getWidgetMap(false);
         $arrayMapOfWidgetMap = array();
-        if(null !== $templateName) 
-        {
+        if (null !== $templateName) {
             $clonedView->setName($templateName);
         }
-        
+
         $clonedView->setId(null);
         $this->em->persist($clonedView);
         $widgetLayoutSlots = [];
@@ -359,9 +358,9 @@ class ViewHelper
             }
         }
         $this->em->flush();
-        foreach($widgetMapClone as $wigetSlotCloneKey => $widgetSlotCloneVal) {
-            foreach($widgetSlotCloneVal as $widgetMapItemKey => $widgetMapItemVal) {
-                if(isset($arrayMapOfWidgetMap[$widgetMapItemVal['widgetId']])) {
+        foreach ($widgetMapClone as $wigetSlotCloneKey => $widgetSlotCloneVal) {
+            foreach ($widgetSlotCloneVal as $widgetMapItemKey => $widgetMapItemVal) {
+                if (isset($arrayMapOfWidgetMap[$widgetMapItemVal['widgetId']])) {
                     $widgetId = $arrayMapOfWidgetMap[$widgetMapItemVal['widgetId']]->getId();
                     $widgetMapItemVal['widgetId'] = $widgetId;
                     if (array_key_exists($wigetSlotCloneKey, $widgetSlotMap)) {
@@ -370,14 +369,14 @@ class ViewHelper
                     $widgetMapClone[$wigetSlotCloneKey][$widgetMapItemKey] = $widgetMapItemVal;
                 }
             }
-        } 
-        
-        $clonedView->setSlots(array()); 
-        $clonedView->setWidgetMap($widgetMapClone); 
-        
+        }
+
+        $clonedView->setSlots(array());
+        $clonedView->setWidgetMap($widgetMapClone);
+
         $this->em->persist($clonedView);
         $this->em->flush();
 
-        return $clonedView;   
+        return $clonedView;
     }
 }

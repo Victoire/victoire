@@ -18,7 +18,7 @@
       </trans-unit>
       <trans-unit id="4c4f990524dc7e0381ae6cdda138667b41f74beb" resname="form.pageSeo.keyword.label">
         <source>form.pageSeo.keyword.label</source>
-        <target>Mot clé principal</target>
+        <target>Main keyword</target>
         <jms:reference-file line="114">SeoBundle/Form/PageSeoType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="a75bc323a866d5065225cf0337d03778c9368210" resname="form.pageSeo.metaDescription.label">
@@ -28,7 +28,7 @@
       </trans-unit>
       <trans-unit id="8785e80490a7e12295c668b1fd7e05f96cec55d0" resname="form.pageSeo.metaRobotsAdvanced.label">
         <source>form.pageSeo.metaRobotsAdvanced.label</source>
-        <target>Meta Robots - Avancé</target>
+        <target>Meta Robots - Advanced</target>
         <jms:reference-file line="102">SeoBundle/Form/PageSeoType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="a23d6aa0fc85ecac379c8b2b77db7c37b0dbe249" resname="form.pageSeo.metaRobotsFollow.label">
@@ -43,7 +43,7 @@
       </trans-unit>
       <trans-unit id="2c7ab4736e80d548511eca8323815287ef91d2f9" resname="form.pageSeo.metaTitle.label">
         <source>form.pageSeo.metaTitle.label</source>
-        <target>Titre</target>
+        <target>Title</target>
         <jms:reference-file line="37">SeoBundle/Form/PageSeoType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="72731a4116742dc25b0edf1e76d87f5da98d7149" resname="form.pageSeo.ogDescription.label">
@@ -58,11 +58,11 @@
       </trans-unit>
       <trans-unit id="193128bf45239a9b151a60184db3678e87c803a0" resname="form.pageSeo.ogTitle.vic_help_block">
         <source>form.pageSeo.ogTitle.vic_help_block</source>
-        <target>Titre</target>
+        <target>Title</target>
       </trans-unit>
       <trans-unit id="fd776a6ac301728d22d0a7a20418db1106e9f6fa" resname="form.pageSeo.ogTitle.label">
         <source>form.pageSeo.ogTitle.label</source>
-        <target>Fb - Titre</target>
+        <target>Fb - Title</target>
         <jms:reference-file line="49">SeoBundle/Form/PageSeoType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="53017428f32ab59a56a3519944a2463ad7c7ac72" resname="form.pageSeo.ogType.label">
@@ -77,31 +77,31 @@
       </trans-unit>
       <trans-unit id="a92b7f221fdf5f74410d2205a4318f7845cb7ab5" resname="form.pageSeo.page.label">
         <source>form.pageSeo.page.label</source>
-        <target>form.pageSeo.page.label</target>
+        <target>Related page</target>
         <jms:reference-file line="123">SeoBundle/Form/PageSeoType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="80a407248802ef25ba49a89d78c518bc37036f8b" resname="form.pageSeo.redirectTo.vic_help_block">
         <source>form.pageSeo.redirectTo.vic_help_block</source>
-        <target>Redirection permanente</target>
+        <target>Permanent redirection</target>
       </trans-unit>
       <trans-unit id="16a1310d9050a9320cccdcbfb4d64533ad75d054" resname="form.pageSeo.redirectTo.label">
         <source>form.pageSeo.redirectTo.label</source>
-        <target>Redirection automatique</target>
+        <target>Automatic redirection</target>
         <jms:reference-file line="117">SeoBundle/Form/PageSeoType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="0e032dac458cf41f55badd9a3d3cc21f9d561908" resname="form.pageSeo.relAuthor.label">
         <source>form.pageSeo.relAuthor.label</source>
-        <target>Auteur (Url g+)</target>
+        <target>Author (Url g+)</target>
         <jms:reference-file line="43">SeoBundle/Form/PageSeoType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="90bb98cbd87d27c93a9cb98a2851db23ba8d55ba" resname="form.pageSeo.relCanonical.label">
         <source>form.pageSeo.relCanonical.label</source>
-        <target>Uri canonique</target>
+        <target>Canonical url</target>
         <jms:reference-file line="111">SeoBundle/Form/PageSeoType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="455949e3f6b365160f0f6d94080c91fd20d42d53" resname="form.pageSeo.relPublisher.label">
         <source>form.pageSeo.relPublisher.label</source>
-        <target>Publieur (Url g+)</target>
+        <target>Publisher (Url g+)</target>
         <jms:reference-file line="46">SeoBundle/Form/PageSeoType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="60fabb75dd6b492257fdca6488e713e9223f1163" resname="form.pageSeo.schemaDescription.label">
@@ -116,7 +116,7 @@
       </trans-unit>
       <trans-unit id="e2aa02dc1ba7c5830b546eb803f17586eb6a3e0d" resname="form.pageSeo.schemaName.label">
         <source>form.pageSeo.schemaName.label</source>
-        <target>Schema - Nom</target>
+        <target>Schema - Name</target>
         <jms:reference-file line="87">SeoBundle/Form/PageSeoType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="196fd098123f9eb766592a74c0d326af6df122d4" resname="form.pageSeo.schemaPageType.label">
@@ -126,17 +126,17 @@
       </trans-unit>
       <trans-unit id="e3d1541cc16fb43cf5ac248c1b9a6ff57c8e2d36" resname="form.pageSeo.sitemapIndexed.label">
         <source>form.pageSeo.sitemapIndexed.label</source>
-        <target>Sitemap - Présent ?</target>
+        <target>Sitemap - Visible ?</target>
         <jms:reference-file line="105">SeoBundle/Form/PageSeoType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="6498935ea3debc26701e707f71a8dc9fec72a385" resname="form.pageSeo.sitemapPriority.label">
         <source>form.pageSeo.sitemapPriority.label</source>
-        <target>Sitemap - Priorité</target>
+        <target>Sitemap - Priority</target>
         <jms:reference-file line="108">SeoBundle/Form/PageSeoType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="df44e71281b87399f0293a79d8155c3491415011" resname="form.pageSeo.twitterCard.vic_help_block">
         <source>form.pageSeo.twitterCard.vic_help_block</source>
-        <target>Carte Twitter</target>
+        <target>Twitter card</target>
       </trans-unit>
       <trans-unit id="15c542c8b3d81dbb50ec4aa75921437eadc46619" resname="form.pageSeo.twitterCard.label">
         <source>form.pageSeo.twitterCard.label</source>
@@ -155,7 +155,7 @@
       </trans-unit>
       <trans-unit id="3948672f4553296b61ed0240a6d0b9b105c49ac4" resname="form.pageSeo.twitterTitle.label">
         <source>form.pageSeo.twitterTitle.label</source>
-        <target>Tw - Titre</target>
+        <target>Tw - Title</target>
         <jms:reference-file line="75">SeoBundle/Form/PageSeoType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="0ad25b71ed32cd64b3cb5cc5bef497ea807f5e3e" resname="form.pageSeo.twitterUrl.label">
@@ -169,12 +169,12 @@
       </trans-unit>
       <trans-unit id="02cfca5e484be77e623b5ff8be9ef843c02cf8b1" resname="modal.form.pageSeo.settings.title">
         <source><![CDATA[%page.name% > Settings]]></source>
-        <target>Paramètres SEO de la page "page.name"</target>
+        <target><![CDATA[SEO settings - <strong>page.name</strong>strong>]]></target>
         <jms:reference-file line="22">views/PageSeo/settings.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="9a84dc1132d73a2f0abce302a49337045c823482" resname="modal.mandatory_fields.label">
         <source>Mandatory fields</source>
-        <target>Champ obligatoire</target>
+        <target>Mandatory fields</target>
         <jms:reference-file line="29">views/PageSeo/settings.html.twig</jms:reference-file>
       </trans-unit>
     </body>
