@@ -1,6 +1,6 @@
 <?php
 
-namespace Victoire\Bundle\CoreBundle;
+namespace victoire\Bundle\CoreBundle;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;

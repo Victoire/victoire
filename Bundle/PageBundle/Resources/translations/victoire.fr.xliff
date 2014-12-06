@@ -38,7 +38,7 @@
                 <source>modal.form.page.settings.title</source>
                 <target><![CDATA[Paramètres de la page  <strong>%pageName%</strong>]]></target>
             </trans-unit>
-            <trans-unit id="f4d5sf4d86s4fd56s4f65ds4f65d4s6" resname="modal.form.page.newtranslation.title">
+            <trans-unit id="f4ds5f4ds5f4d56s4f56ds86f7d86s4f24" resname="modal.form.page.newtranslation.title">
                 <source>modal.form.page.newtranslation.title</source>
                 <target><![CDATA[Nouvelle traduction de la page  <strong>%pageName%</strong>]]></target>
             </trans-unit>

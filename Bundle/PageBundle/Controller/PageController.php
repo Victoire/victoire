@@ -1,5 +1,5 @@
 <?php
-namespace Victoire\Bundle\PageBundle\Controller;
+namespace victoire\Bundle\PageBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;

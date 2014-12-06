@@ -1,6 +1,6 @@
 <?php
 
-namespace Victoire\Bundle\CoreBundle\DataFixtures\ORM;
+namespace victoire\Bundle\CoreBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -33,6 +33,7 @@ class LoadFixtureData extends AbstractFixture implements ContainerAwareInterface
     {
         // Load fixtures files
         $files = array();
+
         $files['user']      = $this->fileLocator->locate('@VictoireCoreBundle/DataFixtures/ORM/User/user.yml');
         $files['folder']    = $this->fileLocator->locate('@VictoireCoreBundle/DataFixtures/ORM/Media/folder.yml');
         $files['template']  = $this->fileLocator->locate('@VictoireCoreBundle/DataFixtures/ORM/View/template.yml');
@@ -43,9 +44,9 @@ class LoadFixtureData extends AbstractFixture implements ContainerAwareInterface
             $files,
             $manager,
             array(
-                    'providers'    => array($this),
-                    'locale'       => 'fr_FR',
-                    'persist_once' => false
+                'providers'    => array($this),
+                'locale'       => 'fr_FR',
+                'persist_once' => false
             )
         );
 
