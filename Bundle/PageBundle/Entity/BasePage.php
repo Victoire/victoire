@@ -10,7 +10,7 @@ use Victoire\Bundle\CoreBundle\Entity\View;
  *
  * @ORM\Entity(repositoryClass="Victoire\Bundle\PageBundle\Repository\BasePageRepository")
  * @ORM\Table("vic_base_page")
- * @UniqueEntity("url")
+ * @UniqueEntity(fields={"url", "locale"})
  * @ORM\HasLifecycleCallbacks
  */
 abstract class BasePage extends View
@@ -25,5 +25,6 @@ abstract class BasePage extends View
         parent::__construct();
         $this->publishedAt = new \DateTime();
         $this->status = PageStatus::PUBLISHED;
+        $this->homepage = false;
     }
 }

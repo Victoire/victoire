@@ -165,7 +165,7 @@
       </trans-unit>
       <trans-unit id="9d2f0c1f4734ad4a0f123dc51744de25ebb2a5e1" resname="menu.page.seoSettings">
         <source>menu.page.seoSettings</source>
-        <target><![CDATA[<i class="vic-menuImg vic-menuImg-target"></i> Paramètres SEO]]></target>
+        <target><![CDATA[<i class="vic-menuImg vic-menuImg-target"></i> SEO]]></target>
       </trans-unit>
       <trans-unit id="02cfca5e484be77e623b5ff8be9ef843c02cf8b1" resname="modal.form.pageSeo.settings.title">
         <source><![CDATA[%page.name% > Settings]]></source>

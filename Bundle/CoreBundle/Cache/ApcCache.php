@@ -1,6 +1,8 @@
 <?php
 namespace Victoire\Bundle\CoreBundle\Cache;
 
+use Symfony\Component\HttpKernel\Config\FileLocator;
+
 /**
  * this class handle cache system
  **/
@@ -12,14 +14,15 @@ class ApcCache
     /**
      * Constructor
      *
-     * @param unknown $cache
-     * @param boolean $debug The debug environment
+     * @param unknown     $cache
+     * @param boolean     $debug       The debug environment
+     * @param FileLocator $fileLocator
      */
-    public function __construct($cache, $debug)
+    public function __construct($cache, $debug, FileLocator $fileLocator)
     {
         $this->cache = new $cache();
         $this->debug = $debug;
-        $this->uniqId = md5(__FILE__);
+        $this->uniqId = md5($fileLocator->locate('@VictoireCoreBundle/Cache/ApcCache.php'));
     }
 
     /**

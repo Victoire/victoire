@@ -3,9 +3,7 @@ namespace Victoire\Bundle\CoreBundle\CacheWarmer;
 
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 
-use Doctrine\Common\Cache\Cache,
-    Doctrine\Common\Cache\ArrayCache,
-    Doctrine\Common\Annotations\CachedReader;
+use Doctrine\Common\Cache\Cache;
 
 /**
  * undocumented class

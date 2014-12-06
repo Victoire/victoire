@@ -33,6 +33,7 @@ Composant | Description
 [**UserBundle**][14] | Hérite de FosUserBundle, ce bundle offre un système d'utilisateurs prêt à l'emploi
 [**WidgetBundle**][15] | Composant omniprésent dans Victoire, il s'occupe de tout ce qui à trait aux base des widgets, de la définition à l'affichage en passant par les formulaires de création et modifications multi-mode
 [**WidgetMapBundle**][16] | Contient la logique pour la gestion des widgetsMaps, éléments importants dans l'architecture des vues
+[**I18nBundle**][17] | Composant gérant l'internationalisation
 
 
 * Read the [setup guide](http://github.com/victoire/victoire//blob/master/setup.md)
@@ -63,5 +64,6 @@ Cette œuvre est mise à disposition selon les termes de la Licence Creative Com
 [14]: http://github.com/victoire/victoire//blob/master/Bundle/UserBundle/README.md
 [15]: http://github.com/victoire/victoire//blob/master/Bundle/WidgetBundle/README.md
 [16]: http://github.com/victoire/victoire//blob/master/Bundle/WidgetMapBundle/README.md
+[17]: http://github.com/victoire/victoire//blob/master/Bundle/I18nBundle/README.md
 [18]: http://github.com/victoire/victoire//blob/master/Bundle/BusinessEntityPageBundle/Resources/doc/BusinessEntityPage.md
 [19]: http://github.com/victoire/victoire//blob/master/Bundle/BusinessEntityPageBundle/Resources/doc/BusinessEntityPagePattern.md

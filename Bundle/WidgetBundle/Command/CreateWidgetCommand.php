@@ -1,17 +1,20 @@
 <?php
 namespace Victoire\Bundle\WidgetBundle\Command;
 
-use Sensio\Bundle\GeneratorBundle\Command\GenerateBundleCommand;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Victoire\Bundle\WidgetBundle\Generator\WidgetGenerator;
-use Sensio\Bundle\GeneratorBundle\Generator\DoctrineEntityGenerator;
-use Sensio\Bundle\GeneratorBundle\Command\Validators;
-use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
 use Doctrine\DBAL\Types\Type;
+use Sensio\Bundle\GeneratorBundle\Command\GenerateBundleCommand;
+use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
+use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
+use Sensio\Bundle\GeneratorBundle\Command\Validators;
+use Sensio\Bundle\GeneratorBundle\Generator\DoctrineEntityGenerator;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
+use Symfony\Component\Console\Question\Question;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
+use Victoire\Bundle\WidgetBundle\Generator\WidgetGenerator;
 
 /**
  * Create a new Widget for VictoireCMS
@@ -72,10 +75,11 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $dialog = $this->getDialogHelper();
+        $questionHelper = $this->getQuestionHelper();
 
         if ($input->isInteractive()) {
-            if (!$dialog->askConfirmation($output, $dialog->getQuestion('Do you confirm generation', 'yes', '?'), true)) {
+            $question = new ConfirmationQuestion($questionHelper->getQuestion('Do you confirm generation', 'yes', '?'), true);
+            if (!$questionHelper->ask($input, $output, $question)) {
                 $output->writeln('<error>Command aborted</error>');
 
                 return 1;
@@ -112,7 +116,7 @@ EOT
 
         $contentResolver = $input->getOption('content-resolver');
 
-        $dialog->writeSection($output, 'Bundle generation');
+        $questionHelper->writeSection($output, 'Bundle generation');
 
         if (!$this->getContainer()->get('filesystem')->isAbsolutePath($dir)) {
             $dir = getcwd().'/'.$dir;
@@ -128,15 +132,15 @@ EOT
         $output->writeln('Generating the bundle code: <info>OK</info>');
 
         $errors = array();
-        $runner = $dialog->getRunner($output, $errors);
+        $runner = $questionHelper->getRunner($output, $errors);
 
         // check that the namespace is already autoloaded
         $runner($this->checkAutoloader($output, $namespace, $bundle, $dir));
 
         // register the bundle in the Kernel class
-        $runner($this->updateKernel($dialog, $input, $output, $this->getContainer()->get('kernel'), $namespace, $bundle));
+        $runner($this->updateKernel($questionHelper, $input, $output, $this->getContainer()->get('kernel'), $namespace, $bundle));
 
-        $dialog->writeGeneratorSummary($output, $errors);
+        $questionHelper->writeGeneratorSummary($output, $errors);
     }
 
     /**
@@ -145,9 +149,8 @@ EOT
      */
     protected function getEntityGenerator()
     {
-
-        $dirs[] = __DIR__.'/../Resources/skeleton';
-        $dirs[] = __DIR__.'/../Resources';
+        $dirs[] = $this->getContainer()->get('file_locator')->locate('@VictoireWidgetBundle/Resources/skeleton/');
+        $dirs[] = $this->getContainer()->get('file_locator')->locate('@VictoireWidgetBundle/Resources/');
 
         $generator = $this->createEntityGenerator();
 
@@ -164,9 +167,8 @@ EOT
      */
     protected function getGenerator(BundleInterface $bundle = null)
     {
-
-        $dirs[] = __DIR__.'/../Resources/skeleton';
-        $dirs[] = __DIR__.'/../Resources';
+        $dirs[] = $this->getContainer()->get('file_locator')->locate('@VictoireWidgetBundle/Resources/skeleton/');
+        $dirs[] = $this->getContainer()->get('file_locator')->locate('@VictoireWidgetBundle/Resources/');
 
         $generator = $this->createWidgetGenerator();
 
@@ -185,8 +187,8 @@ EOT
      */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
-        $dialog = $this->getDialogHelper();
-        $dialog->writeSection($output, 'Welcome to the Victoire widget bundle generator');
+        $questionHelper = $this->getQuestionHelper();
+        $questionHelper->writeSection($output, 'Welcome to the Victoire widget bundle generator');
 
         ///////////////////////
         //                   //
@@ -199,7 +201,7 @@ EOT
         try {
             $namespace = $input->getOption('namespace') ? Validators::validateBundleNamespace($input->getOption('namespace')) : null;
         } catch (\Exception $error) {
-            $output->writeln($dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+            $output->writeln($questionHelper->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
         }
 
         if (null === $namespace) {
@@ -213,7 +215,17 @@ EOT
                 'If you want for example a BlogWidget, the Widget Name should be Blog'
             ));
 
-            $name = $dialog->askAndValidate($output, $dialog->getQuestion('Widget name', $input->getOption('bundle-name')), array('Victoire\Bundle\CoreBundle\Command\CreateWidgetCommand', 'validateWidgetName'), false, $input->getOption('namespace'));
+            $question = new Question($questionHelper->getQuestion('Widget name', $input->getOption('bundle-name')));
+            $question->setValidator(function ($answer) {
+                return self::validateWidgetName($answer, false);
+            });
+
+            $name = $questionHelper->ask(
+                $input,
+                $output,
+                $question
+            );
+
             $bundle = 'VictoireWidget' . $name . 'Bundle';
             $input->setOption('bundle-name', $bundle);
             $namespace = "Victoire\\Widget\\".$name."Bundle";
@@ -222,7 +234,9 @@ EOT
 
         $parent = $input->getOption('parent');
 
-        if (null === $parent && $dialog->askConfirmation($output, $dialog->getQuestion('Does your widget extends another widget ?', 'no', '?'))) {
+        $question = new ConfirmationQuestion($questionHelper->getQuestion('Does your widget extends another widget ?', 'no', '?'), false);
+
+        if (null === $parent && $questionHelper->ask($input, $output, $question)) {
             $output->writeln(array(
                 '',
                 'A widget can extends another to reproduce it\'s behavior',
@@ -232,12 +246,11 @@ EOT
                 'If you want to extends the TestWidget, the widget name should be Test'
             ));
 
-            $parent = $dialog->askAndValidate(
-                $output,
-                $dialog->getQuestion('Parent widget name', null),
-                array('Victoire\Bundle\CoreBundle\Command\CreateWidgetCommand', 'validateWidgetName'),
-                false,
-                null);
+            $question = new Question($questionHelper->getQuestion('Parent widget name', false));
+            $question->setValidator(function ($answer) {
+                return self::validateWidgetName($answer, false);
+            });
+            $parent = $questionHelper->ask($input, $output, $question);
 
             $input->setOption('parent', $parent);
         }
@@ -250,7 +263,12 @@ EOT
             'the standard conventions.',
             '',
         ));
-        $dir = $dialog->askAndValidate($output, $dialog->getQuestion('Target directory', $dir), function ($dir) use ($bundle, $namespace) { return Validators::validateTargetDir($dir, $bundle, $namespace); }, false, $dir);
+
+        $question = new Question($questionHelper->getQuestion('Target directory', $dir), $dir);
+        $question->setValidator(function ($dir) use ($bundle, $namespace) {
+                return Validators::validateTargetDir($dir, $bundle, $namespace);
+        });
+        $dir = $questionHelper->ask($input, $output, $question);
         $input->setOption('dir', $dir);
 
         // format
@@ -258,7 +276,7 @@ EOT
         try {
             $format = $input->getOption('format') ? Validators::validateFormat($input->getOption('format')) : null;
         } catch (\Exception $error) {
-            $output->writeln($dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+            $output->writeln($questionHelper->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
         }
 
         if (null === $format) {
@@ -267,14 +285,21 @@ EOT
                 'Determine the format to use for the generated configuration.',
                 '',
             ));
-            $format = $dialog->askAndValidate($output, $dialog->getQuestion('Configuration format (yml, xml, php, or annotation)', "annotation"), array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateFormat'), false, "annotation");
+
+            $question = new Question($questionHelper->getQuestion('Configuration format (yml, xml, php, or annotation)', 'annotation'), 'annotation');
+            $question->setValidator(
+                array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateFormat')
+            );
+            $format = $questionHelper->ask($input, $output, $question);
             $input->setOption('format', $format);
         }
 
         $input->setOption('structure', false);
 
         $contentResolver = $input->getOption('content-resolver');
-        if (!$contentResolver && $dialog->askConfirmation($output, $dialog->getQuestion('Do you want to customize widget rendering logic', 'no', '?'), false)) {
+
+        $question = new ConfirmationQuestion($questionHelper->getQuestion('Do you want to customize widget rendering logic ?', 'no', '?'), false);
+        if (!$contentResolver && $questionHelper->ask($input, $output, $question)) {
             $contentResolver = true;
         }
         $input->setOption('content-resolver', $contentResolver);
@@ -285,7 +310,7 @@ EOT
         //                   //
         ///////////////////////
 
-        $input->setOption('fields', $this->addFields($input, $output, $dialog));
+        $input->setOption('fields', $this->addFields($input, $output, $questionHelper));
         $entity = "Widget".$name;
         $input->setOption('entity', $bundle.':'.$entity);
 
@@ -379,10 +404,10 @@ EOT
      *
      * @param  InputInterface  $input
      * @param  OutputInterface $output
-     * @param  DialogHelper    $dialog
+     * @param  DialogHelper    $questionHelper
      * @return $fields
      */
-    private function addFields(InputInterface $input, OutputInterface $output, DialogHelper $dialog)
+    private function addFields(InputInterface $input, OutputInterface $output, QuestionHelper $questionHelper)
     {
         $fields = $this->parseFields($input->getOption('fields'));
         $output->writeln(array(
@@ -437,22 +462,29 @@ EOT
         while (true) {
             $output->writeln('');
             $generator = $this->getEntityGenerator();
-            $columnName = $dialog->askAndValidate($output, $dialog->getQuestion('New field name (press <return> to stop adding fields)', null), function ($name) use ($fields, $generator) {
-                if (isset($fields[$name]) || 'id' == $name) {
-                    throw new \InvalidArgumentException(sprintf('Field "%s" is already defined.', $name));
-                }
 
-                // check reserved words by database
-                if ($generator->isReservedKeyword($name)) {
-                    throw new \InvalidArgumentException(sprintf('Name "%s" is a reserved word.', $name));
-                }
-                // check reserved words by victoire
-                if ($this->isReservedKeyword($name)) {
-                    throw new \InvalidArgumentException(sprintf('Name "%s" is a Victoire reserved word.', $name));
-                }
 
-                return $name;
-            });
+            $question = new Question($questionHelper->getQuestion('New field name (press <return> to stop adding fields)', null));
+            $question->setValidator(
+                function ($name) use ($fields, $generator) {
+                    if (isset($fields[$name]) || 'id' == $name) {
+                        throw new \InvalidArgumentException(sprintf('Field "%s" is already defined.', $name));
+                    }
+
+                    // check reserved words by database
+                    if ($generator->isReservedKeyword($name)) {
+                        throw new \InvalidArgumentException(sprintf('Name "%s" is a reserved word.', $name));
+                    }
+                    // check reserved words by victoire
+                    if ($this->isReservedKeyword($name)) {
+                        throw new \InvalidArgumentException(sprintf('Name "%s" is a Victoire reserved word.', $name));
+                    }
+
+                    return $name;
+                }
+            );
+
+            $columnName = $questionHelper->ask($input, $output, $question);
             if (!$columnName) {
                 break;
             }
@@ -470,12 +502,17 @@ EOT
                 $defaultType = 'boolean';
             }
 
-            $type = $dialog->askAndValidate($output, $dialog->getQuestion('Field type', $defaultType), $fieldValidator, false, $defaultType, $types);
+            $question = new Question($questionHelper->getQuestion('Field type', $defaultType), $defaultType);
+            $question->setValidator($fieldValidator);
+            $question->setAutocompleterValues($types);
+            $type = $questionHelper->ask($input, $output, $question);
 
             $data = array('columnName' => $columnName, 'fieldName' => lcfirst(Container::camelize($columnName)), 'type' => $type);
 
             if ($type == 'string') {
-                $data['length'] = $dialog->askAndValidate($output, $dialog->getQuestion('Field length', 255), $lengthValidator, false, 255);
+                $question = new Question($questionHelper->getQuestion('Field length', 255), 255);
+                $question->setValidator($lengthValidator);
+                $data['length'] = $questionHelper->ask($input, $output, $question);
             }
 
             $fields[$columnName] = $data;

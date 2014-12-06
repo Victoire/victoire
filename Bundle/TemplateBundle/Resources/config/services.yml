@@ -5,7 +5,10 @@ services:
 
     victoire_template.template.form.type:
         class: Victoire\Bundle\TemplateBundle\Form\TemplateType
-        arguments: ['%victoire_core.layouts%']
+        arguments:
+            - "%victoire_core.layouts%"
+            - "%victoire_i18n.available_locales%"
+            - "@request_stack"
         tags:
             - { name: form.type, alias: victoire_template_type }
 

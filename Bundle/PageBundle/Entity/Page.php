@@ -14,19 +14,11 @@ class Page extends BasePage
     const TYPE = 'page';
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="homepage", type="boolean", nullable=false)
-     */
-    protected $homepage;
-
-    /**
      * contruct
      **/
     public function __construct()
     {
         parent::__construct();
-        $this->homepage = false;
     }
 
     /**
@@ -51,15 +43,5 @@ class Page extends BasePage
     public function isHomepage()
     {
         return $this->homepage;
-    }
-
-    /**
-     * get url
-     *
-     * @return string override to test if page is homepage
-     */
-    public function getUrl()
-    {
-        return $this->homepage ? "" : parent::getUrl();
     }
 }

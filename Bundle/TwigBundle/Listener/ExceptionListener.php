@@ -71,6 +71,14 @@ class ExceptionListener extends BaseExceptionListener
         } while (null !== $exception = $exception->getPrevious());
     }
 
+
+    private function handleNotFoundException(GetResponseForExceptionEvent $event, NotFoundHttpException $exception)
+    {
+        if (null !== $this->logger) {
+            $this->logger->info(sprintf('Not Found exception occured (%s)', $exception->getMessage()));
+        }
+    }
+
     private function handleAuthenticationException(GetResponseForExceptionEvent $event, AuthenticationException $exception)
     {
         if (null !== $this->logger) {

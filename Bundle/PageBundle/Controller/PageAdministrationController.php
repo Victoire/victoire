@@ -52,15 +52,15 @@ class PageAdministrationController extends PageController
      * @param Request  $request
      * @param BasePage $page
      *
-     * @Route("/{id}/settings", name="victoire_core_page_settings")
+     * @Route("/{id}/{newTranslation}/settings", name="victoire_core_page_settings", defaults={"newTranslation" = false})
      * @Template()
      * @ParamConverter("page", class="VictoirePageBundle:BasePage")
      *
      * @return json The settings
      */
-    public function settingsAction(Request $request, BasePage $page)
+    public function settingsAction(Request $request, BasePage $page, $newTranslation = false)
     {
-        return new JsonResponse(parent::settingsAction($request, $page));
+        return new JsonResponse(parent::settingsAction($request, $page, $newTranslation));
     }
 
     /**
@@ -74,7 +74,7 @@ class PageAdministrationController extends PageController
      */
     public function deleteAction(BasePage $page)
     {
-        //Disable this since the voter does not work properly
+        //@FIXME Disable this since the voter does not work properly
         // if (!$this->get('security.context')->isGranted('PAGE_OWNER', $page)) {
             // throw new AccessDeniedException("Nop ! you can't do such an action");
         // }

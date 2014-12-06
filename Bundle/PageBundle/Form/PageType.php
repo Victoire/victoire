@@ -2,6 +2,7 @@
 namespace Victoire\Bundle\PageBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Victoire\Bundle\PageBundle\Entity\Page;
 
@@ -10,6 +11,14 @@ use Victoire\Bundle\PageBundle\Entity\Page;
  */
 class PageType extends BasePageType
 {
+
+    /*
+    * Constructor
+    */
+    public function __construct($availableLocales, RequestStack $requestStack)
+    {
+        parent::__construct($availableLocales, $requestStack);
+    }
 
     /**
      * define form fields

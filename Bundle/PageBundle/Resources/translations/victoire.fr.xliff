@@ -38,6 +38,10 @@
                 <source>modal.form.page.settings.title</source>
                 <target><![CDATA[Paramètres de la page  <strong>%pageName%</strong>]]></target>
             </trans-unit>
+            <trans-unit resname="modal.form.page.newtranslation.title">
+                <source>modal.form.page.newtranslation.title</source>
+                <target><![CDATA[Nouvelle traduction de la page  <strong>%pageName%</strong>]]></target>
+            </trans-unit>
             <trans-unit resname="modal.form.template.settings.title">
                 <source>modal.form.template.settings.title</source>
                 <target><![CDATA[Paramètres du modèle <strong>%templateName%</strong>]]></target>

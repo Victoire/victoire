@@ -1,0 +1,62 @@
+services:
+
+    victoire_i18n.locale_resolver:
+        class: Victoire\Bundle\I18nBundle\Resolver\LocaleResolver
+        arguments: ['%victoire_i18n.locale_pattern%', '%victoire_i18n.locale_pattern_table%', '%locale%', '%victoire_i18n.available_locales%']
+
+    victoire_i18n.menu_listener:
+        class: Victoire\Bundle\I18nBundle\Listener\I18nPageMenuListener
+        arguments:
+            - "@victoire_core.admin_menu_builder"
+        tags:
+            - { name: kernel.event_listener, event: victoire_core.page_menu.contextual, method: addContextual, priority: 100 }
+
+    victoire_i18n.cache_warmer.i18n_warmer:
+        class: Victoire\Bundle\I18nBundle\CacheWarmer\I18nWarmer
+        arguments:
+            - "@victoire_core.annotation_reader"
+            - "%victoire_i18n.available_locales%"
+        tags:
+            - { name: kernel.cache_warmer, priority: 1}
+
+    victoire_i18n.i18n.cache_driver:
+        class: Victoire\Bundle\I18nBundle\CacheWarmer\I18nCacheDriver
+        arguments:
+            - "@annotation_reader"
+            - "%kernel.cache_dir%"
+
+    victoire_i18n.translator:
+        class: Victoire\Bundle\I18nBundle\Translation\Translator
+        arguments: ["@service_container", "@translator.selector",{}, {cache_dir:"%kernel.cache_dir%/translations%", debug: "%kernel.debug%"}]
+
+    victoire_i18n.locale_listener:
+        class: Victoire\Bundle\I18nBundle\Listener\LocaleListener
+        arguments:
+            - "%kernel.default_locale%"
+            - "@victoire_i18n.locale_resolver"
+        tags:
+            - { name: kernel.event_subscriber }
+
+    victoire_i18n.template_menu.contextual:
+        class: Victoire\Bundle\I18nBundle\Listener\I18nTemplateMenuListener
+        arguments: ["@victoire_core.admin_menu_builder"]
+        tags:
+            - { name: kernel.event_listener, event: victoire_core.template_menu.contextual, method: addContextual }
+
+    victoire_i18n.routing_loader:
+        class: Victoire\Bundle\I18nBundle\Route\I18nRouteLoader
+        arguments:
+            - '%victoire_core.widgets%'
+            - '@victoire_i18n.locale_resolver'
+        tags:
+            - { name: routing.loader }
+
+    victoire_i18n.twig.link_extension:
+        class: Victoire\Bundle\I18nBundle\Twig\I18nLinkExtension
+        arguments:
+            - @router
+            - @request_stack
+            - %victoire_seo.analytics%
+            - "@victoire_i18n.locale_resolver"
+        tags:
+            - { name: twig.extension }

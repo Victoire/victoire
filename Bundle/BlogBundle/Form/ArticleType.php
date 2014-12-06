@@ -4,21 +4,26 @@ namespace Victoire\Bundle\BlogBundle\Form;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Victoire\Bundle\CoreBundle\DataTransformer\ViewToIdTransformer;
-use Victoire\Bundle\CoreBundle\Form\ViewType;
+use Victoire\Bundle\PageBundle\Form\BasePageType;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 
 /**
  *
  */
-class ArticleType extends ViewType
+class ArticleType extends BasePageType
 {
-    private $em;
+    private $entityManager;
 
-    public function __construct(EntityManager $em)
+    /**
+    * Constructor
+    */
+    public function __construct(EntityManager $entityManager, $availableLocales, RequestStack $requestStack)
     {
-        $this->em = $em;
+        parent::__construct($availableLocales, $requestStack);
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -30,7 +35,7 @@ class ArticleType extends ViewType
     {
         parent::buildForm($builder, $options);
 
-        $viewToIdTransformer = new ViewToIdTransformer($this->em);
+        $viewToIdTransformer = new ViewToIdTransformer($this->entityManager);
         $builder
             ->add('description')
             ->add('image', 'media')
@@ -51,8 +56,8 @@ class ArticleType extends ViewType
                 )
             );
 
-            $getAllArticleTemplates = function (EntityRepository $tr) {
-                return $tr->getPatterns()
+            $articleTemplates = function (EntityRepository $repo) {
+                return $repo->getPatterns()
                     ->getInstance()
                     ->andWhere("pattern.businessEntityName = 'article'");
             };
@@ -60,7 +65,7 @@ class ArticleType extends ViewType
                 'label'         => 'form.view.type.template.label',
                 'property'      => 'name',
                 'required'      => true,
-                'query_builder' => $getAllArticleTemplates,
+                'query_builder' => $articleTemplates,
             ));
 
     }

@@ -39,13 +39,13 @@ class PageMenuListener implements MenuListenerInterface
         $mainItem->addChild('menu.page.settings',
             array(
                 'route' => 'victoire_core_page_settings',
-                'routeParameters' => array('id' => $page->getId())
+                'routeParameters' => array('id' => $page->getId(), 'newTranslation' => false)
             )
         )->setLinkAttribute('data-toggle', 'vic-modal');
         $mainItem->addChild('menu.page.seoSettings',
             array(
                 'route' => 'victoire_seo_pageSeo_settings',
-                'routeParameters' => array('id' => $page->getId())
+                'routeParameters' => array('id' => $page->getId(), 'newTranslation' => false)
             )
         )->setLinkAttribute('data-toggle', 'vic-modal');
 

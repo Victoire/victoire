@@ -56,12 +56,12 @@ class LinkType extends AbstractType
             'label'                          => 'form.link_type.url.label',
             'vic_vic_widget_form_group_attr' => array('class' => 'vic-form-group vic-hidden url-type'),
             'required'                       => true,
-            'attr' => array('novalidate' => 'novalidate'),
+            'attr'                           => array('novalidate' => 'novalidate'),
         ))
         ->add('page', 'entity', array(
             'label'                          => 'form.link_type.page.label',
             'required'                       => true,
-            'attr' => array('novalidate' => 'novalidate'),
+            'attr'                           => array('novalidate' => 'novalidate'),
             'empty_value'                    => 'form.link_type.page.blank',
             'class'                          => 'VictoirePageBundle:Page',
             'property'                       => 'name',
