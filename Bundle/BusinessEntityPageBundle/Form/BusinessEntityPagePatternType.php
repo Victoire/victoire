@@ -3,6 +3,7 @@
 namespace Victoire\Bundle\BusinessEntityPageBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Victoire\Bundle\CoreBundle\Form\ViewType;
 
@@ -11,13 +12,15 @@ use Victoire\Bundle\CoreBundle\Form\ViewType;
  */
 class BusinessEntityPagePatternType extends ViewType
 {
-    /**
+
+    /*
     * Constructor
     */
-    public function __construct($applicationLocales) 
+    public function __construct($availableLocales, RequestStack $requestStack)
     {
-        parent::__construct($application_locales);
+        parent::__construct($availableLocales, $requestStack);
     }
+
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
@@ -27,13 +30,11 @@ class BusinessEntityPagePatternType extends ViewType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-        $businessProperty = $options['businessProperty'];
 
         $builder
             ->add('businessEntityName', 'hidden')
             ->add('query')
             ->add('url');
-
     }
 
     /**

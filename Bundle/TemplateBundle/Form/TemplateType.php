@@ -3,6 +3,7 @@
 namespace Victoire\Bundle\TemplateBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Victoire\Bundle\CoreBundle\Form\ViewType;
 
@@ -18,9 +19,9 @@ class TemplateType extends ViewType
      * constructor
      * @param EntityManager $layouts
      */
-    public function __construct($layouts, $applicationLocales)
+    public function __construct($layouts, $availableLocales, RequestStack $requestStack)
     {
-        parent::__construct($applicationLocales);
+        parent::__construct($availableLocales, $requestStack);
         $this->layouts = $layouts;
     }
 

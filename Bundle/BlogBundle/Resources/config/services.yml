@@ -24,19 +24,28 @@ services:
     #ARTICLE
     victoire_blog.article.form.type:
         class: Victoire\Bundle\BlogBundle\Form\ArticleType
-        arguments: ["@doctrine.orm.entity_manager", "%victoire_i18n.application_locales%"]
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "%victoire_i18n.available_locales%"
+            - "@request_stack"
         tags:
             - { name: form.type, alias: victoire_article_type }
 
     victoire_blog.article_settings.form.type:
         class: Victoire\Bundle\BlogBundle\Form\ArticleSettingsType
-        arguments: ["@doctrine.orm.entity_manager"]
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "%victoire_i18n.available_locales%"
+            - "@request_stack"
         tags:
             - { name: form.type, alias: victoire_article_settings_type }
 
     #BLOG
     victoire_blog.blog.form.type:
         class: Victoire\Bundle\BlogBundle\Form\BlogType
+        arguments:
+            - "%victoire_i18n.available_locales%"
+            - "@request_stack"
         tags:
             - { name: form.type, alias: victoire_blog_type }
 

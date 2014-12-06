@@ -2,15 +2,17 @@
 
 namespace Victoire\Bundle\I18nBundle\Route;
 
-use Victoire\Bundle\CoreBundle\Route\RouteLoader as BaseRouteLoader;
-use Victoire\Bundle\I18nBundle\Resolver\LocaleResolver; 
-use Symfony\Component\Config\Loader\Loader;
-use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\Route;
+use Symfony\Component\Routing\RouteCollection;
+use Victoire\Bundle\CoreBundle\Route\RouteLoader as BaseRouteLoader;
+use Victoire\Bundle\I18nBundle\Resolver\LocaleResolver;
 
+/**
+ * The I18nRouteLoader overwrite Victoire default RouteLoader to
+ */
 class I18nRouteLoader extends BaseRouteLoader
 {
-	protected $localeResolver;
+    protected $localeResolver;
 
     public function __construct($widgets, LocaleResolver $localeResolver)
     {
@@ -18,23 +20,47 @@ class I18nRouteLoader extends BaseRouteLoader
         $this->localeResolver = $localeResolver;
     }
 
-    protected function addShowPageRoute(&$collection)
+    /**
+     * {@inheritdoc}
+     */
+    public function load($resource, $type = null)
     {
+        $collection = new RouteCollection();
 
-        // prepare a new route
-        $pattern = '/{_locale}/{url}';
-        $defaults = array(
-            '_controller' => 'VictoirePageBundle:Page:show',
-            '_locale' => 'fr'
+        //Prefix every victoire route with the locale
+        $collection = parent::load($resource, $type);
+        $collection->addPrefix('/{_locale}');
+        $collection->addCollection($collection);
+        //Add a redirection to the default locale homepage when empty url '/'
+        $this->addHomepageRedirection($collection);
+
+        return $collection;
+    }
+
+    /**
+     * Add a homepage redirection route to the collection
+     * @param RouteCollection $collection The collection where to add the new route
+     */
+    protected function addHomepageRedirection(&$collection)
+    {
+        $route = new Route(
+            '/',
+            array(
+                '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
+                'path'        => '/'.$this->localeResolver->defaultLocale, //@todo handle PATTERN_DOMAIN strategy
+                'permanent'   => true
+            )
         );
-        $requirements = array(
-            'url' => '^.*$',
-        );
-        $route = new Route($pattern, $defaults, $requirements);
 
-        // add the new route to the route collection:
-        $routeName = 'victoire_core_page_show';
+        $collection->add('victoire_redirect_homepage', $route);
+    }
 
-        $collection->add($routeName, $route);
+    /**
+     * Finds a loader able to load an imported resource.
+     * {@inheritdoc}
+     */
+    public function supports($resource, $type = null)
+    {
+        return $type === 'victoire_i18n';
     }
 }

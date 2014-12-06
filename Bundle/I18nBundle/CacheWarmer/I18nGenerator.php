@@ -11,16 +11,16 @@ use Sensio\Bundle\GeneratorBundle\Generator\Generator;
 class I18nGenerator extends Generator
 {
     private $annotationReader;
-    protected $applicationLocales; 
+    protected $availableLocales;
 
     /**
      *
      * @param unknown $annotationReader
      */
-    public function __construct($annotationReader, $applicationLocales)
+    public function __construct($annotationReader, $availableLocales)
     {
         $this->annotationReader = $annotationReader;
-        $this->applicationLocales = $applicationLocales;
+        $this->applicationLocales = $availableLocales;
     }
 
     /**

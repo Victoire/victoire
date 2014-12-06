@@ -6,7 +6,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
-use Symfony\Component\Yaml\Yaml;
 
 /**
  * This is the class that loads and manages your bundle configuration
@@ -27,7 +26,7 @@ class VictoireI18nExtension extends Extension
         $loader->load('services.yml');
 
         $container->setParameter(
-            'victoire_i18n.application_locales', $config['application_locales']
+            'victoire_i18n.available_locales', $config['available_locales']
         );
         $container->setParameter(
             'victoire_i18n.locale_pattern_table', $config['locale_pattern_table']
@@ -37,7 +36,7 @@ class VictoireI18nExtension extends Extension
         );
         $container->setParameter(
             'victoire_i18n.locale_pattern', $config['locale_pattern']
-        ); 
+        );
 
     }
 }

@@ -4,6 +4,7 @@ namespace Victoire\Bundle\I18nBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Victoire\Bundle\I18nBundle\Resolver\LocaleResolver;
 
 /**
  * This is the class that validates and merges configuration from your app/config files
@@ -25,7 +26,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('victoire_locale')->defaultValue('fr')->end()
             ->end()
             ->children()
-                ->scalarNode('locale_pattern')->defaultValue('domain')->end()
+                ->scalarNode('locale_pattern')->defaultValue(LocaleResolver::PATTERN_PARAMETER)->end()
             ->end()
             ->children()
                 ->arrayNode('locale_pattern_table')
@@ -36,7 +37,7 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end()
             ->children()
-                ->arrayNode('application_locales')
+                ->arrayNode('available_locales')
                     ->useAttributeAsKey(true)
                     ->prototype('scalar')
                     ->end()

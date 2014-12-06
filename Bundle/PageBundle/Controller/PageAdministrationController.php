@@ -60,7 +60,6 @@ class PageAdministrationController extends PageController
      */
     public function settingsAction(Request $request, BasePage $page, $newTranslation = false)
     {
-       
         return new JsonResponse(parent::settingsAction($request, $page, $newTranslation));
     }
 
@@ -75,7 +74,7 @@ class PageAdministrationController extends PageController
      */
     public function deleteAction(BasePage $page)
     {
-        //Disable this since the voter does not work properly
+        //@FIXME Disable this since the voter does not work properly
         // if (!$this->get('security.context')->isGranted('PAGE_OWNER', $page)) {
             // throw new AccessDeniedException("Nop ! you can't do such an action");
         // }

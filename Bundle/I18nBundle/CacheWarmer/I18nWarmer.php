@@ -12,18 +12,17 @@ use Behat\Behat\Exception\Exception;
 class I18nWarmer extends CacheWarmer
 {
     private $annotationReader;
-    protected $applicationLocales;
+    protected $availableLocales;
 
     /**
      * Constructor
-     *
      * @param unknown $annotationReader
-     * @param $applicationLocales the configures locales for the applicaton in I18n config
+     * @param $availableLocales the configures locales for the applicaton in I18n config
      */
-    public function __construct($annotationReader, $applicationLocales)
+    public function __construct($annotationReader, $availableLocales)
     {
         $this->annotationReader = $annotationReader;
-        $this->applicationLocales = $applicationLocales;
+        $this->applicationLocales = $availableLocales;
     }
 
     /**
@@ -33,7 +32,7 @@ class I18nWarmer extends CacheWarmer
      *
      * @throws Exception
      *
-     * this method Read the cache and if the entity does not exists it loads it 
+     * this method Read the cache and if the entity does not exists it loads it
      */
     public function warmUp($cacheDir)
     {

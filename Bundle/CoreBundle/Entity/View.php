@@ -157,7 +157,7 @@ abstract class View
     //the slot contains the widget maps entities
     protected $slots = array();
 
-    //The reference is related to views.xml fil which list all app views.
+    //The reference is related to viewsReferences.xml fil which list all app views.
     //This is used to speed up the routing system and to identify virtual pages (BusinessEntityPage)
     protected $reference;
 
@@ -176,13 +176,10 @@ abstract class View
     /**
      * contruct
      **/
-    public function __construct($locale = "fr")
+    public function __construct()
     {
-        $this->createdAt = new \DateTime();
-        $this->updatedAt = new \DateTime();
         $this->widgets = new ArrayCollection();
         $this->widgetMap = array();
-        $this->locale = $locale;
         $this->initI18n();
     }
 

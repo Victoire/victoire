@@ -2,8 +2,6 @@
 
 namespace Victoire\Bundle\I18nBundle\Resolver;
 
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -11,118 +9,76 @@ use Symfony\Component\HttpFoundation\Request;
 */
 class LocaleResolver
 {
-    const PATTERNDOMAIN         = 'domain';
-    const PATTERNPARAMETERINURL = 'inurl';
+    const PATTERN_PARAMETER = 'parameter'; // pass the locale the normal way, ie. http://acme.dn/fr
+    const PATTERN_DOMAIN    = 'domain';
 
-	protected $localePattern;
-	protected $localePatternTable;
-	protected $defaultLocale;
-	protected $victoireLocale;
-	protected $applicationLocales;
+    protected $localePattern;
+    protected $localeDomainConfig;
+    protected $availableLocales;
+    public $defaultLocale;
 
-	/**
-	* Constructor
-	*
-	* @param string $localePattern 
-	* @param string $localPatternTable
-	* @param string $defaultLocale
-	*/
-	public function __construct($localePattern, $localePatternTable, $defaultLocale, $victoireLocale, $applicationLocales) 
-	{
-		$this->localePattern = $localePattern;
-		$this->localePatternTable = $localePatternTable;
-		$this->defaultLocale = $defaultLocale;
-		$this->victoireLocale = $victoireLocale;
-		$this->applicationLocales = $applicationLocales;
-	}
-
-	/**
-	* @param GetResponseEvent $event
-	* method called on kernelRequest it sets the local in request depending on patterns
-	* it also set the victoire_locale wich is the locale of the application admin
-	*/
-	public function onKernelRequest(GetResponseEvent $event)
-    {
-		if (HttpKernel::MASTER_REQUEST != $event->getRequestType()) {
-            return;
-        } else {
-        	//locale
-        	$request = $event->getRequest();
-        	switch ($this->localePattern) {
-        		case self::PATTERNDOMAIN : 
-        		    $locale = $this->resolveFromDomain($request);
-        		    $request->setLocale($locale);
-        	        break;
-
-        	     case self::PATTERNPARAMETERINURL : 
-        		    $locale = $this->resolveAsParameterInUrl($request);
-        		    $request->setLocale($locale);
-
-        	        break;
-        	    default : 
-        	        break; 
-        	} 
-
-        	//victoireLocale
-        	if (!$request->getSession()->get('victoire_locale')) {
-        		$request->getSession()->set('victoire_locale', $this->victoireLocale);
-        	}
-        }
-    }
     /**
-    * @param Request $request
+    * Constructor
     *
-    * @return string 
-    *
-    * resolves the locale from host
+    * @param string $localePattern      What is the strategy to resolve locale
+    * @param string $localeDomainConfig The locale domain config
+    * @param string $defaultLocale      The default local app
+    * @param string $availableLocales   The list of available locales
     */
-	public function resolveFromDomain(Request $request) 
-	{
-		$host = $request->getHttpHost();
+    public function __construct($localePattern, $localeDomainConfig, $defaultLocale, $availableLocales)
+    {
+        $this->localePattern = $localePattern;
+        $this->localeDomainConfig = $localeDomainConfig;
+        $this->defaultLocale = $defaultLocale;
+        $this->availableLocales = $availableLocales;
+    }
 
-        return $this->localePatternTable[$host];
-	}
+    /**
+    * set the local depending on patterns
+    * it also set the victoire_locale wich is the locale of the application admin
+    */
+    public function resolve(Request $request)
+    {
+        //locale
+        switch ($this->localePattern) {
+            case self::PATTERN_DOMAIN :
+                $locale = $this->resolveFromDomain($request);
+                $request->setLocale($locale);
+                break;
+        }
 
-	/**
+        return $request->getLocale();
+    }
+
+    /**
     * @param Request $request
     *
     * @return string
     *
-    * This method resolves the domain from locale 
+    * resolves the locale from host
     */
-	public function resolveDomainForLocale($locale) 
-	{
-		foreach ($this->localePatternTable as $domain => $domainLocale) {
-			if ($locale === $domainLocale) 
-			{
-				return $domain;
-			}	
-		}
+    public function resolveFromDomain(Request $request)
+    {
+        $host = $request->getHttpHost();
 
-        return 'fr';
-	}
+        return $this->localeDomainConfig[$host];
+    }
 
-	/**
+    /**
     * @param Request $request
     *
-    * @return string 
-	*
-    * this method resolves the locale from parameters pass in the url
+    * @return string
+    *
+    * This method resolves the domain from locale
     */
-	public function resolveAsParameterInUrl(Request $request) 
-	{
-		$uri = $request->getRequestUri();
-		if(strstr($uri, '/app_dev.php/')) {
-			$uri = str_replace('/app_dev.php/', '', $uri);
-		} else {
-			$uri = ltrim ($uri, '/');
-		}
-		$endLocalePos  = strpos($uri, '/');
-		if (!empty($uri)) {
-		   $endLocale = substr($uri, 0, $endLocalePos);
-		   return $endLocale;
-		} else {
-			return $this->defaultLocale;
-		}
-	}
+    public function resolveDomainForLocale($locale)
+    {
+        foreach ($this->localeDomainConfig as $domain => $domainLocale) {
+            if ($locale === $domainLocale) {
+                return $domain;
+            }
+        }
+
+        return $this->defaultLocale;
+    }
 }

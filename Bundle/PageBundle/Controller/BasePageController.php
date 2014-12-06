@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\PageBundle\Helper\UrlHelper;
 
 /**
  * The base page controller is used to interact with all kind of pages
@@ -19,7 +18,7 @@ class BasePageController extends AwesomeController
 
     public function showAction(Request $request, $url)
     {
-        
+
         $response = $this->container->get('victoire_page.page_helper')->renderPageByUrl($url, $request->getLocale());
 
         //throw an exception is the page is not valid
@@ -139,7 +138,7 @@ class BasePageController extends AwesomeController
                     $this->getDoctrine()->getEntityManager()->refresh($page);
                     $page = $this->get('victoire_core.view_helper')->addTranslation($page, $page->getName().'-'.$targetLocale, $targetLocale);
                     $request->setLocale($targetLocale);
-                } 
+                }
                 $em->persist($page);
                 $em->flush();
 

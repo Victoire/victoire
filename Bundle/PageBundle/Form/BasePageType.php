@@ -5,6 +5,7 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Victoire\Bundle\CoreBundle\Form\ViewType;
 
 /**
@@ -16,11 +17,11 @@ abstract class BasePageType extends ViewType
     /*
     * Constructor
     */
-    public function __construct($applicationLocales) 
+    public function __construct($availableLocales, RequestStack $requestStack)
     {
-        parent::__construct($applicationLocales);
+        parent::__construct($availableLocales, $requestStack);
     }
-    
+
     /**
      * define form fields
      * @param FormBuilderInterface $builder

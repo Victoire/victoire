@@ -7,7 +7,7 @@ intégré a victoire c'est un composant pour gérer les sites multilingues. Il p
 
     victoire_i18n:
         victoire_locale: en
-        application_locales:
+        available_locales:
             fr: fr
             en: en
             it: it

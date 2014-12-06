@@ -7,8 +7,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Victoire\Bundle\TemplateBundle\Entity\Template;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Victoire\Bundle\CoreBundle\Entity\View;
+use Victoire\Bundle\TemplateBundle\Entity\Template;
 
 /**
  * Page Type
@@ -16,11 +17,14 @@ use Victoire\Bundle\CoreBundle\Entity\View;
 abstract class ViewType extends AbstractType
 {
 
-    protected $applicationLocales;
+    protected $availableLocales;
+    protected $currentLocale;
+    protected $isNew;
 
-    public function __construct($applicationLocales)
+    public function __construct($availableLocales, RequestStack $requestStack)
     {
-        $this->applicationLocales = $applicationLocales;
+        $this->availableLocales = $availableLocales;
+        $this->currentLocale = $requestStack->getCurrentRequest()->getLocale();
     }
 
     /**
@@ -36,11 +40,12 @@ abstract class ViewType extends AbstractType
             $view = $event->getData();
             $form = $event->getForm();
 
+            $this->isNew = !$view || null === $view->getId();
+
             // vérifie si l'objet Product est "nouveau"
             // Si aucune donnée n'est passée au formulaire, la donnée est "null".
             // Ce doit être considéré comme une nouvelle "View"
-            if (!$view || null === $view->getId()) {
-
+            if ($this->isNew) {
                 $getAllTemplateWithoutMe = function (EntityRepository $tr) {
                     return $tr->getAll()->getInstance();
                 };
@@ -61,12 +66,14 @@ abstract class ViewType extends AbstractType
                 ));
             }
             if (!$form->has('locale')) {
-
                 $form->add('locale', 'choice', array(
-                    'expanded' => false,
-                    'multiple' => false,
-                    'choices'  => $this->getAvailableLocales($view),
-                    'label'    => 'form.view.type.local.label'));
+                        'expanded' => false,
+                        'multiple' => false,
+                        'choices'  => $this->getAvailableLocales($view),
+                        'label'    => 'form.view.type.local.label',
+                        'data'     => $this->currentLocale
+                    )
+                );
             }
         });
 
@@ -76,18 +83,18 @@ abstract class ViewType extends AbstractType
             ));
     }
 
-    protected function getAvailableLocales(View $view) 
+    protected function getAvailableLocales(View $view)
     {
         $choices = array();
         $i18n = $view->getI18n();
 
-        foreach($this->applicationLocales as $localeKey => $localeVal) {
-            if($i18n->getTranslation($localeVal) === null ) {
-                $choices[$localeVal] = $localeVal;
+        foreach ($this->availableLocales as $localeVal) {
+            if ($this->isNew === true || $i18n->getTranslation($localeVal) === null ) {
+                $choices[$localeVal] = 'victoire.i18n.viewType.locale.'.$localeVal;
             }
         }
 
         return $choices;
-    } 
+    }
 
 }
