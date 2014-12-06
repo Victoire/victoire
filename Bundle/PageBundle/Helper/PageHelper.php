@@ -2,7 +2,6 @@
 namespace Victoire\Bundle\PageBundle\Helper;
 
 use Doctrine\Orm\EntityManager;
-use Gedmo\Sluggable\Util\Urlizer;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -25,8 +24,6 @@ use Victoire\Bundle\PageBundle\Matcher\UrlMatcher;
 use Victoire\Bundle\SeoBundle\Helper\PageSeoHelper;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
-use Doctrine\ORM\PersistentCollection;
-use Victoire\Bundle\I18nBundle\Entity\I18n;
 use Victoire\Bundle\i18nBUndle\Resolver\LocaleResolver;
 
 /**
@@ -37,7 +34,7 @@ class PageHelper extends ViewHelper
 {
     protected $parameterConverter = null;
     protected $businessEntityHelper = null;
-    protected $em; // @doctrine.orm.entity_manager'
+    protected $entityManager; // @doctrine.orm.entity_manager'
     protected $urlHelper; // @victoire_page.url_helper'
     protected $urlMatcher; // @victoire_page.matcher.url_matcher'
     protected $currentViewHelper; // @victoire_core.current_view
@@ -47,7 +44,6 @@ class PageHelper extends ViewHelper
     protected $viewCacheHelper; // @victoire_core.view_cache_helper
     protected $session; // @session
     protected $securityContex; // @security.context
-    protected $urlizer; // @gedmo.urlizer
     protected $widgetMapBuilder; // @victoire_widget_map.builder
     protected $localeResolver;
 
@@ -64,8 +60,8 @@ class PageHelper extends ViewHelper
      * Constructor
      * @param BETParameterConverter    $parameterConverter
      * @param BusinessEntityHelper     $businessEntityHelper
-     * @param BusinessEntityPageHelper $businessEntityPageHelper
-     * @param EntityManager            $em
+     * @param BusinessEntityPageHelper $bepHelper
+     * @param EntityManager            $entityManager
      * @param UrlHelper                $urlHelper
      * @param UrlMatcher               $urlMatcher
      * @param CurrentViewHelper        $currentViewHelper
@@ -75,13 +71,13 @@ class PageHelper extends ViewHelper
      * @param ViewCacheHelper          $viewCacheHelper
      * @param Session                  $session
      * @param SecurityContext          $securityContext
-     * @param Urlizer                  $urlizer
+     * @param WidgetMapBuilder         $widgetMapBuilder
      */
     public function __construct(
         BETParameterConverter $parameterConverter,
         BusinessEntityHelper $businessEntityHelper,
-        BusinessEntityPageHelper $businessEntityPageHelper,
-        EntityManager $em,
+        BusinessEntityPageHelper $bepHelper,
+        EntityManager $entityManager,
         UrlHelper $urlHelper,
         UrlMatcher $urlMatcher,
         CurrentViewHelper $currentViewHelper,
@@ -91,15 +87,15 @@ class PageHelper extends ViewHelper
         ViewCacheHelper $viewCacheHelper,
         Session $session,
         SecurityContext $securityContext,
-        Urlizer $urlizer,
         WidgetMapBuilder $widgetMapBuilder,
-        LocaleResolver $localeResolver
+        LocaleResolver $localeResolver,
+        WidgetMapBuilder $widgetMapBuilder
     )
     {
         $this->parameterConverter = $parameterConverter;
         $this->businessEntityHelper = $businessEntityHelper;
-        $this->businessEntityPageHelper = $businessEntityPageHelper;
-        $this->em = $em;
+        $this->bepHelper = $bepHelper;
+        $this->entityManager = $entityManager;
         $this->urlHelper = $urlHelper;
         $this->urlMatcher = $urlMatcher;
         $this->currentViewHelper = $currentViewHelper;
@@ -109,7 +105,6 @@ class PageHelper extends ViewHelper
         $this->viewCacheHelper = $viewCacheHelper;
         $this->session = $session;
         $this->securityContext = $securityContext;
-        $this->urlizer = $urlizer;
         $this->widgetMapBuilder = $widgetMapBuilder;
         $this->localeResolver = $localeResolver;
 
@@ -170,7 +165,7 @@ class PageHelper extends ViewHelper
      */
     public function updatePageWithEntity(BusinessEntityPagePattern $page, $entity)
     {
-        $page = $this->businessEntityPageHelper->generateEntityPageFromPattern($page, $entity);
+        $page = $this->bepHelper->generateEntityPageFromPattern($page, $entity);
         $this->pageSeoHelper->updateSeoByEntity($page, $entity);
 
         //update the parameters of the page
@@ -194,7 +189,7 @@ class PageHelper extends ViewHelper
 
         $entity = null;
         if (!empty($viewReference['entityId'])) {
-            $entity = $this->em->getRepository($viewReference['entityNamespace'])->findOneById($viewReference['entityId']);
+            $entity = $this->entityManager->getRepository($viewReference['entityNamespace'])->findOneById($viewReference['entityId']);
         }
 
         return $entity;
@@ -210,7 +205,7 @@ class PageHelper extends ViewHelper
      */
     public function findPageInRouteHistory($url)
     {
-        $route = $this->em->getRepository('VictoireCoreBundle:Route')->findOneMostRecentByUrl($url);
+        $route = $this->entityManager->getRepository('VictoireCoreBundle:Route')->findOneMostRecentByUrl($url);
         if ($route !== null) {
             //the page linked to the old url
             return $route->getPage();
@@ -230,9 +225,9 @@ class PageHelper extends ViewHelper
         $page = null;
         //get the page
         if (!empty($viewReference['viewId'])) {
-            $page = $this->em->getRepository('VictoireCoreBundle:View')->findOneById($viewReference['viewId']);
+            $page = $this->entityManager->getRepository('VictoireCoreBundle:View')->findOneById($viewReference['viewId']);
         } elseif (!empty($viewReference['patternId'])) {
-            $page = $this->em->getRepository('VictoireCoreBundle:View')->findOneById($viewReference['patternId']);
+            $page = $this->entityManager->getRepository('VictoireCoreBundle:View')->findOneById($viewReference['patternId']);
         }
 
         if (!$page) {
@@ -295,7 +290,7 @@ class PageHelper extends ViewHelper
                 throw new NotFoundHttpException('The BusinessEntityPage for '.get_class($entity).'#'.$entity->getId().' is not visible on front.');
             }
             if (!$page->getId()) {
-                $entityAllowed = $this->businessEntityPageHelper->isEntityAllowed($page->getTemplate(), $entity);
+                $entityAllowed = $this->bepHelper->isEntityAllowed($page->getTemplate(), $entity);
 
                 if ($entityAllowed === false) {
                     throw new NotFoundHttpException('The entity ['.$entity->getId().'] is not allowed for the page pattern ['.$page->getId().']');

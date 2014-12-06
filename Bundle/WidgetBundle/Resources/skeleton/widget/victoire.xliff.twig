@@ -6,16 +6,16 @@
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
     </header>
     <body>
-      <trans-unit resname="widget.{{ widget|lower }}.new.action.label">
+      <trans-unit id="1" resname="widget.{{ widget|lower }}.new.action.label">
         <source>widget.{{ widget|lower }}.new.action.label</source>
         <target state="new">{{ widget }}</target>
       </trans-unit>
-      <trans-unit resname="modal.form.widget.type.{{ widget|lower }}.label">
+      <trans-unit id="2" resname="modal.form.widget.type.{{ widget|lower }}.label">
         <source>modal.form.widget.type.{{ widget|lower }}.label</source>
         <target state="new">{{ widget }}</target>
       </trans-unit>
 {% for field in fields %}
-      <trans-unit resname="widget_{{ widget|lower }}.form.{{ field.fieldName }}.label">
+      <trans-unit id="{{ loop.index + 2 }}" resname="widget_{{ widget|lower }}.form.{{ field.fieldName }}.label">
         <source>widget_{{widget|lower}}.form.{{field.fieldName}}.label</source>
         <target state="new">{{ field.fieldName }}</target>
       </trans-unit>

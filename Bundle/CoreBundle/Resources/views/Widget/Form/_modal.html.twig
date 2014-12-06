@@ -13,10 +13,10 @@
             <div class="vic-modal-footer-content">
                 {% block modal_footer_content %}
                     {% if widget.id %}
-                        <a href={{ path('victoire_core_widget_delete', {'id':widget.id, 'viewReference': view.reference.id })}} class="vic-btn vic-btn-danger vic-pull-left" data-toggle="vic-confirm" data-modal="delete" data-title="{{ 'modal.button.delete.confirm.title'|trans({}, 'victoire')|desc('Are you sure ?') }}" data-body="{{ 'modal.button.delete.confirm.body'|trans({}, 'victoire')|desc('This actions will permanently delete this content from the database. This action is irreversible so you have to understand this message. Do you ?') }}" title="{{ 'modal.button.delete.title'|trans({}, 'victoire')|desc('Delete') }}"><i class="fa fa-trash-o"></i> {{ 'modal.button.delete.title'|trans({}, 'victoire')|desc('Delete') }}</a>
+                        <a href={{ path('victoire_core_widget_delete', {'id':widget.id, 'viewReference': view.reference.id })}} class="vic-btn vic-btn-danger vic-pull-left" data-toggle="vic-confirm" data-modal="delete" data-title="{{ 'modal.button.delete.confirm.title'|trans({}, 'victoire') }}" data-body="{{ 'modal.button.delete.confirm.body'|trans({}, 'victoire') }}" title="{{ 'modal.button.delete.title'|trans({}, 'victoire') }}"><i class="fa fa-trash-o"></i> {{ 'modal.button.delete.title'|trans({}, 'victoire') }}</a>
                     {% endif %}
 
-                    <a href="#" class="vic-btn vic-btn-default vic-pull-left" data-modal="close"><i class="fa fa-times-circle"></i> {{ 'modal.button.cancel.title'|trans({}, 'victoire')|desc('Cancel') }}</a>
+                    <a href="#" class="vic-btn vic-btn-default vic-pull-left" data-modal="close"><i class="fa fa-times-circle"></i> {{ 'modal.button.cancel.title'|trans({}, 'victoire') }}</a>
 
                     <a href="#" class="vic-btn vic-btn-success" data-modal="{% block action %}update{% endblock action %}" title="{{ ('modal.button.'~ block('action') ~'.title')|trans({}, 'victoire') }}"><i class="fa fa-check-circle"></i> {{ ('modal.button.'~ block('action') ~'.title')|trans({}, 'victoire') }}</a>
                 {% endblock modal_footer_content %}

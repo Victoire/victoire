@@ -29,23 +29,18 @@ class LoadFixtureData extends AbstractFixture implements ContainerAwareInterface
      */
     public function load(ObjectManager $manager)
     {
-
         // Load fixtures files
         $files = array();
-
-        if ('test' != $this->container->getParameter('kernel.environment')) {
-            $files['user']      = __DIR__ . '/User/user.yml';
-            $files['folder']    = __DIR__ . '/Media/folder.yml';
-            $files['template']  = __DIR__ . '/View/template.yml';
-            $files['page']      = __DIR__ . '/View/page.yml';
-            $files['errorPage'] = __DIR__ . '/View/errorPage.yml';
-        }
+        $files['user']      = __DIR__ . '/User/user.yml';
+        $files['folder']    = __DIR__ . '/Media/folder.yml';
+        $files['template']  = __DIR__ . '/View/template.yml';
+        $files['page']      = __DIR__ . '/View/page.yml';
+        $files['errorPage'] = __DIR__ . '/View/errorPage.yml';
 
         $objects = Fixtures::load($files, $manager, array(
                 'providers'    => array($this),
                 'locale'       => 'fr_FR',
-                'persist_once' => false,
-                'user_class'   => $this->container->getParameter('victoire_core.user_class'), //loader will change user class
+                'persist_once' => false
         ));
 
         $manager->flush();

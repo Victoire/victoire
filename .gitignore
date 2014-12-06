@@ -1,2 +1,9 @@
 /.buildpath
 /.project
+/composer.lock
+/composer.phar
+/vendor/*
+/Tests/Functionnal/web/bundles/*
+/Tests/Functionnal/web/*js/*
+/Tests/Functionnal/web/*css/*
+/node_modules/*

@@ -6,11 +6,11 @@
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
     </header>
     <body>
-      <trans-unit resname="blog.category_filter.label">
+      <trans-unit id="1" resname="blog.category_filter.label">
         <source>blog.category_filter.label</source>
         <target state="new">Catégories</target>
       </trans-unit>
-      <trans-unit resname="blog.tag_filter.label">
+      <trans-unit id="2" resname="blog.tag_filter.label">
         <source>blog.tag_filter.label</source>
         <target state="new">Étiquettes</target>
       </trans-unit>

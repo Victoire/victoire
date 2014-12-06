@@ -1,0 +1,15 @@
+services:
+    victoire_core.widget_anakin_content_resolver:
+        parent: victoire_widget.base_widget_content_resolver
+        tags:
+            - { name: victoire_widget.widget_content_resolver, alias: Anakin }
+
+    #alias to the entity
+    victoire.widget.anakin:
+        class: Victoire\Widget\AnakinBundle\Entity\WidgetAnakin
+
+    #alias to the form
+    victoire.widget.form.anakin:
+        class: Victoire\Widget\AnakinBundle\Form\WidgetAnakinType
+        tags:
+            - { name: form.type , alias: victoire_widget_form_anakin }

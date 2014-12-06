@@ -24,7 +24,6 @@ class ViewHelper
     protected $businessEntityHelper = null;
     protected $bepHelper;
     protected $entityManager; // @doctrine.orm.entity_manager'
-    protected $urlizer; // @gedmo.urlizer
 
     /**
      * Constructor
@@ -33,15 +32,13 @@ class ViewHelper
      * @param BusinessEntityPageHelper $bepHelper
      * @param EntityManager            $entityManager
      * @param ViewCacheHelper          $viewCacheHelper
-     * @param Urlizer                  $urlizer
      */
     public function __construct(
         BETParameterConverter $parameterConverter,
         BusinessEntityHelper $businessEntityHelper,
         BusinessEntityPageHelper $bepHelper,
         EntityManager $entityManager,
-        ViewCacheHelper $viewCacheHelper,
-        Urlizer $urlizer
+        ViewCacheHelper $viewCacheHelper
     )
     {
         $this->parameterConverter = $parameterConverter;
@@ -49,7 +46,6 @@ class ViewHelper
         $this->businessEntityPageHelper = $bepHelper;
         $this->em = $entityManager;
         $this->viewCacheHelper = $viewCacheHelper;
-        $this->urlizer = $urlizer;
     }
 
     //@todo Make it dynamic please
@@ -69,13 +65,8 @@ class ViewHelper
     public function getAllViewsReferences()
     {
         $viewsReferences = array();
-        $schemaManager = $this->em->getConnection()->getSchemaManager();
-        if ($schemaManager->tablesExist(array('vic_view')) == true) {
-            //This query is not optimized because we need the property "businessEntityName" later, and it's only present in Pattern pages
-            $views = $this->em->createQuery("SELECT v FROM VictoireCoreBundle:View v")->getResult();
-        } else {
-            $views = array();
-        }
+        //@todo This query is not optimized because we need the property "businessEntityName" later, and it's only present in Pattern pages
+        $views = $this->em->createQuery("SELECT v FROM VictoireCoreBundle:View v")->getResult();
 
         foreach ($views as $view) {
             $viewsReferences = array_merge($viewsReferences, $this->buildViewReference($view));
@@ -117,7 +108,9 @@ class ViewHelper
                         $this->setEntityAttributeValue($page, $pageAttribute, $updatedString);
                     }
                 }
-                $page->setSlug($this->urlizer->urlize($page->getName()));
+
+                $urlizer = new Urlizer();
+                $page->setSlug($urlizer->urlize($page->getName()));
             }
         }
     }

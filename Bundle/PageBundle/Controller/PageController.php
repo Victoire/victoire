@@ -30,10 +30,10 @@ class PageController extends BasePageController
     public function homepageAction(Request $request)
     {
         //services
-        $em = $this->getEntityManager();
+        $entityManager = $this->getDoctrine()->getManager();
 
         //get the homepage
-        $homepage = $em->getRepository('VictoirePageBundle:BasePage')->findOneByHomepage(true);
+        $homepage = $entityManager->getRepository('VictoirePageBundle:BasePage')->findOneByHomepage(true);
 
         if ($homepage !== null) {
             return $this->showAction($request, $homepage->getUrl());

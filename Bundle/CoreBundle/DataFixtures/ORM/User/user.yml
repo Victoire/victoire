@@ -8,6 +8,8 @@ Victoire\Bundle\UserBundle\Entity\User:
         enabled:           true
         locked:            false
         expired:           false
+        createdAt:         <dateTime('now')>
+        updatedAt:         <dateTime('now')>
         roles:
             ROLE_ADMIN: ROLE_ADMIN
             ROLE_VICTOIRE_DEVELOPER: ROLE_VICTOIRE_DEVELOPER
@@ -20,6 +22,8 @@ Victoire\Bundle\UserBundle\Entity\User:
         enabled:           true
         locked:            false
         expired:           false
+        createdAt:         <dateTime('now')>
+        updatedAt:         <dateTime('now')>
         roles:
             ROLE_ADMIN: ROLE_ADMIN
             ROLE_VICTOIRE_DEVELOPER: ROLE_VICTOIRE_DEVELOPER
@@ -32,6 +36,8 @@ Victoire\Bundle\UserBundle\Entity\User:
         enabled:           true
         locked:            false
         expired:           false
+        createdAt:         <dateTime('now')>
+        updatedAt:         <dateTime('now')>
         roles:
             ROLE_ADMIN: ROLE_ADMIN
             ROLE_VICTOIRE_DEVELOPER: ROLE_VICTOIRE_DEVELOPER
@@ -44,6 +50,8 @@ Victoire\Bundle\UserBundle\Entity\User:
         enabled:           true
         locked:            false
         expired:           false
+        createdAt:         <dateTime('now')>
+        updatedAt:         <dateTime('now')>
         roles:
             ROLE_ADMIN: ROLE_ADMIN
             ROLE_VICTOIRE_DEVELOPER: ROLE_VICTOIRE_DEVELOPER
@@ -56,6 +64,8 @@ Victoire\Bundle\UserBundle\Entity\User:
         enabled:           true
         locked:            false
         expired:           false
+        createdAt:         <dateTime('now')>
+        updatedAt:         <dateTime('now')>
         roles:
             ROLE_ADMIN: ROLE_ADMIN
             ROLE_VICTOIRE_DEVELOPER: ROLE_VICTOIRE_DEVELOPER
@@ -68,6 +78,8 @@ Victoire\Bundle\UserBundle\Entity\User:
         enabled:           true
         locked:            false
         expired:           false
+        createdAt:         <dateTime('now')>
+        updatedAt:         <dateTime('now')>
         roles:
             ROLE_ADMIN: ROLE_ADMIN
             ROLE_VICTOIRE_DEVELOPER: ROLE_VICTOIRE_DEVELOPER

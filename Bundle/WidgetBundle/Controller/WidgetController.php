@@ -2,10 +2,10 @@
 
 namespace Victoire\Bundle\WidgetBundle\Controller;
 
-use AppVentus\Awesome\ShortcutsBundle\Controller\AwesomeController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +18,7 @@ use Victoire\Bundle\WidgetBundle\Entity\Widget;
  * Widget Controller
  *
  */
-class WidgetController extends AwesomeController
+class WidgetController extends Controller
 {
     /**
      * Show a widget
@@ -94,7 +94,6 @@ class WidgetController extends AwesomeController
     {
         try {
             //services
-            $em = $this->getEntityManager();
             $view = $this->getViewByReferenceId($viewReference);
 
             $isNewPage = $view->getId() == null ? true : false;
@@ -191,8 +190,8 @@ class WidgetController extends AwesomeController
 
             if (!$view->getId()) {
                 //This view does not have an id, so it's a non persisted BEP. To keep this new order, well have to persist it.
-                $this->getEntityManager()->persist($view);
-                $this->getEntityManager()->flush();
+                $this->get('doctrine.orm.entity_manager')->persist($view);
+                $this->get('doctrine.orm.entity_manager')->flush();
             }
 
             //recompute the order for the widgets
