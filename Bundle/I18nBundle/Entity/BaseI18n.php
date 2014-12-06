@@ -40,7 +40,7 @@ abstract class BaseI18n
     public function getEntity($entityName)
     {
         //test the entity name
-        if ($entityName == null) {
+        if ($entityName === null) {
             throw new \Exception('The businessEntityName is not defined for the entityProxy with the id:'.$this->getId());
         }
 

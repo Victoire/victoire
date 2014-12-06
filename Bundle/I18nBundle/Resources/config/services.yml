@@ -43,12 +43,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: victoire_core.template_menu.contextual, method: addContextual }
 
-    victoire_i18n.domainResolver:
-        class: Victoire\Bundle\I18nBundle\Resolver\DomainResolver
-        arguments: ["@service_container"]
-        tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
-
     victoire_i18n.routing_loader:
         class: Victoire\Bundle\I18nBundle\Route\I18nRouteLoader
         arguments:
