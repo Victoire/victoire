@@ -1,6 +1,6 @@
 <?php
 
-namespace victoire\Bundle\CoreBundle\DataFixtures\ORM;
+namespace Victoire\Bundle\CoreBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
