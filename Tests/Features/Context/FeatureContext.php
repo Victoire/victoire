@@ -82,8 +82,6 @@ class FeatureContext extends MinkContext
     {
         $element = $this->findAfterAjax($this->getSession()->getPage(), $text, $timeout);
         if (!$element) {
-
-            var_dump($this->getSession()->getPage()->getContent());
             $message = sprintf('The text "%s" was not found anywhere in the text of the current page.', $text);
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
