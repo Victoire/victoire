@@ -569,8 +569,10 @@ abstract class View
      */
     public function initI18n()
     {
-        $this->i18n = new I18n();
-        $this->i18n->setTranslation($this->getLocale(), $this);
+        if (!$this->i18n) {
+            $this->i18n = new I18n();
+            $this->i18n->setTranslation($this->getLocale(), $this);
+        }
     }
 
     /**
