@@ -170,6 +170,7 @@ abstract class View
      * @var string
      *
      * @ORM\OneToOne(targetEntity="\Victoire\Bundle\I18nBundle\Entity\I18n", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="i18n_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $i18n;
 
