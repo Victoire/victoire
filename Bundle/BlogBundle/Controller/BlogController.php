@@ -45,7 +45,8 @@ class BlogController extends BasePageController
      */
     public function indexAction($isHomepage = false)
     {
-        $blogs = $this->getEntityManager()->getRepository('VictoireBlogBundle:Blog')
+        $blogs = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('VictoireBlogBundle:Blog')
             ->getAll()->run();
 
         return new JsonResponse(

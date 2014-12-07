@@ -22,13 +22,12 @@ class DefaultController extends Controller
      */
     public function welcomeAction()
     {
-
-        $em = $this->getEntityManager();
+        $entityManager = $this->get('doctrine.orm.entity_manager');
 
         //get the page
-        $templates = $em->getRepository('VictoireTemplateBundle:Template')->findAll();
-        $pages = $em->getRepository('VictoirePageBundle:Page')->findAll();
-        $homepage = $em->getRepository('VictoirePageBundle:Page')->findOneByHomepage();
+        $templates = $entityManager->getRepository('VictoireTemplateBundle:Template')->findAll();
+        $pages = $entityManager->getRepository('VictoirePageBundle:Page')->findAll();
+        $homepage = $entityManager->getRepository('VictoirePageBundle:Page')->findOneByHomepage();
 
         return array(
             "templates" => $templates,

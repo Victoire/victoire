@@ -58,7 +58,6 @@ class ArticleController extends BasePageController
      */
     public function newBlogArticleAction(Blog $blog)
     {
-        $em = $this->getEntityManager();
         $article = new Article();
         $article->setBlog($blog);
         $form = $this->container->get('form.factory')->create($this->getNewPageType(), $article);
@@ -80,7 +79,7 @@ class ArticleController extends BasePageController
      * @param Page    $article
      *
      * @Route("/{id}/{newTranslation}/settings", name="victoire_blog_article_settings", defaults={"newTranslation"=false})
-     * 
+     *
      * @ParamConverter("article", class="VictoireBlogBundle:Article")
      * @return template
      */

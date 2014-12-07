@@ -43,7 +43,7 @@ class BasePageController extends Controller
      */
     protected function newAction($isHomepage = false)
     {
-        $em = $this->getEntityManager();
+        $entityManager = $this->get('doctrine.orm.entity_manager');
         $page = $this->getNewPage();
         if ($page instanceof Page) {
             $page->setHomepage($isHomepage ? $isHomepage : 0);
@@ -56,14 +56,14 @@ class BasePageController extends Controller
             if ($page->getParent()) {
                 $pageNb = count($page->getParent()->getChildren());
             } else {
-                $pageNb = count($em->getRepository('VictoirePageBundle:BasePage')->findByParent(null));
+                $pageNb = count($entityManager->getRepository('VictoirePageBundle:BasePage')->findByParent(null));
             }
             // + 1 because position start at 1, not 0
             $page->setPosition($pageNb + 1);
 
             $page->setAuthor($this->getUser());
-            $em->persist($page);
-            $em->flush();
+            $entityManager->persist($page);
+            $entityManager->flush();
 
             // If the $page is a BusinessEntity (eg. an Article), compute it's url
             if (null !== $this->container->get('victoire_core.helper.business_entity_helper')->findByEntityInstance($page)) {
@@ -101,7 +101,7 @@ class BasePageController extends Controller
     protected function settingsAction(Request $request, BasePage $page, $newTranslation = false)
     {
         $originalPageId = $newTranslation ? $page->getId(): null;
-        $em = $this->getEntityManager();
+        $entityManager = $this->get('doctrine.orm.entity_manager');
 
         $response = array();
 
@@ -139,8 +139,8 @@ class BasePageController extends Controller
                     $page = $this->get('victoire_core.view_helper')->addTranslation($page, $page->getName().'-'.$targetLocale, $targetLocale);
                     $request->setLocale($targetLocale);
                 }
-                $em->persist($page);
-                $em->flush();
+                $entityManager->persist($page);
+                $entityManager->flush();
 
                 $response =  array(
                     'success' => true,
@@ -192,13 +192,13 @@ class BasePageController extends Controller
             }
 
             //the entity manager
-            $em = $this->getEntityManager();
+            $entityManager = $this->get('doctrine.orm.entity_manager');
 
             //remove the page
-            $em->remove($page);
+            $entityManager->remove($page);
 
             //flush the modifications
-            $em->flush();
+            $entityManager->flush();
 
             //redirect to the homepage
             $homepageUrl = $this->generateUrl('victoire_core_page_homepage');
