@@ -248,7 +248,7 @@
 {% if widget == 'single_text' %}
     {% if datepicker is defined %}
         <div data-provider="datepicker" class="vic-input-group vic-date" data-date="{{ value }}" data-link-field="{{ id }}" data-link-format="dd-mm-yyyy">
-            <input {% if vic_widget_form_control_class is not sameas(false) %}class="{{ vic_widget_form_control_class }}" {% endif %}type="text" {% if read_only %} readonly="readonly"{% endif %}{% if vic_disabled %} disabled="disabled"{% endif %}{% if required %} required="required"{% endif %}>
+            <input {% if vic_widget_form_control_class is not sameas(false) %}class="{{ vic_widget_form_control_class }}" {% endif %}type="text" {% if read_only %} readonly="readonly"{% endif %}{% if disabled %} disabled="disabled"{% endif %}{% if required %} required="required"{% endif %}>
             <input type="hidden" value="{{ value }}" {{ block('widget_attributes') }}>
             <span class="vic-input-group-addon">{{ victoire_icon('calendar') }}</span>
         </div>
@@ -274,7 +274,7 @@
 {% if widget == 'single_text' %}
     {% if timepicker is defined %}
         <div data-provider="timepicker" class="vic-input-group vic-date" data-date="{{ value }}" data-link-field="{{ id }}" data-link-format="hh:ii">
-            <input class="vic-form-control" type="text" {% if read_only %} readonly="readonly"{% endif %}{% if vic_disabled %} disabled="disabled"{% endif %}{% if required %} required="required"{% endif %}>
+            <input class="vic-form-control" type="text" {% if read_only %} readonly="readonly"{% endif %}{% if disabled %} disabled="disabled"{% endif %}{% if required %} required="required"{% endif %}>
             <input type="hidden" value="{{ value }}" {{ block('widget_attributes') }}>
             <span class="vic-input-group-addon">{{ victoire_icon('time') }}</span>
         </div>
@@ -300,7 +300,7 @@
     {% if widget == 'single_text' %}
         {% if vic_datetimepicker is defined %}
             <div data-provider="datetimepicker" class="vic-input-group vic-date" data-date="{% if value %}{{ value|date('d-m-Y H:i') }}{% endif %}" data-link-field="{{ id }}" data-link-format="dd-mm-yyyy hh:ii">
-                <input class="vic-form-control" type="text" {% if read_only %} readonly="readonly"{% endif %}{% if vic_disabled %} disabled="disabled"{% endif %}{% if required %} required="required"{% endif %} value="{% if value %}{{ value|date('d-m-Y H:i') }}{% endif %}">
+                <input class="vic-form-control" type="text" {% if read_only %} readonly="readonly"{% endif %}{% if disabled %} disabled="disabled"{% endif %}{% if required %} required="required"{% endif %} value="{% if value %}{{ value|date('d-m-Y H:i') }}{% endif %}">
                 <input type="hidden" value="{% if value %}{{ value|date('d-m-Y H:i') }}{% endif %}" {{ block('widget_attributes') }}>
                 <span class="vic-input-group-addon">{{ victoire_icon('th') }}</span>
             </div>
