@@ -67,6 +67,5 @@
             "Victoire\\Tests\\Features\\": "Tests/Features"
         }
     },
-    "minimum-stability": "dev",
-    "target-dir": "Victoire"
+    "minimum-stability": "dev"
 }
