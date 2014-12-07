@@ -36,7 +36,7 @@
             "victoire-edit":
             [
                 "@VictoireCoreBundle/Resources/style/less/globals/typography.less",
-                "@VictoireCoreBundle/Resources/public/vendor/font-awesome/4.0.3/css/font-awesome.css",
+                "@VictoireCoreBundle/Resources/public/vendor/font-awesome/4.2.0/css/font-awesome.css",
                 "@VictoireCoreBundle/Resources/public/vendor/vic-bootstrap/3.0.3/css/bootstrap.min.css",
                 "@VictoireCoreBundle/Resources/public/vendor/codrops-notification/less/ns-default.less",
                 "@VictoireCoreBundle/Resources/public/vendor/codrops-notification/less/ns-style-bar.less",
