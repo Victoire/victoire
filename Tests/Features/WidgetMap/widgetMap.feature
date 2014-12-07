@@ -1,4 +1,4 @@
-@mink:selenium2 @victoire
+@mink:selenium2 @database @fixtures
 Feature: Create a widget at first position
 
 Background:

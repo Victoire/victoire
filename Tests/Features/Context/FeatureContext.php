@@ -6,6 +6,9 @@ use Behat\MinkExtension\Context\MinkContext;
 use Behat\Mink\Exception\UnsupportedDriverActionException;
 use Behat\Symfony2Extension\Context\KernelDictionary;
 use Behat\Symfony2Extension\Driver\KernelDriver;
+use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
+use Doctrine\Common\DataFixtures\Purger\ORMPurger;
+use Victoire\Bundle\CoreBundle\DataFixtures\ORM\LoadFixtureData;
 use Victoire\Tests\Features\Context\SubContext\AjaxSubContextTrait;
 use Victoire\Tests\Features\Context\SubContext\VictoireSubContextTrait;
 
@@ -30,15 +33,20 @@ class FeatureContext extends MinkContext
     }
 
     /**
-     * @BeforeScenario @victoire
+     * @BeforeScenario @database&&@fixtures
      */
-    public function importVictoireSeed()
+    public function cleanDatabaseFixtures()
     {
+        /** @var $em \Doctrine\ORM\EntityManager */
         $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
 
-        //clean db
-        $seedsVictoireQuery = file_get_contents(__DIR__.'/../seeds.sql');
-        $entityManager->getConnection()->executeUpdate($seedsVictoireQuery);
+        $purger = new ORMPurger();
+        $executor = new ORMExecutor($entityManager, $purger);
+        $executor->purge();
+
+        $fixturesLoader = new LoadFixtureData();
+        $fixturesLoader->setContainer($this->getContainer());
+        $fixturesLoader->load($entityManager);
     }
 
     /**
