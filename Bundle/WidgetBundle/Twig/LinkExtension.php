@@ -4,6 +4,7 @@ namespace Victoire\Bundle\WidgetBundle\Twig;
 
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 
 /**
  * Twig extension for rendering a link.
@@ -48,7 +49,7 @@ class LinkExtension extends \Twig_Extension
         switch ($linkType) {
             case 'page':
                 //fallback when a page is deleted cascading the relation as null (page_id = null)
-                if ($page) {
+                if ($page && $page instanceof WebViewInterface) {
                     //avoid to refresh page when not needed
                     $linkUrl = $this->router->generate('victoire_core_page_show', array('url' => $page->getUrl() ));
                     if ($this->request->getRequestUri() != $linkUrl || !$avoidRefresh) {
@@ -61,7 +62,7 @@ class LinkExtension extends \Twig_Extension
                 break;
             case 'attachedWidget':
                 //fallback when a widget is deleted cascading the relation as null (widget_id = null)
-                if ($attachedWidget && method_exists($attachedWidget->getView(), 'getUrl')) {
+                if ($attachedWidget && $attachedWidget->getView() instanceof WebViewInterface) {
 
                     //create base url
                     $url = $this->router->generate('victoire_core_page_show', array('url' => $attachedWidget->getView()->getUrl()));

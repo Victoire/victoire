@@ -4,8 +4,9 @@ namespace Victoire\Bundle\I18nBundle\Twig;
 
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Victoire\Bundle\WidgetBundle\Twig\LinkExtension as BaseLinkExtension;
+use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\I18nBundle\Resolver\LocaleResolver;
+use Victoire\Bundle\WidgetBundle\Twig\LinkExtension as BaseLinkExtension;
 
 /**
  * Twig extension for rendering a link.
@@ -14,15 +15,15 @@ use Victoire\Bundle\I18nBundle\Resolver\LocaleResolver;
 class I18nLinkExtension extends BaseLinkExtension
 {
 
-	protected $localeResolver;
+    protected $localeResolver;
 
-	public function __construct(Router $router, RequestStack $requestStack, $analytics, LocaleResolver $localeResolver)
+    public function __construct(Router $router, RequestStack $requestStack, $analytics, LocaleResolver $localeResolver)
     {
         parent::__construct($router, $requestStack, $analytics);
         $this->localeResolver = $localeResolver;
     }
 
-	/**
+    /**
      * Generate the complete link (with the a tag)
      * @param array  $parameters   The link parameters (go to LinkTrait to have the list)
      * @param string $avoidRefresh Do we have to refresh or not ?
@@ -37,7 +38,7 @@ class I18nLinkExtension extends BaseLinkExtension
         switch ($linkType) {
             case 'page':
                 //fallback when a page is deleted cascading the relation as null (page_id = null)
-                if ($page) {
+                if ($page instanceof WebViewInterface) {
                     //avoid to refresh page when not needed
                     $linkUrl = $this->router->generate('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl() ));
                     if ($this->request->getRequestUri() != $linkUrl || !$avoidRefresh) {

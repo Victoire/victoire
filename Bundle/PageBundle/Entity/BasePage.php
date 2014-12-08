@@ -4,6 +4,7 @@ namespace Victoire\Bundle\PageBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Victoire\Bundle\CoreBundle\Entity\View;
+use Victoire\Bundle\CoreBundle\Entity\WebView;
 
 /**
  * Page
@@ -13,7 +14,7 @@ use Victoire\Bundle\CoreBundle\Entity\View;
  * @UniqueEntity(fields={"url", "locale"})
  * @ORM\HasLifecycleCallbacks
  */
-abstract class BasePage extends View
+abstract class BasePage extends View implements WebView
 {
     use \Victoire\Bundle\PageBundle\Entity\Traits\WebViewTrait;
 
