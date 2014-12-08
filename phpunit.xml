@@ -4,8 +4,7 @@
          xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.1/phpunit.xsd"
          backupGlobals="false"
          colors="true"
-         bootstrap="./Tests/bootstrap.php"
->
+         bootstrap="./Tests/bootstrap.php">
     <php>
         <ini name="memory_limit" value="-1"/>
         <server name="KERNEL_DIR" value="./Tests/Functional/app" />

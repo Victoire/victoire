@@ -7,7 +7,7 @@ use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
 
 class I18nTemplateMenuListener extends TemplateMenuListener
 {
-	
+
     /**
      * {@inheritDoc}
      */
@@ -41,7 +41,6 @@ class I18nTemplateMenuListener extends TemplateMenuListener
                 'routeParameters' => array('slug' => $template->getSlug(), 'newTranslation' => true)
                 )
         )->setLinkAttribute('data-toggle', 'vic-modal');
-
 
         return $mainItem;
     }
