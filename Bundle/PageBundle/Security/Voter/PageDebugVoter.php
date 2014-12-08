@@ -3,7 +3,6 @@ namespace Victoire\Bundle\PageBundle\Security\Voter;
 
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
-use Victoire\Bundle\CoreBundle\Entity\View;
 
 /**
  * This class decides yes or no if the user is granted to see the debug
@@ -41,7 +40,7 @@ class PageDebugVoter implements VoterInterface
     /**
      * {@inheritDoc}
      */
-    public function vote(TokenInterface $token, View $view, array $attributes)
+    public function vote(TokenInterface $token, $view, array $attributes)
     {
         foreach ($attributes as $attribute) {
             if ($this->supportsAttribute($attribute) && $this->supportsClass($view)) {

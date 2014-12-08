@@ -8,5 +8,5 @@ namespace Victoire\Bundle\CoreBundle\Entity;
 interface WebViewInterface
 {
     public function getUrl();
-    public function setUrl();
+    public function setUrl($url);
 }
