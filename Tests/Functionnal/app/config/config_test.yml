@@ -70,6 +70,7 @@ stof_doctrine_extensions:
         default:
             tree: true
             sluggable: true
+            timestampable: true
 
 fos_user:
     db_driver: orm
