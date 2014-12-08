@@ -3,6 +3,7 @@ namespace Victoire\Bundle\PageBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -215,5 +216,35 @@ class BasePageController extends Controller
         }
 
         return $return;
+    }
+
+    /**
+     * Show homepage or redirect to new page
+     *
+     * ==========================
+     * find homepage
+     * if homepage
+     *     forward show(homepage)
+     * else
+         *     redirect to welcome page (dashboard)
+     * ==========================
+     *
+     * @Route("/", name="victoire_core_page_homepage")
+     * @return template
+     *
+     */
+    public function homepageAction(Request $request)
+    {
+        //services
+        $entityManager = $this->getDoctrine()->getManager();
+
+        //get the homepage
+        $homepage = $entityManager->getRepository('VictoirePageBundle:BasePage')->findOneByHomepage($request->getLocale());
+
+        if ($homepage !== null) {
+            return $this->showAction($request, $homepage->getUrl());
+        } else {
+            return $this->redirect($this->generateUrl('victoire_dashboard_default_welcome'));
+        }
     }
 }

@@ -11,14 +11,14 @@ use Victoire\Bundle\PageBundle\Entity\PageStatus;
 class BasePageRepository extends NestedTreeRepository
 {
 
-    private $qb;
+    private $queryBuilder;
 
     /**
      * Get query builder instance
      */
     public function getInstance()
     {
-        return $this->qb ? $this->qb : $this->createQueryBuilder('page');
+        return $this->queryBuilder ? $this->queryBuilder : $this->createQueryBuilder('page');
     }
 
     /**
@@ -45,9 +45,9 @@ class BasePageRepository extends NestedTreeRepository
      */
     public function findOneByUrl($url)
     {
-        $qb = $this->getOneByUrl($url);
+        $queryBuilder = $this->getOneByUrl($url);
 
-        return $qb->getQuery()->getOneOrNullResult();
+        return $queryBuilder->getQuery()->getOneOrNullResult();
     }
 
     /**
@@ -59,11 +59,11 @@ class BasePageRepository extends NestedTreeRepository
      */
     public function getAll($excludeUnpublished = false)
     {
-        $this->qb = $this->getInstance();
+        $this->queryBuilder = $this->getInstance();
 
         //If $excludeUnpublished === true, we exclude the non published results
         if ($excludeUnpublished) {
-            $this->qb
+            $this->queryBuilder
                 ->andWhere('page.status = :status')
                 ->orWhere('page.status = :scheduled_status AND page.publishedAt > :publicationDate')
                 ->setParameter('status', PageStatus::PUBLISHED)
@@ -84,5 +84,30 @@ class BasePageRepository extends NestedTreeRepository
     public function run($method = 'getResult', $hydrationMode = Query::HYDRATE_OBJECT)
     {
         return $this->getInstance()->getQuery()->$method($hydrationMode);
+    }
+
+    /**
+     * Get the the page that is a homepage and a published one
+     * @param string $locale
+     *
+     * @return Page
+     */
+    public function findOneByHomepage($locale = 'fr')
+    {
+        //the query builder
+        $queryBuilder = $this->createQueryBuilder('page');
+
+        $queryBuilder
+            ->where('page.homepage = true')
+            ->andWhere('page.status = :status')
+            ->andWhere('page.locale = :locale')
+            ->setMaxResults(1)
+            ->setParameter('locale', $locale)
+            ->setParameter('status', PageStatus::PUBLISHED);
+
+        $query = $queryBuilder->getQuery();
+        $page = $query->getOneOrNullResult();
+
+        return $page;
     }
 }
