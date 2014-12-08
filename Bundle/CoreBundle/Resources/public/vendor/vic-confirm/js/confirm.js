@@ -28,7 +28,8 @@ function vicSmartConfirm(e,referer,type){
             cancel_button_class  : $vic(referer).data('cancel-button-class'),
             confirm_button_class : $vic(referer).data('confirm-button-class'),
             id                   : $vic(referer).attr('id'),
-            type                 : type
+            type                 : type,
+            _locale              : locale
         },
         function(data){
           $vic("body").append(data);

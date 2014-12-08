@@ -14,7 +14,7 @@
         <source>modal.form.widget.type.anakin.label</source>
         <target>Anakin</target>
       </trans-unit>
-      <trans-unit id="2" resname="widget_anakin.form.side.label">
+      <trans-unit id="3" resname="widget_anakin.form.side.label">
         <source>widget_anakin.form.side.label</source>
         <target>Side</target>
       </trans-unit>

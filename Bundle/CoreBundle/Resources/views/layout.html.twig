@@ -44,26 +44,20 @@
     {% endblock body %}
 
     {% block foot_script %}
+
+    <script type="text/javascript">
+        {% if view is defined %}
+            var viewReferenceId = '{{ view.reference.id }}';
+        {% endif %}
+        </script>
         {% if is_granted('ROLE_VICTOIRE') %}
             {% spaceless %}
-                {% javascripts injector='victoire-edit' %}
+                {% javascripts injector='victoire-edit, victoire-leftnavbar' %}
                 <script type="text/javascript" src="{{ asset_url }}"></script>
                 {% endjavascripts %}
             {% endspaceless %}
         {% endif %}
-        {% if is_granted('ROLE_VICTOIRE_LEFTNAVBAR') %}
-            {% spaceless %}
-                {% javascripts injector='victoire-leftnavbar' %}
-                <script type="text/javascript" src="{{ asset_url }}"></script>
-                {% endjavascripts %}
-            {% endspaceless %}
-        {% endif %}
-        {% javascripts injector='foot'
-            "http://netdna.bootstrapcdn.com/bootstrap/2.3.2/js/bootstrap.min.js"
-        %}
-        <script type="text/javascript" src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-
+        {% if is_granted('ROLE_VICTOIRE') %}
         <script type="text/javascript">
             $vic(document).ready(function(){
                 $vic('a#media-manager').on('click', function(ev) {
@@ -72,10 +66,15 @@
                 });
             });
         </script>
+        {% endif %}
         <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+        <script type="text/javascript">
+            var locale = '{{ app.request.locale }}';
+        </script>
         <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
 
     {% endblock foot_script %}
+
 
     {% block foot_script_additional %}
     {% endblock foot_script_additional %}

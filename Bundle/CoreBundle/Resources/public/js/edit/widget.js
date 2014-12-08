@@ -174,10 +174,11 @@ function generateNewWidgetUrl(select){
     var url = Routing.generate(
         'victoire_core_widget_new',
         {
-            'viewReference': viewReferenceId,
-            'type'         : $vic(select).val(),
-            'slot'         : slotId,
-            'positionReference'     : positionReference
+            'viewReference'    : viewReferenceId,
+            'type'             : $vic(select).val(),
+            'slot'             : slotId,
+            'positionReference': positionReference,
+            '_locale'          : locale
         }
     );
 

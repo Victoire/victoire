@@ -2,10 +2,10 @@ $vic(document).on('change', '#vic-switcher-editMode', function(event) {
 
     if ($vic(this).is(':checked')) {
         $vic('body').attr('role','admin');
-        var route = Routing.generate('victoire_core_switchEnable');
+        var route = Routing.generate('victoire_core_switchEnable', {'_locale': locale});
     } else {
         $vic('body').removeAttr('role');
-        var route = Routing.generate('victoire_core_switchDisable');
+        var route = Routing.generate('victoire_core_switchDisable', {'_locale': locale});
     }
 
     $vic.ajax({

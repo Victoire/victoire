@@ -135,7 +135,7 @@ function updatePosition(ui){
 
     return $vic.post(
         Routing.generate('victoire_core_widget_update_position', {'viewReference': viewReferenceId}),
-        { 'sorted': sorted }
+        { 'sorted': sorted, '_locale': locale }
     );
 }
 
