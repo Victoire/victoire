@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 
 /**
@@ -15,20 +14,20 @@ use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
  */
 class QueryHelper
 {
-    protected $em = null;
+    protected $entityManager = null;
     protected $businessEntityHelper = null;
     protected $currentView;
 
     /**
      * Constructor
      *
-     * @param EntityManager        $em
+     * @param EntityManager        $entityManager
      * @param BusinessEntityHelper $businessEntityHelper
      * @param CurrentViewHelper    $currentView
      */
-    public function __construct(EntityManager $em, BusinessEntityHelper $businessEntityHelper, CurrentViewHelper $currentView)
+    public function __construct(EntityManager $entityManager, BusinessEntityHelper $businessEntityHelper, CurrentViewHelper $currentView)
     {
-        $this->em = $em;
+        $this->entityManager = $entityManager;
         $this->businessEntityHelper = $businessEntityHelper;
         $this->currentView = $currentView;
     }
@@ -46,7 +45,7 @@ class QueryHelper
     public function getQueryBuilder($containerEntity)
     {
         //services
-        $em = $this->em;
+        $entityManager = $this->entityManager;
         $businessEntityHelper = $this->businessEntityHelper;
 
         if ($containerEntity === null) {
@@ -75,7 +74,7 @@ class QueryHelper
 
         $businessClass = $businessEntity->getClass();
 
-        $itemsQueryBuilder = $em
+        $itemsQueryBuilder = $entityManager
             ->createQueryBuilder()
             ->select('main_item')
             ->from($businessClass, 'main_item');
@@ -114,7 +113,7 @@ class QueryHelper
     public function buildWithSubQuery($containerEntity, QueryBuilder $itemsQueryBuilder)
     {
         //services
-        $em = $this->em;
+        $entityManager = $this->entityManager;
 
         //test the container entity
         if ($containerEntity === null) {
@@ -128,7 +127,7 @@ class QueryHelper
         $query = $containerEntity->getQuery();
         if ($query !== '' && $query !== null) {
 
-            $subQuery = $this->em->createQueryBuilder()
+            $subQuery = $this->entityManager->createQueryBuilder()
                              ->select('item.id')
                              ->from($itemsQueryBuilder->getRootEntities()[0], 'item');
 
@@ -141,7 +140,7 @@ class QueryHelper
         if ($currentView() && $currentView() instanceof BusinessEntityPage && null !== $currentEntity = $currentView()->getBusinessEntity()) {
 
             // NEW
-            $metadatas = $this->em->getClassMetadata(get_class($currentEntity));
+            $metadatas = $this->entityManager->getClassMetadata(get_class($currentEntity));
             foreach ($metadatas->fieldMappings as $fieldName => $field) {
                 if (strpos($query, ":" . $fieldName) !== false) {
                     $itemsQueryBuilder->setParameter($fieldName, $metadatas->getFieldValue($currentEntity, $fieldName));

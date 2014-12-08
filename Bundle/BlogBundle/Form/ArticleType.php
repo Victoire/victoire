@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Victoire\Bundle\CoreBundle\DataTransformer\ViewToIdTransformer;
 use Victoire\Bundle\PageBundle\Form\BasePageType;
-use Victoire\Bundle\TemplateBundle\Entity\Template;
 
 /**
  *

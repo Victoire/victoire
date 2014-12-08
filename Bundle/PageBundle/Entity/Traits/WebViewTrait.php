@@ -73,7 +73,7 @@ trait WebViewTrait
      *
      * @return Page
      */
-    public function setSeo($seo)
+    public function setSeo(PageSeo $seo)
     {
         if ($seo !== null) {
             $seo->setPage($this);
@@ -129,7 +129,7 @@ trait WebViewTrait
      *
      * @param route $route
      */
-    public function removeRoute($route)
+    public function removeRoute(Route $route)
     {
         $this->routes->remove($route);
     }
@@ -139,7 +139,7 @@ trait WebViewTrait
      *
      * @param route $route
      */
-    public function addRoute($route)
+    public function addRoute(Route $route)
     {
         $this->routes[] = $route;
     }

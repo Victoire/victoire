@@ -5,9 +5,8 @@ namespace Victoire\Bundle\I18nBundle\Translation;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator as BaseTranslator;
 use Symfony\Component\Translation\MessageSelector;
-use Symfony\Component\Config\ConfigCache;
 
-class Translator extends BaseTranslator 
+class Translator extends BaseTranslator
 {
 
     protected $container;
@@ -28,7 +27,7 @@ class Translator extends BaseTranslator
         $this->container = $container;
     }
 
-	/**
+    /**
      * {@inheritdoc}
      *
      * @api
@@ -41,7 +40,7 @@ class Translator extends BaseTranslator
         if (null === $domain) {
             $domain = 'messages';
         } elseif ('victoire' === $domain) {
-        	$locale = $this->getVictoireLocale();
+            $locale = $this->getVictoireLocale();
         }
         if (!isset($this->catalogues[$locale])) {
             $this->loadCatalogue($locale);
@@ -63,7 +62,7 @@ class Translator extends BaseTranslator
         if (null === $domain) {
             $domain = 'messages';
         } elseif ('victoire' === $domain) {
-        	$locale = $this->getVictoireLocale();
+            $locale = $this->getVictoireLocale();
         }
         if (!isset($this->catalogues[$locale])) {
             $this->loadCatalogue($locale);
@@ -78,9 +77,10 @@ class Translator extends BaseTranslator
                 break;
             }
         }
+
         return strtr($this->selector->choose($catalogue->get($id, $domain), (int) $number, $locale), $parameters);
     }
-    
+
     /**
     * get the local in the session
     */
@@ -90,15 +90,15 @@ class Translator extends BaseTranslator
 
         return $this->locale;
     }
-    
+
     /**
     * get the locale of the administration template
     */
-    public function getVictoireLocale() 
+    public function getVictoireLocale()
     {
         $this->locale = $this->container->get('request')->getSession()->get('victoire_locale');
 
         return $this->locale;
     }
-    
+
 }

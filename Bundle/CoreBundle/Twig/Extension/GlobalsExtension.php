@@ -3,7 +3,6 @@
 namespace Victoire\Bundle\CoreBundle\Twig\Extension;
 
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Provides some gloval variabls to twig
@@ -35,7 +34,7 @@ class GlobalsExtension extends \Twig_Extension
     {
         return array(
             "global_layout" => $this->templateMapper->getGlobalLayout(),
-            "edit_mode" => $this->session->get('victoire.edit_mode', false),
+            "edit_mode"     => $this->session->get('victoire.edit_mode', false),
         );
     }
 

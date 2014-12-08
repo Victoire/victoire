@@ -7,8 +7,6 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\SecurityContext;
-use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter as BETParameterConverter;
-use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\BusinessEntityPageBundle\Helper\BusinessEntityPageHelper;
@@ -20,11 +18,9 @@ use Victoire\Bundle\CoreBundle\Helper\ViewHelper;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\PageBundle\Matcher\UrlMatcher;
 use Victoire\Bundle\SeoBundle\Helper\PageSeoHelper;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
-use Victoire\Bundle\i18nBUndle\Resolver\LocaleResolver;
 
 /**
  * Page helper
@@ -32,12 +28,8 @@ use Victoire\Bundle\i18nBUndle\Resolver\LocaleResolver;
  */
 class PageHelper extends ViewHelper
 {
-    protected $parameterConverter = null;
-    protected $businessEntityHelper = null;
     protected $bepHelper = null;
     protected $entityManager; // @doctrine.orm.entity_manager'
-    protected $urlHelper; // @victoire_page.url_helper'
-    protected $urlMatcher; // @victoire_page.matcher.url_matcher'
     protected $currentViewHelper; // @victoire_core.current_view
     protected $eventDispatcher; // @event_dispatcher
     protected $victoireTemplating; // @victoire_templating
@@ -46,9 +38,6 @@ class PageHelper extends ViewHelper
     protected $session; // @session
     protected $securityContex; // @security.context
     protected $widgetMapBuilder; // @victoire_widget_map.builder
-    protected $localeResolver;   // @victoire_i18n.locale_resolver
-
-
 
     //@todo Make it dynamic please
     protected $pageParameters = array(
@@ -61,12 +50,8 @@ class PageHelper extends ViewHelper
 
     /**
      * Constructor
-     * @param BETParameterConverter    $parameterConverter
-     * @param BusinessEntityHelper     $businessEntityHelper
      * @param BusinessEntityPageHelper $bepHelper
      * @param EntityManager            $entityManager
-     * @param UrlHelper                $urlHelper
-     * @param UrlMatcher               $urlMatcher
      * @param CurrentViewHelper        $currentViewHelper
      * @param EventDispatcherInterface $eventDispatcher
      * @param VictoireTemplating       $victoireTemplating
@@ -75,15 +60,10 @@ class PageHelper extends ViewHelper
      * @param Session                  $session
      * @param SecurityContext          $securityContext
      * @param WidgetMapBuilder         $widgetMapBuilder
-     * @param LocalResolver            $localeResolver
      */
     public function __construct(
-        BETParameterConverter $parameterConverter,
-        BusinessEntityHelper $businessEntityHelper,
         BusinessEntityPageHelper $bepHelper,
         EntityManager $entityManager,
-        UrlHelper $urlHelper,
-        UrlMatcher $urlMatcher,
         CurrentViewHelper $currentViewHelper,
         EventDispatcherInterface $eventDispatcher,
         TemplateMapper $victoireTemplating,
@@ -91,16 +71,11 @@ class PageHelper extends ViewHelper
         ViewCacheHelper $viewCacheHelper,
         Session $session,
         SecurityContext $securityContext,
-        WidgetMapBuilder $widgetMapBuilder,
-        LocaleResolver $localeResolver
+        WidgetMapBuilder $widgetMapBuilder
     )
     {
-        $this->parameterConverter = $parameterConverter;
-        $this->businessEntityHelper = $businessEntityHelper;
         $this->bepHelper = $bepHelper;
         $this->entityManager = $entityManager;
-        $this->urlHelper = $urlHelper;
-        $this->urlMatcher = $urlMatcher;
         $this->currentViewHelper = $currentViewHelper;
         $this->eventDispatcher = $eventDispatcher;
         $this->victoireTemplating = $victoireTemplating;
@@ -109,7 +84,6 @@ class PageHelper extends ViewHelper
         $this->session = $session;
         $this->securityContext = $securityContext;
         $this->widgetMapBuilder = $widgetMapBuilder;
-        $this->localeResolver = $localeResolver;
 
     }
 

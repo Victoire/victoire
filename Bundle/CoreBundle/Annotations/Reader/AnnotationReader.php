@@ -9,10 +9,6 @@ use Victoire\Bundle\CoreBundle\Annotations\BusinessProperty;
 use Victoire\Bundle\CoreBundle\Annotations\ReceiverProperty;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
-use Doctrine\Common\Cache\Cache,
-    Doctrine\Common\Cache\ArrayCache,
-    Doctrine\Common\Annotations\CachedReader;
-
 /**
  * The annotation reader for the business entities
  *

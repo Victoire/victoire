@@ -5,7 +5,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\Finder\Finder;
-use JMS\TranslationBundle\Translation\ConfigBuilder;
 
 /**
  * Description
@@ -14,8 +13,8 @@ use JMS\TranslationBundle\Translation\ConfigBuilder;
  * It simulates a custom config for all the overwritten Victoire bundle (src/Victoire/{YourBundleName}Bundle)
  * and sets the translation dir in its Resources/translations folder.
  *
- * @author  Paul Andrieux
- * @author  Leny Bernard
+ * @author Paul Andrieux
+ * @author Leny Bernard
  *
  **/
 class TraductionCompilerPass implements CompilerPassInterface
@@ -28,7 +27,6 @@ class TraductionCompilerPass implements CompilerPassInterface
         if (file_exists($victoireBasePath)) {
             $finder = new Finder();
             $finder->directories()->in($victoireBasePath)->depth(' == 0');
-            $requests = array();
 
             // we iterates on each overwritten or home made Victoire bundle (in src path)
             foreach ($finder as $bundle) {

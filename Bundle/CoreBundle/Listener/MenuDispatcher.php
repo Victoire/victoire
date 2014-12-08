@@ -3,7 +3,6 @@ namespace Victoire\Bundle\CoreBundle\Listener;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\Security\Core\SecurityContext;
 
 /**

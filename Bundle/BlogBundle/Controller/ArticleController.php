@@ -5,7 +5,6 @@ namespace Victoire\Bundle\BlogBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -29,10 +28,10 @@ class ArticleController extends BasePageController
     public function __construct()
     {
         $this->routes = array(
-                'new'      => 'victoire_blog_article_new',
-                'show'     => 'victoire_core_page_show',
-                'settings' => 'victoire_blog_article_settings',
-            );
+            'new'      => 'victoire_blog_article_new',
+            'show'     => 'victoire_core_page_show',
+            'settings' => 'victoire_blog_article_settings',
+        );
     }
 
     /**
