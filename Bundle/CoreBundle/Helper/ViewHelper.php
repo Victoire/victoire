@@ -290,7 +290,7 @@ class ViewHelper
         $view->setTemplate($template);
         $clonedView = $this->cloneView($view, $viewName, $locale);
         if ($clonedView instanceof BasePage && $view->getTemplate()) {
-           $template->setPages($clonedView);
+           $template->addPage($clonedView);
         }
 
         $i18n = $view->getI18n();
