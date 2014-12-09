@@ -44,6 +44,7 @@ class Template extends View
     {
         parent::__construct();
         $this->widgets = new ArrayCollection();
+        $this->pages = new ArrayCollection();
     }
 
     /**
@@ -64,7 +65,7 @@ class Template extends View
      */
     public function setPages($pages)
     {
-        $this->pages = $pages;
+        $this->pages = is_array($pages)? $pages: array($pages);
 
         return $this;
     }
