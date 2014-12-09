@@ -187,7 +187,7 @@ class TemplateController extends Controller
             return $this->redirect($this->generateUrl('victoire_template_show', array('slug' => $template->getSlug())));
         }
 
-        return $this->redirect($this->generateUrl('victoire_template_settings', array("slug" => $template->getSlug())));
+        return $this->redirect($this->generateUrl('victoire_template_settings', array("slug" => $template->getSlug(), "newTranslation" => $newTranslation)));
 
     }
 

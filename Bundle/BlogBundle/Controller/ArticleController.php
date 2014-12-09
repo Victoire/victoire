@@ -82,7 +82,7 @@ class ArticleController extends BasePageController
      * @ParamConverter("article", class="VictoireBlogBundle:Article")
      * @return template
      */
-    public function settingsAction(Request $request, BasePage $article, $newTranslation=false)
+    public function settingsAction(Request $request, BasePage $article, $newTranslation = false)
     {
         $response = parent::settingsAction($request, $article, $newTranslation);
 
