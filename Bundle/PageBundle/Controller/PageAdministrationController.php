@@ -65,7 +65,7 @@ class PageAdministrationController extends PageController
     }
 
     /**
-     * View translation
+     * Page translation
      * @param Request $request
      * @param BasePage $page
      *

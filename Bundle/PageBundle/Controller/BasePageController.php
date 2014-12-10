@@ -95,11 +95,11 @@ class BasePageController extends Controller
      * @param Request  $request
      * @param BasePage $page
      *
-     * @return template
+     * @return array
      */
     protected function settingsAction(Request $request, BasePage $page)
     {
-        $entityManager = $this->getDoctrine->getManager;
+        $entityManager = $this->getDoctrine()->getManager();
         $form = $this->createForm($this->getPageSettingsType(), $page);
         $businessProperties = array();
 
@@ -120,15 +120,13 @@ class BasePageController extends Controller
                 'success' => true,
                 'url'     => $this->generateUrl('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl()))
             );
-        } else {
-             return array(
-                'success' => false,
-                'message' => $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form)
-            );
-        }
+        } 
         //we display the form
+        $errors = $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form);
+        $sucess = empty($errors)? true : false; 
+
         return  array(
-            'success' => false,
+            'success' => $success,
             'html' => $this->container->get('victoire_templating')->render(
                 $this->getBaseTemplatePath() . ':settings.html.twig',
                 array(
@@ -136,7 +134,8 @@ class BasePageController extends Controller
                     'form' => $form->createView(),
                     'businessProperties' => $businessProperties
                 )
-            )
+            ),
+            'message' => $errors
         );
     }
 
@@ -173,15 +172,12 @@ class BasePageController extends Controller
                 'success' => true,
                 'url' => $$this->generateUrl('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl()))
             );
-        } else {
-             return array(
-                'success' => false,
-                'message' => $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form)
-            );
         }
+        $errors = $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form);
+        $success = empty($errors)? true : false;
 
         return array(
-            'success' => false,
+            'success' => $success,
             'html' => $this->container->get('victoire_templating')->render(
                 $this->getBaseTemplatePath() . ':translate.html.twig',
                 array(
@@ -189,7 +185,8 @@ class BasePageController extends Controller
                     'form' => $form->createView(),
                     'businessProperties' => $businessProperties
                 )
-            )
+            ),
+            'message' => $errors
         );
     }
     /**

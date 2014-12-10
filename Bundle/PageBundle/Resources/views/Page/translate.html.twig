@@ -23,20 +23,8 @@
                     <div class="vic-col-lg-8">
 
                         {{ form_row(form.name) }}
-                        {{ form_row(form.parent) }}
-                        {{ form_row(form.template) }}
                         {{ form_row(form.locale)}}
                     
-                    </div>
-
-                    <div class="vic-col-lg-4">
-                        {{ form_row(form.status) }}
-
-                        <div class="vic-form-group">
-                            <div class="publication-date-container{{ form.vars.value.status != constant('Victoire\\Bundle\\PageBundle\\Entity\\PageStatus::SCHEDULED') ? ' vic-hidden' }}">
-                                {{ form_widget(form.publishedAt) }}
-                            </div>
-                        </div>
                     </div>
                 </div>
 
