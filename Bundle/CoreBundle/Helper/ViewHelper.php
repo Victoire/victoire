@@ -292,7 +292,6 @@ class ViewHelper
         if ($clonedView instanceof BasePage && $view->getTemplate()) {
            $template->addPage($clonedView);
         }
-
         $i18n = $view->getI18n();
         $i18n->setTranslation($locale, $clonedView);
 

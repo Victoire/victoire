@@ -124,25 +124,21 @@ class TemplateController extends Controller
      * @param string $slug The slug of view
      *
      * @return Response
-     * @Route("/{slug}/{newTranslation}parametres", name="victoire_template_settings")
+     * @Route("/{slug}/parametres", name="victoire_template_settings")
      * @Configuration\Template()
      */
-    public function settingsAction($slug, $newTranslation = false)
+    public function settingsAction(Request $request, $slug)
     {
         $em = $this->getDoctrine()->getManager();
         $template = $em->getRepository('VictoireTemplateBundle:Template')->findOneBySlug($slug);
 
-        $templateForm = $this->container->get('form.factory')->create($this->getNewTemplateType(), $template);
+        $templateForm = $this->createForm($this->getNewTemplateType(), $template);
 
-        $templateForm->handleRequest($this->get('request'));
+        $templateForm->handleRequest($request);
         if ($templateForm->isValid()) {
-            if (true === $newTranslation) {
-                $this->get('victoire_core.view_helper')->addTranslation($template);
-            } else {
                 $em->persist($template);
                 $em->flush();
             }
-
 
             return new JsonResponse(
                 array(
@@ -158,7 +154,49 @@ class TemplateController extends Controller
                 "success" => true,
                 'html'    => $this->container->get('victoire_templating')->render(
                     'VictoireTemplateBundle:Template:settings.html.twig',
-                    array('template' => $template,'form' => $templateForm->createView(), 'newTranslation' => $newTranslation)
+                    array('template' => $template,'form' => $templateForm->createView())
+                )
+            )
+        );
+    }
+
+    /**
+     * translate a template 
+     * @param string $slug The slug of view
+     *
+     * @return Response
+     * @Route("/{slug}/translate ", name="victoire_template_translate")
+     * @Configuration\Template()
+     */
+    public function settingsAction(Request $request, $slug)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $template = $em->getRepository('VictoireTemplateBundle:Template')->findOneBySlug($slug);
+
+        $templateForm = $this->createForm($this->getNewTemplateType(), $template);
+
+        $templateForm->handleRequest($request);
+        if ($templateForm->isValid()) {
+            $template = $this->get('victoire_core.view_helper')->addTranslation($template);
+            $request->setLocale($page->getLocale());
+            $em->persist($template);
+            $em->flush();
+
+            return new JsonResponse(
+                array(
+                    'success' => true,
+                    "url"     => $this->generateUrl('victoire_template_show', array('slug' => $template->getSlug()))
+                )
+            );
+
+        }
+
+        return new JsonResponse(
+            array(
+                "success" => true,
+                'html'    => $this->container->get('victoire_templating')->render(
+                    'VictoireTemplateBundle:Template:settings.html.twig',
+                    array('template' => $template,'form' => $templateForm->createView())
                 )
             )
         );
@@ -187,7 +225,7 @@ class TemplateController extends Controller
             return $this->redirect($this->generateUrl('victoire_template_show', array('slug' => $template->getSlug())));
         }
 
-        return $this->redirect($this->generateUrl('victoire_template_settings', array("slug" => $template->getSlug(), "newTranslation" => $newTranslation)));
+        return $this->redirect($this->generateUrl('victoire_template_settings', array("slug" => $template->getSlug())));
 
     }
 

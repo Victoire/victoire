@@ -25,10 +25,11 @@ class PageAdministrationController extends PageController
     public function __construct()
     {
         $this->routes = array(
-            'new'      => 'victoire_core_page_new',
-            'show'     => 'victoire_core_page_show',
-            'settings' => 'victoire_core_page_settings',
-            'detach'   => 'victoire_core_page_detach'
+            'new'       => 'victoire_core_page_new',
+            'show'      => 'victoire_core_page_show',
+            'settings'  => 'victoire_core_page_settings',
+            'translate' => 'victoire_core_page_translate',
+            'detach'    => 'victoire_core_page_detach'
         );
     }
 
@@ -52,17 +53,32 @@ class PageAdministrationController extends PageController
      * @param Request  $request
      * @param BasePage $page
      *
-     * @Route("/{id}/{newTranslation}/settings", name="victoire_core_page_settings", defaults={"newTranslation" = false})
+     * @Route("/{id}/settings", name="victoire_core_page_settings")
      * @Template()
      * @ParamConverter("page", class="VictoirePageBundle:BasePage")
      *
      * @return json The settings
      */
-    public function settingsAction(Request $request, BasePage $page, $newTranslation = false)
+    public function settingsAction(Request $request, BasePage $page)
     {
-        return new JsonResponse(parent::settingsAction($request, $page, $newTranslation));
+        return new JsonResponse(parent::settingsAction($request, $page));
     }
 
+    /**
+     * View translation
+     * @param Request $request
+     * @param BasePage $page
+     *
+     * @Route("/{id}/translate", name="victoire_core_page_translate")
+     * @Template()
+     * @ParamConverter("page", class="VictoirePageBundle:BasePage")
+     *
+     * @return json The settings
+     */
+    public function translateAction(Request $request, BasePage $page)
+    {
+        return new JsonResponse(parent::translateAction($request, $page));
+    }
     /**
      * Page delete
      * @param BasePage $page
@@ -148,6 +164,16 @@ class PageAdministrationController extends PageController
     protected function getPageSettingsType()
     {
         return 'victoire_page_settings_type';
+    }
+
+     /**
+     * getPageTranslateType
+     *
+     * @return string
+     */
+    protected function getPageTranslateType()
+    {
+        return 'victoire_page_translate_type';
     }
 
     /**

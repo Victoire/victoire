@@ -77,14 +77,41 @@ class ArticleController extends BasePageController
      * @param Request $request
      * @param Page    $article
      *
-     * @Route("/{id}/{newTranslation}/settings", name="victoire_blog_article_settings", defaults={"newTranslation"=false})
+     * @Route("/{id}/settings", name="victoire_blog_article_settings")
      *
      * @ParamConverter("article", class="VictoireBlogBundle:Article")
      * @return template
      */
-    public function settingsAction(Request $request, BasePage $article, $newTranslation = false)
+    public function settingsAction(Request $request, BasePage $article)
     {
-        $response = parent::settingsAction($request, $article, $newTranslation);
+        $response = parent::settingsAction($request, $article);
+
+        $pattern = $article->getTemplate();
+
+        $page = $this->container->get('victoire_page.page_helper')->findPageByParameters(array(
+            'viewId' => $pattern->getId(),
+            'locale' => $request->getSession()->get('victoire_locale'),
+            'entityId' => $article->getId()
+        ));
+        $response['url'] = $this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl()));
+
+        return new JsonResponse($response);
+    }
+
+    /**
+     * Article translation
+     *
+     * @param Request $request
+     * @param Page    $article
+     *
+     * @Route("/{id}/translate", name="victoire_blog_article_translate"})
+     *
+     * @ParamConverter("article", class="VictoireBlogBundle:Article")
+     * @return template
+     */
+    public function translateAction(Request $request, BasePage $article)
+    {
+        $response = parent::translateAction($request, $article);
 
         $pattern = $article->getTemplate();
 
@@ -124,6 +151,15 @@ class ArticleController extends BasePageController
     protected function getPageSettingsType()
     {
         return 'victoire_article_settings_type';
+    }
+
+    /**
+     *
+     * @return string
+     */
+    protected function getPageTranslateType()
+    {
+        return 'victoire_article_translate_type';
     }
 
     /**

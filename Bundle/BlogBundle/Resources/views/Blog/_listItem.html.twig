@@ -5,7 +5,7 @@
                 <a class="vic-accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
                     {{ blog.name }}
                 </a>
-                <a data-toggle="vic-modal" href="{{ path('victoire_blog_settings', {'id' : blog.id, 'newTranslation': newTranslation}) }}">
+                <a data-toggle="vic-modal" href="{{ path('victoire_blog_settings', {'id' : blog.id}) }}">
                     <i class="fa fa-cog"></i>
                 </a>
                 <a href="{{ path('victoire_core_page_show', {'url' : blog.url}) }}">

@@ -97,83 +97,100 @@ class BasePageController extends Controller
      *
      * @return template
      */
-    protected function settingsAction(Request $request, BasePage $page, $newTranslation = false)
+    protected function settingsAction(Request $request, BasePage $page)
     {
-        $originalPageId = $newTranslation ? $page->getId(): null;
-        $entityManager = $this->get('doctrine.orm.entity_manager');
-
-        $response = array();
-
-        $formFactory = $this->container->get('form.factory');
-        $form = $formFactory->create($this->getPageSettingsType(), $page);
-
-        //services
-        $businessEntityHelper = $this->get('victoire_core.helper.business_entity_helper');
-
+        $entityManager = $this->getDoctrine->getManager;
+        $form = $this->createForm($this->getPageSettingsType(), $page);
         $businessProperties = array();
 
         //if the page is a business entity page
         if ($page instanceof BusinessEntityPagePattern) {
-            //get the id of the business entity
-            $businessEntityId = $page->getBusinessEntityName();
             //we can use the business entity properties on the seo
-            $businessEntity = $businessEntityHelper->findById($businessEntityId);
-
+            $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($page->getBusinessEntityName());
             $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
         }
 
-        //the type of method used
-        $requestMethod = $request->getMethod();
+        $form->handleRequest($request);
 
-        //if the form is posted
-        if ($requestMethod === 'POST') {
-            //bind data to the form
-            $form->handleRequest($request);
+        if ($form->isValid()) {
+            $entityManager->persist($page);
+            $entityManager->flush();
 
-            //the form should be valid
-            if ($form->isValid()) {
-                if ('true' === $newTranslation) {
-                    $targetLocale = $page->getLocale();
-                    $this->getDoctrine()->getEntityManager()->refresh($page);
-                    $page = $this->get('victoire_core.view_helper')->addTranslation($page, $page->getName().'-'.$targetLocale, $targetLocale);
-                    $request->setLocale($targetLocale);
-                }
-                $entityManager->persist($page);
-                $entityManager->flush();
-
-                $response =  array(
-                    'success' => true,
-                    'url'     => $this->generateUrl('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl()))
-                );
-            } else {
-                $formErrorHelper = $this->get('victoire_form.error_helper');
-                $errors = $formErrorHelper->getRecursiveReadableErrors($form);
-
-                $response =  array(
-                    'success' => false,
-                    'message' => $errors
-                );
-            }
+             return array(
+                'success' => true,
+                'url'     => $this->generateUrl('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl()))
+            );
         } else {
-            //we display the form
-            $response = array(
+             return array(
                 'success' => false,
-                'html' => $this->container->get('victoire_templating')->render(
-                    $this->getBaseTemplatePath() . ':settings.html.twig',
-                    array(
-                        'newTranslation' => $newTranslation,
-                        'originalPageId' => $originalPageId,
-                        'page' => $page,
-                        'form' => $form->createView(),
-                        'businessProperties' => $businessProperties
-                    )
+                'message' => $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form)
+            );
+        }
+        //we display the form
+        return  array(
+            'success' => false,
+            'html' => $this->container->get('victoire_templating')->render(
+                $this->getBaseTemplatePath() . ':settings.html.twig',
+                array(
+                    'page' => $page,
+                    'form' => $form->createView(),
+                    'businessProperties' => $businessProperties
                 )
+            )
+        );
+    }
+
+
+    /**
+     * Page translation
+     *
+     * @param Request  $request
+     * @param BasePage $page
+     *
+     * @return array
+     */
+    protected function translateAction(Request $request, BasePage $page)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $form = $this->createForm($this->getPageTranslateType(), $page);
+
+        $businessProperties = array();
+
+        if ($page instanceof BusinessEntityPagePattern) {
+            $businessEntityId = $page->getBusinessEntityName();
+            $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($businessEntityId);
+            $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
+        }
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $page = $this->get('victoire_core.view_helper')->addTranslation($page, $page->getName().'-'.$page->getLocale(), $page->getLocale());
+            $request->setLocale($page->getLocale());
+            $entityManager->persist($page);
+            $entityManager->flush();
+            return array(
+                'success' => true,
+                'url' => $$this->generateUrl('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl()))
+            );
+        } else {
+             return array(
+                'success' => false,
+                'message' => $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form)
             );
         }
 
-        return $response;
+        return array(
+            'success' => false,
+            'html' => $this->container->get('victoire_templating')->render(
+                $this->getBaseTemplatePath() . ':translate.html.twig',
+                array(
+                    'page' => $page,
+                    'form' => $form->createView(),
+                    'businessProperties' => $businessProperties
+                )
+        );
     }
-
     /**
      * @param Page $page The page to delete
      *

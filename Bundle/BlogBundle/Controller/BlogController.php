@@ -27,10 +27,11 @@ class BlogController extends BasePageController
     public function __construct()
     {
         $this->routes = array(
-            'new'      => 'victoire_blog_index',
-            'show'     => 'victoire_core_page_show',
-            'settings' => 'victoire_blog_settings',
-            'delete'   => 'victoire_blog_delete',
+            'new'       => 'victoire_blog_index',
+            'show'      => 'victoire_core_page_show',
+            'settings'  => 'victoire_blog_settings',
+            'translate' => 'victoire_blog_translate',
+            'delete'    => 'victoire_blog_delete',
         );
     }
 
@@ -79,13 +80,29 @@ class BlogController extends BasePageController
      * @param Page    $blog
      *
      * @return template
-     * @Route("/{id}/{newTranslation}/settings", name="victoire_blog_settings", defaults={"newTranslation"=false})
+     * @Route("/{id}/settings", name="victoire_blog_settings")
      * @Template()
      * @ParamConverter("blog", class="VictoirePageBundle:BasePage")
      */
-    public function settingsAction(Request $request, BasePage $blog, $newTranslation = false)
+    public function settingsAction(Request $request, BasePage $blog)
     {
-        return new JsonResponse(parent::settingsAction($request, $blog, $newTranslation));
+        return new JsonResponse(parent::settingsAction($request, $blog));
+    }
+
+    /**
+     * Blog translation
+     *
+     * @param Request $request
+     * @param Page    $blog
+     *
+     * @return template
+     * @Route("/{id}/translate", name="victoire_blog_translate")
+     * @Template()
+     * @ParamConverter("blog", class="VictoirePageBundle:BasePage")
+     */
+    public function settingsAction(Request $request, BasePage $blog)
+    {
+        return new JsonResponse(parent::translateAction($request, $blog));
     }
 
     /**
@@ -114,6 +131,15 @@ class BlogController extends BasePageController
     protected function getPageSettingsType()
     {
         return 'victoire_blog_settings_type';
+    }
+
+    /**
+     *
+     * @return string
+     */
+    protected function getPageTranslateType()
+    {
+        return 'victoire_blog_translate_type';
     }
 
     /**
