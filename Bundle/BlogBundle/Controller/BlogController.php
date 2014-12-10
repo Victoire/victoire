@@ -139,7 +139,7 @@ class BlogController extends BasePageController
      */
     protected function getPageTranslateType()
     {
-        return 'victoire_page_translate_type';
+        return 'victoire_view_translate_type';
     }
 
     /**

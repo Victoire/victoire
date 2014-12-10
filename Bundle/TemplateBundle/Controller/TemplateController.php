@@ -121,7 +121,7 @@ class TemplateController extends Controller
 
     /**
      * define settings of the template
-     * @param string $slug The slug of view
+     * @param Template $template 
      *
      * @return Response
      * @Route("/{slug}/parametres", name="victoire_template_settings")
@@ -160,7 +160,7 @@ class TemplateController extends Controller
 
     /**
      * translate a template 
-     * @param string $slug The slug of view
+     * @param Template $template
      *
      * @return Response
      * @Route("/{slug}/translate ", name="victoire_template_translate")
@@ -241,6 +241,6 @@ class TemplateController extends Controller
      */
     protected function getTranslateType()
     {
-        return 'victoire_page_translate_type';
+        return 'victoire_view_translate_type';
     }
 }

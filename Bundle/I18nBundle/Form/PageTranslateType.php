@@ -58,7 +58,7 @@ class PageTranslateType extends AbstractType
      */
     public function getName()
     {
-        return 'victoire_page_translate_type';
+        return 'victoire_view_translate_type';
     }
 
     protected function getAvailableLocales(View $view)
@@ -74,13 +74,5 @@ class PageTranslateType extends AbstractType
 
         return $choices;
     }
-    /*
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $resolver->setDefaults(array(
-            'data_class' => 'Victoire\Bundle\PageBundle\Entity\BasePage',
-        ));
-    }
-    */
 }
 

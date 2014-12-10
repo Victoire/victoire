@@ -73,4 +73,4 @@ services:
             - "%victoire_i18n.available_locales%"
             - "@request_stack"
         tags:
-            - { name: form.type, alias: victoire_page_translate_type }
+            - { name: form.type, alias: victoire_view_translate_type }
