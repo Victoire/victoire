@@ -138,15 +138,12 @@ class TemplateController extends Controller
         if ($templateForm->isValid()) {
                 $em->persist($template);
                 $em->flush();
-            }
-
-            return new JsonResponse(
-                array(
-                    'success' => true,
-                    "url"     => $this->generateUrl('victoire_template_show', array('slug' => $template->getSlug()))
-                )
-            );
-
+                return new JsonResponse(
+                    array(
+                        'success' => true,
+                        "url"     => $this->generateUrl('victoire_template_show', array('slug' => $template->getSlug()))
+                    )
+                );
         }
 
         return new JsonResponse(
@@ -168,7 +165,7 @@ class TemplateController extends Controller
      * @Route("/{slug}/translate ", name="victoire_template_translate")
      * @Configuration\Template()
      */
-    public function settingsAction(Request $request, $slug)
+    public function translateAction(Request $request, $slug)
     {
         $em = $this->getDoctrine()->getManager();
         $template = $em->getRepository('VictoireTemplateBundle:Template')->findOneBySlug($slug);
@@ -188,7 +185,6 @@ class TemplateController extends Controller
                     "url"     => $this->generateUrl('victoire_template_show', array('slug' => $template->getSlug()))
                 )
             );
-
         }
 
         return new JsonResponse(

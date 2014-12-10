@@ -189,6 +189,7 @@ class BasePageController extends Controller
                     'form' => $form->createView(),
                     'businessProperties' => $businessProperties
                 )
+            )
         );
     }
     /**

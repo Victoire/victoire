@@ -104,7 +104,7 @@ class ArticleController extends BasePageController
      * @param Request $request
      * @param Page    $article
      *
-     * @Route("/{id}/translate", name="victoire_blog_article_translate"})
+     * @Route("/{id}/translate", name="victoire_blog_article_translate")
      *
      * @ParamConverter("article", class="VictoireBlogBundle:Article")
      * @return template

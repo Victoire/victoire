@@ -65,3 +65,12 @@ services:
             - "@victoire_i18n.locale_resolver"
         tags:
             - { name: twig.extension }
+
+    
+    victoire_i18n.page_translate.form.type:
+        class: Victoire\Bundle\I18nBundle\Form\PageTranslateType
+        arguments:
+            - "%victoire_i18n.available_locales%"
+            - "@request_stack"
+        tags:
+            - { name: form.type, alias: victoire_page_translate_type }

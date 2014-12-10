@@ -100,7 +100,7 @@ class BlogController extends BasePageController
      * @Template()
      * @ParamConverter("blog", class="VictoirePageBundle:BasePage")
      */
-    public function settingsAction(Request $request, BasePage $blog)
+    public function translateAction(Request $request, BasePage $blog)
     {
         return new JsonResponse(parent::translateAction($request, $blog));
     }
