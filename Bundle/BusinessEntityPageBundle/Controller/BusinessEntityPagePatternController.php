@@ -315,9 +315,9 @@ class BusinessEntityPagePatternController extends Controller
     public function listEntitiesAction(BusinessEntityPagePattern $entity)
     {
         //services
-        $businessEntityPagePatternHelper = $this->get('victoire_business_entity_page.business_entity_page_helper');
+        $bepHelper = $this->get('victoire_business_entity_page.business_entity_page_helper');
 
-        $entities = $businessEntityPagePatternHelper->getEntitiesAllowed($entity);
+        $entities = $bepHelper->getEntitiesAllowed($entity);
 
         //parameters for the view
         $parameters = array(

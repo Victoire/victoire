@@ -93,6 +93,7 @@ class ViewCacheHelper
      * update or insert values of given view cache
      * @param View                $view
      * @param BusinessEntity|null $entity
+     * @param $locale
      *
      * @return void
      */
