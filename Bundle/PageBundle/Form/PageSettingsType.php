@@ -43,8 +43,7 @@ class PageSettingsType extends PageType
             ->add('publishedAt', null, array(
                 'widget'             => 'single_text',
                 'vic_datetimepicker' => true
-            ))
-            ->remove('layout');
+            ));
     }
 
     /**

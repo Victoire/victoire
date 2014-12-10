@@ -123,7 +123,7 @@ class BasePageController extends Controller
         } 
         //we display the form
         $errors = $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form);
-        $sucess = empty($errors)? true : false; 
+        $success = empty($errors)? true : false; 
 
         return  array(
             'success' => $success,
@@ -170,7 +170,7 @@ class BasePageController extends Controller
             $entityManager->flush();
             return array(
                 'success' => true,
-                'url' => $$this->generateUrl('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl()))
+                'url' => $this->generateUrl('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl()))
             );
         }
         $errors = $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form);
