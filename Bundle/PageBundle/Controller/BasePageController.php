@@ -123,10 +123,9 @@ class BasePageController extends Controller
         } 
         //we display the form
         $errors = $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form);
-        $success = empty($errors)? true : false; 
 
         return  array(
-            'success' => $success,
+            'success' => empty($errors),
             'html' => $this->container->get('victoire_templating')->render(
                 $this->getBaseTemplatePath() . ':settings.html.twig',
                 array(
@@ -174,10 +173,9 @@ class BasePageController extends Controller
             );
         }
         $errors = $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form);
-        $success = empty($errors)? true : false;
 
         return array(
-            'success' => $success,
+            'success' => empty($errors),
             'html' => $this->container->get('victoire_templating')->render(
                 $this->getBaseTemplatePath() . ':translate.html.twig',
                 array(

@@ -44,9 +44,8 @@ class TemplateController extends Controller
      * list of all templates
      * @param Victoire\Bundle\TemplateBundle\Entity\Template $template The template
      *
-     * @ParamConverter("template", class="VictoireTemplateBundle:Template")
      * @Route("/show/{slug}", name="victoire_template_show")
-     *
+     * @ParamConverter("template", class="VictoireTemplateBundle:Template", options={"mapping": {"slug": "slug", "_locale": "locale"}})
      * @return Response
      *
      */
@@ -126,13 +125,15 @@ class TemplateController extends Controller
      *
      * @return Response
      * @Route("/{slug}/parametres", name="victoire_template_settings")
-     * @ParamConverter("template", class="VictoireTemplateBundle:Template", options={"id" = "slug", "repository_method" = "findOneBySlug"})
-     * @Configuration\Template()
+     * @ParamConverter("template", class="VictoireTemplateBundle:Template", options={"mapping": {"slug": "slug", "_locale": "locale"}})
      */
     public function settingsAction(Request $request, $template)
     {
         $em = $this->getDoctrine()->getManager();
 
+
+        \Doctrine\Common\Utils\Debug::dump($template, 2);
+        exit;
         $form = $this->createForm($this->getNewTemplateType(), $template);
         $form->handleRequest($request);
         if ($form->isValid()) {
@@ -163,8 +164,7 @@ class TemplateController extends Controller
      *
      * @return Response
      * @Route("/{slug}/translate ", name="victoire_template_translate")
-     * @Configuration\Template()
-     * @ParamConverter("template", class="VictoireTemplateBundle:Template", options={"id" = "slug", "repository_method" = "findOneBySlug"})
+     * @ParamConverter("template", class="VictoireTemplateBundle:Template", options={"mapping": {"slug": "slug", "_locale": "locale"}})
      */
     public function translateAction(Request $request, $template)
     {
