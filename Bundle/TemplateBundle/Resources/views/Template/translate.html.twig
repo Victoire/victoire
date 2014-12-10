@@ -7,11 +7,11 @@
 {% block modal_container_classes %}{{ parent() }} vic-view-modal{% endblock modal_container_classes %}
 
 {% block modal_header_title %}
-    {{ 'modal.form.template.settings.title'|trans({'%templateName%' : template.name}, 'victoire')|raw }}
+    {{ 'modal.form.template.translate.title'|trans({'%templateName%' : template.name}, 'victoire')|raw }}
 {% endblock modal_header_title %}
 
 {% block modal_body_content %}
-    <form method="POST" action="{{path('victoire_template_settings', {'slug':template.slug} )}}">
+    <form method="POST" action="{{path('victoire_template_translate', {'slug':template.slug} )}}">
         {{form_row(form.name)}}
         {{form_row(form.template)}}
         {{form_row(form.layout)}}

@@ -28,17 +28,10 @@ class I18nTemplateMenuListener extends TemplateMenuListener
         $mainItem = $this->getMainItem();
         $template = $event->getTemplate();
 
-        //this contextual menu appears only for template
-        $mainItem->addChild('menu.template.settings',
-            array(
-                'route' => 'victoire_template_settings',
-                'routeParameters' => array('slug' => $template->getSlug(), 'newTranslation' => false)
-                )
-        )->setLinkAttribute('data-toggle', 'vic-modal');
         $mainItem->addChild('menu.template.i18n.addTranslation',
             array(
-                'route' => 'victoire_template_settings',
-                'routeParameters' => array('slug' => $template->getSlug(), 'newTranslation' => true)
+                'route' => 'victoire_template_translate',
+                'routeParameters' => array('slug' => $template->getSlug())
                 )
         )->setLinkAttribute('data-toggle', 'vic-modal');
 
