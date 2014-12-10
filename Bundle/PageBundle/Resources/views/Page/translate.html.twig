@@ -33,21 +33,6 @@
         </div>
     </div>
 
-    <script type="text/javascript">
-        $vic('#victoire_page_settings_type_status').on('change', function(){
-            if ($vic(this).val() == '{{ constant('Victoire\\Bundle\\PageBundle\\Entity\\PageStatus::SCHEDULED') }}') {
-                $vic('.publication-date-container').removeClass('vic-hidden');
-            } else {
-                $vic('.publication-date-container').addClass('vic-hidden');
-            }
-        });
-    </script>
-
-    {% javascripts
-        '@VictoireFormBundle/Resources/public/js/datetimepicker-init.js'
-    %}
-        <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
 {% endblock modal_body_content %}
 
 

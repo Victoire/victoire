@@ -11,11 +11,11 @@
     {% endif %}
 
     <div class="vic-tab-pane vic-active" id="basics">
-        <form method="POST" action="{{path('victoire_blog_translate', {'id':page.id} )}}">
+        <form method="POST" action="{{path('victoire_blog_article_settings', {'id':page.id} )}}">
             <div class="vic-form-group">
                 <div class="vic-col-lg-8">
                     {{ form_row(form.name) }}
-                    {{ form_row(form.locale)}}
+                    {{ form_row(form.locale) }}
                 </div>
             </div>
             {{ form_rest(form) }}
@@ -27,5 +27,5 @@
 {% endblock modal_body_content %}
 
 {% block modal_header_title %}
-    {{ 'modal.form.blog.translate.title'|trans({'%blogName%' : page.name}, 'victoire')|raw }}
+    {{ 'modal.form.article.translate.title'|trans({'%articleName%' : page.name}, 'victoire')|raw }}
 {% endblock modal_header_title %}
