@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\TemplateBundle\Event\Menu\TemplateMenuContextualEvent;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Template Controller
@@ -125,17 +126,16 @@ class TemplateController extends Controller
      *
      * @return Response
      * @Route("/{slug}/parametres", name="victoire_template_settings")
+     * @ParamConverter("template", class="VictoireTemplateBundle:Template", options={"id" = "slug", "repository_method" = "findOneBySlug"})
      * @Configuration\Template()
      */
-    public function settingsAction(Request $request, $slug)
+    public function settingsAction(Request $request, $template)
     {
         $em = $this->getDoctrine()->getManager();
-        $template = $em->getRepository('VictoireTemplateBundle:Template')->findOneBySlug($slug);
 
-        $templateForm = $this->createForm($this->getNewTemplateType(), $template);
-
-        $templateForm->handleRequest($request);
-        if ($templateForm->isValid()) {
+        $form = $this->createForm($this->getNewTemplateType(), $template);
+        $form->handleRequest($request);
+        if ($form->isValid()) {
                 $em->persist($template);
                 $em->flush();
                 return new JsonResponse(
@@ -151,7 +151,7 @@ class TemplateController extends Controller
                 "success" => true,
                 'html'    => $this->container->get('victoire_templating')->render(
                     'VictoireTemplateBundle:Template:settings.html.twig',
-                    array('template' => $template,'form' => $templateForm->createView())
+                    array('template' => $template,'form' => $form->createView())
                 )
             )
         );
@@ -164,18 +164,17 @@ class TemplateController extends Controller
      * @return Response
      * @Route("/{slug}/translate ", name="victoire_template_translate")
      * @Configuration\Template()
+     * @ParamConverter("template", class="VictoireTemplateBundle:Template", options={"id" = "slug", "repository_method" = "findOneBySlug"})
      */
-    public function translateAction(Request $request, $slug)
+    public function translateAction(Request $request, $template)
     {
         $em = $this->getDoctrine()->getManager();
-        $template = $em->getRepository('VictoireTemplateBundle:Template')->findOneBySlug($slug);
+        $form = $this->createForm($this->getTranslateType(), $template);
 
-        $templateForm = $this->createForm($this->getNewTemplateType(), $template);
-
-        $templateForm->handleRequest($request);
-        if ($templateForm->isValid()) {
-            $template = $this->get('victoire_core.view_helper')->addTranslation($template);
-            $request->setLocale($page->getLocale());
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $template = $this->get('victoire_core.view_helper')->addTranslation($template, $template->getName(), $template->getLocale());
+            $request->setLocale($template->getLocale());
             $em->persist($template);
             $em->flush();
 
@@ -191,8 +190,8 @@ class TemplateController extends Controller
             array(
                 "success" => true,
                 'html'    => $this->container->get('victoire_templating')->render(
-                    'VictoireTemplateBundle:Template:settings.html.twig',
-                    array('template' => $template,'form' => $templateForm->createView())
+                    'VictoireTemplateBundle:Template:translate.html.twig',
+                    array('template' => $template,'form' => $form->createView())
                 )
             )
         );
@@ -233,5 +232,15 @@ class TemplateController extends Controller
     protected function getNewTemplateType()
     {
         return 'victoire_template_type';
+    }
+
+    /**
+     * get "new" Template Type
+     *
+     * @return string
+     */
+    protected function getTranslateType()
+    {
+        return 'victoire_page_translate_type';
     }
 }

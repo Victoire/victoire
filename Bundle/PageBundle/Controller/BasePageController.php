@@ -164,7 +164,7 @@ class BasePageController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $page = $this->get('victoire_core.view_helper')->addTranslation($page, $page->getName().'-'.$page->getLocale(), $page->getLocale());
+            $page = $this->get('victoire_core.view_helper')->addTranslation($page, $page->getName(), $page->getLocale());
             $request->setLocale($page->getLocale());
             $entityManager->persist($page);
             $entityManager->flush();
