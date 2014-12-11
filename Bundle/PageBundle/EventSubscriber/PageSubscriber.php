@@ -142,8 +142,9 @@ class PageSubscriber implements EventSubscriber
 
             $bepHelper = $this->container->get('victoire_business_entity_page.business_entity_page_helper');
             $entities = $bepHelper->getEntitiesAllowed($page);
+            $this->viewCacheHelper->update($page);
             foreach ($entities as $entity) {
-                $this->viewCacheHelper->update($page, $entity, $viewsReference);
+                $this->viewCacheHelper->update($page, $entity);
             }
         } else {
             $this->viewCacheHelper->update($page, null);

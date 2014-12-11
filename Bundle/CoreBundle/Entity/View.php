@@ -351,8 +351,10 @@ abstract class View
     public function setChildren($children)
     {
         $this->children = $children;
-        foreach ($children as $child) {
-            $child->setParent($this);
+        if($children !== null) {
+           foreach ($children as $child) {
+                $child->setParent($this);
+            }
         }
 
         return $this;

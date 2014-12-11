@@ -20,30 +20,30 @@ use Victoire\Widget\LayoutBundle\Entity\WidgetLayout;
  */
 class ViewHelper
 {
-    protected $parameterConverter = null;
-    protected $businessEntityHelper = null;
-    protected $bepHelper;
-    protected $entityManager; // @doctrine.orm.entity_manager'
+    protected $parameterConverter;
+    protected $businessEntityHelper;
+    protected $businessEntityPageHelper;
+    protected $entityManager;
 
     /**
      * Constructor
      * @param BETParameterConverter    $parameterConverter
      * @param BusinessEntityHelper     $businessEntityHelper
-     * @param BusinessEntityPageHelper $bepHelper
+     * @param BusinessEntityPageHelper $businessEntityPageHelper
      * @param EntityManager            $entityManager
      * @param ViewCacheHelper          $viewCacheHelper
      */
     public function __construct(
         BETParameterConverter $parameterConverter,
         BusinessEntityHelper $businessEntityHelper,
-        BusinessEntityPageHelper $bepHelper,
+        BusinessEntityPageHelper $businessEntityPageHelper,
         EntityManager $entityManager,
         ViewCacheHelper $viewCacheHelper
     )
     {
         $this->parameterConverter = $parameterConverter;
         $this->businessEntityHelper = $businessEntityHelper;
-        $this->businessEntityPageHelper = $bepHelper;
+        $this->businessEntityPageHelper = $businessEntityPageHelper;
         $this->em = $entityManager;
         $this->viewCacheHelper = $viewCacheHelper;
     }
