@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\PageBundle\Entity\Page;
+use Victoire\Bundle\PageBundle\Entity\BasePage;
 
 /**
  * PageSeo
@@ -25,12 +26,6 @@ class PageSeo
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
-    /**
-     * @ORM\OneToOne(targetEntity="\Victoire\Bundle\CoreBundle\Entity\View", mappedBy="seo", cascade={"persist"})
-     * @ORM\JoinColumn(name="page_id", referencedColumnName="id", onDelete="CASCADE")
-     */
-    protected $page;
 
     /**
      * @var string
@@ -228,11 +223,10 @@ class PageSeo
      * @param Page $page
      *
      **/
-    public function __construct($page = null)
+    public function __construct()
     {
         $this->createdAt = $this->createdAt ? $this->createdAt : new \DateTime();
         $this->updatedAt = new \DateTime();
-        $this->page = $page;
     }
 
     /**
@@ -243,30 +237,6 @@ class PageSeo
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set page
-     * @param View $page
-     *
-     * @return PageSeo
-     */
-    public function setPage(View $page)
-    {
-        $page->setSeo($this);
-        $this->page = $page;
-
-        return $this;
-    }
-
-    /**
-     * Get page
-     *
-     * @return Page
-     */
-    public function getPage()
-    {
-        return $this->page;
     }
 
     /**

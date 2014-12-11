@@ -131,9 +131,6 @@ class TemplateController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-
-        \Doctrine\Common\Utils\Debug::dump($template, 2);
-        exit;
         $form = $this->createForm($this->getNewTemplateType(), $template);
         $form->handleRequest($request);
         if ($form->isValid()) {
