@@ -23,7 +23,8 @@ class ViewHelper
     protected $parameterConverter;
     protected $businessEntityHelper;
     protected $businessEntityPageHelper;
-    protected $entityManager;
+    protected $em;
+    protected $viewCacheHelper;
 
     /**
      * Constructor

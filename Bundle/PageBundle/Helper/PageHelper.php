@@ -21,7 +21,8 @@ use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\SeoBundle\Helper\PageSeoHelper;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
-
+use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter as BETParameterConverter;
+use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 /**
  * Page helper
  * ref: victoire_page.page_helper
@@ -71,9 +72,15 @@ class PageHelper extends ViewHelper
         ViewCacheHelper $viewCacheHelper,
         Session $session,
         SecurityContext $securityContext,
-        WidgetMapBuilder $widgetMapBuilder
+        WidgetMapBuilder $widgetMapBuilder,
+        BETParameterConverter $parameterConverter,
+        BusinessEntityHelper $businessEntityHelper,
+        ViewCacheHelper $viewCacheHelper
     )
     {
+        parent::__construct($parameterConverter,
+                $businessEntityHelper, $bepHelper, $entityManager, $viewCacheHelper
+            );
         $this->bepHelper = $bepHelper;
         $this->entityManager = $entityManager;
         $this->currentViewHelper = $currentViewHelper;
