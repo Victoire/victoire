@@ -117,7 +117,7 @@ class ArticleController extends BasePageController
 
         $page = $this->container->get('victoire_page.page_helper')->findPageByParameters(array(
             'viewId' => $pattern->getId(),
-            'locale' => $request->getSession()->get('victoire_locale'),
+            'locale' => $request->getLocale(),
             'entityId' => $article->getId()
         ));
         $response['url'] = $this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl()));
@@ -159,7 +159,7 @@ class ArticleController extends BasePageController
      */
     protected function getPageTranslateType()
     {
-        return 'victoire_article_translate_type';
+        return 'victoire_view_translate_type';
     }
 
     /**

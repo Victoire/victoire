@@ -21,9 +21,9 @@ class Template extends View
     /**
      * @var string
      *
-     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\PageBundle\Entity\BasePage", mappedBy="template")
+     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\TemplateBundle\Entity\Template", mappedBy="template")
      */
-    protected $pages;
+    protected $inheritors;
 
     /**
      * @var string
@@ -34,6 +34,10 @@ class Template extends View
 
     /**
      * @var string
+     *
+     * Could be Template or BusinessEntityPagePattern
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\TemplateBundle\Entity\Template", inversedBy="inheritors", cascade={"persist"})
+     * @ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="CASCADE")
      *
      */
     protected $template;
@@ -131,6 +135,29 @@ class Template extends View
     }
 
     /**
+     * Set inheritors
+     * @param string $inheritors
+     *
+     * @return Template
+     */
+    public function setInheritors($inheritors)
+    {
+        $this->inheritors = $inheritors;
+
+        return $this;
+    }
+
+    /**
+     * Get inheritors (all Templates having this object as Template)
+     *
+     * @return string
+     */
+    public function getInheritors()
+    {
+        return $this->inheritors;
+    }
+
+    /**
      * @Assert\Callback(groups={"victoire"})
      */
     public function validate(ExecutionContextInterface $context)
@@ -140,12 +167,12 @@ class Template extends View
         while ($template != null) {
             if ($template->getLayout() != null) {
                 $templateHasLayout = true;
-                break;
+                return;
             }
             $template = $template->getTemplate();
         }
-        if ($templateHasLayout === false
-            && $this->getLayout() == null) {
+
+        if ($this->getLayout() == null) {
             $context->addViolationAt(
                 'layout',
                 'data.template.templateform.view.type.template.layout.validator_message',

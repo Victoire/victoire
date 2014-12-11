@@ -11,7 +11,7 @@
     {% endif %}
 
     <div class="vic-tab-pane vic-active" id="basics">
-        <form method="POST" action="{{path('victoire_blog_article_settings', {'id':page.id} )}}">
+        <form method="POST" action="{{path('victoire_blog_article_translate', {'id':page.id} )}}">
             <div class="vic-form-group">
                 <div class="vic-col-lg-8">
                     {{ form_row(form.name) }}

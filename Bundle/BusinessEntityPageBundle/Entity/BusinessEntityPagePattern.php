@@ -23,9 +23,9 @@ class BusinessEntityPagePattern extends Template implements WebViewInterface
     /**
      * @var Collection
      *
-     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage", mappedBy="pattern")
+     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage", mappedBy="template")
      */
-    protected $instances;
+    protected $inheritors;
 
     /**
      * contruct
