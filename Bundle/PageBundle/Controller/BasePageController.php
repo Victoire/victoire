@@ -163,13 +163,11 @@ class BasePageController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $page = $this->get('victoire_core.view_helper')->addTranslation($page, $page->getName(), $page->getLocale());
-            $request->setLocale($page->getLocale());
-            $entityManager->persist($page);
-            $entityManager->flush();
+            $clone = $this->get('victoire_core.view_helper')->addTranslation($page, $page->getName(), $page->getLocale());
+            $entityManager->refresh($page);
             return array(
                 'success' => true,
-                'url' => $this->generateUrl('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl()))
+                'url' => $this->generateUrl('victoire_core_page_show', array('_locale'=> $clone->getLocale(), 'url' => $clone->getUrl()))
             );
         }
         $errors = $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form);

@@ -170,15 +170,13 @@ class TemplateController extends Controller
 
         $form->handleRequest($request);
         if ($form->isValid()) {
-            $template = $this->get('victoire_core.view_helper')->addTranslation($template, $template->getName(), $template->getLocale());
-            $request->setLocale($template->getLocale());
-            $em->persist($template);
-            $em->flush();
+            $clone = $this->get('victoire_core.view_helper')->addTranslation($template, $template->getName(), $template->getLocale());
+            $em->refresh($template);
 
             return new JsonResponse(
                 array(
                     'success' => true,
-                    "url"     => $this->generateUrl('victoire_template_show', array('slug' => $template->getSlug()))
+                    "url"     => $this->generateUrl('victoire_template_show', array('_locale', $clone->getLocale(), 'slug' => $clone->getSlug()))
                 )
             );
         }
