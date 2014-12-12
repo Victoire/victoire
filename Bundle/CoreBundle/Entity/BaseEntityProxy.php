@@ -57,21 +57,10 @@ abstract class BaseEntityProxy
      *
      * @throws \Exception
      */
-    public function setEntity($entity)
+    public function setEntity($entity, $entityName)
     {
-        $className = get_class($entity);
-
-        //split
-        $namespaceEntries = explode("\\", $className);
-
-        $businessEntityName = array_pop($namespaceEntries);
-
-        if ($businessEntityName === null) {
-            throw new \Exception('No business entity name were found for the entity.');
-        }
-
         //set the entity
-        $method = 'set'.ucfirst($businessEntityName);
+        $method = 'set'.ucfirst($entityName);
 
         //set the entity
         call_user_func(array($this, $method), $entity);

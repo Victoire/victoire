@@ -160,7 +160,7 @@ class BusinessEntityPageHelper
         }
 
         $entityProxy = new EntityProxy();
-        $entityProxy->setEntity($entity);
+        $entityProxy->setEntity($entity, $businessEntity->getName());
         $page->setEntityProxy($entityProxy);
         $page->setTemplate($bepPattern);
 
