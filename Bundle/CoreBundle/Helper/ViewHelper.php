@@ -295,7 +295,6 @@ class ViewHelper
         }
         $i18n = $view->getI18n();
         $i18n->setTranslation($locale, $clonedView);
-
         $this->em->persist($clonedView);
         $this->em->flush();
 
@@ -320,56 +319,76 @@ class ViewHelper
 
         $clonedView->setId(null);
         $this->em->persist($clonedView);
-        $widgetLayoutSlots = [];
-        $newWidgets = [];
-        foreach ($clonedView->getWidgets() as $widgetKey => $widgetVal) {
-            $clonedWidget = clone $widgetVal;
-            $clonedWidget->setId(null);
-            $clonedWidget->setView($clonedView);
-            $this->em->persist($clonedWidget);
-            $newWidgets[] = $clonedWidget;
-            $arrayMapOfWidgetMap[$widgetVal->getId()] = $clonedWidget;
-            if ($widgetVal instanceof WidgetLayout) {
-                $id = $widgetVal->getId();
-                $widgetLayoutSlots[$id] = $clonedWidget;
-            }
-        }
-        $clonedView->setWidgets($newWidgets);
-        $this->em->persist($clonedView);
-        $this->em->refresh($view);
-        $this->em->flush();
-        $widgetSlotMap = [];
-        foreach ($widgetLayoutSlots as $_id => $_widget) {
-            foreach ($clonedView->getWidgets() as $_clonedWidget) {
-                if (preg_match('/^' . $_id . '_(.)/', $_clonedWidget->getSlot(), $matches)) {
-                    $newSlot = $_widget->getId() . '_' . $matches[1];
-                    $oldSlot = $_clonedWidget->getSlot();
-                    $_clonedWidget->setSlot($newSlot);
-                    $widgetSlotMap[$oldSlot] = $newSlot;
 
+         if ($view instanceof BusinessEntityPagePattern) {
+            $clonedView = $this->cloneBusinessEntityPagePattern($clonedView);
+        } else {
+            $widgetLayoutSlots = [];
+            $newWidgets = [];
+            foreach ($clonedView->getWidgets() as $widgetKey => $widgetVal) {
+                $clonedWidget = clone $widgetVal;
+                $clonedWidget->setId(null);
+                $clonedWidget->setView($clonedView);
+                $this->em->persist($clonedWidget);
+                $newWidgets[] = $clonedWidget;
+                $arrayMapOfWidgetMap[$widgetVal->getId()] = $clonedWidget;
+                if ($widgetVal instanceof WidgetLayout) {
+                    $id = $widgetVal->getId();
+                    $widgetLayoutSlots[$id] = $clonedWidget;
                 }
             }
-        }
-        $this->em->flush();
-        foreach ($widgetMapClone as $wigetSlotCloneKey => $widgetSlotCloneVal) {
-            foreach ($widgetSlotCloneVal as $widgetMapItemKey => $widgetMapItemVal) {
-                if (isset($arrayMapOfWidgetMap[$widgetMapItemVal['widgetId']])) {
-                    $widgetId = $arrayMapOfWidgetMap[$widgetMapItemVal['widgetId']]->getId();
-                    $widgetMapItemVal['widgetId'] = $widgetId;
-                    if (array_key_exists($wigetSlotCloneKey, $widgetSlotMap)) {
-                        $wigetSlotCloneKey = $widgetSlotMap[$wigetSlotCloneKey];
+            $clonedView->setWidgets($newWidgets);
+            $this->em->persist($clonedView);
+            $this->em->refresh($view);
+            $this->em->flush();
+            $widgetSlotMap = [];
+            foreach ($widgetLayoutSlots as $_id => $_widget) {
+                foreach ($clonedView->getWidgets() as $_clonedWidget) {
+                    if (preg_match('/^' . $_id . '_(.)/', $_clonedWidget->getSlot(), $matches)) {
+                        $newSlot = $_widget->getId() . '_' . $matches[1];
+                        $oldSlot = $_clonedWidget->getSlot();
+                        $_clonedWidget->setSlot($newSlot);
+                        $widgetSlotMap[$oldSlot] = $newSlot;
+
                     }
-                    $widgetMapClone[$wigetSlotCloneKey][$widgetMapItemKey] = $widgetMapItemVal;
                 }
             }
+            $this->em->flush();
+            foreach ($widgetMapClone as $wigetSlotCloneKey => $widgetSlotCloneVal) {
+                foreach ($widgetSlotCloneVal as $widgetMapItemKey => $widgetMapItemVal) {
+                    if (isset($arrayMapOfWidgetMap[$widgetMapItemVal['widgetId']])) {
+                        $widgetId = $arrayMapOfWidgetMap[$widgetMapItemVal['widgetId']]->getId();
+                        $widgetMapItemVal['widgetId'] = $widgetId;
+                        if (array_key_exists($wigetSlotCloneKey, $widgetSlotMap)) {
+                            $wigetSlotCloneKey = $widgetSlotMap[$wigetSlotCloneKey];
+                        }
+                        $widgetMapClone[$wigetSlotCloneKey][$widgetMapItemKey] = $widgetMapItemVal;
+                    }
+                }
+            }
+
+            $clonedView->setSlots(array());
+            $clonedView->setWidgetMap($widgetMapClone);
+            $this->em->persist($clonedView);
+            $this->em->flush();
         }
-
-        $clonedView->setSlots(array());
-        $clonedView->setWidgetMap($widgetMapClone);
-
-        $this->em->persist($clonedView);
-        $this->em->flush();
 
         return $clonedView;
+    }
+
+
+    /**
+    * @param BusinessEnityPagePattern $view
+    * @param $etmplateName the future name of the clone
+    *
+    * this methods allows you to clone a BusinessEntityPagePattern
+    *
+    */
+    protected cloneBusinessEntityPagePattern(BusinessEntityPagePattern $view) 
+    {
+        
+        $businessEntityId = $view->getBusinessEntityName();
+        $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($businessEntityId);
+        $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
     }
 }
