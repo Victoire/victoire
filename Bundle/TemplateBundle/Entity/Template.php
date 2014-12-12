@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\ExecutionContextInterface;
 use Victoire\Bundle\CoreBundle\Entity\View;
+use Victoire\Bundle\PageBundle\Entity\BasePage;
 
 /**
  * Template
@@ -20,9 +21,9 @@ class Template extends View
     /**
      * @var string
      *
-     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\PageBundle\Entity\BasePage", mappedBy="template")
+     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\TemplateBundle\Entity\Template", mappedBy="template")
      */
-    protected $pages;
+    protected $inheritors;
 
     /**
      * @var string
@@ -34,6 +35,10 @@ class Template extends View
     /**
      * @var string
      *
+     * Could be Template or BusinessEntityPagePattern
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\TemplateBundle\Entity\Template", inversedBy="inheritors", cascade={"persist"})
+     * @ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="CASCADE")
+     *
      */
     protected $template;
 
@@ -44,6 +49,7 @@ class Template extends View
     {
         parent::__construct();
         $this->widgets = new ArrayCollection();
+        $this->pages = new ArrayCollection();
     }
 
     /**
@@ -56,15 +62,41 @@ class Template extends View
         return 'Modèle > '.$this->name;
     }
 
-    /**
-     * Set page
-     * @param string $pages
-     *
+     /**
+     * add page
+     * @param BasePage $page
      * @return Template
-     */
-    public function setPages($pages)
+     **/
+    public function addPage(BasePage $page)
     {
-        $this->pages = $pages;
+        $page->setTemplate($this);
+        $this->pages[] = $page;
+
+        return $this;
+    }
+
+    /**
+     * set page
+     * @param array $pages
+     * @return Template
+     **/
+    public function setPages(array $pages)
+    {
+        foreach($pages as $page){
+            $this->addPage($page);
+        }
+
+        return $this;
+    }
+
+    /**
+     * remove page
+     * @param BasePage $pages
+     * @return Template
+     **/
+    public function removePage($page)
+    {
+        $this->pages->removeElement($page);
 
         return $this;
     }
@@ -72,7 +104,7 @@ class Template extends View
     /**
      * Get pages (all Pages having this object as Template)
      *
-     * @return string
+     * @return ArrayCollection
      */
     public function getPages()
     {
@@ -103,6 +135,29 @@ class Template extends View
     }
 
     /**
+     * Set inheritors
+     * @param string $inheritors
+     *
+     * @return Template
+     */
+    public function setInheritors($inheritors)
+    {
+        $this->inheritors = $inheritors;
+
+        return $this;
+    }
+
+    /**
+     * Get inheritors (all Templates having this object as Template)
+     *
+     * @return string
+     */
+    public function getInheritors()
+    {
+        return $this->inheritors;
+    }
+
+    /**
      * @Assert\Callback(groups={"victoire"})
      */
     public function validate(ExecutionContextInterface $context)
@@ -112,12 +167,12 @@ class Template extends View
         while ($template != null) {
             if ($template->getLayout() != null) {
                 $templateHasLayout = true;
-                break;
+                return;
             }
             $template = $template->getTemplate();
         }
-        if ($templateHasLayout === false
-            && $this->getLayout() == null) {
+
+        if ($this->getLayout() == null) {
             $context->addViolationAt(
                 'layout',
                 'data.template.templateform.view.type.template.layout.validator_message',

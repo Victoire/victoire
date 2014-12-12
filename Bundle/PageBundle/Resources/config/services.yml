@@ -28,6 +28,9 @@ services:
             - "@session"
             - "@security.context"
             - "@victoire_widget_map.builder"
+            - "@victoire_business_entity.converter.parameter_converter"
+            - "@victoire_core.helper.business_entity_helper"
+            - "@victoire_core.view_cache_helper"
 
     victoire_page.url_helper:
         class: Victoire\Bundle\PageBundle\Helper\UrlHelper

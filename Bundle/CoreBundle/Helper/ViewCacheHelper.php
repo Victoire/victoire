@@ -93,6 +93,7 @@ class ViewCacheHelper
      * update or insert values of given view cache
      * @param View                $view
      * @param BusinessEntity|null $entity
+     * @param $locale
      *
      * @return void
      */
@@ -117,14 +118,16 @@ class ViewCacheHelper
 
     public function getReferenceByParameters($parameters)
     {
-        $arguments = array(
+        $locale = array(
             'locale' => '@locale="' . $this->requestStack->getCurrentRequest()->getLocale() . '"'
         );
         $viewReference = array();
+        
         foreach ($parameters as $key => $value) {
             $arguments[$key] = '@' . $key . '="' . $value . '"';
         }
-
+        $arguments = array_merge($arguments, $locale);
+        
         if ($xmlReference = $this->readCache()->xpath("//viewReference[" . implode(' and ', $arguments) . "]")) {
             $viewReference['id']              = $xmlReference[0]->getAttributeAsPhp('id');
             $viewReference['locale']          = $xmlReference[0]->getAttributeAsPhp('locale');

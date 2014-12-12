@@ -73,23 +73,6 @@ abstract class View
      */
     protected $widgets;
 
-    /**
-     * @var string
-     *
-     * @Assert\NotNull()
-     * Could be Template or BusinessEntityPagePattern
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\TemplateBundle\Entity\Template", inversedBy="inheritors", cascade={"persist"})
-     * @ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="CASCADE")
-     *
-     */
-    protected $template;
-
-    /**
-     * @var string
-     *
-     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\TemplateBundle\Entity\Template", mappedBy="template")
-     */
-    protected $inheritors;
 
     /**
      * @Gedmo\TreeParent
@@ -301,29 +284,6 @@ abstract class View
     }
 
     /**
-     * Set page
-     * @param string $inheritors
-     *
-     * @return Template
-     */
-    public function setInheritors($inheritors)
-    {
-        $this->inheritors = $inheritors;
-
-        return $this;
-    }
-
-    /**
-     * Get inheritors (all Templates having this object as Template)
-     *
-     * @return string
-     */
-    public function getInheritors()
-    {
-        return $this->inheritors;
-    }
-
-    /**
      * Set parent
      *
      * @param \Victoire\Bundle\PageBundle\Entity\BasePage $parent
@@ -351,8 +311,10 @@ abstract class View
     public function setChildren($children)
     {
         $this->children = $children;
-        foreach ($children as $child) {
-            $child->setParent($this);
+        if($children !== null) {
+           foreach ($children as $child) {
+                $child->setParent($this);
+            }
         }
 
         return $this;

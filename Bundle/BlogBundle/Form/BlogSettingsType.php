@@ -3,6 +3,7 @@ namespace Victoire\Bundle\BlogBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Victoire\Bundle\PageBundle\Entity\PageStatus;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Edit Blog Type
@@ -10,12 +11,17 @@ use Victoire\Bundle\PageBundle\Entity\PageStatus;
 class BlogSettingsType extends BlogType
 {
 
+    public function __construct($available_locales, RequestStack $requestStack)
+    {
+        parent::__construct($available_locales, $requestStack);
+    }
+
     /**
      * define form fields
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm( FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
         $builder

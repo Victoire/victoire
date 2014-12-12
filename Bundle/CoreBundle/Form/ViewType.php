@@ -89,9 +89,7 @@ abstract class ViewType extends AbstractType
         $i18n = $view->getI18n();
 
         foreach ($this->availableLocales as $localeVal) {
-            if ($this->isNew === true || $i18n->getTranslation($localeVal) === null ) {
-                $choices[$localeVal] = 'victoire.i18n.viewType.locale.'.$localeVal;
-            }
+            $choices[$localeVal] = 'victoire.i18n.viewType.locale.'.$localeVal;
         }
 
         return $choices;

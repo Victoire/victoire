@@ -23,9 +23,9 @@ class BusinessEntityPagePattern extends Template implements WebViewInterface
     /**
      * @var Collection
      *
-     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage", mappedBy="pattern")
+     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage", mappedBy="template")
      */
-    protected $instances;
+    protected $inheritors;
 
     /**
      * contruct
@@ -37,8 +37,8 @@ class BusinessEntityPagePattern extends Template implements WebViewInterface
         $this->status = PageStatus::PUBLISHED;
     }
 
-    public function getInstances() { return $this->instances; }
-    public function setInstances($instances) { $this->instances = $instances; return $this; }
+    public function getInstances() { return $this->inheritors; }
+    public function setInstances($inheritors) { $this->inheritors = $inheritors; return $this; }
     public function getLayout() { return $this->getTemplate()->getLayout(); }
 
 }

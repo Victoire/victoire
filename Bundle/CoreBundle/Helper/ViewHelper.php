@@ -20,30 +20,31 @@ use Victoire\Widget\LayoutBundle\Entity\WidgetLayout;
  */
 class ViewHelper
 {
-    protected $parameterConverter = null;
-    protected $businessEntityHelper = null;
-    protected $bepHelper;
-    protected $entityManager; // @doctrine.orm.entity_manager'
+    protected $parameterConverter;
+    protected $businessEntityHelper;
+    protected $businessEntityPageHelper;
+    protected $em;
+    protected $viewCacheHelper;
 
     /**
      * Constructor
      * @param BETParameterConverter    $parameterConverter
      * @param BusinessEntityHelper     $businessEntityHelper
-     * @param BusinessEntityPageHelper $bepHelper
+     * @param BusinessEntityPageHelper $businessEntityPageHelper
      * @param EntityManager            $entityManager
      * @param ViewCacheHelper          $viewCacheHelper
      */
     public function __construct(
         BETParameterConverter $parameterConverter,
         BusinessEntityHelper $businessEntityHelper,
-        BusinessEntityPageHelper $bepHelper,
+        BusinessEntityPageHelper $businessEntityPageHelper,
         EntityManager $entityManager,
         ViewCacheHelper $viewCacheHelper
     )
     {
         $this->parameterConverter = $parameterConverter;
         $this->businessEntityHelper = $businessEntityHelper;
-        $this->businessEntityPageHelper = $bepHelper;
+        $this->businessEntityPageHelper = $businessEntityPageHelper;
         $this->em = $entityManager;
         $this->viewCacheHelper = $viewCacheHelper;
     }
@@ -283,20 +284,20 @@ class ViewHelper
                 $template = $template->getI18n()->getTranslation($locale);
             } else {
                 $templateName = $template->getName()."-".$locale;
+                $this->em->refresh($view);
                 $template = $this->addTranslation($template, $templateName, $locale);
             }
         }
         $view->setLocale($locale);
         $view->setTemplate($template);
         $clonedView = $this->cloneView($view, $viewName, $locale);
-        if ($clonedView instanceof Template && $view->getTemplate()) {
-           $template->setPages($clonedView);
+        if ($clonedView instanceof BasePage && $view->getTemplate()) {
+           $template->addPage($clonedView);
         }
-
         $i18n = $view->getI18n();
         $i18n->setTranslation($locale, $clonedView);
-
-        $this->em->persist($clonedView);
+        $this->em->persist($clonedView); 
+        $this->em->refresh($view);      
         $this->em->flush();
 
         return $clonedView;
@@ -312,6 +313,7 @@ class ViewHelper
     public function cloneView(View $view, $templateName = null)
     {
         $clonedView = clone $view;
+        $this->em->refresh($view);
         $widgetMapClone = $clonedView->getWidgetMap(false);
         $arrayMapOfWidgetMap = array();
         if (null !== $templateName) {
@@ -320,56 +322,77 @@ class ViewHelper
 
         $clonedView->setId(null);
         $this->em->persist($clonedView);
-        $widgetLayoutSlots = [];
-        $newWidgets = [];
-        foreach ($clonedView->getWidgets() as $widgetKey => $widgetVal) {
-            $clonedWidget = clone $widgetVal;
-            $clonedWidget->setId(null);
-            $clonedWidget->setView($clonedView);
-            $this->em->persist($clonedWidget);
-            $newWidgets[] = $clonedWidget;
-            $arrayMapOfWidgetMap[$widgetVal->getId()] = $clonedWidget;
-            if ($widgetVal instanceof WidgetLayout) {
-                $id = $widgetVal->getId();
-                $widgetLayoutSlots[$id] = $clonedWidget;
-            }
-        }
-        $clonedView->setWidgets($newWidgets);
-        $this->em->persist($clonedView);
-        $this->em->refresh($view);
-        $this->em->flush();
-        $widgetSlotMap = [];
-        foreach ($widgetLayoutSlots as $_id => $_widget) {
-            foreach ($clonedView->getWidgets() as $_clonedWidget) {
-                if (preg_match('/^' . $_id . '_(.)/', $_clonedWidget->getSlot(), $matches)) {
-                    $newSlot = $_widget->getId() . '_' . $matches[1];
-                    $oldSlot = $_clonedWidget->getSlot();
-                    $_clonedWidget->setSlot($newSlot);
-                    $widgetSlotMap[$oldSlot] = $newSlot;
 
+
+         if ($clonedView instanceof BusinessEntityPagePattern) {
+            $clonedView = $this->cloneBusinessEntityPagePattern($clonedView);
+        } else {
+            $widgetLayoutSlots = [];
+            $newWidgets = [];
+            foreach ($clonedView->getWidgets() as $widgetKey => $widgetVal) {
+                $clonedWidget = clone $widgetVal;
+                $clonedWidget->setId(null);
+                $clonedWidget->setView($clonedView);
+                $this->em->persist($clonedWidget);
+                $newWidgets[] = $clonedWidget;
+                $arrayMapOfWidgetMap[$widgetVal->getId()] = $clonedWidget;
+                if ($widgetVal instanceof WidgetLayout) {
+                    $id = $widgetVal->getId();
+                    $widgetLayoutSlots[$id] = $clonedWidget;
                 }
             }
-        }
-        $this->em->flush();
-        foreach ($widgetMapClone as $wigetSlotCloneKey => $widgetSlotCloneVal) {
-            foreach ($widgetSlotCloneVal as $widgetMapItemKey => $widgetMapItemVal) {
-                if (isset($arrayMapOfWidgetMap[$widgetMapItemVal['widgetId']])) {
-                    $widgetId = $arrayMapOfWidgetMap[$widgetMapItemVal['widgetId']]->getId();
-                    $widgetMapItemVal['widgetId'] = $widgetId;
-                    if (array_key_exists($wigetSlotCloneKey, $widgetSlotMap)) {
-                        $wigetSlotCloneKey = $widgetSlotMap[$wigetSlotCloneKey];
+            $clonedView->setWidgets($newWidgets);
+            $this->em->persist($clonedView);
+            $this->em->flush();
+            $widgetSlotMap = [];
+            foreach ($widgetLayoutSlots as $_id => $_widget) {
+                foreach ($clonedView->getWidgets() as $_clonedWidget) {
+                    if (preg_match('/^' . $_id . '_(.)/', $_clonedWidget->getSlot(), $matches)) {
+                        $newSlot = $_widget->getId() . '_' . $matches[1];
+                        $oldSlot = $_clonedWidget->getSlot();
+                        $_clonedWidget->setSlot($newSlot);
+                        $widgetSlotMap[$oldSlot] = $newSlot;
+
                     }
-                    $widgetMapClone[$wigetSlotCloneKey][$widgetMapItemKey] = $widgetMapItemVal;
                 }
             }
+
+            $this->em->flush();
+            foreach ($widgetMapClone as $wigetSlotCloneKey => $widgetSlotCloneVal) {
+                foreach ($widgetSlotCloneVal as $widgetMapItemKey => $widgetMapItemVal) {
+                    if (isset($arrayMapOfWidgetMap[$widgetMapItemVal['widgetId']])) {
+                        $widgetId = $arrayMapOfWidgetMap[$widgetMapItemVal['widgetId']]->getId();
+                        $widgetMapItemVal['widgetId'] = $widgetId;
+                        if (array_key_exists($wigetSlotCloneKey, $widgetSlotMap)) {
+                            $wigetSlotCloneKey = $widgetSlotMap[$wigetSlotCloneKey];
+                        }
+                        $widgetMapClone[$wigetSlotCloneKey][$widgetMapItemKey] = $widgetMapItemVal;
+                    }
+                }
+            }
+
+            $clonedView->setSlots(array());
+            $clonedView->setWidgetMap($widgetMapClone);
+            $this->em->persist($clonedView);       
+            $this->em->flush();
         }
-
-        $clonedView->setSlots(array());
-        $clonedView->setWidgetMap($widgetMapClone);
-
-        $this->em->persist($clonedView);
-        $this->em->flush();
 
         return $clonedView;
+    }
+
+
+    /**
+    * @param BusinessEnityPagePattern $view
+    * @param $etmplateName the future name of the clone
+    *
+    * this methods allows you to clone a BusinessEntityPagePattern
+    *
+    */
+    protected function cloneBusinessEntityPagePattern(BusinessEntityPagePattern $view) 
+    {
+
+        $businessEntityId = $view->getBusinessEntityName();
+        $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($businessEntityId);
+        $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
     }
 }

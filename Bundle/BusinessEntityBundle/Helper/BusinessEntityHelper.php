@@ -14,9 +14,9 @@ use Victoire\Bundle\CoreBundle\Annotations\Reader\AnnotationReader;
  */
 class BusinessEntityHelper
 {
-    protected $annotationReader = null;
-    protected $em = null;
-    protected $businessEntities = null;
+    protected $annotationReader;
+    protected $em;
+    protected $businessEntities;
 
     /**
      * Constructor
@@ -29,6 +29,7 @@ class BusinessEntityHelper
     {
         $this->annotationReader = $annotationReader;
         $this->em = $entityManager;
+        $this->businessEntities = null;
     }
 
     /**
