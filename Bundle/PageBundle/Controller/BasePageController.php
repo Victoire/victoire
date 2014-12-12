@@ -164,7 +164,6 @@ class BasePageController extends Controller
 
         if ($form->isValid()) {
             $clone = $this->get('victoire_core.view_helper')->addTranslation($page, $page->getName(), $page->getLocale());
-            $entityManager->refresh($page);
             return array(
                 'success' => true,
                 'url' => $this->generateUrl('victoire_core_page_show', array('_locale'=> $clone->getLocale(), 'url' => $clone->getUrl()))

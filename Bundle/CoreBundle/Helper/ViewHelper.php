@@ -284,6 +284,7 @@ class ViewHelper
                 $template = $template->getI18n()->getTranslation($locale);
             } else {
                 $templateName = $template->getName()."-".$locale;
+                $this->em->refresh($view);
                 $template = $this->addTranslation($template, $templateName, $locale);
             }
         }
@@ -295,7 +296,8 @@ class ViewHelper
         }
         $i18n = $view->getI18n();
         $i18n->setTranslation($locale, $clonedView);
-        $this->em->persist($clonedView);
+        $this->em->persist($clonedView); 
+        $this->em->refresh($view);      
         $this->em->flush();
 
         return $clonedView;
@@ -311,6 +313,7 @@ class ViewHelper
     public function cloneView(View $view, $templateName = null)
     {
         $clonedView = clone $view;
+        $this->em->refresh($view);
         $widgetMapClone = $clonedView->getWidgetMap(false);
         $arrayMapOfWidgetMap = array();
         if (null !== $templateName) {
@@ -320,7 +323,8 @@ class ViewHelper
         $clonedView->setId(null);
         $this->em->persist($clonedView);
 
-         if ($view instanceof BusinessEntityPagePattern) {
+
+         if ($clonedView instanceof BusinessEntityPagePattern) {
             $clonedView = $this->cloneBusinessEntityPagePattern($clonedView);
         } else {
             $widgetLayoutSlots = [];
@@ -339,7 +343,6 @@ class ViewHelper
             }
             $clonedView->setWidgets($newWidgets);
             $this->em->persist($clonedView);
-            $this->em->refresh($view);
             $this->em->flush();
             $widgetSlotMap = [];
             foreach ($widgetLayoutSlots as $_id => $_widget) {
@@ -353,6 +356,7 @@ class ViewHelper
                     }
                 }
             }
+
             $this->em->flush();
             foreach ($widgetMapClone as $wigetSlotCloneKey => $widgetSlotCloneVal) {
                 foreach ($widgetSlotCloneVal as $widgetMapItemKey => $widgetMapItemVal) {
@@ -369,7 +373,7 @@ class ViewHelper
 
             $clonedView->setSlots(array());
             $clonedView->setWidgetMap($widgetMapClone);
-            $this->em->persist($clonedView);
+            $this->em->persist($clonedView);       
             $this->em->flush();
         }
 
@@ -384,9 +388,9 @@ class ViewHelper
     * this methods allows you to clone a BusinessEntityPagePattern
     *
     */
-    protected cloneBusinessEntityPagePattern(BusinessEntityPagePattern $view) 
+    protected function cloneBusinessEntityPagePattern(BusinessEntityPagePattern $view) 
     {
-        
+
         $businessEntityId = $view->getBusinessEntityName();
         $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($businessEntityId);
         $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');

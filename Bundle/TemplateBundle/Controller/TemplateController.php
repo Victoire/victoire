@@ -53,7 +53,7 @@ class TemplateController extends Controller
     {
         //add the view to twig
         $this->get('twig')->addGlobal('view', $template);
-        $viewParameters = array('viewId' => $template->getId());
+        $viewParameters = array('locale' => $template->getLocale(),'viewId' => $template->getId());
         $viewReference = $this->container->get('victoire_core.view_cache_helper')->getReferenceByParameters($viewParameters);
         $template->setReference($viewReference);
         $event = new TemplateMenuContextualEvent($template);
@@ -68,8 +68,9 @@ class TemplateController extends Controller
         $layout = 'AppBundle:Layout:' . $template->getLayout() . '.html.twig';
 
         $parameters = array(
-            'view' => $template,
-            'id'   => $template->getId()
+            'view'   => $template,
+            'id'     => $template->getId(),
+            'locale' => $template->getLocale()
         );
 
         $this->get('victoire_widget_map.builder')->build($template);
@@ -171,7 +172,6 @@ class TemplateController extends Controller
         $form->handleRequest($request);
         if ($form->isValid()) {
             $clone = $this->get('victoire_core.view_helper')->addTranslation($template, $template->getName(), $template->getLocale());
-            $em->refresh($template);
 
             return new JsonResponse(
                 array(
