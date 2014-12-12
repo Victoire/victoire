@@ -155,8 +155,9 @@ class PageHelper extends ViewHelper
         //update the parameters of the page
         $this->updatePageParametersByEntity($page, $entity);
 
+        $businessEntity = $this->businessEntityHelper->findByEntityInstance($entity);
         $entityProxy = new EntityProxy();
-        $entityProxy->setEntity($entity);
+        $entityProxy->setEntity($entity, $businessEntity->getName());
         $page->setEntityProxy($entityProxy);
 
         return $page;
@@ -308,8 +309,9 @@ class PageHelper extends ViewHelper
         //update the parameters of the page
         $this->updatePageParametersByEntity($newPage, $entity);
 
+        $businessEntity = $this->businessEntityHelper->findByEntityInstance($entity);
         $entityProxy = new EntityProxy();
-        $entityProxy->setEntity($entity);
+        $entityProxy->setEntity($entity, $businessEntity->getName());
 
         $newPage->setEntityProxy($entityProxy);
 
