@@ -125,10 +125,10 @@ class BusinessEntityHelper
         $businessEntity = null;
         $refClass = new \ReflectionClass($entity);
         $parentClass = $refClass->getParentClass();
-        while (!$businessEntity && $parentClass->name != null) {
-            $parentClass = $parentClass->getParentClass();
-            $classname = $this->em->getClassMetadata($parentClass->name)->getName();
-            $businessEntity = $this->findByEntityClassname($classname);
+        while (($parentClass = $parentClass->getParentClass())
+            && !$businessEntity
+            && $parentClass->name != null) {
+            $businessEntity = $this->findByEntityClassname($parentClass->name);
         }
 
         return $businessEntity;
