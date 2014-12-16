@@ -80,9 +80,7 @@ class WidgetFormBuilder
      */
     public function renderNewWidgetForms($slot, View $view, Widget $widget, $position = 0)
     {
-        $annotationReader = $this->container->get('victoire_core.annotation_reader');
-        $classes = $annotationReader->getBusinessClassesForWidget($widget);
-        $manager = $this->container->get('widget_manager');
+        $classes = $this->container->get('victoire_core.helper.business_entity_helper')->getBusinessClassesForWidget($widget);
 
         //the static form
         $forms['static'] = array();
@@ -91,7 +89,7 @@ class WidgetFormBuilder
         // Build each form relative to business entities
         foreach ($classes as $entityName => $namespace) {
             //get the forms for the business entity (entity/query/businessEntity)
-            $entityForms = $this->buildEntityForms($manager, $widget, $view, $entityName, $namespace);
+            $entityForms = $this->buildEntityForms($widget, $view, $entityName, $namespace);
 
             //the list of forms
             $forms[$entityName] = array();
@@ -107,7 +105,6 @@ class WidgetFormBuilder
     }
 
     /**
-     * @param unknown $manager
      * @param unknown $widget
      * @param Page    $view
      * @param string  $entityName
@@ -115,7 +112,7 @@ class WidgetFormBuilder
      *
      * @return array
      */
-    public function buildEntityForms($manager, $widget, View $view, $entityName = null, $namespace = null, $position = 0)
+    public function buildEntityForms($widget, View $view, $entityName = null, $namespace = null, $position = 0)
     {
         $forms = array();
 
@@ -259,7 +256,7 @@ class WidgetFormBuilder
         //if there is an entity
         if ($entityName) {
             //get the businessClasses for the widget
-            $classes = $this->container->get('victoire_core.annotation_reader')->getBusinessClassesForWidget($widget);
+            $classes = $this->container->get('victoire_core.helper.business_entity_helper')->getBusinessClassesForWidget($widget);
 
             //test the result
             if (!isset($classes[$entityName])) {

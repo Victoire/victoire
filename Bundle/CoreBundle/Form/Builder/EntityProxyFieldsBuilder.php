@@ -2,7 +2,7 @@
 
 namespace Victoire\Bundle\CoreBundle\Form\Builder;
 
-use Victoire\Bundle\CoreBundle\Annotations\Reader\AnnotationReader;
+use Victoire\Bundle\BusinessEntityBundle\Reader\BusinessEntityCacheReader;
 
 /**
  * Edit Page Type
@@ -10,16 +10,16 @@ use Victoire\Bundle\CoreBundle\Annotations\Reader\AnnotationReader;
  */
 class EntityProxyFieldsBuilder
 {
-    private $annotationReader;
+    private $cacheReader;
 
     /**
      * define form fields
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
-    public function __construct(AnnotationReader $annotationReader)
+    public function __construct(BusinessEntityCacheReader $cacheReader)
     {
-        $this->annotationReader = $annotationReader;
+        $this->cacheReader = $cacheReader;
     }
 
     /**
@@ -32,16 +32,15 @@ class EntityProxyFieldsBuilder
     public function buildForEntityAndWidgetType(&$builder, $widgetType, $namespace)
     {
         //Try to add a new form for each entity with the correct annotation and business properties
-        $businessProperties = $this->annotationReader->getBusinessProperties($namespace);
-        $receiverProperties = $this->annotationReader->getReceiverProperties();
+        $businessProperties = $this->cacheReader->getBusinessProperties($namespace);
+        $receiverProperties = $this->cacheReader->getReceiverProperties();
 
         if (!empty($receiverProperties[$widgetType])) {
-            foreach ($receiverProperties[$widgetType] as $key => $_fields) {
+            foreach ($receiverProperties[$widgetType] as $_fields) {
                 foreach ($_fields as $fieldKey => $fieldVal) {
                     //Check if entity has all the required receiver properties as business properties
                     if (isset($businessProperties[$key]) && is_array($businessProperties[$key]) && count($businessProperties[$key])) {
                         //Create form types with field as key and values as choices
-                        //TODO Add some formatter Class or a buildField method responsible to create this type
                         $builder->add($fieldKey, 'choice', array(
                             'choices' => $businessProperties[$key]
                         ));

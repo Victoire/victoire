@@ -10,15 +10,15 @@ use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
  **/
 class EntityProxySubscriber implements EventSubscriber
 {
-    protected static $annotationReader;
+    protected static $cacherReader;
 
     /**
      * contructor
-     * @param array $annotationReader
+     * @param array $cacherReader
      */
-    public function setAnnotationReader($annotationReader)
+    public function setBusinessEntityCacheReader($cacherReader)
     {
-        self::$annotationReader = $annotationReader;
+        self::$cacherReader = $cacherReader;
     }
 
     /**
@@ -43,16 +43,15 @@ class EntityProxySubscriber implements EventSubscriber
         //but the argument is not the same
         //so to avoid an error during extractions, we test the argument
         if ($eventArgs instanceof LoadClassMetadataEventArgs) {
-            $annotationReader = self::$annotationReader;
 
             $metadatas = $eventArgs->getClassMetadata();
             $metaBuilder = new ClassMetadataBuilder($metadatas);
             if ($metadatas->name === 'Victoire\Bundle\CoreBundle\Entity\EntityProxy') {
-                foreach ($annotationReader->getBusinessClasses() as $field => $entity) {
+                foreach (self::$cacherReader->getBusinessClasses() as $field => $entity) {
                     $metaBuilder->addManyToOne($field, $entity, "proxies");
                 }
             }
-            $key = array_search($metadatas->name, $annotationReader->getBusinessClasses());
+            $key = array_search($metadatas->name, self::$cacherReader->getBusinessClasses());
             if ($key) {
                 $metaBuilder->addOneToMany('proxies', 'Victoire\Bundle\CoreBundle\Entity\EntityProxy', $key);
             }

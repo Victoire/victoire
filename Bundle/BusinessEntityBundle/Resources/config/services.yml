@@ -15,3 +15,9 @@ services:
             - "@victoire_core.helper.business_entity_helper"
         tags:
             - { name: form.type_extension, alias: form }
+
+    victoire_business_entity.cache_reader:
+        class: Victoire\Bundle\BusinessEntityBundle\Reader\BusinessEntityCacheReader
+        arguments:
+            - "@victoire_core.apc.cache"
+            - "@victoire_widget.widget_helper"

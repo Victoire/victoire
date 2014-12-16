@@ -7,6 +7,10 @@ namespace Victoire\Bundle\BusinessEntityBundle\Entity;
  */
 class BusinessEntity
 {
+
+    const CACHE_CLASSES = 'victoire_business_entity_classes';
+    const CACHE_WIDGETS = 'victoire_business_entity_widgets';
+
     protected $id = null;
     protected $class = null;
     protected $name = null;
