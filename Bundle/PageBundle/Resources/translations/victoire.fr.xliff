@@ -18,8 +18,8 @@
                 <source>form.view.type.parent.label</source>
                 <target>Page parente</target>
             </trans-unit>
-            <trans-unit id="5" resname="form.view.type.template.label">
-                <source>form.view.type.template.label</source>
+            <trans-unit id="5" resname="form.view.type.pattern.label">
+                <source>form.view.type.pattern.label</source>
                 <target>Modèle à utiliser</target>
             </trans-unit>
             <trans-unit id="6" resname="form.page.type.bodyClass.label">

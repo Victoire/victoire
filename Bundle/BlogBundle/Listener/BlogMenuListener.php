@@ -85,7 +85,7 @@ class BlogMenuListener implements MenuListenerInterface
 
         $mainItem->addChild('menu.blog.article.new',
             array(
-                'route'           => 'victoire_blog_article_new',
+                'route'           => 'victoire_blog_article_newBlogArticle',
                 'routeParameters' => array('id' => $event->getPage()->getId())
                 )
         )->setLinkAttribute('data-toggle', 'vic-modal');

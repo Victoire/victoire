@@ -5,12 +5,12 @@ namespace Victoire\Bundle\BlogBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Victoire\Bundle\BlogBundle\Entity\Article;
 use Victoire\Bundle\BlogBundle\Entity\Blog;
-use Victoire\Bundle\PageBundle\Controller\BasePageController;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 
 /**
@@ -18,7 +18,7 @@ use Victoire\Bundle\PageBundle\Entity\BasePage;
  *
  * @Route("/victoire-dcms/article")
  */
-class ArticleController extends BasePageController
+class ArticleController extends Controller
 {
     protected $routes;
 
@@ -35,16 +35,49 @@ class ArticleController extends BasePageController
     }
 
     /**
-     * New page
+     * Create article
+     * @Route("/create", name="victoire_blog_article_create")
      *
-     * @Route("/new", name="victoire_blog_article_new")
-     * @Template()
-     *
-     * @return JsonResponse
+     * @return template
      */
     public function createAction()
     {
-        return new JsonResponse(parent::newAction());
+        $entityManager = $this->get('doctrine.orm.entity_manager');
+        $article = new Article();
+        $form = $this->createForm('victoire_article_type', $article);
+
+        $form->handleRequest($this->get('request'));
+        if ($form->isValid()) {
+            $article->setAuthor($this->getUser());
+            $entityManager->persist($article);
+            $entityManager->flush();
+
+            if (null !== $this->container->get('victoire_core.helper.business_entity_helper')->findByEntityInstance($article)) {
+                $article = $this->container
+                     ->get('victoire_business_entity_article.business_entity_article_helper')
+                     ->generateEntityPageFromPattern($article->getTemplate(), $article);
+            }
+
+            return new JsonResponse(array(
+                "success"  => true,
+                "url"      => $this->generateUrl('victoire_core_page_show', array('url' => $article->getUrl()))
+            ));
+        } else {
+            $formErrorHelper = $this->container->get('victoire_form.error_helper');
+
+            return new JsonResponse(
+                array(
+                    "success" => false,
+                    "message" => $formErrorHelper->getRecursiveReadableErrors($form),
+                    'html'    => $this->container->get('victoire_templating')->render(
+                        'VictoireBlogBundle:Article:new.html.twig',
+                        array(
+                            'form' => $form->createView()
+                        )
+                    )
+                )
+            );
+        }
     }
 
     /**
@@ -64,7 +97,7 @@ class ArticleController extends BasePageController
         return new JsonResponse(
             array(
                 'html' => $this->container->get('victoire_templating')->render(
-                    $this->getBaseTemplatePath() . ':new.html.twig',
+                    'VictoireBlogBundle:Article:new.html.twig',
                     array('form' => $form->createView())
                 )
             )

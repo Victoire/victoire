@@ -10,6 +10,17 @@ use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
  */
 class BusinessEntityPagePatternRepository extends EntityRepository
 {
+
+    private $queryBuilder;
+
+    /**
+     * Get query builder instance
+     */
+    public function getInstance()
+    {
+        return $this->queryBuilder ? $this->queryBuilder : $this->createQueryBuilder('pattern');
+    }
+
     /**
      * Find the pagePatterns of the business entity
      * @param BusinessEntity $businessEntity

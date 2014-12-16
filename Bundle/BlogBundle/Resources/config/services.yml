@@ -40,6 +40,13 @@ services:
         tags:
             - { name: form.type, alias: victoire_article_settings_type }
 
+    victoire_blog.type.tags:
+        class: Victoire\Bundle\BlogBundle\Form\TagsType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type, alias: tags }
+
     #BLOG
     victoire_blog.blog.form.type:
         class: Victoire\Bundle\BlogBundle\Form\BlogType
