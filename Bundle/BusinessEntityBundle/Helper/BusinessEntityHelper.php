@@ -3,9 +3,8 @@ namespace Victoire\Bundle\BusinessEntityBundle\Helper;
 
 use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
-use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
-use Victoire\Bundle\CoreBundle\Annotations\Reader\AnnotationReader;
+use Victoire\Bundle\CoreBundle\Cache\ApcCache;
 
 /**
  * The BusinessEntityHelper
@@ -14,67 +13,20 @@ use Victoire\Bundle\CoreBundle\Annotations\Reader\AnnotationReader;
  */
 class BusinessEntityHelper
 {
-    protected $annotationReader;
-    protected $em;
+    protected $cache;
+    protected $entityManager;
     protected $businessEntities;
 
     /**
      * Constructor
-     *
-     * @param AnnotationReader $annotationReader
-     * @param EntityManager    $entityManager
+     * @param ApcCache      $cache
+     * @param EntityManager $entityManager
      *
      */
-    public function __construct(AnnotationReader $annotationReader, EntityManager $entityManager)
+    public function __construct(ApcCache $cache, EntityManager $entityManager)
     {
-        $this->annotationReader = $annotationReader;
-        $this->em = $entityManager;
-        $this->businessEntities = null;
-    }
-
-    /**
-     * Get the business entities
-     *
-     * @return array BusinessEntity
-     */
-    public function getBusinessEntities()
-    {
-        //generate the business entities on demand
-        if ($this->businessEntities === null) {
-            $annotationReader = $this->annotationReader;
-
-            $businessEntities = $annotationReader->getBusinessClasses();
-            $businessEntitiesObjects = array();
-
-            foreach ($businessEntities as $name => $class) {
-                $be = new BusinessEntity();
-                $be->setId($name);
-                $be->setName($name);
-                $be->setClass($class);
-
-                //the business properties of the business entity
-                $businessProperties = $annotationReader->getBusinessProperties($class);
-
-                //parse the array of the annotation reader
-                foreach ($businessProperties as $type => $properties) {
-                    foreach ($properties as $property) {
-                        $bp = new BusinessProperty();
-                        $bp->setType($type);
-                        $bp->setEntityProperty($property);
-
-                        //add the business property to the business entity object
-                        $be->addBusinessProperty($bp);
-                        unset($bp);
-                    }
-                }
-
-                $businessEntitiesObjects[] = $be;
-            }
-
-            $this->businessEntities = $businessEntitiesObjects;
-        }
-
-        return $this->businessEntities;
+        $this->cache = $cache;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -125,10 +77,10 @@ class BusinessEntityHelper
         $businessEntity = null;
         $refClass = new \ReflectionClass($entity);
         $parentClass = $refClass->getParentClass();
-        while (!$businessEntity && $parentClass->name != null) {
-            $parentClass = $parentClass->getParentClass();
-            $classname = $this->em->getClassMetadata($parentClass->name)->getName();
-            $businessEntity = $this->findByEntityClassname($classname);
+        while (($parentClass = $parentClass->getParentClass())
+            && !$businessEntity
+            && $parentClass->name != null) {
+            $businessEntity = $this->findByEntityClassname($parentClass->name);
         }
 
         return $businessEntity;
@@ -174,10 +126,9 @@ class BusinessEntityHelper
     {
         //retrieve the class of the business entity
         $class = $businessEntity->getClass();
-        $em = $this->em;
 
         //get the repository
-        $repo = $em->getRepository($class);
+        $repo = $this->entityManager->getRepository($class);
 
         $functionName = 'findOneBy'.ucfirst($attributeName);
 

@@ -35,9 +35,7 @@ class BusinessEntityCacheReader
      **/
     public function getBusinessClasses()
     {
-        $businessClasses = $this->cache->fetch(BusinessEntity::CACHE_CLASSES, array());
-
-        return $businessClasses;
+        return $this->cache->fetch(BusinessEntity::CACHE_CLASSES, array());
     }
     /**
      * this method get annotated business classes (from cache if enabled)
@@ -47,10 +45,8 @@ class BusinessEntityCacheReader
     public function getBusinessClassesForWidget(Widget $widget)
     {
         $widgetName = $this->widgetHelper->getWidgetName($widget);
+        $businessClasses = $this->cache->fetch(BusinessEntity::CACHE_WIDGETS, array());
 
-        $businessClassesForWidget = $this->cache->fetch(BusinessEntity::CACHE_WIDGETS, array());
-        var_dump($businessClassesForWidget);exit;
-
-        return $businessClassesForWidget[$widgetName];
+        return $businessClasses[$widgetName];
     }
 }

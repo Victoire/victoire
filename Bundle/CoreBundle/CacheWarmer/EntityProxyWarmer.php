@@ -3,6 +3,7 @@ namespace Victoire\Bundle\CoreBundle\CacheWarmer;
 
 use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmer;
 use Symfony\Component\HttpKernel\Config\FileLocator;
+use Victoire\Bundle\BusinessEntityBundle\Reader\BusinessEntityCacheReader;
 
 /**
  *
@@ -11,17 +12,17 @@ use Symfony\Component\HttpKernel\Config\FileLocator;
  */
 class EntityProxyWarmer extends CacheWarmer
 {
-    private $annotationReader;
+    private $cacheReader;
     private $fileLocator;
 
     /**
      * Constructor
      *
-     * @param unknown $annotationReader
+     * @param unknown $cacheReader
      */
-    public function __construct($annotationReader, FileLocator $fileLocator)
+    public function __construct(BusinessEntityCacheReader $cacheReader, FileLocator $fileLocator)
     {
-        $this->annotationReader = $annotationReader;
+        $this->cacheReader = $cacheReader;
         $this->fileLocator = $fileLocator;
     }
 
@@ -43,7 +44,7 @@ class EntityProxyWarmer extends CacheWarmer
             }
         }
 
-        $generator = new EntityProxyGenerator($this->annotationReader, $this->fileLocator);
+        $generator = new EntityProxyGenerator($this->cacheReader, $this->fileLocator);
         $cacheContent = $generator->generate();
 
         $this->writeCacheFile($file, $cacheContent);

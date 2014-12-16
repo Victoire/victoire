@@ -16,6 +16,13 @@ services:
         tags:
             - { name: form.type_extension, alias: form }
 
+    victoire_business_entity.metadata_listener:
+        class: Victoire\Bundle\BusinessEntityBundle\Listener\MetadataListener
+        arguments:
+            - "@victoire_core.annotation_driver"
+        tags:
+            - { name: doctrine.event_listener, event: loadClassMetadata }
+
     victoire_business_entity.cache_reader:
         class: Victoire\Bundle\BusinessEntityBundle\Reader\BusinessEntityCacheReader
         arguments:
