@@ -73,7 +73,6 @@ abstract class View
      */
     protected $widgets;
 
-
     /**
      * @Gedmo\TreeParent
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\PageBundle\Entity\BasePage", inversedBy="children", cascade={"persist"})
@@ -311,7 +310,7 @@ abstract class View
     public function setChildren($children)
     {
         $this->children = $children;
-        if($children !== null) {
+        if ($children !== null) {
            foreach ($children as $child) {
                 $child->setParent($this);
             }

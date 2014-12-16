@@ -3,25 +3,23 @@ namespace Victoire\Bundle\BlogBundle\Form;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Victoire\Bundle\CoreBundle\DataTransformer\ViewToIdTransformer;
-use Victoire\Bundle\PageBundle\Form\BasePageType;
 
 /**
  *
  */
-class ArticleType extends BasePageType
+class ArticleType extends AbstractType
 {
     private $entityManager;
 
     /**
     * Constructor
     */
-    public function __construct(EntityManager $entityManager, $availableLocales, RequestStack $requestStack)
+    public function __construct(EntityManager $entityManager)
     {
-        parent::__construct($availableLocales, $requestStack);
         $this->entityManager = $entityManager;
     }
 
@@ -36,6 +34,7 @@ class ArticleType extends BasePageType
 
         $viewToIdTransformer = new ViewToIdTransformer($this->entityManager);
         $builder
+            ->add('name')
             ->add('description')
             ->add('image', 'media')
             ->add('category')
@@ -46,25 +45,21 @@ class ArticleType extends BasePageType
             )
             ->add(
                 'tags',
-                'select2',
+                'tags',
                 array(
-                    'class'    => 'Victoire\Bundle\BlogBundle\Entity\Tag',
-                    'property' => 'title',
                     'required' => false,
                     'multiple' => true
                 )
             );
 
-            $articleTemplates = function (EntityRepository $repo) {
-                return $repo->getPatterns()
-                    ->getInstance()
-                    ->andWhere("pattern.businessEntityName = 'article'");
+            $articlePatterns = function (EntityRepository $repo) {
+                return $repo->getInstance()->andWhere("pattern.businessEntityName = 'article'");
             };
-            $builder->add('template', null, array(
-                'label'         => 'form.view.type.template.label',
+            $builder->add('pattern', null, array(
+                'label'         => 'form.view.type.pattern.label',
                 'property'      => 'name',
                 'required'      => true,
-                'query_builder' => $articleTemplates,
+                'query_builder' => $articlePatterns,
             ));
 
     }

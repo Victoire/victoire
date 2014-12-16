@@ -18,7 +18,6 @@ abstract class BasePage extends View implements WebViewInterface
 {
     use \Victoire\Bundle\PageBundle\Entity\Traits\WebViewTrait;
 
-    
     /**
      * @var string
      *

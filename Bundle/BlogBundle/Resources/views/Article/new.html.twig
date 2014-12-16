@@ -11,13 +11,13 @@
 {% endblock modal_header_title %}
 
 {% block modal_body_content %}
-    <form method="POST" action="{{path('victoire_blog_article_new')}}">
+    <form method="POST" action="{{path('victoire_blog_article_create')}}">
         {{ form_errors(form) }}
         {{ form_row(form.name) }}
         {{ form_row(form.description) }}
         {{ form_row(form.category) }}
         {{ form_row(form.tags) }}
-        {{ form_row(form.template) }}
+        {{ form_row(form.pattern) }}
         {{ form_rest(form) }}
     </form>
 {% endblock modal_body_content %}
