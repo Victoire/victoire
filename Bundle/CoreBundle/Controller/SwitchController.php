@@ -14,14 +14,13 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class SwitchController extends Controller
 {
     /**
-     * @Route("/disable", name="victoire_core_switchDisable", options={"expose"=true}, defaults={"mode"=false})
-     * @Route("/enable", name="victoire_core_switchEnable", options={"expose"=true}, defaults={"mode"=true})
-     *
+     * Method used to change of edit mode
      * @param string $mode The mode
      *
+     * @Route("/mode/{mode}", name="victoire_core_switchMode", options={"expose"=true})
      * @return JsonResponse Empty response
      */
-    public function switchAction($mode)
+    public function switchModeAction($mode)
     {
         //the session
         $session = $this->get('session');
@@ -30,9 +29,7 @@ class SwitchController extends Controller
         $session->set('victoire.edit_mode', $mode);
 
         return new JsonResponse(
-            array(
-                'response' => true
-            )
+            array('response' => true)
         );
     }
 }

@@ -60,17 +60,6 @@
             </li>
             {% endif %}
 
-            {#
-            <li>
-                <input class="vic-switcher vic-switcher-stat" type="checkbox" id="vic-switcher-statMode">
-                <label for="vic-switcher-statMode">Statistiques</label>
-            </li>
-            #}
-            <li>
-                <input class="vic-switcher vic-switcher-edit vic-navBar-switcher" type="checkbox" id="vic-switcher-editMode" {{ edit_mode ? 'checked="checked"' : ''}}>
-                <label for="vic-switcher-editMode">Édition</label>
-            </li>
-
             <li class="vic-menu-main-list-lastItem">
                 <div class="vic-dropdown">
                     <a class="vic-dropdown-toggle" id="dropdownMenu1" data-toggle="vic-dropdown">
@@ -89,4 +78,11 @@
         </ul>
     </div>
     {% endblock %}
+</section>
+<section id="vic-mode-toggler">
+    <div class="vic-btn-group" role="group" aria-label="...">
+        <button type="button" class="vic-btn vic-btn-default{{ not edit_mode ? ' vic-active' }}" data-mode="admin-readonly" title="{{ 'navbar.mode.readonly'|trans({}, 'victoire') }}"><span class="fa fa-eye-slash fa-2x"></span></button>
+        <button type="button" class="vic-btn vic-btn-default{{ "admin-layout" == edit_mode ? ' vic-active' }}" data-mode="admin-layout" title="{{ 'navbar.mode.layout'|trans({}, 'victoire') }}"><span class="fa fa-plus fa-2x"></span></button>
+        <button type="button" class="vic-btn vic-btn-default{{ "admin-edit" == edit_mode ? ' vic-active' }}" data-mode="admin-edit" title="{{ 'navbar.mode.edit'|trans({}, 'victoire') }}"><span class="fa fa-edit fa-2x"></span></button>
+    </div>
 </section>
