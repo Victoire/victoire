@@ -22,6 +22,11 @@ class Article
     use BusinessEntityTrait;
     use TimestampableEntity;
 
+    const DRAFT       = "draft";
+    const PUBLISHED   = "published";
+    const UNPUBLISHED = "unpublished";
+    const SCHEDULED   = "scheduled";
+
     /**
      * @VIC\BusinessProperty("businessParameter")
      * @ORM\Column(name="id", type="integer")
@@ -53,6 +58,11 @@ class Article
      * @VIC\BusinessProperty("textable")
      */
     private $description;
+
+    /**
+     * @ORM\Column(name="status", type="string", nullable=false)
+     */
+    protected $status = self::PUBLISHED;
 
     /**
      * Categories of the article
@@ -125,6 +135,16 @@ class Article
     * @VIC\BusinessProperty("textable")
     */
     private $authorFullName;
+
+    /**
+     * to string method
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->name;
+    }
 
     /**
      * Get id
@@ -352,6 +372,49 @@ class Article
     public function getPattern()
     {
         return $this->pattern;
+    }
+
+    /**
+     * Set status
+     *
+     * @param status $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * Get status
+     *
+     * @return status
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Set slug
+     * @param string $slug
+     *
+     * @return $this
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
     }
 
     /**
