@@ -166,10 +166,10 @@ class ViewHelper
                 $page = $this->businessEntityPageHelper->generateEntityPageFromPattern($currentPattern, $entity);
                 $this->updatePageParametersByEntity($page, $entity);
                 $referenceId = $this->viewCacheHelper->getViewCacheId($view, $entity);
-                $viewsReferences[$page->getUrl().$entity->getLocale()] = array(
+                $viewsReferences[$page->getUrl().$page->getLocale()] = array(
                     'id'              => $referenceId,
                     'url'             => $page->getUrl(),
-                    'locale'          => $entity->getLocale(),
+                    'locale'          => $page->getLocale(),
                     'viewId'          => $page->getTemplate()->getId(),
                     'entityId'        => $entity->getId(),
                     'entityNamespace' => $this->em->getClassMetadata(get_class($entity))->name,
@@ -186,7 +186,6 @@ class ViewHelper
                     'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
                 );
                 $businessEntities = $this->businessEntityHelper->getBusinessEntities();
-
 
                 foreach ($businessEntities as $businessEntity) {
                     $properties = $this->businessEntityPageHelper->getBusinessProperties($businessEntity);
@@ -218,7 +217,7 @@ class ViewHelper
                             $viewsReferences[$page->getUrl().$view->getLocale()] = array(
                                 'id'              => $referenceId,
                                 'url'             => $page->getUrl(),
-                                'locale'          => $entity->getLocale(),
+                                'locale'          => $page->getLocale(),
                                 'viewId'          => $page->getTemplate()->getId(),
                                 'entityId'        => $entity->getId(),
                                 'entityNamespace' => $this->em->getClassMetadata(get_class($entity))->name,
@@ -296,8 +295,8 @@ class ViewHelper
         }
         $i18n = $view->getI18n();
         $i18n->setTranslation($locale, $clonedView);
-        $this->em->persist($clonedView); 
-        $this->em->refresh($view);      
+        $this->em->persist($clonedView);
+        $this->em->refresh($view);
         $this->em->flush();
 
         return $clonedView;
@@ -373,7 +372,7 @@ class ViewHelper
 
             $clonedView->setSlots(array());
             $clonedView->setWidgetMap($widgetMapClone);
-            $this->em->persist($clonedView);       
+            $this->em->persist($clonedView);
             $this->em->flush();
         }
 
@@ -388,7 +387,7 @@ class ViewHelper
     * this methods allows you to clone a BusinessEntityPagePattern
     *
     */
-    protected function cloneBusinessEntityPagePattern(BusinessEntityPagePattern $view) 
+    protected function cloneBusinessEntityPagePattern(BusinessEntityPagePattern $view)
     {
 
         $businessEntityId = $view->getBusinessEntityName();
