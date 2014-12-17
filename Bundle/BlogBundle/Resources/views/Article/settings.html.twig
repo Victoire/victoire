@@ -58,4 +58,15 @@
     {{ 'modal.form.article.settings.title'|trans({'%articleName%' : article.name}, 'victoire')|raw }}
 {% endblock modal_header_title %}
 
-{% block action %}update{% endblock action %}
+{% block modal_footer %}
+    <div class="vic-modal-footer">
+        <div class="vic-container">
+            <div class="vic-modal-footer-content">
+                {% block modal_footer_content %}
+                    <a href="{{ path('victoire_core_article_delete', {'id': article.id}) }}" data-toggle="vic-confirm" class="vic-btn vic-btn-danger vic-pull-left" data-title="{{ 'modal.form.article.settings.action.delete.confirm.title'|trans({}, 'victoire') }}" data-body="{{ 'modal.form.article.settings.action.delete.confirm.body'|trans({}, 'victoire') }}" data-modal="delete"><i class="fa fa-trash-o"></i> {{ 'modal.button.delete.title'|trans({}, 'victoire') }}</a>
+                    <a href="#" class="vic-btn vic-btn-success" data-modal="{% block action %}update{% endblock action %}" title="{{ 'modal.button.'~ block('action') ~'.title'|trans({}, 'victoire') }}"><i class="fa fa-check-circle"></i> {{ 'modal.button.'~ block('action') ~'.title'|trans({}, 'victoire') }}</a>
+                {% endblock modal_footer_content %}
+            </div>
+        </div>
+    </div>
+{% endblock modal_footer %}

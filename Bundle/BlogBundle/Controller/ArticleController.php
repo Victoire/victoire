@@ -8,10 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Victoire\Bundle\BlogBundle\Entity\Article;
 use Victoire\Bundle\BlogBundle\Entity\Blog;
-use Victoire\Bundle\PageBundle\Entity\BasePage;
 
 /**
  * article Controller
@@ -146,19 +144,41 @@ class ArticleController extends Controller
     /**
      * Page delete
      *
-     * @param BasePage $article
+     * @param Article $article
      *
      * @return template
      * @Route("/{id}/delete", name="victoire_core_article_delete")
      * @Template()
      * @ParamConverter("article", class="VictoireBlogBundle:Article")
      */
-    public function deleteAction(BasePage $article)
+    public function deleteAction(Article $article)
     {
-        if (!$this->get('security.context')->isGranted('PAGE_OWNER', $article)) {
-            throw new AccessDeniedException("Nop ! you can't do such an action");
+        try {
+            //the entity manager
+            $entityManager = $this->get('doctrine.orm.entity_manager');
+
+            //remove the page (soft deletete)
+            $article->setVisibleOnFront(false);
+            $entityManager->flush($article);
+            $entityManager->remove($article);
+
+            //flush the modifications
+            $entityManager->flush();
+
+            //redirect to the homepage
+            $homepageUrl = $this->generateUrl('victoire_core_page_homepage');
+
+            $response = array(
+                'success' => true,
+                'url'     => $homepageUrl
+            );
+        } catch (\Exception $ex) {
+            $response = array(
+                'success' => false,
+                'message' => $ex->getMessage()
+            );
         }
 
-        return new JsonResponse(parent::deleteAction($article));
+        return new JsonResponse($response);
     }
 }

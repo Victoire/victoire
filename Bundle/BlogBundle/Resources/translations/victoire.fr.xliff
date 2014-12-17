@@ -74,6 +74,14 @@
         <source>widget_filter.tag_filter</source>
         <target>Etiquettes</target>
       </trans-unit>
+      <trans-unit id="07b2988c1c5daf0bdf6be270bede6fc8424cd688" resname="modal.form.article.settings.action.delete.confirm.body">
+        <source>modal.form.article.settings.action.delete.confirm.body</source>
+        <target>Cette action va supprimer définitivement cet article. Cette action est irréversible. Etes vous sûr ?</target>
+      </trans-unit>
+      <trans-unit id="131320710e98bb9e085c0b3eecb26ebcdd8dc5a8" resname="modal.form.article.settings.action.delete.confirm.title">
+        <source>modal.form.article.settings.action.delete.confirm.title</source>
+        <target>C'est votre dernier mot ?</target>
+      </trans-unit>
       <trans-unit id="13" resname="modal.blog.new.title">
         <source>modal.blog.new.title</source>
         <target>Créer un nouveau blog</target>
