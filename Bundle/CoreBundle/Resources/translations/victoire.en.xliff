@@ -158,6 +158,18 @@
         <source>modal.sitemap.caption</source>
         <target>Get a bird eye of your site's tree and reorganize it by a simple drag and drop.</target>
       </trans-unit>
+      <trans-unit id="9" resname="navbar.mode.edit">
+        <source>navbar.mode.edit</source>
+        <target>Content edit mode</target>
+      </trans-unit>
+      <trans-unit id="9" resname="navbar.mode.layout">
+        <source>navbar.mode.layout</source>
+        <target>Layout</target>
+      </trans-unit>
+      <trans-unit id="9" resname="navbar.mode.readonly">
+        <source>navbar.mode.readonly</source>
+        <target>Preview</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

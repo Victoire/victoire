@@ -1,0 +1,43 @@
+body[role=admin-edit] {
+    .vic-new-widget {
+        display: none !important;
+    }
+}
+
+body[role=admin-layout] {
+    .vic-hover-widget {
+        display: none !important;
+    }
+    .vic-new-widget {
+        display: block !important;
+    }
+}
+
+#vic-mode-toggler {
+    position: fixed;
+    bottom: 0;
+    text-align: center;
+	width: 100%;
+	z-index: 500;
+	height: 35px;
+	background: @anthracite;
+	.vic-btn-group {
+		margin-top: -30px;
+		> .vic-btn {
+			background: @anthracite;
+			border: 0px;
+			padding: 15px 20px;
+			width: 75px;
+			&.vic-active, &:active, &:hover {
+				background: @green;
+			}
+			.fa {
+				color: @white;
+			}
+			&:first-child, &:last-child {
+				border-bottom-left-radius: 0;
+				border-bottom-right-radius: 0;
+			}
+		}
+	}
+}
