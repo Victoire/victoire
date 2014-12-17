@@ -166,7 +166,7 @@ class ViewHelper
                 $page = $this->businessEntityPageHelper->generateEntityPageFromPattern($currentPattern, $entity);
                 $this->updatePageParametersByEntity($page, $entity);
                 $referenceId = $this->viewCacheHelper->getViewCacheId($view, $entity);
-                $viewsReferences[$page->getUrl().$entity->getLocale()] = array(
+                $viewsReferences[$page->getUrl().$page->getLocale()] = array(
                     'id'              => $referenceId,
                     'url'             => $page->getUrl(),
                     'locale'          => $page->getLocale(),

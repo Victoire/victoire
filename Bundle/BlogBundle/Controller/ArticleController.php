@@ -20,20 +20,6 @@ use Victoire\Bundle\PageBundle\Entity\BasePage;
  */
 class ArticleController extends Controller
 {
-    protected $routes;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->routes = array(
-            'new'      => 'victoire_blog_article_new',
-            'show'     => 'victoire_core_page_show',
-            'settings' => 'victoire_blog_article_settings',
-        );
-    }
-
     /**
      * Create article
      * @Route("/create", name="victoire_blog_article_create")
@@ -54,8 +40,8 @@ class ArticleController extends Controller
 
             if (null !== $this->container->get('victoire_core.helper.business_entity_helper')->findByEntityInstance($article)) {
                 $article = $this->container
-                     ->get('victoire_business_entity_article.business_entity_article_helper')
-                     ->generateEntityPageFromPattern($article->getTemplate(), $article);
+                     ->get('victoire_business_entity_page.business_entity_page_helper')
+                     ->generateEntityPageFromPattern($article->getPattern(), $article);
             }
 
             return new JsonResponse(array(
@@ -92,7 +78,7 @@ class ArticleController extends Controller
     {
         $article = new Article();
         $article->setBlog($blog);
-        $form = $this->container->get('form.factory')->create($this->getNewPageType(), $article);
+        $form = $this->createForm('victoire_article_type', $article);
 
         return new JsonResponse(
             array(
@@ -119,38 +105,11 @@ class ArticleController extends Controller
     {
         $response = parent::settingsAction($request, $article);
 
-        $pattern = $article->getTemplate();
+        $pattern = $article->getPattern();
 
         $page = $this->container->get('victoire_page.page_helper')->findPageByParameters(array(
             'viewId' => $pattern->getId(),
             'locale' => $request->getSession()->get('victoire_locale'),
-            'entityId' => $article->getId()
-        ));
-        $response['url'] = $this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl()));
-
-        return new JsonResponse($response);
-    }
-
-    /**
-     * Article translation
-     *
-     * @param Request $request
-     * @param Page    $article
-     *
-     * @Route("/{id}/translate", name="victoire_blog_article_translate")
-     *
-     * @ParamConverter("article", class="VictoireBlogBundle:Article")
-     * @return template
-     */
-    public function translateAction(Request $request, BasePage $article)
-    {
-        $response = parent::translateAction($request, $article);
-
-        $pattern = $article->getTemplate();
-
-        $page = $this->container->get('victoire_page.page_helper')->findPageByParameters(array(
-            'viewId' => $pattern->getId(),
-            'locale' => $request->getLocale(),
             'entityId' => $article->getId()
         ));
         $response['url'] = $this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl()));
@@ -190,27 +149,9 @@ class ArticleController extends Controller
      *
      * @return string
      */
-    protected function getPageTranslateType()
-    {
-        return 'victoire_view_translate_type';
-    }
-
-    /**
-     *
-     * @return string
-     */
     protected function getNewPageType()
     {
         return 'victoire_article_type';
-    }
-
-    /**
-     *
-     * @return \Victoire\Bundle\BlogBundle\Entity\Article
-     */
-    protected function getNewPage()
-    {
-        return new Article();
     }
 
     /**
@@ -220,14 +161,5 @@ class ArticleController extends Controller
     protected function getBaseTemplatePath()
     {
         return "VictoireBlogBundle:Article";
-    }
-
-    /**
-     *
-     * @param unknown $action
-     */
-    protected function getRoutes($action)
-    {
-        return $this->routes[$action];
     }
 }
