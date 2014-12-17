@@ -2,7 +2,7 @@
 namespace Victoire\Bundle\BlogBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
-use Victoire\Bundle\PageBundle\Entity\PageStatus;
+use Victoire\Bundle\BlogBundle\Entity\Article;
 
 /**
  * Edit Article Type
@@ -25,18 +25,17 @@ class ArticleSettingsType extends ArticleType
             ->add('status', 'choice', array(
                 'label'   => 'form.page.type.status.label',
                 'choices' => array(
-                    PageStatus::DRAFT       => 'form.page.type.status.choice.label.draft',
-                    PageStatus::PUBLISHED   => 'form.page.type.status.choice.label.published',
-                    PageStatus::UNPUBLISHED => 'form.page.type.status.choice.label.unpublished',
-                    PageStatus::SCHEDULED   => 'form.page.type.status.choice.label.scheduled',
+                    Article::DRAFT       => 'form.page.type.status.choice.label.draft',
+                    Article::PUBLISHED   => 'form.page.type.status.choice.label.published',
+                    Article::UNPUBLISHED => 'form.page.type.status.choice.label.unpublished',
+                    Article::SCHEDULED   => 'form.page.type.status.choice.label.scheduled',
                 )
             ))
             ->add('publishedAt', null, array(
                 'widget'         => 'single_text',
                 'datetimepicker' => true
             ))
-            ->add('image', 'media')
-            ->add('author', null);
+            ->add('image', 'media');
     }
 
     /**

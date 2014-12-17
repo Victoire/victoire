@@ -94,25 +94,51 @@ class ArticleController extends Controller
      * Article settings
      *
      * @param Request $request
-     * @param Page    $article
+     * @param Article $article
      *
      * @Route("/{id}/settings", name="victoire_blog_article_settings")
      *
      * @ParamConverter("article", class="VictoireBlogBundle:Article")
      * @return template
      */
-    public function settingsAction(Request $request, BasePage $article)
+    public function settingsAction(Request $request, Article $article)
     {
-        $response = parent::settingsAction($request, $article);
+        $form = $this->createForm('victoire_article_settings_type', $article);
+        $businessProperties = array();
 
-        $pattern = $article->getPattern();
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $this->get('doctrine.orm.entity_manager')->persist($article);
+            $this->get('doctrine.orm.entity_manager')->flush();
 
-        $page = $this->container->get('victoire_page.page_helper')->findPageByParameters(array(
-            'viewId' => $pattern->getId(),
-            'locale' => $request->getSession()->get('victoire_locale'),
-            'entityId' => $article->getId()
-        ));
-        $response['url'] = $this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl()));
+            $pattern = $article->getPattern();
+
+            $page = $this->container->get('victoire_page.page_helper')->findPageByParameters(array(
+                'viewId' => $pattern->getId(),
+                'locale' => $request->getSession()->get('victoire_locale'),
+                'entityId' => $article->getId()
+            ));
+
+            $response = array(
+                'success' => true,
+                'url'     => $this->generateUrl(
+                    'victoire_core_page_show',
+                    array('url' => $page->getUrl())
+                )
+            );
+        } else {
+            $response = array(
+                'success' => false,
+                'html'    => $this->container->get('victoire_templating')->render(
+                    'VictoireBlogBundle:Article:settings.html.twig',
+                    array(
+                        'article'            => $article,
+                        'form'               => $form->createView(),
+                        'businessProperties' => $businessProperties
+                    )
+                )
+            );
+        }
 
         return new JsonResponse($response);
     }
@@ -134,32 +160,5 @@ class ArticleController extends Controller
         }
 
         return new JsonResponse(parent::deleteAction($article));
-    }
-
-    /**
-     *
-     * @return string
-     */
-    protected function getPageSettingsType()
-    {
-        return 'victoire_article_settings_type';
-    }
-
-    /**
-     *
-     * @return string
-     */
-    protected function getNewPageType()
-    {
-        return 'victoire_article_type';
-    }
-
-    /**
-     *
-     * @return string
-     */
-    protected function getBaseTemplatePath()
-    {
-        return "VictoireBlogBundle:Article";
     }
 }
