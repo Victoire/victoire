@@ -49,4 +49,38 @@ class BusinessEntityCacheReader
 
         return $businessClasses[$widgetName];
     }
+
+    /**
+     * Get a business entity by its id
+     *
+     * @param string $id
+     *
+     * @throws \Exception
+     *
+     * @return BusinessEntity
+     */
+    public function findById($id)
+    {
+        if ($id === null) {
+            throw new \Exception('The parameter $id is mandatory');
+        }
+
+        //get all the business entities
+        $businessEntities = $this->getBusinessClasses();
+
+        //the result
+        $businessEntity = null;
+
+        //parse the business entities
+        foreach ($businessEntities as $tempBusinessEntity) {
+            //look for the same id
+            if ($tempBusinessEntity->getId() === $id) {
+                $businessEntity = $tempBusinessEntity;
+                //business entity was found, there is no need to continue
+                continue;
+            }
+        }
+
+        return $businessEntity;
+    }
 }

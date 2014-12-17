@@ -16,9 +16,6 @@ class MetadataListener
 
     public function loadClassMetadata(LoadClassMetadataEventArgs $args)
     {
-        $entityManager = $args->getEntityManager();
-
-        $omDriver = $entityManager->getConfiguration()->getMetadataDriverImpl();
-        $omDriver->addDriver($this->annotationDriver, $args->getClassMetadata()->name);
+        $this->annotationDriver->loadMetadataForClass($args->getClassMetadata()->name, $args->getClassMetadata());
     }
 }

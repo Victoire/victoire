@@ -5,19 +5,20 @@ namespace Victoire\Bundle\CoreBundle\EventSubscriber;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\BusinessEntityBundle\Event\BusinessEntityAnnotationEvent;
-use Victoire\Bundle\CoreBundle\Annotations\Reader\AnnotationDriver;
+use Victoire\Bundle\CoreBundle\Cache\Builder\CacheBuilder;
 use Victoire\Bundle\WidgetBundle\Event\WidgetAnnotationEvent;
 
 /**
  * Save victoire temp data in cache file
+ * ref: victoire_core.cache_subscriber
  */
 class CacheSubscriber implements EventSubscriberInterface
 {
-    private $cache;
+    private $cacheBuilder;
 
-    public function __construct(AnnotationDriver $cache)
+    public function __construct(CacheBuilder $cacheBuilder)
     {
-        $this->cache = $cache;
+        $this->cacheBuilder = $cacheBuilder;
     }
 
     public function addBusinessEntityInfo(BusinessEntityAnnotationEvent $event)
@@ -47,7 +48,7 @@ class CacheSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            'victoire.business_entity_annotation_load' => 'addBusinessEntityClass',
+            'victoire.business_entity_annotation_load' => 'addBusinessEntityInfo',
             'victoire.widget_annotation_load'          => 'addWidgetInfo'
         );
     }

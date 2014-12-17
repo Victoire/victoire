@@ -40,35 +40,22 @@ class BusinessEntityHelper
      */
     public function findById($id)
     {
-        if ($id === null) {
-            throw new \Exception('The parameter $id is mandatory');
-        }
+        //@todo Should get Business entity with the cache reader
+    }
 
-        //get all the business entities
-        $businessEntities = $this->getBusinessEntities();
-
-        //the result
-        $businessEntity = null;
-
-        //parse the business entities
-        foreach ($businessEntities as $tempBusinessEntity) {
-            //look for the same id
-            if ($tempBusinessEntity->getId() === $id) {
-                $businessEntity = $tempBusinessEntity;
-                //business entity was found, there is no need to continue
-                continue;
-            }
-        }
-
-        return $businessEntity;
+    /**
+     * Get all business entities
+     *
+     * @return BusinessEntity
+     */
+    public function getBusinessEntities()
+    {
+        //@todo Should get all Business entities with the cache reader
     }
 
     /**
      * Get a business entity
-     *
      * @param Entity $entity
-     *
-     * @throws \Exception
      *
      * @return BusinessEntity
      */
@@ -85,6 +72,7 @@ class BusinessEntityHelper
 
         return $businessEntity;
     }
+
     /**
      * Get a business entity by classname
      *
@@ -115,7 +103,6 @@ class BusinessEntityHelper
 
     /**
      * Find a entity by the business entity and the id
-     *
      * @param BusinessEntity $businessEntity
      * @param string         $attributeName
      * @param string         $id

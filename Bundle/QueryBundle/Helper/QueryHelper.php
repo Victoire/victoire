@@ -46,7 +46,6 @@ class QueryHelper
     {
         //services
         $entityManager = $this->entityManager;
-        $businessEntityHelper = $this->businessEntityHelper;
 
         if ($containerEntity === null) {
             throw new \Exception('The container entity parameter must not be null.');
@@ -65,7 +64,7 @@ class QueryHelper
         }
 
         //the business class of the container entity
-        $businessEntity = $businessEntityHelper->findById($businessEntityName);
+        $businessEntity = $this->businessEntityHelper->findById($businessEntityName);
 
         //test that there was a businessEntity
         if ($businessEntity === null) {

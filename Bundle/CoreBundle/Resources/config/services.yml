@@ -113,6 +113,11 @@ services:
         calls:
             - [ setContainer, ["@service_container"] ]
 
+    victoire_core.cache_builder:
+        class: Victoire\Bundle\CoreBundle\Cache\Builder\CacheBuilder
+        arguments:
+            - "@victoire_core.apc.cache"
+
 
     victoire_core.view_cache_listener:
         class: Victoire\Bundle\CoreBundle\Listener\ViewCacheListener
@@ -157,6 +162,8 @@ services:
 
     victoire_core.cache_subscriber:
         class: Victoire\Bundle\CoreBundle\EventSubscriber\CacheSubscriber
+        arguments:
+            - "@victoire_core.cache_builder"
         tags:
             - { name: kernel.event_subscriber }
 
