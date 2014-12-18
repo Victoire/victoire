@@ -35,16 +35,15 @@ class ArticleController extends Controller
             $article->setAuthor($this->getUser());
             $entityManager->persist($article);
             $entityManager->flush();
-
-            if (null !== $this->container->get('victoire_core.helper.business_entity_helper')->findByEntityInstance($article)) {
-                $article = $this->container
-                     ->get('victoire_business_entity_page.business_entity_page_helper')
-                     ->generateEntityPageFromPattern($article->getPattern(), $article);
-            }
+            //Auto creation of the BEP
+            $page = $this->container->get('victoire_business_entity_page.business_entity_page_helper')
+                                ->generateEntityPageFromPattern($article->getPattern(), $article);
+            $entityManager->persist($page);
+            $entityManager->flush();
 
             return new JsonResponse(array(
                 "success"  => true,
-                "url"      => $this->generateUrl('victoire_core_page_show', array('url' => $article->getUrl()))
+                "url"      => $this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl()))
             ));
         } else {
             $formErrorHelper = $this->container->get('victoire_form.error_helper');

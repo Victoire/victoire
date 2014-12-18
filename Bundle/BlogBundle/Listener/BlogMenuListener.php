@@ -33,18 +33,27 @@ class BlogMenuListener implements MenuListenerInterface
     public function addContextual($event)
     {
         $mainItem = $this->getMainItem();
+        $currentBlog = $event->getPage()->getBusinessEntity()->getBlog();
+        $currentArticle = $event->getPage()->getBusinessEntity();
 
         $mainItem->addChild('menu.blog.article.settings',
             array(
                 'route' => 'victoire_blog_article_settings',
-                'routeParameters' => array('id' => $event->getPage()->getBusinessEntity()->getId())
+                'routeParameters' => array('id' => $currentArticle->getId())
                 )
         )->setLinkAttribute('data-toggle', 'vic-modal');
 
         $mainItem->addChild('menu.blog.article.settings',
             array(
                 'route' => 'victoire_blog_article_settings',
-                'routeParameters' => array('id' => $event->getPage()->getBusinessEntity()->getId())
+                'routeParameters' => array('id' => $currentArticle->getId())
+                )
+        )->setLinkAttribute('data-toggle', 'vic-modal');
+
+        $mainItem->addChild('menu.blog.article.new',
+            array(
+                'route'           => 'victoire_blog_article_newBlogArticle',
+                'routeParameters' => array('id' => $currentBlog->getId())
                 )
         )->setLinkAttribute('data-toggle', 'vic-modal');
 
