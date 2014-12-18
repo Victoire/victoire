@@ -79,10 +79,25 @@
     </div>
     {% endblock %}
 </section>
+
 <section id="vic-mode-toggler">
-    <div class="vic-btn-group" role="group" aria-label="...">
-        <button type="button" class="vic-btn vic-btn-default{{ not edit_mode ? ' vic-active' }}" data-mode="admin-readonly" title="{{ 'navbar.mode.readonly'|trans({}, 'victoire') }}"><span class="fa fa-eye-slash fa-2x"></span></button>
-        <button type="button" class="vic-btn vic-btn-default{{ "admin-layout" == edit_mode ? ' vic-active' }}" data-mode="admin-layout" title="{{ 'navbar.mode.layout'|trans({}, 'victoire') }}"><span class="fa fa-plus fa-2x"></span></button>
-        <button type="button" class="vic-btn vic-btn-default{{ "admin-edit" == edit_mode ? ' vic-active' }}" data-mode="admin-edit" title="{{ 'navbar.mode.edit'|trans({}, 'victoire') }}"><span class="fa fa-edit fa-2x"></span></button>
-    </div>
+    <ul class="vic-mode-container">
+        <li class="vic-mode-item">
+            <button class="vic-mode vic-mode-readonly{{ not edit_mode ? ' vic-active' }}" type="button" data-mode="admin-readonly" title="{{ 'navbar.mode.readonly'|trans({}, 'victoire') }}" data-toggle="vic-tooltip" data-placement="top"><img src="{{ asset('bundles/victoirecore/images/mode/readonly.svg') }}"></button>
+        </li>
+
+        <li class="vic-mode-item">
+            <button class="vic-mode vic-mode-layout{{ "admin-layout" == edit_mode ? ' vic-active' }}" type="button" data-mode="admin-layout" title="{{ 'navbar.mode.layout'|trans({}, 'victoire') }}" data-toggle="vic-tooltip" data-placement="top"><img src="{{ asset('bundles/victoirecore/images/mode/layout.svg') }}"></button>
+        </li>
+
+        <li class="vic-mode-item">
+            <button class="vic-mode vic-mode-edit{{ "admin-edit" == edit_mode ? ' vic-active' }}" type="button" data-mode="admin-edit" title="{{ 'navbar.mode.edit'|trans({}, 'victoire') }}" data-toggle="vic-tooltip" data-placement="top"><img src="{{ asset('bundles/victoirecore/images/mode/edit.svg') }}"></button>
+        </li>
+    </ul>
 </section>
+
+<script>
+    $(function () {
+        $('[data-toggle="vic-tooltip"]').tooltip();
+    })
+</script>
