@@ -69,18 +69,24 @@
     &:extend(.vic-menu-main-list > *:not(.vic-menu-main-list-lastItem));
 
     a {
+        display: flex;
         height: 100%;
     }
 
     img {
-        vertical-align: baseline;
-        margin-top: ((@vic-menu-main-height - (@vic-menu-main-list-topSpace * 2)) - @vic-topNavbar-logo-height) / 2;
+        display: inline-block;
     }
+
     &.vic-loading {
         img.vic-picto {
             -webkit-animation: rotation 2s infinite linear;
         }
     }
+}
+
+.vic-logo-label {
+    margin-top: -4px;
+    margin-left: 4px;
 }
 
 @-webkit-keyframes rotation {
