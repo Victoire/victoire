@@ -126,6 +126,7 @@ class BusinessEntityPageHelper
                 }
             }
         }
+
         //find Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity object according to the given $entity
         $businessEntity = $this->businessEntityHelper->findByEntityInstance($entity);
 
@@ -143,26 +144,27 @@ class BusinessEntityPageHelper
                 $pageName = $this->parameterConverter->setBusinessPropertyInstance($pageName, $businessProperty, $entity);
             }
 
+            //Check that all twig variables in pattern url was removed for it's generated BusinessEntityPage
+            preg_match_all('/\{\%\s*([^\%\}]*)\s*\%\}|\{\{\s*([^\}\}]*)\s*\}\}/i', $pageUrl, $matches);
+
+            if (count($matches[2])) {
+                throw new \Exception(sprintf(
+                    'The following identifiers are not defined as well, (%s)
+                    you need to add the following lines on your businessEntity properties:
+                    <br> <pre>@VIC\BusinessProperty("businessParameter")</pre>',
+                    implode($matches[2], ', ')
+                ));
+            }
+
+            $entityProxy = new EntityProxy();
+            $entityProxy->setEntity($entity, $businessEntity->getName());
+
             //we update the url of the page
             $page->setUrl($pageUrl);
             $page->setName($pageName);
+            $page->setEntityProxy($entityProxy);
+            $page->setTemplate($bepPattern);
         }
-        //Check that all twig variables in pattern url was removed for it's generated BusinessEntityPage
-        preg_match_all('/\{\%\s*([^\%\}]*)\s*\%\}|\{\{\s*([^\}\}]*)\s*\}\}/i', $pageUrl, $matches);
-
-        if (count($matches[2])) {
-            throw new \Exception(sprintf(
-                'The following identifiers are not defined as well, (%s)
-                you need to add the following lines on your businessEntity properties:
-                <br> <pre>@VIC\BusinessProperty("businessParameter")</pre>',
-                implode($matches[2], ', ')
-            ));
-        }
-
-        $entityProxy = new EntityProxy();
-        $entityProxy->setEntity($entity, $businessEntity->getName());
-        $page->setEntityProxy($entityProxy);
-        $page->setTemplate($bepPattern);
 
         return $page;
     }

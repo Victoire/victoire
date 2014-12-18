@@ -158,6 +158,18 @@
         <source>modal.sitemap.caption</source>
         <target>Visualisez l'arborescence du site et glissez/déposez les pages pour les réorganiser à votre gré</target>
       </trans-unit>
+      <trans-unit id="9" resname="navbar.mode.edit">
+        <source>navbar.mode.edit</source>
+        <target>Modification de contenu</target>
+      </trans-unit>
+      <trans-unit id="9" resname="navbar.mode.layout">
+        <source>navbar.mode.layout</source>
+        <target>Agencement</target>
+      </trans-unit>
+      <trans-unit id="9" resname="navbar.mode.readonly">
+        <source>navbar.mode.readonly</source>
+        <target>Apercu</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

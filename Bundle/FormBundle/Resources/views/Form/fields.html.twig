@@ -8,6 +8,21 @@
     showSelectedLinkType($vic('.vic-linkType-select'));
 </script>
 {% endblock victoire_link_widget %}
+
+{% block tags_widget %}
+<input type="hidden" id="{{id}}" name="{{ full_name }}" value="{{tag_values}}" tabindex="-1" class="select2-offscreen" />
+<script type="text/javascript">
+    $("#{{ id }}").select2({
+        tags:[{% for id, tag in tags %} { id: "{{id}}", text:"{{tag}}" }{% if not loop.last %},{% endif %}{% endfor %}],
+        {% if enable_creation %}
+        createSearchChoice:function(term, data) {
+            return { id:term, text:term};
+        },
+        {% endif %}
+    });
+</script>
+{% endblock tags_widget %}
+
 {% block button_attributes %}
     {% set attr = attr|merge({class: 'vic-btn ' ~ attr.class | default("")}) %}
     {{ parent() }}

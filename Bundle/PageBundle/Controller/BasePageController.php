@@ -34,6 +34,7 @@ class BasePageController extends Controller
 
         return $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl())));
     }
+
     /**
      * New page
      * @param boolean $isHomepage
@@ -120,7 +121,7 @@ class BasePageController extends Controller
                 'success' => true,
                 'url'     => $this->generateUrl('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl()))
             );
-        } 
+        }
         //we display the form
         $errors = $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form);
 
@@ -164,6 +165,7 @@ class BasePageController extends Controller
 
         if ($form->isValid()) {
             $clone = $this->get('victoire_core.view_helper')->addTranslation($page, $page->getName(), $page->getLocale());
+
             return array(
                 'success' => true,
                 'url' => $this->generateUrl('victoire_core_page_show', array('_locale'=> $clone->getLocale(), 'url' => $clone->getUrl()))

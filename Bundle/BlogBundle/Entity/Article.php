@@ -3,87 +3,88 @@
 namespace Victoire\Bundle\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\CoreBundle\Annotations as VIC;
 use Victoire\Bundle\CoreBundle\Entity\Traits\BusinessEntityTrait;
 use Victoire\Bundle\MediaBundle\Entity\Media;
-use Victoire\Bundle\PageBundle\Entity\BasePage;
 
 /**
- * PostPage
- *
  * @ORM\Entity
  * @ORM\Table("vic_article")
- *
+ * @ORM\HasLifecycleCallbacks
  * @VIC\BusinessEntity({"Redactor", "Listing", "BlogArticles", "Title", "CKEditor", "Text", "UnderlineTitle", "Cover", "Image", "Authorship", "ArticleList"})
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
-class Article extends BasePage
+class Article
 {
     use BusinessEntityTrait;
+    use TimestampableEntity;
 
-    const TYPE = 'article';
+    const DRAFT       = "draft";
+    const PUBLISHED   = "published";
+    const UNPUBLISHED = "unpublished";
+    const SCHEDULED   = "scheduled";
+
+    /**
+     * @VIC\BusinessProperty("businessParameter")
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
 
     /**
      * Title is inherited from Page, just add the BusinessProperty annotation
-     * @var string
      *
+     * @ORM\Column(name="name", type="string", length=255)
      * @Assert\NotBlank()
      * @VIC\BusinessProperty({"textable", "businessParameter"})
      */
-    protected $name;
+    private $name;
+
     /**
-     * @var string
-     *
+     * @ORM\Column(name="slug", type="string", length=255)
+     * @Gedmo\Slug(fields={"name"}, updatable=false, unique=false)
      * @VIC\BusinessProperty("businessParameter")
      */
-    protected $slug;
-    /**
-     * @var string
-     *
-     * @VIC\BusinessProperty("businessParameter")
-     */
-    protected $id;
+    private $slug;
 
     /**
      * Description is inherited from Page, just add the BusinessProperty annotation
-     * @var string
-     *
-     * @Assert\NotBlank()
      * @ORM\Column(name="description", type="text")
+     * @Assert\NotBlank()
      * @VIC\BusinessProperty("textable")
      */
-    protected $description;
+    private $description;
+
+    /**
+     * @ORM\Column(name="status", type="string", nullable=false)
+     */
+    protected $status = self::PUBLISHED;
 
     /**
      * Categories of the article
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="articles")
      */
-    protected $category;
+    private $category;
 
     /**
     * @var datetime $publishedAt
     *
-    * @ORM\Column(name="publishedAt", type="datetime")
+    * @ORM\Column(name="publishedAt", type="datetime", nullable=true)
     * @VIC\BusinessProperty("dateable")
     * @VIC\BusinessProperty("textable")
     */
-    protected $publishedAt;
+    private $publishedAt;
 
     /**
-     * @var string
-     * Title is inherited from Page, just add the BusinessProperty annotation
-     *
-     * @VIC\BusinessProperty("textable")
+     * This relation is dynamically added by ArticleSubscriber
+     * The property is needed here
      */
-    protected $url;
-
-    /**
-     * @var string
-     * Author is inherited from Page, just add the BusinessProperty annotation
-     *
-     * @VIC\BusinessProperty("textable")
-     */
-    protected $author;
+    private $author;
 
     /**
      * Tags of the article
@@ -91,13 +92,21 @@ class Article extends BasePage
      * @ORM\JoinTable(name="vic_article_tags")
      * @Assert\Valid()
      */
-    protected $tags;
+    private $tags;
 
     /**
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\BlogBundle\Entity\Blog", inversedBy="articles", cascade={"persist"})
      * @ORM\JoinColumn(name="blog_id", referencedColumnName="id", onDelete="CASCADE")
      */
-    protected $blog;
+    private $blog;
+
+    /**
+     * @var BusinessEntityPagePattern
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern")
+     * @ORM\JoinColumn(name="pattern_id", referencedColumnName="id", onDelete="SET NULL")
+     * @Assert\NotNull()
+     */
+    private $pattern;
 
     /**
      * @var string
@@ -105,29 +114,85 @@ class Article extends BasePage
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\MediaBundle\Entity\Media")
      * @ORM\JoinColumn(name="image_id", referencedColumnName="id", onDelete="CASCADE")
      * @VIC\BusinessProperty("imageable")
-     *
      */
-    protected $image;
+    private $image;
 
     /**
      * @VIC\BusinessProperty("textable")
      */
-    protected $categoryTitle;
+    private $categoryTitle;
 
     /**
     * @VIC\BusinessProperty("textable")
     */
-    protected $publishedAtString;
+    private $publishedAtString;
 
     /**
     * @VIC\BusinessProperty("textable")
     */
-    protected $authorAvatar;
+    private $authorAvatar;
 
     /**
     * @VIC\BusinessProperty("textable")
     */
-    protected $authorFullName;
+    private $authorFullName;
+
+    /**
+     * @ORM\Column(name="deletedAt", type="datetime", nullable=true)
+     */
+    private $deletedAt;
+
+    /**
+     * to string method
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set id
+     * @param id $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set name
+     * @param string $name
+     *
+     * @return $this
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
 
     /**
      * Set description
@@ -188,6 +253,42 @@ class Article extends BasePage
     }
 
     /**
+     * Set publishedAt
+     * @param string $publishedAt
+     *
+     * @return $this
+     */
+    public function setPublishedAt($publishedAt)
+    {
+        $this->publishedAt = $publishedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get deletedAt
+     *
+     * @return DateTime
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    /**
+     * Set deletedAt
+     * @param string $deletedAt
+     *
+     * @return $this
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    /**
      * Get the blog
      *
      * @return String
@@ -202,10 +303,9 @@ class Article extends BasePage
      *
      * @param string $blog
      */
-    public function setBlog($blog)
+    public function setBlog(Blog $blog)
     {
         $this->blog = $blog;
-        $this->setParent($blog);
     }
 
     /**
@@ -294,6 +394,72 @@ class Article extends BasePage
     }
 
     /**
+     * Set pattern
+     * @param BusinessEntityPagePattern $pattern
+     *
+     * @return Article
+     */
+    public function setPattern(BusinessEntityPagePattern $pattern)
+    {
+        $this->pattern = $pattern;
+
+        return $this;
+    }
+
+    /**
+     * Get pattern
+     *
+     * @return string
+     */
+    public function getPattern()
+    {
+        return $this->pattern;
+    }
+
+    /**
+     * Set status
+     *
+     * @param status $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * Get status
+     *
+     * @return status
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Set slug
+     * @param string $slug
+     *
+     * @return $this
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
      * Get categoryTitle
      *
      * @return string
@@ -315,12 +481,37 @@ class Article extends BasePage
         return strftime('%d %B %Y', $this->publishedAt->getTimestamp());
     }
 
+    /**
+     * Get author
+     *
+     * @return string
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * Set author
+     *
+     * @param string $author
+     *
+     * @return $this
+     */
+    public function setAuthor($author)
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
     public function getAuthorAvatar()
     {
         $email = $this->author->getEmail();
 
         return "http://www.gravatar.com/avatar/" . md5($email) . "?s=70";
     }
+
     public function getAuthorFullname()
     {
         return $this->author->getFullname();

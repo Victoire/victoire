@@ -125,7 +125,14 @@ class PageHelper extends ViewHelper
 
         $event = new \Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent($page);
 
-        $eventName = 'victoire_core.' . $page->getType() . '_menu.contextual';
+        //Dispatch contextual event regarding page type
+        if ($page->getType() == 'business_entity_page') {
+            $type = strtolower($page->getBusinessEntityName());
+        } else {
+            $type = $page->getType();
+        }
+
+        $eventName = 'victoire_core.' . $type . '_menu.contextual';
         $this->eventDispatcher->dispatch($eventName, $event);
 
         $layout = 'AppBundle:Layout:' . $page->getTemplate()->getLayout() . '.html.twig';
