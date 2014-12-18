@@ -40,7 +40,7 @@
         "appventus/assetic-injector-bundle"   : "dev-master",
         "knplabs/gaufrette"                   : "v0.1.7",
         "liip/imagine-bundle"                 : "1.0.*@dev",
-        "jms/translation-bundle"              : "dev-master"
+        "jms/translation-bundle"              : "1.1.*@dev"
     },
     "repositories": [
         {
