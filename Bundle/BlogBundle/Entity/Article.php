@@ -253,6 +253,19 @@ class Article
     }
 
     /**
+     * Set publishedAt
+     * @param string $publishedAt
+     *
+     * @return $this
+     */
+    public function setPublishedAt($publishedAt)
+    {
+        $this->publishedAt = $publishedAt;
+
+        return $this;
+    }
+
+    /**
      * Get deletedAt
      *
      * @return DateTime
