@@ -155,10 +155,9 @@ class QueryHelper
             if (strpos($query, ":currentEntity") !== false) {
                 $itemsQueryBuilder->setParameter('currentEntity', $currentEntity->getId());
             }
-
-            $itemsQueryBuilder->andWhere('main_item.visibleOnFront = true');
-
         }
+
+        $itemsQueryBuilder->andWhere('main_item.visibleOnFront = true');
 
         return $itemsQueryBuilder;
     }
