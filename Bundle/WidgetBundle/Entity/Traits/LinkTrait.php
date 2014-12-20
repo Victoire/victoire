@@ -63,7 +63,7 @@ trait LinkTrait
     /**
      * @var string
      *
-     * @ORM\Column(name="analytics_track_code", type="text")
+     * @ORM\Column(name="analytics_track_code", type="text", nullable=true)
      */
     protected $analyticsTrackCode;
 

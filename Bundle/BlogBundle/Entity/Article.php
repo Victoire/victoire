@@ -14,13 +14,19 @@ use Victoire\Bundle\MediaBundle\Entity\Media;
 /**
  * @ORM\Entity
  * @ORM\Table("vic_article")
- *
+ * @ORM\HasLifecycleCallbacks
  * @VIC\BusinessEntity({"Redactor", "Listing", "BlogArticles", "Title", "CKEditor", "Text", "UnderlineTitle", "Cover", "Image", "Authorship", "ArticleList"})
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
 class Article
 {
     use BusinessEntityTrait;
     use TimestampableEntity;
+
+    const DRAFT       = "draft";
+    const PUBLISHED   = "published";
+    const UNPUBLISHED = "unpublished";
+    const SCHEDULED   = "scheduled";
 
     /**
      * @VIC\BusinessProperty("businessParameter")
@@ -55,6 +61,11 @@ class Article
     private $description;
 
     /**
+     * @ORM\Column(name="status", type="string", nullable=false)
+     */
+    protected $status = self::PUBLISHED;
+
+    /**
      * Categories of the article
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="articles")
      */
@@ -63,7 +74,7 @@ class Article
     /**
     * @var datetime $publishedAt
     *
-    * @ORM\Column(name="publishedAt", type="datetime")
+    * @ORM\Column(name="publishedAt", type="datetime", nullable=true)
     * @VIC\BusinessProperty("dateable")
     * @VIC\BusinessProperty("textable")
     */
@@ -125,6 +136,21 @@ class Article
     * @VIC\BusinessProperty("textable")
     */
     private $authorFullName;
+
+    /**
+     * @ORM\Column(name="deletedAt", type="datetime", nullable=true)
+     */
+    private $deletedAt;
+
+    /**
+     * to string method
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->name;
+    }
 
     /**
      * Get id
@@ -224,6 +250,42 @@ class Article
     public function getPublishedAt()
     {
         return $this->publishedAt;
+    }
+
+    /**
+     * Set publishedAt
+     * @param string $publishedAt
+     *
+     * @return $this
+     */
+    public function setPublishedAt($publishedAt)
+    {
+        $this->publishedAt = $publishedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get deletedAt
+     *
+     * @return DateTime
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    /**
+     * Set deletedAt
+     * @param string $deletedAt
+     *
+     * @return $this
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+
+        return $this;
     }
 
     /**
@@ -352,6 +414,49 @@ class Article
     public function getPattern()
     {
         return $this->pattern;
+    }
+
+    /**
+     * Set status
+     *
+     * @param status $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * Get status
+     *
+     * @return status
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Set slug
+     * @param string $slug
+     *
+     * @return $this
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
     }
 
     /**

@@ -30,8 +30,6 @@ class ArticleType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        parent::buildForm($builder, $options);
-
         $viewToIdTransformer = new ViewToIdTransformer($this->entityManager);
         $builder
             ->add('name')

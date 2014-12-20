@@ -8,10 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Victoire\Bundle\BlogBundle\Entity\Article;
 use Victoire\Bundle\BlogBundle\Entity\Blog;
-use Victoire\Bundle\PageBundle\Entity\BasePage;
 
 /**
  * article Controller
@@ -20,20 +18,6 @@ use Victoire\Bundle\PageBundle\Entity\BasePage;
  */
 class ArticleController extends Controller
 {
-    protected $routes;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->routes = array(
-            'new'      => 'victoire_blog_article_new',
-            'show'     => 'victoire_core_page_show',
-            'settings' => 'victoire_blog_article_settings',
-        );
-    }
-
     /**
      * Create article
      * @Route("/create", name="victoire_blog_article_create")
@@ -51,16 +35,15 @@ class ArticleController extends Controller
             $article->setAuthor($this->getUser());
             $entityManager->persist($article);
             $entityManager->flush();
-
-            if (null !== $this->container->get('victoire_core.helper.business_entity_helper')->findByEntityInstance($article)) {
-                $article = $this->container
-                     ->get('victoire_business_entity_article.business_entity_article_helper')
-                     ->generateEntityPageFromPattern($article->getTemplate(), $article);
-            }
+            //Auto creation of the BEP
+            $page = $this->container->get('victoire_business_entity_page.business_entity_page_helper')
+                                ->generateEntityPageFromPattern($article->getPattern(), $article);
+            $entityManager->persist($page);
+            $entityManager->flush();
 
             return new JsonResponse(array(
                 "success"  => true,
-                "url"      => $this->generateUrl('victoire_core_page_show', array('url' => $article->getUrl()))
+                "url"      => $this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl()))
             ));
         } else {
             $formErrorHelper = $this->container->get('victoire_form.error_helper');
@@ -92,7 +75,7 @@ class ArticleController extends Controller
     {
         $article = new Article();
         $article->setBlog($blog);
-        $form = $this->container->get('form.factory')->create($this->getNewPageType(), $article);
+        $form = $this->createForm('victoire_article_type', $article);
 
         return new JsonResponse(
             array(
@@ -108,52 +91,51 @@ class ArticleController extends Controller
      * Article settings
      *
      * @param Request $request
-     * @param Page    $article
+     * @param Article $article
      *
      * @Route("/{id}/settings", name="victoire_blog_article_settings")
      *
      * @ParamConverter("article", class="VictoireBlogBundle:Article")
      * @return template
      */
-    public function settingsAction(Request $request, BasePage $article)
+    public function settingsAction(Request $request, Article $article)
     {
-        $response = parent::settingsAction($request, $article);
+        $form = $this->createForm('victoire_article_settings_type', $article);
+        $businessProperties = array();
 
-        $pattern = $article->getTemplate();
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $this->get('doctrine.orm.entity_manager')->persist($article);
+            $this->get('doctrine.orm.entity_manager')->flush();
 
-        $page = $this->container->get('victoire_page.page_helper')->findPageByParameters(array(
-            'viewId' => $pattern->getId(),
-            'locale' => $request->getSession()->get('victoire_locale'),
-            'entityId' => $article->getId()
-        ));
-        $response['url'] = $this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl()));
+            $pattern = $article->getPattern();
 
-        return new JsonResponse($response);
-    }
+            $page = $this->container->get('victoire_page.page_helper')->findPageByParameters(array(
+                'viewId' => $pattern->getId(),
+                'locale' => $request->getSession()->get('victoire_locale'),
+                'entityId' => $article->getId()
+            ));
 
-    /**
-     * Article translation
-     *
-     * @param Request $request
-     * @param Page    $article
-     *
-     * @Route("/{id}/translate", name="victoire_blog_article_translate")
-     *
-     * @ParamConverter("article", class="VictoireBlogBundle:Article")
-     * @return template
-     */
-    public function translateAction(Request $request, BasePage $article)
-    {
-        $response = parent::translateAction($request, $article);
-
-        $pattern = $article->getTemplate();
-
-        $page = $this->container->get('victoire_page.page_helper')->findPageByParameters(array(
-            'viewId' => $pattern->getId(),
-            'locale' => $request->getLocale(),
-            'entityId' => $article->getId()
-        ));
-        $response['url'] = $this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl()));
+            $response = array(
+                'success' => true,
+                'url'     => $this->generateUrl(
+                    'victoire_core_page_show',
+                    array('url' => $page->getUrl())
+                )
+            );
+        } else {
+            $response = array(
+                'success' => false,
+                'html'    => $this->container->get('victoire_templating')->render(
+                    'VictoireBlogBundle:Article:settings.html.twig',
+                    array(
+                        'article'            => $article,
+                        'form'               => $form->createView(),
+                        'businessProperties' => $businessProperties
+                    )
+                )
+            );
+        }
 
         return new JsonResponse($response);
     }
@@ -161,73 +143,41 @@ class ArticleController extends Controller
     /**
      * Page delete
      *
-     * @param BasePage $article
+     * @param Article $article
      *
      * @return template
      * @Route("/{id}/delete", name="victoire_core_article_delete")
      * @Template()
      * @ParamConverter("article", class="VictoireBlogBundle:Article")
      */
-    public function deleteAction(BasePage $article)
+    public function deleteAction(Article $article)
     {
-        if (!$this->get('security.context')->isGranted('PAGE_OWNER', $article)) {
-            throw new AccessDeniedException("Nop ! you can't do such an action");
+        try {
+            //the entity manager
+            $entityManager = $this->get('doctrine.orm.entity_manager');
+
+            //remove the page (soft deletete)
+            $article->setVisibleOnFront(false);
+            $entityManager->flush($article);
+            $entityManager->remove($article);
+
+            //flush the modifications
+            $entityManager->flush();
+
+            //redirect to the homepage
+            $homepageUrl = $this->generateUrl('victoire_core_page_homepage');
+
+            $response = array(
+                'success' => true,
+                'url'     => $homepageUrl
+            );
+        } catch (\Exception $ex) {
+            $response = array(
+                'success' => false,
+                'message' => $ex->getMessage()
+            );
         }
 
-        return new JsonResponse(parent::deleteAction($article));
-    }
-
-    /**
-     *
-     * @return string
-     */
-    protected function getPageSettingsType()
-    {
-        return 'victoire_article_settings_type';
-    }
-
-    /**
-     *
-     * @return string
-     */
-    protected function getPageTranslateType()
-    {
-        return 'victoire_view_translate_type';
-    }
-
-    /**
-     *
-     * @return string
-     */
-    protected function getNewPageType()
-    {
-        return 'victoire_article_type';
-    }
-
-    /**
-     *
-     * @return \Victoire\Bundle\BlogBundle\Entity\Article
-     */
-    protected function getNewPage()
-    {
-        return new Article();
-    }
-
-    /**
-     *
-     * @return string
-     */
-    protected function getBaseTemplatePath()
-    {
-        return "VictoireBlogBundle:Article";
-    }
-
-    /**
-     *
-     * @param unknown $action
-     */
-    protected function getRoutes($action)
-    {
-        return $this->routes[$action];
+        return new JsonResponse($response);
     }
 }

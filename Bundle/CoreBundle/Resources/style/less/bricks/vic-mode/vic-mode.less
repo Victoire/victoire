@@ -1,0 +1,94 @@
+#vic-mode-toggler {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 500;
+    height: 50px;
+    background: @anthracite;
+}
+
+.vic-mode-container {
+    position: fixed;
+    left: 50%;
+    bottom: 10px;
+    .transform(translateX(-50%));
+    border-radius: 5px 5px 0 0;
+    background-color: @anthracite;
+    padding: 5px;
+    display: flex;
+    align-items: stretch;
+    width: 130px;
+    margin-bottom: 0;
+
+    ul& {
+        list-style: none;
+    }
+
+    > .vic-mode-item {
+        &:first-child {
+            .vic-mode {
+                border-top-left-radius: 3px;
+                border-bottom-left-radius: 3px;
+            }
+        }
+
+        &:last-child {
+            .vic-mode {
+                border-top-right-radius: 3px;
+                border-bottom-right-radius: 3px;
+            }
+        }
+    }
+}
+
+.vic-mode-item {
+    width: 100%;
+    height: 40px;
+    position: relative;
+
+    .tooltip.top {
+        bottom: ~"calc(100% + 10px)" !important;
+        top: auto !important;
+        left: 50% !important;
+        right: auto !important;
+        .transform(translateX(-50%));
+    }
+
+    .tooltip-inner {
+        padding: 5px;
+        width: 130px;
+    }
+}
+
+.vic-mode {
+    width: 100%;
+    background-color: @anthracite;
+    color: @white;
+    border-width: 0;
+    width: 100%;
+    display: block;
+    height: 100%;
+    padding: 0;
+    position: relative;
+
+    &:hover,
+    &.is-active {
+        color: white;
+    }
+
+    &.vic-active {
+        border-radius: 3px;
+
+        &.vic-mode-readonly {
+            background-color: #04BF96;
+        }
+
+        &.vic-mode-layout {
+            background-color: #2F7BBD;
+        }
+
+        &.vic-mode-edit {
+            background-color: #F72848;
+        }
+    }
+}

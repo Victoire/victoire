@@ -1,28 +1,23 @@
-{% extends 'VictoirePageBundle:Page:settings.html.twig' %}
+{% extends 'VictoireBlogBundle:Article:new.html.twig' %}
 
 {% trans_default_domain "victoire" %}
 
 {% block modal_body_content %}
 
 <div class="vic-tab-content vic-modal-tab-content">
-    {# Only display this business entity property list when related to a business entity #}
-    {% if page.businessEntity is defined %}
-        {% include 'VictoireBusinessEntityBundle:BusinessProperty:list.html.twig' with { 'businessProperties': businessProperties } %}
-    {% endif %}
 
     <div class="vic-tab-pane vic-active" id="basics">
-        <form method="POST" action="{{path('victoire_blog_article_settings', {'id':page.id} )}}">
+        <form method="POST" action="{{path('victoire_blog_article_settings', {'id': article.id} )}}">
             <div class="vic-form-group">
                 <div class="vic-col-lg-8">
                     {{ form_row(form.name) }}
-                    {{ form_row(form.template) }}
+                    {{ form_row(form.pattern) }}
                     <div class="vic-form-group">
                          <label for="victoire_article_settings_type_bodyClass" class="vic-control-label control-label vic-optional">
                             {{ 'form.page.type.slug.label'|trans({}, 'victoire') }}
                          </label>
 
                         <div class="vic-form-url-slug">
-                            {{ url('victoire_core_page_show', {'url' : page.url })|replace({(page.slug): ''}) }}
                             {{ form_widget(form.slug) }}
                         </div>
                     </div>
@@ -30,7 +25,7 @@
                 <div class="vic-col-lg-4">
                     {{ form_row(form.status) }}
                     <div class="vic-form-group">
-                        <div class="publication-date-container{{ form.vars.value.status != constant('Victoire\\Bundle\\PageBundle\\Entity\\PageStatus::SCHEDULED') ? ' vic-hidden' }}">
+                        <div class="publication-date-container{{ form.vars.value.status != constant('Victoire\\Bundle\\BlogBundle\\Entity\\Article::SCHEDULED') ? ' vic-hidden' }}">
                             {{ form_widget(form.publishedAt) }}
                         </div>
                     </div>
@@ -43,7 +38,7 @@
 
 <script type="text/javascript">
     $vic('#victoire_article_settings_type_status').on('change', function(){
-        if ($vic(this).val() == '{{ constant('Victoire\\Bundle\\PageBundle\\Entity\\PageStatus::SCHEDULED') }}') {
+        if ($vic(this).val() == '{{ constant('Victoire\\Bundle\\BlogBundle\\Entity\\Article::SCHEDULED') }}') {
             $vic('.publication-date-container').removeClass('vic-hidden');
         } else {
             $vic('.publication-date-container').addClass('vic-hidden');
@@ -60,5 +55,18 @@
 {% endblock modal_body_content %}
 
 {% block modal_header_title %}
-    {{ 'modal.form.article.settings.title'|trans({'%articleName%' : page.name}, 'victoire')|raw }}
+    {{ 'modal.form.article.settings.title'|trans({'%articleName%' : article.name}, 'victoire')|raw }}
 {% endblock modal_header_title %}
+
+{% block modal_footer %}
+    <div class="vic-modal-footer">
+        <div class="vic-container">
+            <div class="vic-modal-footer-content">
+                {% block modal_footer_content %}
+                    <a href="{{ path('victoire_core_article_delete', {'id': article.id}) }}" data-toggle="vic-confirm" class="vic-btn vic-btn-danger vic-pull-left" data-title="{{ 'modal.form.article.settings.action.delete.confirm.title'|trans({}, 'victoire') }}" data-body="{{ 'modal.form.article.settings.action.delete.confirm.body'|trans({}, 'victoire') }}" data-modal="delete"><i class="fa fa-trash-o"></i> {{ 'modal.button.delete.title'|trans({}, 'victoire') }}</a>
+                    <a href="#" class="vic-btn vic-btn-success" data-modal="{% block action %}update{% endblock action %}" title="{{ 'modal.button.'~ block('action') ~'.title'|trans({}, 'victoire') }}"><i class="fa fa-check-circle"></i> {{ 'modal.button.'~ block('action') ~'.title'|trans({}, 'victoire') }}</a>
+                {% endblock modal_footer_content %}
+            </div>
+        </div>
+    </div>
+{% endblock modal_footer %}

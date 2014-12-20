@@ -23,8 +23,8 @@
     {% block brand %}
     <div class="vic-topNavbar-logo vic-loading">
         <a href="#">
-            <img class="vic-picto" src="{{ asset('bundles/victoirecore/images/menu/vic-logo-menu-main-picto.png') }}" alt="Logo Victoire DCMS" />
-            <img src="{{ asset('bundles/victoirecore/images/menu/vic-logo-menu-main-label.png') }}" alt="Logo Victoire DCMS" />
+            <img class="vic-picto" src="{{ asset('bundles/victoirecore/images/menu/vic-logo-menu-main-picto.svg') }}" alt="Logo Victoire DCMS" />
+            <img class="vic-logo-label" src="{{ asset('bundles/victoirecore/images/menu/vic-logo-menu-main-label.svg') }}" alt="Logo Victoire DCMS" />
         </a>
     </div>
     {% endblock %}
@@ -60,17 +60,6 @@
             </li>
             {% endif %}
 
-            {#
-            <li>
-                <input class="vic-switcher vic-switcher-stat" type="checkbox" id="vic-switcher-statMode">
-                <label for="vic-switcher-statMode">Statistiques</label>
-            </li>
-            #}
-            <li>
-                <input class="vic-switcher vic-switcher-edit vic-navBar-switcher" type="checkbox" id="vic-switcher-editMode" {{ edit_mode ? 'checked="checked"' : ''}}>
-                <label for="vic-switcher-editMode">Édition</label>
-            </li>
-
             <li class="vic-menu-main-list-lastItem">
                 <div class="vic-dropdown">
                     <a class="vic-dropdown-toggle" id="dropdownMenu1" data-toggle="vic-dropdown">
@@ -90,3 +79,25 @@
     </div>
     {% endblock %}
 </section>
+
+<section id="vic-mode-toggler">
+    <ul class="vic-mode-container">
+        <li class="vic-mode-item">
+            <button class="vic-mode vic-mode-readonly{{ not edit_mode ? ' vic-active' }}" type="button" data-mode="admin-readonly" title="{{ 'navbar.mode.readonly'|trans({}, 'victoire') }}" data-toggle="vic-tooltip" data-placement="top"><img src="{{ asset('bundles/victoirecore/images/mode/readonly.svg') }}"></button>
+        </li>
+
+        <li class="vic-mode-item">
+            <button class="vic-mode vic-mode-layout{{ "admin-layout" == edit_mode ? ' vic-active' }}" type="button" data-mode="admin-layout" title="{{ 'navbar.mode.layout'|trans({}, 'victoire') }}" data-toggle="vic-tooltip" data-placement="top"><img src="{{ asset('bundles/victoirecore/images/mode/layout.svg') }}"></button>
+        </li>
+
+        <li class="vic-mode-item">
+            <button class="vic-mode vic-mode-edit{{ "admin-edit" == edit_mode ? ' vic-active' }}" type="button" data-mode="admin-edit" title="{{ 'navbar.mode.edit'|trans({}, 'victoire') }}" data-toggle="vic-tooltip" data-placement="top"><img src="{{ asset('bundles/victoirecore/images/mode/edit.svg') }}"></button>
+        </li>
+    </ul>
+</section>
+
+<script>
+    $(function () {
+        $('[data-toggle="vic-tooltip"]').tooltip();
+    })
+</script>

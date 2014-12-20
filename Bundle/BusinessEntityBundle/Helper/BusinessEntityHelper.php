@@ -62,12 +62,10 @@ class BusinessEntityHelper
     public function findByEntityInstance($entity)
     {
         $businessEntity = null;
-        $refClass = new \ReflectionClass($entity);
-        $parentClass = $refClass->getParentClass();
-        while (($parentClass = $parentClass->getParentClass())
-            && !$businessEntity
-            && $parentClass->name != null) {
-            $businessEntity = $this->findByEntityClassname($parentClass->name);
+        $class = new \ReflectionClass($entity);
+        while (!$businessEntity && $class && $class->name != null) {
+            $businessEntity = $this->findByEntityClassname($class->name);
+            $class = $class->getParentClass();
         }
 
         return $businessEntity;

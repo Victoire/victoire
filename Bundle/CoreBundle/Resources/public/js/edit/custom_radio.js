@@ -1,28 +1,21 @@
-$vic(document).on('change', '#vic-switcher-editMode', function(event) {
+$vic(document).on('click', '#vic-mode-toggler .vic-mode', function(event) {
 
-    if ($vic(this).is(':checked')) {
-        $vic('body').attr('role','admin');
-        var route = Routing.generate('victoire_core_switchEnable', {'_locale': locale});
-    } else {
-        $vic('body').removeAttr('role');
-        var route = Routing.generate('victoire_core_switchDisable', {'_locale': locale});
-    }
+    var mode = $vic(this).data('mode');
+    $vic('body').attr('role', mode);
+    var route = Routing.generate('victoire_core_switchMode', {'mode': mode, '_locale': locale});
+    $vic('#vic-mode-toggler .vic-mode').removeClass('vic-active');
+    $vic(this).addClass('vic-active');
 
-    $vic.ajax({
-        url: route,
-        context: document.body,
-        type: "GET",
-        error: function(jsonResponse) {
-            if (typeof toastr === 'undefined') {
-                alert("Il semble s'être produit une erreur");
-            } else {
-                toastr.options = {
-                    "positionClass": "toast-bottom-left",
-                }
-
-                toastr.error("Il semble s'être produit une erreur");
-          }
-          $vic('#canvasloader-container').fadeOut();
-      }
-  });
+    loading(true);
+    $vic.ajax(
+        {
+            url: route,
+            context: document.body,
+            type: "GET",
+            error: function(jsonResponse) {
+                error('Woups. La panne !');
+            }
+        }
+    );
+    loading(false);
 });
