@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\BusinessEntityBundle\Reader;
 
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
@@ -7,7 +8,7 @@ use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
 use Victoire\Bundle\WidgetBundle\Model\Widget;
 
 /**
- * The BusinessEntityHelper
+ * The BusinessEntity Cache Reader
  *
  * ref: victoire_business_entity.cache_reader
  */
@@ -47,7 +48,7 @@ class BusinessEntityCacheReader
         $widgetName = $this->widgetHelper->getWidgetName($widget);
         $businessClasses = $this->cache->fetch(BusinessEntity::CACHE_WIDGETS, array());
 
-        return $businessClasses[$widgetName];
+        return isset($businessClasses[$widgetName]) ? $businessClasses[$widgetName] : array();
     }
 
     /**

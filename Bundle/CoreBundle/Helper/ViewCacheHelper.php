@@ -122,12 +122,12 @@ class ViewCacheHelper
             'locale' => '@locale="' . $this->requestStack->getCurrentRequest()->getLocale() . '"'
         );
         $viewReference = array();
-        
+
         foreach ($parameters as $key => $value) {
             $arguments[$key] = '@' . $key . '="' . $value . '"';
         }
         $arguments = array_merge($arguments, $locale);
-        
+
         if ($xmlReference = $this->readCache()->xpath("//viewReference[" . implode(' and ', $arguments) . "]")) {
             $viewReference['id']              = $xmlReference[0]->getAttributeAsPhp('id');
             $viewReference['locale']          = $xmlReference[0]->getAttributeAsPhp('locale');

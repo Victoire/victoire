@@ -86,7 +86,7 @@ class BusinessEntityPagePatternController extends Controller
             'victoire_business_entity_page_type',
             $entity,
             array(
-                'action'           => $this->generateUrl('victoire_businessentitypagepattern_businessentitypagepattern_create', array('id' => $businessEntityName)),
+                'action'           => $this->generateUrl('victoire_businessentitypagepattern_businessentitypagepattern_create', array('id' => strtolower($businessEntityName))),
                 'method'           => 'POST',
                 'businessProperty' => $businessProperty
             )
@@ -147,11 +147,7 @@ class BusinessEntityPagePatternController extends Controller
      */
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
-        $businessEntityPagePatternHelper = $this->get('victoire_business_entity_page.business_entity_page_helper');
-        $businessEntityHelper = $this->get('victoire_core.helper.business_entity_helper');
-
-        $entity = $em->getRepository('VictoireBusinessEntityPageBundle:BusinessEntityPagePattern')->find($id);
+        $entity = $this->getDoctrine()->getManager()->getRepository('VictoireBusinessEntityPageBundle:BusinessEntityPagePattern')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find BusinessEntityPagePattern entity.');
@@ -161,8 +157,8 @@ class BusinessEntityPagePatternController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         //the business property link to the page
-        $businessEntityId = $entity->getBusinessEntityName();
-        $businessEntity = $businessEntityHelper->findById($businessEntityId);
+        $businessEntityName = $entity->getBusinessEntityName();
+        $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById(strtolower($businessEntityName));
 
         $businessEntityPagePatternHelper = $this->get('victoire_business_entity_page.business_entity_page_helper');
 
@@ -347,7 +343,7 @@ class BusinessEntityPagePatternController extends Controller
         //the name of the business entity link to the business entity page pattern
         $businessEntityName = $entity->getBusinessEntityName();
 
-        $businessEntity = $businessEntityHelper->findById($businessEntityName);
+        $businessEntity = $businessEntityHelper->findById(strtolower($businessEntityName));
         $businessProperties = $businessEntity->getBusinessPropertiesByType('businessParameter');
 
         $businessProperty = array();

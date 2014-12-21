@@ -64,7 +64,7 @@ class QueryHelper
         }
 
         //the business class of the container entity
-        $businessEntity = $this->businessEntityHelper->findById($businessEntityName);
+        $businessEntity = $this->businessEntityHelper->findById(strtolower($businessEntityName));
 
         //test that there was a businessEntity
         if ($businessEntity === null) {

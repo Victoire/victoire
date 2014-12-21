@@ -3,8 +3,9 @@ namespace Victoire\Bundle\BusinessEntityBundle\Helper;
 
 use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
+use Victoire\Bundle\BusinessEntityBundle\Reader\BusinessEntityCacheReader;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
-use Victoire\Bundle\CoreBundle\Cache\ApcCache;
+use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
  * The BusinessEntityHelper
@@ -13,25 +14,23 @@ use Victoire\Bundle\CoreBundle\Cache\ApcCache;
  */
 class BusinessEntityHelper
 {
-    protected $cache;
+    protected $reader;
     protected $entityManager;
     protected $businessEntities;
 
     /**
      * Constructor
-     * @param ApcCache      $cache
-     * @param EntityManager $entityManager
-     *
+     * @param BusinessEntityCacheReader $reader
+     * @param EntityManager             $entityManager
      */
-    public function __construct(ApcCache $cache, EntityManager $entityManager)
+    public function __construct(BusinessEntityCacheReader $reader, EntityManager $entityManager)
     {
-        $this->cache = $cache;
+        $this->reader = $reader;
         $this->entityManager = $entityManager;
     }
 
     /**
      * Get a business entity by its id
-     *
      * @param string $id
      *
      * @throws \Exception
@@ -40,7 +39,12 @@ class BusinessEntityHelper
      */
     public function findById($id)
     {
-        //@todo Should get Business entity with the cache reader
+        $businessEntity = $this->reader->findById($id);
+        if ($businessEntity === null) {
+            throw new \Exception("<<".$id. ">> does not seems to be a valid BusinessEntity");
+        }
+
+        return $businessEntity;
     }
 
     /**
@@ -50,7 +54,18 @@ class BusinessEntityHelper
      */
     public function getBusinessEntities()
     {
-        //@todo Should get all Business entities with the cache reader
+        return $this->reader->getBusinessClasses();
+    }
+
+    /**
+     * this method get annotated business classes (from cache if enabled)
+     * @param Widget $widget
+     *
+     * @return array $businessClasses
+     **/
+    public function getBusinessClassesForWidget(Widget $widget)
+    {
+        return $this->reader->getBusinessClassesForWidget($widget);
     }
 
     /**
@@ -100,10 +115,10 @@ class BusinessEntityHelper
     }
 
     /**
-     * Find a entity by the business entity and the id
+     * Find a entity by the business entity and the attributeValue
      * @param BusinessEntity $businessEntity
      * @param string         $attributeName
-     * @param string         $id
+     * @param string         $attributeValue
      *
      * @return Entity
      */
