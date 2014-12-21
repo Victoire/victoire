@@ -172,6 +172,8 @@ class ArticleController extends Controller
                 'url'     => $homepageUrl
             );
         } catch (\Exception $ex) {
+            throw $ex;
+
             $response = array(
                 'success' => false,
                 'message' => $ex->getMessage()
