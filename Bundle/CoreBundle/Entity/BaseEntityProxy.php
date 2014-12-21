@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Behat\Behat\Exception\Exception;
 
 /**
+ * The Entity proxy is the link between a view, a widget or any else with the BusinessEntity
  *
  * @ORM\MappedSuperclass
  */
@@ -19,6 +20,14 @@ abstract class BaseEntityProxy
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\WidgetBundle\Entity\Widget", mappedBy="entityProxy")
+     * @ORM\OrderBy({"id" = "ASC"})
+     */
+    protected $widgets;
 
     /**
      * Get id
@@ -64,5 +73,61 @@ abstract class BaseEntityProxy
 
         //set the entity
         call_user_func(array($this, $method), $entity);
+    }
+
+    /**
+     * Set widgets
+     * @param string $widgets
+     *
+     * @return EntityProxy
+     */
+    public function setWidgets($widgets)
+    {
+        $this->widgets = $widgets;
+
+        foreach ($widgets as $widget) {
+            $widget->setView($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get widgets
+     *
+     * @return string
+     */
+    public function getWidgets()
+    {
+        return $this->widgets;
+    }
+
+    /**
+     * Add widget
+     * @param Widget $widget
+     */
+    public function addWidget(Widget $widget)
+    {
+        $this->widgets[] = $widget;
+    }
+
+    /**
+     * Remove widget
+     * @param Widget $widget
+     */
+    public function removeWidget(Widget $widget)
+    {
+        $this->widgets->remove($widget);
+    }
+
+    /**
+     * has widget
+     * @param Widget $widget
+     *
+     * @return bool
+     */
+    public function hasWidget(Widget $widget)
+    {
+        return $this->widgets->contains($widget);
     }
 }

@@ -19,7 +19,7 @@ services:
 
     victoire_core.entity_proxy.fields_builder:
         class: Victoire\Bundle\CoreBundle\Form\Builder\EntityProxyFieldsBuilder
-        arguments: ["@victoire_business_entity.cache_reader"]
+        arguments: ["@victoire_core.helper.business_entity_helper"]
 
 #  ==================  MENU ================== #
 
@@ -196,7 +196,7 @@ services:
     victoire_core.helper.business_entity_helper:
         class: Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper
         arguments:
-            - "@victoire_core.apc.cache"
+            - "@victoire_business_entity.cache_reader"
             - "@doctrine.orm.entity_manager"
 
 #  ==================  Error handler =================== #

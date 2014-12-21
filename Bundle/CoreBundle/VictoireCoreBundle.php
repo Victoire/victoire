@@ -8,15 +8,16 @@ use Victoire\Bundle\CoreBundle\DependencyInjection\Compiler\AccessMapCompilerPas
 use Victoire\Bundle\CoreBundle\DependencyInjection\Compiler\TraductionCompilerPass;
 
 /**
- * Awesome Cms for Symfony2
+ * Victoire Core Bundle
  */
 class VictoireCoreBundle extends Bundle
 {
     /**
-     * create admin menu, add listeners for generate contextual menu item and dispatch globals item menus
+     * Boot the bundle
      */
     public function boot()
     {
+        //Add entity proxy driver into the DriverChain
         $driverChain = $this->container->get('doctrine.orm.entity_manager')->getConfiguration()->getMetadataDriverImpl();
 
         $proxyDriver = $this->container->get('victoire_core.entity_proxy.cache_driver');

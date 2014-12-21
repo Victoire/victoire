@@ -5,7 +5,6 @@ use Doctrine\Common\Annotations\AnnotationException;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\Reader;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
-use Doctrine\Common\Persistence\Mapping\Driver\AnnotationDriver as AbstractAnnotationDriver;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Victoire\Bundle\BusinessEntityBundle\Event\BusinessEntityAnnotationEvent;
 use Victoire\Bundle\CoreBundle\Annotations\BusinessEntity;
@@ -19,8 +18,21 @@ use Victoire\Bundle\WidgetBundle\Event\WidgetAnnotationEvent;
  *
  * ref: victoire_core.annotation_driver
  **/
-class AnnotationDriver extends AbstractAnnotationDriver
+class AnnotationDriver
 {
+    /** Annotation reader instance
+     *
+     * @var object
+     */
+    protected $reader;
+
+    /**
+     * valid paths
+     *
+     * @var array
+     */
+    protected $paths;
+
     /**
      * construct
      * @param AnnotationReader         $reader
@@ -31,7 +43,7 @@ class AnnotationDriver extends AbstractAnnotationDriver
     {
         $this->reader = $reader;
         $this->eventDispatcher = $eventDispatcher;
-        $this->addPaths($paths);
+        $this->paths = $paths;
     }
 
     /**
@@ -81,6 +93,7 @@ class AnnotationDriver extends AbstractAnnotationDriver
                     $annotationObj->getWidgets()
                 );
 
+                //do what you want (caching BusinessEntity...)
                 $this->eventDispatcher->dispatch('victoire.business_entity_annotation_load', $event);
 
             }
@@ -161,9 +174,10 @@ class AnnotationDriver extends AbstractAnnotationDriver
 
         $businessEntity = new \Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity();
 
-        $entityName = explode('\\', $className);
-        $businessEntity->setId(strtolower(array_pop($entityName)));
-        $businessEntity->setName(strtolower(array_pop($entityName)));
+        $classNameArray = explode('\\', $className);
+        $entityName = array_pop($classNameArray);
+        $businessEntity->setId(strtolower($entityName));
+        $businessEntity->setName($entityName);
         $businessEntity->setClass($className);
 
         //parse the array of the annotation reader
