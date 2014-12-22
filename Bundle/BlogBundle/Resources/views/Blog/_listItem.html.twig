@@ -28,7 +28,7 @@
                     <li>
                         <div class="vic-row">
                             <div class="vic-col-md-12">
-                                <a href="#">
+                                <a href="{{ path('victoire_core_page_show_by_id', {'viewId': article.pattern.id, 'entityId': article.id }) }}">
                                     {{ article.name }}
                                 </a>&nbsp;
                                 <a data-toggle="vic-modal" href="{{ path('victoire_blog_article_settings', {'id' : article.id}) }}">
