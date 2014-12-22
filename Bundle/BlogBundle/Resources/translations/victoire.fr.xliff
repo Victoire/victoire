@@ -98,6 +98,10 @@
         <source>modal.form.blog.settings.title</source>
         <target><![CDATA[Paramètres du blog <strong>%blogName%</strong>]]></target>
       </trans-unit>
+      <trans-unit id="17" resname="victoire.blog.article.delete.success">
+        <source>victoire.blog.article.delete.success</source>
+        <target>L'article a bien été supprimé</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
