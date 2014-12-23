@@ -4,6 +4,7 @@ namespace Victoire\Bundle\WidgetBundle\Twig;
 
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 
 /**
@@ -14,12 +15,14 @@ class LinkExtension extends \Twig_Extension
 {
     protected $router;
     protected $analytics;
+    protected $businessEntityHelper;
 
-    public function __construct(Router $router, RequestStack $requestStack, $analytics)
+    public function __construct(Router $router, RequestStack $requestStack, $analytics, BusinessEntityHelper $businessEntityHelper)
     {
         $this->router = $router;
         $this->request = $requestStack->getCurrentRequest();
         $this->analytics = $analytics;
+        $this->businessEntityHelper = $businessEntityHelper;
     }
     /**
      * Returns a list of functions to add to the existing list.
@@ -32,6 +35,7 @@ class LinkExtension extends \Twig_Extension
             new \Twig_SimpleFunction('vic_link_url', array($this, 'victoireLinkUrl')),
             new \Twig_SimpleFunction('vic_link', array($this, 'victoireLink'), array('is_safe' => array('html'))),
             new \Twig_SimpleFunction('vic_menu_link', array($this, 'victoireMenuLink'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('vic_business_link', array($this, 'victoireBusinessLink'), array('is_safe' => array('html'))),
         );
     }
 
@@ -167,6 +171,20 @@ class LinkExtension extends \Twig_Extension
 
         return '<li '.implode($linkAttributes, ' ').'>'.$this->victoireLink($parameters, $label, $attr, false, '#top').'</li>';
 
+    }
+
+    public function victoireBusinessLink($businessEntityInstance)
+    {
+        $parameters = array(
+            'linkType' => 'route',
+            'route' => 'victoire_core_business_page_show_by_id',
+            'routeParameters' => array(
+                'entityId' => $businessEntityInstance->getId(),
+                'type' => $this->businessEntityHelper->findByEntityInstance($businessEntityInstance)->getName(),
+            ),
+        );
+
+        return $this->victoireLinkUrl($parameters);
     }
 
     /**
