@@ -49,11 +49,15 @@ class EntityProxySubscriber implements EventSubscriber
             $metaBuilder = new ClassMetadataBuilder($metadatas);
             if ($metadatas->name === 'Victoire\Bundle\CoreBundle\Entity\EntityProxy') {
                 foreach ($annotationReader->getBusinessClasses() as $field => $entity) {
-                    $metaBuilder->addManyToOne($field, $entity, "proxies");
+                    if (!$metadatas->hasAssociation($field)) {
+                        $metaBuilder->addManyToOne($field, $entity, "proxies");
+                    }
                 }
             }
+            // Test if the current entity is a businessEntity
             $key = array_search($metadatas->name, $annotationReader->getBusinessClasses());
-            if ($key) {
+            // If so, and if proxies relation has already been injected (by a parent BusinessEntity)
+            if ($key && !$metadatas->hasAssociation('proxies')) {
                 $metaBuilder->addOneToMany('proxies', 'Victoire\Bundle\CoreBundle\Entity\EntityProxy', $key);
             }
         }
