@@ -35,6 +35,26 @@ class BasePageController extends Controller
         return $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl())));
     }
 
+    public function showBusinessPageByIdAction($entityId, $type)
+    {
+        $businessEntityHelper = $this->container->get('victoire_core.helper.business_entity_helper');
+        $businessEntity = $businessEntityHelper->findById($type);
+        $entity = $businessEntityHelper->getByBusinessEntityAndId($businessEntity, $entityId);
+
+        $refClass = new \ReflectionClass($entity);
+
+        $pattern = $this->container->get('victoire_business_entity_page.business_entity_page_helper')
+            ->guessBestViewForEntity($refClass);
+
+        $page = $this->container->get('victoire_page.page_helper')->findPageByParameters(array(
+            'viewId' => $pattern->getId(),
+            'entityId' => $entityId
+        ));
+        $this->get('victoire_widget_map.builder')->build($page);
+
+        return $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl())));
+    }
+
     /**
      * New page
      * @param boolean $isHomepage

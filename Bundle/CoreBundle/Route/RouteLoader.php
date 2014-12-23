@@ -20,6 +20,7 @@ class RouteLoader extends Loader
         $this->addVictoireRouting($collection);
         $this->addWidgetsRouting($collection);
         $this->addShowPageByIdRoute($collection);
+        $this->addShowBusinessPageByIdAction($collection);
         $this->addShowPageRoute($collection);
 
         return $collection;
@@ -52,6 +53,20 @@ class RouteLoader extends Loader
                 $collection->addCollection($importedRoutes);
             }
         }
+    }
+
+    protected function addShowBusinessPageByIdAction(&$collection)
+    {
+        $pattern = '/victoire-dcms-public/show-business-page-by-id/{entityId}/{type}';
+        $defaults = array(
+            '_controller' => 'VictoirePageBundle:Page:showBusinessPageById'
+        );
+        $requirements = array(
+            'viewId' => '\d+',
+        );
+        $route = new Route($pattern, $defaults, $requirements);
+        $routeName = 'victoire_core_business_page_show_by_id';
+        $collection->add($routeName, $route);
     }
 
     protected function addShowPageByIdRoute(&$collection)
