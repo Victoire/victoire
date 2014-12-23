@@ -247,10 +247,8 @@ class BusinessEntityPageHelper
     {
         $pattern = null;
         $classname = $refClass->name;
-        elve($classname);
         $businessEntity = $this->businessEntityHelper->findByEntityClassname($classname);
         if ($businessEntity) {
-            elve($businessEntity->getName());
             $patterns = $this->entityManager->getRepository('VictoireBusinessEntityPageBundle:BusinessEntityPagePattern')->findByBusinessEntityName($businessEntity->getName());
             if (count($patterns) > 0) {
                 $pattern = array_pop($patterns);
