@@ -52,7 +52,7 @@ class EntityProxySubscriber implements EventSubscriber
                         $metadatas->mapManyToOne(array(
                             'fieldName'    => $field,
                             'targetEntity' => $entity,
-                            'cascade'      => array('persist', 'remove'),
+                            'cascade'      => array('persist'),
                             'inversedBy'   => 'proxies'
                             )
                         );
