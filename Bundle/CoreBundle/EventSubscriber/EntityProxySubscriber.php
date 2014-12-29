@@ -49,7 +49,13 @@ class EntityProxySubscriber implements EventSubscriber
             $metaBuilder = new ClassMetadataBuilder($metadatas);
             if ($metadatas->name === 'Victoire\Bundle\CoreBundle\Entity\EntityProxy') {
                 foreach ($annotationReader->getBusinessClasses() as $field => $entity) {
-                    $metaBuilder->addManyToOne($field, $entity, "proxies");
+                    $metadatas->mapManyToOne(array(
+                        'fieldName'    => $field,
+                        'targetEntity' => $entity,
+                        'cascade'      => array('persist', 'remove'),
+                        'inversedBy'   => 'proxies'
+                        )
+                    );
                 }
             }
             $key = array_search($metadatas->name, $annotationReader->getBusinessClasses());

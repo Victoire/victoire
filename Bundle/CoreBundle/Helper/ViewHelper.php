@@ -72,6 +72,7 @@ class ViewHelper
         foreach ($views as $view) {
             $viewsReferences = array_merge($viewsReferences, $this->buildViewReference($view));
         }
+        $this->em->clear();
 
         return $viewsReferences;
     }
@@ -260,7 +261,7 @@ class ViewHelper
                 'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
             );
         }
-
+        
         return $viewsReferences;
 
     }
