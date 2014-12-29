@@ -9,6 +9,7 @@ use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 use Victoire\Bundle\QueryBundle\Helper\QueryHelper;
+use Doctrine\ORM\EntityManager;
 
 /**
  * The business entity page pattern helper
@@ -19,17 +20,19 @@ class BusinessEntityPageHelper
     protected $queryHelper = null;
     protected $businessEntityHelper = null;
     protected $parameterConverter = null;
+    protected $entityManager = null;
 
     /**
      * @param QueryHelper          $queryHelper
      * @param BusinessEntityHelper $businessEntityHelper
      * @param ParameterConverter   $parameterConverter
      */
-    public function __construct(QueryHelper $queryHelper, BusinessEntityHelper $businessEntityHelper, ParameterConverter $parameterConverter)
+    public function __construct(QueryHelper $queryHelper, BusinessEntityHelper $businessEntityHelper, ParameterConverter $parameterConverter, EntityManager $entityManager)
     {
         $this->queryHelper = $queryHelper;
         $this->businessEntityHelper = $businessEntityHelper;
         $this->parameterConverter = $parameterConverter;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -232,5 +235,36 @@ class BusinessEntityPageHelper
         }
 
         return $position;
+    }
+
+    /**
+     * Guess the best pattern to represent given reflectionClass
+     * @param  int    $entityId
+     * @param  string $type
+     * @return View
+     */
+    public function guessBestViewForEntity($refClass)
+    {
+        $pattern = null;
+        $classname = $refClass->name;
+        $businessEntity = $this->businessEntityHelper->findByEntityClassname($classname);
+        if ($businessEntity) {
+            $patterns = $this->entityManager->getRepository('VictoireBusinessEntityPageBundle:BusinessEntityPagePattern')->findByBusinessEntityName($businessEntity->getName());
+            if (count($patterns) > 0) {
+                $pattern = array_pop($patterns);
+            }
+        }
+
+        if (!$pattern) {
+            $parentRefClass = $refClass->getParentClass();
+            if ($parentRefClass) {
+                $pattern = $this->guessBestViewForEntity($parentRefClass);
+            } else {
+                throw new \Exception('Cannot find a BusinessEntityPagePattern that can display the requested BusinessEntity.');
+            }
+        }
+
+        return $pattern;
+
     }
 }

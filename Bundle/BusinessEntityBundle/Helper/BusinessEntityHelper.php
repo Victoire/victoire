@@ -219,4 +219,9 @@ class BusinessEntityHelper
 
         return $entity;
     }
+
+    public function getByBusinessEntityAndId(BusinessEntity $businessEntity, $id)
+    {
+        return $this->em->getRepository($businessEntity->getClass())->findOneById($id);
+    }
 }
