@@ -126,7 +126,7 @@ class TemplateController extends Controller
      *
      * @return Response
      * @Route("/{slug}/parametres", name="victoire_template_settings")
-     * @ParamConverter("template", class="VictoireTemplateBundle:Template", options={"mapping": {"slug": "slug", "_locale": "locale"}})
+     * @ParamConverter("template", class="VictoireTemplateBundle:Template", options={"mapping": {"slug": "slug"}})
      */
     public function settingsAction(Request $request, $template)
     {
@@ -162,7 +162,7 @@ class TemplateController extends Controller
      *
      * @return Response
      * @Route("/{slug}/translate ", name="victoire_template_translate")
-     * @ParamConverter("template", class="VictoireTemplateBundle:Template", options={"mapping": {"slug": "slug", "_locale": "locale"}})
+     * @ParamConverter("template", class="VictoireTemplateBundle:Template", options={"mapping": {"slug": "slug"}})
      */
     public function translateAction(Request $request, $template)
     {

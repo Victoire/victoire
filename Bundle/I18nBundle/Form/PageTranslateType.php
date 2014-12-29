@@ -45,7 +45,7 @@ class PageTranslateType extends AbstractType
                         'expanded' => false,
                         'multiple' => false,
                         'choices'  => $this->getAvailableLocales($view),
-                        'label'    => 'form.view.type.local.label',
+                        'label'    => 'form.view.type.locale.label',
                         'data'     => $this->currentLocale
                     )
                 );
