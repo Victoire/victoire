@@ -45,7 +45,7 @@ class TemplateController extends Controller
      * @param Victoire\Bundle\TemplateBundle\Entity\Template $template The template
      *
      * @Route("/show/{slug}", name="victoire_template_show")
-     * @ParamConverter("template", class="VictoireTemplateBundle:Template", options={"mapping": {"slug": "slug", "_locale": "locale"}})
+     * @ParamConverter("template", class="VictoireTemplateBundle:Template", options={"mapping": {"slug": "slug"}})
      * @return Response
      *
      */
