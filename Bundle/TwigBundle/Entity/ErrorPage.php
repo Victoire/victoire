@@ -2,8 +2,8 @@
 namespace Victoire\Bundle\TwigBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Victoire\Bundle\CoreBundle\Entity\View;
 
 /**
  * Error Page
@@ -11,7 +11,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity(repositoryClass="Victoire\Bundle\TwigBundle\Repository\ErrorPageRepository")
  * @UniqueEntity(fields={"code", "locale"})
  */
-class ErrorPage extends BasePage
+class ErrorPage extends View
 {
     const TYPE = 'error';
 

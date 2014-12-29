@@ -251,7 +251,7 @@ class ViewHelper
                 'viewId'          => $view->getId(),
                 'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
             );
-        } else {
+        } elseif (method_exists($view, 'getUrl')) {
             $referenceId = $this->viewCacheHelper->getViewCacheId($view);
             $viewsReferences[$view->getUrl().$view->getLocale()] = array(
                 'id'              => $referenceId,
