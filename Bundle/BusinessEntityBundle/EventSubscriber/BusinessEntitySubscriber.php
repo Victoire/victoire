@@ -56,14 +56,14 @@ class BusinessEntitySubscriber implements EventSubscriber
             $em = $this->container->get('doctrine.orm.entity_manager');
             $patterns = $em->getRepository('VictoireBusinessEntityPageBundle:BusinessEntityPagePattern')->findPagePatternByBusinessEntity($businessEntity);
             foreach ($patterns as $pattern) {
-                $this->updateBusinessEntityPages($pattern, $entity, $businessEntity);
+                $this->updateBusinessEntityPage($pattern, $entity, $businessEntity);
                 $this->updateCache($pattern, $entity);
             }
         }
 
     }
 
-    protected function updateBusinessEntityPages($pattern, $entity, $businessEntity)
+    protected function updateBusinessEntityPage($pattern, $entity, $businessEntity)
     {
         $em = $this->container->get('doctrine.orm.entity_manager');
         $bepRepo = $em->getRepository('Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage');

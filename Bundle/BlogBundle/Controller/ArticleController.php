@@ -40,6 +40,7 @@ class ArticleController extends Controller
                                 ->generateEntityPageFromPattern($article->getPattern(), $article);
             $entityManager->persist($page);
             $entityManager->flush();
+            $this->get('victoire_core.view_cache_helper')->update($article->getPattern(), $article);
 
             return new JsonResponse(array(
                 "success"  => true,
