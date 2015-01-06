@@ -26,10 +26,11 @@ class BasePageController extends Controller
 
     public function showByIdAction($viewId, $entityId = null)
     {
-        $page = $this->container->get('victoire_page.page_helper')->findPageByParameters(array(
-            'viewId' => $viewId,
-            'entityId' => $entityId
-        ));
+        $parameters = array('viewId' => $viewId);
+        if ($entityId) {
+            $parameters['entityId'] = $entityId;
+        }
+        $page = $this->container->get('victoire_page.page_helper')->findPageByParameters($parameters);
         $this->get('victoire_widget_map.builder')->build($page);
 
         return $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl())));
