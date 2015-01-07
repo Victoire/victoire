@@ -5,7 +5,9 @@ namespace Victoire\Bundle\WidgetBundle\Twig;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
+use Victoire\Bundle\BusinessEntityPageBundle\Helper\BusinessEntityPageHelper;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
+use Victoire\Bundle\PageBundle\Helper\PageHelper;
 
 /**
  * Twig extension for rendering a link.
@@ -15,14 +17,25 @@ class LinkExtension extends \Twig_Extension
 {
     protected $router;
     protected $analytics;
-    protected $businessEntityHelper;
+    protected $businessEntityHelper; // @victoire_business_entity_page.business_entity_helper
+    protected $businessEntityPageHelper; // @victoire_business_entity_page.business_entity_page_helper
+    protected $pageHelper;
 
-    public function __construct(Router $router, RequestStack $requestStack, $analytics, BusinessEntityHelper $businessEntityHelper)
+    public function __construct(
+        Router $router,
+        RequestStack $requestStack,
+        $analytics,
+        BusinessEntityHelper $businessEntityHelper,
+        BusinessEntityPageHelper $businessEntityPageHelper,
+        PageHelper $pageHelper
+    )
     {
         $this->router = $router;
         $this->request = $requestStack->getCurrentRequest();
         $this->analytics = $analytics;
         $this->businessEntityHelper = $businessEntityHelper;
+        $this->businessEntityPageHelper = $businessEntityPageHelper;
+        $this->pageHelper = $pageHelper;
     }
     /**
      * Returns a list of functions to add to the existing list.
@@ -175,12 +188,26 @@ class LinkExtension extends \Twig_Extension
 
     public function victoireBusinessLink($businessEntityInstance)
     {
+
+        $businessEntityHelper = $this->businessEntityHelper;
+        $businessEntity = $businessEntityHelper->findByEntityInstance($businessEntityInstance);
+        $entity = $businessEntityHelper->getByBusinessEntityAndId($businessEntity, $businessEntityInstance->getId());
+
+        $refClass = new \ReflectionClass($entity);
+
+        $pattern = $this->businessEntityPageHelper
+            ->guessBestViewForEntity($refClass);
+
+        $page = $this->pageHelper->findPageByParameters(array(
+            'viewId' => $pattern->getId(),
+            'entityId' => $businessEntityInstance->getId()
+        ));
+
         $parameters = array(
             'linkType' => 'route',
-            'route' => 'victoire_core_business_page_show_by_id',
+            'route' => 'victoire_core_page_show',
             'routeParameters' => array(
-                'entityId' => $businessEntityInstance->getId(),
-                'type' => $this->businessEntityHelper->findByEntityInstance($businessEntityInstance)->getName(),
+                'url' => $page->getUrl(),
             ),
         );
 
