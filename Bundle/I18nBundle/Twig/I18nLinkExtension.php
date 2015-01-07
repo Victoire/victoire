@@ -5,8 +5,10 @@ namespace Victoire\Bundle\I18nBundle\Twig;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
+use Victoire\Bundle\BusinessEntityPageBundle\Helper\BusinessEntityPageHelper;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\I18nBundle\Resolver\LocaleResolver;
+use Victoire\Bundle\PageBundle\Helper\PageHelper;
 use Victoire\Bundle\WidgetBundle\Twig\LinkExtension as BaseLinkExtension;
 
 /**
@@ -18,9 +20,17 @@ class I18nLinkExtension extends BaseLinkExtension
 
     protected $localeResolver;
 
-    public function __construct(Router $router, RequestStack $requestStack, $analytics, BusinessEntityHelper $businessEntityHelper, LocaleResolver $localeResolver)
+    public function __construct(
+        Router $router,
+        RequestStack $requestStack,
+        $analytics,
+        BusinessEntityHelper $businessEntityHelper,
+        BusinessEntityPageHelper $businessEntityPageHelper,
+        PageHelper $pageHelper,
+        LocaleResolver $localeResolver
+    )
     {
-        parent::__construct($router, $requestStack, $analytics, $businessEntityHelper);
+        parent::__construct($router, $requestStack, $analytics, $businessEntityHelper, $businessEntityPageHelper, $pageHelper);
         $this->localeResolver = $localeResolver;
     }
 

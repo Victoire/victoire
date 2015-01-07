@@ -6,7 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\PageBundle\Entity\BasePage;
 
 /**
  * PageSeo
@@ -213,7 +212,7 @@ class PageSeo
      * @var string
      *
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\PageBundle\Entity\Page", inversedBy="referers", cascade={"persist"})
-     * @ORM\JoinColumn(name="redirect_to", referencedColumnName="id")
+     * @ORM\JoinColumn(name="redirect_to", referencedColumnName="id", onDelete="SET NULL")
      *
      */
     protected $redirectTo;

@@ -25,6 +25,8 @@ class I18nCompilerPass implements CompilerPassInterface
             new Reference('request_stack'),
             '%victoire_seo.analytics%',
             new Reference('victoire_core.helper.business_entity_helper'),
+            new Reference('victoire_business_entity_page.business_entity_page_helper'),
+            new Reference('victoire_page.page_helper'),
             new Reference('victoire_i18n.locale_resolver')
             )
         );
