@@ -25,14 +25,14 @@ class I18nRouteLoader extends BaseRouteLoader
      */
     public function load($resource, $type = null)
     {
-        $collection = new RouteCollection();
-
-        //Prefix every victoire route with the locale
         $collection = parent::load($resource, $type);
-        $collection->addPrefix('/{_locale}');
-        $collection->addCollection($collection);
-        //Add a redirection to the default locale homepage when empty url '/'
-        $this->addHomepageRedirection($collection);
+        if ($this->localeResolver->localePattern == LocaleResolver::PATTERN_PARAMETER) {
+            //Prefix every victoire route with the locale
+            $collection->addPrefix('/{_locale}');
+            $collection->addCollection($collection);
+            //Add a redirection to the default locale homepage when empty url '/'
+            $this->addHomepageRedirection($collection);
+        }
 
         return $collection;
     }
