@@ -186,20 +186,23 @@ class LinkExtension extends \Twig_Extension
 
     }
 
-    public function victoireBusinessLink($businessEntityInstance)
+    public function victoireBusinessLink($businessEntityInstance, $patternId = null)
     {
+        if (!$patternId) {
+            $businessEntityHelper = $this->businessEntityHelper;
+            $businessEntity = $businessEntityHelper->findByEntityInstance($businessEntityInstance);
+            $entity = $businessEntityHelper->getByBusinessEntityAndId($businessEntity, $businessEntityInstance->getId());
 
-        $businessEntityHelper = $this->businessEntityHelper;
-        $businessEntity = $businessEntityHelper->findByEntityInstance($businessEntityInstance);
-        $entity = $businessEntityHelper->getByBusinessEntityAndId($businessEntity, $businessEntityInstance->getId());
+            $refClass = new \ReflectionClass($entity);
 
-        $refClass = new \ReflectionClass($entity);
+            $pattern = $this->businessEntityPageHelper
+                ->guessBestViewForEntity($refClass);
 
-        $pattern = $this->businessEntityPageHelper
-            ->guessBestViewForEntity($refClass);
+            $patternId = $pattern->getId();
+        }
 
         $page = $this->pageHelper->findPageByParameters(array(
-            'viewId' => $pattern->getId(),
+            'viewId' => $patternId,
             'entityId' => $businessEntityInstance->getId()
         ));
 
