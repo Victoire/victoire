@@ -12,6 +12,7 @@ use Victoire\Bundle\BusinessEntityPageBundle\Helper\BusinessEntityPageHelper;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
+use Victoire\Bundle\TwigBundle\Entity\ErrorPage;
 use Victoire\Widget\LayoutBundle\Entity\WidgetLayout;
 
 /**
@@ -244,6 +245,14 @@ class ViewHelper
                 'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
             );
         } elseif ($view instanceof Template) {
+            $referenceId = $this->viewCacheHelper->getViewCacheId($view);
+            $viewsReferences[$referenceId.$view->getLocale()] = array(
+                'id'              => $referenceId,
+                'locale'          => $view->getLocale(),
+                'viewId'          => $view->getId(),
+                'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
+            );
+        } elseif ($view instanceof ErrorPage) {
             $referenceId = $this->viewCacheHelper->getViewCacheId($view);
             $viewsReferences[$referenceId.$view->getLocale()] = array(
                 'id'              => $referenceId,

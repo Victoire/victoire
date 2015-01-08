@@ -23,6 +23,15 @@ class ErrorPage extends View
     protected $code;
 
     /**
+     * @var string
+     *
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\TemplateBundle\Entity\Template", cascade={"persist"})
+     * @ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="CASCADE")
+     *
+     */
+    protected $template;
+
+    /**
      * Get code
      *
      * @return string

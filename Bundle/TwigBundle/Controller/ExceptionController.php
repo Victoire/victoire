@@ -46,8 +46,8 @@ class ExceptionController extends BaseExceptionController
         if ($this->debug === false) {
             $page = $this->em->getRepository('VictoireTwigBundle:ErrorPage')->findOneByCode($code);
             if ($page) {
-                return $this->forward('VictoirePageBundle:BasePage:show', array(
-                        'url' => $page->getUrl()
+                return $this->forward('VictoireTwigBundle:ErrorPage:show', array(
+                        'code' => $page->getCode()
                     )
                 );
             }
