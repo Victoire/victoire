@@ -43,7 +43,7 @@ class ExceptionController extends BaseExceptionController
         $currentContent = $this->getAndCleanOutputBuffering($request->headers->get('X-Php-Ob-Level', -1));
         $code = $exception->getStatusCode();
 
-        if ($this->debug != false) {
+        if ($this->debug === false) {
             $page = $this->em->getRepository('VictoireTwigBundle:ErrorPage')->findOneByCode($code);
             if ($page) {
                 return $this->forward('VictoireTwigBundle:ErrorPage:show', array(
