@@ -134,11 +134,11 @@ class WidgetController extends Controller
         $view = $this->getViewByReferenceId($viewReference);
         $widgetView = $widget->getView();
 
-        if ($widgetView instanceof VicTemplate) {
-            $widgetViewReference = $this->get('victoire_core.view_cache_helper')->getReferenceByParameters(array('viewId' => $widgetView->getId()));
-        } else {
-            $widgetViewReference = $this->get('victoire_core.view_cache_helper')->getReferenceByParameters(array('url' => $widgetView->getUrl()));
-        }
+        $widgetViewReferenceId = $this->get('victoire_core.view_cache_helper')
+            ->getViewReferenceId($view);
+
+        $widgetViewReference = $this->get('victoire_core.view_cache_helper')
+            ->getReferenceByParameters(array('id' => $widgetViewReferenceId));
 
         $widgetView->setReference($widgetViewReference);
         $this->get('victoire_core.current_view')->setCurrentView($view);
