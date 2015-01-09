@@ -23,7 +23,6 @@ class ErrorPageRepository extends BasePageRepository
             ->where('page.code = :code')
             ->orWhere('page.code = :baseCode')
             ->setParameter('code', $code)
-            ->setParameter('baseCode', floor($code/100)*100)
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
