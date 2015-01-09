@@ -54,7 +54,6 @@ class Article
     /**
      * Description is inherited from Page, just add the BusinessProperty annotation
      * @ORM\Column(name="description", type="text")
-     * @Assert\NotBlank()
      * @VIC\BusinessProperty("textable")
      */
     private $description;
