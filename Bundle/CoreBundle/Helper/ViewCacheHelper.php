@@ -5,6 +5,7 @@ namespace Victoire\Bundle\CoreBundle\Helper;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\SimpleXMLElement;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
 use Victoire\Bundle\CoreBundle\Entity\View;
 
 /**
