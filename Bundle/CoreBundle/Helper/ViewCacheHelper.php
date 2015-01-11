@@ -7,7 +7,6 @@ use Symfony\Component\DependencyInjection\SimpleXMLElement;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
 use Victoire\Bundle\CoreBundle\Entity\View;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
 
 /**
  * View cache helper
