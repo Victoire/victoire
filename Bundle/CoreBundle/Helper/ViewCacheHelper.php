@@ -7,6 +7,7 @@ use Symfony\Component\DependencyInjection\SimpleXMLElement;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
 use Victoire\Bundle\CoreBundle\Entity\View;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
 
 /**
  * View cache helper
@@ -128,7 +129,7 @@ class ViewCacheHelper
             $arguments[$key] = '@' . $key . '="' . $value . '"';
         }
         $arguments = array_merge($arguments, $locale);
-        
+
         if ($xmlReference = $this->readCache()->xpath("//viewReference[" . implode(' and ', $arguments) . "]")) {
             $viewReference['id']              = $xmlReference[0]->getAttributeAsPhp('id');
             $viewReference['locale']          = $xmlReference[0]->getAttributeAsPhp('locale');

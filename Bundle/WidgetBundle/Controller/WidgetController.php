@@ -135,7 +135,7 @@ class WidgetController extends Controller
         $widgetView = $widget->getView();
 
         $widgetViewReferenceId = $this->get('victoire_core.view_cache_helper')
-            ->getViewReferenceId($view);
+            ->getViewReferenceId($widgetView);
 
         $widgetViewReference = $this->get('victoire_core.view_cache_helper')
             ->getReferenceByParameters(array('id' => $widgetViewReferenceId));
