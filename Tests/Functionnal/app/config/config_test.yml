@@ -36,11 +36,11 @@ assetic:
     filters:
         cssrewrite: ~
         less:
-	    node: "node"
+            node: "node"
             node_paths:
                 - "/usr/lib/node_modules"
                 - "%kernel.root_dir%/../../../node_modules"
-		- "/usr/local/lib/node_modules"
+                - "/usr/local/lib/node_modules"
             apply_to: "\.less$"
 
 
