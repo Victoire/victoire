@@ -61,8 +61,8 @@ doctrine:
         host:     "localhost"
         port:     "3306"
         dbname:   "victoire"
-        user:     "root"
-        password: "root"
+        user:     "travis"
+        password: ~
         charset:  UTF8
 
     orm:
