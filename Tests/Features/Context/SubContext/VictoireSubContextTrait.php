@@ -55,11 +55,11 @@ trait VictoireSubContextTrait
     }
 
     /**
-     * @Then /^I switch to edit mode "([^"]*)"$/
+     * @Then /^I switch to "([^"]*)" mode$/
      */
-    public function iSwitchToEditMode($edit)
+    public function iSwitchToMode($mode)
     {
-        $element = $this->getSession()->getPage()->find('xpath', 'descendant-or-self::*[@for="vic-switcher-editMode"]');
+        $element = $this->getSession()->getPage()->find('xpath', 'descendant-or-self::*[@data-mode="admin-'.$mode.'"]');
         $element->click();
     }
         /**

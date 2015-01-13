@@ -16,7 +16,7 @@
       </trans-unit>
       <trans-unit id="3" resname="widget_anakin.form.side.label">
         <source>widget_anakin.form.side.label</source>
-        <target>Côté</target>
+        <target>Côté de la force</target>
       </trans-unit>
     </body>
   </file>

@@ -5,6 +5,16 @@ imports:
     - { resource: @VictoireCoreBundle/Resources/config/config.yml }
     - { resource: @VictoireTwigBundle/Resources/config/config.yml }
 
+monolog:
+    handlers:
+        main:
+            type:   stream
+            path:   "%kernel.logs_dir%/%kernel.environment%.log"
+            level:  debug
+        console:
+            type:   console
+            bubble: false
+
 framework:
     secret:          "s3cr3t"
     router:
@@ -51,8 +61,8 @@ doctrine:
         host:     "localhost"
         port:     "3306"
         dbname:   "victoire"
-        user:     "travis"
-        password: ~
+        user:     "root"
+        password: "root"
         charset:  UTF8
 
     orm:
