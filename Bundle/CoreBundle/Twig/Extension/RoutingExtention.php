@@ -24,11 +24,16 @@ class RoutingExtention extends RoutingExtension
     public function getPath($name, $parameters = array(), $relative = false)
     {
         if ($name == 'victoire_core_page_show_by_id') {
-            $viewId = $parameters['viewId'];
-            $entityId = $parameters['entityId'];
-            $page = $this->pageHelper->findPageByParameters(array('viewId' => $viewId, 'entityId' => $entityId));
+            $params = array('viewId' => $parameters['viewId']);
+            unset($parameters['viewId']);
+            if (!empty($parameters['entityId'])) {
+                $params['entityId'] = $parameters['entityId'];
+                unset($parameters['entityId']);
+            }
+            $page = $this->pageHelper->findPageByParameters($params);
+            $parameters['url'] = $page->getUrl();
 
-            return $this->generator->generate('victoire_core_page_show', array('url' => $page->getUrl()));
+            return $this->generator->generate('victoire_core_page_show', $parameters);
         }
 
         foreach ($parameters as $_key => $_value) {

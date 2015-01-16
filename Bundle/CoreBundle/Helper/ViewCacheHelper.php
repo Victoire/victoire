@@ -5,6 +5,7 @@ namespace Victoire\Bundle\CoreBundle\Helper;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\SimpleXMLElement;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
 use Victoire\Bundle\CoreBundle\Entity\View;
 
 /**
@@ -101,7 +102,7 @@ class ViewCacheHelper
     {
 
         $rootNode = $this->readCache();
-        $id = $this->getViewCacheId($view, $entity);
+        $id = $this->getViewReferenceId($view, $entity);
         $oldItemNode = $rootNode->xpath("//viewReference[@id='" . $id . "']");
         unset($oldItemNode[0][0]);
 
@@ -144,8 +145,11 @@ class ViewCacheHelper
         return $viewReference;
     }
 
-    public function getViewCacheId(View $view, $entity = null)
+    public function getViewReferenceId(View $view, $entity = null)
     {
+        if ($view instanceof BusinessEntityPage) {
+            $entity = $view->getBusinessEntity();
+        }
         $twigEnv = new \Twig_Environment(new \Twig_Loader_String());
 
         $id = $twigEnv->render($this->viewNamePattern, array(

@@ -116,13 +116,7 @@ class PageSeoType extends AbstractType
             ->add('redirectTo', null, array(
                 'label'      => 'form.pageSeo.redirectTo.label',
                 'vic_help_block' => 'form.pageSeo.redirectTo.vic_help_block',
-            ))
-
-            ->add(
-                $builder->create('page', 'hidden', array(
-                    'label' => 'form.pageSeo.page.label')
-                )->addModelTransformer($pageToIdTransformer)
-            );
+            ));
     }
 
     /**

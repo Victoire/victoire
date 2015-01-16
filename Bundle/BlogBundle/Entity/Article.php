@@ -14,7 +14,6 @@ use Victoire\Bundle\MediaBundle\Entity\Media;
 /**
  * @ORM\Entity
  * @ORM\Table("vic_article")
- * @ORM\HasLifecycleCallbacks
  * @VIC\BusinessEntity({"Redactor", "Listing", "BlogArticles", "Title", "CKEditor", "Text", "UnderlineTitle", "Cover", "Image", "Authorship", "ArticleList"})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
@@ -55,7 +54,6 @@ class Article
     /**
      * Description is inherited from Page, just add the BusinessProperty annotation
      * @ORM\Column(name="description", type="text")
-     * @Assert\NotBlank()
      * @VIC\BusinessProperty("textable")
      */
     private $description;

@@ -4,7 +4,10 @@ namespace Victoire\Bundle\WidgetBundle\Twig;
 
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
+use Victoire\Bundle\BusinessEntityPageBundle\Helper\BusinessEntityPageHelper;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
+use Victoire\Bundle\PageBundle\Helper\PageHelper;
 
 /**
  * Twig extension for rendering a link.
@@ -14,12 +17,25 @@ class LinkExtension extends \Twig_Extension
 {
     protected $router;
     protected $analytics;
+    protected $businessEntityHelper; // @victoire_business_entity_page.business_entity_helper
+    protected $businessEntityPageHelper; // @victoire_business_entity_page.business_entity_page_helper
+    protected $pageHelper;
 
-    public function __construct(Router $router, RequestStack $requestStack, $analytics)
+    public function __construct(
+        Router $router,
+        RequestStack $requestStack,
+        $analytics,
+        BusinessEntityHelper $businessEntityHelper,
+        BusinessEntityPageHelper $businessEntityPageHelper,
+        PageHelper $pageHelper
+    )
     {
         $this->router = $router;
         $this->request = $requestStack->getCurrentRequest();
         $this->analytics = $analytics;
+        $this->businessEntityHelper = $businessEntityHelper;
+        $this->businessEntityPageHelper = $businessEntityPageHelper;
+        $this->pageHelper = $pageHelper;
     }
     /**
      * Returns a list of functions to add to the existing list.
@@ -32,6 +48,7 @@ class LinkExtension extends \Twig_Extension
             new \Twig_SimpleFunction('vic_link_url', array($this, 'victoireLinkUrl')),
             new \Twig_SimpleFunction('vic_link', array($this, 'victoireLink'), array('is_safe' => array('html'))),
             new \Twig_SimpleFunction('vic_menu_link', array($this, 'victoireMenuLink'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('vic_business_link', array($this, 'victoireBusinessLink'), array('is_safe' => array('html'))),
         );
     }
 
@@ -167,6 +184,37 @@ class LinkExtension extends \Twig_Extension
 
         return '<li '.implode($linkAttributes, ' ').'>'.$this->victoireLink($parameters, $label, $attr, false, '#top').'</li>';
 
+    }
+
+    public function victoireBusinessLink($businessEntityInstance, $patternId = null)
+    {
+        if (!$patternId) {
+            $businessEntityHelper = $this->businessEntityHelper;
+            $businessEntity = $businessEntityHelper->findByEntityInstance($businessEntityInstance);
+            $entity = $businessEntityHelper->getByBusinessEntityAndId($businessEntity, $businessEntityInstance->getId());
+
+            $refClass = new \ReflectionClass($entity);
+
+            $pattern = $this->businessEntityPageHelper
+                ->guessBestViewForEntity($refClass);
+
+            $patternId = $pattern->getId();
+        }
+
+        $page = $this->pageHelper->findPageByParameters(array(
+            'viewId' => $patternId,
+            'entityId' => $businessEntityInstance->getId()
+        ));
+
+        $parameters = array(
+            'linkType' => 'route',
+            'route' => 'victoire_core_page_show',
+            'routeParameters' => array(
+                'url' => $page->getUrl(),
+            ),
+        );
+
+        return $this->victoireLinkUrl($parameters);
     }
 
     /**

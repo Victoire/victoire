@@ -63,7 +63,7 @@ class LinkType extends AbstractType
             'required'                       => true,
             'attr'                           => array('novalidate' => 'novalidate'),
             'empty_value'                    => 'form.link_type.page.blank',
-            'class'                          => 'VictoirePageBundle:Page',
+            'class'                          => 'VictoirePageBundle:BasePage',
             'property'                       => 'name',
             'vic_vic_widget_form_group_attr' => array('class' => 'vic-form-group vic-hidden page-type'),
         ))

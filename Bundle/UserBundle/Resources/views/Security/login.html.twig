@@ -13,7 +13,16 @@
 
 {% block fos_user_content %}
 {% if error %}
-    <div>{{ error|trans }}</div>
+    <div data-dev="static" style="
+    padding: 15px;
+    background: #ae3484;
+    color: whitesmoke;
+    font-weight: bold;
+    font-size: 17px;
+    text-align: center;
+    text-shadow: 3px 3px 10px #810456;
+    border: 2px solid #810456;
+">{{ error.message|trans({}, 'victoire') }}</div>
 {% endif %}
 
 <form action="{{ path("fos_user_security_check") }}" method="post">

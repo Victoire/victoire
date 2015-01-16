@@ -51,7 +51,7 @@
                     {% if not page.undeletable %}
                     <a href="{{ path('victoire_core_page_delete', {'id': page.id}) }}" data-toggle="vic-confirm" class="vic-btn vic-btn-danger vic-pull-left" data-title="{{ 'modal.form.page.settings.action.delete.confirm.title'|trans({}, 'victoire') }}" data-body="{{ 'modal.form.page.settings.action.delete.confirm.body'|trans({}, 'victoire') }}" data-modal="delete"><i class="fa fa-trash-o"></i> {{ 'modal.button.delete.title'|trans({}, 'victoire') }}</a>
                     {% endif %}
-                    <a href="#" class="vic-btn vic-btn-success" data-modal="{% block action %}update{% endblock action %}" title="{{ 'modal.button.'~ block('action') ~'.title'|trans({}, 'victoire') }}"><i class="fa fa-check-circle"></i> {{ 'modal.button.'~ block('action') ~'.title'|trans({}, 'victoire') }}</a>
+                    <a href="#" class="vic-btn vic-btn-success" data-modal="{% block action %}update{% endblock action %}" title="{{ ('modal.button.'~ block('action') ~'.title')|trans({}, 'victoire') }}"><i class="fa fa-check-circle"></i> {{ ('modal.button.'~ block('action') ~'.title')|trans({}, 'victoire') }}</a>
                 {% endblock modal_footer_content %}
             </div>
         </div>

@@ -40,6 +40,7 @@ class ArticleController extends Controller
                                 ->generateEntityPageFromPattern($article->getPattern(), $article);
             $entityManager->persist($page);
             $entityManager->flush();
+            $this->get('victoire_core.view_cache_helper')->update($article->getPattern(), $article);
 
             return new JsonResponse(array(
                 "success"  => true,
@@ -159,17 +160,30 @@ class ArticleController extends Controller
             //remove the page (soft deletete)
             $article->setVisibleOnFront(false);
             $entityManager->flush($article);
+            $blogpost = $this->get('victoire_page.page_helper')->findPageByParameters(
+                array(
+                    'patternId' => $article->getPattern()->getId(),
+                    'entityId'  => $article->getId()
+                )
+            );
+            $entityManager->remove($blogpost);
             $entityManager->remove($article);
 
             //flush the modifications
             $entityManager->flush();
 
             //redirect to the homepage
-            $homepageUrl = $this->generateUrl('victoire_core_page_homepage');
+            $homepageUrl = $this->generateUrl('victoire_core_page_show', array(
+                'url' => $article->getBlog()->getUrl())
+            );
+
+            $message = $this->get('translator')->trans('victoire.blog.article.delete.success', array(), 'victoire');
+            $this->get('session')->getFlashBag()->add('success', $message);
 
             $response = array(
                 'success' => true,
-                'url'     => $homepageUrl
+                'url'     => $homepageUrl,
+                'message' => $message
             );
         } catch (\Exception $ex) {
             throw $ex;

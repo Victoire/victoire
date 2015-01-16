@@ -2,7 +2,7 @@
 
 {% trans_default_domain "victoire" %}
 
-{% block modal_container_classes %}{{ parent() }} vic-widget-modal{% endblock %}
+{% block modal_container_classes %}{{ parent() }} vic-widget-modal vic-widget-modal-{{ widget.type|lower }}{% endblock %}
 {% block modal_header_title %}
     {% if widget.id %}Widget #{{ widget.id}} - {% endif %}{{ ('modal.form.widget.type.'~widget.type|lower ~'.label')|trans({}, 'victoire')|raw }}
 {% endblock modal_header_title %}

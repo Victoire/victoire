@@ -16,7 +16,7 @@
       </trans-unit>
       <trans-unit id="3" resname="widget_anakin.form.side.label">
         <source>widget_anakin.form.side.label</source>
-        <target>Side</target>
+        <target>Force side</target>
       </trans-unit>
     </body>
   </file>

@@ -5,6 +5,16 @@ imports:
     - { resource: @VictoireCoreBundle/Resources/config/config.yml }
     - { resource: @VictoireTwigBundle/Resources/config/config.yml }
 
+monolog:
+    handlers:
+        main:
+            type:   stream
+            path:   "%kernel.logs_dir%/%kernel.environment%.log"
+            level:  debug
+        console:
+            type:   console
+            bubble: false
+
 framework:
     secret:          "s3cr3t"
     router:
@@ -36,10 +46,11 @@ assetic:
     filters:
         cssrewrite: ~
         less:
-            node: "/home/travis/.nvm/v0.10.32/bin/node"
+            node: "node"
             node_paths:
                 - "/usr/lib/node_modules"
                 - "%kernel.root_dir%/../../../node_modules"
+                - "/usr/local/lib/node_modules"
             apply_to: "\.less$"
 
 

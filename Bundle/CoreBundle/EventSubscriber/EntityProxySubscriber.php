@@ -10,15 +10,15 @@ use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
  **/
 class EntityProxySubscriber implements EventSubscriber
 {
-    protected static $cacherReader;
+    protected static $cacheReader;
 
     /**
      * contructor
-     * @param array $cacherReader
+     * @param array $cacheReader
      */
-    public function setBusinessEntityCacheReader($cacherReader)
+    public function setBusinessEntityCacheReader($cacheReader)
     {
-        self::$cacherReader = $cacherReader;
+        self::$cacheReader = $cacheReader;
     }
 
     /**
@@ -45,14 +45,27 @@ class EntityProxySubscriber implements EventSubscriber
         if ($eventArgs instanceof LoadClassMetadataEventArgs) {
 
             $metadatas = $eventArgs->getClassMetadata();
-            $metaBuilder = new ClassMetadataBuilder($metadatas);
+                var_dump($metadatas->name);
             if ($metadatas->name === 'Victoire\Bundle\CoreBundle\Entity\EntityProxy') {
-                foreach (self::$cacherReader->getBusinessClasses() as $field => $entity) {
-                    $metaBuilder->addManyToOne($entity->getId(), $entity->getClass(), "proxies");
+                var_dump(self::$cacheReader->getBusinessClasses());
+                foreach (self::$cacheReader->getBusinessClasses() as $entity) {
+
+                    if (!$metadatas->hasAssociation($entity->getId())) {
+                        $metadatas->mapManyToOne(array(
+                            'fieldName'    => $entity->getId(),
+                            'targetEntity' => $entity->getClass(),
+                            'cascade'      => array('persist'),
+                            'inversedBy'   => 'proxies'
+                            )
+                        );
+                    };
                 }
             }
-            $key = array_search($metadatas->name, self::$cacherReader->getBusinessClasses());
-            if ($key) {
+            // Test if the current entity is a businessEntity
+            $key = array_search($metadatas->name, self::$cacheReader->getBusinessClasses());
+            // If so, and if proxies relation has already been injected (by a parent BusinessEntity)
+            if ($key && !$metadatas->hasAssociation('proxies')) {
+                $metaBuilder = new ClassMetadataBuilder($metadatas);
                 $metaBuilder->addOneToMany('proxies', 'Victoire\Bundle\CoreBundle\Entity\EntityProxy', $key);
             }
         }

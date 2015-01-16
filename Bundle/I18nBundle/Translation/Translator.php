@@ -17,6 +17,11 @@ class Translator extends BaseTranslator
     protected $loaderIds;
 
     /**
+     * @var MessageSelector
+     */
+    private $selector;
+
+    /**
      * {@inheritdoc}
      *
      * @api
@@ -24,6 +29,7 @@ class Translator extends BaseTranslator
     public function __construct(ContainerInterface $container, MessageSelector $selector, $loaderIds = array(), array $options = array())
     {
         parent::__construct($container, $selector, $loaderIds, $options);
+        $this->selector = $selector;
         $this->container = $container;
     }
 

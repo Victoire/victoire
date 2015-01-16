@@ -24,11 +24,11 @@
         <h3 class="vic-h3">{{ 'modal.blog.list.articlesList.title'|trans({}, 'victoire') }}</h3>
         {% if blog.articles|length %}
             <ul class="vic-list-unstyled">
-                {% for article in blog.articles %}
+                {% for article in blog.articles if not article.deletedAt %}
                     <li>
                         <div class="vic-row">
                             <div class="vic-col-md-12">
-                                <a href="#">
+                                <a href="{{ path('victoire_core_page_show_by_id', {'viewId': article.pattern.id, 'entityId': article.id }) }}">
                                     {{ article.name }}
                                 </a>&nbsp;
                                 <a data-toggle="vic-modal" href="{{ path('victoire_blog_article_settings', {'id' : article.id}) }}">

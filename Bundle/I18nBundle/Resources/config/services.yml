@@ -61,11 +61,14 @@ services:
             - @router
             - @request_stack
             - %victoire_seo.analytics%
-            - "@victoire_i18n.locale_resolver"
+            - @victoire_core.helper.business_entity_helper
+            - @victoire_business_entity_page.business_entity_page_helper
+            - @victoire_page.page_helper
+            - @victoire_i18n.locale_resolver
         tags:
             - { name: twig.extension }
 
-    
+
     victoire_i18n.page_translate.form.type:
         class: Victoire\Bundle\I18nBundle\Form\PageTranslateType
         arguments:

@@ -33,7 +33,8 @@ class ArticleType extends AbstractType
         $viewToIdTransformer = new ViewToIdTransformer($this->entityManager);
         $builder
             ->add('name')
-            ->add('description')
+            ->add('description', null, array(
+                'required' => false))
             ->add('image', 'media')
             ->add('category')
             ->add(

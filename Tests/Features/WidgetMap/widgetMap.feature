@@ -5,7 +5,7 @@ Background:
     Given I am logged in as "paul@appventus.com"
 
 Scenario: Create a widget at first position
-    Then I switch to edit mode "true"
+    Then I switch to "layout" mode
     When I select "Anakin" from the "1" select of "content" slot
     Then I should see "Créer"
     When I fill in "Côté de la force" with "Obscure"

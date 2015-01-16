@@ -13,7 +13,7 @@ class LocaleResolver
     const PATTERN_PARAMETER = 'parameter'; // pass the locale the normal way, ie. http://acme.dn/fr
     const PATTERN_DOMAIN    = 'domain';
 
-    protected $localePattern;
+    public $localePattern;
     protected $localeDomainConfig;
     protected $availableLocales;
     public $defaultLocale;
