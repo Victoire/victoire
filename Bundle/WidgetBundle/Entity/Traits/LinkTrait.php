@@ -28,7 +28,7 @@ trait LinkTrait
     protected $target;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Victoire\Bundle\PageBundle\Entity\Page")
+     * @ORM\ManyToOne(targetEntity="Victoire\Bundle\PageBundle\Entity\BasePage")
      * @ORM\JoinColumn(name="attached_page_id", referencedColumnName="id", onDelete="cascade", nullable=true)
      */
     protected $page;
@@ -195,7 +195,7 @@ trait LinkTrait
     /**
      * Get page
      *
-     * @return \Victoire\Bundle\PageBundle\Entity\Page
+     * @return \Victoire\Bundle\PageBundle\Entity\BasePage
      */
     public function getPage()
     {
