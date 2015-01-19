@@ -32,7 +32,7 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->children()
                 ->arrayNode('base_paths')
-                    ->prototype('scalar')->defaultValue(array('%kernel.cache_dir%/../src', '%kernel.cache_dir%/../vendor/victoire/victoire/Bundle/BlogBundle'))->end()
+                    ->prototype('scalar')->defaultValue(array('%kernel.root_dir%/../src', '%kernel.root_dir%/../vendor/victoire/victoire/Bundle/BlogBundle'))->end()
                 ->end()
             ->end()
             ->children()

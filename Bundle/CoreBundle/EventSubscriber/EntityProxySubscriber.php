@@ -43,24 +43,21 @@ class EntityProxySubscriber implements EventSubscriber
         //but the argument is not the same
         //so to avoid an error during extractions, we test the argument
         if ($eventArgs instanceof LoadClassMetadataEventArgs) {
-
             $metadatas = $eventArgs->getClassMetadata();
-                var_dump($metadatas->name);
             if ($metadatas->name === 'Victoire\Bundle\CoreBundle\Entity\EntityProxy') {
-                var_dump(self::$cacheReader->getBusinessClasses());
                 foreach (self::$cacheReader->getBusinessClasses() as $entity) {
-
                     if (!$metadatas->hasAssociation($entity->getId())) {
                         $metadatas->mapManyToOne(array(
                             'fieldName'    => $entity->getId(),
                             'targetEntity' => $entity->getClass(),
                             'cascade'      => array('persist'),
-                            'inversedBy'   => 'proxies'
+                            'inversedBy'   => 'proxies',
                             )
                         );
                     };
                 }
             }
+
             // Test if the current entity is a businessEntity
             $key = array_search($metadatas->name, self::$cacheReader->getBusinessClasses());
             // If so, and if proxies relation has already been injected (by a parent BusinessEntity)

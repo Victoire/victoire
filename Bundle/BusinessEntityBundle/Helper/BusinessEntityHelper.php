@@ -3,8 +3,10 @@ namespace Victoire\Bundle\BusinessEntityBundle\Helper;
 
 use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
 use Victoire\Bundle\BusinessEntityBundle\Reader\BusinessEntityCacheReader;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
+use Victoire\Bundle\CoreBundle\Cache\Builder\CacheBuilder;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
@@ -15,17 +17,20 @@ use Victoire\Bundle\WidgetBundle\Entity\Widget;
 class BusinessEntityHelper
 {
     protected $reader;
+    protected $builder;
     protected $entityManager;
     protected $businessEntities;
 
     /**
      * Constructor
      * @param BusinessEntityCacheReader $reader
+     * @param CacheBuilder              $builder
      * @param EntityManager             $entityManager
      */
-    public function __construct(BusinessEntityCacheReader $reader, EntityManager $entityManager)
+    public function __construct(BusinessEntityCacheReader $reader, CacheBuilder $builder, EntityManager $entityManager)
     {
         $this->reader = $reader;
+        $this->builder = $builder;
         $this->entityManager = $entityManager;
     }
 
@@ -41,7 +46,7 @@ class BusinessEntityHelper
     {
         $businessEntity = $this->reader->findById($id);
         if ($businessEntity === null) {
-            throw new \Exception("<<".$id. ">> does not seems to be a valid BusinessEntity");
+            throw new \Exception("<<".$id.">> does not seems to be a valid BusinessEntity");
         }
 
         return $businessEntity;
@@ -172,8 +177,74 @@ class BusinessEntityHelper
         return $entity;
     }
 
+    /**
+     * create a BusinessEntity from an annotation object
+     *
+     * @return BusinessEntity
+     **/
+    protected function createBusinessEntity($className, $businessProperties)
+    {
+        $businessEntity = new BusinessEntity();
+
+        $classNameArray = explode('\\', $className);
+        $entityName = array_pop($classNameArray);
+        $businessEntity->setId(strtolower($entityName));
+        $businessEntity->setName($entityName);
+        $businessEntity->setClass($className);
+
+        //parse the array of the annotation reader
+        foreach ($businessProperties as $type => $properties) {
+            foreach ($properties as $property) {
+                $businessProperty = new BusinessProperty();
+                $businessProperty->setType($type);
+                $businessProperty->setEntityProperty($property);
+
+                //add the business property to the business entity object
+                $businessEntity->addBusinessProperty($businessProperty);
+                unset($businessProperty);
+            }
+        }
+
+        return $businessEntity;
+    }
+
     public function getByBusinessEntityAndId(BusinessEntity $businessEntity, $id)
     {
         return $this->em->getRepository($businessEntity->getClass())->findOneById($id);
+    }
+
+    /**
+     * will save business entity
+     * @param BusinessEntity $businessEntity
+     *
+     * @return void
+     **/
+    public function saveBusinessEntity(BusinessEntity $businessEntity)
+    {
+        $this->builder->saveBusinessEntity($businessEntity);
+    }
+
+    /**
+     * will save widget receiver properties
+     * @param string $widgetName
+     * @param array  $receiverProperties
+     *
+     * @return void
+     **/
+    public function saveWidgetReceiverProperties($widgetName, $receiverProperties)
+    {
+        $this->builder->saveWidgetReceiverProperties($widgetName, $receiverProperties);
+    }
+
+    /**
+     * will add widget business entity
+     * @param string $widgetName
+     * @param string $businessEntity
+     *
+     * @return void
+     **/
+    public function addWidgetBusinessEntity($widgetName, $businessEntity)
+    {
+        $this->builder->addWidgetBusinessEntity($widgetName, $businessEntity);
     }
 }

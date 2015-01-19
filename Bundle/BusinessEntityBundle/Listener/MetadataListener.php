@@ -3,19 +3,19 @@
 namespace Victoire\Bundle\BusinessEntityBundle\Listener;
 
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
-use Victoire\Bundle\CoreBundle\Annotations\Driver\AnnotationDriver;
+use Victoire\Bundle\BusinessEntityBundle\Doctrine\MetadataBuilder;
 
 class MetadataListener
 {
-    private $annotationDriver;
+    private $metadataBuilder;
 
-    public function __construct(AnnotationDriver $annotationDriver)
+    public function __construct(MetadataBuilder $metadataBuilder)
     {
-        $this->annotationDriver = $annotationDriver;
+        $this->metadataBuilder = $metadataBuilder;
     }
 
     public function loadClassMetadata(LoadClassMetadataEventArgs $args)
     {
-        $this->annotationDriver->loadMetadataForClass($args->getClassMetadata()->name, $args->getClassMetadata());
+        $this->metadataBuilder->loadMetadataForClass($args->getClassMetadata()->name, $args->getClassMetadata());
     }
 }

@@ -1,28 +1,26 @@
 <?php
-namespace Victoire\Bundle\CoreBundle\CacheWarmer;
+namespace Victoire\Bundle\BusinessEntityBundle\Generator;
 
 use Sensio\Bundle\GeneratorBundle\Generator\Generator;
 use Symfony\Component\HttpKernel\Config\FileLocator;
-use Victoire\Bundle\BusinessEntityBundle\Reader\BusinessEntityCacheReader;
+use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 
 /**
- *
- * @author Paul Andrieux
- *
+ * fetch BusinessEntity cache and generate the EntityProxy class to be mapped by doctrine.
  */
 class EntityProxyGenerator extends Generator
 {
-    private $cacheReader;
+    private $businessEntityHelper;
     private $fileLocator;
 
     /**
      * Constructor
-     * @param BusinessEntityCacheReader $cacheReader
-     * @param FileLocator               $fileLocator
+     * @param BusinessEntityHelper $businessEntityHelper
+     * @param FileLocator          $fileLocator
      */
-    public function __construct(BusinessEntityCacheReader $cacheReader, FileLocator $fileLocator)
+    public function __construct(BusinessEntityHelper $businessEntityHelper, FileLocator $fileLocator)
     {
-        $this->cacheReader = $cacheReader;
+        $this->businessEntityHelper = $businessEntityHelper;
         $this->fileLocator = $fileLocator;
     }
 
@@ -33,7 +31,7 @@ class EntityProxyGenerator extends Generator
      */
     public function generate()
     {
-        $businessEntities = $this->cacheReader->getBusinessClasses();
+        $businessEntities = $this->businessEntityHelper->getBusinessEntities();
         $skeletonDirs = $this->fileLocator->locate('@VictoireCoreBundle/CacheWarmer/skeleton/');
         $this->setSkeletonDirs($skeletonDirs);
 
