@@ -13,7 +13,6 @@ use Victoire\Bundle\TwigBundle\Entity\ErrorPage;
 
 class ExceptionController extends BaseExceptionController
 {
-
     private $em;
 
     public function __construct(\Twig_Environment $twig, $debug, $em, $httpKernel, $requestStack, $router)
@@ -47,7 +46,7 @@ class ExceptionController extends BaseExceptionController
             $page = $this->em->getRepository('VictoireTwigBundle:ErrorPage')->findOneByCode($code);
             if ($page) {
                 return $this->forward('VictoireTwigBundle:ErrorPage:show', array(
-                        'code' => $page->getCode()
+                        'code' => $page->getCode(),
                     )
                 );
             }

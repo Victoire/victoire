@@ -23,8 +23,10 @@ class ViewCacheWarmer implements CacheWarmerInterface
 
     public function warmUp($cacheDir)
     {
-        $viewsReferences = $this->viewHelper->getAllViewsReferences();
-        $this->viewCacheHelper->write($viewsReferences);
+        if (!$this->viewCacheHelper->fileExists()) {
+            $viewsReferences = $this->viewHelper->getAllViewsReferences();
+            $this->viewCacheHelper->write($viewsReferences);
+        }
     }
 
     public function isOptional()

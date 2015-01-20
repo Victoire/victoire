@@ -20,8 +20,8 @@ services:
     victoire_core.entity_proxy.fields_builder:
         class: Victoire\Bundle\CoreBundle\Form\Builder\EntityProxyFieldsBuilder
         arguments: ["@victoire_core.annotation_reader"]
-#  ==================  MENU ================== #
 
+#  ==================  MENU ================== #
     victoire_core.admin_menu_builder:
         class: Victoire\Bundle\CoreBundle\Menu\MenuBuilder
         arguments: [ '@knp_menu.factory', '@security.context' ]
@@ -173,9 +173,8 @@ services:
         arguments:
             - @victoire_core.view_helper
             - @victoire_core.view_cache_helper
-        # DISABLED. @TODO, fix this process
-        # tags:
-        # - { name: kernel.cache_warmer, priority: -1 }
+        tags:
+        - { name: kernel.event_listener, event: kernel.request, method: warmUp }
 
     victoire_core.entity_proxy.cache_driver:
         class: Victoire\Bundle\CoreBundle\CacheWarmer\EntityProxyCacheDriver
