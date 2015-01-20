@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\CoreBundle\CacheWarmer;
 
-use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;
 use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
 use Victoire\Bundle\CoreBundle\Helper\ViewHelper;
 
@@ -10,7 +9,7 @@ use Victoire\Bundle\CoreBundle\Helper\ViewHelper;
  * Called (for example on kernel request) to create the viewsReference cache file
  * ref. victoire_core.cache_warmer.view_warmer
  */
-class ViewCacheWarmer implements CacheWarmerInterface
+class ViewCacheWarmer
 {
     private $viewHelper;
     private $viewCacheHelper;
