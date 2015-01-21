@@ -2,15 +2,60 @@
 
 {% block body %}
 
-<div class="vic-widget {{ cms_widget_extra_css_class(widget) }}" id="widget-{{widget.id}}">
-{% if is_granted('ROLE_VICTOIRE') %}
-    {% block actions %}
-        {{ cms_widget_actions(widget) }}
-    {% endblock actions %}
-{% endif %}
-{% block content %}
-{{ content|raw }}
-{% endblock content %}
-</div>
+    {% set width = containerWidth ? "width: " ~ containerWidth ~ "; " %}
+    {% set margin = containerMargin ? "margin: " ~ containerMargin ~ "; " %}
+    {% set padding = containerPadding ? "padding: " ~ containerPadding ~ "; " %}
+    {% set background = containerBackground ? "background: " ~ containerBackground ~ "; " %}
 
+
+    <style>
+        #widget-{{ widget.id }} {
+            {{ width }}
+            {{ margin }}
+            {{ padding }}
+            {{ background }}
+        }
+
+       {{ _self.responsiveStyle(widget, 'xs', victoire_twig_responsive) }}
+       {{ _self.responsiveStyle(widget, 'sm', victoire_twig_responsive) }}
+       {{ _self.responsiveStyle(widget, 'md', victoire_twig_responsive) }}
+       {{ _self.responsiveStyle(widget, 'lg', victoire_twig_responsive) }}
+    </style>
+
+    <{{ containerTag }} class="vic-widget {{ cms_widget_extra_css_class(widget) }} {{ containerClass }}" id="widget-{{widget.id}}">
+
+	{% if is_granted('ROLE_VICTOIRE') %}
+	    {% block actions %}
+	        {{ cms_widget_actions(widget) }}
+	    {% endblock actions %}
+	{% endif %}
+	{% block content %}
+		{{ content|raw }}
+
+    </{{ containerTag }}>
+{% endblock content %}
 {% endblock body %}
+
+
+
+{% macro responsiveStyle(widget, sizeCode, victoire_twig_responsive) %}
+    {% set config = attribute(victoire_twig_responsive, sizeCode) %}
+    {% set attr = null %}
+    {% if config.min is defined %}
+        {% set attr = 'and (min-width: ' ~ config.min ~ 'px)' %}
+    {% endif %}
+    {% if config.max is defined %}
+        {% set attr = attr ~ ' and (max-width: ' ~ config.max ~ 'px)' %}
+    {% endif %}
+
+{% if attribute(widget, 'containerMargin' ~ sizeCode|upper) or attribute(widget, 'containerPadding' ~ sizeCode|upper) %}
+@media screen {{ attr }} {
+    #widget-{{ widget.id }} {
+        {% if attribute(widget, 'containerMargin' ~ sizeCode|upper) %}margin: {{ attribute(widget, 'containerMargin' ~ sizeCode|upper)}};{% endif %}
+        {% if attribute(widget, 'containerPadding' ~ sizeCode|upper) %}padding: {{ attribute(widget, 'containerPadding' ~ sizeCode|upper)}};{% endif %}
+    }
+}
+{% endif %}
+
+
+{% endmacro %}

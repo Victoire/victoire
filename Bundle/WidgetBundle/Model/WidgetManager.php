@@ -24,8 +24,8 @@ use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 use Victoire\Bundle\WidgetMapBundle\Manager\WidgetMapManager;
 
 /**
-* This manager handles crud operations on a Widget
-*/
+ * This manager handles crud operations on a Widget
+ */
 class WidgetManager
 {
     protected $widgetFormBuilder;
@@ -75,8 +75,7 @@ class WidgetManager
         PageHelper $pageHelper,
         $slots,
         Container $container
-    )
-    {
+    ) {
         $this->widgetFormBuilder = $widgetFormBuilder;
         $this->widgetHelper = $widgetHelper;
         $this->widgetContentResolver = $widgetContentResolver;
@@ -117,9 +116,9 @@ class WidgetManager
                     'view'    => $view,
                     'classes' => $classes,
                     'widget'  => $widget,
-                    'forms'   => $forms
+                    'forms'   => $forms,
                 )
-            )
+            ),
         );
     }
 
@@ -144,7 +143,7 @@ class WidgetManager
         //the default response
         $response = array(
             "success" => false,
-            "html"    => ''
+            "html"    => '',
         );
 
         //create a new widget
@@ -154,7 +153,6 @@ class WidgetManager
 
         $form->handleRequest($request);
         if ($form->isValid()) {
-
             if (!$view->getId()) {
                 //create a view for the business entity instance if we are currently on a virtual one
                 $this->em->persist($view);
@@ -191,16 +189,15 @@ class WidgetManager
             $response = array(
                 "success"  => true,
                 "widgetId" => "vic-widget-".$widget->getId()."-container",
-                "html"     => $hmltWidget
+                "html"     => $hmltWidget,
             );
         } else {
             //get the errors as a string
             $response = array(
                 "success" => false,
                 "message" => $formErrorHelper->getRecursiveReadableErrors($form),
-                "html"    => $this->widgetFormBuilder->renderNewForm($form, $widget, $slotId, $view, $entity)
+                "html"    => $this->widgetFormBuilder->renderNewForm($form, $widget, $slotId, $view, $entity),
             );
-
         }
 
         return $response;
@@ -218,7 +215,6 @@ class WidgetManager
      */
     public function editWidget(Request $request, Widget $widget, View $currentView, $entityName = null)
     {
-
         $classes = $this->annotationReader->getBusinessClassesForWidget($widget);
 
         $widget->setCurrentView($currentView);
@@ -232,7 +228,6 @@ class WidgetManager
 
         //if the form is posted
         if ($requestMethod === 'POST') {
-
             //the widget view
             $widgetView = $widget->getView();
 
@@ -249,7 +244,6 @@ class WidgetManager
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-
                 $widget->setBusinessEntityName($entityName);
 
                 $this->em->persist($widget);
@@ -263,7 +257,7 @@ class WidgetManager
                     'view'        => $currentView,
                     'success'     => true,
                     'html'        => $this->widgetRenderer->render($widget, $currentView),
-                    'widgetId'    => "vic-widget-".$initialWidgetId."-container"
+                    'widgetId'    => "vic-widget-".$initialWidgetId."-container",
                 );
             } else {
                 $formErrorHelper = $this->formErrorHelper;
@@ -271,9 +265,8 @@ class WidgetManager
                 $response = array(
                     "success" => false,
                     "message" => $formErrorHelper->getRecursiveReadableErrors($form),
-                    "html"    => $this->widgetFormBuilder->renderForm($form, $widget, $entityName)
+                    "html"    => $this->widgetFormBuilder->renderForm($form, $widget, $entityName),
                 );
-
             }
         } else {
             $forms = $this->widgetFormBuilder->renderNewWidgetForms($widget->getSlot(), $currentView, $widget);
@@ -286,9 +279,9 @@ class WidgetManager
                         'view'    => $currentView,
                         'classes' => $classes,
                         'forms'   => $forms,
-                        'widget'  => $widget
+                        'widget'  => $widget,
                     )
-                )
+                ),
             );
         }
 
@@ -323,7 +316,7 @@ class WidgetManager
 
         return array(
             "success"  => true,
-            "widgetId" => $widgetId
+            "widgetId" => $widgetId,
         );
     }
 
@@ -368,5 +361,4 @@ class WidgetManager
 
         return $widgetCopy;
     }
-
 }

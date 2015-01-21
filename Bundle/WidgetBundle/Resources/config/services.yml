@@ -64,3 +64,8 @@ services:
             - @victoire_page.page_helper
         tags:
             - { name: twig.extension }
+
+    victoire_widget.widget_style_type:
+        class: Victoire\Bundle\WidgetBundle\Form\WidgetStyleType
+        tags:
+            - { name: form.type, alias: victoire_widget_style_type }

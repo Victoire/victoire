@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Widget\Managers\WidgetManager;
-use Victoire\Bundle\TemplateBundle\Entity\Template as VicTemplate;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
@@ -36,11 +35,10 @@ class WidgetController extends Controller
             $view = $this->container->get('victoire_page.page_helper')->findPageByParameters(array('id' => $viewReferenceId));
             $this->container->get('victoire_core.current_view')->setCurrentView($view);
             if ($this->getRequest()->isXmlHttpRequest()) {
-
-                 $response = new JsonResponse(array(
+                $response = new JsonResponse(array(
                          'html'    => $this->get('victoire_widget.widget_renderer')->render($widget, $view),
                          'update'  => 'vic-widget-'.$widget->getId().'-container',
-                         'success' => false
+                         'success' => false,
                  ));
             } else {
                 $response = $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $view->getUrl())));
@@ -125,7 +123,7 @@ class WidgetController extends Controller
      *
      * @return response
      *
-     * @Route("/victoire-dcms/widget/edit/{id}/{viewReference}/{entityName}", name="victoire_core_widget_edit")
+     * @Route("/victoire-dcms/widget/edit/{id}/{viewReference}/{entityName}", name="victoire_core_widget_edit", options={"expose"=true})
      * @Route("/victoire-dcms/widget/update/{id}/{viewReference}/{entityName}", name="victoire_core_widget_update", defaults={"entityName": null})
      * @Template()
      */
@@ -145,6 +143,72 @@ class WidgetController extends Controller
         try {
             $widgetManager = $this->getWidgetManager();
             $response = new JsonResponse($widgetManager->editWidget($this->get('request'), $widget, $view, $entityName));
+        } catch (\Exception $ex) {
+            $response = $this->getJsonReponseFromException($ex);
+        }
+
+        return $response;
+    }
+
+    /**
+     * Stylize a widget
+     * @param Widget  $widget        The widget to stylize
+     * @param integer $viewReference The current view
+     * @param string  $entityName    The entity name (could be null is the submitted form is in static mode)
+     *
+     * @return response
+     *
+     * @Route("/victoire-dcms/widget/stylize/{id}/{viewReference}/{entityName}", name="victoire_core_widget_stylize", options={"expose"=true})
+     * @Template()
+     */
+    public function stylizeAction(Widget $widget, $viewReference, $entityName = null)
+    {
+        $view = $this->getViewByReferenceId($viewReference);
+        $widgetView = $widget->getView();
+
+        $widgetViewReferenceId = $this->get('victoire_core.view_cache_helper')
+            ->getViewReferenceId($widgetView);
+
+        $widgetViewReference = $this->get('victoire_core.view_cache_helper')
+            ->getReferenceByParameters(array('id' => $widgetViewReferenceId));
+
+        $widgetView->setReference($widgetViewReference);
+        $this->get('victoire_core.current_view')->setCurrentView($view);
+        try {
+            $form = $this->container->get('form.factory')->create('victoire_widget_style_type', $widget, array(
+                    'method' => 'POST',
+                    'action' => $this->generateUrl(
+                        'victoire_core_widget_stylize',
+                        array(
+                            'id'            => $widget->getId(),
+                            'viewReference' => $viewReference,
+                        )
+                    ),
+                )
+            );
+            $form->handleRequest($this->get('request'));
+            if ($form->isValid()) {
+                $this->get('doctrine.orm.entity_manager')->flush();
+                $params = array(
+                    'view'     => $view,
+                    'success'  => true,
+                    'html'     => $this->get('victoire_widget.widget_renderer')->render($widget, $view),
+                    'widgetId' => "vic-widget-".$widget->getId()."-container",
+                );
+            } else {
+                $params = array(
+                    "success"  => false,
+                    "html"     => $this->get('victoire_core.template_mapper')->render(
+                        "VictoireCoreBundle:Widget:Form/stylize.html.twig",
+                        array(
+                            'view'   => $view,
+                            'form'   => $form->createView(),
+                            'widget' => $widget,
+                        )
+                    ),
+                );
+            }
+            $response = new JsonResponse($params);
         } catch (\Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
         }
@@ -248,7 +312,7 @@ class WidgetController extends Controller
             $response = new JsonResponse(
                 array(
                     'success' => false,
-                    'message' => $message
+                    'message' => $message,
                 )
             );
         }

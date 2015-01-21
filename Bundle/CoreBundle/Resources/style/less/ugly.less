@@ -10,8 +10,16 @@ body[role=admin-layout] {
     }
     .vic-new-widget {
         display: block !important;
-    	&.vic-new-widget-disabled {
-        	display: none !important;
-    	}
+        &.vic-new-widget-disabled {
+            display: none !important;
+        }
+    }
+}
+
+body[role=admin-style] {
+    .vic-hover-widget {
+        i {
+            background-image: url(/bundles/victoirecore/images/style-widget-icon.png);
+        }
     }
 }
