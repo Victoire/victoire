@@ -29,9 +29,9 @@ class ViewCacheWarmer
      * @param string  $cacheDir Where does the viewsReferences file should take place
      * @param boolean $force    Should we recompute the file if the file already exists ?
      */
-    public function warmUp($cacheDir, $force = false)
+    public function warmUp($cacheDir)
     {
-        if ($force || !$this->viewCacheHelper->fileExists()) {
+        if (!$this->viewCacheHelper->fileExists()) {
             $viewsReferences = $this->viewHelper->getAllViewsReferences();
             $this->viewCacheHelper->write($viewsReferences);
         }
