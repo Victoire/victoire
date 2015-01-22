@@ -2,9 +2,9 @@
 namespace Victoire\Bundle\WidgetBundle\Entity\Traits;
 
 /**
- * Layout trait adds fields to place a widget in its container
+ * Style trait adds fields to place a widget in its container
  */
-trait LayoutTrait
+trait StyleTrait
 {
     public static $tags = array(
         "section",

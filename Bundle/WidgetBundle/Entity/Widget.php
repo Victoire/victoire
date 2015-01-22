@@ -4,7 +4,7 @@ namespace Victoire\Bundle\WidgetBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Victoire\Bundle\QueryBundle\Entity\Traits\QueryTrait;
-use Victoire\Bundle\WidgetBundle\Entity\Traits\LayoutTrait;
+use Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTrait;
 use Victoire\Bundle\WidgetBundle\Model\Widget as BaseWidget;
 
 /**
@@ -17,7 +17,7 @@ use Victoire\Bundle\WidgetBundle\Model\Widget as BaseWidget;
  */
 class Widget extends BaseWidget
 {
-    use LayoutTrait;
+    use StyleTrait;
     use QueryTrait;
 
     /**
