@@ -19,7 +19,7 @@ trait LayoutTrait
     /**
      * @var string
      *
-     * @ORM\Column(name="container_tag", type="string", length=255)
+     * @ORM\Column(name="container_tag", type="string", length=255, options={"default" = "div"})
      */
     protected $containerTag = "div";
 
