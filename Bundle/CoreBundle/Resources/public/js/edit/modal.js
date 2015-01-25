@@ -38,7 +38,23 @@ $vic(document).on('click', 'a[data-toggle="vic-none"]', function(event) {
 // Open modal
 $vic(document).on('click', 'a.vic-hover-widget, a[data-toggle="vic-modal"]', function(event) {
     event.preventDefault();
-    openModal($vic(this).attr('href'));
+
+    var role = $vic('body').attr('role');
+    if (typeof role !== typeof undefined && role !== false) {
+        if (role == "admin-style") {
+            var route = 'victoire_core_widget_stylize';
+        } else if (role == "admin-edit") {
+            var route = 'victoire_core_widget_edit';
+        }
+
+        var id = $vic(this).data('id');
+        var viewReferenceId = $vic(this).data('viewreferenceid');
+        var url = Routing.generate(route, {'id': id, 'viewReference': viewReferenceId});
+        openModal(url);
+    } else {
+        console.error('You only should click on this in edit or style mode !');
+    }
+
 });
 
 // Close a modal

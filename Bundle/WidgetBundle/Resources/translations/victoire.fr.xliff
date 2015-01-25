@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+  <file date="2013-11-27T18:15:06Z" source-language="en" target-language="fr" datatype="plaintext" original="not.available">
+    <header>
+      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
+      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
+    </header>
+    <body>
+      <trans-unit id="33" resname="modal.button.stylize.title">
+        <source>modal.button.stylize.title</source>
+        <target>Sauvegarder</target>
+      </trans-unit>
+      <trans-unit id="0" resname="victoire_widget.stylize.title">
+        <source>victoire_widget.stylize.title</source>
+        <target><![CDATA[Modification du style du widget <strong>#%widgetId%</strong>]]></target>
+      </trans-unit>
+      <trans-unit id="1" resname="widget_layout.form.containerTag.label">
+        <source>widget_layout.form.containerTag.label</source>
+        <target>Balise</target>
+      </trans-unit>
+      <trans-unit id="2" resname="widget_layout.form.containerClass.label">
+        <source>widget_layout.form.containerClass.label</source>
+        <target>Classes</target>
+      </trans-unit>
+      <trans-unit id="3" resname="widget_layout.form.containerWidth.label">
+        <source>widget_layout.form.containerWidth.label</source>
+        <target>Taille</target>
+      </trans-unit>
+      <trans-unit id="4" resname="widget_layout.form.containerMargin.label">
+        <source>widget_layout.form.containerMargin.label</source>
+        <target>Marge extérieure</target>
+      </trans-unit>
+      <trans-unit id="5" resname="widget_layout.form.containerPadding.label">
+        <source>widget_layout.form.containerPadding.label</source>
+        <target>Marge intérieure</target>
+      </trans-unit>
+      <trans-unit id="6" resname="widget_layout.form.containerMarginXS.label">
+        <source>widget_layout.form.containerMarginXS.label</source>
+        <target>Marge extérieure</target>
+      </trans-unit>
+      <trans-unit id="7" resname="widget_layout.form.containerPaddingXS.label">
+        <source>widget_layout.form.containerPaddingXS.label</source>
+        <target>Marge intérieure</target>
+      </trans-unit>
+      <trans-unit id="8" resname="widget_layout.form.containerMarginSM.label">
+        <source>widget_layout.form.containerMarginSM.label</source>
+        <target>Marge extérieure</target>
+      </trans-unit>
+      <trans-unit id="9" resname="widget_layout.form.containerPaddingSM.label">
+        <source>widget_layout.form.containerPaddingSM.label</source>
+        <target>Marge intérieure</target>
+      </trans-unit>
+      <trans-unit id="10" resname="widget_layout.form.containerMarginMD.label">
+        <source>widget_layout.form.containerMarginMD.label</source>
+        <target>Marge extérieure</target>
+      </trans-unit>
+      <trans-unit id="11" resname="widget_layout.form.containerPaddingMD.label">
+        <source>widget_layout.form.containerPaddingMD.label</source>
+        <target>Marge intérieure</target>
+      </trans-unit>
+      <trans-unit id="12" resname="widget_layout.form.containerMarginLG.label">
+        <source>widget_layout.form.containerMarginLG.label</source>
+        <target>Marge extérieure</target>
+      </trans-unit>
+      <trans-unit id="13" resname="widget_layout.form.containerPaddingLG.label">
+        <source>widget_layout.form.containerPaddingLG.label</source>
+        <target>Marge intérieure</target>
+      </trans-unit>
+      <trans-unit id="14" resname="widget_layout.tab.containerMargin.XS.label">
+        <source>widget_layout.tab.containerMargin.XS.label</source>
+        <target>Mobile</target>
+      </trans-unit>
+      <trans-unit id="15" resname="widget_layout.tab.containerMargin.SM.label">
+        <source>widget_layout.tab.containerMargin.SM.label</source>
+        <target>Tablette</target>
+      </trans-unit>
+      <trans-unit id="16" resname="widget_layout.tab.containerMargin.MD.label">
+        <source>widget_layout.tab.containerMargin.MD.label</source>
+        <target>Ordinateur</target>
+      </trans-unit>
+      <trans-unit id="17" resname="widget_layout.tab.containerMargin.LG.label">
+        <source>widget_layout.tab.containerMargin.LG.label</source>
+        <target>Grand écran</target>
+      </trans-unit>
+
+      <trans-unit id="18" resname="widget_layout.form.containerBackground.label">
+        <source>widget_layout.form.containerBackground.label</source>
+        <target>Arrière plan</target>
+      </trans-unit>
+      <trans-unit id="19" resname="widget_layout.form.containerTag.help_block">
+        <source>widget_layout.form.containerTag.help_block</source>
+        <target><![CDATA[Plus d'informations sur ce choix <a href="http://www.w3.org/wiki/HTML_structural_elements" target="_blank">ici</a>]]></target>
+      </trans-unit>
+      <trans-unit id="20" resname="widget_layout.form.containerClass.help_block">
+        <source>widget_layout.form.containerClass.help_block</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="21" resname="widget_layout.form.containerWidth.help_block">
+        <source>widget_layout.form.containerWidth.help_block</source>
+        <target>Indiquez la taille suivie de l'unité (px, %...)</target>
+      </trans-unit>
+      <trans-unit id="22" resname="widget_layout.form.containerMargin.help_block">
+        <source>widget_layout.form.containerMargin.help_block</source>
+        <target><![CDATA[Indiquez la marge suivie de l'unité (px, %...). Vous pouvez utiliser 0px auto pour centrer le conteneur - Propriété CSS <strong>margin</strong>]]></target>
+      </trans-unit>
+      <trans-unit id="23" resname="widget_layout.form.containerPadding.help_block">
+        <source>widget_layout.form.containerPadding.help_block</source>
+        <target><![CDATA[Indiquez la taille suivie de l'unité (px, %...) - Propriété CSS <strong>padding</strong>]]></target>
+      </trans-unit>
+      <trans-unit id="24" resname="widget_layout.form.containerMarginXS.help_block">
+        <source>widget_layout.form.containerMarginXS.help_block</source>
+        <target><![CDATA[Indiquez la marge suivie de l'unité (px, %...). Vous pouvez utiliser 0px auto pour centrer le conteneur - Propriété CSS <strong>margin</strong>]]></target>
+      </trans-unit>
+      <trans-unit id="25" resname="widget_layout.form.containerPaddingXS.help_block">
+        <source>widget_layout.form.containerPaddingXS.help_block</source>
+        <target><![CDATA[Indiquez la taille suivie de l'unité (px, %...) - Propriété CSS <strong>padding</strong>]]></target>
+      </trans-unit>
+      <trans-unit id="26" resname="widget_layout.form.containerMarginSM.help_block">
+        <source>widget_layout.form.containerMarginSM.help_block</source>
+        <target><![CDATA[Indiquez la marge suivie de l'unité (px, %...). Vous pouvez utiliser 0px auto pour centrer le conteneur - Propriété CSS <strong>margin</strong>]]></target>
+      </trans-unit>
+      <trans-unit id="27" resname="widget_layout.form.containerPaddingSM.help_block">
+        <source>widget_layout.form.containerPaddingSM.help_block</source>
+        <target><![CDATA[Indiquez la taille suivie de l'unité (px, %...) - Propriété CSS <strong>padding</strong>]]></target>
+      </trans-unit>
+      <trans-unit id="28" resname="widget_layout.form.containerMarginMD.help_block">
+        <source>widget_layout.form.containerMarginMD.help_block</source>
+        <target><![CDATA[Indiquez la marge suivie de l'unité (px, %...). Vous pouvez utiliser 0px auto pour centrer le conteneur - Propriété CSS <strong>margin</strong>]]></target>
+      </trans-unit>
+      <trans-unit id="29" resname="widget_layout.form.containerPaddingMD.help_block">
+        <source>widget_layout.form.containerPaddingMD.help_block</source>
+        <target><![CDATA[Indiquez la taille suivie de l'unité (px, %...) - Propriété CSS <strong>padding</strong>]]></target>
+      </trans-unit>
+      <trans-unit id="30" resname="widget_layout.form.containerMarginLG.help_block">
+        <source>widget_layout.form.containerMarginLG.help_block</source>
+        <target><![CDATA[Indiquez la marge suivie de l'unité (px, %...). Vous pouvez utiliser 0px auto pour centrer le conteneur - Propriété CSS <strong>margin</strong>]]></target>
+      </trans-unit>
+      <trans-unit id="31" resname="widget_layout.form.containerPaddingLG.help_block">
+        <source>widget_layout.form.containerPaddingLG.help_block</source>
+        <target><![CDATA[Indiquez la taille suivie de l'unité (px, %...) - Propriété CSS <strong>padding</strong>]]></target>
+      </trans-unit>
+      <trans-unit id="32" resname="widget_layout.form.containerBackground.help_block">
+        <source>widget_layout.form.containerBackground.help_block</source>
+        <target><![CDATA[par ex. : #123ABC ou url('http://website.com/image.jpg') - Propriété CSS <strong>background</strong>]]></target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
