@@ -1,0 +1,17 @@
+parameters:
+    victoire_sitemap_priority_pageseo_type_class: Victoire\Bundle\SitemapBundle\Form\SitemapPriorityPageSeoType
+
+
+services:
+    #  ==================  FORMS ================== #
+    victoire_sitemap.priority.pageseo_type:
+        class: %victoire_sitemap_priority_pageseo_type_class%
+        tags:
+            - { name: form.type, alias: victoire_sitemap_priority_pageseo_type }
+
+    #  ==================  MENU ================== #
+    victoire_sitemap.sitemap_menu_listener:
+        class: Victoire\Bundle\SitemapBundle\Listener\SiteMapMenuListener
+        arguments: ["@victoire_core.admin_menu_builder"]
+        tags:
+            - { name: kernel.event_listener, event: victoire_core.build_menu, method: addGlobal, priority: 70 }

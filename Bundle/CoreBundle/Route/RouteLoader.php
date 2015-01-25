@@ -38,6 +38,7 @@ class RouteLoader extends Loader
             '@VictoirePageBundle/Controller/',
             '@VictoireCoreBundle/Controller/',
             '@VictoireWidgetBundle/Controller/',
+            '@VictoireSitemapBundle/Controller/',
         );
         foreach ($resources as $resource) {
             $importedRoutes = $this->import($resource, 'annotation');
@@ -47,7 +48,7 @@ class RouteLoader extends Loader
     protected function addWidgetsRouting(&$collection)
     {
         foreach ($this->widgets as $widgetParams) {
-            $controllerResource = '@VictoireWidget' . $widgetParams['name'] . 'Bundle/Controller/';
+            $controllerResource = '@VictoireWidget'.$widgetParams['name'].'Bundle/Controller/';
             if ($this->getResolver()->resolve($controllerResource)) {
                 $importedRoutes = $this->import($controllerResource, 'annotation');
                 $collection->addCollection($importedRoutes);
@@ -59,7 +60,7 @@ class RouteLoader extends Loader
     {
         $pattern = '/victoire-dcms-public/show-business-page-by-id/{entityId}/{type}';
         $defaults = array(
-            '_controller' => 'VictoirePageBundle:Page:showBusinessPageById'
+            '_controller' => 'VictoirePageBundle:Page:showBusinessPageById',
         );
         $requirements = array(
             'viewId' => '\d+',
@@ -86,11 +87,10 @@ class RouteLoader extends Loader
 
     protected function addShowPageRoute(&$collection)
     {
-
         // prepare a new route
         $pattern = '/{url}';
         $defaults = array(
-            '_controller' => 'VictoirePageBundle:Page:show'
+            '_controller' => 'VictoirePageBundle:Page:show',
         );
         $requirements = array(
             'url' => '^.*$',

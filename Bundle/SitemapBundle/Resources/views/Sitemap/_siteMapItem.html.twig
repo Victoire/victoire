@@ -1,0 +1,23 @@
+<li id="page-{{ page.id }}">
+    <div>
+        <a 
+            href="{{ path('victoire_core_page_show', {'url': page.url}) }}"
+            title="{{ 'sitemap.goto'|trans({'%pageName%': page.name}, 'victoire') }}">
+            {{ page.name }}
+        </a>
+        {% set sitemapPriorityForm = attribute(forms, page.id) %}
+        {{ form_start(sitemapPriorityForm) }}
+        {{ form_widget(sitemapPriorityForm.sitemapPriority, {
+            'attr': {
+                'onchange':'$vic(this).parents("form").submit();'
+            }}) }}
+        {{ form_end(sitemapPriorityForm) }}&nbsp;&nbsp;<span id="form-save-notice-{{ page.id }}" class="fa fa-save vic-text-green" style="display:none;"></span>
+        {% if page.children %}
+        <ul>
+            {% for _page in page.children %}
+                {% include 'VictoireSitemapBundle:Sitemap:_sitemapItem.html.twig' with {'page': _page} %}
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+</li>
