@@ -14,7 +14,7 @@ trait WebViewTrait
 {
     /**
      * @ORM\OneToOne(targetEntity="\Victoire\Bundle\SeoBundle\Entity\PageSeo")
-     * @ORM\JoinColumn(name="seo_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\JoinColumn(name="seo_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $seo;
 
@@ -53,11 +53,11 @@ trait WebViewTrait
     protected $status = PageStatus::PUBLISHED;
 
     /**
-    * @var datetime $publishedAt
-    *
-    * @ORM\Column(name="publishedAt", type="datetime")
-    * @VIC\BusinessProperty("date")
-    */
+     * @var datetime $publishedAt
+     *
+     * @ORM\Column(name="publishedAt", type="datetime")
+     * @VIC\BusinessProperty("date")
+     */
     protected $publishedAt;
 
     /**
@@ -290,5 +290,4 @@ trait WebViewTrait
 
         return $this;
     }
-
 }
