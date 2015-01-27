@@ -2,18 +2,18 @@
 
 {% block body %}
 
-    {% set width = containerWidth ? "width: " ~ containerWidth ~ "; " %}
-    {% set margin = containerMargin ? "margin: " ~ containerMargin ~ "; " %}
-    {% set padding = containerPadding ? "padding: " ~ containerPadding ~ "; " %}
-    {% set background = containerBackground ? "background: " ~ containerBackground ~ "; " %}
+    {% set widthWidget = containerWidth ? "width: " ~ containerWidth ~ "; " %}
+    {% set marginWidget = containerMargin ? "margin: " ~ containerMargin ~ "; " %}
+    {% set paddingWidget = containerPadding ? "padding: " ~ containerPadding ~ "; " %}
+    {% set backgroundWidget = containerBackground ? "background: " ~ containerBackground ~ "; " %}
 
 
     <style>
         #widget-{{ widget.id }} {
-            {{ width }}
-            {{ margin }}
-            {{ padding }}
-            {{ background }}
+            {{ widthWidget }}
+            {{ marginWidget }}
+            {{ paddingWidget }}
+            {{ backgroundWidget }}
         }
 
        {{ _self.responsiveStyle(widget, 'xs', victoire_twig_responsive) }}
@@ -24,13 +24,13 @@
 
     <{{ containerTag }} class="vic-widget {{ cms_widget_extra_css_class(widget) }} {{ containerClass }}" id="widget-{{widget.id}}">
 
-	{% if is_granted('ROLE_VICTOIRE') %}
-	    {% block actions %}
-	        {{ cms_widget_actions(widget) }}
-	    {% endblock actions %}
-	{% endif %}
-	{% block content %}
-		{{ content|raw }}
+    {% if is_granted('ROLE_VICTOIRE') %}
+        {% block actions %}
+            {{ cms_widget_actions(widget) }}
+        {% endblock actions %}
+    {% endif %}
+    {% block content %}
+        {{ content|raw }}
 
     {% endblock content %}
     </{{ containerTag }}>
