@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1" resname="menu.leftnavbar.sitemap.label">
+                <source>menu.leftnavbar.sitemap.label</source>
+                <target><![CDATA[<i class="vic-menuImg vic-menuImg-sitemap"></i> Plan du site]]></target>
+            </trans-unit>
+            <trans-unit id="2" resname="menu.sitemap">
+                <source>menu.sitemap</source>
+                <target><![CDATA[<i class="vic-menuImg vic-menuImg-sitemap"></i> Plan du site]]></target>
+            </trans-unit>
+            <trans-unit id="3" resname="modal.sitemap.title">
+                <source>modal.sitemap.title</source>
+                <target>Plan du site</target>
+            </trans-unit>
+            <trans-unit id="4" resname="sitemap.changed.success">
+                <source>sitemap.changed.success</source>
+                <target>Le plan du site a été mis à jour avec succès.</target>
+            </trans-unit>
+            <trans-unit id="5" resname="modal.sitemap.caption">
+                <source>modal.sitemap.caption</source>
+                <target>Visualisez l'arborescence du site et glissez/déposez les pages pour les réorganiser à votre gré</target>
+            </trans-unit>
+            <trans-unit id="6" resname="sitemap.changedPriority.success">
+                <source>sitemap.changedPriority.success</source>
+                <target>Ok commandant ;) Changement de priorité pour la page "%pageName%" éffectué !</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

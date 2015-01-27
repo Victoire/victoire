@@ -1,5 +1,6 @@
 <?php
-namespace Victoire\Bundle\CoreBundle\Listener;
+
+namespace Victoire\Bundle\SitemapBundle\Listener;
 
 use Symfony\Component\EventDispatcher\Event;
 use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
@@ -36,7 +37,7 @@ class SiteMapMenuListener
 
         $this->mainItem
             ->addChild('menu.sitemap', array(
-                'route' => 'victoire_core_page_sitemap'
+                'route' => 'victoire_sitemap_reorganize',
             ))
             ->setLinkAttribute('data-toggle', 'vic-modal');
 

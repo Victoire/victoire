@@ -1,0 +1,9 @@
+{
+    "require_all":
+    {
+        "javascripts":
+        {
+            "foot": "@VictoireSitemapBundle/Resources/script/sitemap.js"
+        }
+    }
+}

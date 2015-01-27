@@ -40,7 +40,6 @@ class PageExtension extends \Twig_Extension
     {
         return array(
             'cms_page_business_page_pattern_sitemap' => new \Twig_Function_Method($this, 'cmsPageBusinessPagePatternSiteMap', array('is_safe' => array('html'))),
-            'cms_page_sitemap' => new \Twig_Function_Method($this, 'cmsPageSiteMap', array('is_safe' => array('html')))
         );
     }
 
@@ -62,29 +61,6 @@ class PageExtension extends \Twig_Extension
     public function getName()
     {
         return 'cms_page';
-    }
-
-    /**
-     * Get the link for a page in the sitemap
-     * @param BasePage $page
-     *
-     * @return string The html
-     */
-    public function cmsPageSiteMap(BasePage $page)
-    {
-        $html = '';
-
-        $pageId = $page->getId();
-        $pageUrl = $page->getUrl();
-        $pageName = $page->getName();
-
-        $router = $this->router;
-
-        $url = $router->generate('victoire_core_page_show', array('url' => $pageUrl));
-
-        $html = '<li id="page-'.$pageId.'"><div><a href="'.$url.'" title="'.$url.'">'.$pageName.'</a></div>';
-
-        return $html;
     }
 
     /**
@@ -140,7 +116,7 @@ class PageExtension extends \Twig_Extension
                     'item'      => $item,
                     'url'       => $url,
                     'title'     => $title,
-                    'generated' => $generated
+                    'generated' => $generated,
                 );
 
                 unset($url);

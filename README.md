@@ -26,6 +26,7 @@ Composant | Description
 [**MediaBundle**][7] | Basé sur KunstmaanMediaBundle, il offre une interface de gestion des fichiers d'un site et est une passerelle avec les widgets
 [**PageBundle**][8] | Un des bundles les plus importants, il est responsable des pages de bases
 [**QueryBundle**][9] | Contient la logique permettant à tout objet de récupérer des entités métiers
+[**SitemapBundle**][20] | Contient toute la logique permettant de gérer et générer un plan du site
 [**SeoBundle**][10] | Plus rien ne vous fait peur en terme de SEO. Ce bundle, apporte ce qu'il faut pour définir la sémantique d'une vue et ses détails de reférencement
 [**TemplateBundle**][11] | Que serais-je le monde sans patrons ! Ce bundle apporte la structure pour encadrer les patrons comme il se doivent de l'être
 [**TestsBundle**][12] | Contient l'ensemble des contextes et tests Behat
@@ -36,7 +37,7 @@ Composant | Description
 [**I18nBundle**][17] | Composant gérant l'internationalisation
 
 
-* Read the [setup guide](http://github.com/victoire/victoire//blob/master/setup.md)
+* Read the [setup guide](http://github.com/victoire/victoire/blob/master/setup.md)
 
 [![Licence Creative Commons](http://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-nd/4.0/)
 
@@ -50,22 +51,23 @@ Cette œuvre est mise à disposition selon les termes de la Licence Creative Com
 *Proprieté d'AppVentus, tous droits réservés - Property of AppVentus, All Right reserved*
 
 
-[1]:  http://github.com/victoire/victoire//blob/master/Bundle/CoreBundle/README.md
-[2]:  http://github.com/victoire/victoire//blob/master/Bundle/BlogBundle/README.md
-[3]:  http://github.com/victoire/victoire//blob/master/Bundle/BusinessEntityBundle/README.md
-[4]:  http://github.com/victoire/victoire//blob/master/Bundle/BusinessEntityPageBundle/README.md
-[5]:  http://github.com/victoire/victoire//blob/master/Bundle/DashboardBundle/README.md
-[6]:  http://github.com/victoire/victoire//blob/master/Bundle/FormBundle/README.md
-[7]:  http://github.com/victoire/victoire//blob/master/Bundle/MediaBundle/README.md
-[8]:  http://github.com/victoire/victoire//blob/master/Bundle/PageBundle/README.md
-[9]:  http://github.com/victoire/victoire//blob/master/Bundle/QueryBundle/README.md
-[10]: http://github.com/victoire/victoire//blob/master/Bundle/SeoBundle/README.md
-[11]: http://github.com/victoire/victoire//blob/master/Bundle/TemplateBundle/README.md
-[12]: http://github.com/victoire/victoire//blob/master/Bundle/TestsBundle/README.md
-[13]: http://github.com/victoire/victoire//blob/master/Bundle/TwigBundle/README.md
-[14]: http://github.com/victoire/victoire//blob/master/Bundle/UserBundle/README.md
-[15]: http://github.com/victoire/victoire//blob/master/Bundle/WidgetBundle/README.md
-[16]: http://github.com/victoire/victoire//blob/master/Bundle/WidgetMapBundle/README.md
-[17]: http://github.com/victoire/victoire//blob/master/Bundle/I18nBundle/README.md
-[18]: http://github.com/victoire/victoire//blob/master/Bundle/BusinessEntityPageBundle/Resources/doc/BusinessEntityPage.md
-[19]: http://github.com/victoire/victoire//blob/master/Bundle/BusinessEntityPageBundle/Resources/doc/BusinessEntityPagePattern.md
+[1]:  http://github.com/victoire/victoire/blob/master/Bundle/CoreBundle/README.md
+[2]:  http://github.com/victoire/victoire/blob/master/Bundle/BlogBundle/README.md
+[3]:  http://github.com/victoire/victoire/blob/master/Bundle/BusinessEntityBundle/README.md
+[4]:  http://github.com/victoire/victoire/blob/master/Bundle/BusinessEntityPageBundle/README.md
+[5]:  http://github.com/victoire/victoire/blob/master/Bundle/DashboardBundle/README.md
+[6]:  http://github.com/victoire/victoire/blob/master/Bundle/FormBundle/README.md
+[7]:  http://github.com/victoire/victoire/blob/master/Bundle/MediaBundle/README.md
+[8]:  http://github.com/victoire/victoire/blob/master/Bundle/PageBundle/README.md
+[9]:  http://github.com/victoire/victoire/blob/master/Bundle/QueryBundle/README.md
+[10]: http://github.com/victoire/victoire/blob/master/Bundle/SeoBundle/README.md
+[11]: http://github.com/victoire/victoire/blob/master/Bundle/TemplateBundle/README.md
+[12]: http://github.com/victoire/victoire/blob/master/Bundle/TestsBundle/README.md
+[13]: http://github.com/victoire/victoire/blob/master/Bundle/TwigBundle/README.md
+[14]: http://github.com/victoire/victoire/blob/master/Bundle/UserBundle/README.md
+[15]: http://github.com/victoire/victoire/blob/master/Bundle/WidgetBundle/README.md
+[16]: http://github.com/victoire/victoire/blob/master/Bundle/WidgetMapBundle/README.md
+[17]: http://github.com/victoire/victoire/blob/master/Bundle/I18nBundle/README.md
+[18]: http://github.com/victoire/victoire/blob/master/Bundle/BusinessEntityPageBundle/Resources/doc/BusinessEntityPage.md
+[19]: http://github.com/victoire/victoire/blob/master/Bundle/BusinessEntityPageBundle/Resources/doc/BusinessEntityPagePattern.md
+[20]: http://github.com/victoire/victoire/blob/master/Bundle/SitemapBundle/Resources/doc/README.md
