@@ -3,7 +3,7 @@
     {
         "javascripts":
         {
-            "victoire_edit": "@VictoireSitemapBundle/Resources/script/sitemap.js"
+            "victoire-edit": "@VictoireSitemapBundle/Resources/script/sitemap.js"
         }
     }
 }
