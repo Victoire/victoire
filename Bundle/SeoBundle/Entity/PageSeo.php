@@ -190,9 +190,16 @@ class PageSeo
     /**
      * @var float
      *
-     * @ORM\Column(name="sitemap_priority", type="float", nullable=true)
+     * @ORM\Column(name="sitemap_priority", type="float", nullable=true, options={"default" = "0.8"})
      */
     protected $sitemapPriority;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="sitemap_changeFreq", type="float", nullable=true, options={"default" = "monthly"})
+     */
+    protected $sitemapChangeFreq;
 
     /**
      * @var string
@@ -811,6 +818,29 @@ class PageSeo
     public function getSitemapPriority()
     {
         return $this->sitemapPriority;
+    }
+
+    /**
+     * Set sitemapChangeFreq
+     * @param float $sitemapChangeFreq
+     *
+     * @return PageSeo
+     */
+    public function setSitemapChangeFreq($sitemapChangeFreq)
+    {
+        $this->sitemapChangeFreq = $sitemapChangeFreq;
+
+        return $this;
+    }
+
+    /**
+     * Get sitemapChangeFreq
+     *
+     * @return float
+     */
+    public function getSitemapChangeFreq()
+    {
+        return $this->sitemapChangeFreq;
     }
 
     /**
