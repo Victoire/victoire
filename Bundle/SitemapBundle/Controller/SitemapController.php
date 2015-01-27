@@ -17,6 +17,22 @@ use Victoire\Bundle\SeoBundle\Entity\PageSeo;
 class SitemapController extends Controller
 {
     /**
+     * Change the sitemap priority for the given page
+     *
+     * @Route(".{_format}", name="victoire_sitemap_xml", Requirements={"_format" = "xml"})
+     * @Template("VictoireSitemapBundle:Sitemap:sitemap.xml.twig")
+     * @return template
+     */
+    public function xmlAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        return array(
+            'pages' => $em->getRepository('VictoirePageBundle:BasePage')->findAll(),
+        );
+    }
+
+    /**
      * Show sitemap as tree and reorganize it by dnd
      *
      * @Route("/reorganize", name="victoire_sitemap_reorganize")
