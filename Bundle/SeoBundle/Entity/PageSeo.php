@@ -72,7 +72,7 @@ class PageSeo
      * @var string
      *
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\MediaBundle\Entity\Media")
-     * @ORM\JoinColumn(name="ogImage_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\JoinColumn(name="ogImage_id", referencedColumnName="id", onDelete="SET NULL")
      *
      */
     protected $ogImage;
@@ -130,7 +130,7 @@ class PageSeo
      * @var string
      *
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\MediaBundle\Entity\Media")
-     * @ORM\JoinColumn(name="twitterImage_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\JoinColumn(name="twitterImage_id", referencedColumnName="id", onDelete="SET NULL")
      *
      */
     protected $twitterImage;
@@ -159,7 +159,8 @@ class PageSeo
     /**
      * @var string
      *
-     * @ORM\Column(name="schemaImage", type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\MediaBundle\Entity\Media")
+     * @ORM\JoinColumn(name="schemaImage_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $schemaImage;
 
@@ -187,23 +188,23 @@ class PageSeo
     /**
      * @var boolean
      *
-     * @ORM\Column(name="sitemap_indexed", type="boolean", nullable=true)
+     * @ORM\Column(name="sitemap_indexed", type="boolean", nullable=true, options={"default" = true})
      */
-    protected $sitemapIndexed;
+    protected $sitemapIndexed = true;
 
     /**
      * @var float
      *
      * @ORM\Column(name="sitemap_priority", type="float", nullable=true, options={"default" = "0.8"})
      */
-    protected $sitemapPriority;
+    protected $sitemapPriority = 0.8;
 
     /**
      * @var float
      *
      * @ORM\Column(name="sitemap_changeFreq", type="string", length=255, nullable=true, options={"default" = "monthly"})
      */
-    protected $sitemapChangeFreq;
+    protected $sitemapChangeFreq = "monthly";
 
     /**
      * @var string
@@ -230,7 +231,6 @@ class PageSeo
 
     /**
      * contructor
-     * @param Page $page
      *
      **/
     public function __construct()
@@ -688,7 +688,7 @@ class PageSeo
 
     /**
      * Set schemaImage
-     * @param string $schemaImage
+     * @param Image $schemaImage
      *
      * @return PageSeo
      */
@@ -796,7 +796,7 @@ class PageSeo
      *
      * @return boolean
      */
-    public function getSitemapIndexed()
+    public function isSitemapIndexed()
     {
         return $this->sitemapIndexed;
     }

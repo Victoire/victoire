@@ -32,6 +32,11 @@
 
     {% if view.seo.relCanonical %}<link rel="canonical" href="{{ view.seo.relCanonical }}"/>{% endif %}
     {% if view.seo.keyword %}<meta name="keyword" content="{{ view.seo.keyword }}"/>{% endif %}
+    {% if view.seo.metaRobotsAdvanced %}
+        <meta name="robots" content="{{ view.seo.metaRobotsAdvanced }}"/>
+    {% else %}
+        {% if view.seo.metaRobotsIndex and view.seo.metaRobotsFollow %}<meta name="robots" content="{{ view.seo.metaRobotsIndex }}, {{ view.seo.metaRobotsFollow }}"/>{% endif %}
+    {% endif %}
 {% else %}
 <title>{{ view|default('Victoire DCMS') }}</title>
 {% endif %}
