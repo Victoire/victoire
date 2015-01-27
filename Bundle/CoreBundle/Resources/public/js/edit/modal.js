@@ -36,7 +36,7 @@ $vic(document).on('click', 'a[data-toggle="vic-none"]', function(event) {
 
 
 // Open modal
-$vic(document).on('click', 'a.vic-hover-widget, a[data-toggle="vic-modal"]', function(event) {
+$vic(document).on('click', 'a.vic-hover-widget', function(event) {
     event.preventDefault();
 
     var role = $vic('body').attr('role');
@@ -54,7 +54,12 @@ $vic(document).on('click', 'a.vic-hover-widget, a[data-toggle="vic-modal"]', fun
     } else {
         console.error('You only should click on this in edit or style mode !');
     }
+});
 
+// Open modal
+$vic(document).on('click', 'a[data-toggle="vic-modal"]', function(event) {
+    event.preventDefault();
+    openModal($vic(this).attr('href'));
 });
 
 // Close a modal
