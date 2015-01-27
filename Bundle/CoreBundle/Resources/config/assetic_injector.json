@@ -3,6 +3,11 @@
     {
         "javascripts":
         {
+            "foot":
+            [
+                "@VictoireCoreBundle/Resources/public/vendor/jquery.scrollTo/1.4.14/jquery.scrollTo.min.js",
+                "@VictoireCoreBundle/Resources/public/js/smooth-scroll.js"
+            ],
             "victoire-head":
             [
                 "@VictoireCoreBundle/Resources/public/vendor/jquery/1.10.2/jquery-1.10.2.js",
