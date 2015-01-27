@@ -197,7 +197,7 @@ class PageSeo
     /**
      * @var float
      *
-     * @ORM\Column(name="sitemap_changeFreq", type="float", nullable=true, options={"default" = "monthly"})
+     * @ORM\Column(name="sitemap_changeFreq", type="string", length=255, nullable=true, options={"default" = "monthly"})
      */
     protected $sitemapChangeFreq;
 
