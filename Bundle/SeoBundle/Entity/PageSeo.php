@@ -71,7 +71,9 @@ class PageSeo
     /**
      * @var string
      *
-     * @ORM\Column(name="ogImage", type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\MediaBundle\Entity\Media")
+     * @ORM\JoinColumn(name="ogImage_id", referencedColumnName="id", onDelete="CASCADE")
+     *
      */
     protected $ogImage;
 
@@ -127,7 +129,9 @@ class PageSeo
     /**
      * @var string
      *
-     * @ORM\Column(name="twitterImage", type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\MediaBundle\Entity\Media")
+     * @ORM\JoinColumn(name="twitterImage_id", referencedColumnName="id", onDelete="CASCADE")
+     *
      */
     protected $twitterImage;
 
@@ -408,7 +412,7 @@ class PageSeo
 
     /**
      * Set ogImage
-     * @param string $ogImage
+     * @param Image $ogImage
      *
      * @return PageSeo
      */
@@ -592,7 +596,7 @@ class PageSeo
 
     /**
      * Set twitterImage
-     * @param string $twitterImage
+     * @param Image $twitterImage
      *
      * @return PageSeo
      */

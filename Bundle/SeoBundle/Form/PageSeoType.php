@@ -52,7 +52,7 @@ class PageSeoType extends AbstractType
             ->add('ogType', null, array(
                 'label' => 'form.pageSeo.ogType.label',
             ))
-            ->add('ogImage', null, array(
+            ->add('ogImage', 'media', array(
                 'label' => 'form.pageSeo.ogImage.label',
             ))
             ->add('ogUrl', null, array(
@@ -77,7 +77,7 @@ class PageSeoType extends AbstractType
             ->add('twitterDescription', null, array(
                 'label' => 'form.pageSeo.twitterDescription.label',
             ))
-            ->add('twitterImage', null, array(
+            ->add('twitterImage', 'media', array(
                 'label' => 'form.pageSeo.twitterImage.label',
             ))
             ->add('schemaPageType', null, array(
@@ -126,7 +126,7 @@ class PageSeoType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class'         => 'Victoire\Bundle\SeoBundle\Entity\PageSeo',
-            'translation_domain' => 'victoire'
+            'translation_domain' => 'victoire',
         ));
     }
 
