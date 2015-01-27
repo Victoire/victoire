@@ -44,6 +44,7 @@ class AppKernel extends Kernel
             new Victoire\Bundle\QueryBundle\VictoireQueryBundle(),
             new Victoire\Bundle\MediaBundle\VictoireMediaBundle(),
             new Victoire\Bundle\SeoBundle\VictoireSeoBundle(),
+            new Victoire\Widget\SitemapBundle\VictoireWidgetSitemapBundle(),
             new Victoire\Bundle\TemplateBundle\VictoireTemplateBundle(),
             new Victoire\Bundle\UserBundle\VictoireUserBundle(),
             new Victoire\Bundle\WidgetBundle\VictoireWidgetBundle(),
@@ -51,7 +52,7 @@ class AppKernel extends Kernel
             //Victoire test widget
             new Victoire\Widget\AnakinBundle\VictoireWidgetAnakinBundle(),
             //AppVentus Bundles
-            new AppVentus\AsseticInjectorBundle\AvAsseticInjectorBundle()
+            new AppVentus\AsseticInjectorBundle\AvAsseticInjectorBundle(),
         );
     }
 
