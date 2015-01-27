@@ -10,7 +10,6 @@ use Victoire\Bundle\PageBundle\Entity\PageStatus;
  */
 class BasePageRepository extends NestedTreeRepository
 {
-
     private $queryBuilder;
 
     /**
@@ -48,6 +47,22 @@ class BasePageRepository extends NestedTreeRepository
         $queryBuilder = $this->getOneByUrl($url);
 
         return $queryBuilder->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * Filter the query by the sitemap index (=visibility)
+     * @param bool $indexed
+     *
+     * @return Page
+     */
+    public function filterBySitemapIndexed($indexed = true)
+    {
+        $qb = $this->getInstance();
+        $qb->innerJoin('page.seo', 'seo')->addSelect('seo')
+            ->andWhere('seo.sitemapIndexed = :sitemapIndexed')
+            ->setParameter('sitemapIndexed', $indexed);
+
+        return $this;
     }
 
     /**

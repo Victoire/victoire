@@ -26,9 +26,19 @@ class SitemapController extends Controller
     public function xmlAction()
     {
         $em = $this->getDoctrine()->getManager();
+        $pages = $em->getRepository('VictoirePageBundle:BasePage')
+            ->getAll()
+            ->run();
+
+        $indexedPages = array();
+        foreach ($pages as $page) {
+            if (!$page->getSeo() || $page->getSeo()->isSitemapIndexed()) {
+                $indexedPages[] = $page;
+            }
+        }
 
         return array(
-            'pages' => $em->getRepository('VictoirePageBundle:BasePage')->findAll(),
+            'pages' => $indexedPages,
         );
     }
 
