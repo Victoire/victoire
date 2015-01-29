@@ -71,7 +71,20 @@ class PageSubscriber implements EventSubscriber
 
         //Add author relation on view
         if ($this->userClass && $metadatas->name === 'Victoire\Bundle\CoreBundle\Entity\View') {
-            $metaBuilder->addManyToOne('author', $this->userClass);
+
+            $metadatas->mapManyToOne(array(
+                'fieldName'    => 'author',
+                'targetEntity' => $this->userClass,
+                'cascade'      => array('persist'),
+                'inversedBy'   => 'pages',
+                'joinColumns' => array(
+                    array(
+                        'name' => 'author_id',
+                        'referencedColumnName' => 'id',
+                        'onDelete' => 'SET NULL',
+                    )
+                )
+            ));
         }
 
         // if $pages property exists, add the inversed side on User
