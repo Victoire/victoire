@@ -258,13 +258,16 @@ class PageHelper extends ViewHelper
     protected function checkPageValidity($page, $entity = null)
     {
         $errorMessage = 'The page was not found.';
+        $isPageOwner = false;
 
         //there is no page
         if ($page === null) {
             throw new NotFoundHttpException($errorMessage);
         }
 
-        $isPageOwner = $this->securityContext->isGranted('PAGE_OWNER', $page);
+        if ($this->securityContext->getToken()) {
+            $isPageOwner = $this->securityContext->isGranted('PAGE_OWNER', $page);
+        }
 
         //a page not published, not owned, nor granted throw an exception
         if (($page instanceof BasePage && !$page->isPublished()) && !$isPageOwner) {
