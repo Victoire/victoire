@@ -24,7 +24,7 @@ class BasePageController extends Controller
         return $response;
     }
 
-    public function showByIdAction($viewId, $entityId = null)
+    public function showByIdAction(Request $request, $viewId, $entityId = null)
     {
         $parameters = array('viewId' => $viewId);
         if ($entityId) {
@@ -33,7 +33,11 @@ class BasePageController extends Controller
         $page = $this->container->get('victoire_page.page_helper')->findPageByParameters($parameters);
         $this->get('victoire_widget_map.builder')->build($page);
 
-        return $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl())));
+        return $this->redirect($this->generateUrl('victoire_core_page_show', array_merge(
+                array('url' => $page->getUrl()),
+                $request->query->all()
+            )
+        ));
     }
 
     public function showBusinessPageByIdAction($entityId, $type)
