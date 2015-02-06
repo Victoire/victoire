@@ -1,3 +1,52 @@
+.input_media {
+    .radius(3px);
+    height: 250px;
+    position: relative;
+
+    &.hasnomedia {
+        border-width: 1px;
+        border-style: dashed;
+        border-color: @grey;
+        background-color: #ebebeb;
+    }
+
+    &.hasmedia {
+        .preview {
+            height: 250px;
+            background-size: cover
+        }
+    }
+
+    .del,
+    .choose {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        .transform(translateY(-50%) translateX(-50%));
+    }
+}
+
+.vic-btn {
+    .fa {
+        margin-right: 6px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 body[role=admin-edit] {
     .vic-new-widget {
         display: none !important;
