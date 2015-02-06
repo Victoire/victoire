@@ -1,0 +1,20 @@
+*,
+*:after,
+*::before {
+    .box-sizing;
+}
+
+body {
+    padding-top: 40px;
+}
+
+.victoire {
+    font-size: @victoire-fontSize;
+    font-weight: @victoire-fontWeight;
+
+    &,
+    * {
+        font-family: @victoire-fontFamily !important;
+        color: @victoire-color;
+    }
+}
