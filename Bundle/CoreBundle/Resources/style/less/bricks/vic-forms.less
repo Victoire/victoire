@@ -39,9 +39,17 @@
     }
 }
 
-label {
-    font-size: @vic-label-fontSize;
-    font-weight: @vic-label-fontWeight;
+.vic-modal {
+    label {
+        font-size: @vic-label-fontSize;
+        font-weight: @vic-label-fontWeight;
+        line-height: @vic-label_lineHeight;
+        margin-bottom: @vic-label_mBottom;
+
+        .vic-help-block {
+            display: inline;
+        }
+    }
 }
 
 select {
@@ -81,6 +89,10 @@ select {
     &.vic-form-control {
         height: @vic-formControl-height;
     }
+}
+
+.vic-form-control {
+    .radius(@vic-formControl_borderRadius);
 }
 
 .vic-help-block {
