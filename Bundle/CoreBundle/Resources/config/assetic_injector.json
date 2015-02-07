@@ -40,7 +40,6 @@
             ],
             "victoire-edit":
             [
-                "@VictoireCoreBundle/Resources/style/less/globals/typography.less",
                 "@VictoireCoreBundle/Resources/public/vendor/font-awesome/4.2.0/css/font-awesome.css",
                 "@VictoireCoreBundle/Resources/public/vendor/vic-bootstrap/3.0.3/css/bootstrap.min.css",
                 "@VictoireCoreBundle/Resources/public/vendor/codrops-notification/less/ns-default.less",
@@ -48,7 +47,9 @@
                 "@VictoireCoreBundle/Resources/public/vendor/codrops-notification/less/ns-style-attached.less",
                 "@VictoireCoreBundle/Resources/public/vendor/codrops-notification/less/ns-style-growl.less",
                 "@VictoireCoreBundle/Resources/public/vendor/codrops-notification/less/ns-style-other.less",
-                "@VictoireCoreBundle/Resources/style/less/victoire.less"
+                "@VictoireCoreBundle/Resources/style/less/bricks/bricks.less",
+                "@VictoireCoreBundle/Resources/style/less/layouts/layouts.less",
+                "@VictoireCoreBundle/Resources/style/less/ugly.less"
             ]
         }
     }

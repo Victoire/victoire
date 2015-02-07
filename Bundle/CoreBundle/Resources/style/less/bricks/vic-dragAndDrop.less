@@ -1,0 +1,18 @@
+// Drag & drop state highlight
+.vic-ui-state-highlight {
+    font-family: @victoire-fontFamily;
+    overflow: hidden;
+    text-align: center;
+    font-size: @vic-newWidget-fontSize;
+    box-shadow: @vic-moveWidgetShadow-boxShadow;
+    font-weight: @vic-moveWidgetShadow-fontWeight;
+    color: @vic-moveWidgetShadow-color;
+    line-height: @vic-newWidget-height;
+    height: @vic-newWidget-height;
+    width: 100%;
+    margin: @vic-moveWidgetMargin-vertical @vic-moveWidgetMargin-horizontal;
+
+    &:after {
+        content: "déposez ici";
+    }
+}
