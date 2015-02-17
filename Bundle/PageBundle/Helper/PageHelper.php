@@ -288,7 +288,7 @@ class PageHelper extends ViewHelper
                 $entityAllowed = $this->bepHelper->isEntityAllowed($page->getTemplate(), $entity);
 
                 if ($entityAllowed === false) {
-                    throw new NotFoundHttpException('The entity ['.$entity->getId().'] is not allowed for the page pattern ['.$page->getId().']');
+                    throw new NotFoundHttpException('The entity ['.$entity->getId().'] is not allowed for the page pattern ['.$page->getTemplate()->getId().']');
                 }
             }
         }

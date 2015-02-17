@@ -157,8 +157,6 @@ class QueryHelper
             }
         }
 
-        $itemsQueryBuilder->andWhere('main_item.visibleOnFront = true');
-
         return $itemsQueryBuilder;
     }
 }
