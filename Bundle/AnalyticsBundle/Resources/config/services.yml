@@ -1,0 +1,10 @@
+parameters:
+    victoire_analytics_browser_event_subscriber: Victoire\Bundle\AnalyticsBundle\EventSubscriber\BrowseEventSubscriber
+
+services:
+    victoire_analytics.browser_event.subscriber:
+        class: %victoire_analytics_browser_event_subscriber%
+        arguments:
+            - "%victoire_core.user_class%"
+        tags:
+            - { name: doctrine.event_subscriber, connection: default, priority: -1 }
