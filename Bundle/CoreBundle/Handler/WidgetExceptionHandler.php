@@ -25,7 +25,7 @@ class WidgetExceptionHandler
      * @param boolean         $debug      The debug variable environment
      * @param TemplateMapper  $templating The victoire templating
      */
-    public function __construct(SecurityContext $security,  $twig, $debug, TemplateMapper $templating)
+    public function __construct(SecurityContext $security, $twig, $debug, TemplateMapper $templating)
     {
         $this->security = $security;
         $this->twig = $twig;

@@ -82,7 +82,7 @@ class Template extends View
      **/
     public function setPages(array $pages)
     {
-        foreach($pages as $page){
+        foreach ($pages as $page) {
             $this->addPage($page);
         }
 

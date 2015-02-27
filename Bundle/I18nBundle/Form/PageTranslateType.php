@@ -36,7 +36,7 @@ class PageTranslateType extends AbstractType
         $builder
             ->add('name');
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
             $view = $event->getData();
             $form = $event->getForm();
 
@@ -67,7 +67,7 @@ class PageTranslateType extends AbstractType
         $i18n = $view->getI18n();
 
         foreach ($this->availableLocales as $localeVal) {
-            if ($i18n->getTranslation($localeVal) === null ) {
+            if ($i18n->getTranslation($localeVal) === null) {
                 $choices[$localeVal] = 'victoire.i18n.viewType.locale.'.$localeVal;
             }
         }

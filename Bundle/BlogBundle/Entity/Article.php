@@ -507,7 +507,7 @@ class Article
     {
         $email = $this->author->getEmail();
 
-        return "http://www.gravatar.com/avatar/" . md5($email) . "?s=70";
+        return "http://www.gravatar.com/avatar/".md5($email)."?s=70";
     }
 
     public function getAuthorFullname()

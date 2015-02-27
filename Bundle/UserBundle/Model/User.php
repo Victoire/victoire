@@ -94,7 +94,7 @@ class User extends BaseUser implements VictoireUserInterface
      */
     public function getFullName()
     {
-        return $this->firstname . " " . $this->lastname;
+        return $this->firstname." ".$this->lastname;
     }
 
     /**

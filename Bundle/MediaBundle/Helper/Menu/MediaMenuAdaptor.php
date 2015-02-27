@@ -160,8 +160,8 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
                 if (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0) {
                     if (stripos($menuitem->getRoute(), 'VictoireMediaBundle_media_show') === 0) {
                         /* @var Media $media */
-                        $media     = $this->em->getRepository('VictoireMediaBundle:Media')->getMedia($request->get('mediaId'));
-                        $menuitem->setInternalname('Show ' . $media->getClassType() . ' ' . $media->getName());
+                        $media = $this->em->getRepository('VictoireMediaBundle:Media')->getMedia($request->get('mediaId'));
+                        $menuitem->setInternalname('Show '.$media->getClassType().' '.$media->getName());
                     }
                     $menuitem->setActive(true);
                 }

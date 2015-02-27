@@ -40,7 +40,7 @@ class Cache
      */
     public function fetch($id)
     {
-        $id = $this->uniqId + '-' + $id;
+        $id = $this->uniqId + '-' +$id;
         if ($this->contains($id)) {
             return $this->cache->fetch($id);
         }
@@ -58,7 +58,7 @@ class Cache
      */
     public function save($id, $data)
     {
-        $id = $this->uniqId + '-' + $id;
+        $id = $this->uniqId + '-' +$id;
         if (!$this->apcIsEnabled()) {
             return false;
         }

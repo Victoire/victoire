@@ -76,7 +76,7 @@ class TemplateMapper
         list($bundle, $element, $view) = array_pad(explode(":", $view), 3, null);
 
         if ($view) {
-            $twigTemplate = $element . ":" . $view;
+            $twigTemplate = $element.":".$view;
         } else {
             $twigTemplate = $element;
         }

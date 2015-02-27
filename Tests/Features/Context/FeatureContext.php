@@ -135,7 +135,7 @@ class FeatureContext extends MinkContext
        } else {
            $this->getSession()->wait(100);
 
-           return $this->assertElementContainsText($element, $text, $timeout-100);
+           return $this->assertElementContainsText($element, $text, $timeout - 100);
        }
     }
 
@@ -163,14 +163,14 @@ class FeatureContext extends MinkContext
         $alphabetLower = '"'.implode('', range('a', 'z')).'šœÿàáâãäåæçèéêëìíîïðñòóôõøùúûüýþö"';
         $alphabetUpper = '"'.implode('', range('A', 'Z')).'ŠŒŸÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕØÙÚÛÜÝÞÖ"';
 
-        $item = $element->find('xpath', '/descendant-or-self::*[contains(translate(text(), '.$alphabetUpper.', '.$alphabetLower.'), translate("' . $value. '", '.$alphabetUpper.', '.$alphabetLower.'))]');
+        $item = $element->find('xpath', '/descendant-or-self::*[contains(translate(text(), '.$alphabetUpper.', '.$alphabetLower.'), translate("'.$value.'", '.$alphabetUpper.', '.$alphabetLower.'))]');
 
         if ($item) {
            return $item;
         } else {
            $this->getSession()->wait(100);
 
-           return $this->findAfterAjax($element, $value, $timeout-100);
+           return $this->findAfterAjax($element, $value, $timeout - 100);
         }
    }
 }

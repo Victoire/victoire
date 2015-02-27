@@ -138,7 +138,7 @@ class UrlHelper
 
         //if the url is alreay used, we look for another one
         if ($isUrlAlreadyUsed) {
-            $urlWithSuffix = $url . '-' . $suffixe;
+            $urlWithSuffix = $url.'-'.$suffixe;
 
             $isUrlAlreadyUsed = $this->isUrlAlreadyUsed($urlWithSuffix);
 

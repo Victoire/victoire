@@ -25,8 +25,8 @@ trait VictoireSubContextTrait
         return array(
             new Step\Given('I am on "/login"'),
             new Step\Then('I should see "Se souvenir de moi"'),
-            new Step\When('I fill in "username" with "' . $username . '"'),
-            new Step\When('I fill in "password" with "' . $password . '"'),
+            new Step\When('I fill in "username" with "'.$username.'"'),
+            new Step\When('I fill in "password" with "'.$password.'"'),
             new Step\When('I press "_submit"'),
         );
     }
@@ -35,7 +35,7 @@ trait VictoireSubContextTrait
      */
     public function iFillInWysiwygOnFieldWith($arg)
     {
-        $js = 'CKEDITOR.instances.victoire_widget_form_ckeditor_content.setData("' . $arg . '");';
+        $js = 'CKEDITOR.instances.victoire_widget_form_ckeditor_content.setData("'.$arg.'");';
         $this->getSession()->executeScript($js);
     }
 
@@ -45,11 +45,11 @@ trait VictoireSubContextTrait
     public function iSelectFromTheSelectOfSlot($widget, $nth, $slot)
     {
         $widget = $this->fixStepArgument($widget);
-        $element = 'descendant-or-self::*[@id="vic-widget-1-container"]/div[' . $nth . ']/label/select';
-        $element = 'descendant-or-self::*[@id="vic-slot-' . $slot . '"]/div/label/select[' . $nth . ']';
+        $element = 'descendant-or-self::*[@id="vic-widget-1-container"]/div['.$nth.']/label/select';
+        $element = 'descendant-or-self::*[@id="vic-slot-'.$slot.'"]/div/label/select['.$nth.']';
 
 
-        $slot = $this->getSession()->getPage()->find('xpath', 'descendant-or-self::*[@id="vic-slot-' . $slot . '"]');
+        $slot = $this->getSession()->getPage()->find('xpath', 'descendant-or-self::*[@id="vic-slot-'.$slot.'"]');
         $selects = $slot->findAll('css', 'select[role="menu"]');
         $selects[$nth - 1]->selectOption($widget);
     }
@@ -78,7 +78,7 @@ trait VictoireSubContextTrait
     public function shouldPrecedeForTheQuery($textBefore, $textAfter)
     {
         $items = array_map(
-            function ($element) {
+            function($element) {
                 return $element->getText();
             },
             $this->getSession()->getPage()->findAll('css', 'div.vic-widget > p')

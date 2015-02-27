@@ -67,7 +67,7 @@ trait AjaxSubContextTrait
        } else {
            $this->getSession()->wait(100);
 
-           return $this->assertElementContainsText($element, $text, $timeout-100);
+           return $this->assertElementContainsText($element, $text, $timeout - 100);
        }
     }
 
@@ -89,14 +89,14 @@ trait AjaxSubContextTrait
        $alphabetLower = '"'.implode('', range('a', 'z')).'"';
        $alphabetUpper = '"'.implode('', range('A', 'Z')).'"';
 
-       $item = $element->find('xpath', '/descendant-or-self::*[contains(translate(text(), '.$alphabetUpper.', '.$alphabetLower.'), translate("' . $value. '", '.$alphabetUpper.', '.$alphabetLower.'))]');
+       $item = $element->find('xpath', '/descendant-or-self::*[contains(translate(text(), '.$alphabetUpper.', '.$alphabetLower.'), translate("'.$value.'", '.$alphabetUpper.', '.$alphabetLower.'))]');
 
        if ($item) {
            return $item;
        } else {
            $this->getSession()->wait(100);
 
-           return $this->findAfterAjax($element, $value, $timeout-100);
+           return $this->findAfterAjax($element, $value, $timeout - 100);
        }
 
    }

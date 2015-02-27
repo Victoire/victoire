@@ -108,7 +108,7 @@ class BasePageController extends Controller
                 "success" => false,
                 "message" => $formErrorHelper->getRecursiveReadableErrors($form),
                 'html'    => $this->container->get('victoire_templating')->render(
-                    $this->getBaseTemplatePath() . ':new.html.twig',
+                    $this->getBaseTemplatePath().':new.html.twig',
                     array('form' => $form->createView())
                 )
             );
@@ -153,7 +153,7 @@ class BasePageController extends Controller
         return  array(
             'success' => empty($errors),
             'html' => $this->container->get('victoire_templating')->render(
-                $this->getBaseTemplatePath() . ':settings.html.twig',
+                $this->getBaseTemplatePath().':settings.html.twig',
                 array(
                     'page' => $page,
                     'form' => $form->createView(),
@@ -201,7 +201,7 @@ class BasePageController extends Controller
         return array(
             'success' => empty($errors),
             'html' => $this->container->get('victoire_templating')->render(
-                $this->getBaseTemplatePath() . ':translate.html.twig',
+                $this->getBaseTemplatePath().':translate.html.twig',
                 array(
                     'page' => $page,
                     'form' => $form->createView(),

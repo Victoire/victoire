@@ -29,7 +29,7 @@ class WidgetHelper
              }
          }
 
-         throw new \Exception("Widget name not found for widget " . get_class($widget));
+         throw new \Exception("Widget name not found for widget ".get_class($widget));
 
     }
 
@@ -58,7 +58,7 @@ class WidgetHelper
      */
     public function newWidgetInstance($type, $view, $slot)
     {
-        $widgetAlias = 'victoire.widget.'. strtolower($type);
+        $widgetAlias = 'victoire.widget.'.strtolower($type);
         $widget = $this->container->get($widgetAlias);
 
         $widget->setView($view);
@@ -79,7 +79,7 @@ class WidgetHelper
     public function getTemplateName($action, Widget $widget)
     {
         //the template displayed is in the widget bundle
-        $templateName = 'VictoireWidget' . $this->getWidgetName($widget) . 'Bundle::' . $action . '.html.twig';
+        $templateName = 'VictoireWidget'.$this->getWidgetName($widget).'Bundle::'.$action.'.html.twig';
 
         return $templateName;
     }

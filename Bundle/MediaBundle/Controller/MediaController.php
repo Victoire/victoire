@@ -104,7 +104,7 @@ class MediaController extends Controller
         /* @var Folder $folder */
         $folder = $em->getRepository('VictoireMediaBundle:Folder')->getFolder($folderId);
 
-        $helper  = new BulkUploadHelper();
+        $helper = new BulkUploadHelper();
 
         $form = $this->createForm(new BulkUploadType('*/*'), $helper);
 

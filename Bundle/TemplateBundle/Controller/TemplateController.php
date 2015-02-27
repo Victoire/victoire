@@ -53,19 +53,19 @@ class TemplateController extends Controller
     {
         //add the view to twig
         $this->get('twig')->addGlobal('view', $template);
-        $viewParameters = array('locale' => $template->getLocale(),'viewId' => $template->getId());
+        $viewParameters = array('locale' => $template->getLocale(), 'viewId' => $template->getId());
         $viewReference = $this->container->get('victoire_core.view_cache_helper')->getReferenceByParameters($viewParameters);
         $template->setReference($viewReference);
         $event = new TemplateMenuContextualEvent($template);
 
         //TODO : il serait bon de faire des constantes pour les noms d'évents
-        $eventName = 'victoire_core.' . Template::TYPE . '_menu.contextual';
+        $eventName = 'victoire_core.'.Template::TYPE.'_menu.contextual';
 
         $this->get('event_dispatcher')->dispatch($eventName, $event);
 
         //the victoire templating
         $victoireTemplating = $this->container->get('victoire_templating');
-        $layout = 'AppBundle:Layout:' . $template->getLayout() . '.html.twig';
+        $layout = 'AppBundle:Layout:'.$template->getLayout().'.html.twig';
 
         $parameters = array(
             'view'   => $template,
@@ -103,7 +103,7 @@ class TemplateController extends Controller
             $em->persist($template);
             $em->flush();
 
-            return new JsonResponse( array(
+            return new JsonResponse(array(
                 "success"  => true,
                 "url"      => $this->generateUrl('victoire_template_show', array('slug' => $template->getSlug()))
             ));
@@ -150,7 +150,7 @@ class TemplateController extends Controller
                 "success" => true,
                 'html'    => $this->container->get('victoire_templating')->render(
                     'VictoireTemplateBundle:Template:settings.html.twig',
-                    array('template' => $template,'form' => $form->createView())
+                    array('template' => $template, 'form' => $form->createView())
                 )
             )
         );
@@ -186,7 +186,7 @@ class TemplateController extends Controller
                 "success" => true,
                 'html'    => $this->container->get('victoire_templating')->render(
                     'VictoireTemplateBundle:Template:translate.html.twig',
-                    array('template' => $template,'form' => $form->createView())
+                    array('template' => $template, 'form' => $form->createView())
                 )
             )
         );

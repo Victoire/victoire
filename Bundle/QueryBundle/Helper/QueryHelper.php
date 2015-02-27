@@ -132,7 +132,7 @@ class QueryHelper
                              ->from($itemsQueryBuilder->getRootEntities()[0], 'item');
 
             $itemsQueryBuilder
-                ->andWhere('main_item.id IN (' . $subQuery->getQuery()->getDql() . ' ' . $query . ')');
+                ->andWhere('main_item.id IN ('.$subQuery->getQuery()->getDql().' '.$query.')');
         }
         $currentView = $this->currentView;
 
@@ -142,12 +142,12 @@ class QueryHelper
             // NEW
             $metadatas = $this->entityManager->getClassMetadata(get_class($currentEntity));
             foreach ($metadatas->fieldMappings as $fieldName => $field) {
-                if (strpos($query, ":" . $fieldName) !== false) {
+                if (strpos($query, ":".$fieldName) !== false) {
                     $itemsQueryBuilder->setParameter($fieldName, $metadatas->getFieldValue($currentEntity, $fieldName));
                 }
             }
             foreach ($metadatas->associationMappings as $fieldName => $field) {
-                if (strpos($query, ":" . $fieldName) !== false) {
+                if (strpos($query, ":".$fieldName) !== false) {
                     $itemsQueryBuilder->setParameter($fieldName, $metadatas->getFieldValue($currentEntity, $fieldName)->getId());
                 }
             }
