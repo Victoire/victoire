@@ -5,7 +5,6 @@ namespace Victoire\Bundle\TemplateBundle\Listener;
 use Symfony\Component\EventDispatcher\Event;
 use Victoire\Bundle\CoreBundle\Listener\MenuListenerInterface;
 use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
-use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\TemplateBundle\Event\Menu\TemplateMenuContextualEvent;
 
 /**
