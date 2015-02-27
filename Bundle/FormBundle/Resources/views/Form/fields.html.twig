@@ -93,7 +93,6 @@
 
 {% block form_widget_simple %}
 {% spaceless %}
-    <div class="test">
     {% set type = type|default('text') %}
     {% if type != 'hidden' and ( vic_widget_addon_prepend|default(null) is not null or vic_widget_addon_append|default(null) is not null ) %}
     <div class="vic-input-group">
@@ -121,7 +120,6 @@
     {% if type != 'hidden' and vic_horizontal %}
         {{ block('form_message') }}
     {% endif %}
-</div>
 {% endspaceless %}
 {% endblock form_widget_simple %}
 
