@@ -84,7 +84,7 @@ class QueryHelper
 
     /**
      * Check that the object is not null and has the query trait
-     * @param unknown $containerEntity
+     * @param \Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern $containerEntity
      *
      * @throws \Exception
      */
@@ -128,8 +128,8 @@ class QueryHelper
         if ($query !== '' && $query !== null) {
 
             $subQuery = $this->entityManager->createQueryBuilder()
-                             ->select('item.id')
-                             ->from($itemsQueryBuilder->getRootEntities()[0], 'item');
+                                ->select('item.id')
+                                ->from($itemsQueryBuilder->getRootEntities()[0], 'item');
 
             $itemsQueryBuilder
                 ->andWhere('main_item.id IN ('.$subQuery->getQuery()->getDql().' '.$query.')');

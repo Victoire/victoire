@@ -8,17 +8,17 @@ use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
 class I18nPageMenuListener extends PageMenuListener
 {
 
-	/**
+    /**
      * Constructor
      *
      * @param MenuBuilder $menuBuilder
      */
-	public function __construct(MenuBuilder $menuBuilder) 
-	{
+    public function __construct(MenuBuilder $menuBuilder) 
+    {
         parent::__construct($menuBuilder);
-	}
+    }
 
-	/**
+    /**
      * This method is call to replace the base contextual PageMenuListener to add a new item in the menu when I18n is activated
      *
      * @param PageMenuContextualEvent $event

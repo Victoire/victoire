@@ -143,10 +143,11 @@ class CKEditor
         $_config = $this->configSettings($config, $events);
 
         $js = $this->returnGlobalEvents();
-        if (!empty($_config))
-            $js .= "CKEDITOR.replace('".$name."', ".$this->jsEncode($_config).");";
-        else
-            $js .= "CKEDITOR.replace('".$name."');";
+        if (!empty($_config)) {
+                    $js .= "CKEDITOR.replace('".$name."', ".$this->jsEncode($_config).");";
+        } else {
+                    $js .= "CKEDITOR.replace('".$name."');";
+        }
 
         $out .= $this->script($js);
 
@@ -542,10 +543,12 @@ class CKEditor
             return '{'.implode(',', $temp).'}';
         }
         // String otherwise
-        if (strpos($val, '@@') === 0)
-            return substr($val, 2);
-        if (strtoupper(substr($val, 0, 9)) == 'CKEDITOR.')
-            return $val;
+        if (strpos($val, '@@') === 0) {
+                    return substr($val, 2);
+        }
+        if (strtoupper(substr($val, 0, 9)) == 'CKEDITOR.') {
+                    return $val;
+        }
 
         return '"'.str_replace(array("\\", "/", "\n", "\t", "\r", "\x08", "\x0c", '"'), array('\\\\', '\\/', '\\n', '\\t', '\\r', '\\b', '\\f', '\"'), $val).'"';
     }

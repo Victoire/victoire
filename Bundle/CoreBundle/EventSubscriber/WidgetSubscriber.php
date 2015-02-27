@@ -33,9 +33,9 @@ class WidgetSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         $events = array(
-             VictoireCmsEvents::WIDGET_BUILD_FORM => array(
-                 array('addThemeField')
-             )
+                VictoireCmsEvents::WIDGET_BUILD_FORM => array(
+                    array('addThemeField')
+                )
         );
 
         return $events;

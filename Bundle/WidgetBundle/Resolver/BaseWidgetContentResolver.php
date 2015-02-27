@@ -84,9 +84,9 @@ class BaseWidgetContentResolver
         $parameters = $this->getWidgetStaticContent($widget);
 
         $entity = $this->getWidgetQueryBuilder($widget)
-                       ->setMaxResults(1)
-                       ->getQuery()
-                       ->getOneOrNullResult();
+                        ->setMaxResults(1)
+                        ->getQuery()
+                        ->getOneOrNullResult();
 
         $fields = $widget->getFields();
         $this->populateParametersWithWidgetFields($widget, $entity, $parameters);

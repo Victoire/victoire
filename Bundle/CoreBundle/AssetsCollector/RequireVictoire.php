@@ -5,20 +5,20 @@ namespace Victoire\Bundle\CoreBundle\AssetsCollector;
  */
 class RequireVictoire
 {
-     protected $resources = array();
-     protected $container;
-     protected $widgetTypes;
+        protected $resources = array();
+        protected $container;
+        protected $widgetTypes;
 
-     /**
-      * @param unknown $container
-      */
-     public function __construct($container)
-     {
+        /**
+         * @param unknown $container
+         */
+        public function __construct($container)
+        {
         //TODO : faire un objet qui prend tout le container n'est pas conseillé. Il faut passer juste les serivces nécessaires
         //TODO : Un service n'a pas détat. Ca n'a pas de sens de faire une fonction compute qui ne renvoit rient et un getter ensuite.
         $this->container = $container;
         $this->widgetTypes = array();
-     }
+        }
 
     /**
      * This function computes the assets from assetic_injector.json require_victoire's tag

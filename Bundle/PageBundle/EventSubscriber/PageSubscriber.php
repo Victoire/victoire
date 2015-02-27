@@ -95,9 +95,9 @@ class PageSubscriber implements EventSubscriber
 
     /**
      * This method is called on flush
-    * @param OnFlushEventArgs $eventArgs The flush event args.
+     * @param OnFlushEventArgs $eventArgs The flush event args.
      *
-    * @return void
+     * @return void
      */
     public function onFlush(OnFlushEventArgs $eventArgs)
     {

@@ -19,13 +19,13 @@ class LocaleResolver
     public $defaultLocale;
 
     /**
-    * Constructor
-    *
-    * @param string $localePattern      What is the strategy to resolve locale
-    * @param string $localeDomainConfig The locale domain config
-    * @param string $defaultLocale      The default local app
-    * @param string $availableLocales   The list of available locales
-    */
+     * Constructor
+     *
+     * @param string $localePattern      What is the strategy to resolve locale
+     * @param string $localeDomainConfig The locale domain config
+     * @param string $defaultLocale      The default local app
+     * @param string $availableLocales   The list of available locales
+     */
     public function __construct($localePattern, $localeDomainConfig, $defaultLocale, $availableLocales)
     {
         $this->localePattern = $localePattern;
@@ -35,9 +35,9 @@ class LocaleResolver
     }
 
     /**
-    * set the local depending on patterns
-    * it also set the victoire_locale wich is the locale of the application admin
-    */
+     * set the local depending on patterns
+     * it also set the victoire_locale wich is the locale of the application admin
+     */
     public function resolve(Request $request)
     {
         //locale
@@ -52,12 +52,12 @@ class LocaleResolver
     }
 
     /**
-    * @param Request $request
-    *
-    * @return string
-    *
-    * resolves the locale from host
-    */
+     * @param Request $request
+     *
+     * @return string
+     *
+     * resolves the locale from host
+     */
     public function resolveFromDomain(Request $request)
     {
         $host = $request->getHttpHost();
@@ -66,11 +66,11 @@ class LocaleResolver
     }
 
     /**
-    *
-    * @return string
-    *
-    * This method resolves the domain from locale
-    */
+     *
+     * @return string
+     *
+     * This method resolves the domain from locale
+     */
     public function resolveDomainForLocale($locale)
     {
         foreach ($this->localeDomainConfig as $domain => $domainLocale) {

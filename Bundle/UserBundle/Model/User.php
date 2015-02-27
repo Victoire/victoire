@@ -14,10 +14,10 @@ class User extends BaseUser implements VictoireUserInterface
     use \Gedmo\Timestampable\Traits\TimestampableEntity;
 
     /**
-    * @ORM\Id
-    * @ORM\Column(type="integer")
-    * @ORM\GeneratedValue(strategy="AUTO")
-    */
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
     protected $id;
 
     /**

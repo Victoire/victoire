@@ -12,8 +12,8 @@ class PageSettingsType extends PageType
 {
 
     /**
-    * Constructor
-    */
+     * Constructor
+     */
     public function __construct($availableLocales, RequestStack $requestStack)
     {
         parent::__construct($availableLocales, $requestStack);

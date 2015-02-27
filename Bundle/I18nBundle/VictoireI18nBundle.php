@@ -9,9 +9,9 @@ use Victoire\Bundle\I18nBundle\DependencyInjection\Compiler\I18nCompilerPass;
 
 class VictoireI18nBundle extends Bundle
 {
-	 /**
-     * the function add a cache driver to get and track i18n entity
-     */
+        /**
+         * the function add a cache driver to get and track i18n entity
+         */
     public function boot()
     {
         $driverChain = $this->container->get('doctrine.orm.entity_manager')->getConfiguration()->getMetadataDriverImpl();
