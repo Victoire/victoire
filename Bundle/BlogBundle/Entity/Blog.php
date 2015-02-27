@@ -32,11 +32,11 @@ class Blog extends BasePage
      * Constructor
      *
      */
-     public function __construct()
-     {
+        public function __construct()
+        {
         $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
         $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
-     }
+        }
 
     public function getArticles() { return $this->articles; }
     public function setArticles($articles) { $this->articles = $articles; return $this; }

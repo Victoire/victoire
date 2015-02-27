@@ -14,9 +14,9 @@ class CategoryRepository extends NestedTreeRepository
     public function getOrderedCategories(Blog $blog)
     {
         $this->qb = $this->getInstance('category')
-                         ->join('category.blog', 'blog')
-                         ->where('blog = :blog')
-                         ->setParameter('blog', $blog)
+                            ->join('category.blog', 'blog')
+                            ->where('blog = :blog')
+                            ->setParameter('blog', $blog)
         ;
         return $this;
 

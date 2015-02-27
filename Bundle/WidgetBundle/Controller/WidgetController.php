@@ -7,7 +7,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Widget\Managers\WidgetManager;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
@@ -35,10 +34,10 @@ class WidgetController extends Controller
             $this->container->get('victoire_core.current_view')->setCurrentView($view);
             if ($this->getRequest()->isXmlHttpRequest()) {
                 $response = new JsonResponse(array(
-                         'html'    => $this->get('victoire_widget.widget_renderer')->render($widget, $view),
-                         'update'  => 'vic-widget-'.$widget->getId().'-container',
-                         'success' => false,
-                 ));
+                            'html'    => $this->get('victoire_widget.widget_renderer')->render($widget, $view),
+                            'update'  => 'vic-widget-'.$widget->getId().'-container',
+                            'success' => false,
+                    ));
             } else {
                 $response = $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $view->getUrl())));
             }

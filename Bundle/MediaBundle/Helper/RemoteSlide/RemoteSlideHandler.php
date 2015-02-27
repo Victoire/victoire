@@ -138,7 +138,7 @@ class RemoteSlideHandler extends AbstractMediaHandler
      */
     public function createNew($data)
     {
-       $result = null;
+        $result = null;
         if (is_string($data)) {
             if (strpos($data, 'http') !== 0) {
                 $data = "http://".$data;

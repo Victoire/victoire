@@ -32,7 +32,7 @@ class IdToMediaTransformer implements DataTransformerInterface
     public function __construct(ObjectManager $objectManager, CurrentValueContainer $currentValueContainer)
     {
         $this->objectManager = $objectManager;
-           $this->currentValueContainer = $currentValueContainer;
+            $this->currentValueContainer = $currentValueContainer;
     }
 
     /**

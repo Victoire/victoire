@@ -62,11 +62,11 @@ class Template extends View
         return 'Modèle > '.$this->name;
     }
 
-     /**
-     * add page
-     * @param BasePage $page
-     * @return Template
-     **/
+        /**
+         * add page
+         * @param BasePage $page
+         * @return Template
+         **/
     public function addPage(BasePage $page)
     {
         $page->setTemplate($this);

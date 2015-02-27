@@ -94,11 +94,11 @@ class Category
      * Constructor
      *
      */
-     public function __construct()
-     {
+        public function __construct()
+        {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
         $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
-     }
+        }
 
     /**
      * undocumented function

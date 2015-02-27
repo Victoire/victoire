@@ -92,8 +92,8 @@ class BasePageController extends Controller
             // If the $page is a BusinessEntity (eg. an Article), compute it's url
             if (null !== $this->container->get('victoire_core.helper.business_entity_helper')->findByEntityInstance($page)) {
                 $page = $this->container
-                     ->get('victoire_business_entity_page.business_entity_page_helper')
-                     ->generateEntityPageFromPattern($page->getTemplate(), $page);
+                        ->get('victoire_business_entity_page.business_entity_page_helper')
+                        ->generateEntityPageFromPattern($page->getTemplate(), $page);
             }
 
             return array(
@@ -141,7 +141,7 @@ class BasePageController extends Controller
             $entityManager->persist($page);
             $entityManager->flush();
 
-             return array(
+                return array(
                 'success' => true,
                 'url'     => $this->generateUrl('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl()))
             );
@@ -260,7 +260,7 @@ class BasePageController extends Controller
      * if homepage
      *     forward show(homepage)
      * else
-         *     redirect to welcome page (dashboard)
+     *     redirect to welcome page (dashboard)
      * ==========================
      *
      * @Route("/", name="victoire_core_page_homepage")

@@ -64,8 +64,8 @@ trait VictoireSubContextTrait
         $element->click();
     }
         /**
-     * @Then /^I submit the widget$/
-     */
+         * @Then /^I submit the widget$/
+         */
     public function iSubmitTheWidget()
     {
 

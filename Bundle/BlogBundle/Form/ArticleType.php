@@ -16,8 +16,8 @@ class ArticleType extends AbstractType
     private $entityManager;
 
     /**
-    * Constructor
-    */
+     * Constructor
+     */
     public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;

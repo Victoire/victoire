@@ -23,13 +23,13 @@ class WidgetHelper
     public function getWidgetName(Widget $widget)
     {
         $widgets = $this->container->getParameter('victoire_core.widgets');
-         foreach ($widgets as $widgetParams) {
-             if ($widgetParams['class'] === get_class($widget)) {
+            foreach ($widgets as $widgetParams) {
+                if ($widgetParams['class'] === get_class($widget)) {
                 return $widgetParams['name'];
-             }
-         }
+                }
+            }
 
-         throw new \Exception("Widget name not found for widget ".get_class($widget));
+            throw new \Exception("Widget name not found for widget ".get_class($widget));
 
     }
 

@@ -47,9 +47,9 @@ class CategoryFilter extends BaseFilter
 
         if (count($parameters['category']) > 0) {
             $qb = $qb
-             ->join('main_item.category', 'c')
-             ->andWhere('c.id IN (:category)')
-             ->setParameter('category', $parameters['category']);
+                ->join('main_item.category', 'c')
+                ->andWhere('c.id IN (:category)')
+                ->setParameter('category', $parameters['category']);
         }
 
         return $qb;

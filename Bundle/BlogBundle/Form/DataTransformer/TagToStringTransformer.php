@@ -63,6 +63,6 @@ class TagToStringTransformer implements DataTransformerInterface
     public function transform($array)
     {
         return $array;
-   }
+    }
 
 }

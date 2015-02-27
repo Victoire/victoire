@@ -118,8 +118,8 @@ abstract class View
     protected $children;
 
     /**
-    * This relation is dynamicly added by PageSubscriber
-    */
+     * This relation is dynamicly added by PageSubscriber
+     */
     protected $author;
 
     /**
@@ -311,7 +311,7 @@ abstract class View
     {
         $this->children = $children;
         if ($children !== null) {
-           foreach ($children as $child) {
+            foreach ($children as $child) {
                 $child->setParent($this);
             }
         }

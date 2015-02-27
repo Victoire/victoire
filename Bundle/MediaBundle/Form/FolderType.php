@@ -50,18 +50,18 @@ class FolderType extends AbstractType
                 'choices'   => array('media' => 'media', 'image' => 'image', 'slideshow' => 'slideshow', 'video' => 'video'),
                 ))
             ->add('parent', 'entity', array('class' => 'Victoire\Bundle\MediaBundle\Entity\Folder', 'required' => false,
-              'query_builder' => function(\Doctrine\ORM\EntityRepository $er) use ($folder, $type) {
-                  $qb = $er->createQueryBuilder('folder');
+                'query_builder' => function(\Doctrine\ORM\EntityRepository $er) use ($folder, $type) {
+                    $qb = $er->createQueryBuilder('folder');
 
-                  if ($folder != null && $folder->getId() != null) {
-                      $ids = "folder.id != ".$folder->getId();
-                      $ids .= $type->addChildren($folder);
-                      $qb->andwhere($ids);
-                  }
-                  $qb->andWhere('folder.deleted != true');
+                    if ($folder != null && $folder->getId() != null) {
+                        $ids = "folder.id != ".$folder->getId();
+                        $ids .= $type->addChildren($folder);
+                        $qb->andwhere($ids);
+                    }
+                    $qb->andWhere('folder.deleted != true');
 
-                  return $qb;
-              }
+                    return $qb;
+                }
         ));
     }
 

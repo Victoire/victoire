@@ -70,12 +70,12 @@ class Article
     private $category;
 
     /**
-    * @var datetime $publishedAt
-    *
-    * @ORM\Column(name="publishedAt", type="datetime", nullable=true)
-    * @VIC\BusinessProperty("dateable")
-    * @VIC\BusinessProperty("textable")
-    */
+     * @var datetime $publishedAt
+     *
+     * @ORM\Column(name="publishedAt", type="datetime", nullable=true)
+     * @VIC\BusinessProperty("dateable")
+     * @VIC\BusinessProperty("textable")
+     */
     private $publishedAt;
 
     /**
@@ -121,18 +121,18 @@ class Article
     private $categoryTitle;
 
     /**
-    * @VIC\BusinessProperty("textable")
-    */
+     * @VIC\BusinessProperty("textable")
+     */
     private $publishedAtString;
 
     /**
-    * @VIC\BusinessProperty("textable")
-    */
+     * @VIC\BusinessProperty("textable")
+     */
     private $authorAvatar;
 
     /**
-    * @VIC\BusinessProperty("textable")
-    */
+     * @VIC\BusinessProperty("textable")
+     */
     private $authorFullName;
 
     /**

@@ -3,7 +3,6 @@ namespace Victoire\Bundle\WidgetBundle\Command;
 
 use Doctrine\DBAL\Types\Type;
 use Sensio\Bundle\GeneratorBundle\Command\GenerateBundleCommand;
-use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
 use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
 use Sensio\Bundle\GeneratorBundle\Generator\DoctrineEntityGenerator;

@@ -9,10 +9,10 @@ use Symfony\Component\DependencyInjection\Reference;
 class I18nCompilerPass implements CompilerPassInterface
 {
     /**
-    * method to replace class by other classes during compilation
-    *
-    * @param ContainerBuilder $container
-    */
+     * method to replace class by other classes during compilation
+     *
+     * @param ContainerBuilder $container
+     */
     public function process(ContainerBuilder $container)
     {
         $definition = $container->getDefinition('translator.default');

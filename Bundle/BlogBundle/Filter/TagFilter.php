@@ -47,9 +47,9 @@ class TagFilter extends BaseFilter
 
         if (count($parameters['tags']) > 0) {
             $qb = $qb
-                 ->join('main_item.tags', 't')
-                 ->andWhere('t.id IN (:tags)')
-                 ->setParameter('tags', $parameters['tags']);
+                    ->join('main_item.tags', 't')
+                    ->andWhere('t.id IN (:tags)')
+                    ->setParameter('tags', $parameters['tags']);
         }
 
         return $qb;
