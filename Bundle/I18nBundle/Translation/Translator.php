@@ -99,6 +99,7 @@ class Translator extends BaseTranslator
 
     /**
     * get the locale of the administration template
+    * @return string
     */
     public function getVictoireLocale()
     {

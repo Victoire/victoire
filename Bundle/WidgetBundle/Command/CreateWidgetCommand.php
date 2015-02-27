@@ -71,7 +71,7 @@ EOT
      * @throws \InvalidArgumentException When namespace doesn't end with Bundle
      * @throws \RuntimeException         When bundle can't be executed
      *
-     * @return void
+     * @return integer|null
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -404,7 +404,7 @@ EOT
      *
      * @param  InputInterface  $input
      * @param  OutputInterface $output
-     * @param  DialogHelper    $questionHelper
+     * @param  QuestionHelper    $questionHelper
      * @return $fields
      */
     private function addFields(InputInterface $input, OutputInterface $output, QuestionHelper $questionHelper)

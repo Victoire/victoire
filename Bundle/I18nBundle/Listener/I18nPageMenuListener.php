@@ -23,7 +23,7 @@ class I18nPageMenuListener extends PageMenuListener
      *
      * @param PageMenuContextualEvent $event
      *
-     * @return Ambigous <\Knp\Menu\ItemInterface, NULL>
+     * @return \Knp\Menu\ItemInterface <\Knp\Menu\ItemInterface, NULL>
      */
     public function addContextual($event)
     {

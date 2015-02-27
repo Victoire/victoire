@@ -28,7 +28,7 @@ class BlogMenuListener implements MenuListenerInterface
      *
      * @param PageMenuContextualEvent $event
      *
-     * @return \Victoire\Bundle\BlogBundle\Listener\MenuItem
+     * @return \Knp\Menu\ItemInterface
      */
     public function addContextual($event)
     {
@@ -65,7 +65,7 @@ class BlogMenuListener implements MenuListenerInterface
      *
      * @param PageMenuContextualEvent $event
      *
-     * @return \Victoire\Bundle\BlogBundle\Listener\MenuItem
+     * @return \Knp\Menu\ItemInterface
      */
     public function addBlogContextual($event)
     {
@@ -118,7 +118,7 @@ class BlogMenuListener implements MenuListenerInterface
     /**
      * This method returns you the main item and create it if not exists
      *
-     * @return MenuItem The main item to get
+     * @return \Knp\Menu\ItemInterface The main item to get
      */
     private function getMainItem()
     {

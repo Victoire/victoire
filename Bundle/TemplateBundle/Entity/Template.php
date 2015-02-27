@@ -91,7 +91,7 @@ class Template extends View
 
     /**
      * remove page
-     * @param BasePage $pages
+     * @param BasePage $page
      * @return Template
      **/
     public function removePage($page)

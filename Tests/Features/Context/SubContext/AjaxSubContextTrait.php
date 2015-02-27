@@ -47,7 +47,7 @@ trait AjaxSubContextTrait
      *
      * @Then /^(?:|I )should see "(?P<text>(?:[^"]|\\")*)" in the "(?P<element>[^"]*)" element$/
      *
-     * @return boolean
+     * @return null|boolean
     */
     public function assertElementContainsText($element, $text, $timeout = 5000)
     {

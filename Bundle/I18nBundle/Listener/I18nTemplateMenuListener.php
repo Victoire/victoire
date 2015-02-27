@@ -21,7 +21,7 @@ class I18nTemplateMenuListener extends TemplateMenuListener
      *
      * @param TemplateMenuContextualEvent $event
      *
-     * @return Ambigous <\Knp\Menu\ItemInterface, NULL>
+     * @return \Knp\Menu\ItemInterface <\Knp\Menu\ItemInterface, NULL>
      */
     public function addContextual($event)
     {

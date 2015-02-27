@@ -27,7 +27,7 @@ abstract class AbstractMediaHandler
     abstract public function getFormType();
 
     /**
-     * @param mixed $media
+     * @param Media $media
      */
     abstract public function canHandle($media);
 

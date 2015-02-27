@@ -31,7 +31,7 @@ class TemplateMenuListener implements MenuListenerInterface
      *
      * @param TemplateMenuContextualEvent $event
      *
-     * @return Ambigous <\Knp\Menu\ItemInterface, NULL>
+     * @return \Knp\Menu\ItemInterface <\Knp\Menu\ItemInterface, NULL>
      */
     public function addContextual($event)
     {
@@ -54,7 +54,7 @@ class TemplateMenuListener implements MenuListenerInterface
      *
      * @param Event $event
      *
-     * @return Ambigous <\Knp\Menu\ItemInterface, NULL>
+     * @return \Knp\Menu\ItemInterface <\Knp\Menu\ItemInterface, NULL>
      */
     public function addGlobal(Event $event)
     {

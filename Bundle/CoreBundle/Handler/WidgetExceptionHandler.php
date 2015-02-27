@@ -36,7 +36,6 @@ class WidgetExceptionHandler
     /**
      * Handle response for an exception for a widget
      *
-     * @param \Exception $exception
      * @param Widget     $widget    The widget that throwed an error
      *
      * @return string The html with the Error

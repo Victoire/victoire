@@ -20,7 +20,6 @@ class ErrorPageController extends Controller
 {
     /**
      * Show an error page
-     * @param string $code The error page code
      *
      * @Route("/{code}", name="victoire_errorPage_show")
      * @ParamConverter("page", class="VictoireTwigBundle:ErrorPage")

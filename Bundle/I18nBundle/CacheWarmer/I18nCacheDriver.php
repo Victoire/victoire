@@ -28,7 +28,7 @@ class I18nCacheDriver extends AnnotationDriver
     /**
      * Get all class names
      *
-     * @return array
+     * @return string[]
      */
     public function getAllClassNames()
     {

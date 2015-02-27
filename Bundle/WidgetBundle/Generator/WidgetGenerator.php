@@ -39,6 +39,8 @@ class WidgetGenerator extends Generator
 
     /**
      * build WidgetBundle files
+     * @param string $namespace
+     * @param string $format
      */
     public function generate($namespace, $bundle, $dir, $format, $structure, $fields = null, $parent = null, $contentResolver = false, $parentContentResolver = false)
     {

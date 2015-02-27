@@ -119,7 +119,7 @@ class ViewHelper
     /**
      * Get the content of an attribute of an entity given
      *
-     * @param entity $entity
+     * @param BusinessEntityPage $entity
      * @param strin  $field
      *
      * @return mixed
@@ -135,7 +135,7 @@ class ViewHelper
 
     /**
      * Update the value of the entity
-     * @param Object $entity
+     * @param BusinessEntityPage $entity
      * @param string $field
      * @param string $value
      *
@@ -381,7 +381,7 @@ class ViewHelper
     }
 
     /**
-     * @param BusinessEnityPagePattern $view
+     * @param BusinessEntityPagePattern $view
      * @param $etmplateName the future name of the clone
      *
      * this methods allows you to clone a BusinessEntityPagePattern

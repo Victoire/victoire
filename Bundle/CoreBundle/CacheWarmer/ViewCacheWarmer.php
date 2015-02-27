@@ -27,7 +27,6 @@ class ViewCacheWarmer
     /**
      * Warm the view cache file (if needed or force mode)
      * @param string  $cacheDir Where does the viewsReferences file should take place
-     * @param boolean $force    Should we recompute the file if the file already exists ?
      */
     public function warmUp($cacheDir)
     {

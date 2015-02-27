@@ -70,7 +70,7 @@ class ApcCache
     /**
      * Does the cache contains this key
      *
-     * @param unknown $key
+     * @param string $key
      *
      * @return boolean
      */

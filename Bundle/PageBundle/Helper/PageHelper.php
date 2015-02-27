@@ -55,7 +55,7 @@ class PageHelper extends ViewHelper
      * @param EntityManager            $entityManager
      * @param CurrentViewHelper        $currentViewHelper
      * @param EventDispatcherInterface $eventDispatcher
-     * @param VictoireTemplating       $victoireTemplating
+     * @param TemplateMapper       $victoireTemplating
      * @param PageSeoHelper            $pageSeoHelper
      * @param ViewCacheHelper          $viewCacheHelper
      * @param Session                  $session
@@ -96,9 +96,8 @@ class PageHelper extends ViewHelper
 
     /**
      * generates a response from a page url
-     * @param string $url
      *
-     * @return Response
+     * @return View
      */
     public function findPageByParameters($parameters)
     {
@@ -208,7 +207,6 @@ class PageHelper extends ViewHelper
 
     /**
      * find the page according to given url. If not found, try in route history, if seo redirect, return target
-     * @param string $url
      *
      * @return View
      */

@@ -22,7 +22,7 @@ class ArticleController extends Controller
      * Create article
      * @Route("/create", name="victoire_blog_article_create")
      *
-     * @return template
+     * @return JsonResponse
      */
     public function createAction()
     {
@@ -97,7 +97,7 @@ class ArticleController extends Controller
      * @Route("/{id}/settings", name="victoire_blog_article_settings")
      *
      * @ParamConverter("article", class="VictoireBlogBundle:Article")
-     * @return template
+     * @return JsonResponse
      */
     public function settingsAction(Request $request, Article $article)
     {
@@ -146,7 +146,7 @@ class ArticleController extends Controller
      *
      * @param Article $article
      *
-     * @return template
+     * @return JsonResponse
      * @Route("/{id}/delete", name="victoire_core_article_delete")
      * @Template()
      * @ParamConverter("article", class="VictoireBlogBundle:Article")

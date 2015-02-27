@@ -19,6 +19,7 @@ trait VictoireSubContextTrait
 
     /**
      * @Given /^I am logged in as "([^"]*)" with password "([^"]*)"$/
+     * @param string $password
      */
     public function iAmLoggedInAsWithPassword($username, $password)
     {

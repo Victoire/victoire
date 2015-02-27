@@ -57,7 +57,7 @@ class WidgetManager
      * @param TemplateMapper        $victoireTemplating
      * @param PageHelper            $pageHelper
      * @param array                 $slots
-     * @param ServiceContainer      $container
+     * @param Container      $container
      */
     public function __construct(
         WidgetHelper $widgetHelper,

@@ -55,10 +55,9 @@ class WidgetRenderer
     /**
      * render a widget
      * @param Widget  $widget
-     * @param boolean $addContainer
      * @param View    $view
      *
-     * @return template
+     * @return string
      */
     public function renderContainer(Widget $widget, View $view, $position = 0, $slotOptions = array())
     {
@@ -100,7 +99,7 @@ class WidgetRenderer
     /**
      * render slot actions
      * @param Slot    $slot
-     * @param Page    $view
+     * @param View    $view
      * @param array   $options
      * @param integer $position
      *

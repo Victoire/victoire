@@ -66,7 +66,6 @@ class LocaleResolver
     }
 
     /**
-    * @param Request $request
     *
     * @return string
     *

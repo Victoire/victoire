@@ -173,7 +173,7 @@ class FileHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param mixed $data
+     * @param File $data
      *
      * @return Media
      */

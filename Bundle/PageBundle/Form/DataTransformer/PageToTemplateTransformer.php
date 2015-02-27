@@ -27,7 +27,7 @@ class PageToTemplateTransformer implements DataTransformerInterface
      *
      * @param Page $page
      *
-     * @return string
+     * @return Template
      */
     public function transform($page)
     {
@@ -51,7 +51,7 @@ class PageToTemplateTransformer implements DataTransformerInterface
      * unused reverse transform
      * @param string $template
      *
-     * @return Issue|null
+     * @return string
      * @throws TransformationFailedException if object (issue) is not found.
      */
     public function reverseTransform($template)
