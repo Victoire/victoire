@@ -62,6 +62,13 @@
 </div>
 
 <script type="text/javascript">
+    $vic(document).ready(function() {
+        blogCategories = new Array();
+        prototype = $vic('div.blogCategories').attr('data-prototype');
+
+        //for the existing blogCategories, we generate the js blogCategories
+        initBlogCategories();
+    });
     $vic('#victoire_blog_settings_type_status').on('change', function(){
         if ($vic(this).val() == '{{ constant('Victoire\\Bundle\\PageBundle\\Entity\\PageStatus::SCHEDULED') }}') {
             $vic('.publication-date-container').removeClass('vic-hidden');
