@@ -24,7 +24,17 @@ services:
     ####################################################################################################################
     # Forms
     ####################################################################################################################
-
+    #TREE EXTENSION
+    victoire_blog.hierarchy_tree_extension:
+        class: Victoire\Bundle\BlogBundle\Form\Extension\HierarchyTreeExtension
+        arguments: [ "@property_accessor" ]
+        tags:
+            - { name: form.type, alias: hierarchy_tree }
+    #CATEGORY
+    victoire.form.blog.category:
+        class: Victoire\Bundle\BlogBundle\Form\CategoryType
+        tags:
+            - { name: form.type , alias: victoire_form_blog_category}
     #ARTICLE
     victoire_blog.article.form.type:
         class: Victoire\Bundle\BlogBundle\Form\ArticleType

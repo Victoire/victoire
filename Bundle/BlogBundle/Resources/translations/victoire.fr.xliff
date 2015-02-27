@@ -102,6 +102,22 @@
         <source>victoire.blog.article.delete.success</source>
         <target>L'article a bien été supprimé</target>
       </trans-unit>
+      <trans-unit id="18" resname="blog.form.title.label">
+        <source>blog.form.title.label</source>
+        <target>Catégorie</target>
+      </trans-unit>
+      <trans-unit id="19" resname="victoire.blog.category.title.label">
+        <source>victoire.blog.category.title.label</source>
+        <target>Liste des catégories</target>
+      </trans-unit>
+      <trans-unit id="20" resname="victoire.blog.category.add.sub.label">
+        <source> victoire.blog.category.add.sub.label</source>
+        <target>Ajouter une sous-catégorie</target>
+      </trans-unit>
+      <trans-unit id="21" resname="victoire.blog.category.add.main.label">
+        <source> victoire.blog.category.add.main.label</source>
+        <target>Ajouter une catégorie principale</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

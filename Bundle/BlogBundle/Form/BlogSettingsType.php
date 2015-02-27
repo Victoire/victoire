@@ -4,6 +4,7 @@ namespace Victoire\Bundle\BlogBundle\Form;
 use Symfony\Component\Form\FormBuilderInterface;
 use Victoire\Bundle\PageBundle\Entity\PageStatus;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Edit Blog Type
@@ -40,7 +41,32 @@ class BlogSettingsType extends BlogType
             ->add('publishedAt', null, array(
                 'widget'         => 'single_text',
                 'datetimepicker' => true
-            ));
+            ))
+            ->add(
+                'categories',
+                'collection',
+                array(
+                    'type'          => 'victoire_form_blog_category',
+                    'required'      => false,
+                    'allow_add'     => true,
+                    'allow_delete'  => true,
+                    'by_reference'  => false,
+                    'prototype'     => true,                )
+            );
+    }
+
+    /**
+     * bind to Page entity
+     * @param OptionsResolverInterface $resolver
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        parent::setDefaultOptions($resolver);
+        $resolver->setDefaults(
+            array(
+                'cascade_validation' => 'true'
+            )
+        );
     }
 
     /**
