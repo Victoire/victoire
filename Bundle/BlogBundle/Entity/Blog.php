@@ -17,12 +17,84 @@ class Blog extends BasePage
     const TYPE = 'blog';
 
     /**
+     * @ORM\OneToMany(targetEntity="Category", mappedBy="blog", cascade={"persist", "remove"}, orphanRemoval=true)
+     */
+    protected $categories;
+
+    /**
      * @var string
      *
      * @ORM\OneToMany(targetEntity="\Victoire\Bundle\BlogBundle\Entity\Article", mappedBy="blog")
      */
     protected $articles;
 
+    /**
+     * Constructor
+     *
+     */
+     public function __construct()
+     {
+        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
+     }
+
     public function getArticles() { return $this->articles; }
     public function setArticles($articles) { $this->articles = $articles; return $this; }
+
+    /**
+     * Set categories
+     *
+     * @param string $categories
+     *
+     * @return Article
+     */
+    public function setCategories($categories)
+    {
+        foreach($categories as $category)
+        {
+            $category->setBlog($this);
+        }
+        $this->categories = $categories;
+
+        return $this;
+    }
+
+    /**
+     * Add category
+     *
+     * @param string $category
+     *
+     * @return Article
+     */
+    public function addCategorie($category)
+    {
+        $category->setBlog($this);
+        $this->categories[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param string $category
+     *
+     * @return Article
+     */
+    public function removeCategorie($category)
+    {
+        $this->categories->removeElement($category);
+
+        return $this;
+    }
+
+    /**
+     * Get categories
+     *
+     * @return string
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
 }
