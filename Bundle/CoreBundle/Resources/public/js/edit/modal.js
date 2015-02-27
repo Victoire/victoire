@@ -69,7 +69,7 @@ function closeModal(modal) {
     }
 
     $vic(modal).vicmodal('hide');
-    $vic('.vic-creating').removeClass('vic-creating');
+    setTimeout(function() {$vic('.vic-creating').removeClass('vic-creating');}, 10);
 }
 
 //Code to close the modal by tapping esc

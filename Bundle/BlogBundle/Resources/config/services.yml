@@ -1,3 +1,7 @@
+parameters:
+    victoire_blog_tag_filters_form_type_class: Victoire\Bundle\BlogBundle\Filter\TagFilter
+    victoire_blog_category_filters_form_type_class: Victoire\Bundle\BlogBundle\Filter\CategoryFilter
+
 services:
     victoire_blog.blog_menu_listener:
         class: Victoire\Bundle\BlogBundle\Listener\BlogMenuListener
@@ -76,7 +80,7 @@ services:
 
     #CATEGORY FILTER
     victoire_blog.category_filters.form.type:
-        class: Victoire\Bundle\BlogBundle\Filter\CategoryFilter
+        class: %victoire_blog_category_filters_form_type_class%
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@request="
@@ -86,7 +90,7 @@ services:
 
     #TAG FILTER
     victoire_blog.tag_filters.form.type:
-        class: Victoire\Bundle\BlogBundle\Filter\TagFilter
+        class: %victoire_blog_tag_filters_form_type_class%
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@request="
