@@ -93,6 +93,7 @@
 
 {% block form_widget_simple %}
 {% spaceless %}
+    <div class="test">
     {% set type = type|default('text') %}
     {% if type != 'hidden' and ( vic_widget_addon_prepend|default(null) is not null or vic_widget_addon_append|default(null) is not null ) %}
     <div class="vic-input-group">
@@ -120,6 +121,7 @@
     {% if type != 'hidden' and vic_horizontal %}
         {{ block('form_message') }}
     {% endif %}
+</div>
 {% endspaceless %}
 {% endblock form_widget_simple %}
 
@@ -681,3 +683,44 @@
 {% endif %}
 {% endspaceless %}
 {% endblock vic_widget_form_group_end %}
+
+{% block hierarchy_tree_widget %}
+    {% set attr = attr|merge({'class': attr.class|default('') ~ ' ' ~ vic_widget_form_control_class}) %}
+        {{ block('hierarchy_tree_widget_collapsed')}}
+    {% if vic_horizontal %}
+        {{ block('form_message') }}
+    {% endif %}
+{% endblock %}
+
+{% block hierarchy_tree_widget_collapsed %}
+    {%- if required and placeholder is none and not placeholder_in_choices and not multiple -%}
+        {% set required = false %}
+    {%- endif -%}
+    <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+        {%- if placeholder is not none -%}
+            <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ placeholder|trans({}, translation_domain) }}</option>
+        {%- endif -%}
+        {%- if preferred_choices|length > 0 -%}
+            {% set options = preferred_choices %}
+            {{- block('hierarchy_tree_widget_options') -}}
+            {%- if choices|length > 0 and separator is not none -%}
+                <option disabled="disabled">{{ separator }}</option>
+            {%- endif -%}
+        {%- endif -%}
+        {%- set options = choices -%}
+        {{- block('hierarchy_tree_widget_options') -}}
+    </select>
+{% endblock hierarchy_tree_widget_collapsed %}
+
+{% block hierarchy_tree_widget_options %}
+    {% for group_label, choice in options %}
+        {%- if choice is iterable -%}
+            <optgroup label="{{ group_label|trans({}, translation_domain) }}">
+                {% set options = choice %}
+                {{- block('hierarchy_tree_widget_options') -}}
+            </optgroup>
+        {%- else -%}
+            <option value="{{ choice.value }}"{% if choice is selectedchoice(value) %} selected="selected"{% endif %}>{{ choice.label|trans({}, translation_domain)|raw }}</option>
+        {%- endif -%}
+    {% endfor %}
+{% endblock hierarchy_tree_widget_options %}
