@@ -46,7 +46,7 @@ class BlogSettingsType extends BlogType
                 'categories',
                 'collection',
                 array(
-                    'type'          => 'victoire_form_blog_definition',
+                    'type'          => 'victoire_form_blog_category',
                     'required'      => false,
                     'allow_add'     => true,
                     'allow_delete'  => true,
