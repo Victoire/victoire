@@ -51,7 +51,7 @@ class WidgetHelper
     /**
      * create a new WidgetRedactor
      * @param string $type
-     * @param View   $view
+     * @param \Victoire\Bundle\CoreBundle\Entity\View   $view
      * @param string $slot
      *
      * @return $widget

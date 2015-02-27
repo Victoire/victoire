@@ -38,7 +38,7 @@ class Page extends BasePage
     /**
      * is homepage
      *
-     * @return bool is homepage
+     * @return string is homepage
      */
     public function isHomepage()
     {

@@ -14,8 +14,6 @@ class EntityProxyFieldsBuilder
 
     /**
      * define form fields
-     * @param FormBuilderInterface $builder
-     * @param array                $options
      */
     public function __construct(AnnotationReader $annotationReader)
     {
@@ -24,7 +22,7 @@ class EntityProxyFieldsBuilder
 
     /**
      * Build
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param string               $namespace
      *
      * @return array The all list of fields type to add for the entity namespace given

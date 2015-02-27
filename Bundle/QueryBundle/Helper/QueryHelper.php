@@ -36,7 +36,7 @@ class QueryHelper
      * Get the query builder base. This makes a "select  from item XXX"
      * use the item for doing the left join or where dql
      *
-     * @param unknown $containerEntity
+     * @param \Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern $containerEntity
      *
      * @return QueryBuilder
      *
@@ -103,8 +103,8 @@ class QueryHelper
     /**
      * Get the results from the sql after adding the
      *
-     * @param unknown $containerEntity
-     * @param unknown $itemsQueryBuilder
+     * @param \Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern $containerEntity
+     * @param QueryBuilder $itemsQueryBuilder
      *
      * @throws \Exception
      *

@@ -26,7 +26,7 @@ class WidgetMapManager
     /**
      * compute the widget map for view
      * @param View  $view
-     * @param array $sortedWidgets
+     * @param array $sortedWidget
      *
      * @todo Be able to move a widget from a slot to another
      * @todo test if the widget is allowed for the given slot
@@ -107,7 +107,6 @@ class WidgetMapManager
      * Get the slots for the view by the sorted slots given by the sortable js script when ordering widgets
      *
      * @param View  $view
-     * @param array $widgetSlots
      */
     protected function updateWidgetMapsFromView(View $view, $sortedWidget)
     {

@@ -288,7 +288,7 @@ class Folder
     /**
      * @param bool $includeDeleted
      *
-     * @return Folder[]
+     * @return ArrayCollection
      */
     public function getChildren($includeDeleted = false)
     {

@@ -52,7 +52,7 @@ class LocaleListener implements EventSubscriberInterface
 
     /**
      * This method will be called on user login in order to set the victoire locale
-     * @param GetResponseEvent $event
+     * @param InteractiveLoginEvent $event
      */
     public function onLogin(InteractiveLoginEvent $event)
     {

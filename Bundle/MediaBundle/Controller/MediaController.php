@@ -143,7 +143,7 @@ class MediaController extends Controller
      * @Route("drop/{folderId}", requirements={"folderId" = "\d+"}, name="VictoireMediaBundle_media_drop_upload")
      * @Method({"GET", "POST"})
      *
-     * @return array|RedirectResponse
+     * @return Response
      */
     public function dropAction($folderId)
     {

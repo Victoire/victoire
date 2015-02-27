@@ -24,7 +24,7 @@ class EntityProxySubscriber implements EventSubscriber
     /**
      * bind to LoadClassMetadata method
      *
-     * @return array
+     * @return string[]
      */
     public function getSubscribedEvents()
     {

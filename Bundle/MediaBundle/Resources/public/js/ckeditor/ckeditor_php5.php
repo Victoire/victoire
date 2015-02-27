@@ -469,6 +469,7 @@ class CKEditor
 
     /**
      * Return path to ckeditor.js.
+     * @return string
      */
     private function ckeditorPath()
     {

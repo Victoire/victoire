@@ -197,7 +197,7 @@ class Article
      *
      * @param string $description
      *
-     * @return PostPage
+     * @return Article
      */
     public function setDescription($description)
     {
@@ -266,7 +266,7 @@ class Article
     /**
      * Get deletedAt
      *
-     * @return DateTime
+     * @return string
      */
     public function getDeletedAt()
     {
@@ -289,7 +289,7 @@ class Article
     /**
      * Get the blog
      *
-     * @return String
+     * @return Blog
      */
     public function getBlog()
     {
@@ -299,7 +299,7 @@ class Article
     /**
      * Set the blog
      *
-     * @param string $blog
+     * @param Blog $blog
      */
     public function setBlog(Blog $blog)
     {
@@ -360,9 +360,9 @@ class Article
 
     /**
      * Set image
-     * @param string $image
+     * @param Media $image
      *
-     * @return WidgetImage
+     * @return Article
      */
     public function setImage(Media $image)
     {
@@ -384,7 +384,7 @@ class Article
     /**
      * Get businessEntity
      *
-     * @return string
+     * @return Article
      */
     public function getBusinessEntity()
     {
@@ -407,7 +407,7 @@ class Article
     /**
      * Get pattern
      *
-     * @return string
+     * @return BusinessEntityPagePattern
      */
     public function getPattern()
     {

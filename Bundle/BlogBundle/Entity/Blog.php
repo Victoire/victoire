@@ -46,7 +46,7 @@ class Blog extends BasePage
      *
      * @param string $categories
      *
-     * @return Article
+     * @return Blog
      */
     public function setCategories($categories)
     {
@@ -64,7 +64,7 @@ class Blog extends BasePage
      *
      * @param string $category
      *
-     * @return Article
+     * @return Blog
      */
     public function addCategorie($category)
     {
@@ -79,7 +79,7 @@ class Blog extends BasePage
      *
      * @param string $category
      *
-     * @return Article
+     * @return Blog
      */
     public function removeCategorie($category)
     {

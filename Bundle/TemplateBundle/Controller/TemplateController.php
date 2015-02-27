@@ -23,7 +23,7 @@ class TemplateController extends Controller
      * @Route("/index", name="victoire_template_index")
      * @Configuration\Template()
      *
-     * @return response
+     * @return JsonResponse
      */
     public function indexAction()
     {
@@ -42,7 +42,7 @@ class TemplateController extends Controller
 
     /**
      * list of all templates
-     * @param Victoire\Bundle\TemplateBundle\Entity\Template $template The template
+     * @param Template $template The template
      *
      * @Route("/show/{slug}", name="victoire_template_show")
      * @ParamConverter("template", class="VictoireTemplateBundle:Template", options={"mapping": {"slug": "slug"}})
@@ -88,7 +88,7 @@ class TemplateController extends Controller
     /**
      * create a new Template
      *
-     * @return Response
+     * @return JsonResponse
      * @Route("/new", name="victoire_template_new")
      * @Configuration\Template()
      */
@@ -124,7 +124,7 @@ class TemplateController extends Controller
      * define settings of the template
      * @param Template $template 
      *
-     * @return Response
+     * @return JsonResponse
      * @Route("/{slug}/parametres", name="victoire_template_settings")
      * @ParamConverter("template", class="VictoireTemplateBundle:Template", options={"mapping": {"slug": "slug"}})
      */
@@ -160,7 +160,7 @@ class TemplateController extends Controller
      * translate a template 
      * @param Template $template
      *
-     * @return Response
+     * @return JsonResponse
      * @Route("/{slug}/translate ", name="victoire_template_translate")
      * @ParamConverter("template", class="VictoireTemplateBundle:Template", options={"mapping": {"slug": "slug"}})
      */
@@ -196,7 +196,7 @@ class TemplateController extends Controller
      * edit a Template
      * @param Template $template The Template to edit
      *
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @Route("/edit/{slug}", name="victoire_template_edit")
      * @Configuration\Template()
      * @ParamConverter("template", class="VictoireTemplateBundle:Template")

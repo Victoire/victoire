@@ -47,7 +47,7 @@ class SitemapController extends Controller
      *
      * @Route("/reorganize", name="victoire_sitemap_reorganize")
      * @Template()
-     * @return template
+     * @return JsonResponse
      */
     public function reorganizeAction()
     {
@@ -104,7 +104,7 @@ class SitemapController extends Controller
      * Change the sitemap priority for the given page
      *
      * @Route("/changePriority/{id}", name="victoire_sitemap_changePriority", options={"expose"=true})
-     * @return template
+     * @return JsonResponse
      */
     public function changePriorityAction(Request $request, BasePage $page)
     {

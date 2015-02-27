@@ -27,7 +27,7 @@ class BrowseEventSubscriber implements EventSubscriber
     /**
      * bind to LoadClassMetadata method
      *
-     * @return array The subscribed events
+     * @return string[] The subscribed events
      */
     public function getSubscribedEvents()
     {

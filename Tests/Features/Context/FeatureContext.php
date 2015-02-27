@@ -115,7 +115,7 @@ class FeatureContext extends MinkContext
      * @param string  $text    the text to check
      * @param integer $timeout in milliseconds
      *
-     * @return boolean
+     * @return null|boolean
     */
     public function assertElementContainsText($element, $text, $timeout = 5000)
     {

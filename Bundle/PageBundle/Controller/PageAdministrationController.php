@@ -41,7 +41,7 @@ class PageAdministrationController extends PageController
      * @Route("/homepage/new", name="victoire_core_homepage_new", defaults={"isHomepage" : true})
      * @Template()
      *
-     * @return template
+     * @return JsonResponse
      */
     public function newAction($isHomepage = false)
     {
@@ -57,7 +57,7 @@ class PageAdministrationController extends PageController
      * @Template()
      * @ParamConverter("page", class="VictoirePageBundle:BasePage")
      *
-     * @return json The settings
+     * @return JsonResponse The settings
      */
     public function settingsAction(Request $request, BasePage $page)
     {
@@ -73,7 +73,7 @@ class PageAdministrationController extends PageController
      * @Template()
      * @ParamConverter("page", class="VictoirePageBundle:BasePage")
      *
-     * @return json The settings
+     * @return JsonResponse The settings
      */
     public function translateAction(Request $request, BasePage $page)
     {
@@ -83,7 +83,7 @@ class PageAdministrationController extends PageController
      * Page delete
      * @param BasePage $page
      *
-     * @return template
+     * @return JsonResponse
      * @Route("/{id}/delete", name="victoire_core_page_delete")
      * @Template()
      * @ParamConverter("page", class="VictoirePageBundle:BasePage")

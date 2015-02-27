@@ -24,7 +24,6 @@ class WidgetFormBuilder
      * @param string  $slot
      * @param View    $view
      * @param string  $entity
-     * @param integer $position
      *
      * @return new form
      */
@@ -73,7 +72,7 @@ class WidgetFormBuilder
      * Generates new forms for each available business entities
      *
      * @param string $slot
-     * @param Page   $view
+     * @param View   $view
      * @param Widget $widget
      *
      * @return collection of forms
@@ -108,8 +107,8 @@ class WidgetFormBuilder
 
     /**
      * @param unknown $manager
-     * @param unknown $widget
-     * @param Page    $view
+     * @param Widget $widget
+     * @param View    $view
      * @param string  $entityName
      * @param string  $namespace
      *
@@ -138,7 +137,7 @@ class WidgetFormBuilder
      * create a form with given widget
      *
      * @param Widget  $widget
-     * @param Page    $view
+     * @param View    $view
      * @param string  $entityName
      * @param string  $namespace
      * @param string  $formMode
@@ -211,7 +210,7 @@ class WidgetFormBuilder
      * create a form with given widget
      *
      * @param Widget  $widget     the widget
-     * @param Page    $view       the page
+     * @param View    $view       the page
      * @param string  $entityName the entity class
      * @param string  $namespace  the namespace
      * @param string  $formMode   the form mode
@@ -247,7 +246,7 @@ class WidgetFormBuilder
      * The call is not the same if an entity is provided or not
      *
      * @param Widget  $widget
-     * @param Page    $view
+     * @param View    $view
      * @param string  $entityName
      * @param integer $position
      *

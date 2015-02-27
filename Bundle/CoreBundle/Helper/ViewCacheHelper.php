@@ -30,8 +30,8 @@ class ViewCacheHelper
 
     /**
      * Write given views references in a xml file
-     * @param array $views
      *
+     * @param \SimpleXMLElement $itemNode
      * @return void
      */
     public function buildItemNode($viewReference, $itemNode)
@@ -63,7 +63,6 @@ class ViewCacheHelper
     }
     /**
      * Write given views references in a xml file
-     * @param array $views
      *
      * @return void
      */

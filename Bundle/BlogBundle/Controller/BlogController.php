@@ -77,9 +77,9 @@ class BlogController extends BasePageController
      * Blog settings
      *
      * @param Request $request
-     * @param Page    $blog
+     * @param BasePage    $blog
      *
-     * @return template
+     * @return JsonResponse
      * @Route("/{id}/settings", name="victoire_blog_settings")
      * @Template()
      * @ParamConverter("blog", class="VictoirePageBundle:BasePage")
@@ -93,9 +93,9 @@ class BlogController extends BasePageController
      * Blog translation
      *
      * @param Request $request
-     * @param Page    $blog
+     * @param BasePage    $blog
      *
-     * @return template
+     * @return JsonResponse
      * @Route("/{id}/translate", name="victoire_blog_translate")
      * @Template()
      * @ParamConverter("blog", class="VictoirePageBundle:BasePage")
@@ -110,7 +110,7 @@ class BlogController extends BasePageController
      *
      * @param Blog $blog
      *
-     * @return template
+     * @return JsonResponse
      * @Route("/{id}/delete", name="victoire_blog_delete")
      * @Template()
      * @ParamConverter("blog", class="VictoirePageBundle:BasePage")

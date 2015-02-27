@@ -71,7 +71,7 @@ trait WebViewTrait
      * Set seo
      * @param PageSeo $seo
      *
-     * @return Page
+     * @return WebViewTrait
      */
     public function setSeo(PageSeo $seo)
     {
@@ -123,7 +123,7 @@ trait WebViewTrait
     /**
      * Remove route
      *
-     * @param route $route
+     * @param Route $route
      */
     public function removeRoute(Route $route)
     {
@@ -133,7 +133,7 @@ trait WebViewTrait
     /**
      * Add route
      *
-     * @param route $route
+     * @param Route $route
      */
     public function addRoute(Route $route)
     {

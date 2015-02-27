@@ -101,7 +101,7 @@ class PageSeoHelper
     /**
      * Get the content of an attribute of an entity given
      *
-     * @param entity $entity
+     * @param \Victoire\Bundle\SeoBundle\Entity\PageSeo $entity
      * @param string $field
      *
      * @return mixed
@@ -118,7 +118,7 @@ class PageSeoHelper
     /**
      * Update the value of the entity
      *
-     * @param Object $entity
+     * @param \Victoire\Bundle\SeoBundle\Entity\PageSeo $entity
      * @param string $field
      * @param string $value
      *
