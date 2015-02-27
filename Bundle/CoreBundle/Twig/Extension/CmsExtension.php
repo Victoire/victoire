@@ -156,7 +156,7 @@ class CmsExtension extends \Twig_Extension_Core
                     }
 
                     //render this widget
-                    $result .= $this->cmsWidget($widget, $widgetMap->getPosition()+1, $slotOptions);
+                    $result .= $this->cmsWidget($widget, $widgetMap->getPosition() + 1, $slotOptions);
                 } catch (\Exception $ex) {
                     $result .= $this->widgetExceptionHandler->handle($ex, $widget);
                 }

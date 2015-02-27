@@ -22,7 +22,7 @@ class BlogSettingsType extends BlogType
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
-    public function buildForm( FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
         $builder
@@ -51,7 +51,7 @@ class BlogSettingsType extends BlogType
                     'allow_add'     => true,
                     'allow_delete'  => true,
                     'by_reference'  => false,
-                    'prototype'     => true,                )
+                    'prototype'     => true,)
             );
     }
 

@@ -102,7 +102,7 @@ class PageSubscriber implements EventSubscriber
     public function onFlush(OnFlushEventArgs $eventArgs)
     {
         $this->entityManager = $eventArgs->getEntityManager();
-        $this->uow  = $this->entityManager->getUnitOfWork();
+        $this->uow = $this->entityManager->getUnitOfWork();
 
         foreach ($this->uow->getScheduledEntityInsertions() as $entity) {
             if ($entity instanceof BasePage) {

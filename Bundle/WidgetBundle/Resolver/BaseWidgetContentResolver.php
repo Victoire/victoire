@@ -122,9 +122,9 @@ class BaseWidgetContentResolver
         foreach ($fields as $widgetField => $field) {
             //get the value of the field
             if ($entity !== null) {
-                $attributeValue =  $entity->getEntityAttributeValue($field);
+                $attributeValue = $entity->getEntityAttributeValue($field);
             } else {
-                $attributeValue = $widget->getBusinessEntityName() . ' -> ' . $field;
+                $attributeValue = $widget->getBusinessEntityName().' -> '.$field;
             }
 
             $parameters[$widgetField] = $attributeValue;

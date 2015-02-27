@@ -123,7 +123,7 @@ class AnnotationReader extends AnnotationDriver
     public function getReceiverProperties()
     {
         $receiverProperties = $this->cache->fetch('victoire_core_receiver_properties');
-        if (!$receiverProperties || (is_array($receiverProperties) )) {
+        if (!$receiverProperties || (is_array($receiverProperties))) {
             $receiverProperties = $this->loadReceiverProperties();
             $this->cache->save('victoire_core_receiver_properties', $receiverProperties);
         }
@@ -199,7 +199,7 @@ class AnnotationReader extends AnnotationDriver
             foreach ($annotations as $key => $annotationObj) {
                 if ($annotationObj instanceof BusinessProperty && !in_array($class, $businessProperties)) {
                     if (!$annotations[$key]->getTypes()) {
-                        $message = $class->name . ':$' . $property->name . '" field';
+                        $message = $class->name.':$'.$property->name.'" field';
                         throw AnnotationException::requiredError('type', 'BusinessProperty annotation', $message, 'array or string');
                     }
                     foreach ($annotations[$key]->getTypes() as $type) {
@@ -224,7 +224,7 @@ class AnnotationReader extends AnnotationDriver
                 foreach ($annotations as $key => $annotationObj) {
                     if ($annotationObj instanceof ReceiverProperty && !in_array($class, $receiverProperties)) {
                         if (!$annotations[$key]->getTypes()) {
-                            $message = $class->name . ':$' . $property->name . '" field';
+                            $message = $class->name.':$'.$property->name.'" field';
                             throw AnnotationException::requiredError('type', 'BusinessProperty annotation', $message, 'array or string');
                         }
                         foreach ($annotations[$key]->getTypes() as $type) {
@@ -257,7 +257,7 @@ class AnnotationReader extends AnnotationDriver
         $includedFiles = array();
 
         foreach ($this->paths as $path) {
-            if ( ! is_dir($path)) {
+            if (!is_dir($path)) {
                 throw MappingException::fileMappingDriversRequireConfiguredDirectoryPath($path);
             }
 
@@ -266,7 +266,7 @@ class AnnotationReader extends AnnotationDriver
                     new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS),
                     \RecursiveIteratorIterator::LEAVES_ONLY
                 ),
-                '/^.+\/(src|vendor\/victoire)\/.+\/Entity\/.+' . str_replace('.', '\.', $this->fileExtension) . '$/i',
+                '/^.+\/(src|vendor\/victoire)\/.+\/Entity\/.+'.str_replace('.', '\.', $this->fileExtension).'$/i',
                 \RecursiveRegexIterator::GET_MATCH
             );
 
@@ -284,7 +284,7 @@ class AnnotationReader extends AnnotationDriver
         foreach ($declared as $className) {
             $rc = new \ReflectionClass($className);
             $sourceFile = $rc->getFileName();
-            if (in_array($sourceFile, $includedFiles) && ! $this->isTransient($className)) {
+            if (in_array($sourceFile, $includedFiles) && !$this->isTransient($className)) {
                 $classes[] = $className;
             }
         }

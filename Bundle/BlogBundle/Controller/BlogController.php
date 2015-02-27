@@ -52,7 +52,7 @@ class BlogController extends BasePageController
         return new JsonResponse(
             array(
                 'html' => $this->container->get('victoire_templating')->render(
-                    $this->getBaseTemplatePath() . ':index.html.twig', array(
+                    $this->getBaseTemplatePath().':index.html.twig', array(
                         'blogs' => $blogs
                     )
                 )

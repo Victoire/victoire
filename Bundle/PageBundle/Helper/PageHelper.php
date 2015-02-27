@@ -131,10 +131,10 @@ class PageHelper extends ViewHelper
             $type = $page->getType();
         }
 
-        $eventName = 'victoire_core.' . $type . '_menu.contextual';
+        $eventName = 'victoire_core.'.$type.'_menu.contextual';
         $this->eventDispatcher->dispatch($eventName, $event);
 
-        $layout = 'AppBundle:Layout:' . $page->getTemplate()->getLayout() . '.html.twig';
+        $layout = 'AppBundle:Layout:'.$page->getTemplate()->getLayout().'.html.twig';
 
         $this->widgetMapBuilder->build($page);
         $this->currentViewHelper->setCurrentView($page);
@@ -228,7 +228,7 @@ class PageHelper extends ViewHelper
             && $page->getSeo()
             && $page->getSeo()->getRedirectTo()
             && !$this->session->get('victoire.edit_mode', false)) {
-            $page =  $page->getSeo()->getRedirectTo();
+            $page = $page->getSeo()->getRedirectTo();
         }
 
         if ($viewReference && $page instanceof View) {

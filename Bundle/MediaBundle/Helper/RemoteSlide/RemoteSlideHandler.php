@@ -141,7 +141,7 @@ class RemoteSlideHandler extends AbstractMediaHandler
        $result = null;
         if (is_string($data)) {
             if (strpos($data, 'http') !== 0) {
-                $data = "http://" . $data;
+                $data = "http://".$data;
             }
             $parsedUrl = parse_url($data);
             switch ($parsedUrl['host']) {
@@ -153,7 +153,7 @@ class RemoteSlideHandler extends AbstractMediaHandler
                     $json = json_decode(file_get_contents('http://www.slideshare.net/api/oembed/2?url='.$data.'&format=json'));
                     $slide->setCode($json->{"slideshow_id"});
                     $result = $slide->getMedia();
-                    $result->setName('SlideShare ' . $data);
+                    $result->setName('SlideShare '.$data);
                     break;
             }
         }

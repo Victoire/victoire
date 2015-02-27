@@ -51,7 +51,7 @@ class I18nLinkExtension extends BaseLinkExtension
                 //fallback when a page is deleted cascading the relation as null (page_id = null)
                 if ($page instanceof WebViewInterface) {
                     //avoid to refresh page when not needed
-                    $linkUrl = $this->router->generate('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl() ));
+                    $linkUrl = $this->router->generate('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl()));
                     if ($this->request->getRequestUri() != $linkUrl || !$avoidRefresh) {
                         $url = $linkUrl;
                     }
@@ -72,7 +72,7 @@ class I18nLinkExtension extends BaseLinkExtension
                         $url = "";
                     }
                     //Add anchor part
-                    $url .= "#vic-widget-" . $attachedWidget->getId() . "-container-anchor";
+                    $url .= "#vic-widget-".$attachedWidget->getId()."-container-anchor";
                 }
                 break;
         }
@@ -95,9 +95,9 @@ class I18nLinkExtension extends BaseLinkExtension
         extract($parameters); //will assign $linkType, $attachedWidget, $routeParameters, $route, $page, $analyticsTrackCode
 
         if ($linkType == 'attachedWidget' && $attachedWidget && method_exists($attachedWidget->getView(), 'getUrl')) {
-            $viewUrl = $this->router->generate('victoire_core_page_show', array('_locale' => $locale, 'url' => $attachedWidget->getView()->getUrl() ));
+            $viewUrl = $this->router->generate('victoire_core_page_show', array('_locale' => $locale, 'url' => $attachedWidget->getView()->getUrl()));
             if (rtrim($this->request->getRequestUri(), '/') == rtrim($viewUrl, '/')) {
-                $attr["data-scroll"] = "smooth" ;
+                $attr["data-scroll"] = "smooth";
             }
         }
 
