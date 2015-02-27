@@ -3,7 +3,6 @@ namespace Victoire\Bundle\PageBundle\Security\Voter;
 
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-
 use Victoire\Bundle\PageBundle\Entity\Page;
 
 /**
