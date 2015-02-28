@@ -31,6 +31,7 @@ class AppKernel extends Kernel
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
 
             //Victoire bundles
+            new Victoire\Bundle\AnalyticsBundle\VictoireAnalyticsBundle(),
             new Victoire\Bundle\CoreBundle\VictoireCoreBundle(),
             new Victoire\Bundle\TwigBundle\VictoireTwigBundle(),
             new Victoire\Bundle\BlogBundle\VictoireBlogBundle(),

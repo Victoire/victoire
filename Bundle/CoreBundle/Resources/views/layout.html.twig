@@ -50,6 +50,7 @@
             var viewReferenceId = '{{ view.reference.id }}';
         {% endif %}
         </script>
+        {{ render_hinclude(controller('VictoireAnalyticsBundle:BrowseEvent:track', {'viewReferenceId': view.reference.id, 'referer': app.request.headers.get('referer')})) }}
         {% if is_granted('ROLE_VICTOIRE') %}
             {% spaceless %}
                 {% javascripts injector='victoire-edit, victoire-leftnavbar' %}
