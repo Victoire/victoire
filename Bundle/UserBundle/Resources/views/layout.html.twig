@@ -2,10 +2,29 @@
 
 {% block body %}
 {% block content %}
-    <img class="vic-login-logo" src="/bundles/victoirecore/images/vic-login-logo.png" alt="Logo Victoire DCMS">
-    <div class="vic-login-panel">
-        {% block fos_user_content %}
-        {% endblock %}
+    <div id="vic-login-wrapper" style="height: 100%; width: 100%">
+        <canvas id="constellations-canvas"></canvas>
+
+        <div id="vic-login-content">
+            <div class="vic-text-center">
+                <img id="vic-login-logo" src="/bundles/victoirecore/images/login/logo.svg" alt="Logo Victoire">
+            </div>
+
+            <div id="vic-login-form">
+                {% block fos_user_content %}
+                {% endblock %}
+            </div>
+        </div>
+
+
+        {% javascripts
+            '@VictoireCoreBundle/Resources/public/js/constellations/TweenLite.min.js'
+            '@VictoireCoreBundle/Resources/public/js/constellations/EasePack.min.js'
+            '@VictoireCoreBundle/Resources/public/js/constellations/rAF.js'
+            '@VictoireCoreBundle/Resources/public/js/constellations/constellations.js'
+        %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
     </div>
 {% endblock %}
 {% endblock body %}
