@@ -1,59 +1,99 @@
-// Login
-
-@vic-login-backgroundImage: "/bundles/victoirecore/images/background/nebu.jpg";
-@vic-login-backgroundColor: #000;
-@vic-login-logo-width: 334px;
-@vic-login-logo-height: 235px;
-@vic-login-logo-marginTop: 50px;
-@vic-login-logo-marginBottom: 30px;
-
-@vic-login-panel-width: 320px;
-@vic-login-centerGap: 60px;
-
 .vic-login {
     padding: 0;
-    background-image: url(@vic-login-backgroundImage);
+    background-color: @vicLogin_backgroundColor;
+    background-image: url(@vicLogin_backgroundImage);
     background-size: 100%;
     background-position: top center;
     background-repeat: repeat-x;
-    background-color: @vic-login-backgroundColor;
 
     &,
     * {
         font-family: @victoire-fontFamily !important;
+    }
+}
 
-        &.fa {
-            font-family: FontAwesome !important;
+#vic-login-wrapper {
+    position: relative;
+}
+
+
+
+#vic-login-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    .transform(translate3D(-50%, -50%, 0));
+}
+
+#vic-login-logo {
+    margin-bottom: @vicLogin-logo_marginBottom;
+}
+
+#vic-login-form {
+    width: @vicLogin-content_width;
+}
+
+.vic-form-group  {
+    &.-vic-login {
+        margin-bottom: 0;
+
+        & + & {
+            margin-top: @vicLogin-formGroup_gutterHeight;
         }
     }
+}
 
-    .customCheckbox {
+.vic-form-control {
+    &.-vic-login {
+        background-color: transparent;
+        border-width: @vicLogin-formControl_borderWidth;
+        border-color: @vicLogin_color;
+        color: @vicLogin_color;
+        font-weight: 400;
+        height: @vicLogin-formControl_height;
+        padding: @vicLogin-formControl_padding;
+        .box-shadow(@vicLogin-formControl_boxShadow, inset @vicLogin-formControl_boxShadow);
+
+        &::-webkit-input-placeholder {
+            color: @vicLogin_color;
+        }
+
+        &::-moz-placeholder {
+            color: @vicLogin_color;
+        }
+    }
+}
+
+
+.customCheckbox {
+    &.-vic-login {
         + label {
-            line-height: 39px;
+            line-height: @vicLogin-customCheckbox_lineHeight;
+            color: @vicLogin_color;
+            font-weight: 400;
 
             &:before {
-                margin-top: (39px - @customCheckbox-height) / 2;
-                line-height: @customCheckbox-height;
+                border-width: @vicLogin-formControl_borderWidth;
+                margin-top: (@vicLogin-customCheckbox_lineHeight - @customCheckbox-height) / 2;
+                line-height: @customCheckbox-height - @vicLogin-formControl_borderWidth;
+            }
+
+            &,
+            &:hover {
+                &:before {
+                    color: @vicLogin_color;
+                    border-color: @vicLogin_color;
+                    .box-shadow(@vicLogin-formControl_boxShadow, inset @vicLogin-formControl_boxShadow);
+                }
             }
         }
     }
 }
 
-.vic-login-logo {
-    position: absolute;
-    left: 50%;
-    margin-left: @vic-login-logo-width * -0.5;
-    margin-top: @vic-login-logo-marginTop;
-}
-
-.vic-login-panel {
-    width: @vic-login-panel-width;
-    position: absolute;
-    left: 50%;
-    margin-top: @vic-login-logo-marginTop + @vic-login-logo-marginBottom + @vic-login-logo-height;
-    margin-left: @vic-login-panel-width * -0.5;
-    .radius(5px);
-    background-color: #fff;
-    .box-shadow(5px 8px 15px fade(black, 13%));
-    padding: 10px;
+.vic-btn {
+    &.-vic-login {
+        border-width: 0;
+        .box-shadow(@vicLogin-formControl_boxShadow);
+        height: @vicLogin-formControl_height;
+    }
 }
