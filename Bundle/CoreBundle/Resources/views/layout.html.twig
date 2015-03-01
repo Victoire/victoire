@@ -45,12 +45,12 @@
 
     {% block foot_script %}
 
-    <script type="text/javascript">
         {% if view is defined %}
+        <script type="text/javascript">
             var viewReferenceId = '{{ view.reference.id }}';
-        {% endif %}
         </script>
         {{ render_hinclude(controller('VictoireAnalyticsBundle:BrowseEvent:track', {'viewReferenceId': view.reference.id, 'referer': app.request.headers.get('referer')})) }}
+        {% endif %}
         {% if is_granted('ROLE_VICTOIRE') %}
             {% spaceless %}
                 {% javascripts injector='victoire-edit, victoire-leftnavbar' %}
