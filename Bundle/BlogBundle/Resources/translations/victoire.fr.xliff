@@ -118,6 +118,22 @@
         <source> victoire.blog.category.add.main.label</source>
         <target>Ajouter une catégorie principale</target>
       </trans-unit>
+      <trans-unit id="22" resname="widget_filter.form.date.format.label">
+        <source>widget_filter.form.date.format.label</source>
+        <target>Périodicité</target>
+      </trans-unit>
+      <trans-unit id="23" resname="widget_filter.form.date.format.choices.year.label">
+        <source>widget_filter.form.date.format.choices.year.label</source>
+        <target>À l'année</target>
+      </trans-unit>
+      <trans-unit id="24" resname="widget_filter.form.date.format.choices.month.label">
+        <source>widget_filter.form.date.format.choices.month.label</source>
+        <target>Au mois</target>
+      </trans-unit>
+      <trans-unit id="24" resname="widget_filter.date_filter">
+        <source>widget_filter.date_filter</source>
+        <target>Date de publication</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -8,11 +8,15 @@
     <body>
       <trans-unit id="1" resname="blog.category_filter.label">
         <source>blog.category_filter.label</source>
-        <target state="new">Catégories</target>
+        <target>Catégories</target>
       </trans-unit>
       <trans-unit id="2" resname="blog.tag_filter.label">
         <source>blog.tag_filter.label</source>
-        <target state="new">Étiquettes</target>
+        <target>Étiquettes</target>
+      </trans-unit>
+      <trans-unit id="3" resname="blog.date_filter.label">
+        <source>blog.date_filter.label</source>
+        <target>Date</target>
       </trans-unit>
     </body>
   </file>
