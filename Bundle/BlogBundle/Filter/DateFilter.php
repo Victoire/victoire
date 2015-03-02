@@ -33,7 +33,7 @@ class DateFilter extends BaseFilter
      * @param QueryBuilder &$qb
      * @param array        $parameters
      *
-     * @return queryBuilder
+     * @return QueryBuilder
      */
     public function buildQuery(QueryBuilder $qb, array $parameters)
     {
@@ -108,11 +108,6 @@ class DateFilter extends BaseFilter
                         'data'        => $data['year'],
                     )
                 );
-            //@todo implements me for month and day
-            // if (in_array($options['widget']->getFormat(), array('month', 'day'))) {
-            //     if (in_array($options['widget']->getFormat(), array('day'))) {
-            //     }
-            // }
         }
     }
 

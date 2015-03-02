@@ -256,7 +256,7 @@ class Article
 
     /**
      * Set publishedAt
-     * @param string $publishedAt
+     * @param DateTime $publishedAt
      *
      * @return $this
      */
@@ -270,7 +270,7 @@ class Article
     /**
      * Get deletedAt
      *
-     * @return string
+     * @return DateTime
      */
     public function getDeletedAt()
     {
@@ -279,7 +279,7 @@ class Article
 
     /**
      * Set deletedAt
-     * @param string $deletedAt
+     * @param DateTime $deletedAt
      *
      * @return $this
      */

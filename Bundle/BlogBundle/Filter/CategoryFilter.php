@@ -33,7 +33,7 @@ class CategoryFilter extends BaseFilter
      * @param QueryBuilder &$qb
      * @param array        $parameters
      *
-     * @return queryBuilder
+     * @return QueryBuilder
      */
     public function buildQuery(QueryBuilder $qb, array $parameters)
     {
