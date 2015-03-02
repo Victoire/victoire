@@ -11,12 +11,11 @@ namespace Victoire\Bundle\AnalyticsBundle\Repository;
 class BrowseEventRepository extends \Doctrine\ORM\EntityRepository
 {
     /**
-     * undocumented function
+     * return a qb ordered by visits number descending for some viewReferences[]
      *
-     * @return void
-     * @author
+     * @return QueryBuilder
      **/
-    public function getMostVisited(array $referencesIds, $maxNumber = 10)
+    public function getMostVisitedFromReferences(array $referencesIds, $maxNumber = 10)
     {
         return $this->createQueryBuilder('be')
             ->select('be, COUNT(be.viewReferenceId) AS HIDDEN visits')

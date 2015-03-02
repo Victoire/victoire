@@ -28,9 +28,45 @@ class AnalyticsViewHelper
      *
      * @return View[]
      **/
-    public function getMostReadByViewType($viewNamespace)
+    public function getMostReadByViewType($viewNamespace, $number)
     {
-        throw new \Exception("Implement me");
+        $views = array();
+
+        switch ($viewNamespace) {
+            case 'Victoire\Bundle\PageBundle\Entity\Page':
+
+                $viewReferences = array();
+                $repo = $this->entityManager->getRepository($viewNamespace);
+                //get pages and viewReferenceIds
+                foreach ($repo->getAll()->run() as $key => $page) {
+                    $viewReference = $this->viewCacheHelper->getReferenceByParameters(
+                        array(
+                            'viewNamespace' => $viewNamespace,
+                            'viewId'        => $page->getId(),
+                        )
+                    );
+                    $viewReferences[$viewReference['id']] = $viewReference;
+                }
+                //get pager
+                $browseEvents = $this->entityManager->getRepository('Victoire\Bundle\AnalyticsBundle\Entity\BrowseEvent')
+                    ->getMostVisitedFromReferences(array_keys($viewReferences), $number)
+                    ->getQuery()
+                    ->getResult();
+                //Now we get the most visited references, we'll get views with PageHelper
+                foreach ($browseEvents as $browseEvent) {
+                    $views[] = $this->pageHelper->findPageByReference(
+                        $viewReferences[$browseEvent->getViewReferenceId()]
+                    );
+                }
+
+                break;
+
+            default:
+                # code...
+                break;
+        }
+
+        return $views;
     }
 
     /**
@@ -53,7 +89,7 @@ class AnalyticsViewHelper
         }
         //get pager
         $browseEvents = $this->entityManager->getRepository('Victoire\Bundle\AnalyticsBundle\Entity\BrowseEvent')
-            ->getMostVisited(array_keys($viewReferences), $number)
+            ->getMostVisitedFromReferences(array_keys($viewReferences), $number)
             ->getQuery()
             ->getResult();
 

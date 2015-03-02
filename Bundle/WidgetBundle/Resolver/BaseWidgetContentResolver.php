@@ -8,7 +8,6 @@ use Victoire\Bundle\WidgetBundle\Model\Widget;
 
 class BaseWidgetContentResolver
 {
-
     /**
      * Get the static content of the widget
      *
@@ -18,7 +17,6 @@ class BaseWidgetContentResolver
      */
     public function getWidgetStaticContent(Widget $widget)
     {
-
         $reflect = new \ReflectionClass($widget);
         $widgetProperties = $reflect->getProperties();
         $parameters = array('widget' => $widget);
@@ -29,7 +27,6 @@ class BaseWidgetContentResolver
                 $value = $accessor->getValue($widget, $property->getName());
                 $parameters[$property->getName()] = $value;
             }
-
         }
 
         return $parameters;
@@ -80,7 +77,6 @@ class BaseWidgetContentResolver
      */
     public function getWidgetQueryContent(Widget $widget)
     {
-
         $parameters = $this->getWidgetStaticContent($widget);
 
         $entity = $this->getWidgetQueryBuilder($widget)

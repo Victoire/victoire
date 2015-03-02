@@ -55,7 +55,7 @@ class WidgetManager
      * @param TemplateMapper        $victoireTemplating
      * @param PageHelper            $pageHelper
      * @param array                 $slots
-     * @param Container      $container
+     * @param Container             $container
      */
     public function __construct(
         WidgetHelper $widgetHelper,
@@ -150,7 +150,7 @@ class WidgetManager
         $form = $this->widgetFormBuilder->callBuildFormSwitchParameters($widget, $view, $entity, $positionReference);
 
         $form->handleRequest($request);
-        if ($form->isValid()) {
+        if ($request->query->get('novalidate', false) === false && $form->isValid()) {
             if (!$view->getId()) {
                 //create a view for the business entity instance if we are currently on a virtual one
                 $this->em->persist($view);
@@ -241,7 +241,7 @@ class WidgetManager
 
             $form->handleRequest($request);
 
-            if ($form->isValid()) {
+            if ($request->query->get('novalidate', false) === false && $form->isValid()) {
                 $widget->setBusinessEntityName($entityName);
 
                 $this->em->persist($widget);
