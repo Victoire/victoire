@@ -21,4 +21,12 @@ class CategoryRepository extends NestedTreeRepository
         return $this;
 
     }
+
+    public function getAll()
+    {
+        $this->qb = $this->getInstance('category')
+        ;
+        return $this;
+
+    }
 }
