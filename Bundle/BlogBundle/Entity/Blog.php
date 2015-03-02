@@ -97,4 +97,49 @@ class Blog extends BasePage
     {
         return $this->categories;
     }
+
+    /**
+     * Get root categories
+     *
+     * @return string
+     */
+    public function getRootCategories()
+    {
+        $rootCategories = [];
+        foreach ($this->categories as $categories) {
+            if ($categories->getLvl() == 0) {
+                $rootCategories[] = $categories;
+            }
+        }
+        return $rootCategories;
+    }
+
+    /**
+     * Add rootCategory
+     *
+     * @param string $rootCategory
+     *
+     * @return Article
+     */
+    public function addRootCategory($rootCategory)
+    {
+        $rootCategory->setBlog($this);
+        $this->categories[] = $rootCategory;
+
+        return $this;
+    }
+
+    /**
+     * Remove rootCategory
+     *
+     * @param string $rootCategory
+     *
+     * @return Article
+     */
+    public function removeRootCategory($rootCategory)
+    {
+        $this->categories->removeElement($rootCategory);
+
+        return $this;
+    }
 }
