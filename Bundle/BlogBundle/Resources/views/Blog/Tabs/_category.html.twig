@@ -1,0 +1,79 @@
+
+{% trans_default_domain "victoire" %}
+<div class="vic-tab-content vic-modal-tab-content">
+    <div class="vic-tab-pane vic-active" id="basics">
+        <form method="POST" id="victoire_blog_category_form" action="{{path('victoire_blog_category', {'id':blog.id} )}}">
+            <div class="vic-form-group">
+                <div class="blogCategories" data-prototype="{{ _self.widget_prototype(form.rootCategories.vars.prototype)|e }}" role="blogCategory" data-init="true" data-blog-category="0" data-index="0">
+                    <ul class="vic-blogCategoryWidget-itemList" role="blogCategory-container">
+                        {% for category in form.rootCategories %}
+                            {{ _self.widget_prototype(category, loop.index0) }}
+                        {% endfor %}
+                    </ul>
+                    <div class='vic-form-group vic-add_blogCategory_sibling-Container'>
+                        <span><a href="#" onclick="addBlogCategoryRootItem(this);return false;" class="add_blogCategory_link vic-btn vic-btn-default add_blogCategory_sibling"><i class="fa fa-plus"></i> {{'victoire.blog.category.add.main.label'|trans}}</a></span>
+                    </div>
+                </div>
+            {{form_errors(form)}}
+            {# Add this line to set the widget as rendered to not display it twice in form_rest #}
+            {% do form.rootCategories.setRendered %}
+            </div>
+            {{ form_rest(form) }}
+
+            <button type="submit" href="#" class="vic-btn vic-btn-success" title="{{ ('modal.button.category.title')|trans({}, 'victoire') }}"><i class="fa fa-check-circle"></i> {{ ('modal.button.category.title')|trans({}, 'victoire') }}</submit>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $vic(document).ready(function() {
+        blogCategories = new Array();
+        prototype = $vic('div.blogCategories').attr('data-prototype');
+
+        //for the existing blogCategories, we generate the js blogCategories
+        initBlogCategories();
+    });
+    $vic('#victoire_blog_category_type_status').on('change', function(){
+        if ($vic(this).val() == '{{ constant('Victoire\\Bundle\\PageBundle\\Entity\\PageStatus::SCHEDULED') }}') {
+            $vic('.publication-date-container').removeClass('vic-hidden');
+        } else {
+            $vic('.publication-date-container').addClass('vic-hidden');
+        }
+    });
+</script>
+
+{% javascripts
+    '@VictoireFormBundle/Resources/public/js/datetimepicker-init.js'
+%}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+
+{% macro widget_prototype(form, index) %}
+<li class='vic-form-group vic-blogcategoryWidget-item-formGroup' role="blogCategory" data-index="{{ index is not null ? index : '__blogCategory_index__' }}" data-blog-category="__blogCategory_id__" data-init="false">
+        {{ _self.category_render_form(form) }}
+        <span class='add_blogCategory_link-container'>
+            <span><a href="#" onclick="addBlogCategoryRow(this);return false;" class="vic-btn vic-blogCategoryWidget-btn vic-btn-default add_blogCategory_link"><i class="fa fa-plus"></i> {{'victoire.blog.category.add.sub.label'|trans}}</a></span>
+        </span>
+        <ul class="vic-blogCategoryWidget-itemList" role="blogCategory-container">
+            {% if form.children is defined %}
+                {% for category in form.children %}
+                    {% if category.title is defined %}
+                        {{ _self.widget_prototype(category, loop.index0) }}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </ul>
+</li>
+
+
+{% endmacro %}
+
+{% macro category_render_form(form) %}
+
+    {{ form_widget(form.title, {'attr': {'placeholder': form.title.vars.label}, 'required' : true}) }}
+    <span>
+        <a onclick="deleteBlogCategoryRow(this);return false;" href="#" class="vic-btn vic-btn-danger vic-blogCategoryWidget-btn vic-blogCategoryWidget-deleteRow vic-btn" ><i class="fa fa-trash-o"></i></a>
+    </span>
+
+{% endmacro %}
