@@ -36,7 +36,7 @@ class QueryHelper
      * Get the query builder base. This makes a "select  from item XXX"
      * use the item for doing the left join or where dql
      *
-     * @param unknown $containerEntity
+     * @param \Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern $containerEntity
      *
      * @return QueryBuilder
      *
@@ -84,7 +84,7 @@ class QueryHelper
 
     /**
      * Check that the object is not null and has the query trait
-     * @param unknown $containerEntity
+     * @param \Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern $containerEntity
      *
      * @throws \Exception
      */
@@ -103,8 +103,8 @@ class QueryHelper
     /**
      * Get the results from the sql after adding the
      *
-     * @param unknown $containerEntity
-     * @param unknown $itemsQueryBuilder
+     * @param \Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern $containerEntity
+     * @param QueryBuilder $itemsQueryBuilder
      *
      * @throws \Exception
      *
@@ -128,11 +128,11 @@ class QueryHelper
         if ($query !== '' && $query !== null) {
 
             $subQuery = $this->entityManager->createQueryBuilder()
-                             ->select('item.id')
-                             ->from($itemsQueryBuilder->getRootEntities()[0], 'item');
+                                ->select('item.id')
+                                ->from($itemsQueryBuilder->getRootEntities()[0], 'item');
 
             $itemsQueryBuilder
-                ->andWhere('main_item.id IN (' . $subQuery->getQuery()->getDql() . ' ' . $query . ')');
+                ->andWhere('main_item.id IN ('.$subQuery->getQuery()->getDql().' '.$query.')');
         }
         $currentView = $this->currentView;
 
@@ -142,12 +142,12 @@ class QueryHelper
             // NEW
             $metadatas = $this->entityManager->getClassMetadata(get_class($currentEntity));
             foreach ($metadatas->fieldMappings as $fieldName => $field) {
-                if (strpos($query, ":" . $fieldName) !== false) {
+                if (strpos($query, ":".$fieldName) !== false) {
                     $itemsQueryBuilder->setParameter($fieldName, $metadatas->getFieldValue($currentEntity, $fieldName));
                 }
             }
             foreach ($metadatas->associationMappings as $fieldName => $field) {
-                if (strpos($query, ":" . $fieldName) !== false) {
+                if (strpos($query, ":".$fieldName) !== false) {
                     $itemsQueryBuilder->setParameter($fieldName, $metadatas->getFieldValue($currentEntity, $fieldName)->getId());
                 }
             }

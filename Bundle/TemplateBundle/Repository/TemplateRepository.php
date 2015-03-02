@@ -24,7 +24,7 @@ class TemplateRepository extends NestedTreeRepository
     /**
      * Get all templates in the repository.
      *
-     * @return \Doctrine\ORM\QueryBuilder
+     * @return TemplateRepository
      */
     public function getAll()
     {

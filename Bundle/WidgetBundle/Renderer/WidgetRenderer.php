@@ -55,10 +55,9 @@ class WidgetRenderer
     /**
      * render a widget
      * @param Widget  $widget
-     * @param boolean $addContainer
      * @param View    $view
      *
-     * @return template
+     * @return string
      */
     public function renderContainer(Widget $widget, View $view, $position = 0, $slotOptions = array())
     {
@@ -73,8 +72,8 @@ class WidgetRenderer
             $html .= $this->renderActions($widget->getSlot(), $view, $slotOptions, $position);
         }
 
-        $html = '<a class="vic-anchor" id="vic-widget-'.$widget->getId().'-container-anchor"></a>' . $html;
-        $html = "<div class='vic-widget-container' data-position=\"".($position-1)."\" data-id=\"".$widget->getId()."\" id='vic-widget-".$widget->getId()."-container'>".$html.'</div>';
+        $html = '<a class="vic-anchor" id="vic-widget-'.$widget->getId().'-container-anchor"></a>'.$html;
+        $html = "<div class='vic-widget-container' data-position=\"".($position - 1)."\" data-id=\"".$widget->getId()."\" id='vic-widget-".$widget->getId()."-container'>".$html.'</div>';
 
         $dispatcher->dispatch(VictoireCmsEvents::WIDGET_POST_RENDER, new WidgetRenderEvent($widget, $html));
 
@@ -100,7 +99,7 @@ class WidgetRenderer
     /**
      * render slot actions
      * @param Slot    $slot
-     * @param Page    $view
+     * @param View    $view
      * @param array   $options
      * @param integer $position
      *

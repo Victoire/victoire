@@ -39,7 +39,7 @@ class BusinessEntityPageHelper
      * Is the entity allowed for the business entity page
      *
      * @param BusinessEntityPagePattern $bepPattern
-     * @param Entity                    $entity
+     * @param \Victoire\Bundle\PageBundle\Helper\Entity|null                    $entity
      *
      * @throws \Exception
      * @return boolean
@@ -61,10 +61,10 @@ class BusinessEntityPageHelper
         //the base of the query
         $baseQuery = $queryHelper->getQueryBuilder($bepPattern);
 
-        $baseQuery->andWhere('main_item.id = ' . $entityId);
+        $baseQuery->andWhere('main_item.id = '.$entityId);
 
         //filter with the query of the page
-        $items =  $queryHelper->buildWithSubQuery($bepPattern, $baseQuery)
+        $items = $queryHelper->buildWithSubQuery($bepPattern, $baseQuery)
             ->getQuery()->getResult();
 
         //only one page can be found because we filter on the
@@ -99,7 +99,7 @@ class BusinessEntityPageHelper
         $baseQuery->andWhere('1 = 1');
 
         //filter with the query of the page
-        $items =  $queryHelper->buildWithSubQuery($bepPattern, $baseQuery)
+        $items = $queryHelper->buildWithSubQuery($bepPattern, $baseQuery)
             ->getQuery()
             ->getResult();
 
@@ -239,8 +239,7 @@ class BusinessEntityPageHelper
 
     /**
      * Guess the best pattern to represent given reflectionClass
-     * @param  int    $entityId
-     * @param  string $type
+     * @param \ReflectionClass $refClass
      * @return View
      */
     public function guessBestViewForEntity($refClass)

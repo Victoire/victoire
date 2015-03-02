@@ -118,8 +118,8 @@ abstract class View
     protected $children;
 
     /**
-    * This relation is dynamicly added by PageSubscriber
-    */
+     * This relation is dynamicly added by PageSubscriber
+     */
     protected $author;
 
     /**
@@ -305,13 +305,13 @@ abstract class View
      * Set children
      * @param string $children
      *
-     * @return Page
+     * @return View
      */
     public function setChildren($children)
     {
         $this->children = $children;
         if ($children !== null) {
-           foreach ($children as $child) {
+            foreach ($children as $child) {
                 $child->setParent($this);
             }
         }
@@ -332,7 +332,7 @@ abstract class View
     /**
      * Add child
      *
-     * @param child $child
+     * @param View $child
      */
     public function addChild(View $child)
     {
@@ -342,7 +342,7 @@ abstract class View
     /**
      * Remove child
      *
-     * @param child $child
+     * @param View $child
      */
     public function removeChild(View $child)
     {
@@ -447,7 +447,7 @@ abstract class View
     /**
      * Is the widget is undeletable
      *
-     * @return boolean
+     * @return string
      */
     public function isUndeletable()
     {
@@ -816,7 +816,7 @@ abstract class View
      *
      * @param Slot $slot
      *
-     * @return this
+     * @return View
      */
     public function updateSlot($slot)
     {
@@ -849,7 +849,7 @@ abstract class View
 
     /**
      * Remove slots
-     * @param Widget $slots
+     * @param Slot $slots
      */
     public function removeSlot(Slot $slots)
     {

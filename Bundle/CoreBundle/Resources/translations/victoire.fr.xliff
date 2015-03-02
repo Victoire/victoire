@@ -154,6 +154,14 @@
         <source>navbar.mode.style</source>
         <target>Style</target>
       </trans-unit>
+      <trans-unit id="13" resname="victoire.login.mail.label">
+        <source>victoire.login.mail.label</source>
+        <target>Addresse email</target>
+      </trans-unit>
+      <trans-unit id="14" resname="victoire.login.password.label">
+        <source>victoire.login.password.label</source>
+        <target>Mot de passe</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

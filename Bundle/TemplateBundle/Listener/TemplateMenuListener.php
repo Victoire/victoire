@@ -5,7 +5,6 @@ namespace Victoire\Bundle\TemplateBundle\Listener;
 use Symfony\Component\EventDispatcher\Event;
 use Victoire\Bundle\CoreBundle\Listener\MenuListenerInterface;
 use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
-use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\TemplateBundle\Event\Menu\TemplateMenuContextualEvent;
 
 /**
@@ -31,7 +30,7 @@ class TemplateMenuListener implements MenuListenerInterface
      *
      * @param TemplateMenuContextualEvent $event
      *
-     * @return Ambigous <\Knp\Menu\ItemInterface, NULL>
+     * @return \Knp\Menu\ItemInterface <\Knp\Menu\ItemInterface, NULL>
      */
     public function addContextual($event)
     {
@@ -54,7 +53,7 @@ class TemplateMenuListener implements MenuListenerInterface
      *
      * @param Event $event
      *
-     * @return Ambigous <\Knp\Menu\ItemInterface, NULL>
+     * @return \Knp\Menu\ItemInterface <\Knp\Menu\ItemInterface, NULL>
      */
     public function addGlobal(Event $event)
     {

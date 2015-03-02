@@ -265,7 +265,7 @@ class PageSeo
     /**
      * Get redirectTo
      *
-     * @return Page
+     * @return string
      */
     public function getRedirectTo()
     {

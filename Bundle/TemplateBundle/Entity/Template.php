@@ -62,11 +62,11 @@ class Template extends View
         return 'Modèle > '.$this->name;
     }
 
-     /**
-     * add page
-     * @param BasePage $page
-     * @return Template
-     **/
+        /**
+         * add page
+         * @param BasePage $page
+         * @return Template
+         **/
     public function addPage(BasePage $page)
     {
         $page->setTemplate($this);
@@ -82,7 +82,7 @@ class Template extends View
      **/
     public function setPages(array $pages)
     {
-        foreach($pages as $page){
+        foreach ($pages as $page) {
             $this->addPage($page);
         }
 
@@ -91,7 +91,7 @@ class Template extends View
 
     /**
      * remove page
-     * @param BasePage $pages
+     * @param BasePage $page
      * @return Template
      **/
     public function removePage($page)

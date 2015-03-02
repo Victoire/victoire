@@ -23,7 +23,7 @@ class TemplateController extends Controller
      * @Route("/index", name="victoire_template_index")
      * @Configuration\Template()
      *
-     * @return response
+     * @return JsonResponse
      */
     public function indexAction()
     {
@@ -42,7 +42,7 @@ class TemplateController extends Controller
 
     /**
      * list of all templates
-     * @param Victoire\Bundle\TemplateBundle\Entity\Template $template The template
+     * @param Template $template The template
      *
      * @Route("/show/{slug}", name="victoire_template_show")
      * @ParamConverter("template", class="VictoireTemplateBundle:Template", options={"mapping": {"slug": "slug"}})
@@ -53,19 +53,19 @@ class TemplateController extends Controller
     {
         //add the view to twig
         $this->get('twig')->addGlobal('view', $template);
-        $viewParameters = array('locale' => $template->getLocale(),'viewId' => $template->getId());
+        $viewParameters = array('locale' => $template->getLocale(), 'viewId' => $template->getId());
         $viewReference = $this->container->get('victoire_core.view_cache_helper')->getReferenceByParameters($viewParameters);
         $template->setReference($viewReference);
         $event = new TemplateMenuContextualEvent($template);
 
         //TODO : il serait bon de faire des constantes pour les noms d'évents
-        $eventName = 'victoire_core.' . Template::TYPE . '_menu.contextual';
+        $eventName = 'victoire_core.'.Template::TYPE.'_menu.contextual';
 
         $this->get('event_dispatcher')->dispatch($eventName, $event);
 
         //the victoire templating
         $victoireTemplating = $this->container->get('victoire_templating');
-        $layout = 'AppBundle:Layout:' . $template->getLayout() . '.html.twig';
+        $layout = 'AppBundle:Layout:'.$template->getLayout().'.html.twig';
 
         $parameters = array(
             'view'   => $template,
@@ -88,7 +88,7 @@ class TemplateController extends Controller
     /**
      * create a new Template
      *
-     * @return Response
+     * @return JsonResponse
      * @Route("/new", name="victoire_template_new")
      * @Configuration\Template()
      */
@@ -103,7 +103,7 @@ class TemplateController extends Controller
             $em->persist($template);
             $em->flush();
 
-            return new JsonResponse( array(
+            return new JsonResponse(array(
                 "success"  => true,
                 "url"      => $this->generateUrl('victoire_template_show', array('slug' => $template->getSlug()))
             ));
@@ -124,7 +124,7 @@ class TemplateController extends Controller
      * define settings of the template
      * @param Template $template 
      *
-     * @return Response
+     * @return JsonResponse
      * @Route("/{slug}/parametres", name="victoire_template_settings")
      * @ParamConverter("template", class="VictoireTemplateBundle:Template", options={"mapping": {"slug": "slug"}})
      */
@@ -150,7 +150,7 @@ class TemplateController extends Controller
                 "success" => true,
                 'html'    => $this->container->get('victoire_templating')->render(
                     'VictoireTemplateBundle:Template:settings.html.twig',
-                    array('template' => $template,'form' => $form->createView())
+                    array('template' => $template, 'form' => $form->createView())
                 )
             )
         );
@@ -160,7 +160,7 @@ class TemplateController extends Controller
      * translate a template 
      * @param Template $template
      *
-     * @return Response
+     * @return JsonResponse
      * @Route("/{slug}/translate ", name="victoire_template_translate")
      * @ParamConverter("template", class="VictoireTemplateBundle:Template", options={"mapping": {"slug": "slug"}})
      */
@@ -186,7 +186,7 @@ class TemplateController extends Controller
                 "success" => true,
                 'html'    => $this->container->get('victoire_templating')->render(
                     'VictoireTemplateBundle:Template:translate.html.twig',
-                    array('template' => $template,'form' => $form->createView())
+                    array('template' => $template, 'form' => $form->createView())
                 )
             )
         );
@@ -196,7 +196,7 @@ class TemplateController extends Controller
      * edit a Template
      * @param Template $template The Template to edit
      *
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @Route("/edit/{slug}", name="victoire_template_edit")
      * @Configuration\Template()
      * @ParamConverter("template", class="VictoireTemplateBundle:Template")

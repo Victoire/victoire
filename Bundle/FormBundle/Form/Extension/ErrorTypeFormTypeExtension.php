@@ -55,7 +55,7 @@ class ErrorTypeFormTypeExtension extends AbstractTypeExtension
         $resolver->setDefaults(array(
             'vic_error_type' => $this->errorType,
             'vic_error_delay'=> false
-       ));
+        ));
     }
 
     /**

@@ -40,7 +40,7 @@ class CmsExtension extends \Twig_Extension_Core
      * @param WidgetExceptionHandler $widgetExceptionHandler
      * @param CurrentViewHelper      $currentViewHelper
      * @param ViewCacheHelper        $viewCacheHelper
-     * @param TwigEnvironment        $twig
+     * @param \Twig_Environment        $twig
      */
     public function __construct(
         WidgetRenderer $widgetRenderer,
@@ -156,7 +156,7 @@ class CmsExtension extends \Twig_Extension_Core
                     }
 
                     //render this widget
-                    $result .= $this->cmsWidget($widget, $widgetMap->getPosition()+1, $slotOptions);
+                    $result .= $this->cmsWidget($widget, $widgetMap->getPosition() + 1, $slotOptions);
                 } catch (\Exception $ex) {
                     $result .= $this->widgetExceptionHandler->handle($ex, $widget);
                 }
@@ -210,8 +210,6 @@ class CmsExtension extends \Twig_Extension_Core
 
     /**
      * Converts a date to the given format.
-     * @param Twig_Environment             $env      A Twig_Environment instance
-     * @param DateTime|DateInterval|string $date     A date
      * @param string                       $format   A format
      * @param DateTimeZone|string          $timezone A timezone
      *

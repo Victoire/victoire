@@ -11,10 +11,8 @@ use Victoire\Bundle\CoreBundle\Annotations\Reader\AnnotationReader;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 use Victoire\Bundle\FormBundle\Helper\FormErrorHelper;
-use Victoire\Bundle\PageBundle\Entity\Slot;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
-use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\WidgetBundle\Builder\WidgetFormBuilder;
 use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
 use Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer;
@@ -57,7 +55,7 @@ class WidgetManager
      * @param TemplateMapper        $victoireTemplating
      * @param PageHelper            $pageHelper
      * @param array                 $slots
-     * @param ServiceContainer      $container
+     * @param Container             $container
      */
     public function __construct(
         WidgetHelper $widgetHelper,
@@ -152,7 +150,7 @@ class WidgetManager
         $form = $this->widgetFormBuilder->callBuildFormSwitchParameters($widget, $view, $entity, $positionReference);
 
         $form->handleRequest($request);
-        if ($form->isValid()) {
+        if ($request->query->get('novalidate', false) === false && $form->isValid()) {
             if (!$view->getId()) {
                 //create a view for the business entity instance if we are currently on a virtual one
                 $this->em->persist($view);
@@ -243,7 +241,7 @@ class WidgetManager
 
             $form->handleRequest($request);
 
-            if ($form->isValid()) {
+            if ($request->query->get('novalidate', false) === false && $form->isValid()) {
                 $widget->setBusinessEntityName($entityName);
 
                 $this->em->persist($widget);

@@ -61,7 +61,7 @@ class HelpFormTypeExtension extends AbstractTypeExtension
                 $options['vic_help_label_tooltip']['icon'] = $this->options['vic_help_label_tooltip']['icon'];
             }
             if (!isset($options['vic_help_label_tooltip']['placement'])) {
-                 $options['vic_help_label_tooltip']['placement'] = $this->options['vic_help_label_tooltip']['placement'];
+                    $options['vic_help_label_tooltip']['placement'] = $this->options['vic_help_label_tooltip']['placement'];
             }
 
         }

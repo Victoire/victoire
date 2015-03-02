@@ -3,14 +3,11 @@
 namespace Victoire\Bundle\MediaBundle\Helper\Services;
 
 use Doctrine\ORM\EntityManager;
-
 use Gaufrette\Filesystem;
-
-use Victoire\Bundle\MediaBundle\Entity\Folder,
-    Victoire\Bundle\MediaBundle\Repository\FolderRepository,
-    Victoire\Bundle\MediaBundle\Entity\Media,
-    Victoire\Bundle\MediaBundle\Helper\File\FileHandler;
-
+use Victoire\Bundle\MediaBundle\Entity\Folder;
+use Victoire\Bundle\MediaBundle\Repository\FolderRepository;
+use Victoire\Bundle\MediaBundle\Entity\Media;
+use Victoire\Bundle\MediaBundle\Helper\File\FileHandler;
 use Symfony\Component\HttpFoundation\File\File;
 
 // TODO: Would be cool if we could pass on the folder name. Or the path with a locale.

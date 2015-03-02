@@ -88,7 +88,7 @@ trait LinkTrait
      *
      * @param string $url
      *
-     * @return WidgetButton
+     * @return LinkTrait
      */
     public function setUrl($url)
     {
@@ -112,7 +112,7 @@ trait LinkTrait
      *
      * @param string $target
      *
-     * @return WidgetButton
+     * @return LinkTrait
      */
     public function setTarget($target)
     {
@@ -136,7 +136,7 @@ trait LinkTrait
      *
      * @param string $route
      *
-     * @return WidgetButton
+     * @return LinkTrait
      */
     public function setRoute($route)
     {
@@ -160,7 +160,7 @@ trait LinkTrait
      *
      * @param array $routeParameters
      *
-     * @return WidgetButton
+     * @return LinkTrait
      */
     public function setRouteParameters($routeParameters)
     {
@@ -183,7 +183,7 @@ trait LinkTrait
      * Set page
      * @param \Victoire\Bundle\PageBundle\Entity\Page $page
      *
-     * @return WidgetButton
+     * @return LinkTrait
      */
     public function setPage($page = null)
     {
@@ -207,7 +207,7 @@ trait LinkTrait
      *
      * @param string $linkType
      *
-     * @return MenuItem
+     * @return LinkTrait
      */
     public function setLinkType($linkType)
     {

@@ -25,7 +25,7 @@ class BasePageRepository extends NestedTreeRepository
      *
      * @param string $url The url
      *
-     * @return QueryBuilder The query builder
+     * @return \Doctrine\ORM\QueryBuilder The query builder
      */
     public function getOneByUrl($url)
     {
@@ -53,7 +53,7 @@ class BasePageRepository extends NestedTreeRepository
      * Filter the query by the sitemap index (=visibility)
      * @param bool $indexed
      *
-     * @return Page
+     * @return BasePageRepository
      */
     public function filterBySitemapIndexed($indexed = true)
     {
@@ -70,7 +70,7 @@ class BasePageRepository extends NestedTreeRepository
      *
      * @param boolean $excludeUnpublished Should we get only the published BasePages ?
      *
-     * @return \Doctrine\ORM\QueryBuilder
+     * @return BasePageRepository
      */
     public function getAll($excludeUnpublished = false)
     {

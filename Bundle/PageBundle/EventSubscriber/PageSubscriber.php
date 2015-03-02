@@ -45,7 +45,7 @@ class PageSubscriber implements EventSubscriber
     /**
      * bind to LoadClassMetadata method
      *
-     * @return array The subscribed events
+     * @return string[] The subscribed events
      */
     public function getSubscribedEvents()
     {
@@ -95,14 +95,14 @@ class PageSubscriber implements EventSubscriber
 
     /**
      * This method is called on flush
-    * @param OnFlushEventArgs $eventArgs The flush event args.
+     * @param OnFlushEventArgs $eventArgs The flush event args.
      *
-    * @return void
+     * @return void
      */
     public function onFlush(OnFlushEventArgs $eventArgs)
     {
         $this->entityManager = $eventArgs->getEntityManager();
-        $this->uow  = $this->entityManager->getUnitOfWork();
+        $this->uow = $this->entityManager->getUnitOfWork();
 
         foreach ($this->uow->getScheduledEntityInsertions() as $entity) {
             if ($entity instanceof BasePage) {
@@ -168,7 +168,7 @@ class PageSubscriber implements EventSubscriber
      * Builds the pages children urls with new page slug
      * If page has a custom url, we don't modify it, but we modify children urls
      * @param Page $page
-     * @param bool $depth
+     * @param integer $depth
      *
      * @return $page
      */
@@ -219,7 +219,7 @@ class PageSubscriber implements EventSubscriber
     /**
      * Get the array of slugs of the parents
      * @param Page  $page
-     * @param array $slugs
+     * @param string[] $slugs
      *
      * @return array $urlArray The list of slugs
      */

@@ -18,7 +18,6 @@ class UserCallableHelper
     /**
      * Constructor
      *
-     * @param string $userEntity
      */
     public function __construct(Container $container)
     {

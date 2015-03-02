@@ -71,12 +71,12 @@ class Article
     private $category;
 
     /**
-    * @var datetime $publishedAt
-    *
-    * @ORM\Column(name="publishedAt", type="datetime", nullable=true)
-    * @VIC\BusinessProperty("dateable")
-    * @VIC\BusinessProperty("textable")
-    */
+     * @var datetime $publishedAt
+     *
+     * @ORM\Column(name="publishedAt", type="datetime", nullable=true)
+     * @VIC\BusinessProperty("dateable")
+     * @VIC\BusinessProperty("textable")
+     */
     private $publishedAt;
 
     /**
@@ -122,18 +122,18 @@ class Article
     private $categoryTitle;
 
     /**
-    * @VIC\BusinessProperty("textable")
-    */
+     * @VIC\BusinessProperty("textable")
+     */
     private $publishedAtString;
 
     /**
-    * @VIC\BusinessProperty("textable")
-    */
+     * @VIC\BusinessProperty("textable")
+     */
     private $authorAvatar;
 
     /**
-    * @VIC\BusinessProperty("textable")
-    */
+     * @VIC\BusinessProperty("textable")
+     */
     private $authorFullName;
 
     /**
@@ -198,7 +198,7 @@ class Article
      *
      * @param string $description
      *
-     * @return PostPage
+     * @return Article
      */
     public function setDescription($description)
     {
@@ -267,7 +267,7 @@ class Article
     /**
      * Get deletedAt
      *
-     * @return DateTime
+     * @return string
      */
     public function getDeletedAt()
     {
@@ -290,7 +290,7 @@ class Article
     /**
      * Get the blog
      *
-     * @return String
+     * @return Blog
      */
     public function getBlog()
     {
@@ -300,7 +300,7 @@ class Article
     /**
      * Set the blog
      *
-     * @param string $blog
+     * @param Blog $blog
      */
     public function setBlog(Blog $blog)
     {
@@ -361,9 +361,9 @@ class Article
 
     /**
      * Set image
-     * @param string $image
+     * @param Media $image
      *
-     * @return WidgetImage
+     * @return Article
      */
     public function setImage(Media $image)
     {
@@ -385,7 +385,7 @@ class Article
     /**
      * Get businessEntity
      *
-     * @return string
+     * @return Article
      */
     public function getBusinessEntity()
     {
@@ -408,7 +408,7 @@ class Article
     /**
      * Get pattern
      *
-     * @return string
+     * @return BusinessEntityPagePattern
      */
     public function getPattern()
     {
@@ -508,7 +508,7 @@ class Article
     {
         $email = $this->author->getEmail();
 
-        return "http://www.gravatar.com/avatar/" . md5($email) . "?s=70";
+        return "http://www.gravatar.com/avatar/".md5($email)."?s=70";
     }
 
     public function getAuthorFullname()

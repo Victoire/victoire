@@ -46,7 +46,7 @@ class HierarchyTreeExtension extends AbstractType
             $dataNode = $choice->data;
             $level = $this->propertyAccessor->getValue($dataNode, 'lvl');
 
-            $choice->label = str_repeat(str_repeat('&#160;', $level), 4) . $choice->label;
+            $choice->label = str_repeat(str_repeat('&#160;', $level), 4).$choice->label;
 
         }
     }

@@ -34,7 +34,7 @@ trait BusinessEntityTrait
      *
      * @param \Victoire\Bundle\CoreBundle\Entity\EntityProxy $proxy
      *
-     * @return PostPage
+     * @return BusinessEntityTrait
      */
     public function setProxy(\Victoire\Bundle\CoreBundle\Entity\EntityProxy $proxy = null)
     {
@@ -58,7 +58,7 @@ trait BusinessEntityTrait
      *
      * @param \Victoire\Bundle\CoreBundle\Entity\EntityProxy $proxies
      *
-     * @return PostPage
+     * @return BusinessEntityTrait
      */
     public function addProxie(\Victoire\Bundle\CoreBundle\Entity\EntityProxy $proxies)
     {

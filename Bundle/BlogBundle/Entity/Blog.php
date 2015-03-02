@@ -32,11 +32,11 @@ class Blog extends BasePage
      * Constructor
      *
      */
-     public function __construct()
-     {
+        public function __construct()
+        {
         $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
         $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
-     }
+        }
 
     public function getArticles() { return $this->articles; }
     public function setArticles($articles) { $this->articles = $articles; return $this; }
@@ -46,11 +46,11 @@ class Blog extends BasePage
      *
      * @param string $categories
      *
-     * @return Article
+     * @return Blog
      */
     public function setCategories($categories)
     {
-        foreach($categories as $category)
+        foreach ($categories as $category)
         {
             $category->setBlog($this);
         }
@@ -64,7 +64,7 @@ class Blog extends BasePage
      *
      * @param string $category
      *
-     * @return Article
+     * @return Blog
      */
     public function addCategorie($category)
     {
@@ -79,7 +79,7 @@ class Blog extends BasePage
      *
      * @param string $category
      *
-     * @return Article
+     * @return Blog
      */
     public function removeCategorie($category)
     {
