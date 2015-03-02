@@ -106,17 +106,37 @@
         <source>blog.form.title.label</source>
         <target>Catégorie</target>
       </trans-unit>
-      <trans-unit id="19" resname="victoire.blog.category.title.label">
-        <source>victoire.blog.category.title.label</source>
-        <target>Liste des catégories</target>
-      </trans-unit>
       <trans-unit id="20" resname="victoire.blog.category.add.sub.label">
         <source> victoire.blog.category.add.sub.label</source>
         <target>Ajouter une sous-catégorie</target>
       </trans-unit>
       <trans-unit id="21" resname="victoire.blog.category.add.main.label">
-        <source> victoire.blog.category.add.main.label</source>
+        <source>victoire.blog.category.add.main.label</source>
         <target>Ajouter une catégorie principale</target>
+      </trans-unit>
+      <trans-unit id="22" resname="victoire.blog.choose.blog.label">
+        <source>victoire.blog.choose.blog.label</source>
+        <target>Choisissez votre blog</target>
+      </trans-unit>
+      <trans-unit id="23" resname="victoire.blog.nav.articles.label">
+        <source>victoire.blog.nav.articles.label</source>
+        <target>Listes des articles</target>
+      </trans-unit>
+      <trans-unit id="24" resname="victoire.blog.nav.settings.label">
+        <source>victoire.blog.nav.settings.label</source>
+        <target>Paramètres</target>
+      </trans-unit>
+      <trans-unit id="25" resname="victoire.blog.nav.category.label">
+        <source>victoire.blog.nav.category.label</source>
+        <target>Liste des catégories</target>
+      </trans-unit>
+      <trans-unit id="26" resname="modal.button.settings.title">
+        <source>modal.button.settings.title</source>
+        <target>Modifier</target>
+      </trans-unit>
+      <trans-unit id="27" resname="modal.button.category.title">
+        <source>modal.button.settings.title</source>
+        <target>Modifier</target>
       </trans-unit>
     </body>
   </file>
