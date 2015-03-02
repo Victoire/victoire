@@ -66,6 +66,7 @@ class Article
     /**
      * Categories of the article
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="articles")
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $category;
 
