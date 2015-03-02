@@ -41,18 +41,7 @@ class BlogSettingsType extends BlogType
             ->add('publishedAt', null, array(
                 'widget'         => 'single_text',
                 'datetimepicker' => true
-            ))
-            ->add(
-                'categories',
-                'collection',
-                array(
-                    'type'          => 'victoire_form_blog_category',
-                    'required'      => false,
-                    'allow_add'     => true,
-                    'allow_delete'  => true,
-                    'by_reference'  => false,
-                    'prototype'     => true,                )
-            );
+            ));
     }
 
     /**
