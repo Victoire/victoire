@@ -114,7 +114,6 @@
         <source>victoire.blog.category.add.main.label</source>
         <target>Ajouter une catégorie principale</target>
       </trans-unit>
-<<<<<<< HEAD
       <trans-unit id="22" resname="victoire.blog.choose.blog.label">
         <source>victoire.blog.choose.blog.label</source>
         <target>Choisissez votre blog</target>
@@ -138,6 +137,7 @@
       <trans-unit id="27" resname="modal.button.category.title">
         <source>modal.button.settings.title</source>
         <target>Modifier</target>
+      </trans-unit>
       <trans-unit id="29" resname="widget_filter.form.date.format.label">
         <source>widget_filter.form.date.format.label</source>
         <target>Périodicité</target>
