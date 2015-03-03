@@ -12,7 +12,7 @@ use Victoire\Bundle\CoreBundle\Entity\Traits\BusinessEntityTrait;
 use Victoire\Bundle\MediaBundle\Entity\Media;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Victoire\Bundle\BlogBundle\Repository\ArticleRepository"))
  * @ORM\Table("vic_article")
  * @VIC\BusinessEntity({"Redactor", "Listing", "BlogArticles", "Title", "CKEditor", "Text", "UnderlineTitle", "Cover", "Image", "Authorship", "ArticleList"})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
@@ -248,12 +248,16 @@ class Article
      */
     public function getPublishedAt()
     {
+        if ($this->status == self::PUBLISHED && $this->publishedAt === null) {
+            $this->setPublishedAt($this->getCreatedAt());
+        }
+
         return $this->publishedAt;
     }
 
     /**
      * Set publishedAt
-     * @param string $publishedAt
+     * @param DateTime $publishedAt
      *
      * @return $this
      */
@@ -267,7 +271,7 @@ class Article
     /**
      * Get deletedAt
      *
-     * @return string
+     * @return DateTime
      */
     public function getDeletedAt()
     {
@@ -276,7 +280,7 @@ class Article
 
     /**
      * Set deletedAt
-     * @param string $deletedAt
+     * @param DateTime $deletedAt
      *
      * @return $this
      */
@@ -422,6 +426,9 @@ class Article
      */
     public function setStatus($status)
     {
+        if ($status == self::PUBLISHED && $this->publishedAt === null) {
+            $this->setPublishedAt(new \DateTime());
+        }
         $this->status = $status;
     }
 

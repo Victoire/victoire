@@ -1,6 +1,7 @@
 parameters:
     victoire_blog_tag_filters_form_type_class: Victoire\Bundle\BlogBundle\Filter\TagFilter
     victoire_blog_category_filters_form_type_class: Victoire\Bundle\BlogBundle\Filter\CategoryFilter
+    victoire_blog_date_filters_form_type_class: Victoire\Bundle\BlogBundle\Filter\DateFilter
 
 services:
     victoire_blog.blog_menu_listener:
@@ -101,4 +102,14 @@ services:
             - "@request="
         tags:
             - { name: form.type, alias: tag_filter }
+            - { name: victoire_core.filter }
+
+    #DATE FILTER
+    victoire_blog.date_filters.form.type:
+        class: %victoire_blog_date_filters_form_type_class%
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@request="
+        tags:
+            - { name: form.type, alias: date_filter }
             - { name: victoire_core.filter }
