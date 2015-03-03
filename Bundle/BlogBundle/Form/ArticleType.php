@@ -33,6 +33,12 @@ class ArticleType extends AbstractType
         $viewToIdTransformer = new ViewToIdTransformer($this->entityManager);
         $blog = $builder->getData()->getBlog();
         $categoryRepo = $this->entityManager->getRepository('Victoire\Bundle\BlogBundle\Entity\Category');
+        if($blog)
+        {
+            $queryBuilder = $categoryRepo->getOrderedCategories($blog)->getInstance();
+        }else{
+            $queryBuilder = $categoryRepo->getAll()->getInstance();
+        }
         $builder
             ->add('name')
             ->add('description', null, array(
@@ -40,7 +46,9 @@ class ArticleType extends AbstractType
             ->add('image', 'media')
             ->add('category', 'hierarchy_tree', array(
                 'class' => "Victoire\Bundle\BlogBundle\Entity\Category",
-                'query_builder' => $categoryRepo->getOrderedCategories($blog)->getInstance(),
+                'query_builder' => $queryBuilder,
+                'empty_value' => "Pas de catégorie",
+                "empty_data" => null
                 )
             )
             ->add(

@@ -79,6 +79,11 @@ services:
         tags:
             - { name: form.type, alias: victoire_blog_settings_type }
 
+    victoire_blog.blog_category.form.type:
+        class: Victoire\Bundle\BlogBundle\Form\BlogCategoryType
+        tags:
+            - { name: form.type, alias: victoire_blog_category_type }
+
     #CATEGORY FILTER
     victoire_blog.category_filters.form.type:
         class: %victoire_blog_category_filters_form_type_class%

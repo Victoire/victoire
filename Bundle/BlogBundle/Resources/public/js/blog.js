@@ -122,4 +122,64 @@ BlogCategory.prototype.append = function ()
 {
     $vic('[data-blog-category="' + this.parentId + '"]').children('[role="blogCategory-container"]').first().append(this.newForm);
 };
+$vic(document).on('submit', '#victoire_blog_settings_form', function(event) {
+    event.preventDefault();
+    var form = $vic(this);
+    var formData = $vic(form).serializeArray();
+    formData = $vic.param(formData);
+    if ($vic(form).attr('enctype') == 'multipart/form-data') {
+        var formData = new FormData($vic(form)[0]);
+        var contentType = false;
+    }
+
+    $vic.ajax({
+        url         : $vic(form).attr('action'),
+        context     : document.body,
+        data        : formData,
+        type        : $vic(form).attr('method'),
+        contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+        processData : false,
+        async       : true,
+        cache       : false,
+        success     : function(jsonResponse) {
+            if (jsonResponse.hasOwnProperty("url")) {
+                congrat(jsonResponse.message, 10000);
+                window.location.replace(jsonResponse.url);
+            }else{
+                $vic('#victoire-blog-settings').html(jsonResponse.html);
+                warn(jsonResponse.message, 10000);
+            }
+        }
+    });
+});
+$vic(document).on('submit', '#victoire_blog_category_form', function(event) {
+    event.preventDefault();
+    var form = $vic(this);
+    var formData = $vic(form).serializeArray();
+    formData = $vic.param(formData);
+    if ($vic(form).attr('enctype') == 'multipart/form-data') {
+        var formData = new FormData($vic(form)[0]);
+        var contentType = false;
+    }
+
+    $vic.ajax({
+        url         : $vic(form).attr('action'),
+        context     : document.body,
+        data        : formData,
+        type        : $vic(form).attr('method'),
+        contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+        processData : false,
+        async       : true,
+        cache       : false,
+        success     : function(jsonResponse) {
+            if (jsonResponse.hasOwnProperty("url")) {
+                congrat(jsonResponse.message, 10000);
+                window.location.replace(jsonResponse.url);
+            }else{
+                $vic('#victoire-blog-category').html(jsonResponse.html);
+                warn(jsonResponse.message, 10000);
+            }
+        }
+    });
+});
 
