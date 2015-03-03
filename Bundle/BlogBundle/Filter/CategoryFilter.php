@@ -37,6 +37,9 @@ class CategoryFilter extends BaseFilter
      */
     public function buildQuery(QueryBuilder $qb, array $parameters)
     {
+        if (!is_array($parameters['category'])) {
+            $parameters['category'] =  array($parameters['category']);
+        }
         //clean the parameters from the blank value
         foreach ($parameters['category'] as $index => $parameter) {
             //the blank value is removed
@@ -93,6 +96,7 @@ class CategoryFilter extends BaseFilter
                     'choices'     => $categoriesChoices,
                     'required'    => false,
                     'expanded'    => true,
+                    'empty_value' => 'Tous',
                     'multiple'    => $options['multiple'],
                     'data'        => $data,
                 )
