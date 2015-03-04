@@ -45,6 +45,18 @@ class WidgetStyleType extends AbstractType
             'vic_help_block' => 'widget_layout.form.containerPadding.help_block',
             'required' => false,
         ));
+        $builder->add('textAlign', 'choice', array(
+            'label'       => 'widget_layout.form.textAlign.label',
+            'required'    => false,
+            'empty_value' => true,
+            'choices'     => array(
+                ''        => '',
+                'left'    => 'widget_layout.form.textAlign.choices.left.label',
+                'center'  => 'widget_layout.form.textAlign.choices.center.label',
+                'right'   => 'widget_layout.form.textAlign.choices.right.label',
+                'justify' => 'widget_layout.form.textAlign.choices.justify.label',
+            ),
+        ));
 
         //@todo make it dynamic from the global variable (same name) or twig bundle parameter
         $victoire_twig_responsive = array(

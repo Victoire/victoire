@@ -6,6 +6,7 @@
     {% set marginWidget = containerMargin ? "margin: " ~ containerMargin ~ "; " %}
     {% set paddingWidget = containerPadding ? "padding: " ~ containerPadding ~ "; " %}
     {% set backgroundWidget = containerBackground ? "background: " ~ containerBackground ~ "; " %}
+    {% set textAlign = textAlign != '' ? "text-align: " ~ textAlign ~ "; " %}
 
 
     <style>
@@ -14,6 +15,7 @@
             {{ marginWidget }}
             {{ paddingWidget }}
             {{ backgroundWidget }}
+            {{ textAlign }}
         }
 
        {{ _self.responsiveStyle(widget, 'xs', victoire_twig_responsive) }}

@@ -143,6 +143,26 @@
         <source>widget_layout.form.containerBackground.help_block</source>
         <target><![CDATA[par ex. : #123ABC ou url('http://website.com/image.jpg') - Propriété CSS <strong>background</strong>]]></target>
       </trans-unit>
+      <trans-unit id="33" resname="widget_layout.form.textAlign.label">
+        <source>widget_layout.form.textAlign.label</source>
+        <target>Alignement du texte</target>
+      </trans-unit>
+      <trans-unit id="34" resname="widget_layout.form.textAlign.choices.center.label">
+        <source>widget_layout.form.textAlign.choices.center.label</source>
+        <target>Centré</target>
+      </trans-unit>
+      <trans-unit id="35" resname="widget_layout.form.textAlign.choices.right.label">
+        <source>widget_layout.form.textAlign.choices.right.label</source>
+        <target>Droite</target>
+      </trans-unit>
+      <trans-unit id="36" resname="widget_layout.form.textAlign.choices.justify.label">
+        <source>widget_layout.form.textAlign.choices.justify.label</source>
+        <target>Justifié</target>
+      </trans-unit>
+      <trans-unit id="37" resname="widget_layout.form.textAlign.choices.left.label">
+        <source>widget_layout.form.textAlign.choices.left.label</source>
+        <target>Gauche</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

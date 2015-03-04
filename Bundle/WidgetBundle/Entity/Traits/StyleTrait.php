@@ -115,6 +115,13 @@ trait StyleTrait
     protected $containerBackground;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="text_align", type="string", length=15, nullable=true)
+     */
+    protected $textAlign;
+
+    /**
      * Set containerClass
      * @param string $containerClass
      *
@@ -432,6 +439,29 @@ trait StyleTrait
     public function setContainerBackground($containerBackground)
     {
         $this->containerBackground = $containerBackground;
+
+        return $this;
+    }
+
+    /**
+     * Get textAlign
+     *
+     * @return string
+     */
+    public function getTextAlign()
+    {
+        return $this->textAlign;
+    }
+
+    /**
+     * Set textAlign
+     * @param string $textAlign
+     *
+     * @return $this
+     */
+    public function setTextAlign($textAlign)
+    {
+        $this->textAlign = $textAlign;
 
         return $this;
     }
