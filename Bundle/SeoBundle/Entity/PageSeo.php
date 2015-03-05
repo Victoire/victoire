@@ -71,7 +71,9 @@ class PageSeo
     /**
      * @var string
      *
-     * @ORM\Column(name="ogImage", type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\MediaBundle\Entity\Media")
+     * @ORM\JoinColumn(name="ogImage_id", referencedColumnName="id", onDelete="SET NULL")
+     *
      */
     protected $ogImage;
 
@@ -127,7 +129,9 @@ class PageSeo
     /**
      * @var string
      *
-     * @ORM\Column(name="twitterImage", type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\MediaBundle\Entity\Media")
+     * @ORM\JoinColumn(name="twitterImage_id", referencedColumnName="id", onDelete="SET NULL")
+     *
      */
     protected $twitterImage;
 
@@ -155,7 +159,8 @@ class PageSeo
     /**
      * @var string
      *
-     * @ORM\Column(name="schemaImage", type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\MediaBundle\Entity\Media")
+     * @ORM\JoinColumn(name="schemaImage_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $schemaImage;
 
@@ -183,16 +188,23 @@ class PageSeo
     /**
      * @var boolean
      *
-     * @ORM\Column(name="sitemap_indexed", type="boolean", nullable=true)
+     * @ORM\Column(name="sitemap_indexed", type="boolean", nullable=true, options={"default" = true})
      */
-    protected $sitemapIndexed;
+    protected $sitemapIndexed = true;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="sitemap_priority", type="float", nullable=true)
+     * @ORM\Column(name="sitemap_priority", type="float", nullable=true, options={"default" = "0.8"})
      */
-    protected $sitemapPriority;
+    protected $sitemapPriority = 0.8;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="sitemap_changeFreq", type="string", length=255, nullable=true, options={"default" = "monthly"})
+     */
+    protected $sitemapChangeFreq = "monthly";
 
     /**
      * @var string
@@ -219,7 +231,6 @@ class PageSeo
 
     /**
      * contructor
-     * @param Page $page
      *
      **/
     public function __construct()
@@ -254,7 +265,7 @@ class PageSeo
     /**
      * Get redirectTo
      *
-     * @return Page
+     * @return string
      */
     public function getRedirectTo()
     {
@@ -401,7 +412,7 @@ class PageSeo
 
     /**
      * Set ogImage
-     * @param string $ogImage
+     * @param Image $ogImage
      *
      * @return PageSeo
      */
@@ -585,7 +596,7 @@ class PageSeo
 
     /**
      * Set twitterImage
-     * @param string $twitterImage
+     * @param Image $twitterImage
      *
      * @return PageSeo
      */
@@ -677,7 +688,7 @@ class PageSeo
 
     /**
      * Set schemaImage
-     * @param string $schemaImage
+     * @param Image $schemaImage
      *
      * @return PageSeo
      */
@@ -785,7 +796,7 @@ class PageSeo
      *
      * @return boolean
      */
-    public function getSitemapIndexed()
+    public function isSitemapIndexed()
     {
         return $this->sitemapIndexed;
     }
@@ -811,6 +822,29 @@ class PageSeo
     public function getSitemapPriority()
     {
         return $this->sitemapPriority;
+    }
+
+    /**
+     * Set sitemapChangeFreq
+     * @param float $sitemapChangeFreq
+     *
+     * @return PageSeo
+     */
+    public function setSitemapChangeFreq($sitemapChangeFreq)
+    {
+        $this->sitemapChangeFreq = $sitemapChangeFreq;
+
+        return $this;
+    }
+
+    /**
+     * Get sitemapChangeFreq
+     *
+     * @return float
+     */
+    public function getSitemapChangeFreq()
+    {
+        return $this->sitemapChangeFreq;
     }
 
     /**

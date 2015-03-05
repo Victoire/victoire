@@ -31,10 +31,10 @@ class VictoireCoreExtension extends Extension
         $kernel = new \AppKernel('prod', false);
         foreach ($kernel->registerBundles() as $bundle) {
             $path = $bundle->getPath();
-            $yamlParser = new Yaml($container, $path . '/Resources/config/config.yml');
-            $victoireConfig = $yamlParser->parse($path . '/Resources/config/config.yml');
+            $yamlParser = new Yaml($container, $path.'/Resources/config/config.yml');
+            $victoireConfig = $yamlParser->parse($path.'/Resources/config/config.yml');
             if (is_array($victoireConfig) && array_key_exists('victoire_core', $victoireConfig)) {
-                $config['widgets'] = array_merge($config['widgets'], $victoireConfig['victoire_core']['widgets']?:array());
+                $config['widgets'] = array_merge($config['widgets'], $victoireConfig['victoire_core']['widgets'] ?: array());
             }
         }
 

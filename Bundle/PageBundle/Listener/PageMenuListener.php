@@ -28,7 +28,7 @@ class PageMenuListener implements MenuListenerInterface
      *
      * @param PageMenuContextualEvent $event
      *
-     * @return Ambigous <\Knp\Menu\ItemInterface, NULL>
+     * @return \Knp\Menu\ItemInterface <\Knp\Menu\ItemInterface, NULL>
      */
     public function addContextual($event)
     {
@@ -57,7 +57,7 @@ class PageMenuListener implements MenuListenerInterface
      *
      * @param Event $event
      *
-     * @return Ambigous <\Knp\Menu\ItemInterface, NULL>
+     * @return \Knp\Menu\ItemInterface <\Knp\Menu\ItemInterface, NULL>
      */
     public function addGlobal(Event $event)
     {
@@ -76,7 +76,7 @@ class PageMenuListener implements MenuListenerInterface
     /**
      * Get the main item
      *
-     * @return Ambigous <\Knp\Menu\ItemInterface, NULL>|\Knp\Menu\ItemInterface
+     * @return \Knp\Menu\ItemInterface <\Knp\Menu\ItemInterface, NULL>|\Knp\Menu\ItemInterface
      */
     public function getMainItem()
     {

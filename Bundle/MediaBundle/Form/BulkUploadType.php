@@ -46,7 +46,7 @@ class BulkUploadType extends AbstractType
                     "multiple" => "multiple",
                 ),
                 'data_class' => null
-             )
+                )
         );
     }
 

@@ -29,7 +29,7 @@ class PageAdministrationController extends PageController
             'show'      => 'victoire_core_page_show',
             'settings'  => 'victoire_core_page_settings',
             'translate' => 'victoire_core_page_translate',
-            'detach'    => 'victoire_core_page_detach'
+            'detach'    => 'victoire_core_page_detach',
         );
     }
 
@@ -41,7 +41,7 @@ class PageAdministrationController extends PageController
      * @Route("/homepage/new", name="victoire_core_homepage_new", defaults={"isHomepage" : true})
      * @Template()
      *
-     * @return template
+     * @return JsonResponse
      */
     public function newAction($isHomepage = false)
     {
@@ -57,7 +57,7 @@ class PageAdministrationController extends PageController
      * @Template()
      * @ParamConverter("page", class="VictoirePageBundle:BasePage")
      *
-     * @return json The settings
+     * @return JsonResponse The settings
      */
     public function settingsAction(Request $request, BasePage $page)
     {
@@ -66,14 +66,14 @@ class PageAdministrationController extends PageController
 
     /**
      * Page translation
-     * @param Request $request
+     * @param Request  $request
      * @param BasePage $page
      *
      * @Route("/{id}/translate", name="victoire_core_page_translate")
      * @Template()
      * @ParamConverter("page", class="VictoirePageBundle:BasePage")
      *
-     * @return json The settings
+     * @return JsonResponse The settings
      */
     public function translateAction(Request $request, BasePage $page)
     {
@@ -83,7 +83,7 @@ class PageAdministrationController extends PageController
      * Page delete
      * @param BasePage $page
      *
-     * @return template
+     * @return JsonResponse
      * @Route("/{id}/delete", name="victoire_core_page_delete")
      * @Template()
      * @ParamConverter("page", class="VictoirePageBundle:BasePage")
@@ -95,55 +95,6 @@ class PageAdministrationController extends PageController
             // throw new AccessDeniedException("Nop ! you can't do such an action");
         // }
         return new JsonResponse(parent::deleteAction($page));
-    }
-
-    /**
-     * Show and edit sitemap
-     *
-     * @Route("/sitemap", name="victoire_core_page_sitemap")
-     * @Template()
-     * @return template
-     */
-    public function siteMapAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $pageRepo = $em->getRepository('VictoirePageBundle:BasePage');
-        $response = array(
-            'success' => false
-        );
-        if ($this->get('request')->getMethod() === "POST") {
-            $sorted = $this->getRequest()->request->get('sorted');
-            $depths = array();
-            //reorder pages positions
-            foreach ($sorted as $item) {
-                $depths[$item['depth']][$item['item_id']] = 1;
-                $page = $pageRepo->findOneById($item['item_id']);
-                if ($page !== null) {
-                    if ($item['parent_id'] !== '') {
-                        $parent = $pageRepo->findOneById($item['parent_id']);
-                        $page->setParent($parent);
-                    } else {
-                        $page->setParent(null);
-                    }
-                    $page->setPosition(count($depths[$item['depth']]));
-                    $em->persist($page);
-                }
-            }
-            $em->flush();
-
-            $response = array(
-                'success' => true,
-                'message' => $this->get('translator')->trans('sitemap.changed.success', array(), 'victoire')
-            );
-        }
-
-        $pages = $em->getRepository('VictoirePageBundle:BasePage')->findByParent(null, array('position' => 'ASC'));
-        $response['html'] = $this->container->get('victoire_templating')->render(
-            'VictoirePageBundle:Page:sitemap.html.twig',
-            array('pages' => $pages)
-        );
-
-        return new JsonResponse($response);
     }
 
     /**
@@ -166,7 +117,7 @@ class PageAdministrationController extends PageController
         return 'victoire_page_settings_type';
     }
 
-     /**
+    /**
      * getPageTranslateType
      *
      * @return string

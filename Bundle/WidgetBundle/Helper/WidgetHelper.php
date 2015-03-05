@@ -23,13 +23,13 @@ class WidgetHelper
     public function getWidgetName(Widget $widget)
     {
         $widgets = $this->container->getParameter('victoire_core.widgets');
-         foreach ($widgets as $widgetParams) {
-             if ($widgetParams['class'] === get_class($widget)) {
+            foreach ($widgets as $widgetParams) {
+                if ($widgetParams['class'] === get_class($widget)) {
                 return $widgetParams['name'];
-             }
-         }
+                }
+            }
 
-         throw new \Exception("Widget name not found for widget " . get_class($widget));
+            throw new \Exception("Widget name not found for widget ".get_class($widget));
 
     }
 
@@ -51,14 +51,14 @@ class WidgetHelper
     /**
      * create a new WidgetRedactor
      * @param string $type
-     * @param View   $view
+     * @param \Victoire\Bundle\CoreBundle\Entity\View   $view
      * @param string $slot
      *
      * @return $widget
      */
     public function newWidgetInstance($type, $view, $slot)
     {
-        $widgetAlias = 'victoire.widget.'. strtolower($type);
+        $widgetAlias = 'victoire.widget.'.strtolower($type);
         $widget = $this->container->get($widgetAlias);
 
         $widget->setView($view);
@@ -79,7 +79,7 @@ class WidgetHelper
     public function getTemplateName($action, Widget $widget)
     {
         //the template displayed is in the widget bundle
-        $templateName = 'VictoireWidget' . $this->getWidgetName($widget) . 'Bundle::' . $action . '.html.twig';
+        $templateName = 'VictoireWidget'.$this->getWidgetName($widget).'Bundle::'.$action.'.html.twig';
 
         return $templateName;
     }

@@ -28,7 +28,7 @@ class BusinessEntityPagePatternController extends Controller
      * @Method("POST")
      * @Template("VictoireBusinessEntityPageBundle:BusinessEntityPagePattern:new.html.twig")
      *
-     * @return Ambiguous \Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern NULL
+     * @return JsonResponse \Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern NULL
      */
     public function createAction(Request $request, $id)
     {
@@ -103,7 +103,7 @@ class BusinessEntityPagePatternController extends Controller
      * @Method("GET")
      * @Template()
      *
-     * @return array The entity and the form
+     * @return JsonResponse The entity and the form
      */
     public function newAction($id)
     {
@@ -141,7 +141,7 @@ class BusinessEntityPagePatternController extends Controller
      * @Method("GET")
      * @Template()
      *
-     * @return array The entity and the form
+     * @return JsonResponse The entity and the form
      *
      * @throws \Exception
      */
@@ -185,12 +185,12 @@ class BusinessEntityPagePatternController extends Controller
     }
 
     /**
-    * Creates a form to edit a BusinessEntityPagePattern entity.
-    *
-    * @param BusinessEntityPagePattern $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to edit a BusinessEntityPagePattern entity.
+     *
+     * @param BusinessEntityPagePattern $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
     private function createEditForm(BusinessEntityPagePattern $entity)
     {
         $businessProperty = $this->getBusinessProperties($entity);
@@ -212,7 +212,7 @@ class BusinessEntityPagePatternController extends Controller
      * @Method("PUT")
      * @Template("VictoireBusinessEntityPageBundle:BusinessEntityPagePattern:edit.html.twig")
      *
-     * @return array The parameter for the response
+     * @return JsonResponse The parameter for the response
      *
      * @throws \Exception
      */
@@ -264,7 +264,7 @@ class BusinessEntityPagePatternController extends Controller
      *
      * @throws \Exception
      *
-     * @return redirect
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request, $id)
     {
@@ -289,7 +289,7 @@ class BusinessEntityPagePatternController extends Controller
     /**
      * Creates a form to delete a BusinessEntityPagePattern entity by id.
      *
-     * @param mixed $id The entity id
+     * @param string $id The entity id
      *
      * @return \Symfony\Component\Form\Form The form
      */
@@ -308,7 +308,7 @@ class BusinessEntityPagePatternController extends Controller
      *
      * @Route("listEntities/{id}", name="victoire_businessentitypagepattern_businessentitypagepattern_listentities")
      * @ParamConverter("id", class="VictoireBusinessEntityPageBundle:BusinessEntityPagePattern")
-     * @return array The list of items for this template
+     * @return JsonResponse The list of items for this template
      *
      * @throws Exception
      */

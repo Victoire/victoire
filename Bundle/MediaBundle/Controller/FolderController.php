@@ -3,7 +3,6 @@
 namespace Victoire\Bundle\MediaBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
-
 use Victoire\Bundle\MediaBundle\Entity\Folder;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Victoire\Bundle\MediaBundle\Form\FolderType;

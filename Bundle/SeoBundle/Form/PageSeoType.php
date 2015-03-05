@@ -52,7 +52,7 @@ class PageSeoType extends AbstractType
             ->add('ogType', null, array(
                 'label' => 'form.pageSeo.ogType.label',
             ))
-            ->add('ogImage', null, array(
+            ->add('ogImage', 'media', array(
                 'label' => 'form.pageSeo.ogImage.label',
             ))
             ->add('ogUrl', null, array(
@@ -77,7 +77,7 @@ class PageSeoType extends AbstractType
             ->add('twitterDescription', null, array(
                 'label' => 'form.pageSeo.twitterDescription.label',
             ))
-            ->add('twitterImage', null, array(
+            ->add('twitterImage', 'media', array(
                 'label' => 'form.pageSeo.twitterImage.label',
             ))
             ->add('schemaPageType', null, array(
@@ -89,14 +89,22 @@ class PageSeoType extends AbstractType
             ->add('schemaDescription', null, array(
                 'label' => 'form.pageSeo.schemaDescription.label',
             ))
-            ->add('schemaImage', null, array(
+            ->add('schemaImage', 'media', array(
                 'label' => 'form.pageSeo.schemaImage.label',
             ))
-            ->add('metaRobotsIndex', null, array(
+            ->add('metaRobotsIndex', 'choice', array(
                 'label' => 'form.pageSeo.metaRobotsIndex.label',
+                'choices' => [
+                    'index' => 'form.pageSeo.metaRobotsIndex.values.index',
+                    'noindex' => 'form.pageSeo.metaRobotsIndex.values.noindex',
+                ],
             ))
-            ->add('metaRobotsFollow', null, array(
+            ->add('metaRobotsFollow', 'choice', array(
                 'label' => 'form.pageSeo.metaRobotsFollow.label',
+                'choices' => [
+                    'follow' => 'form.pageSeo.metaRobotsFollow.values.follow',
+                    'nofollow' => 'form.pageSeo.metaRobotsFollow.values.nofollow',
+                ],
             ))
             ->add('metaRobotsAdvanced', null, array(
                 'label' => 'form.pageSeo.metaRobotsAdvanced.label',
@@ -106,6 +114,11 @@ class PageSeoType extends AbstractType
             ))
             ->add('sitemapPriority', null, array(
                 'label' => 'form.pageSeo.sitemapPriority.label',
+            ))
+            ->add('sitemapPriority', 'choice',
+                array(
+                    'label'   => 'form.pageSeo.sitemapPriority.label',
+                    'choices' => array_combine(range(0, 1, 0.1), range(0, 1, 0.1)),
             ))
             ->add('relCanonical', null, array(
                 'label' => 'form.pageSeo.relCanonical.label',
@@ -126,7 +139,7 @@ class PageSeoType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class'         => 'Victoire\Bundle\SeoBundle\Entity\PageSeo',
-            'translation_domain' => 'victoire'
+            'translation_domain' => 'victoire',
         ));
     }
 

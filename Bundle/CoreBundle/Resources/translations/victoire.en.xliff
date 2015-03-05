@@ -46,10 +46,6 @@
         <source>menu.leftnavbar.sandbox.label</source>
         <target state="new">menu.leftnavbar.sandbox.label</target>
       </trans-unit>
-      <trans-unit id="e95f29317df6a1d8c7a9a560b0aadbe231c601fe" resname="menu.leftnavbar.sitemap.label">
-        <source>menu.leftnavbar.sitemap.label</source>
-        <target><![CDATA[<i class="vic-menuImg vic-menuImg-sitemap"></i> Sitemap]]></target>
-      </trans-unit>
       <trans-unit id="5e00d320d8d96443529379885f9d7b1f42c91e63" resname="menu.leftnavbar.stats.label">
         <source>menu.leftnavbar.stats.label</source>
         <target>Statistics</target>
@@ -77,10 +73,6 @@
       <trans-unit id="b56be300a76acfd99efb0bb2d8010cd61ac1d8f4" resname="menu.preview">
         <source>menu.preview</source>
         <target>Preview</target>
-      </trans-unit>
-      <trans-unit id="7143127923e2258df3b91920224c689d170aa155" resname="menu.sitemap">
-        <source>menu.sitemap</source>
-        <target><![CDATA[<i class="vic-menuImg vic-menuImg-sitemap"></i> Sitemap]]></target>
       </trans-unit>
       <trans-unit id="0d78177827ece7fd6e7cf7426c5be1299b611988" resname="modal.button.create.title">
         <source>modal.button.create.title</source>
@@ -146,29 +138,21 @@
         <source>victoire.widget.inherited.notice</source>
         <target><![CDATA[<strong>Be carefull</strong><br/>This content is owned by a parent template (<i>%templateName%</i>). If you just want to customize the content on this page, just continue to edit the form, you're in the right place. If however you want to add a modification everywhere this widget is used throughout the website, you have to click on this link <a href="%templateEditLink%" data-modal="close" data-toggle="vic-modal">Edit the original content</a>. Clicking on this link will close this modal window and open the template's one.]]></target>
       </trans-unit>
-      <trans-unit resname="modal.sitemap.title">
-        <source>modal.sitemap.title</source>
-        <target>Sitemap</target>
-      </trans-unit>
-      <trans-unit resname="sitemap.changed.success">
-        <source>sitemap.changed.success</source>
-        <target>Sitemap updated.</target>
-      </trans-unit>
-      <trans-unit resname="modal.sitemap.caption">
-        <source>modal.sitemap.caption</source>
-        <target>Get a bird eye of your site's tree and reorganize it by a simple drag and drop.</target>
-      </trans-unit>
       <trans-unit id="9" resname="navbar.mode.edit">
         <source>navbar.mode.edit</source>
         <target>Content edit mode</target>
       </trans-unit>
-      <trans-unit id="9" resname="navbar.mode.layout">
+      <trans-unit id="10" resname="navbar.mode.layout">
         <source>navbar.mode.layout</source>
         <target>Layout</target>
       </trans-unit>
-      <trans-unit id="9" resname="navbar.mode.readonly">
+      <trans-unit id="11" resname="navbar.mode.readonly">
         <source>navbar.mode.readonly</source>
         <target>Preview</target>
+      </trans-unit>
+      <trans-unit id="12" resname="navbar.mode.style">
+        <source>navbar.mode.style</source>
+        <target>Style</target>
       </trans-unit>
     </body>
   </file>

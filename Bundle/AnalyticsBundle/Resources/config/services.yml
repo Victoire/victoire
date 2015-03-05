@@ -1,0 +1,18 @@
+parameters:
+    victoire_analytics_browser_event_subscriber: Victoire\Bundle\AnalyticsBundle\EventSubscriber\BrowseEventSubscriber
+    victoire_analytics_view_helper_class: Victoire\Bundle\AnalyticsBundle\Helper\AnalyticsViewHelper
+
+services:
+    victoire_analytics.browser_event.subscriber:
+        class: %victoire_analytics_browser_event_subscriber%
+        arguments:
+            - "%victoire_core.user_class%"
+        tags:
+            - { name: doctrine.event_subscriber, connection: default, priority: -1 }
+
+    victoire_analytics.view_helper:
+        class: %victoire_analytics_view_helper_class%
+        arguments:
+            - @victoire_core.view_cache_helper
+            - @doctrine.orm.entity_manager
+            - @victoire_page.page_helper

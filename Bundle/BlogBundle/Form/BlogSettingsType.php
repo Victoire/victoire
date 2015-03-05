@@ -4,6 +4,7 @@ namespace Victoire\Bundle\BlogBundle\Form;
 use Symfony\Component\Form\FormBuilderInterface;
 use Victoire\Bundle\PageBundle\Entity\PageStatus;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Edit Blog Type
@@ -21,7 +22,7 @@ class BlogSettingsType extends BlogType
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
-    public function buildForm( FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
         $builder
@@ -41,6 +42,20 @@ class BlogSettingsType extends BlogType
                 'widget'         => 'single_text',
                 'datetimepicker' => true
             ));
+    }
+
+    /**
+     * bind to Page entity
+     * @param OptionsResolverInterface $resolver
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        parent::setDefaultOptions($resolver);
+        $resolver->setDefaults(
+            array(
+                'cascade_validation' => 'true'
+            )
+        );
     }
 
     /**

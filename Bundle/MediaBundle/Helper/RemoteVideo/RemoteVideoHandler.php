@@ -86,7 +86,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
         //update thumbnail
         switch ($video->getType()) {
             case 'youtube':
-                $video->setThumbnailUrl("http://img.youtube.com/vi/" . $code . "/0.jpg");
+                $video->setThumbnailUrl("http://img.youtube.com/vi/".$code."/0.jpg");
                 break;
             case 'vimeo':
                 $xml = simplexml_load_file("http://vimeo.com/api/v2/video/".$code.".xml");
@@ -111,7 +111,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
      *
      * @return boolean
      */
-    private function endsWith( $str, $sub )
+    private function endsWith($str, $sub)
     {
         return substr($str, strlen($str) - strlen($sub)) === $sub;
     }
@@ -165,7 +165,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
         $result = null;
         if (is_string($data)) {
             if (strpos($data, 'http') !== 0) {
-                $data = "http://" . $data;
+                $data = "http://".$data;
             }
             $parsedUrl = parse_url($data);
             switch ($parsedUrl['host']) {
@@ -178,7 +178,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
                     $video->setType('youtube');
                     $video->setCode($code);
                     $result = $video->getMedia();
-                    $result->setName('Youtube ' . $code);
+                    $result->setName('Youtube '.$code);
                     break;
                 case 'www.vimeo.com':
                 case 'vimeo.com':
@@ -188,7 +188,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
                     $video->setType('vimeo');
                     $video->setCode($code);
                     $result = $video->getMedia();
-                    $result->setName('Vimeo ' . $code);
+                    $result->setName('Vimeo '.$code);
                     break;
                 case 'www.dailymotion.com':
                 case 'dailymotion.com':
@@ -198,7 +198,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
                     $video->setType('dailymotion');
                     $video->setCode($code);
                     $result = $video->getMedia();
-                    $result->setName('Dailymotion ' . $code);
+                    $result->setName('Dailymotion '.$code);
                     break;
             }
         }

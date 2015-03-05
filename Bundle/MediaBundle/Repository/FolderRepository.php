@@ -84,7 +84,7 @@ class FolderRepository extends EntityRepository
     /**
      * @param int $folderId
      *
-     * @return object
+     * @return Folder
      * @throws EntityNotFoundException
      */
     public function getFolder($folderId)

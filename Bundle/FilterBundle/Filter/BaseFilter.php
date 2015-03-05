@@ -10,7 +10,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 abstract class BaseFilter extends AbstractType implements BaseFilterInterface
 {
-
     protected $em;
     protected $request;
 
@@ -37,15 +36,15 @@ abstract class BaseFilter extends AbstractType implements BaseFilterInterface
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'csrf_protection'   => false,
-            'widget'   => null,
-            'filters'   => array(),
-            'listing_id'   => null,
+            'csrf_protection' => false,
+            'widget'          => null,
+            'multiple'        => false,
+            'filter'          => null,
+            'listing_id'      => null,
         ));
     }
 
     public function getName()
     {
     }
-
 }

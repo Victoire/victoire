@@ -89,4 +89,19 @@ Victoire\Bundle\UserBundle\Entity\User:
         roles:
             ROLE_ADMIN: ROLE_ADMIN
             ROLE_VICTOIRE_DEVELOPER: ROLE_VICTOIRE_DEVELOPER
+    sebastien:
+        username (unique): sebastien@appventus.com
+        email (unique):    sebastien@appventus.com
+        plainPassword:     test
+        firstname:         Sébastien
+        lastname:          Talbot
+        enabled:           true
+        locale:            fr
+        locked:            false
+        expired:           false
+        createdAt:         <dateTime('now')>
+        updatedAt:         <dateTime('now')>
+        roles:
+            ROLE_ADMIN: ROLE_ADMIN
+            ROLE_VICTOIRE_DEVELOPER: ROLE_VICTOIRE_DEVELOPER
 

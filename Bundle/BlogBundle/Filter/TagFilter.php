@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 
 /**
- * CategoryFilter form type
+ * TagFilter form type
  */
 class TagFilter extends BaseFilter
 {
@@ -33,7 +33,7 @@ class TagFilter extends BaseFilter
      * @param QueryBuilder &$qb
      * @param array        $parameters
      *
-     * @return queryBuilder
+     * @return QueryBuilder
      */
     public function buildQuery(QueryBuilder $qb, array $parameters)
     {
@@ -47,9 +47,9 @@ class TagFilter extends BaseFilter
 
         if (count($parameters['tags']) > 0) {
             $qb = $qb
-                 ->join('main_item.tags', 't')
-                 ->andWhere('t.id IN (:tags)')
-                 ->setParameter('tags', $parameters['tags']);
+                    ->join('main_item.tags', 't')
+                    ->andWhere('t.id IN (:tags)')
+                    ->setParameter('tags', $parameters['tags']);
         }
 
         return $qb;
@@ -73,24 +73,27 @@ class TagFilter extends BaseFilter
             $tagsChoices[$tag->getId()] = $tag->getTitle();
         }
 
-        $selectedTags = array();
+        $data = null;
         if ($this->request->query->has('filter') && array_key_exists('tag_filter', $this->request->query->get('filter'))) {
-            foreach ($this->request->query->get('filter')['tag_filter']['tags'] as $id => $selectedTag) {
-                $selectedTags[$id] = $selectedTag;
+            if ($options['multiple']) {
+                $data = array();
+                foreach ($this->request->query->get('filter')['tag_filter']['tags'] as $id => $selectedTag) {
+                    $data[$id] = $selectedTag;
+                }
+            } else {
+                $data = $this->request->query->get('filter')['tag_filter']['tags'];
             }
         }
 
         $builder
             ->add(
                 'tags', 'choice', array(
-                    'label' => 'blog.tag_filter.label',
+                    'label' => false,
                     'choices' => $tagsChoices,
                     'required' => false,
-                    'multiple' => true,
-                    'attr' => array(
-                        'class' => 'select2'
-                    ),
-                    'data' => $selectedTags
+                    'expanded' => true,
+                    'multiple' => $options['multiple'],
+                    'data' => $data,
                 )
             );
     }

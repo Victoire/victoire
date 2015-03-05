@@ -5,30 +5,26 @@
 
         <div class="input_media hasnomedia">
             <div class="preview"></div>
-            <a data-toggle="modal" src="{{ path('VictoireMediaBundle_chooser') }}" class="choose vic-btn vic-btn-default">{{ 'media.widget.choose' | trans }}</a>
+            <a data-toggle="modal" src="{{ path('VictoireMediaBundle_chooser') }}" class="choose vic-btn vic-btn-default"><i class="fa fa-picture-o"></i> {{ 'media.widget.choose' | trans }}</a>
         </div>
 
         <div class="input_media hasmedia">
             {% if(value.ent is defined) %}
-                <div class="preview">
-                    {% set media = value.ent %}
-                    {% set handler = mediamanager.getHandler(media) %}
-                    {% set thumbnailurl =  handler.getImageUrl(media, app.request.basePath, 210, 150) %}
-                    {% if thumbnailurl %}
-                        <img height="150" src="{{ handler.getImageUrl(media, app.request.basePath, 210, 150) }}" alt="{{ media.name }}" />
-                    {% else %}
-                        <div style="font-size: 135px;text-align:center">
-                            <i class="icon-file"></i>
-                        </div>
-                   {% endif %}
+                {% set media = value.ent %}
+                {% set handler = mediamanager.getHandler(media) %}
+                {% set thumbnailurl =  handler.getImageUrl(media, app.request.basePath, 210, 150) %}
+                {% if thumbnailurl %}
+                    <div class="preview" {% if thumbnailurl %}style="background-image: url({{ handler.getImageUrl(media, app.request.basePath, 210, 150) }});"{% endif %}>
+                {% else %}
+                    <div class="preview">
+                {% endif %}
+                    <button class="del vic-btn vic-btn-danger vic-btn-bordered"><i class="fa fa-trash-o"></i> Supprimer l'image</button>
                 </div>
-                <button class="del vic-btn vic-btn-danger"><i class="fa fa-trash-o"></i></button>
                 <p class="title">{{ media.name }}</p>
             {% else %}
                 <div class="preview">
-                    <img src="" alt="" />
+                    <button class="del vic-btn vic-btn-danger vic-btn-bordered"><i class="fa fa-trash-o"></i> Supprimer l'image</button>
                 </div>
-                <button class="del vic-btn vic-btn-danger"><i class="fa fa-trash-o"></i></button>
                 <p class="title"></p>
             {% endif %}
         </div>
@@ -56,10 +52,9 @@
                         widget.find('.hasmedia').find('.title').hide();
                     }
                     if(typeof(dialogWin.returnedValue.imgpath)!="undefined"){
-                        widget.find('.hasmedia').find('img').attr('src', dialogWin.returnedValue.imgpath);
-                        widget.find('.hasmedia').find('img').show();
+                        widget.find('.hasmedia').find('.preview').attr('style', 'background-image: url("' + dialogWin.returnedValue.imgpath + '");');
                     } else {
-                        widget.find('.hasmedia').find('img').hide();
+                        widget.find('.hasmedia').find('.preview').attr('style', 'background-image: none;');
                     }
                     widget.find('.hasnomedia').hide();
                     widget.find('.hasmedia').show();

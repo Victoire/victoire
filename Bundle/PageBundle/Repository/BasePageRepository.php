@@ -10,7 +10,6 @@ use Victoire\Bundle\PageBundle\Entity\PageStatus;
  */
 class BasePageRepository extends NestedTreeRepository
 {
-
     private $queryBuilder;
 
     /**
@@ -26,7 +25,7 @@ class BasePageRepository extends NestedTreeRepository
      *
      * @param string $url The url
      *
-     * @return QueryBuilder The query builder
+     * @return \Doctrine\ORM\QueryBuilder The query builder
      */
     public function getOneByUrl($url)
     {
@@ -51,11 +50,27 @@ class BasePageRepository extends NestedTreeRepository
     }
 
     /**
+     * Filter the query by the sitemap index (=visibility)
+     * @param bool $indexed
+     *
+     * @return BasePageRepository
+     */
+    public function filterBySitemapIndexed($indexed = true)
+    {
+        $qb = $this->getInstance();
+        $qb->innerJoin('page.seo', 'seo')->addSelect('seo')
+            ->andWhere('seo.sitemapIndexed = :sitemapIndexed')
+            ->setParameter('sitemapIndexed', $indexed);
+
+        return $this;
+    }
+
+    /**
      * Get all rentals in the repository.
      *
      * @param boolean $excludeUnpublished Should we get only the published BasePages ?
      *
-     * @return \Doctrine\ORM\QueryBuilder
+     * @return BasePageRepository
      */
     public function getAll($excludeUnpublished = false)
     {

@@ -77,7 +77,7 @@ function trackChange(elem)
  */
 function updateSlotActions(slot, max)
 {
-    var count = $vic('> .vic-widget-container', "#vic-slot-"+slot).size();
+    var count = $vic('.vic-widget-container', "#vic-slot-"+slot).size();
     if ( max == undefined || count < max ) {
         $vic("> .vic-new-widget, > .vic-widget-container > .vic-new-widget", "#vic-slot-"+slot).removeClass('vic-new-widget-disabled');
     } else {

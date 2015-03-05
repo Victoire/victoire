@@ -24,14 +24,14 @@ class ViewCacheHelper
      */
     public function __construct($cacheDir, RequestStack $requestStack)
     {
-        $this->xmlFile = $cacheDir . '/victoire/viewsReferences.xml';
+        $this->xmlFile = $cacheDir.'/victoire/viewsReferences.xml';
         $this->requestStack = $requestStack;
     }
 
     /**
      * Write given views references in a xml file
-     * @param array $views
      *
+     * @param \SimpleXMLElement $itemNode
      * @return void
      */
     public function buildItemNode($viewReference, $itemNode)
@@ -60,11 +60,9 @@ class ViewCacheHelper
         if (array_key_exists('locale', $viewReference)) {
             $itemNode->addAttribute('locale', $viewReference['locale']);
         }
-
     }
     /**
      * Write given views references in a xml file
-     * @param array $views
      *
      * @return void
      */
@@ -100,16 +98,15 @@ class ViewCacheHelper
      */
     public function update(View $view, $entity = null)
     {
-
         $rootNode = $this->readCache();
         $id = $this->getViewReferenceId($view, $entity);
-        $oldItemNode = $rootNode->xpath("//viewReference[@id='" . $id . "']");
+        $oldItemNode = $rootNode->xpath("//viewReference[@id='".$id."']");
         unset($oldItemNode[0][0]);
 
         $viewReferences = $this->container->get('victoire_core.view_helper')->buildViewReference($view, $entity);
 
         foreach ($viewReferences as $key => $viewReference) {
-            $oldItemNode = $rootNode->xpath("//viewReference[@url='" . $key . "']");
+            $oldItemNode = $rootNode->xpath("//viewReference[@url='".$key."']");
             unset($oldItemNode[0][0]);
             $itemNode = $rootNode->addChild('viewReference');
             $this->buildItemNode($viewReference, $itemNode);
@@ -120,16 +117,16 @@ class ViewCacheHelper
     public function getReferenceByParameters($parameters)
     {
         $locale = array(
-            'locale' => '@locale="' . $this->requestStack->getCurrentRequest()->getLocale() . '"'
+            'locale' => '@locale="'.$this->requestStack->getCurrentRequest()->getLocale().'"',
         );
         $viewReference = array();
-        
+
         foreach ($parameters as $key => $value) {
-            $arguments[$key] = '@' . $key . '="' . $value . '"';
+            $arguments[$key] = '@'.$key.'="'.$value.'"';
         }
         $arguments = array_merge($arguments, $locale);
 
-        if ($xmlReference = $this->readCache()->xpath("//viewReference[" . implode(' and ', $arguments) . "]")) {
+        if ($xmlReference = $this->readCache()->xpath("//viewReference[".implode(' and ', $arguments)."]")) {
             $viewReference['id']              = $xmlReference[0]->getAttributeAsPhp('id');
             $viewReference['locale']          = $xmlReference[0]->getAttributeAsPhp('locale');
             $viewReference['entityId']        = $xmlReference[0]->getAttributeAsPhp('entityId');
@@ -168,7 +165,7 @@ class ViewCacheHelper
      */
     protected function writeFile(SimpleXMLElement $rootNode)
     {
-        if (! is_dir(dirname($this->xmlFile))) {
+        if (!is_dir(dirname($this->xmlFile))) {
             mkdir(dirname($this->xmlFile), 0777, true);
         }
 
@@ -185,5 +182,15 @@ class ViewCacheHelper
     public function setContainer(Container $container)
     {
         $this->container = $container;
+    }
+
+    /**
+     * Does the cache file exists ?
+     *
+     * @return boolean
+     **/
+    public function fileExists()
+    {
+        return file_exists($this->xmlFile);
     }
 }

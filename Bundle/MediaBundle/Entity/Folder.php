@@ -288,7 +288,7 @@ class Folder
     /**
      * @param bool $includeDeleted
      *
-     * @return Folder[]
+     * @return ArrayCollection
      */
     public function getChildren($includeDeleted = false)
     {
@@ -296,7 +296,7 @@ class Folder
             return $this->children;
         }
 
-        return $this->children->filter( function (Folder $entry) {
+        return $this->children->filter(function(Folder $entry) {
             if ($entry->isDeleted()) {
                 return false;
             }
@@ -364,7 +364,7 @@ class Folder
             return $this->media;
         }
 
-        return $this->media->filter( function (Media $entry) {
+        return $this->media->filter(function(Media $entry) {
             if ($entry->isDeleted()) {
                 return false;
             }

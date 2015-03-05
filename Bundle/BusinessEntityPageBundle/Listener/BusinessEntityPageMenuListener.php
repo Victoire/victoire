@@ -26,7 +26,7 @@ class BusinessEntityPageMenuListener implements MenuListenerInterface
      * Add a global menu item
      * @param Event $event
      *
-     * @return Menu
+     * @return \Knp\Menu\ItemInterface
      *
      * @SuppressWarnings checkUnusedFunctionParameters
      */
@@ -53,7 +53,7 @@ class BusinessEntityPageMenuListener implements MenuListenerInterface
      * Add the parent menu for a page that extends another one
      * @param PageMenuContextualEvent $event
      *
-     * @return MenuBuilder
+     * @return \Knp\Menu\ItemInterface
      */
     public function addContextual($event)
     {
@@ -73,7 +73,7 @@ class BusinessEntityPageMenuListener implements MenuListenerInterface
     /**
      * Get the main item
      *
-     * @return Ambigous <\Knp\Menu\ItemInterface, NULL>|\Knp\Menu\ItemInterface
+     * @return \Knp\Menu\ItemInterface <\Knp\Menu\ItemInterface, NULL>|\Knp\Menu\ItemInterface
      */
     public function getMainItem()
     {

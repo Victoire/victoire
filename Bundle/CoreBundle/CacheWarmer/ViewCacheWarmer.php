@@ -2,11 +2,14 @@
 
 namespace Victoire\Bundle\CoreBundle\CacheWarmer;
 
-use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;
 use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
 use Victoire\Bundle\CoreBundle\Helper\ViewHelper;
 
-class ViewCacheWarmer implements CacheWarmerInterface
+/**
+ * Called (for example on kernel request) to create the viewsReference cache file
+ * ref. victoire_core.cache_warmer.view_warmer
+ */
+class ViewCacheWarmer
 {
     private $viewHelper;
     private $viewCacheHelper;
@@ -21,14 +24,15 @@ class ViewCacheWarmer implements CacheWarmerInterface
         $this->viewCacheHelper = $viewCacheHelper;
     }
 
+    /**
+     * Warm the view cache file (if needed or force mode)
+     * @param string  $cacheDir Where does the viewsReferences file should take place
+     */
     public function warmUp($cacheDir)
     {
-        $viewsReferences = $this->viewHelper->getAllViewsReferences();
-        $this->viewCacheHelper->write($viewsReferences);
-    }
-
-    public function isOptional()
-    {
-        return false;
+        if (!$this->viewCacheHelper->fileExists()) {
+            $viewsReferences = $this->viewHelper->getAllViewsReferences();
+            $this->viewCacheHelper->write($viewsReferences);
+        }
     }
 }

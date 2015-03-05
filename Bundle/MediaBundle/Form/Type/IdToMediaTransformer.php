@@ -3,7 +3,6 @@
 namespace Victoire\Bundle\MediaBundle\Form\Type;
 
 use Doctrine\Common\Persistence\ObjectManager;
-
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Form\Exception\TransformationFailedException;
@@ -33,7 +32,7 @@ class IdToMediaTransformer implements DataTransformerInterface
     public function __construct(ObjectManager $objectManager, CurrentValueContainer $currentValueContainer)
     {
         $this->objectManager = $objectManager;
-           $this->currentValueContainer = $currentValueContainer;
+            $this->currentValueContainer = $currentValueContainer;
     }
 
     /**

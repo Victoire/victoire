@@ -8,7 +8,6 @@ use Victoire\Bundle\WidgetBundle\Model\Widget;
 
 class BaseWidgetContentResolver
 {
-
     /**
      * Get the static content of the widget
      *
@@ -18,7 +17,6 @@ class BaseWidgetContentResolver
      */
     public function getWidgetStaticContent(Widget $widget)
     {
-
         $reflect = new \ReflectionClass($widget);
         $widgetProperties = $reflect->getProperties();
         $parameters = array('widget' => $widget);
@@ -29,7 +27,6 @@ class BaseWidgetContentResolver
                 $value = $accessor->getValue($widget, $property->getName());
                 $parameters[$property->getName()] = $value;
             }
-
         }
 
         return $parameters;
@@ -80,13 +77,12 @@ class BaseWidgetContentResolver
      */
     public function getWidgetQueryContent(Widget $widget)
     {
-
         $parameters = $this->getWidgetStaticContent($widget);
 
         $entity = $this->getWidgetQueryBuilder($widget)
-                       ->setMaxResults(1)
-                       ->getQuery()
-                       ->getOneOrNullResult();
+                        ->setMaxResults(1)
+                        ->getQuery()
+                        ->getOneOrNullResult();
 
         $fields = $widget->getFields();
         $this->populateParametersWithWidgetFields($widget, $entity, $parameters);
@@ -108,6 +104,9 @@ class BaseWidgetContentResolver
         //get the base query
         $itemsQueryBuilder = $queryHelper->getQueryBuilder($widget);
 
+        // Filter only visibleOnFront
+        return $queryBuilder->andWhere('main_item.visibleOnFront = true');
+
         //add the query of the widget
         return $queryHelper->buildWithSubQuery($widget, $itemsQueryBuilder);
     }
@@ -119,9 +118,9 @@ class BaseWidgetContentResolver
         foreach ($fields as $widgetField => $field) {
             //get the value of the field
             if ($entity !== null) {
-                $attributeValue =  $entity->getEntityAttributeValue($field);
+                $attributeValue = $entity->getEntityAttributeValue($field);
             } else {
-                $attributeValue = $widget->getBusinessEntityName() . ' -> ' . $field;
+                $attributeValue = $widget->getBusinessEntityName().' -> '.$field;
             }
 
             $parameters[$widgetField] = $attributeValue;

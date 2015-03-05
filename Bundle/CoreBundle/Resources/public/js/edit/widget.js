@@ -43,6 +43,7 @@ $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(
             if (response.hasOwnProperty("redirect")) {
                 window.location.replace(response.redirect);
             } else {
+                closeModal();
                 if ($vic('.vic-creating').hasClass('vic-first')) {
                     $vic('.vic-creating').after(response.html);
                 } else {
@@ -52,7 +53,6 @@ $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(
                 var slotId = $vic(slot).data('name');
                 //update the positions of the widgets
                 updateWidgetPositions(slotId);
-                closeModal();
                 slideTo($vic('> .vic-anchor', '#' + response.widgetId));
                 congrat(response.message, 10000);
             }
@@ -95,8 +95,8 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update"]', function(
             if (response.hasOwnProperty("redirect")) {
                 window.location.replace(response.redirect);
             } else {
-                $vic(".vic-widget", "#"+response.widgetId).replaceWith(response.html);
                 closeModal();
+                $vic(".vic-widget", "#"+response.widgetId).replaceWith(response.html);
                 slideTo($vic('> .vic-anchor', '#' + response.widgetId));
                 congrat(response.message, 10000);
             }
@@ -105,7 +105,6 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update"]', function(
 
             //inform user there have been an error
             warn(response.message, 10000);
-
 
             if (response.html) {
                 $vic(form).parent('div').replaceWith(response.html);

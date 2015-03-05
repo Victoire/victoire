@@ -1,7 +1,6 @@
 <?php
 namespace Victoire\Bundle\PageBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +23,7 @@ class BasePageController extends Controller
         return $response;
     }
 
-    public function showByIdAction($viewId, $entityId = null)
+    public function showByIdAction(Request $request, $viewId, $entityId = null)
     {
         $parameters = array('viewId' => $viewId);
         if ($entityId) {
@@ -33,7 +32,11 @@ class BasePageController extends Controller
         $page = $this->container->get('victoire_page.page_helper')->findPageByParameters($parameters);
         $this->get('victoire_widget_map.builder')->build($page);
 
-        return $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl())));
+        return $this->redirect($this->generateUrl('victoire_core_page_show', array_merge(
+                array('url' => $page->getUrl()),
+                $request->query->all()
+            )
+        ));
     }
 
     public function showBusinessPageByIdAction($entityId, $type)
@@ -89,8 +92,8 @@ class BasePageController extends Controller
             // If the $page is a BusinessEntity (eg. an Article), compute it's url
             if (null !== $this->container->get('victoire_core.helper.business_entity_helper')->findByEntityInstance($page)) {
                 $page = $this->container
-                     ->get('victoire_business_entity_page.business_entity_page_helper')
-                     ->generateEntityPageFromPattern($page->getTemplate(), $page);
+                        ->get('victoire_business_entity_page.business_entity_page_helper')
+                        ->generateEntityPageFromPattern($page->getTemplate(), $page);
             }
 
             return array(
@@ -104,7 +107,7 @@ class BasePageController extends Controller
                 "success" => false,
                 "message" => $formErrorHelper->getRecursiveReadableErrors($form),
                 'html'    => $this->container->get('victoire_templating')->render(
-                    $this->getBaseTemplatePath() . ':new.html.twig',
+                    $this->getBaseTemplatePath().':new.html.twig',
                     array('form' => $form->createView())
                 )
             );
@@ -138,7 +141,7 @@ class BasePageController extends Controller
             $entityManager->persist($page);
             $entityManager->flush();
 
-             return array(
+                return array(
                 'success' => true,
                 'url'     => $this->generateUrl('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl()))
             );
@@ -149,7 +152,7 @@ class BasePageController extends Controller
         return  array(
             'success' => empty($errors),
             'html' => $this->container->get('victoire_templating')->render(
-                $this->getBaseTemplatePath() . ':settings.html.twig',
+                $this->getBaseTemplatePath().':settings.html.twig',
                 array(
                     'page' => $page,
                     'form' => $form->createView(),
@@ -197,7 +200,7 @@ class BasePageController extends Controller
         return array(
             'success' => empty($errors),
             'html' => $this->container->get('victoire_templating')->render(
-                $this->getBaseTemplatePath() . ':translate.html.twig',
+                $this->getBaseTemplatePath().':translate.html.twig',
                 array(
                     'page' => $page,
                     'form' => $form->createView(),
@@ -257,7 +260,7 @@ class BasePageController extends Controller
      * if homepage
      *     forward show(homepage)
      * else
-         *     redirect to welcome page (dashboard)
+     *     redirect to welcome page (dashboard)
      * ==========================
      *
      * @Route("/", name="victoire_core_page_homepage")

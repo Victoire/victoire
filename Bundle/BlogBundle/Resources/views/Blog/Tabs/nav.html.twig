@@ -1,0 +1,14 @@
+{% trans_default_domain "victoire" %}
+<ul class="nav nav-tabs" role="tablist">
+    {% for tab in tabs %}
+        <li{% if loop.first %} class="active"{% endif %}>
+            <a class="offer-tab-nav-anchor" href="#victoire-blog-{{tab}}" role="tab" data-toggle="tab">
+                {% spaceless %}
+                <span class="icon victoire-blog-tab-nav-icons victoire-blog-tab-nav-icons-{{ tab }}"></span>
+                {% set label = 'victoire.blog.nav.'~ tab ~ '.label' %}
+                <span class="hidden-xs">{{ label|trans }}</span>
+                {% endspaceless %}
+            </a>
+        </li>
+    {% endfor %}
+</ul>

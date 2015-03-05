@@ -19,7 +19,6 @@ use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\SeoBundle\Helper\PageSeoHelper;
-use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter as BETParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
@@ -55,7 +54,7 @@ class PageHelper extends ViewHelper
      * @param EntityManager            $entityManager
      * @param CurrentViewHelper        $currentViewHelper
      * @param EventDispatcherInterface $eventDispatcher
-     * @param VictoireTemplating       $victoireTemplating
+     * @param TemplateMapper       $victoireTemplating
      * @param PageSeoHelper            $pageSeoHelper
      * @param ViewCacheHelper          $viewCacheHelper
      * @param Session                  $session
@@ -96,9 +95,8 @@ class PageHelper extends ViewHelper
 
     /**
      * generates a response from a page url
-     * @param string $url
      *
-     * @return Response
+     * @return View
      */
     public function findPageByParameters($parameters)
     {
@@ -132,10 +130,10 @@ class PageHelper extends ViewHelper
             $type = $page->getType();
         }
 
-        $eventName = 'victoire_core.' . $type . '_menu.contextual';
+        $eventName = 'victoire_core.'.$type.'_menu.contextual';
         $this->eventDispatcher->dispatch($eventName, $event);
 
-        $layout = 'AppBundle:Layout:' . $page->getTemplate()->getLayout() . '.html.twig';
+        $layout = 'AppBundle:Layout:'.$page->getTemplate()->getLayout().'.html.twig';
 
         $this->widgetMapBuilder->build($page);
         $this->currentViewHelper->setCurrentView($page);
@@ -208,7 +206,6 @@ class PageHelper extends ViewHelper
 
     /**
      * find the page according to given url. If not found, try in route history, if seo redirect, return target
-     * @param string $url
      *
      * @return View
      */
@@ -230,7 +227,7 @@ class PageHelper extends ViewHelper
             && $page->getSeo()
             && $page->getSeo()->getRedirectTo()
             && !$this->session->get('victoire.edit_mode', false)) {
-            $page =  $page->getSeo()->getRedirectTo();
+            $page = $page->getSeo()->getRedirectTo();
         }
 
         if ($viewReference && $page instanceof View) {
@@ -258,13 +255,16 @@ class PageHelper extends ViewHelper
     protected function checkPageValidity($page, $entity = null)
     {
         $errorMessage = 'The page was not found.';
+        $isPageOwner = false;
 
         //there is no page
         if ($page === null) {
             throw new NotFoundHttpException($errorMessage);
         }
 
-        $isPageOwner = $this->securityContext->isGranted('PAGE_OWNER', $page);
+        if ($this->securityContext->getToken()) {
+            $isPageOwner = $this->securityContext->isGranted('PAGE_OWNER', $page);
+        }
 
         //a page not published, not owned, nor granted throw an exception
         if (($page instanceof BasePage && !$page->isPublished()) && !$isPageOwner) {
@@ -285,7 +285,7 @@ class PageHelper extends ViewHelper
                 $entityAllowed = $this->bepHelper->isEntityAllowed($page->getTemplate(), $entity);
 
                 if ($entityAllowed === false) {
-                    throw new NotFoundHttpException('The entity ['.$entity->getId().'] is not allowed for the page pattern ['.$page->getId().']');
+                    throw new NotFoundHttpException('The entity ['.$entity->getId().'] is not allowed for the page pattern ['.$page->getTemplate()->getId().']');
                 }
             }
         }

@@ -22,7 +22,7 @@ class BusinessEntitySubscriber implements EventSubscriber
     /**
      * bind to LoadClassMetadata method
      *
-     * @return array The subscribed events
+     * @return string[] The subscribed events
      */
     public function getSubscribedEvents()
     {
@@ -46,13 +46,9 @@ class BusinessEntitySubscriber implements EventSubscriber
         $em = $this->container->get('doctrine.orm.entity_manager');
         $businessEntities = array();
         $businessEntitiesArray = array();
-        $businessEntities = $this->container->get('victoire_core.helper.business_entity_helper')->getBusinessEntities();
-        foreach ($businessEntities as $businessEntity) {
-            $businessEntitiesArray[$businessEntity->getClass()] = $businessEntity;
-        }
-        $entityClass = $em->getClassMetadata(get_class($entity))->getName();
-        if (array_key_exists($entityClass, $businessEntitiesArray)) {
-            $businessEntity = $businessEntitiesArray[$entityClass];
+        $businessEntity = $this->container->get('victoire_core.helper.business_entity_helper')->findByEntityInstance($entity);
+
+        if ($businessEntity) {
             $em = $this->container->get('doctrine.orm.entity_manager');
             $patterns = $em->getRepository('VictoireBusinessEntityPageBundle:BusinessEntityPagePattern')->findPagePatternByBusinessEntity($businessEntity);
             foreach ($patterns as $pattern) {

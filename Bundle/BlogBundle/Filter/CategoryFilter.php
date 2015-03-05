@@ -33,10 +33,13 @@ class CategoryFilter extends BaseFilter
      * @param QueryBuilder &$qb
      * @param array        $parameters
      *
-     * @return queryBuilder
+     * @return QueryBuilder
      */
     public function buildQuery(QueryBuilder $qb, array $parameters)
     {
+        if (!is_array($parameters['category'])) {
+            $parameters['category'] =  array($parameters['category']);
+        }
         //clean the parameters from the blank value
         foreach ($parameters['category'] as $index => $parameter) {
             //the blank value is removed
@@ -47,9 +50,9 @@ class CategoryFilter extends BaseFilter
 
         if (count($parameters['category']) > 0) {
             $qb = $qb
-             ->join('main_item.category', 'c')
-             ->andWhere('c.id IN (:category)')
-             ->setParameter('category', $parameters['category']);
+                ->join('main_item.category', 'c')
+                ->andWhere('c.id IN (:category)')
+                ->setParameter('category', $parameters['category']);
         }
 
         return $qb;
@@ -68,29 +71,34 @@ class CategoryFilter extends BaseFilter
         $categories = $this->em->getRepository('VictoireBlogBundle:Category')->findAll();
 
         //the blank value
-        $categoriesChoices = array(null => '');
+        $categoriesChoices = array();
 
         foreach ($categories as $category) {
             $categoriesChoices[$category->getId()] = $category->getTitle();
         }
 
-        $selectedCategories = array();
+        $data = null;
         if ($this->request->query->has('filter') && array_key_exists('category_filter', $this->request->query->get('filter'))) {
-            foreach ($this->request->query->get('filter')['category_filter']['category'] as $id => $selectedCategory) {
-                $selectedCategories[$id] = $selectedCategory;
+            if ($options['multiple']) {
+                $data = array();
+                foreach ($this->request->query->get('filter')['category_filter']['category'] as $id => $selectedCategory) {
+                    $data[$id] = $selectedCategory;
+                }
+            } else {
+                $data = $this->request->query->get('filter')['category_filter']['tags'];
             }
         }
 
         $builder
             ->add(
                 'category', 'choice', array(
-                    'label' => 'blog.category_filter.label',
-                    'choices' => $categoriesChoices,
-                    'multiple' => true,
-                    'attr' => array(
-                        'class' => 'select2'
-                    ),
-                    'data' => $selectedCategories
+                    'label'       => false,
+                    'choices'     => $categoriesChoices,
+                    'required'    => false,
+                    'expanded'    => true,
+                    'empty_value' => 'Tous',
+                    'multiple'    => $options['multiple'],
+                    'data'        => $data,
                 )
             );
     }

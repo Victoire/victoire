@@ -7,10 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
-use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Widget\Managers\WidgetManager;
-use Victoire\Bundle\TemplateBundle\Entity\Template as VicTemplate;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
@@ -36,12 +33,11 @@ class WidgetController extends Controller
             $view = $this->container->get('victoire_page.page_helper')->findPageByParameters(array('id' => $viewReferenceId));
             $this->container->get('victoire_core.current_view')->setCurrentView($view);
             if ($this->getRequest()->isXmlHttpRequest()) {
-
-                 $response = new JsonResponse(array(
-                         'html'    => $this->get('victoire_widget.widget_renderer')->render($widget, $view),
-                         'update'  => 'vic-widget-'.$widget->getId().'-container',
-                         'success' => false
-                 ));
+                $response = new JsonResponse(array(
+                            'html'    => $this->get('victoire_widget.widget_renderer')->render($widget, $view),
+                            'update'  => 'vic-widget-'.$widget->getId().'-container',
+                            'success' => false,
+                    ));
             } else {
                 $response = $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $view->getUrl())));
             }
@@ -60,7 +56,7 @@ class WidgetController extends Controller
      * @param string  $slot              The slot where attach the widget
      * @param integer $positionReference The positionReference in the widgetMap
      *
-     * @return response
+     * @return JsonResponse
      *
      * @Route("/victoire-dcms/widget/new/{type}/{viewReference}/{slot}/{positionReference}", name="victoire_core_widget_new", defaults={"slot":null}, options={"expose"=true})
      * @Template()
@@ -82,10 +78,10 @@ class WidgetController extends Controller
      * @param string         $type              The type of the widget we edit
      * @param integer        $viewReference     The view reference where attach the widget
      * @param string         $slot              The slot where attach the widget
-     * @param string         $positionReference Position of the widget
+     * @param integer         $positionReference Position of the widget
      * @param BusinessEntity $entityName        The business entity name the widget shows on dynamic mode
      *
-     * @return response
+     * @return JsonResponse
      * @Route("/victoire-dcms/widget/create/{type}/{viewReference}/{slot}/{positionReference}/{entityName}", name="victoire_core_widget_create", defaults={"slot":null, "entityName":null, "positionReference": 0, "_format": "json"})
      * @Template()
      */
@@ -123,9 +119,9 @@ class WidgetController extends Controller
      * @param integer $viewReference The current view
      * @param string  $entityName    The entity name (could be null is the submitted form is in static mode)
      *
-     * @return response
+     * @return JsonResponse
      *
-     * @Route("/victoire-dcms/widget/edit/{id}/{viewReference}/{entityName}", name="victoire_core_widget_edit")
+     * @Route("/victoire-dcms/widget/edit/{id}/{viewReference}/{entityName}", name="victoire_core_widget_edit", options={"expose"=true})
      * @Route("/victoire-dcms/widget/update/{id}/{viewReference}/{entityName}", name="victoire_core_widget_update", defaults={"entityName": null})
      * @Template()
      */
@@ -153,10 +149,76 @@ class WidgetController extends Controller
     }
 
     /**
+     * Stylize a widget
+     * @param Widget  $widget        The widget to stylize
+     * @param integer $viewReference The current view
+     * @param string  $entityName    The entity name (could be null is the submitted form is in static mode)
+     *
+     * @return JsonResponse
+     *
+     * @Route("/victoire-dcms/widget/stylize/{id}/{viewReference}/{entityName}", name="victoire_core_widget_stylize", options={"expose"=true})
+     * @Template()
+     */
+    public function stylizeAction(Widget $widget, $viewReference, $entityName = null)
+    {
+        $view = $this->getViewByReferenceId($viewReference);
+        $widgetView = $widget->getView();
+
+        $widgetViewReferenceId = $this->get('victoire_core.view_cache_helper')
+            ->getViewReferenceId($widgetView);
+
+        $widgetViewReference = $this->get('victoire_core.view_cache_helper')
+            ->getReferenceByParameters(array('id' => $widgetViewReferenceId));
+
+        $widgetView->setReference($widgetViewReference);
+        $this->get('victoire_core.current_view')->setCurrentView($view);
+        try {
+            $form = $this->container->get('form.factory')->create('victoire_widget_style_type', $widget, array(
+                    'method' => 'POST',
+                    'action' => $this->generateUrl(
+                        'victoire_core_widget_stylize',
+                        array(
+                            'id'            => $widget->getId(),
+                            'viewReference' => $viewReference,
+                        )
+                    ),
+                )
+            );
+            $form->handleRequest($this->get('request'));
+            if ($form->isValid()) {
+                $this->get('doctrine.orm.entity_manager')->flush();
+                $params = array(
+                    'view'     => $view,
+                    'success'  => true,
+                    'html'     => $this->get('victoire_widget.widget_renderer')->render($widget, $view),
+                    'widgetId' => "vic-widget-".$widget->getId()."-container",
+                );
+            } else {
+                $params = array(
+                    "success"  => false,
+                    "html"     => $this->get('victoire_core.template_mapper')->render(
+                        "VictoireCoreBundle:Widget:Form/stylize.html.twig",
+                        array(
+                            'view'   => $view,
+                            'form'   => $form->createView(),
+                            'widget' => $widget,
+                        )
+                    ),
+                );
+            }
+            $response = new JsonResponse($params);
+        } catch (\Exception $ex) {
+            $response = $this->getJsonReponseFromException($ex);
+        }
+
+        return $response;
+    }
+
+    /**
      * Delete a Widget
      * @param Widget $widget The widget to delete
      *
-     * @return empty response
+     * @return JsonResponse response
      * @Route("/victoire-dcms/widget/delete/{id}/{viewReference}", name="victoire_core_widget_delete", defaults={"_format": "json"})
      * @Template()
      */
@@ -175,9 +237,8 @@ class WidgetController extends Controller
     /**
      * Update widget positions accross the view. If moved widget is a Reference, ask to detach the view from template
      *
-     * @param View $view The view where update widget positions
      *
-     * @return response
+     * @return JsonResponse
      * @Route("/victoire-dcms/widget/updatePosition/{viewReference}", name="victoire_core_widget_update_position", options={"expose"=true})
      */
     public function updatePositionAction($viewReference)
@@ -248,7 +309,7 @@ class WidgetController extends Controller
             $response = new JsonResponse(
                 array(
                     'success' => false,
-                    'message' => $message
+                    'message' => $message,
                 )
             );
         }

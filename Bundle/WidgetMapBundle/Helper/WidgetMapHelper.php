@@ -42,7 +42,7 @@ class WidgetMapHelper
      * @param Widget  $widget            The widget to position
      * @param integer $positionReference Id of the parent widget
      *
-     * @return integer The position of the widget
+     * @return WidgetMap The position of the widget
      */
     public function generateWidgetPosition(WidgetMap $widgetMapEntry, $widget, $widgetMap, $positionReference)
     {
@@ -83,6 +83,7 @@ class WidgetMapHelper
      * undocumented function
      *
      *
+     * @param \Victoire\Bundle\CoreBundle\Entity\View $view
      * @return void
      * @author
      **/

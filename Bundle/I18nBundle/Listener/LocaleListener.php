@@ -16,9 +16,9 @@ class LocaleListener implements EventSubscriberInterface
     private $localeResolver;
 
     /**
-    * Constructor
-    * @param $defaultLocale the default locale of the application
-    */
+     * Constructor
+     * @param $defaultLocale the default locale of the application
+     */
     public function __construct($defaultLocale, LocaleResolver $localeResolver)
     {
         $this->defaultLocale = $defaultLocale;
@@ -26,10 +26,10 @@ class LocaleListener implements EventSubscriberInterface
     }
 
     /**
-    * @param GetResponseEvent $event
-    *
-    * method called on kernel request used only to persist locale in session
-    */
+     * @param GetResponseEvent $event
+     *
+     * method called on kernel request used only to persist locale in session
+     */
     public function onKernelRequest(GetResponseEvent $event)
     {
         $request = $event->getRequest();
@@ -52,7 +52,7 @@ class LocaleListener implements EventSubscriberInterface
 
     /**
      * This method will be called on user login in order to set the victoire locale
-     * @param GetResponseEvent $event
+     * @param InteractiveLoginEvent $event
      */
     public function onLogin(InteractiveLoginEvent $event)
     {

@@ -67,7 +67,7 @@ class TemplateMapper
      *
      * @param string $view The key of requested template
      *
-     * @return Template file
+     * @return string file
      *
      * @throws HttpException
      **/
@@ -76,7 +76,7 @@ class TemplateMapper
         list($bundle, $element, $view) = array_pad(explode(":", $view), 3, null);
 
         if ($view) {
-            $twigTemplate = $element . ":" . $view;
+            $twigTemplate = $element.":".$view;
         } else {
             $twigTemplate = $element;
         }
@@ -119,7 +119,7 @@ class TemplateMapper
      *
      * @param string $template
      *
-     * @return string|boolean
+     * @return string|false
      */
     protected function getTemplate($template)
     {

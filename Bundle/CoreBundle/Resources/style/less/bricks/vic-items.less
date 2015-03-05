@@ -1,0 +1,18 @@
+ul {
+    &.vic-items {
+        margin: 0;
+        padding: 0;
+        counter-reset: listingCounter;
+
+        li {
+            list-style: none;
+            counter-increment: listingCounter;
+
+            .request-number {
+                &:before {
+                    content: counter(listingCounter);
+                }
+            }
+        }
+    }
+}

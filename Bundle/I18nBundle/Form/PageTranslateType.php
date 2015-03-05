@@ -3,7 +3,6 @@ namespace Victoire\Bundle\I18nBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -18,8 +17,8 @@ class PageTranslateType extends AbstractType
     protected $availableLocales;
     protected $currentLocale;
     /**
-    * Constructor
-    */
+     * Constructor
+     */
     public function __construct($availableLocales, RequestStack $requestStack)
     {
         $this->availableLocales = $availableLocales;
@@ -36,11 +35,11 @@ class PageTranslateType extends AbstractType
         $builder
             ->add('name');
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
             $view = $event->getData();
             $form = $event->getForm();
 
-             if (!$form->has('locale')) {
+                if (!$form->has('locale')) {
                 $form->add('locale', 'choice', array(
                         'expanded' => false,
                         'multiple' => false,
@@ -67,7 +66,7 @@ class PageTranslateType extends AbstractType
         $i18n = $view->getI18n();
 
         foreach ($this->availableLocales as $localeVal) {
-            if ($i18n->getTranslation($localeVal) === null ) {
+            if ($i18n->getTranslation($localeVal) === null) {
                 $choices[$localeVal] = 'victoire.i18n.viewType.locale.'.$localeVal;
             }
         }

@@ -23,12 +23,16 @@ class Widget{{widget}}Type extends {% if parent %}Widget{{parent}}Type{% else %}
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        {% for field in fields %}
-        $builder->add('{{field.fieldName}}', null, array(
-            'label' => 'widget_{{widget|lower}}.form.{{field.fieldName}}.label'
-        ));
-        {% endfor %}
+    {   
+{% if fields|length %}
+        $builder
+{% endif %}
+{% for field in fields %}
+            ->add('{{field.fieldName}}', null, array(
+                    'label' => 'widget_{{widget|lower}}.form.{{field.fieldName}}.label'
+            )){% if loop.last %};{% endif %}
+{% endfor %}
+
         parent::buildForm($builder, $options);
 
     }

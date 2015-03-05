@@ -7,7 +7,7 @@ use Victoire\Bundle\BusinessEntityPageBundle\Helper\BusinessEntityPageHelper;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 
 /**
-  * ref: victoire_page.matcher.url_matcher
+ * ref: victoire_page.matcher.url_matcher
  */
 class UrlMatcher
 {

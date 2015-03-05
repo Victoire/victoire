@@ -1,0 +1,62 @@
+{% extends 'VictoireCoreBundle:Widget:Form/_modal.html.twig' %}
+
+{% form_theme form 'VictoireFormBundle:Form:fields.html.twig' %}
+{% trans_default_domain "victoire" %}
+
+
+{% block modal_header_title %}
+{{ 'victoire_widget.stylize.title'|trans({'%widgetId%': widget.id})|raw }}
+{% endblock modal_header_title %}
+
+{% block modal_body_content %}
+    {% if widget.id and widget.currentView != widget.view %}
+    <div class="vic-alert vic-alert-warning vic-alert-dismissible">
+        {{ 'victoire.widget.inherited.notice'|trans({'%templateName%': widget.view.name, '%templateEditLink%': path('victoire_core_widget_edit', {'id': widget.id, 'viewReference': widget.view.reference.id })}, 'victoire')|raw }}
+    </div>
+    {% endif %}
+    <div class="vic-tab-pane vic-active">
+    {{ form_start(form) }}
+        <div class="vic-row">
+            <div class="vic-col-md-12">
+                <h3 class="vic-h3">Conteneur</h3>
+            </div>
+            <div class="vic-col-md-6">
+                {{ form_row(form.containerTag) }}
+                {{ form_row(form.containerClass) }}
+                {{ form_row(form.containerWidth) }}
+                {{ form_row(form.containerBackground) }}
+                {{ form_row(form.textAlign) }}
+                {% if form.theme is defined %}
+                {{ form_row(form.theme) }}
+                {% endif %}
+            </div>
+            <div class="vic-col-md-6">
+                {{ form_row(form.containerMargin) }}
+                {{ form_row(form.containerPadding) }}
+                <ul class="vic-nav vic-nav-tabs" role="tablist">
+                    {% for key, responsive_config in victoire_twig_responsive %}
+                    <li {% if loop.first %}class="vic-active"{% endif %}>
+                        <a href="#vic-widget-layout-{{ key }}" role="tab" data-toggle="vic-tab" title="{% if responsive_config.min is defined %}{{ responsive_config.min }}px{% endif %}{% if responsive_config.min is defined and responsive_config.max is defined%} - {% endif %}{% if responsive_config.max is defined %}{{ responsive_config.max }}px{% endif %}">
+                            {{ ('widget_layout.tab.containerMargin.' ~ key|upper ~ '.label' )|trans({}, 'victoire') }}
+                            <i class="fa fa-info-circle" title="{% if responsive_config.min is defined %}{{ responsive_config.min }}px{% endif %}{% if responsive_config.min is defined and responsive_config.max is defined%} - {% endif %}{% if responsive_config.max is defined %}{{ responsive_config.max }}px{% endif %}"></i>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <div class="vic-tab-content">
+                {% for key, responsive_config in victoire_twig_responsive %}
+                    <div role="tabpanel" class="vic-tab-pane{% if loop.first %} vic-active{% endif %}" id="vic-widget-layout-{{ key }}">
+                        {{ form_row(attribute(form, 'containerMargin' ~ key|upper)) }}
+                        {{ form_row(attribute(form, 'containerPadding' ~ key|upper)) }}                        
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+    </div>
+
+{% endblock modal_body_content %}
+
+{% block action %}update{% endblock action %}

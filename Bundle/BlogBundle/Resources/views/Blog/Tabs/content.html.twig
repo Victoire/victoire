@@ -1,0 +1,8 @@
+<div class="tab-content">
+    {% for tab in tabs %}
+        <div class="tab-pane{% if loop.first %} active{% endif %}" id="victoire-blog-{{tab}}">
+            {# {% include 'VictoireBlogBundle:Blog:_blogItem.html.twig' %} #}
+            {{render(controller('VictoireBlogBundle:Blog:' ~ tab, {'id' : blog.id}))}}
+        </div>
+    {% endfor %}
+</div>

@@ -1,0 +1,99 @@
+.vic-login {
+    padding: 0;
+    background-color: @vicLogin_backgroundColor;
+    background-image: url(@vicLogin_backgroundImage);
+    background-size: 155%;
+    background-position: top center;
+    background-repeat: repeat-x;
+
+    &,
+    * {
+        font-family: @victoire-fontFamily !important;
+    }
+}
+
+#vic-login-wrapper {
+    position: relative;
+}
+
+
+
+#vic-login-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    .transform(translate3D(-50%, -50%, 0));
+}
+
+#vic-login-logo {
+    margin-bottom: @vicLogin-logo_marginBottom;
+}
+
+#vic-login-form {
+    width: @vicLogin-content_width;
+}
+
+.vic-form-group  {
+    &.-vic-login {
+        margin-bottom: 0;
+
+        & + & {
+            margin-top: @vicLogin-formGroup_gutterHeight;
+        }
+    }
+}
+
+.vic-form-control {
+    &.-vic-login {
+        background-color: transparent;
+        border-width: @vicLogin-formControl_borderWidth;
+        border-color: @vicLogin_color;
+        color: @vicLogin_color;
+        font-weight: 400;
+        height: @vicLogin-formControl_height;
+        padding: @vicLogin-formControl_padding;
+        .box-shadow(@vicLogin-formControl_boxShadow, inset @vicLogin-formControl_boxShadow);
+
+        &::-webkit-input-placeholder {
+            color: @vicLogin_color;
+        }
+
+        &::-moz-placeholder {
+            color: @vicLogin_color;
+        }
+    }
+}
+
+
+.customCheckbox {
+    &.-vic-login {
+        + label {
+            line-height: @vicLogin-customCheckbox_lineHeight;
+            color: @vicLogin_color;
+            font-weight: 400;
+
+            &:before {
+                border-width: @vicLogin-formControl_borderWidth;
+                margin-top: (@vicLogin-customCheckbox_lineHeight - @customCheckbox-height) / 2;
+                line-height: @customCheckbox-height - @vicLogin-formControl_borderWidth;
+            }
+
+            &,
+            &:hover {
+                &:before {
+                    color: @vicLogin_color;
+                    border-color: @vicLogin_color;
+                    .box-shadow(@vicLogin-formControl_boxShadow, inset @vicLogin-formControl_boxShadow);
+                }
+            }
+        }
+    }
+}
+
+.vic-btn {
+    &.-vic-login {
+        border-width: 0;
+        .box-shadow(@vicLogin-formControl_boxShadow);
+        height: @vicLogin-formControl_height;
+    }
+}

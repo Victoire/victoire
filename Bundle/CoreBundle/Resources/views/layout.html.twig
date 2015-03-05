@@ -2,7 +2,7 @@
 
     {% trans_default_domain "victoire" %}
 
-    {% block container_attributes %}{{ parent() }} {% if app.session.get('victoire.edit_mode') %}role="admin"{% endif %}{% endblock container_attributes %}
+    {% block container_attributes %}{{ parent() }} {% if app.session.get('victoire.edit_mode') %}role="{{ app.session.get('victoire.edit_mode') }}"{% endif %}{% endblock container_attributes %}
 
     {% block container_class %}{% endblock container_class %}
     {% block title %}Victoire CMS{% endblock title %}
@@ -45,11 +45,12 @@
 
     {% block foot_script %}
 
-    <script type="text/javascript">
         {% if view is defined %}
+        <script type="text/javascript">
             var viewReferenceId = '{{ view.reference.id }}';
-        {% endif %}
         </script>
+        {{ render_hinclude(controller('VictoireAnalyticsBundle:BrowseEvent:track', {'viewReferenceId': view.reference.id, 'referer': app.request.headers.get('referer')})) }}
+        {% endif %}
         {% if is_granted('ROLE_VICTOIRE') %}
             {% spaceless %}
                 {% javascripts injector='victoire-edit, victoire-leftnavbar' %}

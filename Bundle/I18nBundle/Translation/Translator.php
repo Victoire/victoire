@@ -88,8 +88,8 @@ class Translator extends BaseTranslator
     }
 
     /**
-    * get the local in the session
-    */
+     * get the local in the session
+     */
     public function getLocale()
     {
         $this->locale = $this->container->get('request')->getLocale();
@@ -98,8 +98,9 @@ class Translator extends BaseTranslator
     }
 
     /**
-    * get the locale of the administration template
-    */
+     * get the locale of the administration template
+     * @return string
+     */
     public function getVictoireLocale()
     {
         $this->locale = $this->container->get('request')->getSession()->get('victoire_locale');
