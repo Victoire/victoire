@@ -18,6 +18,10 @@
         <source>menu.blog</source>
         <target>Blog</target>
       </trans-unit>
+      <trans-unit id="9b39444d8d4d52ee8371bd147a45392b465249a8" resname="menu.leftnavbar.blog.label">
+        <source>menu.leftnavbar.blog.label</source>
+        <target><![CDATA[<i class="vic-menuImg vic-menuImg-network"></i> Blog]]></target>
+      </trans-unit>
       <trans-unit id="44ee3ff9b926d8e0fe6e8e356600ad5c77166029" resname="menu.blog.article.new">
         <source>menu.blog.article.new</source>
         <target><![CDATA[<i class="vic-menuImg vic-menuImg-new"></i> Nouvel article]]></target>
