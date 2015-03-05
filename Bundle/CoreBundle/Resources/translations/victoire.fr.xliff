@@ -162,6 +162,10 @@
         <source>victoire.login.password.label</source>
         <target>Mot de passe</target>
       </trans-unit>
+      <trans-unit id="15" resname="victoire.theme.default.label">
+        <source>victoire.theme.default.label</source>
+        <target>Standard</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

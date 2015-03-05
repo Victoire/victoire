@@ -67,5 +67,8 @@ services:
 
     victoire_widget.widget_style_type:
         class: Victoire\Bundle\WidgetBundle\Form\WidgetStyleType
+        arguments:
+            - @kernel
+            - @file_locator
         tags:
             - { name: form.type, alias: victoire_widget_style_type }
