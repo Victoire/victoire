@@ -13,7 +13,7 @@
         {
             "victoire-edit":
             [
-                "@VictoireCoreBundle/Resources/public/vendor/select2/select2.css"
+                "bundles/victoirecore/vendor/select2/select2.css"
             ]
         }
     }
