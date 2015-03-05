@@ -1,6 +1,6 @@
 /**
  * Select2 Persian translation.
- * 
+ *
  * Author: Ali Choopan <choopan@arsh.co>
  * Author: Ebrahim Byagowi <ebrahim@gnu.org>
  */
@@ -16,4 +16,4 @@
         formatLoadMore: function (pageNumber) { return "در حال بارگیری موارد بیشتر…"; },
         formatSearching: function () { return "در حال جستجو…"; }
     });
-})(jQuery);
+})($vic);

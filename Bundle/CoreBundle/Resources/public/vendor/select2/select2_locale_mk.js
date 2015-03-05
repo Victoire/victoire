@@ -1,6 +1,6 @@
 /**
  * Select2 Macedonian translation.
- * 
+ *
  * Author: Marko Aleksic <psybaron@gmail.com>
  */
 (function ($) {
@@ -14,4 +14,4 @@
         formatLoadMore: function (pageNumber) { return "Вчитување резултати…"; },
         formatSearching: function () { return "Пребарување…"; }
     });
-})(jQuery);
+})($vic);

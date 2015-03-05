@@ -14,4 +14,4 @@
         formatLoadMore: function (pageNumber) { return "Laddar fler resultat…"; },
         formatSearching: function () { return "Söker…"; }
     });
-})(jQuery);
+})($vic);

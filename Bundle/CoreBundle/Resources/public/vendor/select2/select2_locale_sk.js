@@ -45,4 +45,4 @@
         formatLoadMore: function (pageNumber) { return "Načítavajú sa ďalšie výsledky…"; },
         formatSearching: function () { return "Vyhľadávanie…"; }
     });
-})(jQuery);
+})($vic);

@@ -12,4 +12,4 @@
         formatLoadMore: function (pageNumber) { return "Lade mehr Ergebnisse…"; },
         formatSearching: function () { return "Suche…"; }
     });
-})(jQuery);
+})($vic);

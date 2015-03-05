@@ -1,6 +1,6 @@
 /**
  * Select2 Catalan translation.
- * 
+ *
  * Author: David Planella <david.planella@gmail.com>
  */
 (function ($) {
@@ -14,4 +14,4 @@
         formatLoadMore: function (pageNumber) { return "S'estan carregant més resultats…"; },
         formatSearching: function () { return "S'està cercant…"; }
     });
-})(jQuery);
+})($vic);

@@ -1,6 +1,6 @@
 /**
  * Select2 Bulgarian translation.
- * 
+ *
  * @author  Lubomir Vikev <lubomirvikev@gmail.com>
  * @author  Uriy Efremochkin <efremochkin@uriy.me>
  */
@@ -15,4 +15,4 @@
         formatLoadMore: function (pageNumber) { return "Зареждат се още…"; },
         formatSearching: function () { return "Търсене…"; }
     });
-})(jQuery);
+})($vic);

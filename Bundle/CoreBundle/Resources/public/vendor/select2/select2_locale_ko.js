@@ -1,6 +1,6 @@
 /**
  * Select2 Korean translation.
- * 
+ *
  * @author  Swen Mun <longfinfunnel@gmail.com>
  */
 (function ($) {
@@ -14,4 +14,4 @@
         formatLoadMore: function (pageNumber) { return "불러오는 중…"; },
         formatSearching: function () { return "검색 중…"; }
     });
-})(jQuery);
+})($vic);
