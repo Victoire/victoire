@@ -103,7 +103,7 @@ class WidgetStyleType extends AbstractType
             //search for available theme files
             $finder = Finder::create()
                 ->files()
-                ->name('*.html.twig')
+                ->name('/^show(.)+\.html\.twig$/')
                 ->in($this->fileLocator->locate('@'.$widgetBundle.'/Resources/views'))
                 ->sortByName();
             //add the default choice
@@ -116,9 +116,12 @@ class WidgetStyleType extends AbstractType
                 $theme = preg_replace('/show|\.html\.twig/', '', $theme);
                 $choices[$theme] = 'victoire.'.$widgetBundle.'.theme.'.$theme.'.label';
             }
-            $form->add('theme', 'choice', array(
-                'choices' => $choices,
-            ));
+            //We add the theme type only if there is a choice
+            if (count($choices) > 1) {
+                $form->add('theme', 'choice', array(
+                    'choices' => $choices,
+                ));
+            }
         });
     }
 
