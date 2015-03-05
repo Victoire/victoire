@@ -12,4 +12,4 @@
         formatLoadMore: function (pageNumber) { return "読込中･･･"; },
         formatSearching: function () { return "検索中･･･"; }
     });
-})(jQuery);
+})($vic);

@@ -1,6 +1,6 @@
 /**
  * Select2 Czech translation.
- * 
+ *
  * Author: Michal Marek <ahoj@michal-marek.cz>
  * Author - sklonovani: David Vallner <david@vallner.net>
  */
@@ -46,4 +46,4 @@
         formatLoadMore: function (pageNumber) { return "Načítají se další výsledky…"; },
         formatSearching: function () { return "Vyhledávání…"; }
     });
-})(jQuery);
+})($vic);

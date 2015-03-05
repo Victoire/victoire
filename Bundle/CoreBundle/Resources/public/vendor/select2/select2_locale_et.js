@@ -14,4 +14,4 @@
         formatLoadMore: function (pageNumber) { return "Laen tulemusi.."; },
         formatSearching: function () { return "Otsin.."; }
     });
-})(jQuery);
+})($vic);

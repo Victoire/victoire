@@ -25,4 +25,4 @@
             return "Etsitään…";
         }
     });
-})(jQuery);
+})($vic);

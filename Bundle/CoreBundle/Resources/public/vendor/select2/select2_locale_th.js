@@ -14,4 +14,4 @@
         formatLoadMore: function (pageNumber) { return "กำลังค้นข้อมูลเพิ่ม…"; },
         formatSearching: function () { return "กำลังค้นข้อมูล…"; }
     });
-})(jQuery);
+})($vic);

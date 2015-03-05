@@ -14,4 +14,4 @@
         formatLoadMore: function (pageNumber) { return "Preuzimanje još rezultata…"; },
         formatSearching: function () { return "Pretraga…"; }
     });
-})(jQuery);
+})($vic);

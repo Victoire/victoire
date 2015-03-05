@@ -1,6 +1,6 @@
 /**
  * Select2 Malay translation.
- * 
+ *
  * Author: Kepoweran <kepoweran@gmail.com>
  */
 (function ($) {
@@ -14,4 +14,4 @@
         formatLoadMore: function (pageNumber) { return "Sedang memuatkan keputusan…"; },
         formatSearching: function () { return "Mencari…"; }
     });
-})(jQuery);
+})($vic);

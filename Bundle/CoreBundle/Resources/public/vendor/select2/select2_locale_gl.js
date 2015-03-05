@@ -1,6 +1,6 @@
 /**
  * Select2 Galician translation
- * 
+ *
  * Author: Leandro Regueiro <leandro.regueiro@gmail.com>
  */
 (function ($) {
@@ -40,4 +40,4 @@
             return "Buscando…";
         }
     });
-})(jQuery);
+})($vic);
