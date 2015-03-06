@@ -61,11 +61,13 @@
 {# Widgets #}
 
 {% block choice_widget_collapsed %}
-    {% set attr = attr|merge({'class': attr.class|default('') ~ ' ' ~ vic_widget_form_control_class}) %}
-    {{ parent() }}
-    {% if vic_horizontal %}
-        {{ block('form_message') }}
-    {% endif %}
+    <div class="vic-custom-select">
+        {% set attr = attr|merge({'class': ''}) %}
+        {{ parent() }}
+        {% if vic_horizontal %}
+            {{ block('form_message') }}
+        {% endif %}
+    </div>
 {% endblock choice_widget_collapsed %}
 
 {% block textarea_widget %}
@@ -722,3 +724,4 @@
         {%- endif -%}
     {% endfor %}
 {% endblock hierarchy_tree_widget_options %}
+

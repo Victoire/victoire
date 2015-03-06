@@ -1,0 +1,44 @@
+.vic-custom-select {
+    height: @vicCustomSelect_height;
+    overflow: hidden;
+    background-color: @vicCustomSelect_bgColor;
+    background-image: url(@vicCustomSelect-caret_img);
+    background-position: right @vicCustomSelect-caret_marginRight center;
+    background-repeat: no-repeat;
+    background-size: auto @vicCustomSelect_height;
+    border-width: @vicCustomSelect_borderWidth;
+    border-style: solid;
+    border-color: @vicCustomSelect_borderColor;
+    -webkit-border-radius: @vicCustomSelect_borderRadius;
+    -moz-border-radius: @vicCustomSelect_borderRadius;
+    border-radius: @vicCustomSelect_borderRadius;
+
+    &:hover,
+    &:focus,
+    &:active {
+        border-color: @vicCustomSelect_borderColor-_state;
+    }
+
+    select {
+        cursor: pointer;
+        background: transparent;
+        width: 100% + @vicCustomSelect-tag_diff;
+        border: 0;
+        border-radius: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        height: @vicCustomSelect_height;
+        line-height: @vicCustomSelect_height;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        padding-left: @vicCustomSelect_pHorizontal;
+        padding-right: @vicCustomSelect-tag_diff * 2;
+
+        &:hover,
+        &:focus,
+        &:active {
+            outline: 0;
+        }
+    }
+}

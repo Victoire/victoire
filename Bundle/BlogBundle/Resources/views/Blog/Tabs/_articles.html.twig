@@ -1,32 +1,46 @@
 {% trans_default_domain "victoire" %}
-<div class="vic-accordion-group">
-    <div class="vic-accordion-inner">
-        {% if blog.articles|length %}
-            <ul class="vic-list-unstyled">
-                {% for article in blog.articles if not article.deletedAt %}
-                    <li>
-                        <div class="vic-row">
-                            <div class="vic-col-md-12">
-                                <a href="{{ path('victoire_core_page_show_by_id', {'viewId': article.pattern.id, 'entityId': article.id }) }}">
-                                    {{ article.name }}
-                                </a>&nbsp;
-                                <a data-toggle="vic-modal" href="{{ path('victoire_blog_article_settings', {'id' : article.id}) }}">
-                                    <i class="fa fa-cog"></i>
-                                </a>&nbsp;
-                            </div>
-                        </div>
-                    </li>
-                {% endfor %}
-                    <li>
-                        <a class="vic-btn vic-btn-success" data-toggle="vic-modal" href="{{ path('victoire_blog_article_newBlogArticle', {'id' : blog.id}) }}">
-                            {{'modal.blog.list.articlesList.new_article'|trans({}, 'victoire')}}
-                        </a>
-                    </li>
-            </ul>
-        {% else %}
-        <div class="vic-alert vic-alert-info">
-            {{ 'modal.blog.list.articlesList.empty.notice'|trans({'%creationLink%' : path('victoire_blog_article_newBlogArticle', {'id' : blog.id})}, 'victoire')|raw }}
+
+<a class="vic-btn vic-btn-success" data-toggle="vic-modal" href="{{ path('victoire_blog_article_newBlogArticle', {'id' : blog.id}) }}">
+    {{'modal.blog.list.articlesList.new_article'|trans({}, 'victoire')|raw}}
+</a>
+
+{% if blog.articles|length %}
+<div id="vic-blog-articleList">
+{% for article in blog.articles if not article.deletedAt %}
+    <div>
+        <div class="vic-panel vic-shadow-plan1 -vicBlog">
+            <div class="vic-panelBlog-image" {% if article.image %}style="background-image: url({{ article.image.url }});"{% endif %}>
+                <span class="vic-panelBlog-badge -{{ article.status }}">
+                    <span class="vic-panelBlog-badge-popover">
+                        {{ 'modal.blog.list.articlesList.status.' ~ article.status |trans }}
+                    </span>
+                </span>
+            </div>
+
+            <div class="vic-panelBlog-body vic-text-center">
+                <a class="vic-panelBlog-title" href="{{ path('victoire_core_page_show_by_id', {'viewId': article.pattern.id, 'entityId': article.id }) }}">{{ article.name }}</a>
+
+                <time datetime="{{ article.publishedAt|date("Y-m-d") }}" class="vic-panelBlog-date">{{ article.publishedAt|localizeddate("medium", "none", null, null, "cccc d LLLL yyyy") }}</time>
+
+                <a class="vic-btn vic-btn-sm vic-btn-default" href="{{ path('victoire_blog_article_settings', {'id' : article.id}) }}" data-toggle="vic-modal">Modifier les paramètres</a>
+            </div>
         </div>
-        {% endif %}
     </div>
+{% endfor %}
 </div>
+
+{% else %}
+<div class="vic-alert vic-alert-info" id="vic-blog-articleList-alert">
+    <p>
+        {{ 'modal.blog.list.articlesList.empty.notice'|trans }}
+    </p>
+
+    <a href="{{ path('victoire_blog_article_newBlogArticle', {'id' : blog.id}) }}" class="vic-btn vic-btn-info">{{ 'modal.blog.list.articlesList.empty.notice.label'|trans }}</a>
+</div>
+{% endif %}
+
+
+
+
+
+

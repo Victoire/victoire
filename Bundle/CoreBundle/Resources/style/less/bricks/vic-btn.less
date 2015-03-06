@@ -10,13 +10,8 @@
     padding-top: 0;
     padding-bottom: 0;
     text-decoration: none;
-}
-
-
-// btn success
-.vic-btn-success {
-    background-color: @vic-btn-success-borderColor;
-    border-color: @vic-btn-success-backgroundColor;
+    padding-left: @vicBtn_paddingHorizontal;
+    padding-right: @vicBtn_paddingHorizontal;
 }
 
 
@@ -68,7 +63,7 @@
 // btn Success
 .vic-btn-success {
     background-color: @vic-btn-success-backgroundColor;
-    border-color: darken(@vic-btn-success-backgroundColor, 10%);
+    border-color: @vic-btn-success-borderColor;
 
     &:hover,
     &:focus,
@@ -119,4 +114,21 @@
 
 .add-request-block {
     margin-bottom: @vic-addRequest-marginBottom;
+}
+
+
+// Btn size
+// ========
+
+// sm
+// --
+
+.vic-btn-sm {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 13px;
+    padding-right: 13px;
+    line-height: 28px;
+    font-size: 14px;
+    line-height: 18px;
 }

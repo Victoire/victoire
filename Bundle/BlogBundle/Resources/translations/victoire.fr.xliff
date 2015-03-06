@@ -36,7 +36,7 @@
       </trans-unit>
       <trans-unit id="5" resname="modal.blog.button.new.label">
         <source>modal.blog.button.new.label</source>
-        <target><![CDATA[<i class="fa fa-check-circle"></i> Créer un nouveau blog]]></target>
+        <target>Créer un nouveau blog</target>
       </trans-unit>
       <trans-unit id="6" resname="modal.blog.list.empty.notice">
         <source>modal.blog.list.empty.notice</source>
@@ -52,11 +52,11 @@
       </trans-unit>
       <trans-unit id="9" resname="modal.blog.list.articlesList.new_article">
         <source>modal.blog.list.articlesList.new_article</source>
-        <target>Ajouter un article</target>
+        <target><![CDATA[<span class="fa fa-check-circle"></span> Créer un nouvel article]]></target>
       </trans-unit>
       <trans-unit id="10" resname="modal.blog.list.articlesList.empty.notice">
         <source>modal.blog.list.articlesList.empty.notice</source>
-        <target><![CDATA[Vous n'avez pas encore créé d'article dans ce blog. C'est le moment :)<br/><br/><a href="%creationLink%" data-toggle="vic-modal" class="vic-btn vic-btn-primary"><i class="fa fa-plus"></i> Créer un article maintenant.</a>]]></target>
+        <target>Vous n'avez pas encore créé d'article dans ce blog. C'est le moment :)</target>
       </trans-unit>
       <trans-unit id="11" resname="modal.blog.button.new.title">
         <source>modal.blog.button.new.title</source>
@@ -157,6 +157,26 @@
       <trans-unit id="32" resname="widget_filter.date_filter">
         <source>widget_filter.date_filter</source>
         <target>Date de publication</target>
+      </trans-unit>
+      <trans-unit id="33" resname="modal.blog.list.articlesList.empty.notice.label">
+        <source>modal.blog.list.articlesList.empty.notice.label</source>
+        <target>Créer un article maintenant</target>
+      </trans-unit>
+      <trans-unit id="34" resname="modal.blog.list.articlesList.status.draft">
+        <source>modal.blog.list.articlesList.status.draft</source>
+        <target>Brouillon</target>
+      </trans-unit>
+      <trans-unit id="35" resname="modal.blog.list.articlesList.status.published">
+        <source>modal.blog.list.articlesList.status.published</source>
+        <target>Publié</target>
+      </trans-unit>
+      <trans-unit id="36" resname="modal.blog.list.articlesList.status.unpublished">
+        <source>modal.blog.list.articlesList.status.unpublished</source>
+        <target>En attente de relecture</target>
+      </trans-unit>
+      <trans-unit id="37" resname="modal.blog.list.articlesList.status.scheduled">
+        <source>modal.blog.list.articlesList.status.scheduled</source>
+        <target>Planifié</target>
       </trans-unit>
     </body>
   </file>
