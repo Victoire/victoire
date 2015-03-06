@@ -1,44 +1,56 @@
-<div class="row">
-    <div class="col-md-4">
-        {{form(chooseBlogForm, {'attr' : {'id' : 'victoire_blog_choose_form'}, 'action' : path('victoire_blog_index')})}}
-    </div>
-    <div class="col-md-2">
-        <a href="{{ path('victoire_core_page_show', {'url' : blog.url}) }}">
+{% form_theme chooseBlogForm 'VictoireFormBundle:Form:fields.html.twig' %}
+
+
+<div id="vic-blog-item-header">
+    <div class="vic-row">
+        <div class="vic-col-sm-3">
+            {{ form_start(chooseBlogForm, {'attr' : {'id' : 'victoire_blog_choose_form'}, 'action' : path('victoire_blog_index')}) }}
+            {{ form_row(chooseBlogForm.blog) }}
+            {{ form_end(chooseBlogForm) }}
+        </div>
+
+        {# <a href="{{ path('victoire_core_page_show', {'url' : blog.url}) }}">
             <i class="fa fa-external-link-square"></i>
-        </a>
-    </div>
-    <div class="col-md-4">
-        <a href="{{ path('victoire_blog_new') }}" class="vic-btn vic-btn-success vic-pull-right" data-toggle="vic-modal" title="{{ ('modal.blog.button.new.title')|trans({}, 'victoire') }}">
-            {{ ('modal.blog.button.new.label')|trans({}, 'victoire')|raw }}
-    </a>
+        </a> #}
+
+        <div class="vic-col-sm-9 vic-text-right">
+            {% spaceless %}
+            <a href="{{ path('victoire_blog_new') }}" id="vic-blog-newBlogBtn" class="vic-btn vic-btn-default vic-pull-right" data-toggle="vic-modal" title="{{ ('modal.blog.button.new.title')|trans({}, 'victoire') }}">
+                {{ ('modal.blog.button.new.label')|trans({}, 'victoire') }}
+            </a>
+            {% endspaceless %}
+        </div>
     </div>
 </div>
-<script type="text/javascript">
-$vic('#victoire_blog_choose_type_blog').on('change', function(){
-    $('#victoire_blog_choose_form').on('submit', function(event){
-        event.preventDefault();
-        var form = $vic(this);
-        var formData = $vic(form).serializeArray();
-        formData = $vic.param(formData);
-        if ($vic(form).attr('enctype') == 'multipart/form-data') {
-            var formData = new FormData($vic(form)[0]);
-            var contentType = false;
-        }
 
-        $vic.ajax({
-            url         : $vic(form).attr('action'),
-            context     : document.body,
-            data        : formData,
-            type        : $vic(form).attr('method'),
-            contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
-            processData : false,
-            async       : true,
-            cache       : false,
-            success     : function(jsonResponse) {
-                $vic('#victoire-blog-modal').html(jsonResponse.html);
+<script type="text/javascript">
+    $vic('#victoire_blog_choose_type_blog').on('change', function(){
+        $('#victoire_blog_choose_form').on('submit', function(event) {
+            event.preventDefault();
+            var form = $vic(this);
+            var formData = $vic(form).serializeArray();
+            formData = $vic.param(formData);
+
+            if ($vic(form).attr('enctype') == 'multipart/form-data') {
+                var formData = new FormData($vic(form)[0]);
+                var contentType = false;
             }
-        });
-    }).submit();
-});
+
+            $vic.ajax({
+                url         : $vic(form).attr('action'),
+                context     : document.body,
+                data        : formData,
+                type        : $vic(form).attr('method'),
+                contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+                processData : false,
+                async       : true,
+                cache       : false,
+                success     : function(jsonResponse) {
+                    $vic('#victoire-blog-modal').html(jsonResponse.html);
+                }
+            });
+        }).submit();
+    });
 </script>
+
 {% include 'VictoireBlogBundle:Blog:_listItem.html.twig' %}

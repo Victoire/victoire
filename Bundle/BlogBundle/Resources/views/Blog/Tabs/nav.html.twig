@@ -1,8 +1,9 @@
 {% trans_default_domain "victoire" %}
-<ul class="nav nav-tabs" role="tablist">
+
+<ul class="vic-nav vic-nav-tabs vic-modal-nav-tabs">
     {% for tab in tabs %}
-        <li{% if loop.first %} class="active"{% endif %}>
-            <a class="offer-tab-nav-anchor" href="#victoire-blog-{{tab}}" role="tab" data-toggle="tab">
+        <li{% if loop.first %} class="vic-active"{% endif %}>
+            <a class="offer-tab-nav-anchor" href="#victoire-blog-{{tab}}" role="vic-tab" data-toggle="vic-tab">
                 {% spaceless %}
                 <span class="icon victoire-blog-tab-nav-icons victoire-blog-tab-nav-icons-{{ tab }}"></span>
                 {% set label = 'victoire.blog.nav.'~ tab ~ '.label' %}

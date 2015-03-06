@@ -1,6 +1,6 @@
-<div class="tab-content">
+<div class="vic-tab-content vic-modal-tab-content">
     {% for tab in tabs %}
-        <div class="tab-pane{% if loop.first %} active{% endif %}" id="victoire-blog-{{tab}}">
+        <div class="vic-tab-pane{% if loop.first %} vic-active{% endif %}" id="victoire-blog-{{tab}}">
             {# {% include 'VictoireBlogBundle:Blog:_blogItem.html.twig' %} #}
             {{render(controller('VictoireBlogBundle:Blog:' ~ tab, {'id' : blog.id}))}}
         </div>
