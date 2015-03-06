@@ -14,4 +14,4 @@
         formatLoadMore: function (pageNumber) { return "טוען תוצאות נוספות…"; },
         formatSearching: function () { return "מחפש…"; }
     });
-})(jQuery);
+})($vic);

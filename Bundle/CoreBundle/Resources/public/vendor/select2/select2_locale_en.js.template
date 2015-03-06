@@ -1,6 +1,6 @@
 /**
  * Select2 <Language> translation.
- * 
+ *
  * Author: Your Name <your@email>
  */
 (function ($) {
@@ -15,4 +15,4 @@
         formatLoadMore: function (pageNumber) { return "Loading more results…"; },
         formatSearching: function () { return "Searching…"; }
     });
-})(jQuery);
+})($vic);

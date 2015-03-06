@@ -40,4 +40,4 @@
           return "Bilatzen…";
         }
     });
-})(jQuery);
+})($vic);

@@ -12,4 +12,4 @@
         formatLoadMore: function (pageNumber) { return "Sæki fleiri niðurstöður…"; },
         formatSearching: function () { return "Leita…"; }
     });
-})(jQuery);
+})($vic);

@@ -14,4 +14,4 @@
         formatLoadMore: function (pageNumber) { return "تحميل المزيد من النتائج…"; },
         formatSearching: function () { return "البحث…"; }
     });
-})(jQuery);
+})($vic);

@@ -1,6 +1,6 @@
 /**
  * Select2 Greek translation.
- * 
+ *
  * @author  Uriy Efremochkin <efremochkin@uriy.me>
  */
 (function ($) {
@@ -14,4 +14,4 @@
         formatLoadMore: function (pageNumber) { return "Φόρτωση περισσότερων…"; },
         formatSearching: function () { return "Αναζήτηση…"; }
     });
-})(jQuery);
+})($vic);

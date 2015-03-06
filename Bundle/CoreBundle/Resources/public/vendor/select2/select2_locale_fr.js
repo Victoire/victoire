@@ -13,4 +13,4 @@
         formatLoadMore: function (pageNumber) { return "Chargement de résultats supplémentaires…"; },
         formatSearching: function () { return "Recherche en cours…"; }
     });
-})(jQuery);
+})($vic);
