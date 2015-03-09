@@ -46,28 +46,28 @@ class I18nLinkExtension extends BaseLinkExtension
     public function victoireLinkUrl($parameters, $avoidRefresh = true, $url = "#")
     {
         $locale = $this->request->getLocale();
-        $referenceLink = UrlGeneratorInterface::ABSOLUTE_PATH;
+        $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH;
         extract($parameters); //will assign $linkType, $attachedWidget, $routeParameters, $route, $page, $analyticsTrackCode
         switch ($linkType) {
             case 'page':
                 //fallback when a page is deleted cascading the relation as null (page_id = null)
                 if ($page instanceof WebViewInterface) {
                     //avoid to refresh page when not needed
-                    $linkUrl = $this->router->generate('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl()), $referenceLink);
+                    $linkUrl = $this->router->generate('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl()), $referenceType);
                     if ($this->request->getRequestUri() != $linkUrl || !$avoidRefresh) {
                         $url = $linkUrl;
                     }
                 }
                 break;
             case 'route':
-                $url = $this->router->generate($route, $routeParameters, $referenceLink);
+                $url = $this->router->generate($route, $routeParameters, $referenceType);
                 break;
             case 'attachedWidget':
                 //fallback when a widget is deleted cascading the relation as null (widget_id = null)
                 if ($attachedWidget && method_exists($attachedWidget->getView(), 'getUrl')) {
 
                     //create base url
-                    $url = $this->router->generate('victoire_core_page_show', array('_locale'=> $locale, 'url' => $attachedWidget->getView()->getUrl()), $referenceLink);
+                    $url = $this->router->generate('victoire_core_page_show', array('_locale'=> $locale, 'url' => $attachedWidget->getView()->getUrl()), $referenceType);
 
                     //If widget in the same view
                     if (rtrim($this->request->getRequestUri(), '/') == rtrim($url, '/')) {
