@@ -63,28 +63,28 @@ class LinkExtension extends \Twig_Extension
      */
     public function victoireLinkUrl($parameters, $avoidRefresh = true, $url = "#")
     {
-        $referenceLink = UrlGeneratorInterface::ABSOLUTE_PATH;
+        $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH;
         extract($parameters); //will assign $linkType, $attachedWidget, $routeParameters, $route, $page, $analyticsTrackCode
         switch ($linkType) {
             case 'page':
                 //fallback when a page is deleted cascading the relation as null (page_id = null)
                 if ($page && $page instanceof WebViewInterface) {
                     //avoid to refresh page when not needed
-                    $linkUrl = $this->router->generate('victoire_core_page_show', array('url' => $page->getUrl()), $referenceLink);
+                    $linkUrl = $this->router->generate('victoire_core_page_show', array('url' => $page->getUrl()), $referenceType);
                     if ($this->request->getRequestUri() != $linkUrl || !$avoidRefresh) {
                         $url = $linkUrl;
                     }
                 }
                 break;
             case 'route':
-                $url = $this->router->generate($route, $routeParameters, $referenceLink);
+                $url = $this->router->generate($route, $routeParameters, $referenceType);
                 break;
             case 'attachedWidget':
                 //fallback when a widget is deleted cascading the relation as null (widget_id = null)
                 if ($attachedWidget && $attachedWidget->getView() instanceof WebViewInterface) {
 
                     //create base url
-                    $url = $this->router->generate('victoire_core_page_show', array('url' => $attachedWidget->getView()->getUrl()), $referenceLink);
+                    $url = $this->router->generate('victoire_core_page_show', array('url' => $attachedWidget->getView()->getUrl()), $referenceType);
 
                     //If widget in the same view
                     if (rtrim($this->request->getRequestUri(), '/') == rtrim($url, '/')) {
@@ -109,11 +109,11 @@ class LinkExtension extends \Twig_Extension
      */
     public function victoireLink($parameters, $label, $attr = array(), $currentClass = 'active', $url = "#")
     {
-        $referenceLink = UrlGeneratorInterface::ABSOLUTE_PATH;
+        $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH;
         extract($parameters); //will assign $linkType, $attachedWidget, $routeParameters, $route, $page, $analyticsTrackCode
 
         if ($linkType == 'attachedWidget' && $attachedWidget && method_exists($attachedWidget->getView(), 'getUrl')) {
-            $viewUrl = $this->router->generate('victoire_core_page_show', array('url' => $attachedWidget->getView()->getUrl()), $referenceLink);
+            $viewUrl = $this->router->generate('victoire_core_page_show', array('url' => $attachedWidget->getView()->getUrl()), $referenceType);
             if (rtrim($this->request->getRequestUri(), '/') == rtrim($viewUrl, '/')) {
                 $attr["data-scroll"] = "smooth";
             }
