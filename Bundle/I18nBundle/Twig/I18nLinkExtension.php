@@ -4,6 +4,7 @@ namespace Victoire\Bundle\I18nBundle\Twig;
 
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessEntityPageBundle\Helper\BusinessEntityPageHelper;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
@@ -45,27 +46,28 @@ class I18nLinkExtension extends BaseLinkExtension
     public function victoireLinkUrl($parameters, $avoidRefresh = true, $url = "#")
     {
         $locale = $this->request->getLocale();
+        $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH;
         extract($parameters); //will assign $linkType, $attachedWidget, $routeParameters, $route, $page, $analyticsTrackCode
         switch ($linkType) {
             case 'page':
                 //fallback when a page is deleted cascading the relation as null (page_id = null)
                 if ($page instanceof WebViewInterface) {
                     //avoid to refresh page when not needed
-                    $linkUrl = $this->router->generate('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl()));
+                    $linkUrl = $this->router->generate('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl()), $referenceType);
                     if ($this->request->getRequestUri() != $linkUrl || !$avoidRefresh) {
                         $url = $linkUrl;
                     }
                 }
                 break;
             case 'route':
-                $url = $this->router->generate($route, $routeParameters);
+                $url = $this->router->generate($route, $routeParameters, $referenceType);
                 break;
             case 'attachedWidget':
                 //fallback when a widget is deleted cascading the relation as null (widget_id = null)
                 if ($attachedWidget && method_exists($attachedWidget->getView(), 'getUrl')) {
 
                     //create base url
-                    $url = $this->router->generate('victoire_core_page_show', array('_locale'=> $locale, 'url' => $attachedWidget->getView()->getUrl()));
+                    $url = $this->router->generate('victoire_core_page_show', array('_locale'=> $locale, 'url' => $attachedWidget->getView()->getUrl()), $referenceType);
 
                     //If widget in the same view
                     if (rtrim($this->request->getRequestUri(), '/') == rtrim($url, '/')) {
@@ -92,10 +94,11 @@ class I18nLinkExtension extends BaseLinkExtension
     {
 
         $locale = $this->request->getLocale();
+        $referenceLink = UrlGeneratorInterface::ABSOLUTE_PATH;
         extract($parameters); //will assign $linkType, $attachedWidget, $routeParameters, $route, $page, $analyticsTrackCode
 
         if ($linkType == 'attachedWidget' && $attachedWidget && method_exists($attachedWidget->getView(), 'getUrl')) {
-            $viewUrl = $this->router->generate('victoire_core_page_show', array('_locale' => $locale, 'url' => $attachedWidget->getView()->getUrl()));
+            $viewUrl = $this->router->generate('victoire_core_page_show', array('_locale' => $locale, 'url' => $attachedWidget->getView()->getUrl()), $referenceLink);
             if (rtrim($this->request->getRequestUri(), '/') == rtrim($viewUrl, '/')) {
                 $attr["data-scroll"] = "smooth";
             }
