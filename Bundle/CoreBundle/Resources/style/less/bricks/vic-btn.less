@@ -13,6 +13,19 @@
     padding-left: @vicBtn_paddingHorizontal;
     padding-right: @vicBtn_paddingHorizontal;
     .box-sizing(border-box);
+
+
+    &.-square {
+        padding-left: 0;
+        padding-right: 0;
+        width: 40px;
+        height: 40px;
+        text-align: center;
+
+        .fa {
+            margin-right: 0;
+        }
+    }
 }
 
 
@@ -132,4 +145,26 @@
     line-height: 28px;
     font-size: 14px;
     line-height: 18px;
+}
+
+
+// Btn variant
+// ===========
+
+// Framed
+// ------
+
+.vic-btn-danger {
+    &.-framed {
+        color: @vic-btn-default-backgroundColor;
+        border-color: @vic-btn-default-backgroundColor;
+        background-color: transparent;
+
+        &:hover, &.hover, &.vic-hover, &.is-hover, &.-hover, 
+        &:focus, &.focus, &.vic-focus, &.is-focus, &.-focus, 
+        &:active, &.active, &.vic-active, &.is-active, &.-active, {
+            background-color: @vic-btn-default-backgroundColor;
+            color: @white;
+        }
+    }
 }

@@ -1,5 +1,6 @@
-
 {% trans_default_domain "victoire" %}
+{% form_theme form 'VictoireFormBundle:Form:fields.html.twig' %}
+
 <div class="vic-tab-content vic-modal-tab-content">
     {# Only display this business entity property list when related to a business entity #}
     {% if blog.businessEntity is defined %}
@@ -8,25 +9,46 @@
 
     <div class="vic-tab-pane vic-active" id="basics">
         <form method="POST" id="victoire_blog_settings_form" action="{{path('victoire_blog_settings', {'id':blog.id} )}}">
-            <div class="vic-form-group">
-                <div class="vic-col-lg-8">
-                    {{ form_row(form.name) }}
-                    {{ form_row(form.parent) }}
-                    {{ form_row(form.template) }}
+            <div class="vic-row">
+                <div class="vic-col-md-offset-8 vic-col-md-4">
+                    {{ form_row(form.status) }}
+                </div>
+            </div>
 
+            <div class="vic-row">
+                <div class="vic-col-md-6">
+                    {{ form_row(form.name) }}
+                </div>
+
+                <div class="vic-col-md-6">
+                    {{ form_row(form.template) }}
+                </div>
+
+                <div class="vic-col-md-6">
                     <div class="vic-form-group">
-                        <label for="victoire_blog_settings_type_bodyClass" class="vic-control-label control-label vic-optional">
+                        <label for="victoire_blog_settings_type_bodyClass">
                             {{ 'form.blog.type.slug.label'|trans({}, 'victoire') }}
                         </label>
 
-                        <div class="vic-form-url-slug">
-                            {{ url('victoire_core_page_show', {'url' : blog.url })|replace({(blog.slug): ''}) }}
+                        <div class="vic-form-url">
+                            <div class="vic-url">
+                                {{ url('victoire_core_page_show', {'url' : blog.url })|replace({(blog.slug): ''}) }}
+                            </div>
+
                             {{ form_widget(form.slug) }}
                         </div>
                     </div>
                 </div>
-                <div class="vic-col-lg-4">
-                    {{ form_row(form.status) }}
+
+                <div class="vic-col-md-6">
+                    {{ form_row(form.locale) }}
+                </div>
+
+                <div class="vic-col-md-6">
+                    {{ form_row(form.parent) }}
+                </div>
+
+                <div class="vic-col-md-6">
                     <div class="vic-form-group">
                         <div class="publication-date-container{{ form.vars.value.status != constant('Victoire\\Bundle\\PageBundle\\Entity\\PageStatus::SCHEDULED') ? ' vic-hidden' }}">
                             {{ form_widget(form.publishedAt) }}
@@ -34,12 +56,16 @@
                     </div>
                 </div>
 
-            {{form_errors(form)}}
-            {# Add this line to set the widget as rendered to not display it twice in form_rest #}
-            </div>
-            {{ form_rest(form) }}
+                <div class="vic-col-md-6">
+                    {{ form_errors(form) }}
 
-            <button type="submit" href="#" class="vic-btn vic-btn-success" title="{{ ('modal.button.settings.title')|trans({}, 'victoire') }}"><i class="fa fa-check-circle"></i> {{ ('modal.button.settings.title')|trans({}, 'victoire') }}</submit>
+                    {# Add this line to set the widget as rendered to not display it twice in form_rest #}
+                    {{ form_rest(form) }}
+                </div>
+            </div>
+
+
+            <button type="submit" href="#" class="vic-btn vic-btn-success vic-pull-right" title="{{ ('modal.button.settings.title')|trans({}, 'victoire') }}"><i class="fa fa-check-circle"></i> {{ ('modal.button.settings.title')|trans({}, 'victoire') }}</submit>
         </form>
     </div>
 </div>
