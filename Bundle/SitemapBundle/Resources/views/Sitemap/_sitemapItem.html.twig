@@ -12,7 +12,7 @@
 
         {{ form_start(sitemapPriorityForm) }}
 
-        Priorité :
+        {{ 'modal.sitemap.priority.label'|trans({}, 'victoire')}}
         {{ form_widget(sitemapPriorityForm.sitemapPriority, {
             'attr': {
                 'onchange':'$vic(this).parents("form").submit();'
@@ -20,9 +20,9 @@
         }}
         {{ form_end(sitemapPriorityForm) }}
 
-        <a href="#" class="vic-btn vic-btn-danger -square -framed">
-            <i class="fa fa-trash-o"></i>
-        </a>
+        {% if not page.undeletable %}
+            <a href="{{ path('victoire_core_page_delete', {'id': page.id}) }}" data-toggle="vic-confirm" class="vic-btn vic-btn-danger -square -framed" data-title="{{ 'modal.form.page.settings.action.delete.confirm.title'|trans({}, 'victoire') }}" data-body="{{ 'modal.form.page.settings.action.delete.confirm.body'|trans({}, 'victoire') }}" data-modal="delete"><i class="fa fa-trash-o"></i></a>
+        {% endif %}
 
 
     </div>

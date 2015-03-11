@@ -26,6 +26,10 @@
                 <source>sitemap.changedPriority.success</source>
                 <target>Ok commandant ;) Changement de priorité pour la page "%pageName%" éffectué !</target>
             </trans-unit>
+            <trans-unit id="7" resname="modal.sitemap.priority.label">
+                <source>modal.sitemap.priority.label</source>
+                <target>Priorité :</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

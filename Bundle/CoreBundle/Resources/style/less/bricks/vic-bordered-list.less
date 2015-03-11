@@ -2,8 +2,8 @@
     list-style: none;
     padding: 0;
     margin: 0;
-    border: 1px solid red;
-    .border-radius(3px);
+    border: @borderedList_borderWidth solid @borderedList_borderColor;
+    .border-radius(@borderedList_borderRadius);
     overflow: hidden;
 
     ul& {
@@ -30,10 +30,10 @@
             content: "";
             position: absolute;
             top: @borderedList-item_height;
-            height: 1px;
+            height: @borderedList_borderWidth;
             left: 0;
             right: 0;
-            background-color: red;
+            background-color: @borderedList_borderColor;
         }
 
         &.-lastitem {
