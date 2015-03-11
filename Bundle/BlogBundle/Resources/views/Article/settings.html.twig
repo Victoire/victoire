@@ -1,37 +1,63 @@
 {% extends 'VictoireBlogBundle:Article:new.html.twig' %}
-
 {% trans_default_domain "victoire" %}
 
 {% block modal_body_content %}
-
 <div class="vic-tab-content vic-modal-tab-content">
-
     <div class="vic-tab-pane vic-active" id="basics">
         <form method="POST" action="{{path('victoire_blog_article_settings', {'id': article.id} )}}">
-            <div class="vic-form-group">
-                <div class="vic-col-lg-8">
+            <div class="vic-row">
+                <div class="vic-col-md-4">
                     {{ form_row(form.name) }}
-                    {{ form_row(form.pattern) }}
-                    <div class="vic-form-group">
-                         <label for="victoire_article_settings_type_bodyClass" class="vic-control-label control-label vic-optional">
-                            {{ 'form.page.type.slug.label'|trans({}, 'victoire') }}
-                         </label>
 
-                        <div class="vic-form-url-slug">
-                            {{ form_widget(form.slug) }}
-                        </div>
-                    </div>
+                    {{ form_row(form.image) }}
                 </div>
-                <div class="vic-col-lg-4">
-                    {{ form_row(form.status) }}
-                    <div class="vic-form-group">
-                        <div class="publication-date-container{{ form.vars.value.status != constant('Victoire\\Bundle\\BlogBundle\\Entity\\Article::SCHEDULED') ? ' vic-hidden' }}">
-                            {{ form_widget(form.publishedAt) }}
+
+                <div class="vic-col-md-8">
+                    <div class="vic-row">
+                        <div class="vic-col-md-6">
+                            {{ form_row(form.pattern) }}
+                        </div>
+
+                        <div class="vic-col-md-6">
+                            {{ form_row(form.status) }}
+                        </div>
+
+                        <div class="vic-col-md-6">
+                            <div class="vic-form-group">
+                                 <label for="victoire_article_settings_type_bodyClass">
+                                    {{ 'form.page.type.slug.label'|trans({}, 'victoire') }}
+                                 </label>
+
+                                {{ form_widget(form.slug) }}
+                            </div>
+                        </div>
+
+                        <div class="vic-col-md-6">
+                            {{ form_row(form.visibleOnFront) }}
+                        </div>
+
+                        <div class="vic-col-md-6" id="vic-blog-article-setting-description">
+                            {{ form_row(form.description) }}
+                        </div>
+
+                        <div class="vic-col-md-6">
+                            {{ form_row(form.category) }}
+
+                            {{ form_row(form.tags) }}
+
+                            <div class="vic-form-group">
+                                <div class="publication-date-container{{ form.vars.value.status != constant('Victoire\\Bundle\\BlogBundle\\Entity\\Article::SCHEDULED') ? ' vic-hidden' }}">
+                                    {{ form_widget(form.publishedAt) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="vic-col-md-6">
+                            {{ form_rest(form) }}
                         </div>
                     </div>
                 </div>
             </div>
-            {{ form_rest(form) }}
         </form>
     </div>
 </div>
