@@ -1,0 +1,50 @@
+.map-line {
+    height: @borderedList-item_height - (@borderedList-item_padding * 2);
+    overflow: hidden;
+    color: @grey_dark;
+    .display(flex);
+    .align-items(center);
+
+    .title {
+        .flex(1 1 0);
+        color: @grey_dark;
+
+        &:hover, &.hover, &.vic-hover, &.-hover, &.-vic-hover,
+        &:active, &.active, &.vic-active, &.-active, &.-vic-active,
+        &:focus, &.focus, &.vic-focus, &.-focus, &.-vic-focus {
+            color: darken(@grey_dark, 20%);
+        }
+    }
+
+    * {
+        + * {
+            margin-left: 10px;
+        }
+    }
+
+    img {
+        cursor: move;
+    }
+
+    form {
+        margin-right: 40px + @borderedList-item_height - (@borderedList-item_padding * 2);
+    }
+
+    .vic-btn {
+        margin-left: (@borderedList-item_height - (@borderedList-item_padding * 2)) * -1;
+
+        &.-square {
+            height: @borderedList-item_height - (@borderedList-item_padding * 2);
+            line-height: @borderedList-item_height - (@borderedList-item_padding * 2);
+            width: @borderedList-item_height - (@borderedList-item_padding * 2);
+        }
+    }
+
+    select {
+        &.form-control {
+            height: @borderedList-item_height - (@borderedList-item_padding * 2);
+            margin: 0;
+            vertical-align: initial;
+        }
+    }
+}
