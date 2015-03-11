@@ -1,23 +1,38 @@
-<li id="page-{{ page.id }}">
-    <div>
-        <a 
-            href="{{ path('victoire_core_page_show', {'url': page.url}) }}"
-            title="{{ 'sitemap.goto'|trans({'%pageName%': page.name}, 'victoire') }}">
+<li class="item -level{{ level }}{% if page.children|length %} -subcontainer{% endif %}" id="page-{{ page.id }}">
+    <div class="map-line">
+        {% spaceless %}
+        <img src="{{ asset('bundles/victoirecore/images/move_cross.png') }}" height="20">
+
+        <a class="title" href="{{ path('victoire_core_page_show', {'url': page.url}) }}" title="{{ 'sitemap.goto'|trans({'%pageName%': page.name}, 'victoire') }}">
             {{ page.name }}
         </a>
+        {% endspaceless %}
+
         {% set sitemapPriorityForm = attribute(forms, page.id) %}
+
         {{ form_start(sitemapPriorityForm) }}
+
+        Priorité :
         {{ form_widget(sitemapPriorityForm.sitemapPriority, {
             'attr': {
                 'onchange':'$vic(this).parents("form").submit();'
-            }}) }}
-        {{ form_end(sitemapPriorityForm) }}&nbsp;&nbsp;<span id="form-save-notice-{{ page.id }}" class="fa fa-save vic-text-green" style="display:none;"></span>
-        {% if page.children %}
-        <ul>
-            {% for _page in page.children %}
-                {% include 'VictoireSitemapBundle:Sitemap:_sitemapItem.html.twig' with {'page': _page} %}
-            {% endfor %}
-        </ul>
-        {% endif %}
+            }})
+        }}
+        {{ form_end(sitemapPriorityForm) }}
+
+        <a href="#" class="vic-btn vic-btn-danger -square -framed">
+            <i class="fa fa-trash-o"></i>
+        </a>
+
+
     </div>
+
+    {% if page.children|length %}
+    <ul class="sublist">
+        {% set level = level + 1 %}
+        {% for _page in page.children %}
+        {% include 'VictoireSitemapBundle:Sitemap:_sitemapItem.html.twig' with {'page': _page, 'level': level} %}
+        {% endfor %}
+    </ul>
+    {% endif %}
 </li>

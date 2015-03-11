@@ -7,15 +7,22 @@
 {% block modal_header_title %}
 {{ 'modal.sitemap.title'|trans({}, 'victoire')}}
 {% endblock modal_header_title %}
+
 {% block modal_body_content %}
 <div class="vic-alert vic-alert-info">
     <i class="fa fa-info"></i>&nbsp;&nbsp;{{ 'modal.sitemap.caption'|trans({}, 'victoire') }}
 </div>
-<ul id="sortable">
+
+<ul class="vic-bordered-list" id="sortable">
     {% for _page in pages %}
+        {% set level = 0 %}
         {% include 'VictoireSitemapBundle:Sitemap:_sitemapItem.html.twig' with {'page': _page} %}
     {% endfor %}
 </ul>
+
+
+
+
 <script>
     $vic(document).ready(function () {
         $vic('#sortable').nestedSortable({

@@ -1,0 +1,62 @@
+.vic-bordered-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid red;
+    .border-radius(3px);
+    overflow: hidden;
+
+    ul& {
+        &,
+        ul {
+            list-style: none;
+        }
+    }
+
+    .item {
+        position: relative;
+        padding-top: @borderedList-item_padding;
+        padding-bottom: @borderedList-item_padding;
+        padding-right: @borderedList-item_padding;
+        padding-left: @borderedList-item_padding;
+        line-height: @borderedList-item_height - (@borderedList-item_padding * 2);
+        .loop(6);
+
+        &.-subcontainer {
+            padding-bottom: 0;
+        }
+
+        &:after {
+            content: "";
+            position: absolute;
+            top: @borderedList-item_height;
+            height: 1px;
+            left: 0;
+            right: 0;
+            background-color: red;
+        }
+
+        &.-lastitem {
+            &:after {
+                content: none;
+            }
+        }
+    }
+
+    .sublist {
+        padding-top: @borderedList-item_padding;
+    }
+}
+
+.loop(@counter) when (@counter > 0) {
+    .loop((@counter - 1));
+
+    &.-level@{counter} {
+        margin-right: @borderedList-item_padding * -1;
+
+        &:after {
+            left: ((@counter * @borderedList-item_height) + (@counter * @borderedList-item_padding)) * -1;
+            right: 0;
+        }
+    }
+}
