@@ -12,7 +12,8 @@
             <div class="vic-panelBlog-image" {% if article.image %}style="background-image: url({{ article.image.url }});"{% endif %}>
                 <span class="vic-panelBlog-badge -{{ article.status }}">
                     <span class="vic-panelBlog-badge-popover">
-                        {{ 'modal.blog.list.articlesList.status.' ~ article.status |trans }}
+                        {% set transKey = 'modal.blog.list.articlesList.status.' ~ article.status %}
+                        {{ transKey |trans }}
                     </span>
                 </span>
             </div>

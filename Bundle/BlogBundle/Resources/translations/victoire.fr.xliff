@@ -178,6 +178,10 @@
         <source>modal.blog.list.articlesList.status.scheduled</source>
         <target>Planifié</target>
       </trans-unit>
+      <trans-unit id="38" resname="form.blog.type.slug.label">
+        <source>form.blog.type.slug.label</source>
+        <target>URL</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

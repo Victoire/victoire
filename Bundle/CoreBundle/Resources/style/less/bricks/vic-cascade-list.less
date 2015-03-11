@@ -1,0 +1,27 @@
+.vic-cascade-list {
+    overflow: hidden;
+    padding: 0;
+    margin-top: @cascadeList_gutterSize / 2 * -1;
+    margin-bottom: @cascadeList_gutterSize / 2 * -1;
+    margin-left: 0;
+    margin-right: 0;
+
+    .vic-item {
+        margin-left: @cascadeList_gutterSize / 2 * -1;
+        margin-right: @cascadeList_gutterSize / 2 * -1;
+
+        > * {
+            margin: @cascadeList_gutterSize / 2;
+            float: left;
+        }
+
+        > .vic-cascade-sublist {
+            margin: 0
+        }
+    }
+}
+
+.vic-cascade-sublist {
+    width: 100%;
+    padding-left: @cascadeSublist_paddingLeft;
+}
