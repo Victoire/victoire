@@ -11,8 +11,9 @@
             </div>
 
             <div id="vic-login-form">
-                {% block fos_user_content %}
-                {% endblock %}
+                {% block fos_user_form_start %}{% endblock %}
+                {% block fos_user_content %}{% endblock %}
+                {% block fos_user_form_end %}{% endblock %}
             </div>
         </div>
 

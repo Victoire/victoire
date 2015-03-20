@@ -25,9 +25,7 @@ trait VictoireSubContextTrait
     {
         return array(
             new Step\Given('I am on "/login"'),
-            new Step\Then('I should see "Se souvenir de moi"'),
             new Step\When('I fill in "username" with "'.$username.'"'),
-            new Step\When('I fill in "password" with "'.$password.'"'),
             new Step\When('I press "_submit"'),
         );
     }

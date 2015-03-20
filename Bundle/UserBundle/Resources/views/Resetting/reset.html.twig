@@ -2,16 +2,10 @@
 
 {% trans_default_domain 'FOSUserBundle' %}
 
-{% block modal_header %}
-    <h1 class="modal-title" id="myModalLabel">Réinitialiser son mot de passe</h1>
-{% endblock modal_header %}
-
-{% block fos_user_form_start %}
-    <form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST" class="fos_user_resetting_reset">
-{% endblock fos_user_form_start %}
-
 {% block fos_user_content %}
+<form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST" class="fos_user_resetting_reset">
 {% include "FOSUserBundle:Resetting:reset_content.html.twig" %}
+</form>
 {% endblock fos_user_content %}
 
 {% block modal_footer %}

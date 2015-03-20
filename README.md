@@ -39,14 +39,15 @@ Composant | Description
 
 * Read the [setup guide](http://github.com/victoire/victoire/blob/master/setup.md)
 
-[![Licence Creative Commons](http://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-nd/4.0/)
+[![Licence Creative Commons](http://i.creativecommons.org/l/by/4.0/88x31.png)](http://creativecommons.org/licenses/by/4.0/)
+
 
 [![Documentation Status](https://readthedocs.org/projects/victoiredcms/badge/?version=latest)](https://readthedocs.org/projects/victoiredcms/?badge=latest) [![Travis-ci](https://travis-ci.org/Victoire/victoire.svg?branch=master)](https://travis-ci.org/Victoire/victoire) [![SensioLabsInsight](https://insight.sensiolabs.com/projects/d5307bf2-eac4-43db-bd49-dd9e85e360a5/mini.png)](https://insight.sensiolabs.com/projects/d5307bf2-eac4-43db-bd49-dd9e85e360a5)[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Victoire/victoire/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Victoire/victoire/?branch=master)
 
 
 
 
-Cette œuvre est mise à disposition selon les termes de la Licence Creative Commons Attribution - Pas d'Utilisation Commerciale - Pas de Modification 4.0 International.
+Cette œuvre est mise à disposition selon les termes de la Licence Creative Commons Attribution 4.0 International.
 
 *Proprieté d'AppVentus, tous droits réservés - Property of AppVentus, All Right reserved*
 

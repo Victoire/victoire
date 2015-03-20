@@ -1,17 +1,28 @@
-{% trans_default_domain "FOSUserBundle" %}
-
 {% extends "FOSUserBundle::layout.html.twig" %}
 
-{% block modal_header %}
-    <h1 class="modal-title" id="myModalLabel">Réinitialiser son mot de passe</h1>
-{% endblock modal_header %}
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block meta %}<title>{{ 'victoire.reset.request.title'|trans({}, 'victoire') }}</title>{% endblock meta %}
+{% block container_class %}vic-login{% endblock container_class %}
+{% block head_style %}
+    {% stylesheets filter='less, cssrewrite' injector="victoire-edit"
+    %}
+        <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+    {% endstylesheets %}
+{% endblock head_style %}
+
 {% block fos_user_form_start %}
     <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
 {% endblock fos_user_form_start %}
 
 {% block fos_user_content %}
+<h1 class="vic-h4 vic-text-center" style="color: white;">{{ 'victoire.reset.request.title'|trans({}, 'victoire') }}</h1>
 {% include "FOSUserBundle:Resetting:request_content.html.twig" %}
 {% endblock fos_user_content %}
+
+{% block fos_user_form_end %}
+    </form>
+{% endblock fos_user_form_end %}
 
 {% block modal_footer %}
     <input type="submit" class="btn btn-info btn-block" value="{{ 'resetting.request.submit'|trans }}" />

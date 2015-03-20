@@ -1,9 +1,27 @@
-{% extends "FOSUserBundle::alertLayout.html.twig" %}
+{% extends "FOSUserBundle::layout.html.twig" %}
 
 {% trans_default_domain 'FOSUserBundle' %}
 
+{% block meta %}<title>{{ 'victoire.reset.request.title'|trans({}, 'victoire') }}</title>{% endblock meta %}
+{% block container_class %}vic-login{% endblock container_class %}
+{% block head_style %}
+    {% stylesheets filter='less, cssrewrite' injector="victoire-edit"
+    %}
+        <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+    {% endstylesheets %}
+{% endblock head_style %}
+
 {% block fos_user_content %}
-<p>
-{{ 'resetting.check_email'|trans({'%email%': email}) }}
-</p>
-{% endblock %}
+<div class="vic-form-group">
+    <div style="border: 2px solid white; border-radius: 4px; color: white; padding: 15px" data-dev="static">
+    {{ 'resetting.check_email'|trans({'%email%': email}) }}
+    </div>
+</div>
+
+<div class="vic-form-group -vic-login vic-text-center">
+    <a class="vic-btn vic-btn-success vic-btn-block -vic-login" href="{{ path('fos_user_security_login') }}">
+        {{ 'victoire.login.link.label'|trans({}, 'victoire') }}
+    </a>
+</div>
+
+{% endblock fos_user_content %}

@@ -156,7 +156,7 @@
       </trans-unit>
       <trans-unit id="13" resname="victoire.login.mail.label">
         <source>victoire.login.mail.label</source>
-        <target>Addresse email</target>
+        <target>Adresse email</target>
       </trans-unit>
       <trans-unit id="14" resname="victoire.login.password.label">
         <source>victoire.login.password.label</source>
@@ -165,6 +165,26 @@
       <trans-unit id="15" resname="victoire.theme.default.label">
         <source>victoire.theme.default.label</source>
         <target>Standard</target>
+      </trans-unit>
+      <trans-unit id="16" resname="victoire.login.submit.label">
+        <source>victoire.login.submit.label</source>
+        <target>Embarquer</target>
+      </trans-unit>
+      <trans-unit id="17" resname="victoire.reset.request.title">
+        <source>victoire.reset.request.title</source>
+        <target>Réinitialisation du mot de passe</target>
+      </trans-unit>
+      <trans-unit id="18" resname="victoire.reset.request.submit.label">
+        <source>victoire.reset.request.submit.label</source>
+        <target>Continuer</target>
+      </trans-unit>
+      <trans-unit id="19" resname="victoire.login.link.label">
+        <source>victoire.login.link.label</source>
+        <target>Se connecter</target>
+      </trans-unit>
+      <trans-unit id="19" resname="victoire.login.meta.title">
+        <source>victoire.login.meta.title</source>
+        <target>Embarquement imminent</target>
       </trans-unit>
     </body>
   </file>
