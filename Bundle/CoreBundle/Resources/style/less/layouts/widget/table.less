@@ -1,0 +1,103 @@
+.vic-table-square {
+    height: 40px;
+    margin: 1px;
+    .flex(1 1 0);
+    border-width: 1px;
+    border-style: solid;
+    border-color: transparent;
+
+    & > & {
+        margin: 0;
+        border-width: 0;
+    }
+
+    &.-field {
+        font-weight: bold;
+    }
+
+    &.-action {
+        text-align: center;
+    }
+
+
+    &.vic-table-square-placeholder {
+        border-width: 1px;
+        border-style: dotted;
+        .box-shadow(0 0 0px 3.5px @green);
+        background-color: @green;
+    }
+
+    .form-group,
+    .vic-form-group {
+        margin-bottom: 0;
+    }
+
+    .form-control,
+    .vic-form-control {
+        .border-radius(0) !important;
+        border-width: 0 !important;
+        .box-shadow(none);
+        height: 40px - (1px * 2);
+
+        &:hover, &.hover, &.-hover,
+        &:active, &.active, &.-active,
+        &:focus, &.focus, &.-focus {
+            outline: 0;
+            .box-shadow(0 0 0px 3.5px @blue) !important;
+        }
+    }
+}
+
+.vic-table-row {
+    padding-left: 0px;
+    list-style: none;
+    .display(flex);
+}
+
+.table-btn {
+    background-color: fade(@anthracite, 10%);
+    height: 100%;
+    width: 100%;
+    display: block;
+    border-width: 0;
+    padding: 0;
+    .box-shadow(0);
+    .transition(all 200ms ease);
+
+    &:hover, &.hover, &.-hover,
+    &:active, &.active, &.-active,
+    &:focus, &.focus, &.-focus {
+        outline: 0;
+        .box-shadow(0 0 0px 3.5px @green);
+
+        &.-remove {
+            .box-shadow(0 0 0px 3.5px @red);
+        }
+    }
+}
+
+
+ul {
+    &.table {
+        padding-left: 0px;
+        list-style: none;
+    }
+}
+
+li {
+
+}
+
+
+
+#table {
+    background-color: lighten(@anthracite, 70%);
+    padding: 3px;
+
+    .checkbox {
+        .customCheckbox {
+            display: block;
+            margin-top: -35px;
+        }
+    }
+}
