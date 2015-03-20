@@ -47,7 +47,7 @@ Composant | Description
 
 
 
-Cette œuvre est mise à disposition selon les termes de la Licence Creative Commons Attribution - Pas d'Utilisation Commerciale - Pas de Modification 4.0 International.
+Cette œuvre est mise à disposition selon les termes de la Licence Creative Commons Attribution 4.0 International.
 
 *Proprieté d'AppVentus, tous droits réservés - Property of AppVentus, All Right reserved*
 
