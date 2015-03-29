@@ -1,20 +1,20 @@
 Victoire\Bundle\TemplateBundle\Entity\Template:
     template_base:
         layout: fullWidth
-        author: @admin
-        name: Modèle de base
+        author: @anakin
+        name: Full width
         locale: fr
         slug: base
         undeletable: true
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
-    template_home:
-        layout: home
+    two_cols:
+        layout: two_cols
         template: @template_base
-        author: @admin
-        name: Modèle de page d'accueil
+        author: @anakin
+        name: Two columns
         locale: fr
-        slug: home
+        slug: two_cols
         undeletable: true
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>

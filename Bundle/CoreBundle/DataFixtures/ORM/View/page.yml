@@ -1,7 +1,7 @@
 Victoire\Bundle\PageBundle\Entity\Page:
     home:
-        template: @template_home
-        author: @admin
+        template: @template_base
+        author: @anakin
         name: Page d'accueil
         locale: fr
         slug: home
