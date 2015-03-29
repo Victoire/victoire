@@ -2,7 +2,7 @@
 Feature: Create a widget at first position
 
 Background:
-    Given I am logged in as "paul@appventus.com"
+    Given I am logged in as "anakin@victoire.io"
 
 Scenario: Create a widget at first position
     Then I switch to "layout" mode

@@ -2,39 +2,32 @@
 
 ##Overview
 
-Basé sur **Symfony2**, le coeur de Victoire (**VictoireCoreBundle**) pose les bases du DCMS et peut s'installer dans n'importe quel projet Symfony2 en quelques minutes.
+Based on **Symfony2**, the Victoire core (**VictoireCoreBundle**) settle the DCMS basics and can be setup in any symfony2 project in just some few minutes.
 
-L'enjeu principal est de permettre au client final de pouvoir **créer**/**modifier**/**supprimer** chaque contenu présent sur son site, autant pour un contenu dit static que pour du contenu basé sur ses objets métiers et **sans avoir la moindre compétence en développement** et avec le minimum de formation possible.
-
-Par son approche **modulaire**, VictoireDCMS mise sur son éco-système à base de **widgets**, qui devient de plus en plus riche à mesure que le nombre de projets réalisés augmente car au delà de l'enjeu principal, VictoireDCMS doit permettre de réutiliser les mêmes widgets d'un projet à un autre même pour des logiques métiers totalement différentes.
-
-
+The main goal is to give to the final customer the ability to **create**/**edit**/**delete** each content on its website, even for a static content than a business entity based content and **whitout any skill in development** and with the minimum of training.
 
 ##What's inside?
 
-Victoire est composé de plusieurs composants lui permettant de fonctionner :
-
-
-Composant | Description
+Component | Description
 ------------ | -------------
-[**BlogBundle**][2] | Permet de créer et gérer un ou plusieurs blog
-[**BusinessEntityBundle**][3] | Gère ce qui a à trait aux entités métiers façon Victoire
-[**BusinessEntityPageBundle**][4] | Défini et gère les pages de type [BusinessEntityPage][18] et [BusinessEntityPagePattern][19
-[**CoreBundle**][1] | Responsable de la définition de l'architecture et comprenant la logique de base
-[**DashboardBundle**][5] | Responsable d'accueillir l'utilisateur après l'installation d'un nouveau projet
-[**FormBundle**][6] | Amène le thème des formulaires Victoire (basé sur MopaBootstrapBundle) theme
-[**MediaBundle**][7] | Basé sur KunstmaanMediaBundle, il offre une interface de gestion des fichiers d'un site et est une passerelle avec les widgets
-[**PageBundle**][8] | Un des bundles les plus importants, il est responsable des pages de bases
-[**QueryBundle**][9] | Contient la logique permettant à tout objet de récupérer des entités métiers
-[**SitemapBundle**][20] | Contient toute la logique permettant de gérer et générer un plan du site
-[**SeoBundle**][10] | Plus rien ne vous fait peur en terme de SEO. Ce bundle, apporte ce qu'il faut pour définir la sémantique d'une vue et ses détails de reférencement
-[**TemplateBundle**][11] | Que serais-je le monde sans patrons ! Ce bundle apporte la structure pour encadrer les patrons comme il se doivent de l'être
-[**TestsBundle**][12] | Contient l'ensemble des contextes et tests Behat
-[**TwigBundle**][13] | Apporte ce qu'il faut pour offrir de la flexibilité même pour les pages d'erreur (selon code apache 404, 500, 503 etc ) et d'autres fonctionnalités propres à Twig
-[**UserBundle**][14] | Hérite de FosUserBundle, ce bundle offre un système d'utilisateurs prêt à l'emploi
-[**WidgetBundle**][15] | Composant omniprésent dans Victoire, il s'occupe de tout ce qui à trait aux base des widgets, de la définition à l'affichage en passant par les formulaires de création et modifications multi-mode
-[**WidgetMapBundle**][16] | Contient la logique pour la gestion des widgetsMaps, éléments importants dans l'architecture des vues
-[**I18nBundle**][17] | Composant gérant l'internationalisation
+[**BlogBundle**][2] | Allow to create and manage one or several blog
+[**BusinessEntityBundle**][3] | Manage BusinessEntity
+[**BusinessEntityPageBundle**][4] | Define and manage [BusinessEntityPage][18] and [BusinessEntityPagePattern][19
+[**CoreBundle**][1] | The core
+[**DashboardBundle**][5] | Welcome the user after the project setup
+[**FormBundle**][6] | Based on MopaBootstrapBundle, it brings some cool form themes
+[**MediaBundle**][7] | Based on KunstmaanMediaBundle, it offers a file management interface and a bridge to the widgets
+[**PageBundle**][8] | One of the most important bundles, it contains all the base page logic
+[**QueryBundle**][9] | Give the possibility to non technical user to build a query
+[**SitemapBundle**][20] | Sitemap related logic
+[**SeoBundle**][10] | This bundle brings to user about than 50 SEO points
+[**TemplateBundle**][11] | Contains the pages templates logic (nearly close to PageBundle)
+[**TestsBundle**][12] | Contains the full tests files (behat)
+[**TwigBundle**][13] | Brings ErrorPage (404, 500, 503 etc) and responsive support
+[**UserBundle**][14] | Extends FosUserBundle, this bundle brings a ready to use system you can override
+[**WidgetBundle**][15] | Contains all the base widget logic to be able to use Widgets
+[**WidgetMapBundle**][16] | Each view has a widget map, this bundle contains all the widget maps logic 
+[**I18nBundle**][17] | This bundle manage the internationalization system
 
 
 * Read the [setup guide](http://github.com/victoire/victoire/blob/master/setup.md)
