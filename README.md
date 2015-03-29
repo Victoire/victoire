@@ -1,10 +1,11 @@
-# Victoire DCMS
+# Victoire
 
 ##Overview
 
-Based on **Symfony2**, the Victoire core (**VictoireCoreBundle**) settle the DCMS basics and can be setup in any symfony2 project in just some few minutes.
+Victoire is a **Symfony2** overlay integrating a business aware cms and a large panel of web marketing tools.
+It can be setup in any symfony2 project in just some few minutes.
 
-The main goal is to give to the final customer the ability to **create**/**edit**/**delete** each content on its website, even for a static content than a business entity based content and **whitout any skill in development** and with the minimum of training.
+The main goal is to give to the final customer the ability to **create**/**edit**/**delete** each content on its website, even for a static content than a business entity based content and **whitout any development skill** and with the minimum of training.
 
 ##What's inside?
 
