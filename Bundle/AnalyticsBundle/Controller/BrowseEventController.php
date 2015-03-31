@@ -18,7 +18,7 @@ class BrowseEventController extends Controller
      * @Route("/track/{viewReferenceId}/{referer}", name="victoire_analytics_track")
      * @Template()
      */
-    public function trackAction(Request $request, $viewReferenceId, $referer)
+    public function trackAction(Request $request, $viewReferenceId, $referer = null)
     {
         $browseEvent = new BrowseEvent();
         $browseEvent->setViewReferenceId($viewReferenceId);
