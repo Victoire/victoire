@@ -1,24 +1,41 @@
 {% trans_default_domain "victoire" %}
 
 <div class="vic-container">
-    <div  style='margin-bottom: 15px;'>
+    <div style='margin-bottom: 15px;'>
+        {% spaceless %}
         <a data-toggle="vic-modal" href="{{ path('victoire_businessentitypagepattern_businessentitypagepattern_new', {'id': businessEntity.getId}) }}">
-            <i class="fa fa-plus-square">{{ 'list.action.add'|trans }}</i>
-	    </a>
+            <i class="fa fa-plus-square"></i>
+
+            {{ 'list.action.add'|trans }}
+        </a>
+        {% endspaceless %}
     </div>
-    {%  for pagePattern in businessEntityPagePatterns %}
+
+    {% for pagePattern in businessEntityPagePatterns %}
     <div>
+        {% spaceless %}
         <a data-toggle="vic-modal"  href="{{ path('victoire_businessentitypagepattern_businessentitypagepattern_edit', {'id': pagePattern.getId}) }}">
-	        <i class="fa fa-pencil-square-o">{{ 'list.action.edit'|trans }}</i>
-	    </a>
-	    <a data-toggle="vic-modal"  href="{{ path('victoire_businessentitypagepattern_businessentitypagepattern_listentities', {'id': pagePattern.getId}) }}">
-	        <i class="fa fa-list">{{ 'list.action.list'|trans }}</i>
-	    </a>
-	    <span style='margin-left: 15px'>
+            <i class="fa fa-pencil-square-o"></i>
+
+            {{ 'list.action.edit'|trans }}
+        </a>
+        {% endspaceless %}
+
+        {% spaceless %}
+        <a data-toggle="vic-modal"  href="{{ path('victoire_businessentitypagepattern_businessentitypagepattern_listentities', {'id': pagePattern.getId}) }}">
+            <i class="fa fa-list"></i>
+
+            {{ 'list.action.list'|trans }}
+        </a>
+        {% endspaceless %}
+
+        {% spaceless %}
+        <span style='margin-left: 15px'>
             <a href="{{ path('victoire_core_page_show', {'url' : pagePattern.getUrl}) }}">
                 {{ pagePattern.getName }}
-    	    </a>
-	    </span>
+            </a>
+        </span>
+        {% endspaceless %}
     </div>
     {% endfor %}
 </div>
