@@ -1,13 +1,26 @@
 {% trans_default_domain "victoire" %}
 
-<div style='margin-bottom: 15px;'>
-    {% spaceless %}
-    <a class="vic-btn vic-btn-success" data-toggle="vic-modal" href="{{ path('victoire_businessentitypagepattern_businessentitypagepattern_new', {'id': businessEntity.getId}) }}">
-        <i class="fa fa-plus-square"></i>
+<div class="vic-businessentity-list-header">
+    <div class="vic-row">
+        <div class="vic-col-sm-6">
+            {% spaceless %}
+            <h1 class="vic-businessentity-list-heading">
+                Liste des représentations de l’objet métier "{{ businessEntity.getName }}"
+            </h1>
+            {% endspaceless %}
+        </div>
 
-        {{ 'list.action.add'|trans }}
-    </a>
-    {% endspaceless %}
+        <div class="vic-col-sm-6 vic-text-right">
+            {% spaceless %}
+            <a class="vic-btn vic-btn-success" data-toggle="vic-modal" href="{{ path('victoire_businessentitypagepattern_businessentitypagepattern_new', {'id': businessEntity.getId}) }}">
+                <i class="fa fa-plus-square"></i>
+
+                {{ 'list.action.add'|trans }}
+            </a>
+            {% endspaceless %}
+        </div>
+    </div>
+
 </div>
 
 <ul class="vic-bordered-list">
