@@ -16,7 +16,7 @@
       </trans-unit>
       <trans-unit id="f6caec6dabceeba3182322b3466fcafa8d8f51ab" resname="list.action.add">
         <source>list.action.add</source>
-        <target>Ajouter une représentation métier</target>
+        <target>Ajouter une représentation</target>
       </trans-unit>
       <trans-unit id="fb1d64fdeabb5f2fe1671d4f3fb72ccca7722ed3" resname="list.action.edit">
         <source>list.action.edit</source>
