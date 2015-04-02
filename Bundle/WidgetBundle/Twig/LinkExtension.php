@@ -153,7 +153,13 @@ class LinkExtension extends \Twig_Extension
         //Creates a new twig environment
         $twigEnv = new \Twig_Environment(new \Twig_Loader_String());
 
-        return $twigEnv->render('{{ link|raw }}', array('link' => '<a href="'.$url.'" '.implode($attributes, ' ').'>'.$label.'</a>'));
+        $link = '<a href="' . $url . '" ' . implode($attributes, ' ') . '>' . $label . '</a>';
+
+        if ($url == '') {
+            $link = '<span>' . $label . '</span>';
+        }
+
+        return $twigEnv->render('{{ link|raw }}', array('link' => $link));
     }
 
     /**
