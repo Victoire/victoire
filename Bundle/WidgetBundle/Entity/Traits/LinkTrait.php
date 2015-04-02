@@ -12,30 +12,38 @@ use Symfony\Component\Validator\ExecutionContextInterface;
  */
 trait LinkTrait
 {
+    /**
+     * @ORM\OneToOne(targetEntity="Victoire\Bundle\CoreBundle\Entity\Link")
+     **/
+    protected $link;
 
     /**
      * @var string
      *
      * @ORM\Column(name="url", type="string", length=255, nullable=true)
+     * @deprecated please run the victoire:legacy:linkMigrator command
      */
     protected $url;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="target", type="string", length=10)
+     * @ORM\Column(name="target", type="string", length=10, nullable=true)
+     * @deprecated please run the victoire:legacy:linkMigrator command
      */
     protected $target;
 
     /**
      * @ORM\ManyToOne(targetEntity="Victoire\Bundle\PageBundle\Entity\BasePage")
      * @ORM\JoinColumn(name="attached_page_id", referencedColumnName="id", onDelete="cascade", nullable=true)
+     * @deprecated please run the victoire:legacy:linkMigrator command
      */
     protected $page;
 
     /**
      * @ORM\ManyToOne(targetEntity="Victoire\Bundle\WidgetBundle\Entity\Widget")
      * @ORM\JoinColumn(name="attached_widget_id", referencedColumnName="id", onDelete="cascade", nullable=true)
+     * @deprecated please run the victoire:legacy:linkMigrator command
      */
     protected $attachedWidget;
 
@@ -43,6 +51,7 @@ trait LinkTrait
      * @var string
      *
      * @ORM\Column(name="route", type="string", length=55, nullable=true)
+     * @deprecated please run the victoire:legacy:linkMigrator command
      */
     protected $route;
 
@@ -50,13 +59,15 @@ trait LinkTrait
      * @var string
      *
      * @ORM\Column(name="route_parameters", type="array", nullable=true)
+     * @deprecated please run the victoire:legacy:linkMigrator command
      */
     protected $routeParameters = array();
 
     /**
      * @var string
      *
-     * @ORM\Column(name="link_type", type="string", length=255)
+     * @ORM\Column(name="link_type", type="string", length=255, nullable=true)
+     * @deprecated please run the victoire:legacy:linkMigrator command
      */
     protected $linkType;
 
@@ -64,23 +75,20 @@ trait LinkTrait
      * @var string
      *
      * @ORM\Column(name="analytics_track_code", type="text", nullable=true)
+     * @deprecated please run the victoire:legacy:linkMigrator command
      */
     protected $analyticsTrackCode;
 
     protected $linkParameters;
 
+    /**
+     *
+     * @deprecated please run the victoire:legacy:linkMigrator command
+     * @deprecated please run the victoire:legacy:linkMigrator command
+     */
     public function getLinkParameters()
     {
-        return $this->linkParameters = array(
-            'linkType'           => $this->linkType,
-            'url'                => $this->url,
-            'page'               => $this->page,
-            'route'              => $this->route,
-            'routeParameters'    => $this->routeParameters,
-            'attachedWidget'     => $this->attachedWidget,
-            'target'             => $this->target,
-            'analyticsTrackCode' => $this->analyticsTrackCode,
-        );
+        return $this->getLink()->getLinkParameters();
     }
 
     /**
@@ -88,23 +96,26 @@ trait LinkTrait
      *
      * @param string $url
      *
-     * @return LinkTrait
+     * @deprecated please run the victoire:legacy:linkMigrator command
+     * @return LinkTrai
+     * @deprecated please run the victoire:legacy:linkMigrator command
+     *                  t
      */
     public function setUrl($url)
     {
-        $this->url = $url;
-
-        return $this;
+        return $this->getLink()->setUrl($url);
     }
 
     /**
      * Get url
      *
+     *
+     * @deprecated please run the victoire:legacy:linkMigrator command
      * @return string
      */
     public function getUrl()
     {
-        return $this->url;
+        return $this->getLink()->getUrl();
     }
 
     /**
@@ -112,23 +123,26 @@ trait LinkTrait
      *
      * @param string $target
      *
-     * @return LinkTrait
+     * @deprecated please run the victoire:legacy:linkMigrator command
+     * @return LinkTrai
+     * @deprecated please run the victoire:legacy:linkMigrator command
+     *                  t
      */
     public function setTarget($target)
     {
-        $this->target = $target;
-
-        return $this;
+        return $this->getLink()->setTarget($target);
     }
 
     /**
      * Get target
      *
+     *
+     * @deprecated please run the victoire:legacy:linkMigrator command
      * @return string
      */
     public function getTarget()
     {
-        return $this->target;
+        return $this->getLink()->getTarget();
     }
 
     /**
@@ -136,23 +150,26 @@ trait LinkTrait
      *
      * @param string $route
      *
-     * @return LinkTrait
+     * @deprecated please run the victoire:legacy:linkMigrator command
+     * @return LinkTrai
+     * @deprecated please run the victoire:legacy:linkMigrator command
+     *                  t
      */
     public function setRoute($route)
     {
-        $this->route = $route;
-
-        return $this;
+        return $this->getLink()->setRoute($route);
     }
 
     /**
      * Get route
      *
+     *
+     * @deprecated please run the victoire:legacy:linkMigrator command
      * @return string
      */
     public function getRoute()
     {
-        return $this->route;
+        return $this->getLink()->getRoute();
     }
 
     /**
@@ -160,46 +177,52 @@ trait LinkTrait
      *
      * @param array $routeParameters
      *
-     * @return LinkTrait
+     * @deprecated please run the victoire:legacy:linkMigrator command
+     * @return LinkTrai
+     * @deprecated please run the victoire:legacy:linkMigrator command
+     *                  t
      */
     public function setRouteParameters($routeParameters)
     {
-        $this->routeParameters = $routeParameters;
-
-        return $this;
+        return $this->getLink()->setRouteParameters($routeParameters);
     }
 
     /**
      * Get routeParameters
      *
+     *
+     * @deprecated please run the victoire:legacy:linkMigrator command
      * @return array
      */
     public function getRouteParameters()
     {
-        return $this->routeParameters;
+        return $this->getLink()->getRouteParameters();
     }
 
     /**
      * Set page
      * @param \Victoire\Bundle\PageBundle\Entity\Page $page
      *
-     * @return LinkTrait
+     * @deprecated please run the victoire:legacy:linkMigrator command
+     * @return LinkTrai
+     * @deprecated please run the victoire:legacy:linkMigrator command
+     *                  t
      */
     public function setPage($page = null)
     {
-        $this->page = $page;
-
-        return $this;
+        return $this->getLink()->setPage($page);
     }
 
     /**
      * Get page
      *
+     *
+     * @deprecated please run the victoire:legacy:linkMigrator command
      * @return \Victoire\Bundle\PageBundle\Entity\BasePage
      */
     public function getPage()
     {
-        return $this->page;
+        return $this->getLink()->getPage();
     }
 
     /**
@@ -207,32 +230,37 @@ trait LinkTrait
      *
      * @param string $linkType
      *
-     * @return LinkTrait
+     * @deprecated please run the victoire:legacy:linkMigrator command
+     * @return LinkTrai
+     * @deprecated please run the victoire:legacy:linkMigrator command
+     *                  t
      */
     public function setLinkType($linkType)
     {
-        $this->linkType = $linkType;
-
-        return $this;
+        return $this->getLink()->setLinkType();
     }
 
     /**
      * Get linkType
      *
+     *
+     * @deprecated please run the victoire:legacy:linkMigrator command
      * @return string
      */
     public function getLinkType()
     {
-        return $this->linkType;
+        return $this->getLink()->getLinkType();
     }
     /**
      * Get attachedWidget
      *
+     *
+     * @deprecated please run the victoire:legacy:linkMigrator command
      * @return string
      */
     public function getAttachedWidget()
     {
-        return $this->attachedWidget;
+        return $this->getLink()->getAttachedWidget();
     }
 
     /**
@@ -240,13 +268,13 @@ trait LinkTrait
      *
      * @param string $attachedWidget
      *
+     *
+     * @deprecated please run the victoire:legacy:linkMigrator command
      * @return $this
      */
     public function setAttachedWidget($attachedWidget)
     {
-        $this->attachedWidget = $attachedWidget;
-
-        return $this;
+        return $this->getLink()->setAttachedWidget($attachedWidget);
     }
 
     public static function loadValidatorMetadata(ClassMetadata $metadata)
@@ -258,24 +286,26 @@ trait LinkTrait
      * undocumented function
      *
      * @return void
-     * @author
+     * @autho
+     * @deprecated please run the victoire:legacy:linkMigrator command
+     *              r
      **/
     public function checkLink(ExecutionContextInterface $context)
     {
         $violation = false;
         // check if the name is actually a fake name
-        switch ($this->getLinkType()) {
+        switch ($this->getLink()->getLinkType()) {
             case 'page':
-            $violation = $this->getPage() == null;
+            $violation = $this->getLink()->getPage() == null;
                 break;
             case 'route':
-            $violation = $this->getRoute() == null;
+            $violation = $this->getLink()->getRoute() == null;
                 break;
             case 'url':
-            $violation = $this->getUrl() == null;
+            $violation = $this->getLink()->getUrl() == null;
                 break;
             case 'attachedWidget':
-            $violation = $this->getAttachedWidget() == null;
+            $violation = $this->getLink()->getAttachedWidget() == null;
                 break;
             default:
                 break;
@@ -284,7 +314,7 @@ trait LinkTrait
         if ($violation) {
             $context->addViolationAt(
                 'firstName',
-                'validator.link.error.message.'.$this->getLinkType().'Missing',
+                'validator.link.error.message.'.$this->getLink()->getLinkType().'Missing',
                 array(),
                 null
             );
@@ -294,11 +324,13 @@ trait LinkTrait
     /**
      * Get analyticsTrackCode
      *
+     *
+     * @deprecated please run the victoire:legacy:linkMigrator command
      * @return string
      */
     public function getAnalyticsTrackCode()
     {
-        return $this->analyticsTrackCode;
+        return $this->getLink()->getAnalyticsTrackCode();
     }
 
     /**
@@ -306,11 +338,44 @@ trait LinkTrait
      *
      * @param string $analyticsTrackCode
      *
+     *
+     * @deprecated please run the victoire:legacy:linkMigrator command
      * @return $this
      */
     public function setAnalyticsTrackCode($analyticsTrackCode)
     {
-        $this->analyticsTrackCode = $analyticsTrackCode;
+        return $this->getLink()->setAnalyticsTrackCode($analyticsTrackCode);
+    }
+
+    /**
+     * Has link
+     *
+     * @return boolean
+     */
+    public function hasLink()
+    {
+        return $this->link ? true : false;
+    }
+
+    /**
+     * Get link
+     *
+     * @return string
+     */
+    public function getLink()
+    {
+        return $this->link;
+    }
+
+    /**
+     * Set link
+     * @param string $link
+     *
+     * @return $this
+     */
+    public function setLink($link)
+    {
+        $this->link = $link;
 
         return $this;
     }
