@@ -12,7 +12,7 @@
 
         <div class="vic-col-sm-6 vic-text-right">
             {% spaceless %}
-            <a class="vic-btn vic-btn-success" data-toggle="vic-modal" href="{{ path('victoire_businessentitypagepattern_businessentitypagepattern_new', {'id': businessEntity.getId}) }}">
+            <a class="vic-btn vic-btn-success" data-toggle="vic-modal" href="{{ path('victoire_bep_new', {'id': businessEntity.id}) }}">
                 <i class="fa fa-plus-square"></i>
 
                 {{ 'list.action.add'|trans }}
@@ -20,7 +20,6 @@
             {% endspaceless %}
         </div>
     </div>
-
 </div>
 
 <ul class="vic-bordered-list">
@@ -28,25 +27,28 @@
     <li class="item -level0">
         <div class="vic-bordered-line">
             <div class="title">
-                {{ pagePattern.getName }}
+                {{ pagePattern.name }}
             </div>
 
-            <a class="vic-btn vic-btn-default -square" data-toggle="vic-modal" href="{{ path('victoire_businessentitypagepattern_businessentitypagepattern_edit', {'id': pagePattern.getId}) }}">
+            <a class="vic-btn vic-btn-default -square" data-toggle="vic-modal" href="{{ path('victoire_bep_edit', {'id': pagePattern.id}) }}">
                 <i class="fa fa-pencil"></i>
             </a>
 
-            <a class="vic-btn vic-btn-default -square" href="{{ path('victoire_core_page_show', {'url' : pagePattern.getUrl}) }}">
+            <a class="vic-btn vic-btn-default -square" href="{{ path('victoire_core_page_show_by_id', {'viewId' : pagePattern.id}) }}">
                 <i class="fa fa-angle-right"></i>
             </a>
 
-{# 
-            <a data-toggle="vic-modal"  href="{{ path('victoire_businessentitypagepattern_businessentitypagepattern_listentities', {'id': pagePattern.getId}) }}">
+            <a class="vic-btn vic-btn-default -square" href="#" onclick="$vic(this).toggleClass('vic-btn-info');$vic('.fa',this).toggleClass('fa-inverse'); $vic('#business-entities-list-container-{{ pagePattern.id }}').slideToggle();">
                 <i class="fa fa-list"></i>
-
-                {{ 'list.action.list'|trans }}
             </a>
- #}
+        </div>
+        <div class="vic-row">
+            <div class="vic-col-md-12" style="display: none" id="business-entities-list-container-{{ pagePattern.id }}">
+                {{ render(path('victoire_bep_listentities', {'id': pagePattern.id})) }}
+            </div>
         </div>
     </li>
     {% endfor %}
 </ul>
+
+<script src="https://github.com/mnot/hinclude/blob/master/hinclude.js" type="text/javascript" />

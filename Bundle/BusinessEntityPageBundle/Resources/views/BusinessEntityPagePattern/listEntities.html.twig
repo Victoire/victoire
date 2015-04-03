@@ -1,27 +1,22 @@
 {% trans_default_domain "victoire" %}
 
-{% extends 'VictoireCoreBundle::_modal.html.twig' %}
-
-{% block modal_container_classes %}{{ parent() }} vic-view-modal{% endblock modal_container_classes %}
-
-{% block modal_header_title %}
-    {{ 'list.entities.title'|trans }}: {{ businessEntityPagePattern.name }}
-{% endblock modal_header_title %}
-
-{% block modal_body_content %}
-    <ol>
-    {% for item in items %}
-            <li>
-            {# @todo create a twig extension pour générer une url basée sur un pattern et une instance
-                <a href="{{ build_url_from_pattern_and_business_entity }}">
-                {{ item }}
-                </a>
-            #}
-            </li>
-    {% endfor %}
-    </ol>
-{% endblock modal_body_content %}
-
-{% block modal_footer_content %}
-    {{ 'list.entities.query'|trans }}: {{ businessEntityPagePattern.query }}
-{% endblock modal_footer_content %}
+{% if items|length %}
+<div class="vic-row">
+    <div class="vic-col-md-8">
+        <ul>
+        {% for item in items %}
+                <li>
+                    <a href="{{ path('victoire_core_page_show_by_id', {viewId: businessEntityPagePattern.id, entityId: item.id}) }}">
+                        {{ app.request.getSchemeAndHttpHost() ~ path('victoire_core_page_show_by_id', {viewId: businessEntityPagePattern.id, entityId: item.id}) }}
+                    </a>
+                </li>
+        {% endfor %}
+        </ul>
+    </div>
+    <div class="vic-col-md-4">
+        {% if businessEntityPagePattern.query != '' %}
+        {{ 'list.entities.query'|trans }}: {{ businessEntityPagePattern.query }}
+        {% endif %}
+    </div>
+</div>
+{% endif %}    
