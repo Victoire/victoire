@@ -67,22 +67,16 @@ class LegacyLinkMigratorCommand extends ContainerAwareCommand
                         $link = new Link();
                         $object->setLink($link);
                         //fill the values
-                        $link->setUrl($object->getUrl());
-                        $link->setTarget($object->getTarget());
-                        $link->setRoute($object->getRoute());
-                        $link->setRouteParameters($object->getRouteParameters());
-                        $link->setPage($object->getPage());
-                        $link->setLinkType($object->getLinkType());
-                        $link->setAttachedWidget($object->getAttachedWidget());
-                        $link->setAnalyticsTrackCode($object->getAnalyticsTrackCode());
-                        //reset legacy values
-                        $object->setUrl(null);
-                        $object->setRoute(null);
-                        $object->setRouteParameters(null);
-                        $object->setPage(null);
-                        $object->setAttachedWidget(null);
-                        $object->setAnalyticsTrackCode(null);
+                        $link->setUrl($object->url);
+                        $link->setTarget($object->target);
+                        $link->setRoute($object->route);
+                        $link->setRouteParameters($object->routeParameters);
+                        $link->setPage($object->page);
+                        $link->setLinkType($object->linkType);
+                        $link->setAttachedWidget($object->attachedWidget);
+                        $link->setAnalyticsTrackCode($object->analyticsTrackCode);
                         //persist the new link and the relation
+                        $entityManager->persist($object);
                         $entityManager->persist($link);
                         $entityManager->flush();
                         $counter++;

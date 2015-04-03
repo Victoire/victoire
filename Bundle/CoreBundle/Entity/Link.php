@@ -81,7 +81,7 @@ class Link
      */
     protected $analyticsTrackCode;
 
-    protected $linkParameters;
+    protected $parameters;
 
     /**
      * Get id
@@ -106,9 +106,9 @@ class Link
         return $this;
     }
 
-    public function getLinkParameters()
+    public function getParameters()
     {
-        return $this->linkParameters = array(
+        return $this->parameters = array(
             'linkType'           => $this->linkType,
             'url'                => $this->url,
             'page'               => $this->page,
