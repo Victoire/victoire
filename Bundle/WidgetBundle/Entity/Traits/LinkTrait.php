@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 trait LinkTrait
 {
     /**
-     * @ORM\OneToOne(targetEntity="Victoire\Bundle\CoreBundle\Entity\Link", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="Victoire\Bundle\CoreBundle\Entity\Link")
      * @ORM\JoinColumn(name="link_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      **/
     protected $link;

@@ -2,28 +2,16 @@
 
 namespace Victoire\Bundle\FormBundle\Form\Type;
 
-/*
- * This file is part of the MopaBootstrapBundle.
- *
- * (c) Philipp A. Mohrenweiser <phiamo@googlemail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Victoire\Widget\RenderBundle\DataTransformer\JsonToArrayTransformer;
 
 /**
- * Type for FormTab handling.
- *
- * @author phiamo <phiamo@googlemail.com>
+ * Type for Victoire Link.
  */
 class LinkType extends AbstractType
 {
-
     private $analytics;
 
     public function __construct($analytics)
@@ -45,12 +33,12 @@ class LinkType extends AbstractType
                 'page'           => 'form.link_type.linkType.page',
                 'route'          => 'form.link_type.linkType.route',
                 'url'            => 'form.link_type.linkType.url',
-                'attachedWidget' => 'form.link_type.linkType.widget'
+                'attachedWidget' => 'form.link_type.linkType.widget',
             ),
             'attr'        => array(
                 'class'    => 'vic-linkType-select',
                 'onchange' => 'showSelectedLinkType($vic(this));',
-            )
+            ),
         ))
         ->add('url', null, array(
             'label'                          => 'form.link_type.url.label',
@@ -106,7 +94,7 @@ class LinkType extends AbstractType
                 'required'       => false,
                 'attr'           => array(
                     'placeholder' => 'form.link_type.analytics_track_code.placeholder',
-                )
+                ),
             ));
         }
     }
@@ -114,7 +102,8 @@ class LinkType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'inherit_data' => true
+            'data_class'         => 'Victoire\Bundle\CoreBundle\Entity\Link',
+            'translation_domain' => 'victoire',
         ));
     }
     /**
