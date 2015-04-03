@@ -96,7 +96,7 @@ function enableSortableSlots(){
             forcePlaceholderSize: true,
             revert: true,
             stop: function( event, ui ) {
-                var ajaxCall = updatePosition(ui);
+                var ajaxCall = updateWidgetPosition(ui);
 
                 //update the positions of the widgets
                 updateWidgetPositions();
@@ -128,7 +128,7 @@ function updateWidgetPositions(slotId){
     });
 }
 
-function updatePosition(ui){
+function updateWidgetPosition(ui){
     var sorted = {
         'parentWidget': ui.item.prev('.vic-widget-container').data('id'),
         'slot': ui.item.parents('.vic-slot').first().data('name'),

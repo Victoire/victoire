@@ -22,7 +22,7 @@ $vic(document).on('submit', '.sitemapPriorityForm', function(event) {
     });
 });
 
-function updatePosition(element, ui)
+function updateSitemapPosition(element, ui)
 {
     var sorted = $vic(element).nestedSortable("toArray");
     loading(true);
