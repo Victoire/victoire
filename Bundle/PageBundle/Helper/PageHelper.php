@@ -34,10 +34,10 @@ class PageHelper extends ViewHelper
     protected $eventDispatcher; // @event_dispatcher
     protected $victoireTemplating; // @victoire_templating
     protected $pageSeoHelper; // @victoire_seo.helper.pageseo_helper
-    protected $viewCacheHelper; // @victoire_core.view_cache_helper
     protected $session; // @session
     protected $securityContex; // @security.context
     protected $widgetMapBuilder; // @victoire_widget_map.builder
+    public $viewCacheHelper; // @victoire_core.view_cache_helper
 
     //@todo Make it dynamic please
     protected $pageParameters = array(
@@ -45,7 +45,7 @@ class PageHelper extends ViewHelper
         'bodyId',
         'bodyClass',
         'slug',
-        'url'
+        'url',
     );
 
     /**
@@ -54,7 +54,7 @@ class PageHelper extends ViewHelper
      * @param EntityManager            $entityManager
      * @param CurrentViewHelper        $currentViewHelper
      * @param EventDispatcherInterface $eventDispatcher
-     * @param TemplateMapper       $victoireTemplating
+     * @param TemplateMapper           $victoireTemplating
      * @param PageSeoHelper            $pageSeoHelper
      * @param ViewCacheHelper          $viewCacheHelper
      * @param Session                  $session
@@ -75,8 +75,7 @@ class PageHelper extends ViewHelper
         BETParameterConverter $parameterConverter,
         BusinessEntityHelper $businessEntityHelper,
         ViewCacheHelper $viewCacheHelper
-    )
-    {
+    ) {
         parent::__construct($parameterConverter,
                 $businessEntityHelper, $bepHelper, $entityManager, $viewCacheHelper
             );
@@ -90,7 +89,6 @@ class PageHelper extends ViewHelper
         $this->session = $session;
         $this->securityContext = $securityContext;
         $this->widgetMapBuilder = $widgetMapBuilder;
-
     }
 
     /**
@@ -139,7 +137,7 @@ class PageHelper extends ViewHelper
         $this->currentViewHelper->setCurrentView($page);
         //create the response
         $response = $this->victoireTemplating->renderResponse($layout, array(
-            "view" => $page
+            "view" => $page,
         ));
 
         return $response;
@@ -176,16 +174,13 @@ class PageHelper extends ViewHelper
      */
     protected function findEntityByReference($viewReference)
     {
-
         $entity = null;
         if (!empty($viewReference['entityId'])) {
             $entity = $this->entityManager->getRepository($viewReference['entityNamespace'])->findOneById($viewReference['entityId']);
         }
 
         return $entity;
-
     }
-
 
     /**
      * Search a page in the route history according to giver url
@@ -201,7 +196,7 @@ class PageHelper extends ViewHelper
             return $route->getPage();
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -242,7 +237,6 @@ class PageHelper extends ViewHelper
 
         return $page;
     }
-
 
     /**
      * If the valid is not valid, an exception is thrown

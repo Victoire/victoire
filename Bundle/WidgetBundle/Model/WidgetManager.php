@@ -151,9 +151,12 @@ class WidgetManager
 
         $form->handleRequest($request);
         if ($request->query->get('novalidate', false) === false && $form->isValid()) {
+            $needViewCacheUpdate = false;
             if (!$view->getId()) {
                 //create a view for the business entity instance if we are currently on a virtual one
                 $this->em->persist($view);
+                //REBUILD VIEWS REFERENCE
+                $needViewCacheUpdate = true;
             }
 
             //get the widget from the form
@@ -165,6 +168,10 @@ class WidgetManager
             //persist the widget
             $this->em->persist($widget);
             $this->em->flush();
+
+            if (true === $needViewCacheUpdate) {
+                $this->pageHelper->viewCacheHelper->update($view);
+            }
 
             //create the new widget map
             $widgetMapEntry = new WidgetMap();

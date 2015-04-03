@@ -31,7 +31,7 @@ class ViewCacheHelper
     /**
      * Write given views references in a xml file
      *
-     * @param \SimpleXMLElement $itemNode
+     * @param  \SimpleXMLElement $itemNode
      * @return void
      */
     public function buildItemNode($viewReference, $itemNode)
@@ -101,6 +101,8 @@ class ViewCacheHelper
         $rootNode = $this->readCache();
         $id = $this->getViewReferenceId($view, $entity);
         $oldItemNode = $rootNode->xpath("//viewReference[@id='".$id."']");
+        unset($oldItemNode[0][0]);
+        $oldItemNode = $rootNode->xpath("//viewReference[@url='".$view->getUrl()."']");
         unset($oldItemNode[0][0]);
 
         $viewReferences = $this->container->get('victoire_core.view_helper')->buildViewReference($view, $entity);
