@@ -86,7 +86,7 @@ class Link
     /**
      * Get id
      *
-     * @return string
+     * @return integer
      */
     public function getId()
     {
@@ -125,7 +125,7 @@ class Link
      *
      * @param string $url
      *
-     * @return LinkTrait
+     * @return Link
      */
     public function setUrl($url)
     {
@@ -149,7 +149,7 @@ class Link
      *
      * @param string $target
      *
-     * @return LinkTrait
+     * @return Link
      */
     public function setTarget($target)
     {
@@ -173,7 +173,7 @@ class Link
      *
      * @param string $route
      *
-     * @return LinkTrait
+     * @return Link
      */
     public function setRoute($route)
     {
@@ -197,7 +197,7 @@ class Link
      *
      * @param array $routeParameters
      *
-     * @return LinkTrait
+     * @return Link
      */
     public function setRouteParameters($routeParameters)
     {
@@ -209,7 +209,7 @@ class Link
     /**
      * Get routeParameters
      *
-     * @return array
+     * @return string
      */
     public function getRouteParameters()
     {
@@ -220,7 +220,7 @@ class Link
      * Set page
      * @param \Victoire\Bundle\PageBundle\Entity\Page $page
      *
-     * @return LinkTrait
+     * @return Link
      */
     public function setPage($page = null)
     {
@@ -232,7 +232,7 @@ class Link
     /**
      * Get page
      *
-     * @return \Victoire\Bundle\PageBundle\Entity\BasePage
+     * @return Page|null
      */
     public function getPage()
     {
@@ -244,7 +244,7 @@ class Link
      *
      * @param string $linkType
      *
-     * @return LinkTrait
+     * @return Link
      */
     public function setLinkType($linkType)
     {
