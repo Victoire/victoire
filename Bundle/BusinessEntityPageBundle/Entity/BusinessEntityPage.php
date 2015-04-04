@@ -2,7 +2,7 @@
 namespace Victoire\Bundle\BusinessEntityPageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Victoire\Bundle\PageBundle\Entity\BasePage;
+use Victoire\Bundle\PageBundle\Entity\Page;
 
 /**
  * BusinessEntityPagePattern
@@ -10,7 +10,7 @@ use Victoire\Bundle\PageBundle\Entity\BasePage;
  * @ORM\Entity(repositoryClass="Victoire\Bundle\BusinessEntityPageBundle\Repository\BusinessEntityPageRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class BusinessEntityPage extends BasePage
+class BusinessEntityPage extends Page
 {
     const TYPE = 'business_entity_page';
 

@@ -1,5 +1,6 @@
 {% trans_default_domain "victoire" %}
 
+{% if businessProperties|length > 0 %}
 <div class='businessProperties'>
     <div class='businessPropertyTitle'>
         {{ 'modal.form.businessEntity.settings.businessProperties'|trans }}
@@ -15,3 +16,4 @@
     //init the event handler for the business entity property
     businessProperty.initPropertyHelper();
 </script>
+{% endif %}

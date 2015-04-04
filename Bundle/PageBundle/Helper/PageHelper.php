@@ -123,6 +123,13 @@ class PageHelper extends ViewHelper
 
         //Dispatch contextual event regarding page type
         if ($page->getType() == 'business_entity_page') {
+            //Dispatch also an event with the Business entity name
+            $eventName = 'victoire_core.page_menu.contextual';
+            if (!$page->getId()) {
+                $eventName = 'victoire_core.business_entity_page_pattern_menu.contextual';
+                $event = new \Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent($page->getTemplate());
+            }
+            $this->eventDispatcher->dispatch($eventName, $event);
             $type = strtolower($page->getBusinessEntityName());
         } else {
             $type = $page->getType();

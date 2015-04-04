@@ -40,7 +40,7 @@ class BusinessEntityPageMenuListener implements MenuListenerInterface
                 ->addChild(
                     'menu.business_entity_page_pattern',
                     array(
-                        'route' => 'victoire_businessentitypage_businessentity_index'
+                        'route' => 'victoire_businessentitypage_businessentity_index',
                     )
                 )
                 ->setLinkAttribute('data-toggle', 'vic-modal');
@@ -62,8 +62,8 @@ class BusinessEntityPageMenuListener implements MenuListenerInterface
         //if there is a template, we add the link in the top bar
         $mainItem->addChild('menu.page.settings',
             array(
-                'route'           => 'victoire_businessentitypagepattern_businessentitypagepattern_edit',
-                'routeParameters' => array('id' => $event->getPage()->getId())
+                'route'           => 'victoire_bepp_edit',
+                'routeParameters' => array('id' => $event->getPage()->getId()),
             )
         )->setLinkAttribute('data-toggle', 'vic-modal');
 

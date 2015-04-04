@@ -63,7 +63,6 @@ class PageSubscriber implements EventSubscriber
      */
     public function loadClassMetadata(LoadClassMetadataEventArgs $eventArgs)
     {
-
         $metadatas = $eventArgs->getClassMetadata();
 
         //set a relation between Page and User to define the page author
@@ -71,7 +70,6 @@ class PageSubscriber implements EventSubscriber
 
         //Add author relation on view
         if ($this->userClass && $metadatas->name === 'Victoire\Bundle\CoreBundle\Entity\View') {
-
             $metadatas->mapManyToOne(array(
                 'fieldName'    => 'author',
                 'targetEntity' => $this->userClass,
@@ -82,8 +80,8 @@ class PageSubscriber implements EventSubscriber
                         'name' => 'author_id',
                         'referencedColumnName' => 'id',
                         'onDelete' => 'SET NULL',
-                    )
-                )
+                    ),
+                ),
             ));
         }
 
@@ -123,7 +121,6 @@ class PageSubscriber implements EventSubscriber
             if ($entity instanceof BasePage) {
                 $computeUrl = ((array_key_exists('slug', $this->uow->getEntityChangeSet($entity)) //the slug of the page has been modified
                             || array_key_exists('parent', $this->uow->getEntityChangeSet($entity)))
-                            && !$entity instanceof BusinessEntityPage // The url of a BusinessEntityPage has already been generated
                             ); //the parent has been modified
                 if ($computeUrl) {
                     $this->buildUrl($entity);
@@ -150,15 +147,15 @@ class PageSubscriber implements EventSubscriber
      */
     protected function updateCache(View $page)
     {
-
         if ($page instanceof BusinessEntityPagePattern) {
-
             $bepHelper = $this->container->get('victoire_business_entity_page.business_entity_page_helper');
             $entities = $bepHelper->getEntitiesAllowed($page);
             $this->viewCacheHelper->update($page);
             foreach ($entities as $entity) {
                 $this->viewCacheHelper->update($page, $entity);
             }
+        } elseif ($page instanceof BusinessEntityPage) {
+            $this->viewCacheHelper->update($page, $page->getBusinessEntity());
         } else {
             $this->viewCacheHelper->update($page, null);
         }
@@ -167,7 +164,7 @@ class PageSubscriber implements EventSubscriber
      * Builds the page's url by get all page parents slugs and implode them with "/".
      * Builds the pages children urls with new page slug
      * If page has a custom url, we don't modify it, but we modify children urls
-     * @param Page $page
+     * @param Page    $page
      * @param integer $depth
      *
      * @return $page
@@ -218,7 +215,7 @@ class PageSubscriber implements EventSubscriber
 
     /**
      * Get the array of slugs of the parents
-     * @param Page  $page
+     * @param Page     $page
      * @param string[] $slugs
      *
      * @return array $urlArray The list of slugs

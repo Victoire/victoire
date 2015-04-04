@@ -12,7 +12,7 @@
 
         <div class="vic-col-sm-6 vic-text-right">
             {% spaceless %}
-            <a class="vic-btn vic-btn-success" data-toggle="vic-modal" href="{{ path('victoire_bep_new', {'id': businessEntity.id}) }}">
+            <a class="vic-btn vic-btn-success" data-toggle="vic-modal" href="{{ path('victoire_bepp_new', {'id': businessEntity.id}) }}">
                 <i class="fa fa-plus-square"></i>
 
                 {{ 'list.action.add'|trans }}
@@ -30,7 +30,7 @@
                 {{ pagePattern.name }}
             </div>
 
-            <a class="vic-btn vic-btn-default -square" data-toggle="vic-modal" href="{{ path('victoire_bep_edit', {'id': pagePattern.id}) }}">
+            <a class="vic-btn vic-btn-default -square" data-toggle="vic-modal" href="{{ path('victoire_bepp_edit', {'id': pagePattern.id}) }}">
                 <i class="fa fa-pencil"></i>
             </a>
 
@@ -44,7 +44,7 @@
         </div>
         <div class="vic-row">
             <div class="vic-col-md-12" style="display: none" id="business-entities-list-container-{{ pagePattern.id }}">
-                {{ render(path('victoire_bep_listentities', {'id': pagePattern.id})) }}
+                {{ render(path('victoire_bepp_listentities', {'id': pagePattern.id})) }}
             </div>
         </div>
     </li>
