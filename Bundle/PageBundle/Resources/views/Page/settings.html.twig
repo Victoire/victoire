@@ -25,6 +25,7 @@
                         {{ form_row(form.parent) }}
                         {{ form_row(form.template) }}
 
+                        {% if form.slug is defined %}
                         <div class="vic-form-group">
 
                              <label for="victoire_page_settings_type_bodyClass" class="vic-control-label control-label vic-optional">
@@ -38,7 +39,10 @@
                              </div>
 
                         </div>
-                        {{form_row(form.locale)}}
+                        {% endif %}
+                        {% if form.locale is defined %}
+                        {{ form_row(form.locale) }}
+                        {% endif %}
                     </div>
 
                     <div class="vic-col-lg-4">
