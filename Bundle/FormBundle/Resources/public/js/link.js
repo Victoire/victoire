@@ -12,3 +12,7 @@ function showSelectedLinkType(selects) {
     });
 }
 
+//Autorun 
+$vic(document).on('victoire_modal_open_after', function(){
+    showSelectedLinkType($vic("[data-role='vic-linkType-select']"));
+});

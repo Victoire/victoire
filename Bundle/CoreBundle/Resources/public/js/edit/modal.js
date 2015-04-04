@@ -5,6 +5,7 @@
 
 // Open a modal
 function openModal(url) {
+    $vic(document).trigger('victoire_modal_open_before');
     loading(true);
     $vic.ajax({
         type: "GET",
@@ -20,6 +21,7 @@ function openModal(url) {
             backdrop: false
         });
         loading(false);
+        $vic(document).trigger('victoire_modal_open_after');
     });
 
     return $vic('#vic-modal');

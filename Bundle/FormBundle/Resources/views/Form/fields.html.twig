@@ -2,13 +2,6 @@
 {% use 'form_div_layout.html.twig' %}
 
 {# Buttons #}
-{% block victoire_link_widget %}
-{{ block('form_widget') }}
-<script type="text/javascript">
-    showSelectedLinkType($vic('.vic-linkType-select'));
-</script>
-{% endblock victoire_link_widget %}
-
 {% block tags_widget %}
 <input type="hidden" id="{{id}}" name="{{ full_name }}" value="{{tag_values}}" tabindex="-1" class="select2-offscreen" />
 <script type="text/javascript">
