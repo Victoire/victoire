@@ -720,7 +720,9 @@
 
 {% block font_awesome_picker_widget %}
     {% spaceless %}
-    <input type="text" {{ block('widget_attributes') }}/>
+    <div class="vic-form-group">
+        <input type="text" {{ block('widget_attributes') }} class="vic-form-control"/>
+    </div>
     <script type="text/javascript">
         $vic('#{{ id }}').iconpicker({{ form.vars.font_awesome_picker_settings|json_encode|raw }});
     </script>
