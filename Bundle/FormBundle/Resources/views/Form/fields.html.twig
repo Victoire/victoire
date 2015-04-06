@@ -718,3 +718,11 @@
     {% endfor %}
 {% endblock hierarchy_tree_widget_options %}
 
+{% block font_awesome_picker_widget %}
+    {% spaceless %}
+    <input type="text" {{ block('widget_attributes') }}/>
+    <script type="text/javascript">
+        $vic('#{{ id }}').iconpicker({{ form.vars.font_awesome_picker_settings|json_encode|raw }});
+    </script>
+    {% endspaceless %}
+{% endblock font_awesome_picker_widget %}
