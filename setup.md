@@ -57,12 +57,12 @@ or do it yourself by doing the usual stuff (doctrine:schema:update etc). You can
 - ajouter les widgets requis:
 
 
-        "victoire/text-widget"      : "dev-master",
-        "victoire/redactor-widget"  : "dev-master",
-        "victoire/button-widget"    : "dev-master",
-        "victoire/image-widget"     : "dev-master",
-        "victoire/render-widget"    : "dev-master",
-        "victoire/breadcrumb-widget": "dev-master",
+        "appventus/text-widget"      : "dev-master",
+        "appventus/redactor-widget"  : "dev-master",
+        "appventus/button-widget"    : "dev-master",
+        "appventus/image-widget"     : "dev-master",
+        "appventus/render-widget"    : "dev-master",
+        "appventus/breadcrumb-widget": "dev-master",
         ...
 
 
