@@ -58,7 +58,7 @@ class WidgetType extends AbstractType
 
         //add the mode to the form
         $builder->add('mode', 'hidden', array(
-            'data' => $mode
+            'data' => $mode,
         ));
         $builder->add('theme', 'hidden');
 
@@ -68,7 +68,7 @@ class WidgetType extends AbstractType
         //we use the PRE_SUBMIT event to set the mode option
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function(FormEvent $event) {
+            function (FormEvent $event) {
                 $options = $this->options;
 
                 //we get the raw data for the widget form
@@ -107,7 +107,7 @@ class WidgetType extends AbstractType
         $form->add('fields', 'widget_fields', array(
             'label' => 'widget.form.entity.fields.label',
             'namespace' => $options['namespace'],
-            'widget'    => $options['widget']
+            'widget'    => $options['widget'],
         ));
     }
 
@@ -124,12 +124,12 @@ class WidgetType extends AbstractType
         ->add('fields', 'widget_fields', array(
             'label' => 'widget.form.entity.fields.label',
             'namespace' => $options['namespace'],
-            'widget'    => $options['widget']
+            'widget'    => $options['widget'],
         ))
         ->add('entity_proxy', 'entity_proxy', array(
             'entity_name' => $options['entityName'],
             'namespace' => $options['namespace'],
-            'widget'      => $options['widget']
+            'widget'      => $options['widget'],
         ));
     }
 
@@ -146,7 +146,7 @@ class WidgetType extends AbstractType
         $form->add('fields', 'widget_fields', array(
             'label' => 'widget.form.entity.fields.label',
             'namespace' => $options['namespace'],
-            'widget'    => $options['widget']
+            'widget'    => $options['widget'],
         ));
     }
 
@@ -159,7 +159,7 @@ class WidgetType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class'         => 'Victoire\Bundle\WidgetBundle\Entity\Widget',
-            'translation_domain' => 'victoire'
+            'translation_domain' => 'victoire',
         ));
 
         $resolver->setOptional(array('widget'));
@@ -168,7 +168,6 @@ class WidgetType extends AbstractType
         $resolver->setOptional(array('mode'));
         $resolver->setOptional(array('namespace'));
         $resolver->setOptional(array('entityName'));
-
     }
 
     /**
