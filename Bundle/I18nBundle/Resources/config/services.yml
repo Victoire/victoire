@@ -42,6 +42,13 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    victoire_i18n.view_subscriber:
+        class: Victoire\Bundle\I18nBundle\Subscriber\ViewSubscriber
+        arguments:
+            - "%kernel.default_locale%"
+        tags:
+            - { name: doctrine.event_subscriber, connection: default, priority: -1 }
+
     victoire_i18n.template_menu.contextual:
         class: Victoire\Bundle\I18nBundle\Listener\I18nTemplateMenuListener
         arguments: ["@victoire_core.admin_menu_builder"]
