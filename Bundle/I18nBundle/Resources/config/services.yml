@@ -34,8 +34,8 @@ services:
         class: Victoire\Bundle\I18nBundle\Translation\Translator
         arguments: ["@service_container", "@translator.selector",{}, {cache_dir:"%kernel.cache_dir%/translations%", debug: "%kernel.debug%"}]
 
-    victoire_i18n.locale_listener:
-        class: Victoire\Bundle\I18nBundle\Listener\LocaleListener
+    victoire_i18n.locale_subscriber:
+        class: Victoire\Bundle\I18nBundle\Subscriber\LocaleSubscriber
         arguments:
             - "%kernel.default_locale%"
             - "@victoire_i18n.locale_resolver"
