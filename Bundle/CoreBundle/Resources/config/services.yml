@@ -10,13 +10,6 @@ services:
     #     alias: av_assetic_injector.collector_engine.require_victoire
 
 #  ==================  Widgets ================== #
-    widget.subscriber:
-        class: Victoire\Bundle\CoreBundle\EventSubscriber\WidgetSubscriber
-        arguments:
-            - "@service_container"
-        tags:
-            - { name: kernel.event_subscriber }
-
     victoire_core.entity_proxy.fields_builder:
         class: Victoire\Bundle\CoreBundle\Form\Builder\EntityProxyFieldsBuilder
         arguments: ["@victoire_core.annotation_reader"]
@@ -128,12 +121,6 @@ services:
             - "%victoire_core.widgets%"
         calls:
             - [ setCache, ["@victoire_core.apc.cache"] ]
-
-
-#  ==================  Theme ================== #
-
-    victoire_core.theme_chain:
-        class: Victoire\Bundle\CoreBundle\Theme\ThemeChain
 
 #  ==================  Subscribers ================== #
 

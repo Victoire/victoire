@@ -30,8 +30,6 @@ class DynamicTranslations implements TranslationContainerInterface
             new Message('menu.media', 'victoire'),
             new Message('menu.parent', 'victoire'),
             new Message('menu.business_entity_page_pattern', 'victoire'),
-            new Message('widget.form.theme.label', 'victoire'),
-            new Message('widget.form.theme.default', 'victoire'),
             new Message('modal.button.create.title', 'victoire'),
             new Message('modal.button.update.title', 'victoire'),
             new Message('menu.leftnavbar.stats.label', 'victoire'),
@@ -46,5 +44,4 @@ class DynamicTranslations implements TranslationContainerInterface
             new Message('menu.leftnavbar.sandbox.label', 'victoire'),
         );
     }
-
 }

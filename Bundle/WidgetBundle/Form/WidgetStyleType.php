@@ -119,6 +119,7 @@ class WidgetStyleType extends AbstractType
             //We add the theme type only if there is a choice
             if (count($choices) > 1) {
                 $form->add('theme', 'choice', array(
+                    'label' => 'widget.form.theme.label',
                     'choices' => $choices,
                 ));
             }

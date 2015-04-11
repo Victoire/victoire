@@ -130,8 +130,8 @@
         <source>widget.form.entity.fields.label</source>
         <target>Champs</target>
       </trans-unit>
-      <trans-unit id="baa2a4733047849f29b3c0f2093e33f58fcfc8ea" resname="widget.form.theme.default">
-        <source>widget.form.theme.default</source>
+      <trans-unit id="baa2a4733047849f29b3c0f2093e33f58fcfc8ea" resname="victoire.theme.default.label">
+        <source>victoire.theme.default.label</source>
         <target>Défaut</target>
       </trans-unit>
       <trans-unit id="f20da08ae6b8cbd8d13f9076c53583b0238842b9" resname="widget.form.theme.label">
