@@ -257,7 +257,7 @@ class Article
 
     /**
      * Set publishedAt
-     * @param DateTime $publishedAt
+     * @param \DateTime $publishedAt
      *
      * @return $this
      */

@@ -129,7 +129,7 @@ class BlogController extends BasePageController
 
             return new JsonResponse(array(
                 'success' => true,
-                'url' => $this->generateUrl('victoire_core_page_show', array('_locale' => $blog->getLocale(), 'url' => $blog->getUrl())), ));
+                'url' => $this->generateUrl('victoire_core_page_show', array('_locale' => $blog->getLocale(), 'url' => $blog->getUrl())),));
         }
         //we display the form
         $errors = $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form);
@@ -162,9 +162,9 @@ class BlogController extends BasePageController
      * Blog settings
      *
      * @param Request $request
-     * @param Page    $blog
+     * @param BasePage    $blog
      *
-     * @return template
+     * @return Response
      * @Route("/{id}/category", name="victoire_blog_category")
      * @ParamConverter("blog", class="VictoirePageBundle:BasePage")
      */
@@ -189,7 +189,7 @@ class BlogController extends BasePageController
 
             return new JsonResponse(array(
                 'success' => true,
-                'url' => $this->generateUrl('victoire_core_page_show', array('_locale' => $blog->getLocale(), 'url' => $blog->getUrl())), ));
+                'url' => $this->generateUrl('victoire_core_page_show', array('_locale' => $blog->getLocale(), 'url' => $blog->getUrl())),));
         }
         //we display the form
         $errors = $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form);
@@ -222,9 +222,9 @@ class BlogController extends BasePageController
      * Blog settings
      *
      * @param Request $request
-     * @param Page    $blog
+     * @param BasePage    $blog
      *
-     * @return template
+     * @return Response
      * @Route("/{id}/articles", name="victoire_blog_articles")
      * @ParamConverter("blog", class="VictoirePageBundle:BasePage")
      */

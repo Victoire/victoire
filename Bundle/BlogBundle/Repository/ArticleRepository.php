@@ -25,7 +25,7 @@ class ArticleRepository extends EntityRepository
      *
      * @param boolean $excludeUnpublished Should we get only the published BasePages ?
      *
-     * @return BasePageRepository
+     * @return ArticleRepository
      */
     public function getAll($excludeUnpublished = false)
     {
