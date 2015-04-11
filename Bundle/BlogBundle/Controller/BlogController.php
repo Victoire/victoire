@@ -53,14 +53,13 @@ class BlogController extends BasePageController
         $blogs = $blogRepo->getAll()->run();
         $blog = reset($blogs);
         $options['blog'] = $blog;
-        $template = $this->getBaseTemplatePath() . ':index.html.twig';
+        $template = $this->getBaseTemplatePath().':index.html.twig';
         $chooseBlogForm = $this->createForm(new ChooseBlogType(), null, $options);
-
 
         $chooseBlogForm->handleRequest($request);
         if ($chooseBlogForm->isValid()) {
             $blog = $chooseBlogForm->getData()['blog'];
-            $template = $this->getBaseTemplatePath() . ':_blogItem.html.twig';
+            $template = $this->getBaseTemplatePath().':_blogItem.html.twig';
             $chooseBlogForm = $this->createForm(new ChooseBlogType(), null, array('blog' => $blog));
         }
         $businessProperties = array();
@@ -79,9 +78,9 @@ class BlogController extends BasePageController
                         'blog' => $blog,
                         'tabs' =>  array('articles', 'settings', 'category'),
                         'chooseBlogForm' => $chooseBlogForm->createView(),
-                        'businessProperties' => $businessProperties
+                        'businessProperties' => $businessProperties,
                     )
-                )
+                ),
             )
         );
     }
@@ -102,8 +101,8 @@ class BlogController extends BasePageController
     /**
      * Blog settings
      *
-     * @param Request $request
-     * @param BasePage    $blog
+     * @param Request  $request
+     * @param BasePage $blog
      *
      * @return JsonResponse
      * @Route("/{id}/settings", name="victoire_blog_settings")
@@ -128,32 +127,32 @@ class BlogController extends BasePageController
             $entityManager->persist($blog);
             $entityManager->flush();
 
-             return new JsonResponse(array(
+            return new JsonResponse(array(
                 'success' => true,
-                'url' => $this->generateUrl('victoire_core_page_show', array('_locale' => $blog->getLocale(), 'url' => $blog->getUrl()))));
+                'url' => $this->generateUrl('victoire_core_page_show', array('_locale' => $blog->getLocale(), 'url' => $blog->getUrl())), ));
         }
         //we display the form
         $errors = $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form);
-        if($errors != '')
-        {
+        if ($errors != '') {
             return new JsonResponse(array('html' => $this->container->get('victoire_templating')->render(
-                        $this->getBaseTemplatePath() . ':Tabs/_settings.html.twig',
+                        $this->getBaseTemplatePath().':Tabs/_settings.html.twig',
                             array(
                                 'blog' => $blog,
                                 'form' => $form->createView(),
-                                'businessProperties' => $businessProperties
+                                'businessProperties' => $businessProperties,
                             )
                         ),
-                        'message' => $errors
+                        'message' => $errors,
                     )
                 );
         }
+
         return new Response($this->container->get('victoire_templating')->render(
-                    $this->getBaseTemplatePath() . ':Tabs/_settings.html.twig',
+                    $this->getBaseTemplatePath().':Tabs/_settings.html.twig',
                     array(
                         'blog' => $blog,
                         'form' => $form->createView(),
-                        'businessProperties' => $businessProperties
+                        'businessProperties' => $businessProperties,
                     )
                 )
         );
@@ -188,32 +187,32 @@ class BlogController extends BasePageController
             $entityManager->persist($blog);
             $entityManager->flush();
 
-             return new JsonResponse(array(
+            return new JsonResponse(array(
                 'success' => true,
-                'url' => $this->generateUrl('victoire_core_page_show', array('_locale' => $blog->getLocale(), 'url' => $blog->getUrl()))));
+                'url' => $this->generateUrl('victoire_core_page_show', array('_locale' => $blog->getLocale(), 'url' => $blog->getUrl())), ));
         }
         //we display the form
         $errors = $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form);
-        if($errors != '')
-        {
+        if ($errors != '') {
             return new JsonResponse(array('html' => $this->container->get('victoire_templating')->render(
-                        $this->getBaseTemplatePath() . ':Tabs/_category.html.twig',
+                        $this->getBaseTemplatePath().':Tabs/_category.html.twig',
                             array(
                                 'blog' => $blog,
                                 'form' => $form->createView(),
-                                'businessProperties' => $businessProperties
+                                'businessProperties' => $businessProperties,
                             )
                         ),
-                        'message' => $errors
+                        'message' => $errors,
                     )
                 );
         }
+
         return new Response($this->container->get('victoire_templating')->render(
-                    $this->getBaseTemplatePath() . ':Tabs/_category.html.twig',
+                    $this->getBaseTemplatePath().':Tabs/_category.html.twig',
                     array(
                         'blog' => $blog,
                         'form' => $form->createView(),
-                        'businessProperties' => $businessProperties
+                        'businessProperties' => $businessProperties,
                     )
                 )
         );
@@ -231,9 +230,8 @@ class BlogController extends BasePageController
      */
     public function articlesAction(Request $request, BasePage $blog)
     {
-
         return new Response($this->container->get('victoire_templating')->render(
-                    $this->getBaseTemplatePath() . ':Tabs/_articles.html.twig',
+                    $this->getBaseTemplatePath().':Tabs/_articles.html.twig',
                     array(
                         'blog' => $blog,
                     )
@@ -244,8 +242,8 @@ class BlogController extends BasePageController
     /**
      * Blog translation
      *
-     * @param Request $request
-     * @param BasePage    $blog
+     * @param Request  $request
+     * @param BasePage $blog
      *
      * @return JsonResponse
      * @Route("/{id}/translate", name="victoire_blog_translate")

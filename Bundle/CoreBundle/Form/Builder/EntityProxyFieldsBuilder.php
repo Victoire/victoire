@@ -23,7 +23,7 @@ class EntityProxyFieldsBuilder
     /**
      * Build
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param string               $namespace
+     * @param string                                       $namespace
      *
      * @return array The all list of fields type to add for the entity namespace given
      */
@@ -41,7 +41,8 @@ class EntityProxyFieldsBuilder
                         //Create form types with field as key and values as choices
                         //TODO Add some formatter Class or a buildField method responsible to create this type
                         $builder->add($fieldKey, 'choice', array(
-                            'choices' => $businessProperties[$key]
+                            'choices' => $businessProperties[$key],
+                            'label' => 'widget_'.strtolower($widgetType).'.form.'.$fieldKey.'.label',
                         ));
                     } else {
                         throw new \Exception(sprintf('The Entity %s doesn\'t have a %s property, which is required by %s widget', $namespace, $key, $widgetType));

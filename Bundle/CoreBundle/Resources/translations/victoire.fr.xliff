@@ -10,6 +10,10 @@
         <source>entity_proxy.form.empty_value</source>
         <target>Veuillez sélectionner une entité</target>
       </trans-unit>
+      <trans-unit id="aad0a35b79fd52cd95a03b414b7b4f8eb7c167f6" resname="entity_proxy.form.label">
+        <source>entity_proxy.form.label</source>
+        <target>Objet</target>
+      </trans-unit>
       <trans-unit id="5ec78416cc19bcd441bf69345e854bf535488535" resname="error_occured">
         <source>error_occured</source>
         <target>Une erreur est apparue</target>
