@@ -119,7 +119,7 @@ class Blog extends BasePage
      *
      * @param string $rootCategory
      *
-     * @return Article
+     * @return Blog
      */
     public function addRootCategory($rootCategory)
     {
@@ -134,7 +134,7 @@ class Blog extends BasePage
      *
      * @param string $rootCategory
      *
-     * @return Article
+     * @return Blog
      */
     public function removeRootCategory($rootCategory)
     {

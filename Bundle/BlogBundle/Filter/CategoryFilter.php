@@ -38,7 +38,7 @@ class CategoryFilter extends BaseFilter
     public function buildQuery(QueryBuilder $qb, array $parameters)
     {
         if (!is_array($parameters['category'])) {
-            $parameters['category'] =  array($parameters['category']);
+            $parameters['category'] = array($parameters['category']);
         }
         //clean the parameters from the blank value
         foreach ($parameters['category'] as $index => $parameter) {
