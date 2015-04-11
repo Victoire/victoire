@@ -355,6 +355,16 @@ class WidgetManager
                 }
                 $accessor->setValue($widgetCopy, $name, $relatedEntitiesCopies);
             }
+
+            //Clone OneToOne relation objects
+            if ($values['type'] === ClassMetadataInfo::ONE_TO_ONE) {
+                $relatedEntity = $accessor->getValue($widget, $values['fieldName']);
+                if ($relatedEntity) {
+                    $relatedEntityCopy = clone $relatedEntity;
+                    $this->em->persist($relatedEntity);
+                    $accessor->setValue($widgetCopy, $name, $relatedEntityCopy);
+                }
+            }
         }
 
         //we have to persist the widget to get its id
