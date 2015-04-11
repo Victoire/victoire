@@ -1,9 +1,8 @@
 #Setup
 
-## Just press the button
+## You can start a project from the victoire/demo package
 
-
-    git clone https://github.com/Victoire/launchpad myVictoireWebsite
+    composer create-project victoire/demo /path/to/my/victoire myVictoire
 
 Import the database in var/dump/db.sql
 
@@ -11,34 +10,35 @@ or do it yourself by doing the usual stuff (doctrine:schema:update etc). You can
 
     php bin/console doctrine:databas:create
     php bin/console doctrine:schema:update -force
-    php bin/console doctrine:fixtures:load --fixtures="vendor/victoire/victoire/Victoire/Bundle/CoreBundle/DataFixtures/ORM" -n
+    php bin/console doctrine:fixtures:load --fixtures="vendor/victoire/victoire/Victoire/Bundle/CoreBundle/DataFixtures/ORM"
 
 
-## Manuellement
+## Manually
 
-- Installer le coeur de victoire :
-
+- Install Victoire core  :
 
     composer require victoire/victoire
 
-- Déclarer dans AppKernel:
+- Declare in AppKernel:
 
 
     //Victoire bundles
+    new Victoire\Bundle\AnalyticsBundle\VictoireAnalyticsBundle(),
     new Victoire\Bundle\CoreBundle\VictoireCoreBundle(),
     new Victoire\Bundle\BlogBundle\VictoireBlogBundle(),
     new Victoire\Bundle\BusinessEntityPageBundle\VictoireBusinessEntityPageBundle(),
-    new Victoire\Bundle\MediaBundle\VictoireMediaBundle(),
-    new Victoire\Bundle\QueryBundle\VictoireQueryBundle(),
-    new Victoire\Bundle\ThemeBundle\VictoireThemeBundle(),
-    new Victoire\Bundle\DashboardBundle\VictoireDashboardBundle(),
     new Victoire\Bundle\FormBundle\VictoireFormBundle(),
+    new Victoire\Bundle\FilterBundle\VictoireFilterBundle(),
+    new Victoire\Bundle\MediaBundle\VictoireMediaBundle(),
     new Victoire\Bundle\PageBundle\VictoirePageBundle(),
+    new Victoire\Bundle\QueryBundle\VictoireQueryBundle(),
     new Victoire\Bundle\SeoBundle\VictoireSeoBundle(),
+    new Victoire\Bundle\SitemapBundle\VictoireSitemapBundle(),
+    new Victoire\Bundle\ThemeBundle\VictoireThemeBundle(),
     new Victoire\Bundle\TwigBundle\VictoireTwigBundle(),
 
 
-- créer le fichier de config  victoire.yml suivant
+- create victoire.yml config file:
 
 
     victoire_core:
@@ -54,7 +54,7 @@ or do it yourself by doing the usual stuff (doctrine:schema:update etc). You can
                 widgets:
                     image: ~
 
-- ajouter les widgets requis:
+- add the wanted widgets:
 
 
         "appventus/text-widget"      : "dev-master",
@@ -66,12 +66,13 @@ or do it yourself by doing the usual stuff (doctrine:schema:update etc). You can
         ...
 
 
-Vérifier les dépendances de victoire:
+Check victoire dependencies:
 
 
     "knplabs/knp-menu"                       : "2.0.0-alpha1",
     "knplabs/knp-menu-bundle"                : "2.0.0-alpha1",
     "friendsofsymfony/user-bundle"           : "dev-master",
+    "stof/doctrine-extensions-bundle"        : "1.2.*@dev",
     "appventus/assetic-injector-bundle"      : "dev-master",
     "appventus/alertify-bundle"              : "dev-master",
     "appventus/shortcuts-bundle"             : "dev-master",
@@ -79,13 +80,6 @@ Vérifier les dépendances de victoire:
     "knplabs/knp-gaufrette-bundle"           : "v0.1.7",
     "knplabs/knp-components"                 : "dev-master",
 
-- mise à jour de la base
-
-        php bin/console do:sc:up —force
-
-- Lancez les fixtures pour peupler la base de données
-
-        php bin/console doctrine:fixtures:load --fixtures="vendor/victoire/victoire/Victoire/Bundle/CoreBundle/DataFixtures/ORM"
 
 - setup routing:
 
@@ -125,18 +119,20 @@ Vérifier les dépendances de victoire:
             default:
                 tree: true
 
-- installer FOSJSRouting
+- install FOSJSRouting
 
-- activer le filtre localizeddate:
+- enable the localizeddate filter:
 
         twig.extension.intl:
             class: Twig_Extensions_Extension_Intl
             tags:
                 - { name: twig.extension }
 
-- importer le fichier de config de victoire:
+- import the victoire config file:
+
+
 imports:
         - { resource: @VictoireCoreBundle/Resources/config/config.yml }
 
-- Aller sur «  /victoire-dcms/dashboard/welcome" en étant connecté avec un user ayant le rôle ROLE_VICTOIRE
+- Login with anakin@victoire.io:test user and start creating your website
 

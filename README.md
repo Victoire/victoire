@@ -15,7 +15,6 @@ Component | Description
 [**BusinessEntityBundle**][3] | Manage BusinessEntity
 [**BusinessEntityPageBundle**][4] | Define and manage [BusinessEntityPage][18] and [BusinessEntityPagePattern][19
 [**CoreBundle**][1] | The core
-[**DashboardBundle**][5] | Welcome the user after the project setup
 [**FormBundle**][6] | Based on MopaBootstrapBundle, it brings some cool form themes
 [**MediaBundle**][7] | Based on KunstmaanMediaBundle, it offers a file management interface and a bridge to the widgets
 [**PageBundle**][8] | One of the most important bundles, it contains all the base page logic
@@ -50,7 +49,6 @@ Cette œuvre est mise à disposition selon les termes de la Licence Creative Com
 [2]:  http://github.com/victoire/victoire/blob/master/Bundle/BlogBundle/README.md
 [3]:  http://github.com/victoire/victoire/blob/master/Bundle/BusinessEntityBundle/README.md
 [4]:  http://github.com/victoire/victoire/blob/master/Bundle/BusinessEntityPageBundle/README.md
-[5]:  http://github.com/victoire/victoire/blob/master/Bundle/DashboardBundle/README.md
 [6]:  http://github.com/victoire/victoire/blob/master/Bundle/FormBundle/README.md
 [7]:  http://github.com/victoire/victoire/blob/master/Bundle/MediaBundle/README.md
 [8]:  http://github.com/victoire/victoire/blob/master/Bundle/PageBundle/README.md
