@@ -2,7 +2,7 @@
 
 ## You can start a project from the victoire/demo package
 
-    composer create-project victoire/demo /path/to/my/victoire myVictoire
+    composer create-project victoire/demo myVictoire 1.0.*@dev
 
 Import the database in var/dump/db.sql
 
