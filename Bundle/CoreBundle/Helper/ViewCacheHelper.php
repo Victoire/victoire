@@ -102,8 +102,10 @@ class ViewCacheHelper
         $id = $this->getViewReferenceId($view, $entity);
         $oldItemNode = $rootNode->xpath("//viewReference[@id='".$id."']");
         unset($oldItemNode[0][0]);
-        $oldItemNode = $rootNode->xpath("//viewReference[@url='".$view->getUrl()."']");
-        unset($oldItemNode[0][0]);
+        if (method_exists($view, 'getUrl')) {
+            $oldItemNode = $rootNode->xpath("//viewReference[@url='".$view->getUrl()."']");
+            unset($oldItemNode[0][0]);
+        }
 
         $viewReferences = $this->container->get('victoire_core.view_helper')->buildViewReference($view, $entity);
 
