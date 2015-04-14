@@ -38,13 +38,6 @@ Component | Description
 [![Documentation Status](https://readthedocs.org/projects/victoiredcms/badge/?version=latest)](https://readthedocs.org/projects/victoiredcms/?badge=latest) [![Travis-ci](https://travis-ci.org/Victoire/victoire.svg?branch=master)](https://travis-ci.org/Victoire/victoire) [![SensioLabsInsight](https://insight.sensiolabs.com/projects/d5307bf2-eac4-43db-bd49-dd9e85e360a5/mini.png)](https://insight.sensiolabs.com/projects/d5307bf2-eac4-43db-bd49-dd9e85e360a5)[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Victoire/victoire/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Victoire/victoire/?branch=master)
 
 
-
-
-Cette œuvre est mise à disposition selon les termes de la Licence Creative Commons Attribution 4.0 International.
-
-*Proprieté d'AppVentus, tous droits réservés - Property of AppVentus, All Right reserved*
-
-
 [1]:  http://github.com/victoire/victoire/blob/master/Bundle/CoreBundle/README.md
 [2]:  http://github.com/victoire/victoire/blob/master/Bundle/BlogBundle/README.md
 [3]:  http://github.com/victoire/victoire/blob/master/Bundle/BusinessEntityBundle/README.md
