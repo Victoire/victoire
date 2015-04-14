@@ -9,7 +9,8 @@ Import the database in var/dump/db.sql
 or do it yourself by doing the usual stuff (doctrine:schema:update etc). You can also load fixtures with the following lines :
 
     php bin/console doctrine:database:create
-    php bin/console doctrine:schema:update -force
+    php bin/console doctrine:schema:create
+    php bin/console victoire:generate:view-cache --env=dev
     php bin/console doctrine:fixtures:load --fixtures="vendor/victoire/victoire/Victoire/Bundle/CoreBundle/DataFixtures/ORM"
 
 
