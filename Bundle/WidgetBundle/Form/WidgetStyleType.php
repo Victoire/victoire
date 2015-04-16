@@ -78,12 +78,10 @@ class WidgetStyleType extends AbstractType
         foreach ($victoire_twig_responsive as $key) {
             $builder->add('containerMargin'.$key, null, array(
                 'label' => 'widget_layout.form.containerMargin'.$key.'.label',
-                'vic_help_block' => 'widget_layout.form.containerMargin'.$key.'.help_block',
                 'required' => false,
             ));
             $builder->add('containerPadding'.$key, null, array(
                 'label' => 'widget_layout.form.containerPadding'.$key.'.label',
-                'vic_help_block' => 'widget_layout.form.containerPadding'.$key.'.help_block',
                 'required' => false,
             ));
         }

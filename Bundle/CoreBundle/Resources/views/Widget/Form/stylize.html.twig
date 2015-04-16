@@ -80,7 +80,9 @@
                         <div class="vic-tab-content">
                             {% for key, responsive_config in victoire_twig_responsive %}
                                 <div role="tabpanel" class="vic-tab-pane{% if loop.first %} vic-active{% endif %}" id="vic-widget-layout-{{ key }}">
-                                    {{ form_row(attribute(form, 'containerMargin' ~ key|upper)) }}
+                                    <div class="vic-stylize-responsive-margin vic-clearfix">
+                                        {{ form_row(attribute(form, 'containerMargin' ~ key|upper)) }}
+                                    </div>
 
                                     {{ form_row(attribute(form, 'containerPadding' ~ key|upper)) }}
                                 </div>

@@ -107,38 +107,6 @@
         <source>widget_layout.form.containerPadding.help_block</source>
         <target><![CDATA[Indiquez la taille suivie de l'unité (px, %...) - Propriété CSS <strong>padding</strong>]]></target>
       </trans-unit>
-      <trans-unit id="24" resname="widget_layout.form.containerMarginXS.help_block">
-        <source>widget_layout.form.containerMarginXS.help_block</source>
-        <target><![CDATA[Indiquez la marge suivie de l'unité (px, %...). Vous pouvez utiliser 0px auto pour centrer le conteneur - Propriété CSS <strong>margin</strong>]]></target>
-      </trans-unit>
-      <trans-unit id="25" resname="widget_layout.form.containerPaddingXS.help_block">
-        <source>widget_layout.form.containerPaddingXS.help_block</source>
-        <target><![CDATA[Indiquez la taille suivie de l'unité (px, %...) - Propriété CSS <strong>padding</strong>]]></target>
-      </trans-unit>
-      <trans-unit id="26" resname="widget_layout.form.containerMarginSM.help_block">
-        <source>widget_layout.form.containerMarginSM.help_block</source>
-        <target><![CDATA[Indiquez la marge suivie de l'unité (px, %...). Vous pouvez utiliser 0px auto pour centrer le conteneur - Propriété CSS <strong>margin</strong>]]></target>
-      </trans-unit>
-      <trans-unit id="27" resname="widget_layout.form.containerPaddingSM.help_block">
-        <source>widget_layout.form.containerPaddingSM.help_block</source>
-        <target><![CDATA[Indiquez la taille suivie de l'unité (px, %...) - Propriété CSS <strong>padding</strong>]]></target>
-      </trans-unit>
-      <trans-unit id="28" resname="widget_layout.form.containerMarginMD.help_block">
-        <source>widget_layout.form.containerMarginMD.help_block</source>
-        <target><![CDATA[Indiquez la marge suivie de l'unité (px, %...). Vous pouvez utiliser 0px auto pour centrer le conteneur - Propriété CSS <strong>margin</strong>]]></target>
-      </trans-unit>
-      <trans-unit id="29" resname="widget_layout.form.containerPaddingMD.help_block">
-        <source>widget_layout.form.containerPaddingMD.help_block</source>
-        <target><![CDATA[Indiquez la taille suivie de l'unité (px, %...) - Propriété CSS <strong>padding</strong>]]></target>
-      </trans-unit>
-      <trans-unit id="30" resname="widget_layout.form.containerMarginLG.help_block">
-        <source>widget_layout.form.containerMarginLG.help_block</source>
-        <target><![CDATA[Indiquez la marge suivie de l'unité (px, %...). Vous pouvez utiliser 0px auto pour centrer le conteneur - Propriété CSS <strong>margin</strong>]]></target>
-      </trans-unit>
-      <trans-unit id="31" resname="widget_layout.form.containerPaddingLG.help_block">
-        <source>widget_layout.form.containerPaddingLG.help_block</source>
-        <target><![CDATA[Indiquez la taille suivie de l'unité (px, %...) - Propriété CSS <strong>padding</strong>]]></target>
-      </trans-unit>
       <trans-unit id="32" resname="widget_layout.form.containerBackground.help_block">
         <source>widget_layout.form.containerBackground.help_block</source>
         <target><![CDATA[par ex. : #123ABC ou url('http://website.com/image.jpg') - Propriété CSS <strong>background</strong>]]></target>
