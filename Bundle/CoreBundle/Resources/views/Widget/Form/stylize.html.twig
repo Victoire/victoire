@@ -30,13 +30,20 @@
 
                 {{ form_row(form.containerTag) }}
 
-                {{ form_row(form.containerClass) }}
+                <div class="vic-row">
+                    <div class="vic-col-md-6">
+                        {{ form_row(form.containerClass) }}
+                    </div>
 
-                {{ form_row(form.containerWidth) }}
+                    <div class="vic-col-md-6">
+                        {{ form_row(form.textAlign) }}
+                    </div>
+                </div>
 
                 {{ form_row(form.containerBackground) }}
 
-                {{ form_row(form.textAlign) }}
+                {{ form_row(form.containerWidth) }}
+
 
                 {% if form.theme is defined %}
                     {{ form_row(form.theme) }}
