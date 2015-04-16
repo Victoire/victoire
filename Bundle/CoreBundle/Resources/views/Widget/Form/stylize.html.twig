@@ -21,7 +21,7 @@
 
     <div id="vic-stylize">
         <div class="vic-row">
-            <div class="vic-col-md-6">
+            <div class="vic-col-md-5">
                 {% spaceless %}
                     <h3 class="vic-h3" id="vic-stylize-container-heading">
                         {{ 'victoire.widget.stylize.container.heading'|trans() }}
@@ -50,37 +50,43 @@
                 {% endif %}
             </div>
 
-            <div class="vic-col-md-6">
+            <div class="vic-col-md-7">
                 {% spaceless %}
                     <h3 class="vic-h3" id="vic-stylize-layout-heading">
                         {{ 'victoire.widget.stylize.layout.heading'|trans() }}
                     </h3>
                 {% endspaceless %}
 
-                {{ form_row(form.containerMargin) }}
+                <div class="vic-row">
+                    <div class="vic-col-md-6">
+                        <div id="vic-stylize-regular-box">
+                            {{ form_row(form.containerMargin) }}
 
-                {{ form_row(form.containerPadding) }}
-
-                <ul class="vic-nav vic-nav-tabs" role="tablist">
-                    {% for key, responsive_config in victoire_twig_responsive %}
-                        <li {% if loop.first %}class="vic-active"{% endif %}>
-                            <a href="#vic-widget-layout-{{ key }}" role="tab" data-toggle="vic-tab" title="{% if responsive_config.min is defined %}{{ responsive_config.min }}px{% endif %}{% if responsive_config.min is defined and responsive_config.max is defined%} - {% endif %}{% if responsive_config.max is defined %}{{ responsive_config.max }}px{% endif %}">
-                                {{ ('widget_layout.tab.containerMargin.' ~ key|upper ~ '.label' )|trans({}, 'victoire') }}
-
-                                <i class="fa fa-info-circle" title="{% if responsive_config.min is defined %}{{ responsive_config.min }}px{% endif %}{% if responsive_config.min is defined and responsive_config.max is defined%} - {% endif %}{% if responsive_config.max is defined %}{{ responsive_config.max }}px{% endif %}"></i>
-                            </a>
-                        </li>
-                    {% endfor %}
-                </ul>
-
-                <div class="vic-tab-content">
-                    {% for key, responsive_config in victoire_twig_responsive %}
-                        <div role="tabpanel" class="vic-tab-pane{% if loop.first %} vic-active{% endif %}" id="vic-widget-layout-{{ key }}">
-                            {{ form_row(attribute(form, 'containerMargin' ~ key|upper)) }}
-
-                            {{ form_row(attribute(form, 'containerPadding' ~ key|upper)) }}
+                            {{ form_row(form.containerPadding) }}
                         </div>
-                    {% endfor %}
+                    </div>
+
+                    <div class="vic-col-md-6">
+                        <ul class="vic-nav-group" id="vic-stylize-nav-group">
+                            {% for key, responsive_config in victoire_twig_responsive %}
+                                <li class="item{% if loop.first %} vic-active{% endif %}">
+                                    <a href="#vic-widget-layout-{{ key }}" role="tab" data-toggle="vic-tab" data-title="{% if responsive_config.min is defined %}{{ responsive_config.min }}px{% endif %}{% if responsive_config.min is defined and responsive_config.max is defined%} - {% endif %}{% if responsive_config.max is defined %}{{ responsive_config.max }}px{% endif %}">
+                                        {{ ('widget_layout.tab.containerMargin.' ~ key|upper ~ '.label' )|trans({}, 'victoire')|raw }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+
+                        <div class="vic-tab-content">
+                            {% for key, responsive_config in victoire_twig_responsive %}
+                                <div role="tabpanel" class="vic-tab-pane{% if loop.first %} vic-active{% endif %}" id="vic-widget-layout-{{ key }}">
+                                    {{ form_row(attribute(form, 'containerMargin' ~ key|upper)) }}
+
+                                    {{ form_row(attribute(form, 'containerPadding' ~ key|upper)) }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
