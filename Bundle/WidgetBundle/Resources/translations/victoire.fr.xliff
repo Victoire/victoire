@@ -12,7 +12,7 @@
       </trans-unit>
       <trans-unit id="0" resname="victoire_widget.stylize.title">
         <source>victoire_widget.stylize.title</source>
-        <target><![CDATA[Modification du style du widget <strong>#%widgetId%</strong>]]></target>
+        <target><![CDATA[Style du widget <strong>#%widgetId%</strong>]]></target>
       </trans-unit>
       <trans-unit id="1" resname="widget_layout.form.containerTag.label">
         <source>widget_layout.form.containerTag.label</source>
