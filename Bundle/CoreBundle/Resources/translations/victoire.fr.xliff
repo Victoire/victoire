@@ -190,6 +190,14 @@
         <source>victoire.login.meta.title</source>
         <target>Embarquement imminent</target>
       </trans-unit>
+      <trans-unit id="20" resname="victoire.widget.stylize.container.heading">
+        <source>victoire.widget.stylize.container.heading</source>
+        <target>Conteneur</target>
+      </trans-unit>
+      <trans-unit id="21" resname="victoire.widget.stylize.layout.heading">
+        <source>victoire.widget.stylize.layout.heading</source>
+        <target>Agencement responsive</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

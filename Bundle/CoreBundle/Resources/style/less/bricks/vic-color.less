@@ -1,0 +1,11 @@
+.init-color-helpers(@name, @color) {
+    .vic-text-@{name} {
+        color: @color;
+    }
+
+    .vic-bg-@{name} {
+        background-color: @color;
+    }
+}
+
+.init-color-helpers(~'green', @green);
