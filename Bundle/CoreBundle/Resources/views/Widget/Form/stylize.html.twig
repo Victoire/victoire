@@ -17,15 +17,17 @@
         </div>
     {% endif %}
 
-    <div class="vic-tab-pane vic-active">
-        {{ form_start(form) }}
+    {{ form_start(form) }}
 
+    <div id="vic-stylize">
         <div class="vic-row">
-            <div class="vic-col-md-12">
-                <h3 class="vic-h3">Conteneur</h3>
-            </div>
-
             <div class="vic-col-md-6">
+                {% spaceless %}
+                    <h3 class="vic-h3" id="vic-stylize-container-heading">
+                        {{ 'victoire.widget.stylize.container.heading'|trans() }}
+                    </h3>
+                {% endspaceless %}
+
                 {{ form_row(form.containerTag) }}
 
                 {{ form_row(form.containerClass) }}
@@ -42,6 +44,12 @@
             </div>
 
             <div class="vic-col-md-6">
+                {% spaceless %}
+                    <h3 class="vic-h3" id="vic-stylize-layout-heading">
+                        {{ 'victoire.widget.stylize.layout.heading'|trans() }}
+                    </h3>
+                {% endspaceless %}
+
                 {{ form_row(form.containerMargin) }}
 
                 {{ form_row(form.containerPadding) }}
@@ -71,9 +79,9 @@
         </div>
 
         {{ form_rest(form) }}
-
-        {{ form_end(form) }}
     </div>
+
+    {{ form_end(form) }}
 {% endblock modal_body_content %}
 
 {% block action %}update{% endblock action %}
