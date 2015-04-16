@@ -55,12 +55,21 @@ select {
 }
 
 .vic-help-block {
-    color: #999999;
-    padding: @vic-helpBlock-horizontalPadding 10px;
-    display: inline-block;
+    display: block;
+    padding: 0;
+    font-size: @vicHelpBlock_fontSize;
+    color: @vicFormGroup-label_color;
+    line-height: @vicHelpBlock_lineHeight;
+    margin-top: @vicHelpBlock_marginTop;
+    margin-bottom: @vicHelpBlock_marginBottom;
+
+    b, strong {
+        font-weight: 600;
+    }
 
     a {
-        color: #e74c3c;
+        font-weight: 700;
+        color: @green;
     }
 }
 
