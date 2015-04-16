@@ -4,6 +4,8 @@
 
 {% trans_default_domain "victoire" %}
 
+{% block modal_container_classes %}{{ parent() }} -stylize{% endblock modal_container_classes %}
+
 {% block modal_header_title %}
     {{ 'victoire_widget.stylize.title'|trans({'%widgetId%': widget.id})|raw }}
 {% endblock modal_header_title %}
