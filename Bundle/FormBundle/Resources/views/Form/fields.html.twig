@@ -57,10 +57,9 @@
     <div class="vic-custom-select">
         {% set attr = attr|merge({'class': ''}) %}
         {{ parent() }}
-        {% if vic_horizontal %}
-            {{ block('form_message') }}
-        {% endif %}
     </div>
+
+    {{ block('form_message') }}
 {% endblock choice_widget_collapsed %}
 
 {% block textarea_widget %}
