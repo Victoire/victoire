@@ -11,7 +11,7 @@ or do it yourself by doing the usual stuff (doctrine:schema:update etc). You can
     php bin/console doctrine:database:create
     php bin/console doctrine:schema:create
     php bin/console victoire:generate:view-cache --env=dev
-    php bin/console doctrine:fixtures:load --fixtures="vendor/victoire/victoire/Victoire/Bundle/CoreBundle/DataFixtures/ORM"
+    php bin/console doctrine:fixtures:load --fixtures="vendor/victoire/victoire/Bundle/CoreBundle/DataFixtures/ORM"
 
 
 ## Manually
@@ -22,7 +22,7 @@ or do it yourself by doing the usual stuff (doctrine:schema:update etc). You can
 
 - Declare in AppKernel:
 
-
+```php
     //Victoire bundles
     new Victoire\Bundle\AnalyticsBundle\VictoireAnalyticsBundle(),
     new Victoire\Bundle\CoreBundle\VictoireCoreBundle(),
@@ -37,11 +37,11 @@ or do it yourself by doing the usual stuff (doctrine:schema:update etc). You can
     new Victoire\Bundle\SitemapBundle\VictoireSitemapBundle(),
     new Victoire\Bundle\ThemeBundle\VictoireThemeBundle(),
     new Victoire\Bundle\TwigBundle\VictoireTwigBundle(),
-
+```
 
 - create victoire.yml config file:
 
-
+```yml
     victoire_core:
         user_class: Victoire\Bundle\UserBundle\Entity\User
         applicative_bundle: AppBundle #Optional
@@ -54,10 +54,11 @@ or do it yourself by doing the usual stuff (doctrine:schema:update etc). You can
                 max: 1
                 widgets:
                     image: ~
+```
 
 - add the wanted widgets:
 
-
+```json
         "appventus/text-widget"      : "dev-master",
         "appventus/redactor-widget"  : "dev-master",
         "appventus/button-widget"    : "dev-master",
@@ -65,11 +66,11 @@ or do it yourself by doing the usual stuff (doctrine:schema:update etc). You can
         "appventus/render-widget"    : "dev-master",
         "appventus/breadcrumb-widget": "dev-master",
         ...
-
+```
 
 Check victoire dependencies:
 
-
+```json
     "knplabs/knp-menu"                       : "2.0.0-alpha1",
     "knplabs/knp-menu-bundle"                : "2.0.0-alpha1",
     "friendsofsymfony/user-bundle"           : "dev-master",
@@ -80,10 +81,11 @@ Check victoire dependencies:
     "knplabs/gaufrette"                      : "v0.1.7",
     "knplabs/knp-gaufrette-bundle"           : "v0.1.7",
     "knplabs/knp-components"                 : "dev-master",
-
+```
 
 - setup routing:
 
+```yml
         fos_user_security:
             resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 
@@ -97,13 +99,14 @@ Check victoire dependencies:
         VictoireCoreBundle:
             resource: .
             type: victoire
-
+```
 
 
 - Enable StofDoctrineExtensions in AppKernel
 
 - add this config in doctrine.yml:
 
+```yml
         orm:
            [...]
             mappings:
@@ -112,28 +115,31 @@ Check victoire dependencies:
                     prefix: Gedmo\Tree\Entity
                     dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Tree/Entity"
                     is_bundle: false
+```
 
 - add this config in stof_doctrine_extensions (imported in config.yml)
+```yml
     stof_doctrine_extensions:
         default_locale: fr_FR
         orm:
             default:
                 tree: true
+```
 
 - install FOSJSRouting
 
 - enable the localizeddate filter:
-
+```yml
         twig.extension.intl:
             class: Twig_Extensions_Extension_Intl
             tags:
                 - { name: twig.extension }
-
+```
 - import the victoire config file:
 
-
+```yml
 imports:
         - { resource: @VictoireCoreBundle/Resources/config/config.yml }
-
+```
 - Login with anakin@victoire.io:test user and start creating your website
 
