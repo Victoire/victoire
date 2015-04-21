@@ -42,12 +42,13 @@ class WidgetGeneratorTest extends GeneratorTest
     protected function getGenerator()
     {
         $generator = new WidgetGenerator($this->filesystem);
-        $generator->setSkeletonDirs(array(
+        $skeletonDirs = array(
             __DIR__.'/../../../../vendor/sensio/generator-bundle/Sensio/Bundle/GeneratorBundle/Resources/skeleton',
             __DIR__.'/../../Resources/skeleton',
-        ));
+        );
+        $generator->setSkeletonDirs($skeletonDirs);
 
-        $generator->setTemplating(new \Twig_Environment(new \Twig_Loader_Filesystem($this->skeletonDirs), array(
+        $generator->setTemplating(new \Twig_Environment(new \Twig_Loader_Filesystem($skeletonDirs), array(
             'debug'            => true,
             'cache'            => false,
             'strict_variables' => true,
