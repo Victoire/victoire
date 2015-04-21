@@ -42,7 +42,7 @@ class WidgetGenerator extends Generator
      * @param string $namespace
      * @param string $format
      */
-    public function generate($namespace, $bundle, $dir, $format, $structure, $fields = null, $parent = null, $contentResolver = false, $parentContentResolver = false)
+    public function generate($namespace, $bundle, $dir, $format, $structure, $fields = null, $parent = null, $packagistParentName = null, $contentResolver = false, $parentContentResolver = false, $orgname = null)
     {
 
         $dir .= '/'.strtr($namespace, '\\', '/');
@@ -78,17 +78,19 @@ class WidgetGenerator extends Generator
         }
 
         $parameters = array(
-            'namespace'         => $namespace,
-            'bundle'            => $bundle,
-            'parent'            => $parent,
-            'widget'            => $widget,
-            'format'            => $format,
-            'fields'            => $fields,
-            'toStringProperty' => $toStringProperty,
-            'bundle_basename'   => $basename,
-            'content_resolver'   => $contentResolver,
-            'parent_content_resolver'   => $parentContentResolver,
-            'extension_alias'   => Container::underscore($basename),
+            'namespace'               => $namespace,
+            'bundle'                  => $bundle,
+            'parent'                  => $parent,
+            'packagistParentName'     => $packagistParentName,
+            'orgname'                 => $orgname,
+            'widget'                  => $widget,
+            'format'                  => $format,
+            'fields'                  => $fields,
+            'toStringProperty'        => $toStringProperty,
+            'bundle_basename'         => $basename,
+            'content_resolver'        => $contentResolver,
+            'parent_content_resolver' => $parentContentResolver,
+            'extension_alias'         => Container::underscore($basename),
         );
 
         $this->renderFile('bundle/Bundle.php.twig', $dir.'/'.$bundle.'.php', $parameters);
