@@ -1,5 +1,5 @@
 {
-    "name": "victoire/anakin-widget",
+    "name": "friendsofvictoire/anakin-widget",
     "type": "symfony-bundle",
     "description": "Victoire DCMS Anakin widget",
     "keywords": ["cms", "victoire", "Anakin", "widget"],
