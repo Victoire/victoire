@@ -11,7 +11,6 @@ use Sensio\Bundle\GeneratorBundle\Generator\Generator;
 class WidgetGenerator extends Generator
 {
     private $filesystem;
-    private $frameworks;
     private $templating;
     private $skeletonDirs;
 
@@ -21,10 +20,9 @@ class WidgetGenerator extends Generator
      * @param Filesystem $filesystem
      * @param unknown    $frameworks
      */
-    public function __construct(Filesystem $filesystem, $frameworks)
+    public function __construct(Filesystem $filesystem)
     {
         $this->filesystem = $filesystem;
-        $this->frameworks = $frameworks;
     }
 
     /**
