@@ -40,7 +40,7 @@ class CmsExtension extends \Twig_Extension_Core
      * @param WidgetExceptionHandler $widgetExceptionHandler
      * @param CurrentViewHelper      $currentViewHelper
      * @param ViewCacheHelper        $viewCacheHelper
-     * @param \Twig_Environment        $twig
+     * @param \Twig_Environment      $twig
      */
     public function __construct(
         WidgetRenderer $widgetRenderer,
@@ -51,15 +51,14 @@ class CmsExtension extends \Twig_Extension_Core
         CurrentViewHelper $currentViewHelper,
         ViewCacheHelper $viewCacheHelper,
         \Twig_Environment $twig
-    )
-    {
+    ) {
         $this->widgetRenderer = $widgetRenderer;
         $this->templating = $templating;
         $this->securityContext = $securityContext;
         $this->entityManager = $entityManager;
         $this->widgetExceptionHandler = $widgetExceptionHandler;
         $this->currentViewHelper = $currentViewHelper;
-        $this->pageCacheHelper = $viewCacheHelper;
+        $this->viewCacheHelper = $viewCacheHelper;
         $this->twig = $twig;
     }
 
@@ -72,6 +71,7 @@ class CmsExtension extends \Twig_Extension_Core
     {
         return array(
             'cms_widget_actions'         => new \Twig_Function_Method($this, 'cmsWidgetActions', array('is_safe' => array('html'))),
+            'cms_widget_unlink_action'   => new \Twig_Function_Method($this, 'cmsWidgetUnlinkAction', array('is_safe' => array('html'))),
             'cms_slot_widgets'           => new \Twig_Function_Method($this, 'cmsSlotWidgets', array('is_safe' => array('html'))),
             'cms_slot_actions'           => new \Twig_Function_Method($this, 'cmsSlotActions', array('is_safe' => array('html'))),
             'cms_widget'                 => new \Twig_Function_Method($this, 'cmsWidget', array('is_safe' => array('html'))),
@@ -119,6 +119,23 @@ class CmsExtension extends \Twig_Extension_Core
     }
 
     /**
+     * render unlink action for a widgetId
+     *
+     * @param integer $widgetId The widgetId to unlink
+     *
+     * @return string the widget unlink action
+     */
+    public function cmsWidgetUnlinkAction($widgetId, $view)
+    {
+        $viewReference = $reference = $this->viewCacheHelper->getReferenceByParameters(
+            array('viewId' => $view->getId())
+        );
+        $view->setReference($viewReference);
+
+        return $this->widgetRenderer->renderUnlinkActionByWidgetId($widgetId, $view);
+    }
+
+    /**
      * render all widgets in a slot
      *
      * @param unknown $slotId
@@ -158,7 +175,7 @@ class CmsExtension extends \Twig_Extension_Core
                     //render this widget
                     $result .= $this->cmsWidget($widget, $widgetMap->getPosition() + 1, $slotOptions);
                 } catch (\Exception $ex) {
-                    $result .= $this->widgetExceptionHandler->handle($ex, $widget);
+                    $result .= $this->widgetExceptionHandler->handle($ex, $currentView, $widget, $widgetId);
                 }
             }
         }
@@ -210,8 +227,8 @@ class CmsExtension extends \Twig_Extension_Core
 
     /**
      * Converts a date to the given format.
-     * @param string                       $format   A format
-     * @param DateTimeZone|string          $timezone A timezone
+     * @param string              $format   A format
+     * @param DateTimeZone|string $timezone A timezone
      *
      * <pre>
      *   {{ post.published_at|date("m/d/Y") }}
@@ -229,7 +246,6 @@ class CmsExtension extends \Twig_Extension_Core
         }
 
         return $result;
-
     }
 
     /**

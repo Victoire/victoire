@@ -1,0 +1,2 @@
+{% trans_default_domain "victoire" %}
+<a id="unlink-link-{{ widgetId }}" href="{{ path('victoire_core_widget_unlink', {'id': widgetId, 'viewReference': view.reference.id }) }}" data-toggle="vic-confirm" data-title="{{ 'modal.button.unlink.confirm.title'|trans({}, 'victoire') }}" data-body="{{ 'modal.button.unlink.confirm.body'|trans({}, 'victoire') }}" class="vic-hover-widget-unlink"><i></i></a>

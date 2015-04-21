@@ -10,7 +10,6 @@ use Victoire\Bundle\WidgetBundle\Model\Widget;
 
 class WidgetRenderer
 {
-
     private $container;
 
     public function __construct(Container $container)
@@ -51,11 +50,10 @@ class WidgetRenderer
         );
     }
 
-
     /**
      * render a widget
-     * @param Widget  $widget
-     * @param View    $view
+     * @param Widget $widget
+     * @param View   $view
      *
      * @return string
      */
@@ -91,7 +89,25 @@ class WidgetRenderer
         return $this->container->get('victoire_templating')->render(
             'VictoireCoreBundle:Widget:widgetActions.html.twig',
             array(
-                "widget" => $widget
+                "widget" => $widget,
+            )
+        );
+    }
+
+    /**
+     * render widget unlink action
+     * @param integer $widgetId
+     * @param View    $view
+     *
+     * @return template
+     */
+    public function renderUnlinkActionByWidgetId($widgetId, $view)
+    {
+        return $this->container->get('victoire_templating')->render(
+            'VictoireCoreBundle:Widget:widgetUnlinkAction.html.twig',
+            array(
+                "widgetId" => $widgetId,
+                "view" => $view,
             )
         );
     }
@@ -145,7 +161,7 @@ class WidgetRenderer
                 "view"     => $view,
                 'widgets'  => $widgets,
                 'max'      => $max,
-                'position' => $position
+                'position' => $position,
             )
         );
     }

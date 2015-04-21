@@ -3,6 +3,9 @@
 {% if widget != null %}
 <div class="vic-widget {{ cms_widget_extra_css_class(widget) }}" id="widget-{{widget.id}}">
     {{ cms_widget_actions(widget) }}
+{% elseif widgetId != null %}
+<div class="vic-widget vic-alert vic-alert-danger" id="widget-{{widgetId}}">
+    {{ cms_widget_unlink_action(widgetId, currentView) }}
 {% else %}
 <div class="vic-widget vic-alert vic-alert-danger">
 {% endif %}
