@@ -69,6 +69,9 @@ trait VictoireSubContextTrait
     {
 
         $element = $this->getSession()->getPage()->find('xpath', 'descendant-or-self::*[@class="vic-modal-footer-content"]/a[@data-modal="create"]');
+        if(!$element){
+            $element = $this->getSession()->getPage()->find('xpath', 'descendant-or-self::*[@class="vic-modal-footer-content"]/a[@data-modal="update"]');
+        }
         $element->click();
     }
 
@@ -91,4 +94,14 @@ trait VictoireSubContextTrait
 
     }
 
+    /**
+     * @When /^I select the option "(?P<option>[^"]*)" in the dropdown "(?P<dropdown>[^"]*)"$/
+     */
+    public function iSelectTheOptionInTheDropdown($option, $dropdown)
+    {
+        $link = $this->getSession()->getPage()->find("xpath", "descendant-or-self::a[text()[normalize-space(.)='".$dropdown."']]");
+        $optionButton = $this->getSession()->getPage()->find("xpath", "descendant-or-self::a[text()[normalize-space(.)='$option']]");
+        $link->click();
+        $optionButton->click();
+    }
 }

@@ -126,6 +126,7 @@ class PageSubscriber implements EventSubscriber
                     $this->buildUrl($entity);
                     $meta = $this->entityManager->getClassMetadata(get_class($entity));
                     $this->uow->computeChangeSet($meta, $entity);
+                    $this->updateCache($entity);
                 }
             }
         }
