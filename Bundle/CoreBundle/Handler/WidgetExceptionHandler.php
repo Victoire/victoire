@@ -36,11 +36,13 @@ class WidgetExceptionHandler
     /**
      * Handle response for an exception for a widget
      *
-     * @param Widget     $widget    The widget that throwed an error
+     * @param View    $currentView
+     * @param Widget  $widget
+     * @param integer $widgetId
      *
      * @return string The html with the Error
      */
-    public function handle(\Exception $ex, $widget = null)
+    public function handle(\Exception $ex, $currentView, $widget = null, $widgetId = null)
     {
         $result = '';
 
@@ -68,7 +70,9 @@ class WidgetExceptionHandler
                 'VictoireCoreBundle:Widget:showError.html.twig',
                 array(
                     "widget" => $widget,
-                    "error" => $exceptionResult
+                    "widgetId" => $widgetId,
+                    "currentView" => $currentView,
+                    "error" => $exceptionResult,
                 )
             );
         } else {
@@ -79,7 +83,9 @@ class WidgetExceptionHandler
                     'VictoireCoreBundle:Widget:showError.html.twig',
                     array(
                         "widget" => $widget,
-                        "error" => $ex->getMessage()
+                        "widgetId" => $widgetId,
+                        "currentView" => $currentView,
+                        "error" => $ex->getMessage(),
                     )
                 );
             }

@@ -41,7 +41,6 @@ $vic('#{{ id }} .{{ cancel_button_class }}').click(function(){
 });
 
 {# if no callback were given, we submit or go to the url of given as parameter #}
-{% if confirmCallback == null %}
 $vic('#{{ id }} .{{ confirm_button_class }}').click(function(){
     elem = $vic('.vic-confirm-waiting');
     elem.removeAttr('data-toggle');
@@ -50,16 +49,13 @@ $vic('#{{ id }} .{{ confirm_button_class }}').click(function(){
     {% if type == "form" %}
         elem.submit();
     {% else %}
-        elem.click();
+        window.location.href = $vic(elem).attr("href");
     {% endif %}
     $vic('#{{ id }}').vicmodal('hide');
+    {% if confirmCallback == null %}
+        {{ confirmCallback|raw }};
+    {% endif %}
 });
-{% else %}
-    $vic('#{{ id }} .{{ confirm_button_class }}').click(function(){
-        {{ confirmCallback }};
-        $vic('#{{ id }}').vicmodal('hide');
-    });
-{% endif %}
 
 //Focus on confirm button
 $vic('#{{ id }}').focus(function(){

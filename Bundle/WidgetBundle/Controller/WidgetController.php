@@ -78,7 +78,7 @@ class WidgetController extends Controller
      * @param string         $type              The type of the widget we edit
      * @param integer        $viewReference     The view reference where attach the widget
      * @param string         $slot              The slot where attach the widget
-     * @param integer         $positionReference Position of the widget
+     * @param integer        $positionReference Position of the widget
      * @param BusinessEntity $entityName        The business entity name the widget shows on dynamic mode
      *
      * @return JsonResponse
@@ -216,7 +216,8 @@ class WidgetController extends Controller
 
     /**
      * Delete a Widget
-     * @param Widget $widget The widget to delete
+     * @param Widget  $widget        The widget to delete
+     * @param integer $viewReference The current view
      *
      * @return JsonResponse response
      * @Route("/victoire-dcms/widget/delete/{id}/{viewReference}", name="victoire_core_widget_delete", defaults={"_format": "json"})
@@ -235,8 +236,36 @@ class WidgetController extends Controller
     }
 
     /**
-     * Update widget positions accross the view. If moved widget is a Reference, ask to detach the view from template
+     * Unlink a Widget by id
+     * -> used to unlink an invalid widget after a bad widget unplug
+     * @param integer $id            The widgetId to unlink
+     * @param integer $viewReference The current viewReference
      *
+     * @return JsonResponse response
+     * @Route("/victoire-dcms/widget/unlink/{id}/{viewReference}", name="victoire_core_widget_unlink", defaults={"_format": "json"}, options={"expose"=true})
+     * @Template()
+     */
+    public function unlinkAction($id, $viewReference)
+    {
+        $view = $this->getViewByReferenceId($viewReference);
+        try {
+            $this->get('victoire_widget.widget_helper')->deleteById($id);
+            $response = new JsonResponse($this->get('victoire_widget_map.helper')->removeWidgetMapByWidgetIdAndView($id, $view));
+            $this->get('doctrine.orm.entity_manager')->flush();
+
+            return $this->redirect($this->generateUrl('victoire_core_page_show', array(
+                'url' => $view->getUrl(),
+            )));
+        } catch (\Exception $ex) {
+            $response = $this->getJsonReponseFromException($ex);
+        }
+
+        return $response;
+    }
+
+    /**
+     * Update widget positions accross the view. If moved widget is a Reference, ask to detach the view from template
+     * @param integer $viewReference The current viewReference
      *
      * @return JsonResponse
      * @Route("/victoire-dcms/widget/updatePosition/{viewReference}", name="victoire_core_widget_update_position", options={"expose"=true})

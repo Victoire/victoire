@@ -139,8 +139,8 @@ abstract class View
     //the slot contains the widget maps entities
     protected $slots = array();
 
-    //The reference is related to viewsReferences.xml fil which list all app views.
-    //This is used to speed up the routing system and to identify virtual pages (BusinessEntityPage)
+    //The reference is related to viewsReferences.xml file which list all app views.
+    //This is used to speed up the routing system and identify virtual pages (BusinessEntityPage)
     protected $reference;
 
     /**
@@ -736,7 +736,6 @@ abstract class View
         $this->slots[$slotId] = $slot;
 
         return $slot;
-
     }
     /**
      * Convert slots to a widget map
