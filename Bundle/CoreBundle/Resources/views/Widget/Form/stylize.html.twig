@@ -17,7 +17,7 @@
         </div>
     {% endif %}
 
-    {{ form_start(form) }}
+    {{ form_start(form, {'attr' : {'class' : 'vic-active-form'}}) }}
 
     <div id="vic-stylize">
         <div class="vic-row">
@@ -51,22 +51,18 @@
             </div>
 
             <div class="vic-col-md-7">
-                {% spaceless %}
-                    <h3 class="vic-h3" id="vic-stylize-layout-heading">
-                        {{ 'victoire.widget.stylize.layout.heading'|trans() }}
-                    </h3>
-                {% endspaceless %}
 
                 <div class="vic-row">
                     <div class="vic-col-md-6">
-                        <div id="vic-stylize-regular-box">
-                            {{ form_row(form.containerMargin) }}
-
-                            {{ form_row(form.containerPadding) }}
-                        </div>
+                        {{ form_row(form.containerMargin) }}
                     </div>
-
                     <div class="vic-col-md-6">
+                        {{ form_row(form.containerPadding) }}
+                    </div>
+                    <h3 class="vic-h3">
+                        {{ 'victoire.widget.stylize.layout.heading'|trans() }}
+                    </h3>
+                    <div class="vic-col-md-12 vic-well">
                         <ul class="vic-nav-group" id="vic-stylize-nav-group">
                             {% for key, responsive_config in victoire_twig_responsive %}
                                 <li class="item{% if loop.first %} vic-active{% endif %}">
@@ -80,11 +76,21 @@
                         <div class="vic-tab-content">
                             {% for key, responsive_config in victoire_twig_responsive %}
                                 <div role="tabpanel" class="vic-tab-pane{% if loop.first %} vic-active{% endif %}" id="vic-widget-layout-{{ key }}">
-                                    <div class="vic-stylize-responsive-margin vic-clearfix">
+                                    <div class="vic-col-md-6">
                                         {{ form_row(attribute(form, 'containerMargin' ~ key|upper)) }}
                                     </div>
-
-                                    {{ form_row(attribute(form, 'containerPadding' ~ key|upper)) }}
+                                    <div class="vic-col-md-6">
+                                        {{ form_row(attribute(form, 'containerPadding' ~ key|upper)) }}
+                                    </div>
+                                    <div class="vic-col-md-6">
+                                        {{ form_row(attribute(form, 'containerWidth' ~ key|upper)) }}
+                                    </div>
+                                    <div class="vic-col-md-6">
+                                        {{ form_row(attribute(form, 'containerBackground' ~ key|upper)) }}
+                                    </div>
+                                    <div class="vic-col-md-6">
+                                        {{ form_row(attribute(form, 'textAlign' ~ key|upper)) }}
+                                    </div>
                                 </div>
                             {% endfor %}
                         </div>

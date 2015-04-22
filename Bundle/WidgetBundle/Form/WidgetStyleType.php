@@ -84,6 +84,26 @@ class WidgetStyleType extends AbstractType
                 'label' => 'widget_layout.form.containerPadding'.$key.'.label',
                 'required' => false,
             ));
+            $builder->add('containerWidth'.$key, null, array(
+                'label' => 'widget_layout.form.containerWidth'.$key.'.label',
+                'required' => false,
+            ));
+            $builder->add('containerBackground'.$key, null, array(
+                'label' => 'widget_layout.form.containerBackground'.$key.'.label',
+                'required' => false,
+            ));
+            $builder->add('textAlign'.$key, 'choice', array(
+                'label' => 'widget_layout.form.textAlign'.$key.'.label',
+                'required'    => false,
+                'empty_value' => true,
+                'choices'     => array(
+                    ''        => '',
+                    'left'    => 'widget_layout.form.textAlign.choices.left.label',
+                    'center'  => 'widget_layout.form.textAlign.choices.center.label',
+                    'right'   => 'widget_layout.form.textAlign.choices.right.label',
+                    'justify' => 'widget_layout.form.textAlign.choices.justify.label',
+                ),
+            ));
         }
 
         $builder->add('containerBackground', null, array(

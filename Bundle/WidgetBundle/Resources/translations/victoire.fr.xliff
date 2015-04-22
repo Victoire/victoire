@@ -131,6 +131,55 @@
         <source>widget_layout.form.textAlign.choices.left.label</source>
         <target>Gauche</target>
       </trans-unit>
+      <trans-unit id="38" resname="widget_layout.form.containerWidthXS.label">
+        <source>widget_layout.form.containerWidthXS.label</source>
+        <target>Taille</target>
+      </trans-unit>
+      <trans-unit id="39" resname="widget_layout.form.containerWidthSM.label">
+        <source>widget_layout.form.containerWidthSM.label</source>
+        <target>Taille</target>
+      </trans-unit>
+      <trans-unit id="40" resname="widget_layout.form.containerWidthMD.label">
+        <source>widget_layout.form.containerWidthMD.label</source>
+        <target>Taille</target>
+      </trans-unit>
+      <trans-unit id="41" resname="widget_layout.form.containerWidthLG.label">
+        <source>widget_layout.form.containerWidthLG.label</source>
+        <target>Taille</target>
+      </trans-unit>
+      <trans-unit id="42" resname="widget_layout.form.containerBackgroundXS.label">
+        <source>widget_layout.form.containerBackgroundXS.label</source>
+        <target>Arrière plan</target>
+      </trans-unit>
+      <trans-unit id="43" resname="widget_layout.form.containerBackgroundSM.label">
+        <source>widget_layout.form.containerBackgroundSM.label</source>
+        <target>Arrière plan</target>
+      </trans-unit>
+      <trans-unit id="44" resname="widget_layout.form.containerBackgroundMD.label">
+        <source>widget_layout.form.containerBackgroundMD.label</source>
+        <target>Arrière plan</target>
+      </trans-unit>
+      <trans-unit id="45" resname="widget_layout.form.containerBackgroundLG.label">
+        <source>widget_layout.form.containerBackgroundLG.label</source>
+        <target>Arrière plan</target>
+      </trans-unit>
+      <trans-unit id="45" resname="widget_layout.form.textAlignXS.label">
+        <source>widget_layout.form.textAlignXS.label</source>
+        <target>Alignement du texte</target>
+      </trans-unit>
+      <trans-unit id="46" resname="widget_layout.form.textAlignSM.label">
+        <source>widget_layout.form.textAlignSM.label</source>
+        <target>Alignement du texte</target>
+      </trans-unit>
+      <trans-unit id="47" resname="widget_layout.form.textAlignMD.label">
+        <source>widget_layout.form.textAlignMD.label</source>
+        <target>Alignement du texte</target>
+      </trans-unit>
+      <trans-unit id="48" resname="widget_layout.form.textAlignLG.label">
+        <source>widget_layout.form.textAlignLG.label</source>
+        <target>Alignement du texte</target>
+      </trans-unit>
+
     </body>
   </file>
 </xliff>
