@@ -55,7 +55,7 @@ class FeatureContext extends MinkContext
      */
     public function iWaitSeconds($nbr)
     {
-        $this->getSession()->wait($nbr*1000);
+        $this->getSession()->wait($nbr * 1000);
     }
 
     public function getSymfonyProfile()
@@ -86,7 +86,7 @@ class FeatureContext extends MinkContext
      * @param string  $text    the text to check
      * @param integer $timeout in milliseconds
      */
-    public function assertPageContainsText($text, $timeout = 5000)
+    public function assertPageContainsText($text, $timeout = 15000)
     {
         $element = $this->findAfterAjax($this->getSession()->getPage(), $text, $timeout);
         if (!$element) {
@@ -100,12 +100,12 @@ class FeatureContext extends MinkContext
      * @param string  $text    the text to check
      * @param integer $timeout in milliseconds
      */
-    public function assertPageNotContainsText($text, $timeout = 5000)
+    public function assertPageNotContainsText($text, $timeout = 15000)
     {
         $element = $this->findAfterAjax($this->getSession()->getPage(), $text, $timeout);
         if ($element && $element->isVisible()) {
-                $message = sprintf('The text "%s" was found in the text of the current page although it should not.', $text);
-                throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
+            $message = sprintf('The text "%s" was found in the text of the current page although it should not.', $text);
+            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
     }
 
@@ -117,7 +117,7 @@ class FeatureContext extends MinkContext
      *
      * @return null|boolean
      */
-    public function assertElementContainsText($element, $text, $timeout = 5000)
+    public function assertElementContainsText($element, $text, $timeout = 15000)
     {
         if ($timeout <= 0) {
             $message = sprintf('The element "%s" was not found in the page.', $element);
@@ -147,10 +147,9 @@ class FeatureContext extends MinkContext
      *
      * @return boolean
      */
-    public function findAfterAjax($element, $value, $timeout = 5000)
+    public function findAfterAjax($element, $value, $timeout = 15000)
     {
         if ($timeout <= 0) {
-
             //If the xpath method didn't worked (for example <div><i/> My sentence to find</div>) retry with simple search (no visibility handling... nevermind)
             $actual = $element->getText();
             $actual = preg_replace('/\s+/u', ' ', $actual);
