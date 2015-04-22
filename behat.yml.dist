@@ -21,4 +21,4 @@ default:
                 capabilities: { "browser": "firefox", "version": "33"}
     paths:
         features: Tests/Features/
-        bootstrap: %behat.paths.features%/bootstrap
+        bootstrap: Tests/bootstrap

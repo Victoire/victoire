@@ -1,5 +1,5 @@
 parameters:
-    victoire_core.watch_view_cache: true
+    victoire_core.watch_view_cache: false
 
 imports:
     - { resource: @VictoireCoreBundle/Resources/config/config.yml }

@@ -126,6 +126,14 @@
                 <source>menu.template.settings</source>
                 <target><![CDATA[<i class="vic-menuImg vic-menuImg-gear"></i> Paramètres]]></target>
             </trans-unit>
+            <trans-unit id="10e981313207b6ebcdd8dc5a8b9e085c0b3eecb2" resname="modal.form.page.settings.action.delete.confirm.title">
+                <source>modal.form.page.settings.action.delete.confirm.title</source>
+                <target>C'est votre dernier mot ?</target>
+            </trans-unit>
+            <trans-unit id="f0bdf6be270bede6fc8424cd68807b2988c1c5da" resname="modal.form.page.settings.action.delete.confirm.body">
+                <source>modal.form.page.settings.action.delete.confirm.body</source>
+                <target>Cette action va supprimer définitivement cette page. Cette action est irréversible. Etes vous sûr ?</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
