@@ -116,9 +116,9 @@ trait VictoireSubContextTrait
      */
     public function iSelectTheOptionInTheDropdown($option, $dropdown)
     {
-        $link = $this->getSession()->getPage()->find("xpath", "descendant-or-self::a[text()[normalize-space(.)='".$dropdown."']]");
-        $optionButton = $this->getSession()->getPage()->find("xpath", "descendant-or-self::a[text()[normalize-space(.)='$option']]");
+        $link = $this->getSession()->getPage()->find('css', sprintf('a.vic-dropdown-toggle[title="%s"]', $dropdown));
         $link->click();
+        $optionButton = $this->getSession()->getPage()->find('css', sprintf('ul[aria-labelledby="%sDropdownMenu"] > li > a[title="%s"]', $dropdown, $option));
         $optionButton->click();
     }
 }

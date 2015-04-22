@@ -6,16 +6,16 @@
 {% import 'knp_menu.html.twig' as macros %}
 {% if item.extras.caret|default(false) %}
     <div class="vic-dropdown">
-        <a data-toggle="vic-dropdown">
-            {{ block('label') }}
+        <a data-toggle="vic-dropdown"{{ macros.attributes(item.linkAttributes) }} title="{{ block('label')|striptags|trim }}">
+            <span>{{ block('label') }}</span>
             <span class="vic-caret"></span>
         </a>
-        <ul class="vic-dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+        <ul class="vic-dropdown-menu" role="menu" aria-labelledby="{{ block('label') }}DropdownMenu">
             {{ block('children') }}
         </ul>
     </div>
 {% else %}
-    <a href="{{ item.uri }}"{{ macros.attributes(item.linkAttributes) }}>
+    <a href="{{ item.uri }}"{{ macros.attributes(item.linkAttributes) }} title="{{ block('label')|striptags|trim }}">
     {{ block('label') }}
     </a>
 {% endif -%}
