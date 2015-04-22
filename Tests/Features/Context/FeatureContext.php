@@ -55,7 +55,7 @@ class FeatureContext extends MinkContext
      */
     public function iWaitSeconds($nbr)
     {
-        $this->getSession()->wait($nbr * 1000);
+        $this->getSession()->wait($nbr*1000);
     }
 
     public function getSymfonyProfile()

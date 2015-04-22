@@ -3,7 +3,6 @@ namespace Victoire\Bundle\BlogBundle\Repository;
 
 use Doctrine\ORM\Query;
 use Doctrine\ORM\EntityRepository;
-use Victoire\Bundle\PageBundle\Repository\BasePageRepository;
 
 /**
  * The Article repository

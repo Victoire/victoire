@@ -18,7 +18,6 @@ class WidgetGenerator extends Generator
      * Constructor
      *
      * @param Filesystem $filesystem
-     * @param unknown    $frameworks
      */
     public function __construct(Filesystem $filesystem)
     {

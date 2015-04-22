@@ -1,7 +1,6 @@
 <?php
 
 namespace Bundle\WidgetBundle\Tests\Generator;
-use Sensio\Bundle\GeneratorBundle\Generator\BundleGenerator;
 use Sensio\Bundle\GeneratorBundle\Model\Bundle;
 use Sensio\Bundle\GeneratorBundle\Tests\Generator\GeneratorTest;
 use Victoire\Bundle\WidgetBundle\Generator\WidgetGenerator;

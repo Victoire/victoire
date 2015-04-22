@@ -113,7 +113,7 @@ class WidgetStyleType extends AbstractType
         ));
 
         // add theme field
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
             $data = $event->getData();
             $form = $event->getForm();
             //guess the bundle name

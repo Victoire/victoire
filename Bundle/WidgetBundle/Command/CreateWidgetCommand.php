@@ -286,7 +286,7 @@ EOT
 
             $input->setOption('parent', $parent);
 
-            $packagistParentName = 'friendsofvictoire/' . strtolower($parent) . '-widget';
+            $packagistParentName = 'friendsofvictoire/'.strtolower($parent).'-widget';
             $question = new Question($questionHelper->getQuestion('Parent widget packagist name', $packagistParentName));
 
             $parent = $questionHelper->ask($input, $output, $question);

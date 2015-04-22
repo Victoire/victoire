@@ -351,6 +351,9 @@ class WidgetController extends Controller
         return $response;
     }
 
+    /**
+     * @param integer $referenceId
+     */
     protected function getViewByReferenceId($referenceId)
     {
         return $this->get('victoire_page.page_helper')->findPageByParameters(array('id' => $referenceId));
