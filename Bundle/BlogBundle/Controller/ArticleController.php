@@ -44,7 +44,7 @@ class ArticleController extends Controller
 
             return new JsonResponse(array(
                 "success"  => true,
-                "url"      => $this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl()))
+                'url'     => $this->generateUrl('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl())),
             ));
         } else {
             $formErrorHelper = $this->container->get('victoire_form.error_helper');
@@ -56,9 +56,9 @@ class ArticleController extends Controller
                     'html'    => $this->container->get('victoire_templating')->render(
                         'VictoireBlogBundle:Article:new.html.twig',
                         array(
-                            'form' => $form->createView()
+                            'form' => $form->createView(),
                         )
-                    )
+                    ),
                 )
             );
         }
@@ -83,7 +83,7 @@ class ArticleController extends Controller
                 'html' => $this->container->get('victoire_templating')->render(
                     'VictoireBlogBundle:Article:new.html.twig',
                     array('form' => $form->createView())
-                )
+                ),
             )
         );
     }
@@ -114,15 +114,12 @@ class ArticleController extends Controller
             $page = $this->container->get('victoire_page.page_helper')->findPageByParameters(array(
                 'viewId' => $pattern->getId(),
                 'locale' => $request->getSession()->get('victoire_locale'),
-                'entityId' => $article->getId()
+                'entityId' => $article->getId(),
             ));
 
             $response = array(
                 'success' => true,
-                'url'     => $this->generateUrl(
-                    'victoire_core_page_show',
-                    array('url' => $page->getUrl())
-                )
+                'url'     => $this->generateUrl('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl())),
             );
         } else {
             $response = array(
@@ -132,9 +129,9 @@ class ArticleController extends Controller
                     array(
                         'article'            => $article,
                         'form'               => $form->createView(),
-                        'businessProperties' => $businessProperties
+                        'businessProperties' => $businessProperties,
                     )
-                )
+                ),
             );
         }
 
@@ -163,7 +160,7 @@ class ArticleController extends Controller
             $blogpost = $this->get('victoire_page.page_helper')->findPageByParameters(
                 array(
                     'patternId' => $article->getPattern()->getId(),
-                    'entityId'  => $article->getId()
+                    'entityId'  => $article->getId(),
                 )
             );
             $entityManager->remove($blogpost);
@@ -174,7 +171,9 @@ class ArticleController extends Controller
 
             //redirect to the homepage
             $homepageUrl = $this->generateUrl('victoire_core_page_show', array(
-                'url' => $article->getBlog()->getUrl())
+                    '_locale' => $article->getBlog()->getLocale(),
+                    'url' => $article->getBlog()->getUrl(),
+                )
             );
 
             $message = $this->get('translator')->trans('victoire.blog.article.delete.success', array(), 'victoire');
@@ -183,14 +182,14 @@ class ArticleController extends Controller
             $response = array(
                 'success' => true,
                 'url'     => $homepageUrl,
-                'message' => $message
+                'message' => $message,
             );
         } catch (\Exception $ex) {
             throw $ex;
 
             $response = array(
                 'success' => false,
-                'message' => $ex->getMessage()
+                'message' => $ex->getMessage(),
             );
         }
 

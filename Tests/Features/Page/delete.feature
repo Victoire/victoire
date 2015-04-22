@@ -1,4 +1,4 @@
-@mink:selenium2 @database @fixtures @mink:symfony2
+@mink:selenium2 @database @fixtures
 Feature: Delete a page
 
 Background:
@@ -12,5 +12,6 @@ Scenario: I can delete a new page
     Given I follow "Supprimer"
     Then I should see "Cette action va supprimer définitivement cette page. Cette action est irréversible. Etes vous sûr ?"
     Given I press "J'ai bien compris, je confirme la suppression"
-    Then I should be on "/fr"
-    And I should see "Victoire"
+    Then I should see "Victoire"
+    And I wait 10 seconds
+    And I should be on "/fr/"

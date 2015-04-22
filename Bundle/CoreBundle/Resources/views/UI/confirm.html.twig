@@ -46,12 +46,12 @@ $vic('#{{ id }} .{{ confirm_button_class }}').click(function(){
     elem.removeAttr('data-toggle');
     elem.removeClass('vic-confirm-waiting');
     elem.addClass('vic-confirmed');
+    $vic('#{{ id }}').vicmodal('hide');
     {% if type == "form" %}
         elem.submit();
     {% else %}
-        window.location.href = $vic(elem).attr("href");
+        elem.click();
     {% endif %}
-    $vic('#{{ id }}').vicmodal('hide');
     {% if confirmCallback == null %}
         {{ confirmCallback|raw }};
     {% endif %}

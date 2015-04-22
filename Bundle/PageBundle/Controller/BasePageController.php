@@ -13,10 +13,8 @@ use Victoire\Bundle\PageBundle\Entity\Page;
  **/
 class BasePageController extends Controller
 {
-
     public function showAction(Request $request, $url)
     {
-
         $response = $this->container->get('victoire_page.page_helper')->renderPageByUrl($url, $request->getLocale());
 
         //throw an exception is the page is not valid
@@ -52,7 +50,7 @@ class BasePageController extends Controller
 
         $page = $this->container->get('victoire_page.page_helper')->findPageByParameters(array(
             'viewId' => $pattern->getId(),
-            'entityId' => $entityId
+            'entityId' => $entityId,
         ));
         $this->get('victoire_widget_map.builder')->build($page);
 
@@ -98,7 +96,7 @@ class BasePageController extends Controller
 
             return array(
                 "success"  => true,
-                "url"      => $this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl()))
+                'url'     => $this->generateUrl('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl())),
             );
         } else {
             $formErrorHelper = $this->container->get('victoire_form.error_helper');
@@ -109,7 +107,7 @@ class BasePageController extends Controller
                 'html'    => $this->container->get('victoire_templating')->render(
                     $this->getBaseTemplatePath().':new.html.twig',
                     array('form' => $form->createView())
-                )
+                ),
             );
         }
     }
@@ -141,9 +139,9 @@ class BasePageController extends Controller
             $entityManager->persist($page);
             $entityManager->flush();
 
-                return array(
+            return array(
                 'success' => true,
-                'url'     => $this->generateUrl('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl()))
+                'url'     => $this->generateUrl('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl())),
             );
         }
         //we display the form
@@ -156,13 +154,12 @@ class BasePageController extends Controller
                 array(
                     'page' => $page,
                     'form' => $form->createView(),
-                    'businessProperties' => $businessProperties
+                    'businessProperties' => $businessProperties,
                 )
             ),
-            'message' => $errors
+            'message' => $errors,
         );
     }
-
 
     /**
      * Page translation
@@ -192,7 +189,7 @@ class BasePageController extends Controller
 
             return array(
                 'success' => true,
-                'url' => $this->generateUrl('victoire_core_page_show', array('_locale'=> $clone->getLocale(), 'url' => $clone->getUrl()))
+                'url' => $this->generateUrl('victoire_core_page_show', array('_locale' => $clone->getLocale(), 'url' => $clone->getUrl())),
             );
         }
         $errors = $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form);
@@ -204,10 +201,10 @@ class BasePageController extends Controller
                 array(
                     'page' => $page,
                     'form' => $form->createView(),
-                    'businessProperties' => $businessProperties
+                    'businessProperties' => $businessProperties,
                 )
             ),
-            'message' => $errors
+            'message' => $errors,
         );
     }
     /**
@@ -240,12 +237,12 @@ class BasePageController extends Controller
 
             $return = array(
                 'success' => true,
-                'url'     => $homepageUrl
+                'url'     => $homepageUrl,
             );
         } catch (\Exception $ex) {
             $return = array(
                 'success' => false,
-                'message' => $ex->getMessage()
+                'message' => $ex->getMessage(),
             );
         }
 
@@ -278,7 +275,7 @@ class BasePageController extends Controller
         if ($homepage !== null) {
             return $this->showAction($request, $homepage->getUrl());
         } else {
-            return $this->redirect($this->generateUrl('victoire_dashboard_default_welcome'));
+            throw new \Exception(sprintf('There isn\'t any homepage for "%s" locale, please create one.', $request->getLocale()));
         }
     }
 }

@@ -48,7 +48,6 @@ trait VictoireSubContextTrait
         $element = 'descendant-or-self::*[@id="vic-widget-1-container"]/div['.$nth.']/label/select';
         $element = 'descendant-or-self::*[@id="vic-slot-'.$slot.'"]/div/label/select['.$nth.']';
 
-
         $slot = $this->getSession()->getPage()->find('xpath', 'descendant-or-self::*[@id="vic-slot-'.$slot.'"]');
         $selects = $slot->findAll('css', 'select[role="menu"]');
         $selects[$nth - 1]->selectOption($widget);
@@ -62,16 +61,35 @@ trait VictoireSubContextTrait
         $element = $this->getSession()->getPage()->find('xpath', 'descendant-or-self::*[@data-mode="admin-'.$mode.'"]');
         $element->click();
     }
-        /**
-         * @Then /^I submit the widget$/
-         */
+    /**
+     * @Then /^I submit the widget$/
+     */
     public function iSubmitTheWidget()
     {
-
         $element = $this->getSession()->getPage()->find('xpath', 'descendant-or-self::*[@class="vic-modal-footer-content"]/a[@data-modal="create"]');
-        if(!$element){
+        if (!$element) {
             $element = $this->getSession()->getPage()->find('xpath', 'descendant-or-self::*[@class="vic-modal-footer-content"]/a[@data-modal="update"]');
         }
+        $element->click();
+    }
+
+    /**
+     * @Given /^I edit an "([^"]*)" widget$/
+     * @Given /^I edit the "([^"]*)" widget$/
+     */
+    public function iEditTheWidget($widgetType)
+    {
+        $selector = sprintf('.vic-widget-%s > a', strtolower($widgetType));
+        $session = $this->getSession(); // get the mink session
+        $element = $session->getPage()->find('css', $selector); // runs the actual query and returns the element
+
+        // errors must not pass silently
+        if (null === $element) {
+            throw new \InvalidArgumentException(sprintf('Could not evaluate CSS selector: "%s"', $selector));
+        }
+
+        // ok, let's hover it
+        $element->mouseOver();
         $element->click();
     }
 
@@ -81,7 +99,7 @@ trait VictoireSubContextTrait
     public function shouldPrecedeForTheQuery($textBefore, $textAfter)
     {
         $items = array_map(
-            function($element) {
+            function ($element) {
                 return $element->getText();
             },
             $this->getSession()->getPage()->findAll('css', 'div.vic-widget > p')
@@ -91,7 +109,6 @@ trait VictoireSubContextTrait
             $message = "$textBefore does not proceed $textAfter";
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
-
     }
 
     /**
