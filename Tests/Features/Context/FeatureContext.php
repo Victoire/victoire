@@ -10,6 +10,7 @@ use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Victoire\Bundle\CoreBundle\DataFixtures\ORM\LoadFixtureData;
 use Victoire\Tests\Features\Context\SubContext\AjaxSubContextTrait;
+use Victoire\Tests\Features\Context\SubContext\JavascriptSubContextTrait;
 use Victoire\Tests\Features\Context\SubContext\VictoireSubContextTrait;
 
 /**
@@ -21,6 +22,7 @@ class FeatureContext extends MinkContext
     use KernelDictionary;
     use AjaxSubContextTrait;
     use VictoireSubContextTrait;
+    use JavascriptSubContextTrait;
 
     /**
      * Initializes context with parameters from behat.yml.

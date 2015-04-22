@@ -3,6 +3,7 @@ Feature: Delete a page
 
 Background:
     Given I am logged in as "anakin@victoire.io"
+     And I maximize the browser
 
 Scenario: I can delete a new page
     Given I am on "/fr/test"
