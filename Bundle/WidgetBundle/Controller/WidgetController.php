@@ -229,12 +229,12 @@ class WidgetController extends Controller
         try {
             $this->get('widget_manager')->deleteWidget($widget, $view);
 
-            $return = array(
+            return new JsonResponse(array(
                 'success' => true,
                 'url'     => $this->generateUrl('victoire_core_page_show', array(
                     'url' => $view->getUrl(),
                 )),
-            );
+            ));
         } catch (\Exception $ex) {
             return $this->getJsonReponseFromException($ex);
         }
