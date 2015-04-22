@@ -3,7 +3,7 @@
     "type": "symfony-bundle",
     "description": "Victoire Bundles components",
     "keywords": ["cms", "victoire", "bundle"],
-    "license": "proprietary",
+    "license": "MIT",
     "homepage": "http://appventus.com",
     "authors": [
         {
