@@ -227,12 +227,14 @@ class WidgetController extends Controller
     {
         $view = $this->getViewByReferenceId($viewReference);
         try {
-            $response = new JsonResponse($this->get('widget_manager')->deleteWidget($widget, $view));
-        } catch (\Exception $ex) {
-            $response = $this->getJsonReponseFromException($ex);
-        }
+            $this->get('widget_manager')->deleteWidget($widget, $view);
 
-        return $response;
+            return $this->redirect($this->generateUrl('victoire_core_page_show', array(
+                'url' => $view->getUrl(),
+            )));
+        } catch (\Exception $ex) {
+            return $this->getJsonReponseFromException($ex);
+        }
     }
 
     /**
