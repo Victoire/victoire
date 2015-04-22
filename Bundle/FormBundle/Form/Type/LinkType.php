@@ -5,8 +5,8 @@ namespace Victoire\Bundle\FormBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Victoire\Bundle\CoreBundle\DataTransformer\JsonToArrayTransformer;
 use Victoire\Bundle\CoreBundle\Helper\ViewHelper;
-use Victoire\Widget\RenderBundle\DataTransformer\JsonToArrayTransformer;
 
 /**
  * Type for Victoire Link.
