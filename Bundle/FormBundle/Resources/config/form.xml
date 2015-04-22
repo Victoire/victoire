@@ -128,6 +128,7 @@
 
         <service id="victoire_form.form.type.vic_link" class="%victoire_form.form.type.vic_link.class%">
             <argument>%victoire_seo.analytics%</argument>
+            <argument type="service" id="victoire_core.view_helper"></argument>
             <tag name="form.type" alias="victoire_link" />
         </service>
 
