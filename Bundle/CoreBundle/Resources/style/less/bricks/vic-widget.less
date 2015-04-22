@@ -18,13 +18,13 @@ body {
         .vic-widget {
             min-height: 20px;
         }
-        .vic-hover-widget {
+        .vic-hover-widget, .vic-hover-widget-unlink {
             display: inline-block;
         }
     }
 }
 
-.vic-hover-widget {
+.vic-hover-widget, .vic-hover-widget-unlink {
     position: absolute;
     display: none;
     top: 0;
@@ -54,6 +54,23 @@ body {
         border-radius: 5px;
         border: 1px solid @green;
         .box-shadow(0px 5px 7px 0px rgba(0,0,0,0.20));
+    }
+}
+
+.vic-hover-widget-unlink {
+    i {
+        background-image: url(/bundles/victoirecore/images/unlink-widget-icon.png);
+        top: 100px;
+    }
+}
+
+body[role=admin-layout] {
+    .vic-hover-widget {
+        display: none !important;
+
+        i {
+            background-image: url(/bundles/victoirecore/images/style-widget-icon.png);
+        }
     }
 }
 

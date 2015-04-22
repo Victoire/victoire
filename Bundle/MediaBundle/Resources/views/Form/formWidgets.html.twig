@@ -9,21 +9,17 @@
         </div>
 
         <div class="input_media hasmedia">
-            {% if(value.ent is defined) %}
+            {% if value.ent is defined %}
                 {% set media = value.ent %}
                 {% set handler = mediamanager.getHandler(media) %}
                 {% set thumbnailurl =  handler.getImageUrl(media, app.request.basePath, 210, 150) %}
-                {% if thumbnailurl %}
-                    <div class="preview" {% if thumbnailurl %}style="background-image: url({{ handler.getImageUrl(media, app.request.basePath, 210, 150) }});"{% endif %}>
-                {% else %}
-                    <div class="preview">
-                {% endif %}
-                    <button class="del vic-btn vic-btn-danger vic-btn-bordered"><i class="fa fa-trash-o"></i> Supprimer l'image</button>
+                <div class="preview" {% if thumbnailurl != "" %}style="background-image: url('{{ thumbnailurl }}');"{% endif %}>
+                    <button class="del vic-btn vic-btn-danger vic-btn-bordered"><i class="fa fa-trash-o"></i> {{ 'media.widget.delete'|trans }}</button>
                 </div>
                 <p class="title">{{ media.name }}</p>
             {% else %}
                 <div class="preview">
-                    <button class="del vic-btn vic-btn-danger vic-btn-bordered"><i class="fa fa-trash-o"></i> Supprimer l'image</button>
+                    <button class="del vic-btn vic-btn-danger vic-btn-bordered"><i class="fa fa-trash-o"></i> {{ 'media.widget.delete'|trans }}</button>
                 </div>
                 <p class="title"></p>
             {% endif %}
@@ -52,7 +48,7 @@
                         widget.find('.hasmedia').find('.title').hide();
                     }
                     if(typeof(dialogWin.returnedValue.imgpath)!="undefined"){
-                        widget.find('.hasmedia').find('.preview').attr('style', 'background-image: url("' + dialogWin.returnedValue.imgpath + '");');
+                        widget.find('.hasmedia').find('.preview').attr('style', 'background-image: url(' + dialogWin.returnedValue.imgpath + ');');
                     } else {
                         widget.find('.hasmedia').find('.preview').attr('style', 'background-image: none;');
                     }

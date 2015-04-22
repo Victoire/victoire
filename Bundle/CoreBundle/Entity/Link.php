@@ -42,10 +42,17 @@ class Link
     protected $target = "_parent";
 
     /**
+     * @deprecated use $viewReference instead
+     *
      * @ORM\ManyToOne(targetEntity="Victoire\Bundle\PageBundle\Entity\BasePage")
      * @ORM\JoinColumn(name="attached_page_id", referencedColumnName="id", onDelete="cascade", nullable=true)
      */
     protected $page;
+
+    /**
+     * @ORM\Column(name="view_reference", type="string", length=255)
+     */
+    protected $viewReference;
 
     /**
      * @ORM\ManyToOne(targetEntity="Victoire\Bundle\WidgetBundle\Entity\Widget")
@@ -112,6 +119,7 @@ class Link
             'linkType'           => $this->linkType,
             'url'                => $this->url,
             'page'               => $this->page,
+            'viewReference'      => $this->viewReference,
             'route'              => $this->route,
             'routeParameters'    => $this->routeParameters,
             'attachedWidget'     => $this->attachedWidget,
@@ -217,6 +225,7 @@ class Link
     }
 
     /**
+     * @deprecated use view_reference instead
      * Set page
      * @param \Victoire\Bundle\PageBundle\Entity\Page $page
      *
@@ -230,6 +239,7 @@ class Link
     }
 
     /**
+     * @deprecated use view_reference instead
      * Get page
      *
      * @return Page|null
@@ -237,6 +247,30 @@ class Link
     public function getPage()
     {
         return $this->page;
+    }
+
+    /**
+     * Get viewReference
+     *
+     * @return string
+     */
+    public function getViewReference()
+    {
+        return $this->viewReference;
+    }
+
+    /**
+     * Set viewReference
+     *
+     * @param string $viewReference
+     *
+     * @return $this
+     */
+    public function setViewReference($viewReference)
+    {
+        $this->viewReference = $viewReference;
+
+        return $this;
     }
 
     /**
@@ -302,7 +336,7 @@ class Link
         $violation = false;
         // check if the name is actually a fake name
         switch ($this->getLinkType()) {
-            case 'page':
+            case 'viewReference':
             $violation = $this->getPage() == null;
                 break;
             case 'route':

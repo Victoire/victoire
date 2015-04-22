@@ -120,7 +120,7 @@ class ViewHelper
      * Get the content of an attribute of an entity given
      *
      * @param BusinessEntityPage $entity
-     * @param strin  $field
+     * @param strin              $field
      *
      * @return mixed
      */
@@ -136,8 +136,8 @@ class ViewHelper
     /**
      * Update the value of the entity
      * @param BusinessEntityPage $entity
-     * @param string $field
-     * @param string $value
+     * @param string             $field
+     * @param string             $value
      *
      * @return mixed
      */
@@ -148,6 +148,23 @@ class ViewHelper
         call_user_func(array($entity, $functionName), $value);
     }
 
+    /**
+     * find the view reference for giver page instance
+     * @param Page $page
+     *
+     * @return void
+     */
+    public function findViewReferenceForPage(Page $page)
+    {
+        return array(
+            'id'              => $this->viewCacheHelper->getViewReferenceId($page),
+            'locale'          => $page->getLocale(),
+            'viewId'          => $page->getId(),
+            'url'             => $page->getUrl(),
+            'name'            => $page->getName(),
+            'viewNamespace'   => $this->em->getClassMetadata(get_class($page))->name,
+        );
+    }
     /**
      * compute the viewReference relative to a View + entity
      * @param View                $view
@@ -168,6 +185,7 @@ class ViewHelper
                 $viewsReferences[$page->getUrl().$page->getLocale()] = array(
                     'id'              => $referenceId,
                     'url'             => $page->getUrl(),
+                    'name'            => $page->getName(),
                     'locale'          => $page->getLocale(),
                     'viewId'          => $page->getTemplate()->getId(),
                     'entityId'        => $entity->getId(),
@@ -179,6 +197,7 @@ class ViewHelper
                 $viewsReferences[$view->getUrl().$view->getLocale()] = array(
                     'id'              => $referenceId,
                     'url'             => $view->getUrl(),
+                    'name'            => $view->getName(),
                     'locale'          => $view->getLocale(),
                     'viewId'          => $view->getId(),
                     'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
@@ -214,6 +233,7 @@ class ViewHelper
                             $viewsReferences[$page->getUrl().$view->getLocale()] = array(
                                 'id'              => $referenceId,
                                 'url'             => $page->getUrl(),
+                                'name'             => $page->getName(),
                                 'locale'          => $page->getLocale(),
                                 'viewId'          => $page->getTemplate()->getId(),
                                 'entityId'        => $entity->getId(),
@@ -234,6 +254,7 @@ class ViewHelper
                 'viewId'          => $view->getId(),
                 'patternId'       => $view->getTemplate()->getId(),
                 'url'             => $view->getUrl(),
+                'name'            => $view->getName(),
                 'entityId'        => $view->getBusinessEntity()->getId(),
                 'entityNamespace' => $this->em->getClassMetadata(get_class($view->getBusinessEntity()))->name,
                 'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
@@ -243,6 +264,7 @@ class ViewHelper
             $viewsReferences[$referenceId.$view->getLocale()] = array(
                 'id'              => $referenceId,
                 'locale'          => $view->getLocale(),
+                'name'            => $view->getName(),
                 'viewId'          => $view->getId(),
                 'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
             );
@@ -251,6 +273,7 @@ class ViewHelper
             $viewsReferences[$referenceId.$view->getLocale()] = array(
                 'id'              => $referenceId,
                 'locale'          => $view->getLocale(),
+                'name'            => $view->getName(),
                 'viewId'          => $view->getId(),
                 'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
             );
@@ -261,6 +284,7 @@ class ViewHelper
                 'locale'          => $view->getLocale(),
                 'viewId'          => $view->getId(),
                 'url'             => $view->getUrl(),
+                'name'            => $view->getName(),
                 'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
             );
         }

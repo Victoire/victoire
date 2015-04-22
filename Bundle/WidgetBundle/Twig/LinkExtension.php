@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessEntityPageBundle\Helper\BusinessEntityPageHelper;
-use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
 
 /**
@@ -66,25 +65,24 @@ class LinkExtension extends \Twig_Extension
         $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH;
         extract($parameters); //will assign $linkType, $attachedWidget, $routeParameters, $route, $page, $analyticsTrackCode
         switch ($linkType) {
-            case 'page':
-                //fallback when a page is deleted cascading the relation as null (page_id = null)
-                if ($page && $page instanceof WebViewInterface) {
-                    //avoid to refresh page when not needed
-                    $linkUrl = $this->router->generate('victoire_core_page_show', array('url' => $page->getUrl()), $referenceType);
-                    if ($this->request->getRequestUri() != $linkUrl || !$avoidRefresh) {
-                        $url = $linkUrl;
-                    }
+            case 'viewReference':
+
+                $page = $this->pageHelper->findPageByParameters(array('id' => $viewReference));
+                $linkUrl = $this->router->generate('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl()), $referenceType);
+                if ($this->request->getRequestUri() != $linkUrl || !$avoidRefresh) {
+                    $url = $linkUrl;
                 }
+
                 break;
             case 'route':
                 $url = $this->router->generate($route, $routeParameters, $referenceType);
                 break;
             case 'attachedWidget':
                 //fallback when a widget is deleted cascading the relation as null (widget_id = null)
-                if ($attachedWidget && $attachedWidget->getView() instanceof WebViewInterface) {
+                if ($attachedWidget && method_exists($attachedWidget->getView(), 'getUrl')) {
 
                     //create base url
-                    $url = $this->router->generate('victoire_core_page_show', array('url' => $attachedWidget->getView()->getUrl()), $referenceType);
+                    $url = $this->router->generate('victoire_core_page_show', array('_locale'=> $attachedWidget->getView()->getLocale(), 'url' => $attachedWidget->getView()->getUrl()), $referenceType);
 
                     //If widget in the same view
                     if (rtrim($this->request->getRequestUri(), '/') == rtrim($url, '/')) {
@@ -109,11 +107,11 @@ class LinkExtension extends \Twig_Extension
      */
     public function victoireLink($parameters, $label, $attr = array(), $currentClass = 'active', $url = "#")
     {
-        $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH;
+        $referenceLink = UrlGeneratorInterface::ABSOLUTE_PATH;
         extract($parameters); //will assign $linkType, $attachedWidget, $routeParameters, $route, $page, $analyticsTrackCode
 
         if ($linkType == 'attachedWidget' && $attachedWidget && method_exists($attachedWidget->getView(), 'getUrl')) {
-            $viewUrl = $this->router->generate('victoire_core_page_show', array('url' => $attachedWidget->getView()->getUrl()), $referenceType);
+            $viewUrl = $this->router->generate('victoire_core_page_show', array('_locale' => $attachedWidget->getView()->getLocale(), 'url' => $attachedWidget->getView()->getUrl()), $referenceLink);
             if (rtrim($this->request->getRequestUri(), '/') == rtrim($viewUrl, '/')) {
                 $attr["data-scroll"] = "smooth";
             }
@@ -153,13 +151,7 @@ class LinkExtension extends \Twig_Extension
         //Creates a new twig environment
         $twigEnv = new \Twig_Environment(new \Twig_Loader_String());
 
-        $link = '<a href="' . $url . '" ' . implode($attributes, ' ') . '>' . $label . '</a>';
-
-        if ($url == '') {
-            $link = '<span>' . $label . '</span>';
-        }
-
-        return $twigEnv->render('{{ link|raw }}', array('link' => $link));
+        return $twigEnv->render('{{ link|raw }}', array('link' => '<a href="'.$url.'" '.implode($attributes, ' ').'>'.$label.'</a>'));
     }
 
     /**

@@ -94,6 +94,14 @@
         <source>Is it your last word ?</source>
         <target>Is it your last word ?</target>
       </trans-unit>
+      <trans-unit id="bede6fc8424c07b2988c1c5daf088bdf6be270d6" resname="modal.button.unlink.confirm.body">
+        <source>modal.button.unlink.confirm.body</source>
+        <target>This actions will permanently delete this content from the database. This action is irreversible so you have to understand this message. Do you ?</target>
+      </trans-unit>
+      <trans-unit id="26ebcdd8dc5a8131320710e98bb9e085c0b3eecb" resname="modal.button.unlink.confirm.title">
+        <source>modal.button.unlink.confirm.title</source>
+        <target>Is it your last word ?</target>
+      </trans-unit>
       <trans-unit resname="modal.button.delete.confirm.ok.label">
         <source>modal.button.delete.confirm.ok.label</source>
         <target>I get it, YES, I want to delete it !</target>

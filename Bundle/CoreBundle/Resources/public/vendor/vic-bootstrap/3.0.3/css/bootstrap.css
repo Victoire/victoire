@@ -1987,63 +1987,63 @@ textarea.vic-form-control {
 
 .vic-radio,
 .vic-checkbox {
+  position: relative;
   display: block;
-  min-height: 20px;
-  padding-left: 20px;
   margin-top: 10px;
   margin-bottom: 10px;
-  vertical-align: middle;
 }
-
 .vic-radio label,
 .vic-checkbox label {
-  display: inline;
+  min-height: 20px;
+  padding-left: 20px;
   margin-bottom: 0;
   font-weight: normal;
   cursor: pointer;
 }
-
 .vic-radio input[type="radio"],
 .vic-radio-inline input[type="radio"],
 .vic-checkbox input[type="checkbox"],
 .vic-checkbox-inline input[type="checkbox"] {
-  float: left;
+  position: absolute;
   margin-left: -20px;
+  margin-top: 4px \9;
 }
-
 .vic-radio + .vic-radio,
 .vic-checkbox + .vic-checkbox {
   margin-top: -5px;
 }
-
 .vic-radio-inline,
 .vic-checkbox-inline {
   display: inline-block;
   padding-left: 20px;
   margin-bottom: 0;
-  font-weight: normal;
   vertical-align: middle;
+  font-weight: normal;
   cursor: pointer;
 }
-
 .vic-radio-inline + .vic-radio-inline,
 .vic-checkbox-inline + .vic-checkbox-inline {
   margin-top: 0;
   margin-left: 10px;
 }
-
 input[type="radio"][disabled],
 input[type="checkbox"][disabled],
-.vic-radio[disabled],
-.vic-radio-inline[disabled],
-.vic-checkbox[disabled],
-.vic-checkbox-inline[disabled],
+input[type="radio"].disabled,
+input[type="checkbox"].disabled,
 fieldset[disabled] input[type="radio"],
-fieldset[disabled] input[type="checkbox"],
-fieldset[disabled] .vic-radio,
+fieldset[disabled] input[type="checkbox"] {
+  cursor: not-allowed;
+}
+.vic-radio-inline.disabled,
+.vic-checkbox-inline.disabled,
 fieldset[disabled] .vic-radio-inline,
-fieldset[disabled] .vic-checkbox,
 fieldset[disabled] .vic-checkbox-inline {
+  cursor: not-allowed;
+}
+.vic-radio.disabled label,
+.vic-checkbox.disabled label,
+fieldset[disabled] .vic-radio label,
+fieldset[disabled] .vic-checkbox label {
   cursor: not-allowed;
 }
 

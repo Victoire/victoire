@@ -1,0 +1,106 @@
+.vic-nav-group {
+    .display(flex);
+    .border-radius(3px);
+    border: 1px solid;
+    border-color: #bbbbbb;
+
+    .item {
+        .flex(1 1 0);
+        text-align: center;
+        padding-top: 8px;
+        padding-bottom: 8px;
+
+
+        &.vic-active {
+            background-color: #ebebeb;
+            .box-shadow(inset 1px 1px 5px 0px fade(rgb(51,51,51), 50%));
+        }
+
+
+        & + .item {
+            border-left: 1px solid;
+            border-color: #bbbbbb;
+        }
+
+        a {
+            display: block;
+            height: 23px;
+            position: relative;
+
+            &:before,
+            &:after {
+                visibility: hidden;
+                .transition(visibility 200ms ease);
+            }
+
+            &:before {
+                content: attr(data-title);
+                text-align: center;
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: -50px;
+                .border-radius(3px);
+                line-height: 18px;
+                padding-top: 6px;
+                padding-bottom: 6px;
+                background-color: @anthracite;
+                font-size: 11px;
+                color: @white;
+            }
+
+            &:after {
+                content: '';
+                width: 0;
+                height: 0;
+                border-left: 10px solid transparent;
+                border-right: 10px solid transparent;
+                border-top: 14px solid;
+                border-top-color: @anthracite;
+                position: absolute;
+                left: 50%;
+                margin-left: -10px;
+                top: -24px;
+
+            }
+
+            &:hover, &.hover, &.-hover, &.is-hover, &.vic-hover,
+            &:active, &.active, &.-active, &.is-active, &.vic-active {
+                &:before,
+                &:after {
+                    visibility: visible;
+                }
+
+                svg {
+                    fill: @green;
+                }
+            }
+        }
+
+        svg {
+            fill: @grey_dark;
+        }
+
+        &.vic-active {
+            &:hover, &.hover, &.-hover, &.is-hover, &.vic-hover,
+            &:active, &.active, &.-active, &.is-active, &.vic-active {
+                a {
+                    &:before,
+                    &:after {
+                        visibility: visible;
+                    }
+                }
+
+                svg {
+                    fill: @green;
+                }
+            }
+        }
+    }
+
+    ul& {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+}

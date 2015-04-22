@@ -7,7 +7,6 @@ use Victoire\Bundle\WidgetBundle\Model\Widget;
 
 class WidgetHelper
 {
-
     private $container;
 
     public function __construct(Container $container)
@@ -23,14 +22,13 @@ class WidgetHelper
     public function getWidgetName(Widget $widget)
     {
         $widgets = $this->container->getParameter('victoire_core.widgets');
-            foreach ($widgets as $widgetParams) {
-                if ($widgetParams['class'] === get_class($widget)) {
+        foreach ($widgets as $widgetParams) {
+            if ($widgetParams['class'] === get_class($widget)) {
                 return $widgetParams['name'];
-                }
             }
+        }
 
-            throw new \Exception("Widget name not found for widget ".get_class($widget));
-
+        throw new \Exception("Widget name not found for widget ".get_class($widget));
     }
 
     /**
@@ -50,9 +48,9 @@ class WidgetHelper
 
     /**
      * create a new WidgetRedactor
-     * @param string $type
-     * @param \Victoire\Bundle\CoreBundle\Entity\View   $view
-     * @param string $slot
+     * @param string                                  $type
+     * @param \Victoire\Bundle\CoreBundle\Entity\View $view
+     * @param string                                  $slot
      *
      * @return $widget
      */
@@ -82,5 +80,20 @@ class WidgetHelper
         $templateName = 'VictoireWidget'.$this->getWidgetName($widget).'Bundle::'.$action.'.html.twig';
 
         return $templateName;
+    }
+
+    /**
+     * Delete manually a widget with its id
+     * @param integer $widgetId
+     *
+     * @return string
+     */
+    public function deleteById($widgetId)
+    {
+        $entityManager = $this->container->get('doctrine.orm.entity_manager');
+        $connection = $entityManager->getConnection();
+        $statement = $connection->prepare("DELETE FROM vic_widget WHERE id = :id");
+        $statement->bindValue('id', $widgetId);
+        $statement->execute();
     }
 }

@@ -55,6 +55,9 @@
     #widget-{{ widget.id }} {
         {% if attribute(widget, 'containerMargin' ~ sizeCode|upper) %}margin: {{ attribute(widget, 'containerMargin' ~ sizeCode|upper)}};{% endif %}
         {% if attribute(widget, 'containerPadding' ~ sizeCode|upper) %}padding: {{ attribute(widget, 'containerPadding' ~ sizeCode|upper)}};{% endif %}
+        {% if attribute(widget, 'containerWidth' ~ sizeCode|upper) %}width: {{ attribute(widget, 'containerWidth' ~ sizeCode|upper)}};{% endif %}
+        {% if attribute(widget, 'containerBackground' ~ sizeCode|upper) %}background: {{ attribute(widget, 'containerBackground' ~ sizeCode|upper)}};{% endif %}
+        {% if attribute(widget, 'textAlign' ~ sizeCode|upper) %}text-align: {{ attribute(widget, 'textAlign' ~ sizeCode|upper)}};{% endif %}
     }
 }
 {% endif %}

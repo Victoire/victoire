@@ -63,19 +63,6 @@ services:
         tags:
             - { name: routing.loader }
 
-    victoire_i18n.twig.link_extension:
-        class: Victoire\Bundle\I18nBundle\Twig\I18nLinkExtension
-        arguments:
-            - @router
-            - @request_stack
-            - %victoire_seo.analytics%
-            - @victoire_core.helper.business_entity_helper
-            - @victoire_business_entity_page.business_entity_page_helper
-            - @victoire_page.page_helper
-            - @victoire_i18n.locale_resolver
-        tags:
-            - { name: twig.extension }
-
 
     victoire_i18n.page_translate.form.type:
         class: Victoire\Bundle\I18nBundle\Form\PageTranslateType

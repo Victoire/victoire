@@ -20,7 +20,7 @@ $vic(window).on('beforeunload',function() {
 });
 
 $vic(document).on("dblclick", function (e){
-    if (event.altKey) {
+    if (e.altKey) {
         $vic('.vic-ns-show').remove();
         $vic('#vic-switcher-editMode').click();
 

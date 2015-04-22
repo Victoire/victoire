@@ -6,6 +6,7 @@ namespace Victoire\Bundle\WidgetBundle\Entity\Traits;
  */
 trait StyleTrait
 {
+    /******************* GLOBAL PROPERTIES (NON RESPONSIVE) **********************/
     public static $tags = array(
         "section",
         "header",
@@ -54,6 +55,22 @@ trait StyleTrait
     /**
      * @var string
      *
+     * @ORM\Column(name="container_background", type="string", length=255, nullable=true)
+     */
+    protected $containerBackground;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="text_align", type="string", length=15, nullable=true)
+     */
+    protected $textAlign;
+
+    /******************* RESPONSIVE PROPERTIES **********************/
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="container_margin_xs", type="string", length=255, nullable=true)
      */
     protected $containerMarginXS;
@@ -64,6 +81,27 @@ trait StyleTrait
      * @ORM\Column(name="container_padding_xs", type="string", length=255, nullable=true)
      */
     protected $containerPaddingXS;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="container_width_xs", type="string", length=255, nullable=true)
+     */
+    protected $containerWidthXS;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="container_background_xs", type="string", length=255, nullable=true)
+     */
+    protected $containerBackgroundXS;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="text_align_xs", type="string", length=15, nullable=true)
+     */
+    protected $textAlignXS;
 
     /**
      * @var string
@@ -82,6 +120,27 @@ trait StyleTrait
     /**
      * @var string
      *
+     * @ORM\Column(name="container_width_sm", type="string", length=255, nullable=true)
+     */
+    protected $containerWidthSM;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="container_background_sm", type="string", length=255, nullable=true)
+     */
+    protected $containerBackgroundSM;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="text_align_sm", type="string", length=15, nullable=true)
+     */
+    protected $textAlignSM;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="container_margin_md", type="string", length=255, nullable=true)
      */
     protected $containerMarginMD;
@@ -92,6 +151,27 @@ trait StyleTrait
      * @ORM\Column(name="container_padding_md", type="string", length=255, nullable=true)
      */
     protected $containerPaddingMD;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="container_width_md", type="string", length=255, nullable=true)
+     */
+    protected $containerWidthMD;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="container_background_md", type="string", length=255, nullable=true)
+     */
+    protected $containerBackgroundMD;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="text_align_md", type="string", length=15, nullable=true)
+     */
+    protected $textAlignMD;
 
     /**
      * @var string
@@ -110,16 +190,23 @@ trait StyleTrait
     /**
      * @var string
      *
-     * @ORM\Column(name="container_background", type="string", length=255, nullable=true)
+     * @ORM\Column(name="container_width_lg", type="string", length=255, nullable=true)
      */
-    protected $containerBackground;
+    protected $containerWidthLG;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="text_align", type="string", length=15, nullable=true)
+     * @ORM\Column(name="container_background_lg", type="string", length=255, nullable=true)
      */
-    protected $textAlign;
+    protected $containerBackgroundLG;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="text_align_lg", type="string", length=15, nullable=true)
+     */
+    protected $textAlignLG;
 
     /**
      * Set containerClass
@@ -273,6 +360,75 @@ trait StyleTrait
     }
 
     /**
+     * Get containerWidthXS
+     *
+     * @return string
+     */
+    public function getContainerWidthXS()
+    {
+        return $this->containerWidthXS;
+    }
+
+    /**
+     * Set containerWidthXS
+     * @param string $containerWidthXS
+     *
+     * @return $this
+     */
+    public function setContainerWidthXS($containerWidthXS)
+    {
+        $this->containerWidthXS = $containerWidthXS;
+
+        return $this;
+    }
+
+    /**
+     * Get containerBackgroundXS
+     *
+     * @return string
+     */
+    public function getContainerBackgroundXS()
+    {
+        return $this->containerBackgroundXS;
+    }
+
+    /**
+     * Set containerBackgroundXS
+     * @param string $containerBackgroundXS
+     *
+     * @return $this
+     */
+    public function setContainerBackgroundXS($containerBackgroundXS)
+    {
+        $this->containerBackgroundXS = $containerBackgroundXS;
+
+        return $this;
+    }
+
+    /**
+     * Get textAlignXS
+     *
+     * @return string
+     */
+    public function getTextAlignXS()
+    {
+        return $this->textAlignXS;
+    }
+
+    /**
+     * Set textAlignXS
+     * @param string $textAlignXS
+     *
+     * @return $this
+     */
+    public function setTextAlignXS($textAlignXS)
+    {
+        $this->textAlignXS = $textAlignXS;
+
+        return $this;
+    }
+
+    /**
      * Get containerMarginSM
      *
      * @return string
@@ -314,6 +470,75 @@ trait StyleTrait
     public function setContainerPaddingSM($containerPaddingSM)
     {
         $this->containerPaddingSM = $containerPaddingSM;
+
+        return $this;
+    }
+
+    /**
+     * Get containerWidthSM
+     *
+     * @return string
+     */
+    public function getContainerWidthSM()
+    {
+        return $this->containerWidthSM;
+    }
+
+    /**
+     * Set containerWidthSM
+     * @param string $containerWidthSM
+     *
+     * @return $this
+     */
+    public function setContainerWidthSM($containerWidthSM)
+    {
+        $this->containerWidthSM = $containerWidthSM;
+
+        return $this;
+    }
+
+    /**
+     * Get containerBackgroundSM
+     *
+     * @return string
+     */
+    public function getContainerBackgroundSM()
+    {
+        return $this->containerBackgroundSM;
+    }
+
+    /**
+     * Set containerBackgroundSM
+     * @param string $containerBackgroundSM
+     *
+     * @return $this
+     */
+    public function setContainerBackgroundSM($containerBackgroundSM)
+    {
+        $this->containerBackgroundSM = $containerBackgroundSM;
+
+        return $this;
+    }
+
+    /**
+     * Get textAlignSM
+     *
+     * @return string
+     */
+    public function getTextAlignSM()
+    {
+        return $this->textAlignSM;
+    }
+
+    /**
+     * Set textAlignSM
+     * @param string $textAlignSM
+     *
+     * @return $this
+     */
+    public function setTextAlignSM($textAlignSM)
+    {
+        $this->textAlignSM = $textAlignSM;
 
         return $this;
     }
@@ -365,6 +590,75 @@ trait StyleTrait
     }
 
     /**
+     * Get containerWidthMD
+     *
+     * @return string
+     */
+    public function getContainerWidthMD()
+    {
+        return $this->containerWidthMD;
+    }
+
+    /**
+     * Set containerWidthMD
+     * @param string $containerWidthMD
+     *
+     * @return $this
+     */
+    public function setContainerWidthMD($containerWidthMD)
+    {
+        $this->containerWidthMD = $containerWidthMD;
+
+        return $this;
+    }
+
+    /**
+     * Get containerBackgroundMD
+     *
+     * @return string
+     */
+    public function getContainerBackgroundMD()
+    {
+        return $this->containerBackgroundMD;
+    }
+
+    /**
+     * Set containerBackgroundMD
+     * @param string $containerBackgroundMD
+     *
+     * @return $this
+     */
+    public function setContainerBackgroundMD($containerBackgroundMD)
+    {
+        $this->containerBackgroundMD = $containerBackgroundMD;
+
+        return $this;
+    }
+
+    /**
+     * Get textAlignMD
+     *
+     * @return string
+     */
+    public function getTextAlignMD()
+    {
+        return $this->textAlignMD;
+    }
+
+    /**
+     * Set textAlignMD
+     * @param string $textAlignMD
+     *
+     * @return $this
+     */
+    public function setTextAlignMD($textAlignMD)
+    {
+        $this->textAlignMD = $textAlignMD;
+
+        return $this;
+    }
+
+    /**
      * Get containerMarginLG
      *
      * @return string
@@ -406,6 +700,75 @@ trait StyleTrait
     public function setContainerPaddingLG($containerPaddingLG)
     {
         $this->containerPaddingLG = $containerPaddingLG;
+
+        return $this;
+    }
+
+    /**
+     * Get containerWidthLG
+     *
+     * @return string
+     */
+    public function getContainerWidthLG()
+    {
+        return $this->containerWidthLG;
+    }
+
+    /**
+     * Set containerWidthLG
+     * @param string $containerWidthLG
+     *
+     * @return $this
+     */
+    public function setContainerWidthLG($containerWidthLG)
+    {
+        $this->containerWidthLG = $containerWidthLG;
+
+        return $this;
+    }
+
+    /**
+     * Get containerBackgroundLG
+     *
+     * @return string
+     */
+    public function getContainerBackgroundLG()
+    {
+        return $this->containerBackgroundLG;
+    }
+
+    /**
+     * Set containerBackgroundLG
+     * @param string $containerBackgroundLG
+     *
+     * @return $this
+     */
+    public function setContainerBackgroundLG($containerBackgroundLG)
+    {
+        $this->containerBackgroundLG = $containerBackgroundLG;
+
+        return $this;
+    }
+
+    /**
+     * Get textAlignLG
+     *
+     * @return string
+     */
+    public function getTextAlignLG()
+    {
+        return $this->textAlignLG;
+    }
+
+    /**
+     * Set textAlignLG
+     * @param string $textAlignLG
+     *
+     * @return $this
+     */
+    public function setTextAlignLG($textAlignLG)
+    {
+        $this->textAlignLG = $textAlignLG;
 
         return $this;
     }
