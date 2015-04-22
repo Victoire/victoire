@@ -82,7 +82,10 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update"]', function(
     if ($vic("select.picker_entity_select").length != 0 && $vic("select.picker_entity_select").attr('name').indexOf('appventus_victoirecorebundle_widgetlistingtype[items][__name__][entity]') !== -1) {
         $vic("select.picker_entity_select").remove();
     }
-    var form = $vic(this).parents('.vic-modal-content').find('.vic-tab-pane.vic-active form').filter(":visible");
+    var form = $vic(this).parents('.vic-modal-content').find('form.vic-form-active');
+    if (form == undefined) {
+        var form = $vic(this).parents('.vic-modal-content').find('.vic-tab-pane.vic-active form').filter(":visible");
+    }
     $vic(form).trigger("victoire_widget_form_update_presubmit");
 
     loading(true);
