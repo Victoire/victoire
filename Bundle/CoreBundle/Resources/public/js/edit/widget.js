@@ -83,7 +83,7 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update"]', function(
         $vic("select.picker_entity_select").remove();
     }
     var form = $vic(this).parents('.vic-modal-content').find('form.vic-form-active');
-    if (form == undefined) {
+    if ($vic(form).length == 0) {
         var form = $vic(this).parents('.vic-modal-content').find('.vic-tab-pane.vic-active form').filter(":visible");
     }
     $vic(form).trigger("victoire_widget_form_update_presubmit");
