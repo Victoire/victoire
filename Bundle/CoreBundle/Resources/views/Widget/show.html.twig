@@ -63,7 +63,7 @@
     {% endspaceless %}
 
     {% if instruction %}
-        @media screen {{ attr }} {
+        @media all {{ attr }} {
             #widget-{{ widget.id }} {
                 {{ instruction }}
             }
