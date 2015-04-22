@@ -94,6 +94,14 @@
         <source>Is it your last word ?</source>
         <target>C'est votre dernier mot ?</target>
       </trans-unit>
+      <trans-unit id="0bdf6be270bede6fc8424cd68807b2988c1c5daf" resname="modal.button.unlink.confirm.body">
+        <source>modal.button.unlink.confirm.body</source>
+        <target>Cette action va supprimer définitivement ce contenu. Cette action est irréversible. Etes vous sûr ?</target>
+      </trans-unit>
+      <trans-unit id="bcdd8dc5a8131320710e98bb9e085c0b3eecb26e" resname="modal.button.unlink.confirm.title">
+        <source>modal.button.unlink.confirm.title</source>
+        <target>C'est votre dernier mot ?</target>
+      </trans-unit>
       <trans-unit id="2" resname="modal.button.delete.confirm.ok.label">
         <source>modal.button.delete.confirm.ok.label</source>
         <target>J'ai bien compris, je confirme la suppression</target>
