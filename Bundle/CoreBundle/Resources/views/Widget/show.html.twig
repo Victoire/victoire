@@ -41,21 +41,27 @@
 
 
 {% macro responsiveStyle(widget, sizeCode, victoire_twig_responsive) %}
-    {% set config = attribute(victoire_twig_responsive, sizeCode) %}
-    {% set attr = null %}
-    {% if config.min is defined %}
-        {% set attr = 'and (min-width: ' ~ config.min ~ 'px)' %}
-    {% endif %}
-    {% if config.max is defined %}
-        {% set attr = attr ~ ' and (max-width: ' ~ config.max ~ 'px)' %}
-    {% endif %}
+    {% spaceless %}
+        {% set config = attribute(victoire_twig_responsive, sizeCode) %}
 
-    {% set instruction = null %}
-    {% if attribute(widget, 'containerMargin' ~ sizeCode|upper) %}{% set instruction = instruction ~ "margin: " ~ attribute(widget, 'containerMargin' ~ sizeCode|upper) ~ ";" %}{% endif %}
-    {% if attribute(widget, 'containerPadding' ~ sizeCode|upper) %}{% set instruction = instruction ~ "padding: " ~ attribute(widget, 'containerPadding' ~ sizeCode|upper) ~ ";" %}{% endif %}
-    {% if attribute(widget, 'containerWidth' ~ sizeCode|upper) %}{% set instruction = instruction ~ "width: " ~ attribute(widget, 'containerWidth' ~ sizeCode|upper) ~ ";" %}{% endif %}
-    {% if attribute(widget, 'containerBackground' ~ sizeCode|upper) %}{% set instruction = instruction ~ "background: " ~ attribute(widget, 'containerBackground' ~ sizeCode|upper) ~ ";" %}{% endif %}
-    {% if attribute(widget, 'textAlign' ~ sizeCode|upper) %}{% set instruction = instruction ~ "text-align: " ~ attribute(widget, 'textAlign' ~ sizeCode|upper) ~ ";" %}{% endif %}
+        {% set attr = null %}
+
+        {% if config.min is defined %}
+            {% set attr = 'and (min-width: ' ~ config.min ~ 'px)' %}
+        {% endif %}
+
+        {% if config.max is defined %}
+            {% set attr = attr ~ ' and (max-width: ' ~ config.max ~ 'px)' %}
+        {% endif %}
+
+        {% set instruction = null %}
+        {% if attribute(widget, 'containerMargin' ~ sizeCode|upper) %}{% set instruction = instruction ~ "margin: " ~ attribute(widget, 'containerMargin' ~ sizeCode|upper) ~ ";" %}{% endif %}
+        {% if attribute(widget, 'containerPadding' ~ sizeCode|upper) %}{% set instruction = instruction ~ "padding: " ~ attribute(widget, 'containerPadding' ~ sizeCode|upper) ~ ";" %}{% endif %}
+        {% if attribute(widget, 'containerWidth' ~ sizeCode|upper) %}{% set instruction = instruction ~ "width: " ~ attribute(widget, 'containerWidth' ~ sizeCode|upper) ~ ";" %}{% endif %}
+        {% if attribute(widget, 'containerBackground' ~ sizeCode|upper) %}{% set instruction = instruction ~ "background: " ~ attribute(widget, 'containerBackground' ~ sizeCode|upper) ~ ";" %}{% endif %}
+        {% if attribute(widget, 'textAlign' ~ sizeCode|upper) %}{% set instruction = instruction ~ "text-align: " ~ attribute(widget, 'textAlign' ~ sizeCode|upper) ~ ";" %}{% endif %}
+    {% endspaceless %}
+
     {% if instruction %}
         @media screen {{ attr }} {
             #widget-{{ widget.id }} {
