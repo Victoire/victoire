@@ -41,7 +41,9 @@
                 </div>
 
                 <div class="vic-col-md-6">
-                    {{ form_row(form.locale) }}
+                    {% if form.locale is defined %}
+                        {{ form_row(form.locale) }}
+                    {% endif %}
                 </div>
 
                 <div class="vic-col-md-6">
