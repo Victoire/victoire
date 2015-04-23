@@ -4,11 +4,11 @@
  * Problematic:
  * When a form field conditions the others fields, add the data-refreshOnChange="true" attribute
  * to pass here and then reload|refresh the template (without any errors because the form is not yet properly submitted)
- * by calling the action in a custom mode: novalidate. 
+ * by calling the action in a custom mode: novalidate.
  * Then, on the change event, it will call the form action with the novalidate GET variable.
  * In the WidgetManager@createWidget and WidgetManager@editWidget, we do not validate the form and just returninng the template
  * with the new form types.
- *  
+ *
  **/
 $vic(document).on('change', 'select[data-refreshOnChange="true"]', function(event) {
     var form = $(this).parents('form');
@@ -19,7 +19,7 @@ $vic(document).on('change', 'select[data-refreshOnChange="true"]', function(even
         data: form.serialize(),
         async: true,
     }).done(function(response){
-        $vic('.vic-modal-body .vic-container').html(response.html);
+        $vic('.vic-modal-body .vic-container .vic-tab-pane.vic-active').html(response.html);
         loading(false);
     }).fail(function(response) {
         console.log(response);

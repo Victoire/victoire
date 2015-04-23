@@ -63,7 +63,7 @@ $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(
             warn(response.message, 10000);
             //inform user there have been an error
             if (response.html) {
-                $vic('.vic-modal-body .vic-container').html(response.html);
+                $vic('.vic-modal-body .vic-container .vic-tab-pane.vic-active').html(response.html);
             }
         }
     }).fail(function(response) {
@@ -110,7 +110,7 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update"]', function(
             warn(response.message, 10000);
 
             if (response.html) {
-                $vic(form).parent('div').replaceWith(response.html);
+                $vic(form).parent('div').html(response.html);
             }
         }
     }).fail(function(response) {
