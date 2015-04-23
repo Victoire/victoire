@@ -50,7 +50,7 @@ class Link
     protected $page;
 
     /**
-     * @ORM\Column(name="view_reference", type="string", length=255)
+     * @ORM\Column(name="view_reference", type="string", length=255, nullable=true)
      */
     protected $viewReference;
 
