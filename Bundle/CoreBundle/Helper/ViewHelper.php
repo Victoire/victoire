@@ -71,7 +71,7 @@ class ViewHelper
 
         foreach ($views as $view) {
             $viewsReferences = array_merge($viewsReferences, $this->buildViewReference($view));
-            $this->em->detach($view);
+            $this->em->refresh($view);
         }
 
         return $viewsReferences;
@@ -241,8 +241,8 @@ class ViewHelper
                                 'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
                             );
                         }
-                        //I detach this partial entity from em. If I don't do it, everytime I'll request this entity from em it'll be partially populated
-                        $this->em->detach($entity);
+                        //I refresh this partial entity from em. If I don't do it, everytime I'll request this entity from em it'll be partially populated
+                        $this->em->refresh($entity);
                     }
                 }
             }
