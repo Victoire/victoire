@@ -56,5 +56,5 @@ Component | Description
 [17]: http://github.com/victoire/victoire/blob/master/Bundle/I18nBundle/README.md
 [18]: http://github.com/victoire/victoire/blob/master/Bundle/BusinessEntityPageBundle/Resources/doc/BusinessEntityPage.md
 [19]: http://github.com/victoire/victoire/blob/master/Bundle/BusinessEntityPageBundle/Resources/doc/BusinessEntityPagePattern.md
-[20]: http://github.com/victoire/victoire/blob/master/Bundle/SitemapBundle/Resources/doc/README.md
+[20]: http://github.com/victoire/victoire/blob/master/Bundle/SitemapBundle/README.md
 [21]: http://github.com/Kunstmaan/KunstmaanMediaBundle
