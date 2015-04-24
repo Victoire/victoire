@@ -23,7 +23,7 @@ Component | Description
 [**SeoBundle**][10] | This bundle brings to user about than 50 SEO points
 [**TemplateBundle**][11] | Contains the pages templates logic (nearly close to [PageBundle][22])
 [**TwigBundle**][13] | Brings ErrorPage (404, 500, 503 etc) and responsive support
-[**UserBundle**][14] | Extends FosUserBundle, this bundle brings a ready to use system you can override
+[**UserBundle**][14] | Extends [FosUserBundle][12], this bundle brings a ready to use system you can override
 [**WidgetBundle**][15] | Contains all the base widget logic to be able to use Widgets
 [**WidgetMapBundle**][16] | Each view has a widget map, this bundle contains all the widget maps logic 
 [**I18nBundle**][17] | This bundle manage the internationalization system
@@ -47,6 +47,7 @@ Component | Description
 [9]:  http://github.com/victoire/victoire/blob/master/Bundle/QueryBundle/README.md
 [10]: http://github.com/victoire/victoire/blob/master/Bundle/SeoBundle/README.md
 [11]: http://github.com/victoire/victoire/blob/master/Bundle/TemplateBundle/README.md
+[12]: http://github.com/FriendsOfSymfony/FOSUserBundle
 [13]: http://github.com/victoire/victoire/blob/master/Bundle/TwigBundle/README.md
 [14]: http://github.com/victoire/victoire/blob/master/Bundle/UserBundle/README.md
 [15]: http://github.com/victoire/victoire/blob/master/Bundle/WidgetBundle/README.md
