@@ -21,7 +21,7 @@ Component | Description
 [**QueryBundle**][9] | Give the possibility to non technical user to build a query
 [**SitemapBundle**][20] | Sitemap related logic
 [**SeoBundle**][10] | This bundle brings to user about than 50 SEO points
-[**TemplateBundle**][11] | Contains the pages templates logic (nearly close to PageBundle)
+[**TemplateBundle**][11] | Contains the pages templates logic (nearly close to [PageBundle][22])
 [**TestsBundle**][12] | Contains the full tests files (behat)
 [**TwigBundle**][13] | Brings ErrorPage (404, 500, 503 etc) and responsive support
 [**UserBundle**][14] | Extends FosUserBundle, this bundle brings a ready to use system you can override
@@ -58,3 +58,4 @@ Component | Description
 [19]: http://github.com/victoire/victoire/blob/master/Bundle/BusinessEntityPageBundle/Resources/doc/BusinessEntityPagePattern.md
 [20]: http://github.com/victoire/victoire/blob/master/Bundle/SitemapBundle/README.md
 [21]: http://github.com/Kunstmaan/KunstmaanMediaBundle
+[22]: http://github.com/victoire/victoire/blob/master/Bundle/PageBundle
