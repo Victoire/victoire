@@ -59,12 +59,12 @@ or do it yourself by doing the usual stuff (doctrine:schema:update etc). You can
 - add the wanted widgets:
 
 ```json
-        "friendsvictoire/text-widget"      : "dev-master",
+        "friendsofvictoire/text-widget"      : "dev-master",
         "appventus/redactor-widget"  : "dev-master",
-        "friendsvictoire/button-widget"    : "dev-master",
-        "friendsvictoire/image-widget"     : "dev-master",
-        "friendsvictoire/render-widget"    : "dev-master",
-        "friendsvictoire/breadcrumb-widget": "dev-master",
+        "friendsofvictoire/button-widget"    : "dev-master",
+        "friendsofvictoire/image-widget"     : "dev-master",
+        "friendsofvictoire/render-widget"    : "dev-master",
+        "friendsofvictoire/breadcrumb-widget": "dev-master",
         ...
 ```
 
