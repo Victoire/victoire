@@ -13,7 +13,7 @@ Component | Description
 ------------ | -------------
 [**BlogBundle**][2] | Allow to create and manage one or several blog
 [**BusinessEntityBundle**][3] | Manage BusinessEntity
-[**BusinessEntityPageBundle**][4] | Define and manage [BusinessEntityPage][18] and [BusinessEntityPagePattern][19
+[**BusinessEntityPageBundle**][4] | Define and manage [BusinessEntityPage][18] and [BusinessEntityPagePattern][19]
 [**CoreBundle**][1] | The core
 [**FormBundle**][6] | Based on MopaBootstrapBundle, it brings some cool form themes
 [**MediaBundle**][7] | Based on KunstmaanMediaBundle, it offers a file management interface and a bridge to the widgets
