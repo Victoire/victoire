@@ -25,18 +25,24 @@ or do it yourself by doing the usual stuff (doctrine:schema:update etc). You can
 ```php
     //Victoire bundles
     new Victoire\Bundle\AnalyticsBundle\VictoireAnalyticsBundle(),
-    new Victoire\Bundle\CoreBundle\VictoireCoreBundle(),
     new Victoire\Bundle\BlogBundle\VictoireBlogBundle(),
+    new Victoire\Bundle\BusinessEntityBundle\VictoireBusinessEntityBundle(),
     new Victoire\Bundle\BusinessEntityPageBundle\VictoireBusinessEntityPageBundle(),
-    new Victoire\Bundle\FormBundle\VictoireFormBundle(),
+    new Victoire\Bundle\CoreBundle\VictoireCoreBundle(),
     new Victoire\Bundle\FilterBundle\VictoireFilterBundle(),
+    new Victoire\Bundle\FormBundle\VictoireFormBundle(),
+    new Victoire\Bundle\I18nBundle\VictoireI18nBundle(),
     new Victoire\Bundle\MediaBundle\VictoireMediaBundle(),
     new Victoire\Bundle\PageBundle\VictoirePageBundle(),
     new Victoire\Bundle\QueryBundle\VictoireQueryBundle(),
+    new Victoire\Bundle\ResourcesBundle\VictoireResourcesBundle(),
     new Victoire\Bundle\SeoBundle\VictoireSeoBundle(),
     new Victoire\Bundle\SitemapBundle\VictoireSitemapBundle(),
-    new Victoire\Bundle\ThemeBundle\VictoireThemeBundle(),
+    new Victoire\Bundle\TemplateBundle\VictoireTemplateBundle(),
     new Victoire\Bundle\TwigBundle\VictoireTwigBundle(),
+    new Victoire\Bundle\UserBundle\VictoireUserBundle(),
+    new Victoire\Bundle\WidgetBundle\VictoireWidgetBundle(),
+    new Victoire\Bundle\WidgetMapBundle\VictoireWidgetMapBundle(),
 ```
 
 - create victoire.yml config file:
@@ -60,13 +66,15 @@ or do it yourself by doing the usual stuff (doctrine:schema:update etc). You can
 
 ```json
         "friendsofvictoire/text-widget"      : "dev-master",
-        "appventus/redactor-widget"  : "dev-master",
         "friendsofvictoire/button-widget"    : "dev-master",
         "friendsofvictoire/image-widget"     : "dev-master",
         "friendsofvictoire/render-widget"    : "dev-master",
         "friendsofvictoire/breadcrumb-widget": "dev-master",
         ...
 ```
+
+Get the whole Victoire Widget list at packagist.org/search/?tags=victoire
+
 
 Check victoire dependencies:
 
