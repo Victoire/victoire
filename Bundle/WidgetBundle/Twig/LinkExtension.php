@@ -228,7 +228,7 @@ class LinkExtension extends \Twig_Extension
      *
      * @return LinkExtension
      **/
-    protected function addAttr($label, $value, $attr)
+    protected function addAttr($label, $value, &$attr)
     {
         if (!isset($attr[$label])) {
             $attr[$label] = "";
