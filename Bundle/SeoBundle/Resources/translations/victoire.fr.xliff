@@ -72,7 +72,7 @@
       </trans-unit>
       <trans-unit id="d084d59f0054ba45287438d260be97530e51eb8a" resname="form.pageSeo.ogUrl.label">
         <source>form.pageSeo.ogUrl.label</source>
-        <target>Uri</target>
+        <target>URL</target>
         <jms:reference-file line="59">SeoBundle/Form/PageSeoType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="a92b7f221fdf5f74410d2205a4318f7845cb7ab5" resname="form.pageSeo.page.label">
@@ -91,17 +91,17 @@
       </trans-unit>
       <trans-unit id="0e032dac458cf41f55badd9a3d3cc21f9d561908" resname="form.pageSeo.relAuthor.label">
         <source>form.pageSeo.relAuthor.label</source>
-        <target>Auteur (Url g+)</target>
+        <target>Auteur (URL G+)</target>
         <jms:reference-file line="43">SeoBundle/Form/PageSeoType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="90bb98cbd87d27c93a9cb98a2851db23ba8d55ba" resname="form.pageSeo.relCanonical.label">
         <source>form.pageSeo.relCanonical.label</source>
-        <target>Uri canonique</target>
+        <target>URL canonique</target>
         <jms:reference-file line="111">SeoBundle/Form/PageSeoType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="455949e3f6b365160f0f6d94080c91fd20d42d53" resname="form.pageSeo.relPublisher.label">
         <source>form.pageSeo.relPublisher.label</source>
-        <target>Publieur (Url g+)</target>
+        <target>Publieur (URL G+)</target>
         <jms:reference-file line="46">SeoBundle/Form/PageSeoType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="60fabb75dd6b492257fdca6488e713e9223f1163" resname="form.pageSeo.schemaDescription.label">
@@ -160,7 +160,7 @@
       </trans-unit>
       <trans-unit id="0ad25b71ed32cd64b3cb5cc5bef497ea807f5e3e" resname="form.pageSeo.twitterUrl.label">
         <source>form.pageSeo.twitterUrl.label</source>
-        <target>Uri</target>
+        <target>URL</target>
         <jms:reference-file line="72">SeoBundle/Form/PageSeoType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="9d2f0c1f4734ad4a0f123dc51744de25ebb2a5e1" resname="menu.page.seoSettings">
