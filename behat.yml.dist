@@ -1,24 +1,44 @@
 default:
-    context:
-        class: Victoire\Tests\Features\Context\FeatureContext
-        parameters:
-            wd_host: 'http://localhost:4444/wd/hub'
-            capabilities: { "browser": "firefox", "version": "33"}
+    autoload:
+	 '': Tests/Features/Context
+    suites:
+	 default:
+	     paths:
+		 - Tests/Features
+		 - Tests/Features/Page
+		 - Tests/Features/Widget
+		 - Tests/Features/WidgetMap
+	     contexts:
+		 - Victoire\Tests\Features\Context\FeatureContext:
+		     - Tests/Functionnal/web
+		 - Victoire\Tests\Features\Context\JavascriptContext
+		 - Victoire\Tests\Features\Context\VictoireContext
+		 - Knp\FriendlyContexts\Context\AliceContext
+		 - Knp\FriendlyContexts\Context\MinkContext
+		 - Knp\FriendlyContexts\Context\EntityContext
     extensions:
-        Behat\Symfony2Extension\Extension:
-            mink_driver: true
+	 Behat\Symfony2Extension:
             kernel:
                 path: Tests/Functionnal/app/AppKernel.php
-                bootstrap: Tests/Functionnal/bootstrap.php
-        Behat\MinkExtension\Extension:
-            default_session: 'symfony2'
-            javascript_session: 'selenium2'
-            base_url:     'http://127.0.0.1:8000/app.php/'
-            browser_name: firefox
-            goutte: ~
-            selenium2:
-                wd_host: 'http://localhost:4444/wd/hub'
-                capabilities: { "browser": "firefox", "version": "33"}
-    paths:
-        features: Tests/Features/
-        bootstrap: Tests/bootstrap
+		debug: true
+	 Behat\MinkExtension\ServiceContainer\MinkExtension:
+	     base_url:           'http://localhost:8080/app_test.php'
+	     selenium2:          ~
+	     goutte:             ~
+	     symfony2: ~
+	     default_session:    symfony2
+	     javascript_session: selenium2
+	     browser_name: firefox
+	 Knp\FriendlyContexts\Extension:
+	     entities:
+		 namespaces:
+		     - Acme
+		     - Victoire
+	     smartTag: smartStep
+	     alice:
+		 fixtures:
+		     Media: Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/media.yml
+		     User: Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/user.yml
+		     Template: Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/page.yml
+		     Page: Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/page.yml
+		     ErrorPage: Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/page.yml

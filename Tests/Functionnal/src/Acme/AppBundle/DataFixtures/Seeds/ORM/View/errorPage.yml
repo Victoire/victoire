@@ -1,0 +1,51 @@
+Victoire\Bundle\TwigBundle\Entity\ErrorPage:
+    400:
+	code: 400
+	template: @template_base
+	author: @anakin
+	name: Mauvaise Requete
+	locale: fr
+	slug: mauvaise-requete
+	undeletable: true
+	createdAt: <dateTime('now')>
+	updatedAt: <dateTime('now')>
+    403:
+	code: 403
+	template: @template_base
+	author: @anakin
+	name: Interdit
+	locale: fr
+	slug: erreur403
+	undeletable: true
+	createdAt: <dateTime('now')>
+	updatedAt: <dateTime('now')>
+    404:
+	code: 404
+	template: @template_base
+	author: @anakin
+	name: Page introuvable
+	locale: fr
+	slug: erreur404
+	undeletable: true
+	createdAt: <dateTime('now')>
+	updatedAt: <dateTime('now')>
+    500:
+	code: 500
+	template: @template_base
+	author: @anakin
+	name: Erreur serveur
+	locale: fr
+	slug: erreur500
+	undeletable: true
+	createdAt: <dateTime('now')>
+	updatedAt: <dateTime('now')>
+    503:
+	code: 503
+	template: @template_base
+	author: @anakin
+	name: Service indisponible
+	locale: fr
+	slug: erreur503
+	undeletable: true
+	createdAt: <dateTime('now')>
+	updatedAt: <dateTime('now')>

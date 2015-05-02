@@ -1,0 +1,26 @@
+Victoire\Bundle\PageBundle\Entity\Page:
+    home:
+	template: @template_base
+	author: @anakin
+	name: Page d'accueil
+	locale: fr
+	slug: home
+	homepage: true
+	undeletable: true
+	status: published
+	publishedAt: <dateTime('now')>
+	createdAt: <dateTime('now')>
+	updatedAt: <dateTime('now')>
+
+    test:
+	template: @template_base
+	author: @anakin
+	name: Test
+	locale: fr
+	slug: test
+	homepage: false
+	undeletable: false
+	status: published
+	publishedAt: <dateTime('now')>
+	createdAt: <dateTime('now')>
+	updatedAt: <dateTime('now')>

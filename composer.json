@@ -42,21 +42,16 @@
         "liip/imagine-bundle"                 : "1.0.*@dev",
         "jms/translation-bundle"              : "1.1.*@dev"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/florale/KnpMenu.git"
-        }
-    ],
     "require-dev": {
-        "phpunit/phpunit"               : "4.6.*",
-        "behat/behat"                   : "2.5.x-dev",
-        "behat/mink"                    : "1.5.*@stable",
-        "behat/symfony2-extension"      : "*",
-        "behat/mink-extension"          : "*",
-        "behat/mink-goutte-driver"      : "*",
+	"phpunit/phpunit": "4.6.*",
+	"behat/behat": "~3.0",
+	"behat/mink-extension": "~2.0",
+	"behat/mink-goutte-driver": "~1.1",
+	"behat/mink-selenium2-driver": "~1.1",
         "behat/mink-browserkit-driver"  : "*",
-        "behat/mink-selenium2-driver"   : "1.1.*"
+	"behat/symfony2-extension": "~2.0",
+	"knplabs/friendly-contexts": "dev-master",
+	"symfony/var-dumper": "~3.0@dev"
     },
     "replace": {
         "victoire/blog-bundle": "self.version",
@@ -69,9 +64,10 @@
     },
     "autoload": {
         "psr-4": {
+	    "Acme\\AppBundle\\": "Tests/Functionnal/src/Acme/AppBundle",
             "Victoire\\Bundle\\": "Bundle",
-            "Victoire\\Widget\\": "Tests/Functionnal/src/Victoire/Widget",
-            "Victoire\\Tests\\Features\\": "Tests/Features"
+	    "Victoire\\Tests\\Features\\": "Tests/Features",
+	    "Victoire\\Widget\\": "Tests/Functionnal/src/Victoire/Widget"
         }
     },
     "minimum-stability": "dev",

@@ -1,0 +1,16 @@
+Victoire\Bundle\UserBundle\Entity\User:
+    anakin:
+	username: anakin@victoire.io
+	email: anakin@victoire.io
+	plainPassword: test
+	firstname: Anakin
+	lastname: Skywalker
+	enabled: true
+	locale: fr
+	locked: false
+	expired: false
+	createdAt: <dateTime('now')>
+	updatedAt: <dateTime('now')>
+	roles:
+	    ROLE_ADMIN: ROLE_ADMIN
+	    ROLE_VICTOIRE_DEVELOPER: ROLE_VICTOIRE_DEVELOPER

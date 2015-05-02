@@ -3,7 +3,7 @@ Feature: Create a page
 
 Background:
     Given I am logged in as "anakin@victoire.io"
-     And I maximize the browser
+     And I maximize the window
 
 Scenario: I can create a new page
     Given I should see "Page"

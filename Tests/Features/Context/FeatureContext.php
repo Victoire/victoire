@@ -2,36 +2,37 @@
 
 namespace Victoire\Tests\Features\Context;
 
-use Behat\MinkExtension\Context\MinkContext;
+use Behat\Behat\Context\Context;
+use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\Behat\Hook\Scope\AfterStepScope;
+use Behat\Behat\Hook\Scope\BeforeFeatureScope;
+use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Exception\UnsupportedDriverActionException;
 use Behat\Symfony2Extension\Context\KernelDictionary;
 use Behat\Symfony2Extension\Driver\KernelDriver;
+use Behat\Symfony2Extension\Context\KernelAwareContext;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
-use Victoire\Bundle\CoreBundle\DataFixtures\ORM\LoadFixtureData;
-use Victoire\Tests\Features\Context\SubContext\AjaxSubContextTrait;
-use Victoire\Tests\Features\Context\SubContext\JavascriptSubContextTrait;
-use Victoire\Tests\Features\Context\SubContext\VictoireSubContextTrait;
+use Knp\FriendlyContexts\Context\RawMinkContext;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Feature context.
  */
-class FeatureContext extends MinkContext
+class FeatureContext extends RawMinkContext implements Context, SnippetAcceptingContext, KernelAwareContext
 {
     private $parameters = array();
+    /**
+     * @var
+     */
+    private $screenShotPath;
     use KernelDictionary;
-    use AjaxSubContextTrait;
-    use VictoireSubContextTrait;
-    use JavascriptSubContextTrait;
 
     /**
-     * Initializes context with parameters from behat.yml.
-     *
-     * @param array $parameters
+     * @param string $screenShotPath
      */
-    public function __construct(array $parameters)
-    {
-        $this->parameters = $parameters;
+    public function __construct($screenShotPath) {
+	$this->screenshotsPath = $screenShotPath;
     }
 
     /**
@@ -39,14 +40,13 @@ class FeatureContext extends MinkContext
      */
     public function cleanDatabaseFixtures()
     {
-        /** @var $em \Doctrine\ORM\EntityManager */
-        $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
+	$entityManager = $this->getContainer()->get('doctrine')->getManager();
 
         $purger = new ORMPurger();
         $executor = new ORMExecutor($entityManager, $purger);
         $executor->purge();
 
-        $fixturesLoader = new LoadFixtureData();
+	$fixturesLoader = new \Acme\AppBundle\DataFixtures\Seeds\ORM\LoadFixtureData();
         $fixturesLoader->setContainer($this->getContainer());
         $fixturesLoader->load($entityManager);
     }
@@ -173,5 +173,48 @@ class FeatureContext extends MinkContext
 
             return $this->findAfterAjax($element, $value, $timeout - 100);
         }
+    }
+
+    /**
+     * @AfterStep
+     */
+    public function takeScreenshotAfterFailedStep(AfterStepScope $scope)
+    {
+	if (99 === $scope->getTestResult()->getResultCode()) {
+	    $this->takeScreenshot();
+	}
+    }
+
+    /**
+     * @throws \Exception
+     */
+    private function takeScreenshot()
+    {
+	$driver = $this->getSession()->getDriver();
+	if (!$driver instanceof Selenium2Driver) {
+	    return;
+	}
+	$baseUrl = preg_replace('/\/app_test\.php/', '', $this->getMinkParameter('base_url'));
+	$fileName = date('d-m-y') . '-' . uniqid() . '.png';
+
+	$this->saveScreenshot($fileName, $this->screenshotsPath);
+	print sprintf('Screenshot at: %s/%s', $baseUrl, $fileName);
+    }
+
+    /**
+     * Save a screenshot of the current window to the file system.
+     *
+     * @param string $filename Desired filename, defaults to
+     *                         <browser_name>_<ISO 8601 date>_<randomId>.png
+     * @param string $filepath Desired filepath, defaults to
+     *                         upload_tmp_dir, falls back to sys_get_temp_dir()
+     */
+    private function saveScreenshot($filename = null, $filepath = null)
+    {
+	// Under Cygwin, uniqid with more_entropy must be set to true.
+	// No effect in other environments.
+	$filename = $filename ?: sprintf('%s_%s_%s.%s', $this->getMinkParameter('browser_name'), date('c'), uniqid('', true), 'png');
+	$filepath = $filepath ? $filepath : (ini_get('upload_tmp_dir') ? ini_get('upload_tmp_dir') : sys_get_temp_dir());
+	file_put_contents($filepath . '/' . $filename, $this->getSession()->getScreenshot());
     }
 }

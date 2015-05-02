@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
 
+	    new AppVentus\AsseticInjectorBundle\AvAsseticInjectorBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
@@ -49,10 +50,9 @@ class AppKernel extends Kernel
             new Victoire\Bundle\UserBundle\VictoireUserBundle(),
             new Victoire\Bundle\WidgetBundle\VictoireWidgetBundle(),
             new Victoire\Bundle\WidgetMapBundle\VictoireWidgetMapBundle(),
-            //Victoire test widget
-            new Victoire\Widget\AnakinBundle\VictoireWidgetAnakinBundle(),
-            //AppVentus Bundles
-            new AppVentus\AsseticInjectorBundle\AvAsseticInjectorBundle(),
+	    //Victoire test bundles
+	    new Victoire\Widget\ForceBundle\VictoireWidgetForceBundle(),
+	    new Acme\AppBundle\AcmeAppBundle(),
         );
     }
 
