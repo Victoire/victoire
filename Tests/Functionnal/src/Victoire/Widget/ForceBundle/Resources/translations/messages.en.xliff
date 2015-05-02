@@ -6,17 +6,13 @@
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
     </header>
     <body>
-      <trans-unit id="1" resname="widget.anakin.new.action.label">
-        <source>widget.anakin.new.action.label</source>
-        <target>Anakin</target>
+      <trans-unit id="3" resname="widget_force.form.side.label">
+	<source>widget_force.form.side.label</source>
+	<target state="new">side</target>
       </trans-unit>
-      <trans-unit id="2" resname="modal.form.widget.type.anakin.label">
-        <source>modal.form.widget.type.anakin.label</source>
-        <target>Anakin</target>
-      </trans-unit>
-      <trans-unit id="3" resname="widget_anakin.form.side.label">
-        <source>widget_anakin.form.side.label</source>
-        <target>Force side</target>
+      <trans-unit id="4" resname="widget_force.show.forceSide">
+	<source>widget_force.show.forceSide</source>
+	<target>The %side% Side of the force</target>
       </trans-unit>
     </body>
   </file>

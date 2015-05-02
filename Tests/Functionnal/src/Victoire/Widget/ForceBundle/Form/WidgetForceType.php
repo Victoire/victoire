@@ -1,16 +1,16 @@
 <?php
 
-namespace Victoire\Widget\AnakinBundle\Form;
+namespace Victoire\Widget\ForceBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Victoire\Bundle\CoreBundle\Form\WidgetType;
-
+use Victoire\Bundle\WidgetBundle\Model\Widget;
 
 /**
- * WidgetAnakin form type
+ * WidgetForce form type
  */
-class WidgetAnakinType extends WidgetType
+class WidgetForceType extends WidgetType
 {
     /**
      * define form fields
@@ -19,27 +19,27 @@ class WidgetAnakinType extends WidgetType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-                $builder->add('side', null, array(
-            'label' => 'widget_anakin.form.side.label'
-        ));
-                parent::buildForm($builder, $options);
-
+	if ($options['mode'] === Widget::MODE_STATIC) {
+	    $builder->add('side', null, array(
+		'label' => 'widget_force.form.side.label',
+	    ));
+	}
+	parent::buildForm($builder, $options);
     }
 
-
     /**
-     * bind form to WidgetAnakin entity
+     * bind form to WidgetForce entity
      * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        parent::setDefaultOptions($resolver);
+	parent::setDefaultOptions($resolver);
 
-        $resolver->setDefaults(array(
-            'data_class'         => 'Victoire\Widget\AnakinBundle\Entity\WidgetAnakin',
-            'widget'             => 'Anakin',
-            'translation_domain' => 'victoire'
-        ));
+	$resolver->setDefaults(array(
+	    'data_class'         => 'Victoire\Widget\ForceBundle\Entity\WidgetForce',
+	    'widget'             => 'Force',
+	    'translation_domain' => 'victoire',
+	));
     }
 
     /**
@@ -49,6 +49,6 @@ class WidgetAnakinType extends WidgetType
      */
     public function getName()
     {
-        return 'victoire_widget_form_anakin';
+	return 'victoire_widget_form_force';
     }
 }

@@ -1,37 +1,35 @@
 <?php
-namespace Victoire\Widget\AnakinBundle\Entity;
+namespace Victoire\Widget\ForceBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Victoire\Bundle\CoreBundle\Annotations as VIC;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
- * WidgetAnakin
+ * WidgetForce
  *
- * @ORM\Table("vic_widget_anakin")
+ * @ORM\Table("vic_widget_force")
  * @ORM\Entity
  */
-class WidgetAnakin extends Widget
+class WidgetForce extends Widget
 {
-
     /**
      * @var string
      *
+     * @VIC\ReceiverProperty("textable")
      * @ORM\Column(name="side", type="string", length=255)
      */
     protected $side;
 
     /**
      * To String function
-     * Used in render choices type (Especially in VictoireWidgetRenderBundle)
-     * //TODO Check the generated value and make it more consistent
      *
      * @return String
      */
     public function __toString()
     {
-        return 'Anakin #'.$this->id;
+	return 'Force #'.$this->id;
     }
-
 
     /**
      * Set side
@@ -40,9 +38,9 @@ class WidgetAnakin extends Widget
      */
     public function setSide($side)
     {
-        $this->side = $side;
+	$this->side = $side;
 
-        return $this;
+	return $this;
     }
 
     /**
@@ -52,7 +50,6 @@ class WidgetAnakin extends Widget
      */
     public function getSide()
     {
-        return $this->side;
+	return $this->side;
     }
-
 }

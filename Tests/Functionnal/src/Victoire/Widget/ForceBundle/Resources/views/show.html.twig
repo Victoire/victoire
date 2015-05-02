@@ -1,0 +1,6 @@
+{% extends 'VictoireCoreBundle:Widget:show.html.twig' %}
+
+{% block content %}
+	<span class="fa fa-{% if side|lower == 'dark'|trans %}empire{% else %}rebel{% endif %}"></span>
+    <span>{{ 'widget_force.show.forceSide'|trans({'%side%' : side}) }}</span>
+{% endblock content %}
