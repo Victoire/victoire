@@ -1,5 +1,7 @@
 # Victoire
 
+[![Join the chat at https://gitter.im/Victoire/victoire](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Victoire/victoire?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ##Overview
 
 Victoire is a **Symfony2** overlay integrating a business aware cms and a large panel of web marketing tools.
