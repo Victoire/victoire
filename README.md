@@ -39,6 +39,7 @@ Component | Description
 
 
 [![Documentation Status](https://readthedocs.org/projects/victoiredcms/badge/?version=latest)](https://readthedocs.org/projects/victoiredcms/?badge=latest) [![Travis-ci](https://travis-ci.org/Victoire/victoire.svg?branch=master)](https://travis-ci.org/Victoire/victoire) [![SensioLabsInsight](https://insight.sensiolabs.com/projects/d5307bf2-eac4-43db-bd49-dd9e85e360a5/mini.png)](https://insight.sensiolabs.com/projects/d5307bf2-eac4-43db-bd49-dd9e85e360a5)[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Victoire/victoire/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Victoire/victoire/?branch=master)
+[![Join the chat at https://gitter.im/Victoire/victoire](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Victoire/victoire?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 
 [1]:  http://github.com/victoire/victoire/blob/master/Bundle/CoreBundle/README.md
