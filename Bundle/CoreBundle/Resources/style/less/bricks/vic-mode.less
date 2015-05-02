@@ -45,19 +45,6 @@
     width: 100%;
     height: 40px;
     position: relative;
-
-    .tooltip.top {
-        bottom: ~"calc(100% + 10px)" !important;
-        top: auto !important;
-        left: 50% !important;
-        right: auto !important;
-        .transform(translateX(-50%));
-    }
-
-    .tooltip-inner {
-        padding: 5px;
-        width: 130px;
-    }
 }
 
 .vic-mode {
@@ -71,9 +58,50 @@
     padding: 0;
     position: relative;
 
-    &:hover,
-    &.is-active {
+    &:before {
+        content: attr(title);
+        background-color: @anthracite;
+        position: absolute;
+        width: 110px;
+        top: -48px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        margin-left: -55px;
+        left: 50%;
+        .border-radius(5px);
+    }
+
+    &:after {
+        content: '';
+        width: 0;
+        height: 0;
+        border-top: 8px solid @anthracite;
+        border-left: 7px solid transparent;
+        border-right: 7px solid transparent;
+        position: absolute;
+        top: -18px;
+        left: 50%;
+        margin-left: -7px;
+    }
+
+    &:before,
+    &:after {
+        visibility: hidden;
+        opacity: 0;
+        .transition(opacity 200ms ease);
+    }
+
+    &:hover, &.hover, &.-hover, &.is-hover,
+    &:active, &.active, &.-active, &.is-active {
         color: white;
+    }
+
+    &:hover, &.hover, &.-hover, &.is-hover {
+        &:before,
+        &:after {
+            visibility: visible;
+            opacity: 1;
+        }
     }
 
     &.vic-active {
