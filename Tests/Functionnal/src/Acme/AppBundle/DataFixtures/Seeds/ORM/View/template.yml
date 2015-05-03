@@ -1,14 +1,14 @@
 Victoire\Bundle\TemplateBundle\Entity\Template:
     template_base:
+	name: Base
+	slug: base
 	layout: fullWidth
 	author: @anakin
-	name: Full width
 	locale: fr
-	slug: base
 	undeletable: true
 	createdAt: <dateTime('now')>
 	updatedAt: <dateTime('now')>
-    two_cols:
+    template_two_cols:
 	layout: two_cols
 	template: @template_base
 	author: @anakin

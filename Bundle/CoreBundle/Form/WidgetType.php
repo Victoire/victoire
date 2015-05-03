@@ -9,13 +9,12 @@ use Symfony\Component\Form\FormEvent;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
- * WidgetRedactor form type
+ * Base Widget form type
  */
 class WidgetType extends AbstractType
 {
     /**
      * Define form fields
-     *
      * @param FormBuilderInterface $builder The builder
      * @param array                $options The options
      *
@@ -68,7 +67,7 @@ class WidgetType extends AbstractType
         //we use the PRE_SUBMIT event to set the mode option
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function(FormEvent $event) {
+	    function (FormEvent $event) {
                 $options = $this->options;
 
                 //we get the raw data for the widget form

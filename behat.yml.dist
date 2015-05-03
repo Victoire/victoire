@@ -13,16 +13,16 @@ default:
 		     - Tests/Functionnal/web
 		 - Victoire\Tests\Features\Context\JavascriptContext
 		 - Victoire\Tests\Features\Context\VictoireContext
-		 - Knp\FriendlyContexts\Context\AliceContext
 		 - Knp\FriendlyContexts\Context\MinkContext
+		 - Knp\FriendlyContexts\Context\AliceContext
 		 - Knp\FriendlyContexts\Context\EntityContext
     extensions:
 	 Behat\Symfony2Extension:
             kernel:
-                path: Tests/Functionnal/app/AppKernel.php
+		path: Tests/Functionnal/app/AppKernel.php
 		debug: true
 	 Behat\MinkExtension\ServiceContainer\MinkExtension:
-	     base_url:           'http://localhost:8080/app_test.php'
+	     base_url:           'http://localhost:8000'
 	     selenium2:          ~
 	     goutte:             ~
 	     symfony2: ~
@@ -37,8 +37,15 @@ default:
 	     smartTag: smartStep
 	     alice:
 		 fixtures:
-		     Media: Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/media.yml
-		     User: Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/user.yml
-		     Template: Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/page.yml
-		     Page: Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/page.yml
-		     ErrorPage: Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/page.yml
+		     Media:     Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/Media/folder.yml
+		     User:      Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/User/user.yml
+		     Template:  Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/template.yml
+		     Page:      Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/page.yml
+		     ErrorPage: Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/errorPage.yml
+		 dependencies:
+		     Template:  [User]
+		     ErrorPage: [Template, User]
+		     Page:      [Template, User]
+	     symfony_kernel:
+		 bootstrap: Tests/Functionnal/app/autoload.php
+		 path: Tests/Functionnal/app/AppKernel.php

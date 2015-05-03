@@ -1,6 +1,7 @@
 <?php
 
 namespace Victoire\Tests\Features\Context;
+use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 
 use Knp\FriendlyContexts\Context\RawMinkContext;
 
@@ -9,6 +10,25 @@ use Knp\FriendlyContexts\Context\RawMinkContext;
  */
 class VictoireContext extends RawMinkContext
 {
+    /** @BeforeScenario */
+    public function gatherContexts(BeforeScenarioScope $scope)
+    {
+	$environment = $scope->getEnvironment();
+
+	$this->minkContext = $environment->getContext('Knp\FriendlyContexts\Context\MinkContext');
+    }
+
+    /**
+     * @Given I am logged in as :email
+     */
+    public function iAmLoggedInAsUser($email)
+    {
+	$this->minkContext->visit('/login');
+	$this->minkContext->fillField('username', $email);
+	$this->minkContext->fillField('password', 'test');
+	$this->minkContext->pressButton('_submit');
+    }
+
     /**
      * @Then /^I fill in wysiwyg with "([^"]*)"$/
      */
@@ -23,13 +43,9 @@ class VictoireContext extends RawMinkContext
      */
     public function iSelectFromTheSelectOfSlot($widget, $nth, $slot)
     {
-	$widget = $this->fixStepArgument($widget);
-	$element = 'descendant-or-self::*[@id="vic-widget-1-container"]/div['.$nth.']/label/select';
-	$element = 'descendant-or-self::*[@id="vic-slot-'.$slot.'"]/div/label/select['.$nth.']';
-
 	$slot = $this->getSession()->getPage()->find('xpath', 'descendant-or-self::*[@id="vic-slot-'.$slot.'"]');
 	$selects = $slot->findAll('css', 'select[role="menu"]');
-	$selects[$nth - 1]->selectOption($widget);
+	$selects[$nth - 1]->selectOption(str_replace('\\"', '"', $widget));
     }
 
     /**

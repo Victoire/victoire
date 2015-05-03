@@ -1,9 +1,9 @@
-@mink:selenium2 @database @fixtures
+@mink:selenium2 @alice(Page) @reset-schema
 Feature: Delete a page
 
 Background:
     Given I am logged in as "anakin@victoire.io"
-     And I maximize the browser
+     And I maximize the window
 
 Scenario: I can delete a new page
     Given I am on "/fr/test"

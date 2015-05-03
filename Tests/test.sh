@@ -1,3 +1,4 @@
+#!/bin/sh
 curl -s http://getcomposer.org/installer | php
 composer.phar install --dev --prefer-dist
 php Tests/Functionnal/bin/console --env=test doctrine:database:drop --force
