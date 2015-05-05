@@ -155,5 +155,10 @@ Check victoire dependencies:
 imports:
         - { resource: @VictoireCoreBundle/Resources/config/config.yml }
 ```
-- Login with anakin@victoire.io:test user and start creating your website
+Use the following information to login and start to create your website
+
+|Login|Password|
+|-----|--------|
+|`anakin@victoire.io`|test|
+
 
