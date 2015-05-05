@@ -12,19 +12,8 @@
     margin-bottom: 30px;
 }
 
-body {
-    &[role=admin-edit],
-    &[role=admin-style] {
-        .vic-widget {
-            min-height: 20px;
-        }
-        .vic-hover-widget, .vic-hover-widget-unlink {
-            display: inline-block;
-        }
-    }
-}
-
-.vic-hover-widget, .vic-hover-widget-unlink {
+.vic-hover-widget,
+.vic-hover-widget-unlink {
     position: absolute;
     display: none;
     top: 0;
@@ -57,20 +46,43 @@ body {
     }
 }
 
+body {
+    &[role=admin-edit],
+    &[role=admin-style] {
+        .vic-widget {
+            min-height: 20px;
+        }
+
+        .vic-hover-widget,
+        .vic-hover-widget-unlink {
+            display: inline-block;
+        }
+    }
+
+    &[role=admin-layout] {
+        .vic-hover-widget {
+            display: none !important;
+
+            i {
+                background-image: url(/bundles/victoirecore/images/style-widget-icon.png);
+            }
+        }
+    }
+
+    &[role="admin-style"] {
+        .vic-hover-widget {
+            i {
+                background-image: url(/bundles/victoirecore/images/style-widget-icon.png);
+            }
+        }
+    }
+}
+
+
 .vic-hover-widget-unlink {
     i {
         background-image: url(/bundles/victoirecore/images/unlink-widget-icon.png);
         top: 100px;
-    }
-}
-
-body[role=admin-layout] {
-    .vic-hover-widget {
-        display: none !important;
-
-        i {
-            background-image: url(/bundles/victoirecore/images/style-widget-icon.png);
-        }
     }
 }
 
