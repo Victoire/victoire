@@ -166,6 +166,10 @@
         <source>navbar.mode.style</source>
         <target>Style</target>
       </trans-unit>
+      <trans-unit id="22" resname="hamburger_menu.backend.back_home">
+        <source>hamburger_menu.backend.back_home</source>
+        <target>Back to website</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
