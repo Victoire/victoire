@@ -2,8 +2,8 @@
 
 namespace Victoire\Bundle\CoreBundle\Helper;
 
+use Symfony\Component\Config\Util\XmlUtils;
 use Symfony\Component\DependencyInjection\Container;
-use Symfony\Component\DependencyInjection\SimpleXMLElement;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
 use Victoire\Bundle\CoreBundle\Entity\View;
@@ -60,6 +60,9 @@ class ViewCacheHelper
         if (array_key_exists('locale', $viewReference)) {
             $itemNode->addAttribute('locale', $viewReference['locale']);
         }
+	if (array_key_exists('name', $viewReference)) {
+	    $itemNode->addAttribute('name', $viewReference['name']);
+	}
     }
     /**
      * Write given views references in a xml file
@@ -68,7 +71,7 @@ class ViewCacheHelper
      */
     public function write($viewsReferences)
     {
-        $rootNode = new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8' ?><viewReferences></viewReferences>");
+	$rootNode = new \SimpleXMLElement("<?xml version='1.0' encoding='UTF-8' ?><viewReferences></viewReferences>");
 
         foreach ($viewsReferences as $viewReference) {
             $itemNode = $rootNode->addChild('viewReference');
@@ -81,11 +84,36 @@ class ViewCacheHelper
     /**
      * get the content of the view cache file
      *
-     * @return SimpleXMLElement
+     * @return \SimpleXMLElement
      */
     public function readCache()
     {
-        return new SimpleXMLElement(file_get_contents($this->xmlFile));
+	return new \SimpleXMLElement(file_get_contents($this->xmlFile));
+    }
+
+    public function convertXmlCacheToArray()
+    {
+	$xml = $this->readCache();
+
+	$cachedArray = json_decode(json_encode((array) $xml), TRUE);
+	$viewsReferences = [];
+
+
+	foreach ($cachedArray['viewReference'] as $cachedViewReference) {
+	    $viewReference['id']              = !empty($cachedViewReference['@attributes']['id']) ? $cachedViewReference['@attributes']['id'] : null ;
+	    $viewReference['locale']          = !empty($cachedViewReference['@attributes']['locale']) ? $cachedViewReference['@attributes']['locale'] : null ;
+	    $viewReference['entityId']        = !empty($cachedViewReference['@attributes']['entityId']) ? $cachedViewReference['@attributes']['entityId'] : null ;
+	    $viewReference['entityNamespace'] = !empty($cachedViewReference['@attributes']['entityNamespace']) ? $cachedViewReference['@attributes']['entityNamespace'] : null ;
+	    $viewReference['url']             = !empty($cachedViewReference['@attributes']['url']) ? $cachedViewReference['@attributes']['url'] : null ;
+	    $viewReference['viewId']          = !empty($cachedViewReference['@attributes']['viewId']) ? $cachedViewReference['@attributes']['viewId'] : null ;
+	    $viewReference['viewNamespace']   = !empty($cachedViewReference['@attributes']['viewNamespace']) ? $cachedViewReference['@attributes']['viewNamespace'] : null ;
+	    $viewReference['patternId']       = !empty($cachedViewReference['@attributes']['patternId']) ? $cachedViewReference['@attributes']['patternId'] : null ;
+	    $viewReference['name']            = !empty($cachedViewReference['@attributes']['name']) ? $cachedViewReference['@attributes']['name'] : null ;
+
+	    $viewsReferences[] = $viewReference;
+	}
+
+	return $viewsReferences;
     }
 
     /**
@@ -131,14 +159,15 @@ class ViewCacheHelper
         $arguments = array_merge($arguments, $locale);
 
         if ($xmlReference = $this->readCache()->xpath("//viewReference[".implode(' and ', $arguments)."]")) {
-            $viewReference['id']              = $xmlReference[0]->getAttributeAsPhp('id');
-            $viewReference['locale']          = $xmlReference[0]->getAttributeAsPhp('locale');
-            $viewReference['entityId']        = $xmlReference[0]->getAttributeAsPhp('entityId');
-            $viewReference['entityNamespace'] = $xmlReference[0]->getAttributeAsPhp('entityNamespace');
-            $viewReference['url']             = $xmlReference[0]->getAttributeAsPhp('url');
-            $viewReference['viewId']          = $xmlReference[0]->getAttributeAsPhp('viewId');
-            $viewReference['viewNamespace']   = $xmlReference[0]->getAttributeAsPhp('viewNamespace');
-            $viewReference['patternId']       = $xmlReference[0]->getAttributeAsPhp('patternId');
+	    $viewReference['id']              = XmlUtils::phpize($xmlReference[0]['id']);
+	    $viewReference['locale']          = XmlUtils::phpize($xmlReference[0]['locale']);
+	    $viewReference['entityId']        = XmlUtils::phpize($xmlReference[0]['entityId']);
+	    $viewReference['entityNamespace'] = XmlUtils::phpize($xmlReference[0]['entityNamespace']);
+	    $viewReference['url']             = XmlUtils::phpize($xmlReference[0]['url']);
+	    $viewReference['viewId']          = XmlUtils::phpize($xmlReference[0]['viewId']);
+	    $viewReference['viewNamespace']   = XmlUtils::phpize($xmlReference[0]['viewNamespace']);
+	    $viewReference['patternId']       = XmlUtils::phpize($xmlReference[0]['patternId']);
+	    $viewReference['name']            = XmlUtils::phpize($xmlReference[0]['name']);
         } else {
             $viewReference = null;
         }
@@ -162,12 +191,12 @@ class ViewCacheHelper
     }
 
     /**
-     * write SimpleXMLElement in the cache file
-     * @param SimpleXMLElement $rootNode
+     * write \SimpleXMLElement in the cache file
+     * @param \SimpleXMLElement $rootNode
      *
      * @return void
      */
-    protected function writeFile(SimpleXMLElement $rootNode)
+    protected function writeFile(\SimpleXMLElement $rootNode)
     {
         if (!is_dir(dirname($this->xmlFile))) {
             mkdir(dirname($this->xmlFile), 0777, true);
