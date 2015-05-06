@@ -1,6 +1,3 @@
-parameters:
-    victoire_core.watch_view_cache: false
-
 imports:
     - { resource: @VictoireCoreBundle/Resources/config/config.yml }
     - { resource: @VictoireTwigBundle/Resources/config/config.yml }
