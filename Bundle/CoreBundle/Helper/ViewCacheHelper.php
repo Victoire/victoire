@@ -60,9 +60,9 @@ class ViewCacheHelper
         if (array_key_exists('locale', $viewReference)) {
             $itemNode->addAttribute('locale', $viewReference['locale']);
         }
-	if (array_key_exists('name', $viewReference)) {
-	    $itemNode->addAttribute('name', $viewReference['name']);
-	}
+        if (array_key_exists('name', $viewReference)) {
+            $itemNode->addAttribute('name', $viewReference['name']);
+        }
     }
     /**
      * Write given views references in a xml file
@@ -71,7 +71,7 @@ class ViewCacheHelper
      */
     public function write($viewsReferences)
     {
-	$rootNode = new \SimpleXMLElement("<?xml version='1.0' encoding='UTF-8' ?><viewReferences></viewReferences>");
+	    $rootNode = new \SimpleXMLElement("<?xml version='1.0' encoding='UTF-8' ?><viewReferences></viewReferences>");
 
         foreach ($viewsReferences as $viewReference) {
             $itemNode = $rootNode->addChild('viewReference');
@@ -88,32 +88,35 @@ class ViewCacheHelper
      */
     public function readCache()
     {
-	return new \SimpleXMLElement(file_get_contents($this->xmlFile));
+	    return new \SimpleXMLElement(file_get_contents($this->xmlFile));
     }
 
+    /**
+     * @return array
+     */
     public function convertXmlCacheToArray()
     {
-	$xml = $this->readCache();
+        $xml = $this->readCache();
 
-	$cachedArray = json_decode(json_encode((array) $xml), TRUE);
-	$viewsReferences = [];
+        $cachedArray = json_decode(json_encode((array) $xml), TRUE);
+        $viewsReferences = [];
 
 
-	foreach ($cachedArray['viewReference'] as $cachedViewReference) {
-	    $viewReference['id']              = !empty($cachedViewReference['@attributes']['id']) ? $cachedViewReference['@attributes']['id'] : null ;
-	    $viewReference['locale']          = !empty($cachedViewReference['@attributes']['locale']) ? $cachedViewReference['@attributes']['locale'] : null ;
-	    $viewReference['entityId']        = !empty($cachedViewReference['@attributes']['entityId']) ? $cachedViewReference['@attributes']['entityId'] : null ;
-	    $viewReference['entityNamespace'] = !empty($cachedViewReference['@attributes']['entityNamespace']) ? $cachedViewReference['@attributes']['entityNamespace'] : null ;
-	    $viewReference['url']             = !empty($cachedViewReference['@attributes']['url']) ? $cachedViewReference['@attributes']['url'] : null ;
-	    $viewReference['viewId']          = !empty($cachedViewReference['@attributes']['viewId']) ? $cachedViewReference['@attributes']['viewId'] : null ;
-	    $viewReference['viewNamespace']   = !empty($cachedViewReference['@attributes']['viewNamespace']) ? $cachedViewReference['@attributes']['viewNamespace'] : null ;
-	    $viewReference['patternId']       = !empty($cachedViewReference['@attributes']['patternId']) ? $cachedViewReference['@attributes']['patternId'] : null ;
-	    $viewReference['name']            = !empty($cachedViewReference['@attributes']['name']) ? $cachedViewReference['@attributes']['name'] : null ;
+        foreach ($cachedArray['viewReference'] as $cachedViewReference) {
+            $viewReference['id']              = !empty($cachedViewReference['@attributes']['id']) ? $cachedViewReference['@attributes']['id'] : null ;
+            $viewReference['locale']          = !empty($cachedViewReference['@attributes']['locale']) ? $cachedViewReference['@attributes']['locale'] : null ;
+            $viewReference['entityId']        = !empty($cachedViewReference['@attributes']['entityId']) ? $cachedViewReference['@attributes']['entityId'] : null ;
+            $viewReference['entityNamespace'] = !empty($cachedViewReference['@attributes']['entityNamespace']) ? $cachedViewReference['@attributes']['entityNamespace'] : null ;
+            $viewReference['url']             = !empty($cachedViewReference['@attributes']['url']) ? $cachedViewReference['@attributes']['url'] : null ;
+            $viewReference['viewId']          = !empty($cachedViewReference['@attributes']['viewId']) ? $cachedViewReference['@attributes']['viewId'] : null ;
+            $viewReference['viewNamespace']   = !empty($cachedViewReference['@attributes']['viewNamespace']) ? $cachedViewReference['@attributes']['viewNamespace'] : null ;
+            $viewReference['patternId']       = !empty($cachedViewReference['@attributes']['patternId']) ? $cachedViewReference['@attributes']['patternId'] : null ;
+            $viewReference['name']            = !empty($cachedViewReference['@attributes']['name']) ? $cachedViewReference['@attributes']['name'] : null ;
 
-	    $viewsReferences[] = $viewReference;
-	}
+            $viewsReferences[] = $viewReference;
+        }
 
-	return $viewsReferences;
+        return $viewsReferences;
     }
 
     /**
