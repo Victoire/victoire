@@ -1,0 +1,14 @@
+Victoire\Bundle\BlogBundle\Entity\Article:
+    article:
+        author: @anakin
+        name: First article
+        description: This is a great article description
+        locale: fr
+        slug: the-jedi-network
+        status: published
+        pattern: @pattern_article
+        deleted: false
+        blog: @blog-jedi-network
+        publishedAt: <dateTime('now')>
+        createdAt: <dateTime('now')>
+        updatedAt: <dateTime('now')>
