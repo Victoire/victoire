@@ -161,8 +161,8 @@ class BlogController extends BasePageController
     /**
      * Blog settings
      *
-     * @param Request $request
-     * @param BasePage    $blog
+     * @param Request  $request
+     * @param BasePage $blog
      *
      * @return Response
      * @Route("/{id}/category", name="victoire_blog_category")
@@ -221,8 +221,8 @@ class BlogController extends BasePageController
     /**
      * Blog settings
      *
-     * @param Request $request
-     * @param BasePage    $blog
+     * @param Request  $request
+     * @param BasePage $blog
      *
      * @return Response
      * @Route("/{id}/articles", name="victoire_blog_articles")

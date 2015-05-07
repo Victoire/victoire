@@ -35,7 +35,7 @@ abstract class ViewType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             $view = $event->getData();
             $form = $event->getForm();
 
@@ -45,11 +45,11 @@ abstract class ViewType extends AbstractType
             // Si aucune donnée n'est passée au formulaire, la donnée est "null".
             // Ce doit être considéré comme une nouvelle "View"
             if ($this->isNew) {
-                $getAllTemplateWithoutMe = function(EntityRepository $tr) {
+                $getAllTemplateWithoutMe = function (EntityRepository $tr) {
                     return $tr->getAll()->getInstance();
                 };
             } else {
-                $getAllTemplateWithoutMe = function(EntityRepository $tr) use ($view) {
+                $getAllTemplateWithoutMe = function (EntityRepository $tr) use ($view) {
                     return $tr->getAll()
                         ->getInstance()
                         ->andWhere('template.id != :templateId')

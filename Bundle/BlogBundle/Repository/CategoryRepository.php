@@ -18,6 +18,7 @@ class CategoryRepository extends NestedTreeRepository
                             ->where('blog = :blog')
                             ->setParameter('blog', $blog)
         ;
+
         return $this;
 
     }
@@ -26,6 +27,7 @@ class CategoryRepository extends NestedTreeRepository
     {
         $this->qb = $this->getInstance('category')
         ;
+
         return $this;
 
     }

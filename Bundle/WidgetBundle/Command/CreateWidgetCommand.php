@@ -99,7 +99,6 @@ EOT
             $bundle = strtr($namespace, array('\\' => ''));
         }
 
-
         $orgname = $input->getOption('org-name');
 
         if (null === $input->getOption('org-name')) {
@@ -230,7 +229,7 @@ EOT
             ));
 
             $question = new Question($questionHelper->getQuestion('Widget name', $input->getOption('bundle-name')));
-            $question->setValidator(function($answer) {
+            $question->setValidator(function ($answer) {
                 return self::validateWidgetName($answer, false);
             });
 
@@ -245,8 +244,6 @@ EOT
             $namespace = "Victoire\\Widget\\".$name."Bundle";
             $input->setOption('namespace', $namespace);
         }
-
-
 
         $orgname = $input->getOption('org-name');
 
@@ -279,7 +276,7 @@ EOT
             ));
 
             $question = new Question($questionHelper->getQuestion('Parent widget name', false));
-            $question->setValidator(function($answer) {
+            $question->setValidator(function ($answer) {
                 return self::validateWidgetName($answer, false);
             });
             $parent = $questionHelper->ask($input, $output, $question);
@@ -304,7 +301,7 @@ EOT
         ));
 
         $question = new Question($questionHelper->getQuestion('Target directory', $dir), $dir);
-        $question->setValidator(function($dir) use ($bundle, $namespace) {
+        $question->setValidator(function ($dir) use ($bundle, $namespace) {
                 return Validators::validateTargetDir($dir, $bundle, $namespace);
         });
         $dir = $questionHelper->ask($input, $output, $question);
@@ -443,7 +440,7 @@ EOT
      *
      * @param  InputInterface  $input
      * @param  OutputInterface $output
-     * @param  QuestionHelper    $questionHelper
+     * @param  QuestionHelper  $questionHelper
      * @return $fields
      */
     private function addFields(InputInterface $input, OutputInterface $output, QuestionHelper $questionHelper)
@@ -474,7 +471,7 @@ EOT
         }
         $output->writeln('');
 
-        $fieldValidator = function($type) use ($types) {
+        $fieldValidator = function ($type) use ($types) {
             if (!in_array($type, $types)) {
                 throw new \InvalidArgumentException(sprintf('Invalid type "%s".', $type));
             }
@@ -482,7 +479,7 @@ EOT
             return $type;
         };
 
-        $lengthValidator = function($length) {
+        $lengthValidator = function ($length) {
             if (!$length) {
                 return $length;
             }
@@ -505,7 +502,7 @@ EOT
 
             $question = new Question($questionHelper->getQuestion('New field name (press <return> to stop adding fields)', null));
             $question->setValidator(
-                function($name) use ($fields, $generator) {
+                function ($name) use ($fields, $generator) {
                     if (isset($fields[$name]) || 'id' == $name) {
                         throw new \InvalidArgumentException(sprintf('Field "%s" is already defined.', $name));
                     }

@@ -99,7 +99,7 @@ trait VictoireSubContextTrait
     public function shouldPrecedeForTheQuery($textBefore, $textAfter)
     {
         $items = array_map(
-            function($element) {
+            function ($element) {
                 return $element->getText();
             },
             $this->getSession()->getPage()->findAll('css', 'div.vic-widget > p')

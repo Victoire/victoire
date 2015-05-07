@@ -23,18 +23,18 @@ class ViewCacheWarmer
     {
         $this->viewHelper = $viewHelper;
         $this->viewCacheHelper = $viewCacheHelper;
-	$this->entityManager = $entityManager;
+        $this->entityManager = $entityManager;
     }
 
     /**
      * Warm the view cache file (if needed or force mode)
-     * @param string  $cacheDir Where does the viewsReferences file should take place
+     * @param string $cacheDir Where does the viewsReferences file should take place
      */
     public function warmUp($cacheDir)
     {
         if (!$this->viewCacheHelper->fileExists()) {
-	    $views = $this->entityManager->createQuery("SELECT v FROM VictoireCoreBundle:View v")->getResult();
-	    $viewsReferences = $this->viewHelper->buildViewsReferences($views);
+            $views = $this->entityManager->createQuery("SELECT v FROM VictoireCoreBundle:View v")->getResult();
+            $viewsReferences = $this->viewHelper->buildViewsReferences($views);
             $this->viewCacheHelper->write($viewsReferences);
         }
     }

@@ -104,7 +104,7 @@ class QueryHelper
      * Get the results from the sql after adding the
      *
      * @param \Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern $containerEntity
-     * @param QueryBuilder $itemsQueryBuilder
+     * @param QueryBuilder                                                               $itemsQueryBuilder
      *
      * @throws \Exception
      *

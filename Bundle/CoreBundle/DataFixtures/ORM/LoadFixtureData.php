@@ -151,7 +151,7 @@ class LoadFixtureData extends AbstractFixture implements ContainerAwareInterface
             while ($file = readdir($openFolder)) {
                 if ($file != '.' && $file != '..') {
                     // Remove file
-                    $recursiveDelete = function($str) use (&$recursiveDelete) {
+                    $recursiveDelete = function ($str) use (&$recursiveDelete) {
                         if (is_file($str)) {
                             return @unlink($str);
                         } elseif (is_dir($str)) {

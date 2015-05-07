@@ -3,7 +3,7 @@ victoire_core:
         Anakin:
             class: "Victoire\\Widget\\AnakinBundle\\Entity\\WidgetAnakin"
             name: Anakin
-            
+
 jms_translation:
     configs:
         victoire_anakin_bundle:

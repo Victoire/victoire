@@ -33,8 +33,7 @@ class ArticleType extends AbstractType
         $viewToIdTransformer = new ViewToIdTransformer($this->entityManager);
         $blog = $builder->getData()->getBlog();
         $categoryRepo = $this->entityManager->getRepository('Victoire\Bundle\BlogBundle\Entity\Category');
-        if ($blog)
-        {
+        if ($blog) {
             $queryBuilder = $categoryRepo->getOrderedCategories($blog)->getInstance();
         } else {
             $queryBuilder = $categoryRepo->getAll()->getInstance();
@@ -65,7 +64,7 @@ class ArticleType extends AbstractType
                 )
             );
 
-            $articlePatterns = function(EntityRepository $repo) {
+            $articlePatterns = function (EntityRepository $repo) {
                 return $repo->getInstance()->andWhere("pattern.businessEntityName = 'article'");
             };
             $builder->add('pattern', null, array(

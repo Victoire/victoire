@@ -71,7 +71,7 @@ class ViewCacheHelper
      */
     public function write($viewsReferences)
     {
-	    $rootNode = new \SimpleXMLElement("<?xml version='1.0' encoding='UTF-8' ?><viewReferences></viewReferences>");
+        $rootNode = new \SimpleXMLElement("<?xml version='1.0' encoding='UTF-8' ?><viewReferences></viewReferences>");
 
         foreach ($viewsReferences as $viewReference) {
             $itemNode = $rootNode->addChild('viewReference');
@@ -88,7 +88,7 @@ class ViewCacheHelper
      */
     public function readCache()
     {
-	    return new \SimpleXMLElement(file_get_contents($this->xmlFile));
+        return new \SimpleXMLElement(file_get_contents($this->xmlFile));
     }
 
     /**
@@ -100,7 +100,6 @@ class ViewCacheHelper
 
         $cachedArray = json_decode(json_encode((array) $xml), TRUE);
         $viewsReferences = [];
-
 
         foreach ($cachedArray['viewReference'] as $cachedViewReference) {
             $viewReference['id']              = !empty($cachedViewReference['@attributes']['id']) ? $cachedViewReference['@attributes']['id'] : null ;
@@ -162,15 +161,15 @@ class ViewCacheHelper
         $arguments = array_merge($arguments, $locale);
 
         if ($xmlReference = $this->readCache()->xpath("//viewReference[".implode(' and ', $arguments)."]")) {
-	    $viewReference['id']              = XmlUtils::phpize($xmlReference[0]['id']);
-	    $viewReference['locale']          = XmlUtils::phpize($xmlReference[0]['locale']);
-	    $viewReference['entityId']        = XmlUtils::phpize($xmlReference[0]['entityId']);
-	    $viewReference['entityNamespace'] = XmlUtils::phpize($xmlReference[0]['entityNamespace']);
-	    $viewReference['url']             = XmlUtils::phpize($xmlReference[0]['url']);
-	    $viewReference['viewId']          = XmlUtils::phpize($xmlReference[0]['viewId']);
-	    $viewReference['viewNamespace']   = XmlUtils::phpize($xmlReference[0]['viewNamespace']);
-	    $viewReference['patternId']       = XmlUtils::phpize($xmlReference[0]['patternId']);
-	    $viewReference['name']            = XmlUtils::phpize($xmlReference[0]['name']);
+            $viewReference['id']              = XmlUtils::phpize($xmlReference[0]['id']);
+            $viewReference['locale']          = XmlUtils::phpize($xmlReference[0]['locale']);
+            $viewReference['entityId']        = XmlUtils::phpize($xmlReference[0]['entityId']);
+            $viewReference['entityNamespace'] = XmlUtils::phpize($xmlReference[0]['entityNamespace']);
+            $viewReference['url']             = XmlUtils::phpize($xmlReference[0]['url']);
+            $viewReference['viewId']          = XmlUtils::phpize($xmlReference[0]['viewId']);
+            $viewReference['viewNamespace']   = XmlUtils::phpize($xmlReference[0]['viewNamespace']);
+            $viewReference['patternId']       = XmlUtils::phpize($xmlReference[0]['patternId']);
+            $viewReference['name']            = XmlUtils::phpize($xmlReference[0]['name']);
         } else {
             $viewReference = null;
         }

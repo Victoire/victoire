@@ -28,5 +28,5 @@ class VictoireI18nBundle extends Bundle
         parent::build($container);
         $container->addCompilerPass(new I18nCompilerPass());
     }
-    
+
 }

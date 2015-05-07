@@ -122,7 +122,7 @@ class TemplateController extends Controller
 
     /**
      * define settings of the template
-     * @param Template $template 
+     * @param Template $template
      *
      * @return JsonResponse
      * @Route("/{slug}/parametres", name="victoire_template_settings")
@@ -137,6 +137,7 @@ class TemplateController extends Controller
         if ($form->isValid()) {
                 $em->persist($template);
                 $em->flush();
+
                 return new JsonResponse(
                     array(
                         'success' => true,
@@ -157,7 +158,7 @@ class TemplateController extends Controller
     }
 
     /**
-     * translate a template 
+     * translate a template
      * @param Template $template
      *
      * @return JsonResponse

@@ -49,4 +49,3 @@ Victoire\Bundle\TwigBundle\Entity\ErrorPage:
         undeletable: true
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
-

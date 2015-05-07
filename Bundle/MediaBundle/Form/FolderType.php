@@ -50,7 +50,7 @@ class FolderType extends AbstractType
                 'choices'   => array('media' => 'media', 'image' => 'image', 'slideshow' => 'slideshow', 'video' => 'video'),
                 ))
             ->add('parent', 'entity', array('class' => 'Victoire\Bundle\MediaBundle\Entity\Folder', 'required' => false,
-                'query_builder' => function(\Doctrine\ORM\EntityRepository $er) use ($folder, $type) {
+                'query_builder' => function (\Doctrine\ORM\EntityRepository $er) use ($folder, $type) {
                     $qb = $er->createQueryBuilder('folder');
 
                     if ($folder != null && $folder->getId() != null) {

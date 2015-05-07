@@ -32,7 +32,6 @@ class WidgetAnakin extends Widget
         return 'Anakin #'.$this->id;
     }
 
-
     /**
      * Set side
      *
