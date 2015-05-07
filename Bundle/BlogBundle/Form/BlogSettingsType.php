@@ -40,7 +40,7 @@ class BlogSettingsType extends BlogType
             ))
             ->add('publishedAt', null, array(
                 'widget'         => 'single_text',
-                'datetimepicker' => true
+                'vic_datetimepicker' => true
             ));
     }
 
