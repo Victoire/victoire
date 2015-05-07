@@ -1,11 +1,11 @@
 victoire_core:
     widgets:
-	Force:
-	    class: "Victoire\\Widget\\ForceBundle\\Entity\\WidgetForce"
-	    name: Force
+        Force:
+            class: "Victoire\\Widget\\ForceBundle\\Entity\\WidgetForce"
+            name: Force
 
 jms_translation:
     configs:
-	victoire_force_bundle:
-	    dirs: ["@VictoireForceBundle"]
-	    output_dir: "@VictoireForceBundle/Resources/translations"
+        victoire_force_bundle:
+            dirs: ["@VictoireForceBundle"]
+            output_dir: "@VictoireForceBundle/Resources/translations"

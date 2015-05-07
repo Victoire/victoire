@@ -19,12 +19,12 @@ class WidgetForceType extends WidgetType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-	if ($options['mode'] === Widget::MODE_STATIC) {
-	    $builder->add('side', null, array(
-		'label' => 'widget_force.form.side.label',
-	    ));
-	}
-	parent::buildForm($builder, $options);
+        if ($options['mode'] === Widget::MODE_STATIC) {
+            $builder->add('side', null, array(
+                'label' => 'widget_force.form.side.label',
+            ));
+        }
+        parent::buildForm($builder, $options);
     }
 
     /**
@@ -33,13 +33,13 @@ class WidgetForceType extends WidgetType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-	parent::setDefaultOptions($resolver);
+        parent::setDefaultOptions($resolver);
 
-	$resolver->setDefaults(array(
-	    'data_class'         => 'Victoire\Widget\ForceBundle\Entity\WidgetForce',
-	    'widget'             => 'Force',
-	    'translation_domain' => 'victoire',
-	));
+        $resolver->setDefaults(array(
+            'data_class'         => 'Victoire\Widget\ForceBundle\Entity\WidgetForce',
+            'widget'             => 'Force',
+            'translation_domain' => 'victoire',
+        ));
     }
 
     /**
@@ -49,6 +49,6 @@ class WidgetForceType extends WidgetType
      */
     public function getName()
     {
-	return 'victoire_widget_form_force';
+        return 'victoire_widget_form_force';
     }
 }

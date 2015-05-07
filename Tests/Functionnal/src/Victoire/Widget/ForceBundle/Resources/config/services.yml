@@ -1,15 +1,15 @@
 services:
     victoire_core.widget_force_content_resolver:
-	parent: victoire_widget.base_widget_content_resolver
-	tags:
-	    - { name: victoire_widget.widget_content_resolver, alias: Force }
+        parent: victoire_widget.base_widget_content_resolver
+        tags:
+            - { name: victoire_widget.widget_content_resolver, alias: Force }
 
     #alias to the entity
     victoire.widget.force:
-	class: Victoire\Widget\ForceBundle\Entity\WidgetForce
+        class: Victoire\Widget\ForceBundle\Entity\WidgetForce
 
     #alias to the form
     victoire.widget.form.force:
-	class: Victoire\Widget\ForceBundle\Form\WidgetForceType
-	tags:
-	    - { name: form.type , alias: victoire_widget_form_force }
+        class: Victoire\Widget\ForceBundle\Form\WidgetForceType
+        tags:
+            - { name: form.type , alias: victoire_widget_form_force }

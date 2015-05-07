@@ -17,7 +17,7 @@ class WidgetForce extends Widget
      * @var string
      *
      * @VIC\ReceiverProperty("textable")
-     * @ORM\Column(name="side", type="string", length=255)
+     * @ORM\Column(name="side", type="string", length=255, nullable=true)
      */
     protected $side;
 
