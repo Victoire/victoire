@@ -122,7 +122,7 @@ class WidgetStyleType extends AbstractType
             $finder = Finder::create()
                 ->files()
                 ->name('/^show(.)+\.html\.twig$/')
-                ->in($this->fileLocator->locate('@'.$widgetBundle.'/Resources/views'))
+                ->in($this->fileLocator->locate('@'.$widgetBundle.'/Resources/views', null, false))
                 ->sortByName();
             //add the default choice
             $choices = array(
