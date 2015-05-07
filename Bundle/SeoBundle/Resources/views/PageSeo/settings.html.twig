@@ -15,13 +15,13 @@
         {% include 'VictoireBusinessEntityBundle:BusinessProperty:list.html.twig' with { 'businessProperties':businessProperties } %}
         {% endif %}
         {{form_start(form)}}
-    
+
         <ul class="vic-nav vic-nav-tabs vic-modal-nav-tabs">
             <li class="vic-active vic-seperate"><a href="#seo-global" data-toggle="vic-tab">Général</a></li>
             <li><a href="#seo-social" data-toggle="vic-tab">Réseaux sociaux</a></li>
             <li><a href="#seo-advanced" data-toggle="vic-tab">Avancé</a></li>
         </ul>
-        
+
         <div class="vic-tab-content vic-modal-tab-content">
             <div class="vic-tab-pane vic-active" id="seo-global">
                 <div class="vic-tab-content vic-modal-tab-content">
@@ -75,7 +75,7 @@
                         {{ form_row(form.relCanonical) }}
                         {{ form_row(form.redirectTo) }}
                     </div>
-        
+
                     {{form_rest(form)}}
                 </div>
             </div>

@@ -4,10 +4,6 @@ namespace Victoire\Bundle\MediaBundle\Helper\Menu;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
-use Victoire\Bundle\MediaBundle\Helper\Menu\MenuItem;
-use Victoire\Bundle\MediaBundle\Helper\Menu\MenuAdaptorInterface;
-use Victoire\Bundle\MediaBundle\Helper\Menu\MenuBuilder;
-use Victoire\Bundle\MediaBundle\Helper\Menu\TopMenuItem;
 use Victoire\Bundle\MediaBundle\Entity\Media;
 use Victoire\Bundle\MediaBundle\Entity\Folder;
 

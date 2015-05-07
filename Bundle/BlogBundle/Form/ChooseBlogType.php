@@ -2,7 +2,6 @@
 namespace Victoire\Bundle\BlogBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 use Symfony\Component\Form\AbstractType;

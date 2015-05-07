@@ -6,7 +6,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Victoire\Widget\ListingBundle\Form\WidgetListingItemType;
 
 /**
  * Category form type
@@ -40,7 +39,7 @@ class CategoryType extends AbstractType
          */
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
-            function($event) {
+            function ($event) {
                 $entity = $event->getData();
 
                 if ($entity !== null) {
@@ -62,7 +61,7 @@ class CategoryType extends AbstractType
          */
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function($event) {
+            function ($event) {
                 $rawData = $event->getData();
                 if (isset($rawData['children'])) {
                     $addChildren = true;

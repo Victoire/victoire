@@ -26,7 +26,7 @@ class MigrateI18nCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
      *
      * this method is executed when we launch the command

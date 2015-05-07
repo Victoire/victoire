@@ -4,9 +4,6 @@ namespace Victoire\Bundle\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Victoire\Widget\ListingBundle\Entity\WidgetListingItem;
-use Knp\Menu\NodeInterface;
-
 
 /**
  * Category

@@ -13,6 +13,12 @@ or do it yourself by doing the usual stuff (doctrine:schema:update etc). You can
     php bin/console victoire:generate:view-cache --env=dev
     php bin/console doctrine:fixtures:load --fixtures="vendor/victoire/victoire/Bundle/CoreBundle/DataFixtures/ORM"
 
+*Careful* : please notice that Victoire needs APC in CLI mode. to do so, add these two lines in your php.ini config file
+
+```ini
+    apc.enabled = 1
+    apc.enable_cli = 1
+```
 
 ## Manually
 
@@ -149,5 +155,10 @@ Check victoire dependencies:
 imports:
         - { resource: @VictoireCoreBundle/Resources/config/config.yml }
 ```
-- Login with anakin@victoire.io:test user and start creating your website
+Use the following information to login and start to create your website
+
+|Login|Password|
+|-----|--------|
+|`anakin@victoire.io`|test|
+
 

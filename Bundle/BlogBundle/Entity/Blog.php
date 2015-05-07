@@ -50,8 +50,7 @@ class Blog extends BasePage
      */
     public function setCategories($categories)
     {
-        foreach ($categories as $category)
-        {
+        foreach ($categories as $category) {
             $category->setBlog($this);
         }
         $this->categories = $categories;
@@ -111,6 +110,7 @@ class Blog extends BasePage
                 $rootCategories[] = $categories;
             }
         }
+
         return $rootCategories;
     }
 

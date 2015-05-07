@@ -1,8 +1,6 @@
 <?php
 namespace Victoire\Bundle\I18nBundle\Entity\Traits;
 
-use Victoire\Bundle\I18nBundle\Entity\I18n;
-
 trait I18nTrait
 {
     /**

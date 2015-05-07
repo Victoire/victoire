@@ -24,7 +24,7 @@ class VictoireTwigExtension extends Extension
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
-        
+
         $container->setParameter(
             'victoire_twig.responsive', $config['responsive']
         );

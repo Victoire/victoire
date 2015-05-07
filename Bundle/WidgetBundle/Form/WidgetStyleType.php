@@ -113,7 +113,7 @@ class WidgetStyleType extends AbstractType
         ));
 
         // add theme field
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             $data = $event->getData();
             $form = $event->getForm();
             //guess the bundle name
@@ -122,7 +122,7 @@ class WidgetStyleType extends AbstractType
             $finder = Finder::create()
                 ->files()
                 ->name('/^show(.)+\.html\.twig$/')
-                ->in($this->fileLocator->locate('@'.$widgetBundle.'/Resources/views'))
+                ->in($this->fileLocator->locate('@'.$widgetBundle.'/Resources/views', null, false))
                 ->sortByName();
             //add the default choice
             $choices = array(

@@ -38,8 +38,8 @@ class BusinessEntityPageHelper
     /**
      * Is the entity allowed for the business entity page
      *
-     * @param BusinessEntityPagePattern $bepPattern
-     * @param \Victoire\Bundle\PageBundle\Helper\Entity|null                    $entity
+     * @param BusinessEntityPagePattern                      $bepPattern
+     * @param \Victoire\Bundle\PageBundle\Helper\Entity|null $entity
      *
      * @throws \Exception
      * @return boolean
@@ -239,7 +239,7 @@ class BusinessEntityPageHelper
 
     /**
      * Guess the best pattern to represent given reflectionClass
-     * @param \ReflectionClass $refClass
+     * @param  \ReflectionClass $refClass
      * @return View
      */
     public function guessBestViewForEntity($refClass)

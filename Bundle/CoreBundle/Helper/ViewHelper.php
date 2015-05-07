@@ -59,20 +59,23 @@ class ViewHelper
         'locale',
     );
 
+    public function buildViewsReferences($views)
+    {
+        $viewsReferences = array();
+        foreach ($views as $view) {
+            $viewsReferences = array_merge($viewsReferences, $this->buildViewReference($view));
+            $this->em->refresh($view);
+        }
+
+        return $viewsReferences;
+    }
     /**
      * This method get all views (BasePage and Template) in DB and return the references, including non persisted Business entity page (pattern and businessEntityName based)
      * @return array the computed views as array
      */
     public function getAllViewsReferences()
     {
-        $viewsReferences = array();
-        //@todo This query is not optimized because we need the property "businessEntityName" later, and it's only present in Pattern pages
-        $views = $this->em->createQuery("SELECT v FROM VictoireCoreBundle:View v")->getResult();
-
-        foreach ($views as $view) {
-            $viewsReferences = array_merge($viewsReferences, $this->buildViewReference($view));
-            $this->em->refresh($view);
-        }
+        $viewsReferences = $this->viewCacheHelper->convertXmlCacheToArray();
 
         return $viewsReferences;
     }
@@ -417,4 +420,5 @@ class ViewHelper
         $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($businessEntityId);
         $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
     }
+
 }

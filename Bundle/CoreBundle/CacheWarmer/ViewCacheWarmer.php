@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\CoreBundle\CacheWarmer;
 
+use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
 use Victoire\Bundle\CoreBundle\Helper\ViewHelper;
 
@@ -18,20 +19,22 @@ class ViewCacheWarmer
      * @param ViewHelper      $viewHelper      @victoire_page.page_helper
      * @param ViewCacheHelper $viewCacheHelper @victoire_core.view_cache_helper
      */
-    public function __construct(ViewHelper $viewHelper, ViewCacheHelper $viewCacheHelper)
+    public function __construct(ViewHelper $viewHelper, ViewCacheHelper $viewCacheHelper, EntityManager $entityManager)
     {
         $this->viewHelper = $viewHelper;
         $this->viewCacheHelper = $viewCacheHelper;
+        $this->entityManager = $entityManager;
     }
 
     /**
      * Warm the view cache file (if needed or force mode)
-     * @param string  $cacheDir Where does the viewsReferences file should take place
+     * @param string $cacheDir Where does the viewsReferences file should take place
      */
     public function warmUp($cacheDir)
     {
         if (!$this->viewCacheHelper->fileExists()) {
-            $viewsReferences = $this->viewHelper->getAllViewsReferences();
+            $views = $this->entityManager->createQuery("SELECT v FROM VictoireCoreBundle:View v")->getResult();
+            $viewsReferences = $this->viewHelper->buildViewsReferences($views);
             $this->viewCacheHelper->write($viewsReferences);
         }
     }

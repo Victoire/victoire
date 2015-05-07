@@ -165,7 +165,7 @@ class BusinessEntityHelper
      *
      * @param BusinessEntity $businessEntity
      * @param string         $attributeName
-     * @param string $attributeValue
+     * @param string         $attributeValue
      *
      * @return Entity
      */

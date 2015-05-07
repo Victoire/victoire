@@ -66,9 +66,6 @@ class VictoireCoreExtension extends Extension
             'victoire_core.user_class', $config['user_class']
         );
         $container->setParameter(
-            'victoire_core.watch_view_cache', $config['watch_view_cache']
-        );
-        $container->setParameter(
             'victoire_core.base_paths', $config['base_paths']
         );
     }

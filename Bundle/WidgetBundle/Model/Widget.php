@@ -302,7 +302,7 @@ abstract class Widget
 
         return $viewId;
     }
-    
+
     /**
      * Clone a widget
      */

@@ -106,17 +106,6 @@ services:
         calls:
             - [ setContainer, ["@service_container"] ]
 
-
-    victoire_core.view_cache_listener:
-        class: Victoire\Bundle\CoreBundle\Listener\ViewCacheListener
-        arguments:
-            - "@victoire_core.view_helper"
-            - "@victoire_core.view_cache_helper"
-            - "%kernel.debug%"
-            - "%victoire_core.watch_view_cache%"
-        tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
-
 #  ==================  Annotations ================== #
 
     victoire_core.annotation_reader:
@@ -161,6 +150,7 @@ services:
         arguments:
             - @victoire_core.view_helper
             - @victoire_core.view_cache_helper
+            - @doctrine.orm.entity_manager
         tags:
         - { name: kernel.event_listener, event: kernel.request, method: warmUp }
 
