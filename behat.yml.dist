@@ -1,51 +1,59 @@
 default:
     autoload:
-	 '': Tests/Features/Context
+         '': Tests/Features/Context
     suites:
-	 default:
-	     paths:
-		 - Tests/Features
-		 - Tests/Features/Page
-		 - Tests/Features/Widget
-		 - Tests/Features/WidgetMap
-	     contexts:
-		 - Victoire\Tests\Features\Context\FeatureContext:
-		     - Tests/Functionnal/web
-		 - Victoire\Tests\Features\Context\JavascriptContext
-		 - Victoire\Tests\Features\Context\VictoireContext
-		 - Knp\FriendlyContexts\Context\MinkContext
-		 - Knp\FriendlyContexts\Context\AliceContext
-		 - Knp\FriendlyContexts\Context\EntityContext
+         default:
+             paths:
+                 - Tests/Features
+                 - Tests/Features/Page
+                 - Tests/Features/Widget
+                 - Tests/Features/WidgetMap
+             contexts:
+                 - Victoire\Tests\Features\Context\FeatureContext:
+                     - Tests/Functionnal/web
+                 - Victoire\Tests\Features\Context\JavascriptContext
+                 - Victoire\Tests\Features\Context\VictoireContext
+                 - Knp\FriendlyContexts\Context\MinkContext
+                 - Knp\FriendlyContexts\Context\AliceContext
+                 - Knp\FriendlyContexts\Context\EntityContext
+                 - Knp\FriendlyContexts\Context\TableContext
     extensions:
-	 Behat\Symfony2Extension:
+         Behat\Symfony2Extension:
             kernel:
-		path: Tests/Functionnal/app/AppKernel.php
-		debug: true
-	 Behat\MinkExtension\ServiceContainer\MinkExtension:
-	     base_url:           'http://localhost:8000'
-	     selenium2:          ~
-	     goutte:             ~
-	     symfony2: ~
-	     default_session:    symfony2
-	     javascript_session: selenium2
-	     browser_name: firefox
-	 Knp\FriendlyContexts\Extension:
-	     entities:
-		 namespaces:
-		     - Acme
-		     - Victoire
-	     smartTag: smartStep
-	     alice:
-		 fixtures:
-		     Media:     Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/Media/folder.yml
-		     User:      Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/User/user.yml
-		     Template:  Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/template.yml
-		     Page:      Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/page.yml
-		     ErrorPage: Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/errorPage.yml
-		 dependencies:
-		     Template:  [User]
-		     ErrorPage: [Template, User]
-		     Page:      [Template, User]
-	     symfony_kernel:
-		 bootstrap: Tests/Functionnal/app/autoload.php
-		 path: Tests/Functionnal/app/AppKernel.php
+                path: Tests/Functionnal/app/AppKernel.php
+                debug: true
+         Behat\MinkExtension\ServiceContainer\MinkExtension:
+             base_url:           'http://localhost:8000'
+             selenium2:          ~
+             goutte:             ~
+             symfony2: ~
+             default_session:    symfony2
+             javascript_session: selenium2
+             browser_name: firefox
+         Knp\FriendlyContexts\Extension:
+             entities:
+                 namespaces:
+                     - Acme
+                     - Victoire
+             smartTag: smartStep
+             alice:
+                 fixtures:
+                     Media:       Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/Media/folder.yml
+                     User:        Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/User/user.yml
+                     Template:    Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/template.yml
+                     Page:        Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/page.yml
+                     ErrorPage:   Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/errorPage.yml
+                     Blog:        Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/blog.yml
+                     BlogPattern: Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/pattern.yml
+                     Article:     Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/article.yml
+                     Jedi:        Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Jedi/jedi.yml
+                     JediPattern: Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Jedi/pattern.yml
+                 dependencies:
+                     Template:  [User]
+                     ErrorPage: [Template, User]
+                     Page:      [Template, User]
+                     Blog:      [Template, BlogPattern, User]
+                     Article:   [Template, BlogPattern, User, Blog]
+             symfony_kernel:
+                 bootstrap: Tests/Functionnal/app/autoload.php
+                 path: Tests/Functionnal/app/AppKernel.php
