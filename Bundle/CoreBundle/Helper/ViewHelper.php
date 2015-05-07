@@ -75,9 +75,9 @@ class ViewHelper
      */
     public function getAllViewsReferences()
     {
-	$viewsReferences = $this->viewCacheHelper->convertXmlCacheToArray();
+        $viewsReferences = $this->viewCacheHelper->convertXmlCacheToArray();
 
-	return $viewsReferences;
+        return $viewsReferences;
     }
 
     /**

@@ -2,9 +2,6 @@
 
 namespace Victoire\Bundle\MediaBundle\Helper\Menu;
 
-use Victoire\Bundle\MediaBundle\Helper\Menu\MenuBuilder;
-use Victoire\Bundle\MediaBundle\Helper\Menu\MenuItem;
-
 use Symfony\Component\HttpFoundation\Request;
 
 /**

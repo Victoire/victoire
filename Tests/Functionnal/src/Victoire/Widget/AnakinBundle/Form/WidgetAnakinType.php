@@ -6,7 +6,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Victoire\Bundle\CoreBundle\Form\WidgetType;
 
-
 /**
  * WidgetAnakin form type
  */
@@ -25,7 +24,6 @@ class WidgetAnakinType extends WidgetType
                 parent::buildForm($builder, $options);
 
     }
-
 
     /**
      * bind form to WidgetAnakin entity

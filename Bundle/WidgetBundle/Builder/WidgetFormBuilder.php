@@ -19,11 +19,11 @@ class WidgetFormBuilder
 
     /**
      * create form new for a widget
-     * @param Form    $form
-     * @param Widget  $widget
-     * @param string  $slot
-     * @param View    $view
-     * @param string  $entity
+     * @param Form   $form
+     * @param Widget $widget
+     * @param string $slot
+     * @param View   $view
+     * @param string $entity
      *
      * @return new form
      */
@@ -107,7 +107,7 @@ class WidgetFormBuilder
 
     /**
      * @param unknown $manager
-     * @param Widget $widget
+     * @param Widget  $widget
      * @param View    $view
      * @param string  $entityName
      * @param string  $namespace

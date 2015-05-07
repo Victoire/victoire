@@ -13,7 +13,7 @@ class I18nPageMenuListener extends PageMenuListener
      *
      * @param MenuBuilder $menuBuilder
      */
-    public function __construct(MenuBuilder $menuBuilder) 
+    public function __construct(MenuBuilder $menuBuilder)
     {
         parent::__construct($menuBuilder);
     }

@@ -2,7 +2,6 @@
 
 namespace Victoire\Tests\Features\Context\SubContext;
 
-
 trait JavascriptSubContextTrait
 {
     /**

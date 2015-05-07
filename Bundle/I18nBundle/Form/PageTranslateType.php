@@ -31,11 +31,11 @@ class PageTranslateType extends AbstractType
      * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
-    {     
+    {
         $builder
             ->add('name');
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             $view = $event->getData();
             $form = $event->getForm();
 
@@ -74,4 +74,3 @@ class PageTranslateType extends AbstractType
         return $choices;
     }
 }
-
