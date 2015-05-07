@@ -1,0 +1,11 @@
+Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern:
+    pattern_article:
+        name: Base Jedi view
+        author: @anakin
+        slug: base-jedi-view
+        locale: fr
+        template: @template_base
+        status: published
+        publishedAt: <dateTime('now')>
+        createdAt: <dateTime('now')>
+        updatedAt: <dateTime('now')>

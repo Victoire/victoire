@@ -1,3 +1,8 @@
+acme_app:
+    resource: "@AcmeAppBundle/Controller/"
+    type:     annotation
+    prefix:   /victoire-dcms/backend
+
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 

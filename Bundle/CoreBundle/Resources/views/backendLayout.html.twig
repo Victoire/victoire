@@ -1,13 +1,19 @@
 {% extends 'VictoireCoreBundle::layout.html.twig' %}
 {% trans_default_domain "victoire" %}
-{% block meta %}Backend{% endblock meta %}
+{% block meta %}<title>Backend</title>{% endblock meta %}
 {% block container_attributes %}{{ parent() }} role="victoire-backend"{% endblock container_attributes %}
 {% block container_class %}{% endblock container_class %}
-{% block content%}
 
-    <h1>{% block header_title %}{% endblock header_title %}</h1>
+{% block body %}
+    {% if is_granted('ROLE_VICTOIRE') %}
+        {% include 'VictoireCoreBundle:Menu:admin_navbar.html.twig' %}
+    {% endif %}
+    <div class="vic-container">
+        <h1>{% block header_title %}{% endblock header_title %}</h1>
+        {% block content %}{% endblock content %}
+    </div>
+{% endblock body %}
 
-{% endblock content %}
 {% block foot_script %}
 
     {% spaceless %}
