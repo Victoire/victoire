@@ -11,7 +11,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class TemplateMapper
 {
     protected $container;
-    protected $framework;
     protected $appBundle;
     protected $templates;
 
@@ -23,7 +22,6 @@ class TemplateMapper
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->framework = $container->getParameter('victoire_core.framework');
         $this->appBundle = $container->getParameter('victoire_core.applicative_bundle');
         $this->templates = $container->getParameter('victoire_core.templates');
     }

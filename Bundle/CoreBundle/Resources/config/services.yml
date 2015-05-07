@@ -124,7 +124,7 @@ services:
         arguments:
             - "@annotation_reader"
             - "@victoire_widget.widget_helper"
-            - "%kernel.root_dir%"
+            - "%victoire_core.base_paths%"
             - "%victoire_core.widgets%"
         calls:
             - [ setCache, ["@victoire_core.apc.cache"] ]

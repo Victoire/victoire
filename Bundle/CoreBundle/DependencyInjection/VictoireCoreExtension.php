@@ -44,12 +44,6 @@ class VictoireCoreExtension extends Extension
         $container->setParameter(
             'victoire_core.applicative_bundle', $config['applicative_bundle']
         );
-        $container->setParameter(
-            'victoire_core.available_frameworks', $config['available_frameworks']
-        );
-        $container->setParameter(
-            'victoire_core.framework', ucfirst($config['framework'])
-        );
         if (array_key_exists('templates', $config)) {
             $container->setParameter(
                 'victoire_core.templates', $config['templates']
@@ -73,6 +67,9 @@ class VictoireCoreExtension extends Extension
         );
         $container->setParameter(
             'victoire_core.watch_view_cache', $config['watch_view_cache']
+        );
+        $container->setParameter(
+            'victoire_core.base_paths', $config['base_paths']
         );
     }
 }
