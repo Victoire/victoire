@@ -4,6 +4,7 @@ namespace Victoire\Bundle\WidgetBundle\Model;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PropertyAccess\PropertyAccess;
@@ -100,9 +101,9 @@ class WidgetManager
      *
      * @return template
      */
-    public function newWidget($type, $slot, $view, $position)
+    public function newWidget($mode, $type, $slot, $view, $position)
     {
-        $widget = $this->widgetHelper->newWidgetInstance($type, $view, $slot);
+        $widget = $this->widgetHelper->newWidgetInstance($type, $view, $slot, $mode);
 
         $classes = $this->annotationReader->getBusinessClassesForWidget($widget);
         $forms = $this->widgetFormBuilder->renderNewWidgetForms($slot, $view, $widget, $position);
@@ -122,30 +123,26 @@ class WidgetManager
 
     /**
      * Create a widget
+     * @param string  $mode
      * @param string  $type
      * @param string  $slotId
      * @param View    $view
      * @param string  $entity
      * @param integer $positionReference
      *
-     * @return template
-     *
+     * @param string $type
      * @throws \Exception
+     * @return Template
+     *
      */
-    public function createWidget($type, $slotId, View $view, $entity, $positionReference)
+    public function createWidget($mode, $type, $slotId, View $view, $entity, $positionReference)
     {
         //services
         $formErrorHelper = $this->formErrorHelper;
         $request = $this->request;
 
-        //the default response
-        $response = array(
-            "success" => false,
-            "html"    => '',
-        );
-
         //create a new widget
-        $widget = $this->widgetHelper->newWidgetInstance($type, $view, $slotId);
+        $widget = $this->widgetHelper->newWidgetInstance($type, $view, $slotId, $mode);
 
         $form = $this->widgetFormBuilder->callBuildFormSwitchParameters($widget, $view, $entity, $positionReference);
 
@@ -189,12 +186,12 @@ class WidgetManager
             $widget->setCurrentView($view);
 
             //get the html for the widget
-            $hmltWidget = $this->widgetRenderer->renderContainer($widget, $view, $widgetMapEntry->getPosition());
+            $htmlWidget = $this->widgetRenderer->renderContainer($widget, $view, $widgetMapEntry->getPosition());
 
             $response = array(
                 "success"  => true,
                 "widgetId" => "vic-widget-".$widget->getId()."-container",
-                "html"     => $hmltWidget,
+                "html"     => $htmlWidget,
             );
         } else {
             //get the errors as a string
@@ -270,7 +267,7 @@ class WidgetManager
                 $response = array(
                     "success" => false,
                     "message" => $formErrorHelper->getRecursiveReadableErrors($form),
-                    "html"    => $this->widgetFormBuilder->renderForm($form, $widget, $entityName),
+                    "html"    => $this->widgetFormBuilder->renderForm($form, $widget, null, $entityName),
                 );
             }
         } else {
