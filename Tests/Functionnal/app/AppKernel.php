@@ -23,7 +23,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
 
-	    new AppVentus\AsseticInjectorBundle\AvAsseticInjectorBundle(),
+            new AppVentus\AsseticInjectorBundle\AvAsseticInjectorBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
@@ -32,11 +32,11 @@ class AppKernel extends Kernel
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new Liip\ImagineBundle\LiipImagineBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle(),
 
             //Victoire bundles
             new Victoire\Bundle\AnalyticsBundle\VictoireAnalyticsBundle(),
             new Victoire\Bundle\CoreBundle\VictoireCoreBundle(),
-            new Victoire\Bundle\TwigBundle\VictoireTwigBundle(),
             new Victoire\Bundle\BlogBundle\VictoireBlogBundle(),
             new Victoire\Bundle\BusinessEntityBundle\VictoireBusinessEntityBundle(),
             new Victoire\Bundle\BusinessEntityPageBundle\VictoireBusinessEntityPageBundle(),
@@ -49,12 +49,13 @@ class AppKernel extends Kernel
             new Victoire\Bundle\SeoBundle\VictoireSeoBundle(),
             new Victoire\Bundle\SitemapBundle\VictoireSitemapBundle(),
             new Victoire\Bundle\TemplateBundle\VictoireTemplateBundle(),
+            new Victoire\Bundle\TwigBundle\VictoireTwigBundle(),
             new Victoire\Bundle\UserBundle\VictoireUserBundle(),
             new Victoire\Bundle\WidgetBundle\VictoireWidgetBundle(),
             new Victoire\Bundle\WidgetMapBundle\VictoireWidgetMapBundle(),
-	    //Victoire test bundles
-	    new Victoire\Widget\ForceBundle\VictoireWidgetForceBundle(),
-	    new Acme\AppBundle\AcmeAppBundle(),
+            //Victoire test bundles
+            new Victoire\Widget\ForceBundle\VictoireWidgetForceBundle(),
+            new Acme\AppBundle\AcmeAppBundle(),
         );
     }
 

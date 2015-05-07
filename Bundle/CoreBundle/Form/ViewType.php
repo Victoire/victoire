@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 
@@ -60,7 +61,7 @@ abstract class ViewType extends AbstractType
                 $form->add('template', null, array(
                     'label'         => 'form.view.type.template.label',
                     'property'      => 'name',
-                    'required'      => !$view instanceof Template,
+                    'required'      => !$view instanceof Template || $view instanceof BusinessEntityPagePattern,
                     'query_builder' => $getAllTemplateWithoutMe,
                 ));
             }

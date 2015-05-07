@@ -120,6 +120,9 @@ victoire_core:
         fullWidth: "Contenu unique"
         home: "Accueil"
     slots: ~
+    base_paths: #(optional) required for a non standard installation
+        - "%kernel.root_dir%/../../../Bundle/BlogBundle"
+        - "%kernel.root_dir%/../../../Tests/Functionnal/src"
 
 services:
     twig.extension.text:

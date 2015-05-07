@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\CoreBundle\Entity\Route;
+use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\CoreBundle\Entity\View;
@@ -148,17 +149,10 @@ class PageSubscriber implements EventSubscriber
      */
     protected function updateCache(View $page)
     {
-        if ($page instanceof BusinessEntityPagePattern) {
-            $bepHelper = $this->container->get('victoire_business_entity_page.business_entity_page_helper');
-            $entities = $bepHelper->getEntitiesAllowed($page);
-            $this->viewCacheHelper->update($page);
-            foreach ($entities as $entity) {
-                $this->viewCacheHelper->update($page, $entity);
-            }
-        } elseif ($page instanceof BusinessEntityPage) {
+        if ($page instanceof BusinessEntityPage) {
             $this->viewCacheHelper->update($page, $page->getBusinessEntity());
         } else {
-            $this->viewCacheHelper->update($page, null);
+            $this->viewCacheHelper->update($page);
         }
     }
     /**

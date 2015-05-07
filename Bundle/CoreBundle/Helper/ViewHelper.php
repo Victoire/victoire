@@ -152,7 +152,7 @@ class ViewHelper
      * find the view reference for giver page instance
      * @param Page $page
      *
-     * @return void
+     * @return array
      */
     public function findViewReferenceForPage(Page $page)
     {

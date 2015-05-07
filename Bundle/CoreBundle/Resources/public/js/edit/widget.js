@@ -37,7 +37,7 @@ $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(
     $vic.ajax({
         type: form.attr('method'),
         url : form.attr('action'),
-        data: form.serialize(),
+        data: form.serialize()
     }).done(function(response){
         if (true === response.success) {
             if (response.hasOwnProperty("redirect")) {
