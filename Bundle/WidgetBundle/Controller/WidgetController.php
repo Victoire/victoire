@@ -230,8 +230,8 @@ class WidgetController extends Controller
             $this->get('widget_manager')->deleteWidget($widget, $view);
 
             return new JsonResponse(array(
-                'success' => true,
-                'url'     => $this->generateUrl('victoire_core_page_show', array(
+                'success'  => true,
+                'redirect' => $this->generateUrl('victoire_core_page_show', array(
                     'url' => $view->getUrl(),
                 )),
             ));
@@ -258,10 +258,13 @@ class WidgetController extends Controller
             $response = new JsonResponse($this->get('victoire_widget_map.helper')->removeWidgetMapByWidgetIdAndView($id, $view));
             $this->get('doctrine.orm.entity_manager')->flush();
 
-            return $this->redirect($this->generateUrl('victoire_core_page_show', array(
-                'url' => $view->getUrl(),
-            )));
-        } catch (\Exception $ex) {
+            return new JsonResponse(array(
+                    'success'  => true,
+                    'redirect' => $this->generateUrl('victoire_core_page_show', array(
+                            'url' => $view->getUrl(),
+                        )),
+                ));
+        } catch (Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
         }
 
