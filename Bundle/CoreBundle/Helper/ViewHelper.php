@@ -152,28 +152,38 @@ class ViewHelper
     }
 
     /**
-     * find the view reference for giver page instance
-     * @param Page $page
+     * get the view reference for a given view
+     * @param View $view
      *
      * @return array
      */
-    public function findViewReferenceForPage(Page $page)
+    public function getViewReferenceByView(View $view, $entity = null)
     {
-        return array(
-            'id'              => $this->viewCacheHelper->getViewReferenceId($page),
-            'locale'          => $page->getLocale(),
-            'viewId'          => $page->getId(),
-            'url'             => $page->getUrl(),
-            'name'            => $page->getName(),
-            'viewNamespace'   => $this->em->getClassMetadata(get_class($page))->name,
+        $viewReference = array(
+            'id'            => $this->viewCacheHelper->getViewReferenceId($view),
+            'locale'        => $view->getLocale(),
+            'viewId'        => $view->getId(),
+            'name'          => $view->getName(),
+            'viewNamespace' => $this->em->getClassMetadata(get_class($view))->name,
         );
+
+        if ($entity) {
+            $viewReference['entityId'] = $entity->getId();
+            $viewReference['entityNamespace'] = $this->em->getClassMetadata(get_class($entity))->name;
+        }
+
+        if (method_exists($view, 'getUrl')) {
+            $viewReference['url'] = $view->getUrl();
+        }
+
+        return $viewReference;
     }
     /**
      * compute the viewReference relative to a View + entity
      * @param View                $view
      * @param BusinessEntity|null $entity
      *
-     * @return void
+     * @return array
      */
     public function buildViewReference(View $view, $entity = null)
     {
@@ -210,7 +220,7 @@ class ViewHelper
                 foreach ($businessEntities as $businessEntity) {
                     $properties = $this->businessEntityPageHelper->getBusinessProperties($businessEntity);
 
-                    //find businessEdietifiers of the current businessEntity
+                    //find business identifiers of the current businessEntity
                     $selectableProperties = array('id');
                     foreach ($properties as $property) {
                         if ($property->getType() === 'businessParameter') {

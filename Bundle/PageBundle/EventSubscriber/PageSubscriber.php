@@ -7,6 +7,8 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Symfony\Component\DependencyInjection\Container;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\CoreBundle\Entity\Route;
@@ -14,6 +16,7 @@ use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\CoreBundle\Entity\View;
+use Victoire\Bundle\PageBundle\Helper\UserCallableHelper;
 
 /**
  * This class listen Page Entity changes.
@@ -28,11 +31,11 @@ class PageSubscriber implements EventSubscriber
 
     /**
      * Constructor
-     * @param unknown         $router          @router
-     * @param unknown         $userCallable    @victoire_page.user_callable
-     * @param string          $userClass       %victoire_core.user_class%
-     * @param ViewCacheHelper $viewCacheHelper @victoire_core.view_cache_helper
-     * @param Container       $container       @service_container
+     * @param Router             $router          @router
+     * @param UserCallableHelper $userCallable    @victoire_page.user_callable
+     * @param string             $userClass       %victoire_core.user_class%
+     * @param ViewCacheHelper    $viewCacheHelper @victoire_core.view_cache_helper
+     * @param Container          $container       @service_container
      */
     public function __construct($router, $userCallable, $userClass, $viewCacheHelper, $container)
     {

@@ -5,6 +5,7 @@ namespace Victoire\Bundle\CoreBundle\Helper;
 use Symfony\Component\Config\Util\XmlUtils;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
 use Victoire\Bundle\CoreBundle\Entity\View;
 
@@ -15,7 +16,6 @@ use Victoire\Bundle\CoreBundle\Entity\View;
 class ViewCacheHelper
 {
     private $xmlFile;
-    private $viewNamePattern = 'ref_{{view.id}}{{entity ? "_" ~ entity.id}}';
     private $container;
     private $requestStack;
 
@@ -31,51 +31,20 @@ class ViewCacheHelper
     /**
      * Write given views references in a xml file
      *
-     * @param  \SimpleXMLElement $itemNode
-     * @return void
-     */
-    public function buildItemNode($viewReference, $itemNode)
-    {
-        if (array_key_exists('id', $viewReference)) {
-            $itemNode->addAttribute('id', $viewReference['id']);
-        }
-        if (array_key_exists('url', $viewReference)) {
-            $itemNode->addAttribute('url', $viewReference['url']);
-        }
-        if (array_key_exists('viewId', $viewReference)) {
-            $itemNode->addAttribute('viewId', $viewReference['viewId']);
-        }
-        if (array_key_exists('patternId', $viewReference)) {
-            $itemNode->addAttribute('patternId', $viewReference['patternId']);
-        }
-        if (array_key_exists('viewNamespace', $viewReference)) {
-            $itemNode->addAttribute('viewNamespace', $viewReference['viewNamespace']);
-        }
-        if (array_key_exists('entityId', $viewReference)) {
-            $itemNode->addAttribute('entityId', $viewReference['entityId']);
-        }
-        if (array_key_exists('entityNamespace', $viewReference)) {
-            $itemNode->addAttribute('entityNamespace', $viewReference['entityNamespace']);
-        }
-        if (array_key_exists('locale', $viewReference)) {
-            $itemNode->addAttribute('locale', $viewReference['locale']);
-        }
-        if (array_key_exists('name', $viewReference)) {
-            $itemNode->addAttribute('name', $viewReference['name']);
-        }
-    }
-    /**
-     * Write given views references in a xml file
-     *
      * @return void
      */
     public function write($viewsReferences)
     {
-        $rootNode = new \SimpleXMLElement("<?xml version='1.0' encoding='UTF-8' ?><viewReferences></viewReferences>");
-
+        $xml = <<<'XML'
+<?xml version='1.0' encoding='UTF-8' ?>
+<viewReferences/>
+XML;
+        $rootNode = new \SimpleXMLElement($xml);
         foreach ($viewsReferences as $viewReference) {
             $itemNode = $rootNode->addChild('viewReference');
-            $this->buildItemNode($viewReference, $itemNode);
+            foreach ($viewReference as $key => $value) {
+                $itemNode->addAttribute($key, $value);
+            }
         }
 
         $this->writeFile($rootNode);
@@ -88,7 +57,7 @@ class ViewCacheHelper
      */
     public function readCache()
     {
-        return new \SimpleXMLElement(file_get_contents($this->xmlFile));
+	return new \SimpleXMLElement(file_get_contents($this->xmlFile));
     }
 
     /**
@@ -122,30 +91,24 @@ class ViewCacheHelper
      * update or insert values of given view cache
      * @param View                $view
      * @param BusinessEntity|null $entity
-     * @param $locale
      *
      * @return void
      */
     public function update(View $view, $entity = null)
     {
+        /** @var ViewHelper $viewHelper */
+        $viewHelper = $this->container->get('victoire_core.view_helper');
         $rootNode = $this->readCache();
-        $id = $this->getViewReferenceId($view, $entity);
-        $oldItemNode = $rootNode->xpath("//viewReference[@id='".$id."']");
-        unset($oldItemNode[0][0]);
-        if (method_exists($view, 'getUrl')) {
-            $oldItemNode = $rootNode->xpath("//viewReference[@url='".$view->getUrl()."']");
-            unset($oldItemNode[0][0]);
-        }
+        $viewReference = $viewHelper->getViewReferenceByView($view, $entity);
+        self::removeViewReference($rootNode, $viewReference);
 
-        $viewReferences = $this->container->get('victoire_core.view_helper')->buildViewReference($view, $entity);
-
+        $viewReferences = $viewHelper->buildViewReference($view, $entity);
         foreach ($viewReferences as $key => $viewReference) {
-            $oldItemNode = $rootNode->xpath("//viewReference[@url='".$key."']");
-            if(isset($oldItemNode[0][0])) {
-                unset($oldItemNode[0][0]);
-            }
+            self::removeViewReference($rootNode, $viewReference);
             $itemNode = $rootNode->addChild('viewReference');
-            $this->buildItemNode($viewReference, $itemNode);
+            foreach ($viewReference as $key => $value) {
+                $itemNode->addAttribute($key, $value);
+            }
         }
 
         $this->writeFile($rootNode);
@@ -180,26 +143,49 @@ class ViewCacheHelper
         return $viewReference;
     }
 
-    public function getViewReferenceId(View $view, $entity = null)
+    /**
+     * @param View $view
+     * @param $entity
+     * @return string
+     */
+    public static function getViewReferenceId(View $view, $entity = null)
     {
         if ($view instanceof BusinessEntityPage) {
             $entity = $view->getBusinessEntity();
         }
-        $twigEnv = new \Twig_Environment(new \Twig_Loader_String());
 
-        $id = $twigEnv->render($this->viewNamePattern, array(
-            'view'   => $view,
-            'entity' => $entity,
-        ));
+        $id = sprintf('ref_%s', $view->getId());
+        if ($entity) {
+            $id .= '_'.$entity->getId();
+        }
 
         return $id;
+    }
+
+    /**
+     * @param \SimpleXMLElement $rootNode
+     * @param array             $viewReference
+     */
+    private static function removeViewReference(\SimpleXMLElement $rootNode, array $viewReference)
+    {
+        //Clean by searching by id
+        $regex = sprintf("//viewReference[@id='%s']", $viewReference['id']);
+
+        //Clean by searching by url
+        if (isset($viewReference['url'])) {
+            $regex .= sprintf("| //viewReference[@url='%s']", $viewReference['url']);
+        }
+
+        foreach ($rootNode->xpath($regex) as $item) {
+            unset($item[0]);
+        }
     }
 
     /**
      * write \SimpleXMLElement in the cache file
      * @param \SimpleXMLElement $rootNode
      *
-     * @return void
+     * @return integer
      */
     protected function writeFile(\SimpleXMLElement $rootNode)
     {
@@ -214,7 +200,7 @@ class ViewCacheHelper
         $dom->loadXML($rootNode->asXML());
         $dom->saveXML();
 
-        $dom->save($this->xmlFile);
+        return $dom->save($this->xmlFile);
     }
 
     public function setContainer(Container $container)
