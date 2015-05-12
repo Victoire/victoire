@@ -12,7 +12,7 @@ Scenario: I can create a new page
     And I should see "Créer"
     And I fill in "Nom" with "tatooine"
     Then I submit the widget
-    And I should see "Victoire"
+    And I should see "Victoire !"
     And I wait 10 seconds
     And I should be on "/fr/tatooine"
 
@@ -29,7 +29,6 @@ Scenario: I can change the name and the url of a given page
     Then I fill in "Nom" with "anoth"
     Then I fill in "victoire_page_settings_type_slug" with "anoth"
     And I submit the widget
-    And I should see "Victoire"
+    And I should see "Victoire !"
     And I wait 10 seconds
     And I should be on "/fr/anoth"
-

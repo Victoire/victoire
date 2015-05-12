@@ -134,6 +134,10 @@
                 <source>modal.form.page.settings.action.delete.confirm.body</source>
                 <target>Cette action va supprimer définitivement cette page. Cette action est irréversible. Etes vous sûr ?</target>
             </trans-unit>
+            <trans-unit id="fdsfdsf0bdf6be270be" resname="victoire_page.create.success">
+                <source>victoire_page.create.success</source>
+                <target>Page crée avec succès</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

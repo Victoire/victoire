@@ -1,14 +1,16 @@
 Victoire\Bundle\BlogBundle\Entity\Article:
     article:
         author: @anakin
-        name: First article
+        name: "I'm your father."
         description: This is a great article description
-        locale: fr
-        slug: the-jedi-network
+        slug: i-m-your-father
         status: published
         pattern: @pattern_article
-        deleted: false
         blog: @blog-jedi-network
         publishedAt: <dateTime('now')>
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
+
+Victoire\Bundle\CoreBundle\Entity\EntityProxy:
+    ep_article_i_m_your_father:
+        article: @article

@@ -3,8 +3,11 @@
 namespace Victoire\Tests\Features\Context;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 
+use Behat\Symfony2Extension\Context\KernelDictionary;
 use Knp\FriendlyContexts\Context\MinkContext;
 use Knp\FriendlyContexts\Context\RawMinkContext;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\NullOutput;
 
 /**
  * This class gives some usefull methods for Victoire navigation
@@ -12,6 +15,7 @@ use Knp\FriendlyContexts\Context\RawMinkContext;
  */
 class VictoireContext extends RawMinkContext
 {
+    use KernelDictionary;
     protected $minkContext;
 
     /** @BeforeScenario */
@@ -19,6 +23,17 @@ class VictoireContext extends RawMinkContext
     {
         $environment = $scope->getEnvironment();
         $this->minkContext = $environment->getContext('Knp\FriendlyContexts\Context\MinkContext');
+    }
+
+    /**
+     * @BeforeScenario
+     * @param BeforeScenarioScope $scope
+     */
+    public function resetViewsReference(BeforeScenarioScope $scope)
+    {
+        $views = $this->getContainer()->get('doctrine.orm.entity_manager')->createQuery("SELECT v FROM VictoireCoreBundle:View v")->getResult();
+        $viewsReferences = $this->getContainer()->get('victoire_core.view_helper')->buildViewsReferences($views);
+        $this->getContainer()->get('victoire_core.view_cache_helper')->write($viewsReferences);
     }
 
     /**

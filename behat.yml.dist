@@ -9,8 +9,7 @@ default:
                  - Tests/Features/Widget
                  - Tests/Features/WidgetMap
              contexts:
-                 - Victoire\Tests\Features\Context\FeatureContext:
-                     - Tests/Functionnal/web
+                 - Victoire\Tests\Features\Context\FeatureContext
                  - Victoire\Tests\Features\Context\JavascriptContext
                  - Victoire\Tests\Features\Context\VictoireContext
                  - Knp\FriendlyContexts\Context\MinkContext
@@ -46,6 +45,7 @@ default:
                      Blog:        Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/blog.yml
                      BlogPattern: Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/pattern.yml
                      Article:     Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/article.yml
+                     BlogBEP:     Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/bep.yml
                      Jedi:        Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Jedi/jedi.yml
                      JediPattern: Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Jedi/pattern.yml
                  dependencies:
@@ -53,7 +53,7 @@ default:
                      ErrorPage: [Template, User]
                      Page:      [Template, User]
                      Blog:      [Template, BlogPattern, User]
-                     Article:   [Template, BlogPattern, User, Blog]
+                     Article:   [Template, BlogBEP, BlogPattern, User, Blog]
              symfony_kernel:
                  bootstrap: Tests/Functionnal/app/autoload.php
                  path: Tests/Functionnal/app/AppKernel.php

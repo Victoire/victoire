@@ -42,6 +42,18 @@
         <source>menu.business_entity_page_pattern</source>
         <target><![CDATA[<i class="vic-menuImg vic-menuImg-sandbox"></i> Représentation métier]]></target>
       </trans-unit>
+      <trans-unit id="16123d88eb230626a519ccbd8bb1110504c35954" resname="victoire.business_entity_page_pattern.create.success">
+        <source>victoire.business_entity_page_pattern.create.success</source>
+        <target>La représentation métier a bien été créé</target>
+      </trans-unit>
+      <trans-unit id="16123d88eb230619ccbd8b26a5b1110504c35954" resname="victoire.business_entity_page_pattern.edit.success">
+        <source>victoire.business_entity_page_pattern.edit.success</source>
+        <target>La représentation métier a bien été modifiée</target>
+      </trans-unit>
+      <trans-unit id="16123d88eb230619ccbd8b26a5b1110504c35954" resname="victoire.business_entity_page_pattern.edit.error">
+        <source>victoire.business_entity_page_pattern.edit.error</source>
+        <target>La modification de la représentation métier a échoué</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
