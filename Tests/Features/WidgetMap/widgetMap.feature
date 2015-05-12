@@ -1,5 +1,5 @@
 @mink:selenium2 @alice(Page) @reset-schema
-Feature: Create a widget at first position
+Feature: Test widgetMap
 
 Background:
     Given I am logged in as "anakin@victoire.io"

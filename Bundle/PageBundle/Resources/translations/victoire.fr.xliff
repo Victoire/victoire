@@ -138,6 +138,10 @@
                 <source>victoire_page.create.success</source>
                 <target>Page crée avec succès</target>
             </trans-unit>
+            <trans-unit id="fdsfdsf0bdf6be270be" resname="victoire_page.update.success">
+                <source>victoire_page.update.success</source>
+                <target>Page modifiée avec succès</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

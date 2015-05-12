@@ -144,6 +144,8 @@ class BasePageController extends Controller
             $entityManager->persist($page);
             $entityManager->flush();
 
+            $this->congrat($this->get('translator')->trans('victoire_page.update.success', array(), 'victoire'));
+
             return array(
                 'success' => true,
                 'url'     => $this->generateUrl('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl())),
