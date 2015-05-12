@@ -44,3 +44,9 @@ victoire_core:
                 image: ~
                 list: ~
                 archive: ~
+
+av_alertify:
+    contexts:
+        victoire:
+            engine: "codrops-notification"
+            translationDomain: "victoire"
