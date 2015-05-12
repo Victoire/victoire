@@ -248,10 +248,6 @@ class AnnotationReader extends AnnotationDriver
      */
     public function getAllClassnames()
     {
-/*        if ($this->classNames !== null) {
-            return $this->classNames;
-        }
-*/
         if (!$this->paths) {
             throw MappingException::pathRequired();
         }
