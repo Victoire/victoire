@@ -11,16 +11,20 @@
     <div>
         <div class="vic-panel vic-shadow-plan1 -vicBlog">
             <div class="vic-panelBlog-image" {% if article.image %}style="background-image: url({{ article.image.url }});"{% endif %}>
-                <span class="vic-panelBlog-badge -{{ article.status }}">
-                    <span class="vic-panelBlog-badge-popover">
-                        {% set transKey = 'modal.blog.list.articlesList.status.' ~ article.status %}
-                        {{ transKey |trans }}
+                <a class="vic-panelBlog-title" href="{{ path('victoire_core_page_show_by_id', {'viewId': article.pattern.id, 'entityId': article.id }) }}">
+                    <span class="vic-panelBlog-badge -{{ article.status }}">
+                        <span class="vic-panelBlog-badge-popover">
+                            {% set transKey = 'modal.blog.list.articlesList.status.' ~ article.status %}
+                            {{ transKey |trans }}
+                        </span>
                     </span>
-                </span>
+                </a>
             </div>
 
             <div class="vic-panelBlog-body vic-text-center">
-                <a class="vic-panelBlog-title" href="{{ path('victoire_core_page_show_by_id', {'viewId': article.pattern.id, 'entityId': article.id }) }}">{{ article.name }}</a>
+                <a class="vic-panelBlog-title" href="{{ path('victoire_core_page_show_by_id', {'viewId': article.pattern.id, 'entityId': article.id }) }}">
+                    {{ article.name }}
+                </a>
 
                 <time datetime="{{ article.publishedAt|date("Y-m-d") }}" class="vic-panelBlog-date">{{ article.publishedAt|localizeddate("medium", "none", null, null, "cccc d LLLL yyyy") }}</time>
 

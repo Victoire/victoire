@@ -9,7 +9,7 @@ use Doctrine\ORM\QueryBuilder;
  *
  * This trait was written to offer repos a chained workflow.
  */
-trait ChainedRepositoryTrait
+trait StateFullRepositoryTrait
 {
     private $qb;
     private $mainAlias;
@@ -37,7 +37,7 @@ trait ChainedRepositoryTrait
      * Set query builder instance
      * @param QueryBuilder $qb The queryBuilder
      *
-     * @return BaseEntityRepository This repository
+     * @return StateFullRepositoryTrait
      */
     public function setInstance(QueryBuilder $qb)
     {
@@ -48,7 +48,7 @@ trait ChainedRepositoryTrait
 
     /**
      * Clears the current QueryBuilder instance
-     * @return BaseEntityRepository This repository
+     * @return StateFullRepositoryTrait
      */
     public function clearInstance()
     {
@@ -59,9 +59,9 @@ trait ChainedRepositoryTrait
 
     /**
      * Run active query
-     * @param method        $method        The method to run
-     * @param hydrationMode $hydrationMode How the results will be (Object ? Array )
-     * @param boolean       $autoClear     AutoClear means reset active instance
+     * @param string  $method        The method to run
+     * @param string  $hydrationMode How the results will be (Object ? Array )
+     * @param boolean $autoClear     AutoClear means reset active instance
      *
      * @return array()
      */

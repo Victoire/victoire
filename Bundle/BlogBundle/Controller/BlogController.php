@@ -267,8 +267,18 @@ class BlogController extends BasePageController
      */
     public function deleteAction(BasePage $blog)
     {
-        if (!$this->get('security.context')->isGranted('PAGE_OWNER', $blog)) {
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_VICTOIRE', $blog)) {
             throw new AccessDeniedException("Nop ! you can't do such an action");
+        }
+
+        foreach ($blog->getArticles() as $_article) {
+            $bep = $this->get('victoire_page.page_helper')->findPageByParameters(
+                array(
+                    'patternId' => $_article->getPattern()->getId(),
+                    'entityId'  => $_article->getId(),
+                )
+            );
+            $this->get('victoire_blog.manager.article')->delete($_article, $bep);
         }
 
         return new JsonResponse(parent::deleteAction($blog));

@@ -3,14 +3,14 @@ namespace Victoire\Bundle\BlogBundle\Repository;
 
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 use Victoire\Bundle\BlogBundle\Entity\Blog;
-use Victoire\Bundle\CoreBundle\Repository\ChainedRepositoryTrait;
+use Victoire\Bundle\CoreBundle\Repository\StateFullRepositoryTrait;
 
 /**
  * The Category repository
  */
 class CategoryRepository extends NestedTreeRepository
 {
-    use ChainedRepositoryTrait;
+    use StateFullRepositoryTrait;
 
     public function getOrderedCategories(Blog $blog)
     {

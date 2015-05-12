@@ -38,9 +38,9 @@ class ArticleController extends Controller
             //Auto creation of the BEP
             $page = $this->container->get('victoire_business_entity_page.business_entity_page_helper')
                                 ->generateEntityPageFromPattern($article->getPattern(), $article);
+
             $entityManager->persist($page);
             $entityManager->flush();
-            $this->get('victoire_core.view_cache_helper')->update($article->getPattern(), $article);
 
             return new JsonResponse(array(
                 "success"  => true,
@@ -150,48 +150,30 @@ class ArticleController extends Controller
      */
     public function deleteAction(Article $article)
     {
-        try {
-            //the entity manager
-            $entityManager = $this->get('doctrine.orm.entity_manager');
+        $bep = $this->get('victoire_page.page_helper')->findPageByParameters(
+            array(
+                'patternId' => $article->getPattern()->getId(),
+                'entityId'  => $article->getId(),
+            )
+        );
 
-            //remove the page (soft deletete)
-            $article->setVisibleOnFront(false);
-            $entityManager->flush($article);
-            $blogpost = $this->get('victoire_page.page_helper')->findPageByParameters(
-                array(
-                    'patternId' => $article->getPattern()->getId(),
-                    'entityId'  => $article->getId(),
-                )
-            );
-            $entityManager->remove($blogpost);
-            $entityManager->remove($article);
+        $this->get('victoire_blog.manager.article')->delete($article, $bep);
 
-            //flush the modifications
-            $entityManager->flush();
+        //redirect to the homepage
+        $homepageUrl = $this->generateUrl('victoire_core_page_show', array(
+                '_locale' => $article->getBlog()->getLocale(),
+                'url' => $article->getBlog()->getUrl(),
+            )
+        );
 
-            //redirect to the homepage
-            $homepageUrl = $this->generateUrl('victoire_core_page_show', array(
-                    '_locale' => $article->getBlog()->getLocale(),
-                    'url' => $article->getBlog()->getUrl(),
-                )
-            );
+        $message = $this->get('translator')->trans('victoire.blog.article.delete.success', array(), 'victoire');
+        $this->get('session')->getFlashBag()->add('success', $message);
 
-            $message = $this->get('translator')->trans('victoire.blog.article.delete.success', array(), 'victoire');
-            $this->get('session')->getFlashBag()->add('success', $message);
-
-            $response = array(
-                'success' => true,
-                'url'     => $homepageUrl,
-                'message' => $message,
-            );
-        } catch (\Exception $ex) {
-            throw $ex;
-
-            $response = array(
-                'success' => false,
-                'message' => $ex->getMessage(),
-            );
-        }
+        $response = array(
+            'success' => true,
+            'url'     => $homepageUrl,
+            'message' => $message,
+        );
 
         return new JsonResponse($response);
     }
