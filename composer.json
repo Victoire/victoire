@@ -61,7 +61,7 @@
         },
         {
             "type": "vcs",
-            "url": "https://github.com/lenybernard/MinkExtension"
+            "url": "https://github.com/lenybernard/mink"
         }
     ],
     "autoload": {
