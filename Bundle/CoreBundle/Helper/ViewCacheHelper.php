@@ -101,12 +101,16 @@ XML;
         $rootNode = $this->readCache();
         $viewReference = $viewHelper->getViewReferenceByView($view, $entity);
         self::removeViewReference($rootNode, $viewReference);
+        $itemNode = $rootNode->addChild('viewReference');
+        foreach ($viewReference as $key => $value) {
+            $itemNode->addAttribute($key, $value);
+        }
 
         $viewReferences = $viewHelper->buildViewReference($view, $entity);
-        foreach ($viewReferences as $key => $viewReference) {
-            self::removeViewReference($rootNode, $viewReference);
+        foreach ($viewReferences as $key => $_viewReference) {
+            self::removeViewReference($rootNode, $_viewReference);
             $itemNode = $rootNode->addChild('viewReference');
-            foreach ($viewReference as $key => $value) {
+            foreach ($_viewReference as $key => $value) {
                 $itemNode->addAttribute($key, $value);
             }
         }

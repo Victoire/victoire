@@ -205,3 +205,10 @@ services:
             - '%victoire_core.widgets%'
         tags:
             - { name: routing.loader }
+
+    victoire_core.view_url_helper:
+        class: Victoire\Bundle\CoreBundle\Helper\ViewUrlHelper
+        arguments:
+            - "@router"
+        calls:
+            - [setRequest, ["@request_stack"]]
