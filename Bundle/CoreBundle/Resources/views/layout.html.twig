@@ -73,7 +73,9 @@
             var locale = '{{ app.request.locale }}';
         </script>
         <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
-
+        {% block alertify %}
+            {{ app.session|alertify|raw }}
+        {% endblock %}
     {% endblock foot_script %}
 
 

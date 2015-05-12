@@ -5,6 +5,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
+use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 
@@ -13,6 +14,8 @@ use Victoire\Bundle\PageBundle\Entity\Page;
  **/
 class BasePageController extends Controller
 {
+    use VictoireAlertifyControllerTrait;
+
     public function showAction(Request $request, $url)
     {
         $response = $this->container->get('victoire_page.page_helper')->renderPageByUrl($url, $request->getLocale());
@@ -93,6 +96,8 @@ class BasePageController extends Controller
                         ->get('victoire_business_entity_page.business_entity_page_helper')
                         ->generateEntityPageFromPattern($page->getTemplate(), $page);
             }
+
+            $this->congrat($this->get('translator')->trans('victoire_page.create.success', array(), 'victoire'));
 
             return array(
                 "success"  => true,
@@ -214,7 +219,7 @@ class BasePageController extends Controller
      */
     public function deleteAction(BasePage $page)
     {
-        $return = null;
+        $response = null;
 
         try {
             //it should not be allowed to try to delete an undeletable page
@@ -235,18 +240,18 @@ class BasePageController extends Controller
             //redirect to the homepage
             $homepageUrl = $this->generateUrl('victoire_core_page_homepage');
 
-            $return = array(
+            $response = array(
                 'success' => true,
                 'url'     => $homepageUrl,
             );
         } catch (\Exception $ex) {
-            $return = array(
+            $response = array(
                 'success' => false,
                 'message' => $ex->getMessage(),
             );
         }
 
-        return $return;
+        return $response;
     }
 
     /**

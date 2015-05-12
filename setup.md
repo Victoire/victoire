@@ -29,7 +29,19 @@ or do it yourself by doing the usual stuff (doctrine:schema:update etc). You can
 - Declare in AppKernel:
 
 ```php
+    //dependencies
+    new AppVentus\AsseticInjectorBundle\AvAsseticInjectorBundle(),
+    new AppVentus\AlertifyBundle\AvAlertifyBundle(),
+    new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
+    new FOS\UserBundle\FOSUserBundle(),
+    new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+    new JMS\AopBundle\JMSAopBundle(),
+    new JMS\TranslationBundle\JMSTranslationBundle(),
+    new JMS\DiExtraBundle\JMSDiExtraBundle($this),
+    new Liip\ImagineBundle\LiipImagineBundle(),
+    new Knp\Bundle\MenuBundle\KnpMenuBundle(),
     //Victoire bundles
+    new Victoire\Bundle\AnalyticsBundle\VictoireAnalyticsBundle(),
     new Victoire\Bundle\AnalyticsBundle\VictoireAnalyticsBundle(),
     new Victoire\Bundle\BlogBundle\VictoireBlogBundle(),
     new Victoire\Bundle\BusinessEntityBundle\VictoireBusinessEntityBundle(),
