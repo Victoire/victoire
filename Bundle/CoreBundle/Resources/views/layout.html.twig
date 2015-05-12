@@ -8,7 +8,7 @@
     {% block title %}Victoire CMS{% endblock title %}
 
     {% block head_script %}
-    <!-- HEAD_SCRIPT -->
+        <!-- HEAD_SCRIPT -->
         {% if is_granted('ROLE_VICTOIRE') %}
             {% javascripts injector="victoire-head" %}
                 <script type="text/javascript" src="{{ asset_url }}"></script>
@@ -18,21 +18,21 @@
             <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
         <!-- END HEAD_SCRIPT -->
-        <script type="text/javascript" src="{{ asset('bundles/victoiredashboard/js/jquery-1.11.0.js') }}"></script>
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     {% endblock head_script %}
     {% block head_style %}
-
-    {% stylesheets filter='less, cssrewrite' injector="head" %}
-    <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
-    {% endstylesheets %}
-
-    {% if is_granted('ROLE_VICTOIRE') %}
-        {% stylesheets filter='less, cssrewrite' injector="victoire-edit"
-         %}
+        <!-- HEAD_STYLE -->
+        {% stylesheets filter='less, cssrewrite' injector="head" %}
         <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
         {% endstylesheets %}
-    {% endif %}
-     <link href="http://netdna.bootstrapcdn.com/bootstrap/2.3.2/css/bootstrap.min.css" type="text/css" rel="stylesheet" media="screen" />
+
+        {% if is_granted('ROLE_VICTOIRE') %}
+            {% stylesheets filter='less, cssrewrite' injector="victoire-edit, alertify-codrops-notification"
+             %}
+            <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+            {% endstylesheets %}
+        {% endif %}
+        <!-- END HEAD_STYLE -->
 
     {% endblock head_style %}
     {% block body %}
@@ -44,6 +44,7 @@
     {% endblock body %}
 
     {% block foot_script %}
+        <!-- FOOT_SCRIPT -->
 
         {% if view is defined %}
         <script type="text/javascript">
@@ -73,9 +74,14 @@
             var locale = '{{ app.request.locale }}';
         </script>
         <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+
+        {% javascripts injector="foot, alertify-codrops-notification" %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
         {% block alertify %}
             {{ app.session|alertify|raw }}
         {% endblock %}
+        <!-- END FOOT_SCRIPT -->
     {% endblock foot_script %}
 
 
