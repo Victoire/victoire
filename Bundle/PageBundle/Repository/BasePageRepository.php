@@ -90,11 +90,11 @@ class BasePageRepository extends NestedTreeRepository
     }
 
     /**
-     * Get very next festivals query builder
-     * @param method        $method        The method to run
-     * @param hydrationMode $hydrationMode How the results will be (Object ? Array )
+     * Run instance
+     * @param string $method
+     * @param string $hydrationMode
      *
-     * @return array()
+     * @return array
      */
     public function run($method = 'getResult', $hydrationMode = Query::HYDRATE_OBJECT)
     {
