@@ -38,6 +38,7 @@ class ArticleController extends Controller
             //Auto creation of the BEP
             $page = $this->container->get('victoire_business_entity_page.business_entity_page_helper')
                                 ->generateEntityPageFromPattern($article->getPattern(), $article);
+            $page->setParent($article->getBlog());
 
             $entityManager->persist($page);
             $entityManager->flush();
