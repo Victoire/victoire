@@ -121,9 +121,9 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update"]', function(
 });
 
 // Delete a widget after submit
-$vic(document).on('click', '.vic-widget-modal a[data-modal="delete"]', function(event) {
+$vic(document).on('click', '.vic-widget-modal a[data-modal="delete"], .vic-hover-widget-unlink', function(event) {
     //Check that there isn't a data-toggle="vic-confirm" on it !
-    if ($vic(event.target).data('toggle') != "vic-confirm" || $vic(event.target).hasClass('vic-confirmed')) {
+    if ($vic(event.target).hasClass('vic-confirmed')) {
         event.preventDefault();
         $vic(document).trigger("victoire_widget_delete_presubmit");
 

@@ -19,31 +19,9 @@ $vic(window).on('beforeunload',function() {
     $vic('body').addClass('page-unloading');
 });
 
-$vic(document).on("dblclick", function (e){
+$vic(document).on("keydown", function (e){
     if (e.altKey) {
-        $vic('.vic-ns-show').remove();
-        $vic('#vic-switcher-editMode').click();
-
-        if ($vic('#vic-switcher-editMode').is(':checked')) {
-
-            //Are we targeting a widget ? If so find it to click on the link to edit it and auto scroll.
-            if ($vic(e.target).hasClass('.vic-widget')) {
-                var widget = $vic(e.target);
-            } else if ($vic(e.target).hasClass('.vic-widget-container')) {
-                var widget = $vic('> .vic-widget', e.target);
-            } else if ($vic(e.target).parents('.vic-widget:first') != undefined) {
-                var widget = $vic(e.target).parents('.vic-widget').first(); //Because it could be an embed widget
-            }
-
-            if (widget != undefined) {
-                //Automatic open the widget modal
-                $vic('> a.vic-hover-widget', widget).click();
-                //Automatic scroll to the widget
-                slideTo('#' + $vic('> .vic-anchor', $vic(widget).parent()).attr('id'), 0);
-            }
-
-            congrat('Hey Victoire');
-        }
+        $vic('button[data-mode="admin-edit"]').click();
     }
 });
 
