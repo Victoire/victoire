@@ -14,7 +14,7 @@ use Victoire\Bundle\MediaBundle\Entity\Media;
 /**
  * @ORM\Entity(repositoryClass="Victoire\Bundle\BlogBundle\Repository\ArticleRepository"))
  * @ORM\Table("vic_article")
- * @VIC\BusinessEntity({"Redactor", "Listing", "BlogArticles", "Title", "CKEditor", "Text", "UnderlineTitle", "Cover", "Image", "Authorship", "ArticleList"})
+ * @VIC\BusinessEntity({"Force", "Redactor", "Listing", "BlogArticles", "Title", "CKEditor", "Text", "UnderlineTitle", "Cover", "Image", "Authorship", "ArticleList"})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
 class Article
@@ -53,7 +53,7 @@ class Article
 
     /**
      * Description is inherited from Page, just add the BusinessProperty annotation
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="text", nullable=true)
      * @VIC\BusinessProperty("textable")
      */
     private $description;
@@ -163,7 +163,7 @@ class Article
 
     /**
      * Set id
-     * @param id $id
+     * @param integer $id
      */
     public function setId($id)
     {
@@ -244,7 +244,7 @@ class Article
     /**
      * Get the published at property
      *
-     * @return DateTime
+     * @return \DateTime
      */
     public function getPublishedAt()
     {
@@ -271,7 +271,7 @@ class Article
     /**
      * Get deletedAt
      *
-     * @return DateTime
+     * @return \DateTime
      */
     public function getDeletedAt()
     {
@@ -280,7 +280,7 @@ class Article
 
     /**
      * Set deletedAt
-     * @param DateTime $deletedAt
+     * @param \DateTime $deletedAt
      *
      * @return $this
      */
@@ -472,7 +472,9 @@ class Article
      */
     public function getCategoryTitle()
     {
-        return $this->category ? $this->category->getTitle() : null;
+        $this->categoryTitle = $this->category ? $this->category->getTitle() : null;
+
+        return $this->categoryTitle;
     }
 
     /**
@@ -513,13 +515,15 @@ class Article
 
     public function getAuthorAvatar()
     {
-        $email = $this->author->getEmail();
+        $this->authorAvatar = "http://www.gravatar.com/avatar/".md5($this->author->getEmail())."?s=70";
 
-        return "http://www.gravatar.com/avatar/".md5($email)."?s=70";
+        return $this->authorAvatar;
     }
 
     public function getAuthorFullname()
     {
-        return $this->author->getFullname();
+        $this->authorFullName = $this->author->getFullname();
+
+        return $this->authorFullName;
     }
 }

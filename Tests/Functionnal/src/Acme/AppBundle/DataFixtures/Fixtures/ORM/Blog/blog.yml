@@ -1,0 +1,13 @@
+Victoire\Bundle\BlogBundle\Entity\Blog:
+    blog-jedi-network:
+        template: @template_base
+        author: @anakin
+        name: The Jedi Network
+        locale: fr
+        slug: the-jedi-network
+        homepage: false
+        undeletable: false
+        status: published
+        publishedAt: <dateTime('now')>
+        createdAt: <dateTime('now')>
+        updatedAt: <dateTime('now')>

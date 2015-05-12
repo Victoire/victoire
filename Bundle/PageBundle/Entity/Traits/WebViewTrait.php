@@ -21,7 +21,7 @@ trait WebViewTrait
     /**
      * @var string
      *
-     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\CoreBundle\Entity\Route", mappedBy="page", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\CoreBundle\Entity\Route", mappedBy="view", cascade={"persist", "remove"})
      */
     protected $routes;
 

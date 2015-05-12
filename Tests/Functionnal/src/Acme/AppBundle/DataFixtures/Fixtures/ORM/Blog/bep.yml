@@ -1,0 +1,13 @@
+Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage:
+    bep_article_i_m_your_father:
+        name: "I'm your father."
+        url: "the-jedi-network/i-m-your-father"
+        author: @anakin
+        locale: fr
+        template: @pattern_article
+        status: published
+        parent: @blog-jedi-network
+        entityProxy: @ep_article_i_m_your_father
+        publishedAt: <dateTime('now')>
+        createdAt: <dateTime('now')>
+        updatedAt: <dateTime('now')>

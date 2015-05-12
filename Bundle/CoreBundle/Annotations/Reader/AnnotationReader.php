@@ -3,11 +3,14 @@ namespace Victoire\Bundle\CoreBundle\Annotations\Reader;
 
 use Doctrine\Common\Annotations\AnnotationException;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
+use \Doctrine\Common\Annotations\Reader;
 use Doctrine\ORM\Mapping\MappingException;
+use Symfony\Component\VarDumper\VarDumper;
 use Victoire\Bundle\CoreBundle\Annotations\BusinessEntity;
 use Victoire\Bundle\CoreBundle\Annotations\BusinessProperty;
 use Victoire\Bundle\CoreBundle\Annotations\ReceiverProperty;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
+use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
 
 /**
  * The annotation reader for the business entities
@@ -23,19 +26,17 @@ class AnnotationReader extends AnnotationDriver
 
     /**
      * construct
-     * @param unknown      $reader
+     * @param Reader       $reader
      * @param WidgetHelper $widgetHelper
-     * @param unknown      $paths
-     * @param unknown      $widgets
+     * @param array        $paths
+     * @param array        $widgets
      */
-    public function __construct($reader, $widgetHelper, $paths, $widgets)
+    public function __construct(Reader $reader, WidgetHelper $widgetHelper, $paths, $widgets)
     {
         $this->reader = $reader;
         $this->widgetHelper = $widgetHelper;
         $this->widgets = $widgets;
-        if ($paths) {
-            $this->addPaths(array($paths."/../"));
-        }
+        $this->paths = $paths;
     }
 
     /**
@@ -146,10 +147,12 @@ class AnnotationReader extends AnnotationDriver
             $className = explode('\\', $classNamespace);
             $className = strtolower(array_pop($className));
             foreach ($annotations as $key => $annotationObj) {
-
                 if ($annotationObj instanceof BusinessEntity) {
                     if ($annotationObj->getWidgets() !== null) {
                         foreach ($annotationObj->getWidgets() as $availableWidget) {
+                            if (is_array($availableWidget) && count($availableWidget) === 1) {
+                                $availableWidget = $availableWidget[0];
+                            }
                             if ($availableWidget === $widgetName && !in_array($className, $businessClassesForWidget)) {
                                 $businessClassesForWidget[$className] = $classNamespace;
                             }
@@ -245,46 +248,38 @@ class AnnotationReader extends AnnotationDriver
      */
     public function getAllClassnames()
     {
-        if ($this->classNames !== null) {
+/*        if ($this->classNames !== null) {
             return $this->classNames;
         }
-
+*/
         if (!$this->paths) {
             throw MappingException::pathRequired();
         }
-
         $classes = array();
         $includedFiles = array();
-
         foreach ($this->paths as $path) {
-            if (!is_dir($path)) {
+            if (! is_dir($path)) {
                 throw MappingException::fileMappingDriversRequireConfiguredDirectoryPath($path);
             }
-
             $iterator = new \RegexIterator(
                 new \RecursiveIteratorIterator(
                     new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS),
                     \RecursiveIteratorIterator::LEAVES_ONLY
                 ),
-                '/^.+\/(src|vendor\/victoire)\/.+\/Entity\/.+'.str_replace('.', '\.', $this->fileExtension).'$/i',
+                '/^.+\/(src|vendor\/victoire|Victoire)\/.+\/Entity\/.+\.php$/i',
                 \RecursiveRegexIterator::GET_MATCH
             );
-
             foreach ($iterator as $file) {
                 $sourceFile = realpath($file[0]);
-
                 require_once $sourceFile;
-
                 $includedFiles[] = $sourceFile;
             }
         }
-
         $declared = get_declared_classes();
-
         foreach ($declared as $className) {
             $rc = new \ReflectionClass($className);
             $sourceFile = $rc->getFileName();
-            if (in_array($sourceFile, $includedFiles) && !$this->isTransient($className)) {
+            if (in_array($sourceFile, $includedFiles) && ! $this->isTransient($className)) {
                 $classes[] = $className;
             }
         }

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+  <file date="2013-11-27T18:15:06Z" source-language="en" target-language="fr" datatype="plaintext" original="not.available">
+    <header>
+      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
+      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
+    </header>
+    <body>
+      <trans-unit id="1" resname="form.widget.tab.jedi.label">
+        <source>form.widget.tab.jedi.label</source>
+        <target>Jedi</target>
+      </trans-unit>
+      <trans-unit id="2" resname="hamburger_menu.jedi">
+        <source>hamburger_menu.jedi</source>
+        <target><![CDATA[<i class="fa fa-empire"></i> Jedi]]></target>
+      </trans-unit>
+      <trans-unit id="3" resname="acme.app.jedi.index.title">
+        <source>acme.app.jedi.index.title</source>
+        <target>Jedis list</target>
+      </trans-unit>
+      <trans-unit id="4" resname="acme.app.jedi.new.title">
+        <source>acme.app.jedi.new.title</source>
+        <target>New Jedi</target>
+      </trans-unit>
+      <trans-unit id="5" resname="acme.app.jedi.edit.title">
+        <source>acme.app.jedi.edit.title</source>
+        <target>Jedi edit</target>
+      </trans-unit>
+      <trans-unit id="6" resname="acme.app.jedi.index.th.Name">
+        <source>acme.app.jedi.index.th.Name</source>
+        <target>Name</target>
+      </trans-unit>      
+      <trans-unit id="7" resname="acme.app.jedi.index.th.Midichlorians">
+        <source>acme.app.jedi.index.th.Midichlorians</source>
+        <target>Midichlorians</target>
+      </trans-unit>
+      <trans-unit id="8" resname="acme.app.jedi.index.th.Side">
+        <source>acme.app.jedi.index.th.Side</source>
+        <target>Side</target>
+      </trans-unit>
+      <trans-unit id="9" resname="acme.app.jedi.index.th.Slug">
+        <source>acme.app.jedi.index.th.Slug</source>
+        <target>Slug</target>
+      </trans-unit>
+      <trans-unit id="10" resname="acme.app.jedi.index.th.Createdat">
+        <source>acme.app.jedi.index.th.Createdat</source>
+        <target>Createdat</target>
+      </trans-unit>
+      <trans-unit id="11" resname="acme.app.jedi.index.th.Updatedat">
+        <source>acme.app.jedi.index.th.Updatedat</source>
+        <target>Updatedat</target>
+      </trans-unit>
+      <trans-unit id="12" resname="acme.app.jedi.index.th.Visibleonfront">
+        <source>acme.app.jedi.index.th.Visibleonfront</source>
+        <target>Visibleonfront</target>
+      </trans-unit>
+      <trans-unit id="13" resname="acme.app.jedi.index.th.Actions">
+        <source>acme.app.jedi.index.th.Actions</source>
+        <target>Actions</target>
+      </trans-unit>
+      <trans-unit id="14" resname="acme.app.jedi.form.side.choice.both">
+        <source>acme.app.jedi.form.side.choice.both</source>
+        <target>Both</target>
+      </trans-unit>
+      <trans-unit id="15" resname="acme.app.jedi.form.side.choice.dark">
+        <source>acme.app.jedi.form.side.choice.dark</source>
+        <target>Dark</target>
+      </trans-unit>
+      <trans-unit id="16" resname="acme.app.jedi.form.side.choice.bright">
+        <source>acme.app.jedi.form.side.choice.bright</source>
+        <target>Bright</target>
+      </trans-unit>
+      <trans-unit id="17" resname="acme.app.jedi.form.name.label">
+        <source>acme.app.jedi.form.name.label</source>
+        <target>Name</target>
+      </trans-unit>
+      <trans-unit id="18" resname="acme.app.jedi.form.midiChlorians.label">
+        <source>acme.app.jedi.form.midiChlorians.label</source>
+        <target>MidiChlorians</target>
+      </trans-unit>
+      <trans-unit id="19" resname="acme.app.jedi.form.slug.label">
+        <source>acme.app.jedi.form.slug.label</source>
+        <target>Slug</target>
+      </trans-unit>
+      <trans-unit id="20" resname="acme.app.jedi.form.createdAt.label">
+        <source>acme.app.jedi.form.createdAt.label</source>
+        <target>Creation date</target>
+      </trans-unit>
+      <trans-unit id="21" resname="acme.app.jedi.form.updatedAt.label">
+        <source>acme.app.jedi.form.updatedAt.label</source>
+        <target>Update date</target>
+      </trans-unit>
+      <trans-unit id="22" resname="acme.app.jedi.form.side.label">
+        <source>acme.app.jedi.form.side.label</source>
+        <target>Force side</target>
+      </trans-unit>
+      <trans-unit id="23" resname="acme.app.jedi.form.action.new">
+        <source>acme.app.jedi.form.action.new</source>
+        <target>New jedi</target>
+      </trans-unit>
+      <trans-unit id="23" resname="acme.app.jedi.form.action.edit">
+        <source>acme.app.jedi.form.action.edit</source>
+        <target>Edit</target>
+      </trans-unit>
+      <trans-unit id="23" resname="acme.app.jedi.form.action.delete">
+        <source>acme.app.jedi.form.action.delete</source>
+        <target>Delete</target>
+      </trans-unit>
+      <trans-unit id="24" resname="acme.app.jedi.form.action.index">
+        <source>acme.app.jedi.form.action.index</source>
+        <target>Jedis list</target>
+      </trans-unit>
+      <trans-unit id="26" resname="acme.app.jedi.form.button.create">
+        <source>acme.app.jedi.form.button.create</source>
+        <target>Create</target>
+      </trans-unit>
+      <trans-unit id="27" resname="acme.app.jedi.form.button.update">
+        <source>acme.app.jedi.form.button.update</source>
+        <target>Update</target>
+      </trans-unit>
+      <trans-unit id="28" resname="acme.app.jedi.form.button.delete">
+        <source>acme.app.jedi.form.button.delete</source>
+        <target>Delete</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

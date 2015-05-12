@@ -1,9 +1,9 @@
-@mink:selenium2 @database @fixtures
+@mink:selenium2 @alice(Page) @reset-schema
 Feature: Delete a page
 
 Background:
     Given I am logged in as "anakin@victoire.io"
-     And I maximize the browser
+     And I maximize the window
 
 Scenario: I can delete a new page
     Given I am on "/fr/test"
@@ -13,6 +13,6 @@ Scenario: I can delete a new page
     Given I follow "Supprimer"
     Then I should see "Cette action va supprimer définitivement cette page. Cette action est irréversible. Etes vous sûr ?"
     Given I press "J'ai bien compris, je confirme la suppression"
-    Then I should see "Victoire"
+#    Then I should see "Victoire !"
     And I wait 10 seconds
     And I should be on "/fr/"

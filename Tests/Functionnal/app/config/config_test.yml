@@ -50,6 +50,12 @@ assetic:
                 - "/usr/local/lib/node_modules"
             apply_to: "\.less$"
 
+av_alertify:
+    contexts:
+        victoire:
+            engine: "codrops-notification"
+            translationDomain: "victoire"
+
 
 # Doctrine Configuration
 doctrine:
@@ -116,6 +122,9 @@ victoire_core:
         fullWidth: "Contenu unique"
         home: "Accueil"
     slots: ~
+    base_paths: #(optional) required for a non standard installation
+        - "%kernel.root_dir%/../../../Bundle/BlogBundle"
+        - "%kernel.root_dir%/../../../Tests/Functionnal/src"
 
 services:
     twig.extension.text:

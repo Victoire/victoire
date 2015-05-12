@@ -1,0 +1,16 @@
+Victoire\Bundle\BlogBundle\Entity\Article:
+    article:
+        author: @anakin
+        name: "I'm your father."
+        description: This is a great article description
+        slug: i-m-your-father
+        status: published
+        pattern: @pattern_article
+        blog: @blog-jedi-network
+        publishedAt: <dateTime('now')>
+        createdAt: <dateTime('now')>
+        updatedAt: <dateTime('now')>
+
+Victoire\Bundle\CoreBundle\Entity\EntityProxy:
+    ep_article_i_m_your_father:
+        article: @article

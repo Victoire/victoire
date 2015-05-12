@@ -28,7 +28,7 @@ class BusinessEntityHelper
     public function __construct(AnnotationReader $annotationReader, EntityManager $entityManager)
     {
         $this->annotationReader = $annotationReader;
-        $this->em = $entityManager;
+        $this->entityManager = $entityManager;
         $this->businessEntities = null;
     }
 
@@ -173,7 +173,7 @@ class BusinessEntityHelper
     {
         //retrieve the class of the business entity
         $class = $businessEntity->getClass();
-        $em = $this->em;
+        $em = $this->entityManager;
 
         //get the repository
         $repo = $em->getRepository($class);
@@ -222,6 +222,6 @@ class BusinessEntityHelper
 
     public function getByBusinessEntityAndId(BusinessEntity $businessEntity, $id)
     {
-        return $this->em->getRepository($businessEntity->getClass())->findOneById($id);
+        return $this->entityManager->getRepository($businessEntity->getClass())->findOneById($id);
     }
 }

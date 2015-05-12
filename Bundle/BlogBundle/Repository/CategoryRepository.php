@@ -1,15 +1,16 @@
 <?php
 namespace Victoire\Bundle\BlogBundle\Repository;
 
-use Victoire\Bundle\BlogBundle\Entity\Blog;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
+use Victoire\Bundle\BlogBundle\Entity\Blog;
+use Victoire\Bundle\CoreBundle\Repository\StateFullRepositoryTrait;
 
 /**
  * The Category repository
  */
 class CategoryRepository extends NestedTreeRepository
 {
-    use \AppVentus\Awesome\ShortcutsBundle\Repository\AwesomeRepositoryTrait;
+    use StateFullRepositoryTrait;
 
     public function getOrderedCategories(Blog $blog)
     {
@@ -31,4 +32,6 @@ class CategoryRepository extends NestedTreeRepository
         return $this;
 
     }
+
+
 }

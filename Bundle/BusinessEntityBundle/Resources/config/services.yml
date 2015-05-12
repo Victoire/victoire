@@ -5,7 +5,7 @@ services:
     victoire_business_entity.business_entity_subscriber:
         class: Victoire\Bundle\BusinessEntityBundle\EventSubscriber\BusinessEntitySubscriber
         arguments:
-            - "@service_container"
+            - @service_container
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 

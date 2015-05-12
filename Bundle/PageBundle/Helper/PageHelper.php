@@ -5,8 +5,9 @@ use Doctrine\Orm\EntityManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Security\Core\SecurityContext;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\BusinessEntityPageBundle\Helper\BusinessEntityPageHelper;
@@ -35,7 +36,8 @@ class PageHelper extends ViewHelper
     protected $victoireTemplating; // @victoire_templating
     protected $pageSeoHelper; // @victoire_seo.helper.pageseo_helper
     protected $session; // @session
-    protected $securityContex; // @security.context
+    protected $token_storage; // @security.authorization_checker
+    protected $authorizationChecker; // @security.authorization_checker
     protected $widgetMapBuilder; // @victoire_widget_map.builder
     public $viewCacheHelper; // @victoire_core.view_cache_helper
 
@@ -58,7 +60,8 @@ class PageHelper extends ViewHelper
      * @param PageSeoHelper            $pageSeoHelper
      * @param ViewCacheHelper          $viewCacheHelper
      * @param Session                  $session
-     * @param SecurityContext          $securityContext
+     * @param TokenStorage             $tokenStorage
+     * @param AuthorizationChecker     $authorizationChecker
      * @param WidgetMapBuilder         $widgetMapBuilder
      */
     public function __construct(
@@ -70,15 +73,14 @@ class PageHelper extends ViewHelper
         PageSeoHelper $pageSeoHelper,
         ViewCacheHelper $viewCacheHelper,
         Session $session,
-        SecurityContext $securityContext,
+        TokenStorage $tokenStorage,
+        AuthorizationChecker $authorization_checker,
         WidgetMapBuilder $widgetMapBuilder,
         BETParameterConverter $parameterConverter,
         BusinessEntityHelper $businessEntityHelper,
         ViewCacheHelper $viewCacheHelper
     ) {
-        parent::__construct($parameterConverter,
-                $businessEntityHelper, $bepHelper, $entityManager, $viewCacheHelper
-            );
+        parent::__construct($parameterConverter, $businessEntityHelper, $bepHelper, $entityManager, $viewCacheHelper);
         $this->bepHelper = $bepHelper;
         $this->entityManager = $entityManager;
         $this->currentViewHelper = $currentViewHelper;
@@ -87,7 +89,8 @@ class PageHelper extends ViewHelper
         $this->pageSeoHelper = $pageSeoHelper;
         $this->viewCacheHelper = $viewCacheHelper;
         $this->session = $session;
-        $this->securityContext = $securityContext;
+        $this->tokenStorage = $tokenStorage;
+        $this->authorizationChecker = $authorization_checker;
         $this->widgetMapBuilder = $widgetMapBuilder;
     }
 
@@ -263,8 +266,8 @@ class PageHelper extends ViewHelper
             throw new NotFoundHttpException($errorMessage);
         }
 
-        if ($this->securityContext->getToken()) {
-            $isPageOwner = $this->securityContext->isGranted('PAGE_OWNER', $page);
+        if ($this->tokenStorage->getToken()) {
+            $isPageOwner = $this->authorizationChecker->isGranted('PAGE_OWNER', $page);
         }
 
         //a page not published, not owned, nor granted throw an exception
@@ -275,11 +278,11 @@ class PageHelper extends ViewHelper
         //if the page is a BusinessEntityPagePattern and the entity is not allowed for this page pattern
         if ($page instanceof BusinessEntityPagePattern) {
             //only victoire users are able to access a business page
-            if (!$this->securityContext->isGranted('ROLE_VICTOIRE')) {
+            if (!$this->authorizationChecker->isGranted('ROLE_VICTOIRE')) {
                 throw new AccessDeniedException('You are not allowed to see this page');
             }
         } elseif ($page instanceof BusinessEntityPage) {
-            if (!$entity->isVisibleOnFront() && !$this->securityContext->isGranted('ROLE_VICTOIRE')) {
+            if (!$entity->isVisibleOnFront() && !$this->authorizationChecker->isGranted('ROLE_VICTOIRE')) {
                 throw new NotFoundHttpException('The BusinessEntityPage for '.get_class($entity).'#'.$entity->getId().' is not visible on front.');
             }
             if (!$page->getId()) {

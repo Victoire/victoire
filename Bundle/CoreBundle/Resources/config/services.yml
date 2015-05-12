@@ -2,17 +2,13 @@ parameters:
     router.options.generator_base_class: Victoire\Bundle\CoreBundle\Route\UrlGenerator
 
 services:
-    # av_assetic_injector.collector_engine.require_victoire:
-    #     class: "Victoire\Bundle\CoreBundle\AssetsCollector\RequireVictoire"
-    #     arguments: [@service_container]
-
-    # assetic_injector.require_victoire:
-    #     alias: av_assetic_injector.collector_engine.require_victoire
 
 #  ==================  Widgets ================== #
     victoire_core.entity_proxy.fields_builder:
         class: Victoire\Bundle\CoreBundle\Form\Builder\EntityProxyFieldsBuilder
-        arguments: ["@victoire_core.annotation_reader"]
+        arguments:
+            - @victoire_core.annotation_reader
+            - @translator
 
 #  ==================  MENU ================== #
     victoire_core.admin_menu_builder:
@@ -50,6 +46,17 @@ services:
             - "@security.context"
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+    victoire_core.backend_menu_listener:
+        class: Victoire\Bundle\CoreBundle\Listener\BackendMenuListener
+        arguments: ["@victoire_core.admin_menu_builder"]
+        tags:
+            - { name: kernel.event_listener, event: victoire_core.backend_menu.global, method: addGlobal, priority: 100 }
+
+    victoire_core.listener.controller_listener:
+        class: Victoire\Bundle\CoreBundle\Listener\ControllerListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: preExecuteAutorun }
 
 #  ==================  Template ================== #
     victoire_core.template_mapper:
@@ -106,7 +113,7 @@ services:
         arguments:
             - "@annotation_reader"
             - "@victoire_widget.widget_helper"
-            - "%kernel.root_dir%"
+            - "%victoire_core.base_paths%"
             - "%victoire_core.widgets%"
         calls:
             - [ setCache, ["@victoire_core.apc.cache"] ]
@@ -198,3 +205,10 @@ services:
             - '%victoire_core.widgets%'
         tags:
             - { name: routing.loader }
+
+    victoire_core.view_url_helper:
+        class: Victoire\Bundle\CoreBundle\Helper\ViewUrlHelper
+        arguments:
+            - "@router"
+        calls:
+            - [setRequest, ["@request_stack"]]

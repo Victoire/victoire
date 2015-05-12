@@ -160,40 +160,40 @@
 } )( window );
 
 function warn(content, ttl, icon) {
-	if (icon == undefined) {
-		icon = 'fa-warning';
-	}
-	if (content == undefined) {
-		content = 'L\'action n\'a pas pu aboutir.';
-	}
-	notify(content, ttl, 'growl', 'jelly', 'warning', icon);
+    if (icon == undefined) {
+        icon = 'fa-warning';
+    }
+    if (content == undefined) {
+        content = 'L\'action n\'a pas pu aboutir.';
+    }
+    notify(content, ttl, 'growl', 'jelly', 'warning', icon);
 }
 
 function congrat(content, ttl, icon) {
-	if (icon == undefined) {
-		icon = 'fa-rocket';
-	}
-	if (content == undefined) {
-		content = 'Victoire !';
-	}
-	notify(content, ttl, 'growl', 'jelly', 'success', icon);
+    if (icon == undefined) {
+        icon = 'fa-rocket';
+    }
+    if (content == undefined) {
+        content = 'Victoire !';
+    }
+    notify(content, ttl, 'growl', 'jelly', 'success', icon);
 }
 
 function error(content, ttl, icon) {
-	if (icon == undefined) {
-		icon = 'fa-flash';
-	}
-	if (content == undefined) {
-		content = 'Oups !';
-	}
-	notify(content, ttl, 'growl', 'jelly', 'error', icon);
+    if (icon == undefined) {
+        icon = 'fa-flash';
+    }
+    if (content == undefined) {
+        content = 'Oups !';
+    }
+    notify(content, ttl, 'growl', 'jelly', 'error', icon);
 }
 
 function notify(content, ttl, layout, effect, type, icon) {
     if (ttl == undefined) {
         ttl = 10000; //10 seconds
     }
-	var notification = new NotificationFx({
+    var notification = new NotificationFx({
         message : '<div><i class="fa ' + icon + '"></i> ' + content + '</div>',
         layout  : layout,
         effect  : effect,

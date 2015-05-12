@@ -206,6 +206,10 @@
         <source>victoire.widget.stylize.layout.heading</source>
         <target>Agencement responsive</target>
       </trans-unit>
+      <trans-unit id="22" resname="hamburger_menu.backend.back_home">
+        <source>hamburger_menu.backend.back_home</source>
+        <target>Retour sur le site</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

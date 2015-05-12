@@ -1,25 +1,30 @@
 {% trans_default_domain "victoire" %}
 
+{% if blog.articles|length %}
+
 <a class="vic-btn vic-btn-success" data-toggle="vic-modal" href="{{ path('victoire_blog_article_newBlogArticle', {'id' : blog.id}) }}">
     {{'modal.blog.list.articlesList.new_article'|trans({}, 'victoire')|raw}}
 </a>
 
-{% if blog.articles|length %}
 <div id="vic-blog-articleList">
 {% for article in blog.articles if not article.deletedAt %}
     <div>
         <div class="vic-panel vic-shadow-plan1 -vicBlog">
             <div class="vic-panelBlog-image" {% if article.image %}style="background-image: url({{ article.image.url }});"{% endif %}>
-                <span class="vic-panelBlog-badge -{{ article.status }}">
-                    <span class="vic-panelBlog-badge-popover">
-                        {% set transKey = 'modal.blog.list.articlesList.status.' ~ article.status %}
-                        {{ transKey |trans }}
+                <a class="vic-panelBlog-title" href="{{ path('victoire_core_page_show_by_id', {'viewId': article.pattern.id, 'entityId': article.id }) }}">
+                    <span class="vic-panelBlog-badge -{{ article.status }}">
+                        <span class="vic-panelBlog-badge-popover">
+                            {% set transKey = 'modal.blog.list.articlesList.status.' ~ article.status %}
+                            {{ transKey |trans }}
+                        </span>
                     </span>
-                </span>
+                </a>
             </div>
 
             <div class="vic-panelBlog-body vic-text-center">
-                <a class="vic-panelBlog-title" href="{{ path('victoire_core_page_show_by_id', {'viewId': article.pattern.id, 'entityId': article.id }) }}">{{ article.name }}</a>
+                <a class="vic-panelBlog-title" href="{{ path('victoire_core_page_show_by_id', {'viewId': article.pattern.id, 'entityId': article.id }) }}">
+                    {{ article.name }}
+                </a>
 
                 <time datetime="{{ article.publishedAt|date("Y-m-d") }}" class="vic-panelBlog-date">{{ article.publishedAt|localizeddate("medium", "none", null, null, "cccc d LLLL yyyy") }}</time>
 
@@ -36,6 +41,6 @@
         {{ 'modal.blog.list.articlesList.empty.notice'|trans }}
     </p>
 
-    <a href="{{ path('victoire_blog_article_newBlogArticle', {'id' : blog.id}) }}" class="vic-btn vic-btn-info">{{ 'modal.blog.list.articlesList.empty.notice.label'|trans }}</a>
+    <a data-toggle="vic-modal" href="{{ path('victoire_blog_article_newBlogArticle', {'id' : blog.id}) }}" class="vic-btn vic-btn-info">{{ 'modal.blog.list.articlesList.empty.notice.label'|trans }}</a>
 </div>
 {% endif %}

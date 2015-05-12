@@ -11,7 +11,7 @@ services:
             - "@victoire_page.user_callable"
             - "%victoire_core.user_class%"
             - "@victoire_core.view_cache_helper"
-            - "@service_container"
+            - "@victoire_core.view_url_helper"
         tags:
             - { name: doctrine.event_subscriber, connection: default, priority: -1 }
 
@@ -26,25 +26,18 @@ services:
             - "@victoire_seo.helper.pageseo_helper"
             - "@victoire_core.view_cache_helper"
             - "@session"
-            - "@security.context"
+            - "@security.token_storage"
+            - "@security.authorization_checker"
             - "@victoire_widget_map.builder"
             - "@victoire_business_entity.converter.parameter_converter"
             - "@victoire_core.helper.business_entity_helper"
             - "@victoire_core.view_cache_helper"
 
-    victoire_page.url_helper:
-        class: Victoire\Bundle\PageBundle\Helper\UrlHelper
-        arguments:
-            - "@router"
-            - "@victoire_page.repository.page"
-        calls:
-            - [setRequest, ["@request_stack"]]
-
     victoire_page.matcher.url_matcher:
         class: Victoire\Bundle\PageBundle\Matcher\UrlMatcher
         arguments:
             - "@doctrine.orm.entity_manager"
-            - "@victoire_page.url_helper"
+            - "@victoire_core.view_url_helper"
             - "@victoire_business_entity_page.business_entity_page_helper"
             - "@victoire_core.helper.business_entity_helper"
 
@@ -110,10 +103,3 @@ services:
             - "@victoire_page.page_helper"
         tags:
             - { name: twig.extension }
-
-
-    victoire_page.repository.page:
-        class: Victoire\Bundle\PageBundle\Entity\Page
-        factory_service: doctrine.orm.default_entity_manager
-        factory_method: getRepository
-        arguments: ['VictoirePageBundle:Page']

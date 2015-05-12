@@ -284,10 +284,10 @@ abstract class View
 
     /**
      * Set parent
+     * @param View $parent
      *
-     * @param \Victoire\Bundle\PageBundle\Entity\BasePage $parent
      */
-    public function setParent(\Victoire\Bundle\PageBundle\Entity\BasePage $parent = null)
+    public function setParent(View $parent = null)
     {
         $this->parent = $parent;
     }
@@ -295,7 +295,7 @@ abstract class View
     /**
      * Get parent
      *
-     * @return \Victoire\Bundle\PageBundle\Entity\BasePage parent
+     * @return View parent
      */
     public function getParent()
     {

@@ -182,6 +182,26 @@
         <source>form.blog.type.slug.label</source>
         <target>URL</target>
       </trans-unit>
+      <trans-unit id="39" resname="victoire_blog.noresult">
+        <source>victoire_blog.noresult</source>
+        <target>Aucun résultat</target>
+      </trans-unit>
+      <trans-unit id="40" resname="form.article.name.label">
+        <source>form.article.name.label</source>
+        <target>Nom de l'article</target>
+      </trans-unit>
+      <trans-unit id="41" resname="form.article.description.label">
+        <source>form.article.description.label</source>
+        <target>Description</target>
+      </trans-unit>
+      <trans-unit id="42" resname="form.article.image.label">
+        <source>form.article.image.label</source>
+        <target>Image</target>
+      </trans-unit>
+      <trans-unit id="43" resname="form.article.category.label">
+        <source>form.article.category.label</source>
+        <target>Catégorie</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

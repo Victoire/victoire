@@ -16,62 +16,60 @@
         }
     ],
     "require": {
-        "php"                                 : ">=5.3.3",
-        "symfony/symfony"                     : ">=2.4.2, <2.7.0",
-        "doctrine/orm"                        : "~2.2,>=2.2.3",
-        "doctrine/doctrine-bundle"            : ">=1.2",
-        "twig/extensions"                     : "~1.0",
-        "symfony/assetic-bundle"              : "~2.3",
-        "symfony/swiftmailer-bundle"          : "~2.3",
-        "symfony/monolog-bundle"              : "~2.4",
-        "sensio/distribution-bundle"          : ">2.3",
-        "sensio/framework-extra-bundle"       : "~3.0",
-        "sensio/generator-bundle"             : "~2.3",
-        "incenteev/composer-parameter-handler": "~2.0",
-        "doctrine/doctrine-fixtures-bundle"   : "dev-master",
-        "doctrine/data-fixtures"              : "dev-master",
-        "nelmio/alice"                        : "1.5.2",
-        "knplabs/knp-menu"                    : "2.0.*@dev",
-        "knplabs/knp-menu-bundle"             : "2.0.*@dev",
-        "jms/di-extra-bundle"                 : "1.4.*@dev",
-        "stof/doctrine-extensions-bundle"     : "1.2.*@dev",
-        "friendsofsymfony/jsrouting-bundle"   : "2.0.*@dev",
-        "friendsofsymfony/user-bundle"        : "2.0.*@dev",
-        "appventus/assetic-injector-bundle"   : "dev-master",
-        "knplabs/gaufrette"                   : "v0.1.7",
-        "liip/imagine-bundle"                 : "1.0.*@dev",
-        "jms/translation-bundle"              : "1.1.*@dev"
+        "php" : ">=5.3.3",
+        "symfony/symfony" : ">=2.4.2, <2.7.0",
+        "doctrine/orm" : "~2.2,>=2.2.3",
+        "doctrine/doctrine-bundle" : ">=1.2",
+        "twig/extensions" : "~1.0",
+        "symfony/assetic-bundle" : "~2.3",
+        "symfony/swiftmailer-bundle" : "~2.3",
+        "symfony/monolog-bundle" : "~2.4",
+        "sensio/distribution-bundle" : ">2.3",
+        "sensio/framework-extra-bundle" : "~3.0",
+        "sensio/generator-bundle" : "~2.3",
+        "incenteev/composer-parameter-handler" : "~2.0",
+        "doctrine/doctrine-fixtures-bundle" : "dev-master",
+        "doctrine/data-fixtures" : "dev-master",
+        "nelmio/alice" : "1.5.2",
+        "knplabs/knp-menu" : "2.0.*@dev",
+        "knplabs/knp-menu-bundle" : "2.0.*@dev",
+        "jms/di-extra-bundle" : "1.4.*@dev",
+        "stof/doctrine-extensions-bundle" : "1.2.*@dev",
+        "friendsofsymfony/jsrouting-bundle" : "2.0.*@dev",
+        "friendsofsymfony/user-bundle" : "2.0.*@dev",
+        "appventus/assetic-injector-bundle" : "dev-master",
+        "knplabs/gaufrette" : "v0.1.7",
+        "liip/imagine-bundle" : "1.0.*@dev",
+        "jms/translation-bundle" : "1.1.*@dev",
+        "appventus/alertify-bundle": "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.6.*",
+        "behat/behat": "~3.0",
+        "behat/mink-extension": "~2.0",
+        "behat/mink-goutte-driver": "~1.1",
+        "behat/mink-selenium2-driver": "~1.1",
+        "behat/mink-browserkit-driver"  : "*",
+        "behat/symfony2-extension": "~2.0",
+        "knplabs/friendly-contexts": "dev-master",
+        "symfony/var-dumper": "~3.0@dev"
     },
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/florale/KnpMenu.git"
+            "url": "https://github.com/lenybernard/FriendlyContexts.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/lenybernard/mink"
         }
     ],
-    "require-dev": {
-        "phpunit/phpunit"               : "4.6.*",
-        "behat/behat"                   : "2.5.x-dev",
-        "behat/mink"                    : "1.5.*@stable",
-        "behat/symfony2-extension"      : "*",
-        "behat/mink-extension"          : "*",
-        "behat/mink-goutte-driver"      : "*",
-        "behat/mink-browserkit-driver"  : "*",
-        "behat/mink-selenium2-driver"   : "1.1.*"
-    },
-    "replace": {
-        "victoire/blog-bundle": "self.version",
-        "victoire/core-bundle": "self.version",
-        "victoire/dashboard-bundle": "self.version",
-        "victoire/form-bundle": "self.version",
-        "victoire/media-bundle": "self.version",
-        "victoire/page-bundle": "self.version",
-        "victoire/seo-bundle": "self.version"
-    },
     "autoload": {
         "psr-4": {
+            "Acme\\AppBundle\\": "Tests/Functionnal/src/Acme/AppBundle",
             "Victoire\\Bundle\\": "Bundle",
-            "Victoire\\Widget\\": "Tests/Functionnal/src/Victoire/Widget",
-            "Victoire\\Tests\\Features\\": "Tests/Features"
+            "Victoire\\Tests\\Features\\": "Tests/Features",
+            "Victoire\\Widget\\": "Tests/Functionnal/src/Victoire/Widget"
         }
     },
     "minimum-stability": "dev",

@@ -113,3 +113,8 @@ services:
         tags:
             - { name: form.type, alias: date_filter }
             - { name: victoire_core.filter }
+
+    victoire_blog.manager.article:
+        class: Victoire\Bundle\BlogBundle\Manager\ArticleManager
+        arguments:
+            - "@doctrine.orm.entity_manager"

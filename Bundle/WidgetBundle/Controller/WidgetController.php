@@ -2,13 +2,16 @@
 
 namespace Victoire\Bundle\WidgetBundle\Controller;
 
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Victoire\Bundle\CoreBundle\Widget\Managers\WidgetManager;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\VarDumper\VarDumper;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
+use Victoire\Bundle\WidgetBundle\Model\WidgetManager;
 
 /**
  * Widget Controller
@@ -18,30 +21,33 @@ class WidgetController extends Controller
 {
     /**
      * Show a widget
-     * @param Widget  $widget          the widget to show
+     * @param Request $request
+     * @param Widget $widget the widget to show
      * @param integer $viewReferenceId The id of the view
      *
-     * @return response
      * @Route("/victoire-dcms-public/widget/show/{id}/{viewReferenceId}", name="victoire_core_widget_show", options={"expose"=true})
      * @Template()
      * @ParamConverter("id", class="VictoireWidgetBundle:Widget")
+     * @throws Exception
+     * @return Response
      */
-    public function showAction(Widget $widget, $viewReferenceId)
+    public function showAction(Request $request, Widget $widget, $viewReferenceId)
     {
         //the response is for the ajax.js from the AppVentus Ajax Bundle
         try {
             $view = $this->container->get('victoire_page.page_helper')->findPageByParameters(array('id' => $viewReferenceId));
             $this->container->get('victoire_core.current_view')->setCurrentView($view);
-            if ($this->getRequest()->isXmlHttpRequest()) {
+            if ($request->isXmlHttpRequest()) {
                 $response = new JsonResponse(array(
                             'html'    => $this->get('victoire_widget.widget_renderer')->render($widget, $view),
                             'update'  => 'vic-widget-'.$widget->getId().'-container',
                             'success' => false,
-                    ));
+                    )
+                );
             } else {
                 $response = $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $view->getUrl())));
             }
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
         }
 
@@ -65,8 +71,8 @@ class WidgetController extends Controller
     {
         try {
             $view = $this->getViewByReferenceId($viewReference);
-            $response = new JsonResponse($this->get('widget_manager')->newWidget($type, $slot, $view, $positionReference));
-        } catch (\Exception $ex) {
+            $response = new JsonResponse($this->get('widget_manager')->newWidget(Widget::MODE_STATIC, $type, $slot, $view, $positionReference));
+        } catch (Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
         }
 
@@ -82,21 +88,21 @@ class WidgetController extends Controller
      * @param BusinessEntity $entityName        The business entity name the widget shows on dynamic mode
      *
      * @return JsonResponse
-     * @Route("/victoire-dcms/widget/create/{type}/{viewReference}/{slot}/{positionReference}/{entityName}", name="victoire_core_widget_create", defaults={"slot":null, "entityName":null, "positionReference": 0, "_format": "json"})
+     * @Route("/victoire-dcms/widget/create/{mode}/{type}/{viewReference}/{slot}/{positionReference}/{entityName}", name="victoire_core_widget_create", defaults={"slot":null, "entityName":null, "positionReference": 0, "_format": "json"})
      * @Template()
      */
-    public function createAction($type, $viewReference, $slot = null, $positionReference = 0, $entityName = null)
+    public function createAction($mode, $type, $viewReference, $slot = null, $positionReference = 0, $entityName = null)
     {
         try {
             //services
             $view = $this->getViewByReferenceId($viewReference);
 
-            $isNewPage = $view->getId() == null ? true : false;
+            $isNewPage = $view->getId() === null ? true : false;
 
             $this->get('victoire_core.current_view')->setCurrentView($view);
             $widgetManager = $this->getWidgetManager();
 
-            $response = $widgetManager->createWidget($type, $slot, $view, $entityName, $positionReference);
+            $response = $widgetManager->createWidget($mode, $type, $slot, $view, $entityName, $mode, $positionReference);
 
             if ($isNewPage) {
                 $response = new JsonResponse(array(
@@ -106,7 +112,7 @@ class WidgetController extends Controller
             } else {
                 $response = new JsonResponse($response);
             }
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
         }
 
@@ -117,7 +123,7 @@ class WidgetController extends Controller
      * Edit a widget
      * @param Widget  $widget        The widget to edit
      * @param integer $viewReference The current view
-     * @param string  $entityName    The entity name (could be null is the submitted form is in static mode)
+     * @param string  $entityName    The entity name (can be null if the submitted form is in static mode)
      *
      * @return JsonResponse
      *
@@ -141,7 +147,7 @@ class WidgetController extends Controller
         try {
             $widgetManager = $this->getWidgetManager();
             $response = new JsonResponse($widgetManager->editWidget($this->get('request'), $widget, $view, $entityName));
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
         }
 
@@ -207,7 +213,7 @@ class WidgetController extends Controller
                 );
             }
             $response = new JsonResponse($params);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
         }
 
@@ -230,12 +236,12 @@ class WidgetController extends Controller
             $this->get('widget_manager')->deleteWidget($widget, $view);
 
             return new JsonResponse(array(
-                'success' => true,
-                'url'     => $this->generateUrl('victoire_core_page_show', array(
+                'success'  => true,
+                'redirect' => $this->generateUrl('victoire_core_page_show', array(
                     'url' => $view->getUrl(),
                 )),
             ));
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             return $this->getJsonReponseFromException($ex);
         }
     }
@@ -255,17 +261,17 @@ class WidgetController extends Controller
         $view = $this->getViewByReferenceId($viewReference);
         try {
             $this->get('victoire_widget.widget_helper')->deleteById($id);
-            $response = new JsonResponse($this->get('victoire_widget_map.helper')->removeWidgetMapByWidgetIdAndView($id, $view));
             $this->get('doctrine.orm.entity_manager')->flush();
 
-            return $this->redirect($this->generateUrl('victoire_core_page_show', array(
-                'url' => $view->getUrl(),
-            )));
-        } catch (\Exception $ex) {
-            $response = $this->getJsonReponseFromException($ex);
+            return new JsonResponse(array(
+                    'success'  => true,
+                    'redirect' => $this->generateUrl('victoire_core_page_show', array(
+                            'url' => $view->getUrl(),
+                        )),
+                ));
+        } catch (Exception $ex) {
+            return $this->getJsonReponseFromException($ex);
         }
-
-        return $response;
     }
 
     /**
@@ -275,12 +281,12 @@ class WidgetController extends Controller
      * @return JsonResponse
      * @Route("/victoire-dcms/widget/updatePosition/{viewReference}", name="victoire_core_widget_update_position", options={"expose"=true})
      */
-    public function updatePositionAction($viewReference)
+    public function updatePositionAction(Request $request, $viewReference)
     {
         $view = $this->getViewByReferenceId($viewReference);
         try {
             //the sorted order for the widgets
-            $sortedWidget = $this->getRequest()->request->get('sorted');
+            $sortedWidget = $request->get('sorted');
 
             if (!$view->getId()) {
                 //This view does not have an id, so it's a non persisted BEP. To keep this new order, well have to persist it.
@@ -292,7 +298,7 @@ class WidgetController extends Controller
             $this->get('victoire_widget_map.manager')->updateWidgetMapOrder($view, $sortedWidget);
 
             $response = new JsonResponse(array('success' => true));
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
         }
 
@@ -314,11 +320,11 @@ class WidgetController extends Controller
     /**
      * Get the json response by the exception and the current user
      *
-     * @param \Exception $ex
+     * @param Exception $ex
      *
      * @return JsonResponse
      */
-    protected function getJsonReponseFromException(\Exception $ex)
+    protected function getJsonReponseFromException(Exception $ex)
     {
         //services
         $securityContext = $this->get('security.context');

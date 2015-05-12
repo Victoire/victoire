@@ -1,0 +1,9 @@
+Victoire\Bundle\MediaBundle\Entity\Folder:
+    root:
+        id: 1
+        name: '/'
+        createdAt: <dateTime('now')>
+        updatedAt: <dateTime('now')>
+        rel: NULL
+        internalName: NULL
+        deleted: 0

@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
+use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
 use Victoire\Bundle\CoreBundle\Entity\View;
 
 /**
@@ -19,6 +20,8 @@ use Victoire\Bundle\CoreBundle\Entity\View;
  */
 class BusinessEntityPagePatternController extends Controller
 {
+    use VictoireAlertifyControllerTrait;
+
     /**
      * Creates a new BusinessEntityPagePattern entity.
      *
@@ -29,13 +32,12 @@ class BusinessEntityPagePatternController extends Controller
      * @Method("POST")
      * @Template("VictoireBusinessEntityPageBundle:BusinessEntityPagePattern:new.html.twig")
      *
-     * @return JsonResponse \Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern NULL
+     * @return JsonResponse
      */
     public function createAction(Request $request, $id)
     {
         //get the business entity
         $businessEntity = $this->getBusinessEntity($id);
-        $errorMessage = '';
 
         $view = new BusinessEntityPagePattern();
         $view->setBusinessEntityName($businessEntity->getName());
@@ -44,8 +46,9 @@ class BusinessEntityPagePatternController extends Controller
 
         $form->handleRequest($request);
 
-        $success = false;
-        $completeUrl = null;
+        $params = array(
+            'success' => false
+        );
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -53,19 +56,16 @@ class BusinessEntityPagePatternController extends Controller
             $em->flush();
 
             //redirect to the page of the pagePattern
-            $completeUrl = $this->generateUrl('victoire_core_page_show', array('url' => $view->getUrl()));
+            $params['url'] = $this->generateUrl('victoire_core_page_show', array('url' => $view->getUrl()));
+            $params['success'] = true;
 
-            $success = true;
+            $this->congrat($this->get('translator')->trans('victoire.business_entity_page_pattern.create.success', array(), 'victoire'));
         } else {
             //get the errors as a string
-            $errorMessage = $this->container->get('victoire_form.error_helper')->getRecursiveReadableErrors($form);
+            $params['message'] = $this->container->get('victoire_form.error_helper')->getRecursiveReadableErrors($form);
         }
 
-        return new JsonResponse(array(
-            'success' => $success,
-            'url'     => $completeUrl,
-            'message' => $errorMessage,
-        ));
+        return new JsonResponse($params);
     }
 
     /**
@@ -148,8 +148,8 @@ class BusinessEntityPagePatternController extends Controller
     public function editAction(View $view)
     {
         $em = $this->getDoctrine()->getManager();
-        $businessEntityPagePatternHelper = $this->get('victoire_business_entity_page.business_entity_page_helper');
         $businessEntityHelper = $this->get('victoire_core.helper.business_entity_helper');
+        $businessEntityPagePatternHelper = $this->get('victoire_business_entity_page.business_entity_page_helper');
 
         $editForm = $this->createEditForm($view);
         $deleteForm = $this->createDeleteForm($view->getId());
@@ -158,7 +158,6 @@ class BusinessEntityPagePatternController extends Controller
         $businessEntityId = $view->getBusinessEntityName();
         $businessEntity = $businessEntityHelper->findById($businessEntityId);
 
-        $businessEntityPagePatternHelper = $this->get('victoire_business_entity_page.business_entity_page_helper');
 
         $businessProperties = $businessEntityPagePatternHelper->getBusinessProperties($businessEntity);
 
@@ -174,7 +173,7 @@ class BusinessEntityPagePatternController extends Controller
                 'VictoireBusinessEntityPageBundle:BusinessEntityPagePattern:edit.html.twig',
                 $parameters
             ),
-            'success' => true,
+            'success' => true
         ));
     }
 
@@ -220,7 +219,6 @@ class BusinessEntityPagePatternController extends Controller
             throw $this->createNotFoundException('Unable to find BusinessEntityPagePattern entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($pagePattern);
         $editForm->handleRequest($request);
 
@@ -235,16 +233,19 @@ class BusinessEntityPagePatternController extends Controller
 
             //redirect to the page of the template
             $completeUrl = $shortcuts->generateUrl('victoire_core_page_show', array('url' => $pagePattern));
+            $message = $this->get('translator')->trans('victoire.business_entity_page_pattern.edit.success', array(), 'victoire');
 
             $success = true;
         } else {
             $success = false;
             $completeUrl = null;
+            $message = $this->get('translator')->trans('victoire.business_entity_page_pattern.edit.error', array(), 'victoire');
         }
 
         return new JsonResponse(array(
             'success' => $success,
             'url'     => $completeUrl,
+            'message' => $message,
         ));
     }
 

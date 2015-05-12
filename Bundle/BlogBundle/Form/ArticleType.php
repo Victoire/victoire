@@ -39,15 +39,21 @@ class ArticleType extends AbstractType
             $queryBuilder = $categoryRepo->getAll()->getInstance();
         }
         $builder
-            ->add('name')
+            ->add('name', null, array(
+                    'label' => 'form.article.name.label',
+                ))
             ->add('description', null, array(
+                    'label' => 'form.article.description.label',
                 'required' => false))
-            ->add('image', 'media')
+            ->add('image', 'media', array(
+                    'label' => 'form.article.image.label',
+                ))
             ->add('category', 'hierarchy_tree', array(
-                'class' => "Victoire\Bundle\BlogBundle\Entity\Category",
-                'query_builder' => $queryBuilder,
-                'empty_value' => "Pas de catégorie",
-                "empty_data" => null
+                    'label' => 'form.article.category.label',
+                    'class' => "Victoire\\Bundle\\BlogBundle\\Entity\\Category",
+                    'query_builder' => $queryBuilder,
+                    'empty_value' => "Pas de catégorie",
+                    "empty_data" => null
                 )
             )
             ->add(

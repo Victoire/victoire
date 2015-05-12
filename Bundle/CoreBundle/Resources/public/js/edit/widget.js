@@ -37,7 +37,7 @@ $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(
     $vic.ajax({
         type: form.attr('method'),
         url : form.attr('action'),
-        data: form.serialize(),
+        data: form.serialize()
     }).done(function(response){
         if (true === response.success) {
             if (response.hasOwnProperty("redirect")) {
@@ -121,9 +121,9 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update"]', function(
 });
 
 // Delete a widget after submit
-$vic(document).on('click', '.vic-widget-modal a[data-modal="delete"]', function(event) {
+$vic(document).on('click', '.vic-widget-modal a[data-modal="delete"], .vic-hover-widget-unlink', function(event) {
     //Check that there isn't a data-toggle="vic-confirm" on it !
-    if ($vic(event.target).data('toggle') != "vic-confirm" || $vic(event.target).hasClass('vic-confirmed')) {
+    if ($vic(event.target).hasClass('vic-confirmed')) {
         event.preventDefault();
         $vic(document).trigger("victoire_widget_delete_presubmit");
 

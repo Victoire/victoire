@@ -14,15 +14,6 @@
     {{ parent() }}
 {% endblock head_script %}
 
-{% block head_style %}
-    {% if is_granted('ROLE_VICTOIRE') %}
-        {% stylesheets filter='less, cssrewrite' injector="victoire-edit"
-         %}
-        <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
-        {% endstylesheets %}
-    {% endif %}
-{% endblock head_style %}
-
 {% block body %}
     {% if is_granted('ROLE_VICTOIRE') %}
         {% include 'VictoireCoreBundle:Menu:admin_navbar.html.twig' %}

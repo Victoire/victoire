@@ -386,10 +386,7 @@ EOT
      */
     protected function createWidgetGenerator()
     {
-        $generator = new WidgetGenerator(
-            $this->getContainer()->get('filesystem'),
-            $this->getContainer()->getParameter('victoire_core.available_frameworks')
-        );
+        $generator = new WidgetGenerator($this->getContainer()->get('filesystem'));
         $generator->setTemplating($this->getContainer()->get('twig'));
 
         return $generator;

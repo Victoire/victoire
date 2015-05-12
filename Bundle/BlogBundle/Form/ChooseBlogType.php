@@ -21,7 +21,7 @@ class ChooseBlogType extends AbstractType
                 'label' => 'victoire.blog.choose.blog.label',
                 'class' => 'Victoire\Bundle\BlogBundle\Entity\Blog',
                 'property' => 'name',
-                'preferred_choices' => array($options['blog'])
+                'preferred_choices' => $options['blog'] ? array($options['blog']) : array()
             )
         );
     }

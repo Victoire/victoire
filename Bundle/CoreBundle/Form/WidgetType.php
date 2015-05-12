@@ -9,13 +9,12 @@ use Symfony\Component\Form\FormEvent;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
- * WidgetRedactor form type
+ * Base Widget form type
  */
 class WidgetType extends AbstractType
 {
     /**
      * Define form fields
-     *
      * @param FormBuilderInterface $builder The builder
      * @param array                $options The options
      *
