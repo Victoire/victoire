@@ -13,7 +13,7 @@ Victoire\Bundle\PageBundle\Entity\Page:
         updatedAt: <dateTime('now')>
 
     test:
-        template: @template_base
+        template: @template_two_cols
         author: @anakin
         name: Test
         locale: fr
