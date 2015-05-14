@@ -130,15 +130,13 @@ class VictoireContext extends RawMinkContext
      */
     public function shouldPrecedeForTheQuery($textBefore, $textAfter)
     {
-        $items = array_map(
-            function ($element) {
-                return $element->getText();
-            },
-            $this->getSession()->getPage()->findAll('css', 'div.vic-widget > p')
+        $element = $this->getSession()->getPage()->find(
+            'xpath',
+            sprintf('//descendant-or-self::*[normalize-space(text()) = "%s"]/ancestor::div[@class="vic-widget-container"]/following-sibling::div[@class="vic-widget-container"]/descendant-or-self::*[normalize-space(text()) = "%s"]', $textBefore, $textAfter)
         );
 
-        if (array_search($textBefore, $items) > array_search($textAfter, $items)) {
-            $message = "$textBefore does not proceed $textAfter";
+        if (null === $element) {
+            $message = sprintf('"%s" does not preceed "%s"', $textBefore, $textAfter);
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
     }
