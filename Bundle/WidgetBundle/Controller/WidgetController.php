@@ -102,7 +102,7 @@ class WidgetController extends Controller
             $this->get('victoire_core.current_view')->setCurrentView($view);
             $widgetManager = $this->getWidgetManager();
 
-            $response = $widgetManager->createWidget($mode, $type, $slot, $view, $entityName, $mode, $positionReference);
+            $response = $widgetManager->createWidget($mode, $type, $slot, $view, $entityName, $positionReference);
 
             if ($isNewPage) {
                 $response = new JsonResponse(array(
