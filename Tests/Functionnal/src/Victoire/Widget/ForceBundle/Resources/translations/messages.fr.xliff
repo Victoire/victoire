@@ -12,7 +12,7 @@
       </trans-unit>
       <trans-unit id="4" resname="widget_force.show.forceSide">
 	<source>widget_force.show.forceSide</source>
-	<target>Le Côté %side% de la force</target>
+	<target>Le côté %side% de la force</target>
       </trans-unit>
       <trans-unit id="5" resname="dark">
 	<source>dark</source>
