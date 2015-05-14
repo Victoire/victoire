@@ -1,21 +1,21 @@
 # WidgetMap
 
-##Qu'est ce qu'une WidgetMap
+##What is a WidgetMap
 
-Une WidgetMap permet de répertorier, cartographier les widgets présents au sein d'une vue. Elle a la forme d'un tableau de slots dans lequel on retrouve une liste d'élement positionnant un contenu dans ce slot.
+A WidgetMap list and organize the widgets within a view. It's a slot table in which we find a items list and define their positions.
 
 ##Slot
 
-Un slot est un conteneur de widgets.
-C'est un objet non persisté qui est créé dynamiquement par le WidgetMapBuilder.
+A slot is widget container.
+It's a non-persisted object dynamically created by WidgetMapBuilder.
 
 ##WidgetMapItem
 
-Élement d'une widgetMap, le WidgetMapItem sert à positionner un contenu dans un slot.
-Il a les caractéristiques suivantes :
+The WidgetMapItem is used to positionnate a widget in a slot.
+Properties :
 
-Proprieté        | Description
---               |  --
+Property         | Description
+---------------- | -------------
 widgetId         | ref to Widget object
 position         | the order to display widgets
 action           | could be create or overwrite
@@ -24,44 +24,44 @@ replacedWidgetId | In *overwrite* mode, it is used to recover the overwriten wid
 
 #WidgetMapBuilder
 
-La classe WidgetMapBuilder est responsable de construire une WidgetMap pour une vue donnée. La méthode build sera chargée de construire la widgetMap complète en prenant en compte la hiérarchie de la page. Cette widgetMap pour être récupérée directement depuis l'objet View avec la méthode getWidgetMap($built = true).
+The WidgetMapBuilder stands forbuild a WidgetMap for a given view. The build method will build the entire widgetMap taking into consideration the page hierarchy. This widgetMap would be directly get from the getWidgetMap($built = true) method from the view object.
 
-Builder (victoire_widget_map.builder)
+##Builder (victoire_widget_map.builder)
 
 Fonction        | Description
---              |  --        
+---------------- | -------------  
 @build | build complete widgetMap from View
 
 Helper : (victoire_widget_map.helper)
 
 Fonction        | Description
---               |  --       
+---------------- | -------------
 @getNextAvailablePosition | Used to know the very next available position for a given
 
 WidgetMapToArrayTransformer (victoire_widget_map.transformer)
 
 Fonction          | Description
---                |  --        
+---------------- | -------------
 @transform        | WM to array
  @reverseTransform | array to WM
 
 Manager (victoire_widget_map.manager)
 
 Fonction                 | Description
---                       | --        
+---------------- | -------------
 @overwriteWidgetMap      | --
 @deleteWidgetFromView    | --
 @updateWidgetMapFromView | --
-@updateWidgetMapOrder    | appelée par le widgetController->updatePosition : met à jour les positions du widgetMap
+@updateWidgetMapOrder    | called by widgetController->updatePosition : update widgetMap position
 
 ##Actions
 
-CREATE|OVERWRITE|DELETE
---    | --      |--    
-Cette action est utilisée pour définir un widget comme ayant été créé dans la vue courante.    |Utilisé pour définir que le widget est une surcharge d'un widget hérité depuis le modèle|Utilisé pour cacher un widget appartenant au modèle de page
+CREATE | OVERWRITE | DELETE
+---------------- | ---------------- | -------------
+This action is used to define a widget when it has been created in the current view. | Used to define that the widget is an overwrite instance of an extended widget owned by a template | Used to hide an extended widget owned by a template
 
 ##Position Reference
 
-La positionReference est une notion apparue pour réussir à positionner les widgets d'une vue en composant avec l'ordre de la vue et ceux des modèles parents.
+The positionReference exists to be able to position the widgets within a view while dealing with the ones of parents templates.
 
 

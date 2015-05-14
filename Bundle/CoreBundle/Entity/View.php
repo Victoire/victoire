@@ -8,6 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Victoire\Bundle\PageBundle\Entity\Slot;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
+use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\I18nBundle\Entity\I18n;
 
@@ -261,7 +262,7 @@ abstract class View
 
     /**
      * Set template
-     * @param Page $template
+     * @param View $template
      *
      * @return View
      */
@@ -275,7 +276,7 @@ abstract class View
     /**
      * Get template
      *
-     * @return string
+     * @return Template
      */
     public function getTemplate()
     {
@@ -794,21 +795,12 @@ abstract class View
      */
     public function getSlotById($slotId)
     {
-        $slot = null;
+        foreach ($this->slots as $slot) {
+            if ($slot->getId() === $slotId) {
 
-        $slots = $this->slots;
-
-        //parse all slots
-        foreach ($slots as $sl) {
-            //if this the slot we are looikong for
-            if ($sl->getId() === $slotId) {
-                $slot = $sl;
-                //there no need to continue, we found the slot
-                break;
+                return $slot;
             }
         }
-
-        return $slot;
     }
     /**
      * Update the given slot
@@ -858,7 +850,7 @@ abstract class View
     /**
      * Get the slots
      *
-     * @return array The slots
+     * @return Slot[] The slots
      */
     public function getSlots()
     {

@@ -37,7 +37,7 @@ class WidgetMapBuilder
             $widgetMap = $this->build($template);
         }
 
-        // build the view widgetMpas for each its slots
+        // build the view widgetMaps for each its slots
         foreach ($view->getSlots() as $slot) {
             if (empty($widgetMap[$slot->getId()])) {
                 $widgetMap[$slot->getId()] = array();
@@ -48,7 +48,6 @@ class WidgetMapBuilder
             }
             //if the current view have some widget maps
             if ($viewWidgetMaps !== null) {
-                // $viewWidgetMaps = array_reverse($viewWidgetMaps, true);
                 //we parse the widget maps
                 foreach ($viewWidgetMaps as $viewWidgetMap) {
                     $viewWidgetMap = clone $viewWidgetMap;

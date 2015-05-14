@@ -78,7 +78,6 @@ function enableSortableSlots(){
 
                 //update the positions of the widgets
                 updateWidgetPositions();
-                var fail = false;
                 ajaxCall.fail(function(){
                     $vic(".vic-slot").each(function(){
                         $vic(this).sortable('cancel');
@@ -86,14 +85,13 @@ function enableSortableSlots(){
                 });
 
                 replaceDropdown(ui);
-
             }
 
         });
     });
 }
 
-function updateWidgetPositions(slotId){
+function updateWidgetPositions(slotId) {
     if (slotId == undefined || slotId == "") {
         $vic(".vic-slot").each(function() {
             updateWidgetPositions($vic(this).data('name'));
@@ -111,7 +109,7 @@ function updateWidgetPosition(ui){
         'parentWidget': ui.item.prev('.vic-widget-container').data('id'),
         'slot': ui.item.parents('.vic-slot').first().data('name'),
         'widget': ui.item.data('id')
-    }
+    };
 
     return $vic.post(
         Routing.generate('victoire_core_widget_update_position', {'viewReference': viewReferenceId}),
@@ -135,8 +133,8 @@ function loading(value) {
 }
 
 function slideTo(element, duration, effect) {
-    if (duration == undefined) { var duration = 1500; }
-    if (effect == undefined) { var effect = 'easeInSine'; }
+    if (duration == undefined) { duration = 1500; }
+    if (effect == undefined) { effect = 'easeInSine'; }
 
     //get the top offset of the target anchor
     var target_offset = $vic(element).offset();
