@@ -50,13 +50,6 @@ assetic:
                 - "/usr/local/lib/node_modules"
             apply_to: "\.less$"
 
-av_alertify:
-    contexts:
-        victoire:
-            engine: "codrops-notification"
-            translationDomain: "victoire"
-
-
 # Doctrine Configuration
 doctrine:
     dbal:

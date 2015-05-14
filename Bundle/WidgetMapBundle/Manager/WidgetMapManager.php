@@ -27,9 +27,6 @@ class WidgetMapManager
      * @param View  $view
      * @param array $sortedWidget
      *
-     * @todo Be able to move a widget from a slot to another
-     * @todo test if the widget is allowed for the given slot
-     *
      * @throws Exception
      */
     public function updateWidgetMapOrder(View $view, $sortedWidget)
@@ -109,21 +106,27 @@ class WidgetMapManager
      */
     protected function updateWidgetMapsFromView(View $view, $sortedWidget)
     {
-        $parentWidgetId = (int) $sortedWidget['parentWidget'];
-        $slotId = $sortedWidget['slot'];
-        $widgetId = (int) $sortedWidget['widget'];
+        $parentWidgetId = (int) $sortedWidget['parentWidget'];        //2
+        $slotId = $sortedWidget['slot']; //content
+        $widgetId = (int) $sortedWidget['widget']; //1
         $slot = $view->getSlotById($slotId);
         $originalWidgetMap = $slot->getWidgetMapByWidgetId($widgetId);
-        // If the moved widget belongs to the current page
 
+        // Get the moved widget in the current page or in template
+        $watchdog = 100;
+        $_view = $view;
         while (!$originalWidgetMap) {
-            $parentView = $view->getTemplate();
-            $parentSlot = $parentView->getSlotById($slotId);
+            $watchdog--;
+            $_view = $_view->getTemplate();
+            $parentSlot = $_view->getSlotById($slotId);
             $originalWidgetMap = $parentSlot->getWidgetMapByWidgetId($widgetId);
+            if (0 === $watchdog) {
+                throw new \Exception(sprintf("The slot or the widget %s doesn't appears to be in any WidgetMap. You should check this manually.", $slotId, $widgetId));
+            }
         }
 
         // If parentWidgetId is null, the widget was places on first position
-        if ($parentWidgetId == null) {
+        if (null === $parentWidgetId) {
             $widgetMapEntry = new WidgetMap();
             $widgetMapEntry->setPosition(1);
             $widgetMapEntry->setAction($originalWidgetMap->getAction());
@@ -147,7 +150,7 @@ class WidgetMapManager
             $widgetMapEntry->setPositionReference($parentWidgetId);
             $widgetMapEntry->setWidgetId($widgetId);
         }
-        // OK
+
         // If this WidgetMapEntry already in the page, remove it
         if ($oldWidgetMapEntry = $slot->getWidgetMapByWidgetId($widgetId)) {
             $slot->removeWidgetMap($oldWidgetMapEntry);

@@ -3,6 +3,7 @@
 namespace Victoire\Bundle\WidgetMapBundle\Helper;
 
 use Doctrine\ORM\EntityManager;
+use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\PageBundle\Entity\Slot;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 
@@ -107,12 +108,12 @@ class WidgetMapHelper
 
     /**
      * Find a widgetMap by widgetId and view
-     * @param widgetId $widgetId
-     * @param View     $view
+     * @param integer $widgetId
+     * @param View    $view
      *
      * @return WidgetMap
      **/
-    public function removeWidgetMapByWidgetIdAndView($widgetId, $view)
+    public function removeWidgetMapByWidgetIdAndView($widgetId, View $view)
     {
         foreach ($view->getSlots() as $_slot) {
             foreach ($_slot->getWidgetMaps() as $_widgetMap) {
