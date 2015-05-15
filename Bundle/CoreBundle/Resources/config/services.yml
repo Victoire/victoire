@@ -115,6 +115,7 @@ services:
             - "@victoire_widget.widget_helper"
             - "%victoire_core.base_paths%"
             - "%victoire_core.widgets%"
+            - "@victoire_widget.widget_item_content_resolver_chain"
         calls:
             - [ setCache, ["@victoire_core.apc.cache"] ]
 

@@ -11,6 +11,7 @@ use Victoire\Bundle\CoreBundle\Annotations\BusinessProperty;
 use Victoire\Bundle\CoreBundle\Annotations\ReceiverProperty;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
+use Victoire\Bundle\WidgetBundle\Resolver\Chain\WidgetItemChain;
 
 /**
  * The annotation reader for the business entities
@@ -31,12 +32,13 @@ class AnnotationReader extends AnnotationDriver
      * @param array        $paths
      * @param array        $widgets
      */
-    public function __construct(Reader $reader, WidgetHelper $widgetHelper, $paths, $widgets)
+    public function __construct(Reader $reader, WidgetHelper $widgetHelper, $paths, $widgets, WidgetItemChain $widgetItemChain)
     {
         $this->reader = $reader;
         $this->widgetHelper = $widgetHelper;
         $this->widgets = $widgets;
         $this->paths = $paths;
+        $this->widgetItemChain = $widgetItemChain;
     }
 
     /**
@@ -218,6 +220,9 @@ class AnnotationReader extends AnnotationDriver
     private function loadReceiverProperties()
     {
         $receiverProperties = array();
+        //Add widgetItems to widgets
+        $widgetItems = $this->widgetItemChain->getWidgetItems();
+        $widgets = array_merge($this->widgets, $widgetItems);
         foreach ($this->widgets as $widget) {
             $class = new \ReflectionClass($widget['class']);
 
