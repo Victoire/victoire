@@ -53,6 +53,9 @@ services:
         arguments:
             - @victoire_widget.widget_helper
 
+    victoire_widget.widget_item_content_resolver_chain:
+        class: Victoire\Bundle\WidgetBundle\Resolver\Chain\WidgetItemChain
+
     victoire_widget.twig.link_extension:
         class: Victoire\Bundle\WidgetBundle\Twig\LinkExtension
         arguments:

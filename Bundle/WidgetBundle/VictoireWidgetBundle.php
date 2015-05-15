@@ -19,5 +19,7 @@ class VictoireWidgetBundle extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(new WidgetContentResolverPass());
+        //get widgetItems
+        $container->addCompilerPass(new WidgetItemPass());
     }
 }
