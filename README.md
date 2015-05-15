@@ -1,4 +1,15 @@
-# Victoire
+![Victoire](https://app.box.com/s/k9p0d4rs4cqui4msmzbzvs3qj4govq7e)
+
+[![Gitter chat](https://badges.gitter.im/Victoire/Victoire.png)](https://gitter.im/Victoire/victoire)
+[![License](https://img.shields.io/packagist/l/Victoire/Victoire.svg)](https://packagist.org/packages/Victoire/Victoire)
+[![Licence Creative Commons](http://i.creativecommons.org/l/by/4.0/88x31.png)](http://creativecommons.org/licenses/by/4.0/)
+[![Version](https://img.shields.io/packagist/v/Victoire/Victoire.svg)](https://packagist.org/packages/Victoire/Victoire)
+[![Build status...](https://img.shields.io/travis/Victoire/Victoire/master.svg)](http://travis-ci.org/Victoire/Victoire)
+[![Scrutinizer Quality Score](https://img.shields.io/scrutinizer/g/Victoire/Victoire.svg)](https://scrutinizer-ci.com/g/Victoire/victoire/)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/d5307bf2-eac4-43db-bd49-dd9e85e360a5/mini.png)](https://insight.sensiolabs.com/projects/d5307bf2-eac4-43db-bd49-dd9e85e360a5)
+[![HHVM Status](https://img.shields.io/hhvm/Victoire/Victoire.svg)](http://hhvm.h4cc.de/package/sylius/sylius)
+[![Dependency Status](https://www.versioneye.com/php/victoire:victoire/1.0.0/badge.svg)](https://www.versioneye.com/php/victoire:victoire/1.0.0)
+[![Documentation Status](https://readthedocs.org/projects/victoiredcms/badge/?version=latest)](https://readthedocs.org/projects/victoiredcms/)
 
 ##Overview
 
@@ -40,11 +51,6 @@ Component | Description
 
 * Read the [setup guide](http://github.com/victoire/victoire/blob/master/setup.md)
 
-[![Licence Creative Commons](http://i.creativecommons.org/l/by/4.0/88x31.png)](http://creativecommons.org/licenses/by/4.0/)
-
-
-[![Documentation Status](https://readthedocs.org/projects/victoiredcms/badge/?version=latest)](https://readthedocs.org/projects/victoiredcms/?badge=latest) [![Travis-ci](https://travis-ci.org/Victoire/victoire.svg?branch=master)](https://travis-ci.org/Victoire/victoire) [![SensioLabsInsight](https://insight.sensiolabs.com/projects/d5307bf2-eac4-43db-bd49-dd9e85e360a5/mini.png)](https://insight.sensiolabs.com/projects/d5307bf2-eac4-43db-bd49-dd9e85e360a5)[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Victoire/victoire/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Victoire/victoire/?branch=master)
-[![Join the chat at https://gitter.im/Victoire/victoire](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Victoire/victoire?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 
 [1]:  http://github.com/victoire/victoire/blob/master/Bundle/CoreBundle/README.md
