@@ -67,14 +67,14 @@ To do so, you have to create a patch :
 This operation creates a file /tmp/patch with your modifications.
 You then have to create a new branch in your fork, from master :
 
-   ```bash
+    ```bash
     git checkout master
     git checkout -b feature/VIC-123-awesome-feature
     ```
 
 And execute this command to apply the modifications :
 
-   ```bash
+    ```bash
     git apply /tmp/patch
     ```
 
