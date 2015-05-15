@@ -7,6 +7,11 @@ It can be setup in any symfony2 project in just some few minutes.
 
 The main goal is to give to the final customer the ability to **create**/**edit**/**delete** each content on its website, even for a static content than a business entity based content and **whitout any development skill** and with the minimum of training.
 
+##Contribution
+
+We are keen on getting your participation for the development of this product.
+To do so, please follow the steps [**here**](https://github.com/Victoire/victoire/blob/master/CONTRIBUTION.md)
+
 ##What's inside?
 
 Component | Description
