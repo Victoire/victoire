@@ -2,17 +2,17 @@
 
 We use the Fork's method :
 
-##>1 : Create your own Fork
+>##1 : Create your own Fork
 
 Get to [Github](https://github.com/victoire/victoire), then click on "Fork"
 
-##>2 : Clone your fork on your computer
+>##2 : Clone your fork on your computer
 
     ```bash
     git clone git@github.com:USER/victoire.git
     ```
 
-##>2 : Acces to Victoire's original deposit :
+>##3 : Acces to Victoire's original deposit :
 
     ```bash
     git remote add upstream git@github.com:Victoire/victoire.git
@@ -35,7 +35,7 @@ That should return :
     upstream    git@github.com:Victoire/victoire.git (push)
     ```
 
-##>3 : Synchronize your fork with Victoire's original deposit
+>##4 : Synchronize your fork with Victoire's original deposit
 
 If this is your first set up, your fork is up to date.
 If you have created your fork earlier on, there is a high probability that it doesn't include the changes made in the original deposit. In order to update it, you have to recover upstream's last commits :
@@ -49,7 +49,7 @@ Then you need to merge them in your own fork :
     git merge upstream/masteram
     ```
 
-##>4 : Merge your modifications
+>##5 : Merge your modifications
 
 If you've worked on Victoire for a specific project, you surely have made modifications which aren't on your fork but on the Victoire's project deposit. That leads to different problematics :
 
@@ -78,12 +78,12 @@ And execute this command to apply the modifications :
     git apply /tmp/patch
     ```
 
-##>5 : Integrate your modifications
+>##6 : Integrate your modifications
 
 After those steps, your modifications are echoed in your fork.
 You can now proceed doing your commits, push and issue a Pull Request.
 
-##>5 : Execute a Pull Request
+>##7 : Execute a Pull Request
 
 Go to your fork's deposit on GitHub and access to the Pull Request tab : github.com/USER/victoire/pulls
 You can now click on "New Pull Request" and GitHub takes in charge the next step.
