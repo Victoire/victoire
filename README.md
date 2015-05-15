@@ -1,8 +1,7 @@
-![Victoire](https://app.box.com/s/k9p0d4rs4cqui4msmzbzvs3qj4govq7e)
+![Victoire](https://www.dropbox.com/s/ii2be7tpvtso39n/victoire-V-color.png)
 
 [![Gitter chat](https://badges.gitter.im/Victoire/Victoire.png)](https://gitter.im/Victoire/victoire)
 [![License](https://img.shields.io/packagist/l/Victoire/Victoire.svg)](https://packagist.org/packages/Victoire/Victoire)
-[![Licence Creative Commons](http://i.creativecommons.org/l/by/4.0/88x31.png)](http://creativecommons.org/licenses/by/4.0/)
 [![Version](https://img.shields.io/packagist/v/Victoire/Victoire.svg)](https://packagist.org/packages/Victoire/Victoire)
 [![Build status...](https://img.shields.io/travis/Victoire/Victoire/master.svg)](http://travis-ci.org/Victoire/Victoire)
 [![Scrutinizer Quality Score](https://img.shields.io/scrutinizer/g/Victoire/Victoire.svg)](https://scrutinizer-ci.com/g/Victoire/victoire/)
@@ -51,6 +50,7 @@ Component | Description
 
 * Read the [setup guide](http://github.com/victoire/victoire/blob/master/setup.md)
 
+[![Licence Creative Commons](http://i.creativecommons.org/l/by/4.0/88x31.png)](http://creativecommons.org/licenses/by/4.0/)
 
 
 [1]:  http://github.com/victoire/victoire/blob/master/Bundle/CoreBundle/README.md
