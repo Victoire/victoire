@@ -5,6 +5,7 @@ namespace Victoire\Bundle\WidgetBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Victoire\Bundle\WidgetBundle\DependencyInjection\Compiler\WidgetContentResolverPass;
+use Victoire\Bundle\WidgetBundle\DependencyInjection\Compiler\WidgetItemPass;
 
 class VictoireWidgetBundle extends Bundle
 {
