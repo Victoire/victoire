@@ -223,7 +223,7 @@ class AnnotationReader extends AnnotationDriver
         //Add widgetItems to widgets
         $widgetItems = $this->widgetItemChain->getWidgetItems();
         $widgets = array_merge($this->widgets, $widgetItems);
-        foreach ($this->widgets as $widget) {
+        foreach ($widgets as $widget) {
             $class = new \ReflectionClass($widget['class']);
 
             $properties = $class->getProperties();
@@ -267,7 +267,7 @@ class AnnotationReader extends AnnotationDriver
                     new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS),
                     \RecursiveIteratorIterator::LEAVES_ONLY
                 ),
-                '/^.+\/(src|vendor\/victoire|Victoire)\/.+\/Entity\/.+\.php$/i',
+                '/^.+\/Entity\/.+\.php$/i',
                 \RecursiveRegexIterator::GET_MATCH
             );
             foreach ($iterator as $file) {
