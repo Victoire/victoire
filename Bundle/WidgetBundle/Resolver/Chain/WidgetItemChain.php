@@ -19,7 +19,7 @@ class WidgetItemChain
     {
         $classname = get_class($widgetItem);
         $parsedClassname = explode( '\\', $classname);
-        $name = strtolower(preg_replace('/Widget/', '', end($parsedClassname), 1));
+        $name = preg_replace('/Widget/', '', end($parsedClassname), 1);
         $newWidgetItem = array(
             'class' => $classname,
             'name' => $name
