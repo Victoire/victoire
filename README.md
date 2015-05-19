@@ -1,4 +1,4 @@
-![Victoire](https://cvws.icloud-content.com/B/AWlCS4ClVlUC3vHg7JKl_lrm3Ls9AYVgXBkTQZ_r-g0tVThQlo59NAYL/victoire-V-color.png?o=AgqQsu4SZhLzxrbeDpzeGu6VtkpmSSydsLzbiIbZ21Ng&v=1&x=3&a=BXWPE9-akm4nA6wVKw&e=1431719749&k=Ji6pxfXR50ZivrOdzw5n_A&fl=&r=d720d2e5-32a3-ec22-78ff-73d6b1912363-1&ckc=com.apple.clouddocs&ckz=com.apple.CloudDocs&z=https%3A%2F%2Fp32-content.icloud.com%3A443&s=nLKNx7S0p9K01Mpol6alpOByIvI&cd=i)
+![Victoire](http://appventus.com/uploads/media/555b2ccb8020a.png)
 
 [![Gitter chat](https://badges.gitter.im/Victoire/Victoire.png)](https://gitter.im/Victoire/victoire)
 [![License](https://img.shields.io/packagist/l/Victoire/Victoire.svg)](https://packagist.org/packages/Victoire/Victoire)
@@ -6,7 +6,6 @@
 [![Build status...](https://img.shields.io/travis/Victoire/Victoire/master.svg)](http://travis-ci.org/Victoire/Victoire)
 [![Scrutinizer Quality Score](https://img.shields.io/scrutinizer/g/Victoire/Victoire.svg)](https://scrutinizer-ci.com/g/Victoire/victoire/)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/d5307bf2-eac4-43db-bd49-dd9e85e360a5/mini.png)](https://insight.sensiolabs.com/projects/d5307bf2-eac4-43db-bd49-dd9e85e360a5)
-[![HHVM Status](https://img.shields.io/hhvm/Victoire/Victoire.svg)](http://hhvm.h4cc.de/package/sylius/sylius)
 [![Dependency Status](https://www.versioneye.com/php/victoire:victoire/1.0.0/badge.svg)](https://www.versioneye.com/php/victoire:victoire/1.0.0)
 [![Documentation Status](https://readthedocs.org/projects/victoiredcms/badge/?version=latest)](https://readthedocs.org/projects/victoiredcms/)
 

@@ -1,59 +1,126 @@
 {
     "name": "victoire/victoire",
     "type": "symfony-bundle",
-    "description": "Victoire Bundles components",
-    "keywords": ["cms", "victoire", "bundle"],
+    "description": "Victoire is a Dynamic-CMS based on Symfony framework",
+    "keywords": [
+        "dcms",
+        "victoire",
+        "webstation"
+        "Dynamic-CMS"
+    ],
     "license": "MIT",
-    "homepage": "http://appventus.com",
+    "homepage": "http://victoire.io",
     "authors": [
         {
             "name": "Paul Andrieux",
-            "email": "paul@appventus.com"
+            "email": "paul@victoire.io",
+            "homepage": "http://github.com/paulandrieux",
+            "role": "developer"
         },
         {
             "name": "Leny Bernard",
-            "email": "leny@appventus.com"
+            "email": "leny@victoire.io",
+            "homepage": "http://github.com/lenybernard",
+            "role": "developer"
+        }
+        {
+            "name": "AppVentus",
+            "homepage": "http://appventus.com"
+        }
+        {
+            "name": "Community Contributors",
+            "homepage": "http://github.com/Victoire/Victoire/graphs/contributors"
+        }
+    ],
+    "support": [
+        {
+            "email": "contact@victoire.io"
         }
     ],
     "require": {
         "php" : ">=5.3.3",
-        "symfony/symfony" : ">=2.4.2, <2.7.0",
-        "doctrine/orm" : "~2.2,>=2.2.3",
+        "appventus/alertify-bundle": "dev-master",
+        "appventus/assetic-injector-bundle" : "dev-master",
+        "doctrine/data-fixtures" : "dev-master",
         "doctrine/doctrine-bundle" : ">=1.2",
-        "twig/extensions" : "~1.0",
-        "symfony/assetic-bundle" : "~2.3",
-        "symfony/swiftmailer-bundle" : "~2.3",
-        "symfony/monolog-bundle" : "~2.4",
+        "doctrine/doctrine-fixtures-bundle" : "dev-master",
+        "doctrine/orm" : "~2.2,>=2.2.3",
+        "friendsofsymfony/jsrouting-bundle" : "2.0.*@dev",
+        "friendsofsymfony/user-bundle" : "2.0.*@dev",
+        "incenteev/composer-parameter-handler" : "~2.0",
+        "jms/di-extra-bundle" : "1.4.*@dev",
+        "jms/translation-bundle" : "1.1.*@dev",
+        "knplabs/gaufrette" : "v0.1.7",
+        "knplabs/knp-menu" : "2.0.*@dev",
+        "knplabs/knp-menu-bundle" : "2.0.*@dev",
+        "liip/imagine-bundle" : "1.0.*@dev",
+        "nelmio/alice" : "1.5.2",
         "sensio/distribution-bundle" : ">2.3",
         "sensio/framework-extra-bundle" : "~3.0",
         "sensio/generator-bundle" : "~2.3",
-        "incenteev/composer-parameter-handler" : "~2.0",
-        "doctrine/doctrine-fixtures-bundle" : "dev-master",
-        "doctrine/data-fixtures" : "dev-master",
-        "nelmio/alice" : "1.5.2",
-        "knplabs/knp-menu" : "2.0.*@dev",
-        "knplabs/knp-menu-bundle" : "2.0.*@dev",
-        "jms/di-extra-bundle" : "1.4.*@dev",
         "stof/doctrine-extensions-bundle" : "1.2.*@dev",
-        "friendsofsymfony/jsrouting-bundle" : "2.0.*@dev",
-        "friendsofsymfony/user-bundle" : "2.0.*@dev",
-        "appventus/assetic-injector-bundle" : "dev-master",
-        "knplabs/gaufrette" : "v0.1.7",
-        "liip/imagine-bundle" : "1.0.*@dev",
-        "jms/translation-bundle" : "1.1.*@dev",
-        "appventus/alertify-bundle": "dev-master"
+        "symfony/assetic-bundle" : "~2.3",
+        "symfony/monolog-bundle" : "~2.4",
+        "symfony/symfony" : ">=2.4.2, <2.7.0",
+        "symfony/swiftmailer-bundle" : "~2.3",
+        "twig/extensions" : "~1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "4.6.*",
         "behat/behat": "~3.0",
+        "behat/mink-browserkit-driver"  : "*",
         "behat/mink-extension": "~2.0",
         "behat/mink-goutte-driver": "~1.1",
         "behat/mink-selenium2-driver": "~1.1",
-        "behat/mink-browserkit-driver"  : "*",
         "behat/symfony2-extension": "~2.0",
         "knplabs/friendly-contexts": "dev-master",
+        "phpunit/phpunit": "4.6.*",
         "symfony/var-dumper": "~3.0@dev"
     },
+    "suggest": {
+        "friendsofvictoire/alertbutton-widget": ,
+        "friendsofvictoire/archive-widget": ,
+        "friendsofvictoire/articlelist-widget": ,
+        "friendsofvictoire/breadcrumb-widget": ,
+        "friendsofvictoire/button-widget": ,
+        "friendsofvictoire/calculator-widget": ,
+        "friendsofvictoire/ckeditor-widget": ,
+        "friendsofvictoire/cover-widget": ,
+        "friendsofvictoire/disqus-widget": ,
+        "friendsofvictoire/faq-widget": ,
+        "friendsofvictoire/file-widget": ,
+        "friendsofvictoire/filter-widget": ,
+        "friendsofvictoire/form-widget": ,
+        "friendsofvictoire/html-widget": ,
+        "friendsofvictoire/image-widget": ,
+        "friendsofvictoire/layout-widget": ,
+        "friendsofvictoire/listing-widget": ,
+        "friendsofvictoire/login-widget": ,
+        "friendsofvictoire/markdown-widget": ,
+        "friendsofvictoire/menu-widget": ,
+        "friendsofvictoire/render-widget": ,
+        "friendsofvictoire/richlist-widget": ,
+        "friendsofvictoire/sharethis-widget": ,
+        "friendsofvictoire/siblingsmenu-widget": ,
+        "friendsofvictoire/simplecontactform-widget": ,
+        "friendsofvictoire/sitemap-widget": ,
+        "friendsofvictoire/slider-widget": ,
+        "friendsofvictoire/slidernav-widget": ,
+        "friendsofvictoire/socialbuttons-widget": ,
+        "friendsofvictoire/statistic-widget": ,
+        "friendsofvictoire/tab-widget": ,
+        "friendsofvictoire/table-widget": ,
+        "friendsofvictoire/text-widget": ,
+        "friendsofvictoire/title-widget"
+    },
+    "autoload": {
+        "psr-4": {
+            "Acme\\AppBundle\\": "Tests/Functionnal/src/Acme/AppBundle",
+            "Victoire\\Bundle\\": "Bundle",
+            "Victoire\\Tests\\Features\\": "Tests/Features",
+            "Victoire\\Widget\\": "Tests/Functionnal/src/Victoire/Widget"
+        }
+    },
+    "minimum-stability": "dev",
     "repositories": [
         {
             "type": "vcs",
@@ -64,15 +131,6 @@
             "url": "https://github.com/lenybernard/mink"
         }
     ],
-    "autoload": {
-        "psr-4": {
-            "Acme\\AppBundle\\": "Tests/Functionnal/src/Acme/AppBundle",
-            "Victoire\\Bundle\\": "Bundle",
-            "Victoire\\Tests\\Features\\": "Tests/Features",
-            "Victoire\\Widget\\": "Tests/Functionnal/src/Victoire/Widget"
-        }
-    },
-    "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
             "dev-master": "1.0-dev"
