@@ -15,6 +15,7 @@
 {% endblock body %}
 
 {% block foot_script %}
+    {{ parent() }}
 
     {% spaceless %}
         {% javascripts injector='victoire-edit, victoire-leftnavbar' %}
