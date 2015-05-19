@@ -8,52 +8,50 @@ For a more general Git-Workflow, you can have a look [here](https://github.com/a
 
 **Note: The steps in this section only need to be performed once per repository**
 
-    1 : Create your own Fork
+1 : Create your own Fork
 
 Get to [Github](https://github.com/victoire/victoire), then click on "Fork"
 
-    2 : Clone your fork on your computer
+2 : Clone your fork on your computer
 
-```
     git clone git@github.com:USER/victoire.git
-```
 
-    3 : Acces to Victoire's original deposit :
+3 : Acces to Victoire's original deposit :
 
-```
+
     git remote add upstream git@github.com:Victoire/victoire.git
-```
+
 
 This command create a new remote to your deposit.
 You have now two remote : one heading to your fork (origin) and another heading to the original one (upstream)
 You can check this with this command
 
-```
+
     git remote -v
-```
+
 
 That should return :
 
-```
+
     origin  git@github.com:USER/victoire.git (fetch)
     origin  git@github.com:USER/victoire.git (push)
     upstream    git@github.com:Victoire/victoire.git (fetch)
     upstream    git@github.com:Victoire/victoire.git (push)
-```
+
 
 ## Synchronize your fork with Victoire's original deposit
 
 If this is your first set up, your fork is up to date.
 If you have created your fork earlier on, there is a high probability that it doesn't include the changes made in the original deposit. In order to update it, you have to recover upstream's last commits :
 
-```
+
     git fetch upstream
-```
+
 Then you need to merge them in your own fork :
 
-```
+
     git merge upstream/masteram
-```
+
 
 ## Merge your modifications
 
@@ -65,24 +63,24 @@ If you've worked on Victoire for a specific project, you surely have made modifi
 The solution is to copy your modifications made in the project's Victoire in your fork.
 To do so, you have to create a patch :
 
-```
+
     cd vendor/victoire/victoire
     git diff > /tmp/patch
-```
+
 
 This operation creates a file /tmp/patch with your modifications.
 You then have to create a new branch in your fork, from master :
 
-```
+
     git checkout master
     git checkout -b feature/VIC-123-awesome-feature
-```
+
 
 And execute this command to apply the modifications :
 
-```
+
     git apply /tmp/patch
-```
+
 
 ## Integrate your modifications
 

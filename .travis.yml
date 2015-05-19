@@ -1,5 +1,8 @@
 language: php
 
+sudo: false
+#http://docs.travis-ci.com/user/workers/container-based-infrastructure/
+
 php:
   - 5.5
   - 5.6
