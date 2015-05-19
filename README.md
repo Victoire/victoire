@@ -18,8 +18,15 @@ The main goal is to give to the final customer the ability to **create**/**edit*
 
 ##Contribution
 
+Victoire is an open-source, community driven project.
 We are keen on getting your participation for the development of this product.
 To do so, please follow the steps [**here**](https://github.com/Victoire/victoire/blob/master/CONTRIBUTION.md)
+
+You can see the list of [contributors](https://github.com/Victoire/Victoire/contributors)
+
+##Install Victoire
+
+To do so, follow the [setup guide](http://github.com/victoire/victoire/blob/master/setup.md)
 
 ##What's inside?
 
@@ -45,11 +52,15 @@ Component | Description
 [**WidgetBundle**][15] | Contains all the base widget logic to be able to use Widgets
 [**WidgetMapBundle**][16] | Each view has a widget map, this bundle contains all the widget maps logic
 
+##Bug tracking
+
+Victoire uses GitHub issues. If you have found a bug, please create an issue.
+
+##MIT License
+
+License can be found [here](http://github.com/victoire/victoire/blob/master/license.md).
 
 
-* Read the [setup guide](http://github.com/victoire/victoire/blob/master/setup.md)
-
-[![Licence Creative Commons](http://i.creativecommons.org/l/by/4.0/88x31.png)](http://creativecommons.org/licenses/by/4.0/)
 
 
 [1]:  http://github.com/victoire/victoire/blob/master/Bundle/CoreBundle/README.md

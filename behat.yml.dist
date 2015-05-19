@@ -1,6 +1,10 @@
+# This file is part of the Victoire package.
+# (c) Leny Bernard
+
 default:
     autoload:
          '': Tests/Features/Context
+
     suites:
          default:
              paths:
@@ -16,6 +20,7 @@ default:
                  - Knp\FriendlyContexts\Context\AliceContext
                  - Knp\FriendlyContexts\Context\EntityContext
                  - Knp\FriendlyContexts\Context\TableContext
+
     extensions:
          Behat\Symfony2Extension:
             kernel:
