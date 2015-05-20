@@ -54,15 +54,27 @@ class LocaleResolver
     /**
      * @param Request $request
      *
+     * @throws \Exception
      * @return string
      *
-     * resolves the locale from host
+     * resolves the locale from httpHost or host
      */
     public function resolveFromDomain(Request $request)
     {
-        $host = $request->getHttpHost();
+        $host = $request->getHost();
+        $httpHost = $request->getHttpHost();
 
-        return $this->localeDomainConfig[$host];
+        if (array_key_exists($host, $this->localeDomainConfig)) {
+            return $this->localeDomainConfig[$host];
+        } else if (array_key_exists($httpHost, $this->localeDomainConfig)) {
+            return $this->localeDomainConfig[$httpHost];
+        }
+
+        throw new \Exception(sprintf(
+            'Host "%s" is not defined in your locale_pattern_table in app/config/victoire_core.yml',
+            $httpHost
+        ));
+
     }
 
     /**
