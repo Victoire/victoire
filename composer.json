@@ -22,20 +22,20 @@
             "email": "leny@victoire.io",
             "homepage": "http://github.com/lenybernard",
             "role": "developer"
-        }
+        },
         {
             "name": "AppVentus",
             "homepage": "http://appventus.com"
-        }
+        },
         {
             "name": "Community Contributors",
             "homepage": "http://github.com/Victoire/Victoire/graphs/contributors"
-        }
+        },
     ],
     "support": [
         {
             "email": "contact@victoire.io"
-        }
+        },
     ],
     "require": {
         "php" : ">=5.3.3",
@@ -118,7 +118,7 @@
             "Victoire\\Bundle\\": "Bundle",
             "Victoire\\Tests\\Features\\": "Tests/Features",
             "Victoire\\Widget\\": "Tests/Functionnal/src/Victoire/Widget"
-        }
+        },
     },
     "minimum-stability": "dev",
     "repositories": [
@@ -129,11 +129,11 @@
         {
             "type": "vcs",
             "url": "https://github.com/lenybernard/mink"
-        }
+        },
     ],
     "extra": {
         "branch-alias": {
             "dev-master": "1.0-dev"
-        }
-    }
+        },
+    },
 }
