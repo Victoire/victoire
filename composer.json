@@ -32,11 +32,9 @@
             "homepage": "http://github.com/Victoire/Victoire/graphs/contributors"
         }
     ],
-    "support": [
-        {
+    "support": {
             "email": "contact@victoire.io"
-        }
-    ],
+        },
     "require": {
         "php" : ">=5.3.3",
         "appventus/alertify-bundle": "dev-master",
