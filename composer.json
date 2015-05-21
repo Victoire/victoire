@@ -30,7 +30,7 @@
         "incenteev/composer-parameter-handler" : "~2.0",
         "doctrine/doctrine-fixtures-bundle" : "dev-master",
         "doctrine/data-fixtures" : "dev-master",
-        "nelmio/alice" : "1.5.2",
+        "nelmio/alice" : "1.*@dev",
         "knplabs/knp-menu" : "2.0.*@dev",
         "knplabs/knp-menu-bundle" : "2.0.*@dev",
         "jms/di-extra-bundle" : "1.4.*@dev",
