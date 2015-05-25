@@ -1,4 +1,4 @@
-![Victoire](http://appventus.com/uploads/media/555b2ccb8020a.png)
+![Victoire](Media/victoire.png)
 
 [![Gitter chat](https://badges.gitter.im/Victoire/Victoire.png)](https://gitter.im/Victoire/victoire)
 [![License](https://img.shields.io/packagist/l/Victoire/Victoire.svg)](https://packagist.org/packages/Victoire/Victoire)
