@@ -61,7 +61,7 @@ class Article
     /**
      * @ORM\Column(name="status", type="string", nullable=false)
      */
-    protected $status = self::PUBLISHED;
+    protected $status;
 
     /**
      * Categories of the article
