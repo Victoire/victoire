@@ -67,4 +67,4 @@ trait VictoireAlertifyControllerTrait {
     {
         $this->alert($content, 'error');
     }
-} 
+}
