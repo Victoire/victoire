@@ -1,537 +1,137 @@
 <?php
+namespace Victoire\Bundle\BlogBundle\Listener;
 
-namespace Victoire\Bundle\BlogBundle\Entity;
-
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
-use Symfony\Component\Validator\Constraints as Assert;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
-use Victoire\Bundle\CoreBundle\Annotations as VIC;
-use Victoire\Bundle\CoreBundle\Entity\Traits\BusinessEntityTrait;
-use Victoire\Bundle\MediaBundle\Entity\Media;
+use Symfony\Component\EventDispatcher\Event;
+use Victoire\Bundle\CoreBundle\Listener\MenuListenerInterface;
+use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
+use Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent;
 
 /**
- * @ORM\Entity(repositoryClass="Victoire\Bundle\BlogBundle\Repository\ArticleRepository"))
- * @ORM\Table("vic_article")
- * @VIC\BusinessEntity({"Force", "Redactor", "Listing", "BlogArticles", "Title", "CKEditor", "Text", "UnderlineTitle", "Cover", "Image", "Authorship", "ArticleList"})
- * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
+ * When dispatched, this listener add items to a KnpMenu
  */
-class Article
+class BlogMenuListener implements MenuListenerInterface
 {
-    use BusinessEntityTrait;
-    use TimestampableEntity;
-
-    const DRAFT       = "draft";
-    const PUBLISHED   = "published";
-    const UNPUBLISHED = "unpublished";
-    const SCHEDULED   = "scheduled";
+    protected $menuBuilder;
 
     /**
-     * @VIC\BusinessProperty("businessParameter")
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
-    /**
-     * Title is inherited from Page, just add the BusinessProperty annotation
+     * Blog menu listener constructor
      *
-     * @ORM\Column(name="name", type="string", length=255)
-     * @Assert\NotBlank()
-     * @VIC\BusinessProperty({"textable", "businessParameter"})
+     * @param MenuBuilder $menuBuilder
      */
-    private $name;
-
-    /**
-     * @ORM\Column(name="slug", type="string", length=255)
-     * @Gedmo\Slug(fields={"name"}, updatable=false, unique=false)
-     * @VIC\BusinessProperty("businessParameter")
-     */
-    private $slug;
-
-    /**
-     * Description is inherited from Page, just add the BusinessProperty annotation
-     * @ORM\Column(name="description", type="text", nullable=true)
-     * @VIC\BusinessProperty("textable")
-     */
-    private $description;
-
-    /**
-     * @ORM\Column(name="status", type="string", nullable=false)
-     */
-    protected $status = self::PUBLISHED;
-
-    /**
-     * Categories of the article
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="articles")
-     * @ORM\JoinColumn(onDelete="SET NULL")
-     */
-    private $category;
-
-    /**
-     * @var datetime $publishedAt
-     *
-     * @ORM\Column(name="publishedAt", type="datetime", nullable=true)
-     * @VIC\BusinessProperty("dateable")
-     * @VIC\BusinessProperty("textable")
-     */
-    private $publishedAt;
-
-    /**
-     * This relation is dynamically added by ArticleSubscriber
-     * The property is needed here
-     */
-    private $author;
-
-    /**
-     * Tags of the article
-     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="articles")
-     * @ORM\JoinTable(name="vic_article_tags")
-     * @Assert\Valid()
-     */
-    private $tags;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\BlogBundle\Entity\Blog", inversedBy="articles", cascade={"persist"})
-     * @ORM\JoinColumn(name="blog_id", referencedColumnName="id", onDelete="CASCADE")
-     */
-    private $blog;
-
-    /**
-     * @var BusinessEntityPagePattern
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern")
-     * @ORM\JoinColumn(name="pattern_id", referencedColumnName="id", onDelete="SET NULL")
-     * @Assert\NotNull()
-     */
-    private $pattern;
-
-    /**
-     * @var string
-     *
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\MediaBundle\Entity\Media")
-     * @ORM\JoinColumn(name="image_id", referencedColumnName="id", onDelete="CASCADE")
-     * @VIC\BusinessProperty("imageable")
-     */
-    private $image;
-
-    /**
-     * @VIC\BusinessProperty("textable")
-     */
-    private $categoryTitle;
-
-    /**
-     * @VIC\BusinessProperty("textable")
-     */
-    private $publishedAtString;
-
-    /**
-     * @VIC\BusinessProperty("textable")
-     */
-    private $authorAvatar;
-
-    /**
-     * @VIC\BusinessProperty("textable")
-     */
-    private $authorFullName;
-
-    /**
-     * @ORM\Column(name="deletedAt", type="datetime", nullable=true)
-     */
-    private $deletedAt;
-
-    /**
-     * to string method
-     *
-     * @return string
-     */
-    public function __toString()
+    public function __construct(MenuBuilder $menuBuilder)
     {
-        return $this->name;
+        $this->menuBuilder = $menuBuilder;
     }
 
     /**
-     * constructor
+     * add a contextual menu item
+     *
+     * @param PageMenuContextualEvent $event
+     *
+     * @return \Knp\Menu\ItemInterface
      */
+    public function addContextual($event)
+    {
+        $mainItem = $this->getMainItem();
+        $currentBlog = $event->getPage()->getBusinessEntity()->getBlog();
+        $currentArticle = $event->getPage()->getBusinessEntity();
 
-    public function __construct() {
-        $this->publishedAt = new \DateTime();
+        $mainItem->addChild('menu.blog.article.settings',
+            array(
+                'route' => 'victoire_blog_article_settings',
+                'routeParameters' => array('id' => $currentArticle->getId()),
+                )
+        )->setLinkAttribute('data-toggle', 'vic-modal');
+
+        $mainItem->addChild('menu.blog.article.settings',
+            array(
+                'route' => 'victoire_blog_article_settings',
+                'routeParameters' => array('id' => $currentArticle->getId()),
+                )
+        )->setLinkAttribute('data-toggle', 'vic-modal');
+
+        $mainItem->addChild('menu.blog.article.new',
+            array(
+                'route'           => 'victoire_blog_article_newBlogArticle',
+                'routeParameters' => array('id' => $currentBlog->getId()),
+                )
+        )->setLinkAttribute('data-toggle', 'vic-modal');
+
+        return $mainItem;
     }
 
     /**
-     * Get id
+     * add a blog contextual menu item
      *
-     * @return integer
+     * @param PageMenuContextualEvent $event
+     *
+     * @return \Knp\Menu\ItemInterface
      */
-    public function getId()
+    public function addBlogContextual($event)
     {
-        return $this->id;
+        $mainItem = $this->getMainItem();
+
+        $mainItem->addChild('menu.blog.settings',
+            array(
+                'route'           => 'victoire_blog_settings',
+                'routeParameters' => array('id' => $event->getPage()->getId()),
+                )
+        )->setLinkAttribute('data-toggle', 'vic-modal');
+
+        $mainItem->addChild('menu.blog.translate',
+            array(
+                'route'           => 'victoire_blog_translate',
+                'routeParameters' => array('id' => $event->getPage()->getId()),
+                )
+        )->setLinkAttribute('data-toggle', 'vic-modal');
+
+        $mainItem->addChild('menu.blog.article.new',
+            array(
+                'route'           => 'victoire_blog_article_newBlogArticle',
+                'routeParameters' => array('id' => $event->getPage()->getId()),
+                )
+        )->setLinkAttribute('data-toggle', 'vic-modal');
+
+        return $mainItem;
     }
 
     /**
-     * Set id
-     * @param integer $id
+     * add global menu items
+     *
+     * @param Event $event
+     *
+     * @return \Victoire\Bundle\BlogBundle\Listener\MenuItem
+     *
+     * @SuppressWarnings checkUnusedFunctionParameters
      */
-    public function setId($id)
+    public function addGlobal(Event $event)
     {
-        $this->id = $id;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Set name
-     * @param string $name
-     *
-     * @return $this
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     *
-     * @return Article
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * Set category
-     *
-     * @param string $category
-     *
-     * @return Article
-     */
-    public function setCategory($category)
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
-    /**
-     * Get category
-     *
-     * @return string
-     */
-    public function getCategory()
-    {
-        return $this->category;
-    }
-
-    /**
-     * Get the published at property
-     *
-     * @return \DateTime
-     */
-    public function getPublishedAt()
-    {
-        if ($this->status == self::PUBLISHED && $this->publishedAt === null) {
-            $this->setPublishedAt($this->getCreatedAt());
+        if ($this->menuBuilder->isGranted('ROLE_VICTOIRE_BLOG')) {
+            $this->menuBuilder->getLeftNavbar()->addChild(
+                'menu.leftnavbar.blog.label', array(
+                    'route' => 'victoire_blog_index',
+                )
+            )->setLinkAttribute('data-toggle', 'vic-modal');
         }
-
-        return $this->publishedAt;
     }
 
     /**
-     * Set publishedAt
-     * @param \DateTime $publishedAt
+     * This method returns you the main item and create it if not exists
      *
-     * @return $this
+     * @return \Knp\Menu\ItemInterface The main item to get
      */
-    public function setPublishedAt($publishedAt)
+    private function getMainItem()
     {
-        $this->publishedAt = $publishedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get deletedAt
-     *
-     * @return \DateTime
-     */
-    public function getDeletedAt()
-    {
-        return $this->deletedAt;
-    }
-
-    /**
-     * Set deletedAt
-     * @param \DateTime $deletedAt
-     *
-     * @return $this
-     */
-    public function setDeletedAt($deletedAt)
-    {
-        $this->deletedAt = $deletedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get the blog
-     *
-     * @return Blog
-     */
-    public function getBlog()
-    {
-        return $this->blog;
-    }
-
-    /**
-     * Set the blog
-     *
-     * @param Blog $blog
-     */
-    public function setBlog(Blog $blog)
-    {
-        $this->blog = $blog;
-    }
-
-    /**
-     * Set tags
-     *
-     * @param string $tags
-     *
-     * @return Article
-     */
-    public function setTags($tags)
-    {
-        $this->tags = $tags;
-
-        return $this;
-    }
-
-    /**
-     * Add tag
-     *
-     * @param string $tag
-     *
-     * @return Article
-     */
-    public function addTag($tag)
-    {
-        $this->tags[] = $tag;
-
-        return $this;
-    }
-
-    /**
-     * Remove tag
-     *
-     * @param string $tag
-     *
-     * @return Article
-     */
-    public function removeTag($tag)
-    {
-        $this->tags->removeElement($tag);
-
-        return $this;
-    }
-
-    /**
-     * Get tags
-     *
-     * @return string
-     */
-    public function getTags()
-    {
-        return $this->tags;
-    }
-
-    /**
-     * Set image
-     * @param Media $image
-     *
-     * @return Article
-     */
-    public function setImage(Media $image)
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    /**
-     * Get image
-     *
-     * @return string
-     */
-    public function getImage()
-    {
-        return $this->image;
-    }
-
-    /**
-     * Get businessEntity
-     *
-     * @return Article
-     */
-    public function getBusinessEntity()
-    {
-        return $this;
-    }
-
-    /**
-     * Set pattern
-     * @param BusinessEntityPagePattern $pattern
-     *
-     * @return Article
-     */
-    public function setPattern(BusinessEntityPagePattern $pattern)
-    {
-        $this->pattern = $pattern;
-
-        return $this;
-    }
-
-    /**
-     * Get pattern
-     *
-     * @return BusinessEntityPagePattern
-     */
-    public function getPattern()
-    {
-        return $this->pattern;
-    }
-
-    /**
-     * Set status
-     *
-     * @param status $status
-     */
-    public function setStatus($status)
-    {
-        if ($status == self::PUBLISHED && $this->publishedAt === null) {
-            $this->setPublishedAt(new \DateTime());
+        //if not exists, create it and return it
+        if ($menuPage = $this->menuBuilder->getTopNavbar()->getChild(('menu.blog'))) {
+            return $menuPage;
+        } else {
+            //else, find it and return it
+            return $this->menuBuilder->createDropdownMenuItem(
+                $this->menuBuilder->getTopNavbar(),
+                "menu.blog",
+                array("attributes" => array("class" => "vic-pull-left vic-text-center"))
+            );
         }
-        $this->status = $status;
-    }
-
-    /**
-     * Get status
-     *
-     * @return status
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
-     * Get slug
-     *
-     * @return string
-     */
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-
-    /**
-     * Set slug
-     * @param string $slug
-     *
-     * @return $this
-     */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
-    /**
-     * Get categoryTitle
-     *
-     * @return string
-     */
-    public function getCategoryTitle()
-    {
-        $this->categoryTitle = $this->category ? $this->category->getTitle() : null;
-
-        return $this->categoryTitle;
-    }
-
-    /**
-     * Get publishedAtString
-     *
-     * @return string
-     */
-    public function getPublishedAtString()
-    {
-        setlocale(LC_TIME, "fr_FR");
-
-        return strftime('%d %B %Y', $this->publishedAt->getTimestamp());
-    }
-
-    /**
-     * Get author
-     *
-     * @return string
-     */
-    public function getAuthor()
-    {
-        return $this->author;
-    }
-
-    /**
-     * Set author
-     *
-     * @param string $author
-     *
-     * @return $this
-     */
-    public function setAuthor($author)
-    {
-        $this->author = $author;
-
-        return $this;
-    }
-
-    public function getAuthorAvatar()
-    {
-        $this->authorAvatar = "http://www.gravatar.com/avatar/".md5($this->author->getEmail())."?s=70";
-
-        return $this->authorAvatar;
-    }
-
-    public function getAuthorFullname()
-    {
-        $this->authorFullName = $this->author->getFullname();
-
-        return $this->authorFullName;
     }
 }
