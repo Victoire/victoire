@@ -204,7 +204,7 @@ class LinkExtension extends \Twig_Extension
         }
 
         $page = $this->pageHelper->findPageByParameters(array(
-            'viewId' => $patternId,
+            'patternId' => $patternId,
             'entityId' => $businessEntityInstance->getId()
         ));
 

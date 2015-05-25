@@ -96,6 +96,21 @@ class DateFilter extends BaseFilter
         }
 
         if (in_array($options['widget']->getFormat(), array('year', 'month', 'day'))) {
+            if (!$data['year']) {
+                // set default value to date filter and set listing to request while not better way
+                $data['year']= $options['widget']->getDefaultValue();
+                $this->request->query->replace(
+                    array(
+                        'victoire_form_filter' => array(
+                            $this->getName() => array(
+                                'year' => $options['widget']->getDefaultValue()
+                            ),
+                        'listing' => $options['widget']->getListing()->getId()
+                        )
+                    )
+                );
+
+            }
             $builder
                 ->add(
                     'year', 'choice', array(
