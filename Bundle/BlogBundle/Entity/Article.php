@@ -77,7 +77,7 @@ class Article
      * @VIC\BusinessProperty("dateable")
      * @VIC\BusinessProperty("textable")
      */
-    private $publishedAt;
+    private $publishedAt = self::DRAFT;
 
     /**
      * This relation is dynamically added by ArticleSubscriber
