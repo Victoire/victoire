@@ -30,7 +30,7 @@ class ViewRepository extends NestedTreeRepository
      */
     public function getOneByUrl($url)
     {
-        return $this->createQueryBuilder('view')
+        return $this->createQueryBuilder('page')
             ->where('page.url = (:url)')
             ->setMaxResults(1)
             ->setParameter('url', $url);
@@ -111,7 +111,7 @@ class ViewRepository extends NestedTreeRepository
     public function findOneByHomepage($locale = 'fr')
     {
         //the query builder
-        $queryBuilder = $this->createQueryBuilder('view');
+        $queryBuilder = $this->createQueryBuilder('page');
 
         $queryBuilder
             ->where('page.homepage = true')
