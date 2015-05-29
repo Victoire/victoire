@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Victoire\Bundle\CoreBundle\Form\ViewType;
 
 /**
- *
+ * businessEntitypagePatternType
  */
 class BusinessEntityPagePatternType extends ViewType
 {
