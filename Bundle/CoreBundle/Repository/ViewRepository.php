@@ -18,7 +18,7 @@ class ViewRepository extends NestedTreeRepository
      */
     public function getInstance()
     {
-        return $this->queryBuilder ? $this->queryBuilder : $this->createQueryBuilder('view');
+        return $this->queryBuilder ? $this->queryBuilder : $this->createQueryBuilder('page');
     }
 
     /**
@@ -31,7 +31,7 @@ class ViewRepository extends NestedTreeRepository
     public function getOneByUrl($url)
     {
         return $this->createQueryBuilder('view')
-            ->where('view.url = (:url)')
+            ->where('page.url = (:url)')
             ->setMaxResults(1)
             ->setParameter('url', $url);
     }
@@ -59,7 +59,7 @@ class ViewRepository extends NestedTreeRepository
     public function filterBySitemapIndexed($indexed = true)
     {
         $qb = $this->getInstance();
-        $qb->innerJoin('view.seo', 'seo')->addSelect('seo')
+        $qb->innerJoin('page.seo', 'seo')->addSelect('seo')
             ->andWhere('seo.sitemapIndexed = :sitemapIndexed')
             ->setParameter('sitemapIndexed', $indexed);
 
@@ -80,8 +80,8 @@ class ViewRepository extends NestedTreeRepository
         //If $excludeUnpublished === true, we exclude the non published results
         if ($excludeUnpublished) {
             $this->queryBuilder
-                ->andWhere('view.status = :status')
-                ->orWhere('view.status = :scheduled_status AND view.publishedAt > :publicationDate')
+                ->andWhere('page.status = :status')
+                ->orWhere('page.status = :scheduled_status AND page.publishedAt > :publicationDate')
                 ->setParameter('status', PageStatus::PUBLISHED)
                 ->setParameter('scheduled_status', PageStatus::SCHEDULED)
                 ->setParameter('publicationDate', new \DateTime());
@@ -114,9 +114,9 @@ class ViewRepository extends NestedTreeRepository
         $queryBuilder = $this->createQueryBuilder('view');
 
         $queryBuilder
-            ->where('view.homepage = true')
-            ->andWhere('view.status = :status')
-            ->andWhere('view.locale = :locale')
+            ->where('page.homepage = true')
+            ->andWhere('page.status = :status')
+            ->andWhere('page.locale = :locale')
             ->setMaxResults(1)
             ->setParameter('locale', $locale)
             ->setParameter('status', PageStatus::PUBLISHED);
