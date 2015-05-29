@@ -34,7 +34,10 @@ class BusinessEntityPagePatternType extends ViewType
         $builder
             ->add('businessEntityName', 'hidden')
             ->add('query')
-            ->add('url');
+            ->add('slug', null, array(
+                    'label' => 'victoire.form.business_entity_page_pattern.slug.label'
+                )
+            );
     }
 
     /**
