@@ -54,6 +54,10 @@
         <source>victoire.business_entity_page_pattern.edit.error</source>
         <target>La modification de la représentation métier a échoué</target>
       </trans-unit>
+      <trans-unit id="1" resname="victoire.form.business_entity_page_pattern.slug.label">
+        <source>victoire.form.business_entity_page_pattern.slug.label</source>
+        <target>Url</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
