@@ -202,6 +202,14 @@
         <source>form.article.category.label</source>
         <target>Catégorie</target>
       </trans-unit>
+      <trans-unit id="44" resname="widget_filter.form.date.default.label">
+        <source>widget_filter.form.date.default.label</source>
+        <target>Date par défaut</target>
+      </trans-unit>
+      <trans-unit id="45" resname="widget_filter.form.date.default.empty_value.label">
+        <source>widget_filter.form.date.default.empty_value.label</source>
+        <target>Choisissez une date</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

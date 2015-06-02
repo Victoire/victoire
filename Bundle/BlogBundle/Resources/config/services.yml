@@ -118,3 +118,19 @@ services:
         class: Victoire\Bundle\BlogBundle\Manager\ArticleManager
         arguments:
             - "@doctrine.orm.entity_manager"
+
+    #  ==================  Filter listener ================== #
+    #
+    victoire.widget_filter.form.listener.presetdata:
+        class: Victoire\Bundle\BlogBundle\Listener\BlogFilterListener
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: kernel.event_listener, event: victoire.widget_filter.form.pre_set_data, method: manageExtraFiltersFields, priority: 1 }
+
+    victoire.widget_filter.form.listener.presubmit:
+        class: Victoire\Bundle\BlogBundle\Listener\BlogFilterListener
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: kernel.event_listener, event: victoire.widget_filter.form.pre_submit, method: manageExtraFiltersFields, priority: 1 }

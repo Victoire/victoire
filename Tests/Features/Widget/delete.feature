@@ -36,5 +36,6 @@ Scenario: Create and delete a widget
     Given I follow "Supprimer"
     Then I should see "Cette action va supprimer définitivement ce contenu. Cette action est irréversible. Etes vous sûr ?"
     Given I press "J'ai bien compris, je confirme la suppression"
-    Then I should not see "Widget #"
-    Then I should not see "Le Côté Obscure de la force"
+    Then I wait 2 seconds
+    And I should not see "Widget #"
+    And I should not see "Le Côté Obscure de la force"

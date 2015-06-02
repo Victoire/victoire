@@ -30,9 +30,9 @@ Scenario: I create widget in a position
     And I submit the widget
     Then I should see "Victoire !"
     Then I should see "Le côté Double de la force"
-    And "Le côté Lumineux de la force" should precede "Le côté Double de la force"
-    And "Le côté Double de la force" should precede "Le côté Obscure de la force"
+    And "Le côté Double de la force" should precede "Le côté Lumineux de la force"
+    And "Le côté Obscure de la force" should precede "Le côté Double de la force"
 
     Given I reload the page
-    And "Le côté Lumineux de la force" should precede "Le côté Double de la force"
-    And "Le côté Double de la force" should precede "Le côté Obscure de la force"
+    And "Le côté Double de la force" should precede "Le côté Lumineux de la force"
+    And "Le côté Obscure de la force" should precede "Le côté Double de la force"

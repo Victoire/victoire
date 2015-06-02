@@ -20,6 +20,7 @@ $vic(document).on('change', 'select[data-refreshOnChange="true"]', function(even
         async: true,
     }).done(function(response){
         $vic('.vic-modal-body .vic-container .vic-tab-pane.vic-active').html(response.html);
+        eval($vic('.vic-modal-body .vic-container .vic-tab-pane.vic-active').find("script").text());
         loading(false);
     }).fail(function(response) {
         console.log(response);

@@ -18,7 +18,7 @@ trait VictoireAlertifyControllerTrait {
     public function alert($content, $type = 'success')
     {
         if (is_array($content)) {
-            $content = $content['context'] = 'victoire';
+            $content['context'] = 'victoire';
         } else {
             $content = array(
                 'context' => 'victoire',

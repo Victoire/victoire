@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Victoire\Bundle\CoreBundle\Form\ViewType;
 
 /**
- *
+ * businessEntitypagePatternType
  */
 class BusinessEntityPagePatternType extends ViewType
 {
@@ -34,7 +34,10 @@ class BusinessEntityPagePatternType extends ViewType
         $builder
             ->add('businessEntityName', 'hidden')
             ->add('query')
-            ->add('url');
+            ->add('slug', null, array(
+                    'label' => 'victoire.form.business_entity_page_pattern.slug.label'
+                )
+            );
     }
 
     /**

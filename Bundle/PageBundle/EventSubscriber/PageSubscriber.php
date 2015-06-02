@@ -11,11 +11,13 @@ use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
 use Doctrine\ORM\UnitOfWork;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
 use Victoire\Bundle\CoreBundle\Helper\ViewUrlHelper;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\PageBundle\Helper\UserCallableHelper;
+use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 
 /**
  * This class listen Page Entity changes.
@@ -108,7 +110,7 @@ class PageSubscriber implements EventSubscriber
         $uow = $entityManager->getUnitOfWork();
 
         foreach ($uow->getScheduledEntityInsertions() as $entity) {
-            if ($entity instanceof BasePage) {
+            if ($entity instanceof WebViewInterface) {
                 $computeUrl = ((array_key_exists('slug', $uow->getEntityChangeSet($entity)) //the slug of the page has been modified
                             || array_key_exists('parent', $uow->getEntityChangeSet($entity)))
                             ); //the parent has been modified
@@ -118,11 +120,15 @@ class PageSubscriber implements EventSubscriber
                 $meta = $entityManager->getClassMetadata(get_class($entity));
                 $uow->recomputeSingleEntityChangeSet($meta, $entity);
                 $entity->setAuthor($this->userCallable->getCurrentUser());
+                if ($entity instanceof BusinessEntityPagePattern) {
+                    $this->updateCache($entity);
+                }
+
             }
         }
 
         foreach ($uow->getScheduledEntityUpdates() as $entity) {
-            if ($entity instanceof BasePage) {
+            if ($entity instanceof WebViewInterface) {
                 $computeUrl = ((array_key_exists('slug', $uow->getEntityChangeSet($entity)) //the slug of the page has been modified
                             || array_key_exists('parent', $uow->getEntityChangeSet($entity)))
                             ); //the parent has been modified
