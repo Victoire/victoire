@@ -117,7 +117,7 @@ services:
     victoire_blog.manager.article:
         class: Victoire\Bundle\BlogBundle\Manager\ArticleManager
         arguments:
-             - "@doctrine.orm.entity_manager"
+            - "@doctrine.orm.entity_manager"
 
     #  ==================  Filter listener ================== #
     #
