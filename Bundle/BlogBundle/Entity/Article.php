@@ -61,7 +61,7 @@ class Article
     /**
      * @ORM\Column(name="status", type="string", nullable=false)
      */
-    protected $status = self::DRAFT;
+    protected $status;
 
     /**
      * Categories of the article
@@ -149,6 +149,16 @@ class Article
     public function __toString()
     {
         return $this->name;
+    }
+
+    /**
+     * Constructor
+     *
+     *
+     */
+    public function __construct()
+    {
+        $this->status = self::DRAFT;
     }
 
     /**
