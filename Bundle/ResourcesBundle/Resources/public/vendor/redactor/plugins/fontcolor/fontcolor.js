@@ -73,4 +73,4 @@ if (!RedactorPlugins) var RedactorPlugins = {};
 			}
 		};
 	};
-})(jQuery);
+})($vic);
