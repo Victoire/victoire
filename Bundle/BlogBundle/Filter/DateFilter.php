@@ -67,7 +67,7 @@ class DateFilter extends BaseFilter
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $articles = $this->em->getRepository('VictoireBlogBundle:Article')->getAll()->run();
+        $articles = $this->em->getRepository('VictoireBlogBundle:Article')->getAll(true)->run();
         $years = $months = $days = array();
         foreach ($articles as $key => $_article) {
             $years[$_article->getPublishedAt()->format('Y')] = $_article->getPublishedAt()->format('Y');
