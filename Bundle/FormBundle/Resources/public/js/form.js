@@ -19,8 +19,8 @@ $vic(document).on('change', 'select[data-refreshOnChange="true"]', function(even
         data: form.serialize(),
         async: true,
     }).done(function(response){
-        $vic('.vic-modal-body .vic-container .vic-tab-pane.vic-active').html(response.html);
-        eval($vic('.vic-modal-body .vic-container .vic-tab-pane.vic-active').find("script").text());
+        $vic('.vic-modal-body .vic-container-fluid .vic-tab-pane.vic-active').html(response.html);
+        eval($vic('.vic-modal-body .vic-container-fluid .vic-tab-pane.vic-active').find("script").text());
         loading(false);
     }).fail(function(response) {
         console.log(response);
