@@ -1,0 +1,60 @@
+{% form_theme form 'VictoireFormBundle:Form:fields.html.twig' %}
+<form method="POST" action="{{path('victoire_blog_article_settings', {'id': article.id} )}}">
+    <div class="vic-row">
+        <div class="vic-col-md-4">
+            {{ form_row(form.name) }}
+            {{ form_row(form.image) }}
+        </div>
+        <div class="vic-col-md-8">
+            <div class="vic-row">
+                <div class="vic-col-md-6">
+                    {{ form_row(form.pattern) }}
+                </div>
+                <div class="vic-col-md-6">
+                    {{ form_row(form.status) }}
+                </div>
+            </div>
+            <div class="vic-row">
+                <div class="vic-col-md-6">
+                    <div class="vic-form-group">
+                         <label for="victoire_article_settings_type_bodyClass">
+                            {{ 'form.page.type.slug.label'|trans({}, 'victoire') }}
+                         </label>
+
+                        {{ form_widget(form.slug) }}
+                    </div>
+                </div>
+                <div class="vic-col-md-6">
+                    {{ form_row(form.visibleOnFront) }}
+                </div>
+            </div>
+            <div class="vic-row">
+                <div class="vic-col-md-6" id="vic-blog-article-setting-description">
+                    {{ form_row(form.description) }}
+                </div>
+                <div class="vic-col-md-6">
+                    {{ form_row(form.category) }}
+                    {{ form_row(form.tags) }}
+                    {% if form.publishedAt is defined %}
+                        <div class="vic-form-group">
+                            <div class="publication-date-container">
+                                {{ form_widget(form.publishedAt) }}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="vic-row">
+                <div class="vic-col-md-12">
+                    {{ form_rest(form) }}
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</form>
+{% javascripts
+    '@VictoireFormBundle/Resources/public/js/datetimepicker-init.js'
+%}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
