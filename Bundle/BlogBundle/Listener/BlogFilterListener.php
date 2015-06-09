@@ -70,7 +70,7 @@ class BlogFilterListener
         }
         if ($eventDefaultValue) {
             $defaultValueEvent = new WidgetFilterSetDefaultValueEvent($form, $data);
-            $this->eventDispatcher->dispatch($eventDefaultValue);
+            $this->eventDispatcher->dispatch($eventDefaultValue, $defaultValueEvent);
         }
 
     }
