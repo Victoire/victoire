@@ -55,6 +55,7 @@ class BlogFilterListener
         }
 
         $form->remove('format');
+        $form->remove('defaultValue');
         switch ($data) {
             case 'date_filter':
                 $form->remove('multiple');
