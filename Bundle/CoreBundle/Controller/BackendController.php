@@ -10,6 +10,8 @@ use Symfony\Component\EventDispatcher\Event;
  */
 abstract class BackendController extends Controller
 {
+    use VictoireAlertifyControllerTrait;
+    
     /**
      * This method is run for each backend request by the victoire_core.controller.pre_execute_listener
      * Must be public to be run outside in ControllerListener
