@@ -4,6 +4,8 @@ namespace Victoire\Bundle\BlogBundle\Listener;
 
 use Symfony\Component\Form\FormEvent;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Victoire\Widget\FilterBundle\Event\WidgetFilterSetDefaultValueEvent;
 
 /**
  * This class listen Filter widget form changes.
@@ -12,15 +14,18 @@ class BlogFilterListener
 {
     protected $em;
 
+    private $eventDispatcher;
+
     /**
      * Constructor
      *
      * @param EntityManager $em
      * @param unknown       $request
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, EventDispatcherInterface $eventDispatcher)
     {
         $this->em = $em;
+        $this->eventDispatcher = $eventDispatcher;
     }
     /**
      *
@@ -31,28 +36,6 @@ class BlogFilterListener
     {
         $data = $event->getData();
         $form = $event->getForm()->getParent();
-        $articles = $this->em->getRepository('VictoireBlogBundle:Article')->getAll(true)->run();
-        $options = $form->getConfig()->getOptions()['data'];
-        $years = $months = $days = array();
-        foreach ($articles as $key => $_article) {
-            $years[$_article->getPublishedAt()->format('Y')] = $_article->getPublishedAt()->format('Y');
-
-            if ($options->getFormat() != 'year') {
-                //init $months array
-                if (!isset($months[$_article->getPublishedAt()->format('Y')])) {
-                    $months[$_article->getPublishedAt()->format('Y')] = array();
-                }
-                $months[$_article->getPublishedAt()->format('Y')][] = $_article->getPublishedAt()->format('M');
-                if ($options->getFormat() != 'month') {
-                    //init $days array
-                    if (!isset($days[$_article->getPublishedAt()->format('M')])) {
-                        $days[$_article->getPublishedAt()->format('M')] = array();
-                    }
-                    //assign values
-                    $days[$_article->getPublishedAt()->format('M')][] = $_article->getPublishedAt()->format('M');
-                }
-            }
-        }
 
         $form->remove('format');
         $form->remove('defaultValue');
@@ -70,19 +53,25 @@ class BlogFilterListener
                         'data-refreshOnChange' => "true",
                     ),
                 ));
-                $form->add('defaultValue', 'choice', array(
-                    'label'   => 'widget_filter.form.date.default.label',
-                    'choices' => $years,
-                    'empty_value' => 'widget_filter.form.date.default.empty_value.label',
-                    )
-                );
+                $eventDefaultValue = 'victoire.widget_filter.form.date.set_default_value';
                 break;
             case 'tag_filter':
+                $form->add('multiple', null, array(
+                    'label' => 'widget_filter.form.multiple.label',
+                ));
+                $eventDefaultValue = 'victoire.widget_filter.form.tag.set_default_value';
+            break;
             case 'category_filter':
                 $form->add('multiple', null, array(
                     'label' => 'widget_filter.form.multiple.label',
                 ));
+                $eventDefaultValue = 'victoire.widget_filter.form.category.set_default_value';
                 break;
         }
+        if ($eventDefaultValue) {
+            $defaultValueEvent = new WidgetFilterSetDefaultValueEvent($form, $data);
+            $this->eventDispatcher->dispatch($eventDefaultValue);
+        }
+
     }
 }
