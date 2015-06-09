@@ -31,7 +31,7 @@ class BlogFilterListener
     {
         $data = $event->getData();
         $form = $event->getForm()->getParent();
-        $articles = $this->em->getRepository('VictoireBlogBundle:Article')->getAll()->run();
+        $articles = $this->em->getRepository('VictoireBlogBundle:Article')->getAll(true)->run();
         $options = $form->getConfig()->getOptions()['data'];
         $years = $months = $days = array();
         foreach ($articles as $key => $_article) {
