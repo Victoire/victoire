@@ -125,6 +125,7 @@ services:
         class: Victoire\Bundle\BlogBundle\Listener\BlogFilterListener
         arguments:
             - "@doctrine.orm.entity_manager"
+            - "@event_dispatcher"
         tags:
             - { name: kernel.event_listener, event: victoire.widget_filter.form.pre_set_data, method: manageExtraFiltersFields, priority: 1 }
 
@@ -132,5 +133,14 @@ services:
         class: Victoire\Bundle\BlogBundle\Listener\BlogFilterListener
         arguments:
             - "@doctrine.orm.entity_manager"
+            - "@event_dispatcher"
         tags:
             - { name: kernel.event_listener, event: victoire.widget_filter.form.pre_submit, method: manageExtraFiltersFields, priority: 1 }
+
+    victoire.widget_filter.blog.set.default.values.form.listener:
+        class: Victoire\Bundle\BlogBundle\Listener\ArticleFilterDefaultValuesListener
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: kernel.event_listener, event: victoire.widget_filter.form.date.set_default_value, method: setDefaultDateValue, priority: 1 }
+
