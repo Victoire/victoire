@@ -62,8 +62,8 @@ class BlogFilterListener
                 $form->add('format', 'choice', array(
                     'label'   => 'widget_filter.form.date.format.label',
                     'choices' => array(
-                        // 'year'  => 'widget_filter.form.date.format.choices.year.label', #TODO
-                        // 'month' => 'widget_filter.form.date.format.choices.month.label', #TODO
+                        'year'  => 'widget_filter.form.date.format.choices.year.label',
+                        'month' => 'widget_filter.form.date.format.choices.month.label',
                         'day' => 'widget_filter.form.date.format.choices.day.label',
                     ),
                     'attr' => array(
