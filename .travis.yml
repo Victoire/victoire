@@ -5,6 +5,9 @@ php:
   - 5.6
 
 before_script:
+  # Additional PHP config
+  - phpenv config-add travis.php.ini
+
   - npm install less
   - composer install --dev --prefer-dist
   # Prepare database
