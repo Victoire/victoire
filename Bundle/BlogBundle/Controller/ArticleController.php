@@ -114,7 +114,6 @@ class ArticleController extends Controller
 
             $page = $this->container->get('victoire_page.page_helper')->findPageByParameters(array(
                 'viewId' => $pattern->getId(),
-                'locale' => $request->getSession()->get('victoire_locale'),
                 'entityId' => $article->getId(),
             ));
 

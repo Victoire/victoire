@@ -120,15 +120,12 @@ XML;
 
     public function getReferenceByParameters($parameters)
     {
-        $locale = array(
-            'locale' => '@locale="'.$this->requestStack->getCurrentRequest()->getLocale().'"',
-        );
         $viewReference = array();
+        $arguments = array();
 
         foreach ($parameters as $key => $value) {
             $arguments[$key] = '@'.$key.'="'.$value.'"';
         }
-        $arguments = array_merge($arguments, $locale);
 
         if ($xmlReference = $this->readCache()->xpath("//viewReference[".implode(' and ', $arguments)."]")) {
             $viewReference['id']              = XmlUtils::phpize($xmlReference[0]['id']);
