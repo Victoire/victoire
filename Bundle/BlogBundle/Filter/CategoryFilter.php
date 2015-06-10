@@ -6,6 +6,7 @@ use Victoire\Bundle\FilterBundle\Filter\BaseFilter;
 use Symfony\Component\Form\FormBuilderInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
+use Victoire\Bundle\BlogBundle\Entity\Category;
 
 /**
  * CategoryFilter form type
@@ -40,22 +41,39 @@ class CategoryFilter extends BaseFilter
         if (!is_array($parameters['category'])) {
             $parameters['category'] = array($parameters['category']);
         }
+        $childrenArray = [];
         //clean the parameters from the blank value
         foreach ($parameters['category'] as $index => $parameter) {
             //the blank value is removed
             if ($parameter === '') {
                 unset($parameters['category'][$index]);
+            }else{
+                $parentCategory = $this->em->getRepository('VictoireBlogBundle:Category')->findOneById($parameter);
+                $childrenArray = array_merge($childrenArray, $this->getCategoryChildrens($parentCategory, array()));
+
             }
         }
 
-        if (count($parameters['category']) > 0) {
+
+        if (count($childrenArray) > 0) {
             $qb = $qb
                 ->join('main_item.category', 'c')
                 ->andWhere('c.id IN (:category)')
-                ->setParameter('category', $parameters['category']);
+                ->setParameter('category', $childrenArray);
         }
 
         return $qb;
+    }
+
+    public function getCategoryChildrens(Category $category, $childrenArray)
+    {
+        $childrenArray[] = $category->getId();
+        $childrens = $category->getChildren();
+
+        foreach ($childrens as $children) {
+            $childrenArray =  $this->getCategoryChildrens($children, $childrenArray);
+        }
+        return $childrenArray;
     }
 
     /**
@@ -68,9 +86,27 @@ class CategoryFilter extends BaseFilter
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $categories = $this->em->getRepository('VictoireBlogBundle:Category')->findAll();
 
+        //getAll categories
+        $categoryQb = $this->em->getRepository('VictoireBlogBundle:Category')->getAll();
+        //getAll published articles
+        $articleQb = $this->em->getRepository('VictoireBlogBundle:Article')->getAll(true);
+
+        //get Listing
+        $listing = $options['widget']->getListing();
+
+        $mode = $listing->getMode();
+        switch ($mode) {
+            case 'query':
+                //filter with listingQuery
+                $articleQb->filterWithListingQuery($listing->getQuery());
+                break;
+        }
+        //filter categoriess with right articles
+        $categoryQb->filterByArticles($articleQb->getInstance('article'));
+        $categories = $categoryQb->getInstance('c_category')->getQuery()->getResult();
         //the blank value
+
         $categoriesChoices = array();
 
         foreach ($categories as $category) {
