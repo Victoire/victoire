@@ -64,8 +64,23 @@ class TagFilter extends BaseFilter
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $tags = $this->em->getRepository('VictoireBlogBundle:Tag')->findAll();
+        //getAll tags
+        $tagQb = $this->em->getRepository('VictoireBlogBundle:Tag')->getAll();
+        //getAll published articles
+        $articleQb = $this->em->getRepository('VictoireBlogBundle:Article')->getAll(true);
 
+        //get Listing
+        $listing = $options['widget']->getListing();
+
+        $mode = $listing->getMode();
+        switch ($mode) {
+            case 'query':                //filter with listingQuery
+                $articleQb->filterWithListingQuery($listing->getQuery());
+                break;
+        }
+        //filter tags with right articles
+        $tagQb->filterByArticles($articleQb->getInstance('article'));
+        $tags = $tagQb->getInstance('t_tag')->getQuery()->getResult();
         //the blank value
         $tagsChoices = array();
 
