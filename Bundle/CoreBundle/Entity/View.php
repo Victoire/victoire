@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\PageBundle\Entity\Slot;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
@@ -341,10 +342,12 @@ abstract class View
     {
         $webViewChildren = array();
         foreach ($this->children as $child) {
-            if ($child instanceof WebViewInterface) {
+            if (!$child instanceof BusinessEntityPagePattern) {
                 $webViewChildren[] = $child;
             }
         }
+
+        return $webViewChildren;
     }
 
     /**
