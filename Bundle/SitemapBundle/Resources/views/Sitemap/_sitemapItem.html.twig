@@ -30,7 +30,7 @@
     {% if page.children|length %}
     <ul class="sublist">
         {% set level = level + 1 %}
-        {% for _page in page.children %}
+        {% for _page in page.webViewChildren %}
         {% include 'VictoireSitemapBundle:Sitemap:_sitemapItem.html.twig' with {'page': _page, 'level': level} %}
         {% endfor %}
     </ul>

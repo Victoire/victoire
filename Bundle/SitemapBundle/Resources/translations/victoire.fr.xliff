@@ -30,6 +30,10 @@
                 <source>modal.sitemap.priority.label</source>
                 <target>Priorité :</target>
             </trans-unit>
+            <trans-unit id="8" resname="sitemap.goto">
+                <source>sitemap.goto</source>
+                <target>Se rendre à la page "%pageName%"</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

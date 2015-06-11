@@ -27,6 +27,10 @@
                 <source>sitemap.changedPriority.success</source>
                 <target>Ok boss, priority change for the page "%pageName%" !</target>
             </trans-unit>
+            <trans-unit id="8" resname="sitemap.goto">
+                <source>sitemap.goto</source>
+                <target>Let's go to "%pageName%" page</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

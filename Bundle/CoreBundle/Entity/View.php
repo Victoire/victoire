@@ -333,6 +333,21 @@ abstract class View
     }
 
     /**
+     * Get WebView children
+     *
+     * @return string
+     */
+    public function getWebViewChildren()
+    {
+        $webViewChildren = array();
+        foreach ($this->children as $child) {
+            if ($child instanceof WebViewInterface) {
+                $webViewChildren[] = $child;
+            }
+        }
+    }
+
+    /**
      * Add child
      *
      * @param View $child
