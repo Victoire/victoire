@@ -45,7 +45,7 @@ class SitemapController extends Controller
     /**
      * Show sitemap as tree and reorganize it by dnd
      *
-     * @Route("/reorganize", name="victoire_sitemap_reorganize")
+     * @Route("/reorganize", name="victoire_sitemap_reorganize", options={"expose"=true})
      * @Template()
      * @return JsonResponse
      */

@@ -27,20 +27,20 @@ function updateSitemapPosition(element, ui)
     var sorted = $vic(element).nestedSortable("toArray");
     loading(true);
     $vic.post(
-        "{{path('victoire_sitemap_reorganize')}}",
+        Routing.generate('victoire_sitemap_reorganize'),
         {
             sorted: sorted
         }
     ).done(function(response) {
-        loading(false);
-        congrat(response.message);
+            loading(false);
+            congrat(response.message);
 
-        $vic('#vic-modal').replaceWith(response.html);
-        $vic('#vic-modal').vicmodal({
-            keyboard: true,
-            backdrop: false
+            $vic('#vic-modal').replaceWith(response.html);
+            $vic('#vic-modal').vicmodal({
+                keyboard: true,
+                backdrop: false
+            });
         });
-    });
 };
 
 $vic('.modal').on('hidden', function () {
