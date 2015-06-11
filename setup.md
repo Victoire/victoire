@@ -42,7 +42,6 @@ or do it yourself by doing the usual stuff (doctrine:schema:update etc). You can
     new Knp\Bundle\MenuBundle\KnpMenuBundle(),
     //Victoire bundles
     new Victoire\Bundle\AnalyticsBundle\VictoireAnalyticsBundle(),
-    new Victoire\Bundle\AnalyticsBundle\VictoireAnalyticsBundle(),
     new Victoire\Bundle\BlogBundle\VictoireBlogBundle(),
     new Victoire\Bundle\BusinessEntityBundle\VictoireBusinessEntityBundle(),
     new Victoire\Bundle\BusinessEntityPageBundle\VictoireBusinessEntityPageBundle(),
@@ -91,7 +90,7 @@ or do it yourself by doing the usual stuff (doctrine:schema:update etc). You can
         ...
 ```
 
-Get the whole Victoire Widget list at packagist.org/search/?tags=victoire
+Get the whole Victoire Widget list [**here**](http://packagist.org/search/?tags=victoire)
 
 
 Check victoire dependencies:

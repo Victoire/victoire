@@ -66,6 +66,9 @@ class LinkExtension extends \Twig_Extension
         extract($parameters); //will assign $linkType, $attachedWidget, $routeParameters, $route, $page, $analyticsTrackCode
         switch ($linkType) {
             case 'viewReference':
+                if (is_array($viewReference)) {
+                    $viewReference = $viewReference['id'];
+                }
 
                 $page = $this->pageHelper->findPageByParameters(array('id' => $viewReference));
                 $linkUrl = $this->router->generate('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl()), $referenceType);

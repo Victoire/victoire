@@ -38,4 +38,8 @@
     {% javascripts injector="foot, alertify-codrops-notification" %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
+    {% block alertify %}
+        {{ app.session|alertify|raw }}
+    {% endblock %}
+    <!-- END FOOT_SCRIPT -->
 {% endblock foot_script %}

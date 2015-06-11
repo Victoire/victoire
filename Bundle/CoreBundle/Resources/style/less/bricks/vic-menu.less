@@ -15,7 +15,18 @@
         cursor: pointer;
 
         &:hover {
-            color: @green;
+            &,
+            .fa,
+            .vic-fa {
+                color: @green;
+            }
+        }
+
+        .fa,
+        .vic-fa {
+            width: 15px;
+            margin-right: 3px;
+            text-align: center;
         }
     }
 }

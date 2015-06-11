@@ -19,7 +19,7 @@ use Victoire\Bundle\I18nBundle\Entity\I18n;
  * @Gedmo\Tree(type="nested")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Victoire\Bundle\CoreBundle\Repository\ViewRepository")
  * @ORM\Table("vic_view")
  * @ORM\HasLifecycleCallbacks
  */
@@ -61,7 +61,9 @@ abstract class View
     /**
      * @var string
      *
-     * @Gedmo\Slug(fields={"name"}, updatable=false, unique=false)
+     * @Gedmo\Slug(handlers={
+     *     @Gedmo\SlugHandler(class="Victoire\Bundle\BusinessEntityBundle\Handler\TwigSlugHandler"
+     * )},fields={"name"}, updatable=false, unique=false)
      * @ORM\Column(name="slug", type="string", length=255)
      */
     protected $slug;
@@ -76,7 +78,7 @@ abstract class View
 
     /**
      * @Gedmo\TreeParent
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\PageBundle\Entity\BasePage", inversedBy="children", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="View", inversedBy="children", cascade={"persist"})
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $parent;
@@ -113,7 +115,7 @@ abstract class View
     protected $root;
 
     /**
-     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\PageBundle\Entity\BasePage", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="View", mappedBy="parent")
      * @ORM\OrderBy({"lft" = "ASC"})
      */
     protected $children;

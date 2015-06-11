@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
 use Doctrine\ORM\UnitOfWork;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
 use Victoire\Bundle\CoreBundle\Helper\ViewUrlHelper;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
@@ -119,6 +120,10 @@ class PageSubscriber implements EventSubscriber
                 $meta = $entityManager->getClassMetadata(get_class($entity));
                 $uow->recomputeSingleEntityChangeSet($meta, $entity);
                 $entity->setAuthor($this->userCallable->getCurrentUser());
+                if ($entity instanceof BusinessEntityPagePattern) {
+                    $this->updateCache($entity);
+                }
+
             }
         }
 

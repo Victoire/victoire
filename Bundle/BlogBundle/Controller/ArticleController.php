@@ -106,15 +106,14 @@ class ArticleController extends Controller
         $businessProperties = array();
 
         $form->handleRequest($request);
-        if ($form->isValid()) {
-            $this->get('doctrine.orm.entity_manager')->persist($article);
+        $novalidate = $request->query->get('novalidate', false);
+        if ($novalidate === false && $form->isValid()) {
             $this->get('doctrine.orm.entity_manager')->flush();
 
             $pattern = $article->getPattern();
 
             $page = $this->container->get('victoire_page.page_helper')->findPageByParameters(array(
                 'viewId' => $pattern->getId(),
-                'locale' => $request->getSession()->get('victoire_locale'),
                 'entityId' => $article->getId(),
             ));
 
@@ -123,10 +122,15 @@ class ArticleController extends Controller
                 'url'     => $this->generateUrl('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl())),
             );
         } else {
+            if ($novalidate === false){
+                $template = "VictoireBlogBundle:Article:settings.html.twig";
+            }else {
+                $template = "VictoireBlogBundle:Article:_form.html.twig";
+            }
             $response = array(
                 'success' => false,
                 'html'    => $this->container->get('victoire_templating')->render(
-                    'VictoireBlogBundle:Article:settings.html.twig',
+                    $template,
                     array(
                         'article'            => $article,
                         'form'               => $form->createView(),
