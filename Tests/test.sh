@@ -14,4 +14,5 @@ sleep 5
 curl http://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar > selenium-server-standalone-2.45.0.jar
 nohup java -jar selenium-server-standalone-2.45.0.jar > /dev/null &
 phpunit --coverage-text
-php ./vendor/bin/behat
+
+php ./vendor/bin/behat $1
