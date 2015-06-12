@@ -200,7 +200,7 @@ class ViewHelper
                     'url'             => $page->getUrl(),
                     'name'            => $page->getName(),
                     'locale'          => $page->getLocale(),
-                    'viewId'          => $page->getTemplate()->getId(),
+                    'patternId'       => $page->getTemplate()->getId(),
                     'entityId'        => $entity->getId(),
                     'entityNamespace' => $this->em->getClassMetadata(get_class($entity))->name,
                     'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
