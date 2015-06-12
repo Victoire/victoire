@@ -25,16 +25,24 @@ class BusinessEntitySubscriber implements EventSubscriber
     public function getSubscribedEvents()
     {
         return array(
-            'postPersist' => 'updateBusinessEntityPagesAndRegerateCache',
-            'postUpdate'  => 'updateBusinessEntityPagesAndRegerateCache',
+            'postPersist',
+            'postUpdate',
         );
     }
 
+    public function postPersist(LifecycleEventArgs $eventArgs)
+    {
+        $this->updateBusinessEntityPagesAndRegerateCache($eventArgs);
+    }
+    public function postUpdate(LifecycleEventArgs $eventArgs)
+    {
+        $this->updateBusinessEntityPagesAndRegerateCache($eventArgs);
+    }
     public function updateBusinessEntityPagesAndRegerateCache(LifecycleEventArgs $eventArgs)
     {
         $entityManager = $eventArgs->getEntityManager();
         $entity = $eventArgs->getEntity();
-        $businessEntity = $this->container->get('victoire_business_entity.business_entity_helper')->findByEntityInstance($entity);
+        $businessEntity = $this->container->get('victoire_core.helper.business_entity_helper')->findByEntityInstance($entity);
 
         if ($businessEntity) {
             $patterns = $entityManager->getRepository('VictoireBusinessEntityPageBundle:BusinessEntityPagePattern')->findPagePatternByBusinessEntity($businessEntity);
