@@ -135,7 +135,7 @@ class ViewUrlHelper
     {
         $initialUrl = $view->getUrl();
         // build url binded with parents url
-        if ($view instanceof Page && $view->isHomepage()) {
+        if (method_exists($view, 'isHomepage') && $view->isHomepage()) {
             $url = array('');
         } else {
             $url = array($view->getSlug());
