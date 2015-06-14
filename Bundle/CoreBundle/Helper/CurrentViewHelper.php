@@ -10,6 +10,7 @@ use Victoire\Bundle\CoreBundle\Entity\View;
 class CurrentViewHelper
 {
     protected $currentView;
+    protected $mainCurrentView;
 
     /**
      * Get currentView
@@ -19,6 +20,15 @@ class CurrentViewHelper
     public function getCurrentView()
     {
         return $this->currentView;
+    }
+    /**
+     * Get mainCurrentView
+     *
+     * @return View
+     */
+    public function getMainCurrentView()
+    {
+        return $this->mainCurrentView;
     }
 
     /**
@@ -30,6 +40,9 @@ class CurrentViewHelper
      */
     public function setCurrentView(View $currentView)
     {
+        if ($this->currentView == null) {
+            $this->mainCurrentView = clone $currentView;
+        }
         $this->currentView = $currentView;
 
         return $this;
