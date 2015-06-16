@@ -101,5 +101,6 @@ services:
             - "@victoire_business_entity_page.business_entity_page_helper"
             - "@router"
             - "@victoire_page.page_helper"
+            - "@victoire_core.current_view"
         tags:
             - { name: twig.extension }

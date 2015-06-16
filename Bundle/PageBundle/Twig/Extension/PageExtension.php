@@ -5,6 +5,7 @@ namespace Victoire\Bundle\PageBundle\Twig\Extension;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\BusinessEntityPageBundle\Helper\BusinessEntityPageHelper;
+use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
 
@@ -21,14 +22,16 @@ class PageExtension extends \Twig_Extension
      * Constructor
      *
      * @param BusinessEntityPageHelper $businessEntityPagePatternHelper
-     * @param Router                   $router
-     * @param PageHelper               $pageHelper
+     * @param Router $router
+     * @param PageHelper $pageHelper
+     * @param CurrentViewHelper $currentViewHelper
      */
-    public function __construct(BusinessEntityPageHelper $businessEntityPagePatternHelper, Router $router, PageHelper $pageHelper)
+    public function __construct(BusinessEntityPageHelper $businessEntityPagePatternHelper, Router $router, PageHelper $pageHelper, CurrentViewHelper $currentViewHelper)
     {
         $this->businessEntityPagePatternHelper = $businessEntityPagePatternHelper;
         $this->router = $router;
         $this->pageHelper = $pageHelper;
+        $this->currentViewHelper = $currentViewHelper;
     }
 
     /**
@@ -39,6 +42,7 @@ class PageExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
+            new \Twig_SimpleFunction('vic_current_page_reference', array($this, 'victoireCurrentPageReference')),
             'cms_page_business_page_pattern_sitemap' => new \Twig_Function_Method($this, 'cmsPageBusinessPagePatternSiteMap', array('is_safe' => array('html'))),
         );
     }
@@ -167,5 +171,12 @@ class PageExtension extends \Twig_Extension
         }
 
         return $urls;
+    }
+
+    public function victoireCurrentPageReference()
+    {
+        $currentView = $this->currentViewHelper;
+
+        return $currentView->getMainCurrentView()->getReference()['id'];
     }
 }
