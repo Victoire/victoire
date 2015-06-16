@@ -9,6 +9,8 @@ before_script:
   - phpenv config-add travis.php.ini
 
   - npm install less
+  - composer self-update
+  - composer config --global github-oauth.github.com $gh_auth_token
   - composer install --dev --prefer-dist
   # Prepare database
   - php Tests/Functionnal/bin/console --env=test doctrine:database:create
