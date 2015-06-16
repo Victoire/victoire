@@ -1,6 +1,7 @@
 Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern:
     pattern_article:
         name: "{{item.name}}"
+        slug: "{{item.slug}}"
         url: "the-jedi-network/{{item.slug}}"
         businessEntityName: article
         author: @anakin
