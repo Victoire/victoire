@@ -48,7 +48,7 @@
 
         {% if view is defined %}
         <script type="text/javascript">
-            var viewReferenceId = '{{ view.reference.id }}';
+            var viewReferenceId = '{{ vic_current_page_reference() }}';
         </script>
         {{ render_hinclude(controller('VictoireAnalyticsBundle:BrowseEvent:track', {'viewReferenceId': view.reference.id, 'referer': app.request.headers.get('referer')})) }}
         {% endif %}
