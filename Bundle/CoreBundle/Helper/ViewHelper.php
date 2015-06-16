@@ -67,7 +67,25 @@ class ViewHelper
             $this->em->refresh($view);
         }
 
+        $this->cleanVirtualViews($viewsReferences);
+
         return $viewsReferences;
+    }
+
+    public function cleanVirtualViews(&$viewsReferences)
+    {
+        foreach ($viewsReferences as $viewReference) {
+            // If viewReference is a persisted page
+            if ($viewReference['viewNamespace'] == 'Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage') {
+                array_walk($viewsReferences, function ($_viewReference, $key) use ($viewReference, &$viewsReferences) {
+                    if ($_viewReference['viewNamespace'] == 'Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern'
+                        && !empty($_viewReference['entityId'])
+                        && $_viewReference['entityId'] == $viewReference['entityId']) {
+                        unset($viewsReferences[$key]);
+                    }
+                });
+            }
+        }
     }
     /**
      * This method get all views (BasePage and Template) in DB and return the references, including non persisted Business entity page (pattern and businessEntityName based)
