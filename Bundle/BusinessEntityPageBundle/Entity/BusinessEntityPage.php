@@ -19,6 +19,7 @@ class BusinessEntityPage extends Page
      * @var EntityProxy
      *
      * @ORM\OneToOne(targetEntity="\Victoire\Bundle\CoreBundle\Entity\EntityProxy", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="entityProxy_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $entityProxy;
 
