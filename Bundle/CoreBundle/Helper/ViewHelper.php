@@ -246,12 +246,7 @@ class ViewHelper
                         }
                     }
 
-                    // This query retrieve business entity object, without useless properties for performance optimisation
-                    $entities = $this->em->getRepository($businessEntity->getClass())
-                        ->createQueryBuilder('e')
-                        ->addSelect('partial e.{'.implode(', ', $selectableProperties).'}')
-                        ->getQuery()
-                        ->getResult();
+                    $entities = $this->businessEntityPageHelper->getEntitiesAllowed($view);
 
                     // for each business entity
                     foreach ($entities as $entity) {
