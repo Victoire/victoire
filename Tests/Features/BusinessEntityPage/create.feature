@@ -7,7 +7,7 @@ Feature: Create business entity pages
             | name   | side   | midiChlorians | slug   |
             | Anakin | dark   | 20000         | anakin |
             | Yoda   | bright | 17500         | yoda   |
-        And I maximize the window
+        And I resize the window to 1024x720
 
     Scenario: I can create a new Business entity page pattern a create some content in the pattern
         Given I open the hamburger menu

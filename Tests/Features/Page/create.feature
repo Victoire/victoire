@@ -3,7 +3,7 @@ Feature: Create a page
 
 Background:
     Given I am logged in as "anakin@victoire.io"
-     And I maximize the window
+     And I resize the window to 1024x720
 
   @smartStep
 Scenario: I can create a new page
