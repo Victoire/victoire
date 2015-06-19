@@ -2,7 +2,6 @@
 
 namespace Victoire\Tests\Features\Context;
 
-
 use Knp\FriendlyContexts\Context\RawMinkContext;
 
 class JavascriptContext extends RawMinkContext
@@ -12,7 +11,7 @@ class JavascriptContext extends RawMinkContext
      */
     public function iMaximizeTheBroswer()
     {
-	$this->getSession()->maximizeWindow();
+        $this->getSession()->maximizeWindow();
     }
 
     /**
@@ -20,6 +19,14 @@ class JavascriptContext extends RawMinkContext
      */
     public function iMinimizeTheWindow()
     {
-	$this->getSession()->resizeWindow(500, 500, 'current');
+        $this->getSession()->resizeWindow(500, 500, 'current');
+    }
+
+    /**
+     * @When /^I resize the window to (\d+)x(\d+)/
+     */
+    public function iResizeTheWindow($width, $height)
+    {
+        $this->getSession()->resizeWindow(intval($width), intval($height), 'current');
     }
 }
