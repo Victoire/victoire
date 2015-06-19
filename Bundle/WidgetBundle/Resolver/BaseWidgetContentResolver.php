@@ -105,7 +105,7 @@ class BaseWidgetContentResolver
         $itemsQueryBuilder = $queryHelper->getQueryBuilder($widget);
 
         // Filter only visibleOnFront
-        return $queryBuilder->andWhere('main_item.visibleOnFront = true');
+        $itemsQueryBuilder->andWhere('main_item.visibleOnFront = true');
 
         //add the query of the widget
         return $queryHelper->buildWithSubQuery($widget, $itemsQueryBuilder);
