@@ -6,6 +6,7 @@ use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Event\WidgetRenderEvent;
 use Victoire\Bundle\CoreBundle\VictoireCmsEvents;
+use Victoire\Bundle\PageBundle\Entity\Slot;
 use Victoire\Bundle\WidgetBundle\Model\Widget;
 
 class WidgetRenderer
@@ -57,21 +58,18 @@ class WidgetRenderer
      *
      * @return string
      */
-    public function renderContainer(Widget $widget, View $view, $position = 0, $slotOptions = array())
+    public function renderContainer(Widget $widget, View $view, $position = 0)
     {
         $dispatcher = $this->container->get('event_dispatcher');
         $securityContext = $this->container->get('security.context');
 
         $dispatcher->dispatch(VictoireCmsEvents::WIDGET_PRE_RENDER, new WidgetRenderEvent($widget));
 
-        $html = $this->render($widget, $view);
+        $html = '<a class="vic-anchor" id="vic-widget-'.$widget->getId().'-container-anchor"></a>';
+        $html .= $this->render($widget, $view);
 
-        if ($securityContext->isGranted('ROLE_VICTOIRE')) {
-            $html .= $this->renderActions($widget->getSlot(), $view, $slotOptions, $position);
-        }
-
-        $html = '<a class="vic-anchor" id="vic-widget-'.$widget->getId().'-container-anchor"></a>'.$html;
         $html = "<div class='vic-widget-container' data-position=\"".($position - 1)."\" data-id=\"".$widget->getId()."\" id='vic-widget-".$widget->getId()."-container'>".$html.'</div>';
+        $html .= '<div class="vic-undraggable vic-new-widget" ng-bind-html="newContentActionButtonHtml"></div>';
 
         $dispatcher->dispatch(VictoireCmsEvents::WIDGET_POST_RENDER, new WidgetRenderEvent($widget, $html));
 
@@ -82,7 +80,7 @@ class WidgetRenderer
      * render widget actions
      * @param Widget $widget
      *
-     * @return template
+     * @return string
      */
     public function renderWidgetActions(Widget $widget)
     {
@@ -99,7 +97,7 @@ class WidgetRenderer
      * @param integer $widgetId
      * @param View    $view
      *
-     * @return template
+     * @return string
      */
     public function renderUnlinkActionByWidgetId($widgetId, $view)
     {
@@ -115,13 +113,12 @@ class WidgetRenderer
     /**
      * render slot actions
      * @param Slot    $slot
-     * @param View    $view
      * @param array   $options
      * @param integer $position
      *
-     * @return template
+     * @return string
      */
-    public function renderActions($slot, View $view, $options = array(), $position = 0)
+    public function renderActions($slot, $options = array())
     {
         $slots = $this->container->getParameter('victoire_core.slots');
 
@@ -158,10 +155,8 @@ class WidgetRenderer
             "VictoireCoreBundle:Widget:actions.html.twig",
             array(
                 "slot"     => $slot,
-                "view"     => $view,
                 'widgets'  => $widgets,
-                'max'      => $max,
-                'position' => $position,
+                'max'      => $max
             )
         );
     }

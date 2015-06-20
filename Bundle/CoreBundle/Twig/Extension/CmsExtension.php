@@ -138,8 +138,8 @@ class CmsExtension extends \Twig_Extension_Core
     /**
      * render all widgets in a slot
      *
-     * @param unknown $slotId
-     * @param string  $slotOptions
+     * @param string $slotId
+     * @param string $slotOptions
      *
      * @return string HTML markup of the widget with action button if needed
      */
@@ -150,10 +150,6 @@ class CmsExtension extends \Twig_Extension_Core
         $em = $this->entityManager;
 
         $result = "";
-
-        if ($this->isRoleVictoireGranted()) {
-            $result .= $this->widgetRenderer->renderActions($slotId, $currentView, $slotOptions, 0);
-        }
 
         if (!empty($currentView->getWidgetMap()[$slotId])) {
             //parse the widget maps
@@ -175,19 +171,19 @@ class CmsExtension extends \Twig_Extension_Core
                         }
 
                         //render this widget
-                        $result .= $this->cmsWidget($widget, $widgetMap->getPosition() + 1, $slotOptions);
+                        $result .= $this->cmsWidget($widget, $widgetMap->getPosition() + 1);
                     } else {
                         $ngControllerName =  'widget'.$widgetId.'AsynchronousLoadCtrl';
-                        $result .= '<div ng-controller="WidgetAsynchronousLoadController as '.$ngControllerName.'" class="vic-widget" data-widget="'.$widgetId.'" ng-init="'.$ngControllerName.'.fetchAsynchronousWidget('.$widgetId.')" ng-bind-html="html"></div>';
+                        $result .= '<div id="vic-widget-'.$widgetId.'-container" ng-controller="WidgetAsynchronousLoadController as '.$ngControllerName.'" class="vic-widget" ng-init="'.$ngControllerName.'.fetchAsynchronousWidget('.$widgetId.')" ng-bind-html="html"></div>';
                     }
                 } catch (\Exception $ex) {
                     $result .= $this->widgetExceptionHandler->handle($ex, $currentView, $widget, $widgetId);
                 }
             }
         }
-
         //the container for the slot
-        $result = "<div class='vic-slot' data-name=".$slotId." id='vic-slot-".$slotId."'>".$result."</div>";
+        $ngSlotControllerName = 'slot'.$slotId.'Controller';
+        $result = '<div class="vic-slot" data-name="'.$slotId.'" id="vic-slot-'.$slotId.'" ng-controller="SlotController as '.$ngSlotControllerName.'" ng-init="'.$ngSlotControllerName.'.addActions(\''.$slotId.'\', '.json_encode($slotOptions).')"><div class="vic-undraggable vic-new-widget" ng-bind-html="newContentActionButtonHtml"></div>'.$result.'</div>';
 
         return $result;
     }
@@ -196,14 +192,14 @@ class CmsExtension extends \Twig_Extension_Core
      * Render a widget
      * @param Widget $widget
      *
-     * @return unknown
+     * @return string
      */
-    public function cmsWidget($widget, $position = 0, $slotOptions = array())
+    public function cmsWidget($widget, $position = 0)
     {
         $widget->setCurrentView($this->currentViewHelper->getCurrentView());
 
         try {
-            $response = $this->widgetRenderer->renderContainer($widget, $widget->getCurrentView(), $position, $slotOptions);
+            $response = $this->widgetRenderer->renderContainer($widget, $widget->getCurrentView(), $position);
         } catch (\Exception $ex) {
             $response = $this->widgetExceptionHandler->handle($ex, $widget);
         }
