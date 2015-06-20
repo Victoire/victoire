@@ -163,17 +163,23 @@ class CmsExtension extends \Twig_Extension_Core
                     //get the widget id
                     $widgetId = $widgetMap->getWidgetId();
 
-                    //get the widget
-                    $widgetRepo = $em->getRepository('VictoireWidgetBundle:Widget');
-                    $widget = $widgetRepo->findOneById($widgetId);
+                    if (!$widgetMap->isAsynchronous()) {
 
-                    //test widget
-                    if ($widget === null) {
-                        throw new \Exception('The widget with the id:['.$widgetId.'] was not found.');
+                        //get the widget
+                        $widgetRepo = $em->getRepository('VictoireWidgetBundle:Widget');
+                        $widget = $widgetRepo->findOneById($widgetId);
+
+                        //test widget
+                        if ($widget === null) {
+                            throw new \Exception('The widget with the id:[' . $widgetId . '] was not found.');
+                        }
+
+                        //render this widget
+                        $result .= $this->cmsWidget($widget, $widgetMap->getPosition() + 1, $slotOptions);
+                    } else {
+                        $ngControllerName =  'widget'.$widgetId.'AsynchronousLoadCtrl';
+                        $result .= '<div ng-controller="WidgetAsynchronousLoadController as '.$ngControllerName.'" class="vic-widget" data-widget="'.$widgetId.'" ng-init="'.$ngControllerName.'.fetchAsynchronousWidget('.$widgetId.')" ng-bind-html="html"></div>';
                     }
-
-                    //render this widget
-                    $result .= $this->cmsWidget($widget, $widgetMap->getPosition() + 1, $slotOptions);
                 } catch (\Exception $ex) {
                     $result .= $this->widgetExceptionHandler->handle($ex, $currentView, $widget, $widgetId);
                 }
