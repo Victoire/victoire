@@ -46,6 +46,13 @@ class Widget extends BaseWidget
     /**
      * @var string
      *
+     * @ORM\Column(name="asynchronous", type="boolean", nullable=true)
+     */
+    protected $asynchronous;
+
+    /**
+     * @var string
+     *
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\CoreBundle\Entity\View", inversedBy="widgets", cascade={"persist"})
      * @ORM\JoinColumn(name="view_id", referencedColumnName="id", onDelete="CASCADE")
      *
