@@ -16,7 +16,7 @@ $vic(document).on('change', '.vic-new-widget select', function(event) {
     event.preventDefault();
     var url = generateNewWidgetUrl(event.target);
     $vic(event.target).blur();
-    var modal = openModal(url);
+    openModal(url);
     $vic(this).parents('.vic-new-widget').first().addClass('vic-creating');
 });
 
@@ -53,7 +53,10 @@ $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(
                 var slotId = $vic(slot).data('name');
                 //update the positions of the widgets
                 updateWidgetPositions(slotId);
-                slideTo($vic('> .vic-anchor', '#' + response.widgetId));
+                slideTo($vic('> .vic-anchor', '#vic-widget-' + response.widgetId + '-container'));
+                if(typeof(Storage) !== "undefined") {
+                    localStorage.setItem('victoire__widget__html__' + response.widgetId, response.html);
+                }
                 congrat(response.message, 10000);
             }
 
@@ -84,7 +87,7 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update"]', function(
     }
     var form = $vic(this).parents('.vic-modal-content').find('form.vic-form-active');
     if ($vic(form).length == 0) {
-        var form = $vic(this).parents('.vic-modal-content').find('.vic-tab-pane.vic-active form').filter(":visible");
+        form = $vic(this).parents('.vic-modal-content').find('.vic-tab-pane.vic-active form').filter(":visible");
     }
     $vic(form).trigger("victoire_widget_form_update_presubmit");
 
@@ -92,16 +95,19 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update"]', function(
     $vic.ajax({
         type: form.attr('method'),
         url : form.attr('action'),
-        data: form.serialize(),
+        data: form.serialize()
     }).done(function(response){
         if (true === response.success) {
             if (response.hasOwnProperty("redirect")) {
                 window.location.replace(response.redirect);
             } else {
                 closeModal();
-                $vic(".vic-widget", "#"+response.widgetId).replaceWith(response.html);
-                slideTo($vic('> .vic-anchor', '#' + response.widgetId));
+                $vic(".vic-widget", '#vic-widget-' + response.widgetId + '-container').replaceWith(response.html);
+                slideTo($vic('> .vic-anchor', '#vic-widget-' + response.widgetId + '-container'));
                 congrat(response.message, 10000);
+            }
+            if(typeof(Storage) !== "undefined") {
+                localStorage.setItem('victoire__widget__html__' + response.widgetId, response.html);
             }
             loading(false);
         } else {
@@ -160,20 +166,19 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="delete"], .vic-hover
             }
         });
         $vic(document).trigger("victoire_widget_delete_postsubmit");
-    };
+    }
 });
 
 function generateNewWidgetUrl(select){
     var slotId = $vic(select).parents('.vic-slot').first().data('name');
+    var container = $vic(select).parents('.vic-new-widget');
+    var positionReference = 0;
 
-    if ($vic(select).parents('.vic-new-widget').first().hasClass('vic-first')) {
-        var positionReference = 0;
-    } else {
-        var positionReference = parseInt($vic(select).parents('.vic-widget-container').data('id'));
+    if (!$vic(container).is(':first-child')) {
+        positionReference = parseInt($vic(container).prev().data('id'));
     }
 
-
-    var url = Routing.generate(
+    return Routing.generate(
         'victoire_core_widget_new',
         {
             'viewReference'    : viewReferenceId,
@@ -183,6 +188,4 @@ function generateNewWidgetUrl(select){
             '_locale'          : locale
         }
     );
-
-    return url;
 }

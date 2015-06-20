@@ -197,7 +197,7 @@ class WidgetController extends Controller
                     'view'     => $view,
                     'success'  => true,
                     'html'     => $this->get('victoire_widget.widget_renderer')->render($widget, $view),
-                    'widgetId' => "vic-widget-".$widget->getId()."-container",
+                    'widgetId' => $widget->getId(),
                 );
             } else {
                 $params = array(

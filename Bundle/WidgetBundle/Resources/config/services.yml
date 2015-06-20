@@ -1,8 +1,4 @@
 services:
-    victoire_widget.widget_map_builder:
-        class: Victoire\Bundle\PageBundle\WidgetMap\WidgetMapBuilder
-        arguments: [@doctrine.orm.entity_manager]
-
     victoire_widget.widget_content_resolver:
         class: Victoire\Bundle\WidgetBundle\Resolver\WidgetContentResolver
         arguments:

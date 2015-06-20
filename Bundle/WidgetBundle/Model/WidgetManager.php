@@ -190,7 +190,7 @@ class WidgetManager
 
             $response = array(
                 "success"  => true,
-                "widgetId" => "vic-widget-".$widget->getId()."-container",
+                'widgetId' => $widget->getId(),
                 "html"     => $htmlWidget,
             );
         } else {
@@ -259,7 +259,7 @@ class WidgetManager
                     'view'        => $currentView,
                     'success'     => true,
                     'html'        => $this->widgetRenderer->render($widget, $currentView),
-                    'widgetId'    => "vic-widget-".$initialWidgetId."-container",
+                    'widgetId'    => $initialWidgetId,
                 );
             } else {
                 $formErrorHelper = $this->formErrorHelper;

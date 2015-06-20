@@ -8,8 +8,19 @@
     {% set backgroundWidget = containerBackground ? "background: " ~ containerBackground ~ "; " %}
     {% set textAlign = textAlign != '' ? "text-align: " ~ textAlign ~ "; " %}
 
+    {% set hasGlobalStyle = widthWidget or marginWidget or paddingWidget or backgroundWidget or textAlign %}
 
+    {% set responsiveStyles = {} %}
+    {% for sizeCode in ['xs', 'sm', 'md', 'lg'] %}
+        {% set instructions = _self.responsiveStyle(widget, 'xs', victoire_twig_responsive) %}
+        {% if instructions|trim != "" %}
+            {% set responsiveStyles = responsiveStyles|merge({sizeCode: instructions}) %}
+        {% endif %}
+    {% endfor %}
+
+    {% if hasGlobalStyle or responsiveStyles|length %}
     <style>
+        {% if hasGlobalStyle %}
         #widget-{{ widget.id }} {
             {{ widthWidget }}
             {{ marginWidget }}
@@ -17,12 +28,16 @@
             {{ backgroundWidget }}
             {{ textAlign }}
         }
+        {% endif %}
 
-       {{ _self.responsiveStyle(widget, 'xs', victoire_twig_responsive) }}
+        {% for responsiveStyle in responsiveStyles %}
+            {{ responsiveStyle }}
+        {% endfor %}
        {{ _self.responsiveStyle(widget, 'sm', victoire_twig_responsive) }}
        {{ _self.responsiveStyle(widget, 'md', victoire_twig_responsive) }}
        {{ _self.responsiveStyle(widget, 'lg', victoire_twig_responsive) }}
     </style>
+    {% endif %}
 
     <{{ containerTag }} class="vic-widget {{ cms_widget_extra_css_class(widget) }} {{ containerClass }}" id="widget-{{widget.id}}">
 

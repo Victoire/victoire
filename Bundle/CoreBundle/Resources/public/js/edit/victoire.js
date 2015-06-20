@@ -138,8 +138,10 @@ function slideTo(element, duration, effect) {
 
     //get the top offset of the target anchor
     var target_offset = $vic(element).offset();
-    var target_top = target_offset.top;
+    if (target_offset != undefined) {
+        var target_top = target_offset.top;
 
-    //goto that anchor by setting the body scroll top to anchor top
-    $vic('html, body').animate({scrollTop:target_top}, duration, effect);
+        //goto that anchor by setting the body scroll top to anchor top
+        $vic('html, body').animate({scrollTop:target_top}, duration, effect);
+    }
 }
