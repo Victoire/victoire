@@ -11,6 +11,8 @@ use Victoire\Bundle\WidgetBundle\Model\Widget;
 
 class WidgetRenderer
 {
+    public static $newContentActionButtonHtml = '<div class="vic-undraggable vic-new-widget" ng-bind-html="newContentActionButtonHtml"></div>';
+
     private $container;
 
     public function __construct(Container $container)
@@ -58,20 +60,32 @@ class WidgetRenderer
      *
      * @return string
      */
-    public function renderContainer(Widget $widget, View $view, $position = 0)
+    public function renderContainer(Widget $widget, View $view)
     {
         $dispatcher = $this->container->get('event_dispatcher');
-        $securityContext = $this->container->get('security.context');
 
         $dispatcher->dispatch(VictoireCmsEvents::WIDGET_PRE_RENDER, new WidgetRenderEvent($widget));
 
-        $html = '<a class="vic-anchor" id="vic-widget-'.$widget->getId().'-container-anchor"></a>';
+        $html = '<div class="vic-widget-container" data-id="'.$widget->getId().'" id="vic-widget-'.$widget->getId().'-container">';
         $html .= $this->render($widget, $view);
-
-        $html = "<div class='vic-widget-container' data-position=\"".($position - 1)."\" data-id=\"".$widget->getId()."\" id='vic-widget-".$widget->getId()."-container'>".$html.'</div>';
-        $html .= '<div class="vic-undraggable vic-new-widget" ng-bind-html="newContentActionButtonHtml"></div>';
+        $html .= '</div>';
 
         $dispatcher->dispatch(VictoireCmsEvents::WIDGET_POST_RENDER, new WidgetRenderEvent($widget, $html));
+
+        return $html;
+    }
+
+    /**
+     * prepare a widget to be rendered asynchronously
+     * @param integer $widgetId
+     *
+     * @return string
+     */
+    public function prepareAsynchronousRender($widgetId)
+    {
+        $ngControllerName =  'widget'.$widgetId.'AsynchronousLoadCtrl';
+        $ngDirectives = 'ng-controller="WidgetAsynchronousLoadController as '.$ngControllerName.'" class="vic-widget" ng-init="'.$ngControllerName.'.fetchAsynchronousWidget('.$widgetId.')" ng-bind-html="html"';
+        $html = '<div class="vic-widget-container" data-id="'.$widgetId.'" id="vic-widget-'.$widgetId.'-container" '.$ngDirectives.'></div>';
 
         return $html;
     }

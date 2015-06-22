@@ -2,6 +2,7 @@
 
 {% block body %}
 
+    <a class="vic-anchor" id="vic-widget-{{ widget.id }}-container-anchor"></a>
     {% set widthWidget = containerWidth ? "width: " ~ containerWidth ~ "; " %}
     {% set marginWidget = containerMargin ? "margin: " ~ containerMargin ~ "; " %}
     {% set paddingWidget = containerPadding ? "padding: " ~ containerPadding ~ "; " %}
@@ -39,7 +40,7 @@
     </style>
     {% endif %}
 
-    <{{ containerTag }} class="vic-widget {{ cms_widget_extra_css_class(widget) }} {{ containerClass }}" id="widget-{{widget.id}}">
+    <{{ containerTag }} class="vic-widget {{ cms_widget_extra_css_class(widget) }} {{ containerClass }}" id="widget-{{ widget.id }}">
 
     {% if is_granted('ROLE_VICTOIRE') %}
         {% block actions %}

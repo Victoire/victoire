@@ -171,11 +171,11 @@ class CmsExtension extends \Twig_Extension_Core
                         }
 
                         //render this widget
-                        $result .= $this->cmsWidget($widget, $widgetMap->getPosition() + 1);
+                        $result .= $this->cmsWidget($widget);
                     } else {
-                        $ngControllerName =  'widget'.$widgetId.'AsynchronousLoadCtrl';
-                        $result .= '<div id="vic-widget-'.$widgetId.'-container" ng-controller="WidgetAsynchronousLoadController as '.$ngControllerName.'" class="vic-widget" ng-init="'.$ngControllerName.'.fetchAsynchronousWidget('.$widgetId.')" ng-bind-html="html"></div>';
+                        $result .= $this->widgetRenderer->prepareAsynchronousRender($widgetId);
                     }
+                    $result .= WidgetRenderer::$newContentActionButtonHtml;
                 } catch (\Exception $ex) {
                     $result .= $this->widgetExceptionHandler->handle($ex, $currentView, $widget, $widgetId);
                 }
@@ -183,7 +183,8 @@ class CmsExtension extends \Twig_Extension_Core
         }
         //the container for the slot
         $ngSlotControllerName = 'slot'.$slotId.'Controller';
-        $result = '<div class="vic-slot" data-name="'.$slotId.'" id="vic-slot-'.$slotId.'" ng-controller="SlotController as '.$ngSlotControllerName.'" ng-init="'.$ngSlotControllerName.'.addActions(\''.$slotId.'\', '.json_encode($slotOptions).')"><div class="vic-undraggable vic-new-widget" ng-bind-html="newContentActionButtonHtml"></div>'.$result.'</div>';
+        $ngInitLoadActions = $this->isRoleVictoireGranted() ? 'ng-init="'.$ngSlotControllerName.'.addActions(\''.$slotId.'\', '.json_encode($slotOptions).')"' : '';
+        $result = '<div class="vic-slot" data-name="'.$slotId.'" id="vic-slot-'.$slotId.'" ng-controller="SlotController as '.$ngSlotControllerName.'" '.$ngInitLoadActions.'>'.WidgetRenderer::$newContentActionButtonHtml.$result.'</div>';
 
         return $result;
     }
@@ -194,12 +195,12 @@ class CmsExtension extends \Twig_Extension_Core
      *
      * @return string
      */
-    public function cmsWidget($widget, $position = 0)
+    public function cmsWidget($widget)
     {
         $widget->setCurrentView($this->currentViewHelper->getCurrentView());
 
         try {
-            $response = $this->widgetRenderer->renderContainer($widget, $widget->getCurrentView(), $position);
+            $response = $this->widgetRenderer->renderContainer($widget, $widget->getCurrentView());
         } catch (\Exception $ex) {
             $response = $this->widgetExceptionHandler->handle($ex, $widget);
         }

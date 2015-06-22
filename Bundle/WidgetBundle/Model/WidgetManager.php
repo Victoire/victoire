@@ -187,6 +187,7 @@ class WidgetManager
 
             //get the html for the widget
             $htmlWidget = $this->widgetRenderer->renderContainer($widget, $view, $widgetMapEntry->getPosition());
+            $htmlWidget .= WidgetRenderer::$newContentActionButtonHtml;
 
             $response = array(
                 "success"  => true,

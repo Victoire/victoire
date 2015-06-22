@@ -8,7 +8,6 @@ victoire_app.controller("WidgetAsynchronousLoadController",
                 promise.then(
                     function(payload) {
                         html = payload.data.html;
-                        console.log(html);
                         $widgetLocalStorageService.store(widgetId, html);
                         $scope.html = $sce.trustAsHtml(html);
                     },
