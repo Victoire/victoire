@@ -99,7 +99,7 @@ XML;
         /** @var ViewHelper $viewHelper */
         $viewHelper = $this->container->get('victoire_core.view_helper');
         $rootNode = $this->readCache();
-        $viewReference = $viewHelper->getViewReferenceByView($view, $entity);
+        $viewReference = $viewHelper->getViewReferenceByView($view);
         self::removeViewReference($rootNode, $viewReference);
         $itemNode = $rootNode->addChild('viewReference');
         foreach ($viewReference as $key => $value) {
