@@ -178,7 +178,7 @@ class ViewHelper
     public function getViewReferenceByView(View $view, $entity = null)
     {
         $viewReference = array(
-            'id'            => $this->viewCacheHelper->getViewReferenceId($view),
+            'id'            => $this->viewCacheHelper->getViewReferenceId($view, $entity),
             'locale'        => $view->getLocale(),
             'viewId'        => $view->getId(),
             'name'          => $view->getName(),
