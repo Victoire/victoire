@@ -44,15 +44,9 @@ $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(
                 window.location.replace(response.redirect);
             } else {
                 closeModal();
-                if ($vic('.vic-creating').hasClass('vic-first')) {
-                    $vic('.vic-creating').after(response.html);
-                } else {
-                    $vic('.vic-creating').parents('.vic-widget-container').first().after(response.html);
-                }
+                $vic('.vic-creating').after(response.html);
                 var slot = $vic('.vic-creating').parents('vic-slot').first();
                 var slotId = $vic(slot).data('name');
-                //update the positions of the widgets
-                updateWidgetPositions(slotId);
                 slideTo($vic('> .vic-anchor', '#vic-widget-' + response.widgetId + '-container'));
                 if(typeof(Storage) !== "undefined") {
                     localStorage.setItem('victoire__widget__html__' + response.widgetId, response.html);
@@ -151,8 +145,6 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="delete"], .vic-hover
 
                     //remove the div
                     widgetDiv.remove();
-                    //update the data-position attribute of the slot's widgets
-                    updateWidgetPositions(slotId);
 
                     //close the modal
                     eval(slotFunction + "()");

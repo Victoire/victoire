@@ -9,6 +9,7 @@
                 "http://code.angularjs.org/1.4.1/angular-sanitize.min.js",
                 "@VictoireCoreBundle/Resources/script/victoire_app/app.js",
                 "@VictoireCoreBundle/Resources/script/victoire_app/controllers/widget/WidgetAsynchronousLoadCtrl.js",
+                "@VictoireCoreBundle/Resources/script/victoire_app/controllers/slot/SlotCtrl.js",
                 "@VictoireCoreBundle/Resources/public/vendor/jquery.scrollTo/1.4.14/jquery.scrollTo.min.js",
                 "@VictoireCoreBundle/Resources/public/js/smooth-scroll.js",
                 "@VictoireCoreBundle/Resources/public/vendor/jquery-unveil/jquery.unveil.js",
