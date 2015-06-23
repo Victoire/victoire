@@ -84,8 +84,8 @@ class WidgetRenderer
     public function prepareAsynchronousRender($widgetId)
     {
         $ngControllerName =  'widget'.$widgetId.'AsynchronousLoadCtrl';
-        $ngDirectives = 'ng-controller="WidgetAsynchronousLoadController as '.$ngControllerName.'" class="vic-widget" ng-init="'.$ngControllerName.'.fetchAsynchronousWidget('.$widgetId.')" ng-bind-html="html"';
-        $html = '<div class="vic-widget-container" data-id="'.$widgetId.'" id="vic-widget-'.$widgetId.'-container" '.$ngDirectives.'></div>';
+        $ngDirectives = sprintf('ng-controller="WidgetAsynchronousLoadController as %s" class="vic-widget" ng-init="%s.init(%d)" ng-bind-html="html"', $ngControllerName, $ngControllerName, $widgetId);
+        $html = sprintf('<div class="vic-widget-container" data-id="%d" id="vic-widget-%d-container" %s></div>', $widgetId, $widgetId, $ngDirectives);
 
         return $html;
     }
