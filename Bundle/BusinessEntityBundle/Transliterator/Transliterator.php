@@ -29,6 +29,7 @@ class Transliterator extends BaseTransliterator
      *
      * @param string $text
      * @param string $separator
+     * @param boolean $excludeTwig
      *
      * @return string
      */
@@ -54,7 +55,7 @@ class Transliterator extends BaseTransliterator
             // this regex match all word, characters, number, twig variables.
             $text = preg_replace("/(?:\\{\\{\\s*%\\s*[^}]+\\}\\})|(\\{\\{\\s*(?!%)\\s*(?>(?!\\.)[^\\s{}%]*)(?<!%)\\s*\\}\\}|\\w+)|(?:.)/mx", "$1 ", $text);
             $text = preg_replace('!\s+!', $separator, $text);
-        }else{
+        } else {
             $text = preg_replace('/[^A-Za-z0-9\/]+/', $separator, $text);
 
         }

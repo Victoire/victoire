@@ -47,7 +47,7 @@ class CategoryFilter extends BaseFilter
             //the blank value is removed
             if ($parameter === '') {
                 unset($parameters['category'][$index]);
-            }else{
+            } else {
                 $parentCategory = $this->em->getRepository('VictoireBlogBundle:Category')->findOneById($parameter);
                 $childrenArray = array_merge($childrenArray, $this->getCategoryChildrens($parentCategory, array()));
 
@@ -71,7 +71,7 @@ class CategoryFilter extends BaseFilter
         $childrens = $category->getChildren();
 
         foreach ($childrens as $children) {
-            $childrenArray =  $this->getCategoryChildrens($children, $childrenArray);
+            $childrenArray = $this->getCategoryChildrens($children, $childrenArray);
         }
         return $childrenArray;
     }

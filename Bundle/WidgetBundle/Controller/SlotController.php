@@ -2,13 +2,10 @@
 
 namespace Victoire\Bundle\WidgetBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\VarDumper\VarDumper;
 
 /**
  * Slot Controller
@@ -19,7 +16,7 @@ class SlotController extends Controller
     /**
      * Get the new content button for the given slot and options
      *
-     * @param string  $slot    The slot where attach the widget
+     * @param string  $slotId    The slot where attach the widget
      * @param array   $options The slot options
      *
      * @return JsonResponse

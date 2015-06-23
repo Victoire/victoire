@@ -39,14 +39,14 @@ class ArticleSettingsType extends ArticleType
             ->add('image', 'media');
 
             // manage conditional related status in preset data
-            $builder->get('status')->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            $builder->get('status')->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
                 $data = $event->getData();
                 $form = $event->getForm();
                 self::manageRelatedStatus($data, $form->getParent());
             });
 
             // manage conditional related status in pre submit (ajax call to refresh view)
-            $builder->get('status')->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+            $builder->get('status')->addEventListener(FormEvents::PRE_SUBMIT, function(FormEvent $event) {
                 $form = $event->getForm();
                 $data = $event->getData();
                 self::manageRelatedStatus($data, $form->getParent());

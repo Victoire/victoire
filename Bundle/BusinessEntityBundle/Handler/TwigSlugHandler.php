@@ -74,7 +74,7 @@ class TwigSlugHandler implements SlugHandlerInterface
     {
         if ($object instanceof BusinessEntityPagePattern) {
             $slug = $this->transliterator->urlize($text, $separator, true);
-        }else{
+        } else {
             $slug = $this->transliterator->urlize($text, $separator);
         }
         return $slug;

@@ -24,7 +24,6 @@ class ArticleManager
     /**
      * Delete a given article
      * @param Article            $article
-     * @param BusinessEntityPage $view
      */
     public function delete(Article $article, BusinessEntityPage $bep)
     {

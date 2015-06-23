@@ -71,7 +71,7 @@ class Route
     /**
      * Set view
      *
-     * @param \stdClass $view
+     * @param View $view
      *
      * @return Route
      */

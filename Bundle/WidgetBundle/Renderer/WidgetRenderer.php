@@ -83,7 +83,7 @@ class WidgetRenderer
      */
     public function prepareAsynchronousRender($widgetId)
     {
-        $ngControllerName =  'widget'.$widgetId.'AsynchronousLoadCtrl';
+        $ngControllerName = 'widget'.$widgetId.'AsynchronousLoadCtrl';
         $ngDirectives = sprintf('ng-controller="WidgetAsynchronousLoadController as %s" class="vic-widget" ng-init="%s.init(%d)" ng-bind-html="html"', $ngControllerName, $ngControllerName, $widgetId);
         $html = sprintf('<div class="vic-widget-container" data-id="%d" id="vic-widget-%d-container" %s></div>', $widgetId, $widgetId, $ngDirectives);
 
@@ -128,7 +128,6 @@ class WidgetRenderer
      * render slot actions
      * @param Slot    $slot
      * @param array   $options
-     * @param integer $position
      *
      * @return string
      */
