@@ -183,8 +183,9 @@ class CmsExtension extends \Twig_Extension_Core
         }
         //the container for the slot
         $ngSlotControllerName = 'slot'.$slotId.'Controller';
-        $ngInitLoadActions = $this->isRoleVictoireGranted() ? 'ng-init="'.$ngSlotControllerName.'.addActions(\''.$slotId.'\', '.json_encode($slotOptions).')"' : '';
+        $ngInitLoadActions = $this->isRoleVictoireGranted() ? 'ng-init=\''.$ngSlotControllerName.'.addActions("'.$slotId.'", '.json_encode($slotOptions).')\'' : '';
         $result = '<div class="vic-slot" data-name="'.$slotId.'" id="vic-slot-'.$slotId.'" ng-controller="SlotController as '.$ngSlotControllerName.'" '.$ngInitLoadActions.'>'.WidgetRenderer::$newContentActionButtonHtml.$result.'</div>';
+
 
         return $result;
     }
