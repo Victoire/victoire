@@ -3,7 +3,7 @@ ngApp.controller("WidgetAsynchronousLoadController",
     function($scope, $widgetLocalStorageService, $widgetAPI, $slotLocalStorageService, $sce) {
         this.init = function(widgetId) {
             $scope.widgetId = widgetId;
-            fetchAsynchronousWidget();
+            $scope.fetchAsynchronousWidget();
         },
         $scope.fetchAsynchronousWidget = function() {
             html = $widgetLocalStorageService.fetchStorage($scope.widgetId);
