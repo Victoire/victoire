@@ -48,11 +48,11 @@ class BasePageController extends Controller
 
         $refClass = new \ReflectionClass($entity);
 
-        $pattern = $this->container->get('victoire_business_entity_page.business_entity_page_helper')
-            ->guessBestViewForEntity($refClass);
+        $patternId = $this->container->get('victoire_business_entity_page.business_entity_page_helper')
+            ->guessBestPatternIdForEntity($refClass, $entityId);
 
         $page = $this->container->get('victoire_page.page_helper')->findPageByParameters(array(
-            'viewId' => $pattern->getId(),
+            'viewId' => $patternId,
             'entityId' => $entityId,
         ));
         $this->get('victoire_widget_map.builder')->build($page);

@@ -200,10 +200,9 @@ class LinkExtension extends \Twig_Extension
 
             $refClass = new \ReflectionClass($entity);
 
-            $pattern = $this->businessEntityPageHelper
-                ->guessBestViewForEntity($refClass);
+            $patternId = $this->businessEntityPageHelper
+                ->guessBestPatternIdForEntity($refClass, $entity->getId());
 
-            $patternId = $pattern->getId();
         }
 
         $page = $this->pageHelper->findPageByParameters(array(
