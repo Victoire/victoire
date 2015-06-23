@@ -601,7 +601,7 @@ abstract class View
     /**
      * Get widgets
      *
-     * @return string
+     * @return Widget[]
      */
     public function getWidgets()
     {
@@ -698,10 +698,11 @@ abstract class View
 
             foreach ($_widgetMapEntries as $_widgetMapEntry) {
                 $_widgetMap = new WidgetMap();
-                $_widgetMap->setAction($_widgetMapEntry['action']);
-                $_widgetMap->setPosition($_widgetMapEntry['position']);
-                $_widgetMap->setPositionReference($_widgetMapEntry['positionReference']);
-                $_widgetMap->setReplacedWidgetId($_widgetMapEntry['replacedWidgetId']);
+                $_widgetMap->setAction(@$_widgetMapEntry['action']);
+                $_widgetMap->setPosition(@$_widgetMapEntry['position']);
+                $_widgetMap->setPositionReference(@$_widgetMapEntry['positionReference']);
+                $_widgetMap->setAsynchronous(@$_widgetMapEntry['asynchronous']);
+                $_widgetMap->setReplacedWidgetId(@$_widgetMapEntry['replacedWidgetId']);
                 $_widgetMap->setWidgetId(intval($_widgetMapEntry['widgetId']));
 
                 $slot->addWidgetMap($_widgetMap);
@@ -740,24 +741,6 @@ abstract class View
         $this->updateWidgetMapBySlots();
     }
 
-    public function computeCompleteSlot($slotId)
-    {
-        $slot = $this->getSlotById($slotId);
-        if (null !== $template = $this->getTemplate()) {
-            // Is the parent has the slot in it's widgetMaps ?
-            if (null !== $templateSlot = $template->computeCompleteSlot($slotId)) {
-                foreach ($templateSlot->getWidgetMaps() as $widgetMap) {
-                    //
-                    $widgetMap->setAction(WidgetMap::ACTION_OVERWRITE);
-                    $widgetMap->setReplacedWidgetId($widgetMap->getWidgetId());
-                    $slot->addWidgetMap($widgetMap);
-                }
-            }
-        }
-        $this->slots[$slotId] = $slot;
-
-        return $slot;
-    }
     /**
      * Convert slots to a widget map
      *
@@ -765,7 +748,7 @@ abstract class View
      */
     protected function convertSlotsToWidgetMap()
     {
-        $slots = $this->slots;
+        $slots = $this->getSlots();
 
         $widgetMap = array();
 
@@ -781,6 +764,7 @@ abstract class View
                 $widgetMapEntry = array();
                 $widgetMapEntry['action'] = $_widgetMap->getAction();
                 $widgetMapEntry['position'] = $_widgetMap->getPosition();
+                $widgetMapEntry['asynchronous'] = $_widgetMap->isAsynchronous();
                 $widgetMapEntry['positionReference'] = $_widgetMap->getPositionReference();
                 $widgetMapEntry['replacedWidgetId'] = $_widgetMap->getReplacedWidgetId();
                 $widgetMapEntry['widgetId'] = $_widgetMap->getWidgetId();

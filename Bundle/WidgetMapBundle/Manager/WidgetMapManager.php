@@ -125,7 +125,7 @@ class WidgetMapManager
             }
         }
 
-        // If parentWidgetId is null, the widget was places on first position
+        // If parentWidgetId is null, the widget was placed on first position
         if (null === $parentWidgetId) {
             $widgetMapEntry = new WidgetMap();
             $widgetMapEntry->setPosition(1);
@@ -153,6 +153,7 @@ class WidgetMapManager
 
         // If this WidgetMapEntry already in the page, remove it
         if ($oldWidgetMapEntry = $slot->getWidgetMapByWidgetId($widgetId)) {
+            $widgetMapEntry->setAsynchronous($oldWidgetMapEntry->isAsynchronous());
             $slot->removeWidgetMap($oldWidgetMapEntry);
         // Else, the new widgetMap is an overwrite
         } elseif ($originalWidgetMap->getAction() !== WidgetMap::ACTION_OVERWRITE) {
@@ -220,6 +221,7 @@ class WidgetMapManager
         $widgetMap->setReplacedWidgetId($replacedWidgetId);
         $widgetMap->setWidgetId($widgetId);
         $widgetMap->setPosition($originalWidgetMap->getPosition());
+        $widgetMap->setAsynchronous($widgetCopy->isAsynchronous());
         $widgetMap->setPositionReference($originalWidgetMap->getPositionReference());
 
         $slot->addWidgetMap($widgetMap);

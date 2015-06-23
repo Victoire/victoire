@@ -210,6 +210,10 @@
         <source>hamburger_menu.backend.back_home</source>
         <target>Retour sur le site</target>
       </trans-unit>
+      <trans-unit id="23" resname="victoire.widget.type.asynchronous.label">
+        <source>victoire.widget.type.asynchronous.label</source>
+        <target>Chargement asynchrone ?</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

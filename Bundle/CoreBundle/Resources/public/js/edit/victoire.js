@@ -1,16 +1,6 @@
-
 $vic(document).ready(function() {
     loading(false);
     enableSortableSlots();
-
-    //Display all buttons except the disabled after they have been disabled (by updateSlotActions functions)
-    setTimeout(function() {
-        $vic.each($vic('.vic-new-widget'), function() {
-            if (!$vic(this).hasClass("vic-new-widget-disabled")) {
-                $vic(this).removeClass('vic-hidden');
-            }
-        }) ;
-    }, 10);
 });
 
 //Used to know when user is leaving or page is refreshing
@@ -45,24 +35,6 @@ function trackChange(elem)
     }
 }
 
-
-/**
- * This function is used to update the slot actions (Add some widget )
- * @param  {integer} slot the id of the slot
- * @param  {integer} max  the max number of items
- *
- * @return {void}
- */
-function updateSlotActions(slot, max)
-{
-    var count = $vic('.vic-widget-container', "#vic-slot-"+slot).size();
-    if ( max == undefined || count < max ) {
-        $vic("> .vic-new-widget, > .vic-widget-container > .vic-new-widget", "#vic-slot-"+slot).removeClass('vic-new-widget-disabled');
-    } else {
-        $vic("> .vic-new-widget, > .vic-widget-container > .vic-new-widget", "#vic-slot-"+slot).addClass('vic-new-widget-disabled');
-    }
-}
-
 function enableSortableSlots(){
     $vic(".vic-slot").each(function(){
         $vic(this).sortable({
@@ -75,32 +47,16 @@ function enableSortableSlots(){
             revert: true,
             stop: function( event, ui ) {
                 var ajaxCall = updateWidgetPosition(ui);
-
-                //update the positions of the widgets
-                updateWidgetPositions();
                 ajaxCall.fail(function(){
                     $vic(".vic-slot").each(function(){
                         $vic(this).sortable('cancel');
                     });
+                    return false;
                 });
-
-                replaceDropdown(ui);
+                var $scope = angular.element($vic(this)).scope();
+                $scope.rebuildActions();
             }
-
         });
-    });
-}
-
-function updateWidgetPositions(slotId) {
-    if (slotId == undefined || slotId == "") {
-        $vic(".vic-slot").each(function() {
-            updateWidgetPositions($vic(this).data('name'));
-        });
-    }
-    var position = 1;
-    $vic(".vic-slot[data-name='" + slotId + "'] > .vic-widget-container").each(function() {
-        $vic(this).attr('data-position', position);
-        position = parseInt(position + 1);
     });
 }
 
@@ -115,11 +71,6 @@ function updateWidgetPosition(ui){
         Routing.generate('victoire_core_widget_update_position', {'viewReference': viewReferenceId}),
         { 'sorted': sorted, '_locale': locale }
     );
-}
-
-function replaceDropdown(ui) {
-    $vic(ui.item).children('.vic-new-widget').remove();
-    $vic(ui.item).append($vic(ui.item).parents('.vic-slot').children('.vic-new-widget').clone());
 }
 
 function loading(value) {
@@ -138,8 +89,10 @@ function slideTo(element, duration, effect) {
 
     //get the top offset of the target anchor
     var target_offset = $vic(element).offset();
-    var target_top = target_offset.top;
+    if (target_offset != undefined) {
+        var target_top = target_offset.top;
 
-    //goto that anchor by setting the body scroll top to anchor top
-    $vic('html, body').animate({scrollTop:target_top}, duration, effect);
+        //goto that anchor by setting the body scroll top to anchor top
+        $vic('html, body').animate({scrollTop:target_top}, duration, effect);
+    }
 }

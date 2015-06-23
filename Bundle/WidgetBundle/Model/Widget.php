@@ -29,6 +29,22 @@ abstract class Widget
     protected $currentView;
 
     /**
+     * @return string
+     */
+    public function isAsynchronous()
+    {
+        return $this->asynchronous;
+    }
+
+    /**
+     * @param string $asynchronous
+     */
+    public function setAsynchronous($asynchronous)
+    {
+        $this->asynchronous = $asynchronous;
+    }
+
+    /**
      * Set the entity proxy
      *
      * @param EntityProxy $entityProxy
