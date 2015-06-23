@@ -45,12 +45,13 @@ $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(
             } else {
                 closeModal();
                 $vic('.vic-creating').after(response.html);
-                var slot = $vic('.vic-creating').parents('vic-slot').first();
-                var slotId = $vic(slot).data('name');
+                var slot = $vic('.vic-creating').parent('.vic-slot');
+                angular.element($vic(slot)).scope().rebuildActions();
                 slideTo($vic('> .vic-anchor', '#vic-widget-' + response.widgetId + '-container'));
                 if(typeof(Storage) !== "undefined") {
                     localStorage.setItem('victoire__widget__html__' + response.widgetId, response.html);
                 }
+
                 congrat(response.message, 10000);
             }
 
