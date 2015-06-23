@@ -25,4 +25,17 @@ class BrowseEventRepository extends \Doctrine\ORM\EntityRepository
             ->setMaxResults($maxNumber)
             ->orderBy('visits', 'DESC');
     }
+
+    /**
+     * return a qb for number of results for a viewReferenceId group by ip
+     *
+     * @return QueryBuilder
+     **/
+    public function getNumberOfEventForViewReferenceId($referencesId)
+    {
+        return $this->createQueryBuilder('be')
+            ->select('COUNT(DISTINCT be.ip)')
+            ->andWhere('be.viewReferenceId in (:ids)')
+            ->setParameter('ids', array($referencesId));
+    }
 }

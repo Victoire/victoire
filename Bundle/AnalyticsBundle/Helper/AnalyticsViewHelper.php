@@ -103,4 +103,19 @@ class AnalyticsViewHelper
 
         return $views;
     }
+
+    /**
+     * Get number of unique visitor for a viewReference
+     *
+     * @param string $viewReferenceId
+     */
+    public function getVisitorCountForViewReference($viewReferenceId)
+    {
+        $viewCount = $this->entityManager->getRepository('Victoire\Bundle\AnalyticsBundle\Entity\BrowseEvent')
+            ->getNumberOfEventForViewReferenceId($viewReferenceId)
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        return $viewCount;
+    }
 }
