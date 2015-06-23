@@ -5,15 +5,18 @@
         {
             "foot":
             [
-                "https://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js",
-                "http://code.angularjs.org/1.4.1/angular-sanitize.min.js",
-                "@VictoireCoreBundle/Resources/script/victoire_app/app.js",
-                "@VictoireCoreBundle/Resources/script/victoire_app/controllers/widget/WidgetAsynchronousLoadCtrl.js",
-                "@VictoireCoreBundle/Resources/script/victoire_app/controllers/slot/SlotCtrl.js",
                 "@VictoireCoreBundle/Resources/public/vendor/jquery.scrollTo/1.4.14/jquery.scrollTo.min.js",
                 "@VictoireCoreBundle/Resources/public/js/smooth-scroll.js",
                 "@VictoireCoreBundle/Resources/public/vendor/jquery-unveil/jquery.unveil.js",
                 "@VictoireCoreBundle/Resources/public/js/unveil.js"
+            ],
+            "victoire-ngApp":
+            [
+                "https://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js",
+                "http://code.angularjs.org/1.4.1/angular-sanitize.min.js",
+                "@VictoireCoreBundle/Resources/script/ngApp/app.js",
+                "@VictoireCoreBundle/Resources/script/ngApp/controllers/widget/WidgetAsynchronousLoadCtrl.js",
+                "@VictoireCoreBundle/Resources/script/ngApp/controllers/slot/SlotCtrl.js"
             ],
             "victoire-head":
             [

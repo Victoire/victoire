@@ -1,18 +1,22 @@
-victoire_app.controller("WidgetAsynchronousLoadController",
+ngApp.controller("WidgetAsynchronousLoadController",
     ["$scope", "widgetLocalStorageService", "widgetAPIService", "slotLocalStorageService", "$sce",
     function($scope, $widgetLocalStorageService, $widgetAPI, $slotLocalStorageService, $sce) {
-        this.fetchAsynchronousWidget = function(widgetId) {
-            html = $widgetLocalStorageService.fetchStorage(widgetId);
+        this.init = function(widgetId) {
+            $scope.widgetId = widgetId;
+            fetchAsynchronousWidget();
+        },
+        $scope.fetchAsynchronousWidget = function() {
+            html = $widgetLocalStorageService.fetchStorage($scope.widgetId);
             if (!html) {
-                var promise = $widgetAPI.show(widgetId);
+                var promise = $widgetAPI.show($scope.widgetId);
                 promise.then(
                     function(payload) {
                         html = payload.data.html;
-                        $widgetLocalStorageService.store(widgetId, html);
+                        $widgetLocalStorageService.store($scope.widgetId, html);
                         $scope.html = $sce.trustAsHtml(html);
                     },
                     function(errorPayload) {
-                        console.error(widgetId + ' widget API "get call" has failed.');
+                        console.error($scope.widgetId + ' widget API "get call" has failed.');
                         console.error(errorPayload);
                     });
             } else {
@@ -22,14 +26,15 @@ victoire_app.controller("WidgetAsynchronousLoadController",
     }
 ]);
 
-victoire_app.service("widgetLocalStorageService", [
+ngApp.service("widgetLocalStorageService", [
     function() {
         this.fetchStorage = function(widgetId) {
-            if(typeof(Storage) !== "undefined") {
+            if(typeof(Storage) !== "undefined" && debug != undefined && debug === false) {
                 var object = JSON.parse(localStorage.getItem('victoire__widget__html__' + widgetId));
                 if (object != undefined) {
                     storedAt = object.timestamp;
                     now = new Date().getTime().toString();
+
                     //More than a week content has probably changed, forget and remove
                     if ((now - storedAt)/1000 < 604800) {
                         return object.data;
@@ -48,7 +53,7 @@ victoire_app.service("widgetLocalStorageService", [
     }
 ]);
 
-victoire_app.service("widgetAPIService", ["$http",
+ngApp.service("widgetAPIService", ["$http",
     function($http) {
         this.show = function(widgetId) {
             var url = Routing.generate('victoire_core_widget_show', {'id': widgetId, 'viewReferenceId': viewReferenceId});

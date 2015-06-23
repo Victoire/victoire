@@ -1,9 +1,9 @@
-victoire_app.controller("SlotController", ["$scope", "slotLocalStorageService", "slotAPIService", "$sce",
+ngApp.controller("SlotController", ["$scope", "slotLocalStorageService", "slotAPIService", "$sce",
     function($scope, $slotLocalStorageService, $slotAPI, $sce) {
-        this.addActions = function(slotId, options) {
+        this.init = function(slotId, options) {
             $scope.slotId = slotId;
             $scope.options = options;
-            $scope.getNewContentActionButton(slotId, options);
+            $scope.getNewContentActionButton();
         };
         $scope.rebuildActions = function() {
             var newContentButton = angular.element('.vic-new-widget').first();
@@ -32,15 +32,14 @@ victoire_app.controller("SlotController", ["$scope", "slotLocalStorageService", 
     }
 ]);
 
-victoire_app.service("slotLocalStorageService", [
+ngApp.service("slotLocalStorageService", [
     function() {
         this.fetchStorage = function(slotId) {
-            if(typeof(Storage) !== "undefined") {
+            if(typeof(Storage) !== "undefined" && debug != undefined && debug === false) {
                 var object = JSON.parse(localStorage.getItem('victoire__slot__newContent__html__' + slotId));
                 if (object != undefined) {
                     storedAt = object.timestamp;
                     now = new Date().getTime().toString();
-                    //todo disable for debug true environment
                     //More than an hour ? forget and remove
                     if ((now - storedAt)/1000 < 3600) {
                         return object.data;
@@ -59,7 +58,7 @@ victoire_app.service("slotLocalStorageService", [
     }
 ]);
 
-victoire_app.service("slotAPIService", ["$http",
+ngApp.service("slotAPIService", ["$http",
     function($http) {
         this.newContentButton = function(slotId, options) {
             var url = Routing.generate('victoire_core_slot_newContentButton', {
