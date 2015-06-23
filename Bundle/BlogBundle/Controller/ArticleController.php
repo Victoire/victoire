@@ -122,9 +122,9 @@ class ArticleController extends Controller
                 'url'     => $this->generateUrl('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl())),
             );
         } else {
-            if ($novalidate === false){
+            if ($novalidate === false) {
                 $template = "VictoireBlogBundle:Article:settings.html.twig";
-            }else {
+            } else {
                 $template = "VictoireBlogBundle:Article:_form.html.twig";
             }
             $response = array(

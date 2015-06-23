@@ -39,7 +39,7 @@ class CategoryType extends AbstractType
          */
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
-            function ($event) {
+            function($event) {
                 $entity = $event->getData();
 
                 if ($entity !== null) {
@@ -61,7 +61,7 @@ class CategoryType extends AbstractType
          */
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function ($event) {
+            function($event) {
                 $rawData = $event->getData();
                 if (isset($rawData['children'])) {
                     $addChildren = true;

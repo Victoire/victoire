@@ -5,7 +5,6 @@ use Doctrine\Common\Annotations\AnnotationException;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use \Doctrine\Common\Annotations\Reader;
 use Doctrine\ORM\Mapping\MappingException;
-use Symfony\Component\VarDumper\VarDumper;
 use Victoire\Bundle\CoreBundle\Annotations\BusinessEntity;
 use Victoire\Bundle\CoreBundle\Annotations\BusinessProperty;
 use Victoire\Bundle\CoreBundle\Annotations\ReceiverProperty;
@@ -259,7 +258,7 @@ class AnnotationReader extends AnnotationDriver
         $classes = array();
         $includedFiles = array();
         foreach ($this->paths as $path) {
-            if (! is_dir($path)) {
+            if (!is_dir($path)) {
                 throw MappingException::fileMappingDriversRequireConfiguredDirectoryPath($path);
             }
             $iterator = new \RegexIterator(
@@ -280,7 +279,7 @@ class AnnotationReader extends AnnotationDriver
         foreach ($declared as $className) {
             $rc = new \ReflectionClass($className);
             $sourceFile = $rc->getFileName();
-            if (in_array($sourceFile, $includedFiles) && ! $this->isTransient($className)) {
+            if (in_array($sourceFile, $includedFiles) && !$this->isTransient($className)) {
                 $classes[] = $className;
             }
         }

@@ -20,7 +20,6 @@ class BlogFilterListener
      * Constructor
      *
      * @param EntityManager $em
-     * @param unknown       $request
      */
     public function __construct(EntityManager $em, EventDispatcherInterface $eventDispatcher)
     {
@@ -30,7 +29,7 @@ class BlogFilterListener
     /**
      *
      *
-     * @param FormEvent $eventArgs
+     * @param FormEvent $event
      */
     public function manageExtraFiltersFields(FormEvent $event)
     {

@@ -9,24 +9,24 @@ use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 class WidgetMapToArrayTransformer implements DataTransformerInterface
 {
     /**
-    * @var ObjectManager
-    */
+     * @var ObjectManager
+     */
     private $om;
 
     /**
-    * @param ObjectManager $om
-    */
+     * @param ObjectManager $om
+     */
     public function __construct(ObjectManager $om)
     {
         $this->om = $om;
     }
 
     /**
-    * Transforms an object (WidgetMap) to an array.
-    *
-    * @param  WidgetMap|null $widgetMap
-    * @return string
-    */
+     * Transforms an object (WidgetMap) to an array.
+     *
+     * @param  WidgetMap|null $widgetMap
+     * @return string
+     */
     public function transform($widgetMap)
     {
         if (null === $widgetMap) {
@@ -46,12 +46,12 @@ class WidgetMapToArrayTransformer implements DataTransformerInterface
     }
 
     /**
-    * Transforms an array to an object (WidgetMap).
-    * @param  array $widgetMapAsArray
-    *
-    * @return WidgetMap|null
-    * @throws TransformationFailedException if object (issue) is not found.
-    */
+     * Transforms an array to an object (WidgetMap).
+     * @param  array $widgetMapAsArray
+     *
+     * @return WidgetMap|null
+     * @throws TransformationFailedException if object (issue) is not found.
+     */
     public function reverseTransform($widgetMapAsArray)
     {
         if (!$widgetMapAsArray) {
