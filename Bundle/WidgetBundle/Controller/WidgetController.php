@@ -22,8 +22,8 @@ class WidgetController extends Controller
     /**
      * Show a widget
      * @param Request $request
-     * @param Widget $widget the widget to show
-     * @param integer $viewReferenceId The id of the view
+     * @param Widget  $widget
+     * @param integer $viewReferenceId
      *
      * @Route("/victoire-dcms-public/widget/show/{id}/{viewReferenceId}", name="victoire_core_widget_show", options={"expose"=true})
      * @Template()
@@ -52,6 +52,28 @@ class WidgetController extends Controller
         }
 
         return $response;
+    }
+
+    /**
+     * API widgets function
+     * @param string  $widgetIds       the widget ids to fetch in json
+     * @param integer $viewReferenceId
+     *
+     * @Route("/victoire-dcms-public/api/widgets/{widgetIds}/{viewReferenceId}", name="victoire_core_widget_apiWidgets", options={"expose"=true})
+     * @return JsonResponse
+     */
+    public function apiWidgetsAction($widgetIds, $viewReferenceId)
+    {
+        $view = $this->container->get('victoire_page.page_helper')->findPageByParameters(array('id' => $viewReferenceId));
+        $response = array();
+        $widgets = $this->get('doctrine.orm.entity_manager')->getRepository('VictoireWidgetBundle:Widget')
+            ->findBy(array('id' => json_decode($widgetIds)));
+
+        foreach ($widgets as $widget) {
+            $response[$widget->getId()] = $this->get('victoire_widget.widget_renderer')->render($widget, $view);
+        }
+
+        return new JsonResponse($response);
     }
 
     /**
