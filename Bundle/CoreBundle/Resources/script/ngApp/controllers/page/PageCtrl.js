@@ -16,8 +16,7 @@ ngApp.controller("PageController",
                         widgetIds.push($(this).data('id'));
                     });
 
-                    if (widgetIds.length < 1) {
-                        console.log(widgetIds.length + ' widget(s)');
+                    if (widgetIds.length < 10) {
                         for (key in widgetIds) {
                             //cal API to get html, widget after widget
                             $widgetScope = $('#vic-widget-' + widgetIds[key] + '-container').scope();
@@ -25,16 +24,10 @@ ngApp.controller("PageController",
                         }
                     } else {
                         //too much widgets, let's fetch them in one shot
-                        console.log('Fetching widgets in a shot');
-                        console.log(widgetIds);
-
                         var promise = $widgetAPI.widgets(widgetIds);
                         promise.then(
                             function(payload) {
                                 for (_widgetId in payload.data) {
-                                    console.log('storing');
-                                    console.log(_widgetId);
-                                    console.log(payload.data[_widgetId]);
 
                                     $widgetLocalStorageService.store(_widgetId, payload.data[_widgetId]);
                                     $scope.feedAsynchronousWidget($('#vic-widget-' + _widgetId + '-container'));
