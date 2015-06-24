@@ -72,7 +72,7 @@
         <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
         <script type="text/javascript">
             var locale = '{{ app.request.locale }}';
-            var debug = {{ app.debug }};
+            var debug = {{ app.debug ? "true" : "false" }};
         </script>
         <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
 
