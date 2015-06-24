@@ -19,7 +19,9 @@ ngApp.controller("PageController",
                     if (widgetIds.length < 10) {
                         for (key in widgetIds) {
                             //cal API to get html, widget after widget
-                            $widgetScope = $('#vic-widget-' + widgetIds[key] + '-container').scope();
+                            widget = '#vic-widget-' + widgetIds[key] + '-container';
+                            $widgetScope = $(widget).scope();
+                            $widgetScope.widgetId = $(widget).data('id');
                             $widgetScope.fetchAsynchronousWidget();
                         }
                     } else {
@@ -43,8 +45,7 @@ ngApp.controller("PageController",
 
             $scope.feedAsynchronousWidget = function(widget) {
                 $widgetScope = $(widget).scope();
-                $widgetScope.widgetId = $(widget).data('id');
-                $widgetScope.html = $sce.trustAsHtml($widgetLocalStorageService.fetchStorage($widgetScope.widgetId));
+                $widgetScope.html = $sce.trustAsHtml($widgetLocalStorageService.fetchStorage($(widget).data('id')));
                 if ($widgetScope.html != undefined && $widgetScope.html != "") {
                     $(widget).removeClass('vic-widget-asynchronous').addClass('vic-widget-asynchronous-was');
                 }
