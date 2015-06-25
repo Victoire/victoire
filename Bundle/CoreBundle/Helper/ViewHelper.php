@@ -208,7 +208,7 @@ class ViewHelper
         $viewsReferences = array();
         // if page is a pattern, compute it's bep
         if ($view instanceof BusinessEntityPagePattern) {
-            if ($entity) {
+            if ($entity && $this->businessEntityPageHelper->isEntityAllowed($view, $entity)) {
                 $currentPattern = clone $view;
                 $page = $this->businessEntityPageHelper->generateEntityPageFromPattern($currentPattern, $entity);
                 $this->updatePageParametersByEntity($page, $entity);
