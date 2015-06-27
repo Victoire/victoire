@@ -171,6 +171,10 @@ class BusinessEntityPageHelper
             $page->setName($pageName);
             $page->setEntityProxy($entityProxy);
             $page->setTemplate($bepPattern);
+            if ($seo = $bepPattern->getSeo()) {
+                $pageSeo = clone $seo;
+                $page->setSeo($pageSeo);
+            }
         }
 
         return $page;

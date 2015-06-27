@@ -13,7 +13,7 @@ use Victoire\Bundle\SeoBundle\Entity\PageSeo;
 trait WebViewTrait
 {
     /**
-     * @ORM\OneToOne(targetEntity="\Victoire\Bundle\SeoBundle\Entity\PageSeo")
+     * @ORM\OneToOne(targetEntity="\Victoire\Bundle\SeoBundle\Entity\PageSeo", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="seo_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $seo;
