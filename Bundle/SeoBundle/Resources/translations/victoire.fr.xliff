@@ -193,7 +193,10 @@
         <source>form.pageSeo.metaRobotsFollow.values.nofollow</source>
         <target>NoFollow</target>
       </trans-unit>
-
+      <trans-unit id="fdsfdsfdsfdsfdshhgf6be270be" resname="victoire_seo.save.success">
+        <source>victoire_seo.save.success</source>
+        <target>Paramètres SEO modifiés avec succès</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -8,13 +8,8 @@
 
 {% block modal_body_content %}
     <div class="vic-tab-content vic-modal-tab-content">
-        {# Only display this business entity property list when related to a business entity #}
-        {% if page.businessEntity is defined %}
-            {% include 'VictoireBusinessEntityBundle:BusinessProperty:list.html.twig' with
-                {
-                    'businessProperties': businessProperties
-                }
-            %}
+        {% if businessProperties is defined %}
+            {% include 'VictoireBusinessEntityBundle:BusinessProperty:list.html.twig' with {'businessProperties': businessProperties} %}
         {% endif %}
 
         <div class="vic-tab-pane vic-active" id="basics">

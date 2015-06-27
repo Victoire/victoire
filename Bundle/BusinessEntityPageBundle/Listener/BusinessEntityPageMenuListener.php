@@ -66,6 +66,12 @@ class BusinessEntityPageMenuListener implements MenuListenerInterface
                 'routeParameters' => array('id' => $event->getPage()->getId()),
             )
         )->setLinkAttribute('data-toggle', 'vic-modal');
+        $mainItem->addChild('menu.page.seoSettings',
+            array(
+                'route' => 'victoire_seo_pageSeo_settings',
+                'routeParameters' => array('id' => $event->getPage()->getId())
+            )
+        )->setLinkAttribute('data-toggle', 'vic-modal');
 
         return $mainItem;
     }
