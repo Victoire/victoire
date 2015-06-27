@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Victoire\Bundle\BlogBundle\Entity\Blog;
+use Victoire\Bundle\BlogBundle\Repository\BlogRepository;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\PageBundle\Controller\BasePageController;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\BlogBundle\Form\ChooseBlogType;
@@ -42,16 +44,21 @@ class BlogController extends BasePageController
     /**
      * New page
      *
-     * @Route("/", name="victoire_blog_index")
+     * @Route("/{blogId}/{tab}", name="victoire_blog_index", defaults={"blogId" = null, "tab" = "articles"})
+     * @param Request $request
+     * @param integer|null $id
      *
      * @return JsonResponse
      */
-    public function indexAction(Request $request, $isHomepage = false)
+    public function indexAction(Request $request, $blogId = null, $tab = 'articles')
     {
-        $blogRepo = $this->get('doctrine.orm.entity_manager')
-            ->getRepository('VictoireBlogBundle:Blog');
+        /** @var BlogRepository $blogRepo */
+        $blogRepo = $this->get('doctrine.orm.entity_manager')->getRepository('VictoireBlogBundle:Blog');
         $blogs = $blogRepo->getAll()->run();
         $blog = reset($blogs);
+        if (is_numeric($blogId)) {
+            $blog = $blogRepo->find($blogId);
+        }
         $options['blog'] = $blog;
         $template = $this->getBaseTemplatePath().':index.html.twig';
         $chooseBlogForm = $this->createForm(new ChooseBlogType(), null, $options);
@@ -75,9 +82,10 @@ class BlogController extends BasePageController
                 'html' => $this->container->get('victoire_templating')->render(
                     $template,
                     array(
-                        'blog' => $blog,
-                        'tabs' =>  array('articles', 'settings', 'category'),
-                        'chooseBlogForm' => $chooseBlogForm->createView(),
+                        'blog'               => $blog,
+                        'currentTab'         => $tab,
+                        'tabs'               =>  array('articles', 'settings', 'category'),
+                        'chooseBlogForm'     => $chooseBlogForm->createView(),
                         'businessProperties' => $businessProperties,
                     )
                 ),

@@ -73,9 +73,12 @@ class BlogMenuListener implements MenuListenerInterface
 
         $mainItem->addChild('menu.blog.settings',
             array(
-                'route'           => 'victoire_blog_settings',
-                'routeParameters' => array('id' => $event->getPage()->getId()),
-                )
+                'route'           => 'victoire_blog_index',
+                'routeParameters' => array(
+                    'blogId' => $event->getPage()->getId(),
+                    'tab'    => 'settings'
+                ),
+            )
         )->setLinkAttribute('data-toggle', 'vic-modal');
 
         $mainItem->addChild('menu.blog.translate',
