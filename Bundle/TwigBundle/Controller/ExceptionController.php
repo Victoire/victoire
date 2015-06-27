@@ -26,7 +26,7 @@ class ExceptionController extends BaseExceptionController
     }
 
     /**
-     * Converts an Exception to a Response.
+     * Converts an Exception to a Response to be able to render a Victoire view.
      *
      * @param Request              $request   The request
      * @param FlattenException     $exception A FlattenException instance
@@ -42,7 +42,12 @@ class ExceptionController extends BaseExceptionController
         $currentContent = $this->getAndCleanOutputBuffering($request->headers->get('X-Php-Ob-Level', -1));
         $code = $exception->getStatusCode();
 
-        if ($this->debug === false) {
+        //get request extension
+        $uriArray = explode("/", $request->getRequestUri());
+        $matches = preg_match('/^.*(\..*)$/', array_pop($uriArray), $matches);
+
+        //if in production environment and the query is not a file
+        if ($this->debug === false && 0 === $matches) {
             $page = $this->em->getRepository('VictoireTwigBundle:ErrorPage')->findOneByCode($code);
             if ($page) {
                 return $this->forward('VictoireTwigBundle:ErrorPage:show', array(
