@@ -19,6 +19,7 @@ use Victoire\Bundle\CoreBundle\Helper\ViewHelper;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
+use Victoire\Bundle\SeoBundle\Entity\PageSeo;
 use Victoire\Bundle\SeoBundle\Helper\PageSeoHelper;
 use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter as BETParameterConverter;
@@ -240,8 +241,12 @@ class PageHelper extends ViewHelper
         }
 
         $entity = $this->findEntityByReference($viewReference);
-        if ($entity && $page instanceof BusinessEntityPagePattern) {
-            $page = $this->updatePageWithEntity($page, $entity);
+        if ($entity) {
+            if ($page instanceof BusinessEntityPagePattern) {
+                $page = $this->updatePageWithEntity($page, $entity);
+            } elseif ($page instanceof BusinessEntityPage) {
+                $this->pageSeoHelper->updateSeoByEntity($page, $entity);
+            }
         }
         $this->checkPageValidity($page, $entity);
 

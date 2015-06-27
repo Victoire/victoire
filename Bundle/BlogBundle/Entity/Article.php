@@ -40,7 +40,7 @@ class Article
      *
      * @ORM\Column(name="name", type="string", length=255)
      * @Assert\NotBlank()
-     * @VIC\BusinessProperty({"textable", "businessParameter"})
+     * @VIC\BusinessProperty({"textable", "businessParameter", "seoable"})
      */
     private $name;
 
@@ -54,7 +54,7 @@ class Article
     /**
      * Description is inherited from Page, just add the BusinessProperty annotation
      * @ORM\Column(name="description", type="text", nullable=true)
-     * @VIC\BusinessProperty("textable")
+     * @VIC\BusinessProperty({"textable", "seoable"})
      */
     private $description;
 
@@ -67,6 +67,7 @@ class Article
      * Categories of the article
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="articles")
      * @ORM\JoinColumn(onDelete="SET NULL")
+     * @VIC\BusinessProperty({"textable", "seoable"})
      */
     private $category;
 
@@ -74,14 +75,14 @@ class Article
      * @var datetime $publishedAt
      *
      * @ORM\Column(name="publishedAt", type="datetime", nullable=true)
-     * @VIC\BusinessProperty("dateable")
-     * @VIC\BusinessProperty("textable")
+     * @VIC\BusinessProperty({"dateable", "textable"})
      */
     private $publishedAt;
 
     /**
      * This relation is dynamically added by ArticleSubscriber
      * The property is needed here
+     * @VIC\BusinessProperty({"textable", "seoable"})
      */
     private $author;
 

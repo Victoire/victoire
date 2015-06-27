@@ -10,8 +10,7 @@
 
 <div class="vic-tab-content vic-modal-tab-content">
     <div class="vic-tab-pane vic-active" id="basics">
-        {# Only display this business entity property list when related to a business entity #}
-        {% if page.businessEntity is defined %}
+        {% if businessProperties is defined %}
         {% include 'VictoireBusinessEntityBundle:BusinessProperty:list.html.twig' with { 'businessProperties':businessProperties } %}
         {% endif %}
         {{form_start(form)}}
