@@ -70,7 +70,6 @@ class CmsExtension extends \Twig_Extension_Core
     public function getFunctions()
     {
         return array(
-            'cms_widget_actions'         => new \Twig_Function_Method($this, 'cmsWidgetActions', array('is_safe' => array('html'))),
             'cms_widget_unlink_action'   => new \Twig_Function_Method($this, 'cmsWidgetUnlinkAction', array('is_safe' => array('html'))),
             'cms_slot_widgets'           => new \Twig_Function_Method($this, 'cmsSlotWidgets', array('is_safe' => array('html'))),
             'cms_slot_actions'           => new \Twig_Function_Method($this, 'cmsSlotActions', array('is_safe' => array('html'))),
@@ -105,20 +104,6 @@ class CmsExtension extends \Twig_Extension_Core
     }
 
     /**
-     * render actions for a widget
-     *
-     * @param Widget $widget The widget to render
-     *
-     * @return string the widget actions (buttons edit, move and delete)
-     */
-    public function cmsWidgetActions($widget)
-    {
-        $widget->setCurrentView($this->currentViewHelper->getCurrentView());
-
-        return $this->widgetRenderer->renderWidgetActions($widget);
-    }
-
-    /**
      * render unlink action for a widgetId
      *
      * @param integer $widgetId The widgetId to unlink
@@ -150,6 +135,8 @@ class CmsExtension extends \Twig_Extension_Core
         $em = $this->entityManager;
 
         $result = "";
+        $slotOptions = $this->widgetRenderer->computeOptions($slotId, $slotOptions);
+        $slotNewContentButton = $this->isRoleVictoireGranted() ? $this->widgetRenderer->renderActions($slotId, $slotOptions): '';
 
         if (!empty($currentView->getWidgetMap()[$slotId])) {
             //parse the widget maps
@@ -175,7 +162,7 @@ class CmsExtension extends \Twig_Extension_Core
                     } else {
                         $result .= $this->widgetRenderer->prepareAsynchronousRender($widgetId);
                     }
-                    $result .= WidgetRenderer::$newContentActionButtonHtml;
+                    $result .= $slotNewContentButton;
                 } catch (\Exception $ex) {
                     $result .= $this->widgetExceptionHandler->handle($ex, $currentView, $widget, $widgetId);
                 }
@@ -184,7 +171,15 @@ class CmsExtension extends \Twig_Extension_Core
         //the container for the slot
         $ngSlotControllerName = 'slot'.$slotId.'Controller';
         $ngInitLoadActions = $this->isRoleVictoireGranted() ? sprintf('ng-init=\'%s.init("%s", %s)\'', $ngSlotControllerName, $slotId, json_encode($slotOptions)) : '';
-        $result = sprintf('<div class="vic-slot" data-name="%s" id="vic-slot-%s" ng-controller="SlotController as %s" %s>%s</div>', $slotId, $slotId, $ngSlotControllerName, $ngInitLoadActions, WidgetRenderer::$newContentActionButtonHtml.$result);
+        $result = sprintf(
+            '<div class="vic-slot" data-name="%s" id="vic-slot-%s" ng-controller="SlotController as %s" %s>%s%s</div>',
+            $slotId,
+            $slotId,
+            $ngSlotControllerName,
+            $ngInitLoadActions,
+            $slotNewContentButton,
+            $result
+        );
 
         return $result;
     }

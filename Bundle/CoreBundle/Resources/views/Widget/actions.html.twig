@@ -1,11 +1,13 @@
 {% trans_default_domain "victoire" %}
-<label href="#" class="text-center">
-    <select role="menu" aria-labelledby="dLabel">
-        <option disabled selected></option>
-        {{ _self.widgetList(widgets, slot) }}
-    </select>
-    <span>{{ "widget.dropdown.action.label"|trans({}, "victoire")}}</span>
-</label>
+<div class="vic-undraggable vic-new-widget vic-new-widget-disabled">
+    <label href="#" class="text-center">
+        <select role="menu" aria-labelledby="dLabel">
+            <option disabled selected></option>
+            {{ _self.widgetList(options.availableWidgets, slot) }}
+        </select>
+        <span>{{ "widget.dropdown.action.label"|trans({}, "victoire")}}</span>
+    </label>
+</div>
 
 {% macro widgetList(widgets, slot, depth = 0) %}
     {% if widgets|length > 0 %}

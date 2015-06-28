@@ -49,8 +49,7 @@ $vic(document).on('click', 'a.vic-hover-widget', function(event) {
             var route = 'victoire_core_widget_edit';
         }
 
-        var id = $vic(this).data('id');
-        var viewReferenceId = $vic(this).data('viewreferenceid');
+        var id = $vic(this).parents('.vic-widget-container').first().data('id');
         var url = Routing.generate(route, {'id': id, 'viewReference': viewReferenceId});
         openModal(url);
     } else {

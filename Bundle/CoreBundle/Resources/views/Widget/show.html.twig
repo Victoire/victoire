@@ -1,8 +1,6 @@
 {% trans_default_domain "victoire" %}
 
 {% block body %}
-
-    <a class="vic-anchor" id="vic-widget-{{ widget.id }}-container-anchor"></a>
     {% set widthWidget = containerWidth ? "width: " ~ containerWidth ~ "; " %}
     {% set marginWidget = containerMargin ? "margin: " ~ containerMargin ~ "; " %}
     {% set paddingWidget = containerPadding ? "padding: " ~ containerPadding ~ "; " %}
@@ -42,15 +40,12 @@
 
     <{{ containerTag }} class="vic-widget {{ cms_widget_extra_css_class(widget) }} {{ containerClass }}" id="widget-{{ widget.id }}">
 
-    {% if is_granted('ROLE_VICTOIRE') %}
-        {% block actions %}
-            {{ cms_widget_actions(widget) }}
-        {% endblock actions %}
-    {% endif %}
-    {% block content %}
-        {{ content|raw }}
+        <a class="vic-anchor" id="vic-widget-{{ widget.id }}-container-anchor"></a>
+        <a href="#" class="vic-hover-widget"><i></i></a>
 
-    {% endblock content %}
+        {% block content %}
+            {{ content|raw }}
+        {% endblock content %}
     </{{ containerTag }}>
 {% endblock body %}
 
