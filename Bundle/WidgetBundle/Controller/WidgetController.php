@@ -255,14 +255,15 @@ class WidgetController extends Controller
     {
         $view = $this->getViewByReferenceId($viewReference);
         try {
+            $widgetId = $widget->getId();
             $this->get('widget_manager')->deleteWidget($widget, $view);
 
             return new JsonResponse(array(
-                'success'  => true,
-                'redirect' => $this->generateUrl('victoire_core_page_show', array(
-                    'url' => $view->getUrl(),
-                )),
-            ));
+                    'success'  => true,
+                    'message'  => $this->get('translator')->trans('victoire_widget.delete.success', array(), 'victoire'),
+                    'widgetId' => $widgetId
+                )
+            );
         } catch (Exception $ex) {
             return $this->getJsonReponseFromException($ex);
         }
