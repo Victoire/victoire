@@ -11,7 +11,6 @@ use Victoire\Bundle\WidgetBundle\Model\Widget;
 
 class WidgetRenderer
 {
-    public static $newContentActionButtonHtml = '<div class="vic-undraggable vic-new-widget" ng-bind-html="newContentActionButtonHtml"></div>';
 
     private $container;
 
@@ -91,22 +90,6 @@ class WidgetRenderer
     }
 
     /**
-     * render widget actions
-     * @param Widget $widget
-     *
-     * @return string
-     */
-    public function renderWidgetActions(Widget $widget)
-    {
-        return $this->container->get('victoire_templating')->render(
-            'VictoireCoreBundle:Widget:widgetActions.html.twig',
-            array(
-                "widget" => $widget,
-            )
-        );
-    }
-
-    /**
      * render widget unlink action
      * @param integer $widgetId
      * @param View    $view
@@ -133,15 +116,33 @@ class WidgetRenderer
      */
     public function renderActions($slot, $options = array())
     {
+        return $this->container->get('victoire_templating')->render(
+            "VictoireCoreBundle:Widget:actions.html.twig",
+            array(
+                "slot"     => $slot,
+                'options'  => $options
+            )
+        );
+    }
+
+    /**
+     * Compute slot options
+     * @param Slot    $slotId
+     * @param array   $options
+     *
+     * @return string
+     */
+    public function computeOptions($slotId, $options = array())
+    {
         $slots = $this->container->getParameter('victoire_core.slots');
 
         $availableWidgets = $this->container->getParameter('victoire_core.widgets');
         $widgets = array();
 
         //If the slot is declared in config
-        if (!empty($slots[$slot]) && !empty($slots[$slot]['widgets'])) {
+        if (!empty($slots[$slotId]) && !empty($slots[$slotId]['widgets'])) {
             //parse declared widgets
-            $slotWidgets = array_keys($slots[$slot]['widgets']);
+            $slotWidgets = array_keys($slots[$slotId]['widgets']);
         } elseif (!empty($options['availableWidgets'])) {
             $slotWidgets = $options['availableWidgets'];
         } else {
@@ -159,20 +160,14 @@ class WidgetRenderer
                 $widgets[$slotWidget]['params'] = $widgetParams;
             }
         }
-        $max = null;
-        if (!empty($slots[$slot]) && !empty($slots[$slot]['max'])) {
-            $max = $slots[$slot]['max'];
+        $slots[$slotId]['availableWidgets'] = $widgets;
+        if (isset($options['max'])) {
+            $slots[$slotId]['max'] = $options['max'];
         }
 
-        return $this->container->get('victoire_templating')->render(
-            "VictoireCoreBundle:Widget:actions.html.twig",
-            array(
-                "slot"     => $slot,
-                'widgets'  => $widgets,
-                'max'      => $max
-            )
-        );
+        return $slots[$slotId];
     }
+
 
     /**
      * Get the extra classes for the css

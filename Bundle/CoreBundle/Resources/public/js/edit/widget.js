@@ -47,6 +47,7 @@ $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(
                 $vic('.vic-creating').after(response.html);
                 var slot = $vic('.vic-creating').parent('.vic-slot');
                 angular.element($vic(slot)).scope().rebuildActions();
+                angular.element($vic(slot)).scope().toggleEnableButtons();
                 slideTo($vic('> .vic-anchor', '#vic-widget-' + response.widgetId + '-container'));
                 if(typeof(Storage) !== "undefined") {
                     localStorage.setItem('victoire__widget__html__' + response.widgetId, response.html);
@@ -137,19 +138,17 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="delete"], .vic-hover
                 if (response.hasOwnProperty("redirect")) {
                     window.location.replace(response.redirect);
                 } else {
-                    //selector for the widget div
-                    var widgetContainerSelector = 'vic-widget-' + response.widgetId + '-container';
-                    var widgetDiv               = $vic("#" + widgetContainerSelector);
-                    var widgetSlot              = $vic(widgetDiv).parents('.vic-slot').first();
-                    var slotId                  = $vic(widgetSlot).data('name');
-                    var slotFunction            = "updateSlotActions" + slotId;
-
-                    //remove the div
-                    widgetDiv.remove();
-
-                    //close the modal
-                    eval(slotFunction + "()");
                     closeModal();
+                    widget = $vic('#vic-widget-' + response.widgetId + '-container');
+                    slot = widget.parents('.vic-slot');
+                    widget.remove();
+                    angular.element($vic(slot)).scope().rebuildActions();
+                    angular.element($vic(slot)).scope().toggleEnableButtons();
+                    if(typeof(Storage) !== "undefined") {
+                        localStorage.removeItem('victoire__widget__html__' + response.widgetId);
+                    }
+
+                    congrat(response.message, 10000);
                 }
                 loading(false);
             } else {

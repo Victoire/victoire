@@ -1,32 +1,25 @@
-ngApp.controller("SlotController", ["$scope", "slotLocalStorageService", "slotAPIService", "$sce",
-    function($scope, $slotLocalStorageService, $slotAPI, $sce) {
+ngApp.controller("SlotController", ["$scope",
+    function($scope) {
         this.init = function(slotId, options) {
             $scope.slotId = slotId;
             $scope.options = options;
-            $scope.getNewContentActionButton();
+            $scope.toggleEnableButtons();
+
         };
         $scope.rebuildActions = function() {
-            var newContentButton = angular.element('.vic-new-widget').first();
-            angular.element('.vic-new-widget').remove();
-            angular.element('.vic-widget-container').after(newContentButton);
-            angular.element('.vic-slot').prepend(newContentButton.clone());
+            var newContentButton = $('.vic-new-widget', '#vic-slot-' + $scope.slotId).first();
+            newContentButton.addClass('vic-new-widget-disabled');
+            $('.vic-new-widget', '#vic-slot-' + $scope.slotId).remove();
+            $('.vic-widget-container', '#vic-slot-' + $scope.slotId).after(newContentButton);
+            $('#vic-slot-' + $scope.slotId).prepend(newContentButton.clone());
+            $scope.toggleEnableButtons();
         };
-        $scope.getNewContentActionButton = function() {
-            var html = $slotLocalStorageService.fetchStorage($scope.slotId);
-            if (!html) {
-                var promise = $slotAPI.newContentButton($scope.slotId, $scope.options);
-                promise.then(
-                    function(payload) {
-                        html = payload.data.html;
-                        $slotLocalStorageService.store($scope.slotId, html);
-                        $scope.newContentActionButtonHtml = $sce.trustAsHtml(html);
-                    },
-                    function(errorPayload) {
-                        console.error($scope.slotId + ' slot newContentButton API fetch has failed.');
-                        console.error(errorPayload);
-                    });
+        $scope.toggleEnableButtons = function() {
+            widgets = $('.vic-widget-container', '#vic-slot-' + $scope.slotId);
+            if (!("max" in $scope.options) || ("max" in $scope.options) && $scope.options.max > widgets.length) {
+                $('.vic-new-widget', '#vic-slot-' + $scope.slotId).removeClass('vic-new-widget-disabled');
             } else {
-                $scope.newContentActionButtonHtml = $sce.trustAsHtml(html);
+                $('.vic-new-widget', '#vic-slot-' + $scope.slotId).addClass('vic-new-widget-disabled');
             }
         };
     }

@@ -179,7 +179,10 @@
         <source>widget_layout.form.textAlignLG.label</source>
         <target>Alignement du texte</target>
       </trans-unit>
-
+      <trans-unit id="49" resname="victoire_widget.delete.success">
+        <source>victoire_widget.delete.success</source>
+        <target>Le widget a bien été supprimé</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
