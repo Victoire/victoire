@@ -50,7 +50,8 @@ $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(
                 angular.element($vic(slot)).scope().toggleEnableButtons();
                 slideTo($vic('> .vic-anchor', '#vic-widget-' + response.widgetId + '-container'));
                 if(typeof(Storage) !== "undefined") {
-                    localStorage.setItem('victoire__widget__html__' + response.widgetId, response.html);
+                    var object = {data: response.html, timestamp: new Date().getTime()};
+                    localStorage.setItem('victoire__widget__html__' + response.widgetId, JSON.stringify(object));
                 }
 
                 congrat(response.message, 10000);
@@ -103,7 +104,8 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update"]', function(
                 congrat(response.message, 10000);
             }
             if(typeof(Storage) !== "undefined") {
-                localStorage.setItem('victoire__widget__html__' + response.widgetId, response.html);
+                var object = {data: response.html, timestamp: new Date().getTime()};
+                localStorage.setItem('victoire__widget__html__' + response.widgetId, JSON.stringify(object));
             }
             loading(false);
         } else {
