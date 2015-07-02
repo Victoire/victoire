@@ -31,7 +31,7 @@ class BlogController extends BasePageController
     public function __construct()
     {
         $this->routes = array(
-            'new'       => 'victoire_blog_index',
+            'new'       => 'victoire_blog_new',
             'show'      => 'victoire_core_page_show',
             'settings'  => 'victoire_blog_settings',
             'articles'  => 'victoire_blog_articles',
@@ -44,7 +44,7 @@ class BlogController extends BasePageController
     /**
      * New page
      *
-     * @Route("/{blogId}/{tab}", name="victoire_blog_index", defaults={"blogId" = null, "tab" = "articles"})
+     * @Route("/index/{blogId}/{tab}", name="victoire_blog_index", defaults={"blogId" = null, "tab" = "articles"})
      * @param Request $request
      * @param integer|null $id
      *
