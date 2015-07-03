@@ -7,6 +7,7 @@ use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\CoreBundle\Entity\View;
 
 /**
@@ -117,7 +118,7 @@ XML;
         //Update only given entity for a pattern
         else {
             $viewReferenceToRemove['id'] = self::getViewReferenceId($view, $entity);
-            if (method_exists($view, 'getUrl')) {
+            if (method_exists($view, 'getUrl') && !($view instanceof BusinessEntityPagePattern)) {
                 $viewReferenceToRemove['url'] = $view->getUrl();
             }
             self::removeViewReference($rootNode, $viewReferenceToRemove);
