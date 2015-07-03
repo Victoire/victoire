@@ -9,7 +9,7 @@ Feature: Create business entity pages
             | Yoda   | bright | 17500         | yoda   |
         And I resize the window to 1024x720
 
-    Scenario: I can create a new Business entity page pattern a create some content in the pattern
+    Scenario: I can create a new Business entity page pattern and create some content in the pattern
         Given I open the hamburger menu
         Then I should see "Représentation métier"
         When I follow "Représentation métier"
@@ -37,6 +37,59 @@ Feature: Create business entity pages
         Given I am on "/fr/fiche-jedi-yoda"
         Then I should see "Le Côté bright de la force"
 
+    Scenario: I can create two Business entity page patterns differentiated by queries and access to their related Business Entity pages
+        Given I open the hamburger menu
+        Then I should see "Représentation métier"
+
+        When I follow "Représentation métier"
+        Then I should see "Ajouter une représentation"
+        When I follow the tab "jedi"
+        And I follow "Ajouter une représentation"
+        Then I should see "Créer une représentation métier"
+        When I fill in "Nom" with "Fiche Jedi Dark - {{item.name}}"
+        And I fill in "Url" with "fiche-jedi-dark-{{item.slug}}"
+        And I fill in "Query" with "WHERE item.side='dark'"
+        And I follow "Créer"
+        Then I should see "La représentation métier a bien été créé"
+        And I wait 5 seconds
+        And I should be on "/fr/fiche-jedi-dark-%7B%7Bitem.slug%7D%7D"
+        Then I switch to "layout" mode
+        When I select "Force" from the "1" select of "content" slot
+        Then I should see "Créer"
+        When I fill in "Côté de la force" with "Static Widget - Fiche Jedi Dark"
+        And I submit the widget
+        Then I should see "Victoire !"
+
+        When I open the hamburger menu
+        And I follow "Représentation métier"
+        Then I should see "Ajouter une représentation"
+        When I follow the tab "jedi"
+        And I follow "Ajouter une représentation"
+        Then I should see "Créer une représentation métier"
+        When I fill in "Nom" with "Fiche Jedi Bright - {{item.name}}"
+        And I fill in "Url" with "fiche-jedi-bright-{{item.slug}}"
+        And I fill in "Query" with "WHERE item.side='bright'"
+        And I follow "Créer"
+        Then I should see "La représentation métier a bien été créé"
+        And I wait 5 seconds
+        And I should be on "/fr/fiche-jedi-bright-%7B%7Bitem.slug%7D%7D"
+        Then I switch to "layout" mode
+        When I select "Force" from the "1" select of "content" slot
+        Then I should see "Créer"
+        When I fill in "Côté de la force" with "Static Widget - Fiche Jedi Bright"
+        And I submit the widget
+        Then I should see "Victoire !"
+
+        Given I am on "/fr/fiche-jedi-dark-anakin"
+        Then I should see "Static Widget - Fiche Jedi Dark"
+        Given I am on "/fr/fiche-jedi-bright-anakin"
+        Then I should see "404 not found"
+
+        Given I am on "/fr/fiche-jedi-bright-yoda"
+        Then I should see "Static Widget - Fiche Jedi Bright"
+        Given I am on "/fr/fiche-jedi-dark-yoda"
+        Then I should see "404 not found"
+
     Scenario: I can override a pattern to add some specific content
         Given I open the hamburger menu
         Then I should see "Représentation métier"
@@ -59,7 +112,7 @@ Feature: Create business entity pages
         Given I am on "/fr/fiche-jedi-%7B%7Bitem.slug%7D%7D"
         Then I should not see "Le Côté Nouveau de la force"
 
-    Scenario: I add a BusinessEntity and check its representation is accessible
+    Scenario: I add a BusinessEntity and check if its representation is accessible
         Given I open the hamburger menu
         Then I should see "Représentation métier"
         When I follow "Représentation métier"

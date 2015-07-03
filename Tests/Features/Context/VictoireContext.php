@@ -111,7 +111,7 @@ class VictoireContext extends RawMinkContext
      */
     public function iEditTheWidget($widgetType)
     {
-        $selector = sprintf('.vic-widget-%s > a', strtolower($widgetType));
+        $selector = sprintf('.vic-widget-%s > a.vic-hover-widget', strtolower($widgetType));
         $session = $this->getSession(); // get the mink session
         $element = $session->getPage()->find('css', $selector); // runs the actual query and returns the element
 

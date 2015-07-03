@@ -170,33 +170,6 @@ class ViewHelper
     }
 
     /**
-     * get the view reference for a given view
-     * @param View $view
-     *
-     * @return array
-     */
-    public function getViewReferenceByView(View $view, $entity = null)
-    {
-        $viewReference = array(
-            'id'            => $this->viewCacheHelper->getViewReferenceId($view, $entity),
-            'locale'        => $view->getLocale(),
-            'viewId'        => $view->getId(),
-            'name'          => $view->getName(),
-            'viewNamespace' => $this->em->getClassMetadata(get_class($view))->name,
-        );
-
-        if ($entity) {
-            $viewReference['entityId'] = $entity->getId();
-            $viewReference['entityNamespace'] = $this->em->getClassMetadata(get_class($entity))->name;
-        }
-
-        if (method_exists($view, 'getUrl')) {
-            $viewReference['url'] = $view->getUrl();
-        }
-
-        return $viewReference;
-    }
-    /**
      * compute the viewReference relative to a View + entity
      * @param View                $view
      * @param BusinessEntity|null $entity
@@ -208,21 +181,23 @@ class ViewHelper
         $viewsReferences = array();
         // if page is a pattern, compute it's bep
         if ($view instanceof BusinessEntityPagePattern) {
-            if ($entity && $this->businessEntityPageHelper->isEntityAllowed($view, $entity)) {
-                $currentPattern = clone $view;
-                $page = $this->businessEntityPageHelper->generateEntityPageFromPattern($currentPattern, $entity);
-                $this->updatePageParametersByEntity($page, $entity);
-                $referenceId = $this->viewCacheHelper->getViewReferenceId($view, $entity);
-                $viewsReferences[$page->getUrl().$page->getLocale()] = array(
-                    'id'              => $referenceId,
-                    'url'             => $page->getUrl(),
-                    'name'            => $page->getName(),
-                    'locale'          => $page->getLocale(),
-                    'patternId'       => $page->getTemplate()->getId(),
-                    'entityId'        => $entity->getId(),
-                    'entityNamespace' => $this->em->getClassMetadata(get_class($entity))->name,
-                    'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
-                );
+            if ($entity) {
+                if($this->businessEntityPageHelper->isEntityAllowed($view, $entity)){
+                    $currentPattern = clone $view;
+                    $page = $this->businessEntityPageHelper->generateEntityPageFromPattern($currentPattern, $entity);
+                    $this->updatePageParametersByEntity($page, $entity);
+                    $referenceId = $this->viewCacheHelper->getViewReferenceId($view, $entity);
+                    $viewsReferences[$page->getUrl().$page->getLocale()] = array(
+                        'id'              => $referenceId,
+                        'url'             => $page->getUrl(),
+                        'name'            => $page->getName(),
+                        'locale'          => $page->getLocale(),
+                        'patternId'       => $page->getTemplate()->getId(),
+                        'entityId'        => $entity->getId(),
+                        'entityNamespace' => $this->em->getClassMetadata(get_class($entity))->name,
+                        'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
+                    );
+                }
             } else {
                 $referenceId = $this->viewCacheHelper->getViewReferenceId($view);
                 $viewsReferences[$view->getUrl().$view->getLocale()] = array(

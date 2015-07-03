@@ -7,6 +7,7 @@ use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\CoreBundle\Entity\View;
 
 /**
@@ -96,22 +97,37 @@ XML;
      */
     public function update(View $view, $entity = null)
     {
+
         /** @var ViewHelper $viewHelper */
         $viewHelper = $this->container->get('victoire_core.view_helper');
+        $businessEntityPageHelper = $this->container->get('victoire_business_entity_page.business_entity_page_helper');
         $rootNode = $this->readCache();
-        $viewReference = $viewHelper->getViewReferenceByView($view);
-        self::removeViewReference($rootNode, $viewReference);
-        $itemNode = $rootNode->addChild('viewReference');
-        foreach ($viewReference as $key => $value) {
-            $itemNode->addAttribute($key, $value);
+
+        //Update pattern and its entities
+        if(!$entity) {
+            $viewReferences = $viewHelper->buildViewReference($view);
+            foreach ($viewReferences as $key => $_viewReference) {
+                self::removeViewReference($rootNode, $_viewReference);
+                $itemNode = $rootNode->addChild('viewReference');
+                foreach ($_viewReference as $key => $value) {
+                    $itemNode->addAttribute($key, $value);
+                }
+            }
         }
 
-        $viewReferences = $viewHelper->buildViewReference($view, $entity);
-        foreach ($viewReferences as $key => $_viewReference) {
-            self::removeViewReference($rootNode, $_viewReference);
-            $itemNode = $rootNode->addChild('viewReference');
-            foreach ($_viewReference as $key => $value) {
-                $itemNode->addAttribute($key, $value);
+        //Update only given entity for a pattern
+        else {
+            $viewReferenceToRemove['id'] = self::getViewReferenceId($view, $entity);
+            if (method_exists($view, 'getUrl') && !($view instanceof BusinessEntityPagePattern)) {
+                $viewReferenceToRemove['url'] = $view->getUrl();
+            }
+            self::removeViewReference($rootNode, $viewReferenceToRemove);
+            $viewReferences = $viewHelper->buildViewReference($view, $entity);
+            foreach ($viewReferences as $key => $_viewReference) {
+                $itemNode = $rootNode->addChild('viewReference');
+                foreach ($_viewReference as $key => $value) {
+                    $itemNode->addAttribute($key, $value);
+                }
             }
         }
 
