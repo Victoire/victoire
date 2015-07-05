@@ -45,6 +45,8 @@
         "doctrine/orm" : "~2.2,>=2.2.3",
         "friendsofsymfony/jsrouting-bundle" : "2.0.*@dev",
         "friendsofsymfony/user-bundle" : "2.0.*@dev",
+        "friendsofvictoire/text-widget": "dev-master",
+        "friendsofvictoire/button-widget": "dev-master",
         "incenteev/composer-parameter-handler" : "~2.0",
         "jms/di-extra-bundle" : "1.4.*@dev",
         "jms/translation-bundle" : "1.1.*@dev",
