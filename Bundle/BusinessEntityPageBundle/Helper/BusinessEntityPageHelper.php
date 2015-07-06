@@ -265,11 +265,10 @@ class BusinessEntityPageHelper
         if ($businessEntity) {
             $parameters = array(
                 'entityId' => $entityId,
-                'entityNamespace' => $originalRefClassName
+                'entityNamespace' => $this->entityManager->getClassMetadata($originalRefClassName)->name
             );
 
             $viewReference = $this->viewCacheHelper->getReferenceByParameters($parameters);
-
         }
 
         if (!$viewReference) {

@@ -193,12 +193,8 @@ class LinkExtension extends \Twig_Extension
     public function victoireBusinessLink($businessEntityInstance, $patternId = null, $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
         if (!$patternId) {
-            $businessEntityHelper = $this->businessEntityHelper;
-            $businessEntity = $businessEntityHelper->findByEntityInstance($businessEntityInstance);
-            $entity = $businessEntityHelper->getByBusinessEntityAndId($businessEntity, $businessEntityInstance->getId());
-
             $patternId = $this->businessEntityPageHelper
-                ->guessBestPatternIdForEntity(new \ReflectionClass($entity), $entity->getId());
+                ->guessBestPatternIdForEntity(new \ReflectionClass($businessEntityInstance), $businessEntityInstance->getId());
         }
 
         $page = $this->pageHelper->findPageByParameters(array(
