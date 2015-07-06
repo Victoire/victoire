@@ -1,0 +1,40 @@
+Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern:
+    pattern_character:
+        name: "Character {{item.name}}"
+        slug: "character-{{item.slug}}"
+        url: "character-{{item.slug}}"
+        businessEntityName: character
+        author: @anakin
+        locale: fr
+        template: @template_base
+        status: published
+        publishedAt: <dateTime('now')>
+        createdAt: <dateTime('now')>
+        updatedAt: <dateTime('now')>
+
+    pattern_jedi:
+        name: "Jedi {{item.name}}"
+        slug: "jedi-{{item.slug}}"
+        url: "jedi-{{item.slug}}"
+        businessEntityName: jedi
+        author: @anakin
+        locale: fr
+        template: @template_base
+        status: published
+        publishedAt: <dateTime('now')>
+        createdAt: <dateTime('now')>
+        updatedAt: <dateTime('now')>
+
+    pattern_mercenary:
+        name: "Mercenary {{item.name}}"
+        slug: "mercenary-{{item.slug}}"
+        url: "mercenary-{{item.slug}}"
+        businessEntityName: character
+        query: WHERE itme.type = 'mercenary'
+        author: @anakin
+        locale: fr
+        template: @template_base
+        status: published
+        publishedAt: <dateTime('now')>
+        createdAt: <dateTime('now')>
+        updatedAt: <dateTime('now')>

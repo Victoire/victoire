@@ -126,6 +126,10 @@
         <source>acme.app.jedi.form.button.delete</source>
         <target>Supprimer</target>
       </trans-unit>
+      <trans-unit id="29" resname="form.widget.tab.character.label">
+        <source>form.widget.tab.character.label</source>
+        <target>Personnages</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

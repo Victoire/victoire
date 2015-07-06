@@ -1,0 +1,13 @@
+Acme\AppBundle\Entity\Mercenary:
+    mercenary_CadBane  :
+        name: Cad Bane
+        midiChlorians: 1500
+    mercenary_Bobafet  :
+        name: Boba fet
+        midiChlorians: 1500
+    mercenary_AurraSing:
+        name: Aurra Sing
+        midiChlorians: 1500
+    mercenary_Djangofet:
+        name: Django fet
+        midiChlorians: 1500

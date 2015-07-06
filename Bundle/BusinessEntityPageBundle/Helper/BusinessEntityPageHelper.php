@@ -247,18 +247,25 @@ class BusinessEntityPageHelper
 
     /**
      * Guess the best pattern to represent given reflectionClass
-     * @param  \ReflectionClass $refClass
+     * @param \ReflectionClass $refClass
+     * @param integer          $entityId
+     * @param string           $originalRefClassName When digging into parentClass, we do not have to forget originalClass to be able to get reference after all
+     *
      * @return View
      */
-    public function guessBestPatternIdForEntity($refClass, $entityId)
+    public function guessBestPatternIdForEntity($refClass, $entityId, $originalRefClassName = null)
     {
-        $pattern = null;
-        $classname = $refClass->name;
-        $businessEntity = $this->businessEntityHelper->findByEntityClassname($classname);
+        $viewReference = null;
+        if (!$originalRefClassName) {
+            $originalRefClassName = $refClass->name;
+        }
+
+        $businessEntity = $this->businessEntityHelper->findByEntityClassname($refClass->name);
+
         if ($businessEntity) {
             $parameters = array(
                 'entityId' => $entityId,
-                'entityNamespace' => $refClass->getName()
+                'entityNamespace' => $originalRefClassName
             );
 
             $viewReference = $this->viewCacheHelper->getReferenceByParameters($parameters);
@@ -268,9 +275,9 @@ class BusinessEntityPageHelper
         if (!$viewReference) {
             $parentRefClass = $refClass->getParentClass();
             if ($parentRefClass) {
-                $pattern = $this->guessBestPatternIdForEntity($parentRefClass, $entityId);
+                $viewReference['patternId'] = $this->guessBestPatternIdForEntity($parentRefClass, $entityId, $originalRefClassName);
             } else {
-                throw new \Exception('Cannot find a BusinessEntityPagePattern that can display the requested BusinessEntity.');
+                throw new \Exception(sprintf('Cannot find a BusinessEntityPagePattern that can display the requested BusinessEntity ("%s", "%s".)', $refClass->name, $entityId));
             }
         }
 

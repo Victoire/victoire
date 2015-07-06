@@ -42,23 +42,26 @@ default:
              smartTag: smartStep
              alice:
                  fixtures:
-                     Media:       Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/Media/folder.yml
-                     User:        Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/User/user.yml
-                     Template:    Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/template.yml
-                     Page:        Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/page.yml
-                     ErrorPage:   Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/errorPage.yml
-                     Blog:        Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/blog.yml
-                     BlogPattern: Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/pattern.yml
-                     Article:     Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/article.yml
-                     BlogBEP:     Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/bep.yml
-                     Jedi:        Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Jedi/jedi.yml
-                     JediPattern: Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Jedi/pattern.yml
+                     Media:             Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/Media/folder.yml
+                     User:              Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/User/user.yml
+                     Template:          Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/template.yml
+                     Page:              Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/page.yml
+                     ErrorPage:         Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/errorPage.yml
+                     Blog:              Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/blog.yml
+                     BlogPattern:       Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/pattern.yml
+                     Article:           Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/article.yml
+                     BlogBEP:           Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/bep.yml
+                     Character:         Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/character.yml
+                     Mercenary:         Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/mercenary.yml
+                     Jedi:              Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/jedi.yml
+                     CharacterPatterns: Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/pattern.yml
                  dependencies:
-                     Template:  [User]
-                     ErrorPage: [Template, User]
-                     Page:      [Template, User]
-                     Blog:      [Template, BlogPattern, User]
-                     Article:   [Template, BlogBEP, BlogPattern, User, Blog]
+                     Template:          [User]
+                     ErrorPage:         [Template, User]
+                     Page:              [Template, User]
+                     Blog:              [Template, BlogPattern, User]
+                     Article:           [Template, BlogBEP, BlogPattern, User, Blog]
+                     CharacterPatterns: [Template, User]
              symfony_kernel:
                  bootstrap: Tests/Functionnal/app/autoload.php
                  path: Tests/Functionnal/app/AppKernel.php
