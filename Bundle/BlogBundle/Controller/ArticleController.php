@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Victoire\Bundle\BlogBundle\Entity\Article;
 use Victoire\Bundle\BlogBundle\Entity\Blog;
+use Victoire\Bundle\BlogBundle\Event\ArticleEvent;
+use Victoire\Bundle\BlogBundle\VictoireBlogEvents;
 
 /**
  * article Controller
@@ -43,10 +45,18 @@ class ArticleController extends Controller
             $entityManager->persist($page);
             $entityManager->flush();
 
-            return new JsonResponse(array(
-                "success"  => true,
-                'url'     => $this->generateUrl('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl())),
-            ));
+            $dispatcher = $this->get('event_dispatcher');
+            $event = new ArticleEvent($article);
+            $dispatcher->dispatch(VictoireBlogEvents::CREATE_ARTICLE, $event);
+            if (null === $response = $event->getResponse()) {
+                $response = new JsonResponse(array(
+                    "success"  => true,
+                    'url'     => $this->generateUrl('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl())),
+                ));
+            }
+
+            return $response;
+
         } else {
             $formErrorHelper = $this->container->get('victoire_form.error_helper');
 
