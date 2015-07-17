@@ -101,7 +101,7 @@ class DateFilter extends BaseFilter
                 $data['year'] = $options['widget']->getDefaultValue();
                 $this->request->query->replace(
                     array(
-                        'victoire_form_filter' => array(
+                        'filter' => array(
                             $this->getName() => array(
                                 'year' => $options['widget']->getDefaultValue()
                             ),
