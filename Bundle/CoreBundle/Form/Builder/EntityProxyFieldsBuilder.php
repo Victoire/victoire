@@ -4,6 +4,7 @@ namespace Victoire\Bundle\CoreBundle\Form\Builder;
 
 use Symfony\Component\Translation\TranslatorInterface;
 use Victoire\Bundle\CoreBundle\Annotations\Reader\AnnotationReader;
+use Symfony\Component\Form\FormRegistryInterface;
 
 /**
  * Edit Page Type
@@ -13,14 +14,23 @@ class EntityProxyFieldsBuilder
 {
     private $annotationReader;
     private $translator;
+    private $registry;
+    private $widgets = array();
 
     /**
      * define form fields
      */
-    public function __construct(AnnotationReader $annotationReader, TranslatorInterface $translator)
+    public function __construct(
+        AnnotationReader $annotationReader,
+        TranslatorInterface $translator,
+        FormRegistryInterface $registry,
+        $widgets
+        )
     {
         $this->annotationReader = $annotationReader;
         $this->translator = $translator;
+        $this->registry = $registry;
+        $this->widgets = $widgets;
     }
 
     /**
@@ -35,6 +45,7 @@ class EntityProxyFieldsBuilder
         //Try to add a new form for each entity with the correct annotation and business properties
         $businessProperties = $this->annotationReader->getBusinessProperties($namespace);
         $receiverProperties = $this->annotationReader->getReceiverProperties();
+        $widgetClass = $this->widgets[$widgetType]['class'];
 
         if (!empty($receiverProperties[$widgetType])) {
             foreach ($receiverProperties[$widgetType] as $key => $_fields) {
@@ -43,14 +54,23 @@ class EntityProxyFieldsBuilder
                     if (isset($businessProperties[$key]) && is_array($businessProperties[$key]) && count($businessProperties[$key])) {
                         //Create form types with field as key and values as choices
                         //TODO Add some formatter Class or a buildField method responsible to create this type
+                        //GuessRequire for each property
+                        $guesser = $this->registry->getTypeGuesser();
+                        $requiredGuess = $guesser->guessRequired($widgetClass, $fieldKey);
+
                         $label = $this->translator->trans('widget_'.strtolower($widgetType).'.form.'.$fieldKey.'.label', array(), 'victoire');
-                        $builder->add($fieldKey, 'choice', array(
+                        $options = array(
                                 'choices' => $businessProperties[$key],
                                 'label' => $label,
                                 'attr' => array(
                                     'title' => $label
                                 )
-                        ));
+                        );
+                        if ($requiredGuess) {
+                            $options = array_merge(array('required' => $requiredGuess->getValue()), $options);
+                        }
+
+                        $builder->add($fieldKey, 'choice', $options);
                     } else {
                         throw new \Exception(sprintf('The Entity %s doesn\'t have a %s property, which is required by %s widget', $namespace, $key, $widgetType));
                     }

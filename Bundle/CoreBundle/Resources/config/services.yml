@@ -9,6 +9,8 @@ services:
         arguments:
             - @victoire_core.annotation_reader
             - @translator
+            - @form.registry
+            - %victoire_core.widgets%
 
 #  ==================  MENU ================== #
     victoire_core.admin_menu_builder:

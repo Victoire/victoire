@@ -110,9 +110,13 @@ trait BusinessEntityTrait
      */
     public function getEntityAttributeValue($field)
     {
-        $functionName = 'get'.ucfirst($field);
+        if ($field) {
+            $functionName = 'get'.ucfirst($field);
 
-        $fieldValue = $this->{$functionName}();
+            $fieldValue = $this->{$functionName}();
+        }else{
+            $fieldValue = null;
+        }
 
         return $fieldValue;
     }
