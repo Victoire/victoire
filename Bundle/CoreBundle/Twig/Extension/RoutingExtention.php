@@ -33,9 +33,9 @@ class RoutingExtention extends RoutingExtension
             $page = $this->pageHelper->findPageByParameters($params);
             $parameters['url'] = $page->getUrl();
 
-            return $this->generator->generate('victoire_core_page_show', $parameters);
+            $name = 'victoire_core_page_show';
         }
 
-        return $this->generator->generate($name, $parameters, $relative ? UrlGeneratorInterface::RELATIVE_PATH : UrlGeneratorInterface::ABSOLUTE_PATH);
+        return $this->generator->generate($name, $parameters, $relative ? UrlGeneratorInterface::ABSOLUTE_PATH : UrlGeneratorInterface::ABSOLUTE_URL);
     }
 }
