@@ -45,7 +45,6 @@ class EntityProxyFieldsBuilder
         //Try to add a new form for each entity with the correct annotation and business properties
         $businessProperties = $this->annotationReader->getBusinessProperties($namespace);
         $receiverProperties = $this->annotationReader->getReceiverProperties();
-        $widgetClass = $this->widgets[$widgetType]['class'];
 
         if (!empty($receiverProperties[$widgetType])) {
             foreach ($receiverProperties[$widgetType] as $key => $_fields) {
@@ -54,9 +53,6 @@ class EntityProxyFieldsBuilder
                     if (isset($businessProperties[$key]) && is_array($businessProperties[$key]) && count($businessProperties[$key])) {
                         //Create form types with field as key and values as choices
                         //TODO Add some formatter Class or a buildField method responsible to create this type
-                        //GuessRequire for each property
-                        $guesser = $this->registry->getTypeGuesser();
-                        $requiredGuess = $guesser->guessRequired($widgetClass, $fieldKey);
 
                         $label = $this->translator->trans('widget_'.strtolower($widgetType).'.form.'.$fieldKey.'.label', array(), 'victoire');
                         $options = array(
@@ -66,8 +62,14 @@ class EntityProxyFieldsBuilder
                                     'title' => $label
                                 )
                         );
-                        if ($requiredGuess) {
-                            $options = array_merge(array('required' => $requiredGuess->getValue()), $options);
+                        //GuessRequire for each property
+                        if (array_key_exists($widgetType, $this->widgets)) {
+                            $widgetClass = $this->widgets[$widgetType]['class'];
+                            $guesser = $this->registry->getTypeGuesser();
+                            $requiredGuess = $guesser->guessRequired($widgetClass, $fieldKey);
+                            if ($requiredGuess) {
+                                $options = array_merge(array('required' => $requiredGuess->getValue()), $options);
+                            }
                         }
 
                         $builder->add($fieldKey, 'choice', $options);
