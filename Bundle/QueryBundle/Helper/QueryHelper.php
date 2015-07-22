@@ -125,6 +125,7 @@ class QueryHelper
 
         //get the query of the container entity
         $query = $containerEntity->getQuery();
+        $orderBy = json_decode($containerEntity->getOrderBy(), true);
         if ($query !== '' && $query !== null) {
 
             $subQuery = $this->entityManager->createQueryBuilder()
@@ -133,6 +134,11 @@ class QueryHelper
 
             $itemsQueryBuilder
                 ->andWhere('main_item.id IN ('.$subQuery->getQuery()->getDql().' '.$query.')');
+            if ($orderBy) {
+                foreach ($orderBy as $addOrderBy) {
+                    $itemsQueryBuilder->addOrderBy('main_item.' . $addOrderBy['by'], $addOrderBy['order']);
+                }
+            }
         }
         $currentView = $this->currentView;
 
