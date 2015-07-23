@@ -10,7 +10,7 @@
  * with the new form types.
  *
  **/
-$vic(document).on('change', 'select[data-refreshOnChange="true"]', function(event) {
+$vic(document).on('change', 'select[data-refreshOnChange="true"], input:checkbox[data-refreshOnChange="true"]', function(event) {
     var form = $(this).parents('form');
     loading(true);
     $vic.ajax({
