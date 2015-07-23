@@ -56,10 +56,23 @@ class CategoryFilter extends BaseFilter
 
 
         if (count($childrenArray) > 0) {
-            $qb = $qb
-                ->join('main_item.category', 'c')
-                ->andWhere('c.id IN (:category)')
-                ->setParameter('category', $childrenArray);
+            if (array_key_exists('strict', $parameters)) {
+                $repository = $this->em->getRepository('VictoireBlogBundle:Article');
+                foreach ($childrenArray as $index => $category) {
+                    $parameter = ':category'.$index;
+                    $subquery = $repository->createQueryBuilder('article_'.$index)
+                                ->join('article_'.$index.'.category', 'category_'.$index)
+                                ->where('category_'.$index.' = '.$parameter)
+                                ;
+                    $qb->andWhere($qb->expr()->in('main_item', $subquery->getDql()))
+                                ->setParameter($parameter, $category);
+                }
+            }else{
+                $qb = $qb
+                    ->join('main_item.category', 'c')
+                    ->andWhere('c.id IN (:category)')
+                    ->setParameter('category', $childrenArray);
+            }
         }
 
         return $qb;
