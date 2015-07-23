@@ -46,10 +46,24 @@ class TagFilter extends BaseFilter
         }
 
         if (count($parameters['tags']) > 0) {
-            $qb = $qb
-                    ->join('main_item.tags', 't')
-                    ->andWhere('t.id IN (:tags)')
-                    ->setParameter('tags', $parameters['tags']);
+
+            if (array_key_exists('strict', $parameters)) {
+                $repository = $this->em->getRepository('VictoireBlogBundle:Article');
+                foreach ($parameters['tags'] as $index => $tag) {
+                    $parameter = ':tag'.$index;
+                    $subquery = $repository->createQueryBuilder('article_'.$index)
+                                ->join('article_'.$index.'.tags', 'tag_'.$index)
+                                ->where('tag_'.$index.' = '.$parameter)
+                                ;
+                    $qb->andWhere($qb->expr()->in('main_item', $subquery->getDql()))
+                                ->setParameter($parameter, $tag);
+                }
+            }else{
+                $qb = $qb
+                        ->join('main_item.tags', 't')
+                        ->andWhere('t.id IN (:tags)')
+                        ->setParameter('tags', $parameters['tags']);
+            }
         }
 
         return $qb;
