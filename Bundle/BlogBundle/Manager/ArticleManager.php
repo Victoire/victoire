@@ -28,7 +28,8 @@ class ArticleManager
     public function delete(Article $article, BusinessEntityPage $bep)
     {
         $this->entityManager->remove($bep);
-        $this->entityManager->remove($article);
+        $article->setVisibleOnFront(0);
+        $article->setDeletedAt(new \DateTime());
 
         //flush the modifications
         $this->entityManager->flush();
