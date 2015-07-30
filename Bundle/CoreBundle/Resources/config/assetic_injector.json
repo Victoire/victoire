@@ -25,8 +25,11 @@
             "victoire-head":
             [
                 "@VictoireCoreBundle/Resources/public/vendor/jquery/1.10.2/jquery-1.10.2.js",
-                "@VictoireCoreBundle/Resources/public/js/jquery.noConflict.js",
-                "@VictoireCoreBundle/Resources/public/vendor/codrops-notification/js/modernizr.custom.js"
+                "@VictoireCoreBundle/Resources/public/js/jquery.noConflict.js"
+            ],
+            "modernizr":
+            [
+                "@VictoireCoreBundle/Resources/public/js/modernizr.custom.js"
             ],
             "victoire-leftnavbar":
             [
