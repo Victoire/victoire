@@ -5,7 +5,7 @@
 {% block head_script %}
     <!-- HEAD_SCRIPT -->
     {% if is_granted('ROLE_VICTOIRE') %}
-        {% javascripts injector="victoire-head" %}
+        {% javascripts injector="victoire-head, modernizr" %}
             <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
     {% endif %}
