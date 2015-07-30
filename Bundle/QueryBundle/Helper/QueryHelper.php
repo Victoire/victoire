@@ -121,6 +121,7 @@ class QueryHelper
         }
 
         //verify that the object has the query trait
+        //@todo please use an interface and cast with it in the method signature
         $this->checkObjectHasQueryTrait($containerEntity);
 
         //get the query of the container entity
@@ -134,6 +135,14 @@ class QueryHelper
             $itemsQueryBuilder
                 ->andWhere('main_item.id IN ('.$subQuery->getQuery()->getDql().' '.$query.')');
         }
+
+        $orderBy = json_decode($containerEntity->getOrderBy(), true);
+        if ($orderBy) {
+            foreach ($orderBy as $addOrderBy) {
+                $itemsQueryBuilder->addOrderBy('main_item.' . $addOrderBy['by'], $addOrderBy['order']);
+            }
+        }
+
         $currentView = $this->currentView;
 
         // If the current page is a BEP, we parse all its properties and inject them as query parameters
