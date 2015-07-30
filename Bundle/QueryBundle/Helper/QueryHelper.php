@@ -136,10 +136,12 @@ class QueryHelper
                 ->andWhere('main_item.id IN ('.$subQuery->getQuery()->getDql().' '.$query.')');
         }
 
-        $orderBy = json_decode($containerEntity->getOrderBy(), true);
-        if ($orderBy) {
-            foreach ($orderBy as $addOrderBy) {
-                $itemsQueryBuilder->addOrderBy('main_item.' . $addOrderBy['by'], $addOrderBy['order']);
+        if(method_exists($containerEntity, 'getOrderBy')) {
+            $orderBy = json_decode($containerEntity->getOrderBy(), true);
+            if ($orderBy) {
+                foreach ($orderBy as $addOrderBy) {
+                    $itemsQueryBuilder->addOrderBy('main_item.' . $addOrderBy['by'], $addOrderBy['order']);
+                }
             }
         }
 
