@@ -1,6 +1,6 @@
 #!/bin/sh
 curl -s http://getcomposer.org/installer | php
-composer.phar install --dev --prefer-dist
+php -d memory_limit=-1 composer.phar install --dev --prefer-dist
 php Tests/Functionnal/bin/console --env=test doctrine:database:drop --force
 php Tests/Functionnal/bin/console --env=test doctrine:database:create
 php Tests/Functionnal/bin/console --env=test cache:warmup
