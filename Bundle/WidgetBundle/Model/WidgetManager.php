@@ -238,7 +238,7 @@ class WidgetManager
                 $widget = $this->overwriteWidget($currentView, $widget);
             }
             if ($entityName !== null) {
-                $form = $this->widgetFormBuilder->buildForm($widget, $currentView, $entityName, $classes[$entityName]);
+                $form = $this->widgetFormBuilder->buildForm($widget, $currentView, $entityName, $classes[$entityName], $widget->getMode());
             } else {
                 $form = $this->widgetFormBuilder->buildForm($widget, $currentView);
             }
@@ -267,7 +267,7 @@ class WidgetManager
                 $response = array(
                     "success" => false,
                     "message" => $formErrorHelper->getRecursiveReadableErrors($form),
-                    "html"    => $this->widgetFormBuilder->renderForm($form, $widget, null, $entityName),
+                    "html"    => $this->widgetFormBuilder->renderForm($form, $widget, $entityName),
                 );
             }
         } else {
