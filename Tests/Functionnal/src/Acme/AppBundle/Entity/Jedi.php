@@ -15,15 +15,6 @@ use Victoire\Bundle\CoreBundle\Annotations as VIC;
  */
 class Jedi extends Character
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @VIC\BusinessProperty({"textable", "businessParameter"})
-     */
-    private $id;
 
     /**
      * @var string
@@ -32,16 +23,6 @@ class Jedi extends Character
      * @VIC\BusinessProperty("textable")
      */
     private $side;
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * Get side
