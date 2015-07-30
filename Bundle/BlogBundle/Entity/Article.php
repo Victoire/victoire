@@ -497,7 +497,12 @@ class Article
     {
         setlocale(LC_TIME, "fr_FR");
 
-        return strftime('%d %B %Y', $this->publishedAt->getTimestamp());
+        if ($this->publishedAt) {
+            return strftime('%d %B %Y', $this->publishedAt->getTimestamp());
+        }
+        else {
+            return "";
+        }
     }
 
     /**
