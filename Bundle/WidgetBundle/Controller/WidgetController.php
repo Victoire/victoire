@@ -149,11 +149,11 @@ class WidgetController extends Controller
      *
      * @return JsonResponse
      *
-     * @Route("/victoire-dcms/widget/edit/{id}/{viewReference}/{entityName}", name="victoire_core_widget_edit", options={"expose"=true})
-     * @Route("/victoire-dcms/widget/update/{id}/{viewReference}/{entityName}", name="victoire_core_widget_update", defaults={"entityName": null})
+     * @Route("/victoire-dcms/widget/edit/{id}/{viewReference}/{mode}/{entityName}", name="victoire_core_widget_edit", options={"expose"=true})
+     * @Route("/victoire-dcms/widget/update/{id}/{viewReference}/{mode}/{entityName}", name="victoire_core_widget_update", defaults={"entityName": null})
      * @Template()
      */
-    public function editAction(Widget $widget, $viewReference, $entityName = null)
+    public function editAction(Widget $widget, $viewReference, $mode = Widget::MODE_STATIC, $entityName = null)
     {
         $view = $this->getViewByReferenceId($viewReference);
         $widgetView = $widget->getView();
@@ -168,7 +168,7 @@ class WidgetController extends Controller
         $this->get('victoire_core.current_view')->setCurrentView($view);
         try {
             $widgetManager = $this->getWidgetManager();
-            $response = new JsonResponse($widgetManager->editWidget($this->get('request'), $widget, $view, $entityName));
+            $response = new JsonResponse($widgetManager->editWidget($this->get('request'), $widget, $view, $entityName, $mode));
         } catch (Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
         }

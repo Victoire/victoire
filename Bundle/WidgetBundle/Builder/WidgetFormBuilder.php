@@ -190,7 +190,8 @@ class WidgetFormBuilder
                 array(
                     'id'            => $widget->getId(),
                     'viewReference' => $viewReference['id'],
-                    'entityName'    => $entityName
+                    'entityName'    => $entityName,
+                    'mode'          => $formMode
                 )
             );
         }

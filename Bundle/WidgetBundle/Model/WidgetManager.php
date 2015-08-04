@@ -215,7 +215,7 @@ class WidgetManager
      *
      * @return template
      */
-    public function editWidget(Request $request, Widget $widget, View $currentView, $entityName = null)
+    public function editWidget(Request $request, Widget $widget, View $currentView, $entityName = null, $widgetMode = Widget::MODE_STATIC)
     {
         $classes = $this->annotationReader->getBusinessClassesForWidget($widget);
 
@@ -238,7 +238,7 @@ class WidgetManager
                 $widget = $this->overwriteWidget($currentView, $widget);
             }
             if ($entityName !== null) {
-                $form = $this->widgetFormBuilder->buildForm($widget, $currentView, $entityName, $classes[$entityName], $widget->getMode());
+                $form = $this->widgetFormBuilder->buildForm($widget, $currentView, $entityName, $classes[$entityName], $widgetMode);
             } else {
                 $form = $this->widgetFormBuilder->buildForm($widget, $currentView);
             }
