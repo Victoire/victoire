@@ -56,6 +56,7 @@ class EntityProxySubscriber implements EventSubscriber
                             'inversedBy'   => 'proxies'
                             )
                         );
+                        $metadatas->associationMappings[$field]['joinColumns'][0]['onDelete'] = "CASCADE";
                     }
                 }
             }
