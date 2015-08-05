@@ -58,7 +58,7 @@ XML;
      */
     public function readCache()
     {
-	return new \SimpleXMLElement(file_get_contents($this->xmlFile));
+        return new \SimpleXMLElement(file_get_contents($this->xmlFile));
     }
 
     /**
@@ -158,6 +158,28 @@ XML;
         }
 
         return $viewReference;
+    }
+
+    /**
+     * remove all views reference that match with parameters
+     *
+     * @param $parameters
+     * @return void
+     **/
+    public function removeViewsReferencesByParameters($parameters)
+    {
+        $viewReference = array();
+        $arguments = array();
+        $rootNode = $this->readCache();
+        foreach ($parameters as $key => $value) {
+            $arguments[$key] = '@'.$key.'="'.$value.'"';
+        }
+
+        $viewsReferencesToRemove = $this->readCache()->xpath("//viewReference[".implode(' and ', $arguments)."]");
+        foreach ($viewsReferencesToRemove as $viewReferenceToRemove) {
+            $this->removeViewReference($rootNode, current($viewReferenceToRemove->attributes()));
+        }
+        $this->writeFile($rootNode);
     }
 
     /**
