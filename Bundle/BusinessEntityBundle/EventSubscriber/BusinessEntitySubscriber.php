@@ -27,6 +27,7 @@ class BusinessEntitySubscriber implements EventSubscriber
         return array(
             'postPersist',
             'postUpdate',
+            'preRemove'
         );
     }
 
@@ -37,6 +38,19 @@ class BusinessEntitySubscriber implements EventSubscriber
     public function postUpdate(LifecycleEventArgs $eventArgs)
     {
         $this->updateBusinessEntityPagesAndRegerateCache($eventArgs);
+    }
+    public function preRemove(LifecycleEventArgs $eventArgs)
+    {
+        $entity = $eventArgs->getEntity();
+        $businessEntity = $this->container->get('victoire_core.helper.business_entity_helper')->findByEntityInstance($entity);
+        if ($businessEntity) {
+            $viewCacheHelper = $this->container->get('victoire_core.view_cache_helper');
+            //remove all references which refer to the entity
+            $viewCacheHelper->removeViewsReferencesByParameters(array(
+                        'entityId' => $entity->getId(),
+                        'entityNamespace' => get_class($entity),
+            ));
+        }
     }
     public function updateBusinessEntityPagesAndRegerateCache(LifecycleEventArgs $eventArgs)
     {
