@@ -21,6 +21,7 @@
         <parameter key="victoire_form.form.type.vic_tab.class">Victoire\Bundle\FormBundle\Form\Type\TabType</parameter>
         <parameter key="victoire_form.form.type.vic_form_actions.class">Victoire\Bundle\FormBundle\Form\Type\FormActionsType</parameter>
         <parameter key="victoire_form.form.type.vic_link.class">Victoire\Bundle\FormBundle\Form\Type\LinkType</parameter>
+        <parameter key="victoire_form.form.type.font_awesome_picker.class">Victoire\Bundle\FormBundle\Form\Type\FontAwesomePickerType</parameter>
     </parameters>
 
     <services>
@@ -127,7 +128,12 @@
 
         <service id="victoire_form.form.type.vic_link" class="%victoire_form.form.type.vic_link.class%">
             <argument>%victoire_seo.analytics%</argument>
+            <argument type="service" id="victoire_core.view_helper"></argument>
             <tag name="form.type" alias="victoire_link" />
+        </service>
+
+        <service id="victoire_form.form.type.font_awesome_picker" class="%victoire_form.form.type.font_awesome_picker.class%">
+            <tag name="form.type" alias="font_awesome_picker" />
         </service>
     </services>
 </container>

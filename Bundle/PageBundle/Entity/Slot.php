@@ -50,7 +50,7 @@ class Slot
     /**
      * Get the widget maps
      *
-     * @return array The widget maps
+     * @return WidgetMap[] The widget maps
      */
     public function getWidgetMaps()
     {

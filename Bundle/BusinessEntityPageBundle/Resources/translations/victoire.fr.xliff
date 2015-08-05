@@ -16,7 +16,7 @@
       </trans-unit>
       <trans-unit id="f6caec6dabceeba3182322b3466fcafa8d8f51ab" resname="list.action.add">
         <source>list.action.add</source>
-        <target>Ajouter une représentation métier</target>
+        <target>Ajouter une représentation</target>
       </trans-unit>
       <trans-unit id="fb1d64fdeabb5f2fe1671d4f3fb72ccca7722ed3" resname="list.action.edit">
         <source>list.action.edit</source>
@@ -41,6 +41,22 @@
       <trans-unit id="19ccbd8b16123d88eb230626a5b1110504c35954" resname="menu.business_entity_page_pattern">
         <source>menu.business_entity_page_pattern</source>
         <target><![CDATA[<i class="vic-menuImg vic-menuImg-sandbox"></i> Représentation métier]]></target>
+      </trans-unit>
+      <trans-unit id="16123d88eb230626a519ccbd8bb1110504c35954" resname="victoire.business_entity_page_pattern.create.success">
+        <source>victoire.business_entity_page_pattern.create.success</source>
+        <target>La représentation métier a bien été créé</target>
+      </trans-unit>
+      <trans-unit id="16123d88eb230619ccbd8b26a5b1110504c35954" resname="victoire.business_entity_page_pattern.edit.success">
+        <source>victoire.business_entity_page_pattern.edit.success</source>
+        <target>La représentation métier a bien été modifiée</target>
+      </trans-unit>
+      <trans-unit id="16123d88eb230619ccbd8b26a5b1110504c35954" resname="victoire.business_entity_page_pattern.edit.error">
+        <source>victoire.business_entity_page_pattern.edit.error</source>
+        <target>La modification de la représentation métier a échoué</target>
+      </trans-unit>
+      <trans-unit id="1" resname="victoire.form.business_entity_page_pattern.slug.label">
+        <source>victoire.form.business_entity_page_pattern.slug.label</source>
+        <target>Url</target>
       </trans-unit>
     </body>
   </file>

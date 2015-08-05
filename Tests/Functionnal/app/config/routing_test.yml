@@ -1,5 +1,14 @@
+acme_app:
+    resource: "@AcmeAppBundle/Controller/"
+    type:     annotation
+    prefix:   /victoire-dcms/backend
+
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /resetting
 
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

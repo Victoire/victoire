@@ -33,13 +33,20 @@ services:
         class: Victoire\Bundle\I18nBundle\Translation\Translator
         arguments: ["@service_container", "@translator.selector",{}, {cache_dir:"%kernel.cache_dir%/translations%", debug: "%kernel.debug%"}]
 
-    victoire_i18n.locale_listener:
-        class: Victoire\Bundle\I18nBundle\Listener\LocaleListener
+    victoire_i18n.locale_subscriber:
+        class: Victoire\Bundle\I18nBundle\Subscriber\LocaleSubscriber
         arguments:
             - "%kernel.default_locale%"
             - "@victoire_i18n.locale_resolver"
         tags:
             - { name: kernel.event_subscriber }
+
+    victoire_i18n.view_subscriber:
+        class: Victoire\Bundle\I18nBundle\Subscriber\ViewSubscriber
+        arguments:
+            - "%kernel.default_locale%"
+        tags:
+            - { name: doctrine.event_subscriber, connection: default, priority: -1 }
 
     victoire_i18n.template_menu.contextual:
         class: Victoire\Bundle\I18nBundle\Listener\I18nTemplateMenuListener
@@ -54,19 +61,6 @@ services:
             - '@victoire_i18n.locale_resolver'
         tags:
             - { name: routing.loader }
-
-    victoire_i18n.twig.link_extension:
-        class: Victoire\Bundle\I18nBundle\Twig\I18nLinkExtension
-        arguments:
-            - @router
-            - @request_stack
-            - %victoire_seo.analytics%
-            - @victoire_core.helper.business_entity_helper
-            - @victoire_business_entity_page.business_entity_page_helper
-            - @victoire_page.page_helper
-            - @victoire_i18n.locale_resolver
-        tags:
-            - { name: twig.extension }
 
 
     victoire_i18n.page_translate.form.type:

@@ -16,8 +16,8 @@
     <hr/>
     <div class="vic-row">
         <div class="vic-col-md-8 vic-col-md-offset-2 vic-text-center">
-            <button class="vic-btn {{ cancel_button_class }}" data-modal="close" aria-hidden="true"><i class="fa fa-times-circle"></i> {{ 'modal.button.delete.confirm.cancel.label'|trans }}</button>&nbsp;
-            <button class="vic-btn {{ confirm_button_class }}" aria-hidden="true"><i class="fa fa-trash-o"></i> {{ 'modal.button.delete.confirm.ok.label'|trans }}</button>
+            <button class="vic-btn {{ cancel_button_class }}" data-modal="close" aria-hidden="true"><i class="fa fa-times-circle"></i> <span>{{ 'modal.button.delete.confirm.cancel.label'|trans }}</span></button>&nbsp;
+            <button class="vic-btn {{ confirm_button_class }}" aria-hidden="true"><i class="fa fa-trash-o"></i> <span>{{ 'modal.button.delete.confirm.ok.label'|trans }}</span></button>
         </div>
     </div>
 {% endspaceless %}
@@ -41,25 +41,21 @@ $vic('#{{ id }} .{{ cancel_button_class }}').click(function(){
 });
 
 {# if no callback were given, we submit or go to the url of given as parameter #}
-{% if confirmCallback == null %}
 $vic('#{{ id }} .{{ confirm_button_class }}').click(function(){
     elem = $vic('.vic-confirm-waiting');
     elem.removeAttr('data-toggle');
     elem.removeClass('vic-confirm-waiting');
     elem.addClass('vic-confirmed');
+    $vic('#{{ id }}').vicmodal('hide');
     {% if type == "form" %}
         elem.submit();
     {% else %}
         elem.click();
     {% endif %}
-    $vic('#{{ id }}').vicmodal('hide');
+    {% if confirmCallback == null %}
+        {{ confirmCallback|raw }};
+    {% endif %}
 });
-{% else %}
-    $vic('#{{ id }} .{{ confirm_button_class }}').click(function(){
-        {{ confirmCallback }};
-        $vic('#{{ id }}').vicmodal('hide');
-    });
-{% endif %}
 
 //Focus on confirm button
 $vic('#{{ id }}').focus(function(){
@@ -67,5 +63,3 @@ $vic('#{{ id }}').focus(function(){
 });
 </script>
 {% endblock modal_container %}
-
-

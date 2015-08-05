@@ -5,6 +5,7 @@
 
 // Open a modal
 function openModal(url) {
+    $vic(document).trigger('victoire_modal_open_before');
     loading(true);
     $vic.ajax({
         type: "GET",
@@ -20,6 +21,7 @@ function openModal(url) {
             backdrop: false
         });
         loading(false);
+        $vic(document).trigger('victoire_modal_open_after');
     });
 
     return $vic('#vic-modal');
@@ -36,7 +38,27 @@ $vic(document).on('click', 'a[data-toggle="vic-none"]', function(event) {
 
 
 // Open modal
-$vic(document).on('click', 'a.vic-hover-widget, a[data-toggle="vic-modal"]', function(event) {
+$vic(document).on('click', 'a.vic-hover-widget', function(event) {
+    event.preventDefault();
+
+    var role = $vic('body').attr('role');
+    if (typeof role !== typeof undefined && role !== false) {
+        if (role == "admin-style") {
+            var route = 'victoire_core_widget_stylize';
+        } else if (role == "admin-edit") {
+            var route = 'victoire_core_widget_edit';
+        }
+
+        var id = $vic(this).parents('.vic-widget-container').first().data('id');
+        var url = Routing.generate(route, {'id': id, 'viewReference': viewReferenceId});
+        openModal(url);
+    } else {
+        console.error('You only should click on this in edit or style mode !');
+    }
+});
+
+// Open modal
+$vic(document).on('click', 'a[data-toggle="vic-modal"]', function(event) {
     event.preventDefault();
     openModal($vic(this).attr('href'));
 });
@@ -48,7 +70,7 @@ function closeModal(modal) {
     }
 
     $vic(modal).vicmodal('hide');
-    $vic('.vic-creating').removeClass('vic-creating');
+    setTimeout(function() {$vic('.vic-creating').removeClass('vic-creating');}, 10);
 }
 
 //Code to close the modal by tapping esc

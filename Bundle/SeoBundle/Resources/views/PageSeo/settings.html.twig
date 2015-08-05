@@ -10,40 +10,75 @@
 
 <div class="vic-tab-content vic-modal-tab-content">
     <div class="vic-tab-pane vic-active" id="basics">
-        {# Only display this business entity property list when related to a business entity #}
-        {% if page.businessEntity is defined %}
+        {% if businessProperties is defined %}
         {% include 'VictoireBusinessEntityBundle:BusinessProperty:list.html.twig' with { 'businessProperties':businessProperties } %}
         {% endif %}
         {{form_start(form)}}
-            {{ form_row(form.metaTitle)}}
-            {{ form_row(form.metaDescription) }}
-            {{ form_row(form.relAuthor) }}
-            {{ form_row(form.relPublisher) }}
-            {{ form_row(form.ogTitle) }}
-            {{ form_row(form.ogType) }}
-            {{ form_row(form.ogImage) }}
-            {{ form_row(form.ogUrl) }}
-            {{ form_row(form.ogDescription) }}
-            {{ form_row(form.fbAdmins) }}
-            {{ form_row(form.twitterCard) }}
-            {{ form_row(form.twitterUrl) }}
-            {{ form_row(form.twitterTitle) }}
-            {{ form_row(form.twitterDescription) }}
-            {{ form_row(form.twitterImage) }}
-            {{ form_row(form.schemaPageType) }}
-            {{ form_row(form.schemaName) }}
-            {{ form_row(form.schemaDescription) }}
-            {{ form_row(form.schemaImage) }}
-            {{ form_row(form.metaRobotsIndex) }}
-            {{ form_row(form.metaRobotsFollow) }}
-            {{ form_row(form.metaRobotsAdvanced) }}
-            {{ form_row(form.sitemapIndexed) }}
-            {{ form_row(form.sitemapPriority) }}
-            {{ form_row(form.relCanonical) }}
-            {{ form_row(form.keyword) }}
-            {{ form_row(form.redirectTo) }}
 
-            {{form_rest(form)}}
+        <ul class="vic-nav vic-nav-tabs vic-modal-nav-tabs">
+            <li class="vic-active vic-seperate"><a href="#seo-global" data-toggle="vic-tab">Général</a></li>
+            <li><a href="#seo-social" data-toggle="vic-tab">Réseaux sociaux</a></li>
+            <li><a href="#seo-advanced" data-toggle="vic-tab">Avancé</a></li>
+        </ul>
+
+        <div class="vic-tab-content vic-modal-tab-content">
+            <div class="vic-tab-pane vic-active" id="seo-global">
+                <div class="vic-tab-content vic-modal-tab-content">
+                    {{ form_row(form.metaTitle)}}
+                    {{ form_row(form.metaDescription) }}
+                    {{ form_row(form.relAuthor) }}
+                    {{ form_row(form.relPublisher) }}
+                    {{ form_row(form.keyword) }}
+                </div>
+            </div>
+            <div class="vic-tab-pane" id="seo-social">
+                <div class="vic-tab-content vic-modal-tab-content">
+                    <div class="col-md-6">
+                    <h3 class="vic-h3">Facebook</h3>
+                        {{ form_row(form.ogImage) }}
+                        {{ form_row(form.ogTitle) }}
+                        {{ form_row(form.ogDescription) }}
+                        {{ form_row(form.ogType) }}
+                        {{ form_row(form.ogUrl) }}
+                        {{ form_row(form.fbAdmins) }}
+                    </div>
+                    <div class="col-md-6">
+                    <h3 class="vic-h3">Twitter</h3>
+                        {{ form_row(form.twitterImage) }}
+                        {{ form_row(form.twitterTitle) }}
+                        {{ form_row(form.twitterDescription) }}
+                        {{ form_row(form.twitterUrl) }}
+                        {{ form_row(form.twitterCard) }}
+                    </div>
+                </div>
+            </div>
+            <div class="vic-tab-pane" id="seo-advanced">
+                <div class="vic-tab-content vic-modal-tab-content">
+                    <div class="col-md-4">
+                        <h3 class="vic-h3">Schema.org</h3>
+                        {{ form_row(form.schemaPageType) }}
+                        {{ form_row(form.schemaName) }}
+                        {{ form_row(form.schemaDescription) }}
+                        {{ form_row(form.schemaImage) }}
+                    </div>
+                    <div class="col-md-4">
+                        <h3 class="vic-h3">Robots</h3>
+                        {{ form_row(form.metaRobotsIndex) }}
+                        {{ form_row(form.metaRobotsFollow) }}
+                        {{ form_row(form.metaRobotsAdvanced) }}
+                    </div>
+                    <div class="col-md-4">
+                        <h3 class="vic-h3">Plan de site</h3>
+                        {{ form_row(form.sitemapIndexed) }}
+                        {{ form_row(form.sitemapPriority) }}
+                        {{ form_row(form.relCanonical) }}
+                        {{ form_row(form.redirectTo) }}
+                    </div>
+
+                    {{form_rest(form)}}
+                </div>
+            </div>
+        </div>
         {{form_end(form)}}
     </div>
 </div>

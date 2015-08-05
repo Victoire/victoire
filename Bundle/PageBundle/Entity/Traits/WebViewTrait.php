@@ -13,15 +13,15 @@ use Victoire\Bundle\SeoBundle\Entity\PageSeo;
 trait WebViewTrait
 {
     /**
-     * @ORM\OneToOne(targetEntity="\Victoire\Bundle\SeoBundle\Entity\PageSeo")
-     * @ORM\JoinColumn(name="seo_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\OneToOne(targetEntity="\Victoire\Bundle\SeoBundle\Entity\PageSeo", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="seo_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $seo;
 
     /**
      * @var string
      *
-     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\CoreBundle\Entity\Route", mappedBy="page", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\CoreBundle\Entity\Route", mappedBy="view", cascade={"persist", "remove"})
      */
     protected $routes;
 
@@ -53,11 +53,11 @@ trait WebViewTrait
     protected $status = PageStatus::PUBLISHED;
 
     /**
-    * @var datetime $publishedAt
-    *
-    * @ORM\Column(name="publishedAt", type="datetime")
-    * @VIC\BusinessProperty("date")
-    */
+     * @var datetime $publishedAt
+     *
+     * @ORM\Column(name="publishedAt", type="datetime")
+     * @VIC\BusinessProperty("date")
+     */
     protected $publishedAt;
 
     /**
@@ -71,7 +71,7 @@ trait WebViewTrait
      * Set seo
      * @param PageSeo $seo
      *
-     * @return Page
+     * @return WebViewTrait
      */
     public function setSeo(PageSeo $seo)
     {
@@ -123,7 +123,7 @@ trait WebViewTrait
     /**
      * Remove route
      *
-     * @param route $route
+     * @param Route $route
      */
     public function removeRoute(Route $route)
     {
@@ -133,7 +133,7 @@ trait WebViewTrait
     /**
      * Add route
      *
-     * @param route $route
+     * @param Route $route
      */
     public function addRoute(Route $route)
     {
@@ -290,5 +290,4 @@ trait WebViewTrait
 
         return $this;
     }
-
 }

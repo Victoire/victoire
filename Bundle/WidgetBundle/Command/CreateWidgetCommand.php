@@ -3,7 +3,6 @@ namespace Victoire\Bundle\WidgetBundle\Command;
 
 use Doctrine\DBAL\Types\Type;
 use Sensio\Bundle\GeneratorBundle\Command\GenerateBundleCommand;
-use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
 use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
 use Sensio\Bundle\GeneratorBundle\Generator\DoctrineEntityGenerator;
@@ -36,12 +35,14 @@ class CreateWidgetCommand extends GenerateBundleCommand
                 new InputOption('namespace', '', InputOption::VALUE_REQUIRED, 'The namespace of the widget bundle to create'),
                 new InputOption('dir', '', InputOption::VALUE_REQUIRED, 'The directory where to create the bundle'),
                 new InputOption('bundle-name', '', InputOption::VALUE_REQUIRED, 'The optional bundle name'),
+                new InputOption('org-name', '', InputOption::VALUE_REQUIRED, 'Your organisation name'),
                 new InputOption('widget-name', '', InputOption::VALUE_REQUIRED, 'The widget name'),
                 new InputOption('format', '', InputOption::VALUE_REQUIRED, 'Use the format for configuration files (php, xml, yml, or annotation)'),
                 new InputOption('structure', '', InputOption::VALUE_NONE, 'Whether to generate the whole directory structure'),
                 new InputOption('fields', '', InputOption::VALUE_REQUIRED, 'The fields to create with the new entity'),
                 new InputOption('entity', '', InputOption::VALUE_REQUIRED, 'The entity class name to initialize (shortcut notation)'),
                 new InputOption('parent', '', InputOption::VALUE_REQUIRED, 'The widget this widget will extends'),
+                new InputOption('packagist-parent-name', '', InputOption::VALUE_REQUIRED, 'The packagist name of the widget you want to extends'),
                 new InputOption('content-resolver', '', InputOption::VALUE_NONE, 'Whether to generate a blank ContentResolver to customize widget rendering logic'),
             ))
             ->setDescription('Generate a new widget')
@@ -71,7 +72,7 @@ EOT
      * @throws \InvalidArgumentException When namespace doesn't end with Bundle
      * @throws \RuntimeException         When bundle can't be executed
      *
-     * @return void
+     * @return integer|null
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -98,10 +99,22 @@ EOT
             $bundle = strtr($namespace, array('\\' => ''));
         }
 
+        $orgname = $input->getOption('org-name');
+
+        if (null === $input->getOption('org-name')) {
+            $orgname = $input->setOption('org-name', 'friendsofsymfony');
+        }
+
         $parent = $input->getOption('parent');
 
         if (null === $input->getOption('parent')) {
             $parent = $input->setOption('parent', null);
+        }
+
+        $packagistParentName = $input->getOption('packagist-parent-name');
+
+        if (null === $input->getOption('packagist-parent-name')) {
+            $packagistParentName = $input->setOption('packagist-parent-name', null);
         }
 
         $bundle = Validators::validateBundleName($bundle);
@@ -124,10 +137,10 @@ EOT
 
         $fields = $this->parseFields($input->getOption('fields'));
 
-        $parentContentResolver = $this->getContainer()->has('victoire_core.widget_' . strtolower($parent) . '_content_resolver');
+        $parentContentResolver = $this->getContainer()->has('victoire_core.widget_'.strtolower($parent).'_content_resolver');
 
         $generator = $this->getGenerator();
-        $generator->generate($namespace, $bundle, $dir, $format, $structure, $fields, $parent, $contentResolver, $parentContentResolver);
+        $generator->generate($namespace, $bundle, $dir, $format, $structure, $fields, $parent, $packagistParentName, $contentResolver, $parentContentResolver, $orgname);
 
         $output->writeln('Generating the bundle code: <info>OK</info>');
 
@@ -226,11 +239,27 @@ EOT
                 $question
             );
 
-            $bundle = 'VictoireWidget' . $name . 'Bundle';
+            $bundle = 'VictoireWidget'.$name.'Bundle';
             $input->setOption('bundle-name', $bundle);
             $namespace = "Victoire\\Widget\\".$name."Bundle";
             $input->setOption('namespace', $namespace);
         }
+
+        $orgname = $input->getOption('org-name');
+
+        if (null === $orgname) {
+            $output->writeln(array(
+                '',
+                'A composer.json file will be generated, we need to knpw under which organisation you will publish the widget',
+                '',
+                'The default organisation will be FriendsOfVictoire',
+            ));
+            $question = new ConfirmationQuestion($questionHelper->getQuestion('Under which organisation do you want to publish your widget ?', 'friendsofvictoire'), false);
+
+            $orgname = $questionHelper->ask($input, $output, $question);
+        }
+
+        $input->setOption('org-name', $orgname);
 
         $parent = $input->getOption('parent');
 
@@ -253,6 +282,13 @@ EOT
             $parent = $questionHelper->ask($input, $output, $question);
 
             $input->setOption('parent', $parent);
+
+            $packagistParentName = 'friendsofvictoire/'.strtolower($parent).'-widget';
+            $question = new Question($questionHelper->getQuestion('Parent widget packagist name', $packagistParentName));
+
+            $parent = $questionHelper->ask($input, $output, $question);
+
+            $input->setOption('packagist-parent-name', $packagistParentName);
         }
 
         $dir = dirname($this->getContainer()->getParameter('kernel.root_dir')).'/src';
@@ -350,10 +386,7 @@ EOT
      */
     protected function createWidgetGenerator()
     {
-        $generator = new WidgetGenerator(
-            $this->getContainer()->get('filesystem'),
-            $this->getContainer()->getParameter('victoire_core.available_frameworks')
-        );
+        $generator = new WidgetGenerator($this->getContainer()->get('filesystem'));
         $generator->setTemplating($this->getContainer()->get('twig'));
 
         return $generator;
@@ -404,7 +437,7 @@ EOT
      *
      * @param  InputInterface  $input
      * @param  OutputInterface $output
-     * @param  DialogHelper    $questionHelper
+     * @param  QuestionHelper  $questionHelper
      * @return $fields
      */
     private function addFields(InputInterface $input, OutputInterface $output, QuestionHelper $questionHelper)

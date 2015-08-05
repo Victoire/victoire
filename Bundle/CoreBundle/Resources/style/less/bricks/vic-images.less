@@ -1,0 +1,151 @@
+.vic-menuImg {
+    display: inline-block;
+    background-image: url(/bundles/victoirecore/images/sprite@2x.png);
+    background-size: 459px 285px;
+
+    &.vic-menuImg-eye {
+        width: 19px;
+        height: 11px;
+        background-position: -178px 0;
+    }
+
+    &.vic-menuImg-new {
+        width: 12px;
+        height: 16px;
+        background-position: -199px 0;
+    }
+
+    &.vic-menuImg-gear {
+        width: 16px;
+        height: 16px;
+        background-position: -213px 0;
+    }
+
+    &.vic-menuImg-signal {
+        width: 18px;
+        height: 20px;
+    }
+
+    &.vic-menuImg-signal-white {
+        background-position: -1px -35px;
+    }
+
+    &.vic-menuImg-signal-green {
+        background-position: -21px -35px;
+    }
+
+    &.vic-menuImg-signal-orange {
+        background-position: -41px -35px;
+    }
+
+    &.vic-menuImg-signal-red {
+        background-position: -61px -35px;
+    }
+
+    &.vic-menuImg-stats {
+        width: 17px;
+        height: 14px;
+        background-position: -342px 0;
+    }
+
+    &.vic-menuImg-target {
+        width: 19px;
+        height: 19px;
+        background-position: -361px 0;
+    }
+
+    &.vic-menuImg-lang {
+        width: 20px;
+        height: 15px;
+        background-position: -306px 0;
+    }
+
+    &.vic-menuImg-network {
+        width: 15px;
+        height: 15px;
+        background-position: -382px 0;
+    }
+
+    &.vic-menuImg-todo {
+        width: 12px;
+        height: 17px;
+        background-position: -328px 0;
+    }
+
+    &.vic-menuImg-img {
+        width: 15px;
+        height: 15px;
+        background-position: -422px 0;
+    }
+
+    &.vic-menuImg-user {
+        width: 17px;
+        height: 16px;
+        background-position: -287px 0;
+    }
+
+    &.vic-menuImg-404 {
+        width: 21px;
+        height: 9px;
+        background-position: -399px 0;
+    }
+
+    &.vic-menuImg-sitemap {
+        width: 18px;
+        height: 20px;
+        background-position: -267px 0;
+    }
+
+    &.vic-menuImg-sandbox {
+        width: 18px;
+        height: 12px;
+        background-position: -439px 0;
+    }
+}
+
+a {
+    &:hover,
+    &.vic-active {
+        .vic-menuImg {
+            &.vic-menuImg-eye,
+            &.vic-menuImg-new,
+            &.vic-menuImg-gear,
+            &.vic-menuImg-stats,
+            &.vic-menuImg-target,
+            &.vic-menuImg-lang,
+            &.vic-menuImg-network,
+            &.vic-menuImg-todo,
+            &.vic-menuImg-img,
+            &.vic-menuImg-user,
+            &.vic-menuImg-404,
+            &.vic-menuImg-sitemap,
+            &.vic-menuImg-sandbox {
+                background-position-y: -35px;
+            }
+        }
+    }
+}
+
+.vic-menuImg {
+    margin-right: 3px;
+
+    &.vic-menuImg-signal {
+        vertical-align: -6px;
+    }
+
+    &.vic-menuImg-eye {
+        vertical-align: -1px;
+    }
+
+    &:not(.vic-menuImg-logo) {
+        &:not(.vic-menuImg-signal) {
+            &:not(.vic-menuImg-eye) {
+                &:not(.vic-menuImg-404) {
+                    &:not(.vic-menuImg-sandbox) {
+                        vertical-align: -4px;
+                    }
+                }
+            }
+        }
+    }
+}

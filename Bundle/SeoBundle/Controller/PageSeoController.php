@@ -7,6 +7,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
+use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
+use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\SeoBundle\Entity\PageSeo;
 
@@ -17,6 +20,8 @@ use Victoire\Bundle\SeoBundle\Entity\PageSeo;
  */
 class PageSeoController extends Controller
 {
+    use VictoireAlertifyControllerTrait;
+
     /**
      * BasePage settings
      * @param BasePage $page
@@ -26,7 +31,7 @@ class PageSeoController extends Controller
      *
      * @return JsonResponse
      */
-    public function settingsAction(BasePage $page)
+    public function settingsAction(View $page)
     {
         //services
         $em = $this->getDoctrine()->getManager();
@@ -34,12 +39,9 @@ class PageSeoController extends Controller
         $businessProperties = array();
 
         //if the page is a business entity template page
-        if ($page instanceof BusinessEntityPage) {
-            //get the id of the business entity
-            $businessEntityId = $page->getBusinessEntityName();
+        if ($page instanceof BusinessEntityPage || $page instanceof BusinessEntityPagePattern) {
             //we can use the business entity properties on the seo
-            $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($businessEntityId);
-
+            $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($page->getBusinessEntityName());
             $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
         }
 
@@ -67,6 +69,7 @@ class PageSeoController extends Controller
             $page->setSeo($pageSeo);
             $em->persist($page);
             $em->flush();
+            $this->congrat('victoire_seo.save.success');
 
             //redirect to the page url
             $pageUrl = $page->getUrl();

@@ -1,0 +1,40 @@
+{% extends 'VictoireCoreBundle::_modal.html.twig' %}
+
+{% trans_default_domain "victoire" %}
+
+{% block modal_container_classes %}{{ parent() }} vic-view-modal{% endblock modal_container_classes %}
+
+{% block modal_header_title %}
+{{ 'modal.sitemap.title'|trans({}, 'victoire')}}
+{% endblock modal_header_title %}
+
+{% block modal_body_content %}
+<div class="vic-alert vic-alert-info">
+    <i class="fa fa-info"></i>&nbsp;&nbsp;{{ 'modal.sitemap.caption'|trans({}, 'victoire') }}
+</div>
+
+<ul class="vic-bordered-list" id="sortable">
+    {% for _page in pages %}
+        {% set level = 0 %}
+        {% include 'VictoireSitemapBundle:Sitemap:_sitemapItem.html.twig' with {'page': _page} %}
+    {% endfor %}
+</ul>
+
+
+
+
+<script>
+    $vic(document).ready(function () {
+        $vic('#sortable').nestedSortable({
+            handle: 'div',
+            items: 'li',
+            listType: 'ul',
+            toleranceElement: '> div',
+            update: function (event, ui )
+            {
+                updateSitemapPosition($vic('#sortable'), ui);
+            }
+        });
+    });
+</script>
+{% endblock modal_body_content %}

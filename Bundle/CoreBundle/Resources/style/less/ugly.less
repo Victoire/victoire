@@ -1,17 +1,15 @@
-body[role=admin-edit] {
-    .vic-new-widget {
-        display: none !important;
+@import 'parameters/parameters';
+
+
+.vic-checkbox {
+    display: inline-block;
+    label {
+        text-align: left;
+        color: #313131;
     }
 }
 
-body[role=admin-layout] {
-    .vic-hover-widget {
-        display: none !important;
-    }
-    .vic-new-widget {
-        display: block !important;
-    	&.vic-new-widget-disabled {
-        	display: none !important;
-    	}
-    }
+.vic-form-group label {
+    text-align: left;
+    color: #313131;
 }

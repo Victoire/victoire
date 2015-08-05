@@ -12,4 +12,4 @@
         formatLoadMore: function (pageNumber) { return "Caricamento in corso…"; },
         formatSearching: function () { return "Ricerca…"; }
     });
-})(jQuery);
+})($vic);

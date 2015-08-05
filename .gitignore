@@ -7,3 +7,5 @@
 /Tests/Functionnal/web/*js/*
 /Tests/Functionnal/web/*css/*
 /node_modules/*
+/nohup.out
+/selenium-server-standalone-2.45.0.jar

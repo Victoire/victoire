@@ -4,6 +4,7 @@ namespace Victoire\Bundle\CoreBundle\EventSubscriber;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
+use Victoire\Bundle\BusinessEntityBundle\Reader\BusinessEntityCacheReader;
 
 /**
  * This class build the entity EntityProxy with activated widgets relations
@@ -14,9 +15,9 @@ class EntityProxySubscriber implements EventSubscriber
 
     /**
      * contructor
-     * @param array $cacheReader
+     * @param BusinessEntityCacheReader $cacheReader
      */
-    public function setBusinessEntityCacheReader($cacheReader)
+    public function setBusinessEntityCacheReader(BusinessEntityCacheReader $cacheReader)
     {
         self::$cacheReader = $cacheReader;
     }
@@ -24,7 +25,7 @@ class EntityProxySubscriber implements EventSubscriber
     /**
      * bind to LoadClassMetadata method
      *
-     * @return array
+     * @return string[]
      */
     public function getSubscribedEvents()
     {
@@ -39,9 +40,6 @@ class EntityProxySubscriber implements EventSubscriber
      */
     public static function loadClassMetadata($eventArgs)
     {
-        //this functions is called during the extract of translations
-        //but the argument is not the same
-        //so to avoid an error during extractions, we test the argument
         if ($eventArgs instanceof LoadClassMetadataEventArgs) {
             $metadatas = $eventArgs->getClassMetadata();
             if ($metadatas->name === 'Victoire\Bundle\CoreBundle\Entity\EntityProxy') {
@@ -54,7 +52,8 @@ class EntityProxySubscriber implements EventSubscriber
                             'inversedBy'   => 'proxies',
                             )
                         );
-                    };
+                        $metadatas->associationMappings[$entity->getId()]['joinColumns'][0]['onDelete'] = "CASCADE";
+                    }
                 }
             }
 

@@ -14,7 +14,7 @@
     <!-- Facebook -->
     {% if view.seo.ogTitle %}<meta property="og:title" content="{{ view.seo.ogTitle }}"/>{% endif %}
     {% if view.seo.ogType %}<meta property="og:type" content="{{ view.seo.ogType }}"/>{% endif %}
-    {% if view.seo.ogImage %}<meta property="og:image" content="{{ view.seo.ogImage }}"/>{% endif %}
+    {% if view.seo.ogImage %}<meta property="og:image" content="{{ app.request.getSchemeAndHttpHost() ~ view.seo.ogImage }}"/>{% endif %}
     {% if view.seo.ogUrl %}<meta property="og:url" content="{{ view.seo.ogUrl }}"/>{% endif %}
     {% if view.seo.ogDescription %}<meta property="og:description" content="{{ view.seo.ogDescription }}"/>{% endif %}
     {% if view.seo.fbAdmins %}<meta name="fb:admins" content="{{ view.seo.fbAdmins }}"/>{% endif %}
@@ -24,7 +24,7 @@
     {% if view.seo.twitterUrl %}<meta name="twitter:url" content="{{ view.seo.twitterUrl }}"/>{% endif %}
     {% if view.seo.twitterTitle %}<meta name="twitter:title" content="{{ view.seo.twitterTitle }}"/>{% endif %}
     {% if view.seo.twitterDescription %}<meta name="twitter:description" content="{{ view.seo.twitterDescription }}"/>{% endif %}
-    {% if view.seo.twitterImage %}<meta name="twitter:image" content="{{ view.seo.twitterImage }}"/>{% endif %}
+    {% if view.seo.twitterImage %}<meta name="twitter:image" content="{{ app.request.getSchemeAndHttpHost() ~ view.seo.twitterImage }}"/>{% endif %}
 
 
     {% if view.seo.metaRobotsIndex %}<meta name="robots" content="{{ view.seo.metaRobotsIndex }},{{ view.seo.metaRobotsFollow }}"/>{% endif %}
@@ -32,6 +32,11 @@
 
     {% if view.seo.relCanonical %}<link rel="canonical" href="{{ view.seo.relCanonical }}"/>{% endif %}
     {% if view.seo.keyword %}<meta name="keyword" content="{{ view.seo.keyword }}"/>{% endif %}
+    {% if view.seo.metaRobotsAdvanced %}
+        <meta name="robots" content="{{ view.seo.metaRobotsAdvanced }}"/>
+    {% else %}
+        {% if view.seo.metaRobotsIndex and view.seo.metaRobotsFollow %}<meta name="robots" content="{{ view.seo.metaRobotsIndex }}, {{ view.seo.metaRobotsFollow }}"/>{% endif %}
+    {% endif %}
 {% else %}
 <title>{{ view|default('Victoire DCMS') }}</title>
 {% endif %}

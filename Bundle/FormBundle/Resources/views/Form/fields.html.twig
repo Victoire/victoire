@@ -2,17 +2,10 @@
 {% use 'form_div_layout.html.twig' %}
 
 {# Buttons #}
-{% block victoire_link_widget %}
-{{ block('form_widget') }}
-<script type="text/javascript">
-    showSelectedLinkType($vic('.vic-linkType-select'));
-</script>
-{% endblock victoire_link_widget %}
-
 {% block tags_widget %}
 <input type="hidden" id="{{id}}" name="{{ full_name }}" value="{{tag_values}}" tabindex="-1" class="select2-offscreen" />
 <script type="text/javascript">
-    $("#{{ id }}").select2({
+    $vic("#{{ id }}").select2({
         tags:[{% for id, tag in tags %} { id: "{{id}}", text:"{{tag}}" }{% if not loop.last %},{% endif %}{% endfor %}],
         {% if enable_creation %}
         createSearchChoice:function(term, data) {
@@ -61,11 +54,12 @@
 {# Widgets #}
 
 {% block choice_widget_collapsed %}
-    {% set attr = attr|merge({'class': attr.class|default('') ~ ' ' ~ vic_widget_form_control_class}) %}
-    {{ parent() }}
-    {% if vic_horizontal %}
-        {{ block('form_message') }}
-    {% endif %}
+    <div class="vic-custom-select">
+        {% set attr = attr|merge({'class': ''}) %}
+        {{ parent() }}
+    </div>
+
+    {{ block('form_message') }}
 {% endblock choice_widget_collapsed %}
 
 {% block textarea_widget %}
@@ -418,7 +412,7 @@
 {% endblock form_label %}
 
 {% block vic_help_label %}
-    <span class="vic-help-block">{{ help_label|trans({}, translation_domain) }}</span>
+    <span class="vic-help-block">{{ vic_help_label|trans({}, translation_domain) }}</span>
 {% endblock vic_help_label %}
 
 {% block vic_help_label_tooltip %}
@@ -681,3 +675,55 @@
 {% endif %}
 {% endspaceless %}
 {% endblock vic_widget_form_group_end %}
+
+{% block hierarchy_tree_widget %}
+    {% set attr = attr|merge({'class': attr.class|default('') ~ ' ' ~ vic_widget_form_control_class}) %}
+        {{ block('hierarchy_tree_widget_collapsed')}}
+    {% if vic_horizontal %}
+        {{ block('form_message') }}
+    {% endif %}
+{% endblock %}
+
+{% block hierarchy_tree_widget_collapsed %}
+    {%- if required and placeholder is none and not placeholder_in_choices and not multiple -%}
+        {% set required = false %}
+    {%- endif -%}
+    <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+        {%- if placeholder is not none -%}
+            <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ placeholder|trans({}, translation_domain) }}</option>
+        {%- endif -%}
+        {%- if preferred_choices|length > 0 -%}
+            {% set options = preferred_choices %}
+            {{- block('hierarchy_tree_widget_options') -}}
+            {%- if choices|length > 0 and separator is not none -%}
+                <option disabled="disabled">{{ separator }}</option>
+            {%- endif -%}
+        {%- endif -%}
+        {%- set options = choices -%}
+        {{- block('hierarchy_tree_widget_options') -}}
+    </select>
+{% endblock hierarchy_tree_widget_collapsed %}
+
+{% block hierarchy_tree_widget_options %}
+    {% for group_label, choice in options %}
+        {%- if choice is iterable -%}
+            <optgroup label="{{ group_label|trans({}, translation_domain) }}">
+                {% set options = choice %}
+                {{- block('hierarchy_tree_widget_options') -}}
+            </optgroup>
+        {%- else -%}
+            <option value="{{ choice.value }}"{% if choice is selectedchoice(value) %} selected="selected"{% endif %}>{{ choice.label|trans({}, translation_domain)|raw }}</option>
+        {%- endif -%}
+    {% endfor %}
+{% endblock hierarchy_tree_widget_options %}
+
+{% block font_awesome_picker_widget %}
+    {% spaceless %}
+    <div class="vic-form-group">
+        <input type="text" {{ block('widget_attributes') }} class="vic-form-control"/>
+    </div>
+    <script type="text/javascript">
+        $vic('#{{ id }}').iconpicker({{ form.vars.font_awesome_picker_settings|json_encode|raw }});
+    </script>
+    {% endspaceless %}
+{% endblock font_awesome_picker_widget %}

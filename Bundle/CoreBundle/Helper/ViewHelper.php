@@ -41,8 +41,7 @@ class ViewHelper
         BusinessEntityPageHelper $businessEntityPageHelper,
         EntityManager $entityManager,
         ViewCacheHelper $viewCacheHelper
-    )
-    {
+    ) {
         $this->parameterConverter = $parameterConverter;
         $this->businessEntityHelper = $businessEntityHelper;
         $this->businessEntityPageHelper = $businessEntityPageHelper;
@@ -57,23 +56,44 @@ class ViewHelper
         'bodyClass',
         'slug',
         'url',
-        'locale'
+        'locale',
     );
 
+    public function buildViewsReferences($views)
+    {
+        $viewsReferences = array();
+        foreach ($views as $view) {
+            $viewsReferences = array_merge($viewsReferences, $this->buildViewReference($view));
+            $this->em->refresh($view);
+        }
+
+        $this->cleanVirtualViews($viewsReferences);
+
+        return $viewsReferences;
+    }
+
+    public function cleanVirtualViews(&$viewsReferences)
+    {
+        foreach ($viewsReferences as $viewReference) {
+            // If viewReference is a persisted page
+            if ($viewReference['viewNamespace'] == 'Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage') {
+                array_walk($viewsReferences, function ($_viewReference, $key) use ($viewReference, &$viewsReferences) {
+                    if ($_viewReference['viewNamespace'] == 'Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern'
+                        && !empty($_viewReference['entityId'])
+                        && $_viewReference['entityId'] == $viewReference['entityId']) {
+                        unset($viewsReferences[$key]);
+                    }
+                });
+            }
+        }
+    }
     /**
      * This method get all views (BasePage and Template) in DB and return the references, including non persisted Business entity page (pattern and businessEntityName based)
      * @return array the computed views as array
      */
     public function getAllViewsReferences()
     {
-        $viewsReferences = array();
-        //@todo This query is not optimized because we need the property "businessEntityName" later, and it's only present in Pattern pages
-        $views = $this->em->createQuery("SELECT v FROM VictoireCoreBundle:View v")->getResult();
-
-        foreach ($views as $view) {
-            $viewsReferences = array_merge($viewsReferences, $this->buildViewReference($view));
-        }
-        $this->em->clear();
+        $viewsReferences = $this->viewCacheHelper->convertXmlCacheToArray();
 
         return $viewsReferences;
     }
@@ -99,7 +119,6 @@ class ViewHelper
             $businessEntity = $this->businessEntityHelper->findByEntityInstance($entity);
 
             if ($businessEntity !== null) {
-
                 $businessProperties = $this->businessEntityPageHelper->getBusinessProperties($businessEntity);
 
                 //parse the business properties
@@ -121,8 +140,8 @@ class ViewHelper
     /**
      * Get the content of an attribute of an entity given
      *
-     * @param entity $entity
-     * @param strin  $field
+     * @param BusinessEntityPage $entity
+     * @param strin              $field
      *
      * @return mixed
      */
@@ -137,9 +156,9 @@ class ViewHelper
 
     /**
      * Update the value of the entity
-     * @param Object $entity
-     * @param string $field
-     * @param string $value
+     * @param BusinessEntityPage $entity
+     * @param string             $field
+     * @param string             $value
      *
      * @return mixed
      */
@@ -155,7 +174,7 @@ class ViewHelper
      * @param View                $view
      * @param BusinessEntity|null $entity
      *
-     * @return void
+     * @return array
      */
     public function buildViewReference(View $view, $entity = null)
     {
@@ -163,25 +182,28 @@ class ViewHelper
         // if page is a pattern, compute it's bep
         if ($view instanceof BusinessEntityPagePattern) {
             if ($entity) {
-                $currentPattern = clone $view;
-                $page = $this->businessEntityPageHelper->generateEntityPageFromPattern($currentPattern, $entity);
-                $this->updatePageParametersByEntity($page, $entity);
-                $referenceId = $this->viewCacheHelper->getViewReferenceId($view, $entity);
-                $viewsReferences[$page->getUrl().$page->getLocale()] = array(
-                    'id'              => $referenceId,
-                    'url'             => $page->getUrl(),
-                    'locale'          => $page->getLocale(),
-                    'viewId'          => $page->getTemplate()->getId(),
-                    'entityId'        => $entity->getId(),
-                    'entityNamespace' => $this->em->getClassMetadata(get_class($entity))->name,
-                    'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
-                );
+                if($this->businessEntityPageHelper->isEntityAllowed($view, $entity)){
+                    $currentPattern = clone $view;
+                    $page = $this->businessEntityPageHelper->generateEntityPageFromPattern($currentPattern, $entity);
+                    $this->updatePageParametersByEntity($page, $entity);
+                    $referenceId = $this->viewCacheHelper->getViewReferenceId($view, $entity);
+                    $viewsReferences[$page->getUrl().$page->getLocale()] = array(
+                        'id'              => $referenceId,
+                        'url'             => $page->getUrl(),
+                        'name'            => $page->getName(),
+                        'locale'          => $page->getLocale(),
+                        'patternId'       => $page->getTemplate()->getId(),
+                        'entityId'        => $entity->getId(),
+                        'entityNamespace' => $this->em->getClassMetadata(get_class($entity))->name,
+                        'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
+                    );
+                }
             } else {
-
                 $referenceId = $this->viewCacheHelper->getViewReferenceId($view);
                 $viewsReferences[$view->getUrl().$view->getLocale()] = array(
                     'id'              => $referenceId,
                     'url'             => $view->getUrl(),
+                    'name'            => $view->getName(),
                     'locale'          => $view->getLocale(),
                     'viewId'          => $view->getId(),
                     'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
@@ -191,7 +213,7 @@ class ViewHelper
                 foreach ($businessEntities as $businessEntity) {
                     $properties = $this->businessEntityPageHelper->getBusinessProperties($businessEntity);
 
-                    //find businessEdietifiers of the current businessEntity
+                    //find business identifiers of the current businessEntity
                     $selectableProperties = array('id');
                     foreach ($properties as $property) {
                         if ($property->getType() === 'businessParameter') {
@@ -199,16 +221,10 @@ class ViewHelper
                         }
                     }
 
-                    // This query retrieve business entity object, without useless properties for performance optimisation
-                    $entities = $this->em->getRepository($businessEntity->getClass())
-                        ->createQueryBuilder('e')
-                        ->addSelect('partial e.{'. implode(', ', $selectableProperties). '}')
-                        ->getQuery()
-                        ->getResult();
+                    $entities = $this->businessEntityPageHelper->getEntitiesAllowed($view);
 
                     // for each business entity
                     foreach ($entities as $entity) {
-
                         // only if related pattern entity is the current entity
                         if ($view->getBusinessEntityName() === $businessEntity->getName()) {
                             $currentPattern = clone $view;
@@ -218,19 +234,19 @@ class ViewHelper
                             $viewsReferences[$page->getUrl().$view->getLocale()] = array(
                                 'id'              => $referenceId,
                                 'url'             => $page->getUrl(),
+                                'name'             => $page->getName(),
                                 'locale'          => $page->getLocale(),
-                                'viewId'          => $page->getTemplate()->getId(),
+                                'patternId'       => $page->getTemplate()->getId(),
                                 'entityId'        => $entity->getId(),
                                 'entityNamespace' => $this->em->getClassMetadata(get_class($entity))->name,
                                 'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
                             );
                         }
-                        //I detach this partial entity from em. If I don't do it, everytime I'll request this entity from em it'll be partially populated
-                        $this->em->detach($entity);
+                        //I refresh this partial entity from em. If I don't do it, everytime I'll request this entity from em it'll be partially populated
+                        $this->em->refresh($entity);
                     }
                 }
             }
-
         } elseif ($view instanceof BusinessEntityPage) {
             $referenceId = $this->viewCacheHelper->getViewReferenceId($view);
             $viewsReferences[$view->getUrl().$view->getLocale()] = array(
@@ -239,6 +255,7 @@ class ViewHelper
                 'viewId'          => $view->getId(),
                 'patternId'       => $view->getTemplate()->getId(),
                 'url'             => $view->getUrl(),
+                'name'            => $view->getName(),
                 'entityId'        => $view->getBusinessEntity()->getId(),
                 'entityNamespace' => $this->em->getClassMetadata(get_class($view->getBusinessEntity()))->name,
                 'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
@@ -248,6 +265,7 @@ class ViewHelper
             $viewsReferences[$referenceId.$view->getLocale()] = array(
                 'id'              => $referenceId,
                 'locale'          => $view->getLocale(),
+                'name'            => $view->getName(),
                 'viewId'          => $view->getId(),
                 'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
             );
@@ -256,6 +274,7 @@ class ViewHelper
             $viewsReferences[$referenceId.$view->getLocale()] = array(
                 'id'              => $referenceId,
                 'locale'          => $view->getLocale(),
+                'name'            => $view->getName(),
                 'viewId'          => $view->getId(),
                 'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
             );
@@ -266,23 +285,23 @@ class ViewHelper
                 'locale'          => $view->getLocale(),
                 'viewId'          => $view->getId(),
                 'url'             => $view->getUrl(),
+                'name'            => $view->getName(),
                 'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
             );
         }
-        
-        return $viewsReferences;
 
+        return $viewsReferences;
     }
 
     /**
-    * @param View $view, the view to translatate
-    * @param $templatename the new name of the view
-    * @param $loopindex the current loop of iteration in recursion
-    * @param $locale the target locale to translate view
-    *
-    * this methods allow you to add a translation to any view
-    * recursively to its subview
-    */
+     * @param View $view, the view to translatate
+     * @param $templatename the new name of the view
+     * @param $loopindex the current loop of iteration in recursion
+     * @param $locale the target locale to translate view
+     *
+     * this methods allow you to add a translation to any view
+     * recursively to its subview
+     */
     public function addTranslation(View $view, $viewName = null, $locale)
     {
         $template = null;
@@ -300,7 +319,7 @@ class ViewHelper
         $view->setTemplate($template);
         $clonedView = $this->cloneView($view, $viewName, $locale);
         if ($clonedView instanceof BasePage && $view->getTemplate()) {
-           $template->addPage($clonedView);
+            $template->addPage($clonedView);
         }
         $i18n = $view->getI18n();
         $i18n->setTranslation($locale, $clonedView);
@@ -312,12 +331,12 @@ class ViewHelper
     }
 
     /**
-    * @param View $view
-    * @param $etmplateName the future name of the clone
-    *
-    * this methods allows you to clone a view and its widgets and also the widgetmap
-    *
-    */
+     * @param View $view
+     * @param $etmplateName the future name of the clone
+     *
+     * this methods allows you to clone a view and its widgets and also the widgetmap
+     *
+     */
     public function cloneView(View $view, $templateName = null)
     {
         $clonedView = clone $view;
@@ -331,8 +350,7 @@ class ViewHelper
         $clonedView->setId(null);
         $this->em->persist($clonedView);
 
-
-         if ($clonedView instanceof BusinessEntityPagePattern) {
+        if ($clonedView instanceof BusinessEntityPagePattern) {
             $clonedView = $this->cloneBusinessEntityPagePattern($clonedView);
         } else {
             $widgetLayoutSlots = [];
@@ -355,12 +373,11 @@ class ViewHelper
             $widgetSlotMap = [];
             foreach ($widgetLayoutSlots as $_id => $_widget) {
                 foreach ($clonedView->getWidgets() as $_clonedWidget) {
-                    if (preg_match('/^' . $_id . '_(.)/', $_clonedWidget->getSlot(), $matches)) {
-                        $newSlot = $_widget->getId() . '_' . $matches[1];
+                    if (preg_match('/^'.$_id.'_(.)/', $_clonedWidget->getSlot(), $matches)) {
+                        $newSlot = $_widget->getId().'_'.$matches[1];
                         $oldSlot = $_clonedWidget->getSlot();
                         $_clonedWidget->setSlot($newSlot);
                         $widgetSlotMap[$oldSlot] = $newSlot;
-
                     }
                 }
             }
@@ -388,19 +405,18 @@ class ViewHelper
         return $clonedView;
     }
 
-
     /**
-    * @param BusinessEnityPagePattern $view
-    * @param $etmplateName the future name of the clone
-    *
-    * this methods allows you to clone a BusinessEntityPagePattern
-    *
-    */
+     * @param BusinessEntityPagePattern $view
+     * @param $etmplateName the future name of the clone
+     *
+     * this methods allows you to clone a BusinessEntityPagePattern
+     *
+     */
     protected function cloneBusinessEntityPagePattern(BusinessEntityPagePattern $view)
     {
-
         $businessEntityId = $view->getBusinessEntityName();
         $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($businessEntityId);
         $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
     }
+
 }

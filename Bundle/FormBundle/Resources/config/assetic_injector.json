@@ -7,14 +7,17 @@
             [
                 "@VictoireFormBundle/Resources/public/components/smalot-bootstrap-datetimepicker/js/bootstrap-datetimepicker.js",
                 "@VictoireFormBundle/Resources/public/components/smalot-bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.fr.js",
+                "@VictoireFormBundle/Resources/public/components/fontawesome-iconpicker-1.0.0/js/fontawesome-iconpicker.min.js",
                 "@VictoireFormBundle/Resources/public/js/mopabootstrap-collection.js",
-                "@VictoireFormBundle/Resources/public/js/link.js"
+                "@VictoireFormBundle/Resources/public/js/link.js",
+                "@VictoireFormBundle/Resources/public/js/form.js"
             ]
          },
         "stylesheets":
         {
             "victoire-edit":
             [
+                "@VictoireFormBundle/Resources/public/components/fontawesome-iconpicker-1.0.0/css/fontawesome-iconpicker.min.css",
                 "@VictoireFormBundle/Resources/public/components/smalot-bootstrap-datetimepicker/build/build_standalone.less"
             ]
          }

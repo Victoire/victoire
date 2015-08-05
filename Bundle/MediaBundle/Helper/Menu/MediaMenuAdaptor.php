@@ -4,10 +4,6 @@ namespace Victoire\Bundle\MediaBundle\Helper\Menu;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
-use Victoire\Bundle\MediaBundle\Helper\Menu\MenuItem;
-use Victoire\Bundle\MediaBundle\Helper\Menu\MenuAdaptorInterface;
-use Victoire\Bundle\MediaBundle\Helper\Menu\MenuBuilder;
-use Victoire\Bundle\MediaBundle\Helper\Menu\TopMenuItem;
 use Victoire\Bundle\MediaBundle\Entity\Media;
 use Victoire\Bundle\MediaBundle\Entity\Folder;
 
@@ -160,8 +156,8 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
                 if (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0) {
                     if (stripos($menuitem->getRoute(), 'VictoireMediaBundle_media_show') === 0) {
                         /* @var Media $media */
-                        $media     = $this->em->getRepository('VictoireMediaBundle:Media')->getMedia($request->get('mediaId'));
-                        $menuitem->setInternalname('Show ' . $media->getClassType() . ' ' . $media->getName());
+                        $media = $this->em->getRepository('VictoireMediaBundle:Media')->getMedia($request->get('mediaId'));
+                        $menuitem->setInternalname('Show '.$media->getClassType().' '.$media->getName());
                     }
                     $menuitem->setActive(true);
                 }

@@ -1,0 +1,20 @@
+Victoire\Bundle\TemplateBundle\Entity\Template:
+    template_base:
+        name: Base
+        slug: base
+        layout: fullWidth
+        author: @anakin
+        locale: fr
+        undeletable: true
+        createdAt: <dateTime('now')>
+        updatedAt: <dateTime('now')>
+    template_two_cols:
+        layout: two_cols
+        template: @template_base
+        author: @anakin
+        name: Two columns
+        locale: fr
+        slug: two_cols
+        undeletable: true
+        createdAt: <dateTime('now')>
+        updatedAt: <dateTime('now')>

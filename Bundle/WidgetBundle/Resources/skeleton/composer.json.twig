@@ -1,21 +1,15 @@
 {
-    "name": "victoire/{{ widget|lower }}-widget",
+    "name": "{{ orgname }}/{{ widget|lower }}-widget",
     "type": "symfony-bundle",
-    "description": "Victoire DCMS {{ widget }} widget",
-    "keywords": ["cms", "victoire", "{{ widget }}", "widget"],
-    "homepage": "http://appventus.com",
+    "description": "Victoire {{ widget }} widget",
+    "keywords": ["victoire", "{{ widget }}", "widget"],
+    "homepage": "http://victoire.io",
     "license": "MIT",
-    "authors": [
-        {
-            "name": "Leny BERNARD",
-            "email": "leny@appventus.com"
-        }
-    ],
     "require": {
         "php"                      : ">=5.3.3",
         "symfony/framework-bundle" : "~2.3",
         "victoire/victoire"        : "dev-master"{% if parent %},
-        "victoire/{{parent}}-widget": "dev-master"
+        "{{packagistParentName}}": "dev-master"
 {% endif %}
     },
     "autoload": {

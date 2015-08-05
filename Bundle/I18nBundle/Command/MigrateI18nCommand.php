@@ -14,8 +14,8 @@ use Symfony\Component\Console\Input\ArrayInput;
 class MigrateI18nCommand extends ContainerAwareCommand
 {
     /**
-    * this method is the configuration of the command
-    */
+     * this method is the configuration of the command
+     */
     protected function configure()
     {
         $this
@@ -26,11 +26,11 @@ class MigrateI18nCommand extends ContainerAwareCommand
     }
 
     /**
-    * @param InputInterface $input
-    * @param OutpuInterface $output
-    *
-    * this method is executed when we launch the command
-    */
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     *
+     * this method is executed when we launch the command
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $defaultLocale = $input->getArgument('default-locale');
@@ -39,12 +39,12 @@ class MigrateI18nCommand extends ContainerAwareCommand
     }
 
     /**
-    * @param OutputInterface $output
-    * @param $locale the current locale of the application
-    *
-    * this method allow you to update the schema with the new i18n entity and its relations.
-    *  it also sets all your views to the locale given in parameter and build the links
-    */
+     * @param OutputInterface $output
+     * @param $locale the current locale of the application
+     *
+     * this method allow you to update the schema with the new i18n entity and its relations.
+     *  it also sets all your views to the locale given in parameter and build the links
+     */
     protected function doUpdate(OutputInterface $output, $locale)
     {
         $container = $this->getApplication()->getKernel()->getContainer();
@@ -74,10 +74,10 @@ class MigrateI18nCommand extends ContainerAwareCommand
         $this->doGenerateViewCache($output);
     }
     /**
-    * @param OutputInterface $output
-    *
-    * this call the command victoire:generate:view-cache
-    */
+     * @param OutputInterface $output
+     *
+     * this call the command victoire:generate:view-cache
+     */
     protected function doGenerateViewCache(OutputInterface $output)
     {
         $command = $this->getApplication()->find('victoire:generate:view-cache');

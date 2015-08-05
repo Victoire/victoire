@@ -1,0 +1,26 @@
+*,
+*:after,
+*::before {
+    .box-sizing(box-sizing);
+}
+
+body {
+    padding-top: 40px;
+    padding-bottom: @vic-mode-toggler_height;
+}
+
+.victoire {
+    font-size: @victoire-fontSize;
+    font-weight: @victoire-fontWeight;
+
+    &,
+    * {
+        font-family: @victoire-fontFamily !important;
+        color: @victoire-color;
+    }
+
+    .fa,
+    .vic-fa {
+        font-family: fontAwesome !important;
+    }
+}

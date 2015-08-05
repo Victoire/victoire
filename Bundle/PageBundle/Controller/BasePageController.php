@@ -1,11 +1,11 @@
 <?php
 namespace Victoire\Bundle\PageBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
+use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 
@@ -14,17 +14,17 @@ use Victoire\Bundle\PageBundle\Entity\Page;
  **/
 class BasePageController extends Controller
 {
+    use VictoireAlertifyControllerTrait;
 
     public function showAction(Request $request, $url)
     {
-
         $response = $this->container->get('victoire_page.page_helper')->renderPageByUrl($url, $request->getLocale());
 
         //throw an exception is the page is not valid
         return $response;
     }
 
-    public function showByIdAction($viewId, $entityId = null)
+    public function showByIdAction(Request $request, $viewId, $entityId = null)
     {
         $parameters = array('viewId' => $viewId);
         if ($entityId) {
@@ -33,7 +33,11 @@ class BasePageController extends Controller
         $page = $this->container->get('victoire_page.page_helper')->findPageByParameters($parameters);
         $this->get('victoire_widget_map.builder')->build($page);
 
-        return $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl())));
+        return $this->redirect($this->generateUrl('victoire_core_page_show', array_merge(
+                array('url' => $page->getUrl()),
+                $request->query->all()
+            )
+        ));
     }
 
     public function showBusinessPageByIdAction($entityId, $type)
@@ -44,12 +48,12 @@ class BasePageController extends Controller
 
         $refClass = new \ReflectionClass($entity);
 
-        $pattern = $this->container->get('victoire_business_entity_page.business_entity_page_helper')
-            ->guessBestViewForEntity($refClass);
+        $patternId = $this->container->get('victoire_business_entity_page.business_entity_page_helper')
+            ->guessBestPatternIdForEntity($refClass, $entityId);
 
         $page = $this->container->get('victoire_page.page_helper')->findPageByParameters(array(
-            'viewId' => $pattern->getId(),
-            'entityId' => $entityId
+            'viewId' => $patternId,
+            'entityId' => $entityId,
         ));
         $this->get('victoire_widget_map.builder')->build($page);
 
@@ -89,13 +93,15 @@ class BasePageController extends Controller
             // If the $page is a BusinessEntity (eg. an Article), compute it's url
             if (null !== $this->container->get('victoire_core.helper.business_entity_helper')->findByEntityInstance($page)) {
                 $page = $this->container
-                     ->get('victoire_business_entity_page.business_entity_page_helper')
-                     ->generateEntityPageFromPattern($page->getTemplate(), $page);
+                        ->get('victoire_business_entity_page.business_entity_page_helper')
+                        ->generateEntityPageFromPattern($page->getTemplate(), $page);
             }
+
+            $this->congrat($this->get('translator')->trans('victoire_page.create.success', array(), 'victoire'));
 
             return array(
                 "success"  => true,
-                "url"      => $this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl()))
+                'url'     => $this->generateUrl('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl())),
             );
         } else {
             $formErrorHelper = $this->container->get('victoire_form.error_helper');
@@ -104,9 +110,9 @@ class BasePageController extends Controller
                 "success" => false,
                 "message" => $formErrorHelper->getRecursiveReadableErrors($form),
                 'html'    => $this->container->get('victoire_templating')->render(
-                    $this->getBaseTemplatePath() . ':new.html.twig',
+                    $this->getBaseTemplatePath().':new.html.twig',
                     array('form' => $form->createView())
-                )
+                ),
             );
         }
     }
@@ -138,9 +144,11 @@ class BasePageController extends Controller
             $entityManager->persist($page);
             $entityManager->flush();
 
-             return array(
+            $this->congrat($this->get('translator')->trans('victoire_page.update.success', array(), 'victoire'));
+
+            return array(
                 'success' => true,
-                'url'     => $this->generateUrl('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl()))
+                'url'     => $this->generateUrl('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl())),
             );
         }
         //we display the form
@@ -149,17 +157,16 @@ class BasePageController extends Controller
         return  array(
             'success' => empty($errors),
             'html' => $this->container->get('victoire_templating')->render(
-                $this->getBaseTemplatePath() . ':settings.html.twig',
+                $this->getBaseTemplatePath().':settings.html.twig',
                 array(
                     'page' => $page,
                     'form' => $form->createView(),
-                    'businessProperties' => $businessProperties
+                    'businessProperties' => $businessProperties,
                 )
             ),
-            'message' => $errors
+            'message' => $errors,
         );
     }
-
 
     /**
      * Page translation
@@ -189,7 +196,7 @@ class BasePageController extends Controller
 
             return array(
                 'success' => true,
-                'url' => $this->generateUrl('victoire_core_page_show', array('_locale'=> $clone->getLocale(), 'url' => $clone->getUrl()))
+                'url' => $this->generateUrl('victoire_core_page_show', array('_locale' => $clone->getLocale(), 'url' => $clone->getUrl())),
             );
         }
         $errors = $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form);
@@ -197,14 +204,14 @@ class BasePageController extends Controller
         return array(
             'success' => empty($errors),
             'html' => $this->container->get('victoire_templating')->render(
-                $this->getBaseTemplatePath() . ':translate.html.twig',
+                $this->getBaseTemplatePath().':translate.html.twig',
                 array(
                     'page' => $page,
                     'form' => $form->createView(),
-                    'businessProperties' => $businessProperties
+                    'businessProperties' => $businessProperties,
                 )
             ),
-            'message' => $errors
+            'message' => $errors,
         );
     }
     /**
@@ -214,7 +221,7 @@ class BasePageController extends Controller
      */
     public function deleteAction(BasePage $page)
     {
-        $return = null;
+        $response = null;
 
         try {
             //it should not be allowed to try to delete an undeletable page
@@ -235,18 +242,18 @@ class BasePageController extends Controller
             //redirect to the homepage
             $homepageUrl = $this->generateUrl('victoire_core_page_homepage');
 
-            $return = array(
+            $response = array(
                 'success' => true,
-                'url'     => $homepageUrl
+                'url'     => $homepageUrl,
             );
         } catch (\Exception $ex) {
-            $return = array(
+            $response = array(
                 'success' => false,
-                'message' => $ex->getMessage()
+                'message' => $ex->getMessage(),
             );
         }
 
-        return $return;
+        return $response;
     }
 
     /**
@@ -257,7 +264,7 @@ class BasePageController extends Controller
      * if homepage
      *     forward show(homepage)
      * else
-         *     redirect to welcome page (dashboard)
+     *     redirect to welcome page (dashboard)
      * ==========================
      *
      * @Route("/", name="victoire_core_page_homepage")
@@ -275,7 +282,7 @@ class BasePageController extends Controller
         if ($homepage !== null) {
             return $this->showAction($request, $homepage->getUrl());
         } else {
-            return $this->redirect($this->generateUrl('victoire_dashboard_default_welcome'));
+            throw new \Exception(sprintf('There isn\'t any homepage for "%s" locale, please create one.', $request->getLocale()));
         }
     }
 }

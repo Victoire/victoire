@@ -1,6 +1,3 @@
-parameters:
-    victoire_core.watch_view_cache: true
-
 imports:
     - { resource: @VictoireCoreBundle/Resources/config/config.yml }
     - { resource: @VictoireTwigBundle/Resources/config/config.yml }
@@ -53,12 +50,11 @@ assetic:
                 - "/usr/local/lib/node_modules"
             apply_to: "\.less$"
 
-
 # Doctrine Configuration
 doctrine:
     dbal:
         driver:   "pdo_mysql"
-        host:     "localhost"
+        host:     "127.0.0.1"
         port:     "3306"
         dbname:   "victoire"
         user:     "travis"
@@ -112,7 +108,6 @@ security:
         - { path: ^/admin/, role: ROLE_ADMIN }
 
 victoire_core:
-    watch_view_cache: false
     user_class: "Victoire\Bundle\UserBundle\Entity\User"
     templates:
         layout: "::layout.html.twig"

@@ -152,13 +152,13 @@ class Media
     {
         $size = $this->filesize;
         if ($size < 1024) {
-            return $size . "b";
+            return $size."b";
         } else {
-            $help = $size / 1024;
+            $help = $size/1024;
             if ($help < 1024) {
-                return round($help, 1) . "kb";
+                return round($help, 1)."kb";
             } else {
-                return round(($help / 1024), 1) . "mb";
+                return round(($help/1024), 1)."mb";
             }
         }
     }

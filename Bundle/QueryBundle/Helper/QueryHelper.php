@@ -36,7 +36,7 @@ class QueryHelper
      * Get the query builder base. This makes a "select  from item XXX"
      * use the item for doing the left join or where dql
      *
-     * @param unknown $containerEntity
+     * @param \Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern $containerEntity
      *
      * @return QueryBuilder
      *
@@ -83,7 +83,7 @@ class QueryHelper
 
     /**
      * Check that the object is not null and has the query trait
-     * @param unknown $containerEntity
+     * @param \Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern $containerEntity
      *
      * @throws \Exception
      */
@@ -102,8 +102,8 @@ class QueryHelper
     /**
      * Get the results from the sql after adding the
      *
-     * @param unknown $containerEntity
-     * @param unknown $itemsQueryBuilder
+     * @param \Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern $containerEntity
+     * @param QueryBuilder                                                               $itemsQueryBuilder
      *
      * @throws \Exception
      *
@@ -120,19 +120,36 @@ class QueryHelper
         }
 
         //verify that the object has the query trait
+        //@todo please use an interface and cast with it in the method signature
         $this->checkObjectHasQueryTrait($containerEntity);
 
         //get the query of the container entity
         $query = $containerEntity->getQuery();
+        $orderBy = json_decode($containerEntity->getOrderBy(), true);
         if ($query !== '' && $query !== null) {
 
             $subQuery = $this->entityManager->createQueryBuilder()
-                             ->select('item.id')
-                             ->from($itemsQueryBuilder->getRootEntities()[0], 'item');
+                                ->select('item.id')
+                                ->from($itemsQueryBuilder->getRootEntities()[0], 'item');
 
             $itemsQueryBuilder
-                ->andWhere('main_item.id IN (' . $subQuery->getQuery()->getDql() . ' ' . $query . ')');
+                ->andWhere('main_item.id IN ('.$subQuery->getQuery()->getDql().' '.$query.')');
+            if ($orderBy) {
+                foreach ($orderBy as $addOrderBy) {
+                    $itemsQueryBuilder->addOrderBy('main_item.' . $addOrderBy['by'], $addOrderBy['order']);
+                }
+            }
         }
+
+        if(method_exists($containerEntity, 'getOrderBy')) {
+            $orderBy = json_decode($containerEntity->getOrderBy(), true);
+            if ($orderBy) {
+                foreach ($orderBy as $addOrderBy) {
+                    $itemsQueryBuilder->addOrderBy('main_item.' . $addOrderBy['by'], $addOrderBy['order']);
+                }
+            }
+        }
+
         $currentView = $this->currentView;
 
         // If the current page is a BEP, we parse all its properties and inject them as query parameters
@@ -141,12 +158,12 @@ class QueryHelper
             // NEW
             $metadatas = $this->entityManager->getClassMetadata(get_class($currentEntity));
             foreach ($metadatas->fieldMappings as $fieldName => $field) {
-                if (strpos($query, ":" . $fieldName) !== false) {
+                if (strpos($query, ":".$fieldName) !== false) {
                     $itemsQueryBuilder->setParameter($fieldName, $metadatas->getFieldValue($currentEntity, $fieldName));
                 }
             }
             foreach ($metadatas->associationMappings as $fieldName => $field) {
-                if (strpos($query, ":" . $fieldName) !== false) {
+                if (strpos($query, ":".$fieldName) !== false) {
                     $itemsQueryBuilder->setParameter($fieldName, $metadatas->getFieldValue($currentEntity, $fieldName)->getId());
                 }
             }
@@ -155,8 +172,6 @@ class QueryHelper
                 $itemsQueryBuilder->setParameter('currentEntity', $currentEntity->getId());
             }
         }
-
-        $itemsQueryBuilder->andWhere('main_item.visibleOnFront = true');
 
         return $itemsQueryBuilder;
     }

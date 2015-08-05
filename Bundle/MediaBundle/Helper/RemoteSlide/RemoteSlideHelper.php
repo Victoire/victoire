@@ -2,8 +2,6 @@
 
 namespace Victoire\Bundle\MediaBundle\Helper\RemoteSlide;
 
-use Victoire\Bundle\MediaBundle\Helper\RemoteSlide\RemoteSlideHandler;
-
 use Victoire\Bundle\MediaBundle\Entity\Media;
 
 /**

@@ -23,10 +23,29 @@ class WidgetMap
     //the position of the widget
     protected $position = null;
 
+    //does the widget has to be loaded asynchronously
+    protected $asynchronous = null;
+
     //the position of the widget according to its template's widgets
     //the widget is after the widget positionned at this position
     //the position 0 is the top of the page
     protected $positionReference = null;
+
+    /**
+     * @return null
+     */
+    public function isAsynchronous()
+    {
+        return $this->asynchronous;
+    }
+
+    /**
+     * @param null $asynchronous
+     */
+    public function setAsynchronous($asynchronous)
+    {
+        $this->asynchronous = $asynchronous;
+    }
 
     /**
      * Set the action

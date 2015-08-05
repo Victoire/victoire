@@ -19,7 +19,6 @@ class BusinessEntityHelper
     protected $reader;
     protected $builder;
     protected $entityManager;
-    protected $businessEntities;
 
     /**
      * Constructor
@@ -210,7 +209,7 @@ class BusinessEntityHelper
 
     public function getByBusinessEntityAndId(BusinessEntity $businessEntity, $id)
     {
-        return $this->em->getRepository($businessEntity->getClass())->findOneById($id);
+        return $this->entityManager->getRepository($businessEntity->getClass())->findOneById($id);
     }
 
     /**

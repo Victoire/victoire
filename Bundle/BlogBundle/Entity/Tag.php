@@ -9,7 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * Tag
  *
  * @ORM\Table("vic_tag")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Victoire\Bundle\BlogBundle\Repository\TagRepository")
  */
 class Tag
 {
@@ -45,7 +45,7 @@ class Tag
     /**
      * undocumented function
      *
-     * @return void
+     * @return string
      * @author
      **/
     public function __toString()
@@ -68,7 +68,7 @@ class Tag
      *
      * @param string $title
      *
-     * @return Category
+     * @return Tag
      */
     public function setTitle($title)
     {
@@ -92,7 +92,7 @@ class Tag
      *
      * @param string $slug
      *
-     * @return Category
+     * @return Tag
      */
     public function setSlug($slug)
     {
@@ -116,7 +116,7 @@ class Tag
      *
      * @param \stdClass $pages
      *
-     * @return Category
+     * @return Tag
      */
     public function setPages($pages)
     {
@@ -140,7 +140,7 @@ class Tag
      *
      * @param string $articles
      *
-     * @return PostPage
+     * @return Tag
      */
     public function setArticles($articles)
     {

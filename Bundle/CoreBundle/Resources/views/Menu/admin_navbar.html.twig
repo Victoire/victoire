@@ -82,22 +82,36 @@
 
 <section id="vic-mode-toggler">
     <ul class="vic-mode-container">
-        <li class="vic-mode-item">
-            <button class="vic-mode vic-mode-readonly{{ not edit_mode ? ' vic-active' }}" type="button" data-mode="admin-readonly" title="{{ 'navbar.mode.readonly'|trans({}, 'victoire') }}" data-toggle="vic-tooltip" data-placement="top"><img src="{{ asset('bundles/victoirecore/images/mode/readonly.svg') }}"></button>
-        </li>
+        {% spaceless %}
+            <li class="vic-mode-item">
+                <button class="vic-mode vic-mode-readonly{{ edit_mode|default("admin-readonly") == "admin-readonly" ? ' vic-active' }}" type="button" data-mode="admin-readonly" title="{{ 'navbar.mode.readonly'|trans({}, 'victoire') }}">
+                    <img src="{{ asset('bundles/victoirecore/images/mode/readonly.svg') }}">
+                </button>
+            </li>
 
-        <li class="vic-mode-item">
-            <button class="vic-mode vic-mode-layout{{ "admin-layout" == edit_mode ? ' vic-active' }}" type="button" data-mode="admin-layout" title="{{ 'navbar.mode.layout'|trans({}, 'victoire') }}" data-toggle="vic-tooltip" data-placement="top"><img src="{{ asset('bundles/victoirecore/images/mode/layout.svg') }}"></button>
-        </li>
+            <li class="vic-mode-item">
+                <button class="vic-mode vic-mode-layout{{ "admin-layout" == edit_mode ? ' vic-active' }}" type="button" data-mode="admin-layout" title="{{ 'navbar.mode.layout'|trans({}, 'victoire') }}">
+                    <img src="{{ asset('bundles/victoirecore/images/mode/layout.svg') }}">
+                </button>
+            </li>
 
-        <li class="vic-mode-item">
-            <button class="vic-mode vic-mode-edit{{ "admin-edit" == edit_mode ? ' vic-active' }}" type="button" data-mode="admin-edit" title="{{ 'navbar.mode.edit'|trans({}, 'victoire') }}" data-toggle="vic-tooltip" data-placement="top"><img src="{{ asset('bundles/victoirecore/images/mode/edit.svg') }}"></button>
-        </li>
+            <li class="vic-mode-item">
+                <button class="vic-mode vic-mode-edit{{ "admin-edit" == edit_mode ? ' vic-active' }}" type="button" data-mode="admin-edit" title="{{ 'navbar.mode.edit'|trans({}, 'victoire') }}">
+                    <img src="{{ asset('bundles/victoirecore/images/mode/edit.svg') }}">
+                </button>
+            </li>
+
+            <li class="vic-mode-item">
+                <button class="vic-mode vic-mode-style{{ "admin-style" == edit_mode ? ' vic-active' }}" type="button" data-mode="admin-style" title="{{ 'navbar.mode.style'|trans({}, 'victoire') }}">
+                    <img src="{{ asset('bundles/victoirecore/images/mode/style.svg') }}">
+                </button>
+            </li>
+        {% endspaceless %}
     </ul>
 </section>
 
 <script>
-    $(function () {
-        $('[data-toggle="vic-tooltip"]').tooltip();
-    })
+    $vic(function () {
+        $vic('[data-toggle="vic-tooltip"]').tooltip();
+    });
 </script>

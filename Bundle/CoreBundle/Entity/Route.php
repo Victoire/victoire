@@ -3,7 +3,6 @@
 namespace Victoire\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Victoire\Bundle\PageBundle\Entity\Page;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
@@ -28,10 +27,10 @@ class Route
     /**
      * @var \stdClass
      *
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\PageBundle\Entity\BasePage", inversedBy="routes")
-     * @ORM\JoinColumn(name="page_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\CoreBundle\Entity\View", inversedBy="routes")
+     * @ORM\JoinColumn(name="view_id", referencedColumnName="id", onDelete="CASCADE")
      */
-    protected $page;
+    protected $view;
 
     /**
      * @var string
@@ -70,27 +69,27 @@ class Route
     }
 
     /**
-     * Set page
+     * Set view
      *
-     * @param \stdClass $page
+     * @param View $view
      *
      * @return Route
      */
-    public function setPage($page)
+    public function setView(View $view)
     {
-        $this->page = $page;
+        $this->view = $view;
 
         return $this;
     }
 
     /**
-     * Get page
+     * Get view
      *
      * @return \stdClass
      */
-    public function getPage()
+    public function getView()
     {
-        return $this->page;
+        return $this->view;
     }
 
     /**

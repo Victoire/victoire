@@ -1,0 +1,126 @@
+#vic-mode-toggler {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 500;
+    height: @vic-mode-toggler_height;
+    background-color: @vic-mode-toggler_bgColor;
+}
+
+.vic-mode-container {
+    position: fixed;
+    left: 50%;
+    bottom: 10px;
+    .transform(translateX(-50%));
+    border-radius: 5px 5px 0 0;
+    background-color: @anthracite;
+    padding: 5px;
+    display: flex;
+    align-items: stretch;
+    width: 170px;
+    margin-bottom: 0;
+
+    ul& {
+        list-style: none;
+    }
+
+    > .vic-mode-item {
+        &:first-child {
+            .vic-mode {
+                border-top-left-radius: 3px;
+                border-bottom-left-radius: 3px;
+            }
+        }
+
+        &:last-child {
+            .vic-mode {
+                border-top-right-radius: 3px;
+                border-bottom-right-radius: 3px;
+            }
+        }
+    }
+}
+
+.vic-mode-item {
+    width: 100%;
+    height: 40px;
+    position: relative;
+}
+
+.vic-mode {
+    width: 100%;
+    background-color: @anthracite;
+    color: @white;
+    border-width: 0;
+    width: 100%;
+    display: block;
+    height: 100%;
+    padding: 0;
+    position: relative;
+
+    &:before {
+        content: attr(title);
+        background-color: @anthracite;
+        position: absolute;
+        width: 110px;
+        top: -48px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        margin-left: -55px;
+        left: 50%;
+        .border-radius(5px);
+    }
+
+    &:after {
+        content: '';
+        width: 0;
+        height: 0;
+        border-top: 8px solid @anthracite;
+        border-left: 7px solid transparent;
+        border-right: 7px solid transparent;
+        position: absolute;
+        top: -18px;
+        left: 50%;
+        margin-left: -7px;
+    }
+
+    &:before,
+    &:after {
+        visibility: hidden;
+        opacity: 0;
+        .transition(opacity 200ms ease);
+    }
+
+    &:hover, &.hover, &.-hover, &.is-hover,
+    &:active, &.active, &.-active, &.is-active {
+        color: white;
+    }
+
+    &:hover, &.hover, &.-hover, &.is-hover {
+        &:before,
+        &:after {
+            visibility: visible;
+            opacity: 1;
+        }
+    }
+
+    &.vic-active {
+        border-radius: 3px;
+
+        &.vic-mode-readonly {
+            background-color: #3398DB;
+        }
+
+        &.vic-mode-layout {
+            background-color: #E36566;
+        }
+
+        &.vic-mode-edit {
+            background-color: #04BF96;
+        }
+
+        &.vic-mode-style {
+            background-color: #00AAAC;
+        }
+    }
+}

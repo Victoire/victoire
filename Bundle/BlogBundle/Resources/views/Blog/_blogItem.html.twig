@@ -1,0 +1,69 @@
+{% form_theme chooseBlogForm 'VictoireFormBundle:Form:fields.html.twig' %}
+
+
+<div id="vic-blog-item-header">
+    <div class="vic-row">
+
+        {% if blog %}
+        <div class="vic-col-sm-3">
+            {{ form_start(chooseBlogForm, {'attr' : {'id' : 'victoire_blog_choose_form'}, 'action' : path('victoire_blog_index')}) }}
+            {{ form_row(chooseBlogForm.blog) }}
+            {{ form_end(chooseBlogForm) }}
+        </div>
+        {% endif %}
+
+        {% set addBlogButton %}
+        <a href="{{ path('victoire_blog_new') }}" id="vic-blog-newBlogBtn" class="vic-btn vic-btn-default" data-toggle="vic-modal" title="{{ ('modal.blog.button.new.title')|trans({}, 'victoire') }}">
+            {{ ('modal.blog.button.new.label')|trans({}, 'victoire') }}
+        </a>
+        {% endset %}
+        {% if blog %}
+        <div class="vic-col-sm-9 vic-text-right">
+            {{ addBlogButton|raw }}
+        </div>
+        {% else %}
+        <div class="vic-col-sm-12 vic-text-center">
+
+            <div class="vic-alert vic-alert-info" role="alert">
+                {{ 'victoire_blog.noresult'|trans({}, 'victoire') }}
+            </div>
+            {{ addBlogButton|raw }}
+        </div>
+        {% endif%}
+    </div>
+</div>
+
+<script type="text/javascript">
+    $vic('#victoire_blog_choose_type_blog').on('change', function(){
+        $('#victoire_blog_choose_form').on('submit', function(event) {
+            event.preventDefault();
+            var form = $vic(this);
+            var formData = $vic(form).serializeArray();
+            formData = $vic.param(formData);
+
+            if ($vic(form).attr('enctype') == 'multipart/form-data') {
+                formData = new FormData($vic(form)[0]);
+                var contentType = false;
+            }
+
+            $vic.ajax({
+                url         : $vic(form).attr('action'),
+                context     : document.body,
+                data        : formData,
+                type        : $vic(form).attr('method'),
+                contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+                processData : false,
+                async       : true,
+                cache       : false,
+                success     : function(jsonResponse) {
+                    $vic('#victoire-blog-modal').html(jsonResponse.html);
+                }
+            });
+        }).submit();
+    });
+</script>
+
+{% if blog %}
+{% include 'VictoireBlogBundle:Blog:Tabs/nav.html.twig' %}
+{% include 'VictoireBlogBundle:Blog:Tabs/content.html.twig' %}
+{% endif %}

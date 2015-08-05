@@ -12,7 +12,6 @@ use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 
 class WidgetMapManager
 {
-
     private $em;
     private $builder;
     private $helper;
@@ -26,10 +25,7 @@ class WidgetMapManager
     /**
      * compute the widget map for view
      * @param View  $view
-     * @param array $sortedWidgets
-     *
-     * @todo Be able to move a widget from a slot to another
-     * @todo test if the widget is allowed for the given slot
+     * @param array $sortedWidget
      *
      * @throws Exception
      */
@@ -106,26 +102,31 @@ class WidgetMapManager
     /**
      * Get the slots for the view by the sorted slots given by the sortable js script when ordering widgets
      *
-     * @param View  $view
-     * @param array $widgetSlots
+     * @param View $view
      */
     protected function updateWidgetMapsFromView(View $view, $sortedWidget)
     {
-        $parentWidgetId = (int) $sortedWidget['parentWidget'];
-        $slotId = $sortedWidget['slot'];
-        $widgetId = (int) $sortedWidget['widget'];
+        $parentWidgetId = (int) $sortedWidget['parentWidget'];        //2
+        $slotId = $sortedWidget['slot']; //content
+        $widgetId = (int) $sortedWidget['widget']; //1
         $slot = $view->getSlotById($slotId);
         $originalWidgetMap = $slot->getWidgetMapByWidgetId($widgetId);
-        // If the moved widget belongs to the current page
 
+        // Get the moved widget in the current page or in template
+        $watchdog = 100;
+        $_view = $view;
         while (!$originalWidgetMap) {
-            $parentView = $view->getTemplate();
-            $parentSlot = $parentView->getSlotById($slotId);
+            $watchdog--;
+            $_view = $_view->getTemplate();
+            $parentSlot = $_view->getSlotById($slotId);
             $originalWidgetMap = $parentSlot->getWidgetMapByWidgetId($widgetId);
+            if (0 === $watchdog) {
+                throw new \Exception(sprintf("The slot or the widget %s doesn't appears to be in any WidgetMap. You should check this manually.", $slotId, $widgetId));
+            }
         }
 
-        // If parentWidgetId is null, the widget was places on first position
-        if ($parentWidgetId == null) {
+        // If parentWidgetId is null, the widget was placed on first position
+        if (null === $parentWidgetId) {
             $widgetMapEntry = new WidgetMap();
             $widgetMapEntry->setPosition(1);
             $widgetMapEntry->setAction($originalWidgetMap->getAction());
@@ -149,9 +150,10 @@ class WidgetMapManager
             $widgetMapEntry->setPositionReference($parentWidgetId);
             $widgetMapEntry->setWidgetId($widgetId);
         }
-        // OK
+
         // If this WidgetMapEntry already in the page, remove it
         if ($oldWidgetMapEntry = $slot->getWidgetMapByWidgetId($widgetId)) {
+            $widgetMapEntry->setAsynchronous($oldWidgetMapEntry->isAsynchronous());
             $slot->removeWidgetMap($oldWidgetMapEntry);
         // Else, the new widgetMap is an overwrite
         } elseif ($originalWidgetMap->getAction() !== WidgetMap::ACTION_OVERWRITE) {
@@ -161,8 +163,7 @@ class WidgetMapManager
         // Insert the new one in page slot
         $this->helper->insertWidgetMapInSlot($slotId, $widgetMapEntry, $view);
 
-        return null;
-
+        return;
     }
 
     /**
@@ -172,7 +173,6 @@ class WidgetMapManager
      **/
     public function overwriteWidgetMap(Widget $widgetCopy, Widget $widget, View $view)
     {
-
         //the id of the new widget
         $widgetId = $widgetCopy->getId();
 
@@ -196,10 +196,22 @@ class WidgetMapManager
         }
 
         $originalWidgetMap = $slot->getWidgetMapByWidgetId($replacedWidgetId);
-        while (!$originalWidgetMap) {
-            $parentView = $view->getTemplate();
-            $parentSlot = $parentView->getSlotById($widgetSlotId);
-            $originalWidgetMap = $parentSlot->getWidgetMapByWidgetId($replacedWidgetId);
+        //If widgetmap was not found current view, we dig
+        if (!$originalWidgetMap) {
+            $watchDog = 100;
+            $_view = $view;
+            while (!$originalWidgetMap && $watchDog) {
+                $_view = $_view->getTemplate();
+                $parentSlot = $_view->getSlotById($widgetSlotId);
+                if ($parentSlot) {
+                    $originalWidgetMap = $parentSlot->getWidgetMapByWidgetId($replacedWidgetId);
+                }
+                $watchDog--;
+            }
+
+            if (0 == $watchDog) {
+                throw new \Exception(sprintf("The slot %s doesn't appears to be in any templates WidgetMaps. You should check this manually.", $widgetSlotId));
+            }
         }
 
         //the widget is owned by another view (a parent)
@@ -209,9 +221,9 @@ class WidgetMapManager
         $widgetMap->setReplacedWidgetId($replacedWidgetId);
         $widgetMap->setWidgetId($widgetId);
         $widgetMap->setPosition($originalWidgetMap->getPosition());
+        $widgetMap->setAsynchronous($widgetCopy->isAsynchronous());
         $widgetMap->setPositionReference($originalWidgetMap->getPositionReference());
 
         $slot->addWidgetMap($widgetMap);
     }
-
 }

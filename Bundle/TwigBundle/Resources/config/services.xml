@@ -6,7 +6,6 @@
 
     <parameters>
         <parameter key="twig.controller.exception.class">Victoire\Bundle\TwigBundle\Controller\ExceptionController</parameter>
-        <parameter key="security.exception_listener.class">Victoire\Bundle\TwigBundle\Listener\ExceptionListener</parameter>
         <parameter key="victoire_twig.kernel_request_listener.class">Victoire\Bundle\TwigBundle\Listener\KernelRequestListener</parameter>
     </parameters>
 

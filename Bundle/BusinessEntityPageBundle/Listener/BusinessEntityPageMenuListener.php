@@ -26,7 +26,7 @@ class BusinessEntityPageMenuListener implements MenuListenerInterface
      * Add a global menu item
      * @param Event $event
      *
-     * @return Menu
+     * @return \Knp\Menu\ItemInterface
      *
      * @SuppressWarnings checkUnusedFunctionParameters
      */
@@ -40,7 +40,7 @@ class BusinessEntityPageMenuListener implements MenuListenerInterface
                 ->addChild(
                     'menu.business_entity_page_pattern',
                     array(
-                        'route' => 'victoire_businessentitypage_businessentity_index'
+                        'route' => 'victoire_businessentitypage_businessentity_index',
                     )
                 )
                 ->setLinkAttribute('data-toggle', 'vic-modal');
@@ -53,7 +53,7 @@ class BusinessEntityPageMenuListener implements MenuListenerInterface
      * Add the parent menu for a page that extends another one
      * @param PageMenuContextualEvent $event
      *
-     * @return MenuBuilder
+     * @return \Knp\Menu\ItemInterface
      */
     public function addContextual($event)
     {
@@ -62,7 +62,13 @@ class BusinessEntityPageMenuListener implements MenuListenerInterface
         //if there is a template, we add the link in the top bar
         $mainItem->addChild('menu.page.settings',
             array(
-                'route'           => 'victoire_businessentitypagepattern_businessentitypagepattern_edit',
+                'route'           => 'victoire_bepp_edit',
+                'routeParameters' => array('id' => $event->getPage()->getId()),
+            )
+        )->setLinkAttribute('data-toggle', 'vic-modal');
+        $mainItem->addChild('menu.page.seoSettings',
+            array(
+                'route' => 'victoire_seo_pageSeo_settings',
                 'routeParameters' => array('id' => $event->getPage()->getId())
             )
         )->setLinkAttribute('data-toggle', 'vic-modal');
@@ -73,7 +79,7 @@ class BusinessEntityPageMenuListener implements MenuListenerInterface
     /**
      * Get the main item
      *
-     * @return Ambigous <\Knp\Menu\ItemInterface, NULL>|\Knp\Menu\ItemInterface
+     * @return \Knp\Menu\ItemInterface <\Knp\Menu\ItemInterface, NULL>|\Knp\Menu\ItemInterface
      */
     public function getMainItem()
     {

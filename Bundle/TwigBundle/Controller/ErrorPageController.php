@@ -7,9 +7,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\FlattenException;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
 use Victoire\Bundle\TwigBundle\Entity\ErrorPage;
 
 /**
@@ -23,7 +20,6 @@ class ErrorPageController extends Controller
 {
     /**
      * Show an error page
-     * @param string  $code    The error page code
      *
      * @Route("/{code}", name="victoire_errorPage_show")
      * @ParamConverter("page", class="VictoireTwigBundle:ErrorPage")
@@ -39,12 +35,12 @@ class ErrorPageController extends Controller
 
         //the victoire templating
         $victoireTemplating = $this->container->get('victoire_templating');
-        $layout = 'AppBundle:Layout:' . $page->getTemplate()->getLayout() . '.html.twig';
+        $layout = 'AppBundle:Layout:'.$page->getTemplate()->getLayout().'.html.twig';
 
         $parameters = array(
             'view'   => $page,
             'id'     => $page->getId(),
-            'locale' => $page->getLocale()
+            'locale' => $page->getLocale(),
         );
 
         $this->get('victoire_widget_map.builder')->build($page);

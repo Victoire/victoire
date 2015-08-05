@@ -4,6 +4,7 @@ namespace Victoire\Bundle\WidgetMapBundle\Builder;
 
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
+use Victoire\Bundle\WidgetMapBundle\DataTransformer\WidgetMapToArrayTransformer;
 use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 
 /**
@@ -14,15 +15,46 @@ use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 class WidgetMapBuilder
 {
     protected $helper;
+    protected $widgetMapTransformer;
 
     /**
      * Constructor
      *
      * @param WidgetMapHelper $helper Widget map helper
      */
-    public function __construct(WidgetMapHelper $helper)
+    public function __construct(WidgetMapHelper $helper, WidgetMapToArrayTransformer $widgetMapTransformer)
     {
         $this->helper = $helper;
+        $this->widgetMapTransformer = $widgetMapTransformer;
+    }
+
+    public function rebuild(View $view)
+    {
+        $widgetMap = array();
+        if ($view->getTemplate()) {
+            $widgetMap = $view->getTemplate()->getWidgetMap();
+        }
+        foreach ($view->getWidgets() as $widget) {
+            if (!isset($widgetMap[$widget->getSlot()])) {
+                $widgetMap[$widget->getSlot()] = array();
+            }
+            //create the new widget map
+            $widgetMapEntry = new WidgetMap();
+            $widgetMapEntry->setAction(WidgetMap::ACTION_CREATE);
+            $widgetMapEntry->setWidgetId($widget->getId());
+            $widgetMapEntry->setAsynchronous($widget->isAsynchronous());
+            $widgetMapEntry = $this->helper->generateWidgetPosition($widgetMapEntry, $widget, $widgetMap, null);
+            $widgetMap[$widget->getSlot()][] = $widgetMapEntry;
+        }
+
+        $widgetMapAsArray = array();
+        foreach ($widgetMap as $slotId => $widgetMapItems) {
+            foreach ($widgetMapItems as $widgetMapItem) {
+                $widgetMapAsArray[$slotId][] = $this->widgetMapTransformer->transform($widgetMapItem);
+            }
+        }
+
+        $view->setWidgetMap($widgetMapAsArray);
     }
 
     public function build(View $view, $updatePage = true)
@@ -37,7 +69,7 @@ class WidgetMapBuilder
             $widgetMap = $this->build($template);
         }
 
-        // build the view widgetMpas for each its slots
+        // build the view widgetMaps for each its slots
         foreach ($view->getSlots() as $slot) {
             if (empty($widgetMap[$slot->getId()])) {
                 $widgetMap[$slot->getId()] = array();
@@ -48,7 +80,6 @@ class WidgetMapBuilder
             }
             //if the current view have some widget maps
             if ($viewWidgetMaps !== null) {
-                // $viewWidgetMaps = array_reverse($viewWidgetMaps, true);
                 //we parse the widget maps
                 foreach ($viewWidgetMaps as $viewWidgetMap) {
                     $viewWidgetMap = clone $viewWidgetMap;
@@ -83,6 +114,9 @@ class WidgetMapBuilder
                             $position = null;
                             foreach ($widgetMap[$slot->getId()] as $index => $wm) {
                                 if ($wm->getWidgetId() == $viewWidgetMap->getReplacedWidgetId()) {
+                                    if (null === $viewWidgetMap->isAsynchronous()) {
+                                        $viewWidgetMap->setAsynchronous($wm->isAsynchronous());
+                                    }
                                     //replace the widget map from the list
                                     unset($widgetMap[$slot->getId()][$index]);
                                     break;
@@ -108,14 +142,15 @@ class WidgetMapBuilder
                             }
                             break;
                         default:
-                            throw new \Exception('The action ['.$action.'] is not handeld yet.');
+                            throw new \Exception('The action ['.$action.'] is not handled yet.');
                             break;
                     }
                 }
                 ksort($widgetMap[$slot->getId()]);
             }
-
         }
+
+
         if ($updatePage) {
             $view->setBuiltWidgetMap($widgetMap);
         }

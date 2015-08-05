@@ -6,7 +6,7 @@
         <div class="vic-modal-content">
             {% block modal_header %}
             <div class="vic-modal-header">
-                <div class="vic-container">
+                <div class="vic-container-fluid">
                     <button type="button" class="vic-close" data-modal="close">&times;</button>
                     {% block modal_header_title_container %}
                     <h4 class="vic-modal-title" id="victoire-modal-label">{% block modal_header_title %}{% endblock modal_header_title %}</h4>
@@ -17,7 +17,7 @@
 
             {% block modal_body %}
             <div class="vic-modal-body">
-                <div class="vic-container">
+                <div class="vic-container-fluid">
                     {% block modal_body_content %}{% endblock modal_body_content %}
                 </div>
             </div>
@@ -25,7 +25,7 @@
 
             {% block modal_footer %}
             <div class="vic-modal-footer">
-                <div class="vic-container">
+                <div class="vic-container-fluid">
                     <div class="vic-modal-footer-content">
                     {% block modal_footer_content %}
                     {% endblock modal_footer_content %}

@@ -16,7 +16,7 @@ $vic(document).on('change', '.vic-new-widget select', function(event) {
     event.preventDefault();
     var url = generateNewWidgetUrl(event.target);
     $vic(event.target).blur();
-    var modal = openModal(url);
+    openModal(url);
     $vic(this).parents('.vic-new-widget').first().addClass('vic-creating');
 });
 
@@ -37,23 +37,23 @@ $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(
     $vic.ajax({
         type: form.attr('method'),
         url : form.attr('action'),
-        data: form.serialize(),
+        data: form.serialize()
     }).done(function(response){
         if (true === response.success) {
             if (response.hasOwnProperty("redirect")) {
                 window.location.replace(response.redirect);
             } else {
-                if ($vic('.vic-creating').hasClass('vic-first')) {
-                    $vic('.vic-creating').after(response.html);
-                } else {
-                    $vic('.vic-creating').parents('.vic-widget-container').first().after(response.html);
-                }
-                var slot = $vic('.vic-creating').parents('vic-slot').first();
-                var slotId = $vic(slot).data('name');
-                //update the positions of the widgets
-                updateWidgetPositions(slotId);
                 closeModal();
-                slideTo($vic('> .vic-anchor', '#' + response.widgetId));
+                $vic('.vic-creating').after(response.html);
+                var slot = $vic('.vic-creating').parent('.vic-slot');
+                angular.element($vic(slot)).scope().rebuildActions();
+                angular.element($vic(slot)).scope().toggleEnableButtons();
+                slideTo($vic('> .vic-anchor', '#vic-widget-' + response.widgetId + '-container'));
+                if(typeof(Storage) !== "undefined") {
+                    var object = {data: response.html, timestamp: new Date().getTime()};
+                    localStorage.setItem('victoire__widget__html__' + response.widgetId, JSON.stringify(object));
+                }
+
                 congrat(response.message, 10000);
             }
 
@@ -63,7 +63,7 @@ $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(
             warn(response.message, 10000);
             //inform user there have been an error
             if (response.html) {
-                $vic('.vic-modal-body .vic-container').html(response.html);
+                $vic('.vic-modal-body .vic-container .vic-tab-pane.vic-active').html(response.html);
             }
         }
     }).fail(function(response) {
@@ -82,23 +82,30 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update"]', function(
     if ($vic("select.picker_entity_select").length != 0 && $vic("select.picker_entity_select").attr('name').indexOf('appventus_victoirecorebundle_widgetlistingtype[items][__name__][entity]') !== -1) {
         $vic("select.picker_entity_select").remove();
     }
-    var form = $vic(this).parents('.vic-modal-content').find('.vic-tab-pane.vic-active form').filter(":visible");
+    var form = $vic(this).parents('.vic-modal-content').find('form.vic-form-active');
+    if ($vic(form).length == 0) {
+        form = $vic(this).parents('.vic-modal-content').find('.vic-tab-pane.vic-active form').filter(":visible");
+    }
     $vic(form).trigger("victoire_widget_form_update_presubmit");
 
     loading(true);
     $vic.ajax({
         type: form.attr('method'),
         url : form.attr('action'),
-        data: form.serialize(),
+        data: form.serialize()
     }).done(function(response){
         if (true === response.success) {
             if (response.hasOwnProperty("redirect")) {
                 window.location.replace(response.redirect);
             } else {
-                $vic(".vic-widget", "#"+response.widgetId).replaceWith(response.html);
                 closeModal();
-                slideTo($vic('> .vic-anchor', '#' + response.widgetId));
+                $vic(".vic-widget", '#vic-widget-' + response.widgetId + '-container').replaceWith(response.html);
+                slideTo($vic('> .vic-anchor', '#vic-widget-' + response.widgetId + '-container'));
                 congrat(response.message, 10000);
+            }
+            if(typeof(Storage) !== "undefined") {
+                var object = {data: response.html, timestamp: new Date().getTime()};
+                localStorage.setItem('victoire__widget__html__' + response.widgetId, JSON.stringify(object));
             }
             loading(false);
         } else {
@@ -106,9 +113,8 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update"]', function(
             //inform user there have been an error
             warn(response.message, 10000);
 
-
             if (response.html) {
-                $vic(form).parent('div').replaceWith(response.html);
+                $vic(form).parent('div').html(response.html);
             }
         }
     }).fail(function(response) {
@@ -119,9 +125,9 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update"]', function(
 });
 
 // Delete a widget after submit
-$vic(document).on('click', '.vic-widget-modal a[data-modal="delete"]', function(event) {
+$vic(document).on('click', '.vic-widget-modal a[data-modal="delete"], .vic-hover-widget-unlink', function(event) {
     //Check that there isn't a data-toggle="vic-confirm" on it !
-    if ($vic(event.target).data('toggle') != "vic-confirm" || $vic(event.target).hasClass('vic-confirmed')) {
+    if ($vic(event.target).hasClass('vic-confirmed')) {
         event.preventDefault();
         $vic(document).trigger("victoire_widget_delete_presubmit");
 
@@ -134,21 +140,17 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="delete"]', function(
                 if (response.hasOwnProperty("redirect")) {
                     window.location.replace(response.redirect);
                 } else {
-                    //selector for the widget div
-                    var widgetContainerSelector = 'vic-widget-' + response.widgetId + '-container';
-                    var widgetDiv               = $vic("#" + widgetContainerSelector);
-                    var widgetSlot              = $vic(widgetDiv).parents('.vic-slot').first();
-                    var slotId                  = $vic(widgetSlot).data('name');
-                    var slotFunction            = "updateSlotActions" + slotId;
-
-                    //remove the div
-                    widgetDiv.remove();
-                    //update the data-position attribute of the slot's widgets
-                    updateWidgetPositions(slotId);
-
-                    //close the modal
-                    eval(slotFunction + "()");
                     closeModal();
+                    widget = $vic('#vic-widget-' + response.widgetId + '-container');
+                    slot = widget.parents('.vic-slot');
+                    widget.remove();
+                    angular.element($vic(slot)).scope().rebuildActions();
+                    angular.element($vic(slot)).scope().toggleEnableButtons();
+                    if(typeof(Storage) !== "undefined") {
+                        localStorage.removeItem('victoire__widget__html__' + response.widgetId);
+                    }
+
+                    congrat(response.message, 10000);
                 }
                 loading(false);
             } else {
@@ -158,20 +160,19 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="delete"]', function(
             }
         });
         $vic(document).trigger("victoire_widget_delete_postsubmit");
-    };
+    }
 });
 
 function generateNewWidgetUrl(select){
     var slotId = $vic(select).parents('.vic-slot').first().data('name');
+    var container = $vic(select).parents('.vic-new-widget');
+    var positionReference = 0;
 
-    if ($vic(select).parents('.vic-new-widget').first().hasClass('vic-first')) {
-        var positionReference = 0;
-    } else {
-        var positionReference = parseInt($vic(select).parents('.vic-widget-container').data('id'));
+    if (!$vic(container).is(':first-child')) {
+        positionReference = parseInt($vic(container).prev().data('id'));
     }
 
-
-    var url = Routing.generate(
+    return Routing.generate(
         'victoire_core_widget_new',
         {
             'viewReference'    : viewReferenceId,
@@ -181,6 +182,4 @@ function generateNewWidgetUrl(select){
             '_locale'          : locale
         }
     );
-
-    return url;
 }

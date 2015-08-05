@@ -1,6 +1,7 @@
 <?php
 namespace Victoire\Bundle\BusinessEntityPageBundle\Helper;
 
+use Doctrine\DBAL\Schema\View;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
@@ -9,6 +10,7 @@ use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 use Victoire\Bundle\QueryBundle\Helper\QueryHelper;
+use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
 use Doctrine\ORM\EntityManager;
 
 /**
@@ -18,6 +20,7 @@ use Doctrine\ORM\EntityManager;
 class BusinessEntityPageHelper
 {
     protected $queryHelper = null;
+    protected $viewCacheHelper = null;
     protected $businessEntityHelper = null;
     protected $parameterConverter = null;
     protected $entityManager = null;
@@ -27,9 +30,10 @@ class BusinessEntityPageHelper
      * @param BusinessEntityHelper $businessEntityHelper
      * @param ParameterConverter   $parameterConverter
      */
-    public function __construct(QueryHelper $queryHelper, BusinessEntityHelper $businessEntityHelper, ParameterConverter $parameterConverter, EntityManager $entityManager)
+    public function __construct(QueryHelper $queryHelper, ViewCacheHelper $viewCacheHelper, BusinessEntityHelper $businessEntityHelper, ParameterConverter $parameterConverter, EntityManager $entityManager)
     {
         $this->queryHelper = $queryHelper;
+        $this->viewCacheHelper = $viewCacheHelper;
         $this->businessEntityHelper = $businessEntityHelper;
         $this->parameterConverter = $parameterConverter;
         $this->entityManager = $entityManager;
@@ -38,8 +42,8 @@ class BusinessEntityPageHelper
     /**
      * Is the entity allowed for the business entity page
      *
-     * @param BusinessEntityPagePattern $bepPattern
-     * @param Entity                    $entity
+     * @param BusinessEntityPagePattern                      $bepPattern
+     * @param \Victoire\Bundle\PageBundle\Helper\Entity|null $entity
      *
      * @throws \Exception
      * @return boolean
@@ -61,10 +65,10 @@ class BusinessEntityPageHelper
         //the base of the query
         $baseQuery = $queryHelper->getQueryBuilder($bepPattern);
 
-        $baseQuery->andWhere('main_item.id = ' . $entityId);
+        $baseQuery->andWhere('main_item.id = '.$entityId);
 
         //filter with the query of the page
-        $items =  $queryHelper->buildWithSubQuery($bepPattern, $baseQuery)
+        $items = $queryHelper->buildWithSubQuery($bepPattern, $baseQuery)
             ->getQuery()->getResult();
 
         //only one page can be found because we filter on the
@@ -99,7 +103,7 @@ class BusinessEntityPageHelper
         $baseQuery->andWhere('1 = 1');
 
         //filter with the query of the page
-        $items =  $queryHelper->buildWithSubQuery($bepPattern, $baseQuery)
+        $items = $queryHelper->buildWithSubQuery($bepPattern, $baseQuery)
             ->getQuery()
             ->getResult();
 
@@ -167,6 +171,10 @@ class BusinessEntityPageHelper
             $page->setName($pageName);
             $page->setEntityProxy($entityProxy);
             $page->setTemplate($bepPattern);
+            if ($seo = $bepPattern->getSeo()) {
+                $pageSeo = clone $seo;
+                $page->setSeo($pageSeo);
+            }
         }
 
         return $page;
@@ -239,32 +247,40 @@ class BusinessEntityPageHelper
 
     /**
      * Guess the best pattern to represent given reflectionClass
-     * @param  int    $entityId
-     * @param  string $type
+     * @param \ReflectionClass $refClass
+     * @param integer          $entityId
+     * @param string           $originalRefClassName When digging into parentClass, we do not have to forget originalClass to be able to get reference after all
+     *
      * @return View
      */
-    public function guessBestViewForEntity($refClass)
+    public function guessBestPatternIdForEntity($refClass, $entityId, $originalRefClassName = null)
     {
-        $pattern = null;
-        $classname = $refClass->name;
-        $businessEntity = $this->businessEntityHelper->findByEntityClassname($classname);
-        if ($businessEntity) {
-            $patterns = $this->entityManager->getRepository('VictoireBusinessEntityPageBundle:BusinessEntityPagePattern')->findByBusinessEntityName($businessEntity->getName());
-            if (count($patterns) > 0) {
-                $pattern = array_pop($patterns);
-            }
+        $viewReference = null;
+        if (!$originalRefClassName) {
+            $originalRefClassName = $refClass->name;
         }
 
-        if (!$pattern) {
+        $businessEntity = $this->businessEntityHelper->findByEntityClassname($refClass->name);
+
+        if ($businessEntity) {
+            $parameters = array(
+                'entityId' => $entityId,
+                'entityNamespace' => $this->entityManager->getClassMetadata($originalRefClassName)->name
+            );
+
+            $viewReference = $this->viewCacheHelper->getReferenceByParameters($parameters);
+        }
+
+        if (!$viewReference) {
             $parentRefClass = $refClass->getParentClass();
             if ($parentRefClass) {
-                $pattern = $this->guessBestViewForEntity($parentRefClass);
+                $viewReference['patternId'] = $this->guessBestPatternIdForEntity($parentRefClass, $entityId, $originalRefClassName);
             } else {
-                throw new \Exception('Cannot find a BusinessEntityPagePattern that can display the requested BusinessEntity.');
+                throw new \Exception(sprintf('Cannot find a BusinessEntityPagePattern that can display the requested BusinessEntity ("%s", "%s".)', $refClass->name, $entityId));
             }
         }
 
-        return $pattern;
+        return $viewReference['patternId'];
 
     }
 }

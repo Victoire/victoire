@@ -1,0 +1,108 @@
+{% extends 'VictoireCoreBundle:Widget:Form/_modal.html.twig' %}
+
+{% form_theme form 'VictoireFormBundle:Form:fields.html.twig' %}
+
+{% trans_default_domain "victoire" %}
+
+{% block modal_container_classes %}{{ parent() }} -stylize{% endblock modal_container_classes %}
+
+{% block modal_header_title %}
+    {{ 'victoire_widget.stylize.title'|trans({'%widgetId%': widget.id})|raw }}
+{% endblock modal_header_title %}
+
+{% block modal_body_content %}
+    {% if widget.id and widget.currentView != widget.view %}
+        <div class="vic-alert vic-alert-warning vic-alert-dismissible">
+            {{ 'victoire.widget.inherited.notice'|trans({'%templateName%': widget.view.name, '%templateEditLink%': path('victoire_core_widget_edit', {'id': widget.id, 'viewReference': widget.view.reference.id })}, 'victoire')|raw }}
+        </div>
+    {% endif %}
+
+    {{ form_start(form, {'attr' : {'class' : 'vic-form-active'}}) }}
+
+    <div id="vic-stylize">
+        <div class="vic-row">
+            <div class="vic-col-md-5">
+                {% spaceless %}
+                    <h3 class="vic-h3" id="vic-stylize-container-heading">
+                        {{ 'victoire.widget.stylize.container.heading'|trans() }}
+                    </h3>
+                {% endspaceless %}
+
+                {{ form_row(form.containerTag) }}
+
+                <div class="vic-row">
+                    <div class="vic-col-md-6">
+                        {{ form_row(form.containerClass) }}
+                    </div>
+
+                    <div class="vic-col-md-6">
+                        {{ form_row(form.textAlign) }}
+                    </div>
+                </div>
+
+                {{ form_row(form.containerBackground) }}
+
+                {{ form_row(form.containerWidth) }}
+
+
+                {% if form.theme is defined %}
+                    {{ form_row(form.theme) }}
+                {% endif %}
+            </div>
+
+            <div class="vic-col-md-7">
+
+                <div class="vic-row">
+                    <div class="vic-col-md-6">
+                        {{ form_row(form.containerMargin) }}
+                    </div>
+                    <div class="vic-col-md-6">
+                        {{ form_row(form.containerPadding) }}
+                    </div>
+                    <h3 class="vic-h3">
+                        {{ 'victoire.widget.stylize.layout.heading'|trans() }}
+                    </h3>
+                    <div class="vic-col-md-12 vic-well">
+                        <ul class="vic-nav-group" id="vic-stylize-nav-group">
+                            {% for key, responsive_config in victoire_twig_responsive %}
+                                <li class="item{% if loop.first %} vic-active{% endif %}">
+                                    <a href="#vic-widget-layout-{{ key }}" role="tab" data-toggle="vic-tab" data-title="{% if responsive_config.min is defined %}{{ responsive_config.min }}px{% endif %}{% if responsive_config.min is defined and responsive_config.max is defined%} - {% endif %}{% if responsive_config.max is defined %}{{ responsive_config.max }}px{% endif %}">
+                                        {{ ('widget_layout.tab.containerMargin.' ~ key|upper ~ '.label' )|trans({}, 'victoire')|raw }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+
+                        <div class="vic-tab-content">
+                            {% for key, responsive_config in victoire_twig_responsive %}
+                                <div role="tabpanel" class="vic-tab-pane{% if loop.first %} vic-active{% endif %}" id="vic-widget-layout-{{ key }}">
+                                    <div class="vic-col-md-6">
+                                        {{ form_row(attribute(form, 'containerMargin' ~ key|upper)) }}
+                                    </div>
+                                    <div class="vic-col-md-6">
+                                        {{ form_row(attribute(form, 'containerPadding' ~ key|upper)) }}
+                                    </div>
+                                    <div class="vic-col-md-6">
+                                        {{ form_row(attribute(form, 'containerWidth' ~ key|upper)) }}
+                                    </div>
+                                    <div class="vic-col-md-6">
+                                        {{ form_row(attribute(form, 'containerBackground' ~ key|upper)) }}
+                                    </div>
+                                    <div class="vic-col-md-6">
+                                        {{ form_row(attribute(form, 'textAlign' ~ key|upper)) }}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{ form_rest(form) }}
+    </div>
+
+    {{ form_end(form) }}
+{% endblock modal_body_content %}
+
+{% block action %}update{% endblock action %}

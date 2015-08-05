@@ -19,7 +19,7 @@ class I18nCacheDriver extends AnnotationDriver
     {
         $this->reader = $reader;
         $this->cacheDir = $cacheDir;
-        $i18n = $this->cacheDir . "/victoire/Entity/I18n.php";
+        $i18n = $this->cacheDir."/victoire/Entity/I18n.php";
         if (file_exists($i18n) && !class_exists("Victoire\Bundle\I18nBundle\Entity\I18n")) {
             include_once $i18n;
         }
@@ -28,7 +28,7 @@ class I18nCacheDriver extends AnnotationDriver
     /**
      * Get all class names
      *
-     * @return array
+     * @return string[]
      */
     public function getAllClassNames()
     {

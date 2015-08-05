@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 
 /**
- * CategoryFilter form type
+ * TagFilter form type
  */
 class TagFilter extends BaseFilter
 {
@@ -33,7 +33,7 @@ class TagFilter extends BaseFilter
      * @param QueryBuilder &$qb
      * @param array        $parameters
      *
-     * @return queryBuilder
+     * @return QueryBuilder
      */
     public function buildQuery(QueryBuilder $qb, array $parameters)
     {
@@ -46,10 +46,24 @@ class TagFilter extends BaseFilter
         }
 
         if (count($parameters['tags']) > 0) {
-            $qb = $qb
-                 ->join('main_item.tags', 't')
-                 ->andWhere('t.id IN (:tags)')
-                 ->setParameter('tags', $parameters['tags']);
+
+            if (array_key_exists('strict', $parameters)) {
+                $repository = $this->em->getRepository('VictoireBlogBundle:Article');
+                foreach ($parameters['tags'] as $index => $tag) {
+                    $parameter = ':tag'.$index;
+                    $subquery = $repository->createQueryBuilder('article_'.$index)
+                                ->join('article_'.$index.'.tags', 'tag_'.$index)
+                                ->where('tag_'.$index.' = '.$parameter)
+                                ;
+                    $qb->andWhere($qb->expr()->in('main_item', $subquery->getDql()))
+                                ->setParameter($parameter, $tag);
+                }
+            }else{
+                $qb = $qb
+                        ->join('main_item.tags', 't')
+                        ->andWhere('t.id IN (:tags)')
+                        ->setParameter('tags', $parameters['tags']);
+            }
         }
 
         return $qb;
@@ -64,8 +78,23 @@ class TagFilter extends BaseFilter
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $tags = $this->em->getRepository('VictoireBlogBundle:Tag')->findAll();
+        //getAll tags
+        $tagQb = $this->em->getRepository('VictoireBlogBundle:Tag')->getAll();
+        //getAll published articles
+        $articleQb = $this->em->getRepository('VictoireBlogBundle:Article')->getAll(true);
 
+        //get Listing
+        $listing = $options['widget']->getListing();
+
+        $mode = $listing->getMode();
+        switch ($mode) {
+            case 'query':                //filter with listingQuery
+                $articleQb->filterWithListingQuery($listing->getQuery());
+                break;
+        }
+        //filter tags with right articles
+        $tagQb->filterByArticles($articleQb->getInstance('article'));
+        $tags = $tagQb->getInstance('t_tag')->getQuery()->getResult();
         //the blank value
         $tagsChoices = array();
 
@@ -73,24 +102,27 @@ class TagFilter extends BaseFilter
             $tagsChoices[$tag->getId()] = $tag->getTitle();
         }
 
-        $selectedTags = array();
+        $data = null;
         if ($this->request->query->has('filter') && array_key_exists('tag_filter', $this->request->query->get('filter'))) {
-            foreach ($this->request->query->get('filter')['tag_filter']['tags'] as $id => $selectedTag) {
-                $selectedTags[$id] = $selectedTag;
+            if ($options['multiple']) {
+                $data = array();
+                foreach ($this->request->query->get('filter')['tag_filter']['tags'] as $id => $selectedTag) {
+                    $data[$id] = $selectedTag;
+                }
+            } else {
+                $data = $this->request->query->get('filter')['tag_filter']['tags'];
             }
         }
 
         $builder
             ->add(
                 'tags', 'choice', array(
-                    'label' => 'blog.tag_filter.label',
+                    'label' => false,
                     'choices' => $tagsChoices,
                     'required' => false,
-                    'multiple' => true,
-                    'attr' => array(
-                        'class' => 'select2'
-                    ),
-                    'data' => $selectedTags
+                    'expanded' => true,
+                    'multiple' => $options['multiple'],
+                    'data' => $data,
                 )
             );
     }

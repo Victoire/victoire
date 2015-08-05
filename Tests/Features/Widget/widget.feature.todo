@@ -1,0 +1,150 @@
+@javascript
+Feature: Widget
+
+Background:
+    Given I am logged in as "anakin@victoire.io"
+
+Scenario: Create widgets
+
+    Given the following pages:
+	| title | layout |
+	| test  | 3cols  |
+
+    Given I am on the "page" "test" "show" page
+
+    # test image widget
+    When I select the option "image" in the dropdown "Actions"
+    Then I should see "Ok"
+    When I fill in the following:
+	| Url  | https://www.google.fr/images/srpr/logo4w.png |
+    When I press "Ok"
+    Then I should see "https://www.google.fr/images/srpr/logo4w.png" image
+
+    # test redactor widget
+    When I select the option "redactor" in the dropdown "Actions"
+    Then I should see "Content"
+    When I fill redactor "widget-3cols_left" field with "widget redactor"
+    When I press "Ok"
+    Then I should see "widget redactor"
+
+    # test text widget
+    When I select the option "text" in the dropdown "Actions"
+    Then I should see "Appventus victoireCoreBundle widgettexttype"
+    When I fill in the following:
+	| Content  | widget text |
+    When I press "Ok"
+    Then I should see "widget text"
+
+    # test label widget
+    When I select the option "label" in the dropdown "Actions"
+    Then I should see "Appventus victoireCoreBundle widgetlabeltype"
+    When I fill in the following:
+	| Content  | widget label |
+    When I press "Ok"
+    And I wait 1 seconds
+    Then I should see "widget label"
+
+
+Scenario: Edit widgets
+
+    Given the following pages:
+	| title | layout |
+	| test  | 3cols  |
+
+    And the following widgets:
+	| type::text | content::test text  | slot::3cols_left | page:Page:1 |
+	| type::image | url::https://www.google.fr/images/srpr/logo4w.png | slot::3cols_left | page:Page:1 |
+	| type::label | content::test label | slot::3cols_left | page:Page:1 |
+	| type::redactor | content::test redactor | slot::3cols_left | page:Page:1 |
+
+    Given I am on the "page" "test" "show" page
+
+    # test redactor widget
+    When I click on "edit" "widget-4" widget action
+    Then I should see "Content"
+    When I fill redactor "widget-4" field with "widget redactor edited"
+    When I press "Ok"
+    Then I should see "widget redactor edited"
+
+    # test text widget
+    When I click on "edit" "widget-1" widget action
+    Then I should see "Appventus victoireCoreBundle widgettexttype"
+    When I fill in the following:
+	| Content  | widget text edited |
+    When I press "Ok"
+    Then I should see "widget text edited"
+
+    # test image widget
+    When I click on "edit" "widget-2" widget action
+    Then I should see "Ok"
+    When I fill in the following:
+	| Url  | https://www.google.fr/images/srpr/logo2w.png |
+    When I press "Ok"
+    Then I should see "https://www.google.fr/images/srpr/logo2w.png" image
+
+    # test label widget
+    When I click on "edit" "widget-3" widget action
+    Then I should see "Appventus victoireCoreBundle widgetlabeltype"
+    When I fill in the following:
+	| Content  | widget label edited |
+    When I press "Ok"
+    Then I should see "widget label edited"
+
+
+Scenario: Delete widgets
+
+
+    Given the following pages:
+	| title | layout |
+	| test  | 3cols  |
+
+    And the following widgets:
+	| type::text | content::widget text test  | slot::3cols_left | page:Page:1 |
+	| type::image | url::https://www.google.fr/images/srpr/logo4w.png | slot::3cols_left | page:Page:1 |
+	| type::label | content::widget label test | slot::3cols_left | page:Page:1 |
+	| type::redactor | content::widget redactor test | slot::3cols_left | page:Page:1 |
+
+
+    Given I am on the "page" "test" "show" page
+
+    # test text widget
+    When I click on "delete" "widget-1" widget action
+    Then I wait 1 seconds
+    And I should not see "widget text test"
+
+    # test image widget
+    When I click on "delete" "widget-2" widget action
+    Then I wait 1 seconds
+    And I should not see "https://www.google.fr/images/srpr/logo2w.png" image
+
+    # test label widget
+    When I click on "delete" "widget-3" widget action
+    Then I wait 1 seconds
+    And I should not see "widget label test"
+
+
+    # test redactor widget
+    When I click on "delete" "widget-4" widget action
+    Then I wait 1 seconds
+    And I should not see "widget redactor test"
+
+
+#TODO
+#     Scenario: Move widgets
+#
+#        Given the following pages:
+#            | title | layout |
+#            | test  | 3cols  |
+#
+#        And the following widgets:
+#            | type::text | content::test  | slot::3cols_left | page:Page:1 |
+#            | type::text | content::test2 | slot::3cols_left | page:Page:1 |
+#            | type::text | content::test3 | slot::3cols_left | page:Page:1 |
+#
+#        Given I am on the "page" "test" "show" page
+#        Then I should see "test"
+#        And I should see "test2"
+#        And I should see "test3"
+#        And I wait 2 seconds
+#        Then I drag widget "#widget-1" after widget "#slot-3cols_left-add-button"
+#        And I wait 10 seconds

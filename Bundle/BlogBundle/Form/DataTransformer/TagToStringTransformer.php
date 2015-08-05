@@ -38,10 +38,12 @@ class TagToStringTransformer implements DataTransformerInterface
 
             $objectsArray = array();
             foreach ($ids as $title) {
-                $object = new Tag();
-                $object->setTitle($title);
-                $this->em->persist($object);
-                $objectsArray[] = $object;
+                if ($title !== '') {
+                    $object = new Tag();
+                    $object->setTitle($title);
+                    $this->em->persist($object);
+                    $objectsArray[] = $object;
+                }
             }
             $this->em->flush();
 
@@ -63,6 +65,6 @@ class TagToStringTransformer implements DataTransformerInterface
     public function transform($array)
     {
         return $array;
-   }
+    }
 
 }

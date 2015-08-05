@@ -24,7 +24,7 @@ class BusinessEntityPageRepository extends EntityRepository
         $qb = $this->createQueryBuilder('businessEntityPage');
         $qb->join('businessEntityPage.entityProxy', 'proxy');
         $qb->join('businessEntityPage.template', 'template');
-        $qb->join('proxy.' . $businessEntity->getId(), 'entity');
+        $qb->join('proxy.'.$businessEntity->getId(), 'entity');
 
         $qb->where('template.id = :patternId');
 

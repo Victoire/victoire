@@ -6,3 +6,4 @@ security:
             - ROLE_VICTOIRE_LEFTNAVBAR
             - ROLE_VICTOIRE_BET
             - ROLE_VICTOIRE_PAGE_DEBUG
+            - ROLE_VICTOIRE_STYLE

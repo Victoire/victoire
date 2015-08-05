@@ -1,3 +1,8 @@
+parameters:
+    victoire_blog_tag_filters_form_type_class: Victoire\Bundle\BlogBundle\Filter\TagFilter
+    victoire_blog_category_filters_form_type_class: Victoire\Bundle\BlogBundle\Filter\CategoryFilter
+    victoire_blog_date_filters_form_type_class: Victoire\Bundle\BlogBundle\Filter\DateFilter
+
 services:
     victoire_blog.blog_menu_listener:
         class: Victoire\Bundle\BlogBundle\Listener\BlogMenuListener
@@ -20,7 +25,17 @@ services:
     ####################################################################################################################
     # Forms
     ####################################################################################################################
-
+    #TREE EXTENSION
+    victoire_blog.hierarchy_tree_extension:
+        class: Victoire\Bundle\BlogBundle\Form\Extension\HierarchyTreeExtension
+        arguments: [ "@property_accessor" ]
+        tags:
+            - { name: form.type, alias: hierarchy_tree }
+    #CATEGORY
+    victoire.form.blog.category:
+        class: Victoire\Bundle\BlogBundle\Form\CategoryType
+        tags:
+            - { name: form.type , alias: victoire_form_blog_category}
     #ARTICLE
     victoire_blog.article.form.type:
         class: Victoire\Bundle\BlogBundle\Form\ArticleType
@@ -64,9 +79,14 @@ services:
         tags:
             - { name: form.type, alias: victoire_blog_settings_type }
 
+    victoire_blog.blog_category.form.type:
+        class: Victoire\Bundle\BlogBundle\Form\BlogCategoryType
+        tags:
+            - { name: form.type, alias: victoire_blog_category_type }
+
     #CATEGORY FILTER
     victoire_blog.category_filters.form.type:
-        class: Victoire\Bundle\BlogBundle\Filter\CategoryFilter
+        class: %victoire_blog_category_filters_form_type_class%
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@request="
@@ -76,10 +96,51 @@ services:
 
     #TAG FILTER
     victoire_blog.tag_filters.form.type:
-        class: Victoire\Bundle\BlogBundle\Filter\TagFilter
+        class: %victoire_blog_tag_filters_form_type_class%
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@request="
         tags:
             - { name: form.type, alias: tag_filter }
             - { name: victoire_core.filter }
+
+    #DATE FILTER
+    victoire_blog.date_filters.form.type:
+        class: %victoire_blog_date_filters_form_type_class%
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@request="
+        tags:
+            - { name: form.type, alias: date_filter }
+            - { name: victoire_core.filter }
+
+    victoire_blog.manager.article:
+        class: Victoire\Bundle\BlogBundle\Manager\ArticleManager
+        arguments:
+            - "@doctrine.orm.entity_manager"
+
+    #  ==================  Filter listener ================== #
+    #
+    victoire.widget_filter.form.listener.presetdata:
+        class: Victoire\Bundle\BlogBundle\Listener\BlogFilterListener
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@event_dispatcher"
+        tags:
+            - { name: kernel.event_listener, event: victoire.widget_filter.form.pre_set_data, method: manageExtraFiltersFields, priority: 1 }
+
+    victoire.widget_filter.form.listener.presubmit:
+        class: Victoire\Bundle\BlogBundle\Listener\BlogFilterListener
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@event_dispatcher"
+        tags:
+            - { name: kernel.event_listener, event: victoire.widget_filter.form.pre_submit, method: manageExtraFiltersFields, priority: 1 }
+
+    victoire.widget_filter.blog.set.default.values.form.listener:
+        class: Victoire\Bundle\BlogBundle\Listener\ArticleFilterDefaultValuesListener
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: kernel.event_listener, event: victoire.widget_filter.form.date.set_default_value, method: setDefaultDateValue, priority: 1 }
+

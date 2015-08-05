@@ -25,7 +25,7 @@ class WidgetExceptionHandler
      * @param boolean         $debug      The debug variable environment
      * @param TemplateMapper  $templating The victoire templating
      */
-    public function __construct(SecurityContext $security,  $twig, $debug, TemplateMapper $templating)
+    public function __construct(SecurityContext $security, $twig, $debug, TemplateMapper $templating)
     {
         $this->security = $security;
         $this->twig = $twig;
@@ -36,12 +36,13 @@ class WidgetExceptionHandler
     /**
      * Handle response for an exception for a widget
      *
-     * @param \Exception $exception
-     * @param Widget     $widget    The widget that throwed an error
+     * @param View    $currentView
+     * @param Widget  $widget
+     * @param integer $widgetId
      *
      * @return string The html with the Error
      */
-    public function handle(\Exception $ex, $widget = null)
+    public function handle(\Exception $ex, $currentView, $widget = null, $widgetId = null)
     {
         $result = '';
 
@@ -69,7 +70,9 @@ class WidgetExceptionHandler
                 'VictoireCoreBundle:Widget:showError.html.twig',
                 array(
                     "widget" => $widget,
-                    "error" => $exceptionResult
+                    "widgetId" => $widgetId,
+                    "currentView" => $currentView,
+                    "error" => $exceptionResult,
                 )
             );
         } else {
@@ -80,7 +83,9 @@ class WidgetExceptionHandler
                     'VictoireCoreBundle:Widget:showError.html.twig',
                     array(
                         "widget" => $widget,
-                        "error" => $ex->getMessage()
+                        "widgetId" => $widgetId,
+                        "currentView" => $currentView,
+                        "error" => $ex->getMessage(),
                     )
                 );
             }

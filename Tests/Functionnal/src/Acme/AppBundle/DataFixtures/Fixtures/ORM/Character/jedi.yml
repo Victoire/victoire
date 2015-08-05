@@ -1,0 +1,13 @@
+Acme\AppBundle\Entity\Jedi:
+    jedi_anakin:
+        name: anakin
+        side: Dark
+        midiChlorians: 20000
+    jedi_obiwan:
+        name: obiwan
+        side: Bright
+        midiChlorians: 12000
+    jedi_yoda:
+        name: yoda
+        side: Bright
+        midiChlorians: 17500

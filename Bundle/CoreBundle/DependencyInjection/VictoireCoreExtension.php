@@ -31,10 +31,10 @@ class VictoireCoreExtension extends Extension
         $kernel = new \AppKernel('prod', false);
         foreach ($kernel->registerBundles() as $bundle) {
             $path = $bundle->getPath();
-            $yamlParser = new Yaml($container, $path . '/Resources/config/config.yml');
-            $victoireConfig = $yamlParser->parse($path . '/Resources/config/config.yml');
+            $yamlParser = new Yaml($container, $path.'/Resources/config/config.yml');
+            $victoireConfig = $yamlParser->parse($path.'/Resources/config/config.yml');
             if (is_array($victoireConfig) && array_key_exists('victoire_core', $victoireConfig)) {
-                $config['widgets'] = array_merge($config['widgets'], $victoireConfig['victoire_core']['widgets']?:array());
+                $config['widgets'] = array_merge($config['widgets'], $victoireConfig['victoire_core']['widgets'] ?: array());
             }
         }
 
@@ -43,12 +43,6 @@ class VictoireCoreExtension extends Extension
         );
         $container->setParameter(
             'victoire_core.applicative_bundle', $config['applicative_bundle']
-        );
-        $container->setParameter(
-            'victoire_core.available_frameworks', $config['available_frameworks']
-        );
-        $container->setParameter(
-            'victoire_core.framework', ucfirst($config['framework'])
         );
         if (array_key_exists('templates', $config)) {
             $container->setParameter(
@@ -72,7 +66,7 @@ class VictoireCoreExtension extends Extension
             'victoire_core.user_class', $config['user_class']
         );
         $container->setParameter(
-            'victoire_core.watch_view_cache', $config['watch_view_cache']
+            'victoire_core.base_paths', $config['base_paths']
         );
         $container->setParameter(
             'victoire_core.base_paths', $config['base_paths']

@@ -1,6 +1,6 @@
 /**
  * Select2 Turkish translation.
- * 
+ *
  * Author: Salim KAYABAŞI <salim.kayabasi@gmail.com>
  */
 (function ($) {
@@ -14,4 +14,4 @@
         formatLoadMore: function (pageNumber) { return "Daha fazla…"; },
         formatSearching: function () { return "Aranıyor…"; }
     });
-})(jQuery);
+})($vic);

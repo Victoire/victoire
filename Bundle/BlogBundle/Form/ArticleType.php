@@ -16,8 +16,8 @@ class ArticleType extends AbstractType
     private $entityManager;
 
     /**
-    * Constructor
-    */
+     * Constructor
+     */
     public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
@@ -31,12 +31,31 @@ class ArticleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $viewToIdTransformer = new ViewToIdTransformer($this->entityManager);
+        $blog = $builder->getData()->getBlog();
+        $categoryRepo = $this->entityManager->getRepository('Victoire\Bundle\BlogBundle\Entity\Category');
+        if ($blog) {
+            $queryBuilder = $categoryRepo->getOrderedCategories($blog)->getInstance();
+        } else {
+            $queryBuilder = $categoryRepo->getAll()->getInstance();
+        }
         $builder
-            ->add('name')
+            ->add('name', null, array(
+                    'label' => 'form.article.name.label',
+                ))
             ->add('description', null, array(
+                    'label' => 'form.article.description.label',
                 'required' => false))
-            ->add('image', 'media')
-            ->add('category')
+            ->add('image', 'media', array(
+                    'label' => 'form.article.image.label',
+                ))
+            ->add('category', 'hierarchy_tree', array(
+                    'label' => 'form.article.category.label',
+                    'class' => "Victoire\\Bundle\\BlogBundle\\Entity\\Category",
+                    'query_builder' => $queryBuilder,
+                    'empty_value' => "Pas de catégorie",
+                    "empty_data" => null
+                )
+            )
             ->add(
                 $builder->create('blog', 'hidden', array(
                     'label' => 'form.article.blog.label')
@@ -51,7 +70,7 @@ class ArticleType extends AbstractType
                 )
             );
 
-            $articlePatterns = function (EntityRepository $repo) {
+            $articlePatterns = function(EntityRepository $repo) {
                 return $repo->getInstance()->andWhere("pattern.businessEntityName = 'article'");
             };
             $builder->add('pattern', null, array(
@@ -59,8 +78,8 @@ class ArticleType extends AbstractType
                 'property'      => 'name',
                 'required'      => true,
                 'query_builder' => $articlePatterns,
-            ));
-
+            )
+        );
     }
 
     /**

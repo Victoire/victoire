@@ -1,6 +1,6 @@
 /**
  * Select2 Lithuanian translation.
- * 
+ *
  * @author  CRONUS Karmalakas <cronus dot karmalakas at gmail dot com>
  * @author  Uriy Efremochkin <efremochkin@uriy.me>
  */
@@ -21,4 +21,4 @@
     function character (n) {
         return " " + n + " simbol" + ((n%100 > 9 && n%100 < 21) || n%10 == 0 ? "ių" : n%10 > 1 ? "ius" : "į");
     }
-})(jQuery);
+})($vic);

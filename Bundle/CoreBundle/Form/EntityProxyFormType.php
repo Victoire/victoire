@@ -13,7 +13,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class EntityProxyFormType extends AbstractType
 {
-
     /**
      * define form fields
      * @param FormBuilderInterface $builder
@@ -25,13 +24,13 @@ class EntityProxyFormType extends AbstractType
         //it depends of the form
         $builder
             ->add($options['entity_name'], 'entity', array(
-                'label'       => 'entity_proxy.form.' . $options['entity_name'] . '.label',
+                'label'       => 'entity_proxy.form.label',
                 'required'    => false,
                 'empty_value' => 'entity_proxy.form.empty_value',
                 'class'       => $options['namespace'],
                 'attr'        => array(
-                    'class' => 'add_' .$options['entity_name'] . '_link picker_entity_select',
-                )
+                    'class' => 'add_'.$options['entity_name'].'_link picker_entity_select',
+                ),
             ));
     }
 
@@ -46,7 +45,7 @@ class EntityProxyFormType extends AbstractType
             'entity_name'        => null,
             'namespace'          => null,
             'widget'             => null,
-            'translation_domain' => 'victoire'
+            'translation_domain' => 'victoire',
         ));
     }
 

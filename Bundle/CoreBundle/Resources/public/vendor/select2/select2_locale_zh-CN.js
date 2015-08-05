@@ -11,4 +11,4 @@
         formatLoadMore: function (pageNumber) { return "加载结果中…"; },
         formatSearching: function () { return "搜索中…"; }
     });
-})(jQuery);
+})($vic);

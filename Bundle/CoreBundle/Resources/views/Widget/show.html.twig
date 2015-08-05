@@ -1,16 +1,83 @@
 {% trans_default_domain "victoire" %}
 
 {% block body %}
+    {% set widthWidget = containerWidth ? "width: " ~ containerWidth ~ "; " %}
+    {% set marginWidget = containerMargin ? "margin: " ~ containerMargin ~ "; " %}
+    {% set paddingWidget = containerPadding ? "padding: " ~ containerPadding ~ "; " %}
+    {% set backgroundWidget = containerBackground ? "background: " ~ containerBackground ~ "; " %}
+    {% set textAlign = textAlign != '' ? "text-align: " ~ textAlign ~ "; " %}
 
-<div class="vic-widget {{ cms_widget_extra_css_class(widget) }}" id="widget-{{widget.id}}">
-{% if is_granted('ROLE_VICTOIRE') %}
-    {% block actions %}
-        {{ cms_widget_actions(widget) }}
-    {% endblock actions %}
-{% endif %}
-{% block content %}
-{{ content|raw }}
-{% endblock content %}
-</div>
+    {% set hasGlobalStyle = widthWidget or marginWidget or paddingWidget or backgroundWidget or textAlign %}
 
+    {% set responsiveStyles = {} %}
+    {% for sizeCode in ['xs', 'sm', 'md', 'lg'] %}
+        {% set instructions = _self.responsiveStyle(widget, 'xs', victoire_twig_responsive) %}
+        {% if instructions|trim != "" %}
+            {% set responsiveStyles = responsiveStyles|merge({sizeCode: instructions}) %}
+        {% endif %}
+    {% endfor %}
+
+    {% if hasGlobalStyle or responsiveStyles|length %}
+    <style>
+        {% if hasGlobalStyle %}
+        #widget-{{ widget.id }} {
+            {{ widthWidget }}
+            {{ marginWidget }}
+            {{ paddingWidget }}
+            {{ backgroundWidget }}
+            {{ textAlign }}
+        }
+        {% endif %}
+
+        {% for responsiveStyle in responsiveStyles %}
+            {{ responsiveStyle }}
+        {% endfor %}
+       {{ _self.responsiveStyle(widget, 'sm', victoire_twig_responsive) }}
+       {{ _self.responsiveStyle(widget, 'md', victoire_twig_responsive) }}
+       {{ _self.responsiveStyle(widget, 'lg', victoire_twig_responsive) }}
+    </style>
+    {% endif %}
+
+    <{{ containerTag }} class="vic-widget {{ cms_widget_extra_css_class(widget) }} {{ containerClass }}" id="widget-{{ widget.id }}">
+
+        <a class="vic-anchor" id="vic-widget-{{ widget.id }}-container-anchor"></a>
+        <a href="#" class="vic-hover-widget"><i></i></a>
+
+        {% block content %}
+            {{ content|raw }}
+        {% endblock content %}
+    </{{ containerTag }}>
 {% endblock body %}
+
+
+
+{% macro responsiveStyle(widget, sizeCode, victoire_twig_responsive) %}
+    {% spaceless %}
+        {% set config = attribute(victoire_twig_responsive, sizeCode) %}
+
+        {% set attr = null %}
+
+        {% if config.min is defined %}
+            {% set attr = 'and (min-width: ' ~ config.min ~ 'px)' %}
+        {% endif %}
+
+        {% if config.max is defined %}
+            {% set attr = attr ~ ' and (max-width: ' ~ config.max ~ 'px)' %}
+        {% endif %}
+
+        {% set instruction = null %}
+        {% if attribute(widget, 'containerMargin' ~ sizeCode|upper) %}{% set instruction = instruction ~ "margin: " ~ attribute(widget, 'containerMargin' ~ sizeCode|upper) ~ ";" %}{% endif %}
+        {% if attribute(widget, 'containerPadding' ~ sizeCode|upper) %}{% set instruction = instruction ~ "padding: " ~ attribute(widget, 'containerPadding' ~ sizeCode|upper) ~ ";" %}{% endif %}
+        {% if attribute(widget, 'containerWidth' ~ sizeCode|upper) %}{% set instruction = instruction ~ "width: " ~ attribute(widget, 'containerWidth' ~ sizeCode|upper) ~ ";" %}{% endif %}
+        {% if attribute(widget, 'containerBackground' ~ sizeCode|upper) %}{% set instruction = instruction ~ "background: " ~ attribute(widget, 'containerBackground' ~ sizeCode|upper) ~ ";" %}{% endif %}
+        {% if attribute(widget, 'textAlign' ~ sizeCode|upper) %}{% set instruction = instruction ~ "text-align: " ~ attribute(widget, 'textAlign' ~ sizeCode|upper) ~ ";" %}{% endif %}
+    {% endspaceless %}
+
+    {% if instruction %}
+        @media all {{ attr }} {
+            #widget-{{ widget.id }} {
+                {{ instruction }}
+            }
+        }
+    {% endif %}
+{% endmacro %}

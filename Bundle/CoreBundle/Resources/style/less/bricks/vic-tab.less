@@ -1,0 +1,55 @@
+.vic-nav-tabs {
+    margin: 0;
+    border-color: @vic-navTabs-borderColor;
+
+    > li {
+        > a {
+            padding-right: @vic-navTabs-item-horizontalPadding;
+            padding-left: @vic-navTabs-item-horizontalPadding;
+            font-size: @vic-navTabs-item-fontSize;
+            font-size: @victoire-fontSize;
+            color: @vic-navTabs-item-color;
+            margin-right: @vic-navTabs-item-marginRight;
+        }
+
+        &,
+        &.vic-active {
+            > a {
+                border-color: @vic-navTabs-borderColor;
+            }
+        }
+
+        &.vic-active {
+            > a {
+                &,
+                &:hover,
+                &:focus {
+                    border-color: @vic-navTabs-borderColor;
+                    border-bottom-color: transparent;
+                    color: @vic-navTabs-item-active-color;
+                    font-weight: @vic-navTabs-item-active_fontWeight;
+                }
+            }
+        }
+    }
+
+    + .vic-tab-content {
+        border-width: 1px;
+        border-top-width: 0;
+        border-style: solid;
+        border-color: @vic-navTabs-borderColor;
+        overflow: hidden;
+        padding: @vic-navTabs-content-padding;
+    }
+}
+
+.vic-nav {
+    > li {
+        > a {
+            &:hover,
+            &:focus {
+                border-color: @vic-navTabs-borderColor;
+            }
+        }
+    }
+}

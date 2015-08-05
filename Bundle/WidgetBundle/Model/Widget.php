@@ -3,6 +3,7 @@
 namespace Victoire\Bundle\WidgetBundle\Model;
 
 use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
+use Victoire\Bundle\CoreBundle\Entity\View;
 
 /**
  * Widget Model
@@ -29,6 +30,22 @@ abstract class Widget
     protected $currentView;
 
     /**
+     * @return string
+     */
+    public function isAsynchronous()
+    {
+        return $this->asynchronous;
+    }
+
+    /**
+     * @param string $asynchronous
+     */
+    public function setAsynchronous($asynchronous)
+    {
+        $this->asynchronous = $asynchronous;
+    }
+
+    /**
      * Set the entity proxy
      *
      * @param EntityProxy $entityProxy
@@ -51,7 +68,7 @@ abstract class Widget
     /**
      * to string
      *
-     * @return id
+     * @return string
      */
     public function __toString()
     {
@@ -73,7 +90,7 @@ abstract class Widget
      *
      * @param string $fields
      *
-     * @return EntityProxy
+     * @return Widget
      */
     public function setFields($fields)
     {
@@ -170,7 +187,7 @@ abstract class Widget
     /**
      * Get view
      *
-     * @return string
+     * @return View
      */
     public function getView()
     {
@@ -223,7 +240,7 @@ abstract class Widget
     /**
      * Set the current view
      *
-     * @param View $currentView
+     * @param \Victoire\Bundle\CoreBundle\Entity\View $currentView
      *
      * @return \Victoire\Bundle\WidgetBundle\Entity\Widget
      */
@@ -237,7 +254,7 @@ abstract class Widget
     /**
      * Get the current view
      *
-     * @return View The current view
+     * @return \Victoire\Bundle\CoreBundle\Entity\View The current view
      */
     public function getCurrentView()
     {
@@ -302,7 +319,7 @@ abstract class Widget
 
         return $viewId;
     }
-    
+
     /**
      * Clone a widget
      */

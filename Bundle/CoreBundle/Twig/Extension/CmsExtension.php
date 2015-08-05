@@ -40,7 +40,7 @@ class CmsExtension extends \Twig_Extension_Core
      * @param WidgetExceptionHandler $widgetExceptionHandler
      * @param CurrentViewHelper      $currentViewHelper
      * @param ViewCacheHelper        $viewCacheHelper
-     * @param TwigEnvironment        $twig
+     * @param \Twig_Environment      $twig
      */
     public function __construct(
         WidgetRenderer $widgetRenderer,
@@ -51,15 +51,14 @@ class CmsExtension extends \Twig_Extension_Core
         CurrentViewHelper $currentViewHelper,
         ViewCacheHelper $viewCacheHelper,
         \Twig_Environment $twig
-    )
-    {
+    ) {
         $this->widgetRenderer = $widgetRenderer;
         $this->templating = $templating;
         $this->securityContext = $securityContext;
         $this->entityManager = $entityManager;
         $this->widgetExceptionHandler = $widgetExceptionHandler;
         $this->currentViewHelper = $currentViewHelper;
-        $this->pageCacheHelper = $viewCacheHelper;
+        $this->viewCacheHelper = $viewCacheHelper;
         $this->twig = $twig;
     }
 
@@ -71,7 +70,7 @@ class CmsExtension extends \Twig_Extension_Core
     public function getFunctions()
     {
         return array(
-            'cms_widget_actions'         => new \Twig_Function_Method($this, 'cmsWidgetActions', array('is_safe' => array('html'))),
+            'cms_widget_unlink_action'   => new \Twig_Function_Method($this, 'cmsWidgetUnlinkAction', array('is_safe' => array('html'))),
             'cms_slot_widgets'           => new \Twig_Function_Method($this, 'cmsSlotWidgets', array('is_safe' => array('html'))),
             'cms_slot_actions'           => new \Twig_Function_Method($this, 'cmsSlotActions', array('is_safe' => array('html'))),
             'cms_widget'                 => new \Twig_Function_Method($this, 'cmsWidget', array('is_safe' => array('html'))),
@@ -105,24 +104,27 @@ class CmsExtension extends \Twig_Extension_Core
     }
 
     /**
-     * render actions for a widget
+     * render unlink action for a widgetId
      *
-     * @param Widget $widget The widget to render
+     * @param integer $widgetId The widgetId to unlink
      *
-     * @return string the widget actions (buttons edit, move and delete)
+     * @return string the widget unlink action
      */
-    public function cmsWidgetActions($widget)
+    public function cmsWidgetUnlinkAction($widgetId, $view)
     {
-        $widget->setCurrentView($this->currentViewHelper->getCurrentView());
+        $viewReference = $reference = $this->viewCacheHelper->getReferenceByParameters(
+            array('viewId' => $view->getId())
+        );
+        $view->setReference($viewReference);
 
-        return $this->widgetRenderer->renderWidgetActions($widget);
+        return $this->widgetRenderer->renderUnlinkActionByWidgetId($widgetId, $view);
     }
 
     /**
      * render all widgets in a slot
      *
-     * @param unknown $slotId
-     * @param string  $slotOptions
+     * @param string $slotId
+     * @param string $slotOptions
      *
      * @return string HTML markup of the widget with action button if needed
      */
@@ -133,10 +135,8 @@ class CmsExtension extends \Twig_Extension_Core
         $em = $this->entityManager;
 
         $result = "";
-
-        if ($this->isRoleVictoireGranted()) {
-            $result .= $this->widgetRenderer->renderActions($slotId, $currentView, $slotOptions, 0);
-        }
+        $slotOptions = $this->widgetRenderer->computeOptions($slotId, $slotOptions);
+        $slotNewContentButton = $this->isRoleVictoireGranted() ? $this->widgetRenderer->renderActions($slotId, $slotOptions): '';
 
         if (!empty($currentView->getWidgetMap()[$slotId])) {
             //parse the widget maps
@@ -146,25 +146,40 @@ class CmsExtension extends \Twig_Extension_Core
                     //get the widget id
                     $widgetId = $widgetMap->getWidgetId();
 
-                    //get the widget
-                    $widgetRepo = $em->getRepository('VictoireWidgetBundle:Widget');
-                    $widget = $widgetRepo->findOneById($widgetId);
+                    if (!$widgetMap->isAsynchronous()) {
 
-                    //test widget
-                    if ($widget === null) {
-                        throw new \Exception('The widget with the id:['.$widgetId.'] was not found.');
+                        //get the widget
+                        $widgetRepo = $em->getRepository('VictoireWidgetBundle:Widget');
+                        $widget = $widgetRepo->findOneById($widgetId);
+
+                        //test widget
+                        if ($widget === null) {
+                            throw new \Exception('The widget with the id:['.$widgetId.'] was not found.');
+                        }
+
+                        //render this widget
+                        $result .= $this->cmsWidget($widget);
+                    } else {
+                        $result .= $this->widgetRenderer->prepareAsynchronousRender($widgetId);
                     }
-
-                    //render this widget
-                    $result .= $this->cmsWidget($widget, $widgetMap->getPosition()+1, $slotOptions);
+                    $result .= $slotNewContentButton;
                 } catch (\Exception $ex) {
-                    $result .= $this->widgetExceptionHandler->handle($ex, $widget);
+                    $result .= $this->widgetExceptionHandler->handle($ex, $currentView, $widget, $widgetId);
                 }
             }
         }
-
         //the container for the slot
-        $result = "<div class='vic-slot' data-name=".$slotId." id='vic-slot-".$slotId."'>".$result."</div>";
+        $ngSlotControllerName = 'slot'.$slotId.'Controller';
+        $ngInitLoadActions = $this->isRoleVictoireGranted() ? sprintf('ng-init=\'%s.init("%s", %s)\'', $ngSlotControllerName, $slotId, json_encode($slotOptions)) : '';
+        $result = sprintf(
+            '<div class="vic-slot" data-name="%s" id="vic-slot-%s" ng-controller="SlotController as %s" %s>%s%s</div>',
+            $slotId,
+            $slotId,
+            $ngSlotControllerName,
+            $ngInitLoadActions,
+            $slotNewContentButton,
+            $result
+        );
 
         return $result;
     }
@@ -173,14 +188,14 @@ class CmsExtension extends \Twig_Extension_Core
      * Render a widget
      * @param Widget $widget
      *
-     * @return unknown
+     * @return string
      */
-    public function cmsWidget($widget, $position = 0, $slotOptions = array())
+    public function cmsWidget($widget)
     {
         $widget->setCurrentView($this->currentViewHelper->getCurrentView());
 
         try {
-            $response = $this->widgetRenderer->renderContainer($widget, $widget->getCurrentView(), $position, $slotOptions);
+            $response = $this->widgetRenderer->renderContainer($widget, $widget->getCurrentView());
         } catch (\Exception $ex) {
             $response = $this->widgetExceptionHandler->handle($ex, $widget);
         }
@@ -210,10 +225,8 @@ class CmsExtension extends \Twig_Extension_Core
 
     /**
      * Converts a date to the given format.
-     * @param Twig_Environment             $env      A Twig_Environment instance
-     * @param DateTime|DateInterval|string $date     A date
-     * @param string                       $format   A format
-     * @param DateTimeZone|string          $timezone A timezone
+     * @param string              $format   A format
+     * @param DateTimeZone|string $timezone A timezone
      *
      * <pre>
      *   {{ post.published_at|date("m/d/Y") }}
@@ -231,7 +244,6 @@ class CmsExtension extends \Twig_Extension_Core
         }
 
         return $result;
-
     }
 
     /**

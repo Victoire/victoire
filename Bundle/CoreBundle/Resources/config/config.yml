@@ -17,7 +17,6 @@ stof_doctrine_extensions:
           sluggable: true
 
 victoire_core:
-    watch_view_cache: true
     widgets: ~
     slots:
         default_menu_bar:
@@ -45,3 +44,9 @@ victoire_core:
                 image: ~
                 list: ~
                 archive: ~
+
+av_alertify:
+    contexts:
+        victoire:
+            engine: "codrops-notification"
+            translationDomain: "victoire"

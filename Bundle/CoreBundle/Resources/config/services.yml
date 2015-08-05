@@ -3,19 +3,15 @@ parameters:
 
 services:
 #  ==================  Widgets ================== #
-    widget.subscriber:
-        class: Victoire\Bundle\CoreBundle\EventSubscriber\WidgetSubscriber
-        arguments:
-            - "@service_container"
-        tags:
-            - { name: kernel.event_subscriber }
-
     victoire_core.entity_proxy.fields_builder:
         class: Victoire\Bundle\CoreBundle\Form\Builder\EntityProxyFieldsBuilder
-        arguments: ["@victoire_core.helper.business_entity_helper"]
+        arguments:
+            - @victoire_business_entity.cache_reader
+            - @translator
+            - @form.registry
+            - %victoire_core.widgets%
 
 #  ==================  MENU ================== #
-
     victoire_core.admin_menu_builder:
         class: Victoire\Bundle\CoreBundle\Menu\MenuBuilder
         arguments: [ '@knp_menu.factory', '@security.context' ]
@@ -52,11 +48,16 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
-    victoire_core.sitemap_menu_listener:
-        class: Victoire\Bundle\CoreBundle\Listener\SiteMapMenuListener
+    victoire_core.backend_menu_listener:
+        class: Victoire\Bundle\CoreBundle\Listener\BackendMenuListener
         arguments: ["@victoire_core.admin_menu_builder"]
         tags:
-            - { name: kernel.event_listener, event: victoire_core.build_menu, method: addGlobal, priority: 70 }
+            - { name: kernel.event_listener, event: victoire_core.backend_menu.global, method: addGlobal, priority: 100 }
+
+    victoire_core.listener.controller_listener:
+        class: Victoire\Bundle\CoreBundle\Listener\ControllerListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: preExecuteAutorun }
 
 #  ==================  Template ================== #
     victoire_core.template_mapper:
@@ -111,22 +112,6 @@ services:
         arguments:
             - "@victoire_core.apc.cache"
 
-
-    victoire_core.view_cache_listener:
-        class: Victoire\Bundle\CoreBundle\Listener\ViewCacheListener
-        arguments:
-            - "@victoire_core.view_helper"
-            - "@victoire_core.view_cache_helper"
-            - "%kernel.debug%"
-            - "%victoire_core.watch_view_cache%"
-        tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
-
-#  ==================  Theme ================== #
-
-    victoire_core.theme_chain:
-        class: Victoire\Bundle\CoreBundle\Theme\ThemeChain
-
 #  ==================  Subscribers ================== #
 
     victoire_core.widget_discriminator_map.subscriber:
@@ -140,8 +125,6 @@ services:
         class: Victoire\Bundle\CoreBundle\EventSubscriber\EntityProxySubscriber
         calls:
             - [ setBusinessEntityCacheReader, ["@victoire_business_entity.cache_reader"] ]
-        # tags:
-        #     - { name: doctrine.event_subscriber, connection: default}
         tags:
             - { name: doctrine.event_listener, event: loadClassMetadata, priority: 10}
 
@@ -158,7 +141,6 @@ services:
     victoire_core.cache_warmer.entity_proxy_warmer:
         class: Victoire\Bundle\CoreBundle\CacheWarmer\EntityProxyWarmer
         arguments:
-            - "@victoire_business_entity.annotation_driver"
             - "@victoire_core.helper.business_entity_helper"
             - "@file_locator"
         tags:
@@ -169,9 +151,9 @@ services:
         arguments:
             - @victoire_core.view_helper
             - @victoire_core.view_cache_helper
-        # DISABLED. @TODO, fix this process
-        # tags:
-        # - { name: kernel.cache_warmer, priority: -1 }
+            - @doctrine.orm.entity_manager
+        tags:
+        - { name: kernel.event_listener, event: kernel.request, method: warmUp }
 
     victoire_core.entity_proxy.cache_driver:
         class: Victoire\Bundle\CoreBundle\CacheWarmer\EntityProxyCacheDriver
@@ -225,3 +207,10 @@ services:
             - '%victoire_core.widgets%'
         tags:
             - { name: routing.loader }
+
+    victoire_core.view_url_helper:
+        class: Victoire\Bundle\CoreBundle\Helper\ViewUrlHelper
+        arguments:
+            - "@router"
+        calls:
+            - [setRequest, ["@request_stack"]]

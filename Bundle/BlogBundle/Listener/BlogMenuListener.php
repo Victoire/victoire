@@ -28,7 +28,7 @@ class BlogMenuListener implements MenuListenerInterface
      *
      * @param PageMenuContextualEvent $event
      *
-     * @return \Victoire\Bundle\BlogBundle\Listener\MenuItem
+     * @return \Knp\Menu\ItemInterface
      */
     public function addContextual($event)
     {
@@ -39,21 +39,21 @@ class BlogMenuListener implements MenuListenerInterface
         $mainItem->addChild('menu.blog.article.settings',
             array(
                 'route' => 'victoire_blog_article_settings',
-                'routeParameters' => array('id' => $currentArticle->getId())
+                'routeParameters' => array('id' => $currentArticle->getId()),
                 )
         )->setLinkAttribute('data-toggle', 'vic-modal');
 
         $mainItem->addChild('menu.blog.article.settings',
             array(
                 'route' => 'victoire_blog_article_settings',
-                'routeParameters' => array('id' => $currentArticle->getId())
+                'routeParameters' => array('id' => $currentArticle->getId()),
                 )
         )->setLinkAttribute('data-toggle', 'vic-modal');
 
         $mainItem->addChild('menu.blog.article.new',
             array(
                 'route'           => 'victoire_blog_article_newBlogArticle',
-                'routeParameters' => array('id' => $currentBlog->getId())
+                'routeParameters' => array('id' => $currentBlog->getId()),
                 )
         )->setLinkAttribute('data-toggle', 'vic-modal');
 
@@ -65,7 +65,7 @@ class BlogMenuListener implements MenuListenerInterface
      *
      * @param PageMenuContextualEvent $event
      *
-     * @return \Victoire\Bundle\BlogBundle\Listener\MenuItem
+     * @return \Knp\Menu\ItemInterface
      */
     public function addBlogContextual($event)
     {
@@ -73,22 +73,25 @@ class BlogMenuListener implements MenuListenerInterface
 
         $mainItem->addChild('menu.blog.settings',
             array(
-                'route'           => 'victoire_blog_settings',
-                'routeParameters' => array('id' => $event->getPage()->getId())
-                )
+                'route'           => 'victoire_blog_index',
+                'routeParameters' => array(
+                    'blogId' => $event->getPage()->getId(),
+                    'tab'    => 'settings'
+                ),
+            )
         )->setLinkAttribute('data-toggle', 'vic-modal');
 
         $mainItem->addChild('menu.blog.translate',
             array(
                 'route'           => 'victoire_blog_translate',
-                'routeParameters' => array('id' => $event->getPage()->getId())
+                'routeParameters' => array('id' => $event->getPage()->getId()),
                 )
         )->setLinkAttribute('data-toggle', 'vic-modal');
 
         $mainItem->addChild('menu.blog.article.new',
             array(
                 'route'           => 'victoire_blog_article_newBlogArticle',
-                'routeParameters' => array('id' => $event->getPage()->getId())
+                'routeParameters' => array('id' => $event->getPage()->getId()),
                 )
         )->setLinkAttribute('data-toggle', 'vic-modal');
 
@@ -108,8 +111,8 @@ class BlogMenuListener implements MenuListenerInterface
     {
         if ($this->menuBuilder->isGranted('ROLE_VICTOIRE_BLOG')) {
             $this->menuBuilder->getLeftNavbar()->addChild(
-                'menu.blog', array(
-                    'route' => 'victoire_blog_index'
+                'menu.leftnavbar.blog.label', array(
+                    'route' => 'victoire_blog_index',
                 )
             )->setLinkAttribute('data-toggle', 'vic-modal');
         }
@@ -118,7 +121,7 @@ class BlogMenuListener implements MenuListenerInterface
     /**
      * This method returns you the main item and create it if not exists
      *
-     * @return MenuItem The main item to get
+     * @return \Knp\Menu\ItemInterface The main item to get
      */
     private function getMainItem()
     {

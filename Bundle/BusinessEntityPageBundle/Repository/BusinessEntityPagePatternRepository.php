@@ -10,7 +10,6 @@ use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
  */
 class BusinessEntityPagePatternRepository extends EntityRepository
 {
-
     private $queryBuilder;
 
     /**
@@ -22,24 +21,30 @@ class BusinessEntityPagePatternRepository extends EntityRepository
     }
 
     /**
-     * Find the pagePatterns of the business entity
+     * Find the pagePatterns for the business entity
      * @param BusinessEntity $businessEntity
      *
      * @return array The list of pagePatterns
      */
     public function findPagePatternByBusinessEntity(BusinessEntity $businessEntity)
     {
+        return $this->getPagePatternByBusinessEntity($businessEntity->getId())
+            ->getQuery()
+            ->getResult();
+    }
 
-        $qb = $this->createQueryBuilder('businessEntityPagePattern');
-        $qb->where('businessEntityPagePattern.businessEntityName = :businessEntityName');
-
-        $qb->setParameter(':businessEntityName', $businessEntity->getId());
-
-        $qb->orderBy('businessEntityPagePattern.updatedAt', 'ASC');
-
-        $results = $qb->getQuery()->getResult();
-
-        return $results;
+    /**
+     * get the pagePatterns for the business entity query
+     * @param string $entityName
+     *
+     * @return QueryBuilder
+     */
+    public function getPagePatternByBusinessEntity($entityName)
+    {
+        return $this->createQueryBuilder('businessEntityPagePattern')
+            ->where('businessEntityPagePattern.businessEntityName = :entityName')
+            ->setParameter(':entityName', $entityName)
+            ->orderBy('businessEntityPagePattern.updatedAt', 'ASC');
     }
 
     /**

@@ -21,13 +21,13 @@ class I18n extends BaseI18n
      * @ORM\JoinColumn(name="{{locale}}_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected ${{ locale }};
-    
+
 {% endfor %}
 {% for locale in locales %}
-    
+
     /**
     * function set{{ locale|capitalize }}
-    * @param View ${{ locale}} 
+    * @param View ${{ locale}}
     */
     public function set{{ locale|capitalize }}(View ${{ locale }})
     {
@@ -35,7 +35,7 @@ class I18n extends BaseI18n
     }
 
     /**
-    * @return View 
+    * @return View
     */
     public function get{{ locale|capitalize }}()
     {
@@ -46,7 +46,7 @@ class I18n extends BaseI18n
     /**
     * @return View
     */
-	public function getTranslation($locale) 
+	public function getTranslation($locale)
 	{
 		$callback = "get".ucfirst($locale);
         if (method_exists($this, $callback)) {
@@ -58,7 +58,7 @@ class I18n extends BaseI18n
     * @param string $locale
     * @param View $view
     */
-	public function setTranslation($locale, View $view) 
+	public function setTranslation($locale, View $view)
 	{
 		$callback = "set".ucfirst($locale);
         if (method_exists($this, $callback)) {

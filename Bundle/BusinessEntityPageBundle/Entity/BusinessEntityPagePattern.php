@@ -21,8 +21,6 @@ class BusinessEntityPagePattern extends Template implements WebViewInterface
     const TYPE = 'business_entity_page_pattern';
 
     /**
-     * @var Collection
-     *
      * @ORM\OneToMany(targetEntity="\Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage", mappedBy="template")
      */
     protected $inheritors;

@@ -1,71 +1,90 @@
-# Victoire DCMS
+![Victoire](Media/victoire.png)
+
+[![Gitter chat](https://badges.gitter.im/Victoire/Victoire.png)](https://gitter.im/Victoire/victoire)
+[![License](https://img.shields.io/packagist/l/Victoire/Victoire.svg)](https://packagist.org/packages/Victoire/Victoire)
+[![Version](https://img.shields.io/packagist/v/Victoire/Victoire.svg)](https://packagist.org/packages/Victoire/Victoire)
+[![Build status...](https://img.shields.io/travis/Victoire/victoire/master.svg)](http://travis-ci.org/Victoire/victoire)
+[![Scrutinizer Quality Score](https://img.shields.io/scrutinizer/g/Victoire/Victoire.svg)](https://scrutinizer-ci.com/g/Victoire/victoire/)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/d5307bf2-eac4-43db-bd49-dd9e85e360a5/mini.png)](https://insight.sensiolabs.com/projects/d5307bf2-eac4-43db-bd49-dd9e85e360a5)
+[![Dependency Status](https://www.versioneye.com/php/victoire:victoire/1.0.1/badge.svg)](https://www.versioneye.com/php/victoire:victoire/1.0.1)
+[![Reference Status](https://www.versioneye.com/php/victoire:victoire/reference_badge.svg?style=flat)](https://www.versioneye.com/php/victoire:victoire/references)
+[![Documentation Status](https://readthedocs.org/projects/victoiredcms/badge/?version=latest)](https://readthedocs.org/projects/victoiredcms/)
 
 ##Overview
 
-Basé sur **Symfony2**, le coeur de Victoire (**VictoireCoreBundle**) pose les bases du DCMS et peut s'installer dans n'importe quel projet Symfony2 en quelques minutes.
+Victoire is a **Symfony2** overlay integrating a business aware cms and a large panel of web marketing tools.
+It can be setup in any symfony2 project in just some few minutes.
 
-L'enjeu principal est de permettre au client final de pouvoir **créer**/**modifier**/**supprimer** chaque contenu présent sur son site, autant pour un contenu dit static que pour du contenu basé sur ses objets métiers et **sans avoir la moindre compétence en développement** et avec le minimum de formation possible.
+The main goal is to give to the final customer the ability to **create**/**edit**/**delete** each content on its website, even for a static content than a business entity based content and **whitout any development skill** and with the minimum of training.
 
-Par son approche **modulaire**, VictoireDCMS mise sur son éco-système à base de **widgets**, qui devient de plus en plus riche à mesure que le nombre de projets réalisés augmente car au delà de l'enjeu principal, VictoireDCMS doit permettre de réutiliser les mêmes widgets d'un projet à un autre même pour des logiques métiers totalement différentes.
+##Contribution
 
+Victoire is an open-source, community driven project.
+We are keen on getting your participation for the development of this product.
+To do so, please follow the steps [**here**](https://github.com/Victoire/victoire/blob/master/CONTRIBUTION.md)
 
+You can see the list of [contributors](https://github.com/Victoire/Victoire/contributors)
+
+##Install Victoire
+
+To do so, follow the [setup guide](http://github.com/victoire/victoire/blob/master/setup.md)
 
 ##What's inside?
 
-Victoire est composé de plusieurs composants lui permettant de fonctionner :
-
-
-Composant | Description
+Component | Description
 ------------ | -------------
-[**BlogBundle**][2] | Permet de créer et gérer un ou plusieurs blog
-[**BusinessEntityBundle**][3] | Gère ce qui a à trait aux entités métiers façon Victoire
-[**BusinessEntityPageBundle**][4] | Défini et gère les pages de type [BusinessEntityPage][18] et [BusinessEntityPagePattern][19
-[**CoreBundle**][1] | Responsable de la définition de l'architecture et comprenant la logique de base
-[**DashboardBundle**][5] | Responsable d'accueillir l'utilisateur après l'installation d'un nouveau projet
-[**FormBundle**][6] | Amène le thème des formulaires Victoire (basé sur MopaBootstrapBundle) theme
-[**MediaBundle**][7] | Basé sur KunstmaanMediaBundle, il offre une interface de gestion des fichiers d'un site et est une passerelle avec les widgets
-[**PageBundle**][8] | Un des bundles les plus importants, il est responsable des pages de bases
-[**QueryBundle**][9] | Contient la logique permettant à tout objet de récupérer des entités métiers
-[**SeoBundle**][10] | Plus rien ne vous fait peur en terme de SEO. Ce bundle, apporte ce qu'il faut pour définir la sémantique d'une vue et ses détails de reférencement
-[**TemplateBundle**][11] | Que serais-je le monde sans patrons ! Ce bundle apporte la structure pour encadrer les patrons comme il se doivent de l'être
-[**TestsBundle**][12] | Contient l'ensemble des contextes et tests Behat
-[**TwigBundle**][13] | Apporte ce qu'il faut pour offrir de la flexibilité même pour les pages d'erreur (selon code apache 404, 500, 503 etc ) et d'autres fonctionnalités propres à Twig
-[**UserBundle**][14] | Hérite de FosUserBundle, ce bundle offre un système d'utilisateurs prêt à l'emploi
-[**WidgetBundle**][15] | Composant omniprésent dans Victoire, il s'occupe de tout ce qui à trait aux base des widgets, de la définition à l'affichage en passant par les formulaires de création et modifications multi-mode
-[**WidgetMapBundle**][16] | Contient la logique pour la gestion des widgetsMaps, éléments importants dans l'architecture des vues
-[**I18nBundle**][17] | Composant gérant l'internationalisation
+[**AnalyticsBundle**][5] | This bundle record the user's navigation history
+[**BlogBundle**][2] | Allow to create and manage one or several blog
+[**BusinessEntityBundle**][3] | Manage BusinessEntity
+[**BusinessEntityPageBundle**][4] | Define and manage [BusinessEntityPage][18] and [BusinessEntityPagePattern][19]
+[**CoreBundle**][1] | The core
+[**FilterBundle**][23] | Allows to filter any list's results
+[**FormBundle**][6] | Based on MopaBootstrapBundle, it brings some cool form themes
+[**I18nBundle**][17] | This bundle manage the internationalization system
+[**MediaBundle**][7] | Based on [KunstmaanMediaBundle][21], it offers a file management interface and a bridge to the widgets
+[**PageBundle**][8] | One of the most important bundles, it contains all the base page logic
+[**QueryBundle**][9] | Give the possibility to non technical user to build a query
+[**RessourcesBundle**][24] | Contains JS libraries
+[**SeoBundle**][10] | This bundle brings to user about than 50 SEO points
+[**SitemapBundle**][20] | Sitemap related logic
+[**TemplateBundle**][11] | Contains the pages templates logic (nearly close to [PageBundle][22])
+[**TwigBundle**][13] | Brings ErrorPage (404, 500, 503 etc) and responsive support
+[**UserBundle**][14] | Extends [FosUserBundle][12], this bundle brings a ready to use system you can override
+[**WidgetBundle**][15] | Contains all the base widget logic to be able to use Widgets
+[**WidgetMapBundle**][16] | Each view has a widget map, this bundle contains all the widget maps logic
+
+##Bug tracking
+
+Victoire uses GitHub issues. If you have found a bug, please create an issue.
+
+##MIT License
+
+License can be found [here](http://github.com/victoire/victoire/blob/master/license.md).
 
 
-* Read the [setup guide](http://github.com/victoire/victoire//blob/master/setup.md)
-
-[![Licence Creative Commons](http://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-nd/4.0/)
-
-[![Documentation Status](https://readthedocs.org/projects/victoiredcms/badge/?version=latest)](https://readthedocs.org/projects/victoiredcms/?badge=latest) [![Travis-ci](https://travis-ci.org/Victoire/victoire.svg?branch=master)](https://travis-ci.org/Victoire/victoire) [![SensioLabsInsight](https://insight.sensiolabs.com/projects/d5307bf2-eac4-43db-bd49-dd9e85e360a5/mini.png)](https://insight.sensiolabs.com/projects/d5307bf2-eac4-43db-bd49-dd9e85e360a5)
 
 
-
-
-Cette œuvre est mise à disposition selon les termes de la Licence Creative Commons Attribution - Pas d'Utilisation Commerciale - Pas de Modification 4.0 International.
-
-*Proprieté d'AppVentus, tous droits réservés - Property of AppVentus, All Right reserved*
-
-
-[1]:  http://github.com/victoire/victoire//blob/master/Bundle/CoreBundle/README.md
-[2]:  http://github.com/victoire/victoire//blob/master/Bundle/BlogBundle/README.md
-[3]:  http://github.com/victoire/victoire//blob/master/Bundle/BusinessEntityBundle/README.md
-[4]:  http://github.com/victoire/victoire//blob/master/Bundle/BusinessEntityPageBundle/README.md
-[5]:  http://github.com/victoire/victoire//blob/master/Bundle/DashboardBundle/README.md
-[6]:  http://github.com/victoire/victoire//blob/master/Bundle/FormBundle/README.md
-[7]:  http://github.com/victoire/victoire//blob/master/Bundle/MediaBundle/README.md
-[8]:  http://github.com/victoire/victoire//blob/master/Bundle/PageBundle/README.md
-[9]:  http://github.com/victoire/victoire//blob/master/Bundle/QueryBundle/README.md
-[10]: http://github.com/victoire/victoire//blob/master/Bundle/SeoBundle/README.md
-[11]: http://github.com/victoire/victoire//blob/master/Bundle/TemplateBundle/README.md
-[12]: http://github.com/victoire/victoire//blob/master/Bundle/TestsBundle/README.md
-[13]: http://github.com/victoire/victoire//blob/master/Bundle/TwigBundle/README.md
-[14]: http://github.com/victoire/victoire//blob/master/Bundle/UserBundle/README.md
-[15]: http://github.com/victoire/victoire//blob/master/Bundle/WidgetBundle/README.md
-[16]: http://github.com/victoire/victoire//blob/master/Bundle/WidgetMapBundle/README.md
-[17]: http://github.com/victoire/victoire//blob/master/Bundle/I18nBundle/README.md
-[18]: http://github.com/victoire/victoire//blob/master/Bundle/BusinessEntityPageBundle/Resources/doc/BusinessEntityPage.md
-[19]: http://github.com/victoire/victoire//blob/master/Bundle/BusinessEntityPageBundle/Resources/doc/BusinessEntityPagePattern.md
+[1]:  http://github.com/victoire/victoire/blob/master/Bundle/CoreBundle/README.md
+[2]:  http://github.com/victoire/victoire/blob/master/Bundle/BlogBundle/README.md
+[3]:  http://github.com/victoire/victoire/blob/master/Bundle/BusinessEntityBundle/README.md
+[4]:  http://github.com/victoire/victoire/blob/master/Bundle/BusinessEntityPageBundle/README.md
+[5]:  http://github.com/victoire/victoire/blob/master/Bundle/AnalyticsBundle/README.md
+[6]:  http://github.com/victoire/victoire/blob/master/Bundle/FormBundle/README.md
+[7]:  http://github.com/victoire/victoire/blob/master/Bundle/MediaBundle/README.md
+[8]:  http://github.com/victoire/victoire/blob/master/Bundle/PageBundle/README.md
+[9]:  http://github.com/victoire/victoire/blob/master/Bundle/QueryBundle/README.md
+[10]: http://github.com/victoire/victoire/blob/master/Bundle/SeoBundle/README.md
+[11]: http://github.com/victoire/victoire/blob/master/Bundle/TemplateBundle/README.md
+[12]: http://github.com/FriendsOfSymfony/FOSUserBundle
+[13]: http://github.com/victoire/victoire/blob/master/Bundle/TwigBundle/README.md
+[14]: http://github.com/victoire/victoire/blob/master/Bundle/UserBundle/README.md
+[15]: http://github.com/victoire/victoire/blob/master/Bundle/WidgetBundle/README.md
+[16]: http://github.com/victoire/victoire/blob/master/Bundle/WidgetMapBundle/README.md
+[17]: http://github.com/victoire/victoire/blob/master/Bundle/I18nBundle/README.md
+[18]: http://github.com/victoire/victoire/blob/master/Bundle/BusinessEntityPageBundle/Resources/doc/BusinessEntityPage.md
+[19]: http://github.com/victoire/victoire/blob/master/Bundle/BusinessEntityPageBundle/Resources/doc/BusinessEntityPagePattern.md
+[20]: http://github.com/victoire/victoire/blob/master/Bundle/SitemapBundle/README.md
+[21]: http://github.com/Kunstmaan/KunstmaanMediaBundle
+[22]: http://github.com/victoire/victoire/blob/master/Bundle/PageBundle
+[23]: http://github.com/victoire/victoire/blob/master/Bundle/FilterBundle/README.md
+[24]: http://github.com/victoire/victoire/blob/master/Bundle/RessourcesBundle/README.md

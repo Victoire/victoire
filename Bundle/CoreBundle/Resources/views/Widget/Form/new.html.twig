@@ -32,12 +32,16 @@
                     <li{% if widget.mode == constant('MODE_BUSINESS_ENTITY', widget) %} class="vic-active"{% endif %}><a href="#picker-{{class}}-businessEntity" data-toggle="vic-tab">{{ ('form.widget.tab.entity_instance.label')|trans({}, 'victoire') }}</a></li>
                 {% endif %}
             </ul>
-        {% endif %}
             <div class="vic-tab-content vic-modal-tab-content">
                 {% for subForm in form %}
                     {{ subForm|raw }}
                 {% endfor %}
             </div>
+        {% else %}
+            {% for subForm in form %}
+                {{ subForm|raw }}
+            {% endfor %}
+        {% endif %}
         </div>
       {% endfor %}
     </div>

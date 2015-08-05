@@ -3,6 +3,8 @@
 namespace Victoire\Bundle\WidgetBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Victoire\Bundle\QueryBundle\Entity\Traits\QueryTrait;
+use Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTrait;
 use Victoire\Bundle\WidgetBundle\Model\Widget as BaseWidget;
 
 /**
@@ -15,7 +17,8 @@ use Victoire\Bundle\WidgetBundle\Model\Widget as BaseWidget;
  */
 class Widget extends BaseWidget
 {
-    use \Victoire\Bundle\QueryBundle\Entity\Traits\QueryTrait;
+    use StyleTrait;
+    use QueryTrait;
 
     /**
      * @var integer
@@ -39,6 +42,13 @@ class Widget extends BaseWidget
      * @ORM\Column(name="theme", type="string", length=255, nullable=true)
      */
     protected $theme;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="asynchronous", type="boolean", nullable=true)
+     */
+    protected $asynchronous;
 
     /**
      * @var string
@@ -71,5 +81,4 @@ class Widget extends BaseWidget
      * @ORM\JoinColumn(name="entityProxy_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $entityProxy;
-
 }

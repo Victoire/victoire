@@ -4,6 +4,7 @@ namespace Victoire\Bundle\WidgetBundle\Model;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PropertyAccess\PropertyAccess;
@@ -11,10 +12,8 @@ use Victoire\Bundle\BusinessEntityBundle\Reader\BusinessEntityCacheReader;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 use Victoire\Bundle\FormBundle\Helper\FormErrorHelper;
-use Victoire\Bundle\PageBundle\Entity\Slot;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
-use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\WidgetBundle\Builder\WidgetFormBuilder;
 use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
 use Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer;
@@ -24,8 +23,8 @@ use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 use Victoire\Bundle\WidgetMapBundle\Manager\WidgetMapManager;
 
 /**
-* This manager handles crud operations on a Widget
-*/
+ * This manager handles crud operations on a Widget
+ */
 class WidgetManager
 {
     protected $widgetFormBuilder;
@@ -99,9 +98,9 @@ class WidgetManager
      *
      * @return template
      */
-    public function newWidget($type, $slot, $view, $position)
+    public function newWidget($mode, $type, $slot, $view, $position)
     {
-        $widget = $this->widgetHelper->newWidgetInstance($type, $view, $slot);
+        $widget = $this->widgetHelper->newWidgetInstance($type, $view, $slot, $mode);
 
         $classes = $this->cacheReader->getBusinessClassesForWidget($widget);
         $forms = $this->widgetFormBuilder->renderNewWidgetForms($slot, $view, $widget, $position);
@@ -113,47 +112,45 @@ class WidgetManager
                     'view'    => $view,
                     'classes' => $classes,
                     'widget'  => $widget,
-                    'forms'   => $forms
+                    'forms'   => $forms,
                 )
-            )
+            ),
         );
     }
 
     /**
      * Create a widget
+     * @param string  $mode
      * @param string  $type
      * @param string  $slotId
      * @param View    $view
      * @param string  $entity
      * @param integer $positionReference
      *
-     * @return template
-     *
+     * @param string $type
      * @throws \Exception
+     * @return Template
+     *
      */
-    public function createWidget($type, $slotId, View $view, $entity, $positionReference)
+    public function createWidget($mode, $type, $slotId, View $view, $entity, $positionReference)
     {
         //services
         $formErrorHelper = $this->formErrorHelper;
         $request = $this->request;
 
-        //the default response
-        $response = array(
-            "success" => false,
-            "html"    => ''
-        );
-
         //create a new widget
-        $widget = $this->widgetHelper->newWidgetInstance($type, $view, $slotId);
+        $widget = $this->widgetHelper->newWidgetInstance($type, $view, $slotId, $mode);
 
         $form = $this->widgetFormBuilder->callBuildFormSwitchParameters($widget, $view, $entity, $positionReference);
 
         $form->handleRequest($request);
-        if ($form->isValid()) {
-
+        if ($request->query->get('novalidate', false) === false && $form->isValid()) {
+            $needViewCacheUpdate = false;
             if (!$view->getId()) {
                 //create a view for the business entity instance if we are currently on a virtual one
                 $this->entityManager->persist($view);
+                //REBUILD VIEWS REFERENCE
+                $needViewCacheUpdate = true;
             }
 
             //get the widget from the form
@@ -165,6 +162,10 @@ class WidgetManager
             //persist the widget
             $this->entityManager->persist($widget);
             $this->entityManager->flush();
+
+            if (true === $needViewCacheUpdate) {
+                $this->pageHelper->viewCacheHelper->update($view);
+            }
 
             //create the new widget map
             $widgetMapEntry = new WidgetMap();
@@ -182,21 +183,20 @@ class WidgetManager
             $widget->setCurrentView($view);
 
             //get the html for the widget
-            $hmltWidget = $this->widgetRenderer->renderContainer($widget, $view, $widgetMapEntry->getPosition());
+            $htmlWidget = $this->widgetRenderer->renderContainer($widget, $view, $widgetMapEntry->getPosition());
 
             $response = array(
                 "success"  => true,
-                "widgetId" => "vic-widget-".$widget->getId()."-container",
-                "html"     => $hmltWidget
+                'widgetId' => $widget->getId(),
+                "html"     => $htmlWidget,
             );
         } else {
             //get the errors as a string
             $response = array(
                 "success" => false,
                 "message" => $formErrorHelper->getRecursiveReadableErrors($form),
-                "html"    => $this->widgetFormBuilder->renderNewForm($form, $widget, $slotId, $view, $entity)
+                "html"    => $this->widgetFormBuilder->renderNewForm($form, $widget, $slotId, $view, $entity),
             );
-
         }
 
         return $response;
@@ -212,10 +212,10 @@ class WidgetManager
      *
      * @return template
      */
-    public function editWidget(Request $request, Widget $widget, View $currentView, $entityName = null)
+    public function editWidget(Request $request, Widget $widget, View $currentView, $entityName = null, $widgetMode = Widget::MODE_STATIC)
     {
-
         $classes = $this->cacheReader->getBusinessClassesForWidget($widget);
+
 
         $widget->setCurrentView($currentView);
 
@@ -228,7 +228,6 @@ class WidgetManager
 
         //if the form is posted
         if ($requestMethod === 'POST') {
-
             //the widget view
             $widgetView = $widget->getView();
 
@@ -237,15 +236,14 @@ class WidgetManager
                 $widget = $this->overwriteWidget($currentView, $widget);
             }
             if ($entityName !== null) {
-                $form = $this->widgetFormBuilder->buildForm($widget, $currentView, $entityName, $classes[$entityName]);
+                $form = $this->widgetFormBuilder->buildForm($widget, $currentView, $entityName, $classes[$entityName], $widgetMode);
             } else {
                 $form = $this->widgetFormBuilder->buildForm($widget, $currentView);
             }
 
             $form->handleRequest($request);
 
-            if ($form->isValid()) {
-
+            if ($request->query->get('novalidate', false) === false && $form->isValid()) {
                 $widget->setBusinessEntityName($entityName);
 
                 $this->entityManager->persist($widget);
@@ -259,7 +257,7 @@ class WidgetManager
                     'view'        => $currentView,
                     'success'     => true,
                     'html'        => $this->widgetRenderer->render($widget, $currentView),
-                    'widgetId'    => "vic-widget-".$initialWidgetId."-container"
+                    'widgetId'    => $initialWidgetId,
                 );
             } else {
                 $formErrorHelper = $this->formErrorHelper;
@@ -267,9 +265,8 @@ class WidgetManager
                 $response = array(
                     "success" => false,
                     "message" => $formErrorHelper->getRecursiveReadableErrors($form),
-                    "html"    => $this->widgetFormBuilder->renderForm($form, $widget, $entityName)
+                    "html"    => $this->widgetFormBuilder->renderForm($form, $widget, $entityName),
                 );
-
             }
         } else {
             $forms = $this->widgetFormBuilder->renderNewWidgetForms($widget->getSlot(), $currentView, $widget);
@@ -282,9 +279,9 @@ class WidgetManager
                         'view'    => $currentView,
                         'classes' => $classes,
                         'forms'   => $forms,
-                        'widget'  => $widget
+                        'widget'  => $widget,
                     )
-                )
+                ),
             );
         }
 
@@ -319,7 +316,7 @@ class WidgetManager
 
         return array(
             "success"  => true,
-            "widgetId" => $widgetId
+            "widgetId" => $widgetId,
         );
     }
 
@@ -353,6 +350,16 @@ class WidgetManager
                 }
                 $accessor->setValue($widgetCopy, $name, $relatedEntitiesCopies);
             }
+
+            //Clone OneToOne relation objects
+            if ($values['type'] === ClassMetadataInfo::ONE_TO_ONE) {
+                $relatedEntity = $accessor->getValue($widget, $values['fieldName']);
+                if ($relatedEntity) {
+                    $relatedEntityCopy = clone $relatedEntity;
+                    $this->em->persist($relatedEntity);
+                    $accessor->setValue($widgetCopy, $name, $relatedEntityCopy);
+                }
+            }
         }
 
         //we have to persist the widget to get its id
@@ -364,5 +371,4 @@ class WidgetManager
 
         return $widgetCopy;
     }
-
 }

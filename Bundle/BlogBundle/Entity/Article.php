@@ -12,9 +12,9 @@ use Victoire\Bundle\BusinessEntityBundle\Entity\Traits\BusinessEntityTrait;
 use Victoire\Bundle\MediaBundle\Entity\Media;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Victoire\Bundle\BlogBundle\Repository\ArticleRepository"))
  * @ORM\Table("vic_article")
- * @VIC\BusinessEntity({"Redactor", "Listing", "BlogArticles", "Title", "CKEditor", "Text", "UnderlineTitle", "Cover", "Image", "Authorship", "ArticleList"})
+ * @VIC\BusinessEntity({"Force", "Redactor", "Listing", "BlogArticles", "Title", "CKEditor", "Text", "UnderlineTitle", "Cover", "Image", "Authorship", "ArticleList"})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
 class Article
@@ -40,7 +40,7 @@ class Article
      *
      * @ORM\Column(name="name", type="string", length=255)
      * @Assert\NotBlank()
-     * @VIC\BusinessProperty({"textable", "businessParameter"})
+     * @VIC\BusinessProperty({"textable", "businessParameter", "seoable"})
      */
     private $name;
 
@@ -53,34 +53,36 @@ class Article
 
     /**
      * Description is inherited from Page, just add the BusinessProperty annotation
-     * @ORM\Column(name="description", type="text")
-     * @VIC\BusinessProperty("textable")
+     * @ORM\Column(name="description", type="text", nullable=true)
+     * @VIC\BusinessProperty({"textable", "seoable"})
      */
     private $description;
 
     /**
      * @ORM\Column(name="status", type="string", nullable=false)
      */
-    protected $status = self::PUBLISHED;
+    protected $status;
 
     /**
      * Categories of the article
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="articles")
+     * @ORM\JoinColumn(onDelete="SET NULL")
+     * @VIC\BusinessProperty({"textable", "seoable"})
      */
     private $category;
 
     /**
-    * @var datetime $publishedAt
-    *
-    * @ORM\Column(name="publishedAt", type="datetime", nullable=true)
-    * @VIC\BusinessProperty("dateable")
-    * @VIC\BusinessProperty("textable")
-    */
+     * @var datetime $publishedAt
+     *
+     * @ORM\Column(name="publishedAt", type="datetime", nullable=true)
+     * @VIC\BusinessProperty({"dateable", "textable"})
+     */
     private $publishedAt;
 
     /**
      * This relation is dynamically added by ArticleSubscriber
      * The property is needed here
+     * @VIC\BusinessProperty({"textable", "seoable"})
      */
     private $author;
 
@@ -121,18 +123,18 @@ class Article
     private $categoryTitle;
 
     /**
-    * @VIC\BusinessProperty("textable")
-    */
+     * @VIC\BusinessProperty("textable")
+     */
     private $publishedAtString;
 
     /**
-    * @VIC\BusinessProperty("textable")
-    */
+     * @VIC\BusinessProperty("textable")
+     */
     private $authorAvatar;
 
     /**
-    * @VIC\BusinessProperty("textable")
-    */
+     * @VIC\BusinessProperty("textable")
+     */
     private $authorFullName;
 
     /**
@@ -151,6 +153,16 @@ class Article
     }
 
     /**
+     * Constructor
+     *
+     *
+     */
+    public function __construct()
+    {
+        $this->status = self::DRAFT;
+    }
+
+    /**
      * Get id
      *
      * @return integer
@@ -162,7 +174,7 @@ class Article
 
     /**
      * Set id
-     * @param id $id
+     * @param integer $id
      */
     public function setId($id)
     {
@@ -197,7 +209,7 @@ class Article
      *
      * @param string $description
      *
-     * @return PostPage
+     * @return Article
      */
     public function setDescription($description)
     {
@@ -243,16 +255,20 @@ class Article
     /**
      * Get the published at property
      *
-     * @return DateTime
+     * @return \DateTime
      */
     public function getPublishedAt()
     {
+        if ($this->status == self::PUBLISHED && $this->publishedAt === null) {
+            $this->setPublishedAt($this->getCreatedAt());
+        }
+
         return $this->publishedAt;
     }
 
     /**
      * Set publishedAt
-     * @param string $publishedAt
+     * @param \DateTime $publishedAt
      *
      * @return $this
      */
@@ -266,7 +282,7 @@ class Article
     /**
      * Get deletedAt
      *
-     * @return DateTime
+     * @return \DateTime
      */
     public function getDeletedAt()
     {
@@ -275,7 +291,7 @@ class Article
 
     /**
      * Set deletedAt
-     * @param string $deletedAt
+     * @param \DateTime $deletedAt
      *
      * @return $this
      */
@@ -289,7 +305,7 @@ class Article
     /**
      * Get the blog
      *
-     * @return String
+     * @return Blog
      */
     public function getBlog()
     {
@@ -299,7 +315,7 @@ class Article
     /**
      * Set the blog
      *
-     * @param string $blog
+     * @param Blog $blog
      */
     public function setBlog(Blog $blog)
     {
@@ -360,9 +376,9 @@ class Article
 
     /**
      * Set image
-     * @param string $image
+     * @param Media $image
      *
-     * @return WidgetImage
+     * @return Article
      */
     public function setImage(Media $image)
     {
@@ -384,7 +400,7 @@ class Article
     /**
      * Get businessEntity
      *
-     * @return string
+     * @return Article
      */
     public function getBusinessEntity()
     {
@@ -407,7 +423,7 @@ class Article
     /**
      * Get pattern
      *
-     * @return string
+     * @return BusinessEntityPagePattern
      */
     public function getPattern()
     {
@@ -421,6 +437,9 @@ class Article
      */
     public function setStatus($status)
     {
+        if ($status == self::PUBLISHED && $this->publishedAt === null) {
+            $this->setPublishedAt(new \DateTime());
+        }
         $this->status = $status;
     }
 
@@ -464,7 +483,9 @@ class Article
      */
     public function getCategoryTitle()
     {
-        return $this->category ? $this->category->getTitle() : null;
+        $this->categoryTitle = $this->category ? $this->category->getTitle() : null;
+
+        return $this->categoryTitle;
     }
 
     /**
@@ -476,7 +497,12 @@ class Article
     {
         setlocale(LC_TIME, "fr_FR");
 
-        return strftime('%d %B %Y', $this->publishedAt->getTimestamp());
+        if ($this->publishedAt) {
+            return strftime('%d %B %Y', $this->publishedAt->getTimestamp());
+        }
+        else {
+            return "";
+        }
     }
 
     /**
@@ -505,13 +531,15 @@ class Article
 
     public function getAuthorAvatar()
     {
-        $email = $this->author->getEmail();
+        $this->authorAvatar = "http://www.gravatar.com/avatar/".md5($this->author->getEmail())."?s=70";
 
-        return "http://www.gravatar.com/avatar/" . md5($email) . "?s=70";
+        return $this->authorAvatar;
     }
 
     public function getAuthorFullname()
     {
-        return $this->author->getFullname();
+        $this->authorFullName = $this->author->getFullname();
+
+        return $this->authorFullName;
     }
 }

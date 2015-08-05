@@ -5,8 +5,9 @@ use Doctrine\Orm\EntityManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Security\Core\SecurityContext;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\BusinessEntityPageBundle\Helper\BusinessEntityPageHelper;
@@ -18,8 +19,8 @@ use Victoire\Bundle\CoreBundle\Helper\ViewHelper;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
+use Victoire\Bundle\SeoBundle\Entity\PageSeo;
 use Victoire\Bundle\SeoBundle\Helper\PageSeoHelper;
-use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter as BETParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
@@ -35,10 +36,11 @@ class PageHelper extends ViewHelper
     protected $eventDispatcher; // @event_dispatcher
     protected $victoireTemplating; // @victoire_templating
     protected $pageSeoHelper; // @victoire_seo.helper.pageseo_helper
-    protected $viewCacheHelper; // @victoire_core.view_cache_helper
     protected $session; // @session
-    protected $securityContex; // @security.context
+    protected $token_storage; // @security.authorization_checker
+    protected $authorizationChecker; // @security.authorization_checker
     protected $widgetMapBuilder; // @victoire_widget_map.builder
+    public $viewCacheHelper; // @victoire_core.view_cache_helper
 
     //@todo Make it dynamic please
     protected $pageParameters = array(
@@ -46,7 +48,7 @@ class PageHelper extends ViewHelper
         'bodyId',
         'bodyClass',
         'slug',
-        'url'
+        'url',
     );
 
     /**
@@ -55,11 +57,12 @@ class PageHelper extends ViewHelper
      * @param EntityManager            $entityManager
      * @param CurrentViewHelper        $currentViewHelper
      * @param EventDispatcherInterface $eventDispatcher
-     * @param VictoireTemplating       $victoireTemplating
+     * @param TemplateMapper           $victoireTemplating
      * @param PageSeoHelper            $pageSeoHelper
      * @param ViewCacheHelper          $viewCacheHelper
      * @param Session                  $session
-     * @param SecurityContext          $securityContext
+     * @param TokenStorage             $tokenStorage
+     * @param AuthorizationChecker     $authorizationChecker
      * @param WidgetMapBuilder         $widgetMapBuilder
      */
     public function __construct(
@@ -71,16 +74,14 @@ class PageHelper extends ViewHelper
         PageSeoHelper $pageSeoHelper,
         ViewCacheHelper $viewCacheHelper,
         Session $session,
-        SecurityContext $securityContext,
+        TokenStorage $tokenStorage,
+        AuthorizationChecker $authorization_checker,
         WidgetMapBuilder $widgetMapBuilder,
         BETParameterConverter $parameterConverter,
         BusinessEntityHelper $businessEntityHelper,
         ViewCacheHelper $viewCacheHelper
-    )
-    {
-        parent::__construct($parameterConverter,
-                $businessEntityHelper, $bepHelper, $entityManager, $viewCacheHelper
-            );
+    ) {
+        parent::__construct($parameterConverter, $businessEntityHelper, $bepHelper, $entityManager, $viewCacheHelper);
         $this->bepHelper = $bepHelper;
         $this->entityManager = $entityManager;
         $this->currentViewHelper = $currentViewHelper;
@@ -89,16 +90,15 @@ class PageHelper extends ViewHelper
         $this->pageSeoHelper = $pageSeoHelper;
         $this->viewCacheHelper = $viewCacheHelper;
         $this->session = $session;
-        $this->securityContext = $securityContext;
+        $this->tokenStorage = $tokenStorage;
+        $this->authorizationChecker = $authorization_checker;
         $this->widgetMapBuilder = $widgetMapBuilder;
-
     }
 
     /**
      * generates a response from a page url
-     * @param string $url
      *
-     * @return Response
+     * @return View
      */
     public function findPageByParameters($parameters)
     {
@@ -127,21 +127,28 @@ class PageHelper extends ViewHelper
 
         //Dispatch contextual event regarding page type
         if ($page->getType() == 'business_entity_page') {
+            //Dispatch also an event with the Business entity name
+            $eventName = 'victoire_core.page_menu.contextual';
+            if (!$page->getId()) {
+                $eventName = 'victoire_core.business_entity_page_pattern_menu.contextual';
+                $event = new \Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent($page->getTemplate());
+            }
+            $this->eventDispatcher->dispatch($eventName, $event);
             $type = strtolower($page->getBusinessEntityName());
         } else {
             $type = $page->getType();
         }
 
-        $eventName = 'victoire_core.' . $type . '_menu.contextual';
+        $eventName = 'victoire_core.'.$type.'_menu.contextual';
         $this->eventDispatcher->dispatch($eventName, $event);
 
-        $layout = 'AppBundle:Layout:' . $page->getTemplate()->getLayout() . '.html.twig';
+        $layout = 'AppBundle:Layout:'.$page->getTemplate()->getLayout().'.html.twig';
 
         $this->widgetMapBuilder->build($page);
         $this->currentViewHelper->setCurrentView($page);
         //create the response
         $response = $this->victoireTemplating->renderResponse($layout, array(
-            "view" => $page
+            "view" => $page,
         ));
 
         return $response;
@@ -178,16 +185,13 @@ class PageHelper extends ViewHelper
      */
     protected function findEntityByReference($viewReference)
     {
-
         $entity = null;
         if (!empty($viewReference['entityId'])) {
             $entity = $this->entityManager->getRepository($viewReference['entityNamespace'])->findOneById($viewReference['entityId']);
         }
 
         return $entity;
-
     }
-
 
     /**
      * Search a page in the route history according to giver url
@@ -203,12 +207,11 @@ class PageHelper extends ViewHelper
             return $route->getPage();
         }
 
-        return null;
+        return;
     }
 
     /**
      * find the page according to given url. If not found, try in route history, if seo redirect, return target
-     * @param string $url
      *
      * @return View
      */
@@ -230,7 +233,7 @@ class PageHelper extends ViewHelper
             && $page->getSeo()
             && $page->getSeo()->getRedirectTo()
             && !$this->session->get('victoire.edit_mode', false)) {
-            $page =  $page->getSeo()->getRedirectTo();
+            $page = $page->getSeo()->getRedirectTo();
         }
 
         if ($viewReference && $page instanceof View) {
@@ -238,14 +241,17 @@ class PageHelper extends ViewHelper
         }
 
         $entity = $this->findEntityByReference($viewReference);
-        if ($entity && $page instanceof BusinessEntityPagePattern) {
-            $page = $this->updatePageWithEntity($page, $entity);
+        if ($entity) {
+            if ($page instanceof BusinessEntityPagePattern) {
+                $page = $this->updatePageWithEntity($page, $entity);
+            } elseif ($page instanceof BusinessEntityPage) {
+                $this->pageSeoHelper->updateSeoByEntity($page, $entity);
+            }
         }
         $this->checkPageValidity($page, $entity);
 
         return $page;
     }
-
 
     /**
      * If the valid is not valid, an exception is thrown
@@ -258,13 +264,16 @@ class PageHelper extends ViewHelper
     protected function checkPageValidity($page, $entity = null)
     {
         $errorMessage = 'The page was not found.';
+        $isPageOwner = false;
 
         //there is no page
         if ($page === null) {
             throw new NotFoundHttpException($errorMessage);
         }
 
-        $isPageOwner = $this->securityContext->isGranted('PAGE_OWNER', $page);
+        if ($this->tokenStorage->getToken()) {
+            $isPageOwner = $this->authorizationChecker->isGranted('PAGE_OWNER', $page);
+        }
 
         //a page not published, not owned, nor granted throw an exception
         if (($page instanceof BasePage && !$page->isPublished()) && !$isPageOwner) {
@@ -274,18 +283,18 @@ class PageHelper extends ViewHelper
         //if the page is a BusinessEntityPagePattern and the entity is not allowed for this page pattern
         if ($page instanceof BusinessEntityPagePattern) {
             //only victoire users are able to access a business page
-            if (!$this->securityContext->isGranted('ROLE_VICTOIRE')) {
+            if (!$this->authorizationChecker->isGranted('ROLE_VICTOIRE')) {
                 throw new AccessDeniedException('You are not allowed to see this page');
             }
         } elseif ($page instanceof BusinessEntityPage) {
-            if (!$entity->isVisibleOnFront() && !$this->securityContext->isGranted('ROLE_VICTOIRE')) {
+            if (!$entity->isVisibleOnFront() && !$this->authorizationChecker->isGranted('ROLE_VICTOIRE')) {
                 throw new NotFoundHttpException('The BusinessEntityPage for '.get_class($entity).'#'.$entity->getId().' is not visible on front.');
             }
             if (!$page->getId()) {
                 $entityAllowed = $this->bepHelper->isEntityAllowed($page->getTemplate(), $entity);
 
                 if ($entityAllowed === false) {
-                    throw new NotFoundHttpException('The entity ['.$entity->getId().'] is not allowed for the page pattern ['.$page->getId().']');
+                    throw new NotFoundHttpException('The entity ['.$entity->getId().'] is not allowed for the page pattern ['.$page->getTemplate()->getId().']');
                 }
             }
         }

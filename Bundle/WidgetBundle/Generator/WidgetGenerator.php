@@ -11,7 +11,6 @@ use Sensio\Bundle\GeneratorBundle\Generator\Generator;
 class WidgetGenerator extends Generator
 {
     private $filesystem;
-    private $frameworks;
     private $templating;
     private $skeletonDirs;
 
@@ -19,12 +18,10 @@ class WidgetGenerator extends Generator
      * Constructor
      *
      * @param Filesystem $filesystem
-     * @param unknown    $frameworks
      */
-    public function __construct(Filesystem $filesystem, $frameworks)
+    public function __construct(Filesystem $filesystem)
     {
         $this->filesystem = $filesystem;
-        $this->frameworks = $frameworks;
     }
 
     /**
@@ -39,8 +36,10 @@ class WidgetGenerator extends Generator
 
     /**
      * build WidgetBundle files
+     * @param string $namespace
+     * @param string $format
      */
-    public function generate($namespace, $bundle, $dir, $format, $structure, $fields = null, $parent = null, $contentResolver = false, $parentContentResolver = false)
+    public function generate($namespace, $bundle, $dir, $format, $structure, $fields = null, $parent = null, $packagistParentName = null, $contentResolver = false, $parentContentResolver = false, $orgname = null)
     {
 
         $dir .= '/'.strtr($namespace, '\\', '/');
@@ -76,17 +75,19 @@ class WidgetGenerator extends Generator
         }
 
         $parameters = array(
-            'namespace'         => $namespace,
-            'bundle'            => $bundle,
-            'parent'            => $parent,
-            'widget'            => $widget,
-            'format'            => $format,
-            'fields'            => $fields,
-            'toStringProperty' => $toStringProperty,
-            'bundle_basename'   => $basename,
-            'content_resolver'   => $contentResolver,
-            'parent_content_resolver'   => $parentContentResolver,
-            'extension_alias'   => Container::underscore($basename),
+            'namespace'               => $namespace,
+            'bundle'                  => $bundle,
+            'parent'                  => $parent,
+            'packagistParentName'     => $packagistParentName,
+            'orgname'                 => $orgname,
+            'widget'                  => $widget,
+            'format'                  => $format,
+            'fields'                  => $fields,
+            'toStringProperty'        => $toStringProperty,
+            'bundle_basename'         => $basename,
+            'content_resolver'        => $contentResolver,
+            'parent_content_resolver' => $parentContentResolver,
+            'extension_alias'         => Container::underscore($basename),
         );
 
         $this->renderFile('bundle/Bundle.php.twig', $dir.'/'.$bundle.'.php', $parameters);
@@ -110,7 +111,7 @@ class WidgetGenerator extends Generator
         $this->renderFile('widget/views/show.html.twig.twig', $dir.'/Resources/views/show.html.twig', $parameters);
 
         if ($contentResolver) {
-            $parameters['parentResolver'] = class_exists('Victoire\\Widget\\' . $parent . 'Bundle\\Widget\\Resolver\\Widget' . $parent . 'ContentResolver');
+            $parameters['parentResolver'] = class_exists('Victoire\\Widget\\'.$parent.'Bundle\\Widget\\Resolver\\Widget'.$parent.'ContentResolver');
             $this->renderFile('widget/ContentResolver.php.twig', $dir.'/Widget/Resolver/Widget'.$widget.'ContentResolver.php', $parameters);
         }
 

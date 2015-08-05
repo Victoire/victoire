@@ -2,33 +2,24 @@
 
 namespace Victoire\Bundle\FormBundle\Form\Type;
 
-/*
- * This file is part of the MopaBootstrapBundle.
- *
- * (c) Philipp A. Mohrenweiser <phiamo@googlemail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Victoire\Widget\RenderBundle\DataTransformer\JsonToArrayTransformer;
+use Victoire\Bundle\CoreBundle\DataTransformer\JsonToArrayTransformer;
+use Victoire\Bundle\CoreBundle\Helper\ViewHelper;
 
 /**
- * Type for FormTab handling.
- *
- * @author phiamo <phiamo@googlemail.com>
+ * Type for Victoire Link.
  */
 class LinkType extends AbstractType
 {
-
     private $analytics;
+    private $viewHelper;
 
-    public function __construct($analytics)
+    public function __construct($analytics, ViewHelper $viewHelper)
     {
         $this->analytics = $analytics;
+        $this->viewHelper = $viewHelper;
     }
 
     /**
@@ -42,30 +33,36 @@ class LinkType extends AbstractType
             'required'    => true,
             'choices'     => array(
                 'none'           => 'form.link_type.linkType.none',
-                'page'           => 'form.link_type.linkType.page',
+                'viewReference'  => 'form.link_type.linkType.view_reference',
                 'route'          => 'form.link_type.linkType.route',
                 'url'            => 'form.link_type.linkType.url',
-                'attachedWidget' => 'form.link_type.linkType.widget'
+                'attachedWidget' => 'form.link_type.linkType.widget',
             ),
             'attr'        => array(
-                'class'    => 'vic-linkType-select',
-                'onchange' => 'showSelectedLinkType($vic(this));',
-            )
+                'data-role' => 'vic-linkType-select',
+                'onchange'  => 'showSelectedLinkType($vic(this));',
+            ),
         ))
         ->add('url', null, array(
             'label'                          => 'form.link_type.url.label',
             'vic_vic_widget_form_group_attr' => array('class' => 'vic-form-group vic-hidden url-type'),
             'required'                       => true,
             'attr'                           => array('novalidate' => 'novalidate'),
-        ))
-        ->add('page', 'entity', array(
-            'label'                          => 'form.link_type.page.label',
+        ));
+
+        $rawPages = $this->viewHelper->getAllViewsReferences();
+        $pages = array();
+        foreach ($rawPages as $page) {
+            $pages[$page['id']] = $page['name'];
+        }
+
+        $builder->add('viewReference', 'choice', array(
+            'label'                          => 'form.link_type.view_reference.label',
             'required'                       => true,
             'attr'                           => array('novalidate' => 'novalidate'),
-            'empty_value'                    => 'form.link_type.page.blank',
-            'class'                          => 'VictoirePageBundle:BasePage',
-            'property'                       => 'name',
-            'vic_vic_widget_form_group_attr' => array('class' => 'vic-form-group vic-hidden page-type'),
+            'empty_value'                    => 'form.link_type.view_reference.blank',
+            'choices'                        => $pages,
+            'vic_vic_widget_form_group_attr' => array('class' => 'vic-form-group vic-hidden viewReference-type'),
         ))
         ->add('attachedWidget', 'entity', array(
             'label'                          => 'form.link_type.attachedWidget.label',
@@ -106,7 +103,7 @@ class LinkType extends AbstractType
                 'required'       => false,
                 'attr'           => array(
                     'placeholder' => 'form.link_type.analytics_track_code.placeholder',
-                )
+                ),
             ));
         }
     }
@@ -114,7 +111,8 @@ class LinkType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'inherit_data' => true
+            'data_class'         => 'Victoire\Bundle\CoreBundle\Entity\Link',
+            'translation_domain' => 'victoire',
         ));
     }
     /**

@@ -1,0 +1,43 @@
+.input_media {
+    .border-radius(3px);
+    height: 250px;
+    position: relative;
+    margin-bottom: 50px;
+
+    &.hasnomedia {
+        border-width: 1px;
+        border-style: dashed;
+        border-color: @grey;
+        background-color: #ebebeb;
+    }
+
+    &.hasmedia {
+        .preview {
+            height: 250px;
+            background-size: cover
+        }
+    }
+
+    .title {
+        margin-top: 20px;
+    }
+
+    .del,
+    .choose {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        .transform(translateY(-50%) translateX(-50%));
+    }
+}
+
+// Transitional style for input_media display with and without modal
+.vic-modal {
+    .input_media {
+        margin-bottom: 0px;
+
+        .title {
+            margin-top: 0px;
+        }
+    }
+}

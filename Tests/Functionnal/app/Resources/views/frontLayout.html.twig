@@ -5,7 +5,7 @@
 {% block head_script %}
     <!-- HEAD_SCRIPT -->
     {% if is_granted('ROLE_VICTOIRE') %}
-        {% javascripts injector="victoire-head" %}
+        {% javascripts injector="victoire-head, modernizr" %}
             <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
     {% endif %}
@@ -13,15 +13,6 @@
 
     {{ parent() }}
 {% endblock head_script %}
-
-{% block head_style %}
-    {% if is_granted('ROLE_VICTOIRE') %}
-        {% stylesheets filter='less, cssrewrite' injector="victoire-edit"
-         %}
-        <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
-        {% endstylesheets %}
-    {% endif %}
-{% endblock head_style %}
 
 {% block body %}
     {% if is_granted('ROLE_VICTOIRE') %}

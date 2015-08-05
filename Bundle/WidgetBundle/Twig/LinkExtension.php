@@ -4,9 +4,9 @@ namespace Victoire\Bundle\WidgetBundle\Twig;
 
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessEntityPageBundle\Helper\BusinessEntityPageHelper;
-use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
 
 /**
@@ -40,7 +40,7 @@ class LinkExtension extends \Twig_Extension
     /**
      * Returns a list of functions to add to the existing list.
      *
-     * @return array An array of functions
+     * @return \Twig_SimpleFunction[] An array of functions
      */
     public function getFunctions()
     {
@@ -62,34 +62,37 @@ class LinkExtension extends \Twig_Extension
      */
     public function victoireLinkUrl($parameters, $avoidRefresh = true, $url = "#")
     {
+        $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH;
         extract($parameters); //will assign $linkType, $attachedWidget, $routeParameters, $route, $page, $analyticsTrackCode
         switch ($linkType) {
-            case 'page':
-                //fallback when a page is deleted cascading the relation as null (page_id = null)
-                if ($page && $page instanceof WebViewInterface) {
-                    //avoid to refresh page when not needed
-                    $linkUrl = $this->router->generate('victoire_core_page_show', array('url' => $page->getUrl() ));
-                    if ($this->request->getRequestUri() != $linkUrl || !$avoidRefresh) {
-                        $url = $linkUrl;
-                    }
+            case 'viewReference':
+                if (is_array($viewReference)) {
+                    $viewReference = $viewReference['id'];
                 }
+
+                $page = $this->pageHelper->findPageByParameters(array('id' => $viewReference));
+                $linkUrl = $this->router->generate('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl()), $referenceType);
+                if ($this->request->getRequestUri() != $linkUrl || !$avoidRefresh) {
+                    $url = $linkUrl;
+                }
+
                 break;
             case 'route':
-                $url = $this->router->generate($route, $routeParameters);
+                $url = $this->router->generate($route, $routeParameters, $referenceType);
                 break;
             case 'attachedWidget':
                 //fallback when a widget is deleted cascading the relation as null (widget_id = null)
-                if ($attachedWidget && $attachedWidget->getView() instanceof WebViewInterface) {
+                if ($attachedWidget && method_exists($attachedWidget->getView(), 'getUrl')) {
 
                     //create base url
-                    $url = $this->router->generate('victoire_core_page_show', array('url' => $attachedWidget->getView()->getUrl()));
+                    $url = $this->router->generate('victoire_core_page_show', array('_locale'=> $attachedWidget->getView()->getLocale(), 'url' => $attachedWidget->getView()->getUrl()), $referenceType);
 
                     //If widget in the same view
                     if (rtrim($this->request->getRequestUri(), '/') == rtrim($url, '/')) {
                         $url = "";
                     }
                     //Add anchor part
-                    $url .= "#vic-widget-" . $attachedWidget->getId() . "-container-anchor";
+                    $url .= "#vic-widget-".$attachedWidget->getId()."-container-anchor";
                 }
                 break;
         }
@@ -107,12 +110,13 @@ class LinkExtension extends \Twig_Extension
      */
     public function victoireLink($parameters, $label, $attr = array(), $currentClass = 'active', $url = "#")
     {
+        $referenceLink = UrlGeneratorInterface::ABSOLUTE_PATH;
         extract($parameters); //will assign $linkType, $attachedWidget, $routeParameters, $route, $page, $analyticsTrackCode
 
         if ($linkType == 'attachedWidget' && $attachedWidget && method_exists($attachedWidget->getView(), 'getUrl')) {
-            $viewUrl = $this->router->generate('victoire_core_page_show', array('url' => $attachedWidget->getView()->getUrl() ));
+            $viewUrl = $this->router->generate('victoire_core_page_show', array('_locale' => $attachedWidget->getView()->getLocale(), 'url' => $attachedWidget->getView()->getUrl()), $referenceLink);
             if (rtrim($this->request->getRequestUri(), '/') == rtrim($viewUrl, '/')) {
-                $attr["data-scroll"] = "smooth" ;
+                $attr["data-scroll"] = "smooth";
             }
         }
 
@@ -186,23 +190,15 @@ class LinkExtension extends \Twig_Extension
 
     }
 
-    public function victoireBusinessLink($businessEntityInstance, $patternId = null)
+    public function victoireBusinessLink($businessEntityInstance, $patternId = null, $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
         if (!$patternId) {
-            $businessEntityHelper = $this->businessEntityHelper;
-            $businessEntity = $businessEntityHelper->findByEntityInstance($businessEntityInstance);
-            $entity = $businessEntityHelper->getByBusinessEntityAndId($businessEntity, $businessEntityInstance->getId());
-
-            $refClass = new \ReflectionClass($entity);
-
-            $pattern = $this->businessEntityPageHelper
-                ->guessBestViewForEntity($refClass);
-
-            $patternId = $pattern->getId();
+            $patternId = $this->businessEntityPageHelper
+                ->guessBestPatternIdForEntity(new \ReflectionClass($businessEntityInstance), $businessEntityInstance->getId());
         }
 
         $page = $this->pageHelper->findPageByParameters(array(
-            'viewId' => $patternId,
+            'patternId' => $patternId,
             'entityId' => $businessEntityInstance->getId()
         ));
 
@@ -212,6 +208,7 @@ class LinkExtension extends \Twig_Extension
             'routeParameters' => array(
                 'url' => $page->getUrl(),
             ),
+            'referenceType' => $referenceType,
         );
 
         return $this->victoireLinkUrl($parameters);
@@ -225,7 +222,7 @@ class LinkExtension extends \Twig_Extension
      *
      * @return LinkExtension
      **/
-    protected function addAttr($label, $value, $attr)
+    protected function addAttr($label, $value, &$attr)
     {
         if (!isset($attr[$label])) {
             $attr[$label] = "";

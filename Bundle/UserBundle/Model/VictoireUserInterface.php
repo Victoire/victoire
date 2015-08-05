@@ -21,7 +21,6 @@ interface VictoireUserInterface extends UserInterface
     /**
      * Get the firstname.
      *
-     * @param string $firstname
      *
      * @return self
      */
@@ -39,7 +38,6 @@ interface VictoireUserInterface extends UserInterface
     /**
      * Get the lastname.
      *
-     * @param string $lastname
      *
      * @return self
      */
@@ -57,7 +55,6 @@ interface VictoireUserInterface extends UserInterface
     /**
      * Get the locale.
      *
-     * @param string $locale
      *
      * @return self
      */

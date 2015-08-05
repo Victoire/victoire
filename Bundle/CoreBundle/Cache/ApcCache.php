@@ -34,7 +34,7 @@ class ApcCache
      */
     public function fetch($id, $defaultValue = null)
     {
-        $id = $this->uniqId . '-' . $id;
+        $id = $this->uniqId.'-'.$id;
         if ($this->contains($id)) {
             return $this->cache->fetch($id);
         }
@@ -52,7 +52,7 @@ class ApcCache
      */
     public function save($id, $data)
     {
-        $id = $this->uniqId . '-' . $id;
+        $id = $this->uniqId.'-'.$id;
 
         if (!$this->apcIsEnabled()) {
             return false;
@@ -70,7 +70,7 @@ class ApcCache
     /**
      * Does the cache contains this key
      *
-     * @param unknown $key
+     * @param string $key
      *
      * @return boolean
      */

@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 
@@ -16,7 +17,6 @@ use Victoire\Bundle\TemplateBundle\Entity\Template;
  */
 abstract class ViewType extends AbstractType
 {
-
     protected $availableLocales;
     protected $currentLocale;
     protected $isNew;
@@ -36,7 +36,8 @@ abstract class ViewType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
             $view = $event->getData();
             $form = $event->getForm();
 
@@ -46,11 +47,11 @@ abstract class ViewType extends AbstractType
             // Si aucune donnée n'est passée au formulaire, la donnée est "null".
             // Ce doit être considéré comme une nouvelle "View"
             if ($this->isNew) {
-                $getAllTemplateWithoutMe = function (EntityRepository $tr) {
+                $getAllTemplateWithoutMe = function(EntityRepository $tr) {
                     return $tr->getAll()->getInstance();
                 };
             } else {
-                $getAllTemplateWithoutMe = function (EntityRepository $tr) use ($view) {
+                $getAllTemplateWithoutMe = function(EntityRepository $tr) use ($view) {
                     return $tr->getAll()
                         ->getInstance()
                         ->andWhere('template.id != :templateId')
@@ -61,25 +62,49 @@ abstract class ViewType extends AbstractType
                 $form->add('template', null, array(
                     'label'         => 'form.view.type.template.label',
                     'property'      => 'name',
-                    'required'      => !$view instanceof Template,
+                    'required'      => !$view instanceof Template || $view instanceof BusinessEntityPagePattern,
                     'query_builder' => $getAllTemplateWithoutMe,
                 ));
             }
-            if (!$form->has('locale')) {
+            if (!$form->has('locale') && count($choices = $this->getAvailableLocales($view)) > 1) {
                 $form->add('locale', 'choice', array(
                         'expanded' => false,
                         'multiple' => false,
-                        'choices'  => $this->getAvailableLocales($view),
+                        'choices'  => $choices,
                         'label'    => 'form.view.type.locale.label',
-                        'data'     => $this->currentLocale
+                        'data'     => $this->currentLocale,
                     )
                 );
+            }
+            // vérifie si l'objet Product est "nouveau"
+            // Si aucune donnée n'est passée au formulaire, la donnée est "null".
+            // Ce doit être considéré comme une nouvelle "View"
+            if (!$view || null === $view->getId()) {
+                $getAllPageWithoutMe = function(EntityRepository $bpr) {
+                    return $bpr->getAll()->getInstance();
+                };
+            } else {
+                $getAllPageWithoutMe = function(EntityRepository $bpr) use ($view) {
+                    return $bpr->getAll()
+                        ->getInstance()
+                        ->andWhere('page.id != :pageId')
+                        ->setParameter('pageId', $view->getId());
+                };
+            }
+
+            $form->add('parent', null, array(
+                'label'         => 'form.view.type.parent.label',
+                'query_builder' => $getAllPageWithoutMe,
+            ));
+
+            if ($view instanceof BusinessEntityPage) {
+                $form->remove('slug');
             }
         });
 
         $builder
             ->add('name', null, array(
-                'label' => 'form.view.type.name.label'
+                'label' => 'form.view.type.name.label',
             ));
     }
 
@@ -94,5 +119,4 @@ abstract class ViewType extends AbstractType
 
         return $choices;
     }
-
 }

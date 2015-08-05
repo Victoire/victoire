@@ -6,8 +6,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\PageBundle\Entity\Slot;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
+use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\I18nBundle\Entity\I18n;
 
@@ -18,7 +20,7 @@ use Victoire\Bundle\I18nBundle\Entity\I18n;
  * @Gedmo\Tree(type="nested")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Victoire\Bundle\CoreBundle\Repository\ViewRepository")
  * @ORM\Table("vic_view")
  * @ORM\HasLifecycleCallbacks
  */
@@ -60,7 +62,9 @@ abstract class View
     /**
      * @var string
      *
-     * @Gedmo\Slug(fields={"name"}, updatable=false, unique=false)
+     * @Gedmo\Slug(handlers={
+     *     @Gedmo\SlugHandler(class="Victoire\Bundle\BusinessEntityBundle\Handler\TwigSlugHandler"
+     * )},fields={"name"}, updatable=false, unique=false)
      * @ORM\Column(name="slug", type="string", length=255)
      */
     protected $slug;
@@ -75,7 +79,7 @@ abstract class View
 
     /**
      * @Gedmo\TreeParent
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\PageBundle\Entity\BasePage", inversedBy="children", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="View", inversedBy="children", cascade={"persist"})
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $parent;
@@ -112,14 +116,14 @@ abstract class View
     protected $root;
 
     /**
-     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\PageBundle\Entity\BasePage", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="View", mappedBy="parent")
      * @ORM\OrderBy({"lft" = "ASC"})
      */
     protected $children;
 
     /**
-    * This relation is dynamicly added by PageSubscriber
-    */
+     * This relation is dynamicly added by PageSubscriber
+     */
     protected $author;
 
     /**
@@ -139,8 +143,8 @@ abstract class View
     //the slot contains the widget maps entities
     protected $slots = array();
 
-    //The reference is related to viewsReferences.xml fil which list all app views.
-    //This is used to speed up the routing system and to identify virtual pages (BusinessEntityPage)
+    //The reference is related to viewsReferences.xml file which list all app views.
+    //This is used to speed up the routing system and identify virtual pages (BusinessEntityPage)
     protected $reference;
 
     /**
@@ -261,7 +265,7 @@ abstract class View
 
     /**
      * Set template
-     * @param Page $template
+     * @param View $template
      *
      * @return View
      */
@@ -275,7 +279,7 @@ abstract class View
     /**
      * Get template
      *
-     * @return string
+     * @return Template
      */
     public function getTemplate()
     {
@@ -284,10 +288,10 @@ abstract class View
 
     /**
      * Set parent
+     * @param View $parent
      *
-     * @param \Victoire\Bundle\PageBundle\Entity\BasePage $parent
      */
-    public function setParent(\Victoire\Bundle\PageBundle\Entity\BasePage $parent = null)
+    public function setParent(View $parent = null)
     {
         $this->parent = $parent;
     }
@@ -295,7 +299,7 @@ abstract class View
     /**
      * Get parent
      *
-     * @return \Victoire\Bundle\PageBundle\Entity\BasePage parent
+     * @return View parent
      */
     public function getParent()
     {
@@ -305,13 +309,13 @@ abstract class View
      * Set children
      * @param string $children
      *
-     * @return Page
+     * @return View
      */
     public function setChildren($children)
     {
         $this->children = $children;
         if ($children !== null) {
-           foreach ($children as $child) {
+            foreach ($children as $child) {
                 $child->setParent($this);
             }
         }
@@ -330,9 +334,26 @@ abstract class View
     }
 
     /**
+     * Get WebView children
+     *
+     * @return string
+     */
+    public function getWebViewChildren()
+    {
+        $webViewChildren = array();
+        foreach ($this->children as $child) {
+            if (!$child instanceof BusinessEntityPagePattern) {
+                $webViewChildren[] = $child;
+            }
+        }
+
+        return $webViewChildren;
+    }
+
+    /**
      * Add child
      *
-     * @param child $child
+     * @param View $child
      */
     public function addChild(View $child)
     {
@@ -342,7 +363,7 @@ abstract class View
     /**
      * Remove child
      *
-     * @param child $child
+     * @param View $child
      */
     public function removeChild(View $child)
     {
@@ -447,7 +468,7 @@ abstract class View
     /**
      * Is the widget is undeletable
      *
-     * @return boolean
+     * @return string
      */
     public function isUndeletable()
     {
@@ -580,7 +601,7 @@ abstract class View
     /**
      * Get widgets
      *
-     * @return string
+     * @return Widget[]
      */
     public function getWidgets()
     {
@@ -677,10 +698,11 @@ abstract class View
 
             foreach ($_widgetMapEntries as $_widgetMapEntry) {
                 $_widgetMap = new WidgetMap();
-                $_widgetMap->setAction($_widgetMapEntry['action']);
-                $_widgetMap->setPosition($_widgetMapEntry['position']);
-                $_widgetMap->setPositionReference($_widgetMapEntry['positionReference']);
-                $_widgetMap->setReplacedWidgetId($_widgetMapEntry['replacedWidgetId']);
+                $_widgetMap->setAction(@$_widgetMapEntry['action']);
+                $_widgetMap->setPosition(@$_widgetMapEntry['position']);
+                $_widgetMap->setPositionReference(@$_widgetMapEntry['positionReference']);
+                $_widgetMap->setAsynchronous(@$_widgetMapEntry['asynchronous']);
+                $_widgetMap->setReplacedWidgetId(@$_widgetMapEntry['replacedWidgetId']);
                 $_widgetMap->setWidgetId(intval($_widgetMapEntry['widgetId']));
 
                 $slot->addWidgetMap($_widgetMap);
@@ -719,25 +741,6 @@ abstract class View
         $this->updateWidgetMapBySlots();
     }
 
-    public function computeCompleteSlot($slotId)
-    {
-        $slot = $this->getSlotById($slotId);
-        if (null !== $template = $this->getTemplate()) {
-            // Is the parent has the slot in it's widgetMaps ?
-            if (null !== $templateSlot = $template->computeCompleteSlot($slotId)) {
-                foreach ($templateSlot->getWidgetMaps() as $widgetMap) {
-                    //
-                    $widgetMap->setAction(WidgetMap::ACTION_OVERWRITE);
-                    $widgetMap->setReplacedWidgetId($widgetMap->getWidgetId());
-                    $slot->addWidgetMap($widgetMap);
-                }
-            }
-        }
-        $this->slots[$slotId] = $slot;
-
-        return $slot;
-
-    }
     /**
      * Convert slots to a widget map
      *
@@ -745,7 +748,7 @@ abstract class View
      */
     protected function convertSlotsToWidgetMap()
     {
-        $slots = $this->slots;
+        $slots = $this->getSlots();
 
         $widgetMap = array();
 
@@ -761,6 +764,7 @@ abstract class View
                 $widgetMapEntry = array();
                 $widgetMapEntry['action'] = $_widgetMap->getAction();
                 $widgetMapEntry['position'] = $_widgetMap->getPosition();
+                $widgetMapEntry['asynchronous'] = $_widgetMap->isAsynchronous();
                 $widgetMapEntry['positionReference'] = $_widgetMap->getPositionReference();
                 $widgetMapEntry['replacedWidgetId'] = $_widgetMap->getReplacedWidgetId();
                 $widgetMapEntry['widgetId'] = $_widgetMap->getWidgetId();
@@ -795,28 +799,19 @@ abstract class View
      */
     public function getSlotById($slotId)
     {
-        $slot = null;
+        foreach ($this->slots as $slot) {
+            if ($slot->getId() === $slotId) {
 
-        $slots = $this->slots;
-
-        //parse all slots
-        foreach ($slots as $sl) {
-            //if this the slot we are looikong for
-            if ($sl->getId() === $slotId) {
-                $slot = $sl;
-                //there no need to continue, we found the slot
-                break;
+                return $slot;
             }
         }
-
-        return $slot;
     }
     /**
      * Update the given slot
      *
      * @param Slot $slot
      *
-     * @return this
+     * @return View
      */
     public function updateSlot($slot)
     {
@@ -849,7 +844,7 @@ abstract class View
 
     /**
      * Remove slots
-     * @param Widget $slots
+     * @param Slot $slots
      */
     public function removeSlot(Slot $slots)
     {
@@ -859,7 +854,7 @@ abstract class View
     /**
      * Get the slots
      *
-     * @return array The slots
+     * @return Slot[] The slots
      */
     public function getSlots()
     {

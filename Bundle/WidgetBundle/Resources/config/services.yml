@@ -1,8 +1,4 @@
 services:
-    victoire_widget.widget_map_builder:
-        class: Victoire\Bundle\PageBundle\WidgetMap\WidgetMapBuilder
-        arguments: [@doctrine.orm.entity_manager]
-
     victoire_widget.widget_content_resolver:
         class: Victoire\Bundle\WidgetBundle\Resolver\WidgetContentResolver
         arguments:
@@ -52,6 +48,9 @@ services:
         arguments:
             - @victoire_widget.widget_helper
 
+    victoire_widget.widget_item_content_resolver_chain:
+        class: Victoire\Bundle\WidgetBundle\Resolver\Chain\WidgetItemChain
+
     victoire_widget.twig.link_extension:
         class: Victoire\Bundle\WidgetBundle\Twig\LinkExtension
         arguments:
@@ -63,3 +62,16 @@ services:
             - @victoire_page.page_helper
         tags:
             - { name: twig.extension }
+
+    victoire_widget.widget_style_type:
+        class: Victoire\Bundle\WidgetBundle\Form\WidgetStyleType
+        arguments:
+            - @kernel
+            - @file_locator
+        tags:
+            - { name: form.type, alias: victoire_widget_style_type }
+
+    victoire_widget.widget.subscriber:
+        class: Victoire\Bundle\WidgetBundle\Listener\WidgetSubscriber
+        tags:
+            - { name: kernel.event_subscriber }

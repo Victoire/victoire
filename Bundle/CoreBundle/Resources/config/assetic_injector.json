@@ -3,11 +3,33 @@
     {
         "javascripts":
         {
+            "foot":
+            [
+                "@VictoireCoreBundle/Resources/public/vendor/jquery.scrollTo/1.4.14/jquery.scrollTo.min.js",
+                "@VictoireCoreBundle/Resources/public/js/smooth-scroll.js",
+                "@VictoireCoreBundle/Resources/public/vendor/jquery-unveil/jquery.unveil.js",
+                "@VictoireCoreBundle/Resources/public/js/unveil.js"
+            ],
+            "victoire-ngApp":
+            [
+                "http://code.angularjs.org/1.4.1/angular-sanitize.min.js",
+                "@VictoireCoreBundle/Resources/script/ngApp/app.js",
+                "@VictoireCoreBundle/Resources/script/ngApp/controllers/page/PageCtrl.js",
+                "@VictoireCoreBundle/Resources/script/ngApp/controllers/slot/SlotCtrl.js",
+                "@VictoireCoreBundle/Resources/script/ngApp/controllers/widget/WidgetAsynchronousLoadCtrl.js",
+                "@VictoireCoreBundle/Resources/script/ngApp/services/slotAPIService.js",
+                "@VictoireCoreBundle/Resources/script/ngApp/services/slotLocalStorageService.js",
+                "@VictoireCoreBundle/Resources/script/ngApp/services/widgetAPIService.js",
+                "@VictoireCoreBundle/Resources/script/ngApp/services/widgetLocalStorageService.js"
+            ],
             "victoire-head":
             [
                 "@VictoireCoreBundle/Resources/public/vendor/jquery/1.10.2/jquery-1.10.2.js",
-                "@VictoireCoreBundle/Resources/public/js/jquery.noConflict.js",
-                "@VictoireCoreBundle/Resources/public/vendor/codrops-notification/js/modernizr.custom.js"
+                "@VictoireCoreBundle/Resources/public/js/jquery.noConflict.js"
+            ],
+            "modernizr":
+            [
+                "@VictoireCoreBundle/Resources/public/js/modernizr.custom.js"
             ],
             "victoire-leftnavbar":
             [
@@ -23,7 +45,6 @@
                 "@VictoireCoreBundle/Resources/public/js/edit/widget.js",
                 "@VictoireCoreBundle/Resources/public/vendor/vic-confirm/js/confirm.js",
                 "@VictoireCoreBundle/Resources/public/vendor/vic-bootstrap/3.0.3/js/bootstrap.min.js",
-                "@VictoireCoreBundle/Resources/public/vendor/codrops-notification/js/notificationFx.js",
                 "@VictoireCoreBundle/Resources/public/js/jquery.mjs.nestedSortable.js"
             ]
         },
@@ -35,15 +56,11 @@
             ],
             "victoire-edit":
             [
-                "@VictoireCoreBundle/Resources/style/less/globals/typography.less",
                 "@VictoireCoreBundle/Resources/public/vendor/font-awesome/4.2.0/css/font-awesome.css",
                 "@VictoireCoreBundle/Resources/public/vendor/vic-bootstrap/3.0.3/css/bootstrap.min.css",
-                "@VictoireCoreBundle/Resources/public/vendor/codrops-notification/less/ns-default.less",
-                "@VictoireCoreBundle/Resources/public/vendor/codrops-notification/less/ns-style-bar.less",
-                "@VictoireCoreBundle/Resources/public/vendor/codrops-notification/less/ns-style-attached.less",
-                "@VictoireCoreBundle/Resources/public/vendor/codrops-notification/less/ns-style-growl.less",
-                "@VictoireCoreBundle/Resources/public/vendor/codrops-notification/less/ns-style-other.less",
-                "@VictoireCoreBundle/Resources/style/less/victoire.less"
+                "@VictoireCoreBundle/Resources/style/less/bricks/bricks.less",
+                "@VictoireCoreBundle/Resources/style/less/layouts/layouts.less",
+                "@VictoireCoreBundle/Resources/style/less/ugly.less"
             ]
         }
     }

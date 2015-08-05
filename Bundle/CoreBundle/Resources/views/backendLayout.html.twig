@@ -1,0 +1,55 @@
+{% extends 'VictoireCoreBundle::layout.html.twig' %}
+{% trans_default_domain "victoire" %}
+{% block meta %}<title>Backend</title>{% endblock meta %}
+{% block container_attributes %}{{ parent() }} role="victoire-backend"{% endblock container_attributes %}
+{% block container_class %}{% endblock container_class %}
+
+{% block body %}
+    {% if is_granted('ROLE_VICTOIRE') %}
+        {% include 'VictoireCoreBundle:Menu:admin_navbar.html.twig' %}
+    {% endif %}
+    <div class="vic-container">
+        <h1>{% block header_title %}{% endblock header_title %}</h1>
+        {% block content %}{% endblock content %}
+    </div>
+{% endblock body %}
+
+{% block foot_script %}
+    <!-- backend layout foot_script -->
+    <!-- FOOT_SCRIPT -->
+    {% if view is defined %}
+        <script type="text/javascript">
+            var viewReferenceId = '{{ vic_current_page_reference() }}';
+        </script>
+        {{ render_hinclude(controller('VictoireAnalyticsBundle:BrowseEvent:track', {'viewReferenceId': view.reference.id, 'referer': app.request.headers.get('referer')})) }}
+    {% endif %}
+    {% if is_granted('ROLE_VICTOIRE') %}
+        {% javascripts injector='victoire-edit, victoire-leftnavbar' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% endif %}
+    {% if is_granted('ROLE_VICTOIRE') %}
+        <script type="text/javascript">
+            $vic(document).ready(function(){
+                $vic('a#media-manager').on('click', function(ev) {
+                    ev.preventDefault();
+                    openDGDialog("{{ path('VictoireMediaBundle_folder_show', {'folderId': 1} ) }}", 1050, 600);
+                });
+            });
+        </script>
+    {% endif %}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script type="text/javascript">
+        var locale = '{{ app.request.locale }}';
+        var debug = {{ app.debug ? "true" : "false" }};
+    </script>
+    <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+
+    {% javascripts injector="foot, victoire-ngApp, alertify-codrops-notification" %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    {% block alertify %}
+        {{ app.session|alertify|raw }}
+    {% endblock %}
+    <!-- END FOOT_SCRIPT -->
+{% endblock foot_script %}

@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
+use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
+use Victoire\Bundle\CoreBundle\Entity\View;
 
 /**
  * BusinessEntityPagePattern controller.
@@ -18,77 +20,75 @@ use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
  */
 class BusinessEntityPagePatternController extends Controller
 {
+    use VictoireAlertifyControllerTrait;
+
     /**
      * Creates a new BusinessEntityPagePattern entity.
      *
      * @param Request $request
      * @param integer $id
      *
-     * @Route("{id}/create", name="victoire_businessentitypagepattern_businessentitypagepattern_create")
+     * @Route("{id}/create", name="victoire_bepp_create")
      * @Method("POST")
      * @Template("VictoireBusinessEntityPageBundle:BusinessEntityPagePattern:new.html.twig")
      *
-     * @return Ambiguous \Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern NULL
+     * @return JsonResponse
      */
     public function createAction(Request $request, $id)
     {
         //get the business entity
         $businessEntity = $this->getBusinessEntity($id);
-        $errorMessage = '';
 
-        $entity = new BusinessEntityPagePattern();
-        $entity->setBusinessEntityName($businessEntity->getName());
+        $view = new BusinessEntityPagePattern();
+        $view->setBusinessEntityName($businessEntity->getName());
 
-        $form = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($view);
 
         $form->handleRequest($request);
 
-        $success = false;
-        $completeUrl = null;
+        $params = array(
+            'success' => false
+        );
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
+            $em->persist($view);
             $em->flush();
 
             //redirect to the page of the pagePattern
-            $completeUrl = $this->generateUrl('victoire_core_page_show', array('url' => $entity->getUrl()));
+            $params['url'] = $this->generateUrl('victoire_core_page_show', array('url' => $view->getUrl()));
+            $params['success'] = true;
 
-            $success = true;
+            $this->congrat($this->get('translator')->trans('victoire.business_entity_page_pattern.create.success', array(), 'victoire'));
         } else {
-
             //get the errors as a string
-            $errorMessage = $this->container->get('victoire_form.error_helper')->getRecursiveReadableErrors($form);
+            $params['message'] = $this->container->get('victoire_form.error_helper')->getRecursiveReadableErrors($form);
         }
 
-        return new JsonResponse(array(
-            'success' => $success,
-            'url'     => $completeUrl,
-            'message' => $errorMessage
-        ));
+        return new JsonResponse($params);
     }
 
     /**
      * Creates a form to create a BusinessEntityPagePattern entity.
      *
-     * @param BusinessEntityPagePattern $entity The entity
+     * @param BusinessEntityPagePattern $view The entity
      *
      * @return \Symfony\Component\Form\Form The form
      *
      * @return Form
      */
-    private function createCreateForm(BusinessEntityPagePattern $entity)
+    private function createCreateForm(BusinessEntityPagePattern $view)
     {
-        $businessEntityName = $entity->getBusinessEntityName();
-        $businessProperty = $this->getBusinessProperties($entity);
+        $id = $view->getBusinessEntityName();
+        $businessProperty = $this->getBusinessProperties($view);
 
         $form = $this->createForm(
             'victoire_business_entity_page_type',
-            $entity,
+            $view,
             array(
-                'action'           => $this->generateUrl('victoire_businessentitypagepattern_businessentitypagepattern_create', array('id' => strtolower($businessEntityName))),
+                'action'           => $this->generateUrl('victoire_bepp_create', array('id' => $id)),
                 'method'           => 'POST',
-                'businessProperty' => $businessProperty
+                'businessProperty' => $businessProperty,
             )
         );
 
@@ -99,29 +99,29 @@ class BusinessEntityPagePatternController extends Controller
      * Displays a form to create a new BusinessEntityPagePattern entity.
      * @param string $id The id of the businessEntity
      *
-     * @Route("/{id}/new", name="victoire_businessentitypagepattern_businessentitypagepattern_new")
+     * @Route("/{id}/new", name="victoire_bepp_new")
      * @Method("GET")
      * @Template()
      *
-     * @return array The entity and the form
+     * @return JsonResponse The entity and the form
      */
     public function newAction($id)
     {
         //get the business entity
         $businessEntity = $this->getBusinessEntity($id);
 
-        $entity = new BusinessEntityPagePattern();
-        $entity->setBusinessEntityName($businessEntity->getName());
+        $view = new BusinessEntityPagePattern();
+        $view->setBusinessEntityName($businessEntity->getName());
 
-        $form = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($view);
 
         $businessEntityHelper = $this->get('victoire_business_entity_page.business_entity_page_helper');
         $businessProperties = $businessEntityHelper->getBusinessProperties($businessEntity);
 
         $parameters = array(
-            'entity' => $entity,
+            'entity' => $view,
             'form'   => $form->createView(),
-            'businessProperties' => $businessProperties
+            'businessProperties' => $businessProperties,
         );
 
         return new JsonResponse(array(
@@ -129,46 +129,42 @@ class BusinessEntityPagePatternController extends Controller
                 'VictoireBusinessEntityPageBundle:BusinessEntityPagePattern:new.html.twig',
                 $parameters
             ),
-            'success' => true
+            'success' => true,
         ));
     }
 
     /**
      * Displays a form to edit an existing BusinessEntityPagePattern entity.
-     * @param string $id The id of the businessEntity
      *
-     * @Route("/{id}/edit", name="victoire_businessentitypagepattern_businessentitypagepattern_edit")
+     * @Route("/{id}/edit", name="victoire_bepp_edit")
      * @Method("GET")
      * @Template()
+     * @ParamConverter("id", class="VictoireCoreBundle:View")
      *
-     * @return array The entity and the form
+     * @return JsonResponse The entity and the form
      *
      * @throws \Exception
      */
-    public function editAction($id)
+    public function editAction(View $view)
     {
-        $entity = $this->getDoctrine()->getManager()->getRepository('VictoireBusinessEntityPageBundle:BusinessEntityPagePattern')->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $businessEntityHelper = $this->get('victoire_core.helper.business_entity_helper');
+        $businessEntityPagePatternHelper = $this->get('victoire_business_entity_page.business_entity_page_helper');
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find BusinessEntityPagePattern entity.');
-        }
-
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
+        $editForm = $this->createEditForm($view);
+        $deleteForm = $this->createDeleteForm($view->getId());
 
         //the business property link to the page
-        $businessEntityName = $entity->getBusinessEntityName();
-        $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById(strtolower($businessEntityName));
-
-        $businessEntityPagePatternHelper = $this->get('victoire_business_entity_page.business_entity_page_helper');
+        $businessEntityId = $view->getBusinessEntityName();
+        $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($businessEntityId);
 
         $businessProperties = $businessEntityPagePatternHelper->getBusinessProperties($businessEntity);
 
         $parameters = array(
-            'entity'      => $entity,
+            'entity'      => $view,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-            'businessProperties' => $businessProperties
+            'businessProperties' => $businessProperties,
         );
 
         return new JsonResponse(array(
@@ -181,20 +177,20 @@ class BusinessEntityPagePatternController extends Controller
     }
 
     /**
-    * Creates a form to edit a BusinessEntityPagePattern entity.
-    *
-    * @param BusinessEntityPagePattern $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(BusinessEntityPagePattern $entity)
+     * Creates a form to edit a BusinessEntityPagePattern entity.
+     *
+     * @param BusinessEntityPagePattern $view The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createEditForm(BusinessEntityPagePattern $view)
     {
-        $businessProperty = $this->getBusinessProperties($entity);
+        $businessProperty = $this->getBusinessProperties($view);
 
-        $form = $this->createForm('victoire_business_entity_page_type', $entity, array(
-            'action' => $this->generateUrl('victoire_businessentitypagepattern_businessentitypagepattern_update', array('id' => $entity->getId())),
+        $form = $this->createForm('victoire_business_entity_page_type', $view, array(
+            'action' => $this->generateUrl('victoire_bepp_update', array('id' => $view->getId())),
             'method' => 'PUT',
-            'businessProperty' => $businessProperty
+            'businessProperty' => $businessProperty,
         ));
 
         return $form;
@@ -204,11 +200,11 @@ class BusinessEntityPagePatternController extends Controller
      * @param Request $request
      * @param string  $id
      *
-     * @Route("/{id}", name="victoire_businessentitypagepattern_businessentitypagepattern_update")
+     * @Route("/{id}", name="victoire_bepp_update")
      * @Method("PUT")
      * @Template("VictoireBusinessEntityPageBundle:BusinessEntityPagePattern:edit.html.twig")
      *
-     * @return array The parameter for the response
+     * @return JsonResponse The parameter for the response
      *
      * @throws \Exception
      */
@@ -222,7 +218,6 @@ class BusinessEntityPagePatternController extends Controller
             throw $this->createNotFoundException('Unable to find BusinessEntityPagePattern entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($pagePattern);
         $editForm->handleRequest($request);
 
@@ -237,16 +232,19 @@ class BusinessEntityPagePatternController extends Controller
 
             //redirect to the page of the template
             $completeUrl = $shortcuts->generateUrl('victoire_core_page_show', array('url' => $pagePattern));
+            $message = $this->get('translator')->trans('victoire.business_entity_page_pattern.edit.success', array(), 'victoire');
 
             $success = true;
         } else {
             $success = false;
             $completeUrl = null;
+            $message = $this->get('translator')->trans('victoire.business_entity_page_pattern.edit.error', array(), 'victoire');
         }
 
         return new JsonResponse(array(
             'success' => $success,
-            'url'     => $completeUrl
+            'url'     => $completeUrl,
+            'message' => $message,
         ));
     }
 
@@ -255,12 +253,12 @@ class BusinessEntityPagePatternController extends Controller
      * @param Request $request
      * @param string  $id
      *
-     * @Route("/{id}", name="victoire_businessentitypagepattern_businessentitypagepattern_delete")
+     * @Route("/{id}", name="victoire_bepp_delete")
      * @Method("DELETE")
      *
      * @throws \Exception
      *
-     * @return redirect
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request, $id)
     {
@@ -269,13 +267,13 @@ class BusinessEntityPagePatternController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('VictoireBusinessEntityPageBundle:BusinessEntityPagePattern')->find($id);
+            $view = $em->getRepository('VictoireBusinessEntityPageBundle:BusinessEntityPagePattern')->find($id);
 
-            if (!$entity) {
+            if (!$view) {
                 throw $this->createNotFoundException('Unable to find BusinessEntityPagePattern entity.');
             }
 
-            $em->remove($entity);
+            $em->remove($view);
             $em->flush();
         }
 
@@ -285,14 +283,14 @@ class BusinessEntityPagePatternController extends Controller
     /**
      * Creates a form to delete a BusinessEntityPagePattern entity by id.
      *
-     * @param mixed $id The entity id
+     * @param string $id The entity id
      *
      * @return \Symfony\Component\Form\Form The form
      */
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('victoire_businessentitypagepattern_businessentitypagepattern_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('victoire_bepp_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm();
@@ -300,48 +298,39 @@ class BusinessEntityPagePatternController extends Controller
 
     /**
      * List the entities that matches the query of the businessEntityPagePattern
-     * @param BusinessEntityPagePattern $entity
+     * @param BusinessEntityPagePattern $view
      *
-     * @Route("listEntities/{id}", name="victoire_businessentitypagepattern_businessentitypagepattern_listentities")
+     * @Route("listEntities/{id}", name="victoire_bepp_listentities")
      * @ParamConverter("id", class="VictoireBusinessEntityPageBundle:BusinessEntityPagePattern")
-     * @return array The list of items for this template
+     * @Template
+     * @return array|Response The list of items for this template
      *
      * @throws Exception
      */
-    public function listEntitiesAction(BusinessEntityPagePattern $entity)
+    public function listEntitiesAction(BusinessEntityPagePattern $view)
     {
         //services
         $bepHelper = $this->get('victoire_business_entity_page.business_entity_page_helper');
 
-        $entities = $bepHelper->getEntitiesAllowed($entity);
-
         //parameters for the view
-        $parameters = array(
-            'businessEntityPagePattern' => $entity,
-            'items'                     => $entities
+        return array(
+            'businessEntityPagePattern' => $view,
+            'items'                     => $bepHelper->getEntitiesAllowed($view),
         );
-
-        return new JsonResponse(array(
-            'html' => $this->container->get('victoire_templating')->render(
-                'VictoireBusinessEntityPageBundle:BusinessEntityPagePattern:listEntities.html.twig',
-                $parameters
-            ),
-            'success' => true
-        ));
     }
 
     /**
      * Get an array of business properties by the business entity page pattern
      *
-     * @param BusinessEntityPagePattern $entity
+     * @param BusinessEntityPagePattern $view
      *
      * @return array of business properties
      */
-    private function getBusinessProperties(BusinessEntityPagePattern $entity)
+    private function getBusinessProperties(BusinessEntityPagePattern $view)
     {
         $businessEntityHelper = $this->get('victoire_core.helper.business_entity_helper');
         //the name of the business entity link to the business entity page pattern
-        $businessEntityName = $entity->getBusinessEntityName();
+        $businessEntityName = $view->getBusinessEntityName();
 
         $businessEntity = $businessEntityHelper->findById(strtolower($businessEntityName));
         $businessProperties = $businessEntity->getBusinessPropertiesByType('businessParameter');

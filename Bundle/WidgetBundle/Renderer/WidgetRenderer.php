@@ -6,6 +6,7 @@ use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Event\WidgetRenderEvent;
 use Victoire\Bundle\CoreBundle\VictoireCmsEvents;
+use Victoire\Bundle\PageBundle\Entity\Slot;
 use Victoire\Bundle\WidgetBundle\Model\Widget;
 
 class WidgetRenderer
@@ -51,30 +52,22 @@ class WidgetRenderer
         );
     }
 
-
     /**
      * render a widget
-     * @param Widget  $widget
-     * @param boolean $addContainer
-     * @param View    $view
+     * @param Widget $widget
+     * @param View   $view
      *
-     * @return template
+     * @return string
      */
-    public function renderContainer(Widget $widget, View $view, $position = 0, $slotOptions = array())
+    public function renderContainer(Widget $widget, View $view)
     {
         $dispatcher = $this->container->get('event_dispatcher');
-        $securityContext = $this->container->get('security.context');
 
         $dispatcher->dispatch(VictoireCmsEvents::WIDGET_PRE_RENDER, new WidgetRenderEvent($widget));
 
-        $html = $this->render($widget, $view);
-
-        if ($securityContext->isGranted('ROLE_VICTOIRE')) {
-            $html .= $this->renderActions($widget->getSlot(), $view, $slotOptions, $position);
-        }
-
-        $html = '<a class="vic-anchor" id="vic-widget-'.$widget->getId().'-container-anchor"></a>' . $html;
-        $html = "<div class='vic-widget-container' data-position=\"".($position-1)."\" data-id=\"".$widget->getId()."\" id='vic-widget-".$widget->getId()."-container'>".$html.'</div>';
+        $html = '<div class="vic-widget-container" data-id="'.$widget->getId().'" id="vic-widget-'.$widget->getId().'-container">';
+        $html .= $this->render($widget, $view);
+        $html .= '</div>';
 
         $dispatcher->dispatch(VictoireCmsEvents::WIDGET_POST_RENDER, new WidgetRenderEvent($widget, $html));
 
@@ -82,17 +75,34 @@ class WidgetRenderer
     }
 
     /**
-     * render widget actions
-     * @param Widget $widget
+     * prepare a widget to be rendered asynchronously
+     * @param integer $widgetId
      *
-     * @return template
+     * @return string
      */
-    public function renderWidgetActions(Widget $widget)
+    public function prepareAsynchronousRender($widgetId)
+    {
+        $ngControllerName = 'widget'.$widgetId.'AsynchronousLoadCtrl';
+        $ngDirectives = sprintf('ng-controller="WidgetAsynchronousLoadController as %s" class="vic-widget" ng-init="%s.init(%d)" ng-bind-html="html"', $ngControllerName, $ngControllerName, $widgetId);
+        $html = sprintf('<div class="vic-widget-container vic-widget-asynchronous" data-id="%d" id="vic-widget-%d-container" %s></div>', $widgetId, $widgetId, $ngDirectives);
+
+        return $html;
+    }
+
+    /**
+     * render widget unlink action
+     * @param integer $widgetId
+     * @param View    $view
+     *
+     * @return string
+     */
+    public function renderUnlinkActionByWidgetId($widgetId, $view)
     {
         return $this->container->get('victoire_templating')->render(
-            'VictoireCoreBundle:Widget:widgetActions.html.twig',
+            'VictoireCoreBundle:Widget:widgetUnlinkAction.html.twig',
             array(
-                "widget" => $widget
+                "widgetId" => $widgetId,
+                "view" => $view,
             )
         );
     }
@@ -100,13 +110,29 @@ class WidgetRenderer
     /**
      * render slot actions
      * @param Slot    $slot
-     * @param Page    $view
      * @param array   $options
-     * @param integer $position
      *
-     * @return template
+     * @return string
      */
-    public function renderActions($slot, View $view, $options = array(), $position = 0)
+    public function renderActions($slot, $options = array())
+    {
+        return $this->container->get('victoire_templating')->render(
+            "VictoireCoreBundle:Widget:actions.html.twig",
+            array(
+                "slot"     => $slot,
+                'options'  => $options
+            )
+        );
+    }
+
+    /**
+     * Compute slot options
+     * @param Slot    $slotId
+     * @param array   $options
+     *
+     * @return string
+     */
+    public function computeOptions($slotId, $options = array())
     {
         $slots = $this->container->getParameter('victoire_core.slots');
 
@@ -114,9 +140,9 @@ class WidgetRenderer
         $widgets = array();
 
         //If the slot is declared in config
-        if (!empty($slots[$slot]) && !empty($slots[$slot]['widgets'])) {
+        if (!empty($slots[$slotId]) && !empty($slots[$slotId]['widgets'])) {
             //parse declared widgets
-            $slotWidgets = array_keys($slots[$slot]['widgets']);
+            $slotWidgets = array_keys($slots[$slotId]['widgets']);
         } elseif (!empty($options['availableWidgets'])) {
             $slotWidgets = $options['availableWidgets'];
         } else {
@@ -134,22 +160,14 @@ class WidgetRenderer
                 $widgets[$slotWidget]['params'] = $widgetParams;
             }
         }
-        $max = null;
-        if (!empty($slots[$slot]) && !empty($slots[$slot]['max'])) {
-            $max = $slots[$slot]['max'];
+        $slots[$slotId]['availableWidgets'] = $widgets;
+        if (isset($options['max'])) {
+            $slots[$slotId]['max'] = $options['max'];
         }
 
-        return $this->container->get('victoire_templating')->render(
-            "VictoireCoreBundle:Widget:actions.html.twig",
-            array(
-                "slot"     => $slot,
-                "view"     => $view,
-                'widgets'  => $widgets,
-                'max'      => $max,
-                'position' => $position
-            )
-        );
+        return $slots[$slotId];
     }
+
 
     /**
      * Get the extra classes for the css

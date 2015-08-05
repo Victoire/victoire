@@ -24,6 +24,54 @@ trait BusinessEntityTrait
     private $visibleOnFront = true;
 
     /**
+     * Set proxy
+     *
+     * @param \Victoire\Bundle\CoreBundle\Entity\EntityProxy $proxy
+     *
+     * @return BusinessEntityTrait
+     */
+    public function setProxy(\Victoire\Bundle\CoreBundle\Entity\EntityProxy $proxy = null)
+    {
+        $this->proxy = $proxy;
+
+        return $this;
+    }
+
+    /**
+     * Get proxy
+     *
+     * @return \Victoire\Bundle\CoreBundle\Entity\EntityProxy
+     */
+    public function getProxy()
+    {
+        return $this->proxy;
+    }
+
+    /**
+     * Add proxies
+     *
+     * @param \Victoire\Bundle\CoreBundle\Entity\EntityProxy $proxies
+     *
+     * @return BusinessEntityTrait
+     */
+    public function addProxie(\Victoire\Bundle\CoreBundle\Entity\EntityProxy $proxies)
+    {
+        $this->proxies[] = $proxies;
+
+        return $this;
+    }
+
+    /**
+     * Remove proxies
+     *
+     * @param \Victoire\Bundle\CoreBundle\Entity\EntityProxy $proxies
+     */
+    public function removeProxie(\Victoire\Bundle\CoreBundle\Entity\EntityProxy $proxies)
+    {
+        $this->proxies->removeElement($proxies);
+    }
+
+    /**
      * Is visibleOnFront
      *
      * @return string
@@ -56,9 +104,13 @@ trait BusinessEntityTrait
      */
     public function getEntityAttributeValue($field)
     {
-        $functionName = 'get'.ucfirst($field);
+        if ($field) {
+            $functionName = 'get'.ucfirst($field);
 
-        $fieldValue = $this->{$functionName}();
+            $fieldValue = $this->{$functionName}();
+        } else {
+            $fieldValue = null;
+        }
 
         return $fieldValue;
     }

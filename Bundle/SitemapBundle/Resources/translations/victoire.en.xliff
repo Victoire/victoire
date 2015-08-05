@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
+        <body>
+
+            <trans-unit id="1" resname="menu.sitemap">
+                <source>menu.sitemap</source>
+                <target><![CDATA[<i class="vic-menuImg vic-menuImg-sitemap"></i> Sitemap]]></target>
+            </trans-unit>
+            <trans-unit id="2" resname="menu.leftnavbar.sitemap.label">
+                <source>menu.leftnavbar.sitemap.label</source>
+                <target><![CDATA[<i class="vic-menuImg vic-menuImg-sitemap"></i> Sitemap]]></target>
+            </trans-unit>
+            <trans-unit id="3" resname="modal.sitemap.title">
+                <source>modal.sitemap.title</source>
+                <target>Sitemap</target>
+            </trans-unit>
+            <trans-unit id="4" resname="sitemap.changed.success">
+                <source>sitemap.changed.success</source>
+                <target>Sitemap updated.</target>
+            </trans-unit>
+            <trans-unit id="5" resname="modal.sitemap.caption">
+                <source>modal.sitemap.caption</source>
+                <target>Get a bird eye of your site's tree and reorganize it by a simple drag and drop.</target>
+            </trans-unit>
+            <trans-unit id="6" resname="sitemap.changedPriority.success">
+                <source>sitemap.changedPriority.success</source>
+                <target>Ok boss, priority change for the page "%pageName%" !</target>
+            </trans-unit>
+            <trans-unit id="8" resname="sitemap.goto">
+                <source>sitemap.goto</source>
+                <target>Let's go to "%pageName%" page</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

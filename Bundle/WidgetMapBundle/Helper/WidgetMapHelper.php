@@ -3,12 +3,15 @@
 namespace Victoire\Bundle\WidgetMapBundle\Helper;
 
 use Doctrine\ORM\EntityManager;
+use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\PageBundle\Entity\Slot;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 
+/**
+ * ref: victoire_widget_map.helper
+ */
 class WidgetMapHelper
 {
-
     private $em;
 
     public function __construct(EntityManager $em)
@@ -42,7 +45,7 @@ class WidgetMapHelper
      * @param Widget  $widget            The widget to position
      * @param integer $positionReference Id of the parent widget
      *
-     * @return integer The position of the widget
+     * @return WidgetMap The position of the widget
      */
     public function generateWidgetPosition(WidgetMap $widgetMapEntry, $widget, $widgetMap, $positionReference)
     {
@@ -65,7 +68,6 @@ class WidgetMapHelper
             $widgetMapEntry->setPosition($position);
             $widgetMapEntry->setPositionReference($positionReference);
         } else {
-
             foreach ($slot as $key => $_widgetMap) {
                 if ($_widgetMap->getWidgetId() === (int) $positionReference) {
                     $widgetMapEntry->setPosition($_widgetMap->getPosition() + 1);
@@ -83,6 +85,7 @@ class WidgetMapHelper
      * undocumented function
      *
      *
+     * @param  \Victoire\Bundle\CoreBundle\Entity\View $view
      * @return void
      * @author
      **/
@@ -98,22 +101,37 @@ class WidgetMapHelper
             $view->addSlot($slot);
         }
 
-        // Iterate over slot's widgetMaps
-        // foreach ($slot->getWidgetMaps() as $key => $_widgetMap) {
-
-        //     // Handle positionReference
-        //     // If $_widgetMap has same $positionReference (use "==" because we want "null" equals 0)
-        //     // AND $_widgetMap's $position >= $widgetMapEntry's position
-        //     // if ($_widgetMap->getPositionReference() == $widgetMapEntry->getPositionReference()
-        //     if ($_widgetMap->getPosition() >= $widgetMapEntry->getPosition()) {
-        //         // increment $_widgetMap's position
-        //         $_widgetMap->setPosition($_widgetMap->getPosition() + 1);
-        //         $slot->updateWidgetMap($_widgetMap);
-        //     }
-        // }
-
         $slot->addWidgetMap($widgetMapEntry);
         //update the widget map
         $view->updateWidgetMapBySlots();
+    }
+
+    /**
+     * Find a widgetMap by widgetId and view
+     * @param integer $widgetId
+     * @param View    $view
+     *
+     * @return WidgetMap
+     **/
+    public function removeWidgetMapByWidgetIdAndView($widgetId, View $view)
+    {
+        foreach ($view->getSlots() as $_slot) {
+            foreach ($_slot->getWidgetMaps() as $_widgetMap) {
+                if ($_widgetMap->getWidgetId() == $widgetId) {
+                    $_slot->removeWidgetMap($_widgetMap);
+                    //update the widget map
+                    $view->updateWidgetMapBySlots();
+
+                    return array(
+                        'success'  => true,
+                    );
+                }
+            }
+        }
+
+        return array(
+            'success'  => false,
+            'message' => 'The widget isn\'t present in widgetMap...',
+        );
     }
 }
