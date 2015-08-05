@@ -11,8 +11,7 @@ use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 trait BusinessEntityTrait
 {
     /**
-     * Association made dynamically in AnnotationDriver
-     * @ORM\Column(name="proxy_id", type="integer")
+     * Association made dynamically in EntityProxySubscriber
      */
     protected $proxy;
 
@@ -113,29 +112,5 @@ trait BusinessEntityTrait
         }
 
         return $fieldValue;
-    }
-
-     /**
-     * Set proxy
-     *
-     * @param EntityProxy $proxy
-     *
-     * @return PostPage
-     */
-    public function setProxy(EntityProxy $proxy = null)
-    {
-        $this->proxy = $proxy;
-
-        return $this;
-    }
-
-    /**
-     * Get proxy
-     *
-     * @return EntityProxy
-     */
-    public function getProxy()
-    {
-        return $this->proxy;
     }
 }
