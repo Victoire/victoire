@@ -137,14 +137,13 @@ services:
 
 
 #  ==================  Cache =================== #
-
     victoire_core.cache_warmer.entity_proxy_warmer:
         class: Victoire\Bundle\CoreBundle\CacheWarmer\EntityProxyWarmer
         arguments:
             - "@victoire_core.helper.business_entity_helper"
             - "@file_locator"
         tags:
-            - { name: kernel.cache_warmer, priority: 100}
+            - { name: kernel.cache_warmer, priority: 100} #Must be lower than victoire_business_entity.warmer
 
     victoire_core.cache_warmer.view_warmer:
         class: Victoire\Bundle\CoreBundle\CacheWarmer\ViewCacheWarmer
