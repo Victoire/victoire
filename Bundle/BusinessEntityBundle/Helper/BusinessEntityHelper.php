@@ -91,7 +91,7 @@ class BusinessEntityHelper
     {
         $businessEntity = null;
         $class = new \ReflectionClass($entity);
-        while (!$businessEntity && $class && $class->name != null) {
+        while (!$businessEntity && $class && $class->name !== null) {
             $businessEntity = $this->findByEntityClassname($class->name);
             $class = $class->getParentClass();
         }

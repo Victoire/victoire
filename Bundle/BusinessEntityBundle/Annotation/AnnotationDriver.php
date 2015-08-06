@@ -19,6 +19,7 @@ use Victoire\Bundle\WidgetBundle\Event\WidgetAnnotationEvent;
 
 /**
  * Parse all files to get BusinessClasses
+ *
  **/
 class AnnotationDriver extends DoctrineAnnotationDriver
 {
@@ -111,7 +112,6 @@ class AnnotationDriver extends DoctrineAnnotationDriver
 
             // Evaluate Entity annotation
             if (isset($classAnnotations['Victoire\Bundle\CoreBundle\Annotations\BusinessEntity'])) {
-
                 /** @var BusinessEntity $annotationObj */
                 $annotationObj = $classAnnotations['Victoire\Bundle\CoreBundle\Annotations\BusinessEntity'];
                 $businessEntity = BusinessEntityHelper::createBusinessEntity(

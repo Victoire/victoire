@@ -10,6 +10,7 @@ use Victoire\Bundle\BusinessEntityBundle\Generator\EntityProxyGenerator;
 /**
  * The BusinessEntityWarmer object, called in warmup event parse all objects, save in apc
  * and instanciate the EntityProxyGenerator to generate the entity proxy class.
+ * ref: victoire_business_entity.warmer
  */
 class BusinessEntityWarmer extends CacheWarmer
 {

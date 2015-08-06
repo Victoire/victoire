@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\BusinessEntityBundle\Reader;
 
+use Victoire\Bundle\BusinessEntityBundle\Annotation\AnnotationDriver;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\CoreBundle\Cache\ApcCache;
 use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
@@ -16,37 +17,45 @@ class BusinessEntityCacheReader
 {
     protected $cache;
     protected $widgetHelper;
+    protected $driver; // @victoire_business_entity.annotation_driver
 
     /**
      * Constructor
-     * @param ApcCache     $cache
-     * @param WidgetHelper $widgetHelper
+     * @param ApcCache         $cache
+     * @param WidgetHelper     $widgetHelper
+     * @param AnnotationDriver $driver       If cache returns empty results, we try to refectch data
      *
      */
-    public function __construct(ApcCache $cache, WidgetHelper $widgetHelper)
+    public function __construct(ApcCache $cache, WidgetHelper $widgetHelper, AnnotationDriver $driver)
     {
         $this->cache = $cache;
         $this->widgetHelper = $widgetHelper;
+        $this->driver = $driver;
     }
 
     /**
      * this method get annotated business classes (from cache if enabled)
+     * @param AnnotationDriver|null $driver
      *
      * @return array $businessClasses
      **/
     public function getBusinessClasses()
     {
-        return $this->cache->fetch(BusinessEntity::CACHE_CLASSES, array());
+        $businessClasses = $this->fetch(BusinessEntity::CACHE_CLASSES);
+
+        return $businessClasses;
     }
+
     /**
      * this method get annotated business classes (from cache if enabled)
+     * @param Widget $widget
      *
      * @return array $businessClasses
-     **/
+     */
     public function getBusinessClassesForWidget(Widget $widget)
     {
         $widgetName = $this->widgetHelper->getWidgetName($widget);
-        $businessClasses = $this->cache->fetch(BusinessEntity::CACHE_WIDGETS, array());
+        $businessClasses = $this->fetch(BusinessEntity::CACHE_WIDGETS);
 
         return isset($businessClasses[$widgetName]) ? $businessClasses[$widgetName] : array();
     }
@@ -83,5 +92,51 @@ class BusinessEntityCacheReader
         }
 
         return $businessEntity;
+    }
+
+    public function getBusinessProperties($widgetName)
+    {
+        $widgetMetadatas = $this->fetch(BusinessEntity::CACHE_WIDGETS);
+        if (isset($widgetMetadatas[$widgetName]) && array_key_exists('businessEntities', $widgetMetadatas[$widgetName])) {
+            return $widgetMetadatas[$widgetName]['businessEntities'];
+        }
+
+        return array();
+    }
+
+    /**
+     *
+     * @param string $widgetName
+     * @return array
+     */
+    public function getReceiverProperties($widgetName)
+    {
+        $widgetMetadatas = $this->fetch(BusinessEntity::CACHE_WIDGETS);
+        if (isset($widgetMetadatas[$widgetName]) && array_key_exists('receiverProperties', $widgetMetadatas[$widgetName])) {
+            return $widgetMetadatas[$widgetName]['receiverProperties'];
+        }
+
+        return array();
+    }
+
+    /**
+     * Fetch in Cache system and try to reparse Annotation if no results
+     * @param $key
+     * @return mixed
+     * @throws \Doctrine\ORM\Mapping\MappingException
+     */
+    protected function fetch($key)
+    {
+        $results = $this->cache->fetch($key, null);
+
+        if (!$results) {
+            //Reparse all entities to find some @VIC Annotation
+            foreach ($this->driver->getAllClassNames() as $className) {
+                $this->driver->parse(new \ReflectionClass($className));
+            }
+            $results = $this->cache->fetch($key, array());
+        }
+
+        return $results;
     }
 }

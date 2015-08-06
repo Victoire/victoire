@@ -38,6 +38,7 @@ services:
         arguments:
             - "@victoire_core.apc.cache"
             - "@victoire_widget.widget_helper"
+            - "@victoire_business_entity.annotation_driver"
 
 #  ==================  Annotations ================== #
     victoire_business_entity.annotation_driver:
