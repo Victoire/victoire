@@ -6,7 +6,10 @@ use Doctrine\Common\Annotations\AnnotationException;
 use Doctrine\Common\Annotations\Reader;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver as DoctrineAnnotationDriver;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Doctrine\ORM\Mapping\MappingException;
+use Metadata\Driver\DriverInterface;
+use Metadata\MergeableClassMetadata;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Victoire\Bundle\BusinessEntityBundle\Event\BusinessEntityAnnotationEvent;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\CoreBundle\Annotations\BusinessEntity;
@@ -25,11 +28,11 @@ class AnnotationDriver extends DoctrineAnnotationDriver
 
     /**
      * construct
-     * @param Reader $reader
-     * @param EventDispatcher $eventDispatcher
-     * @param array $paths The paths where to search about Entities
+     * @param Reader                   $reader
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param array                    $paths The paths where to search about Entities
      */
-    public function __construct(Reader $reader, EventDispatcher $eventDispatcher, $paths)
+    public function __construct(Reader $reader, EventDispatcherInterface $eventDispatcher, $paths)
     {
         $this->reader = $reader;
         $this->eventDispatcher = $eventDispatcher;
@@ -37,17 +40,52 @@ class AnnotationDriver extends DoctrineAnnotationDriver
     }
 
     /**
-     * {@inheritDoc}
+     * Get all class names
+     *
+     * @return string[]
      */
-    public function loadMetadataForClass($className, ClassMetadata $metadata)
+    public function getAllClassNames()
     {
-        /* @var $metadata \Doctrine\ORM\Mapping\ClassMetadataInfo */
-        $class = $metadata->getReflectionClass();
-
-        if (! $class) {
-            $class = new \ReflectionClass($metadata->name);
+        if (!$this->paths) {
+            throw MappingException::pathRequired();
+        }
+        $classes = array();
+        $includedFiles = array();
+        foreach ($this->paths as $path) {
+            if (! is_dir($path)) {
+                throw MappingException::fileMappingDriversRequireConfiguredDirectoryPath($path);
+            }
+            $iterator = new \RegexIterator(
+                new \RecursiveIteratorIterator(
+                    new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS),
+                    \RecursiveIteratorIterator::LEAVES_ONLY
+                ),
+                '/^.+\/Entity\/.+\.php$/i',
+                \RecursiveRegexIterator::GET_MATCH
+            );
+            foreach ($iterator as $file) {
+                $sourceFile = realpath($file[0]);
+                require_once $sourceFile;
+                $includedFiles[] = $sourceFile;
+            }
+        }
+        $declared = get_declared_classes();
+        foreach ($declared as $className) {
+            $rc = new \ReflectionClass($className);
+            $sourceFile = $rc->getFileName();
+            if (in_array($sourceFile, $includedFiles) && ! $this->isTransient($className)) {
+                $classes[] = $className;
+            }
         }
 
+        return $classes;
+    }
+
+    /**
+     * Parse the given Class to find some annotations related to BusinessEntities
+     */
+    public function parse(\ReflectionClass $class)
+    {
         $classPath = dirname($class->getFileName());
         $inPaths = false;
 
@@ -77,7 +115,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
                 /** @var BusinessEntity $annotationObj */
                 $annotationObj = $classAnnotations['Victoire\Bundle\CoreBundle\Annotations\BusinessEntity'];
                 $businessEntity = BusinessEntityHelper::createBusinessEntity(
-                    $className,
+                    $class->getName(),
                     $this->loadBusinessProperties($class)
                 );
 
@@ -99,7 +137,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
 
             if ($isWidget) {
                 $event = new WidgetAnnotationEvent(
-                    $className,
+                    $class->getName(),
                     $this->loadReceiverProperties($class)
                 );
 
@@ -114,7 +152,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
      *
      * @return Array
      **/
-    public function loadBusinessProperties(\ReflectionClass $class)
+    protected function loadBusinessProperties(\ReflectionClass $class)
     {
         $businessProperties = array();
         $properties = $class->getProperties();
@@ -141,7 +179,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
      *
      * @return Array
      **/
-    public function loadReceiverProperties(\ReflectionClass $class)
+    protected function loadReceiverProperties(\ReflectionClass $class)
     {
         $receiverProperties = array();
         $properties = $class->getProperties();

@@ -26,6 +26,13 @@ services:
         tags:
             - { name: form.type_extension, alias: form }
 
+    victoire_business_entity.warmer:
+        class: Victoire\Bundle\BusinessEntityBundle\CacheWarmer\BusinessEntityWarmer
+        arguments:
+            - "@victoire_business_entity.annotation_driver"
+        tags:
+            # 110 => Must be higher than victoire_core.cache_warmer.entity_proxy_warmer
+            - { name: kernel.cache_warmer, priority: 110}
     victoire_business_entity.cache_reader:
         class: "%victoire_business_entity.cache_reader_class%"
         arguments:
