@@ -2,6 +2,7 @@
 namespace Victoire\Bundle\BusinessEntityBundle\Helper;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
 use Victoire\Bundle\BusinessEntityBundle\Reader\BusinessEntityCacheReader;
@@ -24,12 +25,20 @@ class BusinessEntityHelper
      * Constructor
      * @param BusinessEntityCacheReader $reader
      * @param CacheBuilder              $builder
-     * @param EntityManager             $entityManager
      */
-    public function __construct(BusinessEntityCacheReader $reader, CacheBuilder $builder, EntityManager $entityManager)
+    public function __construct(BusinessEntityCacheReader $reader, CacheBuilder $builder)
     {
         $this->reader = $reader;
         $this->builder = $builder;
+    }
+
+    /**
+     * Set the EntityManagerInterface instance this helper instance should use.
+     *
+     * @param EntityManagerInterface $em
+     */
+    public function setEntityManager(EntityManagerInterface $entityManager)
+    {
         $this->entityManager = $entityManager;
     }
 
@@ -178,10 +187,12 @@ class BusinessEntityHelper
 
     /**
      * create a BusinessEntity from an annotation object
+     * @param string $classname
+     * @param array  $businessProperties
      *
      * @return BusinessEntity
      **/
-    protected function createBusinessEntity($className, $businessProperties)
+    public static function createBusinessEntity($className, array $businessProperties)
     {
         $businessEntity = new BusinessEntity();
 

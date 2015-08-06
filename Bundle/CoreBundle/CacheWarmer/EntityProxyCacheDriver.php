@@ -4,8 +4,8 @@ namespace Victoire\Bundle\CoreBundle\CacheWarmer;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 
 /**
- * undocumented class
- *
+ * Will load the EntityProxy Class if exists and not already done
+ * ref: victoire_core.entity_proxy.cache_driver
  **/
 class EntityProxyCacheDriver extends AnnotationDriver
 {
@@ -20,7 +20,7 @@ class EntityProxyCacheDriver extends AnnotationDriver
         $this->reader = $reader;
         $this->cacheDir = $cacheDir;
         $entityProxy = $this->cacheDir."/victoire/Entity/EntityProxy.php";
-        if (file_exists($entityProxy) && !class_exists("Victoire\Bundle\CoreBundle\Entity\EntityProxy")) {
+        if (file_exists($entityProxy) && !class_exists("Victoire\\Bundle\\CoreBundle\\Entity\\EntityProxy")) {
             include_once $entityProxy;
         }
     }

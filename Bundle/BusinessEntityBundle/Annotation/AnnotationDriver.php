@@ -2,100 +2,111 @@
 
 namespace Victoire\Bundle\BusinessEntityBundle\Annotation;
 
+use Doctrine\Common\Annotations\AnnotationException;
 use Doctrine\Common\Annotations\Reader;
-use Doctrine\ORM\Mapping\MappingException;
+use Doctrine\Common\Persistence\Mapping\ClassMetadata;
+use Doctrine\ORM\Mapping\Driver\AnnotationDriver as DoctrineAnnotationDriver;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Victoire\Bundle\BusinessEntityBundle\Event\BusinessEntityAnnotationEvent;
+use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
+use Victoire\Bundle\CoreBundle\Annotations\BusinessEntity;
+use Victoire\Bundle\CoreBundle\Annotations\BusinessProperty;
+use Victoire\Bundle\CoreBundle\Annotations\ReceiverProperty;
+use Victoire\Bundle\WidgetBundle\Event\WidgetAnnotationEvent;
 
 /**
  * Parse all files to get BusinessClasses
  **/
-class AnnotationDriver
+class AnnotationDriver extends DoctrineAnnotationDriver
 {
-    /** Annotation reader instance
-     */
     public $reader;
-
-    /** Business class names
-     */
-    protected $classNames;
-
-    /**
-     * valid paths
-     */
+    protected $eventDispatcher;
     protected $paths;
 
     /**
      * construct
-     * @param AnnotationReader $reader
-     * @param array            $paths  The paths where to search about Entities
+     * @param Reader $reader
+     * @param EventDispatcher $eventDispatcher
+     * @param array $paths The paths where to search about Entities
      */
-    public function __construct(Reader $reader, $paths)
+    public function __construct(Reader $reader, EventDispatcher $eventDispatcher, $paths)
     {
         $this->reader = $reader;
+        $this->eventDispatcher = $eventDispatcher;
         $this->paths = $paths;
     }
 
     /**
-     * get all business entities from annotation
-     *
-     * @return Array<BusinessEntity>
-     **/
-    public function getBusinessEntities()
-    {
-        foreach ($this->getAllClassnames() as $className) {
-        }
-    }
-
-    /**
-     * Returns all entities of your application including vendors
-     * @return array All entities classnames
+     * {@inheritDoc}
      */
-    private function getAllClassnames()
+    public function loadMetadataForClass($className, ClassMetadata $metadata)
     {
-        if ($this->classNames !== null) {
-            return $this->classNames;
+        /* @var $metadata \Doctrine\ORM\Mapping\ClassMetadataInfo */
+        $class = $metadata->getReflectionClass();
+
+        if (! $class) {
+            $class = new \ReflectionClass($metadata->name);
         }
 
-        if (!$this->paths) {
-            throw MappingException::pathRequired();
-        }
+        $classPath = dirname($class->getFileName());
+        $inPaths = false;
 
-        $classes = array();
-        $includedFiles = array();
-
-        foreach ($this->paths as $path) {
-            if (! is_dir($path)) {
-                throw MappingException::fileMappingDriversRequireConfiguredDirectoryPath($path);
-            }
-
-            $iterator = new \RegexIterator(
-                new \RecursiveIteratorIterator(
-                    new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS),
-                    \RecursiveIteratorIterator::LEAVES_ONLY
-                ),
-                '/^.+\/(src|vendor\/victoire)\/.+\/Entity\/.+'.str_replace('.', '\.', $this->fileExtension).'$/i',
-                \RecursiveRegexIterator::GET_MATCH
-            );
-
-            foreach ($iterator as $file) {
-                $sourceFile = realpath($file[0]);
-
-                require_once $sourceFile;
-
-                $includedFiles[] = $sourceFile;
+        foreach ($this->paths as $key => $_path) {
+            //Check the entity path is in watching paths
+            if (strpos($classPath, realpath($_path)) === 0) {
+                $inPaths = true;
             }
         }
 
-        $declared = get_declared_classes();
+        if ($inPaths) {
+            $classAnnotations = $this->reader->getClassAnnotations($class);
 
-        foreach ($declared as $className) {
-            $rc = new \ReflectionClass($className);
-            $sourceFile = $rc->getFileName();
-            if (in_array($sourceFile, $includedFiles) && ! $this->isTransient($className)) {
-                $classes[] = $className;
+            if ($classAnnotations) {
+                foreach ($classAnnotations as $key => $annot) {
+                    if (! is_numeric($key)) {
+                        continue;
+                    }
+
+                    $classAnnotations[get_class($annot)] = $annot;
+                }
+            }
+
+            // Evaluate Entity annotation
+            if (isset($classAnnotations['Victoire\Bundle\CoreBundle\Annotations\BusinessEntity'])) {
+
+                /** @var BusinessEntity $annotationObj */
+                $annotationObj = $classAnnotations['Victoire\Bundle\CoreBundle\Annotations\BusinessEntity'];
+                $businessEntity = BusinessEntityHelper::createBusinessEntity(
+                    $className,
+                    $this->loadBusinessProperties($class)
+                );
+
+                $event = new BusinessEntityAnnotationEvent(
+                    $businessEntity,
+                    $annotationObj->getWidgets()
+                );
+
+                //do what you want (caching BusinessEntity...)
+                $this->eventDispatcher->dispatch('victoire.business_entity_annotation_load', $event);
+            }
+
+            //check if the entity is a widget (extends (in depth) widget class)
+            $parentClass = $class->getParentClass();
+            $isWidget = false;
+            while ($parentClass && ($parentClass = $parentClass->getParentClass()) && !$isWidget && $parentClass->name != null) {
+                $isWidget = $parentClass->name === 'Victoire\\Bundle\\WidgetBundle\\Model\\Widget';
+            }
+
+            if ($isWidget) {
+                $event = new WidgetAnnotationEvent(
+                    $className,
+                    $this->loadReceiverProperties($class)
+                );
+
+                //dispatch victoire.widget_annotation_load to save receiverProperties in cache
+                $this->eventDispatcher->dispatch('victoire.widget_annotation_load', $event);
             }
         }
-
-        return $classes;
     }
 
     /**
@@ -103,7 +114,7 @@ class AnnotationDriver
      *
      * @return Array
      **/
-    private function loadBusinessProperties(\ReflectionClass $class)
+    public function loadBusinessProperties(\ReflectionClass $class)
     {
         $businessProperties = array();
         $properties = $class->getProperties();
@@ -130,7 +141,7 @@ class AnnotationDriver
      *
      * @return Array
      **/
-    private function loadReceiverProperties(\ReflectionClass $class)
+    public function loadReceiverProperties(\ReflectionClass $class)
     {
         $receiverProperties = array();
         $properties = $class->getProperties();

@@ -27,7 +27,7 @@ class CacheSubscriber implements EventSubscriberInterface
         $this->cacheBuilder->saveBusinessEntity($event->getBusinessEntity());
         //Add the business entity in widget cache entry
         foreach ($event->getWidgets() as $widget) {
-            $this->cacheBuilder->addWidgetBusinessEntity($widget, $event->getBusinessEntity());
+            $this->cacheBuilder->addWidgetBusinessEntity($widget[0], $event->getBusinessEntity());
         }
     }
 

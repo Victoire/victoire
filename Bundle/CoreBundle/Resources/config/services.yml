@@ -166,7 +166,8 @@ services:
         arguments:
             - "@victoire_business_entity.cache_reader"
             - "@victoire_core.cache_builder"
-            - "@doctrine.orm.entity_manager"
+        calls:
+            - [setEntityManager, ["@doctrine.orm.entity_manager"]]
 
 #  ==================  Error handler =================== #
 

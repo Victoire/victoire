@@ -216,7 +216,6 @@ class WidgetManager
     {
         $classes = $this->cacheReader->getBusinessClassesForWidget($widget);
 
-
         $widget->setCurrentView($currentView);
 
         //the id of the edited widget
