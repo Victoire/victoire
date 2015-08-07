@@ -4,11 +4,8 @@ namespace Victoire\Bundle\BusinessEntityBundle\Annotation;
 
 use Doctrine\Common\Annotations\AnnotationException;
 use Doctrine\Common\Annotations\Reader;
-use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver as DoctrineAnnotationDriver;
 use Doctrine\ORM\Mapping\MappingException;
-use Metadata\Driver\DriverInterface;
-use Metadata\MergeableClassMetadata;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Victoire\Bundle\BusinessEntityBundle\Event\BusinessEntityAnnotationEvent;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
@@ -57,7 +54,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
         $classes = array();
         $includedFiles = array();
         foreach ($this->paths as $path) {
-            if (! is_dir($path)) {
+            if (!is_dir($path)) {
                 throw MappingException::fileMappingDriversRequireConfiguredDirectoryPath($path);
             }
             $iterator = new \RegexIterator(
@@ -78,7 +75,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
         foreach ($declared as $className) {
             $rc = new \ReflectionClass($className);
             $sourceFile = $rc->getFileName();
-            if (in_array($sourceFile, $includedFiles) && ! $this->isTransient($className)) {
+            if (in_array($sourceFile, $includedFiles) && !$this->isTransient($className)) {
                 $classes[] = $className;
             }
         }
@@ -106,7 +103,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
 
             if ($classAnnotations) {
                 foreach ($classAnnotations as $key => $annot) {
-                    if (! is_numeric($key)) {
+                    if (!is_numeric($key)) {
                         continue;
                     }
 

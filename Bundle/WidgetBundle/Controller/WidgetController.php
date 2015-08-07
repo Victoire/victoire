@@ -9,11 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Victoire\Bundle\CoreBundle\Entity\View;
-use Victoire\Bundle\TemplateBundle\Entity\Template as VicTemplate;
 use Symfony\Component\HttpFoundation\Request;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
-use Victoire\Bundle\WidgetBundle\Model\WidgetManager;
 
 /**
  * Widget Controller
