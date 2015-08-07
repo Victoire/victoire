@@ -3,7 +3,6 @@
 namespace Victoire\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Behat\Behat\Exception\Exception;
 use Victoire\Bundle\WidgetBundle\Model\Widget;
 
 /**

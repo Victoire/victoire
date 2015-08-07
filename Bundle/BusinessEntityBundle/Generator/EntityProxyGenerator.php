@@ -35,6 +35,6 @@ class EntityProxyGenerator extends Generator
         $skeletonDirs = $this->fileLocator->locate('@VictoireCoreBundle/CacheWarmer/skeleton/');
         $this->setSkeletonDirs($skeletonDirs);
 
-        return $this->render('EntityProxy.php.twig', array('businessEntities' => array_keys($businessEntities)));
+        return $this->render('EntityProxy.php.twig', array('businessEntities' => $businessEntities));
     }
 }
