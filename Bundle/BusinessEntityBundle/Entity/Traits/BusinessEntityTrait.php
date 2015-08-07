@@ -47,30 +47,6 @@ trait BusinessEntityTrait
     }
 
     /**
-     * Add proxies
-     *
-     * @param \Victoire\Bundle\CoreBundle\Entity\EntityProxy $proxies
-     *
-     * @return BusinessEntityTrait
-     */
-    public function addProxie(\Victoire\Bundle\CoreBundle\Entity\EntityProxy $proxies)
-    {
-        $this->proxies[] = $proxies;
-
-        return $this;
-    }
-
-    /**
-     * Remove proxies
-     *
-     * @param \Victoire\Bundle\CoreBundle\Entity\EntityProxy $proxies
-     */
-    public function removeProxie(\Victoire\Bundle\CoreBundle\Entity\EntityProxy $proxies)
-    {
-        $this->proxies->removeElement($proxies);
-    }
-
-    /**
      * Is visibleOnFront
      *
      * @return string

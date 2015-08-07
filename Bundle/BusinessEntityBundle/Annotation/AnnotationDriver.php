@@ -101,7 +101,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
         if ($inPaths) {
             $classAnnotations = $this->reader->getClassAnnotations($class);
 
-            if ($classAnnotations) {
+            if (!empty($classAnnotations)) {
                 foreach ($classAnnotations as $key => $annot) {
                     if (!is_numeric($key)) {
                         continue;

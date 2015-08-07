@@ -45,9 +45,6 @@ class BrowseEventSubscriber implements EventSubscriber
     {
         $metadatas = $eventArgs->getClassMetadata();
 
-        //set a relation between Page and User to define the page author
-        $metaBuilder = new ClassMetadataBuilder($metadatas);
-
         //Add author relation on BrowseEvent
         if ($this->userClass && $metadatas->name === 'Victoire\Bundle\AnalyticsBundle\Entity\BrowseEvent') {
             $metadatas->mapManyToOne(array(
