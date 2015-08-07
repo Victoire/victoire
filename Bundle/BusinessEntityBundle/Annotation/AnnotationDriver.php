@@ -16,6 +16,7 @@ use Victoire\Bundle\CoreBundle\Annotations\BusinessEntity;
 use Victoire\Bundle\CoreBundle\Annotations\BusinessProperty;
 use Victoire\Bundle\CoreBundle\Annotations\ReceiverProperty;
 use Victoire\Bundle\WidgetBundle\Event\WidgetAnnotationEvent;
+use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
 
 /**
  * Parse all files to get BusinessClasses
@@ -25,18 +26,21 @@ class AnnotationDriver extends DoctrineAnnotationDriver
 {
     public $reader;
     protected $eventDispatcher;
+    protected $widgetHelper;
     protected $paths;
 
     /**
      * construct
      * @param Reader                   $reader
      * @param EventDispatcherInterface $eventDispatcher
+     * @param WidgetHelper             $widgetHelper
      * @param array                    $paths The paths where to search about Entities
      */
-    public function __construct(Reader $reader, EventDispatcherInterface $eventDispatcher, $paths)
+    public function __construct(Reader $reader, EventDispatcherInterface $eventDispatcher, $widgetHelper, $paths)
     {
         $this->reader = $reader;
         $this->eventDispatcher = $eventDispatcher;
+        $this->widgetHelper = $widgetHelper;
         $this->paths = $paths;
     }
 
@@ -137,7 +141,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
 
             if ($isWidget) {
                 $event = new WidgetAnnotationEvent(
-                    $class->getName(),
+                    $this->widgetHelper->getWidgetName(new $class->name),
                     $this->loadReceiverProperties($class)
                 );
 
@@ -165,7 +169,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
                         throw AnnotationException::requiredError('type', 'BusinessProperty annotation', $message, 'array or string');
                     }
                     foreach ($annotations[$key]->getTypes() as $type) {
-                        $businessProperties[$type][$property->name] = $property->name;
+                        $businessProperties[$type][] = $property->name;
                     }
                 }
             }
@@ -192,7 +196,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
                         throw AnnotationException::requiredError('type', 'BusinessProperty annotation', $message, 'array or string');
                     }
                     foreach ($annotations[$key]->getTypes() as $type) {
-                        $receiverProperties[$class->name][$type][$property->name] = $property->name;
+                        $receiverProperties[$type][] = $property->name;
                     }
                 }
             }

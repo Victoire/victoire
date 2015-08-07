@@ -46,4 +46,5 @@ services:
         arguments:
             - "@annotation_reader"
             - "@event_dispatcher"
+            - "@victoire_widget.widget_helper"
             - "%victoire_core.base_paths%"

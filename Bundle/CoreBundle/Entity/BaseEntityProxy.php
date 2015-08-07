@@ -4,6 +4,7 @@ namespace Victoire\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Behat\Behat\Exception\Exception;
+use Victoire\Bundle\WidgetBundle\Model\Widget;
 
 /**
  * The Entity proxy is the link between a view, a widget or any else with the BusinessEntity
@@ -42,9 +43,8 @@ abstract class BaseEntityProxy
     /**
      * Get the entity of the proxy
      *
-     * @return Entity
-     *
-     * @throws Exception
+     * @return Object
+     * @throws \Exception
      */
     public function getEntity($entityName)
     {
@@ -61,8 +61,8 @@ abstract class BaseEntityProxy
 
     /**
      * Set the entity
-     *
-     * @param unknown $entity
+     * @param $entity
+     * @param $entityName
      *
      * @throws \Exception
      */

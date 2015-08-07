@@ -24,7 +24,7 @@ class CacheBuilder
     public function saveBusinessEntity(BusinessEntity $businessEntity)
     {
         $businessEntities = $this->cache->fetch(BusinessEntity::CACHE_CLASSES);
-        $businessEntities[$businessEntity->getId()] = $businessEntity;
+        $businessEntities[$businessEntity->getClass()] = $businessEntity;
         $this->cache->save(BusinessEntity::CACHE_CLASSES, $businessEntities);
     }
 

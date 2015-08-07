@@ -55,9 +55,61 @@ class BusinessEntityCacheReader
     public function getBusinessClassesForWidget(Widget $widget)
     {
         $widgetName = $this->widgetHelper->getWidgetName($widget);
-        $businessClasses = $this->fetch(BusinessEntity::CACHE_WIDGETS);
+        $widgetMetadatas = $this->fetch(BusinessEntity::CACHE_WIDGETS);
+        if (isset($widgetMetadatas[$widgetName]) && array_key_exists('businessEntities', $widgetMetadatas[$widgetName])) {
+            return $widgetMetadatas[$widgetName]['businessEntities'];
+        }
 
-        return isset($businessClasses[$widgetName]) ? $businessClasses[$widgetName] : array();
+        return array();
+
+    }
+
+    public function getBusinessProperties($namespace)
+    {
+        /** @var BusinessEntity[] $widgetMetadatas */
+        $widgetMetadatas = $this->fetch(BusinessEntity::CACHE_CLASSES);
+        if (isset($widgetMetadatas[$namespace])) {
+            return $widgetMetadatas[$namespace]->getBusinessProperties();
+        }
+
+        return array();
+    }
+
+    /**
+     *
+     * @param string $widgetName
+     * @return array
+     */
+    public function getReceiverProperties($widgetName)
+    {
+        $widgetMetadatas = $this->fetch(BusinessEntity::CACHE_WIDGETS);
+
+        if (isset($widgetMetadatas[$widgetName]) && array_key_exists('receiverProperties', $widgetMetadatas[$widgetName])) {
+            return $widgetMetadatas[$widgetName]['receiverProperties'];
+        }
+
+        return array();
+    }
+
+    /**
+     * Fetch in Cache system and try to reparse Annotation if no results
+     * @param $key
+     * @return mixed
+     * @throws \Doctrine\ORM\Mapping\MappingException
+     */
+    protected function fetch($key)
+    {
+        $results = $this->cache->fetch($key, null);
+
+        if (!$results) {
+            //Reparse all entities to find some @VIC Annotation
+            foreach ($this->driver->getAllClassNames() as $className) {
+                $this->driver->parse(new \ReflectionClass($className));
+            }
+            $results = $this->cache->fetch($key, array());
+        }
+
+        return $results;
     }
 
     /**
@@ -92,51 +144,5 @@ class BusinessEntityCacheReader
         }
 
         return $businessEntity;
-    }
-
-    public function getBusinessProperties($widgetName)
-    {
-        $widgetMetadatas = $this->fetch(BusinessEntity::CACHE_WIDGETS);
-        if (isset($widgetMetadatas[$widgetName]) && array_key_exists('businessEntities', $widgetMetadatas[$widgetName])) {
-            return $widgetMetadatas[$widgetName]['businessEntities'];
-        }
-
-        return array();
-    }
-
-    /**
-     *
-     * @param string $widgetName
-     * @return array
-     */
-    public function getReceiverProperties($widgetName)
-    {
-        $widgetMetadatas = $this->fetch(BusinessEntity::CACHE_WIDGETS);
-        if (isset($widgetMetadatas[$widgetName]) && array_key_exists('receiverProperties', $widgetMetadatas[$widgetName])) {
-            return $widgetMetadatas[$widgetName]['receiverProperties'];
-        }
-
-        return array();
-    }
-
-    /**
-     * Fetch in Cache system and try to reparse Annotation if no results
-     * @param $key
-     * @return mixed
-     * @throws \Doctrine\ORM\Mapping\MappingException
-     */
-    protected function fetch($key)
-    {
-        $results = $this->cache->fetch($key, null);
-
-        if (!$results) {
-            //Reparse all entities to find some @VIC Annotation
-            foreach ($this->driver->getAllClassNames() as $className) {
-                $this->driver->parse(new \ReflectionClass($className));
-            }
-            $results = $this->cache->fetch($key, array());
-        }
-
-        return $results;
     }
 }

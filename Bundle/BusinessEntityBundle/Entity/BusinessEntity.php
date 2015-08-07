@@ -94,6 +94,16 @@ class BusinessEntity
     }
 
     /**
+     * Get the business properties
+     *
+     * @return array The business properties
+     */
+    public function getBusinessProperties()
+    {
+        return $this->businessProperties;
+    }
+
+    /**
      * Get the business properties by type
      *
      * @param string $type
