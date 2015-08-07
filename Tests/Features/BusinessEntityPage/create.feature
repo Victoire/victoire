@@ -13,8 +13,9 @@ Feature: Create business entity pages
         Given I open the hamburger menu
         Then I should see "Représentation métier"
         When I follow "Représentation métier"
-        Then I should see "Ajouter une représentation"
-        When I follow the tab "jedi"
+        And I close the hamburger menu
+        Then I should see "Jedi"
+        When I follow the tab "Jedi"
         And I follow "Ajouter une représentation"
         Then I should see "Créer une représentation métier"
         When I fill in "Nom" with "Fiche Jedi - {{item.name}}"
@@ -40,10 +41,10 @@ Feature: Create business entity pages
     Scenario: I can create two Business entity page patterns differentiated by queries and access to their related Business Entity pages
         Given I open the hamburger menu
         Then I should see "Représentation métier"
-
         When I follow "Représentation métier"
+        And I close the hamburger menu
         Then I should see "Ajouter une représentation"
-        When I follow the tab "jedi"
+        When I follow the tab "Jedi"
         And I follow "Ajouter une représentation"
         Then I should see "Créer une représentation métier"
         When I fill in "Nom" with "Fiche Jedi Dark - {{item.name}}"
@@ -62,8 +63,9 @@ Feature: Create business entity pages
 
         When I open the hamburger menu
         And I follow "Représentation métier"
+        And I close the hamburger menu
         Then I should see "Ajouter une représentation"
-        When I follow the tab "jedi"
+        When I follow the tab "Jedi"
         And I follow "Ajouter une représentation"
         Then I should see "Créer une représentation métier"
         When I fill in "Nom" with "Fiche Jedi Bright - {{item.name}}"
@@ -94,8 +96,9 @@ Feature: Create business entity pages
         Given I open the hamburger menu
         Then I should see "Représentation métier"
         When I follow "Représentation métier"
+        And I close the hamburger menu
         Then I should see "Ajouter une représentation"
-        When I follow the tab "jedi"
+        When I follow the tab "Jedi"
         And I follow "Ajouter une représentation"
         Then I should see "Créer une représentation métier"
         When I fill in "Nom" with "Fiche Jedi - {{item.name}}"
@@ -116,8 +119,9 @@ Feature: Create business entity pages
         Given I open the hamburger menu
         Then I should see "Représentation métier"
         When I follow "Représentation métier"
+        And I close the hamburger menu
         Then I should see "Ajouter une représentation"
-        When I follow the tab "jedi"
+        When I follow the tab "Jedi"
         And I follow "Ajouter une représentation"
         Then I should see "Créer une représentation métier"
         When I fill in "Nom" with "Fiche Jedi - {{item.name}}"

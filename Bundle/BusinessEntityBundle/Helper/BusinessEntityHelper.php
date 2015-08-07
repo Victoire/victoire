@@ -52,9 +52,9 @@ class BusinessEntityHelper
      */
     public function findById($id)
     {
-        $businessEntity = $this->reader->findById($id);
+        $businessEntity = $this->reader->findById(strtolower($id));
         if ($businessEntity === null) {
-            throw new \Exception("<<".$id.">> does not seems to be a valid BusinessEntity");
+            throw new \Exception("\"".$id."\" does not seems to be a valid BusinessEntity");
         }
 
         return $businessEntity;

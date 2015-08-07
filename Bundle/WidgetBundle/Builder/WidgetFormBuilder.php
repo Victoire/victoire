@@ -113,7 +113,7 @@ class WidgetFormBuilder
      *
      * @return array
      */
-    public function buildEntityForms($widget, View $view, $entityName = null, $namespace = null, $position = 0)
+    protected function buildEntityForms($widget, View $view, $entityName = null, $namespace = null, $position = 0)
     {
         $forms = array();
 
@@ -206,7 +206,7 @@ class WidgetFormBuilder
         $mockForm = $formFactory->create($formAlias, $widget, $params);
         //Prefix base name with form mode to avoid to have unique form fields ids
         $form = $formFactory->createNamed(
-            sprintf("%s_%s_%s", $entityName, $formMode, $mockForm->getName()),
+            sprintf("%s_%s_%s", strtolower($entityName), $formMode, $mockForm->getName()),
             $formAlias,
             $widget,
             $params
@@ -274,11 +274,9 @@ class WidgetFormBuilder
             if (!isset($classes[$entityName])) {
                 throw new \Exception('The entity '.$entityName.' was not found int the business classes.');
             }
-
             //get the class of the entity name
-            $entityClass = $classes[$entityName];
+            $entityClass = $classes[$entityName]->getClass();
         }
-
 
         $form = $this->buildForm($widget, $view, $entityName, $entityClass, $widget->getMode(), $position);
 

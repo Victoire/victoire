@@ -76,7 +76,7 @@ class VictoireContext extends RawMinkContext
     }
 
     /**
-     * @Then /^I open the hamburger menu$/
+     * @Then /^I (open|close|toggle) the hamburger menu$/
      */
     public function iOpenTheHamburgerMenu()
     {

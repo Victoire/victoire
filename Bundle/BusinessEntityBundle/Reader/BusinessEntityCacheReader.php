@@ -68,6 +68,7 @@ class BusinessEntityCacheReader
     {
         /** @var BusinessEntity[] $widgetMetadatas */
         $widgetMetadatas = $this->fetch(BusinessEntity::CACHE_CLASSES);
+
         if (isset($widgetMetadatas[$namespace])) {
             return $widgetMetadatas[$namespace]->getBusinessProperties();
         }
