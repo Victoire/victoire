@@ -69,4 +69,4 @@ Feature: Edit a widget
         When I select "side" from "jedi_query_victoire_widget_form_force[fields][side]"
         And I submit the widget
         Then I should see "Victoire !"
-        And I should see "Le Côté dark de la force"
+        And I should see "Le Côté obscure de la force"
