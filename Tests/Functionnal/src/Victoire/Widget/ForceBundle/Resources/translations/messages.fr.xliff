@@ -7,16 +7,24 @@
     </header>
     <body>
       <trans-unit id="3" resname="widget_force.form.side.label">
-	<source>widget_force.form.side.label</source>
-	<target>Côté de la force</target>
+        <source>widget_force.form.side.label</source>
+        <target>Côté de la force</target>
       </trans-unit>
       <trans-unit id="4" resname="widget_force.show.forceSide">
-	<source>widget_force.show.forceSide</source>
-	<target>Le côté %side% de la force</target>
+        <source>widget_force.show.forceSide</source>
+        <target>Le côté %side% de la force</target>
       </trans-unit>
       <trans-unit id="5" resname="dark">
-	<source>dark</source>
-	<target>obscure</target>
+        <source>dark</source>
+        <target>obscure</target>
+      </trans-unit>
+      <trans-unit id="6" resname="bright">
+        <source>dark</source>
+        <target>lumineux</target>
+      </trans-unit>
+      <trans-unit id="7" resname="both">
+        <source>both</source>
+        <target>double</target>
       </trans-unit>
     </body>
   </file>

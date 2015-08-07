@@ -33,9 +33,9 @@ Feature: Create business entity pages
         Then I should see "Victoire !"
         Then I should see "Le Côté jedi -> side de la force"
         Given I am on "/fr/fiche-jedi-anakin"
-        Then I should see "Le Côté dark de la force"
+        Then I should see "Le Côté obscure de la force"
         Given I am on "/fr/fiche-jedi-yoda"
-        Then I should see "Le Côté bright de la force"
+        Then I should see "Le Côté lumineux de la force"
 
     Scenario: I can create two Business entity page patterns differentiated by queries and access to their related Business Entity pages
         Given I open the hamburger menu
@@ -146,7 +146,7 @@ Feature: Create business entity pages
         And I press "Créer"
 
         Given I am on "/fr/fiche-jedi-mace-windu"
-        Then I should see "Le Côté dark de la force"
+        Then I should see "Le Côté obscure de la force"
 
 
 
