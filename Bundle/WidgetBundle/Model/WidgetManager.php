@@ -9,6 +9,7 @@ use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Victoire\Bundle\BusinessEntityBundle\Annotation\AnnotationDriver;
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\BusinessEntityBundle\Reader\BusinessEntityCacheReader;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
@@ -103,8 +104,9 @@ class WidgetManager
     {
         $widget = $this->widgetHelper->newWidgetInstance($type, $view, $slot, $mode);
 
+        /** @var BusinessEntity[] $classes */
         $classes = $this->cacheReader->getBusinessClassesForWidget($widget);
-        $forms = $this->widgetFormBuilder->renderNewWidgetForms($slot, $view, $widget, $position);
+        $forms = $this->widgetFormBuilder->renderNewWidgetForms($slot, $view, $widget, $classes, $position);
 
         return array(
             "html" => $this->victoireTemplating->render(
@@ -215,6 +217,7 @@ class WidgetManager
      */
     public function editWidget(Request $request, Widget $widget, View $currentView, $entityName = null, $widgetMode = Widget::MODE_STATIC)
     {
+        /** @var BusinessEntity[] $classes */
         $classes = $this->cacheReader->getBusinessClassesForWidget($widget);
 
         $widget->setCurrentView($currentView);
@@ -236,7 +239,7 @@ class WidgetManager
                 $widget = $this->overwriteWidget($currentView, $widget);
             }
             if ($entityName !== null) {
-                $form = $this->widgetFormBuilder->buildForm($widget, $currentView, $entityName, $classes[$entityName], $widgetMode);
+                $form = $this->widgetFormBuilder->buildForm($widget, $currentView, $entityName, $classes[$entityName]->getClass(), $widgetMode);
             } else {
                 $form = $this->widgetFormBuilder->buildForm($widget, $currentView);
             }
@@ -269,7 +272,7 @@ class WidgetManager
                 );
             }
         } else {
-            $forms = $this->widgetFormBuilder->renderNewWidgetForms($widget->getSlot(), $currentView, $widget);
+            $forms = $this->widgetFormBuilder->renderNewWidgetForms($widget->getSlot(), $currentView, $widget, $classes);
 
             $response = array(
                 "success"  => true,

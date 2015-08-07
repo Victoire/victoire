@@ -3,6 +3,7 @@ namespace Victoire\Bundle\WidgetBundle\Builder;
 
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\Form;
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Event\WidgetBuildFormEvent;
 use Victoire\Bundle\CoreBundle\VictoireCmsEvents;
@@ -73,23 +74,23 @@ class WidgetFormBuilder
      * Generates new forms for each available business entities
      *
      * @param string $slot
-     * @param View   $view
-     * @param Widget $widget
-     *
+     * @param View             $view
+     * @param Widget           $widget
+     * @param BusinessEntity[] $classes
+     * @param int              $position
+     * @throws \Exception
      * @return Form[]
      */
-    public function renderNewWidgetForms($slot, View $view, Widget $widget, $position = 0)
+    public function renderNewWidgetForms($slot, View $view, Widget $widget, $classes, $position = 0)
     {
-        $classes = $this->container->get('victoire_core.helper.business_entity_helper')->getBusinessClassesForWidget($widget);
-
         //the static form
         $forms['static'] = array();
         $forms['static']['main'] = $this->renderNewForm($this->buildForm($widget, $view, null, null, Widget::MODE_STATIC, $position), $widget, $slot, $view, null);
 
         // Build each form relative to business entities
-        foreach ($classes as $entityName => $namespace) {
+        foreach ($classes as $entityName => $businessEntity) {
             //get the forms for the business entity (entity/query/businessEntity)
-            $entityForms = $this->buildEntityForms($widget, $view, $entityName, $namespace);
+            $entityForms = $this->buildEntityForms($widget, $view, $entityName, $businessEntity->getClass());
 
             //the list of forms
             $forms[$entityName] = array();

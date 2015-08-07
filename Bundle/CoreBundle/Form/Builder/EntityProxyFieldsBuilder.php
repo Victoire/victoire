@@ -39,19 +39,20 @@ class EntityProxyFieldsBuilder
     public function buildForEntityAndWidgetType(&$builder, $widgetName, $namespace)
     {
         //Try to add a new form for each entity with the correct annotation and business properties
-        $businessProperties = $this->cacheReader->getBusinessProperties($widgetName);
+        $businessProperties = $this->cacheReader->getBusinessProperties($namespace);
         $receiverProperties = $this->cacheReader->getReceiverProperties($widgetName);
 
         if (!empty($receiverProperties)) {
             foreach ($receiverProperties as $key => $_fields) {
-                foreach ($_fields as $fieldKey => $fieldVal) {
+                foreach ($_fields as $field) {
                     //Check if entity has all the required receiver properties as business properties
+
                     if (isset($businessProperties[$key]) && is_array($businessProperties[$key]) && count($businessProperties[$key])) {
                         //Create form types with field as key and values as choices
                         //TODO Add some formatter Class or a buildField method responsible to create this type
-                        $label = $this->translator->trans('widget_'.strtolower($widgetName).'.form.'.$fieldKey.'.label', array(), 'victoire');
+                        $label = $this->translator->trans('widget_'.strtolower($widgetName).'.form.'.$field.'.label', array(), 'victoire');
                         $options = array(
-                                'choices' => $businessProperties[$key],
+                                'choices' => array_combine($businessProperties[$key], $businessProperties[$key]),
                                 'label' => $label,
                                 'attr' => array(
                                     'title' => $label
@@ -61,13 +62,13 @@ class EntityProxyFieldsBuilder
                         if (array_key_exists($widgetName, $this->widgets)) {
                             $widgetClass = $this->widgets[$widgetName]['class'];
                             $guesser = $this->registry->getTypeGuesser();
-                            $requiredGuess = $guesser->guessRequired($widgetClass, $fieldKey);
+                            $requiredGuess = $guesser->guessRequired($widgetClass, $field);
                             if ($requiredGuess) {
                                 $options = array_merge(array('required' => $requiredGuess->getValue()), $options);
                             }
                         }
 
-                        $builder->add($fieldKey, 'choice', $options);
+                        $builder->add($field, 'choice', $options);
                     } else {
                         throw new \Exception(sprintf('The Entity %s doesn\'t have a %s property, which is required by %s widget', $namespace, $key, $widgetName));
                     }
