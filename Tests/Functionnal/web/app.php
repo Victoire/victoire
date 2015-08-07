@@ -9,16 +9,19 @@ $loader = require_once __DIR__.'/../../bootstrap.php';
 // You should change the ApcClassLoader first argument to a unique prefix
 // in order to prevent cache key conflicts with other applications
 // also using APC.
-/*
+
 $apcLoader = new ApcClassLoader(sha1(__FILE__), $loader);
 $loader->unregister();
 $apcLoader->register(true);
-*/
+
+
+/*apc_clear_cache();
+apc_clear_cache('user');*/
 
 require_once __DIR__.'/../app/AppKernel.php';
-//require_once __DIR__.'/../app/AppCache.php';
+require_once __DIR__.'/../app/AppCache.php';
 
-$kernel = new AppKernel('test', true);
+$kernel = new AppKernel('test', false);
 $kernel->loadClassCache();
 //$kernel = new AppCache($kernel);
 
