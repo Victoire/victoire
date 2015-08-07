@@ -35,7 +35,6 @@ class BusinessEntityCacheReader
 
     /**
      * this method get annotated business classes (from cache if enabled)
-     * @param AnnotationDriver|null $driver
      *
      * @return array $businessClasses
      **/
@@ -64,6 +63,9 @@ class BusinessEntityCacheReader
 
     }
 
+    /**
+     * @param string $namespace
+     */
     public function getBusinessProperties($namespace)
     {
         /** @var BusinessEntity[] $widgetMetadatas */

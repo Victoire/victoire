@@ -35,7 +35,6 @@ class BusinessEntityHelper
     /**
      * Set the EntityManagerInterface instance this helper instance should use.
      *
-     * @param EntityManagerInterface $em
      */
     public function setEntityManager(EntityManagerInterface $entityManager)
     {
@@ -187,7 +186,7 @@ class BusinessEntityHelper
 
     /**
      * create a BusinessEntity from an annotation object
-     * @param string $classname
+     * @param string $className
      * @param array  $businessProperties
      *
      * @return BusinessEntity

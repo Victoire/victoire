@@ -42,6 +42,7 @@ abstract class BaseEntityProxy
     /**
      * Get the entity of the proxy
      *
+     * @param string $entityName
      * @return Object
      * @throws \Exception
      */
@@ -78,7 +79,7 @@ abstract class BaseEntityProxy
      * Set widgets
      * @param string $widgets
      *
-     * @return EntityProxy
+     * @return BaseEntityProxy
      */
     public function setWidgets($widgets)
     {

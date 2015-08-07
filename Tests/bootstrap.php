@@ -78,6 +78,10 @@ namespace Symfony\Component\HttpFoundation
         {
             return array_key_exists($key, $this->parameters);
         }
+
+        /**
+         * @param string $key
+         */
         public function remove($key)
         {
             unset($this->parameters[$key]);
@@ -102,6 +106,11 @@ namespace Symfony\Component\HttpFoundation
         {
             return $this->filter($key, $default, $deep, FILTER_VALIDATE_BOOLEAN);
         }
+
+        /**
+         * @param string|boolean $default
+         * @param integer $filter
+         */
         public function filter($key, $default = null, $deep = false, $filter = FILTER_DEFAULT, $options = array())
         {
             $value = $this->get($key, $default, $deep);
@@ -213,6 +222,10 @@ namespace Symfony\Component\HttpFoundation
                 $this->cacheControl = array();
             }
         }
+
+        /**
+         * @param string $key
+         */
         public function getDate($key, \DateTime $default = null)
         {
             if (null === $value = $this->get($key)) {
@@ -223,11 +236,19 @@ namespace Symfony\Component\HttpFoundation
             }
             return $date;
         }
+
+        /**
+         * @param string $key
+         */
         public function addCacheControlDirective($key, $value = true)
         {
             $this->cacheControl[$key] = $value;
             $this->set('Cache-Control', $this->getCacheControlHeader());
         }
+
+        /**
+         * @param string $key
+         */
         public function hasCacheControlDirective($key)
         {
             return array_key_exists($key, $this->cacheControl);
@@ -236,6 +257,10 @@ namespace Symfony\Component\HttpFoundation
         {
             return array_key_exists($key, $this->cacheControl) ? $this->cacheControl[$key] : null;
         }
+
+        /**
+         * @param string $key
+         */
         public function removeCacheControlDirective($key)
         {
             unset($this->cacheControl[$key]);
@@ -702,6 +727,11 @@ namespace Symfony\Component\HttpFoundation
         {
             return self::$httpMethodParameterOverride;
         }
+
+        /**
+         * @param string $key
+         * @param string $default
+         */
         public function get($key, $default = null, $deep = false)
         {
             if ($this !== $result = $this->query->get($key, $this, $deep)) {
@@ -753,6 +783,10 @@ namespace Symfony\Component\HttpFoundation
             }
             return $clientIps ? array_reverse($clientIps) : array($ip);
         }
+
+        /**
+         * @return string
+         */
         public function getClientIp()
         {
             $ipAddresses = $this->getClientIps();
@@ -984,6 +1018,10 @@ namespace Symfony\Component\HttpFoundation
         {
             return null === $this->locale ? $this->defaultLocale : $this->locale;
         }
+
+        /**
+         * @param string $method
+         */
         public function isMethod($method)
         {
             return $this->getMethod() === strtoupper($method);
@@ -992,6 +1030,10 @@ namespace Symfony\Component\HttpFoundation
         {
             return in_array($this->getMethod(), array('GET','HEAD'));
         }
+
+        /**
+         * @return string
+         */
         public function getContent($asResource = false)
         {
             if (false === $this->content || (true === $asResource && null !== $this->content)) {
@@ -1432,6 +1474,10 @@ namespace Symfony\Component\HttpFoundation
             }
             return $this;
         }
+
+        /**
+         * @param string|null $content
+         */
         public function setContent($content)
         {
             if (null !== $content && !is_string($content) && !is_numeric($content) && !is_callable(array($content,'__toString'))) {
@@ -1444,6 +1490,10 @@ namespace Symfony\Component\HttpFoundation
         {
             return $this->content;
         }
+
+        /**
+         * @param string $version
+         */
         public function setProtocolVersion($version)
         {
             $this->version = $version;
@@ -1755,6 +1805,11 @@ namespace Symfony\Component\HttpFoundation
         {
             return in_array($this->statusCode, array(204, 304));
         }
+
+        /**
+         * @param integer $targetLevel
+         * @param boolean $flush
+         */
         public static function closeOutputBuffers($targetLevel, $flush)
         {
             $status = ob_get_status(true);
@@ -1823,6 +1878,10 @@ namespace Symfony\Component\HttpFoundation
                 $this->set('Cache-Control','');
             }
         }
+
+        /**
+         * @param string $key
+         */
         public function set($key, $values, $replace = true)
         {
             parent::set($key, $values, $replace);
@@ -1835,6 +1894,10 @@ namespace Symfony\Component\HttpFoundation
                 $this->computedCacheControl = $this->parseCacheControl($computed);
             }
         }
+
+        /**
+         * @param string $key
+         */
         public function remove($key)
         {
             parent::remove($key);
@@ -1844,10 +1907,18 @@ namespace Symfony\Component\HttpFoundation
                 $this->computedCacheControl = array();
             }
         }
+
+        /**
+         * @param string $key
+         */
         public function hasCacheControlDirective($key)
         {
             return array_key_exists($key, $this->computedCacheControl);
         }
+
+        /**
+         * @param string $key
+         */
         public function getCacheControlDirective($key)
         {
             return array_key_exists($key, $this->computedCacheControl) ? $this->computedCacheControl[$key] : null;
@@ -1937,6 +2008,10 @@ namespace Symfony\Component\DependencyInjection
 {
     interface ContainerAwareInterface
     {
+
+        /**
+         * @return void
+         */
         public function setContainer(ContainerInterface $container = null);
     }
 }
@@ -1952,16 +2027,73 @@ namespace Symfony\Component\DependencyInjection
         const IGNORE_ON_INVALID_REFERENCE = 3;
         const SCOPE_CONTAINER ='container';
         const SCOPE_PROTOTYPE ='prototype';
+
+        /**
+         * @param string $id
+         * @param \Symfony\Component\HttpFoundation\Request|null $service
+         *
+         * @return void
+         */
         public function set($id, $service, $scope = self::SCOPE_CONTAINER);
+
+        /**
+         * @param string $id
+         */
         public function get($id, $invalidBehavior = self::EXCEPTION_ON_INVALID_REFERENCE);
+
+        /**
+         * @param string $id
+         *
+         * @return boolean|null
+         */
         public function has($id);
+
+        /**
+         * @param string $name
+         *
+         * @return string
+         */
         public function getParameter($name);
+
+        /**
+         * @return boolean
+         */
         public function hasParameter($name);
+
+        /**
+         * @return void
+         */
         public function setParameter($name, $value);
+
+        /**
+         * @param string $name
+         *
+         * @return void
+         */
         public function enterScope($name);
+
+        /**
+         * @param string $name
+         *
+         * @return void
+         */
         public function leaveScope($name);
+
+        /**
+         * @return void
+         */
         public function addScope(ScopeInterface $scope);
+
+        /**
+         * @param string $name
+         *
+         * @return boolean
+         */
         public function hasScope($name);
+
+        /**
+         * @return boolean
+         */
         public function isScopeActive($name);
     }
 }
@@ -1969,6 +2101,10 @@ namespace Symfony\Component\DependencyInjection
 {
     interface IntrospectableContainerInterface extends ContainerInterface
     {
+
+        /**
+         * @return boolean
+         */
         public function initialized($id);
     }
 }
@@ -2010,6 +2146,10 @@ namespace Symfony\Component\DependencyInjection
         {
             return $this->parameterBag;
         }
+
+        /**
+         * @param string $name
+         */
         public function getParameter($name)
         {
             return $this->parameterBag->get($name);
@@ -2048,6 +2188,10 @@ namespace Symfony\Component\DependencyInjection
                 unset($this->services[$id]);
             }
         }
+
+        /**
+         * @param string $id
+         */
         public function has($id)
         {
             $id = strtolower($id);
@@ -2060,6 +2204,10 @@ namespace Symfony\Component\DependencyInjection
             || method_exists($this,'get'.strtr($id, array('_'=>'','.'=>'_','\\'=>'_')).'Service')
                 ;
         }
+
+        /**
+         * @param string $id
+         */
         public function get($id, $invalidBehavior = self::EXCEPTION_ON_INVALID_REFERENCE)
         {
             foreach (array(false, true) as $strtolower) {
@@ -2218,6 +2366,10 @@ namespace Symfony\Component\DependencyInjection
         {
             return isset($this->scopedServices[$name]);
         }
+
+        /**
+         * @param string $id
+         */
         public static function camelize($id)
         {
             return strtr(ucwords(strtr($id, array('_'=>' ','.'=>'_ ','\\'=>'_ '))), array(' '=>''));
@@ -2247,21 +2399,53 @@ namespace Symfony\Component\HttpKernel
     interface KernelInterface extends HttpKernelInterface, \Serializable
     {
         public function registerBundles();
+
+        /**
+         * @return \Symfony\Component\DependencyInjection\ContainerBuilder
+         */
         public function registerContainerConfiguration(LoaderInterface $loader);
+
+        /**
+         * @return void
+         */
         public function boot();
+
+        /**
+         * @return void
+         */
         public function shutdown();
         public function getBundles();
+
+        /**
+         * @return boolean
+         */
         public function isClassInActiveBundle($class);
         public function getBundle($name, $first = true);
         public function locateResource($name, $dir = null, $first = true);
         public function getName();
         public function getEnvironment();
+
+        /**
+         * @return boolean
+         */
         public function isDebug();
         public function getRootDir();
         public function getContainer();
         public function getStartTime();
+
+        /**
+         * @return string
+         */
         public function getCacheDir();
+
+        /**
+         * @return string
+         */
         public function getLogDir();
+
+        /**
+         * @return string
+         */
         public function getCharset();
     }
 }
@@ -2271,6 +2455,10 @@ namespace Symfony\Component\HttpKernel
     use Symfony\Component\HttpFoundation\Response;
     interface TerminableInterface
     {
+
+        /**
+         * @return void
+         */
         public function terminate(Request $request, Response $response);
     }
 }
@@ -2647,6 +2835,11 @@ namespace Symfony\Component\HttpKernel
             }
             return $container;
         }
+
+        /**
+         * @param string $class
+         * @param string $baseClass
+         */
         protected function dumpContainer(ConfigCache $cache, ContainerBuilder $container, $class, $baseClass)
         {
             $dumper = new PhpDumper($container);
@@ -2671,6 +2864,10 @@ namespace Symfony\Component\HttpKernel
                 ));
             return new DelegatingLoader($resolver);
         }
+
+        /**
+         * @param string $source
+         */
         public static function stripComments($source)
         {
             if (!function_exists('token_get_all')) {
@@ -2771,12 +2968,32 @@ namespace Symfony\Component\HttpKernel\Bundle
     use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
     interface BundleInterface extends ContainerAwareInterface
     {
+
+        /**
+         * @return void
+         */
         public function boot();
+
+        /**
+         * @return void
+         */
         public function shutdown();
+
+        /**
+         * @return void
+         */
         public function build(ContainerBuilder $container);
         public function getContainerExtension();
+
+        /**
+         * @return null|string
+         */
         public function getParent();
         public function getName();
+
+        /**
+         * @return string
+         */
         public function getNamespace();
         public function getPath();
     }
@@ -2903,6 +3120,11 @@ namespace Symfony\Component\Config
     {
         private $debug;
         private $file;
+
+        /**
+         * @param string $file
+         * @param boolean $debug
+         */
         public function __construct($file, $debug)
         {
             $this->file = $file;
@@ -3054,6 +3276,10 @@ namespace Symfony\Component\HttpKernel
             $this->dispatcher->dispatch(KernelEvents::FINISH_REQUEST, new FinishRequestEvent($this, $request, $type));
             $this->requestStack->pop();
         }
+
+        /**
+         * @param Request $request
+         */
         private function handleException(\Exception $e, $request, $type)
         {
             $event = new GetResponseForExceptionEvent($this, $request, $type, $e);
