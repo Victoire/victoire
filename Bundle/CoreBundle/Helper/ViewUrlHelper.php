@@ -137,6 +137,8 @@ class ViewUrlHelper
         // build url binded with parents url
         if (method_exists($view, 'isHomepage') && $view->isHomepage()) {
             $url = array('');
+        } else if (method_exists($view, 'getStaticUrl') && $view->getStaticUrl() != null && $view->getStaticUrl() != '' ) {
+            $url = array($view->getStaticUrl());
         } else {
             $url = array($view->getSlug());
         }
