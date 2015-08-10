@@ -109,7 +109,6 @@ class BusinessEntityPage extends Page
     public function setStaticUrl($staticUrl)
     {
         $this->staticUrl = $staticUrl;
-        $this->slug = $staticUrl;
 
         return $this;
     }
