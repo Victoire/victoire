@@ -34,7 +34,6 @@ class CategoryRepository extends NestedTreeRepository
     }
     public function filterByArticles($articles)
     {
-        // var_dump($this->qb);die();
         $this->qb
             ->andWhere($this->qb->expr()->in('c_article', $articles->getDql()))
             ->setParameters($articles->getParameters());
