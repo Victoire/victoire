@@ -90,7 +90,9 @@ class VictoireContext extends RawMinkContext
     public function iFollowTheTab($name)
     {
         $tab = $this->getSession()->getPage()->find('xpath', sprintf('descendant-or-self::a[@data-toggle="vic-tab" and normalize-space(text()) = "%s"]', $name));
-        $tab->click();
+        if ($tab) {
+            $tab->click();
+        }
     }
 
     /**
