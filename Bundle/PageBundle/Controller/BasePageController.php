@@ -5,6 +5,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
 use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
@@ -131,11 +132,16 @@ class BasePageController extends Controller
         $form = $this->createForm($this->getPageSettingsType(), $page);
         $businessProperties = array();
 
-        //if the page is a business entity page
+        //if the page is a business entity page pattern
         if ($page instanceof BusinessEntityPagePattern) {
             //we can use the business entity properties on the seo
             $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($page->getBusinessEntityName());
             $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
+        }
+
+        //if the page is a business entity page
+        if ($page instanceof BusinessEntityPage) {
+            $form = $this->createForm($this->getBusinessEntityPageType(), $page);
         }
 
         $form->handleRequest($request);
