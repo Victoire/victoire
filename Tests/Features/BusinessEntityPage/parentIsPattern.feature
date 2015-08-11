@@ -15,6 +15,7 @@ Feature: Mercenary is not a BusinessEntity itself but extends Character which is
             When I follow "Représentation métier"
             Then I should see "Ajouter une représentation"
             When I follow the tab "Character"
+            And I should see "Ajouter une représentation"
             And I follow "Ajouter une représentation"
             Then I should see "Créer une représentation métier"
             When I fill in "Nom" with "Fiche Personnage - {{item.name}}"

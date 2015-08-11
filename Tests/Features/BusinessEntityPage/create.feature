@@ -15,7 +15,9 @@ Feature: Create business entity pages
         When I follow "Représentation métier"
         And I close the hamburger menu
         Then I should see "Jedi"
+        Then I should see "Ajouter une représentation"
         When I follow the tab "Jedi"
+        And I should see "Ajouter une représentation"
         And I follow "Ajouter une représentation"
         Then I should see "Créer une représentation métier"
         When I fill in "Nom" with "Fiche Jedi - {{item.name}}"
@@ -45,6 +47,7 @@ Feature: Create business entity pages
         And I close the hamburger menu
         Then I should see "Ajouter une représentation"
         When I follow the tab "Jedi"
+        And I should see "Ajouter une représentation"
         And I follow "Ajouter une représentation"
         Then I should see "Créer une représentation métier"
         When I fill in "Nom" with "Fiche Jedi Dark - {{item.name}}"
@@ -66,6 +69,7 @@ Feature: Create business entity pages
         And I close the hamburger menu
         Then I should see "Ajouter une représentation"
         When I follow the tab "Jedi"
+        And I should see "Ajouter une représentation"
         And I follow "Ajouter une représentation"
         Then I should see "Créer une représentation métier"
         When I fill in "Nom" with "Fiche Jedi Bright - {{item.name}}"
@@ -99,6 +103,7 @@ Feature: Create business entity pages
         And I close the hamburger menu
         Then I should see "Ajouter une représentation"
         When I follow the tab "Jedi"
+        And I should see "Ajouter une représentation"
         And I follow "Ajouter une représentation"
         Then I should see "Créer une représentation métier"
         When I fill in "Nom" with "Fiche Jedi - {{item.name}}"
@@ -122,6 +127,7 @@ Feature: Create business entity pages
         And I close the hamburger menu
         Then I should see "Ajouter une représentation"
         When I follow the tab "Jedi"
+        And I should see "Ajouter une représentation"
         And I follow "Ajouter une représentation"
         Then I should see "Créer une représentation métier"
         When I fill in "Nom" with "Fiche Jedi - {{item.name}}"
