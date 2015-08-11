@@ -1,6 +1,3 @@
-parameters:
-    router.options.generator_base_class: Victoire\Bundle\CoreBundle\Route\UrlGenerator
-
 services:
 #  ==================  Widgets ================== #
     victoire_core.entity_proxy.fields_builder:
