@@ -32,7 +32,7 @@ class BusinessEntityPageType extends PageSettingsType
         parent::buildForm($builder, $options);
         $builder->remove('slug');
         $builder->add('slug', 'hidden');
-        $builder->add('staticUrl', null, array(
+        $builder->add('staticUrl', 'slug', array(
                 'label' => 'form.page.type.slug.label'
             )
         );
