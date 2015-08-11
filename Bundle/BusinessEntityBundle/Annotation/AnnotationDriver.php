@@ -171,6 +171,23 @@ class AnnotationDriver extends DoctrineAnnotationDriver
                 }
             }
         }
+        // we load business properties of parents recursively
+        // because they are defined by an annotation not by the property type(private, protected, public)
+        $parentClass = $class->getParentClass();
+        if ($parentClass) {
+            //load parent properties recursively
+            $parentProperties = $this->loadBusinessProperties(new \ReflectionClass($parentClass->getName()));
+            foreach ($parentProperties as $key => $parentProperty) {
+                if (array_key_exists($key, $businessProperties)) {
+                    //if parent and current have a same business property type we merge the properties and remove
+                    //duplicates if properties are the same;
+                    $businessProperties[$key] = array_unique(array_merge($parentProperty, $businessProperties[$key]));
+                }else{
+                    //else we had a business property type for the parent properties
+                    $businessProperties[$key] = $parentProperty;
+                }
+            }
+        }
 
         return $businessProperties;
     }

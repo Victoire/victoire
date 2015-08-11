@@ -61,6 +61,6 @@ class BusinessEntityPagePatternType extends ViewType
      */
     public function getName()
     {
-        return 'victoire_business_entity_page_type';
+        return 'victoire_business_entity_page_pattern_type';
     }
 }
