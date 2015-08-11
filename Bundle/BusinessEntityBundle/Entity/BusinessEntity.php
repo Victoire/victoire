@@ -16,6 +16,17 @@ class BusinessEntity
     protected $name = null;
     protected $businessProperties = array();
 
+    public static function __set_state($array)
+    {
+        $businessEntity = new BusinessEntity();
+        $businessEntity->setId($array['id']);
+        $businessEntity->setClass($array['class']);
+        $businessEntity->setName($array['name']);
+        $businessEntity->setBusinessProperties($array['businessProperties']);
+
+        return $businessEntity;
+    }
+
     /**
      * Get the id
      *
@@ -101,6 +112,16 @@ class BusinessEntity
     public function getBusinessProperties()
     {
         return $this->businessProperties;
+    }
+
+    /**
+     * Get the business properties
+     *
+     * @return array The business properties
+     */
+    public function setBusinessProperties($businessProperties)
+    {
+        return $this->businessProperties = $businessProperties;
     }
 
     /**

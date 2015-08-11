@@ -92,12 +92,11 @@ services:
 
 #  ==================  Cache ================== #
 
-    victoire_core.apc.cache:
-        class: Victoire\Bundle\CoreBundle\Cache\ApcCache
+    victoire_core.cache:
+        class: Victoire\Bundle\CoreBundle\Cache\VictoireCache
         arguments:
-            - "%doctrine.orm.cache.apc.class%"
             - "%kernel.debug%"
-            - "@file_locator"
+            - "%victoire_core.cache_dir%"
 
     victoire_core.view_cache_helper:
         class: Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper
@@ -110,7 +109,7 @@ services:
     victoire_core.cache_builder:
         class: Victoire\Bundle\CoreBundle\Cache\Builder\CacheBuilder
         arguments:
-            - "@victoire_core.apc.cache"
+            - "@victoire_core.cache"
 
 #  ==================  Subscribers ================== #
 

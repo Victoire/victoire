@@ -36,7 +36,7 @@ services:
     victoire_business_entity.cache_reader:
         class: "%victoire_business_entity.cache_reader_class%"
         arguments:
-            - "@victoire_core.apc.cache"
+            - "@victoire_core.cache"
             - "@victoire_widget.widget_helper"
             - "@victoire_business_entity.annotation_driver"
 
