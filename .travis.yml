@@ -4,12 +4,11 @@ php:
   - 5.6
 
 before_script:
-  # Additional PHP config
   - phpenv config-add travis.php.ini
   - npm install less
   - composer self-update
   - composer config --global github-oauth.github.com $gh_auth_token
-  - composer install --prefer-dist
+  - COMPOSER_ROOT_VERSION=dev-master composer install --prefer-dist
   # Prepare database
   - php Tests/Functionnal/bin/console --env=test doctrine:database:create
   - php Tests/Functionnal/bin/console --env=test cache:warmup
