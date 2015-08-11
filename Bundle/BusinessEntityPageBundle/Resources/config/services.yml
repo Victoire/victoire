@@ -5,6 +5,14 @@ services:
             - "%victoire_i18n.available_locales%"
             - "@request_stack"
         tags:
+            - { name: form.type, alias: victoire_business_entity_page_pattern_type }
+
+    victoire_business_entity_page.business_entity_page.form.type:
+        class: Victoire\Bundle\BusinessEntityPageBundle\Form\BusinessEntityPageType
+        arguments:
+            - "%victoire_i18n.available_locales%"
+            - "@request_stack"
+        tags:
             - { name: form.type, alias: victoire_business_entity_page_type }
 
 

@@ -22,6 +22,7 @@
         <parameter key="victoire_form.form.type.vic_form_actions.class">Victoire\Bundle\FormBundle\Form\Type\FormActionsType</parameter>
         <parameter key="victoire_form.form.type.vic_link.class">Victoire\Bundle\FormBundle\Form\Type\LinkType</parameter>
         <parameter key="victoire_form.form.type.font_awesome_picker.class">Victoire\Bundle\FormBundle\Form\Type\FontAwesomePickerType</parameter>
+        <parameter key="victoire_form.form.type.slug.class">Victoire\Bundle\FormBundle\Form\Type\SlugType</parameter>
     </parameters>
 
     <services>
@@ -134,6 +135,10 @@
 
         <service id="victoire_form.form.type.font_awesome_picker" class="%victoire_form.form.type.font_awesome_picker.class%">
             <tag name="form.type" alias="font_awesome_picker" />
+        </service>
+
+        <service id="victoire_form.form.type.slug" class="%victoire_form.form.type.slug.class%">
+            <tag name="form.type" alias="slug" />
         </service>
     </services>
 </container>

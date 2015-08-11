@@ -112,6 +112,7 @@ class PageSubscriber implements EventSubscriber
         foreach ($uow->getScheduledEntityInsertions() as $entity) {
             if ($entity instanceof WebViewInterface) {
                 $computeUrl = ((array_key_exists('slug', $uow->getEntityChangeSet($entity)) //the slug of the page has been modified
+                            || array_key_exists('staticUrl', $uow->getEntityChangeSet($entity)) //the static url of the page has been modified
                             || array_key_exists('parent', $uow->getEntityChangeSet($entity)))
                             ); //the parent has been modified
                 if ($computeUrl) {
@@ -130,6 +131,7 @@ class PageSubscriber implements EventSubscriber
         foreach ($uow->getScheduledEntityUpdates() as $entity) {
             if ($entity instanceof WebViewInterface) {
                 $computeUrl = ((array_key_exists('slug', $uow->getEntityChangeSet($entity)) //the slug of the page has been modified
+                            || array_key_exists('staticUrl', $uow->getEntityChangeSet($entity)) //the static url of the page has been modified
                             || array_key_exists('parent', $uow->getEntityChangeSet($entity)))
                             ); //the parent has been modified
                 if ($computeUrl) {
