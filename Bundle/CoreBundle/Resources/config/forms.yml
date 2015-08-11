@@ -8,7 +8,7 @@ services:
     victoire_core.entity_proxy.form.type:
         class: Victoire\Bundle\CoreBundle\Form\EntityProxyFormType
         arguments:
-            - "@victoire_core.annotation_reader"
+            - "@victoire_core.helper.business_entity_helper"
         tags:
             - { name: form.type, alias: entity_proxy }
 

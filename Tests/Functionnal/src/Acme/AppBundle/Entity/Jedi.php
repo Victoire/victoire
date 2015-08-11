@@ -11,11 +11,10 @@ use Victoire\Bundle\CoreBundle\Annotations as VIC;
  *
  * @ORM\Entity
  * @ORM\Table("character_jedi")
- * @VIC\BusinessEntity({"Force"})
+ * @VIC\BusinessEntity({"Text", "Force"})
  */
 class Jedi extends Character
 {
-
     /**
      * @var string
      *

@@ -7,6 +7,10 @@ namespace Victoire\Bundle\BusinessEntityBundle\Entity;
  */
 class BusinessEntity
 {
+
+    const CACHE_CLASSES = 'victoire_business_entity_classes';
+    const CACHE_WIDGETS = 'victoire_business_entity_widgets';
+
     protected $id = null;
     protected $class = null;
     protected $name = null;
@@ -87,6 +91,16 @@ class BusinessEntity
 
         //add the business property indexed by the type
         $this->businessProperties[$type][] = $businessProperty;
+    }
+
+    /**
+     * Get the business properties
+     *
+     * @return array The business properties
+     */
+    public function getBusinessProperties()
+    {
+        return $this->businessProperties;
     }
 
     /**

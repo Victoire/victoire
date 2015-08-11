@@ -3,28 +3,21 @@ namespace Victoire\Bundle\I18nBundle\CacheWarmer;
 
 use Sensio\Bundle\GeneratorBundle\Generator\Generator;
 use Symfony\Component\Config\FileLocator;
-use Victoire\Bundle\CoreBundle\Annotations\Reader\AnnotationReader;
 
 /**
- *
- * @author Florian Raux
- *
  */
 class I18nGenerator extends Generator
 {
-    private $annotationReader;
     protected $availableLocales;
     private $fileLocator;
 
     /**
      * Constructor
-     * @param AnnotationReader $annotationReader
-     * @param array            $availableLocales Got from I18n config
-     * @param FileLocator      $fileLocator
+     * @param array       $availableLocales Got from I18n config
+     * @param FileLocator $fileLocator
      */
-    public function __construct(AnnotationReader $annotationReader, $availableLocales, FileLocator $fileLocator)
+    public function __construct($availableLocales, FileLocator $fileLocator)
     {
-        $this->annotationReader = $annotationReader;
         $this->fileLocator = $fileLocator;
         $this->applicationLocales = $availableLocales;
     }

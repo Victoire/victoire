@@ -2,12 +2,11 @@ parameters:
     router.options.generator_base_class: Victoire\Bundle\CoreBundle\Route\UrlGenerator
 
 services:
-
 #  ==================  Widgets ================== #
     victoire_core.entity_proxy.fields_builder:
         class: Victoire\Bundle\CoreBundle\Form\Builder\EntityProxyFieldsBuilder
         arguments:
-            - @victoire_core.annotation_reader
+            - @victoire_business_entity.cache_reader
             - @translator
             - @form.registry
             - %victoire_core.widgets%
@@ -108,18 +107,10 @@ services:
         calls:
             - [ setContainer, ["@service_container"] ]
 
-#  ==================  Annotations ================== #
-
-    victoire_core.annotation_reader:
-        class: Victoire\Bundle\CoreBundle\Annotations\Reader\AnnotationReader
+    victoire_core.cache_builder:
+        class: Victoire\Bundle\CoreBundle\Cache\Builder\CacheBuilder
         arguments:
-            - "@annotation_reader"
-            - "@victoire_widget.widget_helper"
-            - "%victoire_core.base_paths%"
-            - "%victoire_core.widgets%"
-            - "@victoire_widget.widget_item_content_resolver_chain"
-        calls:
-            - [ setCache, ["@victoire_core.apc.cache"] ]
+            - "@victoire_core.apc.cache"
 
 #  ==================  Subscribers ================== #
 
@@ -133,20 +124,26 @@ services:
     victoire_core.entity_proxy.subscriber:
         class: Victoire\Bundle\CoreBundle\EventSubscriber\EntityProxySubscriber
         calls:
-            - [ setAnnotationReader, ["@victoire_core.annotation_reader"] ]
+            - [ setBusinessEntityCacheReader, ["@victoire_business_entity.cache_reader"] ]
         tags:
-            - { name: doctrine.event_subscriber, connection: default }
+            - { name: doctrine.event_listener, event: loadClassMetadata, priority: 10}
+
+    victoire_core.cache_subscriber:
+        class: Victoire\Bundle\CoreBundle\EventSubscriber\CacheSubscriber
+        arguments:
+            - "@victoire_core.cache_builder"
+        tags:
+            - { name: kernel.event_subscriber }
 
 
 #  ==================  Cache =================== #
-
     victoire_core.cache_warmer.entity_proxy_warmer:
         class: Victoire\Bundle\CoreBundle\CacheWarmer\EntityProxyWarmer
         arguments:
-            - "@victoire_core.annotation_reader"
+            - "@victoire_core.helper.business_entity_helper"
             - "@file_locator"
         tags:
-            - { name: kernel.cache_warmer, priority: 1}
+            - { name: kernel.cache_warmer, priority: 100} #Must be lower than victoire_business_entity.warmer
 
     victoire_core.cache_warmer.view_warmer:
         class: Victoire\Bundle\CoreBundle\CacheWarmer\ViewCacheWarmer
@@ -166,8 +163,10 @@ services:
     victoire_core.helper.business_entity_helper:
         class: Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper
         arguments:
-            - "@victoire_core.annotation_reader"
-            - "@doctrine.orm.entity_manager"
+            - "@victoire_business_entity.cache_reader"
+            - "@victoire_core.cache_builder"
+        calls:
+            - [setEntityManager, ["@doctrine.orm.entity_manager"]]
 
 #  ==================  Error handler =================== #
 

@@ -76,7 +76,7 @@ class VictoireContext extends RawMinkContext
     }
 
     /**
-     * @Then /^I open the hamburger menu$/
+     * @Then /^I (open|close|toggle) the hamburger menu$/
      */
     public function iOpenTheHamburgerMenu()
     {
@@ -90,7 +90,9 @@ class VictoireContext extends RawMinkContext
     public function iFollowTheTab($name)
     {
         $tab = $this->getSession()->getPage()->find('xpath', sprintf('descendant-or-self::a[@data-toggle="vic-tab" and normalize-space(text()) = "%s"]', $name));
-        $tab->click();
+        if ($tab) {
+            $tab->click();
+        }
     }
 
     /**

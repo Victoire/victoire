@@ -32,14 +32,14 @@ class ApcCache
      *
      * @return mixed The cached data or FALSE, if no cache entry exists for the given id.
      */
-    public function fetch($id)
+    public function fetch($id, $defaultValue = null)
     {
         $id = $this->uniqId.'-'.$id;
         if ($this->contains($id)) {
             return $this->cache->fetch($id);
         }
 
-        return false;
+        return $defaultValue;
     }
 
     /**

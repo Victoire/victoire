@@ -34,11 +34,10 @@ services:
             - @victoire_widget_map.manager
             - @victoire_widget_map.helper
             - @victoire_widget_map.builder
-            - @victoire_core.annotation_reader
+            - @victoire_business_entity.cache_reader
             - @victoire_core.template_mapper
             - @victoire_page.page_helper
             - %victoire_core.slots%
-            - @service_container
         scope: request
 
     widget_manager:

@@ -13,7 +13,7 @@
         <ul class="vic-nav vic-nav-tabs vic-modal-nav-tabs">
             <li class="{% if constant('MODE_STATIC', widget) == widget.mode %}vic-active {% endif %}vic-seperate"><a href="#picker-static" data-toggle="vic-tab">Manuel</a></li>
             {% for class, namespace in classes %}
-            <li{% if not loop.last %} class="{% if widget.businessEntityName == class %}vic-active {% endif %}vic-seperate"{% endif %}><a href="#picker-{{class}}" data-toggle="vic-tab">{{ ('form.widget.tab.' ~ class ~ '.label')|trans({}, 'victoire') }}</a></li>
+            <li{% if not loop.last %} class="{% if widget.businessEntityName == class %}vic-active {% endif %}vic-seperate"{% endif %}><a href="#picker-{{class}}" data-toggle="vic-tab">{{ ('form.widget.tab.' ~ class|lower ~ '.label')|trans({}, 'victoire') }}</a></li>
             {% endfor %}
         </ul>
     {% endif %}

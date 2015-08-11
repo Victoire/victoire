@@ -17,14 +17,17 @@ trait VictoireAlertifyControllerTrait {
      */
     public function alert($content, $type = 'success')
     {
-        if (is_array($content)) {
-            $content['context'] = 'victoire';
-        } else {
+        if (!is_array($content)) {
             $content = array(
-                'context' => 'victoire',
-                'body'    => $content
+                'body' => $content
             );
         }
+
+        $content = array_merge($content, array(
+                'context' => 'victoire',
+                'layout' => 'growl',
+                'effect' => 'jelly'
+            ));
         $this->container->get('appventus_alertifybundle.helper.alertifyhelper')->alert($content, $type);
     }
 

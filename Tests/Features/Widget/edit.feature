@@ -14,7 +14,7 @@ Feature: Edit a widget
         Then I should see "Représentation métier"
         When I follow "Représentation métier"
         Then I should see "Ajouter une représentation"
-        When I follow the tab "jedi"
+        When I follow the tab "Jedi"
         And I follow "Ajouter une représentation"
         Then I should see "Créer une représentation métier"
         When I fill in "Nom" with "Fiche Jedi - {{item.name}}"
@@ -45,7 +45,7 @@ Feature: Edit a widget
         Then I should see "Représentation métier"
         When I follow "Représentation métier"
         Then I should see "Ajouter une représentation"
-        When I follow the tab "jedi"
+        When I follow the tab "Jedi"
         And I follow "Ajouter une représentation"
         Then I should see "Créer une représentation métier"
         When I fill in "Nom" with "Fiche Jedi - {{item.name}}"
@@ -69,4 +69,4 @@ Feature: Edit a widget
         When I select "side" from "jedi_query_victoire_widget_form_force[fields][side]"
         And I submit the widget
         Then I should see "Victoire !"
-        And I should see "Le Côté dark de la force"
+        And I should see "Le Côté obscure de la force"

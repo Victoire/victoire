@@ -4,6 +4,7 @@ namespace Victoire\Bundle\AnalyticsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Victoire\Bundle\UserBundle\Model\User;
 
 /**
  * BrowseEvent
@@ -142,7 +143,7 @@ class BrowseEvent
 
     /**
      * Set author
-     * @param string $author
+     * @param User $author
      *
      * @return $this
      */

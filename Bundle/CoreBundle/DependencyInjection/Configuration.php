@@ -29,7 +29,7 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->children()
                 ->variableNode('base_paths')
-                ->defaultValue(array('%kernel.root_dir%/../src', '%kernel.root_dir%/../vendor/victoire/victoire/Bundle/BlogBundle'))
+                ->defaultValue(array('%kernel.root_dir%/../src', '%kernel.root_dir%/../vendor/victoire/victoire/Bundle/BlogBundle', '%kernel.root_dir%/../vendor/friendsofvictoire'))
                 ->end()
             ->end()
             ->children()

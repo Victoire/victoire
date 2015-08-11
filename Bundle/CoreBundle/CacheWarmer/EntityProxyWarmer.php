@@ -3,25 +3,26 @@ namespace Victoire\Bundle\CoreBundle\CacheWarmer;
 
 use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmer;
 use Symfony\Component\HttpKernel\Config\FileLocator;
+use Victoire\Bundle\BusinessEntityBundle\Generator\EntityProxyGenerator;
+use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 
 /**
- *
- * @author Paul Andrieux
- *
+ * The EntityProxyWarmer uses the EntityProxyGenerator to generate the entity proxy class according to BusinessEntities.
  */
 class EntityProxyWarmer extends CacheWarmer
 {
-    private $annotationReader;
+    private $businessEntityHelper;
     private $fileLocator;
 
     /**
      * Constructor
+     * @param BusinessEntityHelper $businessEntityHelper
+     * @param FileLocator          $fileLocator
      *
-     * @param unknown $annotationReader
      */
-    public function __construct($annotationReader, FileLocator $fileLocator)
+    public function __construct(BusinessEntityHelper $businessEntityHelper, FileLocator $fileLocator)
     {
-        $this->annotationReader = $annotationReader;
+        $this->businessEntityHelper = $businessEntityHelper;
         $this->fileLocator = $fileLocator;
     }
 
@@ -30,7 +31,7 @@ class EntityProxyWarmer extends CacheWarmer
      *
      * @param string $cacheDir The cache directory
      *
-     * @throws Exception
+     * @throws \RuntimeException
      */
     public function warmUp($cacheDir)
     {
@@ -43,11 +44,11 @@ class EntityProxyWarmer extends CacheWarmer
             }
         }
 
-        $generator = new EntityProxyGenerator($this->annotationReader, $this->fileLocator);
+        $generator = new EntityProxyGenerator($this->businessEntityHelper, $this->fileLocator);
         $cacheContent = $generator->generate();
 
         $this->writeCacheFile($file, $cacheContent);
-        if (!class_exists("Victoire\Bundle\CoreBundle\Entity\EntityProxy")) {
+        if (!class_exists("Victoire\\Bundle\\CoreBundle\\Entity\\EntityProxy")) {
             include_once $file;
         }
     }

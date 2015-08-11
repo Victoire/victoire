@@ -1,17 +1,50 @@
+parameters:
+    victoire_business_entity.annotation_driver_class:  Victoire\Bundle\BusinessEntityBundle\Annotation\AnnotationDriver
+    victoire_business_entity.business_entity_subscriber_class: Victoire\Bundle\BusinessEntityBundle\EventSubscriber\BusinessEntitySubscriber
+    victoire_business_entity.business_entity_type_extension_class: Victoire\Bundle\BusinessEntityBundle\Form\Extension\BusinessEntityTypeExtension
+    victoire_business_entity.converter.parameter_converter_class: Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter
+    victoire_business_entity.cache_reader_class: Victoire\Bundle\BusinessEntityBundle\Reader\BusinessEntityCacheReader
+    victoire_business_entity.metadata_listener_class: Victoire\Bundle\BusinessEntityBundle\Listener\MetadataListener
+    victoire_business_entity.metadata_builder_class: Victoire\Bundle\BusinessEntityBundle\Doctrine\MetadataBuilder
+
 services:
+
     victoire_business_entity.converter.parameter_converter:
-        class: Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter
+        class: "%victoire_business_entity.converter.parameter_converter_class%"
 
     victoire_business_entity.business_entity_subscriber:
-        class: Victoire\Bundle\BusinessEntityBundle\EventSubscriber\BusinessEntitySubscriber
+        class: "%victoire_business_entity.business_entity_subscriber_class%"
         arguments:
             - @service_container
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
     victoire_business_entity.business_entity_type_extension:
-        class: Victoire\Bundle\BusinessEntityBundle\Form\Extension\BusinessEntityTypeExtension
+        class: "%victoire_business_entity.business_entity_type_extension_class%"
         arguments:
             - "@victoire_core.helper.business_entity_helper"
         tags:
             - { name: form.type_extension, alias: form }
+
+    victoire_business_entity.warmer:
+        class: Victoire\Bundle\BusinessEntityBundle\CacheWarmer\BusinessEntityWarmer
+        arguments:
+            - "@victoire_business_entity.annotation_driver"
+        tags:
+            # 110 => Must be higher than victoire_core.cache_warmer.entity_proxy_warmer
+            - { name: kernel.cache_warmer, priority: 110}
+    victoire_business_entity.cache_reader:
+        class: "%victoire_business_entity.cache_reader_class%"
+        arguments:
+            - "@victoire_core.apc.cache"
+            - "@victoire_widget.widget_helper"
+            - "@victoire_business_entity.annotation_driver"
+
+#  ==================  Annotations ================== #
+    victoire_business_entity.annotation_driver:
+        class: "%victoire_business_entity.annotation_driver_class%"
+        arguments:
+            - "@annotation_reader"
+            - "@event_dispatcher"
+            - "@victoire_widget.widget_helper"
+            - "%victoire_core.base_paths%"

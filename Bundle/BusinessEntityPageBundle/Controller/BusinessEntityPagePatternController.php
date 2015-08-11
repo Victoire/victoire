@@ -79,14 +79,14 @@ class BusinessEntityPagePatternController extends Controller
      */
     private function createCreateForm(BusinessEntityPagePattern $view)
     {
-        $businessEntityName = $view->getBusinessEntityName();
+        $id = $view->getBusinessEntityName();
         $businessProperty = $this->getBusinessProperties($view);
 
         $form = $this->createForm(
             'victoire_business_entity_page_pattern_type',
             $view,
             array(
-                'action'           => $this->generateUrl('victoire_bepp_create', array('id' => $businessEntityName)),
+                'action'           => $this->generateUrl('victoire_bepp_create', array('id' => $id)),
                 'method'           => 'POST',
                 'businessProperty' => $businessProperty,
             )
@@ -156,8 +156,7 @@ class BusinessEntityPagePatternController extends Controller
 
         //the business property link to the page
         $businessEntityId = $view->getBusinessEntityName();
-        $businessEntity = $businessEntityHelper->findById($businessEntityId);
-
+        $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($businessEntityId);
 
         $businessProperties = $businessEntityPagePatternHelper->getBusinessProperties($businessEntity);
 
@@ -330,7 +329,7 @@ class BusinessEntityPagePatternController extends Controller
         //the name of the business entity link to the business entity page pattern
         $businessEntityName = $view->getBusinessEntityName();
 
-        $businessEntity = $businessEntityHelper->findById($businessEntityName);
+        $businessEntity = $businessEntityHelper->findById(strtolower($businessEntityName));
         $businessProperties = $businessEntity->getBusinessPropertiesByType('businessParameter');
 
         $businessProperty = array();
