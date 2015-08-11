@@ -4,7 +4,7 @@ namespace Victoire\Bundle\BusinessEntityBundle\Reader;
 
 use Victoire\Bundle\BusinessEntityBundle\Annotation\AnnotationDriver;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
-use Victoire\Bundle\CoreBundle\Cache\ApcCache;
+use Victoire\Bundle\CoreBundle\Cache\VictoireCache;
 use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
 use Victoire\Bundle\WidgetBundle\Model\Widget;
 
@@ -21,12 +21,12 @@ class BusinessEntityCacheReader
 
     /**
      * Constructor
-     * @param ApcCache         $cache
+     * @param VictoireCache    $cache
      * @param WidgetHelper     $widgetHelper
      * @param AnnotationDriver $driver       If cache returns empty results, we try to refectch data
      *
      */
-    public function __construct(ApcCache $cache, WidgetHelper $widgetHelper, AnnotationDriver $driver)
+    public function __construct(VictoireCache $cache, WidgetHelper $widgetHelper, AnnotationDriver $driver)
     {
         $this->cache = $cache;
         $this->widgetHelper = $widgetHelper;

@@ -25,7 +25,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('user_class')->defaultNull()->end()
             ->end()
             ->children()
-                ->scalarNode('cache_dir')->defaultValue('%kernel.cache_dir%/victoire/Entity')->end()
+                ->scalarNode('cache_dir')->defaultValue('%kernel.cache_dir%/victoire')->end()
             ->end()
             ->children()
                 ->variableNode('base_paths')

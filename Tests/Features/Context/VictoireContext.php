@@ -72,7 +72,9 @@ class VictoireContext extends RawMinkContext
     public function iSwitchToMode($mode)
     {
         $element = $this->getSession()->getPage()->find('xpath', 'descendant-or-self::*[@data-mode="admin-'.$mode.'"]');
-        $element->click();
+        if ($element) {
+            $element->click();
+        }
     }
 
     /**
@@ -81,7 +83,9 @@ class VictoireContext extends RawMinkContext
     public function iOpenTheHamburgerMenu()
     {
         $element = $this->getSession()->getPage()->find('xpath', 'descendant-or-self::*[@id="vic-menu-leftnavbar-trigger"]');
-        $element->click();
+        if ($element) {
+            $element->click();
+        }
     }
 
     /**
