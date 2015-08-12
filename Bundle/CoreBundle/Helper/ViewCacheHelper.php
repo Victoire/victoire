@@ -160,6 +160,10 @@ XML;
         return $viewReference;
     }
 
+    /**
+     * @param array $parameters
+     * @return array
+     */
     public function getAllReferenceByParameters($parameters)
     {
         $viewsReferences = array();
@@ -173,8 +177,6 @@ XML;
             foreach ($xmlReferences as $xmlReference) {
                 $viewsReferences[]  = current($xmlReference->attributes());
             }
-        } else {
-            $viewsReferences = null;
         }
 
         return $viewsReferences;

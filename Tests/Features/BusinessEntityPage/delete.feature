@@ -15,6 +15,7 @@ Feature: Create business entity pages
         When I follow "Représentation métier"
         Then I should see "Ajouter une représentation"
         When I follow the tab "Jedi"
+        And I should see "Ajouter une représentation"
         And I follow "Ajouter une représentation"
         Then I should see "Créer une représentation métier"
         When I fill in "Nom" with "Fiche Jedi - {{item.name}}"
