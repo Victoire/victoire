@@ -8,10 +8,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\VarDumper\VarDumper;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
-use Victoire\Bundle\WidgetBundle\Model\WidgetManager;
 
 /**
  * Widget Controller
@@ -122,9 +121,8 @@ class WidgetController extends Controller
             $isNewPage = $view->getId() === null ? true : false;
 
             $this->get('victoire_core.current_view')->setCurrentView($view);
-            $widgetManager = $this->getWidgetManager();
 
-            $response = $widgetManager->createWidget($mode, $type, $slot, $view, $entityName, $positionReference);
+            $response = $this->get('widget_manager')->createWidget($mode, $type, $slot, $view, $entityName, $positionReference);
 
             if ($isNewPage) {
                 $response = new JsonResponse(array(
@@ -167,8 +165,15 @@ class WidgetController extends Controller
         $widgetView->setReference($widgetViewReference);
         $this->get('victoire_core.current_view')->setCurrentView($view);
         try {
-            $widgetManager = $this->getWidgetManager();
-            $response = new JsonResponse($widgetManager->editWidget($this->get('request'), $widget, $view, $entityName, $mode));
+            $response = new JsonResponse(
+                $this->get('widget_manager')->editWidget(
+                    $this->get('request'),
+                    $widget,
+                    $view,
+                    $entityName,
+                    $mode
+                )
+            );
         } catch (Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
         }
@@ -326,18 +331,6 @@ class WidgetController extends Controller
         }
 
         return $response;
-    }
-
-    /**
-     * Shortcut for getting the widget manager
-     *
-     * @return WidgetManager
-     */
-    protected function getWidgetManager()
-    {
-        $manager = $this->get('widget_manager');
-
-        return $manager;
     }
 
     /**

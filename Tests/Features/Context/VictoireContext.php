@@ -3,6 +3,7 @@
 namespace Victoire\Tests\Features\Context;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 
+use Behat\Mink\Element\Element;
 use Behat\Symfony2Extension\Context\KernelDictionary;
 use Knp\FriendlyContexts\Context\MinkContext;
 use Knp\FriendlyContexts\Context\RawMinkContext;
@@ -71,17 +72,29 @@ class VictoireContext extends RawMinkContext
      */
     public function iSwitchToMode($mode)
     {
-        $element = $this->getSession()->getPage()->find('xpath', 'descendant-or-self::*[@data-mode="admin-'.$mode.'"]');
+        $element = $this->findOrRetry($this->getSession()->getPage(), 'xpath', 'descendant-or-self::*[@data-mode="admin-'.$mode.'"]');
+
+        if (null === $element) {
+            $message = sprintf('Element not found in the page after 10 seconds"');
+            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
+        }
         $element->click();
+
     }
 
     /**
-     * @Then /^I open the hamburger menu$/
+     * @Then /^I (open|close|toggle) the hamburger menu$/
      */
     public function iOpenTheHamburgerMenu()
     {
-        $element = $this->getSession()->getPage()->find('xpath', 'descendant-or-self::*[@id="vic-menu-leftnavbar-trigger"]');
+        $element = $this->findOrRetry($this->getSession()->getPage(), 'xpath', 'descendant-or-self::*[@id="vic-menu-leftnavbar-trigger"]');
+
+        if (null === $element) {
+            $message = sprintf('Element not found in the page after 10 seconds"');
+            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
+        }
         $element->click();
+
     }
 
     /**
@@ -89,8 +102,13 @@ class VictoireContext extends RawMinkContext
      */
     public function iFollowTheTab($name)
     {
-        $tab = $this->getSession()->getPage()->find('xpath', sprintf('descendant-or-self::a[@data-toggle="vic-tab" and normalize-space(text()) = "%s"]', $name));
-        $tab->click();
+        $element = $this->findOrRetry($this->getSession()->getPage(), 'xpath', sprintf('descendant-or-self::a[@data-toggle="vic-tab" and normalize-space(text()) = "%s"]', $name));
+
+        if (null === $element) {
+            $message = sprintf('Element not found in the page after 10 seconds"');
+            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
+        }
+        $element->click();
     }
 
     /**
@@ -98,7 +116,7 @@ class VictoireContext extends RawMinkContext
      */
     public function iSubmitTheWidget()
     {
-        $element = $this->getSession()->getPage()->find('xpath', 'descendant-or-self::*[@class="vic-modal-footer-content"]/a[@data-modal="create"]');
+        $element = $this->findOrRetry($this->getSession()->getPage(), 'xpath', 'descendant-or-self::*[@class="vic-modal-footer-content"]/a[@data-modal="create"]');
         if (!$element) {
             $element = $this->getSession()->getPage()->find('xpath', 'descendant-or-self::*[@class="vic-modal-footer-content"]/a[@data-modal="update"]');
         }
@@ -150,5 +168,30 @@ class VictoireContext extends RawMinkContext
         $link->click();
         $optionButton = $this->getSession()->getPage()->find('css', sprintf('ul[aria-labelledby="%sDropdownMenu"] > li > a[title="%s"]', $dropdown, $option));
         $optionButton->click();
+    }
+
+    /**
+     * Try to find value in element and retry for a given time
+     * @param Element $element
+     * @param string  $selectorType xpath|css
+     * @param string  $value
+     * @param integer $timeout
+     */
+    protected function findOrRetry(Element $element, $selectorType, $value, $timeout = 10000)
+    {
+        if ($timeout <= 0) {
+            return null;
+        }
+
+        $item = $element->find($selectorType, $value);
+
+        if ($item) {
+            return $item;
+        } else {
+            $this->getSession()->wait(100);
+
+            return $this->findOrRetry($element, $selectorType, $value, $timeout - 100);
+        }
+
     }
 }

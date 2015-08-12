@@ -68,5 +68,8 @@ class VictoireCoreExtension extends Extension
         $container->setParameter(
             'victoire_core.base_paths', $config['base_paths']
         );
+        $container->setParameter(
+            'victoire_core.base_paths', $config['base_paths']
+        );
     }
 }

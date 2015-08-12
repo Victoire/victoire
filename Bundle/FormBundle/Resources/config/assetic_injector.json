@@ -10,6 +10,7 @@
                 "@VictoireFormBundle/Resources/public/components/fontawesome-iconpicker-1.0.0/js/fontawesome-iconpicker.min.js",
                 "@VictoireFormBundle/Resources/public/js/mopabootstrap-collection.js",
                 "@VictoireFormBundle/Resources/public/js/link.js",
+                "@VictoireFormBundle/Resources/public/js/slug.js",
                 "@VictoireFormBundle/Resources/public/js/form.js"
             ]
          },

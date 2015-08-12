@@ -77,7 +77,8 @@ class Widget extends BaseWidget
      * Auto simple mode: joined entity
      * @var EntityProxy
      *
-     * @ORM\OneToOne(targetEntity="\Victoire\Bundle\CoreBundle\Entity\EntityProxy", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\CoreBundle\Entity\EntityProxy", inversedBy="widgets", cascade={"persist"})
+     * @ORM\JoinColumn(name="entityProxy_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $entityProxy;
 }

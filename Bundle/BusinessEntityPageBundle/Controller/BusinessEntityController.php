@@ -21,7 +21,7 @@ class BusinessEntityController extends PageController
      */
     public function indexAction()
     {
-        $businessEntityManager = $this->get('victoire_core.helper.business_entity_helper');
+        $businessEntityHelper = $this->get('victoire_core.helper.business_entity_helper');
 
         //services
         $em = $this->get('doctrine.orm.entity_manager');
@@ -31,7 +31,7 @@ class BusinessEntityController extends PageController
 
         $businessEntityPagePatterns = array();
 
-        $businessEntities = $businessEntityManager->getBusinessEntities();
+        $businessEntities = $businessEntityHelper->getBusinessEntities();
 
         foreach ($businessEntities as $businessEntity) {
             $name = $businessEntity->getName();

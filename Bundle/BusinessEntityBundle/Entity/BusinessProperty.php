@@ -55,4 +55,18 @@ class BusinessProperty
     {
         return $this->entityProperty;
     }
+
+    /**
+     * setState (convert from array to object)
+     *
+     * @return string
+     */
+    public static function __set_state($array)
+    {
+        $businessPropery = new BusinessProperty();
+        $businessPropery->setType($array['type']);
+        $businessPropery->setEntityProperty($array['entityProperty']);
+
+        return $businessPropery;
+    }
 }

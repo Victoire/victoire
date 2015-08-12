@@ -79,14 +79,14 @@ class BusinessEntityPagePatternController extends Controller
      */
     private function createCreateForm(BusinessEntityPagePattern $view)
     {
-        $businessEntityName = $view->getBusinessEntityName();
+        $id = $view->getBusinessEntityName();
         $businessProperty = $this->getBusinessProperties($view);
 
         $form = $this->createForm(
-            'victoire_business_entity_page_type',
+            'victoire_business_entity_page_pattern_type',
             $view,
             array(
-                'action'           => $this->generateUrl('victoire_bepp_create', array('id' => $businessEntityName)),
+                'action'           => $this->generateUrl('victoire_bepp_create', array('id' => $id)),
                 'method'           => 'POST',
                 'businessProperty' => $businessProperty,
             )
@@ -156,8 +156,7 @@ class BusinessEntityPagePatternController extends Controller
 
         //the business property link to the page
         $businessEntityId = $view->getBusinessEntityName();
-        $businessEntity = $businessEntityHelper->findById($businessEntityId);
-
+        $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($businessEntityId);
 
         $businessProperties = $businessEntityPagePatternHelper->getBusinessProperties($businessEntity);
 
@@ -188,7 +187,7 @@ class BusinessEntityPagePatternController extends Controller
     {
         $businessProperty = $this->getBusinessProperties($view);
 
-        $form = $this->createForm('victoire_business_entity_page_type', $view, array(
+        $form = $this->createForm('victoire_business_entity_page_pattern_type', $view, array(
             'action' => $this->generateUrl('victoire_bepp_update', array('id' => $view->getId())),
             'method' => 'PUT',
             'businessProperty' => $businessProperty,
@@ -228,11 +227,8 @@ class BusinessEntityPagePatternController extends Controller
             //get the url of the template
             $pagePattern = $pagePattern->getUrl();
 
-            //the shortcuts service
-            $shortcuts = $this->get('av.shortcuts');
-
             //redirect to the page of the template
-            $completeUrl = $shortcuts->generateUrl('victoire_core_page_show', array('url' => $pagePattern));
+            $completeUrl = $this->generateUrl('victoire_core_page_show', array('url' => $pagePattern));
             $message = $this->get('translator')->trans('victoire.business_entity_page_pattern.edit.success', array(), 'victoire');
 
             $success = true;
@@ -333,7 +329,7 @@ class BusinessEntityPagePatternController extends Controller
         //the name of the business entity link to the business entity page pattern
         $businessEntityName = $view->getBusinessEntityName();
 
-        $businessEntity = $businessEntityHelper->findById($businessEntityName);
+        $businessEntity = $businessEntityHelper->findById(strtolower($businessEntityName));
         $businessProperties = $businessEntity->getBusinessPropertiesByType('businessParameter');
 
         $businessProperty = array();

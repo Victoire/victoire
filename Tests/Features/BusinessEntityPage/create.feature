@@ -13,8 +13,11 @@ Feature: Create business entity pages
         Given I open the hamburger menu
         Then I should see "Représentation métier"
         When I follow "Représentation métier"
+        And I close the hamburger menu
+        Then I should see "Jedi"
         Then I should see "Ajouter une représentation"
-        When I follow the tab "jedi"
+        When I follow the tab "Jedi"
+        And I should see "Ajouter une représentation"
         And I follow "Ajouter une représentation"
         Then I should see "Créer une représentation métier"
         When I fill in "Nom" with "Fiche Jedi - {{item.name}}"
@@ -33,17 +36,18 @@ Feature: Create business entity pages
         Then I should see "Victoire !"
         Then I should see "Le Côté jedi -> side de la force"
         Given I am on "/fr/fiche-jedi-anakin"
-        Then I should see "Le Côté dark de la force"
+        Then I should see "Le Côté obscure de la force"
         Given I am on "/fr/fiche-jedi-yoda"
-        Then I should see "Le Côté bright de la force"
+        Then I should see "Le Côté lumineux de la force"
 
     Scenario: I can create two Business entity page patterns differentiated by queries and access to their related Business Entity pages
         Given I open the hamburger menu
         Then I should see "Représentation métier"
-
         When I follow "Représentation métier"
+        And I close the hamburger menu
         Then I should see "Ajouter une représentation"
-        When I follow the tab "jedi"
+        When I follow the tab "Jedi"
+        And I should see "Ajouter une représentation"
         And I follow "Ajouter une représentation"
         Then I should see "Créer une représentation métier"
         When I fill in "Nom" with "Fiche Jedi Dark - {{item.name}}"
@@ -62,8 +66,10 @@ Feature: Create business entity pages
 
         When I open the hamburger menu
         And I follow "Représentation métier"
+        And I close the hamburger menu
         Then I should see "Ajouter une représentation"
-        When I follow the tab "jedi"
+        When I follow the tab "Jedi"
+        And I should see "Ajouter une représentation"
         And I follow "Ajouter une représentation"
         Then I should see "Créer une représentation métier"
         When I fill in "Nom" with "Fiche Jedi Bright - {{item.name}}"
@@ -94,8 +100,10 @@ Feature: Create business entity pages
         Given I open the hamburger menu
         Then I should see "Représentation métier"
         When I follow "Représentation métier"
+        And I close the hamburger menu
         Then I should see "Ajouter une représentation"
-        When I follow the tab "jedi"
+        When I follow the tab "Jedi"
+        And I should see "Ajouter une représentation"
         And I follow "Ajouter une représentation"
         Then I should see "Créer une représentation métier"
         When I fill in "Nom" with "Fiche Jedi - {{item.name}}"
@@ -116,8 +124,10 @@ Feature: Create business entity pages
         Given I open the hamburger menu
         Then I should see "Représentation métier"
         When I follow "Représentation métier"
+        And I close the hamburger menu
         Then I should see "Ajouter une représentation"
-        When I follow the tab "jedi"
+        When I follow the tab "Jedi"
+        And I should see "Ajouter une représentation"
         And I follow "Ajouter une représentation"
         Then I should see "Créer une représentation métier"
         When I fill in "Nom" with "Fiche Jedi - {{item.name}}"
@@ -146,7 +156,7 @@ Feature: Create business entity pages
         And I press "Créer"
 
         Given I am on "/fr/fiche-jedi-mace-windu"
-        Then I should see "Le Côté dark de la force"
+        Then I should see "Le Côté obscure de la force"
 
 
 

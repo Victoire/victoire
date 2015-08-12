@@ -18,7 +18,7 @@ use Victoire\Bundle\CoreBundle\Annotations as VIC;
 class Character
 {
     use \Gedmo\Timestampable\Traits\TimestampableEntity;
-    use \Victoire\Bundle\CoreBundle\Entity\Traits\BusinessEntityTrait;
+    use \Victoire\Bundle\BusinessEntityBundle\Entity\Traits\BusinessEntityTrait;
 
     /**
      * @return string

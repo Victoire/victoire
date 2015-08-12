@@ -117,7 +117,8 @@ victoire_core:
     slots: ~
     base_paths: #(optional) required for a non standard installation
         - "%kernel.root_dir%/../../../Bundle/BlogBundle"
-        - "%kernel.root_dir%/../../../Tests/Functionnal/src"
+        - "%kernel.root_dir%/../../../vendor/friendsofvictoire"
+        - "%kernel.root_dir%/../src"
 
 services:
     twig.extension.text:

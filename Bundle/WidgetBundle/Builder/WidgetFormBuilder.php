@@ -3,6 +3,7 @@ namespace Victoire\Bundle\WidgetBundle\Builder;
 
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\Form;
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Event\WidgetBuildFormEvent;
 use Victoire\Bundle\CoreBundle\VictoireCmsEvents;
@@ -73,25 +74,23 @@ class WidgetFormBuilder
      * Generates new forms for each available business entities
      *
      * @param string $slot
-     * @param View   $view
-     * @param Widget $widget
-     *
-     * @return collection of forms
+     * @param View             $view
+     * @param Widget           $widget
+     * @param BusinessEntity[] $classes
+     * @param int              $position
+     * @throws \Exception
+     * @return Form[]
      */
-    public function renderNewWidgetForms($slot, View $view, Widget $widget, $position = 0)
+    public function renderNewWidgetForms($slot, View $view, Widget $widget, $classes, $position = 0)
     {
-        $annotationReader = $this->container->get('victoire_core.annotation_reader');
-        $classes = $annotationReader->getBusinessClassesForWidget($widget);
-        $manager = $this->container->get('widget_manager');
-
         //the static form
         $forms['static'] = array();
         $forms['static']['main'] = $this->renderNewForm($this->buildForm($widget, $view, null, null, Widget::MODE_STATIC, $position), $widget, $slot, $view, null);
 
         // Build each form relative to business entities
-        foreach ($classes as $entityName => $namespace) {
+        foreach ($classes as $entityName => $businessEntity) {
             //get the forms for the business entity (entity/query/businessEntity)
-            $entityForms = $this->buildEntityForms($manager, $widget, $view, $entityName, $namespace);
+            $entityForms = $this->buildEntityForms($widget, $view, $entityName, $businessEntity->getClass());
 
             //the list of forms
             $forms[$entityName] = array();
@@ -107,7 +106,6 @@ class WidgetFormBuilder
     }
 
     /**
-     * @param object $manager
      * @param Widget $widget
      * @param View    $view
      * @param string  $entityName
@@ -115,7 +113,7 @@ class WidgetFormBuilder
      *
      * @return array
      */
-    public function buildEntityForms($manager, $widget, View $view, $entityName = null, $namespace = null, $position = 0)
+    protected function buildEntityForms($widget, View $view, $entityName = null, $namespace = null, $position = 0)
     {
         $forms = array();
 
@@ -208,7 +206,7 @@ class WidgetFormBuilder
         $mockForm = $formFactory->create($formAlias, $widget, $params);
         //Prefix base name with form mode to avoid to have unique form fields ids
         $form = $formFactory->createNamed(
-            sprintf("%s_%s_%s", $entityName, $formMode, $mockForm->getName()),
+            sprintf("%s_%s_%s", strtolower($entityName), $formMode, $mockForm->getName()),
             $formAlias,
             $widget,
             $params
@@ -270,17 +268,15 @@ class WidgetFormBuilder
         //if there is an entity
         if ($entityName) {
             //get the businessClasses for the widget
-            $classes = $this->container->get('victoire_core.annotation_reader')->getBusinessClassesForWidget($widget);
+            $classes = $this->container->get('victoire_core.helper.business_entity_helper')->getBusinessClassesForWidget($widget);
 
             //test the result
             if (!isset($classes[$entityName])) {
                 throw new \Exception('The entity '.$entityName.' was not found int the business classes.');
             }
-
             //get the class of the entity name
-            $entityClass = $classes[$entityName];
+            $entityClass = $classes[$entityName]->getClass();
         }
-
 
         $form = $this->buildForm($widget, $view, $entityName, $entityClass, $widget->getMode(), $position);
 

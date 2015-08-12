@@ -67,12 +67,18 @@ class BusinessEntitySubscriber implements EventSubscriber
                 // Get the BusinessEntityPage if exists for the given entity
                 $persistedPage = $bepRepo->findPageByBusinessEntityAndPattern($pattern, $entity, $businessEntity);
                 // If there is diff between persisted BEP and computed, persist the change
-                if ($persistedPage && $computedPage->getUrl() !== $persistedPage->getUrl()) {
-                    $persistedPage->setUrl($computedPage->getUrl());
+                if ($persistedPage && $computedPage->getSlug() !== $persistedPage->getSlug()) {
+                    $persistedPage->setSlug($computedPage->getSlug());
                     $entityManager->persist($persistedPage);
                     $entityManager->flush();
+
+                    //we update the cache bor the persisted page
+                    $this->updateCache($persistedPage, $entity);
+                }else{
+                    //we update cache with the computed page
+                    $this->updateCache($pattern, $entity);
+
                 }
-                $this->updateCache($pattern, $entity);
             }
         }
 

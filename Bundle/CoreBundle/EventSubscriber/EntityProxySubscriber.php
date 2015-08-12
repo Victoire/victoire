@@ -4,21 +4,22 @@ namespace Victoire\Bundle\CoreBundle\EventSubscriber;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
+use Victoire\Bundle\BusinessEntityBundle\Reader\BusinessEntityCacheReader;
 
 /**
  * This class build the entity EntityProxy with activated widgets relations
  **/
 class EntityProxySubscriber implements EventSubscriber
 {
-    protected static $annotationReader;
+    protected static $cacheReader;
 
     /**
      * contructor
-     * @param array $annotationReader
+     * @param BusinessEntityCacheReader $cacheReader
      */
-    public function setAnnotationReader($annotationReader)
+    public function setBusinessEntityCacheReader(BusinessEntityCacheReader $cacheReader)
     {
-        self::$annotationReader = $annotationReader;
+        self::$cacheReader = $cacheReader;
     }
 
     /**
@@ -39,29 +40,25 @@ class EntityProxySubscriber implements EventSubscriber
      */
     public static function loadClassMetadata($eventArgs)
     {
-        //this functions is called during the extract of translations
-        //but the argument is not the same
-        //so to avoid an error during extractions, we test the argument
         if ($eventArgs instanceof LoadClassMetadataEventArgs) {
-            $annotationReader = self::$annotationReader;
-
             $metadatas = $eventArgs->getClassMetadata();
             if ($metadatas->name === 'Victoire\Bundle\CoreBundle\Entity\EntityProxy') {
-                foreach ($annotationReader->getBusinessClasses() as $field => $entity) {
-                    if (!$metadatas->hasAssociation($field)) {
+                foreach (self::$cacheReader->getBusinessClasses() as $entity) {
+                    if (!$metadatas->hasAssociation($entity->getId())) {
                         $metadatas->mapManyToOne(array(
-                            'fieldName'    => $field,
-                            'targetEntity' => $entity,
+                            'fieldName'    => $entity->getId(),
+                            'targetEntity' => $entity->getClass(),
                             'cascade'      => array('persist'),
-                            'inversedBy'   => 'proxies'
+                            'inversedBy'   => 'proxies',
                             )
                         );
-                        $metadatas->associationMappings[$field]['joinColumns'][0]['onDelete'] = "CASCADE";
+                        $metadatas->associationMappings[$entity->getId()]['joinColumns'][0]['onDelete'] = "CASCADE";
                     }
                 }
             }
+
             // Test if the current entity is a businessEntity
-            $key = array_search($metadatas->name, $annotationReader->getBusinessClasses());
+            $key = array_search($metadatas->name, self::$cacheReader->getBusinessClasses());
             // If so, and if proxies relation has already been injected (by a parent BusinessEntity)
             if ($key && !$metadatas->hasAssociation('proxies')) {
                 $metaBuilder = new ClassMetadataBuilder($metadatas);

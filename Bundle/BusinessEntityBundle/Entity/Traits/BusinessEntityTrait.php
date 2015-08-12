@@ -1,26 +1,19 @@
 <?php
-namespace Victoire\Bundle\CoreBundle\Entity\Traits;
+
+namespace Victoire\Bundle\BusinessEntityBundle\Entity\Traits;
+
+use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 
 /**
  * BusinessEntity trait adds relationship with the entity proxies
- * @todo #2 Move this into the BusinessEntityBundle
  *
  */
 trait BusinessEntityTrait
 {
-
     /**
-     * @var string
-     *
-     * @ORM\OneToOne(targetEntity="\Victoire\Bundle\CoreBundle\Entity\EntityProxy")
+     * Association made dynamically in EntityProxySubscriber
      */
     protected $proxy;
-
-    /**
-     * proxies relation is inejcted by Victoire\Bundle\CoreBundle\EventSubscriber\EntityProxySubscriber
-     * like : OneToMany(targetEntity="\Victoire\Bundle\CoreBundle\Entity\EntityProxy", mappedBy="{{businessEntityName}}")
-     */
-    protected $proxies;
 
     /**
      * @var string
@@ -51,30 +44,6 @@ trait BusinessEntityTrait
     public function getProxy()
     {
         return $this->proxy;
-    }
-
-    /**
-     * Add proxies
-     *
-     * @param \Victoire\Bundle\CoreBundle\Entity\EntityProxy $proxies
-     *
-     * @return BusinessEntityTrait
-     */
-    public function addProxie(\Victoire\Bundle\CoreBundle\Entity\EntityProxy $proxies)
-    {
-        $this->proxies[] = $proxies;
-
-        return $this;
-    }
-
-    /**
-     * Remove proxies
-     *
-     * @param \Victoire\Bundle\CoreBundle\Entity\EntityProxy $proxies
-     */
-    public function removeProxie(\Victoire\Bundle\CoreBundle\Entity\EntityProxy $proxies)
-    {
-        $this->proxies->removeElement($proxies);
     }
 
     /**
@@ -114,7 +83,7 @@ trait BusinessEntityTrait
             $functionName = 'get'.ucfirst($field);
 
             $fieldValue = $this->{$functionName}();
-        }else{
+        } else {
             $fieldValue = null;
         }
 

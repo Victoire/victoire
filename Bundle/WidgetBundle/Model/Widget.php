@@ -3,6 +3,7 @@
 namespace Victoire\Bundle\WidgetBundle\Model;
 
 use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
+use Victoire\Bundle\CoreBundle\Entity\View;
 
 /**
  * Widget Model
@@ -186,7 +187,7 @@ abstract class Widget
     /**
      * Get view
      *
-     * @return string
+     * @return View
      */
     public function getView()
     {

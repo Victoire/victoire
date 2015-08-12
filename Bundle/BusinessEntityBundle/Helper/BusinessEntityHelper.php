@@ -2,10 +2,13 @@
 namespace Victoire\Bundle\BusinessEntityBundle\Helper;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
+use Victoire\Bundle\BusinessEntityBundle\Reader\BusinessEntityCacheReader;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
-use Victoire\Bundle\CoreBundle\Annotations\Reader\AnnotationReader;
+use Victoire\Bundle\CoreBundle\Cache\Builder\CacheBuilder;
+use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
  * The BusinessEntityHelper
@@ -14,72 +17,32 @@ use Victoire\Bundle\CoreBundle\Annotations\Reader\AnnotationReader;
  */
 class BusinessEntityHelper
 {
-    protected $annotationReader;
-    protected $em;
-    protected $businessEntities;
+    protected $reader;
+    protected $builder;
+    protected $entityManager;
 
     /**
      * Constructor
-     *
-     * @param AnnotationReader $annotationReader
-     * @param EntityManager    $entityManager
-     *
+     * @param BusinessEntityCacheReader $reader
+     * @param CacheBuilder              $builder
      */
-    public function __construct(AnnotationReader $annotationReader, EntityManager $entityManager)
+    public function __construct(BusinessEntityCacheReader $reader, CacheBuilder $builder)
     {
-        $this->annotationReader = $annotationReader;
-        $this->entityManager = $entityManager;
-        $this->businessEntities = null;
+        $this->reader = $reader;
+        $this->builder = $builder;
     }
 
     /**
-     * Get the business entities
+     * Set the EntityManagerInterface instance this helper instance should use.
      *
-     * @return array BusinessEntity
      */
-    public function getBusinessEntities()
+    public function setEntityManager(EntityManagerInterface $entityManager)
     {
-        //generate the business entities on demand
-        if ($this->businessEntities === null) {
-            $annotationReader = $this->annotationReader;
-
-            $businessEntities = $annotationReader->getBusinessClasses();
-            $businessEntitiesObjects = array();
-
-            foreach ($businessEntities as $name => $class) {
-                $be = new BusinessEntity();
-                $be->setId($name);
-                $be->setName($name);
-                $be->setClass($class);
-
-                //the business properties of the business entity
-                $businessProperties = $annotationReader->getBusinessProperties($class);
-
-                //parse the array of the annotation reader
-                foreach ($businessProperties as $type => $properties) {
-                    foreach ($properties as $property) {
-                        $bp = new BusinessProperty();
-                        $bp->setType($type);
-                        $bp->setEntityProperty($property);
-
-                        //add the business property to the business entity object
-                        $be->addBusinessProperty($bp);
-                        unset($bp);
-                    }
-                }
-
-                $businessEntitiesObjects[] = $be;
-            }
-
-            $this->businessEntities = $businessEntitiesObjects;
-        }
-
-        return $this->businessEntities;
+        $this->entityManager = $entityManager;
     }
 
     /**
      * Get a business entity by its id
-     *
      * @param string $id
      *
      * @throws \Exception
@@ -88,35 +51,38 @@ class BusinessEntityHelper
      */
     public function findById($id)
     {
-        if ($id === null) {
-            throw new \Exception('The parameter $id is mandatory');
-        }
-
-        //get all the business entities
-        $businessEntities = $this->getBusinessEntities();
-
-        //the result
-        $businessEntity = null;
-
-        //parse the business entities
-        foreach ($businessEntities as $tempBusinessEntity) {
-            //look for the same id
-            if ($tempBusinessEntity->getId() === $id) {
-                $businessEntity = $tempBusinessEntity;
-                //business entity was found, there is no need to continue
-                continue;
-            }
+        $businessEntity = $this->reader->findById(strtolower($id));
+        if ($businessEntity === null) {
+            throw new \Exception("\"".$id."\" does not seems to be a valid BusinessEntity");
         }
 
         return $businessEntity;
     }
 
     /**
+     * Get all business entities
+     *
+     * @return BusinessEntity
+     */
+    public function getBusinessEntities()
+    {
+        return $this->reader->getBusinessClasses();
+    }
+
+    /**
+     * this method get annotated business classes (from cache if enabled)
+     * @param Widget $widget
+     *
+     * @return array $businessClasses
+     **/
+    public function getBusinessClassesForWidget(Widget $widget)
+    {
+        return $this->reader->getBusinessClassesForWidget($widget);
+    }
+
+    /**
      * Get a business entity
-     *
      * @param Entity $entity
-     *
-     * @throws \Exception
      *
      * @return BusinessEntity
      */
@@ -124,7 +90,7 @@ class BusinessEntityHelper
     {
         $businessEntity = null;
         $class = new \ReflectionClass($entity);
-        while (!$businessEntity && $class && $class->name != null) {
+        while (!$businessEntity && $class && $class->name !== null) {
             $businessEntity = $this->findByEntityClassname($class->name);
             $class = $class->getParentClass();
         }
@@ -161,8 +127,7 @@ class BusinessEntityHelper
     }
 
     /**
-     * Find a entity by the business entity and the id
-     *
+     * Find a entity by the business entity and the attributeValue
      * @param BusinessEntity $businessEntity
      * @param string         $attributeName
      * @param string         $attributeValue
@@ -173,10 +138,9 @@ class BusinessEntityHelper
     {
         //retrieve the class of the business entity
         $class = $businessEntity->getClass();
-        $em = $this->entityManager;
 
         //get the repository
-        $repo = $em->getRepository($class);
+        $repo = $this->entityManager->getRepository($class);
 
         $functionName = 'findOneBy'.ucfirst($attributeName);
 
@@ -220,8 +184,76 @@ class BusinessEntityHelper
         return $entity;
     }
 
+    /**
+     * create a BusinessEntity from an annotation object
+     * @param string $className
+     * @param array  $businessProperties
+     *
+     * @return BusinessEntity
+     **/
+    public static function createBusinessEntity($className, array $businessProperties)
+    {
+        $businessEntity = new BusinessEntity();
+
+        $classNameArray = explode('\\', $className);
+        $entityName = array_pop($classNameArray);
+        $businessEntity->setId(strtolower($entityName));
+        $businessEntity->setName($entityName);
+        $businessEntity->setClass($className);
+
+        //parse the array of the annotation reader
+        foreach ($businessProperties as $type => $properties) {
+            foreach ($properties as $property) {
+                $businessProperty = new BusinessProperty();
+                $businessProperty->setType($type);
+                $businessProperty->setEntityProperty($property);
+
+                //add the business property to the business entity object
+                $businessEntity->addBusinessProperty($businessProperty);
+                unset($businessProperty);
+            }
+        }
+
+        return $businessEntity;
+    }
+
     public function getByBusinessEntityAndId(BusinessEntity $businessEntity, $id)
     {
         return $this->entityManager->getRepository($businessEntity->getClass())->findOneById($id);
+    }
+
+    /**
+     * will save business entity
+     * @param BusinessEntity $businessEntity
+     *
+     * @return void
+     **/
+    public function saveBusinessEntity(BusinessEntity $businessEntity)
+    {
+        $this->builder->saveBusinessEntity($businessEntity);
+    }
+
+    /**
+     * will save widget receiver properties
+     * @param string $widgetName
+     * @param array  $receiverProperties
+     *
+     * @return void
+     **/
+    public function saveWidgetReceiverProperties($widgetName, $receiverProperties)
+    {
+        $this->builder->saveWidgetReceiverProperties($widgetName, $receiverProperties);
+    }
+
+    /**
+     * will add widget business entity
+     * @param string $widgetName
+     * @param string $businessEntity
+     *
+     * @return void
+     **/
+    public function addWidgetBusinessEntity($widgetName, $businessEntity)
+    {
+        $this->builder->addWidgetBusinessEntity($widgetName, $businessEntity);
     }
 }

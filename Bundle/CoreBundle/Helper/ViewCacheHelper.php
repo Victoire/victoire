@@ -161,6 +161,28 @@ XML;
     }
 
     /**
+     * @param array $parameters
+     * @return array
+     */
+    public function getAllReferenceByParameters($parameters)
+    {
+        $viewsReferences = array();
+        $arguments = array();
+
+        foreach ($parameters as $key => $value) {
+            $arguments[$key] = '@'.$key.'="'.$value.'"';
+        }
+
+        if ($xmlReferences = $this->readCache()->xpath("//viewReference[".implode(' and ', $arguments)."]")) {
+            foreach ($xmlReferences as $xmlReference) {
+                $viewsReferences[]  = current($xmlReference->attributes());
+            }
+        }
+
+        return $viewsReferences;
+    }
+
+    /**
      * remove all views reference that match with parameters
      *
      * @param $parameters
@@ -168,16 +190,11 @@ XML;
      **/
     public function removeViewsReferencesByParameters($parameters)
     {
-        $viewReference = array();
-        $arguments = array();
         $rootNode = $this->readCache();
-        foreach ($parameters as $key => $value) {
-            $arguments[$key] = '@'.$key.'="'.$value.'"';
-        }
 
-        $viewsReferencesToRemove = $this->readCache()->xpath("//viewReference[".implode(' and ', $arguments)."]");
+        $viewsReferencesToRemove = $this->getAllReferenceByParameters($parameters);
         foreach ($viewsReferencesToRemove as $viewReferenceToRemove) {
-            $this->removeViewReference($rootNode, current($viewReferenceToRemove->attributes()));
+            $this->removeViewReference($rootNode, $viewReferenceToRemove);
         }
         $this->writeFile($rootNode);
     }
