@@ -29,10 +29,9 @@ class ArticleFilterDefaultValuesListener
      */
     public function setDefaultDateValue(WidgetFilterSetDefaultValueEvent $event)
     {
-        $data = $event->getData();
         $form = $event->getForm();
-        $businessEntityName = $event->getBusinessEntityName();
-        if ($businessEntityName == 'article') {
+        $businessEntityId = $event->getBusinessEntityName();
+        if ($businessEntityId == 'article') {
             $articles = $this->em->getRepository('VictoireBlogBundle:Article')->getAll(true)->run();
             $options = $form->getConfig()->getOptions()['data'];
             $years = $months = $days = array();

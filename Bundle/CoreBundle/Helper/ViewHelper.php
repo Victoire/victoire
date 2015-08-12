@@ -88,7 +88,7 @@ class ViewHelper
         }
     }
     /**
-     * This method get all views (BasePage and Template) in DB and return the references, including non persisted Business entity page (pattern and businessEntityName based)
+     * This method get all views (BasePage and Template) in DB and return the references, including non persisted Business entity page (pattern and businessEntityId based)
      * @return array the computed views as array
      */
     public function getAllViewsReferences()
@@ -226,7 +226,7 @@ class ViewHelper
                     // for each business entity
                     foreach ($entities as $entity) {
                         // only if related pattern entity is the current entity
-                        if ($view->getBusinessEntityName() === $businessEntity->getId()) {
+                        if ($view->getBusinessEntityId() === $businessEntity->getId()) {
                             $currentPattern = clone $view;
                             $page = $this->businessEntityPageHelper->generateEntityPageFromPattern($currentPattern, $entity);
                             $this->updatePageParametersByEntity($page, $entity);
@@ -414,7 +414,7 @@ class ViewHelper
      */
     protected function cloneBusinessEntityPagePattern(BusinessEntityPagePattern $view)
     {
-        $businessEntityId = $view->getBusinessEntityName();
+        $businessEntityId = $view->getBusinessEntityId();
         $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($businessEntityId);
         $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
     }

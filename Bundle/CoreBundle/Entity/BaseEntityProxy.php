@@ -42,18 +42,18 @@ abstract class BaseEntityProxy
     /**
      * Get the entity of the proxy
      *
-     * @param string $entityName
+     * @param string $entityId
      * @return Object
      * @throws \Exception
      */
-    public function getEntity($entityName)
+    public function getEntity($entityId)
     {
         //test the entity name
-        if ($entityName == null) {
-            throw new \Exception('The businessEntityName is not defined for the entityProxy with the id:'.$this->getId());
+        if ($entityId == null) {
+            throw new \Exception('The businessEntityId is not defined for the entityProxy with the id:'.$this->getId());
         }
 
-        $functionName = 'get'.ucfirst($entityName);
+        $functionName = 'get'.ucfirst($entityId);
         $entity = call_user_func(array($this, $functionName));
 
         return $entity;
@@ -62,14 +62,14 @@ abstract class BaseEntityProxy
     /**
      * Set the entity
      * @param $entity
-     * @param $entityName
+     * @param $entityId
      *
      * @throws \Exception
      */
-    public function setEntity($entity, $entityName)
+    public function setEntity($entity, $entityId)
     {
         //set the entity
-        $method = 'set'.ucfirst($entityName);
+        $method = 'set'.ucfirst($entityId);
 
         //set the entity
         call_user_func(array($this, $method), $entity);

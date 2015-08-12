@@ -14,7 +14,7 @@ use Victoire\Bundle\TemplateBundle\Entity\Template;
  */
 class BusinessEntityPagePattern extends Template implements WebViewInterface
 {
-    //This trait add the query and business_entity_name columns
+    //This trait add the query and business_entity_id columns
     use \Victoire\Bundle\QueryBundle\Entity\Traits\QueryTrait;
     use \Victoire\Bundle\PageBundle\Entity\Traits\WebViewTrait;
 

@@ -71,7 +71,7 @@ class ArticleType extends AbstractType
             );
 
             $articlePatterns = function(EntityRepository $repo) {
-                return $repo->getInstance()->andWhere("pattern.businessEntityName = 'article'");
+                return $repo->getInstance()->andWhere("pattern.businessEntityId = 'article'");
             };
             $builder->add('pattern', null, array(
                 'label'         => 'form.view.type.pattern.label',

@@ -55,20 +55,20 @@ class QueryHelper
         $this->checkObjectHasQueryTrait($containerEntity);
 
         //the business name of the container entity
-        $businessEntityName = $containerEntity->getBusinessEntityName();
+        $businessEntityId = $containerEntity->getBusinessEntityId();
 
         //test that there is a business entity name
-        if ($businessEntityName === null || $businessEntityName === '') {
+        if ($businessEntityId === null || $businessEntityId === '') {
             $containerId = $containerEntity->getId();
-            throw new \Exception('The container entity ['.$containerId.'] does not have any businessEntityName.');
+            throw new \Exception('The container entity ['.$containerId.'] does not have any businessEntityId.');
         }
 
         //the business class of the container entity
-        $businessEntity = $this->businessEntityHelper->findById(strtolower($businessEntityName));
+        $businessEntity = $this->businessEntityHelper->findById(strtolower($businessEntityId));
 
         //test that there was a businessEntity
         if ($businessEntity === null) {
-            throw new \Exception('The business entity was not found for the id:['.$businessEntityName.']');
+            throw new \Exception('The business entity was not found for the id:['.$businessEntityId.']');
         }
 
         $businessClass = $businessEntity->getClass();
@@ -94,7 +94,7 @@ class QueryHelper
         }
 
         //test that the containerEntity has the trait
-        if (!method_exists($containerEntity, 'getQuery') || !method_exists($containerEntity, 'getBusinessEntityName')) {
+        if (!method_exists($containerEntity, 'getQuery') || !method_exists($containerEntity, 'getBusinessEntityId')) {
             throw new \Exception('The object '.get_class($containerEntity).' does not have the QueryTrait.');
         }
     }

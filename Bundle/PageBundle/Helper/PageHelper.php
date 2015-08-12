@@ -134,7 +134,7 @@ class PageHelper extends ViewHelper
                 $event = new \Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent($page->getTemplate());
             }
             $this->eventDispatcher->dispatch($eventName, $event);
-            $type = strtolower($page->getBusinessEntityName());
+            $type = $page->getBusinessEntityId();
         } else {
             $type = $page->getType();
         }

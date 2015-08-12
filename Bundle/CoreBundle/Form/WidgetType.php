@@ -26,15 +26,15 @@ class WidgetType extends AbstractType
         $this->options = $options;
 
         $namespace = $options['namespace'];
-        $entityName = $options['entityName'];
+        $businessEntityId = $options['businessEntityId'];
         $mode = $options['mode'];
 
-        if ($entityName !== null) {
+        if ($businessEntityId !== null) {
             if ($namespace === null) {
-                throw new \Exception('The namespace is mandatory if the entity_name is given.');
+                throw new \Exception('The namespace is mandatory if the business_entity_id is given.');
             }
             if ($mode === null) {
-                throw new \Exception('The mode is mandatory if the entity_name is given.');
+                throw new \Exception('The mode is mandatory if the business_entity_id is given.');
             }
         }
 
@@ -130,7 +130,7 @@ class WidgetType extends AbstractType
             'widget'    => $options['widget'],
         ))
         ->add('entity_proxy', 'entity_proxy', array(
-            'entity_name' => $options['entityName'],
+            'business_entity_id' => $options['businessEntityId'],
             'namespace' => $options['namespace'],
             'widget'      => $options['widget'],
         ));
@@ -170,7 +170,7 @@ class WidgetType extends AbstractType
         $resolver->setOptional(array('slot'));
         $resolver->setOptional(array('mode'));
         $resolver->setOptional(array('namespace'));
-        $resolver->setOptional(array('entityName'));
+        $resolver->setOptional(array('businessEntityId'));
     }
 
     /**

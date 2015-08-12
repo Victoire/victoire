@@ -51,7 +51,7 @@ class BusinessEntityHelper
      */
     public function findById($id)
     {
-        $businessEntity = $this->reader->findById(strtolower($id));
+        $businessEntity = $this->reader->findById($id);
         if ($businessEntity === null) {
             throw new \Exception("\"".$id."\" does not seems to be a valid BusinessEntity");
         }
@@ -165,13 +165,13 @@ class BusinessEntityHelper
     {
         $entity = null;
 
-        $businessEntityName = $page->getBusinessEntityName();
+        $businessEntityId = $page->getBusinessEntityId();
 
-        $businessEntity = $this->findById($businessEntityName);
+        $businessEntity = $this->findById($businessEntityId);
 
         //test the result
         if ($businessEntity === null) {
-            throw new \Exception('The business entity ['.$businessEntityName.'] was not found.');
+            throw new \Exception('The business entity ['.$businessEntityId.'] was not found.');
         }
 
         $entity = $this->findEntityByBusinessEntityAndAttribute($businessEntity, $attributeName, $entityIdentifier);
