@@ -5,7 +5,6 @@ Background:
     Given I am logged in as "anakin@victoire.io"
     And I resize the window to 1024x720
     And I am on homepage
-    And I switch to "layout" mode
 
     Scenario: I create a new blog
         Given I open the hamburger menu
@@ -16,7 +15,8 @@ Background:
         Then I should see "Nom"
         When I fill in "Nom" with "The Jedi network"
         And I follow "Créer"
-        And I wait 10 seconds
+        And I wait 5 seconds
+        And I switch to "layout" mode
         When I select "Force" from the "1" select of "content" slot
         Then I should see "Créer"
         When I fill in "Côté de la force" with "Obscure"
