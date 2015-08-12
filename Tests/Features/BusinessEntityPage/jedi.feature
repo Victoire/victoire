@@ -87,12 +87,12 @@ Feature: Manage jedis
         When I fill in "victoire_business_entity_page_type_staticUrl" with "Dark Vador"
         Then I should see an ".slug-is-correct.vic-hidden" element
         And I should not see an ".slug-is-not-correct.vic-hidden" element
-        When I fill in "victoire_business_entity_page_type_staticUrl" with "Dark-Vador"
+        When I fill in "victoire_business_entity_page_type_staticUrl" with "dark-vador"
         Then I should not see an ".slug-is-correct.vic-hidden" element
         And I should see an ".slug-is-not-correct.vic-hidden" element
         When I submit the widget
         Then I should see "Page modifiée avec succès"
-        And I should be on "/fr/Dark-Vador"
+        And I should be on "/fr/dark-vador"
         Given I select the option "Paramètres de la page" in the dropdown "Page"
         And I should see "Mettre à jour"
         When I fill in "victoire_business_entity_page_type_staticUrl" with ""
