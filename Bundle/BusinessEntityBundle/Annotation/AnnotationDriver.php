@@ -137,13 +137,17 @@ class AnnotationDriver extends DoctrineAnnotationDriver
             }
 
             if ($isWidget) {
-                $event = new WidgetAnnotationEvent(
-                    $this->widgetHelper->getWidgetName(new $class->name),
-                    $this->loadReceiverProperties($class)
-                );
+                if ($this->widgetHelper->isEnabled(new $class->name)) {
+                    $event = new WidgetAnnotationEvent(
+                        $this->widgetHelper->getWidgetName(new $class->name),
+                        $this->loadReceiverProperties($class)
+                    );
 
-                //dispatch victoire.widget_annotation_load to save receiverProperties in cache
-                $this->eventDispatcher->dispatch('victoire.widget_annotation_load', $event);
+                    //dispatch victoire.widget_annotation_load to save receiverProperties in cache
+                    $this->eventDispatcher->dispatch('victoire.widget_annotation_load', $event);
+                } else {
+                    error_log(sprintf('Widget name not found for widget %s. Is this widget declared in AppKernel ?', $class->name));
+                }
             }
         }
     }
