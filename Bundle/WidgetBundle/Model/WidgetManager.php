@@ -357,7 +357,7 @@ class WidgetManager
                 $relatedEntity = $accessor->getValue($widget, $values['fieldName']);
                 if ($relatedEntity) {
                     $relatedEntityCopy = clone $relatedEntity;
-                    $this->em->persist($relatedEntity);
+                    $this->entityManager->persist($relatedEntity);
                     $accessor->setValue($widgetCopy, $name, $relatedEntityCopy);
                 }
             }
