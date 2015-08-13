@@ -219,7 +219,7 @@ class BusinessEntityPageHelper
         // preg_match_all('/\{\%\s*([^\%\}]*)\s*\%\}|\{\{\s*([^\}\}]*)\s*\}\}/i', $url, $matches);
 
         //the business property link to the page
-        $businessEntityId = $bepPattern->getBusinessEntityName();
+        $businessEntityId = $bepPattern->getBusinessEntityId();
 
         $businessEntity = $this->businessEntityHelper->findById($businessEntityId);
 

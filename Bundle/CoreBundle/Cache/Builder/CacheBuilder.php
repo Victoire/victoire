@@ -51,7 +51,7 @@ class CacheBuilder
         if (!array_key_exists($widgetName, $widgets)) {
             $widgets[$widgetName] = array('businessEntities' => array());
         }
-        $widgets[$widgetName]['businessEntities'][$businessEntity->getName()] = $businessEntity;
+        $widgets[$widgetName]['businessEntities'][$businessEntity->getId()] = $businessEntity;
         $this->cache->save(BusinessEntity::CACHE_WIDGETS, $widgets);
     }
 }

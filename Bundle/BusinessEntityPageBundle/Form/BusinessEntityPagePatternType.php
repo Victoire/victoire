@@ -32,7 +32,7 @@ class BusinessEntityPagePatternType extends ViewType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add('businessEntityName', 'hidden')
+            ->add('businessEntityId', 'hidden')
             ->add('query')
             ->add('slug', null, array(
                     'label' => 'victoire.form.business_entity_page_pattern.slug.label'

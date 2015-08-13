@@ -40,7 +40,7 @@ class BusinessEntityPagePatternController extends Controller
         $businessEntity = $this->getBusinessEntity($id);
 
         $view = new BusinessEntityPagePattern();
-        $view->setBusinessEntityName($businessEntity->getName());
+        $view->setBusinessEntityId($businessEntity->getId());
 
         $form = $this->createCreateForm($view);
 
@@ -79,7 +79,7 @@ class BusinessEntityPagePatternController extends Controller
      */
     private function createCreateForm(BusinessEntityPagePattern $view)
     {
-        $id = $view->getBusinessEntityName();
+        $id = $view->getBusinessEntityId();
         $businessProperty = $this->getBusinessProperties($view);
 
         $form = $this->createForm(
@@ -111,7 +111,7 @@ class BusinessEntityPagePatternController extends Controller
         $businessEntity = $this->getBusinessEntity($id);
 
         $view = new BusinessEntityPagePattern();
-        $view->setBusinessEntityName($businessEntity->getName());
+        $view->setBusinessEntityId($businessEntity->getId());
 
         $form = $this->createCreateForm($view);
 
@@ -155,7 +155,7 @@ class BusinessEntityPagePatternController extends Controller
         $deleteForm = $this->createDeleteForm($view->getId());
 
         //the business property link to the page
-        $businessEntityId = $view->getBusinessEntityName();
+        $businessEntityId = $view->getBusinessEntityId();
         $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($businessEntityId);
 
         $businessProperties = $businessEntityPagePatternHelper->getBusinessProperties($businessEntity);
@@ -327,9 +327,9 @@ class BusinessEntityPagePatternController extends Controller
     {
         $businessEntityHelper = $this->get('victoire_core.helper.business_entity_helper');
         //the name of the business entity link to the business entity page pattern
-        $businessEntityName = $view->getBusinessEntityName();
+        $businessEntityId = $view->getBusinessEntityId();
 
-        $businessEntity = $businessEntityHelper->findById(strtolower($businessEntityName));
+        $businessEntity = $businessEntityHelper->findById($businessEntityId);
         $businessProperties = $businessEntity->getBusinessPropertiesByType('businessParameter');
 
         $businessProperty = array();

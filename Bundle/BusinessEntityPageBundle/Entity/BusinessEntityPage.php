@@ -32,7 +32,7 @@ class BusinessEntityPage extends Page
 
     /**
      * The entity static Url page
-     * @var unknown
+     * @var string
      *
      * @ORM\Column(name="staticUrl", type="text", length=255, nullable=true)
      */
@@ -63,9 +63,9 @@ class BusinessEntityPage extends Page
      *
      * @return string
      **/
-    public function getBusinessEntityName()
+    public function getBusinessEntityId()
     {
-        return $this->getTemplate()->getBusinessEntityName();
+        return $this->getTemplate()->getBusinessEntityId();
     }
 
     /**
@@ -79,7 +79,7 @@ class BusinessEntityPage extends Page
         if ($this->businessEntity === null) {
             //if there is a proxy
             if ($this->getEntityProxy() !== null) {
-                $this->businessEntity = $this->getEntityProxy()->getEntity($this->getBusinessEntityName());
+                $this->businessEntity = $this->getEntityProxy()->getEntity($this->getBusinessEntityId());
 
                 return $this->businessEntity;
             }

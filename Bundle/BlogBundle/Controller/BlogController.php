@@ -73,7 +73,7 @@ class BlogController extends BasePageController
 
         if ($blog instanceof BusinessEntityPagePattern) {
             //we can use the business entity properties on the seo
-            $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($blog->getBusinessEntityName());
+            $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($blog->getBusinessEntityId());
             $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
         }
 
@@ -125,7 +125,7 @@ class BlogController extends BasePageController
         //if the page is a business entity page
         if ($blog instanceof BusinessEntityPagePattern) {
             //we can use the business entity properties on the seo
-            $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($blog->getBusinessEntityName());
+            $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($blog->getBusinessEntityId());
             $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
         }
 
@@ -185,7 +185,7 @@ class BlogController extends BasePageController
         //if the page is a business entity page
         if ($blog instanceof BusinessEntityPagePattern) {
             //we can use the business entity properties on the seo
-            $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($blog->getBusinessEntityName());
+            $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($blog->getBusinessEntityId());
             $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
         }
 

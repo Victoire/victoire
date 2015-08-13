@@ -135,7 +135,7 @@ class BasePageController extends Controller
         //if the page is a business entity page pattern
         if ($page instanceof BusinessEntityPagePattern) {
             //we can use the business entity properties on the seo
-            $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($page->getBusinessEntityName());
+            $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($page->getBusinessEntityId());
             $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
         }
 
@@ -190,7 +190,7 @@ class BasePageController extends Controller
         $businessProperties = array();
 
         if ($page instanceof BusinessEntityPagePattern) {
-            $businessEntityId = $page->getBusinessEntityName();
+            $businessEntityId = $page->getBusinessEntityId();
             $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($businessEntityId);
             $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
         }

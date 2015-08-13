@@ -7,7 +7,7 @@
         {% block form %}
             {% if entity != null %}
                 {% block form_entity %}
-                <div id="picker-{{entity}}-{{ form.mode.vars.data }}" class="vic-tab-pane {% if form.mode.vars.data == widget.mode %}vic-active{% endif %}">
+                <div id="picker-{{ entity|lower }}-{{ form.mode.vars.data }}" class="vic-tab-pane vic-mode-{{ widget.mode }} {% if form.mode.vars.data == widget.mode %}vic-active{% endif %}">
                     {{ form_start(form) }}
                         {{form_rest(form)}}
                     {{ form_end(form) }}

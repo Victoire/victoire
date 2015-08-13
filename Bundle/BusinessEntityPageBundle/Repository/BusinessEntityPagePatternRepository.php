@@ -35,15 +35,15 @@ class BusinessEntityPagePatternRepository extends EntityRepository
 
     /**
      * get the pagePatterns for the business entity query
-     * @param string $entityName
+     * @param string $businessEntityId
      *
      * @return QueryBuilder
      */
-    public function getPagePatternByBusinessEntity($entityName)
+    public function getPagePatternByBusinessEntity($businessEntityId)
     {
         return $this->createQueryBuilder('businessEntityPagePattern')
-            ->where('businessEntityPagePattern.businessEntityName = :entityName')
-            ->setParameter(':entityName', $entityName)
+            ->where('businessEntityPagePattern.businessEntityId = :entityId')
+            ->setParameter(':entityId', $businessEntityId)
             ->orderBy('businessEntityPagePattern.updatedAt', 'ASC');
     }
 
