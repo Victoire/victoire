@@ -36,16 +36,12 @@ class WidgetController extends Controller
         try {
             $view = $this->container->get('victoire_page.page_helper')->findPageByParameters(array('id' => $viewReferenceId));
             $this->container->get('victoire_core.current_view')->setCurrentView($view);
-            if ($request->isXmlHttpRequest()) {
-                $response = new JsonResponse(array(
-                            'html'    => $this->get('victoire_widget.widget_renderer')->render($widget, $view),
-                            'update'  => 'vic-widget-'.$widget->getId().'-container',
-                            'success' => false,
-                    )
-                );
-            } else {
-                $response = $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $view->getUrl())));
-            }
+            $response = new JsonResponse(array(
+                    'html'    => $this->get('victoire_widget.widget_renderer')->render($widget, $view),
+                    'update'  => 'vic-widget-'.$widget->getId().'-container',
+                    'success' => false,
+                )
+            );
         } catch (Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
         }

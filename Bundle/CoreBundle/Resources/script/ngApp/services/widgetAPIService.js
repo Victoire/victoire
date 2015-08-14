@@ -6,8 +6,7 @@ ngApp.service("widgetAPIService", ["$http",
                     method: 'GET',
                     url: url,
                     headers: {
-                        'Content-Type': 'application/json',
-                        'X-Requested-With': 'XMLHttpRequest'
+                        'Content-Type': 'application/json'
                     }
                 });
         };
