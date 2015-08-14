@@ -2,11 +2,24 @@ ngApp.service("widgetAPIService", ["$http",
     function($http) {
         this.widget = function(widgetId) {
             var url = Routing.generate('victoire_core_widget_show', {'id': widgetId, 'viewReferenceId': viewReferenceId});
-            return $http.get(url);
+            return $http({
+                    method: 'GET',
+                    url: url,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
         };
         this.widgets = function(widgetIds) {
             var url = Routing.generate('victoire_core_widget_apiWidgets', {'widgetIds': JSON.stringify(widgetIds), 'viewReferenceId': viewReferenceId});
-            return $http.get(url);
+            return $http({
+                method: 'GET',
+                url: url,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         };
     }
 ]);
