@@ -28,7 +28,7 @@ class WidgetHelper
             }
         }
 
-        throw new \Exception("Widget name not found for widget ".get_class($widget));
+        throw new \Exception("Widget name not found for widget ".get_class($widget).". Is this widget right declared in AppKernel ?");
     }
 
     /**
@@ -97,5 +97,23 @@ class WidgetHelper
         $statement = $connection->prepare("DELETE FROM vic_widget WHERE id = :id");
         $statement->bindValue('id', $widgetId);
         $statement->execute();
+    }
+
+    /**
+     * Check in the driver chain if the given widget is enabled
+     *
+     * @param Widget $widget
+     * @return bool
+     */
+    public function isEnabled(Widget $widget)
+    {
+        $widgets = $this->container->getParameter('victoire_core.widgets');
+        foreach ($widgets as $widgetParams) {
+            if ($widgetParams['class'] === get_class($widget)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

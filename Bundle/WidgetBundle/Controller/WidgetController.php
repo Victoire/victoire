@@ -36,16 +36,12 @@ class WidgetController extends Controller
         try {
             $view = $this->container->get('victoire_page.page_helper')->findPageByParameters(array('id' => $viewReferenceId));
             $this->container->get('victoire_core.current_view')->setCurrentView($view);
-            if ($request->isXmlHttpRequest()) {
-                $response = new JsonResponse(array(
-                            'html'    => $this->get('victoire_widget.widget_renderer')->render($widget, $view),
-                            'update'  => 'vic-widget-'.$widget->getId().'-container',
-                            'success' => false,
-                    )
-                );
-            } else {
-                $response = $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $view->getUrl())));
-            }
+            $response = new JsonResponse(array(
+                    'html'    => $this->get('victoire_widget.widget_renderer')->render($widget, $view),
+                    'update'  => 'vic-widget-'.$widget->getId().'-container',
+                    'success' => false,
+                )
+            );
         } catch (Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
         }
@@ -102,17 +98,18 @@ class WidgetController extends Controller
 
     /**
      * Create a widget
-     * @param string         $type              The type of the widget we edit
-     * @param integer        $viewReference     The view reference where attach the widget
-     * @param string         $slot              The slot where attach the widget
-     * @param integer        $positionReference Position of the widget
-     * @param BusinessEntity $entityName        The business entity name the widget shows on dynamic mode
+     *
+     * @param string  $type              The type of the widget we edit
+     * @param integer $viewReference     The view reference where attach the widget
+     * @param string  $slot              The slot where attach the widget
+     * @param integer $positionReference Position of the widget
+     * @param string  $businessEntityId The BusinessEntity::id (can be null if the submitted form is in static mode)
      *
      * @return JsonResponse
-     * @Route("/victoire-dcms/widget/create/{mode}/{type}/{viewReference}/{slot}/{positionReference}/{entityName}", name="victoire_core_widget_create", defaults={"slot":null, "entityName":null, "positionReference": 0, "_format": "json"})
+     * @Route("/victoire-dcms/widget/create/{mode}/{type}/{viewReference}/{slot}/{positionReference}/{businessEntityId}", name="victoire_core_widget_create", defaults={"slot":null, "businessEntityId":null, "positionReference": 0, "_format": "json"})
      * @Template()
      */
-    public function createAction($mode, $type, $viewReference, $slot = null, $positionReference = 0, $entityName = null)
+    public function createAction($mode, $type, $viewReference, $slot = null, $positionReference = 0, $businessEntityId = null)
     {
         try {
             //services
@@ -122,7 +119,7 @@ class WidgetController extends Controller
 
             $this->get('victoire_core.current_view')->setCurrentView($view);
 
-            $response = $this->get('widget_manager')->createWidget($mode, $type, $slot, $view, $entityName, $positionReference);
+            $response = $this->get('widget_manager')->createWidget($mode, $type, $slot, $view, $businessEntityId, $positionReference);
 
             if ($isNewPage) {
                 $response = new JsonResponse(array(
@@ -141,17 +138,17 @@ class WidgetController extends Controller
 
     /**
      * Edit a widget
-     * @param Widget  $widget        The widget to edit
-     * @param integer $viewReference The current view
-     * @param string  $entityName    The entity name (can be null if the submitted form is in static mode)
+     * @param Widget  $widget           The widget to edit
+     * @param integer $viewReference    The current view
+     * @param string  $businessEntityId The BusinessEntity::id (can be null if the submitted form is in static mode)
      *
      * @return JsonResponse
      *
-     * @Route("/victoire-dcms/widget/edit/{id}/{viewReference}/{mode}/{entityName}", name="victoire_core_widget_edit", options={"expose"=true})
-     * @Route("/victoire-dcms/widget/update/{id}/{viewReference}/{mode}/{entityName}", name="victoire_core_widget_update", defaults={"entityName": null})
+     * @Route("/victoire-dcms/widget/edit/{id}/{viewReference}/{mode}/{businessEntityId}", name="victoire_core_widget_edit", options={"expose"=true})
+     * @Route("/victoire-dcms/widget/update/{id}/{viewReference}/{mode}/{businessEntityId}", name="victoire_core_widget_update", defaults={"businessEntityId": null})
      * @Template()
      */
-    public function editAction(Widget $widget, $viewReference, $mode = Widget::MODE_STATIC, $entityName = null)
+    public function editAction(Widget $widget, $viewReference, $mode = Widget::MODE_STATIC, $businessEntityId = null)
     {
         $view = $this->getViewByReferenceId($viewReference);
         $widgetView = $widget->getView();
@@ -170,7 +167,7 @@ class WidgetController extends Controller
                     $this->get('request'),
                     $widget,
                     $view,
-                    $entityName,
+                    $businessEntityId,
                     $mode
                 )
             );
@@ -185,14 +182,13 @@ class WidgetController extends Controller
      * Stylize a widget
      * @param Widget  $widget        The widget to stylize
      * @param integer $viewReference The current view
-     * @param string  $entityName    The entity name (could be null is the submitted form is in static mode)
      *
      * @return JsonResponse
      *
-     * @Route("/victoire-dcms/widget/stylize/{id}/{viewReference}/{entityName}", name="victoire_core_widget_stylize", options={"expose"=true})
+     * @Route("/victoire-dcms/widget/stylize/{id}/{viewReference}", name="victoire_core_widget_stylize", options={"expose"=true})
      * @Template()
      */
-    public function stylizeAction(Widget $widget, $viewReference, $entityName = null)
+    public function stylizeAction(Widget $widget, $viewReference)
     {
         $view = $this->getViewByReferenceId($viewReference);
         $widgetView = $widget->getView();

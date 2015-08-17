@@ -155,7 +155,7 @@ class WidgetManager
             $widget = $form->getData();
 
             //update fields of the widget
-            $widget->setBusinessEntityName($entity);
+            $widget->setBusinessEntityId($entity);
 
             //persist the widget
             $this->entityManager->persist($widget);
@@ -202,11 +202,11 @@ class WidgetManager
      * @param Request $request
      * @param Widget  $widget
      * @param View    $currentView
-     * @param string  $entityName  The entity name is used to know which form to submit
+     * @param string  $businessEntityId  The entity name is used to know which form to submit
      *
      * @return template
      */
-    public function editWidget(Request $request, Widget $widget, View $currentView, $entityName = null, $widgetMode = Widget::MODE_STATIC)
+    public function editWidget(Request $request, Widget $widget, View $currentView, $businessEntityId = null, $widgetMode = Widget::MODE_STATIC)
     {
         /** @var BusinessEntity[] $classes */
         $classes = $this->cacheReader->getBusinessClassesForWidget($widget);
@@ -229,8 +229,8 @@ class WidgetManager
             if ($widgetView !== $currentView) {
                 $widget = $this->overwriteWidget($currentView, $widget);
             }
-            if ($entityName !== null) {
-                $form = $this->widgetFormBuilder->buildForm($widget, $currentView, $entityName, $classes[$entityName]->getClass(), $widgetMode);
+            if ($businessEntityId !== null) {
+                $form = $this->widgetFormBuilder->buildForm($widget, $currentView, $businessEntityId, $classes[$businessEntityId]->getClass(), $widgetMode);
             } else {
                 $form = $this->widgetFormBuilder->buildForm($widget, $currentView);
             }
@@ -238,7 +238,7 @@ class WidgetManager
             $form->handleRequest($request);
 
             if ($request->query->get('novalidate', false) === false && $form->isValid()) {
-                $widget->setBusinessEntityName($entityName);
+                $widget->setBusinessEntityId($businessEntityId);
 
                 $this->entityManager->persist($widget);
 
@@ -259,7 +259,7 @@ class WidgetManager
                 $response = array(
                     "success" => false,
                     "message" => $formErrorHelper->getRecursiveReadableErrors($form),
-                    "html"    => $this->widgetFormBuilder->renderForm($form, $widget, $entityName),
+                    "html"    => $this->widgetFormBuilder->renderForm($form, $widget, $businessEntityId),
                 );
             }
         } else {
@@ -350,7 +350,7 @@ class WidgetManager
                 $relatedEntity = $accessor->getValue($widget, $values['fieldName']);
                 if ($relatedEntity) {
                     $relatedEntityCopy = clone $relatedEntity;
-                    $this->em->persist($relatedEntity);
+                    $this->entityManager->persist($relatedEntity);
                     $accessor->setValue($widgetCopy, $name, $relatedEntityCopy);
                 }
             }

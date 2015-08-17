@@ -3,7 +3,7 @@ Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern:
         name: "{{item.name}}"
         slug: "{{item.slug}}"
         url: "the-jedi-network/{{item.slug}}"
-        businessEntityName: article
+        businessEntityId: article
         author: @anakin
         locale: fr
         template: @template_base

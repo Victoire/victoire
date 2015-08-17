@@ -23,13 +23,13 @@ class EntityProxyFormType extends AbstractType
         //add the link to the business entity instance
         //it depends of the form
         $builder
-            ->add($options['entity_name'], 'entity', array(
-                'label'       => 'entity_proxy.form.label',
+            ->add($options['business_entity_id'], 'entity', array(
+                'label'       => false,
                 'required'    => false,
                 'empty_value' => 'entity_proxy.form.empty_value',
                 'class'       => $options['namespace'],
                 'attr'        => array(
-                    'class' => 'add_'.$options['entity_name'].'_link picker_entity_select',
+                    'class' => 'add_'.$options['business_entity_id'].'_link picker_entity_select',
                 ),
             ));
     }
@@ -42,7 +42,7 @@ class EntityProxyFormType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class'         => 'Victoire\Bundle\CoreBundle\Entity\EntityProxy',
-            'entity_name'        => null,
+            'business_entity_id' => null,
             'namespace'          => null,
             'widget'             => null,
             'translation_domain' => 'victoire',

@@ -62,7 +62,7 @@ class BusinessEntityPagePatternManager extends BaseViewManager implements ViewMa
                 // for each business entity
                 foreach ($entities as $entity) {
                     // only if related pattern entity is the current entity
-                    if ($view->getBusinessEntityName() === $businessEntity->getName()) {
+                    if ($view->getBusinessEntityId() === $businessEntity->getId()) {
                         $currentPattern = clone $view;
                         $page = $this->businessEntityPageHelper->generateEntityPageFromPattern($currentPattern, $entity);
                         $this->businessEntityPageHelper->updatePageParametersByEntity($page, $entity);

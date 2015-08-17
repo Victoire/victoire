@@ -24,10 +24,10 @@ trait QueryTrait
     /**
      *  Auto list mode: businessentity type
      * @var string
-     * @ORM\Column(name="business_entity_name", type="string", nullable=true)
+     * @ORM\Column(name="business_entity_id", type="string", nullable=true)
      *
      */
-    protected $businessEntityName;
+    protected $businessEntityId;
 
     /**
      * Get query
@@ -70,22 +70,22 @@ trait QueryTrait
     }
 
     /**
-     * Get businessEntity
+     * Get businessEntityId
      *
      * @return integer
      */
-    public function getBusinessEntityName()
+    public function getBusinessEntityId()
     {
-        return $this->businessEntityName;
+        return $this->businessEntityId;
     }
 
     /**
-     * Set businessEntityName
+     * Set businessEntityId
      *
-     * @param String $businessEntityName The business entity name
+     * @param String $businessEntityId The business entity name
      */
-    public function setBusinessEntityName($businessEntityName)
+    public function setBusinessEntityId($businessEntityId)
     {
-        $this->businessEntityName = $businessEntityName;
+        $this->businessEntityId = $businessEntityId;
     }
 }
