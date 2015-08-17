@@ -185,6 +185,7 @@ services:
             - "@victoire_business_entity_page.business_entity_page_helper"
             - "@doctrine.orm.entity_manager"
             - "@victoire_core.view_cache_helper"
+            - "@victoire_core.view_manager_finder"
 
     victoire_core.current_view:
         class: Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper
@@ -210,3 +211,47 @@ services:
             - "@router"
         calls:
             - [setRequest, ["@request_stack"]]
+
+#  ==================  Finder ================== #
+
+    victoire_core.view_manager_finder:
+        class: Victoire\Bundle\CoreBundle\Finder\ViewManagerFinder
+        arguments:
+            - "@victoire_core.manager.business_entity_page_pattern_manager"
+            - "@victoire_core.manager.business_entity_page_manager"
+            - "@victoire_core.manager.error_page_manager"
+            - "@victoire_core.manager.template_manager"
+            - "@victoire_core.manager.view_manager"
+
+#  ==================  Manager ================== #
+
+    victoire_core.manager.base_view_manager:
+        class: Victoire\Bundle\CoreBundle\Manager\BaseViewManager
+        abstract: true
+        calls:
+            - [setViewCacheHelper, ["@victoire_core.view_cache_helper"]]
+            - [setEntityManager, ["@doctrine.orm.entity_manager"]]
+
+    victoire_core.manager.view_manager:
+        class: Victoire\Bundle\CoreBundle\Manager\ViewManager
+        parent: victoire_core.manager.base_view_manager
+
+    victoire_core.manager.business_entity_page_manager:
+        class: Victoire\Bundle\CoreBundle\Manager\BusinessEntityPageManager
+        parent: victoire_core.manager.base_view_manager
+
+    victoire_core.manager.business_entity_page_pattern_manager:
+        class: Victoire\Bundle\CoreBundle\Manager\BusinessEntityPagePatternManager
+        parent: victoire_core.manager.base_view_manager
+        calls:
+            - [setBusinessEntityPageHelper, ["@victoire_business_entity_page.business_entity_page_helper"]]
+            - [setBusinessEntityHelper, ["@victoire_core.helper.business_entity_helper"]]
+
+    victoire_core.manager.error_page_manager:
+        class: Victoire\Bundle\CoreBundle\Manager\ErrorPageManager
+        parent: victoire_core.manager.base_view_manager
+
+    victoire_core.manager.template_manager:
+        class: Victoire\Bundle\CoreBundle\Manager\TemplateManager
+        parent: victoire_core.manager.base_view_manager
+
