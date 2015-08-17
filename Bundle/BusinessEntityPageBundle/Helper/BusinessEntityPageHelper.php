@@ -12,6 +12,7 @@ use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 use Victoire\Bundle\QueryBundle\Helper\QueryHelper;
 use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
 use Doctrine\ORM\EntityManager;
+use Gedmo\Sluggable\Util\Urlizer;
 
 /**
  * The business entity page pattern helper
@@ -24,6 +25,16 @@ class BusinessEntityPageHelper
     protected $businessEntityHelper = null;
     protected $parameterConverter = null;
     protected $entityManager = null;
+
+    //@todo Make it dynamic please
+    protected $pageParameters = array(
+        'name',
+        'bodyId',
+        'bodyClass',
+        'slug',
+        'url',
+        'locale',
+    );
 
     /**
      * @param QueryHelper          $queryHelper
@@ -282,5 +293,76 @@ class BusinessEntityPageHelper
 
         return $viewReference['patternId'];
 
+    }
+
+    /**
+     * Generate update the page parameters with the entity
+     *
+     * @param BasePage $page
+     * @param Entity   $entity
+     */
+    public function updatePageParametersByEntity(BusinessEntityPage $page, $entity)
+    {
+        //if no entity is provided
+        if ($entity === null) {
+            //we look for the entity of the page
+            if ($page->getBusinessEntity() !== null) {
+                $entity = $page->getBusinessEntity();
+            }
+        }
+
+        //only if we have an entity instance
+        if ($entity !== null) {
+            $businessEntity = $this->businessEntityHelper->findByEntityInstance($entity);
+
+            if ($businessEntity !== null) {
+                $businessProperties = $this->getBusinessProperties($businessEntity);
+
+                //parse the business properties
+                foreach ($businessProperties as $businessProperty) {
+                    //parse of seo attributes
+                    foreach ($this->pageParameters as $pageAttribute) {
+                        $string = $this->getEntityAttributeValue($page, $pageAttribute);
+                        $updatedString = $this->parameterConverter->setBusinessPropertyInstance($string, $businessProperty, $entity);
+                        $this->setEntityAttributeValue($page, $pageAttribute, $updatedString);
+                    }
+                }
+
+                $urlizer = new Urlizer();
+                $page->setSlug($urlizer->urlize($page->getName()));
+            }
+        }
+    }
+
+    /**
+     * Get the content of an attribute of an entity given
+     *
+     * @param BusinessEntityPage $entity
+     * @param strin              $field
+     *
+     * @return mixed
+     */
+    protected function getEntityAttributeValue($entity, $field)
+    {
+        $functionName = 'get'.ucfirst($field);
+
+        $fieldValue = call_user_func(array($entity, $functionName));
+
+        return $fieldValue;
+    }
+
+    /**
+     * Update the value of the entity
+     * @param BusinessEntityPage $entity
+     * @param string             $field
+     * @param string             $value
+     *
+     * @return mixed
+     */
+    protected function setEntityAttributeValue($entity, $field, $value)
+    {
+        $functionName = 'set'.ucfirst($field);
+
+        call_user_func(array($entity, $functionName), $value);
     }
 }
