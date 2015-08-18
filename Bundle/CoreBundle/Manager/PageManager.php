@@ -5,9 +5,9 @@ namespace Victoire\Bundle\CoreBundle\Manager;
 use Victoire\Bundle\CoreBundle\Entity\View;
 
 /**
-* ViewManager
+* PageManager
 */
-class ViewManager extends BaseViewManager implements ViewManagerInterface
+class PageManager extends BaseViewManager implements ViewManagerInterface
 {
     public function buildReference(View $view){
         $viewsReferences = array();
