@@ -16,6 +16,7 @@ use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
 use Victoire\Bundle\CoreBundle\Helper\ViewHelper;
+use Victoire\Bundle\CoreBundle\Manager\Chain\ViewManagerChain;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
@@ -24,7 +25,6 @@ use Victoire\Bundle\SeoBundle\Helper\PageSeoHelper;
 use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter as BETParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
-use Victoire\Bundle\CoreBundle\Finder\ViewManagerFinder;
 
 /**
  * Page helper
@@ -42,7 +42,7 @@ class PageHelper extends ViewHelper
     protected $token_storage; // @security.authorization_checker
     protected $authorizationChecker; // @security.authorization_checker
     protected $widgetMapBuilder; // @victoire_widget_map.builder
-    protected $viewManagerFinder; // @victoire_core.view_manager_finder
+    protected $viewManagerChain; // @victoire_core.chain.view_manager_chain
 
     //@todo Make it dynamic please
     protected $pageParameters = array(
@@ -66,7 +66,7 @@ class PageHelper extends ViewHelper
      * @param TokenStorage             $tokenStorage
      * @param AuthorizationChecker     $authorizationChecker
      * @param WidgetMapBuilder         $widgetMapBuilder
-     * @param ViewManagerFinder        $viewManagerFinder
+     * @param ViewManagerChain         $viewManagerChain
      */
     public function __construct(
         BusinessEntityPageHelper $bepHelper,
@@ -82,9 +82,9 @@ class PageHelper extends ViewHelper
         WidgetMapBuilder $widgetMapBuilder,
         BETParameterConverter $parameterConverter,
         BusinessEntityHelper $businessEntityHelper,
-        ViewManagerFinder $viewManagerFinder
+        ViewManagerChain $viewManagerChain
     ) {
-        parent::__construct($parameterConverter, $businessEntityHelper, $bepHelper, $entityManager, $viewCacheHelper, $viewManagerFinder);
+        parent::__construct($parameterConverter, $businessEntityHelper, $bepHelper, $entityManager, $viewCacheHelper, $viewManagerChain);
         $this->bepHelper = $bepHelper;
         $this->entityManager = $entityManager;
         $this->currentViewHelper = $currentViewHelper;

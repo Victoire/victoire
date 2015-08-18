@@ -3,18 +3,14 @@
 namespace Victoire\Bundle\CoreBundle\Helper;
 
 use Doctrine\Orm\EntityManager;
-use Gedmo\Sluggable\Util\Urlizer;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter as BETParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\BusinessEntityPageBundle\Helper\BusinessEntityPageHelper;
 use Victoire\Bundle\CoreBundle\Entity\View;
+use Victoire\Bundle\CoreBundle\Manager\Chain\ViewManagerChain;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
-use Victoire\Bundle\TemplateBundle\Entity\Template;
-use Victoire\Bundle\TwigBundle\Entity\ErrorPage;
 use Victoire\Widget\LayoutBundle\Entity\WidgetLayout;
-use Victoire\Bundle\CoreBundle\Finder\ViewManagerFinder;
 
 /**
  * Page helper
@@ -35,7 +31,7 @@ class ViewHelper
      * @param BusinessEntityPageHelper $businessEntityPageHelper
      * @param EntityManager            $entityManager
      * @param ViewCacheHelper          $viewCacheHelper
-     * @param ViewManagerFinder        $viewManagerFinder
+     * @param ViewManagerChain         $$viewManagerChain
      */
     public function __construct(
         BETParameterConverter $parameterConverter,
@@ -43,14 +39,14 @@ class ViewHelper
         BusinessEntityPageHelper $businessEntityPageHelper,
         EntityManager $entityManager,
         ViewCacheHelper $viewCacheHelper,
-        ViewManagerFinder $viewManagerFinder
+        ViewManagerChain $viewManagerChain
     ) {
         $this->parameterConverter = $parameterConverter;
         $this->businessEntityHelper = $businessEntityHelper;
         $this->businessEntityPageHelper = $businessEntityPageHelper;
         $this->em = $entityManager;
         $this->viewCacheHelper = $viewCacheHelper;
-        $this->viewManagerFinder = $viewManagerFinder;
+        $this->viewManagerChain = $viewManagerChain;
     }
 
     //@todo Make it dynamic please
@@ -111,7 +107,7 @@ class ViewHelper
      */
     public function buildViewReference(View $view, $entity = null)
     {
-        $viewManager = $this->viewManagerFinder->getViewManager($view);
+        $viewManager = $this->viewManagerChain->getViewManager($view);
         return $viewManager->buildReference($view, $entity);
     }
 
