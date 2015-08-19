@@ -71,8 +71,9 @@ class LocaleResolver
         }
 
         throw new \Exception(sprintf(
-            'Host "%s" is not defined in your locale_pattern_table in app/config/victoire_core.yml',
-            $httpHost
+            'Host "%s" is not defined in your locale_pattern_table in app/config/victoire_core.yml (%s available)',
+            $httpHost,
+            implode(',', $this->localeDomainConfig)
         ));
 
     }

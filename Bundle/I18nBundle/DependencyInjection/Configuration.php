@@ -31,6 +31,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->arrayNode('locale_pattern_table')
                     ->useAttributeAsKey(true)
+                    ->normalizeKeys(false)
                     ->prototype('scalar')
                     ->end()
                 ->defaultValue(array())
