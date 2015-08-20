@@ -3,16 +3,13 @@
 namespace Victoire\Bundle\CoreBundle\Helper;
 
 use Doctrine\Orm\EntityManager;
-use Gedmo\Sluggable\Util\Urlizer;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter as BETParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
 use Victoire\Bundle\BusinessEntityPageBundle\Helper\BusinessEntityPageHelper;
 use Victoire\Bundle\CoreBundle\Entity\View;
+use Victoire\Bundle\CoreBundle\Manager\Chain\ViewManagerChain;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
-use Victoire\Bundle\TemplateBundle\Entity\Template;
-use Victoire\Bundle\TwigBundle\Entity\ErrorPage;
 use Victoire\Widget\LayoutBundle\Entity\WidgetLayout;
 
 /**
@@ -34,19 +31,22 @@ class ViewHelper
      * @param BusinessEntityPageHelper $businessEntityPageHelper
      * @param EntityManager            $entityManager
      * @param ViewCacheHelper          $viewCacheHelper
+     * @param ViewManagerChain         $$viewManagerChain
      */
     public function __construct(
         BETParameterConverter $parameterConverter,
         BusinessEntityHelper $businessEntityHelper,
         BusinessEntityPageHelper $businessEntityPageHelper,
         EntityManager $entityManager,
-        ViewCacheHelper $viewCacheHelper
+        ViewCacheHelper $viewCacheHelper,
+        ViewManagerChain $viewManagerChain
     ) {
         $this->parameterConverter = $parameterConverter;
         $this->businessEntityHelper = $businessEntityHelper;
         $this->businessEntityPageHelper = $businessEntityPageHelper;
         $this->em = $entityManager;
         $this->viewCacheHelper = $viewCacheHelper;
+        $this->viewManagerChain = $viewManagerChain;
     }
 
     //@todo Make it dynamic please
@@ -99,77 +99,6 @@ class ViewHelper
     }
 
     /**
-     * Generate update the page parameters with the entity
-     *
-     * @param BasePage $page
-     * @param Entity   $entity
-     */
-    public function updatePageParametersByEntity(BusinessEntityPage $page, $entity)
-    {
-        //if no entity is provided
-        if ($entity === null) {
-            //we look for the entity of the page
-            if ($page->getBusinessEntity() !== null) {
-                $entity = $page->getBusinessEntity();
-            }
-        }
-
-        //only if we have an entity instance
-        if ($entity !== null) {
-            $businessEntity = $this->businessEntityHelper->findByEntityInstance($entity);
-
-            if ($businessEntity !== null) {
-                $businessProperties = $this->businessEntityPageHelper->getBusinessProperties($businessEntity);
-
-                //parse the business properties
-                foreach ($businessProperties as $businessProperty) {
-                    //parse of seo attributes
-                    foreach ($this->pageParameters as $pageAttribute) {
-                        $string = $this->getEntityAttributeValue($page, $pageAttribute);
-                        $updatedString = $this->parameterConverter->setBusinessPropertyInstance($string, $businessProperty, $entity);
-                        $this->setEntityAttributeValue($page, $pageAttribute, $updatedString);
-                    }
-                }
-
-                $urlizer = new Urlizer();
-                $page->setSlug($urlizer->urlize($page->getName()));
-            }
-        }
-    }
-
-    /**
-     * Get the content of an attribute of an entity given
-     *
-     * @param BusinessEntityPage $entity
-     * @param strin              $field
-     *
-     * @return mixed
-     */
-    protected function getEntityAttributeValue($entity, $field)
-    {
-        $functionName = 'get'.ucfirst($field);
-
-        $fieldValue = call_user_func(array($entity, $functionName));
-
-        return $fieldValue;
-    }
-
-    /**
-     * Update the value of the entity
-     * @param BusinessEntityPage $entity
-     * @param string             $field
-     * @param string             $value
-     *
-     * @return mixed
-     */
-    protected function setEntityAttributeValue($entity, $field, $value)
-    {
-        $functionName = 'set'.ucfirst($field);
-
-        call_user_func(array($entity, $functionName), $value);
-    }
-
-    /**
      * compute the viewReference relative to a View + entity
      * @param View                $view
      * @param BusinessEntity|null $entity
@@ -178,119 +107,8 @@ class ViewHelper
      */
     public function buildViewReference(View $view, $entity = null)
     {
-        $viewsReferences = array();
-        // if page is a pattern, compute it's bep
-        if ($view instanceof BusinessEntityPagePattern) {
-            if ($entity) {
-                if($this->businessEntityPageHelper->isEntityAllowed($view, $entity)){
-                    $currentPattern = clone $view;
-                    $page = $this->businessEntityPageHelper->generateEntityPageFromPattern($currentPattern, $entity);
-                    $this->updatePageParametersByEntity($page, $entity);
-                    $referenceId = $this->viewCacheHelper->getViewReferenceId($view, $entity);
-                    $viewsReferences[$page->getUrl().$page->getLocale()] = array(
-                        'id'              => $referenceId,
-                        'url'             => $page->getUrl(),
-                        'name'            => $page->getName(),
-                        'locale'          => $page->getLocale(),
-                        'patternId'       => $page->getTemplate()->getId(),
-                        'entityId'        => $entity->getId(),
-                        'entityNamespace' => $this->em->getClassMetadata(get_class($entity))->name,
-                        'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
-                    );
-                }
-            } else {
-                $referenceId = $this->viewCacheHelper->getViewReferenceId($view);
-                $viewsReferences[$view->getUrl().$view->getLocale()] = array(
-                    'id'              => $referenceId,
-                    'url'             => $view->getUrl(),
-                    'name'            => $view->getName(),
-                    'locale'          => $view->getLocale(),
-                    'viewId'          => $view->getId(),
-                    'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
-                );
-                $businessEntities = $this->businessEntityHelper->getBusinessEntities();
-
-                foreach ($businessEntities as $businessEntity) {
-                    $properties = $this->businessEntityPageHelper->getBusinessProperties($businessEntity);
-
-                    //find business identifiers of the current businessEntity
-                    $selectableProperties = array('id');
-                    foreach ($properties as $property) {
-                        if ($property->getType() === 'businessParameter') {
-                            $selectableProperties[] = $property->getEntityProperty();
-                        }
-                    }
-
-                    $entities = $this->businessEntityPageHelper->getEntitiesAllowed($view);
-
-                    // for each business entity
-                    foreach ($entities as $entity) {
-                        // only if related pattern entity is the current entity
-                        if ($view->getBusinessEntityId() === $businessEntity->getId()) {
-                            $currentPattern = clone $view;
-                            $page = $this->businessEntityPageHelper->generateEntityPageFromPattern($currentPattern, $entity);
-                            $this->updatePageParametersByEntity($page, $entity);
-                            $referenceId = $this->viewCacheHelper->getViewReferenceId($view, $entity);
-                            $viewsReferences[$page->getUrl().$view->getLocale()] = array(
-                                'id'              => $referenceId,
-                                'url'             => $page->getUrl(),
-                                'name'             => $page->getName(),
-                                'locale'          => $page->getLocale(),
-                                'patternId'       => $page->getTemplate()->getId(),
-                                'entityId'        => $entity->getId(),
-                                'entityNamespace' => $this->em->getClassMetadata(get_class($entity))->name,
-                                'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
-                            );
-                        }
-                        //I refresh this partial entity from em. If I don't do it, everytime I'll request this entity from em it'll be partially populated
-                        $this->em->refresh($entity);
-                    }
-                }
-            }
-        } elseif ($view instanceof BusinessEntityPage) {
-            $referenceId = $this->viewCacheHelper->getViewReferenceId($view);
-            $viewsReferences[$view->getUrl().$view->getLocale()] = array(
-                'id'              => $referenceId,
-                'locale'          => $view->getLocale(),
-                'viewId'          => $view->getId(),
-                'patternId'       => $view->getTemplate()->getId(),
-                'url'             => $view->getUrl(),
-                'name'            => $view->getName(),
-                'entityId'        => $view->getBusinessEntity()->getId(),
-                'entityNamespace' => $this->em->getClassMetadata(get_class($view->getBusinessEntity()))->name,
-                'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
-            );
-        } elseif ($view instanceof Template) {
-            $referenceId = $this->viewCacheHelper->getViewReferenceId($view);
-            $viewsReferences[$referenceId.$view->getLocale()] = array(
-                'id'              => $referenceId,
-                'locale'          => $view->getLocale(),
-                'name'            => $view->getName(),
-                'viewId'          => $view->getId(),
-                'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
-            );
-        } elseif ($view instanceof ErrorPage) {
-            $referenceId = $this->viewCacheHelper->getViewReferenceId($view);
-            $viewsReferences[$referenceId.$view->getLocale()] = array(
-                'id'              => $referenceId,
-                'locale'          => $view->getLocale(),
-                'name'            => $view->getName(),
-                'viewId'          => $view->getId(),
-                'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
-            );
-        } elseif (method_exists($view, 'getUrl')) {
-            $referenceId = $this->viewCacheHelper->getViewReferenceId($view);
-            $viewsReferences[$view->getUrl().$view->getLocale()] = array(
-                'id'              => $referenceId,
-                'locale'          => $view->getLocale(),
-                'viewId'          => $view->getId(),
-                'url'             => $view->getUrl(),
-                'name'            => $view->getName(),
-                'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
-            );
-        }
-
-        return $viewsReferences;
+        $viewManager = $this->viewManagerChain->getViewManager($view);
+        return $viewManager->buildReference($view, $entity);
     }
 
     /**

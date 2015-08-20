@@ -6,6 +6,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Victoire\Bundle\CoreBundle\DependencyInjection\Compiler\AccessMapCompilerPass;
 use Victoire\Bundle\CoreBundle\DependencyInjection\Compiler\TraductionCompilerPass;
+use Victoire\Bundle\CoreBundle\DependencyInjection\Compiler\ViewManagerCompilerPass;
 
 /**
  * Victoire Core Bundle
@@ -37,5 +38,6 @@ class VictoireCoreBundle extends Bundle
             $container->addCompilerPass(new TraductionCompilerPass());
         }
         $container->addCompilerPass(new AccessMapCompilerPass());
+        $container->addCompilerPass(new ViewManagerCompilerPass());
     }
 }

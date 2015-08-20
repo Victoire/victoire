@@ -144,3 +144,10 @@ services:
         tags:
             - { name: kernel.event_listener, event: victoire.widget_filter.form.date.set_default_value, method: setDefaultDateValue, priority: 1 }
 
+
+    victoire_blog.manager.blog_view_manager:
+        class: Victoire\Bundle\BlogBundle\Manager\BlogViewManager
+        parent: victoire_core.manager.page_manager
+        tags:
+            - { name: victoire_core.view_manager, view: Victoire\Bundle\BlogBundle\Entity\Blog }
+
