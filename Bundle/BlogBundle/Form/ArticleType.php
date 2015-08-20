@@ -2,7 +2,6 @@
 namespace Victoire\Bundle\BlogBundle\Form;
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -69,17 +68,6 @@ class ArticleType extends AbstractType
                     'multiple' => true
                 )
             );
-
-            $articlePatterns = function(EntityRepository $repo) {
-                return $repo->getInstance()->andWhere("pattern.businessEntityId = 'article'");
-            };
-            $builder->add('pattern', null, array(
-                'label'         => 'form.view.type.pattern.label',
-                'property'      => 'name',
-                'required'      => true,
-                'query_builder' => $articlePatterns,
-            )
-        );
     }
 
     /**
