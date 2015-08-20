@@ -38,8 +38,13 @@ class ArticleController extends Controller
             $entityManager->persist($article);
             $entityManager->flush();
             //Auto creation of the BEP
+            $patternId = $this->get('victoire_business_entity_page.business_entity_page_helper')->guessBestPatternIdForEntity(
+                 new \ReflectionClass($article),
++                $article->getId()
+            );
++           $pattern = $entityManager->getRepository('Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern')->findOneById($patternId);
             $page = $this->container->get('victoire_business_entity_page.business_entity_page_helper')
-                                ->generateEntityPageFromPattern($article->getPattern(), $article);
+                                ->generateEntityPageFromPattern($pattern, $article);
             $page->setParent($article->getBlog());
 
             $entityManager->persist($page);
@@ -120,10 +125,13 @@ class ArticleController extends Controller
         if ($novalidate === false && $form->isValid()) {
             $this->get('doctrine.orm.entity_manager')->flush();
 
-            $pattern = $article->getPattern();
+            $patternId = $this->get('victoire_business_entity_page.business_entity_page_helper')->guessBestPatternIdForEntity(
+                new \ReflectionClass($article),
+                +                $article->getId()
+            );
 
             $page = $this->container->get('victoire_page.page_helper')->findPageByParameters(array(
-                'viewId' => $pattern->getId(),
+                'viewId' => $patternId,
                 'entityId' => $article->getId(),
             ));
 
@@ -165,9 +173,13 @@ class ArticleController extends Controller
      */
     public function deleteAction(Article $article)
     {
+        $patternId = $this->get('victoire_business_entity_page.business_entity_page_helper')->guessBestPatternIdForEntity(
+            new \ReflectionClass($article),
+            +                $article->getId()
+        );
         $bep = $this->get('victoire_page.page_helper')->findPageByParameters(
             array(
-                'patternId' => $article->getPattern()->getId(),
+                'patternId' => $patternId,
                 'entityId'  => $article->getId(),
             )
         );

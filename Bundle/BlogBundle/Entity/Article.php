@@ -6,9 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
-use Victoire\Bundle\CoreBundle\Annotations as VIC;
 use Victoire\Bundle\BusinessEntityBundle\Entity\Traits\BusinessEntityTrait;
+use Victoire\Bundle\CoreBundle\Annotations as VIC;
 use Victoire\Bundle\MediaBundle\Entity\Media;
 
 /**
@@ -99,14 +98,6 @@ class Article
      * @ORM\JoinColumn(name="blog_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $blog;
-
-    /**
-     * @var BusinessEntityPagePattern
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern")
-     * @ORM\JoinColumn(name="pattern_id", referencedColumnName="id", onDelete="SET NULL")
-     * @Assert\NotNull()
-     */
-    private $pattern;
 
     /**
      * @var string
@@ -405,29 +396,6 @@ class Article
     public function getBusinessEntity()
     {
         return $this;
-    }
-
-    /**
-     * Set pattern
-     * @param BusinessEntityPagePattern $pattern
-     *
-     * @return Article
-     */
-    public function setPattern(BusinessEntityPagePattern $pattern)
-    {
-        $this->pattern = $pattern;
-
-        return $this;
-    }
-
-    /**
-     * Get pattern
-     *
-     * @return BusinessEntityPagePattern
-     */
-    public function getPattern()
-    {
-        return $this->pattern;
     }
 
     /**
