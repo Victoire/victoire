@@ -1,28 +1,22 @@
 #Setup
 
-## You can start a project from the victoire/demo package
+## From scratch ([victoire/demo](https://github.com/Victoire/demo) repo`)
 
-    composer create-project victoire/demo myVictoire 1.0.*@dev
+    composer create-project victoire/demo myProject 1.1.*@dev
 
-Import the database in var/dump/db.sql
+Then, import the database in var/dump/db.sql
 
-or do it yourself by doing the usual stuff (doctrine:schema:update etc). You can also load fixtures with the following lines :
+OR do it yourself by doing the usual stuff (doctrine:schema:update etc). You can also load fixtures with the following lines :
 
     php bin/console doctrine:database:create
     php bin/console doctrine:schema:create
     php bin/console victoire:generate:view-cache --env=dev
-    php bin/console doctrine:fixtures:load --fixtures="vendor/victoire/victoire/Bundle/CoreBundle/DataFixtures/ORM"
+    
+and populate your database according your needs with the available fixtures/seeds : https://github.com/Victoire/victoire/blob/master/behat.yml.dist#L44
 
-*Careful* : please notice that Victoire needs APC in CLI mode. to do so, add these two lines in your php.ini config file
+## In an existing Symfony project
 
-```ini
-    apc.enabled = 1
-    apc.enable_cli = 1
-```
-
-## Manually
-
-- Install Victoire core  :
+- Install Victoire core :
 
     composer require victoire/victoire
 
