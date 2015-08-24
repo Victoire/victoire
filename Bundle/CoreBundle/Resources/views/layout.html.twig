@@ -48,10 +48,10 @@
         <!-- FOOT_SCRIPT -->
 
         {% if view is defined %}
-        <script type="text/javascript">
-            var viewReferenceId = '{{ vic_current_page_reference() }}';
-        </script>
-        {{ render_hinclude(controller('VictoireAnalyticsBundle:BrowseEvent:track', {'viewReferenceId': view.reference.id, 'referer': app.request.headers.get('referer')})) }}
+            <script type="text/javascript">
+                var viewReferenceId = '{{ vic_current_page_reference() }}';
+            </script>
+            {{ render_hinclude(controller('VictoireAnalyticsBundle:BrowseEvent:track', {'viewReferenceId': vic_current_page_reference(), 'referer': app.request.headers.get('referer')})) }}
         {% endif %}
         {% if is_granted('ROLE_VICTOIRE') %}
         {% javascripts injector='victoire-edit, victoire-leftnavbar' %}
