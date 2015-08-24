@@ -4,12 +4,13 @@
 
 {% block meta %}<title>{{ 'victoire.login.meta.title'|trans({}, 'victoire') }}</title>{% endblock meta %}
 {% block container_class %}vic-login{% endblock container_class %}
-{% block head_style %}
+{% block style %}
     {% stylesheets filter='less, cssrewrite' injector="victoire-edit"
     %}
         <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
     {% endstylesheets %}
-{% endblock head_style %}
+    {{ parent() }}
+{% endblock style %}
 
 {% block fos_user_content %}
 {% if error %}
