@@ -20,6 +20,10 @@ class Widget extends BaseWidget
     use StyleTrait;
     use QueryTrait;
 
+    public function __construct() {
+        $this->childrenSlot = uniqid();
+    }
+
     /**
      * @var integer
      *
