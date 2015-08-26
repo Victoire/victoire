@@ -39,6 +39,13 @@ class Widget extends BaseWidget
     /**
      * @var string
      *
+     * @ORM\Column(name="childrenSlot", type="string", length=255, nullable=true)
+     */
+    protected $childrenSlot;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="theme", type="string", length=255, nullable=true)
      */
     protected $theme;
@@ -81,4 +88,20 @@ class Widget extends BaseWidget
      * @ORM\JoinColumn(name="entityProxy_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $entityProxy;
+
+    /**
+     * @return string
+     */
+    public function getChildrenSlot()
+    {
+        return $this->childrenSlot ? : $this->getId();
+    }
+
+    /**
+     * @param string $childrenSlot
+     */
+    public function setChildrenSlot($childrenSlot)
+    {
+        $this->childrenSlot = $childrenSlot;
+    }
 }
