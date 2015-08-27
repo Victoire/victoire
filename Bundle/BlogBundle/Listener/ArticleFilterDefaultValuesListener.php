@@ -30,7 +30,7 @@ class ArticleFilterDefaultValuesListener
     public function setDefaultDateValue(WidgetFilterSetDefaultValueEvent $event)
     {
         $form = $event->getForm();
-        $businessEntityId = $event->getBusinessEntityName();
+        $businessEntityId = $event->getBusinessEntityId();
         if ($businessEntityId == 'article') {
             $articles = $this->em->getRepository('VictoireBlogBundle:Article')->getAll(true)->run();
             $options = $form->getConfig()->getOptions()['data'];
