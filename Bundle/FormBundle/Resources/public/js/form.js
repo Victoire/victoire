@@ -10,6 +10,7 @@
  * with the new form types.
  *
  **/
+
 $vic(document).on('change', 'select[data-refreshOnChange="true"], input:checkbox[data-refreshOnChange="true"]', function(event) {
     var form = $(this).parents('form');
     loading(true);
@@ -17,13 +18,43 @@ $vic(document).on('change', 'select[data-refreshOnChange="true"], input:checkbox
         type: form.attr('method'),
         url : form.attr('action') + '?novalidate',
         data: form.serialize(),
-        async: true,
+        async: true
     }).done(function(response){
         $vic('.vic-modal-body .vic-container-fluid .vic-tab-pane.vic-active').html(response.html);
-        eval($vic('.vic-modal-body .vic-container-fluid .vic-tab-pane.vic-active').find("script").text());
+        var scripts = $vic('.vic-modal-body .vic-container-fluid .vic-tab-pane.vic-active').find("script");
+        evalAll(scripts);
         loading(false);
     }).fail(function(response) {
         console.log(response);
         error('Oups, une erreur est apparue', 10000);
     });
 });
+
+/**
+ * Keep order when eval or load script
+ =====================================
+ * Problematic:
+ * When 2 or more scripts tags need to be evaluated and the first script is an external script
+ * if the other scripts need the first one then an error occur because the first wasn't load entirely.
+ * example:
+ * <script src="source.js"></script>
+ * <script>var var2 = CONST + 1 // CONST is defined in source.js</script>
+ *
+ * This function evaluate scripts one per one and wait to load entirely each script before load an other one.
+ */
+function evalAll(scripts, current) {
+    current = (current) ? current : 0;
+    if (current < scripts.length) {
+        var script = $(scripts[current]);
+        var src = script.attr('src');
+        if (!src) {
+            eval(script.text());
+            evalAll(scripts, current + 1);
+        }
+        else {
+            $.getScript(src, function(){
+                evalAll(scripts, current + 1);
+            });
+        }
+    }
+}
