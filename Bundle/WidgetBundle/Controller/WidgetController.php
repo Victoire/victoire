@@ -188,7 +188,7 @@ class WidgetController extends Controller
      * @Route("/victoire-dcms/widget/stylize/{id}/{viewReference}", name="victoire_core_widget_stylize", options={"expose"=true})
      * @Template()
      */
-    public function stylizeAction(Widget $widget, $viewReference)
+    public function stylizeAction(Request $request, Widget $widget, $viewReference)
     {
         $view = $this->getViewByReferenceId($viewReference);
         $widgetView = $widget->getView();
@@ -214,7 +214,14 @@ class WidgetController extends Controller
                 )
             );
             $form->handleRequest($this->get('request'));
-            if ($form->isValid()) {
+
+            if ($request->query->get('novalidate', false) === false && $form->isValid()) {
+                if ($form->has('deleteBackground') && $form->get('deleteBackground')->getData()) {
+                    // @todo: dynamic responsive key
+                    foreach(['', 'XS', 'SM', 'MD', 'LG'] as $key) {
+                        $widget->{'deleteBackground' . $key}();
+                    }
+                }
                 $this->get('doctrine.orm.entity_manager')->flush();
                 $params = array(
                     'view'     => $view,
@@ -223,10 +230,11 @@ class WidgetController extends Controller
                     'widgetId' => $widget->getId(),
                 );
             } else {
+                $template = ($request->query->get('novalidate', false) !== false) ? 'VictoireCoreBundle:Widget/Form/stylize:form.html.twig' : 'VictoireCoreBundle:Widget/Form:stylize.html.twig';
                 $params = array(
                     "success"  => false,
                     "html"     => $this->get('victoire_core.template_mapper')->render(
-                        "VictoireCoreBundle:Widget:Form/stylize.html.twig",
+                        $template,
                         array(
                             'view'   => $view,
                             'form'   => $form->createView(),
