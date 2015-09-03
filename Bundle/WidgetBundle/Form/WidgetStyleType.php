@@ -4,6 +4,7 @@ namespace Victoire\Bundle\WidgetBundle\Form;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Symfony\Component\Config\FileLocator;
@@ -18,11 +19,15 @@ class WidgetStyleType extends AbstractType
 {
     private $kernel;
     private $fileLocator;
+    private $victoire_twig_responsive;
 
     public function __construct(Kernel $kernel, FileLocator $fileLocator)
     {
         $this->kernel = $kernel;
         $this->fileLocator = $fileLocator;
+
+        //@todo make it dynamic from the global variable (same name) or twig bundle parameter
+        $this->victoire_twig_responsive = ['', 'XS', 'SM', 'MD', 'LG'];
     }
     /**
      * Define form fields
@@ -34,83 +39,87 @@ class WidgetStyleType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('containerTag', 'choice', array(
-            'label' => 'widget_layout.form.containerTag.label',
-            'vic_help_block' => 'widget_layout.form.containerTag.help_block',
-            'choices' => array_combine(Widget::$tags, Widget::$tags),
-        ));
-        $builder->add('containerClass', null, array(
-            'label' => 'widget_layout.form.containerClass.label',
-            'required' => false,
-        ));
-        $builder->add('containerWidth', null, array(
-            'label' => 'widget_layout.form.containerWidth.label',
-            'vic_help_block' => 'widget_layout.form.containerWidth.help_block',
-            'required' => false,
-        ));
-        $builder->add('containerMargin', null, array(
-            'label' => 'widget_layout.form.containerMargin.label',
-            'vic_help_block' => 'widget_layout.form.containerMargin.help_block',
-            'required' => false,
-        ));
-        $builder->add('containerPadding', null, array(
-            'label' => 'widget_layout.form.containerPadding.label',
-            'vic_help_block' => 'widget_layout.form.containerPadding.help_block',
-            'required' => false,
-        ));
-        $builder->add('textAlign', 'choice', array(
-            'label'       => 'widget_layout.form.textAlign.label',
-            'required'    => false,
-            'empty_value' => true,
-            'choices'     => array(
-                ''        => '',
-                'left'    => 'widget_layout.form.textAlign.choices.left.label',
-                'center'  => 'widget_layout.form.textAlign.choices.center.label',
-                'right'   => 'widget_layout.form.textAlign.choices.right.label',
-                'justify' => 'widget_layout.form.textAlign.choices.justify.label',
-            ),
-        ));
+        $builder
+            ->add('containerTag', 'choice', array(
+                'label' => 'widget_layout.form.containerTag.label',
+                'vic_help_block' => 'widget_layout.form.containerTag.help_block',
+                'choices' => array_combine(Widget::$tags, Widget::$tags),
+            ))
+            ->add('containerClass', null, array(
+                'label' => 'widget_layout.form.containerClass.label',
+                'required' => false,
+            ))
+            ->add('vicActiveTab', 'hidden', array(
+                'required' => false,
+                'mapped' => false,
+            ))
+            /**
+             * Delete all background element (delete background of previous version too)
+             */
+            ->add('deleteBackground', 'checkbox', array(
+                'label' => 'widget_layout.form.deleteBackground.label',
+                'required' => false,
+                'mapped' => false,
+            ))
+            ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+                /**
+                 * Generate form fields for each part of form
+                 * Example, generate Static content, XS and SM as color forms
+                 * Whereas MD and LG are image forms
+                 */
+                foreach ($this->victoire_twig_responsive as $key) {
+                    self::generateBackgroundFields($event->getForm(), $event->getData()->{'getContainerBackgroundType'.$key}(), $key);
+                }
+            })
+        ;
 
-        //@todo make it dynamic from the global variable (same name) or twig bundle parameter
-        $victoire_twig_responsive = array(
-            'XS', 'SM', 'MD', 'LG',
-        );
-        foreach ($victoire_twig_responsive as $key) {
-            $builder->add('containerMargin'.$key, null, array(
-                'label' => 'widget_layout.form.containerMargin'.$key.'.label',
-                'required' => false,
-            ));
-            $builder->add('containerPadding'.$key, null, array(
-                'label' => 'widget_layout.form.containerPadding'.$key.'.label',
-                'required' => false,
-            ));
-            $builder->add('containerWidth'.$key, null, array(
-                'label' => 'widget_layout.form.containerWidth'.$key.'.label',
-                'required' => false,
-            ));
-            $builder->add('containerBackground'.$key, null, array(
-                'label' => 'widget_layout.form.containerBackground'.$key.'.label',
-                'required' => false,
-            ));
-            $builder->add('textAlign'.$key, 'choice', array(
-                'label' => 'widget_layout.form.textAlign'.$key.'.label',
-                'required'    => false,
-                'empty_value' => true,
-                'choices'     => array(
-                    ''        => '',
-                    'left'    => 'widget_layout.form.textAlign.choices.left.label',
-                    'center'  => 'widget_layout.form.textAlign.choices.center.label',
-                    'right'   => 'widget_layout.form.textAlign.choices.right.label',
-                    'justify' => 'widget_layout.form.textAlign.choices.justify.label',
-                ),
-            ));
+        foreach ($this->victoire_twig_responsive as $key) {
+            /**
+             * Build global fields for all parts of form
+             */
+            $builder
+                ->add('containerMargin'.$key, null, array(
+                    'label' => 'widget_layout.form.containerMargin'.$key.'.label',
+                    'vic_help_block' => 'widget_layout.form.containerMargin.help_block',
+                    'required' => false,
+                ))
+                ->add('containerPadding'.$key, null, array(
+                    'label' => 'widget_layout.form.containerPadding'.$key.'.label',
+                    'vic_help_block' => 'widget_layout.form.containerPadding.help_block',
+                    'required' => false,
+                ))
+                ->add('containerWidth'.$key, null, array(
+                    'label' => 'widget_layout.form.containerWidth'.$key.'.label',
+                    'vic_help_block' => 'widget_layout.form.containerWidth.help.label',
+                ))
+                ->add('textAlign'.$key, 'choice', array(
+                    'label' => 'widget_layout.form.textAlign'.$key.'.label',
+                    'required'    => false,
+                    'empty_value' => true,
+                    'choices'     => array(
+                        ''        => '',
+                        'left'    => 'widget_layout.form.textAlign.choices.left.label',
+                        'center'  => 'widget_layout.form.textAlign.choices.center.label',
+                        'right'   => 'widget_layout.form.textAlign.choices.right.label',
+                        'justify' => 'widget_layout.form.textAlign.choices.justify.label',
+                    ),
+                ))
+                ->add('containerBackgroundType'.$key, 'choice', array(
+                    'label' => 'widget_layout.form.containerBackgroundType'.$key.'.label',
+                    'choices'     => array(
+                        'color'   => 'widget_layout.form.containerBackgroundType.choices.color.label',
+                        'image'   => 'widget_layout.form.containerBackgroundType.choices.image.label',
+                    ),
+                    'attr' => [
+                        'data-refreshOnChange' => "true",
+                    ],
+                ))
+                ->get('containerBackgroundType'.$key)->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($key) {
+                    self::generateBackgroundFields($event->getForm()->getParent(), $event->getData(), $key);
+                })
+            ;
+
         }
-
-        $builder->add('containerBackground', null, array(
-            'label' => 'widget_layout.form.containerBackground.label',
-            'vic_help_block' => 'widget_layout.form.containerBackground.help_block',
-            'required' => false,
-        ));
 
         // add theme field
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -142,6 +151,76 @@ class WidgetStyleType extends AbstractType
                 ));
             }
         });
+    }
+
+    private function generateBackgroundFields(FormInterface $form, $type = null, $responsiveKey = false) {
+        if ($responsiveKey !== false) {
+            /**
+             * Build the part of form as the good type
+             * Exemple: XS will have background color field whereas SM will have background image field
+             */
+            switch ($type) {
+                case 'image':
+                    $form->
+                        remove('containerBackgroundColor'.$responsiveKey)
+                        ->add('containerBackgroundImage'.$responsiveKey, 'media', array(
+                            'label' => 'widget_layout.form.containerBackgroundImage'.$responsiveKey.'.label',
+                        ))
+                        ->add('containerBackgroundRepeat'.$responsiveKey, 'choice', array(
+                            'label' => 'widget_layout.form.containerBackgroundRepeat'.$responsiveKey.'.label',
+                            'vic_help_block' => 'widget_layout.form.containerBackgroundRepeat.help.label',
+                            'choices' => array(
+                                'no-repeat' => 'widget_layout.form.containerBackgroundRepeat.choices.noRepeat.label',
+                                'repeat'    => 'widget_layout.form.containerBackgroundRepeat.choices.repeat.label',
+                                'repeat-x'  => 'widget_layout.form.containerBackgroundRepeat.choices.repeatX.label',
+                                'repeat-y'  => 'widget_layout.form.containerBackgroundRepeat.choices.repeatY.label',
+                            ),
+                        ))
+                        ->add('containerBackgroundPosition'.$responsiveKey, 'choice', array(
+                            'label' => 'widget_layout.form.containerBackgroundPosition'.$responsiveKey.'.label',
+                            'vic_help_block' => 'widget_layout.form.containerBackgroundPosition.help.label',
+                            'choices' => array(
+                                'center center' => 'widget_layout.form.containerBackgroundRepeat.choices.center.center.label',
+                                'center right'  => 'widget_layout.form.containerBackgroundRepeat.choices.center.right.label',
+                                'center left'   => 'widget_layout.form.containerBackgroundRepeat.choices.center.left.label',
+                                'top center'    => 'widget_layout.form.containerBackgroundRepeat.choices.top.center.label',
+                                'top right'     => 'widget_layout.form.containerBackgroundRepeat.choices.top.right.label',
+                                'top left'      => 'widget_layout.form.containerBackgroundRepeat.choices.top.left.label',
+                                'bottom center' => 'widget_layout.form.containerBackgroundRepeat.choices.bottom.center.label',
+                                'bottom right'  => 'widget_layout.form.containerBackgroundRepeat.choices.bottom.right.label',
+                                'bottom left'   => 'widget_layout.form.containerBackgroundRepeat.choices.bottom.left.label',
+                            ),
+                        ))
+                        ->add('containerBackgroundSize'.$responsiveKey, null, array(
+                            'label' => 'widget_layout.form.containerBackgroundSize'.$responsiveKey.'.label',
+                            'vic_help_block' => 'widget_layout.form.containerBackgroundSize.help.label',
+                        ))
+                        ->add('containerBackgroundOverlay'.$responsiveKey, null, array(
+                            'label' => 'widget_layout.form.containerBackgroundOverlay'.$responsiveKey.'.label',
+                            'vic_help_block' => 'widget_layout.form.containerBackgroundOverlay.help.label',
+                        ))
+                    ;
+                    break;
+                default:
+                    $form
+                        ->remove('containerBackgroundImage'.$responsiveKey)
+                        ->remove('containerBackgroundRepeat'.$responsiveKey)
+                        ->remove('containerBackgroundPosition'.$responsiveKey)
+                        ->remove('containerBackgroundSize'.$responsiveKey)
+                        ->remove('containerBackgroundOverlay'.$responsiveKey)
+                        ->add('containerBackgroundColor'.$responsiveKey, null, array(
+                            'label' => 'widget_layout.form.containerBackgroundColor'.$responsiveKey.'.label',
+                            'vic_help_block' => 'widget_layout.form.containerBackgroundColor.help.label',
+                        ))
+                    ;
+                    break;
+            }
+        }
+        else {
+            foreach ($this->victoire_twig_responsive as $responsiveKey) {
+                self::generateBackgroundFields($form, $type, $responsiveKey);
+            }
+        }
     }
 
     /**
