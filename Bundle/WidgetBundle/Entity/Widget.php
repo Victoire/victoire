@@ -43,7 +43,7 @@ class Widget extends BaseWidget
     /**
      * @var string
      *
-     * @ORM\Column(name="childrenSlot", type="string", length=255, nullable=true)
+     * @ORM\Column(name="childrenSlot", type="string", length=100, nullable=true)
      */
     protected $childrenSlot;
 
