@@ -79,13 +79,14 @@ class ViewHelper
             if ($viewReference['viewNamespace'] == 'Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage') {
                 array_walk($viewsReferences, function ($_viewReference, $key) use ($viewReference, &$viewsReferences) {
                     if ($_viewReference['viewNamespace'] == 'Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern'
-                        && !empty($_viewReference['entityId'])
-                        && $_viewReference['entityId'] == $viewReference['entityId']) {
-                        unset($viewsReferences[$key]);
+                        && !empty($_viewReference['entityNamespace']) && $_viewReference['entityNamespace'] == $viewReference['entityNamespace']
+                        && !empty($_viewReference['entityId']) && $_viewReference['entityId'] == $viewReference['entityId']) {
+                            unset($viewsReferences[$key]);
                     }
                 });
             }
         }
+
     }
     /**
      * This method get all views (BasePage and Template) in DB and return the references, including non persisted Business entity page (pattern and businessEntityId based)

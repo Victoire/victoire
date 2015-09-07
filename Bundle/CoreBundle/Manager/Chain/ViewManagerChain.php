@@ -28,6 +28,10 @@ class ViewManagerChain
         $this->viewsManagers[$view] = $viewManager;
     }
 
+    /**
+     * @param View $view
+     * @return ViewManagerInterface
+     */
     public function getViewManager(View $view)
     {
         if(array_key_exists($viewClass = get_class($view), $this->viewsManagers))
