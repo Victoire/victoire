@@ -11,8 +11,7 @@
     <div class="vic-row">
         <div class="vic-col-sm-6 vic-col-md-4">{{ form_row(form.containerTag) }}</div>
         <div class="vic-col-sm-6 vic-col-md-4">{{ form_row(form.containerClass) }}</div>
-        <div class="vic-col-sm-6 vic-col-md-4">{{ form_row(form.theme) }}</div>
-        <div class="vic-col-xs-12">{{ form_row(form.deleteBackground) }}</div>
+        {% if form.theme is defined and form.theme %}<div class="vic-col-sm-6 vic-col-md-4">{{ form_row(form.theme) }}</div>{% endif %}
     </div>
     <hr>
     <div class="vic-row">

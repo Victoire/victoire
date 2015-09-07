@@ -411,6 +411,10 @@
         <source>widget_layout.form.deleteBackground.label</source>
         <target>Enlever tous les arrières-plans. Attention cette action enlèvera tous les arrières-plans, même ceux présents dans les parties responsives de ce formulaire.</target>
       </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerBackground.help_block">
+        <source>widget_layout.form.containerBackground.help_block</source>
+        <target>Ce champs est déprécié, et sera supprimé prochainement. Merci de ne plus l'utiliser.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

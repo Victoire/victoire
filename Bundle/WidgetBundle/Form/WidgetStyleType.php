@@ -49,15 +49,12 @@ class WidgetStyleType extends AbstractType
                 'label' => 'widget_layout.form.containerClass.label',
                 'required' => false,
             ))
-            ->add('vicActiveTab', 'hidden', array(
+            ->add('containerBackground', null, array( 
+                'label' => 'widget_layout.form.containerBackground.label',
+                'vic_help_block' => 'widget_layout.form.containerBackground.help_block',
                 'required' => false,
-                'mapped' => false,
             ))
-            /**
-             * Delete all background element (delete background of previous version too)
-             */
-            ->add('deleteBackground', 'checkbox', array(
-                'label' => 'widget_layout.form.deleteBackground.label',
+            ->add('vicActiveTab', 'hidden', array(
                 'required' => false,
                 'mapped' => false,
             ))
