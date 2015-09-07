@@ -75,7 +75,7 @@ class ViewHelper
     public function cleanVirtualViews(&$viewsReferences)
     {
         foreach ($viewsReferences as $viewReference) {
-            // If viewReference is a persisted page
+            // If viewReference is a persisted page, we want to clean virtual BEPs
             if ($viewReference['viewNamespace'] == 'Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage') {
                 array_walk($viewsReferences, function ($_viewReference, $key) use ($viewReference, &$viewsReferences) {
                     if ($_viewReference['viewNamespace'] == 'Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern'
