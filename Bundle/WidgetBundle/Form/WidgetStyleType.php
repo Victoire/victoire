@@ -49,7 +49,7 @@ class WidgetStyleType extends AbstractType
                 'label' => 'widget_layout.form.containerClass.label',
                 'required' => false,
             ))
-            ->add('containerBackground', null, array( 
+            ->add('containerBackground', null, array(
                 'label' => 'widget_layout.form.containerBackground.label',
                 'vic_help_block' => 'widget_layout.form.containerBackground.help_block',
                 'required' => false,

@@ -51,4 +51,27 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
 
         return $profile;
     }
+
+    /**
+     * @Then /^I should see the css property "(.+)" of "(.+)" with "(.+)"$/
+     */
+    public function iShouldSeeCssOfWith($property, $elementId, $value) {
+        $script = "return $('#" . $elementId . "').css('" . $property . "') === '" . $value . "';";
+        $evaluated = $this->getSession()->evaluateScript($script);
+        if (!$evaluated) {
+            throw new \RuntimeException('The element with id "' . $elementId . '" and css property "' . $property . ': ' . $value . ';" not found.');
+        }
+    }
+
+    /**
+     * @Then I should see background-image of :id with relative url :url
+     */
+    public function iShouldSeeBackgroundImageWithRelativeUrl($id, $url) {
+        $session = $this->getSession();
+        $base_url = $session->getCurrentUrl();
+        $parse_url = parse_url($base_url);
+        $base_url = rtrim($base_url, $parse_url['path']);
+        $url = rtrim($base_url, DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.ltrim($url, DIRECTORY_SEPARATOR);
+        $this->iShouldSeeCssOfWith('background-image', $id, 'url("' . $url . '")');
+    }
 }

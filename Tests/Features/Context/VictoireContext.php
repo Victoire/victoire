@@ -131,7 +131,7 @@ class VictoireContext extends RawMinkContext
     {
         $selector = sprintf('.vic-widget-%s > a.vic-hover-widget', strtolower($widgetType));
         $session = $this->getSession(); // get the mink session
-        $element = $session->getPage()->find('css', $selector); // runs the actual query and returns the element
+        $element = $this->findOrRetry($session->getPage(), 'css', $selector);
 
         // errors must not pass silently
         if (null === $element) {
@@ -168,6 +168,28 @@ class VictoireContext extends RawMinkContext
         $link->click();
         $optionButton = $this->getSession()->getPage()->find('css', sprintf('ul[aria-labelledby="%sDropdownMenu"] > li > a[title="%s"]', $dropdown, $option));
         $optionButton->click();
+    }
+
+    /**
+     * @Then /^I attach image with id "(\d+)" to victoire field "(.+)"$/
+     */
+    public function attachImageToVictoireScript($imageId, $fieldId) {
+        $script = sprintf('$("#%s input").val(%d)', $fieldId, $imageId);
+        $this->getSession()->executeScript($script);
+    }
+
+    /**
+     * @Then I should find css element :element with selector :selector and value :value
+     */
+    public function iShouldFindCssWithSelectorAndValue($element, $selector, $value) {
+        $css = sprintf('%s[%s="%s"]', $element, $selector, $value);
+        $session = $this->getSession();
+        $element = $this->findOrRetry($session->getPage(), 'css', $css);
+
+        if (null === $element) {
+            $message = sprintf('Element not found. String generate: %s[%s="%s"]', $element, $selector, $value);
+            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
+        }
     }
 
     /**
