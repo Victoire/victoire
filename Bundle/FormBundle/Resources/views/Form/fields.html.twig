@@ -737,3 +737,33 @@
     </script>
     {% endspaceless %}
 {% endblock font_awesome_picker_widget %}
+
+{% block victoire_link_widget %}
+    {% set disposition = form.vars.horizontal ? "-horizontal" : "-vertical" %}
+    <div data-link class="vic-link-container {{ disposition }}">
+        {{ form_row(form.current) }}
+        {{ form_row(form.linkType) }}
+        {{ form_row(form.url) }}
+        {{ form_row(form.viewReference) }}
+        {{ form_row(form.attachedWidget) }}
+        {{ form_row(form.route) }}
+        {% if not form.vars.horizontal %}{{ form_row(form.route_parameters) }}{% endif %}
+        {{ form_row(form.target) }}
+        {% if form.vars.horizontal %}{{ form_row(form.route_parameters) }}{% endif %}
+        {% if form.analytics_track_code is defined and form.analytics_track_code %}{{ form_row(form.analytics_track_code) }}{% endif %}
+    </div>
+    <script>
+        <!--
+        /**
+         * On submit, update value of current input with current value selected
+         * showSelectedLinkType is a function in VictoireFormBundle/Resources/public/js/link.js
+         * this function is use to display or hide link fields
+         */
+        var select = $('[data-link] [data-role="vic-linkType-select"]');
+        select.closest('form').on('submit', function() {
+            $('.vic-current-link').val(select.val());
+        });
+        showSelectedLinkType($vic("[data-role='vic-linkType-select']"));
+        -->
+    </script>
+{% endblock %}
