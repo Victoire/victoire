@@ -91,20 +91,6 @@ trait StyleSMTrait {
     protected $containerBackgroundOverlaySM;
 
     /**
-     * Delete all SM background
-     */
-    public function deleteBackgroundSM() {
-        $this->containerBackgroundSM = null;
-        $this->containerBackgroundTypeSM = null;
-        $this->containerBackgroundColorSM = null;
-        $this->containerBackgroundImageSM = null;
-        $this->containerBackgroundRepeatSM = null;
-        $this->containerBackgroundSizeSM = null;
-        $this->containerBackgroundPositionSM = null;
-        $this->containerBackgroundOverlaySM = null;
-    }
-
-    /**
      * @return string
      */
     public function getContainerMarginSM()

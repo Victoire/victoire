@@ -91,20 +91,6 @@ trait StyleLGTrait {
     protected $containerBackgroundOverlayLG;
 
     /**
-     * Delete all LG background
-     */
-    public function deleteBackgroundLG() {
-        $this->containerBackgroundLG = null;
-        $this->containerBackgroundTypeLG = null;
-        $this->containerBackgroundColorLG = null;
-        $this->containerBackgroundImageLG = null;
-        $this->containerBackgroundRepeatLG = null;
-        $this->containerBackgroundSizeLG = null;
-        $this->containerBackgroundPositionLG = null;
-        $this->containerBackgroundOverlayLG = null;
-    }
-
-    /**
      * @return string
      */
     public function getContainerMarginLG()

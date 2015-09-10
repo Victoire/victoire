@@ -130,20 +130,6 @@ trait StyleTrait
     protected $containerBackgroundOverlay;
 
     /**
-     * Delete all static background
-     */
-    public function deleteBackground() {
-        $this->containerBackground = null;
-        $this->containerBackgroundType = null;
-        $this->containerBackgroundColor = null;
-        $this->containerBackgroundImage = null;
-        $this->containerBackgroundRepeat = null;
-        $this->containerBackgroundSize = null;
-        $this->containerBackgroundPosition = null;
-        $this->containerBackgroundOverlay = null;
-    }
-
-    /**
      * Set containerTag
      * @param string $containerTag
      *

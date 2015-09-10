@@ -91,20 +91,6 @@ trait StyleXSTrait {
     protected $containerBackgroundOverlayXS;
 
     /**
-     * Delete all XS background
-     */
-    public function deleteBackgroundXS() {
-        $this->containerBackgroundXS = null;
-        $this->containerBackgroundTypeXS = null;
-        $this->containerBackgroundColorXS = null;
-        $this->containerBackgroundImageXS = null;
-        $this->containerBackgroundRepeatXS = null;
-        $this->containerBackgroundSizeXS = null;
-        $this->containerBackgroundPositionXS = null;
-        $this->containerBackgroundOverlayXS = null;
-    }
-
-    /**
      * @return string
      */
     public function getContainerMarginXS()

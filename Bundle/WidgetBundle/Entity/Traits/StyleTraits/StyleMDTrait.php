@@ -91,20 +91,6 @@ trait StyleMDTrait {
     protected $containerBackgroundOverlayMD;
 
     /**
-     * Delete all MD background
-     */
-    public function deleteBackgroundMD() {
-        $this->containerBackgroundMD = null;
-        $this->containerBackgroundTypeMD = null;
-        $this->containerBackgroundColorMD = null;
-        $this->containerBackgroundImageMD = null;
-        $this->containerBackgroundRepeatMD = null;
-        $this->containerBackgroundSizeMD = null;
-        $this->containerBackgroundPositionMD = null;
-        $this->containerBackgroundOverlayMD = null;
-    }
-
-    /**
      * @return string
      */
     public function getContainerMarginMD()
