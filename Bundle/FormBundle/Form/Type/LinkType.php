@@ -4,6 +4,8 @@ namespace Victoire\Bundle\FormBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Victoire\Bundle\CoreBundle\DataTransformer\JsonToArrayTransformer;
 use Victoire\Bundle\CoreBundle\Helper\ViewHelper;
@@ -28,27 +30,29 @@ class LinkType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $transformer = new JsonToArrayTransformer();
-        $builder->add('linkType', 'choice', array(
-            'label'       => 'form.link_type.linkType.label',
-            'required'    => true,
-            'choices'     => array(
-                'none'           => 'form.link_type.linkType.none',
-                'viewReference'  => 'form.link_type.linkType.view_reference',
-                'route'          => 'form.link_type.linkType.route',
-                'url'            => 'form.link_type.linkType.url',
-                'attachedWidget' => 'form.link_type.linkType.widget',
-            ),
-            'attr'        => array(
-                'data-role' => 'vic-linkType-select',
-                'onchange'  => 'showSelectedLinkType($vic(this));',
-            ),
-        ))
-        ->add('url', null, array(
-            'label'                          => 'form.link_type.url.label',
-            'vic_vic_widget_form_group_attr' => array('class' => 'vic-form-group vic-hidden url-type'),
-            'required'                       => true,
-            'attr'                           => array('novalidate' => 'novalidate'),
-        ));
+        $builder
+            ->add('linkType', 'choice', array(
+                'label'       => 'form.link_type.linkType.label',
+                'required'    => true,
+                'choices'     => array(
+                    'none'           => 'form.link_type.linkType.none',
+                    'viewReference'  => 'form.link_type.linkType.view_reference',
+                    'route'          => 'form.link_type.linkType.route',
+                    'url'            => 'form.link_type.linkType.url',
+                    'attachedWidget' => 'form.link_type.linkType.widget',
+                ),
+                'attr'        => array(
+                    'data-role' => 'vic-linkType-select',
+                    'onchange'  => 'showSelectedLinkType($vic(this));',
+                ),
+            ))
+            ->add('url', null, array(
+                'label'                          => 'form.link_type.url.label',
+                'vic_vic_widget_form_group_attr' => array('class' => 'vic-form-group vic-hidden url-type'),
+                'required'                       => true,
+                'attr'                           => array('novalidate' => 'novalidate'),
+            ))
+        ;
 
         $rawPages = $this->viewHelper->getAllViewsReferences();
         $pages = array();
@@ -94,7 +98,7 @@ class LinkType extends AbstractType
                 '_blank'     => 'form.link_type.choice.target.blank',
                 'ajax-modal' => 'form.link_type.choice.target.ajax-modal',
             ),
-            'vic_vic_widget_form_group_attr' => array('class' => 'vic-form-group page-type url-type route-type attachedWidget-type'),
+            'vic_vic_widget_form_group_attr' => array('class' => 'vic-form-group viewReference-type page-type url-type route-type attachedWidget-type'),
         ));
 
         if (!empty($this->analytics['google']) && $this->analytics['google']['enabled']) {
@@ -104,6 +108,7 @@ class LinkType extends AbstractType
                 'attr'           => array(
                     'placeholder' => 'form.link_type.analytics_track_code.placeholder',
                 ),
+                'vic_vic_widget_form_group_attr' => array('class' => 'vic-form-group analytics-type'),
             ));
         }
     }
@@ -113,8 +118,18 @@ class LinkType extends AbstractType
         $resolver->setDefaults(array(
             'data_class'         => 'Victoire\Bundle\CoreBundle\Entity\Link',
             'translation_domain' => 'victoire',
+            'horizontal'          => false,
         ));
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $view->vars['horizontal'] = $options['horizontal'];
+    }
+
     /**
      * {@inheritdoc}
      */
