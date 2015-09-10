@@ -52,12 +52,6 @@ class LinkType extends AbstractType
                 'required'                       => true,
                 'attr'                           => array('novalidate' => 'novalidate'),
             ))
-            ->add('current', 'hidden', array(
-                'mapped'    => false,
-                'attr'      => array(
-                    'class' => 'vic-current-link'
-                ),
-            ))
         ;
 
         $rawPages = $this->viewHelper->getAllViewsReferences();

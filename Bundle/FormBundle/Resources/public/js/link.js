@@ -1,14 +1,10 @@
 /**
- * This function is use to display or hide link fields.
- * If the hidden input "current" is not null, this function show the good fields
- * This hidden input has been added in the linkType because when the "data-refreshOnChange" was used,
- * link field took 'none link' value, or value shouldn't be change.
+ * This function is used to display or hide link fields.
  */
 function showSelectedLinkType(selects) {
     $vic(selects).each(function(){
         var select    = $vic(this);
-        var current   = $vic('.vic-current-link').val();
-        (current) ? $vic('.vic-current-link').val('') : current = $vic(this).val();
+        var current   = $vic(this).val();
         var container = select.closest('.vic-link-container');
         var active    = container.find('.' + current + '-type');
         var count     = (current != 'none' && container.find('.analytics-type').length) ? 2 : 1;
