@@ -29,6 +29,13 @@ trait StyleXSTrait {
     /**
      * @var string
      *
+     * @ORM\Column(name="container_height_xs", type="string", length=255, nullable=true)
+     */
+    protected $containerHeightXS;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="text_align_xs", type="string", length=15, nullable=true)
      */
     protected $textAlignXS;
@@ -123,6 +130,24 @@ trait StyleXSTrait {
     public function setContainerPaddingXS($containerPaddingXS)
     {
         $this->containerPaddingXS = $containerPaddingXS;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContainerHeightXS()
+    {
+        return $this->containerHeightXS;
+    }
+
+    /**
+     * @param string $containerHeightXS
+     * @return $this
+     */
+    public function setContainerHeightXS($containerHeightXS)
+    {
+        $this->containerHeightXS = $containerHeightXS;
         return $this;
     }
 

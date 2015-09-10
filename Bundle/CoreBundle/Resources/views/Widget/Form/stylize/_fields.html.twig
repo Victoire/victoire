@@ -6,8 +6,9 @@
     <div class="vic-col-sm-6">{{ form_row(attribute(form, 'containerPadding' ~ key|upper)) }}</div>
 </div>
 <div class="vic-row">
-    <div class="vic-col-sm-6">{{ form_row(attribute(form, 'containerWidth' ~ key|upper)) }}</div>
-    <div class="vic-col-sm-6">{{ form_row(attribute(form, 'textAlign' ~ key|upper)) }}</div>
+    <div class="vic-col-sm-4">{{ form_row(attribute(form, 'containerWidth' ~ key|upper)) }}</div>
+    <div class="vic-col-sm-4">{{ form_row(attribute(form, 'containerHeight' ~ key|upper)) }}</div>
+    <div class="vic-col-sm-4">{{ form_row(attribute(form, 'textAlign' ~ key|upper)) }}</div>
 </div>
 {% set formBackgroundType = attribute(form, 'containerBackgroundType' ~ key|upper) %}
 <div class="vic-row">

@@ -29,6 +29,13 @@ trait StyleSMTrait {
     /**
      * @var string
      *
+     * @ORM\Column(name="container_height_sm", type="string", length=255, nullable=true)
+     */
+    protected $containerHeightSM;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="text_align_sm", type="string", length=15, nullable=true)
      */
     protected $textAlignSM;
@@ -141,6 +148,24 @@ trait StyleSMTrait {
     public function setContainerWidthSM($containerWidthSM)
     {
         $this->containerWidthSM = $containerWidthSM;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContainerHeightSM()
+    {
+        return $this->containerHeightSM;
+    }
+
+    /**
+     * @param string $containerHeightSM
+     * @return $this
+     */
+    public function setContainerHeightSM($containerHeightSM)
+    {
+        $this->containerHeightSM = $containerHeightSM;
         return $this;
     }
 

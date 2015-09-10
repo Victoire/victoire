@@ -89,6 +89,10 @@ class WidgetStyleType extends AbstractType
                     'label' => 'widget_layout.form.containerWidth'.$key.'.label',
                     'vic_help_block' => 'widget_layout.form.containerWidth.help.label',
                 ))
+                ->add('containerHeight'.$key, null, array(
+                    'label' => 'widget_layout.form.containerHeight'.$key.'.label',
+                    'vic_help_block' => 'widget_layout.form.containerHeight.help.label',
+                ))
                 ->add('textAlign'.$key, 'choice', array(
                     'label' => 'widget_layout.form.textAlign'.$key.'.label',
                     'required'    => false,

@@ -4,6 +4,7 @@
 {% set remove = "" %}
 
 {% set globalStyle = (width is defined and width) ? globalStyle|merge({'width': "width: #{width};"}) : globalStyle %}
+{% set globalStyle = (height is defined and height) ? globalStyle|merge({'height': "min-height: #{height};"}) : globalStyle %}
 {% set globalStyle = (margin is defined and margin) ? globalStyle|merge({'margin': "margin: #{margin};"}) : globalStyle %}
 {% set globalStyle = (padding is defined and padding) ? globalStyle|merge({'padding': "padding: #{padding};"}) : globalStyle %}
 {% set globalStyle = (textAlign is defined and textAlign) ? globalStyle|merge({'textAlign': "text-align: #{textAlign};"}) : globalStyle %}

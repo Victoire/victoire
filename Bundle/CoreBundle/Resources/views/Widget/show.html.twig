@@ -1,7 +1,7 @@
 {% trans_default_domain "victoire" %}
 
 {% set hasStyle = 0 %}
-{% for style in ['containerWidth', 'containerMargin', 'containerPadding', 'textAlign', 'containerBackground',
+{% for style in ['containerWidth', 'containerHeight', 'containerMargin', 'containerPadding', 'textAlign', 'containerBackground',
                  'containerBackgroundType', 'containerBackgroundImage', 'containerBackgroundRepeat',
                  'containerBackgroundPosition', 'containerBackgroundSize', 'containerBackgroundOverlay',
                  'containerBackgroundColor'] %}
@@ -28,6 +28,7 @@
             {% endif %}
             {% include "VictoireCoreBundle:Widget/show:_style.html.twig" with {
                 'width': attribute(widget, 'containerWidth' ~ responsive|upper),
+                'height': attribute(widget, 'containerHeight' ~ responsive|upper),
                 'margin': attribute(widget, 'containerMargin' ~ responsive|upper),
                 'padding': attribute(widget, 'containerPadding' ~ responsive|upper),
                 'position': attribute(widget, 'containerBackgroundOverlay' ~ responsive|upper) ? 'relative',

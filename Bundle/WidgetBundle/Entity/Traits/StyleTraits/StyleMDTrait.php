@@ -29,6 +29,13 @@ trait StyleMDTrait {
     /**
      * @var string
      *
+     * @ORM\Column(name="container_height_md", type="string", length=255, nullable=true)
+     */
+    protected $containerHeightMD;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="text_align_md", type="string", length=15, nullable=true)
      */
     protected $textAlignMD;
@@ -141,6 +148,24 @@ trait StyleMDTrait {
     public function setContainerWidthMD($containerWidthMD)
     {
         $this->containerWidthMD = $containerWidthMD;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContainerHeightMD()
+    {
+        return $this->containerHeightMD;
+    }
+
+    /**
+     * @param string $containerHeightMD
+     * @return $this
+     */
+    public function setContainerHeightMD($containerHeightMD)
+    {
+        $this->containerHeightMD = $containerHeightMD;
         return $this;
     }
 

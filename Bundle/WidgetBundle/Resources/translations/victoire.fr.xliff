@@ -99,6 +99,10 @@
         <source>widget_layout.form.containerWidth.help_block</source>
         <target>Indiquez la taille suivie de l'unité (px, %...)</target>
       </trans-unit>
+      <trans-unit id="21" resname="widget_layout.form.containerHeight.help_block">
+        <source>widget_layout.form.containerHeight.help_block</source>
+        <target>Indiquez la taille suivie de l'unité (px, %...)</target>
+      </trans-unit>
       <trans-unit id="22" resname="widget_layout.form.containerMargin.help_block">
         <source>widget_layout.form.containerMargin.help_block</source>
         <target><![CDATA[Indiquez la marge suivie de l'unité (px, %...). Vous pouvez utiliser 0px auto pour centrer le conteneur - Propriété CSS <strong>margin</strong>]]></target>
@@ -147,6 +151,26 @@
         <source>widget_layout.form.containerWidthLG.label</source>
         <target>Largeur</target>
       </trans-unit>
+      <trans-unit id="38" resname="widget_layout.form.containerHeightXS.label">
+        <source>widget_layout.form.containerHeightXS.label</source>
+        <target>Hauteur minimale</target>
+      </trans-unit>
+      <trans-unit id="38" resname="widget_layout.form.containerHeight.label">
+        <source>widget_layout.form.containerHeight.label</source>
+        <target>Hauteur minimale</target>
+      </trans-unit>
+      <trans-unit id="39" resname="widget_layout.form.containerHeightSM.label">
+        <source>widget_layout.form.containerHeightSM.label</source>
+        <target>Hauteur minimale</target>
+      </trans-unit>
+      <trans-unit id="40" resname="widget_layout.form.containerHeightMD.label">
+        <source>widget_layout.form.containerHeightMD.label</source>
+        <target>Hauteur minimale</target>
+      </trans-unit>
+      <trans-unit id="41" resname="widget_layout.form.containerHeightLG.label">
+        <source>widget_layout.form.containerHeightLG.label</source>
+        <target>Hauteur minimale</target>
+      </trans-unit>
       <trans-unit id="42" resname="widget_layout.form.containerBackgroundXS.label">
         <source>widget_layout.form.containerBackgroundXS.label</source>
         <target>Arrière plan</target>
@@ -165,19 +189,19 @@
       </trans-unit>
       <trans-unit id="45" resname="widget_layout.form.textAlignXS.label">
         <source>widget_layout.form.textAlignXS.label</source>
-        <target>Alignement du texte</target>
+        <target>Alignement</target>
       </trans-unit>
       <trans-unit id="46" resname="widget_layout.form.textAlignSM.label">
         <source>widget_layout.form.textAlignSM.label</source>
-        <target>Alignement du texte</target>
+        <target>Alignement</target>
       </trans-unit>
       <trans-unit id="47" resname="widget_layout.form.textAlignMD.label">
         <source>widget_layout.form.textAlignMD.label</source>
-        <target>Alignement du texte</target>
+        <target>Alignement</target>
       </trans-unit>
       <trans-unit id="48" resname="widget_layout.form.textAlignLG.label">
         <source>widget_layout.form.textAlignLG.label</source>
-        <target>Alignement du texte</target>
+        <target>Alignement</target>
       </trans-unit>
       <trans-unit id="49" resname="victoire_widget.delete.success">
         <source>victoire_widget.delete.success</source>
@@ -390,6 +414,10 @@
       <trans-unit id="50" resname="widget_layout.form.containerWidth.help.label">
         <source>widget_layout.form.containerWidth.help.label</source>
         <target>largeur du conteneur, par ex.: 80% ou 80px</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerHeight.help.label">
+        <source>widget_layout.form.containerHeight.help.label</source>
+        <target>hauteur minimale du conteneur, par ex.: 80% ou 80px</target>
       </trans-unit>
       <trans-unit id="50" resname="widget_layout.form.containerBackgroundRepeat.help.label">
         <source>widget_layout.form.containerBackgroundRepeat.help.label</source>

@@ -54,6 +54,13 @@ trait StyleTrait
     /**
      * @var string
      *
+     * @ORM\Column(name="container_height", type="string", length=255, nullable=true)
+     */
+    protected $containerHeight;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="container_margin", type="string", length=255, nullable=true)
      */
     protected $containerMargin;
@@ -193,6 +200,28 @@ trait StyleTrait
     public function getContainerWidth()
     {
         return $this->containerWidth;
+    }
+
+    /**
+     * Set containerHeight
+     * @param string $containerHeight
+     *
+     * @return $this
+     */
+    public function setContainerHeight($containerHeight)
+    {
+        $this->containerHeight = $containerHeight;
+        return $this;
+    }
+
+    /**
+     * Get containerHeight
+     *
+     * @return string
+     */
+    public function getContainerHeight()
+    {
+        return $this->containerHeight;
     }
 
     /**

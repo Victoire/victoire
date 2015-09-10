@@ -29,6 +29,13 @@ trait StyleLGTrait {
     /**
      * @var string
      *
+     * @ORM\Column(name="container_height_lg", type="string", length=255, nullable=true)
+     */
+    protected $containerHeightLG;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="text_align_lg", type="string", length=15, nullable=true)
      */
     protected $textAlignLG;
@@ -141,6 +148,24 @@ trait StyleLGTrait {
     public function setContainerWidthLG($containerWidthLG)
     {
         $this->containerWidthLG = $containerWidthLG;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContainerHeightLG()
+    {
+        return $this->containerHeightLG;
+    }
+
+    /**
+     * @param string $containerHeightLG
+     * @return $this
+     */
+    public function setContainerHeightLG($containerHeightLG)
+    {
+        $this->containerHeightLG = $containerHeightLG;
         return $this;
     }
 
