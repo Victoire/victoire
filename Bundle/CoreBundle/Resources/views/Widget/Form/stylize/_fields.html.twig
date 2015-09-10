@@ -1,0 +1,30 @@
+{% trans_default_domain "victoire" %}
+
+{% set key = key is defined and key ? key : '' %}
+<div class="vic-row">
+    <div class="vic-col-sm-6">{{ form_row(attribute(form, 'containerMargin' ~ key|upper)) }}</div>
+    <div class="vic-col-sm-6">{{ form_row(attribute(form, 'containerPadding' ~ key|upper)) }}</div>
+</div>
+<div class="vic-row">
+    <div class="vic-col-sm-6">{{ form_row(attribute(form, 'containerWidth' ~ key|upper)) }}</div>
+    <div class="vic-col-sm-6">{{ form_row(attribute(form, 'textAlign' ~ key|upper)) }}</div>
+</div>
+{% set formBackgroundType = attribute(form, 'containerBackgroundType' ~ key|upper) %}
+<div class="vic-row">
+    <div class="vic-col-sm-12">{{ form_row(formBackgroundType) }}</div>
+</div>
+{% if formBackgroundType.vars.data and formBackgroundType.vars.data == "image" %}
+    <div class="vic-row">
+        <div class="vic-col-sm-12">{{ form_row(attribute(form, 'containerBackgroundImage' ~ key|upper)) }}</div>
+        <div class="vic-col-sm-6">{{ form_row(attribute(form, 'containerBackgroundRepeat' ~ key|upper)) }}</div>
+        <div class="vic-col-sm-6">{{ form_row(attribute(form, 'containerBackgroundPosition' ~ key|upper)) }}</div>
+    </div>
+    <div class="vic-row">
+        <div class="vic-col-sm-6">{{ form_row(attribute(form, 'containerBackgroundSize' ~ key|upper)) }}</div>
+        <div class="vic-col-sm-6">{{ form_row(attribute(form, 'containerBackgroundOverlay' ~ key|upper)) }}</div>
+    </div>
+{% else %}
+    <div class="vic-row">
+        <div class="vic-col-sm-12">{{ form_row(attribute(form, 'containerBackgroundColor' ~ key|upper)) }}</div>
+    </div>
+{% endif %}

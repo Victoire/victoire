@@ -1,43 +1,51 @@
 {% trans_default_domain "victoire" %}
 
-{% block body %}
-    {% set widthWidget = containerWidth ? "width: " ~ containerWidth ~ "; " %}
-    {% set marginWidget = containerMargin ? "margin: " ~ containerMargin ~ "; " %}
-    {% set paddingWidget = containerPadding ? "padding: " ~ containerPadding ~ "; " %}
-    {% set backgroundWidget = containerBackground ? "background: " ~ containerBackground ~ "; " %}
-    {% set textAlign = textAlign != '' ? "text-align: " ~ textAlign ~ "; " %}
+{% set hasStyle = 0 %}
+{% for style in ['containerWidth', 'containerMargin', 'containerPadding', 'textAlign', 'containerBackground',
+                 'containerBackgroundType', 'containerBackgroundImage', 'containerBackgroundRepeat',
+                 'containerBackgroundPosition', 'containerBackgroundSize', 'containerBackgroundOverlay',
+                 'containerBackgroundColor'] %}
 
-    {% set hasGlobalStyle = widthWidget or marginWidget or paddingWidget or backgroundWidget or textAlign %}
-
-    {% set responsiveStyles = {} %}
-    {% for sizeCode in ['xs', 'sm', 'md', 'lg'] %}
-        {% set instructions = _self.responsiveStyle(widget, 'xs', victoire_twig_responsive) %}
-        {% if instructions|trim != "" %}
-            {% set responsiveStyles = responsiveStyles|merge({sizeCode: instructions}) %}
+    {% for responsive in ['', 'xs', 'sm', 'md', 'lg'] %}
+        {% if attribute(widget, style ~ responsive|upper) %}
+            {% set hasStyle = hasStyle + 1 %}
         {% endif %}
     {% endfor %}
 
-    {% if hasGlobalStyle or responsiveStyles|length %}
-    <style>
-        {% if hasGlobalStyle %}
-        #widget-{{ widget.id }} {
-            {{ widthWidget }}
-            {{ marginWidget }}
-            {{ paddingWidget }}
-            {{ backgroundWidget }}
-            {{ textAlign }}
-        }
-        {% endif %}
+{% endfor %}
 
-        {% for responsiveStyle in responsiveStyles %}
-            {{ responsiveStyle }}
+{% block body %}
+    {% if hasStyle %}
+    {% spaceless %}
+        <style>
+        {% for responsive in ['', 'xs', 'sm', 'md', 'lg'] %}
+            {% set config = responsive != '' ? attribute(victoire_twig_responsive, responsive) : false %}
+            {% if config.min is defined %}
+                {% set attr = "and (min-width: #{config.min}px)" %}
+            {% endif %}
+            {% if config.max is defined %}
+                {% set attr = "#{attr} and (max-width: #{config.max}px)" %}
+            {% endif %}
+            {% include "VictoireCoreBundle:Widget/show:_style.html.twig" with {
+                'width': attribute(widget, 'containerWidth' ~ responsive|upper),
+                'margin': attribute(widget, 'containerMargin' ~ responsive|upper),
+                'padding': attribute(widget, 'containerPadding' ~ responsive|upper),
+                'position': attribute(widget, 'containerBackgroundOverlay' ~ responsive|upper) ? 'relative',
+                'textAlign': attribute(widget, 'textAlign' ~ responsive|upper),
+                'backgroundOld': attribute(widget, 'containerBackground' ~ responsive|upper),
+                'bgType': attribute(widget, 'containerBackgroundType' ~ responsive|upper),
+                'bgImage': attribute(widget, 'containerBackgroundImage' ~ responsive|upper),
+                'bgRepeat': attribute(widget, 'containerBackgroundRepeat' ~ responsive|upper),
+                'bgPosition': attribute(widget, 'containerBackgroundPosition' ~ responsive|upper),
+                'bgSize': attribute(widget, 'containerBackgroundSize' ~ responsive|upper),
+                'bgOverlay': attribute(widget, 'containerBackgroundOverlay' ~ responsive|upper),
+                'bgColor': attribute(widget, 'containerBackgroundColor' ~ responsive|upper),
+                'mediaQuery': attr is defined ? attr
+            } %}
         {% endfor %}
-       {{ _self.responsiveStyle(widget, 'sm', victoire_twig_responsive) }}
-       {{ _self.responsiveStyle(widget, 'md', victoire_twig_responsive) }}
-       {{ _self.responsiveStyle(widget, 'lg', victoire_twig_responsive) }}
-    </style>
+        </style>
+    {% endspaceless %}
     {% endif %}
-
     <{{ containerTag }} class="vic-widget {{ cms_widget_extra_css_class(widget) }} {{ containerClass }}" id="widget-{{ widget.id }}">
 
         <a class="vic-anchor" id="vic-widget-{{ widget.id }}-container-anchor"></a>
@@ -48,36 +56,3 @@
         {% endblock content %}
     </{{ containerTag }}>
 {% endblock body %}
-
-
-
-{% macro responsiveStyle(widget, sizeCode, victoire_twig_responsive) %}
-    {% spaceless %}
-        {% set config = attribute(victoire_twig_responsive, sizeCode) %}
-
-        {% set attr = null %}
-
-        {% if config.min is defined %}
-            {% set attr = 'and (min-width: ' ~ config.min ~ 'px)' %}
-        {% endif %}
-
-        {% if config.max is defined %}
-            {% set attr = attr ~ ' and (max-width: ' ~ config.max ~ 'px)' %}
-        {% endif %}
-
-        {% set instruction = null %}
-        {% if attribute(widget, 'containerMargin' ~ sizeCode|upper) %}{% set instruction = instruction ~ "margin: " ~ attribute(widget, 'containerMargin' ~ sizeCode|upper) ~ ";" %}{% endif %}
-        {% if attribute(widget, 'containerPadding' ~ sizeCode|upper) %}{% set instruction = instruction ~ "padding: " ~ attribute(widget, 'containerPadding' ~ sizeCode|upper) ~ ";" %}{% endif %}
-        {% if attribute(widget, 'containerWidth' ~ sizeCode|upper) %}{% set instruction = instruction ~ "width: " ~ attribute(widget, 'containerWidth' ~ sizeCode|upper) ~ ";" %}{% endif %}
-        {% if attribute(widget, 'containerBackground' ~ sizeCode|upper) %}{% set instruction = instruction ~ "background: " ~ attribute(widget, 'containerBackground' ~ sizeCode|upper) ~ ";" %}{% endif %}
-        {% if attribute(widget, 'textAlign' ~ sizeCode|upper) %}{% set instruction = instruction ~ "text-align: " ~ attribute(widget, 'textAlign' ~ sizeCode|upper) ~ ";" %}{% endif %}
-    {% endspaceless %}
-
-    {% if instruction %}
-        @media all {{ attr }} {
-            #widget-{{ widget.id }} {
-                {{ instruction }}
-            }
-        }
-    {% endif %}
-{% endmacro %}

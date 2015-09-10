@@ -1,0 +1,27 @@
+Victoire\Bundle\MediaBundle\Entity\Media:
+    appventus:
+        id: 1
+        folder: @root
+        uuid: 55953304833d5
+        name: appventus
+        location: local
+        contentType: image/jpg
+        metadata: []
+        createdAt: <dateTime('now')>
+        updatedAt: <dateTime('now')>
+        filesize: 12300
+        url: /uploads/55953304833d5.jpg
+        deleted: 0
+    victoire:
+        id: 2
+        folder: @root
+        uuid: 55dc8d8a4c9d3
+        name: victoire
+        location: local
+        contentType: image/png
+        metadata: []
+        createdAt: <dateTime('now')>
+        updatedAt: <dateTime('now')>
+        filesize: 14330
+        url: /uploads/55dc8d8a4c9d3.jpg
+        deleted: 0

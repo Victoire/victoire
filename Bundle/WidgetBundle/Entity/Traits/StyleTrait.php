@@ -1,12 +1,25 @@
 <?php
 namespace Victoire\Bundle\WidgetBundle\Entity\Traits;
 
+use Victoire\Bundle\MediaBundle\Entity\Media;
+use Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTraits\StyleXSTrait;
+use Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTraits\StyleSMTrait;
+use Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTraits\StyleMDTrait;
+use Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTraits\StyleLGTrait;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * Style trait adds fields to place a widget in its container
  */
 trait StyleTrait
 {
-    /******************* GLOBAL PROPERTIES (NON RESPONSIVE) **********************/
+    /*******************        RESPONSIVE PROPERTIES         **********************/
+     use StyleXSTrait;
+     use StyleSMTrait;
+     use StyleMDTrait;
+     use StyleLGTrait;
+
+    /*******************  GLOBAL PROPERTIES (NON RESPONSIVE)  **********************/
     public static $tags = array(
         "section",
         "header",
@@ -55,6 +68,13 @@ trait StyleTrait
     /**
      * @var string
      *
+     * @ORM\Column(name="text_align", type="string", length=15, nullable=true)
+     */
+    protected $textAlign;
+
+    /**
+     * @var string
+     * @deprecated
      * @ORM\Column(name="container_background", type="string", length=255, nullable=true)
      */
     protected $containerBackground;
@@ -62,174 +82,52 @@ trait StyleTrait
     /**
      * @var string
      *
-     * @ORM\Column(name="text_align", type="string", length=15, nullable=true)
+     * @ORM\Column(name="container_background_type", type="string", length=255, nullable=true)
      */
-    protected $textAlign;
-
-    /******************* RESPONSIVE PROPERTIES **********************/
+    protected $containerBackgroundType;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="container_margin_xs", type="string", length=255, nullable=true)
+     * @ORM\Column(name="container_background_repeat", type="string", length=255, nullable=true)
      */
-    protected $containerMarginXS;
+    protected $containerBackgroundRepeat;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="container_padding_xs", type="string", length=255, nullable=true)
+     * @ORM\Column(name="container_background_position", type="string", length=255, nullable=true)
      */
-    protected $containerPaddingXS;
+    protected $containerBackgroundPosition;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="container_width_xs", type="string", length=255, nullable=true)
+     * @ORM\Column(name="container_background_size", type="string", length=255, nullable=true)
      */
-    protected $containerWidthXS;
+    protected $containerBackgroundSize;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="container_background_xs", type="string", length=255, nullable=true)
+     * @ORM\Column(name="container_background_color", type="string", length=255, nullable=true)
      */
-    protected $containerBackgroundXS;
+    protected $containerBackgroundColor;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="text_align_xs", type="string", length=15, nullable=true)
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\MediaBundle\Entity\Media")
+     * @ORM\JoinColumn(name="container_background_image_id", referencedColumnName="id", onDelete="CASCADE", nullable=true)
      */
-    protected $textAlignXS;
+    protected $containerBackgroundImage;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="container_margin_sm", type="string", length=255, nullable=true)
+     * @ORM\Column(name="container_background_overlay", type="string", length=255, nullable=true)
      */
-    protected $containerMarginSM;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="container_padding_sm", type="string", length=255, nullable=true)
-     */
-    protected $containerPaddingSM;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="container_width_sm", type="string", length=255, nullable=true)
-     */
-    protected $containerWidthSM;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="container_background_sm", type="string", length=255, nullable=true)
-     */
-    protected $containerBackgroundSM;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="text_align_sm", type="string", length=15, nullable=true)
-     */
-    protected $textAlignSM;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="container_margin_md", type="string", length=255, nullable=true)
-     */
-    protected $containerMarginMD;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="container_padding_md", type="string", length=255, nullable=true)
-     */
-    protected $containerPaddingMD;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="container_width_md", type="string", length=255, nullable=true)
-     */
-    protected $containerWidthMD;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="container_background_md", type="string", length=255, nullable=true)
-     */
-    protected $containerBackgroundMD;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="text_align_md", type="string", length=15, nullable=true)
-     */
-    protected $textAlignMD;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="container_margin_lg", type="string", length=255, nullable=true)
-     */
-    protected $containerMarginLG;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="container_padding_lg", type="string", length=255, nullable=true)
-     */
-    protected $containerPaddingLG;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="container_width_lg", type="string", length=255, nullable=true)
-     */
-    protected $containerWidthLG;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="container_background_lg", type="string", length=255, nullable=true)
-     */
-    protected $containerBackgroundLG;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="text_align_lg", type="string", length=15, nullable=true)
-     */
-    protected $textAlignLG;
-
-    /**
-     * Set containerClass
-     * @param string $containerClass
-     *
-     * @return $this
-     */
-    public function setContainerClass($containerClass)
-    {
-        $this->containerClass = $containerClass;
-
-        return $this;
-    }
-
-    /**
-     * Get containerClass
-     *
-     * @return string
-     */
-    public function getContainerClass()
-    {
-        return $this->containerClass;
-    }
+    protected $containerBackgroundOverlay;
 
     /**
      * Set containerTag
@@ -240,7 +138,6 @@ trait StyleTrait
     public function setContainerTag($containerTag)
     {
         $this->containerTag = $containerTag;
-
         return $this;
     }
 
@@ -255,6 +152,28 @@ trait StyleTrait
     }
 
     /**
+     * Set containerClass
+     * @param string $containerClass
+     *
+     * @return $this
+     */
+    public function setContainerClass($containerClass)
+    {
+        $this->containerClass = $containerClass;
+        return $this;
+    }
+
+    /**
+     * Get containerClass
+     *
+     * @return string
+     */
+    public function getContainerClass()
+    {
+        return $this->containerClass;
+    }
+
+    /**
      * Set containerWidth
      * @param string $containerWidth
      *
@@ -263,7 +182,6 @@ trait StyleTrait
     public function setContainerWidth($containerWidth)
     {
         $this->containerWidth = $containerWidth;
-
         return $this;
     }
 
@@ -286,7 +204,6 @@ trait StyleTrait
     public function setContainerMargin($containerMargin)
     {
         $this->containerMargin = $containerMargin;
-
         return $this;
     }
 
@@ -304,472 +221,11 @@ trait StyleTrait
      * Set containerPadding
      * @param string $containerPadding
      *
-     * @return WidgetLayout
+     * @return $this
      */
     public function setContainerPadding($containerPadding)
     {
         $this->containerPadding = $containerPadding;
-
-        return $this;
-    }
-
-    /**
-     * Get containerMarginXS
-     *
-     * @return string
-     */
-    public function getContainerMarginXS()
-    {
-        return $this->containerMarginXS;
-    }
-
-    /**
-     * Set containerMarginXS
-     * @param string $containerMarginXS
-     *
-     * @return $this
-     */
-    public function setContainerMarginXS($containerMarginXS)
-    {
-        $this->containerMarginXS = $containerMarginXS;
-
-        return $this;
-    }
-
-    /**
-     * Get containerPaddingXS
-     *
-     * @return string
-     */
-    public function getContainerPaddingXS()
-    {
-        return $this->containerPaddingXS;
-    }
-
-    /**
-     * Set containerPaddingXS
-     * @param string $containerPaddingXS
-     *
-     * @return $this
-     */
-    public function setContainerPaddingXS($containerPaddingXS)
-    {
-        $this->containerPaddingXS = $containerPaddingXS;
-
-        return $this;
-    }
-
-    /**
-     * Get containerWidthXS
-     *
-     * @return string
-     */
-    public function getContainerWidthXS()
-    {
-        return $this->containerWidthXS;
-    }
-
-    /**
-     * Set containerWidthXS
-     * @param string $containerWidthXS
-     *
-     * @return $this
-     */
-    public function setContainerWidthXS($containerWidthXS)
-    {
-        $this->containerWidthXS = $containerWidthXS;
-
-        return $this;
-    }
-
-    /**
-     * Get containerBackgroundXS
-     *
-     * @return string
-     */
-    public function getContainerBackgroundXS()
-    {
-        return $this->containerBackgroundXS;
-    }
-
-    /**
-     * Set containerBackgroundXS
-     * @param string $containerBackgroundXS
-     *
-     * @return $this
-     */
-    public function setContainerBackgroundXS($containerBackgroundXS)
-    {
-        $this->containerBackgroundXS = $containerBackgroundXS;
-
-        return $this;
-    }
-
-    /**
-     * Get textAlignXS
-     *
-     * @return string
-     */
-    public function getTextAlignXS()
-    {
-        return $this->textAlignXS;
-    }
-
-    /**
-     * Set textAlignXS
-     * @param string $textAlignXS
-     *
-     * @return $this
-     */
-    public function setTextAlignXS($textAlignXS)
-    {
-        $this->textAlignXS = $textAlignXS;
-
-        return $this;
-    }
-
-    /**
-     * Get containerMarginSM
-     *
-     * @return string
-     */
-    public function getContainerMarginSM()
-    {
-        return $this->containerMarginSM;
-    }
-
-    /**
-     * Set containerMarginSM
-     * @param string $containerMarginSM
-     *
-     * @return $this
-     */
-    public function setContainerMarginSM($containerMarginSM)
-    {
-        $this->containerMarginSM = $containerMarginSM;
-
-        return $this;
-    }
-
-    /**
-     * Get containerPaddingSM
-     *
-     * @return string
-     */
-    public function getContainerPaddingSM()
-    {
-        return $this->containerPaddingSM;
-    }
-
-    /**
-     * Set containerPaddingSM
-     * @param string $containerPaddingSM
-     *
-     * @return $this
-     */
-    public function setContainerPaddingSM($containerPaddingSM)
-    {
-        $this->containerPaddingSM = $containerPaddingSM;
-
-        return $this;
-    }
-
-    /**
-     * Get containerWidthSM
-     *
-     * @return string
-     */
-    public function getContainerWidthSM()
-    {
-        return $this->containerWidthSM;
-    }
-
-    /**
-     * Set containerWidthSM
-     * @param string $containerWidthSM
-     *
-     * @return $this
-     */
-    public function setContainerWidthSM($containerWidthSM)
-    {
-        $this->containerWidthSM = $containerWidthSM;
-
-        return $this;
-    }
-
-    /**
-     * Get containerBackgroundSM
-     *
-     * @return string
-     */
-    public function getContainerBackgroundSM()
-    {
-        return $this->containerBackgroundSM;
-    }
-
-    /**
-     * Set containerBackgroundSM
-     * @param string $containerBackgroundSM
-     *
-     * @return $this
-     */
-    public function setContainerBackgroundSM($containerBackgroundSM)
-    {
-        $this->containerBackgroundSM = $containerBackgroundSM;
-
-        return $this;
-    }
-
-    /**
-     * Get textAlignSM
-     *
-     * @return string
-     */
-    public function getTextAlignSM()
-    {
-        return $this->textAlignSM;
-    }
-
-    /**
-     * Set textAlignSM
-     * @param string $textAlignSM
-     *
-     * @return $this
-     */
-    public function setTextAlignSM($textAlignSM)
-    {
-        $this->textAlignSM = $textAlignSM;
-
-        return $this;
-    }
-
-    /**
-     * Get containerMarginMD
-     *
-     * @return string
-     */
-    public function getContainerMarginMD()
-    {
-        return $this->containerMarginMD;
-    }
-
-    /**
-     * Set containerMarginMD
-     * @param string $containerMarginMD
-     *
-     * @return $this
-     */
-    public function setContainerMarginMD($containerMarginMD)
-    {
-        $this->containerMarginMD = $containerMarginMD;
-
-        return $this;
-    }
-
-    /**
-     * Get containerPaddingMD
-     *
-     * @return string
-     */
-    public function getContainerPaddingMD()
-    {
-        return $this->containerPaddingMD;
-    }
-
-    /**
-     * Set containerPaddingMD
-     * @param string $containerPaddingMD
-     *
-     * @return $this
-     */
-    public function setContainerPaddingMD($containerPaddingMD)
-    {
-        $this->containerPaddingMD = $containerPaddingMD;
-
-        return $this;
-    }
-
-    /**
-     * Get containerWidthMD
-     *
-     * @return string
-     */
-    public function getContainerWidthMD()
-    {
-        return $this->containerWidthMD;
-    }
-
-    /**
-     * Set containerWidthMD
-     * @param string $containerWidthMD
-     *
-     * @return $this
-     */
-    public function setContainerWidthMD($containerWidthMD)
-    {
-        $this->containerWidthMD = $containerWidthMD;
-
-        return $this;
-    }
-
-    /**
-     * Get containerBackgroundMD
-     *
-     * @return string
-     */
-    public function getContainerBackgroundMD()
-    {
-        return $this->containerBackgroundMD;
-    }
-
-    /**
-     * Set containerBackgroundMD
-     * @param string $containerBackgroundMD
-     *
-     * @return $this
-     */
-    public function setContainerBackgroundMD($containerBackgroundMD)
-    {
-        $this->containerBackgroundMD = $containerBackgroundMD;
-
-        return $this;
-    }
-
-    /**
-     * Get textAlignMD
-     *
-     * @return string
-     */
-    public function getTextAlignMD()
-    {
-        return $this->textAlignMD;
-    }
-
-    /**
-     * Set textAlignMD
-     * @param string $textAlignMD
-     *
-     * @return $this
-     */
-    public function setTextAlignMD($textAlignMD)
-    {
-        $this->textAlignMD = $textAlignMD;
-
-        return $this;
-    }
-
-    /**
-     * Get containerMarginLG
-     *
-     * @return string
-     */
-    public function getContainerMarginLG()
-    {
-        return $this->containerMarginLG;
-    }
-
-    /**
-     * Set containerMarginLG
-     * @param string $containerMarginLG
-     *
-     * @return $this
-     */
-    public function setContainerMarginLG($containerMarginLG)
-    {
-        $this->containerMarginLG = $containerMarginLG;
-
-        return $this;
-    }
-
-    /**
-     * Get containerPaddingLG
-     *
-     * @return string
-     */
-    public function getContainerPaddingLG()
-    {
-        return $this->containerPaddingLG;
-    }
-
-    /**
-     * Set containerPaddingLG
-     * @param string $containerPaddingLG
-     *
-     * @return $this
-     */
-    public function setContainerPaddingLG($containerPaddingLG)
-    {
-        $this->containerPaddingLG = $containerPaddingLG;
-
-        return $this;
-    }
-
-    /**
-     * Get containerWidthLG
-     *
-     * @return string
-     */
-    public function getContainerWidthLG()
-    {
-        return $this->containerWidthLG;
-    }
-
-    /**
-     * Set containerWidthLG
-     * @param string $containerWidthLG
-     *
-     * @return $this
-     */
-    public function setContainerWidthLG($containerWidthLG)
-    {
-        $this->containerWidthLG = $containerWidthLG;
-
-        return $this;
-    }
-
-    /**
-     * Get containerBackgroundLG
-     *
-     * @return string
-     */
-    public function getContainerBackgroundLG()
-    {
-        return $this->containerBackgroundLG;
-    }
-
-    /**
-     * Set containerBackgroundLG
-     * @param string $containerBackgroundLG
-     *
-     * @return $this
-     */
-    public function setContainerBackgroundLG($containerBackgroundLG)
-    {
-        $this->containerBackgroundLG = $containerBackgroundLG;
-
-        return $this;
-    }
-
-    /**
-     * Get textAlignLG
-     *
-     * @return string
-     */
-    public function getTextAlignLG()
-    {
-        return $this->textAlignLG;
-    }
-
-    /**
-     * Set textAlignLG
-     * @param string $textAlignLG
-     *
-     * @return $this
-     */
-    public function setTextAlignLG($textAlignLG)
-    {
-        $this->textAlignLG = $textAlignLG;
-
         return $this;
     }
 
@@ -781,29 +237,6 @@ trait StyleTrait
     public function getContainerPadding()
     {
         return $this->containerPadding;
-    }
-
-    /**
-     * Get containerBackground
-     *
-     * @return string
-     */
-    public function getContainerBackground()
-    {
-        return $this->containerBackground;
-    }
-
-    /**
-     * Set containerBackground
-     * @param string $containerBackground
-     *
-     * @return $this
-     */
-    public function setContainerBackground($containerBackground)
-    {
-        $this->containerBackground = $containerBackground;
-
-        return $this;
     }
 
     /**
@@ -825,7 +258,150 @@ trait StyleTrait
     public function setTextAlign($textAlign)
     {
         $this->textAlign = $textAlign;
-
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getContainerBackground()
+    {
+        return $this->containerBackground;
+    }
+
+    /**
+     * @param string $containerBackground
+     * @return $this
+     */
+    public function setContainerBackground($containerBackground)
+    {
+        $this->containerBackground = $containerBackground;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContainerBackgroundType()
+    {
+        return $this->containerBackgroundType;
+    }
+
+    /**
+     * @param string $containerBackgroundType
+     */
+    public function setContainerBackgroundType($containerBackgroundType)
+    {
+        $this->containerBackgroundType = $containerBackgroundType;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContainerBackgroundRepeat()
+    {
+        return $this->containerBackgroundRepeat;
+    }
+
+    /**
+     * @param string $containerBackgroundRepeat
+     * @return $this
+     */
+    public function setContainerBackgroundRepeat($containerBackgroundRepeat)
+    {
+        $this->containerBackgroundRepeat = $containerBackgroundRepeat;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContainerBackgroundPosition()
+    {
+        return $this->containerBackgroundPosition;
+    }
+
+    /**
+     * @param string $containerBackgroundPosition
+     * @return $this
+     */
+    public function setContainerBackgroundPosition($containerBackgroundPosition)
+    {
+        $this->containerBackgroundPosition = $containerBackgroundPosition;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContainerBackgroundSize()
+    {
+        return $this->containerBackgroundSize;
+    }
+
+    /**
+     * @param string $containerBackgroundSize
+     * @return $this
+     */
+    public function setContainerBackgroundSize($containerBackgroundSize)
+    {
+        $this->containerBackgroundSize = $containerBackgroundSize;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContainerBackgroundColor()
+    {
+        return $this->containerBackgroundColor;
+    }
+
+    /**
+     * @param string $containerBackgroundColor
+     * @return $this
+     */
+    public function setContainerBackgroundColor($containerBackgroundColor)
+    {
+        $this->containerBackgroundColor = $containerBackgroundColor;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContainerBackgroundImage()
+    {
+        return $this->containerBackgroundImage;
+    }
+
+    /**
+     * Set image
+     * @param string|Media $image
+     * @return $this
+     */
+    public function setContainerBackgroundImage(Media $image = null)
+    {
+        $this->containerBackgroundImage = $image;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContainerBackgroundOverlay()
+    {
+        return $this->containerBackgroundOverlay;
+    }
+
+    /**
+     * @param string $containerBackgroundOverlay
+     * @return $this
+     */
+    public function setContainerBackgroundOverlay($containerBackgroundOverlay)
+    {
+        $this->containerBackgroundOverlay = $containerBackgroundOverlay;
+        return $this;
+    }
+
 }

@@ -12,16 +12,24 @@
  **/
 
 $vic(document).on('change', 'select[data-refreshOnChange="true"], input:checkbox[data-refreshOnChange="true"]', function(event) {
-    var form = $(this).parents('form');
+    var form = $vic(this).parents('form');
     loading(true);
+
+    var target = ".vic-modal-body .vic-container-fluid .vic-tab-pane.vic-active";
+    if ($vic(this).data('target')) {
+        target = $vic(this).data('target');
+    } else if ($vic(this).parents('.vic-modal').hasClass('-stylize')) {
+        target = ".vic-modal-body .vic-container-fluid";
+    }
+
     $vic.ajax({
         type: form.attr('method'),
         url : form.attr('action') + '?novalidate',
         data: form.serialize(),
         async: true
     }).done(function(response){
-        $vic('.vic-modal-body .vic-container-fluid .vic-tab-pane.vic-active').html(response.html);
-        var scripts = $vic('.vic-modal-body .vic-container-fluid .vic-tab-pane.vic-active').find("script");
+        $vic(target).html(response.html);
+        var scripts = $vic(target).find("script");
         evalAll(scripts);
         loading(false);
     }).fail(function(response) {

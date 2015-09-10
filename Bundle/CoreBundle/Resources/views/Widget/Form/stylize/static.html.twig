@@ -1,0 +1,11 @@
+{% trans_default_domain "victoire" %}
+
+<h3 class="vic-h3">
+    {{ 'victoire.widget.stylize.container.heading'|trans() }}
+</h3>
+<div style="height: 112px;"></div>
+{% include 'VictoireCoreBundle:Widget/Form/stylize:_fields.html.twig' %}
+<hr>
+<div class="vic-row">
+    <div class="vic-col-sm-12">{{ form_row(attribute(form, 'containerBackground')) }}</div>
+</div>
