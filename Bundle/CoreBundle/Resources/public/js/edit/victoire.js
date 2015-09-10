@@ -11,7 +11,16 @@ $vic(window).on('beforeunload',function() {
 
 $vic(document).on("keydown", function (e){
     if (e.altKey) {
-        $vic('button[data-mode="admin-edit"]').click();
+        if ($vic('body').attr('role') == 'admin-readonly') {
+            $vic('button[data-mode="admin-layout"]').click();
+        } else if ($vic('body').attr('role') == 'admin-layout') {
+            $vic('button[data-mode="admin-edit"]').click();
+        } else if ($vic('body').attr('role') == 'admin-edit') {
+            $vic('button[data-mode="admin-style"]').click();
+        } else if ($vic('body').attr('role') == 'admin-style') {
+            $vic('button[data-mode="admin-readonly"]').click();
+        }
+
     }
 });
 
