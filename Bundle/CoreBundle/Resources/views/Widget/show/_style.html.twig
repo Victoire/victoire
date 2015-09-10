@@ -1,6 +1,7 @@
 {% spaceless %}
 {% set globalStyle = {} %}
 {% set background = {} %}
+{% set remove = "" %}
 
 {% set globalStyle = (width is defined and width) ? globalStyle|merge({'width': "width: #{width};"}) : globalStyle %}
 {% set globalStyle = (margin is defined and margin) ? globalStyle|merge({'margin': "margin: #{margin};"}) : globalStyle %}
@@ -10,7 +11,7 @@
 {% set globalStyle = (backgroundOld is defined and backgroundOld) ? globalStyle|merge({'backgroundOld': "background: #{backgroundOld};"}) : globalStyle %}
 
 {% if bgType == 'image' %}
-    {% set background = (bgImage is defined and bgImage) ? background|merge({'image': "background-image: url('#{bgImage}');"}) : background %}
+    {% set background = (bgImage is defined and bgImage) ? background|merge({'image': "background-color: none; background-image: url('#{bgImage}');"}) : background %}
     {% set background = (bgRepeat is defined and bgRepeat) ? background|merge({'repeat': "background-repeat: #{bgRepeat};"}) : background %}
     {% set background = (bgPosition is defined and bgPosition) ? background|merge({'position': "background-position: #{bgPosition};"}) : background %}
     {% set background = (bgSize is defined and bgSize) ? background|merge({'size': "background-size: #{bgSize};"}) : background %}
@@ -18,7 +19,7 @@
     {% set bgOverlay = (bgOverlay is defined and bgOverlay) ? "content:' '; position: absolute; top: 0; left: 0; bottom: 0; right: 0; background: #{bgOverlay};" : "" %}
     {% set bgOverlay = (bgOverlay is defined and bgOverlay) ? "#widget-#{widget.id}:before {#{bgOverlay}}" : "" %}
 {% else %}
-    {% set background = (bgColor is defined and bgColor) ? background|merge({'color': "background-color: #{bgColor};"}) : background %}
+    {% set background = (bgColor is defined and bgColor) ? background|merge({'color': "background-image: none; background-color: #{bgColor};"}) : background %}
 {% endif %}
 
 {% set globalStyle = (background|length) ? globalStyle|merge({'background': background}) : globalStyle %}
