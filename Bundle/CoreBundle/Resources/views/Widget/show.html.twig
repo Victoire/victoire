@@ -1,7 +1,21 @@
 {% trans_default_domain "victoire" %}
 
-{% block body %}
+{% set hasStyle = 0 %}
+{% for style in ['containerWidth', 'containerMargin', 'containerPadding', 'textAlign', 'containerBackground',
+                 'containerBackgroundType', 'containerBackgroundImage', 'containerBackgroundRepeat',
+                 'containerBackgroundPosition', 'containerBackgroundSize', 'containerBackgroundOverlay',
+                 'containerBackgroundColor'] %}
 
+    {% for responsive in ['', 'xs', 'sm', 'md', 'lg'] %}
+        {% if attribute(widget, style ~ responsive|upper) %}
+            {% set hasStyle = hasStyle + 1 %}
+        {% endif %}
+    {% endfor %}
+
+{% endfor %}
+
+{% block body %}
+    {% if hasStyle %}
     {% spaceless %}
         <style>
         {% for responsive in ['', 'xs', 'sm', 'md', 'lg'] %}
@@ -31,7 +45,7 @@
         {% endfor %}
         </style>
     {% endspaceless %}
-
+    {% endif %}
     <{{ containerTag }} class="vic-widget {{ cms_widget_extra_css_class(widget) }} {{ containerClass }}" id="widget-{{ widget.id }}">
 
         <a class="vic-anchor" id="vic-widget-{{ widget.id }}-container-anchor"></a>
