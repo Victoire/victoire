@@ -23,5 +23,5 @@ Victoire\Bundle\MediaBundle\Entity\Media:
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         filesize: 14330
-        url: /uploads/55dc8d8a4c9d3.png
+        url: /uploads/55dc8d8a4c9d3.jpg
         deleted: 0
