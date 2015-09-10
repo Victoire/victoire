@@ -65,7 +65,7 @@ class WidgetStyleType extends AbstractType
                  * Whereas MD and LG are image forms
                  */
                 foreach ($this->victoire_twig_responsive as $key) {
-                    self::generateBackgroundFields($event->getForm(), $event->getData()->{'getContainerBackgroundType'.$key}(), $key);
+                    self::generateBackgroundFields($event->getForm(), $key, $event->getData()->{'getContainerBackgroundType'.$key}());
                 }
             })
         ;
@@ -112,7 +112,7 @@ class WidgetStyleType extends AbstractType
                     ],
                 ))
                 ->get('containerBackgroundType'.$key)->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($key) {
-                    self::generateBackgroundFields($event->getForm()->getParent(), $event->getData(), $key);
+                    self::generateBackgroundFields($event->getForm()->getParent(), $key, $event->getData());
                 })
             ;
 
@@ -150,73 +150,64 @@ class WidgetStyleType extends AbstractType
         });
     }
 
-    private function generateBackgroundFields(FormInterface $form, $type = null, $responsiveKey = false) {
-        if ($responsiveKey !== false) {
-            /**
-             * Build the part of form as the good type
-             * Exemple: XS will have background color field whereas SM will have background image field
-             */
-            switch ($type) {
-                case 'image':
-                    $form->
-                        remove('containerBackgroundColor'.$responsiveKey)
-                        ->add('containerBackgroundImage'.$responsiveKey, 'media', array(
-                            'label' => 'widget_layout.form.containerBackgroundImage'.$responsiveKey.'.label',
-                        ))
-                        ->add('containerBackgroundRepeat'.$responsiveKey, 'choice', array(
-                            'label' => 'widget_layout.form.containerBackgroundRepeat'.$responsiveKey.'.label',
-                            'vic_help_block' => 'widget_layout.form.containerBackgroundRepeat.help.label',
-                            'choices' => array(
-                                'no-repeat' => 'widget_layout.form.containerBackgroundRepeat.choices.noRepeat.label',
-                                'repeat'    => 'widget_layout.form.containerBackgroundRepeat.choices.repeat.label',
-                                'repeat-x'  => 'widget_layout.form.containerBackgroundRepeat.choices.repeatX.label',
-                                'repeat-y'  => 'widget_layout.form.containerBackgroundRepeat.choices.repeatY.label',
-                            ),
-                        ))
-                        ->add('containerBackgroundPosition'.$responsiveKey, 'choice', array(
-                            'label' => 'widget_layout.form.containerBackgroundPosition'.$responsiveKey.'.label',
-                            'vic_help_block' => 'widget_layout.form.containerBackgroundPosition.help.label',
-                            'choices' => array(
-                                'center center' => 'widget_layout.form.containerBackgroundRepeat.choices.center.center.label',
-                                'center right'  => 'widget_layout.form.containerBackgroundRepeat.choices.center.right.label',
-                                'center left'   => 'widget_layout.form.containerBackgroundRepeat.choices.center.left.label',
-                                'top center'    => 'widget_layout.form.containerBackgroundRepeat.choices.top.center.label',
-                                'top right'     => 'widget_layout.form.containerBackgroundRepeat.choices.top.right.label',
-                                'top left'      => 'widget_layout.form.containerBackgroundRepeat.choices.top.left.label',
-                                'bottom center' => 'widget_layout.form.containerBackgroundRepeat.choices.bottom.center.label',
-                                'bottom right'  => 'widget_layout.form.containerBackgroundRepeat.choices.bottom.right.label',
-                                'bottom left'   => 'widget_layout.form.containerBackgroundRepeat.choices.bottom.left.label',
-                            ),
-                        ))
-                        ->add('containerBackgroundSize'.$responsiveKey, null, array(
-                            'label' => 'widget_layout.form.containerBackgroundSize'.$responsiveKey.'.label',
-                            'vic_help_block' => 'widget_layout.form.containerBackgroundSize.help.label',
-                        ))
-                        ->add('containerBackgroundOverlay'.$responsiveKey, null, array(
-                            'label' => 'widget_layout.form.containerBackgroundOverlay'.$responsiveKey.'.label',
-                            'vic_help_block' => 'widget_layout.form.containerBackgroundOverlay.help.label',
-                        ))
-                    ;
-                    break;
-                default:
-                    $form
-                        ->remove('containerBackgroundImage'.$responsiveKey)
-                        ->remove('containerBackgroundRepeat'.$responsiveKey)
-                        ->remove('containerBackgroundPosition'.$responsiveKey)
-                        ->remove('containerBackgroundSize'.$responsiveKey)
-                        ->remove('containerBackgroundOverlay'.$responsiveKey)
-                        ->add('containerBackgroundColor'.$responsiveKey, null, array(
-                            'label' => 'widget_layout.form.containerBackgroundColor'.$responsiveKey.'.label',
-                            'vic_help_block' => 'widget_layout.form.containerBackgroundColor.help.label',
-                        ))
-                    ;
-                    break;
-            }
+    private function generateBackgroundFields(FormInterface $form, $responsiveKey, $type = null) {
+        /**
+         * Build the part of form as the good type
+         * Exemple: XS will have background color field whereas SM will have background image field
+         */
+        if ($type == 'image') {
+            $form->
+                remove('containerBackgroundColor'.$responsiveKey)
+                ->add('containerBackgroundImage'.$responsiveKey, 'media', array(
+                    'label' => 'widget_layout.form.containerBackgroundImage'.$responsiveKey.'.label',
+                ))
+                ->add('containerBackgroundRepeat'.$responsiveKey, 'choice', array(
+                    'label' => 'widget_layout.form.containerBackgroundRepeat'.$responsiveKey.'.label',
+                    'vic_help_block' => 'widget_layout.form.containerBackgroundRepeat.help.label',
+                    'choices' => array(
+                        'no-repeat' => 'widget_layout.form.containerBackgroundRepeat.choices.noRepeat.label',
+                        'repeat'    => 'widget_layout.form.containerBackgroundRepeat.choices.repeat.label',
+                        'repeat-x'  => 'widget_layout.form.containerBackgroundRepeat.choices.repeatX.label',
+                        'repeat-y'  => 'widget_layout.form.containerBackgroundRepeat.choices.repeatY.label',
+                    ),
+                ))
+                ->add('containerBackgroundPosition'.$responsiveKey, 'choice', array(
+                    'label' => 'widget_layout.form.containerBackgroundPosition'.$responsiveKey.'.label',
+                    'vic_help_block' => 'widget_layout.form.containerBackgroundPosition.help.label',
+                    'choices' => array(
+                        'center center' => 'widget_layout.form.containerBackgroundRepeat.choices.center.center.label',
+                        'center right'  => 'widget_layout.form.containerBackgroundRepeat.choices.center.right.label',
+                        'center left'   => 'widget_layout.form.containerBackgroundRepeat.choices.center.left.label',
+                        'top center'    => 'widget_layout.form.containerBackgroundRepeat.choices.top.center.label',
+                        'top right'     => 'widget_layout.form.containerBackgroundRepeat.choices.top.right.label',
+                        'top left'      => 'widget_layout.form.containerBackgroundRepeat.choices.top.left.label',
+                        'bottom center' => 'widget_layout.form.containerBackgroundRepeat.choices.bottom.center.label',
+                        'bottom right'  => 'widget_layout.form.containerBackgroundRepeat.choices.bottom.right.label',
+                        'bottom left'   => 'widget_layout.form.containerBackgroundRepeat.choices.bottom.left.label',
+                    ),
+                ))
+                ->add('containerBackgroundSize'.$responsiveKey, null, array(
+                    'label' => 'widget_layout.form.containerBackgroundSize'.$responsiveKey.'.label',
+                    'vic_help_block' => 'widget_layout.form.containerBackgroundSize.help.label',
+                ))
+                ->add('containerBackgroundOverlay'.$responsiveKey, null, array(
+                    'label' => 'widget_layout.form.containerBackgroundOverlay'.$responsiveKey.'.label',
+                    'vic_help_block' => 'widget_layout.form.containerBackgroundOverlay.help.label',
+                ))
+            ;
         }
         else {
-            foreach ($this->victoire_twig_responsive as $responsiveKey) {
-                self::generateBackgroundFields($form, $type, $responsiveKey);
-            }
+            $form
+                ->remove('containerBackgroundImage'.$responsiveKey)
+                ->remove('containerBackgroundRepeat'.$responsiveKey)
+                ->remove('containerBackgroundPosition'.$responsiveKey)
+                ->remove('containerBackgroundSize'.$responsiveKey)
+                ->remove('containerBackgroundOverlay'.$responsiveKey)
+                ->add('containerBackgroundColor'.$responsiveKey, null, array(
+                    'label' => 'widget_layout.form.containerBackgroundColor'.$responsiveKey.'.label',
+                    'vic_help_block' => 'widget_layout.form.containerBackgroundColor.help.label',
+                ))
+            ;
         }
     }
 
