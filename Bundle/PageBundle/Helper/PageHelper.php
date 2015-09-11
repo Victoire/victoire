@@ -8,6 +8,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Victoire\Bundle\BusinessEntityPageBundle\Chain\BusinessTemplateChain;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\BusinessEntityPageBundle\Helper\BusinessPageHelper;

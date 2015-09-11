@@ -1,3 +1,7 @@
+parameters:
+    victoire_business_page.BusinessTemplate_chain.class: Victoire\Bundle\BusinessEntityPageBundle\Chain\BusinessTemplateChain
+    victoire_business_page.BusinessTemplate_chain.BusinessTemplate.class: Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessTemplate
+
 services:
     victoire_business_page.business_template.form.type:
         class: Victoire\Bundle\BusinessEntityPageBundle\Form\BusinessTemplateType
@@ -24,6 +28,14 @@ services:
             - "@victoire_core.helper.business_entity_helper"
             - "@victoire_business_entity.converter.parameter_converter"
             - "@doctrine.orm.entity_manager"
+
+    victoire_business_page.BusinessTemplate_chain:
+        class: "%victoire_business_page.BusinessTemplate_chain.class%"
+
+    victoire_business_page.BusinessTemplate_chain.BusinessTemplate:
+        class: "%victoire_business_page.BusinessTemplate_chain.BusinessTemplate.class%"
+        tags:
+            -  { name: victoire_core.bussinessEntityPagePattern, alias: default }
 
     ####################################################################################################################
     # Menu

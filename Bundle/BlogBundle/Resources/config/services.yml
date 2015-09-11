@@ -4,23 +4,33 @@ parameters:
     victoire_blog_date_filters_form_type_class: Victoire\Bundle\BlogBundle\Filter\DateFilter
 
 services:
+
+    ####################################################################################################################
+    # Menu
+    ####################################################################################################################
     victoire_blog.blog_menu_listener:
         class: Victoire\Bundle\BlogBundle\Listener\BlogMenuListener
         arguments: ["@victoire_core.admin_menu_builder"]
         tags:
             - { name: kernel.event_listener, event: victoire_core.build_menu, method: addGlobal, priority: 90 }
 
-    victoire_core.article_menu.contextual:
+    victoire_blog.article_menu.contextual:
         class: Victoire\Bundle\BlogBundle\Listener\BlogMenuListener
         arguments: ["@victoire_core.admin_menu_builder"]
         tags:
             - { name: kernel.event_listener, event: victoire_core.article_menu.contextual, method: addContextual}
 
-    victoire_core.blog_menu.contextual:
+    victoire_blog.blog_menu.contextual:
         class: Victoire\Bundle\BlogBundle\Listener\BlogMenuListener
         arguments: ["@victoire_core.admin_menu_builder"]
         tags:
             - { name: kernel.event_listener, event: victoire_core.blog_menu.contextual, method: addBlogContextual}
+
+    victoire_blog.article_template_menu.menu_listener.contextual:
+        class: Victoire\Bundle\BusinessEntityPageBundle\Listener\BusinessPageMenuListener
+        arguments: ["@victoire_core.admin_menu_builder"]
+        tags:
+            - { name: kernel.event_listener, event: victoire_core.article_template_menu.contextual, method: addContextual }
 
     ####################################################################################################################
     # Forms
@@ -151,3 +161,7 @@ services:
         tags:
             - { name: victoire_core.view_manager, view: Victoire\Bundle\BlogBundle\Entity\Blog }
 
+    victoire_blog.articleTemplate:
+        class: Victoire\Bundle\BlogBundle\Entity\ArticleTemplate
+        tags:
+            -  { name: victoire_core.bussinessEntityPagePattern, alias: article }

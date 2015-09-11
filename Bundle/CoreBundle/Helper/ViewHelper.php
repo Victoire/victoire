@@ -22,15 +22,16 @@ class ViewHelper
 {
     protected $parameterConverter;
     protected $businessEntityHelper;
-    protected $businessEntityPageHelper;
+    protected $BusinessPageHelper;
     protected $em;
     protected $viewCacheHelper;
+    protected $BusinessTemplateChain;
 
     /**
      * Constructor
      * @param BETParameterConverter    $parameterConverter
      * @param BusinessEntityHelper     $businessEntityHelper
-     * @param BusinessEntityPageHelper $businessEntityPageHelper
+     * @param BusinessPageHelper $BusinessPageHelper
      * @param EntityManager            $entityManager
      * @param ViewCacheHelper          $viewCacheHelper
      * @param ViewManagerChain         $$viewManagerChain
@@ -41,14 +42,16 @@ class ViewHelper
         BusinessPageHelper $BusinessPageHelper,
         EntityManager $entityManager,
         ViewCacheHelper $viewCacheHelper,
-        ViewManagerChain $viewManagerChain
+        ViewReferenceBuilderChain $viewReferenceBuilderChain,
+        BusinessTemplateChain $BusinessTemplateChain
     ) {
         $this->parameterConverter = $parameterConverter;
         $this->businessEntityHelper = $businessEntityHelper;
         $this->BusinessPageHelper = $BusinessPageHelper;
         $this->em = $entityManager;
         $this->viewCacheHelper = $viewCacheHelper;
-        $this->viewManagerChain = $viewManagerChain;
+        $this->viewReferenceBuilderChain = $viewReferenceBuilderChain;
+        $this->BusinessTemplateChain = $BusinessTemplateChain;
     }
 
     //@todo Make it dynamic please
@@ -61,32 +64,57 @@ class ViewHelper
         'locale',
     );
 
-    public function buildViewsReferences($views)
+    /**
+     * @return array
+     */
+    public function buildViewsReferences()
     {
+
+        $views = $this->em->createQuery("SELECT v FROM VictoireCoreBundle:View v")->getResult();
         $viewsReferences = array();
         foreach ($views as $view) {
-            $viewsReferences = array_merge($viewsReferences, $this->buildViewReference($view));
-            $this->em->refresh($view);
+            if (get_class($view) != 'Victoire\Bundle\TemplateBundle\Entity\Template') {
+                $viewsReferences = array_merge($viewsReferences, $this->buildViewReference($view));
+            }
         }
 
         $this->cleanVirtualViews($viewsReferences);
 
+
         return $viewsReferences;
     }
 
+    /**
+     *
+     * @param $viewsReferences
+     */
     public function cleanVirtualViews(&$viewsReferences)
     {
-        foreach ($viewsReferences as $viewReference) {
+        $urls = [];
+        $em = $this->em;
+        $bepps = array_map(function ($bepp) use ($em) { return $em->getClassMetadata(get_class($bepp))->name; },
+            $this->BusinessTemplateChain->getBusinessTemplates()
+        );
+        foreach ($viewsReferences as $key => $viewReference) {
             // If viewReference is a persisted page, we want to clean virtual BEPs
-            if ($viewReference['viewNamespace'] == 'Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage') {
-                array_walk($viewsReferences, function ($_viewReference, $key) use ($viewReference, &$viewsReferences) {
-                    if ($_viewReference['viewNamespace'] == 'Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern'
+            if (!empty($viewReference['type']) && $viewReference['type'] == 'business_page') {
+                array_filter($viewsReferences, function ($_viewReference) use ($viewReference, $bepps) {
+                    $cond = !(in_array($_viewReference['viewNamespace'], $bepps)
                         && !empty($_viewReference['entityNamespace']) && $_viewReference['entityNamespace'] == $viewReference['entityNamespace']
-                        && !empty($_viewReference['entityId']) && $_viewReference['entityId'] == $viewReference['entityId']) {
-                            unset($viewsReferences[$key]);
-                    }
-                });
+                        && !empty($_viewReference['entityId']) && $_viewReference['entityId'] == $viewReference['entityId']);
+
+                        return $cond;
+                    });
             }
+            // while viewReference url is found in viewreferences, increment the url slug to be unique
+            $url = $viewReference['url'];
+            $i = 1;
+            while (in_array($url, $urls)) {
+                $url = $viewReference['url'] . "-" . $i;
+                $i++;
+            }
+            $viewsReferences[$key]['url'] = $url;
+            $urls[] = $url;
         }
 
     }
@@ -104,15 +132,16 @@ class ViewHelper
     /**
      * compute the viewReference relative to a View + entity
      * @param View                $view
-     * @param BusinessEntity|null $entity
+     * @param array|[array] $entity
      *
      * @return array
      */
     public function buildViewReference(View $view, $entity = null)
     {
-        $viewManager = $this->viewManagerChain->getViewManager($view);
+        $viewManager = $this->viewReferenceBuilderChain->getViewManager($view);
         return $viewManager->buildReference($view, $entity);
     }
+
 
     /**
      * @param View $view, the view to translatate
