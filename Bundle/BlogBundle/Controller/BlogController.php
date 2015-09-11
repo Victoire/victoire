@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Victoire\Bundle\BlogBundle\Entity\Blog;
 use Victoire\Bundle\BlogBundle\Repository\BlogRepository;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\PageBundle\Controller\BasePageController;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\BlogBundle\Form\ChooseBlogType;
@@ -71,7 +71,7 @@ class BlogController extends BasePageController
         }
         $businessProperties = array();
 
-        if ($blog instanceof BusinessEntityPagePattern) {
+        if ($blog instanceof BusinessTemplate) {
             //we can use the business entity properties on the seo
             $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($blog->getBusinessEntityId());
             $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
@@ -123,7 +123,7 @@ class BlogController extends BasePageController
         $businessProperties = array();
 
         //if the page is a business entity page
-        if ($blog instanceof BusinessEntityPagePattern) {
+        if ($blog instanceof BusinessTemplate) {
             //we can use the business entity properties on the seo
             $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($blog->getBusinessEntityId());
             $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
@@ -183,7 +183,7 @@ class BlogController extends BasePageController
         $businessProperties = array();
 
         //if the page is a business entity page
-        if ($blog instanceof BusinessEntityPagePattern) {
+        if ($blog instanceof BusinessTemplate) {
             //we can use the business entity properties on the seo
             $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($blog->getBusinessEntityId());
             $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');

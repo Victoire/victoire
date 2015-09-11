@@ -4,12 +4,12 @@ namespace Victoire\Bundle\BusinessEntityPageBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessTemplate;
 
 /**
  * The Business Entity Page repository
  */
-class BusinessEntityPageRepository extends EntityRepository
+class BusinessPageRepository extends EntityRepository
 {
 
     /**
@@ -18,12 +18,12 @@ class BusinessEntityPageRepository extends EntityRepository
      *
      * @return array The list of pagePatterns
      */
-    public function findPageByBusinessEntityAndPattern(BusinessEntityPagePattern $pattern, $entity, BusinessEntity $businessEntity)
+    public function findPageByBusinessEntityAndPattern(BusinessTemplate $pattern, $entity, BusinessEntity $businessEntity)
     {
 
-        $qb = $this->createQueryBuilder('businessEntityPage');
-        $qb->join('businessEntityPage.entityProxy', 'proxy');
-        $qb->join('businessEntityPage.template', 'template');
+        $qb = $this->createQueryBuilder('BusinessPage');
+        $qb->join('BusinessPage.entityProxy', 'proxy');
+        $qb->join('BusinessPage.template', 'template');
         $qb->join('proxy.'.$businessEntity->getId(), 'entity');
 
         $qb->where('template.id = :patternId');

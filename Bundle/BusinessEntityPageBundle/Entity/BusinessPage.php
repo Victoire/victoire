@@ -6,14 +6,14 @@ use Victoire\Bundle\CoreBundle\Entity\BaseEntityProxy;
 use Victoire\Bundle\PageBundle\Entity\Page;
 
 /**
- * BusinessEntityPagePattern
+ * BusinessPage
  *
- * @ORM\Entity(repositoryClass="Victoire\Bundle\BusinessEntityPageBundle\Repository\BusinessEntityPageRepository")
+ * @ORM\Entity(repositoryClass="Victoire\Bundle\BusinessEntityPageBundle\Repository\BusinessPageRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class BusinessEntityPage extends Page
+class BusinessPage extends Page
 {
-    const TYPE = 'business_entity_page';
+    const TYPE = 'business_page';
 
     /**
      * Auto simple mode: joined entity
@@ -30,13 +30,6 @@ class BusinessEntityPage extends Page
      */
     protected $businessEntity;
 
-    /**
-     * The entity static Url page
-     * @var string
-     *
-     * @ORM\Column(name="staticUrl", type="text", length=255, nullable=true)
-     */
-    protected $staticUrl;
 
     /**
      * Set the entity proxy
@@ -85,30 +78,6 @@ class BusinessEntityPage extends Page
             }
         }
         return $this->businessEntity;
-    }
-
-    /**
-     * Get staticUrl
-     *
-     * @return string
-     */
-    public function getStaticUrl()
-    {
-        return $this->staticUrl;
-    }
-
-    /**
-     * Set staticUrl
-     *
-     * @param string $staticUrl
-     *
-     * @return $this
-     */
-    public function setStaticUrl($staticUrl)
-    {
-        $this->staticUrl = $staticUrl;
-
-        return $this;
     }
 
 }

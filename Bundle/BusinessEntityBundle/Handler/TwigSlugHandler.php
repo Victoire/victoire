@@ -7,7 +7,7 @@ use Gedmo\Sluggable\Mapping\Event\SluggableAdapter;
 use Victoire\Bundle\BusinessEntityBundle\Transliterator\Transliterator;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Gedmo\Sluggable\Handler\SlugHandlerInterface;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessTemplate;
 
 /**
  * Sluggable handler which keep twig variable after urlization
@@ -72,7 +72,7 @@ class TwigSlugHandler implements SlugHandlerInterface
      */
     public function transliterate($text, $separator, $object)
     {
-        if ($object instanceof BusinessEntityPagePattern) {
+        if ($object instanceof BusinessTemplate) {
             $slug = $this->transliterator->urlize($text, $separator, true);
         } else {
             $slug = $this->transliterator->urlize($text, $separator);

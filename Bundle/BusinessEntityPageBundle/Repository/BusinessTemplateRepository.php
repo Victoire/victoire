@@ -8,7 +8,7 @@ use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 /**
  * The Business Entity PagePattern repository
  */
-class BusinessEntityPagePatternRepository extends EntityRepository
+class BusinessTemplateRepository extends EntityRepository
 {
     private $queryBuilder;
 
@@ -41,10 +41,10 @@ class BusinessEntityPagePatternRepository extends EntityRepository
      */
     public function getPagePatternByBusinessEntity($businessEntityId)
     {
-        return $this->createQueryBuilder('businessEntityPagePattern')
-            ->where('businessEntityPagePattern.businessEntityId = :entityId')
+        return $this->createQueryBuilder('BusinessTemplate')
+            ->where('BusinessTemplate.businessEntityId = :entityId')
             ->setParameter(':entityId', $businessEntityId)
-            ->orderBy('businessEntityPagePattern.updatedAt', 'ASC');
+            ->orderBy('BusinessTemplate.updatedAt', 'ASC');
     }
 
     /**
@@ -57,10 +57,10 @@ class BusinessEntityPagePatternRepository extends EntityRepository
     {
         $pagePattern = null;
 
-        $qb = $this->createQueryBuilder('businessEntityPagePattern');
-        $qb->where($qb->expr()->like('businessEntityPagePattern.url', $qb->expr()->literal($url)));
+        $qb = $this->createQueryBuilder('BusinessTemplate');
+        $qb->where($qb->expr()->like('BusinessTemplate.url', $qb->expr()->literal($url)));
 
-        $qb->orderBy('businessEntityPagePattern.updatedAt', 'ASC');
+        $qb->orderBy('BusinessTemplate.updatedAt', 'ASC');
 
         $results = $qb->getQuery()->getResult();
 

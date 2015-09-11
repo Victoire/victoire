@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Annotations as VIC;
 use Victoire\Bundle\BusinessEntityBundle\Entity\Traits\BusinessEntityTrait;
 use Victoire\Bundle\MediaBundle\Entity\Media;
@@ -101,8 +101,8 @@ class Article
     private $blog;
 
     /**
-     * @var BusinessEntityPagePattern
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern")
+     * @var BusinessTemplate
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessTemplate")
      * @ORM\JoinColumn(name="pattern_id", referencedColumnName="id", onDelete="SET NULL")
      * @Assert\NotNull()
      */
@@ -409,11 +409,11 @@ class Article
 
     /**
      * Set pattern
-     * @param BusinessEntityPagePattern $pattern
+     * @param BusinessTemplate $pattern
      *
      * @return Article
      */
-    public function setPattern(BusinessEntityPagePattern $pattern)
+    public function setPattern(BusinessTemplate $pattern)
     {
         $this->pattern = $pattern;
 
@@ -423,7 +423,7 @@ class Article
     /**
      * Get pattern
      *
-     * @return BusinessEntityPagePattern
+     * @return BusinessTemplate
      */
     public function getPattern()
     {

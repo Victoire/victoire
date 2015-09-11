@@ -4,8 +4,8 @@ namespace Victoire\Bundle\CoreBundle\Twig\Extension;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\SecurityContext;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessPage;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Handler\WidgetExceptionHandler;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
@@ -273,7 +273,7 @@ class CmsExtension extends \Twig_Extension_Core
         //the result
         $isBusinessEntityAllowed = false;
 
-        if ($view instanceof BusinessEntityPagePattern || $view instanceof BusinessEntityPage) {
+        if ($view instanceof BusinessTemplate || $view instanceof BusinessPage) {
             //are we using the same business entity
             if ($formEntityName === $view->getBusinessEntityId()) {
                 $isBusinessEntityAllowed = true;

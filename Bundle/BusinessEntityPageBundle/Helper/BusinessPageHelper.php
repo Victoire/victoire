@@ -5,9 +5,11 @@ use Doctrine\DBAL\Schema\View;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessPage;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessTemplate;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\VirtualBusinessPage;
 use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 use Victoire\Bundle\QueryBundle\Helper\QueryHelper;
 use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
@@ -16,9 +18,9 @@ use Gedmo\Sluggable\Util\Urlizer;
 
 /**
  * The business entity page pattern helper
- * ref: victoire_business_entity_page.business_entity_page_helper
+ * ref: victoire_business_page.business_page_helper
  */
-class BusinessEntityPageHelper
+class BusinessPageHelper
 {
     protected $queryHelper = null;
     protected $viewCacheHelper = null;
@@ -53,13 +55,13 @@ class BusinessEntityPageHelper
     /**
      * Is the entity allowed for the business entity page
      *
-     * @param BusinessEntityPagePattern                      $bepPattern
+     * @param BusinessTemplate                      $bepPattern
      * @param \Victoire\Bundle\PageBundle\Helper\Entity|null $entity
      *
      * @throws \Exception
      * @return boolean
      */
-    public function isEntityAllowed(BusinessEntityPagePattern $bepPattern, $entity)
+    public function isEntityAllowed(BusinessTemplate $bepPattern, $entity)
     {
         $allowed = true;
 
@@ -95,14 +97,14 @@ class BusinessEntityPageHelper
     }
 
     /**
-     * Get the list of entities allowed for the businessEntityPagePattern page
+     * Get the list of entities allowed for the BusinessTemplate page
      *
-     * @param BusinessEntityPagePattern $bepPattern
+     * @param BusinessTemplate $bepPattern
      *
      * @throws \Exception
      * @return array
      */
-    public function getEntitiesAllowed(BusinessEntityPagePattern $bepPattern)
+    public function getEntitiesAllowed(BusinessTemplate $bepPattern)
     {
         $queryHelper = $this->queryHelper;
 
@@ -123,13 +125,13 @@ class BusinessEntityPageHelper
 
     /**
      * Generate update the page parameters with the entity
-     * @param BusinessEntityPagePattern $bepPattern
+     * @param BusinessTemplate $bepPattern
      * @param Entity                    $entity
      *
      */
-    public function generateEntityPageFromPattern(BusinessEntityPagePattern $bepPattern, $entity)
+    public function generateEntityPageFromPattern(BusinessTemplate $bepPattern, $entity)
     {
-        $page = new BusinessEntityPage();
+        $page = new VirtualBusinessPage();
 
         $reflect = new \ReflectionClass($bepPattern);
         $patternProperties = $reflect->getProperties();
@@ -162,7 +164,7 @@ class BusinessEntityPageHelper
                 $pageName = $this->parameterConverter->setBusinessPropertyInstance($pageName, $businessProperty, $entity);
             }
 
-            //Check that all twig variables in pattern url was removed for it's generated BusinessEntityPage
+            //Check that all twig variables in pattern url was removed for it's generated BusinessPage
             preg_match_all('/\{\%\s*([^\%\}]*)\s*\%\}|\{\{\s*([^\}\}]*)\s*\}\}/i', $pageUrl, $matches);
 
             if (count($matches[2])) {
@@ -196,7 +198,7 @@ class BusinessEntityPageHelper
      *
      * @param BusinessEntity $businessEntity
      *
-     * @return array The list of business properties
+     * @return BusinessProperty[] The list of business properties
      */
     public function getBusinessProperties(BusinessEntity $businessEntity)
     {
@@ -215,11 +217,11 @@ class BusinessEntityPageHelper
     /**
      * Get the position of the identifier in the url of a business entity page pattern
      *
-     * @param BusinessEntityPagePattern $bepPattern
+     * @param BusinessTemplate $bepPattern
      *
      * @return integer The position
      */
-    public function getIdentifierPositionInUrl(BusinessEntityPagePattern $bepPattern)
+    public function getIdentifierPositionInUrl(BusinessTemplate $bepPattern)
     {
         $position = null;
 
@@ -287,7 +289,7 @@ class BusinessEntityPageHelper
             if ($parentRefClass) {
                 $viewReference['patternId'] = $this->guessBestPatternIdForEntity($parentRefClass, $entityId, $originalRefClassName);
             } else {
-                throw new \Exception(sprintf('Cannot find a BusinessEntityPagePattern that can display the requested BusinessEntity ("%s", "%s".)', $refClass->name, $entityId));
+                throw new \Exception(sprintf('Cannot find a BusinessTemplate that can display the requested BusinessEntity ("%s", "%s".)', $refClass->name, $entityId));
             }
         }
 
@@ -301,7 +303,7 @@ class BusinessEntityPageHelper
      * @param BasePage $page
      * @param Entity   $entity
      */
-    public function updatePageParametersByEntity(BusinessEntityPage $page, $entity)
+    public function updatePageParametersByEntity(BusinessPage $page, $entity)
     {
         //if no entity is provided
         if ($entity === null) {
@@ -337,7 +339,7 @@ class BusinessEntityPageHelper
     /**
      * Get the content of an attribute of an entity given
      *
-     * @param BusinessEntityPage $entity
+     * @param BusinessPage $entity
      * @param strin              $field
      *
      * @return mixed
@@ -353,7 +355,7 @@ class BusinessEntityPageHelper
 
     /**
      * Update the value of the entity
-     * @param BusinessEntityPage $entity
+     * @param BusinessPage $entity
      * @param string             $field
      * @param string             $value
      *

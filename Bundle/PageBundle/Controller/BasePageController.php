@@ -4,8 +4,8 @@ namespace Victoire\Bundle\PageBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessTemplate;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
@@ -49,7 +49,7 @@ class BasePageController extends Controller
 
         $refClass = new \ReflectionClass($entity);
 
-        $patternId = $this->container->get('victoire_business_entity_page.business_entity_page_helper')
+        $patternId = $this->container->get('victoire_business_page.business_page_helper')
             ->guessBestPatternIdForEntity($refClass, $entityId);
 
         $page = $this->container->get('victoire_page.page_helper')->findPageByParameters(array(
@@ -94,7 +94,7 @@ class BasePageController extends Controller
             // If the $page is a BusinessEntity (eg. an Article), compute it's url
             if (null !== $this->container->get('victoire_core.helper.business_entity_helper')->findByEntityInstance($page)) {
                 $page = $this->container
-                        ->get('victoire_business_entity_page.business_entity_page_helper')
+                        ->get('victoire_business_page.business_page_helper')
                         ->generateEntityPageFromPattern($page->getTemplate(), $page);
             }
 
@@ -133,15 +133,15 @@ class BasePageController extends Controller
         $businessProperties = array();
 
         //if the page is a business entity page pattern
-        if ($page instanceof BusinessEntityPagePattern) {
+        if ($page instanceof BusinessTemplate) {
             //we can use the business entity properties on the seo
             $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($page->getBusinessEntityId());
             $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
         }
 
         //if the page is a business entity page
-        if ($page instanceof BusinessEntityPage) {
-            $form = $this->createForm($this->getBusinessEntityPageType(), $page);
+        if ($page instanceof BusinessPage) {
+            $form = $this->createForm($this->getBusinessPageType(), $page);
         }
 
         $form->handleRequest($request);
@@ -189,7 +189,7 @@ class BasePageController extends Controller
 
         $businessProperties = array();
 
-        if ($page instanceof BusinessEntityPagePattern) {
+        if ($page instanceof BusinessTemplate) {
             $businessEntityId = $page->getBusinessEntityId();
             $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($businessEntityId);
             $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');

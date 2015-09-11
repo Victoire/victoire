@@ -2,7 +2,7 @@
 namespace Victoire\Bundle\WidgetBundle\Renderer;
 
 use Symfony\Component\DependencyInjection\Container;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Event\WidgetRenderEvent;
 use Victoire\Bundle\CoreBundle\VictoireCmsEvents;
@@ -32,7 +32,7 @@ class WidgetRenderer
         $mode = $widget->getMode();
 
         //if entty is given and it's not the object, retrive it and set the entity for the widget
-        if ($mode == Widget::MODE_BUSINESS_ENTITY && $view instanceof BusinessEntityPage) {
+        if ($mode == Widget::MODE_BUSINESS_ENTITY && $view instanceof BusinessPage) {
             $widget->setEntity($view->getBusinessEntity());
         }
 

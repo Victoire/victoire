@@ -38,7 +38,7 @@ services:
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@victoire_core.view_url_helper"
-            - "@victoire_business_entity_page.business_entity_page_helper"
+            - "@victoire_business_page.business_page_helper"
             - "@victoire_core.helper.business_entity_helper"
 
     ####################################################################################################################
@@ -98,7 +98,7 @@ services:
     victoire_page.twig.page_extension:
         class: Victoire\Bundle\PageBundle\Twig\Extension\PageExtension
         arguments:
-            - "@victoire_business_entity_page.business_entity_page_helper"
+            - "@victoire_business_page.business_page_helper"
             - "@router"
             - "@victoire_page.page_helper"
             - "@victoire_core.current_view"

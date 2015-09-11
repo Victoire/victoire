@@ -5,7 +5,7 @@ namespace Victoire\Bundle\BusinessEntityBundle\EventSubscriber;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Symfony\Component\DependencyInjection\Container;
-use Victoire\Bundle\BusinessEntityPageBundle\Repository\BusinessEntityPageRepository;
+use Victoire\Bundle\BusinessEntityPageBundle\Repository\BusinessPageRepository;
 
 class BusinessEntitySubscriber implements EventSubscriber
 {
@@ -33,11 +33,11 @@ class BusinessEntitySubscriber implements EventSubscriber
 
     public function postPersist(LifecycleEventArgs $eventArgs)
     {
-        $this->updateBusinessEntityPagesAndRegerateCache($eventArgs);
+        $this->updateBusinessPagesAndRegerateCache($eventArgs);
     }
     public function postUpdate(LifecycleEventArgs $eventArgs)
     {
-        $this->updateBusinessEntityPagesAndRegerateCache($eventArgs);
+        $this->updateBusinessPagesAndRegerateCache($eventArgs);
     }
     public function preRemove(LifecycleEventArgs $eventArgs)
     {
@@ -52,19 +52,19 @@ class BusinessEntitySubscriber implements EventSubscriber
             ));
         }
     }
-    public function updateBusinessEntityPagesAndRegerateCache(LifecycleEventArgs $eventArgs)
+    public function updateBusinessPagesAndRegerateCache(LifecycleEventArgs $eventArgs)
     {
         $entityManager = $eventArgs->getEntityManager();
         $entity = $eventArgs->getEntity();
         $businessEntity = $this->container->get('victoire_core.helper.business_entity_helper')->findByEntityInstance($entity);
 
         if ($businessEntity) {
-            $patterns = $entityManager->getRepository('VictoireBusinessEntityPageBundle:BusinessEntityPagePattern')->findPagePatternByBusinessEntity($businessEntity);
+            $patterns = $entityManager->getRepository('VictoireBusinessEntityPageBundle:BusinessTemplate')->findPagePatternByBusinessEntity($businessEntity);
             foreach ($patterns as $pattern) {
-                /** @var BusinessEntityPageRepository $bepRepo */
-                $bepRepo = $entityManager->getRepository('VictoireBusinessEntityPageBundle:BusinessEntityPage');
-                $computedPage = $this->container->get('victoire_business_entity_page.business_entity_page_helper')->generateEntityPageFromPattern($pattern, $entity);
-                // Get the BusinessEntityPage if exists for the given entity
+                /** @var BusinessPageRepository $bepRepo */
+                $bepRepo = $entityManager->getRepository('VictoireBusinessEntityPageBundle:BusinessPage');
+                $computedPage = $this->container->get('victoire_business_page.business_page_helper')->generateEntityPageFromPattern($pattern, $entity);
+                // Get the BusinessPage if exists for the given entity
                 $persistedPage = $bepRepo->findPageByBusinessEntityAndPattern($pattern, $entity, $businessEntity);
                 // If there is diff between persisted BEP and computed, persist the change
                 if ($persistedPage && $computedPage->getSlug() !== $persistedPage->getSlug()) {

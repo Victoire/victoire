@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\Loader;
 /**
  *
  */
-class VictoireBusinessEntityPageExtension extends Extension
+class VictoireBusinessPageExtension extends Extension
 {
     /**
      * Load services

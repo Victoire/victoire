@@ -1,3 +1,3 @@
-Define and manage BusinessEntityPage and BusinessEntityPagePattern
+Define and manage BusinessPage and BusinessTemplate
 
 **MORE DETAILS SOON**

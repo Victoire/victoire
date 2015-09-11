@@ -6,13 +6,13 @@
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
     </header>
     <body>
-      <trans-unit id="52e94987d43944233ad9b250f30e52e34820aec5" resname="business_entity_page_pattern.creation.title">
-        <source>business_entity_page_pattern.creation.title</source>
+      <trans-unit id="52e94987d43944233ad9b250f30e52e34820aec5" resname="business_template.creation.title">
+        <source>business_template.creation.title</source>
         <target>Créer une représentation métier</target>
       </trans-unit>
-      <trans-unit id="8eebf03437d3711e7a615d6acbb00258319c2546" resname="business_entity_page_pattern.edit.title">
-        <source>business_entity_page_pattern.edit.title</source>
-        <target>Edition d'un objet métier</target>
+      <trans-unit id="8eebf03437d3711e7a615d6acbb00258319c2546" resname="business_template.edit.title">
+        <source>business_template.edit.title</source>
+        <target>Edition d'une représentation métier</target>
       </trans-unit>
       <trans-unit id="f6caec6dabceeba3182322b3466fcafa8d8f51ab" resname="list.action.add">
         <source>list.action.add</source>
@@ -38,26 +38,53 @@
         <source>Mandatory fields</source>
         <target>Champs obligatoires</target>
       </trans-unit>
-      <trans-unit id="19ccbd8b16123d88eb230626a5b1110504c35954" resname="menu.business_entity_page_pattern">
-        <source>menu.business_entity_page_pattern</source>
+      <trans-unit id="19ccbd8b16123d88eb230626a5b1110504c35954" resname="menu.business_template">
+        <source>menu.business_template</source>
         <target><![CDATA[<i class="vic-menuImg vic-menuImg-sandbox"></i> Représentation métier]]></target>
       </trans-unit>
-      <trans-unit id="16123d88eb230626a519ccbd8bb1110504c35954" resname="victoire.business_entity_page_pattern.create.success">
-        <source>victoire.business_entity_page_pattern.create.success</source>
+      <trans-unit id="16123d88eb230626a519ccbd8bb1110504c35954" resname="victoire.business_template.create.success">
+        <source>victoire.business_template.create.success</source>
         <target>La représentation métier a bien été créé</target>
       </trans-unit>
-      <trans-unit id="16123d88eb230619ccbd8b26a5b1110504c35954" resname="victoire.business_entity_page_pattern.edit.success">
-        <source>victoire.business_entity_page_pattern.edit.success</source>
+      <trans-unit id="16123d88eb230619ccbd8b26a5b1110504c35954" resname="victoire.business_template.edit.success">
+        <source>victoire.business_template.edit.success</source>
         <target>La représentation métier a bien été modifiée</target>
       </trans-unit>
-      <trans-unit id="16123d88eb230619ccbd8b26a5b1110504c35954" resname="victoire.business_entity_page_pattern.edit.error">
-        <source>victoire.business_entity_page_pattern.edit.error</source>
+      <trans-unit id="16123d88eb230619ccbd8b26a5b1110504c35954" resname="victoire.business_template.edit.error">
+        <source>victoire.business_template.edit.error</source>
         <target>La modification de la représentation métier a échoué</target>
       </trans-unit>
-      <trans-unit id="1" resname="victoire.form.business_entity_page_pattern.slug.label">
-        <source>victoire.form.business_entity_page_pattern.slug.label</source>
+      <trans-unit id="1" resname="victoire.form.business_template.slug.label">
+        <source>victoire.form.business_template.slug.label</source>
         <target>Url</target>
+      </trans-unit>
+      <trans-unit id="4c359543d88eb230619ccbd8b26a5b1110501612" resname="victoire.form.business_template.query.label">
+        <source>victoire.form.business_template.query.label</source>
+        <target><![CDATA[<i class="fa fa-database"></i> Requête <strong>BETA</strong>]]></target>
+      </trans-unit>
+      <trans-unit id="230619ccbd8b26a54c359543d88ebb1110501612" resname="victoire.form.business_template.query.vic_help_block">
+        <source>victoire.form.business_template.query.vic_help_block</source>
+        <target><![CDATA[<i class="fa fa-info-circle"></i> <em>Cette partie est réservée aux développeurs</em>. Utilisez ce champ pour définir quels instances sont autorisés à utiliser cette représentation métier]]></target>
+      </trans-unit>
+      <trans-unit id="d8b26a54c359543d88ebb111050161FDSFD2" resname="victoire.form.business_template.query.url.fieldset">
+        <source>victoire.form.business_template.query.url.fieldset</source>
+        <target>URL</target>
+      </trans-unit>
+      <trans-unit id="d8b26a54c359543d88ebb111050161FDSFD2" resname="victoire.form.business_template.slug.vic_help_block">
+        <source>victoire.form.business_template.slug.vic_help_block</source>
+        <target><![CDATA[<i class="fa fa-info-circle"></i> Utilisez une proprieté de l'entité pour dynamiser l'url.]]></target>
+      </trans-unit>
+      <trans-unit id="d8b26a54c359543d88ebb111050161FDSFD2" resname="victoire.form.business_template.name.vic_help_block">
+        <source>victoire.form.business_template.name.vic_help_block</source>
+        <target><![CDATA[<em>&laquo;Fiche produit&raquo;, &laquo;Profil utilisateur&raquo;, &laquo;Bilan énergetique&raquo;</em>...]]></target>
+      </trans-unit>
+      <trans-unit id="d8b26a54c359543d88ebb111050161FDSFD2" resname="business_template.listEntities.empty">
+        <source>business_template.listEntities.empty</source>
+        <target><![CDATA[<div class="vic-alert vic-alert-info">Cette représentation métier n'est pas utilisée.</div>]]></target>
       </trans-unit>
     </body>
   </file>
 </xliff>
+
+
+

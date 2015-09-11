@@ -21,7 +21,7 @@ abstract class BasePage extends View implements WebViewInterface
     /**
      * @var string
      *
-     * Could be Template or BusinessEntityPagePattern
+     * Could be Template or BusinessTemplate
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\TemplateBundle\Entity\Template", inversedBy="inheritors", cascade={"persist"})
      * @ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="CASCADE")
      *

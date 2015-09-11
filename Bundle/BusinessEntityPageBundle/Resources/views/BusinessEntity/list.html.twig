@@ -12,7 +12,7 @@
 
         <div class="vic-col-sm-6 vic-text-right">
             {% spaceless %}
-            <a class="vic-btn vic-btn-success" data-toggle="vic-modal" href="{{ path('victoire_bepp_new', {'id': businessEntity.id}) }}">
+            <a class="vic-btn vic-btn-success" data-toggle="vic-modal" href="{{ path('victoire_business_template_new', {'id': businessEntity.id}) }}">
                 <i class="fa fa-plus-square"></i>
 
                 {{ 'list.action.add'|trans }}
@@ -23,18 +23,18 @@
 </div>
 
 <ul class="vic-bordered-list">
-    {% for pagePattern in businessEntityPagePatterns %}
+    {% for pagePattern in BusinessTemplates %}
     <li class="item -level0">
         <div class="vic-bordered-line">
             <div class="title">
                 {{ pagePattern.name }}
             </div>
 
-            <a class="vic-btn vic-btn-default -square" data-toggle="vic-modal" href="{{ path('victoire_bepp_edit', {'id': pagePattern.id}) }}">
+            <a class="vic-btn vic-btn-default -square" data-toggle="vic-modal" href="{{ path('victoire_business_template_edit', {'id': pagePattern.id}) }}">
                 <i class="fa fa-pencil"></i>
             </a>
 
-            <a class="vic-btn vic-btn-default -square" href="{{ path('victoire_core_page_show_by_id', {'viewId' : pagePattern.id}) }}">
+            <a class="vic-btn vic-btn-default -square" href="{{ path('victoire_business_template_show', {'id' : pagePattern.id}) }}">
                 <i class="fa fa-angle-right"></i>
             </a>
 
@@ -44,7 +44,7 @@
         </div>
         <div class="vic-row">
             <div class="vic-col-md-12" style="display: none" id="business-entities-list-container-{{ pagePattern.id }}">
-                {{ render(path('victoire_bepp_listentities', {'id': pagePattern.id})) }}
+                {{ render(path('victoire_business_template_listentities', {'id': pagePattern.id})) }}
             </div>
         </div>
     </li>

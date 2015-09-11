@@ -5,10 +5,12 @@ namespace Victoire\Bundle\CoreBundle\Helper;
 use Doctrine\Orm\EntityManager;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter as BETParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
-use Victoire\Bundle\BusinessEntityPageBundle\Helper\BusinessEntityPageHelper;
+use Victoire\Bundle\BusinessEntityPageBundle\Chain\BusinessTemplateChain;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessTemplate;
+use Victoire\Bundle\BusinessEntityPageBundle\Helper\BusinessPageHelper;
 use Victoire\Bundle\CoreBundle\Entity\View;
-use Victoire\Bundle\CoreBundle\Manager\Chain\ViewManagerChain;
+use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
+use Victoire\Bundle\CoreBundle\Manager\Chain\ViewReferenceBuilderChain;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Widget\LayoutBundle\Entity\WidgetLayout;
 
@@ -36,14 +38,14 @@ class ViewHelper
     public function __construct(
         BETParameterConverter $parameterConverter,
         BusinessEntityHelper $businessEntityHelper,
-        BusinessEntityPageHelper $businessEntityPageHelper,
+        BusinessPageHelper $BusinessPageHelper,
         EntityManager $entityManager,
         ViewCacheHelper $viewCacheHelper,
         ViewManagerChain $viewManagerChain
     ) {
         $this->parameterConverter = $parameterConverter;
         $this->businessEntityHelper = $businessEntityHelper;
-        $this->businessEntityPageHelper = $businessEntityPageHelper;
+        $this->BusinessPageHelper = $BusinessPageHelper;
         $this->em = $entityManager;
         $this->viewCacheHelper = $viewCacheHelper;
         $this->viewManagerChain = $viewManagerChain;
@@ -169,8 +171,8 @@ class ViewHelper
         $clonedView->setId(null);
         $this->em->persist($clonedView);
 
-        if ($clonedView instanceof BusinessEntityPagePattern) {
-            $clonedView = $this->cloneBusinessEntityPagePattern($clonedView);
+        if ($clonedView instanceof BusinessTemplate) {
+            $clonedView = $this->cloneBusinessTemplate($clonedView);
         } else {
             $widgetLayoutSlots = [];
             $newWidgets = [];
@@ -225,13 +227,13 @@ class ViewHelper
     }
 
     /**
-     * @param BusinessEntityPagePattern $view
+     * @param BusinessTemplate $view
      * @param $etmplateName the future name of the clone
      *
-     * this methods allows you to clone a BusinessEntityPagePattern
+     * this methods allows you to clone a BusinessTemplate
      *
      */
-    protected function cloneBusinessEntityPagePattern(BusinessEntityPagePattern $view)
+    protected function cloneBusinessTemplate(BusinessTemplate $view)
     {
         $businessEntityId = $view->getBusinessEntityId();
         $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($businessEntityId);

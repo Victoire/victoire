@@ -3,8 +3,8 @@
 namespace Victoire\Bundle\PageBundle\Twig\Extension;
 
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
-use Victoire\Bundle\BusinessEntityPageBundle\Helper\BusinessEntityPageHelper;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessTemplate;
+use Victoire\Bundle\BusinessEntityPageBundle\Helper\BusinessPageHelper;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
@@ -14,21 +14,21 @@ use Victoire\Bundle\PageBundle\Helper\PageHelper;
  */
 class PageExtension extends \Twig_Extension
 {
-    protected $businessEntityPagePatternHelper = null;
+    protected $BusinessTemplateHelper = null;
     protected $router = null;
     protected $pageHelper = null;
 
     /**
      * Constructor
      *
-     * @param BusinessEntityPageHelper $businessEntityPagePatternHelper
+     * @param BusinessPageHelper $BusinessTemplateHelper
      * @param Router $router
      * @param PageHelper $pageHelper
      * @param CurrentViewHelper $currentViewHelper
      */
-    public function __construct(BusinessEntityPageHelper $businessEntityPagePatternHelper, Router $router, PageHelper $pageHelper, CurrentViewHelper $currentViewHelper)
+    public function __construct(BusinessPageHelper $BusinessTemplateHelper, Router $router, PageHelper $pageHelper, CurrentViewHelper $currentViewHelper)
     {
-        $this->businessEntityPagePatternHelper = $businessEntityPagePatternHelper;
+        $this->BusinessTemplateHelper = $BusinessTemplateHelper;
         $this->router = $router;
         $this->pageHelper = $pageHelper;
         $this->currentViewHelper = $currentViewHelper;
@@ -81,23 +81,23 @@ class PageExtension extends \Twig_Extension
         $urls = array();
 
         //the template link to the page
-        $businessEntityPagePattern = $page;
+        $BusinessTemplate = $page;
 
         //
-        if ($page instanceof BusinessEntityPagePattern) {
+        if ($page instanceof BusinessTemplate) {
             //get the list of url of the children to avoid to have it twice.
             $childrenUrls = $this->getChildrenUrls($page);
 
             //services
-            $businessEntityPagePatternHelper = $this->businessEntityPagePatternHelper;
+            $BusinessTemplateHelper = $this->BusinessTemplateHelper;
             $pageHelper = $this->pageHelper;
 
             //the items allowed for the template
-            $items = $businessEntityPagePatternHelper->getEntitiesAllowed($businessEntityPagePattern);
+            $items = $BusinessTemplateHelper->getEntitiesAllowed($BusinessTemplate);
 
             //parse entities
             foreach ($items as $item) {
-                $pageEntity = clone $businessEntityPagePattern;
+                $pageEntity = clone $BusinessTemplate;
 
                 //update url using the entity instance
                 $pageHelper->updatePageParametersByEntity($pageEntity, $item);

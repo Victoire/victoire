@@ -4,7 +4,7 @@ namespace Victoire\Bundle\BlogBundle\Manager;
 
 use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\BlogBundle\Entity\Article;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessPage;
 
 /**
  * article Manager
@@ -25,7 +25,7 @@ class ArticleManager
      * Delete a given article
      * @param Article            $article
      */
-    public function delete(Article $article, BusinessEntityPage $bep)
+    public function delete(Article $article, BusinessPage $bep)
     {
         $this->entityManager->remove($bep);
         $article->setVisibleOnFront(0);

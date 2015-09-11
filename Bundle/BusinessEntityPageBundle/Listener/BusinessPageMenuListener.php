@@ -9,7 +9,7 @@ use Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent;
 /**
  * When dispatched, this listener add items to a KnpMenu
  */
-class BusinessEntityPageMenuListener implements MenuListenerInterface
+class BusinessPageMenuListener implements MenuListenerInterface
 {
     protected $menuBuilder = null;
 
@@ -38,9 +38,9 @@ class BusinessEntityPageMenuListener implements MenuListenerInterface
             $this
                 ->mainItem
                 ->addChild(
-                    'menu.business_entity_page_pattern',
+                    'menu.business_template',
                     array(
-                        'route' => 'victoire_businessentitypage_businessentity_index',
+                        'route' => 'victoire_business_template_index',
                     )
                 )
                 ->setLinkAttribute('data-toggle', 'vic-modal');
@@ -62,7 +62,7 @@ class BusinessEntityPageMenuListener implements MenuListenerInterface
         //if there is a template, we add the link in the top bar
         $mainItem->addChild('menu.page.settings',
             array(
-                'route'           => 'victoire_bepp_edit',
+                'route'           => 'victoire_business_template_edit',
                 'routeParameters' => array('id' => $event->getPage()->getId()),
             )
         )->setLinkAttribute('data-toggle', 'vic-modal');

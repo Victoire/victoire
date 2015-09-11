@@ -23,7 +23,7 @@
         <div id="picker-{{ businessEntity.getName }}" class="vic-tab-pane{% if loop.first %} vic-active{% endif %}">
             {% include 'VictoireBusinessEntityPageBundle:BusinessEntity:list.html.twig' with {
                 'businessEntity' : businessEntity,
-                'businessEntityPagePatterns' : businessEntityPagePatterns[businessEntity.getName]
+                'BusinessTemplates' : BusinessTemplates[businessEntity.getName]
             } %}
         </div>
         {% endfor %}

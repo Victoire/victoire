@@ -8,9 +8,9 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Victoire\Bundle\CoreBundle\Form\ViewType;
 
 /**
- * businessEntitypagePatternType
+ * BusinessTemplateType
  */
-class BusinessEntityPagePatternType extends ViewType
+class BusinessTemplateType extends ViewType
 {
 
     /*
@@ -33,9 +33,11 @@ class BusinessEntityPagePatternType extends ViewType
 
         $builder
             ->add('businessEntityId', 'hidden')
-            ->add('query')
-            ->add('slug', null, array(
-                    'label' => 'victoire.form.business_entity_page_pattern.slug.label'
+            ->add('query', null, array(
+                    'label' => 'victoire.form.business_template.query.label'
+
+                ))->add('slug', null, array(
+                    'label' => 'victoire.form.business_template.slug.label'
                 )
             );
     }
@@ -50,7 +52,8 @@ class BusinessEntityPagePatternType extends ViewType
         $resolver->setOptional(array('businessProperty'));
 
         $resolver->setDefaults(array(
-            'data_class' => 'Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern'
+                'data_class' => 'Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessTemplate',
+                'translationDomain' => 'victoire'
         ));
     }
 
@@ -61,6 +64,6 @@ class BusinessEntityPagePatternType extends ViewType
      */
     public function getName()
     {
-        return 'victoire_business_entity_page_pattern_type';
+        return 'victoire_business_template_type';
     }
 }

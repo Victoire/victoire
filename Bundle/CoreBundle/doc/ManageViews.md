@@ -6,12 +6,12 @@ A chain list all views managers and allow to find.
 
 ##Managers
 
-###ViewManagerInterface
+###ReferenceBuilderInterface
 
 This interface describe all methods that we need for a view.
 For the moment we just a method to build the correct ViewReference associated.
 
-###BaseViewManager
+###BaseReferenceBuilder
 
 This Class have the setter for basic views Managers service dependence.
 

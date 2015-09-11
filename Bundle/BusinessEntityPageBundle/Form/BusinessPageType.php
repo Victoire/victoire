@@ -8,9 +8,9 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Victoire\Bundle\PageBundle\Form\PageSettingsType;
 
 /**
- * businessEntityPageType
+ * BusinessPageType
  */
-class BusinessEntityPageType extends PageSettingsType
+class BusinessPageType extends PageSettingsType
 {
 
     /*
@@ -45,6 +45,6 @@ class BusinessEntityPageType extends PageSettingsType
      */
     public function getName()
     {
-        return 'victoire_business_entity_page_type';
+        return 'victoire_business_page_type';
     }
 }

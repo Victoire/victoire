@@ -8,9 +8,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
-use Victoire\Bundle\BusinessEntityPageBundle\Helper\BusinessEntityPageHelper;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessPage;
+use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessTemplate;
+use Victoire\Bundle\BusinessEntityPageBundle\Helper\BusinessPageHelper;
 use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
@@ -55,9 +55,9 @@ class PageHelper extends ViewHelper
 
     /**
      * Constructor
-     * @param BusinessEntityPageHelper $bepHelper
      * @param EntityManager            $entityManager
      * @param CurrentViewHelper        $currentViewHelper
+     * @param BusinessPageHelper $bepHelper
      * @param EventDispatcherInterface $eventDispatcher
      * @param TemplateMapper           $victoireTemplating
      * @param PageSeoHelper            $pageSeoHelper
@@ -69,7 +69,7 @@ class PageHelper extends ViewHelper
      * @param ViewManagerChain         $viewManagerChain
      */
     public function __construct(
-        BusinessEntityPageHelper $bepHelper,
+        BusinessPageHelper $bepHelper,
         EntityManager $entityManager,
         CurrentViewHelper $currentViewHelper,
         EventDispatcherInterface $eventDispatcher,
@@ -129,12 +129,12 @@ class PageHelper extends ViewHelper
         $event = new \Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent($page);
 
         //Dispatch contextual event regarding page type
-        if ($page->getType() == 'business_entity_page') {
+        if ($view->getType() == 'business_page') {
             //Dispatch also an event with the Business entity name
             $eventName = 'victoire_core.page_menu.contextual';
-            if (!$page->getId()) {
-                $eventName = 'victoire_core.business_entity_page_pattern_menu.contextual';
-                $event = new \Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent($page->getTemplate());
+            if (!$view->getId()) {
+                $eventName = 'victoire_core.business_template_menu.contextual';
+                $event = new \Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent($view->getTemplate());
             }
             $this->eventDispatcher->dispatch($eventName, $event);
             $type = $page->getBusinessEntityId();
@@ -161,9 +161,9 @@ class PageHelper extends ViewHelper
      * @param View           $page
      * @param BusinessEntity $entity
      *
-     * @return BusinessEntityPage
+     * @return BusinessPage
      */
-    public function updatePageWithEntity(BusinessEntityPagePattern $page, $entity)
+    public function updatePageWithEntity(BusinessTemplate $page, $entity)
     {
         $page = $this->bepHelper->generateEntityPageFromPattern($page, $entity);
         $this->pageSeoHelper->updateSeoByEntity($page, $entity);
@@ -244,9 +244,9 @@ class PageHelper extends ViewHelper
 
         $entity = $this->findEntityByReference($viewReference);
         if ($entity) {
-            if ($page instanceof BusinessEntityPagePattern) {
+            if ($page instanceof BusinessTemplate) {
                 $page = $this->updatePageWithEntity($page, $entity);
-            } elseif ($page instanceof BusinessEntityPage) {
+            } elseif ($page instanceof BusinessPage) {
                 $this->pageSeoHelper->updateSeoByEntity($page, $entity);
             }
         }
@@ -283,15 +283,15 @@ class PageHelper extends ViewHelper
             throw new NotFoundHttpException($errorMessage);
         }
 
-        //if the page is a BusinessEntityPagePattern and the entity is not allowed for this page pattern
-        if ($page instanceof BusinessEntityPagePattern) {
+        //if the page is a BusinessTemplate and the entity is not allowed for this page pattern
+        if ($page instanceof BusinessTemplate) {
             //only victoire users are able to access a business page
             if (!$this->authorizationChecker->isGranted('ROLE_VICTOIRE')) {
                 throw new AccessDeniedException('You are not allowed to see this page');
             }
-        } elseif ($page instanceof BusinessEntityPage) {
+        } elseif ($page instanceof BusinessPage) {
             if (!$entity->isVisibleOnFront() && !$this->authorizationChecker->isGranted('ROLE_VICTOIRE')) {
-                throw new NotFoundHttpException('The BusinessEntityPage for '.get_class($entity).'#'.$entity->getId().' is not visible on front.');
+                throw new NotFoundHttpException('The BusinessPage for '.get_class($entity).'#'.$entity->getId().' is not visible on front.');
             }
             if (!$page->getId()) {
                 $entityAllowed = $this->bepHelper->isEntityAllowed($page->getTemplate(), $entity);
@@ -305,25 +305,25 @@ class PageHelper extends ViewHelper
 
     /**
      * Create an instance of the business entity page
-     * @param BusinessEntityPagePattern $businessEntityPagePattern The business entity page
+     * @param BusinessTemplate $BusinessTemplate The business entity page
      * @param entity                    $entity                    The entity
      * @param string                    $url                       The new url
      *
      * @return \Victoire\Bundle\PageBundle\Entity\Page
      */
-    public function createPageInstanceFromBusinessEntityPagePattern(BusinessEntityPagePattern $businessEntityPagePattern, $entity, $url)
+    public function createPageInstanceFromBusinessTemplate(BusinessTemplate $BusinessTemplate, $entity, $url)
     {
         //create a new page
         $newPage = new Page();
 
-        $parentPage = $businessEntityPagePattern->getParent();
+        $parentPage = $BusinessTemplate->getParent();
 
         //set the page parameter by the business entity page
         $newPage->setParent($parentPage);
-        $newPage->setTemplate($businessEntityPagePattern);
+        $newPage->setTemplate($BusinessTemplate);
         $newPage->setUrl($url);
 
-        $newPage->setTitle($businessEntityPagePattern->getTitle());
+        $newPage->setTitle($BusinessTemplate->getTitle());
 
         //update the parameters of the page
         $this->bepHelper->updatePageParametersByEntity($newPage, $entity);
