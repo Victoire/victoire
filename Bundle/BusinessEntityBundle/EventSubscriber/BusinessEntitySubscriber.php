@@ -5,7 +5,7 @@ namespace Victoire\Bundle\BusinessEntityBundle\EventSubscriber;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Symfony\Component\DependencyInjection\Container;
-use Victoire\Bundle\BusinessEntityPageBundle\Repository\BusinessPageRepository;
+use Victoire\Bundle\BusinessPageBundle\Repository\BusinessPageRepository;
 
 class BusinessEntitySubscriber implements EventSubscriber
 {
@@ -59,10 +59,10 @@ class BusinessEntitySubscriber implements EventSubscriber
         $businessEntity = $this->container->get('victoire_core.helper.business_entity_helper')->findByEntityInstance($entity);
 
         if ($businessEntity) {
-            $patterns = $entityManager->getRepository('VictoireBusinessEntityPageBundle:BusinessTemplate')->findPagePatternByBusinessEntity($businessEntity);
+            $patterns = $entityManager->getRepository('VictoireBusinessPageBundle:BusinessTemplate')->findPagePatternByBusinessEntity($businessEntity);
             foreach ($patterns as $pattern) {
                 /** @var BusinessPageRepository $bepRepo */
-                $bepRepo = $entityManager->getRepository('VictoireBusinessEntityPageBundle:BusinessPage');
+                $bepRepo = $entityManager->getRepository('VictoireBusinessPageBundle:BusinessPage');
                 $computedPage = $this->container->get('victoire_business_page.business_page_helper')->generateEntityPageFromPattern($pattern, $entity);
                 // Get the BusinessPage if exists for the given entity
                 $persistedPage = $bepRepo->findPageByBusinessEntityAndPattern($pattern, $entity, $businessEntity);

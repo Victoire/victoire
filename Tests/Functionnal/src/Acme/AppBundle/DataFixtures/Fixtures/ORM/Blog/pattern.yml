@@ -1,4 +1,4 @@
-Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessTemplate:
+Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate:
     pattern_article:
         name: "{{item.name}}"
         slug: "{{item.slug}}"

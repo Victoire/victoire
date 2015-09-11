@@ -4,7 +4,7 @@ namespace Victoire\Bundle\BlogBundle\Manager;
 
 use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\BlogBundle\Entity\Article;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessPage;
+use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 
 /**
  * article Manager

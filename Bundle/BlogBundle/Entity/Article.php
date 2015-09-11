@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessTemplate;
+use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Annotations as VIC;
 use Victoire\Bundle\BusinessEntityBundle\Entity\Traits\BusinessEntityTrait;
 use Victoire\Bundle\MediaBundle\Entity\Media;
@@ -102,7 +102,7 @@ class Article
 
     /**
      * @var BusinessTemplate
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessTemplate")
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate")
      * @ORM\JoinColumn(name="pattern_id", referencedColumnName="id", onDelete="SET NULL")
      * @Assert\NotNull()
      */

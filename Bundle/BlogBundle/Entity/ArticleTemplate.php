@@ -2,7 +2,7 @@
 namespace Victoire\Bundle\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessTemplate;
+use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 
 /**
  * ArticleTemplate (extends BusinessTemplate)

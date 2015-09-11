@@ -3,7 +3,7 @@ namespace Victoire\Bundle\PageBundle\Matcher;
 
 use Victoire\Bundle\PageBundle\Helper\UrlHelper;
 use Doctrine\ORM\EntityManager;
-use Victoire\Bundle\BusinessEntityPageBundle\Helper\BusinessPageHelper;
+use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 
 /**

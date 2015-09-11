@@ -38,7 +38,7 @@ and populate your database according your needs with the available fixtures/seed
     new Victoire\Bundle\AnalyticsBundle\VictoireAnalyticsBundle(),
     new Victoire\Bundle\BlogBundle\VictoireBlogBundle(),
     new Victoire\Bundle\BusinessEntityBundle\VictoireBusinessEntityBundle(),
-    new Victoire\Bundle\BusinessEntityPageBundle\VictoireBusinessEntityPageBundle(),
+    new Victoire\Bundle\BusinessPageBundle\VictoireBusinessPageBundle(),
     new Victoire\Bundle\CoreBundle\VictoireCoreBundle(),
     new Victoire\Bundle\FilterBundle\VictoireFilterBundle(),
     new Victoire\Bundle\FormBundle\VictoireFormBundle(),

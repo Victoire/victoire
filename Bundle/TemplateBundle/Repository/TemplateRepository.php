@@ -35,7 +35,7 @@ class TemplateRepository extends NestedTreeRepository
     {
         $this->qb = $this->_em->createQueryBuilder()
             ->select('pattern')
-            ->from('Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessTemplate', 'pattern');
+            ->from('Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate', 'pattern');
 
         return $this;
     }

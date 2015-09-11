@@ -3,8 +3,8 @@
 namespace Victoire\Bundle\PageBundle\Twig\Extension;
 
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessTemplate;
-use Victoire\Bundle\BusinessEntityPageBundle\Helper\BusinessPageHelper;
+use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
+use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;

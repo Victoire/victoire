@@ -5,7 +5,7 @@ namespace Victoire\Bundle\QueryBundle\Helper;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessPage;
+use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 
 /**
@@ -36,7 +36,7 @@ class QueryHelper
      * Get the query builder base. This makes a "select  from item XXX"
      * use the item for doing the left join or where dql
      *
-     * @param \Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessTemplate $containerEntity
+     * @param \Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate $containerEntity
      *
      * @return QueryBuilder
      *
@@ -83,7 +83,7 @@ class QueryHelper
 
     /**
      * Check that the object is not null and has the query trait
-     * @param \Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessTemplate $containerEntity
+     * @param \Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate $containerEntity
      *
      * @throws \Exception
      */
@@ -102,7 +102,7 @@ class QueryHelper
     /**
      * Get the results from the sql after adding the
      *
-     * @param \Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessTemplate $containerEntity
+     * @param \Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate $containerEntity
      * @param QueryBuilder                                                               $itemsQueryBuilder
      *
      * @throws \Exception

@@ -6,9 +6,11 @@ use Symfony\Component\Config\Util\XmlUtils;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessPage;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessTemplate;
+use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
+use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
+use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
 use Victoire\Bundle\CoreBundle\Entity\View;
+use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 
 /**
  * View cache helper
@@ -206,7 +208,7 @@ XML;
      */
     public static function getViewReferenceId(View $view, $entity = null)
     {
-        if ($view instanceof BusinessEntityPage) {
+        if ($view instanceof BusinessPage) {
             $entity = $view->getBusinessEntity();
         }
 

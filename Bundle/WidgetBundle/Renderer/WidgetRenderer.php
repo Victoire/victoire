@@ -2,7 +2,7 @@
 namespace Victoire\Bundle\WidgetBundle\Renderer;
 
 use Symfony\Component\DependencyInjection\Container;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessPage;
+use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Event\WidgetRenderEvent;
 use Victoire\Bundle\CoreBundle\VictoireCmsEvents;

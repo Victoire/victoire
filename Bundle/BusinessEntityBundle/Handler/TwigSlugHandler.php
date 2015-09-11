@@ -7,7 +7,7 @@ use Gedmo\Sluggable\Mapping\Event\SluggableAdapter;
 use Victoire\Bundle\BusinessEntityBundle\Transliterator\Transliterator;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Gedmo\Sluggable\Handler\SlugHandlerInterface;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessTemplate;
+use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 
 /**
  * Sluggable handler which keep twig variable after urlization
