@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\I18nBundle\Route;
 
+use Gedmo\Sluggable\Util\Urlizer;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 use Victoire\Bundle\CoreBundle\Route\RouteLoader as BaseRouteLoader;
@@ -13,11 +14,13 @@ use Victoire\Bundle\I18nBundle\Resolver\LocaleResolver;
 class I18nRouteLoader extends BaseRouteLoader
 {
     protected $localeResolver;
+    protected $urlizer;
 
     public function __construct($widgets, LocaleResolver $localeResolver)
     {
         parent::__construct($widgets);
         $this->localeResolver = $localeResolver;
+        $this->urlizer = new Urlizer();
     }
 
     /**
@@ -32,6 +35,17 @@ class I18nRouteLoader extends BaseRouteLoader
             $collection->addCollection($collection);
             //Add a redirection to the default locale homepage when empty url '/'
             $this->addHomepageRedirection($collection);
+        } elseif ($this->localeResolver->localePattern == LocaleResolver::PATTERN_DOMAIN) {
+            $collection->addDefaults(array('_locale'=> $this->localeResolver->defaultLocale));
+            $collection->addCollection($collection);
+            foreach ($this->localeResolver->getDomainConfig() as $_domain => $_locale) {
+                $_collection = parent::load($resource, $type);
+                foreach ($_collection->all() as $_name => $_route) {
+                    $_route->addDefaults(array('_locale'=> $_locale));
+                    $_route->setHost($_domain);
+                    $collection->add($_locale."__".$this->urlizer->urlize($_domain, "_")."__".$_name, $_route);
+                }
+            }
         }
 
         return $collection;

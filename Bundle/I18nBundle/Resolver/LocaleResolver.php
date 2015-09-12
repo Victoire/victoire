@@ -22,11 +22,11 @@ class LocaleResolver
      * Constructor
      *
      * @param string $localePattern      What is the strategy to resolve locale
-     * @param string $localeDomainConfig The locale domain config
+     * @param array  $localeDomainConfig The locale domain config
      * @param string $defaultLocale      The default local app
      * @param string $availableLocales   The list of available locales
      */
-    public function __construct($localePattern, $localeDomainConfig, $defaultLocale, $availableLocales)
+    public function __construct($localePattern, array $localeDomainConfig, $defaultLocale, $availableLocales)
     {
         $this->localePattern = $localePattern;
         $this->localeDomainConfig = $localeDomainConfig;
@@ -70,10 +70,11 @@ class LocaleResolver
             return $this->localeDomainConfig[$httpHost];
         }
 
-        throw new \Exception(sprintf(
-            'Host "%s" is not defined in your locale_pattern_table in app/config/victoire_core.yml (%s available)',
+        error_log(sprintf(
+            'Host "%s" is not defined in your locale_pattern_table in app/config/victoire_core.yml (%s available), using default locale (%s) instead',
             $httpHost,
-            implode(',', $this->localeDomainConfig)
+            implode(',', $this->localeDomainConfig),
+            $this->defaultLocale
         ));
 
     }
@@ -93,5 +94,23 @@ class LocaleResolver
         }
 
         return $this->defaultLocale;
+    }
+
+    /**
+     * Return available locales
+     * @return array
+     */
+    public function getAvailableLocales()
+    {
+        return $this->availableLocales;
+    }
+
+    /**
+     * return domain config
+     * @return array
+     */
+    public function getDomainConfig()
+    {
+        return $this->localeDomainConfig;
     }
 }
