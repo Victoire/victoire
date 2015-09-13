@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
+use Victoire\Bundle\I18nBundle\Resolver\LocaleResolver;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 
@@ -199,10 +200,28 @@ class BasePageController extends Controller
 
         if ($form->isValid()) {
             $clone = $this->get('victoire_core.view_helper')->addTranslation($page, $page->getName(), $page->getLocale());
+            $urlPrefix = '';
+            //Guess what is the redirection host.
+            if ($this->container->getParameter('victoire_i18n.locale_pattern') === LocaleResolver::PATTERN_DOMAIN) {
+                foreach ($this->container->getParameter('victoire_i18n.locale_pattern_table') as $_host => $_locale) {
+                    if ($_locale === $clone->getLocale()) {
+                        $urlPrefix = sprintf('%s://%s', $request->getScheme(), $_host);
+                        if ($request->getPort()) {
+                            $urlPrefix .= ':'.$request->getPort();
+                        }
+                        break;
+                    }
+                }
+            }
+
 
             return array(
                 'success' => true,
-                'url' => $this->generateUrl('victoire_core_page_show', array('_locale' => $clone->getLocale(), 'url' => $clone->getUrl())),
+                'url' => $urlPrefix.$this->generateUrl('victoire_core_page_show', array(
+                        '_locale' => $clone->getLocale(),
+                        'url' => $clone->getUrl()
+                    )
+                ),
             );
         }
         $errors = $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form);
