@@ -8,6 +8,7 @@ use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessPageBundle\Chain\BusinessTemplateChain;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
+use Victoire\Bundle\CoreBundle\Entity\Route;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\CoreBundle\Manager\Chain\ViewReferenceBuilderChain;
@@ -78,53 +79,22 @@ class ViewHelper
             }
         }
 
-        $this->cleanVirtualViews($viewsReferences);
+        $this->viewCacheHelper->cleanVirtualViews($viewsReferences);
 
 
         return $viewsReferences;
     }
 
-    /**
-     *
-     * @param $viewsReferences
-     */
-    public function cleanVirtualViews(&$viewsReferences)
-    {
-        $urls = [];
-        $em = $this->em;
-        $bepps = array_map(function ($bepp) use ($em) { return $em->getClassMetadata(get_class($bepp))->name; },
-            $this->BusinessTemplateChain->getBusinessTemplates()
-        );
-        foreach ($viewsReferences as $key => $viewReference) {
-            // If viewReference is a persisted page, we want to clean virtual BEPs
-            if (!empty($viewReference['type']) && $viewReference['type'] == 'business_page') {
-                array_filter($viewsReferences, function ($_viewReference) use ($viewReference, $bepps) {
-                    $cond = !(in_array($_viewReference['viewNamespace'], $bepps)
-                        && !empty($_viewReference['entityNamespace']) && $_viewReference['entityNamespace'] == $viewReference['entityNamespace']
-                        && !empty($_viewReference['entityId']) && $_viewReference['entityId'] == $viewReference['entityId']);
 
-                        return $cond;
-                    });
-            }
-            // while viewReference url is found in viewreferences, increment the url slug to be unique
-            $url = $viewReference['url'];
-            $i = 1;
-            while (in_array($url, $urls)) {
-                $url = $viewReference['url'] . "-" . $i;
-                $i++;
-            }
-            $viewsReferences[$key]['url'] = $url;
-            $urls[] = $url;
-        }
-
-    }
     /**
      * This method get all views (BasePage and Template) in DB and return the references, including non persisted Business entity page (pattern and businessEntityId based)
      * @return array the computed views as array
      */
     public function getAllViewsReferences()
     {
-        $viewsReferences = $this->viewCacheHelper->convertXmlCacheToArray();
+
+        $xml = $this->readCache();
+        $viewsReferences = $this->viewCacheHelper->convertXmlCacheToArray($xml);
 
         return $viewsReferences;
     }
@@ -139,7 +109,9 @@ class ViewHelper
     public function buildViewReference(View $view, $entity = null)
     {
         $viewManager = $this->viewReferenceBuilderChain->getViewManager($view);
-        return $viewManager->buildReference($view, $entity);
+        $viewReferences = $viewManager->buildReference($view, $entity);
+
+        return $viewReferences;
     }
 
 
