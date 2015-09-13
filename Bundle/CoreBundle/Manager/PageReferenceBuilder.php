@@ -2,24 +2,28 @@
 
 namespace Victoire\Bundle\CoreBundle\Manager;
 
-use Victoire\Bundle\CoreBundle\Entity\View;
+use Victoire\Bundle\CoreBundle\Manager\Interfaces\PageReferenceBuilderInterface;
+use Victoire\Bundle\PageBundle\Entity\Page;
 
 /**
 * PageManager
 */
-class PageManager extends BaseViewManager implements ViewManagerInterface
+class PageReferenceBuilder extends BaseReferenceBuilder implements PageReferenceBuilderInterface
 {
-    public function buildReference(View $view){
-        $viewsReferences = array();
+    public function buildReference(Page $view){
+        $view->setUrl($this->urlBuilder->buildUrl($view));
         $referenceId = $this->viewCacheHelper->getViewReferenceId($view);
-        $viewsReferences[$view->getUrl().$view->getLocale()] = array(
+        $viewsReference[] = array(
             'id'              => $referenceId,
             'locale'          => $view->getLocale(),
             'viewId'          => $view->getId(),
             'url'             => $view->getUrl(),
             'name'            => $view->getName(),
             'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
+            'view'            => $view,
         );
-        return $viewsReferences;
+
+        return $viewsReference;
+
     }
 }

@@ -41,36 +41,20 @@ class BusinessTemplateReferenceBuilder extends BaseReferenceBuilder implements B
     public function buildReference(BusinessTemplate $view)
     {
         $viewsReferences = [];
-        $businessEntities = $this->businessEntityHelper->getBusinessEntities();
+        $entities = $this->businessEntityPageHelper->getEntitiesAllowed($view);
 
-        foreach ($businessEntities as $businessEntity) {
-            $properties = $this->businessEntityPageHelper->getBusinessProperties($businessEntity);
+        // for each business entity
+        foreach ($entities as $entity) {
+            $currentPattern = clone $view;
+            $page = $this->businessEntityPageHelper->generateEntityPageFromPattern($currentPattern, $entity);
+            $this->businessEntityPageHelper->updatePageParametersByEntity($page, $entity);
 
-            //find business identifiers of the current businessEntity
-            $selectableProperties = array('id');
-            foreach ($properties as $property) {
-                if ($property->getType() === 'businessParameter') {
-                    $selectableProperties[] = $property->getEntityProperty();
-                }
-            }
+            $viewsReferences = array_merge($viewsReferences, $this->virtualBusinessPageReferenceBuilder->buildReference($page));
 
-            $entities = $this->businessEntityPageHelper->getEntitiesAllowed($view);
-
-            // for each business entity
-            foreach ($entities as $entity) {
-                // only if related pattern entity is the current entity
-                if ($view->getBusinessEntityId() === $businessEntity->getId()) {
-                    $currentPattern = clone $view;
-                    $page = $this->businessEntityPageHelper->generateEntityPageFromPattern($currentPattern, $entity);
-                    $this->businessEntityPageHelper->updatePageParametersByEntity($page, $entity);
-                    $referenceId = $this->getViewCacheHelper()->getViewReferenceId($view, $entity);
-
-                    $viewsReferences = $viewsReferences + $this->virtualBusinessPageReferenceBuilder->buildReference($page);
-                }
-                //I refresh this partial entity from em. If I don't do it, everytime I'll request this entity from em it'll be partially populated
-                $this->getEntityManager()->refresh($entity);
-            }
+            //I refresh this partial entity from em. If I don't do it, everytime I'll request this entity from em it'll be partially populated
+            $this->getEntityManager()->refresh($entity);
         }
+
 
         return $viewsReferences;
     }

@@ -4,13 +4,14 @@ namespace Victoire\Bundle\CoreBundle\Manager\Chain;
 
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use Victoire\Bundle\CoreBundle\Entity\View;
-use Victoire\Bundle\CoreBundle\Manager\ViewManagerInterface;
+use Victoire\Bundle\CoreBundle\Manager\BaseReferenceBuilder;
+use Victoire\Bundle\CoreBundle\Manager\Interfaces\ReferenceBuilderInterface;
 
 /**
- * Class ViewManagerChain
+ * Class ViewReferenceBuilderChain
  * @package Victoire\Bundle\CoreBundle\Manager\Chain
  */
-class ViewManagerChain
+class ViewReferenceBuilderChain
 {
     private $viewsManagers;
 
@@ -21,16 +22,16 @@ class ViewManagerChain
 
     /**
      * add a view Manager
-     * @param ViewManagerInterface $viewManager
+     * @param ReferenceBuilderInterface $viewManager
      */
-    public function addViewManager(ViewManagerInterface $viewManager, $view)
+    public function addViewManager(BaseReferenceBuilder $viewManager, $view)
     {
         $this->viewsManagers[$view] = $viewManager;
     }
 
     /**
      * @param View $view
-     * @return ViewManagerInterface
+     * @return ReferenceBuilderInterface
      */
     public function getViewManager(View $view)
     {

@@ -3,24 +3,23 @@
 namespace Victoire\Bundle\BusinessPageBundle\Manager;
 
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
-use Victoire\Bundle\BusinessPageBundle\Manager\Interfaces\BusinessPageReferenceBuilderInterface;
+use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
+use Victoire\Bundle\BusinessPageBundle\Manager\Interfaces\VirtualBusinessPageReferenceBuilderInterface;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Manager\BaseReferenceBuilder;
+use Victoire\Bundle\CoreBundle\Manager\Interfaces\ReferenceBuilderInterface;
 
 /**
-* BusinessPageReferenceBuilder
+* VirtualBusinessPageReferenceBuilder
 */
-class BusinessPageReferenceBuilder extends BaseReferenceBuilder implements BusinessPageReferenceBuilderInterface
+class VirtualBusinessPageReferenceBuilder extends BaseReferenceBuilder implements VirtualBusinessPageReferenceBuilderInterface
 {
-    public function buildReference(BusinessPage $view)
-    {
-        error_log($this->urlBuilder->buildUrl($view));
-        $view->setUrl($this->urlBuilder->buildUrl($view));
+    public function buildReference(VirtualBusinessPage $view){
+
         $referenceId = $this->getViewCacheHelper()->getViewReferenceId($view);
-        $viewsReferences[] = array(
+        $viewsReference[] = array(
             'id'              => $referenceId,
             'locale'          => $view->getLocale(),
-            'viewId'          => $view->getId(),
             'patternId'       => $view->getTemplate()->getId(),
             'url'             => $view->getUrl(),
             'name'            => $view->getName(),
@@ -30,6 +29,7 @@ class BusinessPageReferenceBuilder extends BaseReferenceBuilder implements Busin
             'type'            => $view::TYPE,
             'view'            => $view,
         );
-        return $viewsReferences;
+
+        return $viewsReference;
     }
 }

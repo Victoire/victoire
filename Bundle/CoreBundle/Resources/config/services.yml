@@ -213,20 +213,21 @@ services:
 
 #  ==================  Chain ================== #
 
-    victoire_core.chain.view_manager_chain:
-        class: Victoire\Bundle\CoreBundle\Manager\Chain\ViewManagerChain
+    victoire_core.chain.view_reference_builder_chain:
+        class: Victoire\Bundle\CoreBundle\Manager\Chain\ViewReferenceBuilderChain
 
 #  ==================  Manager ================== #
 
     victoire_core.manager.base_view_manager:
-        class: Victoire\Bundle\CoreBundle\Manager\BaseViewManager
+        class: Victoire\Bundle\CoreBundle\Manager\BaseReferenceBuilder
         abstract: true
-        calls:
-            - [setViewCacheHelper, ["@victoire_core.view_cache_helper"]]
-            - [setEntityManager, ["@doctrine.orm.entity_manager"]]
+        arguments:
+            - @victoire_core.view_cache_helper
+            - @doctrine.orm.entity_manager
+            - @victoire_core.url_builder
 
-    victoire_core.manager.page_manager:
-        class: Victoire\Bundle\CoreBundle\Manager\PageManager
+    victoire_core.manager.page_reference_builder:
+        class: Victoire\Bundle\CoreBundle\Manager\PageReferenceBuilder
         parent: victoire_core.manager.base_view_manager
         tags:
             - { name: victoire_core.view_manager, view: Victoire\Bundle\PageBundle\Entity\Page }
