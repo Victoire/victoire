@@ -19,4 +19,3 @@ services:
 
     victoire_widget_map.datatransformer.widgetmap_to_array:
         class: Victoire\Bundle\WidgetMapBundle\DataTransformer\WidgetMapToArrayTransformer
-        arguments: [ @doctrine.orm.entity_manager ]

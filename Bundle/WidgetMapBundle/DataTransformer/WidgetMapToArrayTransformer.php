@@ -9,19 +9,6 @@ use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 class WidgetMapToArrayTransformer implements DataTransformerInterface
 {
     /**
-     * @var ObjectManager
-     */
-    private $om;
-
-    /**
-     * @param ObjectManager $om
-     */
-    public function __construct(ObjectManager $om)
-    {
-        $this->om = $om;
-    }
-
-    /**
      * Transforms an object (WidgetMap) to an array.
      *
      * @param  WidgetMap|null $widgetMap
