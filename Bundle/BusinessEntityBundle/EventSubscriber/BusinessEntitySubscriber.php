@@ -55,6 +55,7 @@ class BusinessEntitySubscriber implements EventSubscriber
     public function updateBusinessPagesAndRegerateCache(LifecycleEventArgs $eventArgs)
     {
         $entityManager = $eventArgs->getEntityManager();
+        $uow = $entityManager->getUnitOfWork();
         $entity = $eventArgs->getEntity();
         $businessEntity = $this->container->get('victoire_core.helper.business_entity_helper')->findByEntityInstance($entity);
 
@@ -67,16 +68,28 @@ class BusinessEntitySubscriber implements EventSubscriber
                 // Get the BusinessPage if exists for the given entity
                 $persistedPage = $bepRepo->findPageByBusinessEntityAndPattern($pattern, $entity, $businessEntity);
                 // If there is diff between persisted BEP and computed, persist the change
-                if ($persistedPage && $computedPage->getSlug() !== $persistedPage->getSlug()) {
+
+                if ($persistedPage) {
+                    $oldSlug = $persistedPage->getSlug();
+                    $newSlug = $entity->getSlug();
+                    $staticUrl = $persistedPage->getStaticUrl();
+
+                    if ($staticUrl) {
+                        $staticUrl = preg_replace('/'.$oldSlug.'/', $newSlug, $staticUrl);
+                        $persistedPage->setStaticUrl($staticUrl);
+                    }
+
                     $persistedPage->setSlug($computedPage->getSlug());
+
+
                     $entityManager->persist($persistedPage);
                     $entityManager->flush();
 
                     //we update the cache bor the persisted page
-                    $this->updateCache($persistedPage, $entity);
-                }else{
+                    $this->container->get('victoire_core.view_cache_helper')->update($persistedPage);
+                } else {
                     //we update cache with the computed page
-                    $this->updateCache($pattern, $entity);
+                    $this->container->get('victoire_core.view_cache_helper')->update($computedPage);
 
                 }
             }
@@ -84,9 +97,5 @@ class BusinessEntitySubscriber implements EventSubscriber
 
     }
 
-    protected function updateCache($pattern, $entity)
-    {
-        $this->container->get('victoire_core.view_cache_helper')->update($pattern, $entity);
-    }
 
 }
