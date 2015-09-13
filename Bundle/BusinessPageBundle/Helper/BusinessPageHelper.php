@@ -11,6 +11,7 @@ use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
 use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
+use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
 use Victoire\Bundle\QueryBundle\Helper\QueryHelper;
 use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
 use Doctrine\ORM\EntityManager;
@@ -26,7 +27,7 @@ class BusinessPageHelper
     protected $viewCacheHelper = null;
     protected $businessEntityHelper = null;
     protected $parameterConverter = null;
-    protected $entityManager = null;
+    protected $urlBuilder = null;
 
     //@todo Make it dynamic please
     protected $pageParameters = array(
@@ -43,13 +44,13 @@ class BusinessPageHelper
      * @param BusinessEntityHelper $businessEntityHelper
      * @param ParameterConverter   $parameterConverter
      */
-    public function __construct(QueryHelper $queryHelper, ViewCacheHelper $viewCacheHelper, BusinessEntityHelper $businessEntityHelper, ParameterConverter $parameterConverter, EntityManager $entityManager)
+    public function __construct(QueryHelper $queryHelper, ViewCacheHelper $viewCacheHelper, BusinessEntityHelper $businessEntityHelper, ParameterConverter $parameterConverter, UrlBuilder $urlBuilder)
     {
         $this->queryHelper = $queryHelper;
         $this->viewCacheHelper = $viewCacheHelper;
         $this->businessEntityHelper = $businessEntityHelper;
         $this->parameterConverter = $parameterConverter;
-        $this->entityManager = $entityManager;
+        $this->urlBuilder = $urlBuilder;
     }
 
     /**
@@ -138,7 +139,7 @@ class BusinessPageHelper
         $accessor = PropertyAccess::createPropertyAccessor();
 
         foreach ($patternProperties as $property) {
-            if (!in_array($property->getName(), array('id', 'slug', 'widgetMap', 'slots', 'seo', 'i18n')) && !$property->isStatic()) {
+            if (!in_array($property->getName(), array('id', 'widgetMap', 'slots', 'seo', 'i18n')) && !$property->isStatic()) {
                 $value = $accessor->getValue($bepPattern, $property->getName());
                 $setMethod = 'set'.ucfirst($property->getName());
                 if (method_exists($page, $setMethod)) {
@@ -155,12 +156,15 @@ class BusinessPageHelper
             $businessProperties = $this->getBusinessProperties($businessEntity);
 
             //the url of the page
-            $pageUrl = $page->getUrl();
+            $pageUrl = $this->urlBuilder->buildUrl($page);
+
             $pageName = $page->getName();
+            $pageSlug = $page->getSlug();
 
             //parse the business properties
             foreach ($businessProperties as $businessProperty) {
                 $pageUrl = $this->parameterConverter->setBusinessPropertyInstance($pageUrl, $businessProperty, $entity);
+                $pageSlug = $this->parameterConverter->setBusinessPropertyInstance($pageSlug, $businessProperty, $entity);
                 $pageName = $this->parameterConverter->setBusinessPropertyInstance($pageName, $businessProperty, $entity);
             }
 
@@ -178,9 +182,9 @@ class BusinessPageHelper
 
             $entityProxy = new EntityProxy();
             $entityProxy->setEntity($entity, $businessEntity->getName());
-
             //we update the url of the page
             $page->setUrl($pageUrl);
+            $page->setSlug($pageSlug);
             $page->setName($pageName);
             $page->setEntityProxy($entityProxy);
             $page->setTemplate($bepPattern);
@@ -278,7 +282,7 @@ class BusinessPageHelper
         if ($businessEntity) {
             $parameters = array(
                 'entityId' => $entityId,
-                'entityNamespace' => $this->entityManager->getClassMetadata($originalRefClassName)->name
+                'entityNamespace' => $originalRefClassName
             );
 
             $viewReference = $this->viewCacheHelper->getReferenceByParameters($parameters);
