@@ -8,6 +8,10 @@ php:
 services:
   - redis-server
 
+hosts:
+  - fr.victoire.dev
+  - en.victoire.dev
+
 before_script:
   - phpenv config-add travis.php.ini
   - npm install less
