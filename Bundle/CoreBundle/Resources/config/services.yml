@@ -129,6 +129,17 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    victoire_core.view_reference_subscriber:
+        class: Victoire\Bundle\CoreBundle\EventSubscriber\ViewReferenceSubscriber
+        arguments:
+            - "@victoire_core.url_builder"
+            - "@victoire_core.view_cache_helper"
+            - "@victoire_widget_map.builder"
+            - "@victoire_widget_map.helper"
+            - "@service_container"
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+
 
 #  ==================  Cache =================== #
     victoire_core.cache_warmer.entity_proxy_warmer:
