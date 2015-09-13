@@ -66,9 +66,8 @@ XML;
     /**
      * @return array
      */
-    public function convertXmlCacheToArray()
+    public function convertXmlCacheToArray($xml)
     {
-        $xml = $this->readCache();
 
         $cachedArray = json_decode(json_encode((array) $xml), TRUE);
         $viewsReferences = [];
@@ -90,50 +89,52 @@ XML;
         return $viewsReferences;
     }
 
+
     /**
      * update or insert values of given view cache
+     * The given view can only be a WebView cause it have to got an url
+     * if you want to update a BusinessTemplate and all its BP|VBP, you have to call updateTemplate method
      * @param View                $view
      * @param BusinessEntity|null $entity
      *
-     * @return void
+     * @return \SimpleXMLElement
      */
-    public function update(View $view, $entity = null)
+    public function update(View $view)
     {
 
         /** @var ViewHelper $viewHelper */
         $viewHelper = $this->container->get('victoire_core.view_helper');
-        $businessEntityPageHelper = $this->container->get('victoire_business_entity_page.business_entity_page_helper');
         $rootNode = $this->readCache();
 
-        //Update pattern and its entities
-        if(!$entity) {
-            $viewReferences = $viewHelper->buildViewReference($view);
-            foreach ($viewReferences as $key => $_viewReference) {
-                self::removeViewReference($rootNode, $_viewReference);
-                $itemNode = $rootNode->addChild('viewReference');
-                foreach ($_viewReference as $key => $value) {
+        $viewReferences = $viewHelper->buildViewReference($view);
+
+        self::removeViewReference($rootNode, $viewReferences);
+        foreach ($viewReferences as $key => $_viewReference) {
+            $parameters = [
+                'patternId' => $_viewReference['patternId'],
+                'entityId' => $_viewReference['entityId'],
+                'viewNamespace' => 'Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage',
+            ];
+
+            $viewsReferencesToRemove = $this->getAllReferenceByParameters($parameters);
+            self::removeViewReference($rootNode, ['id' => $_viewReference['id']]);
+            foreach ($viewsReferencesToRemove as $viewReferenceToRemove) {
+                self::removeViewReference($rootNode, $viewReferenceToRemove);
+            }
+            $itemNode = $rootNode->addChild('viewReference');
+            foreach ($_viewReference as $key => $value) {
+                // the key 'view' is the view object, we do not want to write it in the cache file
+                if ($key !== 'view') {
                     $itemNode->addAttribute($key, $value);
                 }
             }
         }
 
-        //Update only given entity for a pattern
-        else {
-            $viewReferenceToRemove['id'] = self::getViewReferenceId($view, $entity);
-            if (method_exists($view, 'getUrl') && !($view instanceof BusinessEntityPagePattern)) {
-                $viewReferenceToRemove['url'] = $view->getUrl();
-            }
-            self::removeViewReference($rootNode, $viewReferenceToRemove);
-            $viewReferences = $viewHelper->buildViewReference($view, $entity);
-            foreach ($viewReferences as $key => $_viewReference) {
-                $itemNode = $rootNode->addChild('viewReference');
-                foreach ($_viewReference as $key => $value) {
-                    $itemNode->addAttribute($key, $value);
-                }
-            }
-        }
 
         $this->writeFile($rootNode);
+
+        return $viewReferences;
+
     }
 
     public function getReferenceByParameters($parameters)
@@ -208,16 +209,22 @@ XML;
      */
     public static function getViewReferenceId(View $view, $entity = null)
     {
+        $id = $view->getId();
         if ($view instanceof BusinessPage) {
             $entity = $view->getBusinessEntity();
+            if ($view instanceof VirtualBusinessPage) {
+                $id = $view->getTemplate()->getId();
+            }
+        } else if (!$view instanceof WebViewInterface) {
+            return $view->getId();
         }
 
-        $id = sprintf('ref_%s', $view->getId());
+        $refId = sprintf('ref_%s', $id);
         if ($entity) {
-            $id .= '_'.$entity->getId();
+            $refId .= '_'.$entity->getId();
         }
 
-        return $id;
+        return $refId;
     }
 
     /**
@@ -274,5 +281,39 @@ XML;
     public function fileExists()
     {
         return file_exists($this->xmlFile);
+    }
+
+    /**
+     *
+     * @param $viewsReferences
+     */
+    public function cleanVirtualViews(&$viewsReferences)
+    {
+        $urls = [];
+
+        foreach ($viewsReferences as $key => $viewReference) {
+            // If viewReference is a persisted page, we want to clean virtual BEPs
+            if (!empty($viewReference['type']) && $viewReference['type'] == 'business_page') {
+                $viewsReferences = array_filter($viewsReferences, function ($_viewReference) use ($viewReference) {
+                        $cond = !($_viewReference['viewNamespace'] == 'Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage'
+                            && !empty($_viewReference['entityNamespace']) && $_viewReference['entityNamespace'] == $viewReference['entityNamespace']
+                            && !empty($_viewReference['entityId']) && $_viewReference['entityId'] == $viewReference['entityId']
+                            && !empty($_viewReference['patternId']) && $_viewReference['patternId'] == $viewReference['patternId']);
+
+                        return $cond;
+                    });
+
+            }
+            // while viewReference url is found in viewreferences, increment the url slug to be unique
+            $url = $viewReference['url'];
+            $i = 1;
+            while (in_array($url, $urls)) {
+                $url = $viewReference['url'] . "-" . $i;
+                $i++;
+            }
+            $viewsReferences[$key]['url'] = $url;
+            $urls[] = $url;
+        }
+
     }
 }
