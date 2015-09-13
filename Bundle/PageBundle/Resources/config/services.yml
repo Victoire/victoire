@@ -17,21 +17,17 @@ services:
 
     victoire_page.page_helper:
         class: Victoire\Bundle\PageBundle\Helper\PageHelper
+        parent: victoire_core.view_helper
         arguments:
-            - "@victoire_business_entity_page.business_entity_page_helper"
-            - "@doctrine.orm.entity_manager"
             - "@victoire_core.current_view"
             - "@event_dispatcher"
             - "@victoire_templating"
             - "@victoire_seo.helper.pageseo_helper"
-            - "@victoire_core.view_cache_helper"
             - "@session"
             - "@security.token_storage"
             - "@security.authorization_checker"
             - "@victoire_widget_map.builder"
-            - "@victoire_business_entity.converter.parameter_converter"
-            - "@victoire_core.helper.business_entity_helper"
-            - "@victoire_core.chain.view_manager_chain"
+            - "@victoire_core.url_builder"
 
     victoire_page.matcher.url_matcher:
         class: Victoire\Bundle\PageBundle\Matcher\UrlMatcher
@@ -39,6 +35,7 @@ services:
             - "@doctrine.orm.entity_manager"
             - "@victoire_business_page.business_page_helper"
             - "@victoire_core.helper.business_entity_helper"
+
 
     ####################################################################################################################
     # Security voter
