@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\BusinessEntityBundle\Reader\BusinessEntityCacheReader;
+use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
+use Victoire\Bundle\BusinessPageBundle\Transformer\VirtualToBusinessPageTransformer;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 use Victoire\Bundle\FormBundle\Helper\FormErrorHelper;
@@ -38,6 +40,7 @@ class WidgetManager
     protected $victoireTemplating;
     protected $pageHelper;
     protected $slots; // %victoire_core.slots%
+    protected $virtualToBpTransformer; // %victoire_core.slots%
 
     /**
      * construct
@@ -70,7 +73,8 @@ class WidgetManager
         BusinessEntityCacheReader $cacheReader,
         TemplateMapper $victoireTemplating,
         PageHelper $pageHelper,
-        $slots
+        $slots,
+        VirtualToBusinessPageTransformer $virtualToBpTransformer
     )
     {
         $this->widgetFormBuilder = $widgetFormBuilder;
@@ -87,6 +91,7 @@ class WidgetManager
         $this->victoireTemplating = $victoireTemplating;
         $this->pageHelper = $pageHelper;
         $this->slots = $slots;
+        $this->virtualToBpTransformer = $virtualToBpTransformer;
     }
 
     /**
@@ -139,6 +144,9 @@ class WidgetManager
         $formErrorHelper = $this->formErrorHelper;
         $request = $this->request;
 
+        if ($view instanceof VirtualBusinessPage) {
+            $this->virtualToBpTransformer->transform($view);
+        }
         //create a new widget
         $widget = $this->widgetHelper->newWidgetInstance($type, $view, $slotId, $mode);
 
@@ -146,10 +154,6 @@ class WidgetManager
 
         $form->handleRequest($request);
         if ($request->query->get('novalidate', false) === false && $form->isValid()) {
-            if (!$view->getId()) {
-                //create a view for the business entity instance if we are currently on a virtual one
-                $this->entityManager->persist($view);
-            }
 
             //get the widget from the form
             $widget = $form->getData();
@@ -157,11 +161,13 @@ class WidgetManager
             //update fields of the widget
             $widget->setBusinessEntityId($entity);
 
+            $widget->positionReference = $positionReference;
+            $widget->slotId = $slotId;
             //persist the widget
             $this->entityManager->persist($widget);
             $this->entityManager->flush();
 
-            //create the new widget map
+//            //create the new widget map
             $widgetMapEntry = new WidgetMap();
             $widgetMapEntry->setAction(WidgetMap::ACTION_CREATE);
             $widgetMapEntry->setWidgetId($widget->getId());
@@ -177,7 +183,7 @@ class WidgetManager
             $widget->setCurrentView($view);
 
             //get the html for the widget
-            $htmlWidget = $this->widgetRenderer->renderContainer($widget, $view, $widgetMapEntry->getPosition());
+            $htmlWidget = $this->widgetRenderer->renderContainer($widget, $view);
 
             $response = array(
                 "success"  => true,
