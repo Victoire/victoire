@@ -68,5 +68,6 @@ services:
         arguments:
             - "%victoire_i18n.available_locales%"
             - "@request_stack"
+            - "@translator"
         tags:
             - { name: form.type, alias: victoire_view_translate_type }
