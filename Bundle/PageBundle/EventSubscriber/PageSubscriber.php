@@ -56,9 +56,26 @@ class PageSubscriber implements EventSubscriber
     {
         return array(
             'loadClassMetadata',
+            'postLoad',
             'onFlush',
-            'postPersist',
         );
+    }
+
+    /**
+     * @param OnFlushEventArgs $eventArgs
+     */
+    public function onFlush(OnFlushEventArgs $eventArgs)
+    {
+        /** @var EntityManager $entityManager */
+        $entityManager = $eventArgs->getEntityManager();
+        /** @var UnitOfWork $uow */
+        $uow = $entityManager->getUnitOfWork();
+
+        foreach ($uow->getScheduledEntityInsertions() as $entity) {
+            if ($entity instanceof View) {
+                $entity->setAuthor($this->userCallableHelper->getCurrentUser());
+            }
+        }
     }
 
     /**
@@ -92,81 +109,17 @@ class PageSubscriber implements EventSubscriber
 
         // if $pages property exists, add the inversed side on User
         if ($metadata->name === $this->userClass && property_exists($this->userClass, 'pages')) {
-            $metaBuilder->addOneToMany('pages', 'Victoire\Bundle\PageBundle\Entity\View', 'author');
+            $metaBuilder->addOneToMany('pages', 'Victoire\Bundle\CoreBundle\Entity\View', 'author');
         }
     }
 
-    /**
-     * This method is called on flush
-     * @param OnFlushEventArgs $eventArgs The flush event args.
-     *
-     * @return void
-     */
-    public function onFlush(OnFlushEventArgs $eventArgs)
-    {
-        /** @var EntityManager $entityManager */
-        $entityManager = $eventArgs->getEntityManager();
-        /** @var UnitOfWork $uow */
-        $uow = $entityManager->getUnitOfWork();
-
-        foreach ($uow->getScheduledEntityInsertions() as $entity) {
-            if ($entity instanceof WebViewInterface) {
-                $computeUrl = ((array_key_exists('slug', $uow->getEntityChangeSet($entity)) //the slug of the page has been modified
-                            || array_key_exists('staticUrl', $uow->getEntityChangeSet($entity)) //the static url of the page has been modified
-                            || array_key_exists('parent', $uow->getEntityChangeSet($entity)))
-                            ); //the parent has been modified
-                if ($computeUrl) {
-                    $this->viewUrlHelper->buildUrl($entity, $uow, $entityManager) ;
-                }
-                $meta = $entityManager->getClassMetadata(get_class($entity));
-                $uow->recomputeSingleEntityChangeSet($meta, $entity);
-                $entity->setAuthor($this->userCallable->getCurrentUser());
-                if ($entity instanceof BusinessEntityPagePattern) {
-                    $this->updateCache($entity);
-                }
-
-            }
-        }
-
-        foreach ($uow->getScheduledEntityUpdates() as $entity) {
-            if ($entity instanceof WebViewInterface) {
-                $computeUrl = ((array_key_exists('slug', $uow->getEntityChangeSet($entity)) //the slug of the page has been modified
-                            || array_key_exists('staticUrl', $uow->getEntityChangeSet($entity)) //the static url of the page has been modified
-                            || array_key_exists('parent', $uow->getEntityChangeSet($entity)))
-                            ); //the parent has been modified
-                if ($computeUrl) {
-                    $this->viewUrlHelper->buildUrl($entity, $uow, $entityManager);
-                    $meta = $entityManager->getClassMetadata(get_class($entity));
-                    $uow->computeChangeSet($meta, $entity);
-                    $this->updateCache($entity);
-                }
-            }
-        }
-    }
-
-    /**
-     * @param LifecycleEventArgs $eventArgs
-     */
-    public function postPersist(LifecycleEventArgs $eventArgs)
+    public function postLoad(LifecycleEventArgs $eventArgs)
     {
         $entity = $eventArgs->getEntity();
         if ($entity instanceof View) {
-            $this->updateCache($entity);
+            $entity->setReference(['id' => $entity->getId()]);
         }
+
     }
 
-    /**
-     * There is changes in the Page, we have to update the page references cache file
-     * @param BasePage $page the page
-     *
-     * @return void
-     */
-    protected function updateCache(View $page)
-    {
-        if ($page instanceof BusinessEntityPage) {
-            $this->viewCacheHelper->update($page, $page->getBusinessEntity());
-        } else {
-            $this->viewCacheHelper->update($page);
-        }
-    }
 }
