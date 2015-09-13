@@ -41,7 +41,7 @@ class UrlMatcher
         //services
         $manager = $this->entityManager;
         $urlHelper = $this->urlHelper;
-        $BusinessTemplateRepository = $manager->getRepository('VictoireBusinessEntityPageBundle:BusinessTemplate');
+        $BusinessTemplateRepository = $manager->getRepository('VictoireBusinessPageBundle:BusinessTemplate');
         $BusinessTemplateHelper = $this->BusinessTemplateHelper;
         $businessEntityHelper = $this->businessEntityHelper;
 

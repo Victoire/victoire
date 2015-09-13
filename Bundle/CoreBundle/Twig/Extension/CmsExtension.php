@@ -4,8 +4,8 @@ namespace Victoire\Bundle\CoreBundle\Twig\Extension;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\SecurityContext;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessPage;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessTemplate;
+use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
+use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Handler\WidgetExceptionHandler;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;

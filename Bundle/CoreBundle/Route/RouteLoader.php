@@ -32,7 +32,7 @@ class RouteLoader extends Loader
             '@VictoireAnalyticsBundle/Controller/',
             '@VictoireTemplateBundle/Controller/',
             '@VictoireBlogBundle/Controller/',
-            '@VictoireBusinessEntityPageBundle/Controller/',
+            '@VictoireBusinessPageBundle/Controller/',
             '@VictoireSeoBundle/Controller/',
             '@VictoireMediaBundle/Controller/',
             '@VictoirePageBundle/Controller/',
