@@ -27,7 +27,7 @@ services:
             - "@victoire_core.view_cache_helper"
             - "@victoire_core.helper.business_entity_helper"
             - "@victoire_business_entity.converter.parameter_converter"
-            - "@doctrine.orm.entity_manager"
+            - "@victoire_core.url_builder"
 
     victoire_business_page.BusinessTemplate_chain:
         class: "%victoire_business_page.BusinessTemplate_chain.class%"
@@ -62,12 +62,6 @@ services:
     victoire_business_page.transformer.virtual_to_business_page_transformer:
         class: Victoire\Bundle\BusinessPageBundle\Transformer\VirtualToBusinessPageTransformer
 
-    victoire_business_page.subscriber.virtual_business_page_subscriber:
-        class: Victoire\Bundle\BusinessPageBundle\EventSubscriber\VirtualBusinessPageSubscriber
-        arguments:
-            - @victoire_business_page.transformer.virtual_to_business_page_transformer
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
     ####################################################################################################################
     # Menu
     ####################################################################################################################
