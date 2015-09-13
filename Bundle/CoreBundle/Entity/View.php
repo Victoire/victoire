@@ -165,6 +165,7 @@ abstract class View
      **/
     public function __construct()
     {
+        $this->children = new ArrayCollection();
         $this->widgets = new ArrayCollection();
         $this->widgetMap = array();
     }

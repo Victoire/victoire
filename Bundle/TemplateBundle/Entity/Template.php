@@ -49,6 +49,7 @@ class Template extends View
     {
         parent::__construct();
         $this->widgets = new ArrayCollection();
+        $this->inheritors = new ArrayCollection();
         $this->pages = new ArrayCollection();
     }
 

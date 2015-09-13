@@ -27,7 +27,7 @@ class Route
     /**
      * @var \stdClass
      *
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\CoreBundle\Entity\View", inversedBy="routes")
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\CoreBundle\Entity\View", inversedBy="routes", cascade={"persist"})
      * @ORM\JoinColumn(name="view_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $view;

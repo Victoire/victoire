@@ -11,7 +11,6 @@ use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
  *
  * @ORM\Entity(repositoryClass="Victoire\Bundle\PageBundle\Repository\BasePageRepository")
  * @ORM\Table("vic_base_page")
- * @UniqueEntity(fields={"url", "locale"})
  * @ORM\HasLifecycleCallbacks
  */
 abstract class BasePage extends View implements WebViewInterface

@@ -28,8 +28,6 @@ trait WebViewTrait
     /**
      * @var string
      * This property is computed by the method PageSubscriber::buildUrl
-     *
-     * @ORM\Column(name="url", type="string")
      */
     protected $url;
 
@@ -37,15 +35,6 @@ trait WebViewTrait
      * @ORM\OneToMany(targetEntity="Victoire\Bundle\SeoBundle\Entity\PageSeo", mappedBy="redirectTo")
      */
     protected $referers;
-
-    /**
-     * @var boolean
-     *
-     * Do we compute automatically the url on the flush
-     *
-     * @ORM\Column(name="compute_url", type="boolean", nullable=false)
-     */
-    protected $computeUrl = true;
 
     /**
      * @ORM\Column(name="status", type="string", nullable=false)
@@ -226,46 +215,6 @@ trait WebViewTrait
         } else {
             return false;
         }
-    }
-
-    /**
-     * Set position
-     *
-     * @param position $position
-     */
-    public function setPosition($position)
-    {
-        $this->position = $position;
-    }
-
-    /**
-     * Get position
-     *
-     * @return position
-     */
-    public function getPosition()
-    {
-        return $this->position;
-    }
-
-    /**
-     * Get the compute url value
-     *
-     * @return boolean The compute url
-     */
-    public function isComputeUrl()
-    {
-        return $this->computeUrl;
-    }
-
-    /**
-     * Set the compute url value
-     *
-     * @param boolean $computeUrl
-     */
-    public function setComputeUrl($computeUrl)
-    {
-        $this->computeUrl = $computeUrl;
     }
 
     /**
