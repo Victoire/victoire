@@ -13,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
-use Victoire\Bundle\CoreBundle\Helper\ViewUrlHelper;
+use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\PageBundle\Helper\UserCallableHelper;
@@ -26,25 +26,25 @@ class PageSubscriber implements EventSubscriber
 {
     protected $router;
     protected $userClass;
-    protected $userCallable;
+    protected $userCallableHelper;
     protected $viewCacheHelper;
-    protected $viewUrlHelper;
+    protected $urlBuilder;
 
     /**
      * Constructor
-     * @param Router             $router          @router
-     * @param UserCallableHelper $userCallable    @victoire_page.user_callable
-     * @param string             $userClass       %victoire_core.user_class%
-     * @param ViewCacheHelper    $viewCacheHelper @victoire_core.view_cache_helper
-     * @param ViewUrlHelper      $viewUrlHelper   @victoire_core.view_url_helper
+     * @param Router             $router             @router
+     * @param UserCallableHelper $userCallableHelper @victoire_page.user_callable
+     * @param string             $userClass          %victoire_core.user_class%
+     * @param ViewCacheHelper    $viewCacheHelper    @victoire_core.view_cache_helper
+     * @param UrlBuilder         $urlBuilder         @victoire_core.url_builder
      */
-    public function __construct($router, $userCallable, $userClass, $viewCacheHelper, $viewUrlHelper)
+    public function __construct($router, $userCallableHelper, $userClass, $viewCacheHelper, $urlBuilder)
     {
         $this->router          = $router;
         $this->userClass       = $userClass;
-        $this->userCallable    = $userCallable;
+        $this->userCallableHelper    = $userCallableHelper;
         $this->viewCacheHelper = $viewCacheHelper;
-        $this->viewUrlHelper = $viewUrlHelper;
+        $this->urlBuilder = $urlBuilder;
     }
 
     /**

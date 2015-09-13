@@ -26,6 +26,7 @@ use Victoire\Bundle\SeoBundle\Helper\PageSeoHelper;
 use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter as BETParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
+use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
 
 /**
  * Page helper
@@ -43,9 +44,9 @@ class PageHelper extends ViewHelper
     protected $token_storage; // @security.authorization_checker
     protected $authorizationChecker; // @security.authorization_checker
     protected $widgetMapBuilder; // @victoire_widget_map.builder
-    protected $viewManagerChain; // @victoire_core.chain.view_manager_chain
+    protected $viewReferenceBuilderChain; // @victoire_core.chain.view_reference_builder_chain
+    protected $urlBuilder; // @victoire_core.url_builder
 
-    //@todo Make it dynamic please
     protected $pageParameters = array(
         'name',
         'bodyId',

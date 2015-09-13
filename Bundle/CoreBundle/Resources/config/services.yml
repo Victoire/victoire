@@ -204,12 +204,10 @@ services:
         tags:
             - { name: routing.loader }
 
-    victoire_core.view_url_helper:
-        class: Victoire\Bundle\CoreBundle\Helper\ViewUrlHelper
+    victoire_core.url_builder:
+        class: Victoire\Bundle\CoreBundle\Helper\UrlBuilder
         arguments:
-            - "@router"
-        calls:
-            - [setRequest, ["@request_stack"]]
+            - "@victoire_core.view_cache_helper"
 
 #  ==================  Chain ================== #
 

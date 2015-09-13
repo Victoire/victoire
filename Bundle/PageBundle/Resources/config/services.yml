@@ -11,7 +11,7 @@ services:
             - "@victoire_page.user_callable"
             - "%victoire_core.user_class%"
             - "@victoire_core.view_cache_helper"
-            - "@victoire_core.view_url_helper"
+            - "@victoire_core.url_builder"
         tags:
             - { name: doctrine.event_subscriber, connection: default, priority: -1 }
 
@@ -37,7 +37,6 @@ services:
         class: Victoire\Bundle\PageBundle\Matcher\UrlMatcher
         arguments:
             - "@doctrine.orm.entity_manager"
-            - "@victoire_core.view_url_helper"
             - "@victoire_business_page.business_page_helper"
             - "@victoire_core.helper.business_entity_helper"
 

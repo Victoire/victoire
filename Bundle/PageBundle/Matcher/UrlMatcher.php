@@ -11,7 +11,6 @@ use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
  */
 class UrlMatcher
 {
-    protected $urlHelper = null;
     protected $entityManager = null;
     protected $BusinessTemplateHelper = null;
     protected $businessEntityHelper = null;
@@ -19,14 +18,12 @@ class UrlMatcher
     /**
      * Constructor
      * @param EntityManager            $entityManager
-     * @param UrlHelper                $urlHelper
      * @param BusinessPageHelper $BusinessTemplateHelper
      * @param BusinessEntityHelper     $businessEntityHelper
      */
-    public function __construct(EntityManager $entityManager, UrlHelper $urlHelper, BusinessEntityPageHelper $businessEntityPagePatternHelper, BusinessEntityHelper $businessEntityHelper)
+    public function __construct(EntityManager $entityManager, BusinessPageHelper $BusinessTemplateHelper, BusinessEntityHelper $businessEntityHelper)
     {
         $this->entityManager = $entityManager;
-        $this->urlHelper = $urlHelper;
         $this->BusinessTemplateHelper = $BusinessTemplateHelper;
         $this->businessEntityHelper = $businessEntityHelper;
     }
@@ -58,7 +55,7 @@ class UrlMatcher
         //until we try to remove all parts
         while ($shorterUrl !== null && $BusinessTemplate === null) {
             //we remove the last part to look for a business entity page pattern
-            $shorterUrl = $urlHelper->removeLastPart($shorterUrl);
+            $shorterUrl = $this->removeLastPart($shorterUrl);
             //the number of time the short has been done
             $shorterCount += 1;
 
@@ -82,7 +79,7 @@ class UrlMatcher
                     $position = $positionProperty['position'];
                     $businessProperty = $positionProperty['businessProperty'];
 
-                    $entityIdentifier = $urlHelper->extractPartByPosition($url, $position);
+                    $entityIdentifier = $this->extractPartByPosition($url, $position);
                     //test the entity identifier
                     if ($entityIdentifier === null) {
                         throw new \Exception('The entity identifier could not be retrieved from the url.');
@@ -117,5 +114,57 @@ class UrlMatcher
         }
 
         return $BusinessTemplateInstance;
+    }
+
+    /**
+     * Remove the last part of the url
+     * @param string $url
+     *
+     * @return string The shorten url
+     */
+    protected function removeLastPart($url)
+    {
+        $shortenUrl = null;
+
+        if ($url !== null && $url !== '') {
+            // split on the / character
+            $keywords = preg_split("/\//", $url);
+
+            //if there are some words, we pop the last
+            if (count($keywords) > 0) {
+                array_pop($keywords);
+
+                //rebuild the url
+                $shortenUrl = implode('/', $keywords);
+            }
+        }
+
+        return $shortenUrl;
+    }
+
+    /**
+     * Extract a part of the url
+     * @param string  $url
+     * @param integer $position
+     *
+     * @return string The extracted part
+     */
+    protected function extractPartByPosition($url, $position)
+    {
+        $part = null;
+
+        if ($url !== null && $url !== '') {
+            // split on the / character
+            $keywords = preg_split("/\//", $url);
+            // preg_match_all('/\{\%\s*([^\%\}]*)\s*\%\}|\{\{\s*([^\}\}]*)\s*\}\}/i', $url, $matches);
+
+            //if there are some words, we pop the last
+            if (count($keywords) > 0) {
+                //get the part
+                $part = $keywords[$position - 1];
+            }
+        }
+
+        return $part;
     }
 }
