@@ -33,8 +33,7 @@ class ViewCacheWarmer
     public function warmUp($cacheDir)
     {
         if (!$this->viewCacheHelper->fileExists()) {
-            $views = $this->entityManager->createQuery("SELECT v FROM VictoireCoreBundle:View v")->getResult();
-            $viewsReferences = $this->viewHelper->buildViewsReferences($views);
+            $viewsReferences = $this->viewHelper->buildViewsReferences();
             $this->viewCacheHelper->write($viewsReferences);
         }
     }

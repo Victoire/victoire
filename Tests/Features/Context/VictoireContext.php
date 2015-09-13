@@ -32,8 +32,7 @@ class VictoireContext extends RawMinkContext
      */
     public function resetViewsReference(BeforeScenarioScope $scope)
     {
-        $views = $this->getContainer()->get('doctrine.orm.entity_manager')->createQuery("SELECT v FROM VictoireCoreBundle:View v")->getResult();
-        $viewsReferences = $this->getContainer()->get('victoire_core.view_helper')->buildViewsReferences($views);
+        $viewsReferences = $this->getContainer()->get('victoire_core.view_helper')->buildViewsReferences();
         $this->getContainer()->get('victoire_core.view_cache_helper')->write($viewsReferences);
     }
 
