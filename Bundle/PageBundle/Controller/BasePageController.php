@@ -43,7 +43,7 @@ class BasePageController extends Controller
 
     public function showBusinessPageByIdAction($entityId, $type)
     {
-        $businessEntityHelper = $this->container->get('victoire_core.helper.business_entity_helper');
+        $businessEntityHelper = $this->container->get('victoire_core.helper.queriable_business_entity_helper');
         $businessEntity = $businessEntityHelper->findById($type);
         $entity = $businessEntityHelper->getByBusinessEntityAndId($businessEntity, $entityId);
 
@@ -94,7 +94,7 @@ class BasePageController extends Controller
             // If the $page is a BusinessEntity (eg. an Article), compute it's url
             if (null !== $this->container->get('victoire_core.helper.business_entity_helper')->findByEntityInstance($page)) {
                 $page = $this->container
-                        ->get('victoire_business_page.business_page_helper')
+                        ->get('victoire_business_page.business_page_builder')
                         ->generateEntityPageFromPattern($page->getTemplate(), $page);
             }
 

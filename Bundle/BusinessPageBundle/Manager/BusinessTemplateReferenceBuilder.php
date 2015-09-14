@@ -4,6 +4,7 @@ namespace Victoire\Bundle\BusinessPageBundle\Manager;
 
 use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
+use Victoire\Bundle\BusinessPageBundle\Builder\BusinessPageBuilder;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
@@ -29,13 +30,15 @@ class BusinessTemplateReferenceBuilder extends BaseReferenceBuilder implements B
         UrlBuilder $urlBuilder,
         VirtualBusinessPageReferenceBuilder $virtualBusinessPageReferenceBuilder,
         BusinessEntityHelper $businessEntityHelper,
-        BusinessPageHelper $businessEntityPageHelper
+        BusinessPageHelper $businessEntityPageHelper,
+        BusinessPageBuilder $businessEntityPageBuilder
     )
     {
         parent::__construct($viewCacheHelper, $em, $urlBuilder);
         $this->virtualBusinessPageReferenceBuilder = $virtualBusinessPageReferenceBuilder;
         $this->businessEntityHelper = $businessEntityHelper;
         $this->businessEntityPageHelper = $businessEntityPageHelper;
+        $this->businessEntityPageBuilder = $businessEntityPageBuilder;
     }
 
     public function buildReference(BusinessTemplate $view)
@@ -46,7 +49,7 @@ class BusinessTemplateReferenceBuilder extends BaseReferenceBuilder implements B
         // for each business entity
         foreach ($entities as $entity) {
             $currentPattern = clone $view;
-            $page = $this->businessEntityPageHelper->generateEntityPageFromPattern($currentPattern, $entity);
+            $page = $this->businessEntityPageBuilder->generateEntityPageFromPattern($currentPattern, $entity);
             $this->businessEntityPageHelper->updatePageParametersByEntity($page, $entity);
 
             $viewsReferences = array_merge($viewsReferences, $this->virtualBusinessPageReferenceBuilder->buildReference($page));

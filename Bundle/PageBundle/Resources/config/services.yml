@@ -28,13 +28,15 @@ services:
             - "@security.authorization_checker"
             - "@victoire_widget_map.builder"
             - "@victoire_core.url_builder"
+            - "@victoire_business_page.business_page_builder"
+            - "@victoire_business_page.business_page_helper"
 
     victoire_page.matcher.url_matcher:
         class: Victoire\Bundle\PageBundle\Matcher\UrlMatcher
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@victoire_business_page.business_page_helper"
-            - "@victoire_core.helper.business_entity_helper"
+            - "@victoire_core.helper.queriable_business_entity_helper"
 
 
     ####################################################################################################################

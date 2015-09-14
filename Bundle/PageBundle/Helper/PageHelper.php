@@ -8,6 +8,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Victoire\Bundle\BusinessPageBundle\Builder\BusinessPageBuilder;
 use Victoire\Bundle\BusinessPageBundle\Chain\BusinessTemplateChain;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
@@ -35,6 +36,7 @@ use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
 class PageHelper extends ViewHelper
 {
     protected $bepHelper = null;
+    protected $businessPageBuilder;
     protected $entityManager; // @doctrine.orm.entity_manager'
     protected $currentViewHelper; // @victoire_core.current_view
     protected $eventDispatcher; // @event_dispatcher
@@ -89,10 +91,12 @@ class PageHelper extends ViewHelper
         TokenStorage $tokenStorage,
         AuthorizationChecker $authorization_checker,
         WidgetMapBuilder $widgetMapBuilder,
-        UrlBuilder $urlBuilder
+        UrlBuilder $urlBuilder,
+        BusinessPageBuilder $businessPageBuilder
     ) {
         parent::__construct($parameterConverter, $businessEntityHelper, $bepHelper, $entityManager, $viewCacheHelper, $viewReferenceBuilderChain, $BusinessTemplateChain);
         $this->bepHelper = $bepHelper;
+        $this->businessPageBuilder = $businessPageBuilder;
         $this->entityManager = $entityManager;
         $this->currentViewHelper = $currentViewHelper;
         $this->eventDispatcher = $eventDispatcher;
@@ -190,7 +194,7 @@ class PageHelper extends ViewHelper
      */
     public function updatePageWithEntity(BusinessTemplate $page, $entity)
     {
-        $page = $this->bepHelper->generateEntityPageFromPattern($page, $entity);
+        $page = $this->businessPageBuilder->generateEntityPageFromPattern($page, $entity);
         $this->pageSeoHelper->updateSeoByEntity($page, $entity);
 
         //update the parameters of the page

@@ -12,6 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\BusinessEntityBundle\Event\BusinessEntityAnnotationEvent;
+use Victoire\Bundle\BusinessPageBundle\Builder\BusinessPageBuilder;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
@@ -38,17 +39,17 @@ class ViewReferenceSubscriber implements EventSubscriber
 {
     protected $urlBuilder;
     protected $viewCacheHelper;
-    protected $container;
+    protected $businessPageBuilder;
 
     /**
      * @param UrlBuilder $urlBuilder
      * @param ViewCacheHelper $viewCacheHelper
      */
-    public function __construct(UrlBuilder $urlBuilder, ViewCacheHelper $viewCacheHelper, ContainerInterface $container)
+    public function __construct(UrlBuilder $urlBuilder, ViewCacheHelper $viewCacheHelper, BusinessPageBuilder $businessPageBuilder)
     {
         $this->urlBuilder = $urlBuilder;
         $this->viewCacheHelper = $viewCacheHelper;
-        $this->container = $container;
+        $this->businessPageBuilder = $businessPageBuilder;
     }
     /**
      * bind to LoadClassMetadata method
@@ -135,7 +136,7 @@ class ViewReferenceSubscriber implements EventSubscriber
         if ($view instanceof BusinessPage) {
             $oldSlug = $view->getSlug();
             $staticUrl = $view->getStaticUrl();
-            $computedPage = $this->container->get('victoire_business_page.business_page_helper')->generateEntityPageFromPattern($view->getTemplate(), $view->getBusinessEntity());
+            $computedPage = $this->businessPageBuilder->generateEntityPageFromPattern($view->getTemplate(), $view->getBusinessEntity());
             $newSlug = $computedPage->getSlug();
 
             if ($staticUrl) {
