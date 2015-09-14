@@ -1,0 +1,17 @@
+{
+    "name": "/lightsaber-widget",
+    "type": "symfony-bundle",
+    "description": "Victoire LightSaber widget",
+    "keywords": ["victoire", "LightSaber", "widget"],
+    "homepage": "http://victoire.io",
+    "license": "MIT",
+    "require": {
+        "php"                      : ">=5.3.3",
+        "symfony/framework-bundle" : "~2.3",
+        "victoire/victoire"        : "dev-master"    },
+    "autoload": {
+        "psr-0": { "Victoire\\Widget\\LightSaberBundle": "" }
+    },
+    "minimum-stability": "dev",
+    "target-dir": "Victoire/Widget/LightSaberBundle"
+}
