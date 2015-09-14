@@ -85,7 +85,6 @@ class ViewHelper
     /**
      * @param View $view, the view to translatate
      * @param $templatename the new name of the view
-     * @param $loopindex the current loop of iteration in recursion
      * @param $locale the target locale to translate view
      *
      * this methods allow you to add a translation to any view
@@ -130,6 +129,7 @@ class ViewHelper
     {
         $clonedView = clone $view;
         $this->em->refresh($view);
+        $clonedView->setSlug(null);
         $widgetMapClone = $clonedView->getWidgetMap(false);
         $arrayMapOfWidgetMap = array();
         if (null !== $templateName) {

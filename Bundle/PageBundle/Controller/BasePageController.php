@@ -185,7 +185,6 @@ class BasePageController extends Controller
      */
     protected function translateAction(Request $request, BasePage $page)
     {
-        $entityManager = $this->getDoctrine()->getManager();
         $form = $this->createForm($this->getPageTranslateType(), $page);
 
         $businessProperties = array();

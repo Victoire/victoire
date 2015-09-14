@@ -37,11 +37,7 @@ class PageTranslateType extends AbstractType
         $builder
             ->add('name', null, array(
                     'label' => 'form.view.type.name.label',
-                ))
-            ->add('slug', null, array(
-                    'label' => 'form.page.type.slug.label'
-                ))
-        ;
+                ));
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
             $view = $event->getData();
