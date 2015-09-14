@@ -22,8 +22,12 @@ class ViewHelper
      * @var ViewReferenceProvider
      */
     private $viewReferenceProvider;
+
     /**
      * @var ViewReferenceHelper
+     *
+     * this methods allow you to add a translation to any view
+     * recursively to its subview
      */
     private $viewReferenceHelper;
 
@@ -40,12 +44,13 @@ class ViewHelper
         EntityManager $entityManager,
         ViewReferenceProvider $viewReferenceProvider,
         ViewReferenceHelper $viewReferenceHelper
-    ) {
+    )
+    {
         $this->entityManager = $entityManager;
         $this->viewReferenceProvider = $viewReferenceProvider;
         $this->viewReferenceHelper = $viewReferenceHelper;
     }
-
+    
     /**
      * @return WebViewInterface[]
      */
