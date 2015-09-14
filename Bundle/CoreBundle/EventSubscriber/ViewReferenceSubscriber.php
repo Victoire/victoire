@@ -38,22 +38,16 @@ class ViewReferenceSubscriber implements EventSubscriber
 {
     protected $urlBuilder;
     protected $viewCacheHelper;
-    protected $widgetMapBuilder;
-    protected $widgetMapHelper;
     protected $container;
 
     /**
      * @param UrlBuilder $urlBuilder
      * @param ViewCacheHelper $viewCacheHelper
-     * @param WidgetMapBuilder $widgetMapBuilder
-     * @param WidgetMapHelper $widgetMapHelper
      */
-    public function __construct(UrlBuilder $urlBuilder, ViewCacheHelper $viewCacheHelper, WidgetMapBuilder $widgetMapBuilder, WidgetMapHelper $widgetMapHelper, ContainerInterface $container)
+    public function __construct(UrlBuilder $urlBuilder, ViewCacheHelper $viewCacheHelper, ContainerInterface $container)
     {
         $this->urlBuilder = $urlBuilder;
         $this->viewCacheHelper = $viewCacheHelper;
-        $this->widgetMapBuilder = $widgetMapBuilder;
-        $this->widgetMapHelper = $widgetMapHelper;
         $this->container = $container;
     }
     /**

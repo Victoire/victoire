@@ -134,8 +134,6 @@ services:
         arguments:
             - "@victoire_core.url_builder"
             - "@victoire_core.view_cache_helper"
-            - "@victoire_widget_map.builder"
-            - "@victoire_widget_map.helper"
             - "@service_container"
         tags:
             - { name: doctrine.event_subscriber, connection: default }
