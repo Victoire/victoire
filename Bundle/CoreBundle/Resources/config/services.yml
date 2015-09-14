@@ -134,7 +134,7 @@ services:
         arguments:
             - "@victoire_core.url_builder"
             - "@victoire_core.view_cache_helper"
-            - "@service_container"
+            - "@victoire_business_page.business_page_builder"
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
@@ -168,6 +168,10 @@ services:
         arguments:
             - "@victoire_business_entity.cache_reader"
             - "@victoire_core.cache_builder"
+
+    victoire_core.helper.queriable_business_entity_helper:
+        class: Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper
+        parent: victoire_core.helper.business_entity_helper
         calls:
             - [setEntityManager, ["@doctrine.orm.entity_manager"]]
 

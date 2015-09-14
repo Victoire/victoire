@@ -3,6 +3,7 @@ namespace Victoire\Bundle\BusinessEntityBundle\Helper;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
 use Victoire\Bundle\BusinessEntityBundle\Reader\BusinessEntityCacheReader;
@@ -13,7 +14,7 @@ use Victoire\Bundle\WidgetBundle\Entity\Widget;
 /**
  * The BusinessEntityHelper
  *
- * ref: victoire_core.helper.business_entity_helper
+ * ref: victoire_core.helper.queriable_business_entity_helper
  */
 class BusinessEntityHelper
 {
@@ -134,7 +135,7 @@ class BusinessEntityHelper
      *
      * @return Entity
      */
-    public function findEntityByBusinessEntityAndAttribute(BusinessEntity $businessEntity, $attributeName, $attributeValue)
+    protected function findEntityByBusinessEntityAndAttribute(BusinessEntity $businessEntity, $attributeName, $attributeValue)
     {
         //retrieve the class of the business entity
         $class = $businessEntity->getClass();
@@ -163,6 +164,10 @@ class BusinessEntityHelper
      */
     public function getEntityByPageAndBusinessIdentifier(BusinessTemplate $page, $entityIdentifier, $attributeName)
     {
+
+        if (!$this->entityManager) {
+            throw new \Exception('EntityManager not defined, you should use the "victoire_core.helper.queriable_business_entity_helper" service');
+        }
         $entity = null;
 
         $businessEntityId = $page->getBusinessEntityId();
@@ -219,6 +224,9 @@ class BusinessEntityHelper
 
     public function getByBusinessEntityAndId(BusinessEntity $businessEntity, $id)
     {
+        if (!$this->entityManager) {
+            throw new \Exception('EntityManager not defined, you should use the "victoire_core.helper.queriable_business_entity_helper" service');
+        }
         return $this->entityManager->getRepository($businessEntity->getClass())->findOneById($id);
     }
 
