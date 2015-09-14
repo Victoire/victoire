@@ -1,0 +1,11 @@
+victoire_core:
+    widgets:
+        LightSaber:
+            class: "Victoire\\Widget\\LightSaberBundle\\Entity\\WidgetLightSaber"
+            name: LightSaber
+            
+jms_translation:
+    configs:
+        victoire_lightsaber_bundle:
+            dirs: ["@VictoireLightSaberBundle"]
+            output_dir: "@VictoireLightSaberBundle/Resources/translations"

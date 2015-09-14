@@ -1,0 +1,15 @@
+services:
+    victoire_core.widget_lightsaber_content_resolver:
+        parent: victoire_widget.base_widget_content_resolver
+        tags:
+            - { name: victoire_widget.widget_content_resolver, alias: LightSaber }
+
+    #alias to the entity
+    victoire.widget.lightsaber:
+        class: Victoire\Widget\LightSaberBundle\Entity\WidgetLightSaber
+
+    #alias to the form
+    victoire.widget.form.lightsaber:
+        class: Victoire\Widget\LightSaberBundle\Form\WidgetLightSaberType
+        tags:
+            - { name: form.type , alias: victoire_widget_form_lightsaber }

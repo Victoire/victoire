@@ -7,11 +7,13 @@ use Doctrine\Common\Annotations\Reader;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver as DoctrineAnnotationDriver;
 use Doctrine\ORM\Mapping\MappingException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Victoire\Bundle\BusinessEntityBundle\Entity\ReceiverProperty;
 use Victoire\Bundle\BusinessEntityBundle\Event\BusinessEntityAnnotationEvent;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\CoreBundle\Annotations\BusinessEntity;
 use Victoire\Bundle\CoreBundle\Annotations\BusinessProperty;
-use Victoire\Bundle\CoreBundle\Annotations\ReceiverProperty;
+use Victoire\Bundle\CoreBundle\Annotations\ReceiverProperty as ReceiverPropertyAnnotation;
 use Victoire\Bundle\WidgetBundle\Event\WidgetAnnotationEvent;
 use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
 
@@ -197,29 +199,50 @@ class AnnotationDriver extends DoctrineAnnotationDriver
     }
 
     /**
-     * load receiver properties from ReflectionClass
+     * Load receiver properties and NotBlank constraints from ReflectionClass
      *
-     * @return Array
-     **/
+     * @param \ReflectionClass $class
+     * @return array
+     * @throws AnnotationException
+     */
     protected function loadReceiverProperties(\ReflectionClass $class)
     {
-        $receiverProperties = array();
+        $receiverPropertiesTypes = array();
         $properties = $class->getProperties();
+
+        //Store receiver properties
         foreach ($properties as $property) {
             $annotations = $this->reader->getPropertyAnnotations($property);
             foreach ($annotations as $key => $annotationObj) {
-                if ($annotationObj instanceof ReceiverProperty && !in_array($class, $receiverProperties)) {
+                if ($annotationObj instanceof ReceiverPropertyAnnotation && !in_array($class, $receiverPropertiesTypes)) {
                     if (!$annotations[$key]->getTypes()) {
                         $message = $class->name.':$'.$property->name.'" field';
                         throw AnnotationException::requiredError('type', 'BusinessProperty annotation', $message, 'array or string');
                     }
                     foreach ($annotations[$key]->getTypes() as $type) {
-                        $receiverProperties[$type][] = $property->name;
+                        $receiverProperty = new ReceiverProperty();
+                        $receiverProperty->setFieldName($property->name);
+                        $receiverPropertiesTypes[$type][] = $receiverProperty;
                     }
                 }
             }
         }
 
-        return $receiverProperties;
+        //Set receiver properties as required if necessary
+        foreach($receiverPropertiesTypes as $type => $receiverProperties) {
+            /* @var ReceiverProperty[] $receiverProperties */
+            foreach($receiverProperties as $receiverProperty) {
+                $receiverPropertyName = $receiverProperty->getFieldName();
+                $refProperty = $class->getProperty($receiverPropertyName);
+                $annotations = $this->reader->getPropertyAnnotations($refProperty);
+                foreach ($annotations as $key => $annotationObj) {
+                    if ($annotationObj instanceof NotBlank) {
+                        $receiverProperty->setRequired(true);
+                    }
+                }
+            }
+        }
+
+        return $receiverPropertiesTypes;
     }
 }

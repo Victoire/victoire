@@ -5,8 +5,6 @@ services:
         arguments:
             - @victoire_business_entity.cache_reader
             - @translator
-            - @form.registry
-            - %victoire_core.widgets%
 
 #  ==================  MENU ================== #
     victoire_core.admin_menu_builder:
