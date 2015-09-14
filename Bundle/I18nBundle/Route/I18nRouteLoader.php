@@ -41,9 +41,11 @@ class I18nRouteLoader extends BaseRouteLoader
             foreach ($this->localeResolver->getDomainConfig() as $_domain => $_locale) {
                 $_collection = parent::load($resource, $type);
                 foreach ($_collection->all() as $_name => $_route) {
-                    $_route->addDefaults(array('_locale'=> $_locale));
-                    $_route->setHost($_domain);
-                    $collection->add($_locale."__".$this->urlizer->urlize($_domain, "_")."__".$_name, $_route);
+                    if (!preg_match('/^\/victoire-dcms/', $_route->getPath())) {
+                        $_route->addDefaults(array('_locale'=> $_locale));
+                        $_route->setHost($_domain);
+                        $collection->add($_locale."__".$this->urlizer->urlize($_domain, "_")."__".$_name, $_route);
+                    }
                 }
             }
         }
