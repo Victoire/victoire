@@ -18,6 +18,7 @@ class QueryHelper
     protected $businessEntityHelper = null;
     protected $currentView;
 
+
     /**
      * Constructor
      *
@@ -25,9 +26,8 @@ class QueryHelper
      * @param BusinessEntityHelper $businessEntityHelper
      * @param CurrentViewHelper    $currentView
      */
-    public function __construct(EntityManager $entityManager, BusinessEntityHelper $businessEntityHelper, CurrentViewHelper $currentView)
+    public function __construct(BusinessEntityHelper $businessEntityHelper, CurrentViewHelper $currentView)
     {
-        $this->entityManager = $entityManager;
         $this->businessEntityHelper = $businessEntityHelper;
         $this->currentView = $currentView;
     }
@@ -42,11 +42,11 @@ class QueryHelper
      *
      * @throws Exception
      */
-    public function getQueryBuilder($containerEntity)
+    public function getQueryBuilder($containerEntity, EntityManager $em = null)
     {
-        //services
-        $entityManager = $this->entityManager;
-
+        if (!$em) {
+            $em = $this->getEntityManager();
+        }
         if ($containerEntity === null) {
             throw new \Exception('The container entity parameter must not be null.');
         }
@@ -73,7 +73,7 @@ class QueryHelper
 
         $businessClass = $businessEntity->getClass();
 
-        $itemsQueryBuilder = $entityManager
+        $itemsQueryBuilder = $em
             ->createQueryBuilder()
             ->select('main_item')
             ->from($businessClass, 'main_item');
@@ -109,11 +109,12 @@ class QueryHelper
      *
      * @return QueryBuilder The QB to list of objects
      */
-    public function buildWithSubQuery($containerEntity, QueryBuilder $itemsQueryBuilder)
+    public function buildWithSubQuery($containerEntity, QueryBuilder $itemsQueryBuilder, EntityManager $em = null)
     {
-        //services
-        $entityManager = $this->entityManager;
 
+        if (!$em) {
+            $em = $this->getEntityManager();
+        }
         //test the container entity
         if ($containerEntity === null) {
             throw new \Exception('The container entity parameter must not be null.');
@@ -128,7 +129,7 @@ class QueryHelper
         $orderBy = json_decode($containerEntity->getOrderBy(), true);
         if ($query !== '' && $query !== null) {
 
-            $subQuery = $this->entityManager->createQueryBuilder()
+            $subQuery = $em->createQueryBuilder()
                                 ->select('item.id')
                                 ->from($itemsQueryBuilder->getRootEntities()[0], 'item');
 
@@ -156,7 +157,7 @@ class QueryHelper
         if ($currentView() && $currentView() instanceof BusinessPage && null !== $currentEntity = $currentView()->getBusinessEntity()) {
 
             // NEW
-            $metadatas = $this->entityManager->getClassMetadata(get_class($currentEntity));
+            $metadatas = $em->getClassMetadata(get_class($currentEntity));
             foreach ($metadatas->fieldMappings as $fieldName => $field) {
                 if (strpos($query, ":".$fieldName) !== false) {
                     $itemsQueryBuilder->setParameter($fieldName, $metadatas->getFieldValue($currentEntity, $fieldName));
@@ -174,5 +175,21 @@ class QueryHelper
         }
 
         return $itemsQueryBuilder;
+    }
+
+    /**
+     * @return EntityManager|null
+     */
+    public function getEntityManager()
+    {
+        return $this->entityManager;
+    }
+
+    /**
+     * @param EntityManager|null $entityManager
+     */
+    public function setEntityManager($entityManager)
+    {
+        $this->entityManager = $entityManager;
     }
 }

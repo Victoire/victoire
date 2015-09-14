@@ -119,7 +119,7 @@ abstract class View
      * @ORM\OneToMany(targetEntity="View", mappedBy="parent")
      * @ORM\OrderBy({"lft" = "ASC"})
      */
-    protected $children;
+    protected $children = array();
 
     /**
      * This relation is dynamicly added by PageSubscriber

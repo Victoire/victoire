@@ -14,16 +14,6 @@ use Victoire\Bundle\PageBundle\Repository\PageRepository;
  */
 class UrlBuilder
 {
-    protected $viewCacheHelper;
-
-    /**
-     * Constructor
-     * @param Router         $router
-     */
-    public function __construct(ViewCacheHelper $viewCacheHelper)
-    {
-        $this->viewCacheHelper = $viewCacheHelper;
-    }
 
 
 

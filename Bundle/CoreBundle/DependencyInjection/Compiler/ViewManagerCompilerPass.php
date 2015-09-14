@@ -31,7 +31,7 @@ class ViewManagerCompilerPass implements CompilerPassInterface
                     throw new InvalidConfigurationException("View class attribute is not defined for " . $id);
                 }
                 $definition->addMethodCall(
-                    'addViewManager',
+                    'addViewReferenceBuilder',
                     array(new Reference($id), $attributes['view'])
                 );
             }

@@ -16,7 +16,7 @@ class VirtualBusinessPageReferenceBuilder extends BaseReferenceBuilder implement
 {
     public function buildReference(VirtualBusinessPage $view){
 
-        $referenceId = $this->getViewCacheHelper()->getViewReferenceId($view);
+        $referenceId = $this->viewReferenceHelper->getViewReferenceId($view);
         $viewsReference[] = array(
             'id'              => $referenceId,
             'locale'          => $view->getLocale(),
@@ -24,8 +24,8 @@ class VirtualBusinessPageReferenceBuilder extends BaseReferenceBuilder implement
             'url'             => $view->getUrl(),
             'name'            => $view->getName(),
             'entityId'        => $view->getBusinessEntity()->getId(),
-            'entityNamespace' => $this->getEntityManager()->getClassMetadata(get_class($view->getBusinessEntity()))->name,
-            'viewNamespace'   => $this->getEntityManager()->getClassMetadata(get_class($view))->name,
+            'entityNamespace' => get_class($view->getBusinessEntity()),
+            'viewNamespace'   => get_class($view),
             'type'            => $view::TYPE,
             'view'            => $view,
         );

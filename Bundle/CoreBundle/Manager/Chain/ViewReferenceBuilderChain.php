@@ -13,31 +13,31 @@ use Victoire\Bundle\CoreBundle\Manager\Interfaces\ReferenceBuilderInterface;
  */
 class ViewReferenceBuilderChain
 {
-    private $viewsManagers;
+    private $viewsReferenceBuilders;
 
     public function __construct()
     {
-        $this->viewsManagers = array();
+        $this->viewsReferenceBuilders = array();
     }
 
     /**
      * add a view Manager
      * @param ReferenceBuilderInterface $viewManager
      */
-    public function addViewManager(BaseReferenceBuilder $viewManager, $view)
+    public function addViewReferenceBuilder(BaseReferenceBuilder $viewManager, $view)
     {
-        $this->viewsManagers[$view] = $viewManager;
+        $this->viewsReferenceBuilders[$view] = $viewManager;
     }
 
     /**
      * @param View $view
      * @return ReferenceBuilderInterface
      */
-    public function getViewManager(View $view)
+    public function getViewReferenceBuilder(View $view)
     {
-        if(array_key_exists($viewClass = get_class($view), $this->viewsManagers))
+        if(array_key_exists($viewClass = get_class($view), $this->viewsReferenceBuilders))
         {
-            return $this->viewsManagers[$viewClass];
+            return $this->viewsReferenceBuilders[$viewClass];
         }
         throw new ServiceNotFoundException('No view manager found for ' . $viewClass);
     }

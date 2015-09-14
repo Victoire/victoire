@@ -5,15 +5,11 @@ namespace Victoire\Bundle\CoreBundle\Helper;
 use Doctrine\Orm\EntityManager;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter as BETParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
-use Victoire\Bundle\BusinessPageBundle\Chain\BusinessTemplateChain;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
-use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
-use Victoire\Bundle\CoreBundle\Entity\Route;
+use Victoire\Bundle\CoreBundle\Builder\ViewReferenceBuilder;
 use Victoire\Bundle\CoreBundle\Entity\View;
-use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
-use Victoire\Bundle\CoreBundle\Manager\Chain\ViewReferenceBuilderChain;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
-use Victoire\Widget\LayoutBundle\Entity\WidgetLayout;
+use Victoire\Bundle\CoreBundle\Helper\ViewReferenceHelper;
 
 /**
  * Page helper
@@ -23,36 +19,31 @@ class ViewHelper
 {
     protected $parameterConverter;
     protected $businessEntityHelper;
-    protected $BusinessPageHelper;
     protected $em;
-    protected $viewCacheHelper;
-    protected $BusinessTemplateChain;
+    protected $viewReferenceBuilder;
+    protected $viewReferenceHelper;
 
     /**
      * Constructor
-     * @param BETParameterConverter    $parameterConverter
-     * @param BusinessEntityHelper     $businessEntityHelper
-     * @param BusinessPageHelper $BusinessPageHelper
-     * @param EntityManager            $entityManager
-     * @param ViewCacheHelper          $viewCacheHelper
-     * @param ViewManagerChain         $$viewManagerChain
+     * @param BETParameterConverter $parameterConverter
+     * @param BusinessEntityHelper $businessEntityHelper
+     * @param EntityManager $entityManager
+     * @param ViewReferenceBuilder $viewReferenceBuilder
+     * @param ViewReferenceHelper $viewReferenceHelper
+     * @internal param $ViewManagerChain $$viewManagerChain
      */
     public function __construct(
         BETParameterConverter $parameterConverter,
         BusinessEntityHelper $businessEntityHelper,
-        BusinessPageHelper $BusinessPageHelper,
         EntityManager $entityManager,
-        ViewCacheHelper $viewCacheHelper,
-        ViewReferenceBuilderChain $viewReferenceBuilderChain,
-        BusinessTemplateChain $BusinessTemplateChain
+        ViewReferenceBuilder $viewReferenceBuilder,
+        ViewReferenceHelper $viewReferenceHelper
     ) {
         $this->parameterConverter = $parameterConverter;
         $this->businessEntityHelper = $businessEntityHelper;
-        $this->BusinessPageHelper = $BusinessPageHelper;
         $this->em = $entityManager;
-        $this->viewCacheHelper = $viewCacheHelper;
-        $this->viewReferenceBuilderChain = $viewReferenceBuilderChain;
-        $this->BusinessTemplateChain = $BusinessTemplateChain;
+        $this->viewReferenceBuilder = $viewReferenceBuilder;
+        $this->viewReferenceHelper = $viewReferenceHelper;
     }
 
     //@todo Make it dynamic please
@@ -75,11 +66,11 @@ class ViewHelper
         $viewsReferences = array();
         foreach ($views as $view) {
             if (get_class($view) != 'Victoire\Bundle\TemplateBundle\Entity\Template') {
-                $viewsReferences = array_merge($viewsReferences, $this->buildViewReference($view));
+                $viewsReferences = array_merge($viewsReferences, $this->viewReferenceBuilder->buildViewReference($view));
             }
         }
 
-        $this->viewCacheHelper->cleanVirtualViews($viewsReferences);
+        $this->viewReferenceHelper->cleanVirtualViews($viewsReferences);
 
 
         return $viewsReferences;
@@ -94,25 +85,11 @@ class ViewHelper
     {
 
         $xml = $this->readCache();
-        $viewsReferences = $this->viewCacheHelper->convertXmlCacheToArray($xml);
+        $viewsReferences = $this->viewReferenceHelper->convertXmlCacheToArray($xml);
 
         return $viewsReferences;
     }
 
-    /**
-     * compute the viewReference relative to a View + entity
-     * @param View                $view
-     * @param array|[array] $entity
-     *
-     * @return array
-     */
-    public function buildViewReference(View $view, $entity = null)
-    {
-        $viewManager = $this->viewReferenceBuilderChain->getViewManager($view);
-        $viewReferences = $viewManager->buildReference($view, $entity);
-
-        return $viewReferences;
-    }
 
 
     /**
@@ -240,5 +217,6 @@ class ViewHelper
         $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($businessEntityId);
         $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
     }
+
 
 }

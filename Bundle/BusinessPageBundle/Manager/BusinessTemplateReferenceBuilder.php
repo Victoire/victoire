@@ -13,6 +13,7 @@ use Victoire\Bundle\BusinessPageBundle\Manager\Interfaces\BusinessTemplateRefere
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
 use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
+use Victoire\Bundle\CoreBundle\Helper\ViewReferenceHelper;
 use Victoire\Bundle\CoreBundle\Manager\BaseReferenceBuilder;
 
 /**
@@ -25,32 +26,27 @@ class BusinessTemplateReferenceBuilder extends BaseReferenceBuilder implements B
     protected $businessEntityPageHelper;
 
     public function __construct(
-        ViewCacheHelper $viewCacheHelper,
-        EntityManager $em,
+        ViewReferenceHelper $viewReferenceHelper,
         UrlBuilder $urlBuilder,
         VirtualBusinessPageReferenceBuilder $virtualBusinessPageReferenceBuilder,
-        BusinessEntityHelper $businessEntityHelper,
-        BusinessPageHelper $businessEntityPageHelper,
         BusinessPageBuilder $businessEntityPageBuilder
     )
     {
-        parent::__construct($viewCacheHelper, $em, $urlBuilder);
+        parent::__construct($viewReferenceHelper, $urlBuilder);
         $this->virtualBusinessPageReferenceBuilder = $virtualBusinessPageReferenceBuilder;
-        $this->businessEntityHelper = $businessEntityHelper;
-        $this->businessEntityPageHelper = $businessEntityPageHelper;
         $this->businessEntityPageBuilder = $businessEntityPageBuilder;
     }
 
-    public function buildReference(BusinessTemplate $view)
+    public function buildReference(BusinessTemplate $view, $entity = null, $em = null)
     {
         $viewsReferences = [];
-        $entities = $this->businessEntityPageHelper->getEntitiesAllowed($view);
+        $entities = $this->businessEntityPageHelper->getEntitiesAllowed($view, $em);
 
         // for each business entity
         foreach ($entities as $entity) {
             $currentPattern = clone $view;
             $page = $this->businessEntityPageBuilder->generateEntityPageFromPattern($currentPattern, $entity);
-            $this->businessEntityPageHelper->updatePageParametersByEntity($page, $entity);
+            $this->businessEntityPageBuilder->updatePageParametersByEntity($page, $entity);
 
             $viewsReferences = array_merge($viewsReferences, $this->virtualBusinessPageReferenceBuilder->buildReference($page));
 

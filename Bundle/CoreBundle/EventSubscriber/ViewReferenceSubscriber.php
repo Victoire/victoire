@@ -18,6 +18,7 @@ use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
 use Victoire\Bundle\BusinessPageBundle\Transformer\VirtualToBusinessPageTransformer;
+use Victoire\Bundle\CoreBundle\Builder\ViewReferenceBuilder;
 use Victoire\Bundle\CoreBundle\Cache\Builder\CacheBuilder;
 use Victoire\Bundle\CoreBundle\Entity\Route;
 use Victoire\Bundle\CoreBundle\Entity\View;
@@ -44,12 +45,15 @@ class ViewReferenceSubscriber implements EventSubscriber
     /**
      * @param UrlBuilder $urlBuilder
      * @param ViewCacheHelper $viewCacheHelper
+     * @param BusinessPageBuilder $businessPageBuilder
+     * @param ViewReferenceBuilder $viewReferenceBuilder
      */
-    public function __construct(UrlBuilder $urlBuilder, ViewCacheHelper $viewCacheHelper, BusinessPageBuilder $businessPageBuilder)
+    public function __construct(UrlBuilder $urlBuilder, ViewCacheHelper $viewCacheHelper, BusinessPageBuilder $businessPageBuilder, ViewReferenceBuilder $viewReferenceBuilder)
     {
         $this->urlBuilder = $urlBuilder;
         $this->viewCacheHelper = $viewCacheHelper;
         $this->businessPageBuilder = $businessPageBuilder;
+        $this->viewReferenceBuilder = $viewReferenceBuilder;
     }
     /**
      * bind to LoadClassMetadata method
@@ -81,12 +85,10 @@ class ViewReferenceSubscriber implements EventSubscriber
                     || array_key_exists('staticUrl', $uow->getEntityChangeSet($entity))
                     || array_key_exists('parent', $uow->getEntityChangeSet($entity)))
                 )) {
-                    error_log(get_class($entity) . $entity->getId());
                     $this->manageViewUrl($entity, $entityManager, $uow);
                 }
             }
         }
-        // @TODO ROUTE HISTORY
     }
 
     /**
@@ -110,7 +112,8 @@ class ViewReferenceSubscriber implements EventSubscriber
      */
     protected function updateCache(View $view, EntityManager $em, UnitOfWork $uow)
     {
-        $viewReferences = $this->viewCacheHelper->update($view);
+        $viewReferences = $this->viewReferenceBuilder->buildViewReference($view);
+        $viewReferences = $this->viewCacheHelper->update($viewReferences);
 
 
         foreach ($viewReferences as $key => $viewReference) {

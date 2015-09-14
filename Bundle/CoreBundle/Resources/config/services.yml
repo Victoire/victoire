@@ -98,8 +98,8 @@ services:
         arguments:
             - "%kernel.cache_dir%"
             - "@request_stack"
-        calls:
-            - [ setContainer, ["@service_container"] ]
+            - "@victoire_core.view_reference_builder"
+            - "@victoire_core.helper.view_reference_helper"
 
     victoire_core.cache_builder:
         class: Victoire\Bundle\CoreBundle\Cache\Builder\CacheBuilder
@@ -135,6 +135,7 @@ services:
             - "@victoire_core.url_builder"
             - "@victoire_core.view_cache_helper"
             - "@victoire_business_page.business_page_builder"
+            - "@victoire_core.view_reference_builder"
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
@@ -193,11 +194,13 @@ services:
         arguments:
             - "@victoire_business_entity.converter.parameter_converter"
             - "@victoire_core.helper.business_entity_helper"
-            - "@victoire_business_page.business_page_helper"
             - "@doctrine.orm.entity_manager"
-            - "@victoire_core.view_cache_helper"
+            - "@victoire_core.view_reference_builder"
+            - "@victoire_core.helper.view_reference_helper"
+    victoire_core.view_reference_builder:
+        class: Victoire\Bundle\CoreBundle\Builder\ViewReferenceBuilder
+        arguments:
             - "@victoire_core.chain.view_reference_builder_chain"
-            - "@victoire_business_page.BusinessTemplate_chain"
 
     victoire_core.current_view:
         class: Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper
@@ -219,8 +222,6 @@ services:
 
     victoire_core.url_builder:
         class: Victoire\Bundle\CoreBundle\Helper\UrlBuilder
-        arguments:
-            - "@victoire_core.view_cache_helper"
 
 #  ==================  Chain ================== #
 
@@ -233,8 +234,7 @@ services:
         class: Victoire\Bundle\CoreBundle\Manager\BaseReferenceBuilder
         abstract: true
         arguments:
-            - @victoire_core.view_cache_helper
-            - @doctrine.orm.entity_manager
+            - @victoire_core.helper.view_reference_helper
             - @victoire_core.url_builder
 
     victoire_core.manager.page_reference_builder:
@@ -242,3 +242,6 @@ services:
         parent: victoire_core.manager.base_view_manager
         tags:
             - { name: victoire_core.view_manager, view: Victoire\Bundle\PageBundle\Entity\Page }
+
+    victoire_core.helper.view_reference_helper:
+        class: Victoire\Bundle\CoreBundle\Helper\ViewReferenceHelper

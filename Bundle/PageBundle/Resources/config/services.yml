@@ -29,7 +29,7 @@ services:
             - "@victoire_widget_map.builder"
             - "@victoire_core.url_builder"
             - "@victoire_business_page.business_page_builder"
-            - "@victoire_business_page.business_page_helper"
+            - "@victoire_core.view_cache_helper"
 
     victoire_page.matcher.url_matcher:
         class: Victoire\Bundle\PageBundle\Matcher\UrlMatcher

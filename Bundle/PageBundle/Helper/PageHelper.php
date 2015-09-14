@@ -12,7 +12,7 @@ use Victoire\Bundle\BusinessPageBundle\Builder\BusinessPageBuilder;
 use Victoire\Bundle\BusinessPageBundle\Chain\BusinessTemplateChain;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
-use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
+use Victoire\Bundle\CoreBundle\Builder\ViewReferenceBuilder;
 use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
@@ -28,6 +28,7 @@ use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter as BETParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
+use Victoire\Bundle\CoreBundle\Helper\ViewReferenceHelper;
 
 /**
  * Page helper
@@ -35,7 +36,6 @@ use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
  */
 class PageHelper extends ViewHelper
 {
-    protected $bepHelper = null;
     protected $businessPageBuilder;
     protected $entityManager; // @doctrine.orm.entity_manager'
     protected $currentViewHelper; // @victoire_core.current_view
@@ -48,6 +48,7 @@ class PageHelper extends ViewHelper
     protected $widgetMapBuilder; // @victoire_widget_map.builder
     protected $viewReferenceBuilderChain; // @victoire_core.chain.view_reference_builder_chain
     protected $urlBuilder; // @victoire_core.url_builder
+    protected $viewCacheHelper;
 
     protected $pageParameters = array(
         'name',
@@ -60,7 +61,6 @@ class PageHelper extends ViewHelper
     /**
      * @param BETParameterConverter $parameterConverter
      * @param BusinessEntityHelper $businessEntityHelper
-     * @param BusinessPageHelper $bepHelper
      * @param EntityManager $entityManager
      * @param ViewCacheHelper $viewCacheHelper
      * @param ViewReferenceBuilderChain $viewReferenceBuilderChain
@@ -78,11 +78,9 @@ class PageHelper extends ViewHelper
     public function __construct(
         BETParameterConverter $parameterConverter,
         BusinessEntityHelper $businessEntityHelper,
-        BusinessPageHelper $bepHelper,
         EntityManager $entityManager,
-        ViewCacheHelper $viewCacheHelper,
-        ViewReferenceBuilderChain $viewReferenceBuilderChain,
-        BusinessTemplateChain $BusinessTemplateChain,
+        ViewReferenceBuilder $viewReferenceBuilder,
+        ViewReferenceHelper $viewReferenceHelper,
         CurrentViewHelper $currentViewHelper,
         EventDispatcherInterface $eventDispatcher,
         TemplateMapper $victoireTemplating,
@@ -92,10 +90,10 @@ class PageHelper extends ViewHelper
         AuthorizationChecker $authorization_checker,
         WidgetMapBuilder $widgetMapBuilder,
         UrlBuilder $urlBuilder,
-        BusinessPageBuilder $businessPageBuilder
+        BusinessPageBuilder $businessPageBuilder,
+        ViewCacheHelper $viewCacheHelper
     ) {
-        parent::__construct($parameterConverter, $businessEntityHelper, $bepHelper, $entityManager, $viewCacheHelper, $viewReferenceBuilderChain, $BusinessTemplateChain);
-        $this->bepHelper = $bepHelper;
+        parent::__construct($parameterConverter, $businessEntityHelper, $entityManager, $viewReferenceBuilder, $viewReferenceHelper);
         $this->businessPageBuilder = $businessPageBuilder;
         $this->entityManager = $entityManager;
         $this->currentViewHelper = $currentViewHelper;

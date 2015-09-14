@@ -14,9 +14,8 @@ class BusinessPageReferenceBuilder extends BaseReferenceBuilder implements Busin
 {
     public function buildReference(BusinessPage $view)
     {
-        error_log($this->urlBuilder->buildUrl($view));
         $view->setUrl($this->urlBuilder->buildUrl($view));
-        $referenceId = $this->getViewCacheHelper()->getViewReferenceId($view);
+        $referenceId = $this->viewReferenceHelper->getViewReferenceId($view);
         $viewsReferences[] = array(
             'id'              => $referenceId,
             'locale'          => $view->getLocale(),
@@ -25,8 +24,8 @@ class BusinessPageReferenceBuilder extends BaseReferenceBuilder implements Busin
             'url'             => $view->getUrl(),
             'name'            => $view->getName(),
             'entityId'        => $view->getBusinessEntity()->getId(),
-            'entityNamespace' => $this->getEntityManager()->getClassMetadata(get_class($view->getBusinessEntity()))->name,
-            'viewNamespace'   => $this->getEntityManager()->getClassMetadata(get_class($view))->name,
+            'entityNamespace' => get_class($view->getBusinessEntity()),
+            'viewNamespace'   => get_class($view),
             'type'            => $view::TYPE,
             'view'            => $view,
         );

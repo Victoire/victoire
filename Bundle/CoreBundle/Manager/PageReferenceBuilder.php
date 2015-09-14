@@ -12,14 +12,14 @@ class PageReferenceBuilder extends BaseReferenceBuilder implements PageReference
 {
     public function buildReference(Page $view){
         $view->setUrl($this->urlBuilder->buildUrl($view));
-        $referenceId = $this->viewCacheHelper->getViewReferenceId($view);
+        $referenceId = $this->viewReferenceHelper->getViewReferenceId($view);
         $viewsReference[] = array(
             'id'              => $referenceId,
             'locale'          => $view->getLocale(),
             'viewId'          => $view->getId(),
             'url'             => $view->getUrl(),
             'name'            => $view->getName(),
-            'viewNamespace'   => $this->em->getClassMetadata(get_class($view))->name,
+            'viewNamespace'   => get_class($view),
             'view'            => $view,
         );
 

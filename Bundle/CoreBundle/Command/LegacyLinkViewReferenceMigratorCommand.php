@@ -42,7 +42,7 @@ class LegacyLinkViewReferenceMigratorCommand extends ContainerAwareCommand
         foreach ($links as $link) {
             $progress->advance();
             if ($link->getLinkType() == 'page' && $page = $link->getPage()) {
-                $viewReference = $this->getContainer()->get('victoire_core.viewCacheHelper')->getViewReferenceId($page);
+                $viewReference = $this->getContainer()->get('victoire_core.helper.view_reference_helper')->getViewReferenceId($page);
                 $link->setViewReference($viewReference);
                 $link->setLinkType('viewReference');
             }
