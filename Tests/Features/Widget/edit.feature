@@ -58,10 +58,6 @@ Feature: Edit a widget
         Then I should see "Victoire !"
         And I should see "Le Côté obscure de la force"
 
-    Scenario: I can not edit widget with not blank receiver property if an entity doesn't have this property
-        When I select "LightSaber" from the "1" select of "content" slot
-        Then I should not see "Créer"
-
     Scenario: I can edit widget for an entity with missing receiver property but field is not display
         When I select "Force" from the "1" select of "content" slot
         Then I should see "Créer"
