@@ -28,19 +28,20 @@ class WidgetForce extends Widget
      */
     public function __toString()
     {
-	return 'Force #'.$this->id;
+        return 'Force #' . $this->id;
     }
 
     /**
      * Set side
      *
-     * @param string $side
+     * @param $side
+     * @return $this
      */
     public function setSide($side)
     {
-	$this->side = $side;
+        $this->side = $side;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -50,6 +51,6 @@ class WidgetForce extends Widget
      */
     public function getSide()
     {
-	return $this->side;
+        return $this->side;
     }
 }
