@@ -130,6 +130,10 @@
         <source>form.widget.tab.character.label</source>
         <target>Personnages</target>
       </trans-unit>
+      <trans-unit id="30" resname="form.widget.tab.spaceship.label">
+        <source>form.widget.tab.spaceship.label</source>
+        <target>Vaisseaux</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

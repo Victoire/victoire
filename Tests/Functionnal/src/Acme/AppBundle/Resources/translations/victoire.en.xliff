@@ -122,6 +122,14 @@
         <source>acme.app.jedi.form.button.delete</source>
         <target>Delete</target>
       </trans-unit>
+      <trans-unit id="29" resname="form.widget.tab.character.label">
+        <source>form.widget.tab.character.label</source>
+        <target>Characters</target>
+      </trans-unit>
+      <trans-unit id="30" resname="form.widget.tab.spaceship.label">
+        <source>form.widget.tab.spaceship.label</source>
+        <target>Spaceships</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
