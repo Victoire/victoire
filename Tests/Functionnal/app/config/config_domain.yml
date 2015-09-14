@@ -8,5 +8,5 @@ victoire_i18n:
         en: en
     locale_pattern: domain
     locale_pattern_table:
-        fr.victoire.dev: fr
-        en.victoire.dev: en
+        fr.victoire.io: fr
+        en.victoire.io: en

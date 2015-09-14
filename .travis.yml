@@ -6,8 +6,8 @@ php:
   - 5.6
 
 hosts:
-  - fr.victoire.dev
-  - en.victoire.dev
+  - fr.victoire.io
+  - en.victoire.io
 
 before_script:
   - phpenv config-add travis.php.ini

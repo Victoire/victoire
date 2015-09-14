@@ -27,6 +27,7 @@ framework:
     trusted_proxies: ~
     session:
         handler_id:  ~
+        cookie_domain: .victoire.io
     fragments:       ~
     http_method_override: true
     test: ~
