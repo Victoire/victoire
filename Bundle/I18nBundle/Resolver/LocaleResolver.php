@@ -17,6 +17,7 @@ class LocaleResolver
     protected $localeDomainConfig;
     protected $availableLocales;
     public $defaultLocale;
+    public $defaultDomain;
 
     /**
      * Constructor.
@@ -32,6 +33,13 @@ class LocaleResolver
         $this->localeDomainConfig = $localeDomainConfig;
         $this->defaultLocale = $defaultLocale;
         $this->availableLocales = $availableLocales;
+
+        foreach ($this->localeDomainConfig as $_domain => $_locale) {
+            if ($_locale == $this->defaultLocale) {
+                $this->defaultDomain = $_domain;
+                break;
+            }
+        }
     }
 
     /**
