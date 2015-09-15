@@ -161,6 +161,12 @@ services:
         tags:
             - { name: victoire_core.view_manager, view: Victoire\Bundle\BlogBundle\Entity\Blog }
 
+    victoire_blog.manager.article_template_reference_builder:
+        class: Victoire\Bundle\BlogBundle\Manager\ArticleTemplateReferenceBuilder
+        parent: victoire_core.manager.page_reference_builder
+        tags:
+            - { name: victoire_core.view_manager, view: Victoire\Bundle\BlogBundle\Entity\ArticleTemplate }
+
     victoire_blog.articleTemplate:
         class: Victoire\Bundle\BlogBundle\Entity\ArticleTemplate
         tags:
