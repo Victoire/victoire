@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\BusinessPageBundle\Manager;
 
+use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Manager\Interfaces\BusinessPageReferenceBuilderInterface;
 use Victoire\Bundle\CoreBundle\Entity\View;
@@ -10,9 +11,9 @@ use Victoire\Bundle\CoreBundle\Manager\BaseReferenceBuilder;
 /**
 * BusinessPageReferenceBuilder
 */
-class BusinessPageReferenceBuilder extends BaseReferenceBuilder implements BusinessPageReferenceBuilderInterface
+class BusinessPageReferenceBuilder extends BaseReferenceBuilder
 {
-    public function buildReference(BusinessPage $view)
+    public function buildReference(View $view, EntityManager $em)
     {
         $view->setUrl($this->urlBuilder->buildUrl($view));
         $referenceId = $this->viewReferenceHelper->getViewReferenceId($view);

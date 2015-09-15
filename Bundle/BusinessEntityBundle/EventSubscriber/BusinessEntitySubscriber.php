@@ -5,6 +5,7 @@ namespace Victoire\Bundle\BusinessEntityBundle\EventSubscriber;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Symfony\Component\DependencyInjection\Container;
+use Victoire\Bundle\BlogBundle\Entity\Article;
 use Victoire\Bundle\BusinessPageBundle\Repository\BusinessPageRepository;
 
 class BusinessEntitySubscriber implements EventSubscriber
@@ -90,11 +91,11 @@ class BusinessEntitySubscriber implements EventSubscriber
                     $entityManager->persist($businessPage);
                     $entityManager->flush();
 
-                    $viewReferences = $this->container->get('victoire_core.view_reference_builder')->buildViewReference($businessPage, null, $entityManager);
+                    $viewReferences = $this->container->get('victoire_core.view_reference_builder')->buildViewReference($businessPage, $entityManager);
                     //we update the cache bor the persisted page
                     $this->container->get('victoire_core.view_cache_helper')->update($viewReferences);
                 } else {
-                    $viewReferences = $this->container->get('victoire_core.view_reference_builder')->buildViewReference($virtualBusinessPage, null, $entityManager);
+                    $viewReferences = $this->container->get('victoire_core.view_reference_builder')->buildViewReference($virtualBusinessPage, $entityManager);
                     //we update cache with the computed page
                     $this->container->get('victoire_core.view_cache_helper')->update($viewReferences);
 

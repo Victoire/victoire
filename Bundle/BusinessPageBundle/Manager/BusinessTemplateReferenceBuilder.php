@@ -19,7 +19,7 @@ use Victoire\Bundle\CoreBundle\Manager\BaseReferenceBuilder;
 /**
 * BusinessTemplateReferenceBuilder
 */
-class BusinessTemplateReferenceBuilder extends BaseReferenceBuilder implements BusinessTemplateReferenceBuilderInterface
+class BusinessTemplateReferenceBuilder extends BaseReferenceBuilder
 {
     protected $virtualBusinessPageReferenceBuilder;
     protected $businessEntityHelper;
@@ -46,7 +46,7 @@ class BusinessTemplateReferenceBuilder extends BaseReferenceBuilder implements B
         $this->businessEntityPageHelper = $businessEntityPageHelper;
     }
 
-    public function buildReference(BusinessTemplate $view, $entity = null, EntityManager $em = null)
+    public function buildReference(View $view, EntityManager $em = null)
     {
         $viewsReferences = [];
         $entities = $this->businessEntityPageHelper->getEntitiesAllowed($view, $em);
@@ -57,7 +57,7 @@ class BusinessTemplateReferenceBuilder extends BaseReferenceBuilder implements B
             $page = $this->businessEntityPageBuilder->generateEntityPageFromPattern($currentPattern, $entity);
             $this->businessEntityPageBuilder->updatePageParametersByEntity($page, $entity);
 
-            $viewsReferences = array_merge($viewsReferences, $this->virtualBusinessPageReferenceBuilder->buildReference($page));
+            $viewsReferences = array_merge($viewsReferences, $this->virtualBusinessPageReferenceBuilder->buildReference($page, $entity, $em));
 
             //I refresh this partial entity from em. If I don't do it, everytime I'll request this entity from em it'll be partially populated
             $em->refresh($entity);

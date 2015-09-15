@@ -32,10 +32,10 @@ class ViewReferenceBuilder
      *
      * @return array
      */
-    public function buildViewReference(View $view, $entity = null, EntityManager $em = null)
+    public function buildViewReference(View $view, EntityManager $em = null)
     {
         $viewManager = $this->viewReferenceBuilderChain->getViewReferenceBuilder($view);
-        $viewReferences = $viewManager->buildReference($view, $entity, $em);
+        $viewReferences = $viewManager->buildReference($view, $em);
 
         return $viewReferences;
     }

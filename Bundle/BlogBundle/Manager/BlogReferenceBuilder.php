@@ -8,7 +8,7 @@ use Victoire\Bundle\CoreBundle\Manager\BaseReferenceBuilder;
 
 class BlogReferenceBuilder extends BaseReferenceBuilder implements BlogReferenceBuilderInterface
 {
-    public function buildReference(Blog $view){
+    public function buildReference(View $view, EntityManager $em){
         $view->setUrl($this->urlBuilder->buildUrl($view));
         $referenceId = $this->viewReferenceHelper->getViewReferenceId($view);
         $viewsReference[] = array(

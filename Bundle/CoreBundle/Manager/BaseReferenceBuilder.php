@@ -3,12 +3,8 @@
 namespace Victoire\Bundle\CoreBundle\Manager;
 
 use Doctrine\ORM\EntityManager;
-use Victoire\Bundle\CoreBundle\Builder\ViewReferenceBuilder;
 use Victoire\Bundle\CoreBundle\Entity\View;
-use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
-use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
-use Doctrine\ORM\EntityManagerInterface;
 use Victoire\Bundle\CoreBundle\Helper\ViewReferenceHelper;
 
 
@@ -29,4 +25,6 @@ abstract class BaseReferenceBuilder
         $this->urlBuilder = $urlBuilder;
     }
 
+
+    public abstract function buildReference(View $view, EntityManager $em);
 }
