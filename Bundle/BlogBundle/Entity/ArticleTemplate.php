@@ -18,8 +18,8 @@ class ArticleTemplate extends BusinessTemplate
      *
      * @return string
      */
-//    public function getQuery()
-//    {
-//        return sprintf("%s main_item.pattern = %s", $this->query ? $this->query . " AND " : "WHERE ", $this->getId());
-//    }
+    public function additionnalQueryPart()
+    {
+        return sprintf("%s main_item.pattern = %s", $this->query ? $this->query . " AND " : "WHERE ", $this->getId());
+    }
 }

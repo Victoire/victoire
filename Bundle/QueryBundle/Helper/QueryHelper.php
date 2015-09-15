@@ -118,6 +118,9 @@ class QueryHelper
 
         //get the query of the container entity
         $query = $containerEntity->getQuery();
+        if (method_exists($containerEntity, 'additionnalQueryPart')) {
+            $query = $containerEntity->additionnalQueryPart();
+        }
         $orderBy = json_decode($containerEntity->getOrderBy(), true);
         if ($query !== '' && $query !== null) {
 
