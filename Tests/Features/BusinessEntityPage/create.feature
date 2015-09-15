@@ -25,7 +25,7 @@ Feature: Create business entity pages
         And I follow "Créer"
         Then I should see "La représentation métier a bien été créé"
         And I wait 5 seconds
-        And I should be on "/fr/fiche-jedi-%7B%7Bitem.slug%7D%7D"
+        And I should be on "/fr/victoire-dcms/business-template/show/5"
         Then I switch to "layout" mode
         When I select "Force" from the "1" select of "content" slot
         Then I should see "Créer"
@@ -134,7 +134,7 @@ Feature: Create business entity pages
         And I fill in "Url" with "fiche-jedi-{{item.slug}}"
         And I follow "Créer"
         Then I should see "La représentation métier a bien été créé"
-        And I should be on "/fr/fiche-jedi-%7B%7Bitem.slug%7D%7D"
+        And I should be on "/fr/victoire-dcms/business-template/show/5"
         Then I switch to "layout" mode
         When I select "Force" from the "1" select of "content" slot
         Then I should see "Créer"
