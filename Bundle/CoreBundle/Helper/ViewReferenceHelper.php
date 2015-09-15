@@ -97,13 +97,16 @@ class ViewReferenceHelper
         foreach ($viewsReferences as $key => $viewReference) {
             // If viewReference is a persisted page, we want to clean virtual BEPs
             if (!empty($viewReference['type']) && $viewReference['type'] == 'business_page') {
-                $viewsReferences = array_filter($viewsReferences, function ($_viewReference) use ($viewReference) {
-                        $cond = !($_viewReference['viewNamespace'] == 'Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage'
+
+                array_filter($viewsReferences, function ($_viewReference) use ($viewReference) {
+                        // If my current viewReference already exists as a virtualBusinessPage, I remove it from viewReferences
+                        $shouldRemove = !($_viewReference['viewNamespace'] == 'Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage'
                             && !empty($_viewReference['entityNamespace']) && $_viewReference['entityNamespace'] == $viewReference['entityNamespace']
                             && !empty($_viewReference['entityId']) && $_viewReference['entityId'] == $viewReference['entityId']
                             && !empty($_viewReference['patternId']) && $_viewReference['patternId'] == $viewReference['patternId']);
 
-                        return $cond;
+                        return $shouldRemove;
+
                     });
 
             }
