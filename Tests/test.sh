@@ -12,6 +12,8 @@ nohup php Tests/Functionnal/bin/console --env=test server:run -r vendor/symfony/
 sleep 5
 curl http://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar > selenium-server-standalone-2.45.0.jar
 nohup java -jar selenium-server-standalone-2.45.0.jar > /dev/null &
+php Tests/Functionnal/bin/console --env=test --target="Tests/Functionnal/web/js/fos_js_routes_test.js"
+php Tests/Functionnal/bin/console --env=domain --target="Tests/Functionnal/web/js/fos_js_routes_domain.js"
 phpunit --coverage-text
 
 php ./vendor/bin/behat $1

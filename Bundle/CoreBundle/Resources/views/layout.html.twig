@@ -73,7 +73,11 @@
             var locale = '{{ app.request.locale }}';
             var debug = {{ app.debug ? "true" : "false" }};
         </script>
-        <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+        {% if app.environment == "test" or app.environment == "domain" %}
+            <script src="/js/fos_js_routes_{{ app.environment }}.js"></script>
+        {% else %}
+            <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+        {% endif %}
 
         {% javascripts injector="foot, victoire-ngApp, alertify-codrops-notification" %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
