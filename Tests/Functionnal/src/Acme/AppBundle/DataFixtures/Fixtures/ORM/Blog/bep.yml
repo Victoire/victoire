@@ -1,7 +1,6 @@
 Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage:
     bep_article_i_m_your_father:
         name: "I'm your father."
-        url: "the-jedi-network/i-m-your-father"
         author: @anakin
         locale: fr
         template: @pattern_article
