@@ -50,7 +50,7 @@ class ViewHelper
         $this->viewReferenceProvider = $viewReferenceProvider;
         $this->viewReferenceHelper = $viewReferenceHelper;
     }
-    
+
     /**
      * @return WebViewInterface[]
      */
