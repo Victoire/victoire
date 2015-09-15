@@ -19,6 +19,9 @@ class VirtualBusinessPageReferenceBuilder extends BaseReferenceBuilder
     public function buildReference(View $view, EntityManager $em)
     {
 
+        if ($view->getBusinessEntity() instanceof Article) {
+            return array();
+        }
         $referenceId = $this->viewReferenceHelper->getViewReferenceId($view);
         $viewsReference[] = array(
             'id'              => $referenceId,
@@ -27,8 +30,8 @@ class VirtualBusinessPageReferenceBuilder extends BaseReferenceBuilder
             'url'             => $view->getUrl(),
             'name'            => $view->getName(),
             'entityId'        => $view->getBusinessEntity()->getId(),
-            'entityNamespace' => get_class($view->getBusinessEntity()),
-            'viewNamespace'   => get_class($view),
+            'entityNamespace' => $em->getClassMetadata(get_class($view->getBusinessEntity()))->name,
+            'viewNamespace'   => $em->getClassMetadata(get_class($view))->name,
             'type'            => $view::TYPE,
             'view'            => $view,
         );

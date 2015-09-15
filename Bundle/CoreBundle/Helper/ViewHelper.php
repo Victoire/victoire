@@ -65,7 +65,7 @@ class ViewHelper
         $views = $this->em->createQuery("SELECT v FROM VictoireCoreBundle:View v")->getResult();
         $viewsReferences = array();
         foreach ($views as $view) {
-            if ($this->em->getClassMetada(get_class($view)) != 'Victoire\Bundle\TemplateBundle\Entity\Template') {
+            if ($this->em->getClassMetadata(get_class($view)) != 'Victoire\Bundle\TemplateBundle\Entity\Template') {
                 $viewsReferences = array_merge($viewsReferences, $this->viewReferenceBuilder->buildViewReference($view, $this->em));
             }
         }
