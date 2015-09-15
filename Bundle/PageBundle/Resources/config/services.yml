@@ -32,14 +32,6 @@ services:
             - "@victoire_business_page.business_page_helper"
             - "@victoire_core.view_cache_helper"
 
-    victoire_page.matcher.url_matcher:
-        class: Victoire\Bundle\PageBundle\Matcher\UrlMatcher
-        arguments:
-            - "@doctrine.orm.entity_manager"
-            - "@victoire_business_page.business_page_helper"
-            - "@victoire_core.helper.queriable_business_entity_helper"
-
-
     ####################################################################################################################
     # Security voter
     ####################################################################################################################
