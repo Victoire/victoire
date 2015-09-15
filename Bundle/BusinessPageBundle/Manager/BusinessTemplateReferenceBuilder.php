@@ -60,7 +60,7 @@ class BusinessTemplateReferenceBuilder extends BaseReferenceBuilder implements B
             $viewsReferences = array_merge($viewsReferences, $this->virtualBusinessPageReferenceBuilder->buildReference($page));
 
             //I refresh this partial entity from em. If I don't do it, everytime I'll request this entity from em it'll be partially populated
-            $this->getEntityManager()->refresh($entity);
+            $em->refresh($entity);
         }
 
 

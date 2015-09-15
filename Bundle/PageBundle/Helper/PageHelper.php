@@ -199,7 +199,7 @@ class PageHelper extends ViewHelper
         $this->pageSeoHelper->updateSeoByEntity($page, $entity);
 
         //update the parameters of the page
-        $this->bepHelper->updatePageParametersByEntity($page, $entity);
+        $this->businessPageBuilder->updatePageParametersByEntity($page, $entity);
 
         $businessEntity = $this->businessEntityHelper->findByEntityInstance($entity);
         $entityProxy = new EntityProxy();
@@ -329,7 +329,7 @@ class PageHelper extends ViewHelper
                 throw new NotFoundHttpException('The BusinessPage for '.get_class($entity).'#'.$entity->getId().' is not visible on front.');
             }
             if (!$page->getId()) {
-                $entityAllowed = $this->bepHelper->isEntityAllowed($page->getTemplate(), $entity, $this->entityManager);
+                $entityAllowed = $this->businessPageHelper->isEntityAllowed($page->getTemplate(), $entity, $this->entityManager);
 
                 if ($entityAllowed === false) {
                     throw new NotFoundHttpException('The entity ['.$entity->getId().'] is not allowed for the page pattern ['.$page->getTemplate()->getId().']');
@@ -361,7 +361,7 @@ class PageHelper extends ViewHelper
         $newPage->setTitle($BusinessTemplate->getTitle());
 
         //update the parameters of the page
-        $this->bepHelper->updatePageParametersByEntity($newPage, $entity);
+        $this->businessPageBuilder->updatePageParametersByEntity($newPage, $entity);
 
         $businessEntity = $this->businessEntityHelper->findByEntityInstance($entity);
         $entityProxy = new EntityProxy();
