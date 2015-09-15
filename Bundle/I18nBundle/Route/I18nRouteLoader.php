@@ -28,8 +28,40 @@ class I18nRouteLoader extends BaseRouteLoader
      */
     public function load($resource, $type = null)
     {
-        $collection = parent::load($resource, $type);
+        $collection = new RouteCollection();
+        foreach ($this->localeResolver->getDomainConfig() as $_domain => $_locale) {
+            $_collection = parent::load($resource, $type);
+            foreach ($_collection->all() as $_name => $_route) {
+                /*if (!preg_match('/^\/victoire-dcms/', $_route->getPath())) {*/
+                    $_route->addDefaults(
+                        array(
+                            '_locale' => $_locale
+                        )
+                    );
+                    $_route->setHost($_domain);
+                    $collection->add($_locale."__".$this->urlizer->urlize($_domain, "_")."__".$_name, $_route);
+                /*}*/
+            }
+        }
+
+        /**
+         * Add default(fallback) route for default locale/domain
+         * needs to be after the loop
+         * */
+        $defaultCollection = parent::load($resource, $type);
+        $defaultCollection->addDefaults(array('_locale'=> $this->localeResolver->defaultLocale));
+        if ($this->localeResolver->localePattern == LocaleResolver::PATTERN_DOMAIN) {
+            $domainRegex = addslashes(implode('|', array_keys($this->localeResolver->getDomainConfig())));
+            $defaultCollection->setHost(
+                '{domain}',
+                array('domain' => $this->localeResolver->defaultDomain),
+                array('domain' => $domainRegex ? $domainRegex : '[^\.]++')
+            );
+        }
+        $collection->addCollection($defaultCollection);
+
         if ($this->localeResolver->localePattern == LocaleResolver::PATTERN_PARAMETER) {
+            $collection = parent::load($resource, $type);
             //Prefix every victoire route with the locale
             $collection->addPrefix('/{_locale}');
             $collection->addRequirements([
@@ -38,19 +70,6 @@ class I18nRouteLoader extends BaseRouteLoader
             $collection->addCollection($collection);
             //Add a redirection to the default locale homepage when empty url '/'
             $this->addHomepageRedirection($collection);
-        } elseif ($this->localeResolver->localePattern == LocaleResolver::PATTERN_DOMAIN) {
-            $collection->addDefaults(array('_locale'=> $this->localeResolver->defaultLocale));
-            $collection->addCollection($collection);
-            foreach ($this->localeResolver->getDomainConfig() as $_domain => $_locale) {
-                $_collection = parent::load($resource, $type);
-                foreach ($_collection->all() as $_name => $_route) {
-                    if (!preg_match('/^\/victoire-dcms/', $_route->getPath())) {
-                        $_route->addDefaults(array('_locale'=> $_locale));
-                        $_route->setHost($_domain);
-                        $collection->add($_locale."__".$this->urlizer->urlize($_domain, "_")."__".$_name, $_route);
-                    }
-                }
-            }
         }
 
         return $collection;
@@ -67,8 +86,8 @@ class I18nRouteLoader extends BaseRouteLoader
             '/',
             [
                 '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
-                'path'        => '/'.$this->localeResolver->defaultLocale, //@todo handle PATTERN_DOMAIN strategy
-                'permanent'   => true,
+                'path'        => '/'.$this->localeResolver->defaultLocale,
+                'permanent'   => true
             ]
         );
 
