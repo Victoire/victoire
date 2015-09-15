@@ -55,7 +55,6 @@ class BusinessEntitySubscriber implements EventSubscriber
     public function updateBusinessPagesAndRegerateCache(LifecycleEventArgs $eventArgs)
     {
         $entityManager = $eventArgs->getEntityManager();
-        $uow = $entityManager->getUnitOfWork();
         $entity = $eventArgs->getEntity();
         $businessEntity = $this->container->get('victoire_core.helper.business_entity_helper')->findByEntityInstance($entity);
 
@@ -64,32 +63,38 @@ class BusinessEntitySubscriber implements EventSubscriber
             foreach ($patterns as $pattern) {
                 /** @var BusinessPageRepository $bepRepo */
                 $bepRepo = $entityManager->getRepository('VictoireBusinessPageBundle:BusinessPage');
-                $computedPage = $this->container->get('victoire_business_page.business_page_builder')->generateEntityPageFromPattern($pattern, $entity);
+                $virtualBusinessPage = $this->container->get('victoire_business_page.business_page_builder')->generateEntityPageFromPattern($pattern, $entity);
                 // Get the BusinessPage if exists for the given entity
-                $persistedPage = $bepRepo->findPageByBusinessEntityAndPattern($pattern, $entity, $businessEntity);
+                $businessPage = $bepRepo->findPageByBusinessEntityAndPattern($pattern, $entity, $businessEntity);
                 // If there is diff between persisted BEP and computed, persist the change
+                $scheduledForRemove = false;
+                foreach ($eventArgs->getEntityManager()->getUnitOfWork()->getScheduledEntityDeletions() as $deletion) {
+                    if (get_class($deletion) == get_class($businessPage) && $deletion->getId() === $businessPage->getId()) {
+                        $scheduledForRemove = true;
+                    }
+                }
 
-                if ($persistedPage) {
-                    $oldSlug = $persistedPage->getSlug();
+                if ($businessPage && !$scheduledForRemove) {
+                    $oldSlug = $businessPage->getSlug();
                     $newSlug = $entity->getSlug();
-                    $staticUrl = $persistedPage->getStaticUrl();
+                    $staticUrl = $businessPage->getStaticUrl();
 
                     if ($staticUrl) {
                         $staticUrl = preg_replace('/'.$oldSlug.'/', $newSlug, $staticUrl);
-                        $persistedPage->setStaticUrl($staticUrl);
+                        $businessPage->setStaticUrl($staticUrl);
                     }
 
-                    $persistedPage->setSlug($computedPage->getSlug());
+                    $businessPage->setSlug($virtualBusinessPage->getSlug());
 
 
-                    $entityManager->persist($persistedPage);
+                    $entityManager->persist($businessPage);
                     $entityManager->flush();
 
-                    $viewReferences = $this->container->get('victoire_core.view_reference_builder')->buildViewReference($persistedPage, null, $entityManager);
+                    $viewReferences = $this->container->get('victoire_core.view_reference_builder')->buildViewReference($businessPage, null, $entityManager);
                     //we update the cache bor the persisted page
                     $this->container->get('victoire_core.view_cache_helper')->update($viewReferences);
                 } else {
-                    $viewReferences = $this->container->get('victoire_core.view_reference_builder')->buildViewReference($computedPage, null, $entityManager);
+                    $viewReferences = $this->container->get('victoire_core.view_reference_builder')->buildViewReference($virtualBusinessPage, null, $entityManager);
                     //we update cache with the computed page
                     $this->container->get('victoire_core.view_cache_helper')->update($viewReferences);
 
