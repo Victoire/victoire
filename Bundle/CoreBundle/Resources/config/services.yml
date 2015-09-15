@@ -98,7 +98,6 @@ services:
         arguments:
             - "%kernel.cache_dir%"
             - "@request_stack"
-            - "@victoire_core.view_reference_builder"
             - "@victoire_core.helper.view_reference_helper"
 
     victoire_core.cache_builder:

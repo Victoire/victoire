@@ -8,6 +8,7 @@ services:
         class: Victoire\Bundle\WidgetBundle\Resolver\BaseWidgetContentResolver
         calls:
             - [setQueryHelper, ["@victoire_query.query_helper"]]
+            - [setEntityManager, ["@doctrine.orm.entity_manager"]]
 
     victoire_widget.widget_helper:
         class: Victoire\Bundle\WidgetBundle\Helper\WidgetHelper

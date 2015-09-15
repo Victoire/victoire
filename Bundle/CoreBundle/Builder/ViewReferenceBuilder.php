@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\CoreBundle\Builder;
 
+use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
 use Victoire\Bundle\CoreBundle\Entity\View;
@@ -31,7 +32,7 @@ class ViewReferenceBuilder
      *
      * @return array
      */
-    public function buildViewReference(View $view, $entity = null, $em = null)
+    public function buildViewReference(View $view, $entity = null, EntityManager $em = null)
     {
         $viewManager = $this->viewReferenceBuilderChain->getViewReferenceBuilder($view);
         $viewReferences = $viewManager->buildReference($view, $entity, $em);

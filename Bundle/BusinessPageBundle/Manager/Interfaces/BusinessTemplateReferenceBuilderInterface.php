@@ -2,9 +2,9 @@
 
 namespace Victoire\Bundle\BusinessPageBundle\Manager\Interfaces;
 
+use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
-use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\CoreBundle\Manager\Interfaces\ReferenceBuilderInterface;
 
 /**
@@ -21,5 +21,5 @@ interface BusinessTemplateReferenceBuilderInterface extends ReferenceBuilderInte
      * @param BusinessPage $view
      * @return array
      */
-    public function buildReference(BusinessTemplate $view);
+    public function buildReference(BusinessTemplate $view, $entity, EntityManager $em);
 }

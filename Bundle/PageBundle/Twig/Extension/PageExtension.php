@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\PageBundle\Twig\Extension;
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
@@ -25,13 +26,15 @@ class PageExtension extends \Twig_Extension
      * @param Router $router
      * @param PageHelper $pageHelper
      * @param CurrentViewHelper $currentViewHelper
+     * @param EntityManager $entityManager
      */
-    public function __construct(BusinessPageHelper $BusinessTemplateHelper, Router $router, PageHelper $pageHelper, CurrentViewHelper $currentViewHelper)
+    public function __construct(BusinessPageHelper $BusinessTemplateHelper, Router $router, PageHelper $pageHelper, CurrentViewHelper $currentViewHelper, EntityManager $entityManager)
     {
         $this->BusinessTemplateHelper = $BusinessTemplateHelper;
         $this->router = $router;
         $this->pageHelper = $pageHelper;
         $this->currentViewHelper = $currentViewHelper;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -93,7 +96,7 @@ class PageExtension extends \Twig_Extension
             $pageHelper = $this->pageHelper;
 
             //the items allowed for the template
-            $items = $BusinessTemplateHelper->getEntitiesAllowed($BusinessTemplate);
+            $items = $BusinessTemplateHelper->getEntitiesAllowed($BusinessTemplate, $this->entityManager);
 
             //parse entities
             foreach ($items as $item) {

@@ -378,7 +378,7 @@ class BusinessTemplateController extends Controller
         //parameters for the view
         return array(
             'BusinessTemplate' => $view,
-            'items'                     => $bepHelper->getEntitiesAllowed($view),
+            'items'                     => $bepHelper->getEntitiesAllowed($view, $this->get('doctrine.orm.entity_manager')),
         );
     }
 

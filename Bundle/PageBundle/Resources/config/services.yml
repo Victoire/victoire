@@ -29,6 +29,7 @@ services:
             - "@victoire_widget_map.builder"
             - "@victoire_core.url_builder"
             - "@victoire_business_page.business_page_builder"
+            - "@victoire_business_page.business_page_helper"
             - "@victoire_core.view_cache_helper"
 
     victoire_page.matcher.url_matcher:
@@ -100,5 +101,6 @@ services:
             - "@router"
             - "@victoire_page.page_helper"
             - "@victoire_core.current_view"
+            - "@doctrine.orm.entity_manager"
         tags:
             - { name: twig.extension }

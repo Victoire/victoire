@@ -25,19 +25,28 @@ class BusinessTemplateReferenceBuilder extends BaseReferenceBuilder implements B
     protected $businessEntityHelper;
     protected $businessEntityPageHelper;
 
+    /**
+     * @param ViewReferenceHelper $viewReferenceHelper
+     * @param UrlBuilder $urlBuilder
+     * @param VirtualBusinessPageReferenceBuilder $virtualBusinessPageReferenceBuilder
+     * @param BusinessPageBuilder $businessEntityPageBuilder
+     * @param BusinessPageHelper $businessEntityPageHelper
+     */
     public function __construct(
         ViewReferenceHelper $viewReferenceHelper,
         UrlBuilder $urlBuilder,
         VirtualBusinessPageReferenceBuilder $virtualBusinessPageReferenceBuilder,
-        BusinessPageBuilder $businessEntityPageBuilder
+        BusinessPageBuilder $businessEntityPageBuilder,
+        BusinessPageHelper $businessEntityPageHelper
     )
     {
         parent::__construct($viewReferenceHelper, $urlBuilder);
         $this->virtualBusinessPageReferenceBuilder = $virtualBusinessPageReferenceBuilder;
         $this->businessEntityPageBuilder = $businessEntityPageBuilder;
+        $this->businessEntityPageHelper = $businessEntityPageHelper;
     }
 
-    public function buildReference(BusinessTemplate $view, $entity = null, $em = null)
+    public function buildReference(BusinessTemplate $view, $entity = null, EntityManager $em = null)
     {
         $viewsReferences = [];
         $entities = $this->businessEntityPageHelper->getEntitiesAllowed($view, $em);

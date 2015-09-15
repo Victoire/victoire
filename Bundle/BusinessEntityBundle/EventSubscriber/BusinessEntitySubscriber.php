@@ -85,11 +85,11 @@ class BusinessEntitySubscriber implements EventSubscriber
                     $entityManager->persist($persistedPage);
                     $entityManager->flush();
 
-                    $viewReferences = $this->container->get('victoire_core.view_reference_builder')->buildViewReference($persistedPage);
+                    $viewReferences = $this->container->get('victoire_core.view_reference_builder')->buildViewReference($persistedPage, null, $entityManager);
                     //we update the cache bor the persisted page
                     $this->container->get('victoire_core.view_cache_helper')->update($viewReferences);
                 } else {
-                    $viewReferences = $this->container->get('victoire_core.view_reference_builder')->buildViewReference($persistedPage);
+                    $viewReferences = $this->container->get('victoire_core.view_reference_builder')->buildViewReference($computedPage, null, $entityManager);
                     //we update cache with the computed page
                     $this->container->get('victoire_core.view_cache_helper')->update($viewReferences);
 

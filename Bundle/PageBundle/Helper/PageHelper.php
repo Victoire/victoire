@@ -12,6 +12,7 @@ use Victoire\Bundle\BusinessPageBundle\Builder\BusinessPageBuilder;
 use Victoire\Bundle\BusinessPageBundle\Chain\BusinessTemplateChain;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
+use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
 use Victoire\Bundle\CoreBundle\Builder\ViewReferenceBuilder;
 use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 use Victoire\Bundle\CoreBundle\Entity\View;
@@ -91,10 +92,12 @@ class PageHelper extends ViewHelper
         WidgetMapBuilder $widgetMapBuilder,
         UrlBuilder $urlBuilder,
         BusinessPageBuilder $businessPageBuilder,
+        BusinessPageHelper $businessPageHelper,
         ViewCacheHelper $viewCacheHelper
     ) {
         parent::__construct($parameterConverter, $businessEntityHelper, $entityManager, $viewReferenceBuilder, $viewReferenceHelper);
         $this->businessPageBuilder = $businessPageBuilder;
+        $this->businessPageHelper = $businessPageHelper;
         $this->entityManager = $entityManager;
         $this->currentViewHelper = $currentViewHelper;
         $this->eventDispatcher = $eventDispatcher;
@@ -326,7 +329,7 @@ class PageHelper extends ViewHelper
                 throw new NotFoundHttpException('The BusinessPage for '.get_class($entity).'#'.$entity->getId().' is not visible on front.');
             }
             if (!$page->getId()) {
-                $entityAllowed = $this->bepHelper->isEntityAllowed($page->getTemplate(), $entity);
+                $entityAllowed = $this->bepHelper->isEntityAllowed($page->getTemplate(), $entity, $this->entityManager);
 
                 if ($entityAllowed === false) {
                     throw new NotFoundHttpException('The entity ['.$entity->getId().'] is not allowed for the page pattern ['.$page->getTemplate()->getId().']');

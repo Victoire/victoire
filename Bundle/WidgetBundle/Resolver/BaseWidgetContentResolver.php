@@ -2,12 +2,16 @@
 
 namespace Victoire\Bundle\WidgetBundle\Resolver;
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Victoire\Bundle\QueryBundle\Helper\QueryHelper;
 use Victoire\Bundle\WidgetBundle\Model\Widget;
 
 class BaseWidgetContentResolver
 {
+    protected $queryHelper;
+    protected $entityManager;
+
     /**
      * Get the static content of the widget
      *
@@ -99,16 +103,14 @@ class BaseWidgetContentResolver
      */
     public function getWidgetQueryBuilder(Widget $widget)
     {
-        $queryHelper = $this->queryHelper;
-
         //get the base query
-        $itemsQueryBuilder = $queryHelper->getQueryBuilder($widget);
+        $itemsQueryBuilder = $this->queryHelper->getQueryBuilder($widget, $this->entityManager);
 
         // Filter only visibleOnFront
         $itemsQueryBuilder->andWhere('main_item.visibleOnFront = true');
 
         //add the query of the widget
-        return $queryHelper->buildWithSubQuery($widget, $itemsQueryBuilder);
+        return $this->queryHelper->buildWithSubQuery($widget, $itemsQueryBuilder, $this->entityManager);
     }
 
     protected function populateParametersWithWidgetFields(Widget $widget, $entity, &$parameters)
@@ -127,8 +129,18 @@ class BaseWidgetContentResolver
         }
     }
 
+    /**
+     * @param QueryHelper $queryHelper
+     */
     public function setQueryHelper(QueryHelper $queryHelper)
     {
         $this->queryHelper = $queryHelper;
+    }
+    /**
+     * @param QueryHelper $entityManager
+     */
+    public function setEntityManager(EntityManager $entityManager)
+    {
+        $this->entityManager = $entityManager;
     }
 }

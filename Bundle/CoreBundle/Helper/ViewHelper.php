@@ -66,7 +66,7 @@ class ViewHelper
         $viewsReferences = array();
         foreach ($views as $view) {
             if (get_class($view) != 'Victoire\Bundle\TemplateBundle\Entity\Template') {
-                $viewsReferences = array_merge($viewsReferences, $this->viewReferenceBuilder->buildViewReference($view));
+                $viewsReferences = array_merge($viewsReferences, $this->viewReferenceBuilder->buildViewReference($view, null, $this->em));
             }
         }
 

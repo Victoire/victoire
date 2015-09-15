@@ -112,7 +112,7 @@ class ViewReferenceSubscriber implements EventSubscriber
      */
     protected function updateCache(View $view, EntityManager $em, UnitOfWork $uow)
     {
-        $viewReferences = $this->viewReferenceBuilder->buildViewReference($view);
+        $viewReferences = $this->viewReferenceBuilder->buildViewReference($view, null, $em);
         $viewReferences = $this->viewCacheHelper->update($viewReferences);
 
 

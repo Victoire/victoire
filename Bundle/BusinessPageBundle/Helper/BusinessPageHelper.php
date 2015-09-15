@@ -47,13 +47,14 @@ class BusinessPageHelper
     /**
      * Is the entity allowed for the business entity page
      *
-     * @param BusinessTemplate                      $bepPattern
+     * @param BusinessTemplate $bepPattern
      * @param \Victoire\Bundle\PageBundle\Helper\Entity|null $entity
      *
+     * @param EntityManager $em
      * @throws \Exception
      * @return boolean
      */
-    public function isEntityAllowed(BusinessTemplate $bepPattern, $entity)
+    public function isEntityAllowed(BusinessTemplate $bepPattern, $entity, EntityManager $em = null)
     {
         $allowed = true;
 
@@ -68,12 +69,12 @@ class BusinessPageHelper
         $entityId = $entity->getId();
 
         //the base of the query
-        $baseQuery = $queryHelper->getQueryBuilder($bepPattern);
+        $baseQuery = $queryHelper->getQueryBuilder($bepPattern, $em);
 
         $baseQuery->andWhere('main_item.id = '.$entityId);
 
         //filter with the query of the page
-        $items = $queryHelper->buildWithSubQuery($bepPattern, $baseQuery)
+        $items = $queryHelper->buildWithSubQuery($bepPattern, $baseQuery, $em)
             ->getQuery()->getResult();
 
         //only one page can be found because we filter on the
@@ -96,7 +97,7 @@ class BusinessPageHelper
      * @throws \Exception
      * @return array
      */
-    public function getEntitiesAllowed(BusinessTemplate $bepPattern, EntityManager $em = null)
+    public function getEntitiesAllowed(BusinessTemplate $bepPattern, EntityManager $em)
     {
         //the base of the query
         $baseQuery = $this->queryHelper->getQueryBuilder($bepPattern, $em);

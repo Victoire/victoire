@@ -17,7 +17,6 @@ class ViewCacheHelper
 {
     private $xmlFile;
     private $requestStack;
-    private $viewReferenceBuilder;
     private $viewReferenceHelper;
 
     /**
@@ -26,11 +25,10 @@ class ViewCacheHelper
      * @param ViewReferenceBuilder $viewReferenceBuilder
      * @param ViewReferenceHelper $viewReferenceHelper
      */
-    public function __construct($cacheDir, RequestStack $requestStack, ViewReferenceBuilder $viewReferenceBuilder, ViewReferenceHelper $viewReferenceHelper)
+    public function __construct($cacheDir, RequestStack $requestStack, ViewReferenceHelper $viewReferenceHelper)
     {
         $this->xmlFile = $cacheDir.'/victoire/viewsReferences.xml';
         $this->requestStack = $requestStack;
-        $this->viewReferenceBuilder = $viewReferenceBuilder;
         $this->viewReferenceHelper = $viewReferenceHelper;
     }
 

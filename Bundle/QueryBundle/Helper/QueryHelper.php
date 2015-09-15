@@ -14,7 +14,6 @@ use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
  */
 class QueryHelper
 {
-    protected $entityManager = null;
     protected $businessEntityHelper = null;
     protected $currentView;
 
@@ -44,9 +43,6 @@ class QueryHelper
      */
     public function getQueryBuilder($containerEntity, EntityManager $em = null)
     {
-        if (!$em) {
-            $em = $this->getEntityManager();
-        }
         if ($containerEntity === null) {
             throw new \Exception('The container entity parameter must not be null.');
         }
@@ -109,12 +105,8 @@ class QueryHelper
      *
      * @return QueryBuilder The QB to list of objects
      */
-    public function buildWithSubQuery($containerEntity, QueryBuilder $itemsQueryBuilder, EntityManager $em = null)
+    public function buildWithSubQuery($containerEntity, QueryBuilder $itemsQueryBuilder, EntityManager $em)
     {
-
-        if (!$em) {
-            $em = $this->getEntityManager();
-        }
         //test the container entity
         if ($containerEntity === null) {
             throw new \Exception('The container entity parameter must not be null.');
@@ -177,19 +169,4 @@ class QueryHelper
         return $itemsQueryBuilder;
     }
 
-    /**
-     * @return EntityManager|null
-     */
-    public function getEntityManager()
-    {
-        return $this->entityManager;
-    }
-
-    /**
-     * @param EntityManager|null $entityManager
-     */
-    public function setEntityManager($entityManager)
-    {
-        $this->entityManager = $entityManager;
-    }
 }
