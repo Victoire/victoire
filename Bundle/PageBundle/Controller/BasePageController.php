@@ -221,6 +221,7 @@ class BasePageController extends Controller
      */
     protected function translateAction(Request $request, BasePage $page)
     {
+
         $form = $this->createForm($this->getPageTranslateType(), $page);
 
         $businessProperties = [];
@@ -235,23 +236,22 @@ class BasePageController extends Controller
 
         if ($form->isValid()) {
             $clone = $this->get('victoire_i18n.view_translation_manager')->addTranslation($page, $page->getName(), $page->getLocale());
-            $urlPrefix = '';
-            //Guess what is the redirection host.
-            if ($this->container->getParameter('victoire_i18n.locale_pattern') === LocaleResolver::PATTERN_DOMAIN) {
-                foreach ($this->container->getParameter('victoire_i18n.locale_pattern_table') as $_host => $_locale) {
-                    if ($_locale === $clone->getLocale()) {
-                        $urlPrefix = sprintf('%s://%s', $request->getScheme(), $_host);
-                        if ($request->getPort()) {
-                            $urlPrefix .= ':'.$request->getPort();
-                        }
-                        break;
-                    }
+            $domain = null;
+            foreach ($this->container->getParameter('victoire_i18n.locale_pattern_table') as $_domain => $_locale) {
+                if ($_locale === $clone->getLocale()) {
+                    $domain = $_domain;
+                    break;
                 }
             }
 
             return [
                 'success' => true,
-                'url'     => $urlPrefix.$this->generateUrl('victoire_core_page_show', ['_locale' => $clone->getLocale(), 'url' => $clone->getUrl()]),
+                'url' => $this->generateUrl('victoire_core_page_show', [
+                        '_locale' => $clone->getLocale(),
+                        'domain' => $domain,
+                        'url' => $clone->getUrl()
+                    ]
+                )
             ];
         }
         $errors = $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form);
