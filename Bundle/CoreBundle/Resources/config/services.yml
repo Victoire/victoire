@@ -135,6 +135,7 @@ services:
             - "@victoire_core.view_cache_helper"
             - "@victoire_business_page.business_page_builder"
             - "@victoire_core.view_reference_builder"
+            - "@victoire_core.provider.view_reference_provider"
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
@@ -196,6 +197,7 @@ services:
             - "@doctrine.orm.entity_manager"
             - "@victoire_core.view_reference_builder"
             - "@victoire_core.helper.view_reference_helper"
+            - "@victoire_core.provider.view_reference_provider"
     victoire_core.view_reference_builder:
         class: Victoire\Bundle\CoreBundle\Builder\ViewReferenceBuilder
         arguments:
@@ -244,3 +246,9 @@ services:
 
     victoire_core.helper.view_reference_helper:
         class: Victoire\Bundle\CoreBundle\Helper\ViewReferenceHelper
+
+    victoire_core.provider.view_reference_provider:
+        class: Victoire\Bundle\CoreBundle\Provider\ViewReferenceProvider
+        arguments:
+            - @victoire_business_page.business_page_helper
+            - @victoire_business_page.business_page_builder

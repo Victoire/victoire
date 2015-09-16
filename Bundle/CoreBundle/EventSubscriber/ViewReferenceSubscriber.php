@@ -6,31 +6,18 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\OnFlushEventArgs;
-use Doctrine\ORM\Event\PostFlushEventArgs;
 use Doctrine\ORM\UnitOfWork;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
-use Victoire\Bundle\BusinessEntityBundle\Event\BusinessEntityAnnotationEvent;
 use Victoire\Bundle\BusinessPageBundle\Builder\BusinessPageBuilder;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
-use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
-use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
-use Victoire\Bundle\BusinessPageBundle\Transformer\VirtualToBusinessPageTransformer;
 use Victoire\Bundle\CoreBundle\Builder\ViewReferenceBuilder;
-use Victoire\Bundle\CoreBundle\Cache\Builder\CacheBuilder;
 use Victoire\Bundle\CoreBundle\Entity\Route;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
 use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
-use Victoire\Bundle\PageBundle\Entity\WidgetMap;
-use Victoire\Bundle\PageBundle\Helper\UserCallableHelper;
-use Victoire\Bundle\WidgetBundle\Event\WidgetAnnotationEvent;
-use Victoire\Bundle\WidgetBundle\Model\Widget;
-use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
-use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
+use Victoire\Bundle\CoreBundle\Provider\ViewReferenceProvider;
 
 /**
  * Tracks if a slug changed and re-compute the view cache
@@ -41,6 +28,7 @@ class ViewReferenceSubscriber implements EventSubscriber
     protected $urlBuilder;
     protected $viewCacheHelper;
     protected $businessPageBuilder;
+    protected $viewReferenceProvider;
 
     /**
      * @param UrlBuilder $urlBuilder
@@ -48,12 +36,19 @@ class ViewReferenceSubscriber implements EventSubscriber
      * @param BusinessPageBuilder $businessPageBuilder
      * @param ViewReferenceBuilder $viewReferenceBuilder
      */
-    public function __construct(UrlBuilder $urlBuilder, ViewCacheHelper $viewCacheHelper, BusinessPageBuilder $businessPageBuilder, ViewReferenceBuilder $viewReferenceBuilder)
+    public function __construct(
+        UrlBuilder $urlBuilder,
+        ViewCacheHelper $viewCacheHelper,
+        BusinessPageBuilder $businessPageBuilder,
+        ViewReferenceBuilder $viewReferenceBuilder,
+        ViewReferenceProvider $viewReferenceProvider
+    )
     {
         $this->urlBuilder = $urlBuilder;
         $this->viewCacheHelper = $viewCacheHelper;
         $this->businessPageBuilder = $businessPageBuilder;
         $this->viewReferenceBuilder = $viewReferenceBuilder;
+        $this->viewReferenceProvider = $viewReferenceProvider;
     }
     /**
      * bind to LoadClassMetadata method
@@ -112,8 +107,15 @@ class ViewReferenceSubscriber implements EventSubscriber
      */
     protected function updateCache(View $view, EntityManager $em, UnitOfWork $uow)
     {
-        $viewReferences = $this->viewReferenceBuilder->buildViewReference($view, $em);
-        $viewReferences = $this->viewCacheHelper->update($viewReferences);
+        $viewReferences = [];
+        $referencableViews = $this->viewReferenceProvider->getReferencableViews($view, $em);
+
+        foreach ($referencableViews as $referencableView) {
+
+            $viewReferences = $this->viewReferenceBuilder->buildViewReference($referencableView, $em);
+            $viewReferences = $this->viewCacheHelper->update($viewReferences);
+        }
+
 
 
         foreach ($viewReferences as $key => $viewReference) {

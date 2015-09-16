@@ -8,8 +8,8 @@ use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Builder\ViewReferenceBuilder;
 use Victoire\Bundle\CoreBundle\Entity\View;
+use Victoire\Bundle\CoreBundle\Provider\ViewReferenceProvider;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
-use Victoire\Bundle\CoreBundle\Helper\ViewReferenceHelper;
 
 /**
  * Page helper
@@ -22,6 +22,7 @@ class ViewHelper
     protected $em;
     protected $viewReferenceBuilder;
     protected $viewReferenceHelper;
+    protected $viewReferenceProvider;
 
     /**
      * Constructor
@@ -30,6 +31,7 @@ class ViewHelper
      * @param EntityManager $entityManager
      * @param ViewReferenceBuilder $viewReferenceBuilder
      * @param ViewReferenceHelper $viewReferenceHelper
+     * @param ViewReferenceProvider $viewReferenceProvider
      * @internal param $ViewManagerChain $$viewManagerChain
      */
     public function __construct(
@@ -37,13 +39,15 @@ class ViewHelper
         BusinessEntityHelper $businessEntityHelper,
         EntityManager $entityManager,
         ViewReferenceBuilder $viewReferenceBuilder,
-        ViewReferenceHelper $viewReferenceHelper
+        ViewReferenceHelper $viewReferenceHelper,
+        ViewReferenceProvider $viewReferenceProvider
     ) {
         $this->parameterConverter = $parameterConverter;
         $this->businessEntityHelper = $businessEntityHelper;
         $this->em = $entityManager;
         $this->viewReferenceBuilder = $viewReferenceBuilder;
         $this->viewReferenceHelper = $viewReferenceHelper;
+        $this->viewReferenceProvider = $viewReferenceProvider;
     }
 
     //@todo Make it dynamic please
@@ -63,10 +67,11 @@ class ViewHelper
     {
 
         $views = $this->em->createQuery("SELECT v FROM VictoireCoreBundle:View v")->getResult();
-        $viewsReferences = array();
-        foreach ($views as $view) {
-            $viewsReferences = array_merge($viewsReferences, $this->viewReferenceBuilder->buildViewReference($view, $this->em));
+        $viewsReferences = [];
+        foreach ($this->viewReferenceProvider->getReferencableViews($views, $this->em) as $viewReferencable) {
+            $viewsReferences = array_merge($viewsReferences, $this->viewReferenceBuilder->buildViewReference($viewReferencable, $this->em));
         }
+
         $this->viewReferenceHelper->cleanVirtualViews($viewsReferences);
 
         return $viewsReferences;

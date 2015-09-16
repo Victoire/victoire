@@ -32,14 +32,11 @@ class ViewReferenceBuilder
      *
      * @return array
      */
-    public function buildViewReference(View $view, EntityManager $em = null)
+    public function buildViewReference(WebViewInterface $view, EntityManager $em = null)
     {
-        $viewReferences = [];
-        if ($em->getClassMetadata(get_class($view))->name != 'Victoire\Bundle\TemplateBundle\Entity\Template') {
 
-            $viewManager = $this->viewReferenceBuilderChain->getViewReferenceBuilder($view);
-            $viewReferences = $viewManager->buildReference($view, $em);
-        }
+        $viewManager = $this->viewReferenceBuilderChain->getViewReferenceBuilder($view);
+        $viewReferences = $viewManager->buildReference($view, $em);
 
         return $viewReferences;
     }

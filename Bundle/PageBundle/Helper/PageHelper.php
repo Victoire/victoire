@@ -20,6 +20,7 @@ use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
 use Victoire\Bundle\CoreBundle\Helper\ViewHelper;
 use Victoire\Bundle\CoreBundle\Manager\Chain\ViewReferenceBuilderChain;
+use Victoire\Bundle\CoreBundle\Provider\ViewReferenceProvider;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
@@ -82,6 +83,7 @@ class PageHelper extends ViewHelper
         EntityManager $entityManager,
         ViewReferenceBuilder $viewReferenceBuilder,
         ViewReferenceHelper $viewReferenceHelper,
+        ViewReferenceProvider $viewReferenceProvider,
         CurrentViewHelper $currentViewHelper,
         EventDispatcherInterface $eventDispatcher,
         TemplateMapper $victoireTemplating,
@@ -95,7 +97,7 @@ class PageHelper extends ViewHelper
         BusinessPageHelper $businessPageHelper,
         ViewCacheHelper $viewCacheHelper
     ) {
-        parent::__construct($parameterConverter, $businessEntityHelper, $entityManager, $viewReferenceBuilder, $viewReferenceHelper);
+        parent::__construct($parameterConverter, $businessEntityHelper, $entityManager, $viewReferenceBuilder, $viewReferenceHelper, $viewReferenceProvider);
         $this->businessPageBuilder = $businessPageBuilder;
         $this->businessPageHelper = $businessPageHelper;
         $this->entityManager = $entityManager;
