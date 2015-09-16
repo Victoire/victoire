@@ -119,6 +119,9 @@ class PageSubscriber implements EventSubscriber
         if ($entity instanceof View) {
             $entity->setReference(['id' => $entity->getId()]);
         }
+        if ($entity instanceof WebViewInterface) {
+            $entity->setUrl($this->urlBuilder->buildUrl($entity));
+        }
 
     }
 
