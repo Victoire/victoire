@@ -23,7 +23,7 @@ Feature: Create business entity pages
         And I follow "Créer"
         Then I should see "La représentation métier a bien été créé"
         And I wait 5 seconds
-        And I should be on "/fr/fiche-jedi-%7B%7Bitem.slug%7D%7D"
+        And I should be on "/fr/victoire-dcms/business-template/show/5"
 
         Given I am on "/fr/fiche-jedi-anakin"
         And I switch to "layout" mode

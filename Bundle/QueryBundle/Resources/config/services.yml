@@ -2,6 +2,5 @@ services:
     victoire_query.query_helper:
         class: Victoire\Bundle\QueryBundle\Helper\QueryHelper
         arguments:
-            - "@doctrine.orm.entity_manager"
             - "@victoire_core.helper.business_entity_helper"
             - "@victoire_core.current_view"

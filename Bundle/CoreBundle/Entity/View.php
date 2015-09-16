@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
+use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\PageBundle\Entity\Slot;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
@@ -72,7 +72,7 @@ abstract class View
     /**
      * @var string
      *
-     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\WidgetBundle\Entity\Widget", mappedBy="view")
+     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\WidgetBundle\Entity\Widget", mappedBy="view", cascade={"persist", "remove"})
      * @ORM\OrderBy({"id" = "ASC"})
      */
     protected $widgets;
@@ -119,7 +119,7 @@ abstract class View
      * @ORM\OneToMany(targetEntity="View", mappedBy="parent")
      * @ORM\OrderBy({"lft" = "ASC"})
      */
-    protected $children;
+    protected $children = array();
 
     /**
      * This relation is dynamicly added by PageSubscriber
@@ -144,7 +144,7 @@ abstract class View
     protected $slots = array();
 
     //The reference is related to viewsReferences.xml file which list all app views.
-    //This is used to speed up the routing system and identify virtual pages (BusinessEntityPage)
+    //This is used to speed up the routing system and identify virtual pages (BusinessPage)
     protected $reference;
 
     /**
@@ -165,6 +165,7 @@ abstract class View
      **/
     public function __construct()
     {
+        $this->children = new ArrayCollection();
         $this->widgets = new ArrayCollection();
         $this->widgetMap = array();
     }
@@ -342,7 +343,7 @@ abstract class View
     {
         $webViewChildren = array();
         foreach ($this->children as $child) {
-            if (!$child instanceof BusinessEntityPagePattern) {
+            if (!$child instanceof BusinessTemplate) {
                 $webViewChildren[] = $child;
             }
         }
@@ -871,6 +872,26 @@ abstract class View
         $class = get_called_class();
 
         return $class::TYPE;
+    }
+
+    /**
+     * Set position
+     *
+     * @param integer $position
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+    }
+
+    /**
+     * Get position
+     *
+     * @return integer
+     */
+    public function getPosition()
+    {
+        return $this->position;
     }
 
     /**

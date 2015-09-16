@@ -11,7 +11,6 @@ use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
  *
  * @ORM\Entity(repositoryClass="Victoire\Bundle\PageBundle\Repository\BasePageRepository")
  * @ORM\Table("vic_base_page")
- * @UniqueEntity(fields={"url", "locale"})
  * @ORM\HasLifecycleCallbacks
  */
 abstract class BasePage extends View implements WebViewInterface
@@ -21,7 +20,7 @@ abstract class BasePage extends View implements WebViewInterface
     /**
      * @var string
      *
-     * Could be Template or BusinessEntityPagePattern
+     * Could be Template or BusinessTemplate
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\TemplateBundle\Entity\Template", inversedBy="inheritors", cascade={"persist"})
      * @ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="CASCADE")
      *

@@ -29,7 +29,7 @@
 
                              <div class="vic-form-url-slug">
                                 {% if form.staticUrl is defined %}
-                                    {% set baseUrl = url('victoire_core_page_show', {'url' : page.template.url })|replace({(page.template.slug | url_encode): ''}) %}
+                                    {% set baseUrl = url('victoire_core_page_show', {'url' : page.parent ? page.parent.url : '' }) %}
                                     {{ baseUrl}}
                                     {{ form_widget(form.staticUrl, {'attr' : {'placeholder' : page.slug, 'onLoad': "addSlugValidation(this);"}}) }}
                                 {% else %}

@@ -41,6 +41,8 @@ class User extends BaseUser implements VictoireUserInterface
      */
     protected $locale;
 
+    protected $pages;
+
     /**
      * Get firstname
      *

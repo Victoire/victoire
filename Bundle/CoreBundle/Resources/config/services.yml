@@ -98,8 +98,7 @@ services:
         arguments:
             - "%kernel.cache_dir%"
             - "@request_stack"
-        calls:
-            - [ setContainer, ["@service_container"] ]
+            - "@victoire_core.helper.view_reference_helper"
 
     victoire_core.cache_builder:
         class: Victoire\Bundle\CoreBundle\Cache\Builder\CacheBuilder
@@ -128,6 +127,17 @@ services:
             - "@victoire_core.cache_builder"
         tags:
             - { name: kernel.event_subscriber }
+
+    victoire_core.view_reference_subscriber:
+        class: Victoire\Bundle\CoreBundle\EventSubscriber\ViewReferenceSubscriber
+        arguments:
+            - "@victoire_core.url_builder"
+            - "@victoire_core.view_cache_helper"
+            - "@victoire_business_page.business_page_builder"
+            - "@victoire_core.view_reference_builder"
+            - "@victoire_core.provider.view_reference_provider"
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
 
 
 #  ==================  Cache =================== #
@@ -159,6 +169,10 @@ services:
         arguments:
             - "@victoire_business_entity.cache_reader"
             - "@victoire_core.cache_builder"
+
+    victoire_core.helper.queriable_business_entity_helper:
+        class: Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper
+        parent: victoire_core.helper.business_entity_helper
         calls:
             - [setEntityManager, ["@doctrine.orm.entity_manager"]]
 
@@ -180,10 +194,14 @@ services:
         arguments:
             - "@victoire_business_entity.converter.parameter_converter"
             - "@victoire_core.helper.business_entity_helper"
-            - "@victoire_business_entity_page.business_entity_page_helper"
             - "@doctrine.orm.entity_manager"
-            - "@victoire_core.view_cache_helper"
-            - "@victoire_core.chain.view_manager_chain"
+            - "@victoire_core.view_reference_builder"
+            - "@victoire_core.helper.view_reference_helper"
+            - "@victoire_core.provider.view_reference_provider"
+    victoire_core.view_reference_builder:
+        class: Victoire\Bundle\CoreBundle\Builder\ViewReferenceBuilder
+        arguments:
+            - "@victoire_core.chain.view_reference_builder_chain"
 
     victoire_core.current_view:
         class: Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper
@@ -203,57 +221,34 @@ services:
         tags:
             - { name: routing.loader }
 
-    victoire_core.view_url_helper:
-        class: Victoire\Bundle\CoreBundle\Helper\ViewUrlHelper
-        arguments:
-            - "@router"
-        calls:
-            - [setRequest, ["@request_stack"]]
+    victoire_core.url_builder:
+        class: Victoire\Bundle\CoreBundle\Helper\UrlBuilder
 
 #  ==================  Chain ================== #
 
-    victoire_core.chain.view_manager_chain:
-        class: Victoire\Bundle\CoreBundle\Manager\Chain\ViewManagerChain
+    victoire_core.chain.view_reference_builder_chain:
+        class: Victoire\Bundle\CoreBundle\Manager\Chain\ViewReferenceBuilderChain
 
 #  ==================  Manager ================== #
 
     victoire_core.manager.base_view_manager:
-        class: Victoire\Bundle\CoreBundle\Manager\BaseViewManager
+        class: Victoire\Bundle\CoreBundle\Manager\BaseReferenceBuilder
         abstract: true
-        calls:
-            - [setViewCacheHelper, ["@victoire_core.view_cache_helper"]]
-            - [setEntityManager, ["@doctrine.orm.entity_manager"]]
+        arguments:
+            - @victoire_core.helper.view_reference_helper
+            - @victoire_core.url_builder
 
-    victoire_core.manager.page_manager:
-        class: Victoire\Bundle\CoreBundle\Manager\PageManager
+    victoire_core.manager.page_reference_builder:
+        class: Victoire\Bundle\CoreBundle\Manager\PageReferenceBuilder
         parent: victoire_core.manager.base_view_manager
         tags:
             - { name: victoire_core.view_manager, view: Victoire\Bundle\PageBundle\Entity\Page }
 
-    victoire_core.manager.business_entity_page_manager:
-        class: Victoire\Bundle\CoreBundle\Manager\BusinessEntityPageManager
-        parent: victoire_core.manager.base_view_manager
-        tags:
-            - { name: victoire_core.view_manager, view: Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage }
+    victoire_core.helper.view_reference_helper:
+        class: Victoire\Bundle\CoreBundle\Helper\ViewReferenceHelper
 
-    victoire_core.manager.business_entity_page_pattern_manager:
-        class: Victoire\Bundle\CoreBundle\Manager\BusinessEntityPagePatternManager
-        parent: victoire_core.manager.base_view_manager
-        calls:
-            - [setBusinessEntityPageHelper, ["@victoire_business_entity_page.business_entity_page_helper"]]
-            - [setBusinessEntityHelper, ["@victoire_core.helper.business_entity_helper"]]
-        tags:
-            - { name: victoire_core.view_manager, view: Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern }
-
-    victoire_core.manager.error_page_manager:
-        class: Victoire\Bundle\CoreBundle\Manager\ErrorPageManager
-        parent: victoire_core.manager.base_view_manager
-        tags:
-            - { name: victoire_core.view_manager, view: Victoire\Bundle\TwigBundle\Entity\ErrorPage}
-
-    victoire_core.manager.template_manager:
-        class: Victoire\Bundle\CoreBundle\Manager\TemplateManager
-        parent: victoire_core.manager.base_view_manager
-        tags:
-            - { name: victoire_core.view_manager, view: Victoire\Bundle\TemplateBundle\Entity\Template }
-
+    victoire_core.provider.view_reference_provider:
+        class: Victoire\Bundle\CoreBundle\Provider\ViewReferenceProvider
+        arguments:
+            - @victoire_business_page.business_page_helper
+            - @victoire_business_page.business_page_builder

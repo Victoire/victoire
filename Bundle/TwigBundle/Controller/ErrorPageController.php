@@ -29,9 +29,7 @@ class ErrorPageController extends Controller
     {
         //add the view to twig
         $this->container->get('twig')->addGlobal('view', $page);
-        $viewParameters = array('locale' => $page->getLocale(), 'viewId' => $page->getId());
-        $viewReference = $this->container->get('victoire_core.view_cache_helper')->getReferenceByParameters($viewParameters);
-        $page->setReference($viewReference);
+        $page->setReference(['id' => $page->getId()]);
 
         //the victoire templating
         $victoireTemplating = $this->container->get('victoire_templating');

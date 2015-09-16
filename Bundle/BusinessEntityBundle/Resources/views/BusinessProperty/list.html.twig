@@ -2,9 +2,6 @@
 
 {% if businessProperties|length > 0 %}
 <div class='businessProperties'>
-    <div class='businessPropertyTitle'>
-        {{ 'modal.form.businessEntity.settings.businessProperties'|trans }}
-    </div>
     {% for businessProperty in businessProperties %}
         <div class='businessProperty {{ businessProperty.type }}'>
             <a onClick='businessProperty.addPropertyToCurrentInput("{{ businessProperty.entityProperty }}")' title="{{ businessProperty.type }}">{{ businessProperty.entityProperty }}</a>

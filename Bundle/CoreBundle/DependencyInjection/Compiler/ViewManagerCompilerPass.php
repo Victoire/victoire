@@ -16,11 +16,11 @@ class ViewManagerCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        if(!$container->hasDefinition('victoire_core.chain.view_manager_chain')){
+        if(!$container->hasDefinition('victoire_core.chain.view_reference_builder_chain')){
             return;
         }
         $definition = $container->getDefinition(
-            'victoire_core.chain.view_manager_chain'
+            'victoire_core.chain.view_reference_builder_chain'
         );
         $taggedServices = $container->findTaggedServiceIds(
             'victoire_core.view_manager'
@@ -31,7 +31,7 @@ class ViewManagerCompilerPass implements CompilerPassInterface
                     throw new InvalidConfigurationException("View class attribute is not defined for " . $id);
                 }
                 $definition->addMethodCall(
-                    'addViewManager',
+                    'addViewReferenceBuilder',
                     array(new Reference($id), $attributes['view'])
                 );
             }

@@ -74,8 +74,8 @@ Feature: Manage jedis
         When I fill in "Nom" with "Fiche Jedi - {{item.name}}"
         And I fill in "Url" with "fiche-jedi-{{item.slug}}"
         And I follow "Créer"
-        Given I am on "/fr/fiche-jedi-anakin"
         Then I should see "La représentation métier a bien été créé"
+        Given I am on "/fr/fiche-jedi-anakin"
         And I switch to "layout" mode
         When I select "Force" from the "1" select of "content" slot
         Then I should see "Créer"
@@ -84,10 +84,10 @@ Feature: Manage jedis
         Then I should see "Le Côté Nouveau de la force"
         Given I select the option "Paramètres de la page" in the dropdown "Page"
         And I should see "Mettre à jour"
-        When I fill in "victoire_business_entity_page_type_staticUrl" with "Dark Vador"
+        When I fill in "victoire_business_page_type_staticUrl" with "Dark Vador"
         Then I should see an ".slug-is-correct.vic-hidden" element
         And I should not see an ".slug-is-not-correct.vic-hidden" element
-        When I fill in "victoire_business_entity_page_type_staticUrl" with "dark-vador"
+        When I fill in "victoire_business_page_type_staticUrl" with "dark-vador"
         Then I should not see an ".slug-is-correct.vic-hidden" element
         And I should see an ".slug-is-not-correct.vic-hidden" element
         When I submit the widget
@@ -95,7 +95,7 @@ Feature: Manage jedis
         And I should be on "/fr/dark-vador"
         Given I select the option "Paramètres de la page" in the dropdown "Page"
         And I should see "Mettre à jour"
-        When I fill in "victoire_business_entity_page_type_staticUrl" with ""
+        When I fill in "victoire_business_page_type_staticUrl" with ""
         Then I should not see an ".slug-is-correct.vic-hidden" element
         And I should see an ".slug-is-not-correct.vic-hidden" element
         When I submit the widget

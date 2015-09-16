@@ -20,28 +20,4 @@ class Page extends BasePage
     {
         parent::__construct();
     }
-
-    /**
-     * Set homepage
-     *
-     * @param boolean $homepage
-     *
-     * @return Page
-     */
-    public function setHomepage($homepage)
-    {
-        $this->homepage = $homepage;
-
-        return $this;
-    }
-
-    /**
-     * is homepage
-     *
-     * @return string is homepage
-     */
-    public function isHomepage()
-    {
-        return $this->homepage;
-    }
 }

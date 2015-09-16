@@ -8,7 +8,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Victoire\Bundle\CoreBundle\DataTransformer\JsonToArrayTransformer;
-use Victoire\Bundle\CoreBundle\Helper\ViewHelper;
+use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
 
 /**
  * Type for Victoire Link.
@@ -16,12 +16,12 @@ use Victoire\Bundle\CoreBundle\Helper\ViewHelper;
 class LinkType extends AbstractType
 {
     private $analytics;
-    private $viewHelper;
+    private $viewCacheHelper;
 
-    public function __construct($analytics, ViewHelper $viewHelper)
+    public function __construct($analytics, ViewCacheHelper $viewCacheHelper)
     {
         $this->analytics = $analytics;
-        $this->viewHelper = $viewHelper;
+        $this->viewCacheHelper = $viewCacheHelper;
     }
 
     /**
@@ -54,7 +54,7 @@ class LinkType extends AbstractType
             ))
         ;
 
-        $rawPages = $this->viewHelper->getAllViewsReferences();
+        $rawPages = $this->viewCacheHelper->getAllViewsReferences();
         $pages = array();
         foreach ($rawPages as $page) {
             $pages[$page['id']] = $page['name'];

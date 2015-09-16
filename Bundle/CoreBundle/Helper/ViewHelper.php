@@ -5,12 +5,11 @@ namespace Victoire\Bundle\CoreBundle\Helper;
 use Doctrine\Orm\EntityManager;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter as BETParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
-use Victoire\Bundle\BusinessEntityPageBundle\Helper\BusinessEntityPageHelper;
+use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
+use Victoire\Bundle\CoreBundle\Builder\ViewReferenceBuilder;
 use Victoire\Bundle\CoreBundle\Entity\View;
-use Victoire\Bundle\CoreBundle\Manager\Chain\ViewManagerChain;
+use Victoire\Bundle\CoreBundle\Provider\ViewReferenceProvider;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
-use Victoire\Widget\LayoutBundle\Entity\WidgetLayout;
 
 /**
  * Page helper
@@ -20,33 +19,35 @@ class ViewHelper
 {
     protected $parameterConverter;
     protected $businessEntityHelper;
-    protected $businessEntityPageHelper;
     protected $em;
-    protected $viewCacheHelper;
+    protected $viewReferenceBuilder;
+    protected $viewReferenceHelper;
+    protected $viewReferenceProvider;
 
     /**
      * Constructor
-     * @param BETParameterConverter    $parameterConverter
-     * @param BusinessEntityHelper     $businessEntityHelper
-     * @param BusinessEntityPageHelper $businessEntityPageHelper
-     * @param EntityManager            $entityManager
-     * @param ViewCacheHelper          $viewCacheHelper
-     * @param ViewManagerChain         $$viewManagerChain
+     * @param BETParameterConverter $parameterConverter
+     * @param BusinessEntityHelper $businessEntityHelper
+     * @param EntityManager $entityManager
+     * @param ViewReferenceBuilder $viewReferenceBuilder
+     * @param ViewReferenceHelper $viewReferenceHelper
+     * @param ViewReferenceProvider $viewReferenceProvider
+     * @internal param $ViewManagerChain $$viewManagerChain
      */
     public function __construct(
         BETParameterConverter $parameterConverter,
         BusinessEntityHelper $businessEntityHelper,
-        BusinessEntityPageHelper $businessEntityPageHelper,
         EntityManager $entityManager,
-        ViewCacheHelper $viewCacheHelper,
-        ViewManagerChain $viewManagerChain
+        ViewReferenceBuilder $viewReferenceBuilder,
+        ViewReferenceHelper $viewReferenceHelper,
+        ViewReferenceProvider $viewReferenceProvider
     ) {
         $this->parameterConverter = $parameterConverter;
         $this->businessEntityHelper = $businessEntityHelper;
-        $this->businessEntityPageHelper = $businessEntityPageHelper;
         $this->em = $entityManager;
-        $this->viewCacheHelper = $viewCacheHelper;
-        $this->viewManagerChain = $viewManagerChain;
+        $this->viewReferenceBuilder = $viewReferenceBuilder;
+        $this->viewReferenceHelper = $viewReferenceHelper;
+        $this->viewReferenceProvider = $viewReferenceProvider;
     }
 
     //@todo Make it dynamic please
@@ -59,58 +60,26 @@ class ViewHelper
         'locale',
     );
 
-    public function buildViewsReferences($views)
-    {
-        $viewsReferences = array();
-        foreach ($views as $view) {
-            $viewsReferences = array_merge($viewsReferences, $this->buildViewReference($view));
-            $this->em->refresh($view);
-        }
-
-        $this->cleanVirtualViews($viewsReferences);
-
-        return $viewsReferences;
-    }
-
-    public function cleanVirtualViews(&$viewsReferences)
-    {
-        foreach ($viewsReferences as $viewReference) {
-            // If viewReference is a persisted page, we want to clean virtual BEPs
-            if ($viewReference['viewNamespace'] == 'Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage') {
-                array_walk($viewsReferences, function ($_viewReference, $key) use ($viewReference, &$viewsReferences) {
-                    if ($_viewReference['viewNamespace'] == 'Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern'
-                        && !empty($_viewReference['entityNamespace']) && $_viewReference['entityNamespace'] == $viewReference['entityNamespace']
-                        && !empty($_viewReference['entityId']) && $_viewReference['entityId'] == $viewReference['entityId']) {
-                            unset($viewsReferences[$key]);
-                    }
-                });
-            }
-        }
-
-    }
     /**
-     * This method get all views (BasePage and Template) in DB and return the references, including non persisted Business entity page (pattern and businessEntityId based)
-     * @return array the computed views as array
-     */
-    public function getAllViewsReferences()
-    {
-        $viewsReferences = $this->viewCacheHelper->convertXmlCacheToArray();
-
-        return $viewsReferences;
-    }
-
-    /**
-     * compute the viewReference relative to a View + entity
-     * @param View                $view
-     * @param BusinessEntity|null $entity
-     *
      * @return array
      */
-    public function buildViewReference(View $view, $entity = null)
+    public function buildViewsReferences()
     {
-        $viewManager = $this->viewManagerChain->getViewManager($view);
-        return $viewManager->buildReference($view, $entity);
+
+        $views = $this->em->createQuery("SELECT v FROM VictoireCoreBundle:View v")->getResult();
+        $viewsReferences = [];
+        foreach ($this->viewReferenceProvider->getReferencableViews($views, $this->em) as $viewReferencable) {
+            $viewsReferences = array_merge($viewsReferences, $this->viewReferenceBuilder->buildViewReference($viewReferencable, $this->em));
+        }
+
+        $this->viewReferenceHelper->cleanVirtualViews($viewsReferences);
+
+        return $viewsReferences;
     }
+
+
+
+
 
     /**
      * @param View $view, the view to translatate
@@ -169,8 +138,8 @@ class ViewHelper
         $clonedView->setId(null);
         $this->em->persist($clonedView);
 
-        if ($clonedView instanceof BusinessEntityPagePattern) {
-            $clonedView = $this->cloneBusinessEntityPagePattern($clonedView);
+        if ($clonedView instanceof BusinessTemplate) {
+            $clonedView = $this->cloneBusinessTemplate($clonedView);
         } else {
             $widgetLayoutSlots = [];
             $newWidgets = [];
@@ -225,17 +194,18 @@ class ViewHelper
     }
 
     /**
-     * @param BusinessEntityPagePattern $view
+     * @param BusinessTemplate $view
      * @param $etmplateName the future name of the clone
      *
-     * this methods allows you to clone a BusinessEntityPagePattern
+     * this methods allows you to clone a BusinessTemplate
      *
      */
-    protected function cloneBusinessEntityPagePattern(BusinessEntityPagePattern $view)
+    protected function cloneBusinessTemplate(BusinessTemplate $view)
     {
         $businessEntityId = $view->getBusinessEntityId();
         $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($businessEntityId);
         $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
     }
+
 
 }

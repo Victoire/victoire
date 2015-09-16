@@ -6,7 +6,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Victoire\Bundle\CoreBundle\VictoireCmsEvents;
 use Victoire\Bundle\CoreBundle\Event\WidgetRenderEvent;
 use Victoire\Bundle\WidgetBundle\Model\Widget;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
+use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 
 /**
  * Class WidgetSubscriber
@@ -32,7 +32,7 @@ class WidgetSubscriber implements EventSubscriberInterface
     public function widgetPreRender(WidgetRenderEvent $event)
     {
         $widget = $event->getWidget();
-        if ($widget->getMode() == Widget::MODE_QUERY && $widget->getCurrentView() instanceof BusinessEntityPagePattern && strpos($widget->getQuery(), ":currentEntity") !== false) {
+        if ($widget->getMode() == Widget::MODE_QUERY && $widget->getCurrentView() instanceof BusinessTemplate && strpos($widget->getQuery(), ":currentEntity") !== false) {
                 $widget->setQuery('');
         }
     }

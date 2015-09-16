@@ -35,7 +35,7 @@ class Template extends View
     /**
      * @var string
      *
-     * Could be Template or BusinessEntityPagePattern
+     * Could be Template or BusinessTemplate
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\TemplateBundle\Entity\Template", inversedBy="inheritors", cascade={"persist"})
      * @ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="CASCADE")
      *
@@ -49,6 +49,7 @@ class Template extends View
     {
         parent::__construct();
         $this->widgets = new ArrayCollection();
+        $this->inheritors = new ArrayCollection();
         $this->pages = new ArrayCollection();
     }
 
@@ -150,7 +151,7 @@ class Template extends View
     /**
      * Get inheritors (all Templates having this object as Template)
      *
-     * @return string
+     * @return [Template]
      */
     public function getInheritors()
     {

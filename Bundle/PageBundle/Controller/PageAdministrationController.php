@@ -114,13 +114,13 @@ class PageAdministrationController extends PageController
     }
 
     /**
-     * getBusinessEntityPageType
+     * getBusinessPageType
      *
      * @return string
      */
-    protected function getBusinessEntityPageType()
+    protected function getBusinessPageType()
     {
-        return 'victoire_business_entity_page_type';
+        return 'victoire_business_page_type';
     }
 
 

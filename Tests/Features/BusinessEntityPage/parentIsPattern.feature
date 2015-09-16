@@ -22,7 +22,7 @@ Feature: Mercenary is not a BusinessEntity itself but extends Character which is
             And I fill in "Url" with "fiche-personnage-{{item.slug}}"
             And I follow "Créer"
             And I wait 10 seconds
-            And I should be on "/fr/fiche-personnage-%7B%7Bitem.slug%7D%7D"
+            And I should be on "/fr/victoire-dcms/business-template/show/5"
             Then I switch to "layout" mode
             When I select "Text" from the "1" select of "content" slot
             Then I should see "Créer"

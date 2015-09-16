@@ -4,23 +4,33 @@ parameters:
     victoire_blog_date_filters_form_type_class: Victoire\Bundle\BlogBundle\Filter\DateFilter
 
 services:
+
+    ####################################################################################################################
+    # Menu
+    ####################################################################################################################
     victoire_blog.blog_menu_listener:
         class: Victoire\Bundle\BlogBundle\Listener\BlogMenuListener
         arguments: ["@victoire_core.admin_menu_builder"]
         tags:
             - { name: kernel.event_listener, event: victoire_core.build_menu, method: addGlobal, priority: 90 }
 
-    victoire_core.article_menu.contextual:
+    victoire_blog.article_menu.contextual:
         class: Victoire\Bundle\BlogBundle\Listener\BlogMenuListener
         arguments: ["@victoire_core.admin_menu_builder"]
         tags:
             - { name: kernel.event_listener, event: victoire_core.article_menu.contextual, method: addContextual}
 
-    victoire_core.blog_menu.contextual:
+    victoire_blog.blog_menu.contextual:
         class: Victoire\Bundle\BlogBundle\Listener\BlogMenuListener
         arguments: ["@victoire_core.admin_menu_builder"]
         tags:
             - { name: kernel.event_listener, event: victoire_core.blog_menu.contextual, method: addBlogContextual}
+
+    victoire_blog.article_template_menu.menu_listener.contextual:
+        class: Victoire\Bundle\BusinessPageBundle\Listener\BusinessPageMenuListener
+        arguments: ["@victoire_core.admin_menu_builder"]
+        tags:
+            - { name: kernel.event_listener, event: victoire_core.article_template_menu.contextual, method: addContextual }
 
     ####################################################################################################################
     # Forms
@@ -145,9 +155,19 @@ services:
             - { name: kernel.event_listener, event: victoire.widget_filter.form.date.set_default_value, method: setDefaultDateValue, priority: 1 }
 
 
-    victoire_blog.manager.blog_view_manager:
-        class: Victoire\Bundle\BlogBundle\Manager\BlogViewManager
-        parent: victoire_core.manager.page_manager
+    victoire_blog.manager.blog_reference_builder:
+        class: Victoire\Bundle\BlogBundle\Manager\BlogReferenceBuilder
+        parent: victoire_core.manager.page_reference_builder
         tags:
             - { name: victoire_core.view_manager, view: Victoire\Bundle\BlogBundle\Entity\Blog }
 
+    victoire_blog.manager.article_template_reference_builder:
+        class: Victoire\Bundle\BlogBundle\Manager\ArticleTemplateReferenceBuilder
+        parent: victoire_core.manager.page_reference_builder
+        tags:
+            - { name: victoire_core.view_manager, view: Victoire\Bundle\BlogBundle\Entity\ArticleTemplate }
+
+    victoire_blog.articleTemplate:
+        class: Victoire\Bundle\BlogBundle\Entity\ArticleTemplate
+        tags:
+            -  { name: victoire_core.bussinessEntityPagePattern, alias: article }

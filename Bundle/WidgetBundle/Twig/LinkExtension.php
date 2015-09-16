@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
-use Victoire\Bundle\BusinessEntityPageBundle\Helper\BusinessEntityPageHelper;
+use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
 
 /**
@@ -17,8 +17,8 @@ class LinkExtension extends \Twig_Extension
 {
     protected $router;
     protected $analytics;
-    protected $businessEntityHelper; // @victoire_business_entity_page.business_entity_helper
-    protected $businessEntityPageHelper; // @victoire_business_entity_page.business_entity_page_helper
+    protected $businessEntityHelper; // @victoire_business_page.business_entity_helper
+    protected $BusinessPageHelper; // @victoire_business_page.business_page_helper
     protected $pageHelper;
 
     public function __construct(
@@ -26,7 +26,7 @@ class LinkExtension extends \Twig_Extension
         RequestStack $requestStack,
         $analytics,
         BusinessEntityHelper $businessEntityHelper,
-        BusinessEntityPageHelper $businessEntityPageHelper,
+        BusinessPageHelper $BusinessPageHelper,
         PageHelper $pageHelper
     )
     {
@@ -34,7 +34,7 @@ class LinkExtension extends \Twig_Extension
         $this->request = $requestStack->getCurrentRequest();
         $this->analytics = $analytics;
         $this->businessEntityHelper = $businessEntityHelper;
-        $this->businessEntityPageHelper = $businessEntityPageHelper;
+        $this->BusinessPageHelper = $BusinessPageHelper;
         $this->pageHelper = $pageHelper;
     }
     /**
@@ -193,7 +193,7 @@ class LinkExtension extends \Twig_Extension
     public function victoireBusinessLink($businessEntityInstance, $patternId = null, $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
         if (!$patternId) {
-            $patternId = $this->businessEntityPageHelper
+            $patternId = $this->BusinessPageHelper
                 ->guessBestPatternIdForEntity(new \ReflectionClass($businessEntityInstance), $businessEntityInstance->getId());
         }
 

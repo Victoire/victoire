@@ -6,8 +6,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
+use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
+use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
@@ -39,7 +39,7 @@ class PageSeoController extends Controller
         $businessProperties = array();
 
         //if the page is a business entity template page
-        if ($page instanceof BusinessEntityPage || $page instanceof BusinessEntityPagePattern) {
+        if ($page instanceof BusinessPage || $page instanceof BusinessTemplate) {
             //we can use the business entity properties on the seo
             $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($page->getBusinessEntityId());
             $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');

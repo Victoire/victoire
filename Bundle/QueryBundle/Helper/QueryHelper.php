@@ -5,7 +5,7 @@ namespace Victoire\Bundle\QueryBundle\Helper;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPage;
+use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 
 /**
@@ -14,9 +14,9 @@ use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
  */
 class QueryHelper
 {
-    protected $entityManager = null;
     protected $businessEntityHelper = null;
     protected $currentView;
+
 
     /**
      * Constructor
@@ -25,9 +25,8 @@ class QueryHelper
      * @param BusinessEntityHelper $businessEntityHelper
      * @param CurrentViewHelper    $currentView
      */
-    public function __construct(EntityManager $entityManager, BusinessEntityHelper $businessEntityHelper, CurrentViewHelper $currentView)
+    public function __construct(BusinessEntityHelper $businessEntityHelper, CurrentViewHelper $currentView)
     {
-        $this->entityManager = $entityManager;
         $this->businessEntityHelper = $businessEntityHelper;
         $this->currentView = $currentView;
     }
@@ -36,17 +35,14 @@ class QueryHelper
      * Get the query builder base. This makes a "select  from item XXX"
      * use the item for doing the left join or where dql
      *
-     * @param \Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern $containerEntity
+     * @param \Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate $containerEntity
      *
      * @return QueryBuilder
      *
      * @throws Exception
      */
-    public function getQueryBuilder($containerEntity)
+    public function getQueryBuilder($containerEntity, EntityManager $em)
     {
-        //services
-        $entityManager = $this->entityManager;
-
         if ($containerEntity === null) {
             throw new \Exception('The container entity parameter must not be null.');
         }
@@ -73,7 +69,7 @@ class QueryHelper
 
         $businessClass = $businessEntity->getClass();
 
-        $itemsQueryBuilder = $entityManager
+        $itemsQueryBuilder = $em
             ->createQueryBuilder()
             ->select('main_item')
             ->from($businessClass, 'main_item');
@@ -83,7 +79,7 @@ class QueryHelper
 
     /**
      * Check that the object is not null and has the query trait
-     * @param \Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern $containerEntity
+     * @param \Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate $containerEntity
      *
      * @throws \Exception
      */
@@ -102,18 +98,15 @@ class QueryHelper
     /**
      * Get the results from the sql after adding the
      *
-     * @param \Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern $containerEntity
-     * @param QueryBuilder                                                               $itemsQueryBuilder
+     * @param mixed        $containerEntity
+     * @param QueryBuilder $itemsQueryBuilder
      *
      * @throws \Exception
      *
      * @return QueryBuilder The QB to list of objects
      */
-    public function buildWithSubQuery($containerEntity, QueryBuilder $itemsQueryBuilder)
+    public function buildWithSubQuery($containerEntity, QueryBuilder $itemsQueryBuilder, EntityManager $em)
     {
-        //services
-        $entityManager = $this->entityManager;
-
         //test the container entity
         if ($containerEntity === null) {
             throw new \Exception('The container entity parameter must not be null.');
@@ -125,10 +118,13 @@ class QueryHelper
 
         //get the query of the container entity
         $query = $containerEntity->getQuery();
+        if (method_exists($containerEntity, 'additionnalQueryPart')) {
+            $query = $containerEntity->additionnalQueryPart();
+        }
         $orderBy = json_decode($containerEntity->getOrderBy(), true);
         if ($query !== '' && $query !== null) {
 
-            $subQuery = $this->entityManager->createQueryBuilder()
+            $subQuery = $em->createQueryBuilder()
                                 ->select('item.id')
                                 ->from($itemsQueryBuilder->getRootEntities()[0], 'item');
 
@@ -153,10 +149,10 @@ class QueryHelper
         $currentView = $this->currentView;
 
         // If the current page is a BEP, we parse all its properties and inject them as query parameters
-        if ($currentView() && $currentView() instanceof BusinessEntityPage && null !== $currentEntity = $currentView()->getBusinessEntity()) {
+        if ($currentView() && $currentView() instanceof BusinessPage && null !== $currentEntity = $currentView()->getBusinessEntity()) {
 
             // NEW
-            $metadatas = $this->entityManager->getClassMetadata(get_class($currentEntity));
+            $metadatas = $em->getClassMetadata(get_class($currentEntity));
             foreach ($metadatas->fieldMappings as $fieldName => $field) {
                 if (strpos($query, ":".$fieldName) !== false) {
                     $itemsQueryBuilder->setParameter($fieldName, $metadatas->getFieldValue($currentEntity, $fieldName));
@@ -175,4 +171,5 @@ class QueryHelper
 
         return $itemsQueryBuilder;
     }
+
 }

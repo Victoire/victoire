@@ -2,7 +2,25 @@
 
 ## [Unreleased](https://github.com/victoire/victoire/tree/HEAD)
 
-[Full Changelog](https://github.com/victoire/victoire/compare/1.1.0...HEAD)
+[Full Changelog](https://github.com/victoire/victoire/compare/1.2.0...HEAD)
+
+## [1.2.0](https://github.com/victoire/victoire/tree/1.2.0) (2015-09-16)
+[Full Changelog](https://github.com/victoire/victoire/compare/1.1.0...1.2.0)
+
+- Refactor BusinessEntityPage, Patterns and change view cache storage strategy [#184](https://github.com/Victoire/victoire/pull/186) ([paulandrieux](https://github.com/paulandrieux)) 
+- Make ReceiverProperty optionnal and use NotBlank Constraint to throw Exception if not defined [#186](https://github.com/Victoire/victoire/pull/186) ([gregumo](https://github.com/gregumo))
+- change relation between Business entities and Entity proxy, manty to … [#183](https://github.com/Victoire/victoire/pull/183) ([vincent-chapron](https://github.com/vincent-chapron))
+- Fix refresh on change and link type [#182](https://github.com/Victoire/victoire/pull/182) ([vincent-chapron](https://github.com/vincent-chapron))
+- Fix ID collision issue[#181](https://github.com/Victoire/victoire/pull/181) ([paulandrieux](https://github.com/paulandrieux))
+- Add background in modal style [#180](https://github.com/Victoire/victoire/pull/180) ([vincent-chapron](https://github.com/vincent-chapron))
+- redactor didn't work with refresh on change [#179](https://github.com/Victoire/victoire/pull/179) ([vincent-chapron](https://github.com/vincent-chapron))
+- add childrenSlot column [#178](https://github.com/Victoire/victoire/pull/178) ([lenybernard](https://github.com/lenybernard))
+- refactor views management [#176](https://github.com/Victoire/victoire/pull/176) ([Charlie-Lucas](https://github.com/Charlie-Lucas))
+- remove base $http config to not always do XMLHttpRequest for ajax wit… [#175](https://github.com/Victoire/victoire/pull/175) ([lenybernard](https://github.com/lenybernard))
+- Fix page build on find page by reference [#174](https://github.com/Victoire/victoire/pull/174) ([lenybernard](https://github.com/lenybernard))
+- Fix widget form active tab [#173](https://github.com/Victoire/victoire/pull/173) ([lenybernard](https://github.com/lenybernard))
+- use BusinessEntity::id instead name and rename variable from entityName to businessEntityId [#172](https://github.com/Victoire/victoire/pull/172) ([lenybernard](https://github.com/lenybernard))
+
 
 ## [1.1.0](https://github.com/victoire/victoire/tree/1.1.0) (2015-08-12)
 [Full Changelog](https://github.com/victoire/victoire/compare/1.0.1...1.1.0)

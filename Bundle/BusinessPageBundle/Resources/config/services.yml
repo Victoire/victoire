@@ -1,0 +1,86 @@
+parameters:
+    victoire_business_page.BusinessTemplate_chain.class: Victoire\Bundle\BusinessPageBundle\Chain\BusinessTemplateChain
+    victoire_business_page.BusinessTemplate_chain.BusinessTemplate.class: Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate
+
+services:
+    victoire_business_page.business_template.form.type:
+        class: Victoire\Bundle\BusinessPageBundle\Form\BusinessTemplateType
+        arguments:
+            - "%victoire_i18n.available_locales%"
+            - "@request_stack"
+        tags:
+            - { name: form.type, alias: victoire_business_template_type }
+
+    victoire_business_page.business_page.form.type:
+        class: Victoire\Bundle\BusinessPageBundle\Form\BusinessPageType
+        arguments:
+            - "%victoire_i18n.available_locales%"
+            - "@request_stack"
+        tags:
+            - { name: form.type, alias: victoire_business_page_type }
+
+
+    victoire_business_page.business_page_helper:
+        class: Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper
+        arguments:
+            - "@victoire_query.query_helper"
+            - "@victoire_core.view_cache_helper"
+            - "@victoire_core.helper.business_entity_helper"
+            - "@victoire_business_entity.converter.parameter_converter"
+            - "@victoire_core.url_builder"
+
+    victoire_business_page.business_page_builder:
+        class: Victoire\Bundle\BusinessPageBundle\Builder\BusinessPageBuilder
+        arguments:
+            - "@victoire_core.helper.business_entity_helper"
+            - "@victoire_core.url_builder"
+            - "@victoire_business_entity.converter.parameter_converter"
+
+    victoire_business_page.BusinessTemplate_chain:
+        class: "%victoire_business_page.BusinessTemplate_chain.class%"
+
+    victoire_business_page.BusinessTemplate_chain.BusinessTemplate:
+        class: "%victoire_business_page.BusinessTemplate_chain.BusinessTemplate.class%"
+        tags:
+            -  { name: victoire_core.bussinessEntityPagePattern, alias: default }
+
+    victoire_business_page.manager.business_template_reference_builder:
+        class: Victoire\Bundle\BusinessPageBundle\Manager\BusinessTemplateReferenceBuilder
+        parent: victoire_core.manager.base_view_manager
+        arguments:
+            - @victoire_business_page.manager.virtual_business_page_reference_builder
+            - @victoire_business_page.business_page_builder
+            - @victoire_business_page.business_page_helper
+        tags:
+            - { name: victoire_core.view_manager, view: Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate }
+
+    victoire_business_page.manager.business_page_reference_builder:
+        class: Victoire\Bundle\BusinessPageBundle\Manager\BusinessPageReferenceBuilder
+        parent: victoire_core.manager.base_view_manager
+        tags:
+            - { name: victoire_core.view_manager, view: Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage }
+
+    victoire_business_page.manager.virtual_business_page_reference_builder:
+        class: Victoire\Bundle\BusinessPageBundle\Manager\VirtualBusinessPageReferenceBuilder
+        parent: victoire_core.manager.base_view_manager
+        tags:
+            - { name: victoire_core.view_manager, view: Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage }
+
+    victoire_business_page.transformer.virtual_to_business_page_transformer:
+        class: Victoire\Bundle\BusinessPageBundle\Transformer\VirtualToBusinessPageTransformer
+
+    ####################################################################################################################
+    # Menu
+    ####################################################################################################################
+    victoire_business_page.business_template_menu_listener:
+        class: Victoire\Bundle\BusinessPageBundle\Listener\BusinessPageMenuListener
+        arguments:
+            - "@victoire_core.admin_menu_builder"
+        tags:
+            - { name: kernel.event_listener, event: victoire_core.build_menu, method: addGlobal, priority: 50 }
+
+    victoire_core.business_template_menu.contextual:
+        class: Victoire\Bundle\BusinessPageBundle\Listener\BusinessPageMenuListener
+        arguments: ["@victoire_core.admin_menu_builder"]
+        tags:
+            - { name: kernel.event_listener, event: victoire_core.business_template_menu.contextual, method: addContextual }

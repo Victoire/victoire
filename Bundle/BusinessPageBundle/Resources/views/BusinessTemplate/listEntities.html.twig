@@ -1,0 +1,25 @@
+{% trans_default_domain "victoire" %}
+
+{% if items|length %}
+<div class="vic-row">
+    <div class="vic-col-md-8">
+        <ul>
+        {% for item in items %}
+                <li>
+                    <a href="{{ path('victoire_core_page_show_by_id', {viewId: BusinessTemplate.id, entityId: item.id}) }}">
+                        {{ path('victoire_core_page_show_by_id', {viewId: BusinessTemplate.id, entityId: item.id}) }}
+                    </a>
+                </li>
+        {% endfor %}
+        </ul>
+    </div>
+    <div class="vic-col-md-4">
+        {% if BusinessTemplate.query != '' %}
+            {{ 'list.entities.query'|trans }}: {{ BusinessTemplate.query }}
+        {% endif %}
+    </div>
+</div>
+{% else %}
+<br/>
+        {{ 'business_template.listEntities.empty'|trans|raw }}
+{% endif %}

@@ -37,20 +37,6 @@ class ViewRepository extends NestedTreeRepository
     }
 
     /**
-     * Get the view by the url
-     *
-     * @param string $url
-     *
-     * @return Page
-     */
-    public function findOneByUrl($url)
-    {
-        $queryBuilder = $this->getOneByUrl($url);
-
-        return $queryBuilder->getQuery()->getOneOrNullResult();
-    }
-
-    /**
      * Filter the query by the sitemap index (=visibility)
      * @param bool $indexed
      *

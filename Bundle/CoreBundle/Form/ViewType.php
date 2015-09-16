@@ -8,7 +8,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Victoire\Bundle\BusinessEntityPageBundle\Entity\BusinessEntityPagePattern;
+use Victoire\Bundle\BlogBundle\Entity\ArticleTemplate;
+use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
+use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 
@@ -62,7 +64,7 @@ abstract class ViewType extends AbstractType
                 $form->add('template', null, array(
                     'label'         => 'form.view.type.template.label',
                     'property'      => 'name',
-                    'required'      => !$view instanceof Template || $view instanceof BusinessEntityPagePattern,
+                    'required'      => !$view instanceof Template || $view instanceof BusinessTemplate,
                     'query_builder' => $getAllTemplateWithoutMe,
                 ));
             }
@@ -76,29 +78,33 @@ abstract class ViewType extends AbstractType
                     )
                 );
             }
-            // vérifie si l'objet Product est "nouveau"
-            // Si aucune donnée n'est passée au formulaire, la donnée est "null".
-            // Ce doit être considéré comme une nouvelle "View"
-            if (!$view || null === $view->getId()) {
-                $getAllPageWithoutMe = function(EntityRepository $bpr) {
-                    return $bpr->getAll()->getInstance();
-                };
-            } else {
-                $getAllPageWithoutMe = function(EntityRepository $bpr) use ($view) {
-                    return $bpr->getAll()
-                        ->getInstance()
-                        ->andWhere('page.id != :pageId')
-                        ->setParameter('pageId', $view->getId());
-                };
-            }
 
-            $form->add('parent', null, array(
-                'label'         => 'form.view.type.parent.label',
-                'query_builder' => $getAllPageWithoutMe,
-            ));
+            //If view is either a BEPP or a BEP and is not an Article BEP, we do not allow to choose parent because it will be set
+            if (!$view instanceof ArticleTemplate) {
+                // vérifie si l'objet Product est "nouveau"
+                // Si aucune donnée n'est passée au formulaire, la donnée est "null".
+                // Ce doit être considéré comme une nouvelle "View"
+                if (!$view || null === $view->getId()) {
+                    $getAllPageWithoutMe = function(EntityRepository $bpr) {
+                        return $bpr->getAll()->getInstance();
+                    };
+                } else {
+                    $getAllPageWithoutMe = function(EntityRepository $bpr) use ($view) {
+                        return $bpr->getAll()
+                            ->getInstance()
+                            ->andWhere('page.id != :pageId')
+                            ->setParameter('pageId', $view->getId());
+                    };
+                }
 
-            if ($view instanceof BusinessEntityPage) {
-                $form->remove('slug');
+                $form->add(
+                    'parent',
+                    null,
+                    array(
+                        'label' => 'form.view.type.parent.label',
+                        'query_builder' => $getAllPageWithoutMe,
+                    )
+                );
             }
         });
 

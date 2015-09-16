@@ -36,7 +36,7 @@ Component | Description
 [**AnalyticsBundle**][5] | This bundle record the user's navigation history
 [**BlogBundle**][2] | Allow to create and manage one or several blog
 [**BusinessEntityBundle**][3] | Manage BusinessEntity
-[**BusinessEntityPageBundle**][4] | Define and manage [BusinessEntityPage][18] and [BusinessEntityPagePattern][19]
+[**BusinessPageBundle**][4] | Define and manage [BusinessPage][18] and [BusinessTemplate][19]
 [**CoreBundle**][1] | The core
 [**FilterBundle**][23] | Allows to filter any list's results
 [**FormBundle**][6] | Based on MopaBootstrapBundle, it brings some cool form themes
@@ -67,7 +67,7 @@ License can be found [here](http://github.com/victoire/victoire/blob/master/lice
 [1]:  http://github.com/victoire/victoire/blob/master/Bundle/CoreBundle/README.md
 [2]:  http://github.com/victoire/victoire/blob/master/Bundle/BlogBundle/README.md
 [3]:  http://github.com/victoire/victoire/blob/master/Bundle/BusinessEntityBundle/README.md
-[4]:  http://github.com/victoire/victoire/blob/master/Bundle/BusinessEntityPageBundle/README.md
+[4]:  http://github.com/victoire/victoire/blob/master/Bundle/BusinessPageBundle/README.md
 [5]:  http://github.com/victoire/victoire/blob/master/Bundle/AnalyticsBundle/README.md
 [6]:  http://github.com/victoire/victoire/blob/master/Bundle/FormBundle/README.md
 [7]:  http://github.com/victoire/victoire/blob/master/Bundle/MediaBundle/README.md
@@ -81,8 +81,8 @@ License can be found [here](http://github.com/victoire/victoire/blob/master/lice
 [15]: http://github.com/victoire/victoire/blob/master/Bundle/WidgetBundle/README.md
 [16]: http://github.com/victoire/victoire/blob/master/Bundle/WidgetMapBundle/README.md
 [17]: http://github.com/victoire/victoire/blob/master/Bundle/I18nBundle/README.md
-[18]: http://github.com/victoire/victoire/blob/master/Bundle/BusinessEntityPageBundle/Resources/doc/BusinessEntityPage.md
-[19]: http://github.com/victoire/victoire/blob/master/Bundle/BusinessEntityPageBundle/Resources/doc/BusinessEntityPagePattern.md
+[18]: http://github.com/victoire/victoire/blob/master/Bundle/BusinessPageBundle/Resources/doc/BusinessPage.md
+[19]: http://github.com/victoire/victoire/blob/master/Bundle/BusinessPageBundle/Resources/doc/BusinessTemplate.md
 [20]: http://github.com/victoire/victoire/blob/master/Bundle/SitemapBundle/README.md
 [21]: http://github.com/Kunstmaan/KunstmaanMediaBundle
 [22]: http://github.com/victoire/victoire/blob/master/Bundle/PageBundle
