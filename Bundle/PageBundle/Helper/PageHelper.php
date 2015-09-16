@@ -130,7 +130,7 @@ class PageHelper extends ViewHelper
                 $viewReference = $this->viewCacheHelper->getReferenceByParameters($parameters);
             }
 
-            $page = $this->findPageByReference($viewReference, $parameters['url']);
+            $page = $this->findPageByReference($viewReference, $parameters);
         }
 
         return $page;
@@ -249,7 +249,7 @@ class PageHelper extends ViewHelper
      *
      * @return View
      */
-    public function findPageByReference($viewReference, $url = null)
+    public function findPageByReference($viewReference, $parameters = null)
     {
         $page = null;
         //get the page
@@ -284,7 +284,7 @@ class PageHelper extends ViewHelper
             }
         }
 
-        $this->checkPageValidity($page, $entity, $url);
+        $this->checkPageValidity($page, $entity, $parameters);
         $this->widgetMapBuilder->build($page);
         $page->setUrl($this->urlBuilder->buildUrl($page));
 
@@ -298,11 +298,15 @@ class PageHelper extends ViewHelper
      *
      * @throws NotFoundHttpException
      */
-    protected function checkPageValidity($page, $entity = null, $url = null)
+    protected function checkPageValidity($page, $entity = null, $parameters = null)
     {
         $errorMessage = 'The page was not found';
-        if ($url) {
-            $errorMessage .= " for url $url";
+        if ($parameters) {
+
+            array_walk($parameters, function ($key, $parameter) {
+                    return $key . ': '. $parameter;
+                });
+            $errorMessage .= " for parameters ".implode(', ', $parameters);
         }
         $isPageOwner = false;
 
