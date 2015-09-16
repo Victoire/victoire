@@ -27,7 +27,7 @@ Feature: Edit a widget
     Scenario: I can create a new Business entity page pattern, create a widget and edit this widget
         When I select "Force" from the "1" select of "content" slot
         Then I should see "Créer"
-        When I follow "Jedi"
+        When I follow the tab "Jedi"
         And I follow "Objet courant"
         And I select "side" from "jedi_businessEntity_victoire_widget_form_force[fields][side]"
         When I submit the widget
@@ -51,7 +51,7 @@ Feature: Edit a widget
         When I switch to "edit" mode
         And I edit the "Force" widget
         Then I should see "Widget #1 - Force"
-        When I follow "Jedi"
+        When I follow the tab "Jedi"
         And I follow "Requête"
         When I select "side" from "jedi_query_victoire_widget_form_force[fields][side]"
         And I submit the widget
@@ -64,6 +64,6 @@ Feature: Edit a widget
         When I follow "Vaisseaux"
         And I follow "Choix"
         Then I should not see "Côté de la force"
-        When I follow "Jedi"
+        When I follow the tab "Jedi"
         And I follow "Choix"
         Then I should see "Côté de la force"
