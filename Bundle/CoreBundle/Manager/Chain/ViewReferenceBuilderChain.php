@@ -39,6 +39,6 @@ class ViewReferenceBuilderChain
         {
             return $this->viewsReferenceBuilders[$viewClass];
         }
-        throw new ServiceNotFoundException('No view manager found for ' . $viewClass);
+        throw new ServiceNotFoundException('No view reference builder found for ' . $viewClass);
     }
 }

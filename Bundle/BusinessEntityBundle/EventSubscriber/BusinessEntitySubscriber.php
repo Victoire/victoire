@@ -60,13 +60,13 @@ class BusinessEntitySubscriber implements EventSubscriber
         $businessEntity = $this->container->get('victoire_core.helper.business_entity_helper')->findByEntityInstance($entity);
 
         if ($businessEntity) {
-            $patterns = $entityManager->getRepository('VictoireBusinessPageBundle:BusinessTemplate')->findPagePatternByBusinessEntity($businessEntity);
-            foreach ($patterns as $pattern) {
+            $businessTemplates = $entityManager->getRepository('VictoireBusinessPageBundle:BusinessTemplate')->findPagePatternByBusinessEntity($businessEntity);
+            foreach ($businessTemplates as $businessTemplate) {
                 /** @var BusinessPageRepository $bepRepo */
                 $bepRepo = $entityManager->getRepository('VictoireBusinessPageBundle:BusinessPage');
-                $virtualBusinessPage = $this->container->get('victoire_business_page.business_page_builder')->generateEntityPageFromPattern($pattern, $entity);
+                $virtualBusinessPage = $this->container->get('victoire_business_page.business_page_builder')->generateEntityPageFromPattern($businessTemplate, $entity);
                 // Get the BusinessPage if exists for the given entity
-                $businessPage = $bepRepo->findPageByBusinessEntityAndPattern($pattern, $entity, $businessEntity);
+                $businessPage = $bepRepo->findPageByBusinessEntityAndPattern($businessTemplate, $entity, $businessEntity);
                 // If there is diff between persisted BEP and computed, persist the change
                 $scheduledForRemove = false;
                 foreach ($eventArgs->getEntityManager()->getUnitOfWork()->getScheduledEntityDeletions() as $deletion) {
