@@ -122,6 +122,12 @@ class PageHelper extends ViewHelper
     {
         if (!empty($parameters['id']) && !preg_match('/^ref_/', $parameters['id'])) {
             $page = $this->em->getRepository('VictoireCoreBundle:View')->findOneById($parameters['id']);
+
+            $entity = null;
+            if (method_exists($page, 'getBusinessEntity')) {
+                $entity = $page->getBusinessEntity();
+            }
+            $this->checkPageValidity($page, $entity, $parameters);
         } else {
             $viewReference = $this->viewCacheHelper->getReferenceByParameters($parameters);
             if ($viewReference === null && !empty($parameters['viewId'])) {
