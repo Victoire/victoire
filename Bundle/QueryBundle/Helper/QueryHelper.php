@@ -98,8 +98,8 @@ class QueryHelper
     /**
      * Get the results from the sql after adding the
      *
-     * @param \Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate $containerEntity
-     * @param QueryBuilder                                                               $itemsQueryBuilder
+     * @param mixed        $containerEntity
+     * @param QueryBuilder $itemsQueryBuilder
      *
      * @throws \Exception
      *
