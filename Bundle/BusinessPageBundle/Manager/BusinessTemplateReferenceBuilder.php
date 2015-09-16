@@ -57,7 +57,7 @@ class BusinessTemplateReferenceBuilder extends BaseReferenceBuilder
             $page = $this->businessEntityPageBuilder->generateEntityPageFromPattern($currentPattern, $entity);
             $this->businessEntityPageBuilder->updatePageParametersByEntity($page, $entity);
 
-            $viewsReferences = array_merge($viewsReferences, $this->virtualBusinessPageReferenceBuilder->buildReference($page, $entity, $em));
+            $viewsReferences = array_merge($viewsReferences, $this->virtualBusinessPageReferenceBuilder->buildReference($page, $em));
 
             //I refresh this partial entity from em. If I don't do it, everytime I'll request this entity from em it'll be partially populated
             $em->refresh($entity);
