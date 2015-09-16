@@ -29,7 +29,7 @@ Feature: Create business entity pages
         Then I switch to "layout" mode
         When I select "Force" from the "1" select of "content" slot
         Then I should see "Créer"
-        When I follow "Jedi"
+        Then I follow the tab "Jedi"
         And I follow "Objet courant"
         And I select "side" from "jedi_businessEntity_victoire_widget_form_force[fields][side]"
         And I submit the widget

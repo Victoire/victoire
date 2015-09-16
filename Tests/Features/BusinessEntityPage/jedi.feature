@@ -74,8 +74,8 @@ Feature: Manage jedis
         When I fill in "Nom" with "Fiche Jedi - {{item.name}}"
         And I fill in "Url" with "fiche-jedi-{{item.slug}}"
         And I follow "Créer"
-        Given I am on "/fr/fiche-jedi-anakin"
         Then I should see "La représentation métier a bien été créé"
+        Given I am on "/fr/fiche-jedi-anakin"
         And I switch to "layout" mode
         When I select "Force" from the "1" select of "content" slot
         Then I should see "Créer"
