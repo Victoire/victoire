@@ -41,7 +41,7 @@ class QueryHelper
      *
      * @throws Exception
      */
-    public function getQueryBuilder($containerEntity, EntityManager $em = null)
+    public function getQueryBuilder($containerEntity, EntityManager $em)
     {
         if ($containerEntity === null) {
             throw new \Exception('The container entity parameter must not be null.');
