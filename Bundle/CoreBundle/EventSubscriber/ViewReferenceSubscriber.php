@@ -98,7 +98,7 @@ class ViewReferenceSubscriber implements EventSubscriber
     public function postPersist(LifecycleEventArgs $eventArgs)
     {
         $entity = $eventArgs->getEntity();
-        if ($entity instanceof WebViewInterface) {
+        if ($entity instanceof View) {
             $em = $eventArgs->getEntityManager();
             $this->manageViewUrl($entity, $em, $em->getUnitOfWork());
         }
