@@ -73,18 +73,6 @@ class ViewHelper
     }
 
 
-    /**
-     * This method get all views (BasePage and Template) in DB and return the references, including non persisted Business entity page (pattern and businessEntityId based)
-     * @return array the computed views as array
-     */
-    public function getAllViewsReferences()
-    {
-
-        $xml = $this->readCache();
-        $viewsReferences = $this->viewReferenceHelper->convertXmlCacheToArray($xml);
-
-        return $viewsReferences;
-    }
 
 
 
