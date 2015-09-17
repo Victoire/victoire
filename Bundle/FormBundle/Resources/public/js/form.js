@@ -15,12 +15,16 @@ $vic(document).on('change', 'select[data-refreshOnChange="true"], input:checkbox
     var form = $vic(this).parents('form');
     loading(true);
 
-    var target = ".vic-modal-body .vic-container-fluid .vic-tab-pane.vic-active";
+    var targetClass = ".vic-modal-body .vic-container-fluid .vic-tab-pane.vic-active";
     if ($vic(this).data('target')) {
-        target = $vic(this).data('target');
+        targetClass = $vic(this).data('target');
     } else if ($vic(this).parents('.vic-modal').hasClass('-stylize')) {
-        target = ".vic-modal-body .vic-container-fluid";
+        targetClass = ".vic-modal-body .vic-container-fluid";
     }
+
+    //Get last element of visible target class
+    var $target = $vic(document).find(targetClass + ':visible');
+    $target = $target.last();
 
     $vic.ajax({
         type: form.attr('method'),
@@ -28,8 +32,8 @@ $vic(document).on('change', 'select[data-refreshOnChange="true"], input:checkbox
         data: form.serialize(),
         async: true
     }).done(function(response){
-        $vic(target).html(response.html);
-        var scripts = $vic(target).find("script");
+        $target.html(response.html);
+        var scripts = $target.find("script");
         evalAll(scripts);
         loading(false);
     }).fail(function(response) {

@@ -152,8 +152,14 @@ class WidgetManager
 
         $form = $this->widgetFormBuilder->callBuildFormSwitchParameters($widget, $view, $entity, $positionReference);
 
+        $noValidate = $request->query->get('novalidate', false);
+
         $form->handleRequest($request);
-        if ($request->query->get('novalidate', false) === false && $form->isValid()) {
+        if ($noValidate === false && $form->isValid()) {
+            if (!$view->getId()) {
+                //create a view for the business entity instance if we are currently on a virtual one
+                $this->entityManager->persist($view);
+            }
 
             //get the widget from the form
             $widget = $form->getData();
@@ -167,7 +173,7 @@ class WidgetManager
             $this->entityManager->persist($widget);
             $this->entityManager->flush();
 
-//            //create the new widget map
+            //create the new widget map
             $widgetMapEntry = new WidgetMap();
             $widgetMapEntry->setAction(WidgetMap::ACTION_CREATE);
             $widgetMapEntry->setWidgetId($widget->getId());
@@ -194,7 +200,7 @@ class WidgetManager
             //get the errors as a string
             $response = array(
                 "success" => false,
-                "message" => $formErrorHelper->getRecursiveReadableErrors($form),
+                "message" => $noValidate === false ? $formErrorHelper->getRecursiveReadableErrors($form) : null,
                 "html"    => $this->widgetFormBuilder->renderNewForm($form, $widget, $slotId, $view, $entity),
             );
         }
@@ -241,9 +247,9 @@ class WidgetManager
                 $form = $this->widgetFormBuilder->buildForm($widget, $currentView);
             }
 
+            $noValidate = $request->query->get('novalidate', false);
             $form->handleRequest($request);
-
-            if ($request->query->get('novalidate', false) === false && $form->isValid()) {
+            if ($noValidate === false && $form->isValid()) {
                 $widget->setBusinessEntityId($businessEntityId);
 
                 $this->entityManager->persist($widget);
@@ -264,7 +270,7 @@ class WidgetManager
                 //Return a message for developer in console and form view in order to refresh view and show form errors
                 $response = array(
                     "success" => false,
-                    "message" => $formErrorHelper->getRecursiveReadableErrors($form),
+                    "message" => $noValidate === false ? $formErrorHelper->getRecursiveReadableErrors($form) : null,
                     "html"    => $this->widgetFormBuilder->renderForm($form, $widget, $businessEntityId),
                 );
             }
