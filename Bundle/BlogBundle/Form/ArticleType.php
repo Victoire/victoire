@@ -68,7 +68,8 @@ class ArticleType extends AbstractType
                     'required' => false,
                     'multiple' => true
                 )
-            );
+            )
+            ->remove('visibleOnFront');
 
             $articlePatterns = function(EntityRepository $repo) {
                 return $repo->getInstance()->andWhere("pattern.businessEntityId = 'article'");

@@ -1,5 +1,5 @@
 {% form_theme form 'VictoireFormBundle:Form:fields.html.twig' %}
-<form method="POST" action="{{path('victoire_blog_article_settings', {'id': article.id} )}}">
+<form method="POST" action="{{ action }}">
     <div class="vic-row">
         <div class="vic-col-md-4">
             {{ form_row(form.name) }}
@@ -10,24 +10,25 @@
                 <div class="vic-col-md-6">
                     {{ form_row(form.pattern) }}
                 </div>
+                {% if form.status is defined %}
                 <div class="vic-col-md-6">
                     {{ form_row(form.status) }}
                 </div>
+                {% endif %}
             </div>
-            <div class="vic-row">
-                <div class="vic-col-md-6">
-                    <div class="vic-form-group">
-                         <label for="victoire_article_settings_type_bodyClass">
-                            {{ 'form.page.type.slug.label'|trans({}, 'victoire') }}
-                         </label>
+            {% if form.slug is defined %}
+                <div class="vic-row">
+                    <div class="vic-col-md-6">
+                        <div class="vic-form-group">
+                            <label for="victoire_article_settings_type_bodyClass">
+                                 {{ 'form.page.type.slug.label'|trans({}, 'victoire') }}
+                             </label>
 
-                        {{ form_widget(form.slug) }}
+                            {{ form_widget(form.slug) }}
+                        </div>
                     </div>
                 </div>
-                <div class="vic-col-md-6">
-                    {{ form_row(form.visibleOnFront) }}
-                </div>
-            </div>
+            {% endif %}
             <div class="vic-row">
                 <div class="vic-col-md-6" id="vic-blog-article-setting-description">
                     {{ form_row(form.description) }}
