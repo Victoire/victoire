@@ -66,7 +66,7 @@ class BusinessPageBuilder
         $accessor = PropertyAccess::createPropertyAccessor();
 
         foreach ($patternProperties as $property) {
-            if (!in_array($property->getName(), array('id', 'widgetMap', 'slots', 'seo', 'i18n')) && !$property->isStatic()) {
+            if (!in_array($property->getName(), array('id', 'widgetMap', 'slots', 'seo', 'i18n', 'widgets')) && !$property->isStatic()) {
                 $value = $accessor->getValue($bepPattern, $property->getName());
                 $setMethod = 'set'.ucfirst($property->getName());
                 if (method_exists($page, $setMethod)) {
