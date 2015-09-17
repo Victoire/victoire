@@ -115,6 +115,10 @@ class CmsExtension extends \Twig_Extension_Core
         $viewReference = $reference = $this->viewCacheHelper->getReferenceByParameters(
             array('viewId' => $view->getId())
         );
+        if (!$viewReference) {
+            $viewReference = $view->setReference(['id' => $view->getId()]);
+        }
+
         $view->setReference($viewReference);
 
         return $this->widgetRenderer->renderUnlinkActionByWidgetId($widgetId, $view);
