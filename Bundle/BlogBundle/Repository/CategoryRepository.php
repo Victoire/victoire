@@ -12,13 +12,16 @@ class CategoryRepository extends NestedTreeRepository
 {
     use StateFullRepositoryTrait;
 
-    public function getOrderedCategories(Blog $blog)
+    /**
+     * @param $blogId
+     * @return $this
+     */
+    public function getOrderedCategories($blogId)
     {
         $this->qb = $this->getInstance('c_category')
-                            ->join('c_category.blog', 'c_blog')
-                            ->where('c_blog = :blog')
-                            ->setParameter('blog', $blog)
-        ;
+            ->leftJoin('c_category.blog', 'c_blog')
+            ->where('c_blog.id = :blogId')
+            ->setParameter('blogId', $blogId);
 
         return $this;
 
@@ -26,7 +29,7 @@ class CategoryRepository extends NestedTreeRepository
     public function getAll()
     {
         $this->qb = $this->getInstance('c_category')
-                    ->join('c_category.articles', 'c_article')
+            ->leftJoin('c_category.articles', 'c_article')
         ;
 
         return $this;
