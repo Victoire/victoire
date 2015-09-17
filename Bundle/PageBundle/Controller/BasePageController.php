@@ -95,7 +95,7 @@ class BasePageController extends Controller
             if (null !== $this->container->get('victoire_core.helper.business_entity_helper')->findByEntityInstance($page)) {
                 $page = $this->container
                         ->get('victoire_business_page.business_page_builder')
-                        ->generateEntityPageFromPattern($page->getTemplate(), $page);
+                        ->generateEntityPageFromPattern($page->getTemplate(), $page, $em);
             }
 
             $this->congrat($this->get('translator')->trans('victoire_page.create.success', array(), 'victoire'));
