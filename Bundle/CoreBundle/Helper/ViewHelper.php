@@ -72,7 +72,7 @@ class ViewHelper
             $viewsReferences = array_merge($viewsReferences, $this->viewReferenceBuilder->buildViewReference($viewReferencable, $this->em));
         }
 
-        $this->viewReferenceHelper->cleanVirtualViews($viewsReferences);
+        $viewsReferences = $this->viewReferenceHelper->cleanVirtualViews($viewsReferences);
 
         return $viewsReferences;
     }
