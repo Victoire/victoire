@@ -29,6 +29,7 @@ before_script:
 
 after_script:
   - php Tests/Functionnal/bin/console --env=test doctrine:database:drop --force
+  - cat $(php -r "echo sys_get_temp_dir();")/Victoire/logs/test.log
 
 script:
   - './vendor/bin/behat'

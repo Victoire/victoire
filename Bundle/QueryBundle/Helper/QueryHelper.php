@@ -74,6 +74,10 @@ class QueryHelper
             ->select('main_item')
             ->from($businessClass, 'main_item');
 
+        if (method_exists($containerEntity, 'getDeletedAt')) {
+            $itemsQueryBuilder->where('main_item.deletedAt IS NOT NULL');
+        }
+
         return $itemsQueryBuilder;
     }
 
