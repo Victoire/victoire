@@ -87,8 +87,10 @@ class ArticleType extends AbstractType
 
         if ($blogId) {
             $queryBuilder = $categoryRepo->getOrderedCategories($blogId)->getInstance();
+            $categoryRepo->clearInstance();
         } else {
             $queryBuilder = $categoryRepo->getAll()->getInstance();
+            $categoryRepo->clearInstance();
         }
 
         $form->add('category', 'hierarchy_tree', array(

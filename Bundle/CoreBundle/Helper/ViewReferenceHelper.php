@@ -104,11 +104,15 @@ class ViewReferenceHelper
                             && !empty($_viewReference['entityNamespace']) && $_viewReference['entityNamespace'] == $viewReference['entityNamespace']
                             && !empty($_viewReference['entityId']) && $_viewReference['entityId'] == $viewReference['entityId']
                             && !empty($_viewReference['patternId']) && $_viewReference['patternId'] == $viewReference['patternId']);
-                        
+
                         return $shouldRemove;
 
                     });
             }
+
+        }
+        foreach ($viewsReferences as $key => $viewReference) {
+
             // while viewReference url is found in viewreferences, increment the url slug to be unique
             $url = $viewReference['url'];
             $i = 1;
@@ -118,8 +122,9 @@ class ViewReferenceHelper
             }
             $viewsReferences[$key]['url'] = $url;
             $urls[] = $url;
-
         }
+
+
 
         return $viewsReferences;
 
