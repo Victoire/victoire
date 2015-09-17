@@ -74,10 +74,10 @@ class QueryHelper
             ->select('main_item')
             ->from($businessClass, 'main_item');
 
-        if (method_exists($containerEntity, 'getDeletedAt')) {
-            $itemsQueryBuilder->where('main_item.deletedAt IS NOT NULL');
+        $refClass = new $businessClass;
+        if (method_exists($refClass, 'getDeletedAt')) {
+            $itemsQueryBuilder->where('main_item.deletedAt IS NULL');
         }
-
         return $itemsQueryBuilder;
     }
 
