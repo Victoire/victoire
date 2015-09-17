@@ -13,4 +13,5 @@
 ```
 UPDATE `vic_view` SET type = 'businesspage' WHERE type = 'businessentitypage';
 UPDATE `vic_view` SET type = 'businesstemplate' WHERE type = 'businessentitypagepattern';
+UPDATE `vic_view` SET type = 'articletemplate' WHERE type = 'businessentitypage' AND business_entity_id = 'article' ;
 ```
