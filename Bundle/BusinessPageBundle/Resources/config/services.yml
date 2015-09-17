@@ -35,6 +35,7 @@ services:
             - "@victoire_core.helper.business_entity_helper"
             - "@victoire_core.url_builder"
             - "@victoire_business_entity.converter.parameter_converter"
+            - "@victoire_business_entity.provider.entity_proxy_provider"
 
     victoire_business_page.BusinessTemplate_chain:
         class: "%victoire_business_page.BusinessTemplate_chain.class%"

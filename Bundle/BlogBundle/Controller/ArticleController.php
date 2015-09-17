@@ -40,7 +40,7 @@ class ArticleController extends Controller
 
             //Auto creation of the BEP
             $page = $this->container->get('victoire_business_page.business_page_builder')
-                                ->generateEntityPageFromPattern($article->getPattern(), $article);
+                                ->generateEntityPageFromPattern($article->getPattern(), $article, $entityManager);
 
             // Transform VBP into BP
             $this->container->get('victoire_business_page.transformer.virtual_to_business_page_transformer')->transform($page);

@@ -79,8 +79,7 @@ class BusinessTemplateController extends Controller
     {
         //add the view to twig
         $this->get('twig')->addGlobal('view', $view);
-        $view->setReference(['id' => $view->getId()])
-        ;
+        $view->setReference(['id' => $view->getId()]);
 
         $this->get('victoire_widget_map.builder')->build($view);
         $this->container->get('victoire_core.current_view')->setCurrentView($view);

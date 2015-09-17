@@ -2,23 +2,29 @@
 namespace Victoire\Bundle\BusinessPageBundle\Builder;
 
 
+use Doctrine\ORM\EntityManager;
 use Gedmo\Sluggable\Util\Urlizer;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
+use Victoire\Bundle\BusinessEntityBundle\Provider\EntityProxyProvider;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
 use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
 use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 
+/**
+ * @property mixed entityProxyProvider
+ */
 class BusinessPageBuilder
 {
 
     protected $businessEntityHelper;
     protected $urlBuilder;
     protected $parameterConverter;
+    protected $entityProxyProvider;
 
     //@todo Make it dynamic please
     protected $pageParameters = array(
@@ -30,11 +36,18 @@ class BusinessPageBuilder
         'locale',
     );
 
-    public function __construct(BusinessEntityHelper $businessEntityHelper, UrlBuilder $urlBuilder, ParameterConverter $parameterConverter)
+    /**
+     * @param BusinessEntityHelper $businessEntityHelper
+     * @param UrlBuilder $urlBuilder
+     * @param ParameterConverter $parameterConverter
+     * @param EntityProxyProvider $entityProxyProvider
+     */
+    public function __construct(BusinessEntityHelper $businessEntityHelper, UrlBuilder $urlBuilder, ParameterConverter $parameterConverter, EntityProxyProvider $entityProxyProvider)
     {
         $this->businessEntityHelper = $businessEntityHelper;
         $this->urlBuilder = $urlBuilder;
         $this->parameterConverter = $parameterConverter;
+        $this->entityProxyProvider = $entityProxyProvider;
 
     }
 
@@ -44,7 +57,7 @@ class BusinessPageBuilder
      * @param BusinessEntity                    $entity
      *
      */
-    public function generateEntityPageFromPattern(BusinessTemplate $bepPattern, $entity)
+    public function generateEntityPageFromPattern(BusinessTemplate $bepPattern, $entity, EntityManager $em)
     {
         $page = new VirtualBusinessPage();
 
@@ -53,7 +66,7 @@ class BusinessPageBuilder
         $accessor = PropertyAccess::createPropertyAccessor();
 
         foreach ($patternProperties as $property) {
-            if (!in_array($property->getName(), array('id', 'widgetMap', 'slots', 'seo', 'i18n')) && !$property->isStatic()) {
+            if (!in_array($property->getName(), array('id', 'widgetMap', 'slots', 'seo', 'i18n', 'widgets')) && !$property->isStatic()) {
                 $value = $accessor->getValue($bepPattern, $property->getName());
                 $setMethod = 'set'.ucfirst($property->getName());
                 if (method_exists($page, $setMethod)) {
@@ -94,8 +107,7 @@ class BusinessPageBuilder
                     ));
             }
 
-            $entityProxy = new EntityProxy();
-            $entityProxy->setEntity($entity, $businessEntity->getName());
+            $entityProxy = $this->entityProxyProvider->getEntityProxy($entity, $businessEntity, $em);
             //we update the url of the page
             $page->setUrl($pageUrl);
             $page->setSlug($pageSlug);

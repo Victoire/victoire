@@ -64,7 +64,7 @@ class BusinessEntitySubscriber implements EventSubscriber
             foreach ($businessTemplates as $businessTemplate) {
                 /** @var BusinessPageRepository $bepRepo */
                 $bepRepo = $entityManager->getRepository('VictoireBusinessPageBundle:BusinessPage');
-                $virtualBusinessPage = $this->container->get('victoire_business_page.business_page_builder')->generateEntityPageFromPattern($businessTemplate, $entity);
+                $virtualBusinessPage = $this->container->get('victoire_business_page.business_page_builder')->generateEntityPageFromPattern($businessTemplate, $entity, $entityManager);
                 // Get the BusinessPage if exists for the given entity
                 $businessPage = $bepRepo->findPageByBusinessEntityAndPattern($businessTemplate, $entity, $businessEntity);
                 // If there is diff between persisted BEP and computed, persist the change

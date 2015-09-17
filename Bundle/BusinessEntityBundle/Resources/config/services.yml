@@ -48,3 +48,8 @@ services:
             - "@event_dispatcher"
             - "@victoire_widget.widget_helper"
             - "%victoire_core.base_paths%"
+
+#  ==================  Provider ================== #
+
+    victoire_business_entity.provider.entity_proxy_provider:
+        class: Victoire\Bundle\BusinessEntityBundle\Provider\EntityProxyProvider
