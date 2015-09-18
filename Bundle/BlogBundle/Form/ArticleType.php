@@ -42,6 +42,7 @@ class ArticleType extends AbstractType
                     'label' => 'form.article.description.label',
                     'required' => false))
             ->add('image', 'media', array(
+                    'required' => false,
                     'label' => 'form.article.image.label',
                 ))
             ->add(
@@ -94,6 +95,7 @@ class ArticleType extends AbstractType
         }
 
         $form->add('category', 'hierarchy_tree', array(
+                'required' => false,
                 'label' => 'form.article.category.label',
                 'class' => "Victoire\\Bundle\\BlogBundle\\Entity\\Category",
                 'query_builder' => $queryBuilder,
