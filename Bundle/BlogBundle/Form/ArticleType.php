@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Victoire\Bundle\BlogBundle\Repository\TagRepository;
 use Victoire\Bundle\CoreBundle\DataTransformer\ViewToIdTransformer;
 
 /**
@@ -54,7 +55,7 @@ class ArticleType extends AbstractType
                 'tags',
                 array(
                     'required' => false,
-                    'multiple' => true
+                    'multiple' => true,
                 )
             )
             ->remove('visibleOnFront');
@@ -71,6 +72,19 @@ class ArticleType extends AbstractType
                 $this->manageCategories($data, $form->getParent());
             });
 
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+                $form = $event->getForm();
+                $data = $event->getData();
+                $this->manageTags($data, $form);
+            });
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function(FormEvent $event) {
+                $form = $event->getForm();
+                $data = $form->getData();
+                $this->manageTags($data, $form);
+            });
+
+
+
         $articlePatterns = function(EntityRepository $repo) {
             return $repo->getInstance()->andWhere("pattern.businessEntityId = 'article'");
         };
@@ -81,6 +95,24 @@ class ArticleType extends AbstractType
                 'query_builder' => $articlePatterns,
             ));
     }
+
+    protected function manageTags($data, $form)
+    {
+        $form->add(
+            'tags',
+            'tags',
+            array(
+                'required' => false,
+                'multiple' => true,
+                'query_builder' => function (TagRepository $er) use ($data){
+                    $qb = $er->filterByBlog($data->getBlog())->getInstance();
+                    $er->clearInstance();
+                    return $qb;
+                }
+            )
+        );
+    }
+
 
     protected function manageCategories($blogId, $form) {
         $categoryRepo = $this->entityManager->getRepository('Victoire\Bundle\BlogBundle\Entity\Category');
