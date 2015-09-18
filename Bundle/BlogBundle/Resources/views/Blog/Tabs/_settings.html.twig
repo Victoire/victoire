@@ -66,6 +66,9 @@
                 </div>
             </div>
 
+            {% if not blog.undeletable %}
+                <a href="{{ path('victoire_blog_delete', {'id': blog.id}) }}" data-toggle="vic-confirm" class="vic-btn vic-btn-danger vic-pull-left" data-title="{{ 'modal.form.page.settings.action.delete.confirm.title'|trans({}, 'victoire') }}" data-body="{{ 'modal.form.page.settings.action.delete.confirm.body'|trans({}, 'victoire') }}" data-modal="delete"><i class="fa fa-trash-o"></i> {{ 'modal.button.delete.title'|trans({}, 'victoire') }}</a>
+            {% endif %}
             <button type="submit" href="#" class="vic-btn vic-btn-success vic-pull-right" title="{{ ('modal.button.settings.title')|trans({}, 'victoire') }}"><i class="fa fa-check-circle"></i> {{ ('modal.button.settings.title')|trans({}, 'victoire') }}</button>
         </form>
     </div>
