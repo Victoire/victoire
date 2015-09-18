@@ -33,14 +33,19 @@ $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(
     $vic(form).trigger("victoire_widget_form_create_presubmit");
 
     loading(true);
-    var formdata = new FormData($vic(form)[0]);
 
+    formData = form.serialize();
+    var contentType = 'application/x-www-form-urlencoded; charset=UTF-8';
+    if ($vic(form).attr('enctype') == 'multipart/form-data') {
+        var formData = new FormData($vic(form)[0]);
+        var contentType = false;
+    }
     $vic.ajax({
         type: form.attr('method'),
         url : form.attr('action'),
-        data: formdata,
-        processData: false,
-        contentType: false
+        data        : formData,
+        processData : false,
+        contentType : contentType
     }).done(function(response){
         if (true === response.success) {
             if (response.hasOwnProperty("redirect")) {
@@ -92,14 +97,19 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update"]', function(
     $vic(form).trigger("victoire_widget_form_update_presubmit");
 
     loading(true);
-    var formdata = new FormData($vic(form)[0]);
 
+    formData = form.serialize();
+    var contentType = 'application/x-www-form-urlencoded; charset=UTF-8';
+    if ($vic(form).attr('enctype') == 'multipart/form-data') {
+        var formData = new FormData($vic(form)[0]);
+        var contentType = false;
+    }
     $vic.ajax({
         type: form.attr('method'),
         url : form.attr('action'),
-        data: formdata,
-        processData: false,
-        contentType: false
+        data        : formData,
+        processData : false,
+        contentType : contentType
     }).done(function(response){
         if (true === response.success) {
             if (response.hasOwnProperty("redirect")) {
