@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Victoire\Bundle\BlogBundle\Entity\Article;
 use Victoire\Bundle\BlogBundle\Entity\Blog;
+use Victoire\Bundle\BlogBundle\Entity\Tag;
 use Victoire\Bundle\BlogBundle\Event\ArticleEvent;
 use Victoire\Bundle\BlogBundle\VictoireBlogEvents;
 
@@ -36,6 +37,14 @@ class ArticleController extends Controller
         if ($form->isValid()) {
             $article->setAuthor($this->getUser());
             $entityManager->persist($article);
+            if (is_array($article->getTags())) {
+                /** @var Tag $tag */
+                foreach ($article->getTags() as $tag) {
+                    $tag->setBlog($article->getBlog());
+                    $entityManager->persist($tag);
+                }
+            }
+
             $entityManager->flush();
 
             //Auto creation of the BEP

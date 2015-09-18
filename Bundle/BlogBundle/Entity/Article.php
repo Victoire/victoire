@@ -367,7 +367,7 @@ class Article
     /**
      * Get tags
      *
-     * @return string
+     * @return [Tag]
      */
     public function getTags()
     {

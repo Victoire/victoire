@@ -29,6 +29,13 @@ class Blog extends BasePage
     protected $articles;
 
     /**
+     * @var string
+     *
+     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\BlogBundle\Entity\Tag", mappedBy="blog")
+     */
+    protected $tags;
+
+    /**
      * Constructor
      *
      */
@@ -141,5 +148,21 @@ class Blog extends BasePage
         $this->categories->removeElement($rootCategory);
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
+     * @param string $tags
+     */
+    public function setTags($tags)
+    {
+        $this->tags = $tags;
     }
 }

@@ -43,6 +43,11 @@ class Tag
     protected $articles;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Blog", inversedBy="tags")
+     */
+    protected $blog;
+
+    /**
      * undocumented function
      *
      * @return string
@@ -157,5 +162,21 @@ class Tag
     public function getArticles()
     {
         return $this->articles;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBlog()
+    {
+        return $this->blog;
+    }
+
+    /**
+     * @param mixed $blog
+     */
+    public function setBlog(Blog $blog)
+    {
+        $this->blog = $blog;
     }
 }
