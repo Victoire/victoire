@@ -380,7 +380,7 @@ class Article
      *
      * @return Article
      */
-    public function setImage(Media $image)
+    public function setImage(Media $image = null)
     {
         $this->image = $image;
 
