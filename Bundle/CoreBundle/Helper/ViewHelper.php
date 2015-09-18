@@ -73,6 +73,7 @@ class ViewHelper
         }
 
         $viewsReferences = $this->viewReferenceHelper->cleanVirtualViews($viewsReferences);
+        $viewsReferences = $this->viewReferenceHelper->uniqueUrls($viewsReferences);
 
         return $viewsReferences;
     }
