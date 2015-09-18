@@ -20,6 +20,7 @@ Background:
         Then I should see "Blog"
         When I follow "Blog"
         Then I should see "The Jedi network"
+        And I follow "Paramètres"
         And I should see "Supprimer"
         Given I follow "Supprimer"
         Then I should see "Cette action va supprimer définitivement cette page. Cette action est irréversible. Etes vous sûr ?"
