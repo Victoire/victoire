@@ -146,6 +146,7 @@ class ArticleController extends Controller
                 'html'    => $this->container->get('victoire_templating')->render(
                     $template,
                     array(
+                        'action'            => $this->generateUrl('victoire_blog_article_settings', ['id' => $article->getId()]) ,
                         'article'            => $article,
                         'form'               => $form->createView(),
                         'businessProperties' => $businessProperties,
