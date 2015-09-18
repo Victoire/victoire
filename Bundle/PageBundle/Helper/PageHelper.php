@@ -292,7 +292,11 @@ class PageHelper extends ViewHelper
 
         $this->checkPageValidity($page, $entity, $parameters);
         $this->widgetMapBuilder->build($page);
-        $page->setUrl($this->urlBuilder->buildUrl($page));
+        if (!empty($viewReference['url'])) {
+            $page->setUrl($viewReference['url']);
+        } else {
+            $page->setUrl($this->urlBuilder->buildUrl($page));
+        }
 
         return $page;
     }
