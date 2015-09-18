@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\SecurityContext;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
+use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Handler\WidgetExceptionHandler;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
@@ -115,8 +116,10 @@ class CmsExtension extends \Twig_Extension_Core
         $viewReference = $reference = $this->viewCacheHelper->getReferenceByParameters(
             array('viewId' => $view->getId())
         );
-        if (!$viewReference) {
+        if (!$viewReference && $view->getId() != '') {
             $viewReference = $view->setReference(['id' => $view->getId()]);
+        } elseif ($view instanceof VirtualBusinessPage) {
+            $viewReference = $view->setReference(['id' => $view->getTemplate()->getId()]);
         }
 
         $view->setReference($viewReference);
