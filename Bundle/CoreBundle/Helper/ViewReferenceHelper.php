@@ -50,11 +50,6 @@ class ViewReferenceHelper
         //Clean by searching by id
         $regex = sprintf("//viewReference[@id='%s']", $viewReference['id']);
 
-        //Clean by searching by url
-        if (isset($viewReference['url'])) {
-            $regex .= sprintf("| //viewReference[@url='%s']", $viewReference['url']);
-        }
-
         foreach ($rootNode->xpath($regex) as $item) {
             unset($item[0]);
         }
@@ -92,7 +87,6 @@ class ViewReferenceHelper
      */
     public function cleanVirtualViews($viewsReferences)
     {
-        $urls = [];
 
         foreach ($viewsReferences as $key => $viewReference) {
             // If viewReference is a persisted page, we want to clean virtual BEPs
@@ -111,6 +105,16 @@ class ViewReferenceHelper
             }
 
         }
+
+
+        return $viewsReferences;
+
+    }
+
+    public function uniqueUrls($viewsReferences)
+    {
+
+        $urls = [];
         foreach ($viewsReferences as $key => $viewReference) {
 
             // while viewReference url is found in viewreferences, increment the url slug to be unique
@@ -124,10 +128,7 @@ class ViewReferenceHelper
             $urls[] = $url;
         }
 
-
-
         return $viewsReferences;
-
     }
 
 }

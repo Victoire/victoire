@@ -112,11 +112,8 @@ class ViewReferenceSubscriber implements EventSubscriber
 
         foreach ($referencableViews as $referencableView) {
 
-            $viewReferences = $this->viewReferenceBuilder->buildViewReference($referencableView, $em);
-            $viewReferences = $this->viewCacheHelper->update($viewReferences);
+            $viewReferences = array_merge($viewReferences, $this->viewCacheHelper->update($this->viewReferenceBuilder->buildViewReference($referencableView, $em)));
         }
-
-
 
         foreach ($viewReferences as $key => $viewReference) {
             if ($view instanceof WebViewInterface && $view->getId() ) {

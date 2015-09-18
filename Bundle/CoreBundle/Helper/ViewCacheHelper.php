@@ -79,10 +79,6 @@ XML;
     {
         $rootNode = $this->readCache();
 
-
-        foreach ($viewReferences as $_viewReference) {
-            $this->viewReferenceHelper->removeViewReference($rootNode, $_viewReference);
-        }
         foreach ($viewReferences as $key => $_viewReference) {
             $parameters = [
                 'patternId' => !empty($_viewReference['patternId']) ? $_viewReference['patternId'] : null,
@@ -90,8 +86,8 @@ XML;
                 'viewNamespace' => 'Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage',
             ];
 
-            $viewsReferencesToRemove = $this->getAllReferenceByParameters($parameters);
             $this->viewReferenceHelper->removeViewReference($rootNode, ['id' => $_viewReference['id']]);
+            $viewsReferencesToRemove = $this->getAllReferenceByParameters($parameters);
             foreach ($viewsReferencesToRemove as $viewReferenceToRemove) {
                 $this->viewReferenceHelper->removeViewReference($rootNode, $viewReferenceToRemove);
             }
@@ -104,8 +100,10 @@ XML;
             }
         }
 
+        $allViewsReferences = $this->viewReferenceHelper->convertXmlCacheToArray($rootNode);
+        $allViewsReferences = $this->viewReferenceHelper->uniqueUrls($allViewsReferences);
 
-        $this->writeFile($rootNode);
+        $this->write($allViewsReferences);
 
         return $viewReferences;
 
