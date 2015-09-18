@@ -50,11 +50,6 @@ class ViewReferenceHelper
         //Clean by searching by id
         $regex = sprintf("//viewReference[@id='%s']", $viewReference['id']);
 
-        //Clean by searching by url
-        if (isset($viewReference['url'])) {
-            $regex .= sprintf("| //viewReference[@url='%s']", $viewReference['url']);
-        }
-
         foreach ($rootNode->xpath($regex) as $item) {
             unset($item[0]);
         }
