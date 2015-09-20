@@ -20,6 +20,6 @@ class ArticleTemplate extends BusinessTemplate
      */
     public function additionnalQueryPart()
     {
-        return sprintf("%s main_item.pattern = %s", $this->query ? $this->query . " AND " : "WHERE ", $this->getId());
+        return sprintf("%s main_item.pattern = %s", $this->query ? $this->query." AND " : "WHERE ", $this->getId());
     }
 }

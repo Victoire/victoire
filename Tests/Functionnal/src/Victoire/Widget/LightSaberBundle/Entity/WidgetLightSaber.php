@@ -64,7 +64,7 @@ class WidgetLightSaber extends Widget
     /**
      * Get length
      *
-     * @return string
+     * @return integer
      */
     public function getLength()
     {

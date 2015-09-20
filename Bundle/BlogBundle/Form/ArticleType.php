@@ -97,6 +97,9 @@ class ArticleType extends AbstractType
             ));
     }
 
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     */
     protected function manageTags($data, $form)
     {
         $form->add(
@@ -105,7 +108,7 @@ class ArticleType extends AbstractType
             array(
                 'required' => false,
                 'multiple' => true,
-                'query_builder' => function (TagRepository $er) use ($data){
+                'query_builder' => function(TagRepository $er) use ($data){
                     $qb = $er->filterByBlog($data->getBlog())->getInstance();
                     $er->clearInstance();
                     return $qb;
@@ -115,6 +118,9 @@ class ArticleType extends AbstractType
     }
 
 
+    /**
+     * @param \Symfony\Component\Form\FormInterface|null $form
+     */
     protected function manageCategories($blogId, $form) {
         $categoryRepo = $this->entityManager->getRepository('Victoire\Bundle\BlogBundle\Entity\Category');
 

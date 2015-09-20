@@ -2,20 +2,15 @@
 namespace Victoire\Bundle\BusinessPageBundle\Helper;
 
 use Doctrine\DBAL\Schema\View;
-use Symfony\Component\PropertyAccess\PropertyAccess;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
-use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
-use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
-use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
 use Victoire\Bundle\QueryBundle\Helper\QueryHelper;
 use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
 use Doctrine\ORM\EntityManager;
-use Gedmo\Sluggable\Util\Urlizer;
 
 /**
  * The business entity page pattern helper

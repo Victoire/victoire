@@ -305,7 +305,7 @@ trait StyleXSTrait {
 
     /**
      * Set image
-     * @param string|Media $image
+     * @param Media $image
      * @return $this
      */
     public function setContainerBackgroundImageXS(Media $image = null)

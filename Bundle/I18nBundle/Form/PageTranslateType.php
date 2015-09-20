@@ -35,7 +35,7 @@ class PageTranslateType extends AbstractType
         $builder
             ->add('name');
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
             $view = $event->getData();
             $form = $event->getForm();
 

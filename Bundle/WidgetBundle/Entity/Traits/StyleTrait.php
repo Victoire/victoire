@@ -6,7 +6,6 @@ use Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTraits\StyleXSTrait;
 use Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTraits\StyleSMTrait;
 use Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTraits\StyleMDTrait;
 use Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTraits\StyleLGTrait;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Style trait adds fields to place a widget in its container
@@ -14,10 +13,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 trait StyleTrait
 {
     /*******************        RESPONSIVE PROPERTIES         **********************/
-     use StyleXSTrait;
-     use StyleSMTrait;
-     use StyleMDTrait;
-     use StyleLGTrait;
+        use StyleXSTrait;
+        use StyleSMTrait;
+        use StyleMDTrait;
+        use StyleLGTrait;
 
     /*******************  GLOBAL PROPERTIES (NON RESPONSIVE)  **********************/
     public static $tags = array(

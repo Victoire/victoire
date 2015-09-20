@@ -9,7 +9,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\EventDispatcher\Event;
 use Victoire\Bundle\CoreBundle\Controller\BackendController;
 
 /**
@@ -156,12 +155,12 @@ class JediController extends BackendController
     }
 
     /**
-    * Creates a form to edit a Jedi entity.
-    *
-    * @param Jedi $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to edit a Jedi entity.
+     *
+     * @param Jedi $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
     private function createEditForm(Jedi $entity)
     {
         $form = $this->createForm(new JediType(), $entity, array(

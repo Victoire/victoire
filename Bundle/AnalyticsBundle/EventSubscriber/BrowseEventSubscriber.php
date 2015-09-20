@@ -4,8 +4,6 @@ namespace Victoire\Bundle\AnalyticsBundle\EventSubscriber;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
-use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
-use Victoire\Bundle\PageBundle\Entity\Page;
 
 /**
  * This class listen Browse Event Entity changes.

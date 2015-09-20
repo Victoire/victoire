@@ -143,7 +143,7 @@ class CmsExtension extends \Twig_Extension_Core
 
         $result = "";
         $slotOptions = $this->widgetRenderer->computeOptions($slotId, $slotOptions);
-        $slotNewContentButton = $this->isRoleVictoireGranted() ? $this->widgetRenderer->renderActions($slotId, $slotOptions): '';
+        $slotNewContentButton = $this->isRoleVictoireGranted() ? $this->widgetRenderer->renderActions($slotId, $slotOptions) : '';
 
         if (!empty($currentView->getWidgetMap()[$slotId])) {
             //parse the widget maps

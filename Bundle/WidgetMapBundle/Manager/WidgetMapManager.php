@@ -106,7 +106,7 @@ class WidgetMapManager
      */
     protected function updateWidgetMapsFromView(View $view, $sortedWidget)
     {
-        $parentWidgetId = (int) $sortedWidget['parentWidget'];        //2
+        $parentWidgetId = (int) $sortedWidget['parentWidget']; //2
         $slotId = $sortedWidget['slot']; //content
         $widgetId = (int) $sortedWidget['widget']; //1
         $slot = $view->getSlotById($slotId);

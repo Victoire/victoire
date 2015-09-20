@@ -28,7 +28,7 @@ class WidgetForce extends Widget
      */
     public function __toString()
     {
-        return 'Force #' . $this->id;
+        return 'Force #'.$this->id;
     }
 
     /**

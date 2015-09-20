@@ -3,7 +3,6 @@
 namespace Victoire\Bundle\CoreBundle\Helper;
 
 use Symfony\Component\Config\Util\XmlUtils;
-use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\CoreBundle\Builder\ViewReferenceBuilder;
@@ -22,7 +21,6 @@ class ViewCacheHelper
     /**
      * @param string $cacheDir
      * @param RequestStack $requestStack
-     * @param ViewReferenceBuilder $viewReferenceBuilder
      * @param ViewReferenceHelper $viewReferenceHelper
      */
     public function __construct($cacheDir, RequestStack $requestStack, ViewReferenceHelper $viewReferenceHelper)
@@ -150,7 +148,7 @@ XML;
 
         if ($xmlReferences = $this->readCache()->xpath("//viewReference[".implode(' and ', $arguments)."]")) {
             foreach ($xmlReferences as $xmlReference) {
-                $viewsReferences[]  = current($xmlReference->attributes());
+                $viewsReferences[] = current($xmlReference->attributes());
             }
         }
 

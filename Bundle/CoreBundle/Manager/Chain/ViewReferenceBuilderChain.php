@@ -35,10 +35,10 @@ class ViewReferenceBuilderChain
      */
     public function getViewReferenceBuilder(View $view)
     {
-        if(array_key_exists($viewClass = get_class($view), $this->viewsReferenceBuilders))
+        if (array_key_exists($viewClass = get_class($view), $this->viewsReferenceBuilders))
         {
             return $this->viewsReferenceBuilders[$viewClass];
         }
-        throw new ServiceNotFoundException('No view reference builder found for ' . $viewClass);
+        throw new ServiceNotFoundException('No view reference builder found for '.$viewClass);
     }
 }

@@ -23,10 +23,10 @@ trait StateFullRepositoryTrait
     public function getInstance($alias = null)
     {
         if (!$alias && !$this->mainAlias) {
-            $namespace= explode("\\", $this->_entityName);
+            $namespace = explode("\\", $this->_entityName);
             $alias = strtolower(end($namespace));
             $this->mainAlias = $alias;
-        }elseif ($alias){
+        }elseif ($alias) {
             $this->mainAlias = $alias;
         }
 

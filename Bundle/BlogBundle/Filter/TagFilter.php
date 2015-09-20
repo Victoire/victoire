@@ -58,7 +58,7 @@ class TagFilter extends BaseFilter
                     $qb->andWhere($qb->expr()->in('main_item', $subquery->getDql()))
                                 ->setParameter($parameter, $tag);
                 }
-            }else{
+            } else {
                 $qb = $qb
                         ->join('main_item.tags', 't')
                         ->andWhere('t.id IN (:tags)')

@@ -13,7 +13,6 @@ use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
 use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
-use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 
 /**
  * @property mixed entityProxyProvider
@@ -147,7 +146,7 @@ class BusinessPageBuilder
     /**
      * Generate update the page parameters with the entity
      *
-     * @param BasePage $page
+     * @param BusinessPage $page
      * @param Entity   $entity
      */
     public function updatePageParametersByEntity(BusinessPage $page, $entity)

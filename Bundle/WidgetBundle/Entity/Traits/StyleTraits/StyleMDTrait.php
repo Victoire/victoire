@@ -305,7 +305,7 @@ trait StyleMDTrait {
 
     /**
      * Set image
-     * @param string|Media $image
+     * @param Media $image
      * @return $this
      */
     public function setContainerBackgroundImageMD(Media $image = null)

@@ -17,28 +17,28 @@ class VictoireYamlLoader extends AliceBaseLoader
      */
     public function load($file)
     {
-	ob_start();
-	$loader = $this;
-	$includeWrapper = function () use ($file, $loader) {
-	    return include $file;
-	};
-	$data = $includeWrapper();
-	if (true !== $data) {
-	    $yaml = ob_get_clean();
-	    $data = YamlParser::parse($yaml);
-	}
+    ob_start();
+    $loader = $this;
+    $includeWrapper = function () use ($file, $loader) {
+        return include $file;
+    };
+    $data = $includeWrapper();
+    if (true !== $data) {
+        $yaml = ob_get_clean();
+        $data = YamlParser::parse($yaml);
+    }
 
-	if (!is_array($data)) {
-	    throw new \UnexpectedValueException('Yaml files must parse to an array of data');
-	}
+    if (!is_array($data)) {
+        throw new \UnexpectedValueException('Yaml files must parse to an array of data');
+    }
 
-	foreach ($data as $key => $value) {
-	    if ($key == "Victoire\Bundle\UserBundle\Entity\User") {
-		$data[$this->userClass] = $value;
-	    }
-	    unset($data[$key]);
-	}
+    foreach ($data as $key => $value) {
+        if ($key == "Victoire\Bundle\UserBundle\Entity\User") {
+        $data[$this->userClass] = $value;
+        }
+        unset($data[$key]);
+    }
 
-	return parent::load($data);
+    return parent::load($data);
     }
 }
