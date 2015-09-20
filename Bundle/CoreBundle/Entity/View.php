@@ -702,7 +702,7 @@ abstract class View
                 $_widgetMap->setAction(@$_widgetMapEntry['action']);
                 $_widgetMap->setPosition(@$_widgetMapEntry['position']);
                 $_widgetMap->setPositionReference(@$_widgetMapEntry['positionReference']);
-                $_widgetMap->setAsynchronous(@$_widgetMapEntry['asynchronous']);
+                $_widgetMap->setAsynchronous(isset($_widgetMapEntry['asynchronous'])?$_widgetMapEntry['asynchronous']:null);
                 $_widgetMap->setReplacedWidgetId(@$_widgetMapEntry['replacedWidgetId']);
                 $_widgetMap->setWidgetId(intval($_widgetMapEntry['widgetId']));
 

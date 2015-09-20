@@ -109,7 +109,7 @@
         {% set attr = attr|merge({'class': attr.class|default('') ~ ' vic-not-removable'}) %}
     {% endif %}
     {% set attr = attr|merge({'class': attr.class|default('') ~ ' ' ~ vic_widget_form_control_class}) %}
-    {% if vic_static_text is sameas(true) %}
+    {% if vic_static_text is same as(true) %}
         <p class="vic-form-control-static">{{ value }}</p>
     {% else %}
         {{ parent() }}
@@ -238,7 +238,7 @@
 
 {% block checkbox_widget %}
 {% spaceless %}
-{% if label is not sameas(false) and label is empty %}
+{% if label is not same as(false) and label is empty %}
     {% set label = name|humanize %}
 {% endif %}
 {% if form.parent != null and 'choice' not in form.parent.vars.block_prefixes %}
@@ -267,7 +267,7 @@
 {% if widget == 'single_text' %}
     {% if datepicker is defined %}
         <div data-provider="datepicker" class="vic-input-group vic-date" data-date="{{ value }}" data-link-field="{{ id }}" data-link-format="dd-mm-yyyy">
-            <input {% if vic_widget_form_control_class is not sameas(false) %}class="{{ vic_widget_form_control_class }}" {% endif %}type="text" {% if read_only %} readonly="readonly"{% endif %}{% if disabled %} disabled="disabled"{% endif %}{% if required %} required="required"{% endif %}>
+            <input {% if vic_widget_form_control_class is not same as(false) %}class="{{ vic_widget_form_control_class }}" {% endif %}type="text" {% if read_only %} readonly="readonly"{% endif %}{% if disabled %} disabled="disabled"{% endif %}{% if required %} required="required"{% endif %}>
             <input type="hidden" value="{{ value }}" {{ block('widget_attributes') }}>
             <span class="vic-input-group-addon">{{ victoire_icon('calendar') }}</span>
         </div>
@@ -388,7 +388,7 @@
 {% block form_label %}
 {% if 'checkbox' not in block_prefixes or vic_widget_vic_checkbox_label in ['label', 'both'] %}
 {% spaceless %}
-    {% if label is not sameas(false) %}
+    {% if label is not same as(false) %}
         {% if label is empty %}
             {% set label = name|humanize %}
         {% endif %}
@@ -428,10 +428,10 @@
 {% block vic_help_label_tooltip %}
     <span class="vic-help-block">
         <a href="#" data-toggle="vic-tooltip" data-placement="{{ vic_help_label_tooltip.placement}}" data-title="{{ vic_help_label_tooltip.title|trans({}, translation_domain) }}">
-            {% if vic_help_label_tooltip.icon is not sameas(false) %}
+            {% if vic_help_label_tooltip.icon is not same as(false) %}
                 {{ victoire_icon(vic_help_label_tooltip.icon) }}
             {% endif %}
-            {% if vic_help_label_tooltip.text is not sameas(null) %}
+            {% if vic_help_label_tooltip.text is not same as(null) %}
             {{ vic_help_label_tooltip.text }}
             {% endif %}
         </a>
@@ -441,10 +441,10 @@
 {% block vic_help_label_popover %}
     <span class="vic-help-block">
         <a href="#" data-toggle="vic-popover" data-trigger="hover" data-placement="{{ vic_help_label_popover.placement}}" data-title="{{ vic_help_label_popover.title|trans({}, translation_domain) }}" data-content="{{ vic_help_label_popover.content|trans({}, translation_domain) }}" >
-            {% if vic_help_label_popover.icon is not sameas(false) %}
+            {% if vic_help_label_popover.icon is not same as(false) %}
                 {{ victoire_icon(vic_help_label_popover.icon) }}
             {% endif %}
-            {% if vic_help_label_popover.text is not sameas(null) %}
+            {% if vic_help_label_popover.text is not same as(null) %}
             {{ vic_help_label_popover.text }}
             {% endif %}
         </a>
@@ -536,7 +536,7 @@
 
 {% block form_vic_widget_remove_btn %}
 {% spaceless %}
-    {% if vic_widget_remove_btn.wrapper_div is not sameas(false) %}
+    {% if vic_widget_remove_btn.wrapper_div is not same as(false) %}
         <div class="vic-form-group">
             <div class="{{ vic_widget_remove_btn.wrapper_div.class }} vic-col-lg-offset-3">
     {% endif %}
@@ -545,7 +545,7 @@
     {% set button_values = vic_widget_remove_btn %}
     {{ block('collection_button') }}
     {% endif %}
-    {% if vic_widget_remove_btn.wrapper_div is not sameas(false) %}
+    {% if vic_widget_remove_btn.wrapper_div is not same as(false) %}
             </div>
         </div>
     {% endif %}
@@ -644,10 +644,10 @@
         {# Add Error Class to Widget Wrapper#}
         {% set vic_vic_widget_form_group_attr = vic_vic_widget_form_group_attr|merge({'class': vic_vic_widget_form_group_attr.class|default('') ~ ' has-error'}) %}
     {% endif %}
-    {% if vic_help_widget_popover.selector is sameas(null) %}
+    {% if vic_help_widget_popover.selector is same as(null) %}
         {% set vic_help_widget_popover = vic_help_widget_popover|merge({'selector': '#' ~ id }) %}
     {% endif %}
-    <div{% if vic_help_widget_popover.title is not sameas(null) %}{{ block('vic_help_widget_popover') }}{% endif %} {% for attrname,attrvalue in vic_vic_widget_form_group_attr %} {{attrname}}="{{attrvalue}}"{% endfor %}>
+    <div{% if vic_help_widget_popover.title is not same as(null) %}{{ block('vic_help_widget_popover') }}{% endif %} {% for attrname,attrvalue in vic_vic_widget_form_group_attr %} {{attrname}}="{{attrvalue}}"{% endfor %}>
     {# a form item containing the field in block_prefixes is a near subform or a field directly #}
     {% if (form|length > 0 and form.parent != null)
         and 'field' not in form.vars.block_prefixes
