@@ -110,7 +110,7 @@ class WidgetRenderer
     /**
      * render slot actions
      * @param Slot    $slot
-     * @param array   $options
+     * @param string   $options
      *
      * @return string
      */

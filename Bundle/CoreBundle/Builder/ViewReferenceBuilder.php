@@ -3,8 +3,6 @@
 namespace Victoire\Bundle\CoreBundle\Builder;
 
 use Doctrine\ORM\EntityManager;
-use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
-use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\CoreBundle\Manager\Chain\ViewReferenceBuilderChain;
@@ -27,8 +25,7 @@ class ViewReferenceBuilder
 
     /**
      * compute the viewReference relative to a View + entity
-     * @param View                $view
-     * @param array|[array] $entity
+     * @param WebViewInterface                $view
      *
      * @return array
      */

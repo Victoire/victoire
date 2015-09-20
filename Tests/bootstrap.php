@@ -33,7 +33,7 @@ namespace Symfony\Component\HttpFoundation
         }
         public function get($path, $default = null, $deep = false)
         {
-            if (!$deep || false === $pos = strpos($path,'[')) {
+            if (!$deep || false === $pos = strpos($path, '[')) {
                 return array_key_exists($path, $this->parameters) ? $this->parameters[$path] : $default;
             }
             $root = substr($path, 0, $pos);
@@ -44,12 +44,12 @@ namespace Symfony\Component\HttpFoundation
             $currentKey = null;
             for ($i = $pos, $c = strlen($path); $i < $c; $i++) {
                 $char = $path[$i];
-                if ('['=== $char) {
+                if ('[' === $char) {
                     if (null !== $currentKey) {
                         throw new \InvalidArgumentException(sprintf('Malformed path. Unexpected "[" at position %d.', $i));
                     }
-                    $currentKey ='';
-                } elseif (']'=== $char) {
+                    $currentKey = '';
+                } elseif (']' === $char) {
                     if (null === $currentKey) {
                         throw new \InvalidArgumentException(sprintf('Malformed path. Unexpected "]" at position %d.', $i));
                     }
@@ -86,17 +86,17 @@ namespace Symfony\Component\HttpFoundation
         {
             unset($this->parameters[$key]);
         }
-        public function getAlpha($key, $default ='', $deep = false)
+        public function getAlpha($key, $default = '', $deep = false)
         {
-            return preg_replace('/[^[:alpha:]]/','', $this->get($key, $default, $deep));
+            return preg_replace('/[^[:alpha:]]/', '', $this->get($key, $default, $deep));
         }
-        public function getAlnum($key, $default ='', $deep = false)
+        public function getAlnum($key, $default = '', $deep = false)
         {
-            return preg_replace('/[^[:alnum:]]/','', $this->get($key, $default, $deep));
+            return preg_replace('/[^[:alnum:]]/', '', $this->get($key, $default, $deep));
         }
-        public function getDigits($key, $default ='', $deep = false)
+        public function getDigits($key, $default = '', $deep = false)
         {
-            return str_replace(array('-','+'),'', $this->filter($key, $default, $deep, FILTER_SANITIZE_NUMBER_INT));
+            return str_replace(array('-', '+'), '', $this->filter($key, $default, $deep, FILTER_SANITIZE_NUMBER_INT));
         }
         public function getInt($key, $default = 0, $deep = false)
         {
@@ -150,7 +150,7 @@ namespace Symfony\Component\HttpFoundation
                 return'';
             }
             $max = max(array_map('strlen', array_keys($this->headers))) + 1;
-            $content ='';
+            $content = '';
             ksort($this->headers);
             foreach ($this->headers as $name => $values) {
                 $name = implode('-', array_map('ucfirst', explode('-', $name)));
@@ -181,7 +181,7 @@ namespace Symfony\Component\HttpFoundation
         }
         public function get($key, $default = null, $first = true)
         {
-            $key = strtr(strtolower($key),'_','-');
+            $key = strtr(strtolower($key), '_', '-');
             if (!array_key_exists($key, $this->headers)) {
                 if (null === $default) {
                     return $first ? null : array();
@@ -195,30 +195,34 @@ namespace Symfony\Component\HttpFoundation
         }
         public function set($key, $values, $replace = true)
         {
-            $key = strtr(strtolower($key),'_','-');
+            $key = strtr(strtolower($key), '_', '-');
             $values = array_values((array) $values);
             if (true === $replace || !isset($this->headers[$key])) {
                 $this->headers[$key] = $values;
             } else {
                 $this->headers[$key] = array_merge($this->headers[$key], $values);
             }
-            if ('cache-control'=== $key) {
+            if ('cache-control' === $key) {
                 $this->cacheControl = $this->parseCacheControl($values[0]);
             }
         }
         public function has($key)
         {
-            return array_key_exists(strtr(strtolower($key),'_','-'), $this->headers);
+            return array_key_exists(strtr(strtolower($key), '_', '-'), $this->headers);
         }
         public function contains($key, $value)
         {
             return in_array($value, $this->get($key, null, false));
         }
+
+        /**
+         * @param string $key
+         */
         public function remove($key)
         {
-            $key = strtr(strtolower($key),'_','-');
+            $key = strtr(strtolower($key), '_', '-');
             unset($this->headers[$key]);
-            if ('cache-control'=== $key) {
+            if ('cache-control' === $key) {
                 $this->cacheControl = array();
             }
         }
@@ -283,7 +287,7 @@ namespace Symfony\Component\HttpFoundation
                     $parts[] = $key;
                 } else {
                     if (preg_match('#[^a-zA-Z0-9._-]#', $value)) {
-                        $value ='"'.$value.'"';
+                        $value = '"'.$value.'"';
                     }
                     $parts[] = "$key=$value";
                 }
@@ -306,7 +310,7 @@ namespace Symfony\Component\HttpFoundation
     use Symfony\Component\HttpFoundation\File\UploadedFile;
     class FileBag extends ParameterBag
     {
-        private static $fileKeys = array('error','name','size','tmp_name','type');
+        private static $fileKeys = array('error', 'name', 'size', 'tmp_name', 'type');
         public function __construct(array $parameters = array())
         {
             $this->replace($parameters);
@@ -345,7 +349,7 @@ namespace Symfony\Component\HttpFoundation
                         $file = new UploadedFile($file['tmp_name'], $file['name'], $file['type'], $file['size'], $file['error']);
                     }
                 } else {
-                    $file = array_map(array($this,'convertFileInformation'), $file);
+                    $file = array_map(array($this, 'convertFileInformation'), $file);
                 }
             }
             return $file;
@@ -365,7 +369,7 @@ namespace Symfony\Component\HttpFoundation
                 unset($files[$k]);
             }
             foreach ($data['name'] as $key => $name) {
-                $files[$key] = $this->fixPhpFilesArray(array('error'=> $data['error'][$key],'name'=> $name,'type'=> $data['type'][$key],'tmp_name'=> $data['tmp_name'][$key],'size'=> $data['size'][$key],
+                $files[$key] = $this->fixPhpFilesArray(array('error'=> $data['error'][$key], 'name'=> $name, 'type'=> $data['type'][$key], 'tmp_name'=> $data['tmp_name'][$key], 'size'=> $data['size'][$key],
                     ));
             }
             return $files;
@@ -379,18 +383,17 @@ namespace Symfony\Component\HttpFoundation
         public function getHeaders()
         {
             $headers = array();
-            $contentHeaders = array('CONTENT_LENGTH'=> true,'CONTENT_MD5'=> true,'CONTENT_TYPE'=> true);
+            $contentHeaders = array('CONTENT_LENGTH'=> true, 'CONTENT_MD5'=> true, 'CONTENT_TYPE'=> true);
             foreach ($this->parameters as $key => $value) {
-                if (0 === strpos($key,'HTTP_')) {
+                if (0 === strpos($key, 'HTTP_')) {
                     $headers[substr($key, 5)] = $value;
-                }
-                elseif (isset($contentHeaders[$key])) {
+                } elseif (isset($contentHeaders[$key])) {
                     $headers[$key] = $value;
                 }
             }
             if (isset($this->parameters['PHP_AUTH_USER'])) {
                 $headers['PHP_AUTH_USER'] = $this->parameters['PHP_AUTH_USER'];
-                $headers['PHP_AUTH_PW'] = isset($this->parameters['PHP_AUTH_PW']) ? $this->parameters['PHP_AUTH_PW'] :'';
+                $headers['PHP_AUTH_PW'] = isset($this->parameters['PHP_AUTH_PW']) ? $this->parameters['PHP_AUTH_PW'] : '';
             } else {
                 $authorizationHeader = null;
                 if (isset($this->parameters['HTTP_AUTHORIZATION'])) {
@@ -399,19 +402,19 @@ namespace Symfony\Component\HttpFoundation
                     $authorizationHeader = $this->parameters['REDIRECT_HTTP_AUTHORIZATION'];
                 }
                 if (null !== $authorizationHeader) {
-                    if (0 === stripos($authorizationHeader,'basic ')) {
+                    if (0 === stripos($authorizationHeader, 'basic ')) {
                         $exploded = explode(':', base64_decode(substr($authorizationHeader, 6)), 2);
                         if (count($exploded) == 2) {
                             list($headers['PHP_AUTH_USER'], $headers['PHP_AUTH_PW']) = $exploded;
                         }
-                    } elseif (empty($this->parameters['PHP_AUTH_DIGEST']) && (0 === stripos($authorizationHeader,'digest '))) {
+                    } elseif (empty($this->parameters['PHP_AUTH_DIGEST']) && (0 === stripos($authorizationHeader, 'digest '))) {
                         $headers['PHP_AUTH_DIGEST'] = $authorizationHeader;
                         $this->parameters['PHP_AUTH_DIGEST'] = $authorizationHeader;
                     }
                 }
             }
             if (isset($headers['PHP_AUTH_USER'])) {
-                $headers['AUTHORIZATION'] ='Basic '.base64_encode($headers['PHP_AUTH_USER'].':'.$headers['PHP_AUTH_PW']);
+                $headers['AUTHORIZATION'] = 'Basic '.base64_encode($headers['PHP_AUTH_USER'].':'.$headers['PHP_AUTH_PW']);
             } elseif (isset($headers['PHP_AUTH_DIGEST'])) {
                 $headers['AUTHORIZATION'] = $headers['PHP_AUTH_DIGEST'];
             }
@@ -424,20 +427,20 @@ namespace Symfony\Component\HttpFoundation
     use Symfony\Component\HttpFoundation\Session\SessionInterface;
     class Request
     {
-        const HEADER_CLIENT_IP ='client_ip';
-        const HEADER_CLIENT_HOST ='client_host';
-        const HEADER_CLIENT_PROTO ='client_proto';
-        const HEADER_CLIENT_PORT ='client_port';
-        const METHOD_HEAD ='HEAD';
-        const METHOD_GET ='GET';
-        const METHOD_POST ='POST';
-        const METHOD_PUT ='PUT';
-        const METHOD_PATCH ='PATCH';
-        const METHOD_DELETE ='DELETE';
-        const METHOD_PURGE ='PURGE';
-        const METHOD_OPTIONS ='OPTIONS';
-        const METHOD_TRACE ='TRACE';
-        const METHOD_CONNECT ='CONNECT';
+        const HEADER_CLIENT_IP = 'client_ip';
+        const HEADER_CLIENT_HOST = 'client_host';
+        const HEADER_CLIENT_PROTO = 'client_proto';
+        const HEADER_CLIENT_PORT = 'client_port';
+        const METHOD_HEAD = 'HEAD';
+        const METHOD_GET = 'GET';
+        const METHOD_POST = 'POST';
+        const METHOD_PUT = 'PUT';
+        const METHOD_PATCH = 'PATCH';
+        const METHOD_DELETE = 'DELETE';
+        const METHOD_PURGE = 'PURGE';
+        const METHOD_OPTIONS = 'OPTIONS';
+        const METHOD_TRACE = 'TRACE';
+        const METHOD_CONNECT = 'CONNECT';
         protected static $trustedProxies = array();
         protected static $trustedHostPatterns = array();
         protected static $trustedHosts = array();
@@ -468,7 +471,7 @@ namespace Symfony\Component\HttpFoundation
         protected $format;
         protected $session;
         protected $locale;
-        protected $defaultLocale ='en';
+        protected $defaultLocale = 'en';
         protected static $formats;
         protected static $requestFactory;
         public function __construct(array $query = array(), array $request = array(), array $attributes = array(), array $cookies = array(), array $files = array(), array $server = array(), $content = null)
@@ -499,7 +502,7 @@ namespace Symfony\Component\HttpFoundation
         public static function createFromGlobals()
         {
             $server = $_SERVER;
-            if ('cli-server'=== php_sapi_name()) {
+            if ('cli-server' === php_sapi_name()) {
                 if (array_key_exists('HTTP_CONTENT_LENGTH', $_SERVER)) {
                     $server['CONTENT_LENGTH'] = $_SERVER['HTTP_CONTENT_LENGTH'];
                 }
@@ -508,19 +511,19 @@ namespace Symfony\Component\HttpFoundation
                 }
             }
             $request = self::createRequestFromFactory($_GET, $_POST, array(), $_COOKIE, $_FILES, $server);
-            if (0 === strpos($request->headers->get('CONTENT_TYPE'),'application/x-www-form-urlencoded')
-                && in_array(strtoupper($request->server->get('REQUEST_METHOD','GET')), array('PUT','DELETE','PATCH'))
+            if (0 === strpos($request->headers->get('CONTENT_TYPE'), 'application/x-www-form-urlencoded')
+                && in_array(strtoupper($request->server->get('REQUEST_METHOD', 'GET')), array('PUT', 'DELETE', 'PATCH'))
             ) {
                 parse_str($request->getContent(), $data);
                 $request->request = new ParameterBag($data);
             }
             return $request;
         }
-        public static function create($uri, $method ='GET', $parameters = array(), $cookies = array(), $files = array(), $server = array(), $content = null)
+        public static function create($uri, $method = 'GET', $parameters = array(), $cookies = array(), $files = array(), $server = array(), $content = null)
         {
-            $server = array_replace(array('SERVER_NAME'=>'localhost','SERVER_PORT'=> 80,'HTTP_HOST'=>'localhost','HTTP_USER_AGENT'=>'Symfony/2.X','HTTP_ACCEPT'=>'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8','HTTP_ACCEPT_LANGUAGE'=>'en-us,en;q=0.5','HTTP_ACCEPT_CHARSET'=>'ISO-8859-1,utf-8;q=0.7,*;q=0.7','REMOTE_ADDR'=>'127.0.0.1','SCRIPT_NAME'=>'','SCRIPT_FILENAME'=>'','SERVER_PROTOCOL'=>'HTTP/1.1','REQUEST_TIME'=> time(),
+            $server = array_replace(array('SERVER_NAME'=>'localhost', 'SERVER_PORT'=> 80, 'HTTP_HOST'=>'localhost', 'HTTP_USER_AGENT'=>'Symfony/2.X', 'HTTP_ACCEPT'=>'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'HTTP_ACCEPT_LANGUAGE'=>'en-us,en;q=0.5', 'HTTP_ACCEPT_CHARSET'=>'ISO-8859-1,utf-8;q=0.7,*;q=0.7', 'REMOTE_ADDR'=>'127.0.0.1', 'SCRIPT_NAME'=>'', 'SCRIPT_FILENAME'=>'', 'SERVER_PROTOCOL'=>'HTTP/1.1', 'REQUEST_TIME'=> time(),
                 ), $server);
-            $server['PATH_INFO'] ='';
+            $server['PATH_INFO'] = '';
             $server['REQUEST_METHOD'] = strtoupper($method);
             $components = parse_url($uri);
             if (isset($components['host'])) {
@@ -528,8 +531,8 @@ namespace Symfony\Component\HttpFoundation
                 $server['HTTP_HOST'] = $components['host'];
             }
             if (isset($components['scheme'])) {
-                if ('https'=== $components['scheme']) {
-                    $server['HTTPS'] ='on';
+                if ('https' === $components['scheme']) {
+                    $server['HTTPS'] = 'on';
                     $server['SERVER_PORT'] = 443;
                 } else {
                     unset($server['HTTPS']);
@@ -547,14 +550,14 @@ namespace Symfony\Component\HttpFoundation
                 $server['PHP_AUTH_PW'] = $components['pass'];
             }
             if (!isset($components['path'])) {
-                $components['path'] ='/';
+                $components['path'] = '/';
             }
             switch (strtoupper($method)) {
                 case'POST':
                 case'PUT':
                 case'DELETE':
                     if (!isset($server['CONTENT_TYPE'])) {
-                        $server['CONTENT_TYPE'] ='application/x-www-form-urlencoded';
+                        $server['CONTENT_TYPE'] = 'application/x-www-form-urlencoded';
                     }
                 case'PATCH':
                     $request = $parameters;
@@ -565,20 +568,20 @@ namespace Symfony\Component\HttpFoundation
                     $query = $parameters;
                     break;
             }
-            $queryString ='';
+            $queryString = '';
             if (isset($components['query'])) {
                 parse_str(html_entity_decode($components['query']), $qs);
                 if ($query) {
                     $query = array_replace($qs, $query);
-                    $queryString = http_build_query($query,'','&');
+                    $queryString = http_build_query($query, '', '&');
                 } else {
                     $query = $qs;
                     $queryString = $components['query'];
                 }
             } elseif ($query) {
-                $queryString = http_build_query($query,'','&');
+                $queryString = http_build_query($query, '', '&');
             }
-            $server['REQUEST_URI'] = $components['path'].(''!== $queryString ?'?'.$queryString :'');
+            $server['REQUEST_URI'] = $components['path'].('' !== $queryString ? '?'.$queryString : '');
             $server['QUERY_STRING'] = $queryString;
             return self::createRequestFromFactory($query, $request, array(), $cookies, $files, $server, $content);
         }
@@ -645,22 +648,22 @@ namespace Symfony\Component\HttpFoundation
         }
         public function overrideGlobals()
         {
-            $this->server->set('QUERY_STRING', static::normalizeQueryString(http_build_query($this->query->all(), null,'&')));
+            $this->server->set('QUERY_STRING', static::normalizeQueryString(http_build_query($this->query->all(), null, '&')));
             $_GET = $this->query->all();
             $_POST = $this->request->all();
             $_SERVER = $this->server->all();
             $_COOKIE = $this->cookies->all();
             foreach ($this->headers->all() as $key => $value) {
-                $key = strtoupper(str_replace('-','_', $key));
-                if (in_array($key, array('CONTENT_TYPE','CONTENT_LENGTH'))) {
+                $key = strtoupper(str_replace('-', '_', $key));
+                if (in_array($key, array('CONTENT_TYPE', 'CONTENT_LENGTH'))) {
                     $_SERVER[$key] = implode(', ', $value);
                 } else {
                     $_SERVER['HTTP_'.$key] = implode(', ', $value);
                 }
             }
-            $request = array('g'=> $_GET,'p'=> $_POST,'c'=> $_COOKIE);
+            $request = array('g'=> $_GET, 'p'=> $_POST, 'c'=> $_COOKIE);
             $requestOrder = ini_get('request_order') ?: ini_get('variables_order');
-            $requestOrder = preg_replace('#[^cgp]#','', strtolower($requestOrder)) ?:'gp';
+            $requestOrder = preg_replace('#[^cgp]#', '', strtolower($requestOrder)) ?: 'gp';
             $_REQUEST = array();
             foreach (str_split($requestOrder) as $order) {
                 $_REQUEST = array_merge($_REQUEST, $request[$order]);
@@ -676,7 +679,7 @@ namespace Symfony\Component\HttpFoundation
         }
         public static function setTrustedHosts(array $hostPatterns)
         {
-            self::$trustedHostPatterns = array_map(function ($hostPattern) {
+            self::$trustedHostPatterns = array_map(function($hostPattern) {
                     return sprintf('#%s#i', $hostPattern);
                 }, $hostPatterns);
             self::$trustedHosts = array();
@@ -701,19 +704,18 @@ namespace Symfony\Component\HttpFoundation
         }
         public static function normalizeQueryString($qs)
         {
-            if (''== $qs) {
+            if ('' == $qs) {
                 return'';
             }
             $parts = array();
             $order = array();
             foreach (explode('&', $qs) as $param) {
-                if (''=== $param ||'='=== $param[0]) {
+                if ('' === $param || '=' === $param[0]) {
                     continue;
                 }
                 $keyValuePair = explode('=', $param, 2);
                 $parts[] = isset($keyValuePair[1]) ?
-                    rawurlencode(urldecode($keyValuePair[0])).'='.rawurlencode(urldecode($keyValuePair[1])) :
-                    rawurlencode(urldecode($keyValuePair[0]));
+                    rawurlencode(urldecode($keyValuePair[0])).'='.rawurlencode(urldecode($keyValuePair[1])) : rawurlencode(urldecode($keyValuePair[0]));
                 $order[] = urldecode($keyValuePair[0]);
             }
             array_multisort($order, SORT_ASC, $parts);
@@ -794,7 +796,7 @@ namespace Symfony\Component\HttpFoundation
         }
         public function getScriptName()
         {
-            return $this->server->get('SCRIPT_NAME', $this->server->get('ORIG_SCRIPT_NAME',''));
+            return $this->server->get('SCRIPT_NAME', $this->server->get('ORIG_SCRIPT_NAME', ''));
         }
         public function getPathInfo()
         {
@@ -819,7 +821,7 @@ namespace Symfony\Component\HttpFoundation
         }
         public function getScheme()
         {
-            return $this->isSecure() ?'https':'http';
+            return $this->isSecure() ? 'https' : 'http';
         }
         public function getPort()
         {
@@ -827,20 +829,20 @@ namespace Symfony\Component\HttpFoundation
                 if (self::$trustedHeaders[self::HEADER_CLIENT_PORT] && $port = $this->headers->get(self::$trustedHeaders[self::HEADER_CLIENT_PORT])) {
                     return $port;
                 }
-                if (self::$trustedHeaders[self::HEADER_CLIENT_PROTO] &&'https'=== $this->headers->get(self::$trustedHeaders[self::HEADER_CLIENT_PROTO],'http')) {
+                if (self::$trustedHeaders[self::HEADER_CLIENT_PROTO] && 'https' === $this->headers->get(self::$trustedHeaders[self::HEADER_CLIENT_PROTO], 'http')) {
                     return 443;
                 }
             }
             if ($host = $this->headers->get('HOST')) {
-                if ($host[0] ==='[') {
-                    $pos = strpos($host,':', strrpos($host,']'));
+                if ($host[0] === '[') {
+                    $pos = strpos($host, ':', strrpos($host, ']'));
                 } else {
-                    $pos = strrpos($host,':');
+                    $pos = strrpos($host, ':');
                 }
                 if (false !== $pos) {
                     return (int) substr($host, $pos + 1);
                 }
-                return'https'=== $this->getScheme() ? 443 : 80;
+                return'https' === $this->getScheme() ? 443 : 80;
             }
             return $this->server->get('SERVER_PORT');
         }
@@ -856,7 +858,7 @@ namespace Symfony\Component\HttpFoundation
         {
             $userinfo = $this->getUser();
             $pass = $this->getPassword();
-            if (''!= $pass) {
+            if ('' != $pass) {
                 $userinfo .= ":$pass";
             }
             return $userinfo;
@@ -865,7 +867,7 @@ namespace Symfony\Component\HttpFoundation
         {
             $scheme = $this->getScheme();
             $port = $this->getPort();
-            if (('http'== $scheme && $port == 80) || ('https'== $scheme && $port == 443)) {
+            if (('http' == $scheme && $port == 80) || ('https' == $scheme && $port == 443)) {
                 return $this->getHost();
             }
             return $this->getHost().':'.$port;
@@ -884,7 +886,7 @@ namespace Symfony\Component\HttpFoundation
         public function getUri()
         {
             if (null !== $qs = $this->getQueryString()) {
-                $qs ='?'.$qs;
+                $qs = '?'.$qs;
             }
             return $this->getSchemeAndHttpHost().$this->getBaseUrl().$this->getPathInfo().$qs;
         }
@@ -895,15 +897,15 @@ namespace Symfony\Component\HttpFoundation
         public function getQueryString()
         {
             $qs = static::normalizeQueryString($this->server->get('QUERY_STRING'));
-            return''=== $qs ? null : $qs;
+            return'' === $qs ? null : $qs;
         }
         public function isSecure()
         {
             if ($this->isFromTrustedProxy() && self::$trustedHeaders[self::HEADER_CLIENT_PROTO] && $proto = $this->headers->get(self::$trustedHeaders[self::HEADER_CLIENT_PROTO])) {
-                return in_array(strtolower(current(explode(',', $proto))), array('https','on','ssl','1'));
+                return in_array(strtolower(current(explode(',', $proto))), array('https', 'on', 'ssl', '1'));
             }
             $https = $this->server->get('HTTPS');
-            return !empty($https) &&'off'!== strtolower($https);
+            return !empty($https) && 'off' !== strtolower($https);
         }
         public function getHost()
         {
@@ -912,11 +914,11 @@ namespace Symfony\Component\HttpFoundation
                 $host = $elements[count($elements) - 1];
             } elseif (!$host = $this->headers->get('HOST')) {
                 if (!$host = $this->server->get('SERVER_NAME')) {
-                    $host = $this->server->get('SERVER_ADDR','');
+                    $host = $this->server->get('SERVER_ADDR', '');
                 }
             }
-            $host = strtolower(preg_replace('/:\d+$/','', trim($host)));
-            if ($host &&''!== preg_replace('/(?:^\[)?[a-zA-Z0-9-:\]_]+\.?/','', $host)) {
+            $host = strtolower(preg_replace('/:\d+$/', '', trim($host)));
+            if ($host && '' !== preg_replace('/(?:^\[)?[a-zA-Z0-9-:\]_]+\.?/', '', $host)) {
                 throw new \UnexpectedValueException(sprintf('Invalid Host "%s"', $host));
             }
             if (count(self::$trustedHostPatterns) > 0) {
@@ -941,12 +943,12 @@ namespace Symfony\Component\HttpFoundation
         public function getMethod()
         {
             if (null === $this->method) {
-                $this->method = strtoupper($this->server->get('REQUEST_METHOD','GET'));
-                if ('POST'=== $this->method) {
+                $this->method = strtoupper($this->server->get('REQUEST_METHOD', 'GET'));
+                if ('POST' === $this->method) {
                     if ($method = $this->headers->get('X-HTTP-METHOD-OVERRIDE')) {
                         $this->method = strtoupper($method);
                     } elseif (self::$httpMethodParameterOverride) {
-                        $this->method = strtoupper($this->request->get('_method', $this->query->get('_method','POST')));
+                        $this->method = strtoupper($this->request->get('_method', $this->query->get('_method', 'POST')));
                     }
                 }
             }
@@ -954,7 +956,7 @@ namespace Symfony\Component\HttpFoundation
         }
         public function getRealMethod()
         {
-            return strtoupper($this->server->get('REQUEST_METHOD','GET'));
+            return strtoupper($this->server->get('REQUEST_METHOD', 'GET'));
         }
         public function getMimeType($format)
         {
@@ -965,7 +967,7 @@ namespace Symfony\Component\HttpFoundation
         }
         public function getFormat($mimeType)
         {
-            if (false !== $pos = strpos($mimeType,';')) {
+            if (false !== $pos = strpos($mimeType, ';')) {
                 $mimeType = substr($mimeType, 0, $pos);
             }
             if (null === static::$formats) {
@@ -984,7 +986,7 @@ namespace Symfony\Component\HttpFoundation
             }
             static::$formats[$format] = is_array($mimeTypes) ? $mimeTypes : array($mimeTypes);
         }
-        public function getRequestFormat($default ='html')
+        public function getRequestFormat($default = 'html')
         {
             if (null === $this->format) {
                 $this->format = $this->get('_format', $default);
@@ -1028,7 +1030,7 @@ namespace Symfony\Component\HttpFoundation
         }
         public function isMethodSafe()
         {
-            return in_array($this->getMethod(), array('GET','HEAD'));
+            return in_array($this->getMethod(), array('GET', 'HEAD'));
         }
 
         /**
@@ -1041,7 +1043,7 @@ namespace Symfony\Component\HttpFoundation
             }
             if (true === $asResource) {
                 $this->content = false;
-                return fopen('php://input','rb');
+                return fopen('php://input', 'rb');
             }
             if (null === $this->content) {
                 $this->content = file_get_contents('php://input');
@@ -1054,7 +1056,7 @@ namespace Symfony\Component\HttpFoundation
         }
         public function isNoCache()
         {
-            return $this->headers->hasCacheControlDirective('no-cache') ||'no-cache'== $this->headers->get('Pragma');
+            return $this->headers->hasCacheControlDirective('no-cache') || 'no-cache' == $this->headers->get('Pragma');
         }
         public function getPreferredLanguage(array $locales = null)
         {
@@ -1068,7 +1070,7 @@ namespace Symfony\Component\HttpFoundation
             $extendedPreferredLanguages = array();
             foreach ($preferredLanguages as $language) {
                 $extendedPreferredLanguages[] = $language;
-                if (false !== $position = strpos($language,'_')) {
+                if (false !== $position = strpos($language, '_')) {
                     $superLanguage = substr($language, 0, $position);
                     if (!in_array($superLanguage, $preferredLanguages)) {
                         $extendedPreferredLanguages[] = $superLanguage;
@@ -1086,9 +1088,9 @@ namespace Symfony\Component\HttpFoundation
             $languages = AcceptHeader::fromString($this->headers->get('Accept-Language'))->all();
             $this->languages = array();
             foreach ($languages as $lang => $acceptHeaderItem) {
-                if (false !== strpos($lang,'-')) {
+                if (false !== strpos($lang, '-')) {
                     $codes = explode('-', $lang);
-                    if ('i'=== $codes[0]) {
+                    if ('i' === $codes[0]) {
                         if (count($codes) > 1) {
                             $lang = $codes[1];
                         }
@@ -1097,7 +1099,7 @@ namespace Symfony\Component\HttpFoundation
                             if ($i === 0) {
                                 $lang = strtolower($codes[0]);
                             } else {
-                                $lang .='_'.strtoupper($codes[$i]);
+                                $lang .= '_'.strtoupper($codes[$i]);
                             }
                         }
                     }
@@ -1129,11 +1131,11 @@ namespace Symfony\Component\HttpFoundation
         }
         public function isXmlHttpRequest()
         {
-            return'XMLHttpRequest'== $this->headers->get('X-Requested-With');
+            return'XMLHttpRequest' == $this->headers->get('X-Requested-With');
         }
         protected function prepareRequestUri()
         {
-            $requestUri ='';
+            $requestUri = '';
             if ($this->headers->has('X_ORIGINAL_URL')) {
                 $requestUri = $this->headers->get('X_ORIGINAL_URL');
                 $this->headers->remove('X_ORIGINAL_URL');
@@ -1143,7 +1145,7 @@ namespace Symfony\Component\HttpFoundation
             } elseif ($this->headers->has('X_REWRITE_URL')) {
                 $requestUri = $this->headers->get('X_REWRITE_URL');
                 $this->headers->remove('X_REWRITE_URL');
-            } elseif ($this->server->get('IIS_WasUrlRewritten') =='1'&& $this->server->get('UNENCODED_URL') !='') {
+            } elseif ($this->server->get('IIS_WasUrlRewritten') == '1' && $this->server->get('UNENCODED_URL') != '') {
                 $requestUri = $this->server->get('UNENCODED_URL');
                 $this->server->remove('UNENCODED_URL');
                 $this->server->remove('IIS_WasUrlRewritten');
@@ -1155,8 +1157,8 @@ namespace Symfony\Component\HttpFoundation
                 }
             } elseif ($this->server->has('ORIG_PATH_INFO')) {
                 $requestUri = $this->server->get('ORIG_PATH_INFO');
-                if (''!= $this->server->get('QUERY_STRING')) {
-                    $requestUri .='?'.$this->server->get('QUERY_STRING');
+                if ('' != $this->server->get('QUERY_STRING')) {
+                    $requestUri .= '?'.$this->server->get('QUERY_STRING');
                 }
                 $this->server->remove('ORIG_PATH_INFO');
             }
@@ -1172,16 +1174,16 @@ namespace Symfony\Component\HttpFoundation
                 $baseUrl = $this->server->get('PHP_SELF');
             } elseif (basename($this->server->get('ORIG_SCRIPT_NAME')) === $filename) {
                 $baseUrl = $this->server->get('ORIG_SCRIPT_NAME'); } else {
-                $path = $this->server->get('PHP_SELF','');
-                $file = $this->server->get('SCRIPT_FILENAME','');
-                $segs = explode('/', trim($file,'/'));
+                $path = $this->server->get('PHP_SELF', '');
+                $file = $this->server->get('SCRIPT_FILENAME', '');
+                $segs = explode('/', trim($file, '/'));
                 $segs = array_reverse($segs);
                 $index = 0;
                 $last = count($segs);
-                $baseUrl ='';
+                $baseUrl = '';
                 do {
                     $seg = $segs[$index];
-                    $baseUrl ='/'.$seg.$baseUrl;
+                    $baseUrl = '/'.$seg.$baseUrl;
                     ++$index;
                 } while ($last > $index && (false !== $pos = strpos($path, $baseUrl)) && 0 != $pos);
             }
@@ -1190,10 +1192,10 @@ namespace Symfony\Component\HttpFoundation
                 return $prefix;
             }
             if ($baseUrl && false !== $prefix = $this->getUrlencodedPrefix($requestUri, dirname($baseUrl).'/')) {
-                return rtrim($prefix,'/');
+                return rtrim($prefix, '/');
             }
             $truncatedRequestUri = $requestUri;
-            if (false !== $pos = strpos($requestUri,'?')) {
+            if (false !== $pos = strpos($requestUri, '?')) {
                 $truncatedRequestUri = substr($requestUri, 0, $pos);
             }
             $basename = basename($baseUrl);
@@ -1203,7 +1205,7 @@ namespace Symfony\Component\HttpFoundation
             if (strlen($requestUri) >= strlen($baseUrl) && (false !== $pos = strpos($requestUri, $baseUrl)) && $pos !== 0) {
                 $baseUrl = substr($requestUri, 0, $pos + strlen($baseUrl));
             }
-            return rtrim($baseUrl,'/');
+            return rtrim($baseUrl, '/');
         }
         protected function prepareBasePath()
         {
@@ -1217,10 +1219,10 @@ namespace Symfony\Component\HttpFoundation
             } else {
                 $basePath = $baseUrl;
             }
-            if ('\\'=== DIRECTORY_SEPARATOR) {
-                $basePath = str_replace('\\','/', $basePath);
+            if ('\\' === DIRECTORY_SEPARATOR) {
+                $basePath = str_replace('\\', '/', $basePath);
             }
-            return rtrim($basePath,'/');
+            return rtrim($basePath, '/');
         }
         protected function preparePathInfo()
         {
@@ -1228,8 +1230,8 @@ namespace Symfony\Component\HttpFoundation
             if (null === ($requestUri = $this->getRequestUri())) {
                 return'/';
             }
-            $pathInfo ='/';
-            if ($pos = strpos($requestUri,'?')) {
+            $pathInfo = '/';
+            if ($pos = strpos($requestUri, '?')) {
                 $requestUri = substr($requestUri, 0, $pos);
             }
             if (null !== $baseUrl && false === $pathInfo = substr($requestUri, strlen($baseUrl))) {
@@ -1241,7 +1243,7 @@ namespace Symfony\Component\HttpFoundation
         }
         protected static function initializeFormats()
         {
-            static::$formats = array('html'=> array('text/html','application/xhtml+xml'),'txt'=> array('text/plain'),'js'=> array('application/javascript','application/x-javascript','text/javascript'),'css'=> array('text/css'),'json'=> array('application/json','application/x-json'),'xml'=> array('text/xml','application/xml','application/x-xml'),'rdf'=> array('application/rdf+xml'),'atom'=> array('application/atom+xml'),'rss'=> array('application/rss+xml'),'form'=> array('application/x-www-form-urlencoded'),
+            static::$formats = array('html'=> array('text/html', 'application/xhtml+xml'), 'txt'=> array('text/plain'), 'js'=> array('application/javascript', 'application/x-javascript', 'text/javascript'), 'css'=> array('text/css'), 'json'=> array('application/json', 'application/x-json'), 'xml'=> array('text/xml', 'application/xml', 'application/x-xml'), 'rdf'=> array('application/rdf+xml'), 'atom'=> array('application/atom+xml'), 'rss'=> array('application/rss+xml'), 'form'=> array('application/x-www-form-urlencoded'),
             );
         }
         private function setPhpDefaultLocale($locale)
@@ -1375,8 +1377,8 @@ namespace Symfony\Component\HttpFoundation
             503 =>'Service Unavailable',
             504 =>'Gateway Timeout',
             505 =>'HTTP Version Not Supported',
-            506 =>'Variant Also Negotiates (Experimental)', 507 =>'Insufficient Storage', 508 =>'Loop Detected', 510 =>'Not Extended', 511 =>'Network Authentication Required', );
-        public function __construct($content ='', $status = 200, $headers = array())
+            506 =>'Variant Also Negotiates (Experimental)', 507 =>'Insufficient Storage', 508 =>'Loop Detected', 510 =>'Not Extended', 511 =>'Network Authentication Required',);
+        public function __construct($content = '', $status = 200, $headers = array())
         {
             $this->headers = new ResponseHeaderBag($headers);
             $this->setContent($content);
@@ -1386,7 +1388,7 @@ namespace Symfony\Component\HttpFoundation
                 $this->setDate(new \DateTime(null, new \DateTimeZone('UTC')));
             }
         }
-        public static function create($content ='', $status = 200, $headers = array())
+        public static function create($content = '', $status = 200, $headers = array())
         {
             return new static($content, $status, $headers);
         }
@@ -1415,10 +1417,10 @@ namespace Symfony\Component\HttpFoundation
                         $headers->set('Content-Type', $mimeType);
                     }
                 }
-                $charset = $this->charset ?:'UTF-8';
+                $charset = $this->charset ?: 'UTF-8';
                 if (!$headers->has('Content-Type')) {
-                    $headers->set('Content-Type','text/html; charset='.$charset);
-                } elseif (0 === stripos($headers->get('Content-Type'),'text/') && false === stripos($headers->get('Content-Type'),'charset')) {
+                    $headers->set('Content-Type', 'text/html; charset='.$charset);
+                } elseif (0 === stripos($headers->get('Content-Type'), 'text/') && false === stripos($headers->get('Content-Type'), 'charset')) {
                     $headers->set('Content-Type', $headers->get('Content-Type').'; charset='.$charset);
                 }
                 if ($headers->has('Transfer-Encoding')) {
@@ -1432,11 +1434,11 @@ namespace Symfony\Component\HttpFoundation
                     }
                 }
             }
-            if ('HTTP/1.0'!= $request->server->get('SERVER_PROTOCOL')) {
+            if ('HTTP/1.0' != $request->server->get('SERVER_PROTOCOL')) {
                 $this->setProtocolVersion('1.1');
             }
-            if ('1.0'== $this->getProtocolVersion() &&'no-cache'== $this->headers->get('Cache-Control')) {
-                $this->headers->set('pragma','no-cache');
+            if ('1.0' == $this->getProtocolVersion() && 'no-cache' == $this->headers->get('Cache-Control')) {
+                $this->headers->set('pragma', 'no-cache');
                 $this->headers->set('expires', -1);
             }
             $this->ensureIEOverSSLCompatibility($request);
@@ -1469,7 +1471,7 @@ namespace Symfony\Component\HttpFoundation
             $this->sendContent();
             if (function_exists('fastcgi_finish_request')) {
                 fastcgi_finish_request();
-            } elseif ('cli'!== PHP_SAPI) {
+            } elseif ('cli' !== PHP_SAPI) {
                 static::closeOutputBuffers(0, true);
             }
             return $this;
@@ -1480,7 +1482,7 @@ namespace Symfony\Component\HttpFoundation
          */
         public function setContent($content)
         {
-            if (null !== $content && !is_string($content) && !is_numeric($content) && !is_callable(array($content,'__toString'))) {
+            if (null !== $content && !is_string($content) && !is_numeric($content) && !is_callable(array($content, '__toString'))) {
                 throw new \UnexpectedValueException(sprintf('The Response content must be a string or object implementing __toString(), "%s" given.', gettype($content)));
             }
             $this->content = (string) $content;
@@ -1510,11 +1512,11 @@ namespace Symfony\Component\HttpFoundation
                 throw new \InvalidArgumentException(sprintf('The HTTP status code "%s" is not valid.', $code));
             }
             if (null === $text) {
-                $this->statusText = isset(self::$statusTexts[$code]) ? self::$statusTexts[$code] :'';
+                $this->statusText = isset(self::$statusTexts[$code]) ? self::$statusTexts[$code] : '';
                 return $this;
             }
             if (false === $text) {
-                $this->statusText ='';
+                $this->statusText = '';
                 return $this;
             }
             $this->statusText = $text;
@@ -1596,7 +1598,7 @@ namespace Symfony\Component\HttpFoundation
             try {
                 return $this->headers->getDate('Expires');
             } catch (\RuntimeException $e) {
-                return \DateTime::createFromFormat(DATE_RFC2822,'Sat, 01 Jan 00 00:00:00 +0000');
+                return \DateTime::createFromFormat(DATE_RFC2822, 'Sat, 01 Jan 00 00:00:00 +0000');
             }
         }
         public function setExpires(\DateTime $date = null)
@@ -1673,16 +1675,16 @@ namespace Symfony\Component\HttpFoundation
             if (null === $etag) {
                 $this->headers->remove('Etag');
             } else {
-                if (0 !== strpos($etag,'"')) {
-                    $etag ='"'.$etag.'"';
+                if (0 !== strpos($etag, '"')) {
+                    $etag = '"'.$etag.'"';
                 }
-                $this->headers->set('ETag', (true === $weak ?'W/':'').$etag);
+                $this->headers->set('ETag', (true === $weak ? 'W/' : '').$etag);
             }
             return $this;
         }
         public function setCache(array $options)
         {
-            if ($diff = array_diff(array_keys($options), array('etag','last_modified','max_age','s_maxage','private','public'))) {
+            if ($diff = array_diff(array_keys($options), array('etag', 'last_modified', 'max_age', 's_maxage', 'private', 'public'))) {
                 throw new \InvalidArgumentException(sprintf('Response does not support the following options: "%s".', implode('", "', array_values($diff))));
             }
             if (isset($options['etag'])) {
@@ -1717,7 +1719,7 @@ namespace Symfony\Component\HttpFoundation
         {
             $this->setStatusCode(304);
             $this->setContent(null);
-            foreach (array('Allow','Content-Encoding','Content-Language','Content-Length','Content-MD5','Content-Type','Last-Modified') as $header) {
+            foreach (array('Allow', 'Content-Encoding', 'Content-Language', 'Content-Length', 'Content-MD5', 'Content-Type', 'Last-Modified') as $header) {
                 $this->headers->remove($header);
             }
             return $this;
@@ -1831,8 +1833,8 @@ namespace Symfony\Component\HttpFoundation
         }
         protected function ensureIEOverSSLCompatibility(Request $request)
         {
-            if (false !== stripos($this->headers->get('Content-Disposition'),'attachment') && preg_match('/MSIE (.*?);/i', $request->server->get('HTTP_USER_AGENT'), $match) == 1 && true === $request->isSecure()) {
-                if ((int) preg_replace('/(MSIE )(.*?);/','$2', $match[0]) < 9) {
+            if (false !== stripos($this->headers->get('Content-Disposition'), 'attachment') && preg_match('/MSIE (.*?);/i', $request->server->get('HTTP_USER_AGENT'), $match) == 1 && true === $request->isSecure()) {
+                if ((int) preg_replace('/(MSIE )(.*?);/', '$2', $match[0]) < 9) {
                     $this->headers->remove('Cache-Control');
                 }
             }
@@ -1843,10 +1845,10 @@ namespace Symfony\Component\HttpFoundation
 {
     class ResponseHeaderBag extends HeaderBag
     {
-        const COOKIES_FLAT ='flat';
-        const COOKIES_ARRAY ='array';
-        const DISPOSITION_ATTACHMENT ='attachment';
-        const DISPOSITION_INLINE ='inline';
+        const COOKIES_FLAT = 'flat';
+        const COOKIES_ARRAY = 'array';
+        const DISPOSITION_ATTACHMENT = 'attachment';
+        const DISPOSITION_INLINE = 'inline';
         protected $computedCacheControl = array();
         protected $cookies = array();
         protected $headerNames = array();
@@ -1854,14 +1856,14 @@ namespace Symfony\Component\HttpFoundation
         {
             parent::__construct($headers);
             if (!isset($this->headers['cache-control'])) {
-                $this->set('Cache-Control','');
+                $this->set('Cache-Control', '');
             }
         }
         public function __toString()
         {
-            $cookies ='';
+            $cookies = '';
             foreach ($this->getCookies() as $cookie) {
-                $cookies .='Set-Cookie: '.$cookie."\r\n";
+                $cookies .= 'Set-Cookie: '.$cookie."\r\n";
             }
             ksort($this->headerNames);
             return parent::__toString().$cookies;
@@ -1875,7 +1877,7 @@ namespace Symfony\Component\HttpFoundation
             $this->headerNames = array();
             parent::replace($headers);
             if (!isset($this->headers['cache-control'])) {
-                $this->set('Cache-Control','');
+                $this->set('Cache-Control', '');
             }
         }
 
@@ -1885,12 +1887,12 @@ namespace Symfony\Component\HttpFoundation
         public function set($key, $values, $replace = true)
         {
             parent::set($key, $values, $replace);
-            $uniqueKey = strtr(strtolower($key),'_','-');
+            $uniqueKey = strtr(strtolower($key), '_', '-');
             $this->headerNames[$uniqueKey] = $key;
-            if (in_array($uniqueKey, array('cache-control','etag','last-modified','expires'))) {
+            if (in_array($uniqueKey, array('cache-control', 'etag', 'last-modified', 'expires'))) {
                 $computed = $this->computeCacheControlValue();
                 $this->headers['cache-control'] = array($computed);
-                $this->headerNames['cache-control'] ='Cache-Control';
+                $this->headerNames['cache-control'] = 'Cache-Control';
                 $this->computedCacheControl = $this->parseCacheControl($computed);
             }
         }
@@ -1901,9 +1903,9 @@ namespace Symfony\Component\HttpFoundation
         public function remove($key)
         {
             parent::remove($key);
-            $uniqueKey = strtr(strtolower($key),'_','-');
+            $uniqueKey = strtr(strtolower($key), '_', '-');
             unset($this->headerNames[$uniqueKey]);
-            if ('cache-control'=== $uniqueKey) {
+            if ('cache-control' === $uniqueKey) {
                 $this->computedCacheControl = array();
             }
         }
@@ -1927,10 +1929,10 @@ namespace Symfony\Component\HttpFoundation
         {
             $this->cookies[$cookie->getDomain()][$cookie->getPath()][$cookie->getName()] = $cookie;
         }
-        public function removeCookie($name, $path ='/', $domain = null)
+        public function removeCookie($name, $path = '/', $domain = null)
         {
             if (null === $path) {
-                $path ='/';
+                $path = '/';
             }
             unset($this->cookies[$domain][$path][$name]);
             if (empty($this->cookies[$domain][$path])) {
@@ -1958,28 +1960,28 @@ namespace Symfony\Component\HttpFoundation
             }
             return $flattenedCookies;
         }
-        public function clearCookie($name, $path ='/', $domain = null, $secure = false, $httpOnly = true)
+        public function clearCookie($name, $path = '/', $domain = null, $secure = false, $httpOnly = true)
         {
             $this->setCookie(new Cookie($name, null, 1, $path, $domain, $secure, $httpOnly));
         }
-        public function makeDisposition($disposition, $filename, $filenameFallback ='')
+        public function makeDisposition($disposition, $filename, $filenameFallback = '')
         {
             if (!in_array($disposition, array(self::DISPOSITION_ATTACHMENT, self::DISPOSITION_INLINE))) {
                 throw new \InvalidArgumentException(sprintf('The disposition must be either "%s" or "%s".', self::DISPOSITION_ATTACHMENT, self::DISPOSITION_INLINE));
             }
-            if (''== $filenameFallback) {
+            if ('' == $filenameFallback) {
                 $filenameFallback = $filename;
             }
             if (!preg_match('/^[\x20-\x7e]*$/', $filenameFallback)) {
                 throw new \InvalidArgumentException('The filename fallback must only contain ASCII characters.');
             }
-            if (false !== strpos($filenameFallback,'%')) {
+            if (false !== strpos($filenameFallback, '%')) {
                 throw new \InvalidArgumentException('The filename fallback cannot contain the "%" character.');
             }
-            if (false !== strpos($filename,'/') || false !== strpos($filename,'\\') || false !== strpos($filenameFallback,'/') || false !== strpos($filenameFallback,'\\')) {
+            if (false !== strpos($filename, '/') || false !== strpos($filename, '\\') || false !== strpos($filenameFallback, '/') || false !== strpos($filenameFallback, '\\')) {
                 throw new \InvalidArgumentException('The filename and the fallback cannot contain the "/" and "\\" characters.');
             }
-            $output = sprintf('%s; filename="%s"', $disposition, str_replace('"','\\"', $filenameFallback));
+            $output = sprintf('%s; filename="%s"', $disposition, str_replace('"', '\\"', $filenameFallback));
             if ($filename !== $filenameFallback) {
                 $output .= sprintf("; filename*=utf-8''%s", rawurlencode($filename));
             }
@@ -2017,16 +2019,13 @@ namespace Symfony\Component\DependencyInjection
 }
 namespace Symfony\Component\DependencyInjection
 {
-    use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
-    use Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException;
-    use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
     interface ContainerInterface
     {
         const EXCEPTION_ON_INVALID_REFERENCE = 1;
         const NULL_ON_INVALID_REFERENCE = 2;
         const IGNORE_ON_INVALID_REFERENCE = 3;
-        const SCOPE_CONTAINER ='container';
-        const SCOPE_PROTOTYPE ='prototype';
+        const SCOPE_CONTAINER = 'container';
+        const SCOPE_PROTOTYPE = 'prototype';
 
         /**
          * @param string $id
@@ -2168,7 +2167,7 @@ namespace Symfony\Component\DependencyInjection
                 throw new InvalidArgumentException(sprintf('You cannot set service "%s" of scope "prototype".', $id));
             }
             $id = strtolower($id);
-            if ('service_container'=== $id) {
+            if ('service_container' === $id) {
                 return;
             }
             if (self::SCOPE_CONTAINER !== $scope) {
@@ -2178,7 +2177,7 @@ namespace Symfony\Component\DependencyInjection
                 $this->scopedServices[$scope][$id] = $service;
             }
             $this->services[$id] = $service;
-            if (method_exists($this, $method ='synchronize'.strtr($id, array('_'=>'','.'=>'_','\\'=>'_')).'Service')) {
+            if (method_exists($this, $method = 'synchronize'.strtr($id, array('_'=>'', '.'=>'_', '\\'=>'_')).'Service')) {
                 $this->$method();
             }
             if (null === $service) {
@@ -2195,13 +2194,13 @@ namespace Symfony\Component\DependencyInjection
         public function has($id)
         {
             $id = strtolower($id);
-            if ('service_container'=== $id) {
+            if ('service_container' === $id) {
                 return true;
             }
             return isset($this->services[$id])
             || array_key_exists($id, $this->services)
             || isset($this->aliases[$id])
-            || method_exists($this,'get'.strtr($id, array('_'=>'','.'=>'_','\\'=>'_')).'Service')
+            || method_exists($this, 'get'.strtr($id, array('_'=>'', '.'=>'_', '\\'=>'_')).'Service')
                 ;
         }
 
@@ -2214,7 +2213,7 @@ namespace Symfony\Component\DependencyInjection
                 if ($strtolower) {
                     $id = strtolower($id);
                 }
-                if ('service_container'=== $id) {
+                if ('service_container' === $id) {
                     return $this;
                 }
                 if (isset($this->aliases[$id])) {
@@ -2229,7 +2228,7 @@ namespace Symfony\Component\DependencyInjection
             }
             if (isset($this->methodMap[$id])) {
                 $method = $this->methodMap[$id];
-            } elseif (method_exists($this, $method ='get'.strtr($id, array('_'=>'','.'=>'_','\\'=>'_')).'Service')) {
+            } elseif (method_exists($this, $method = 'get'.strtr($id, array('_'=>'', '.'=>'_', '\\'=>'_')).'Service')) {
             } else {
                 if (self::EXCEPTION_ON_INVALID_REFERENCE === $invalidBehavior) {
                     if (!$id) {
@@ -2238,7 +2237,7 @@ namespace Symfony\Component\DependencyInjection
                     $alternatives = array();
                     foreach ($this->services as $key => $associatedService) {
                         $lev = levenshtein($id, $key);
-                        if ($lev <= strlen($id) / 3 || false !== strpos($key, $id)) {
+                        if ($lev <= strlen($id)/3 || false !== strpos($key, $id)) {
                             $alternatives[] = $key;
                         }
                     }
@@ -2265,7 +2264,7 @@ namespace Symfony\Component\DependencyInjection
         public function initialized($id)
         {
             $id = strtolower($id);
-            if ('service_container'=== $id) {
+            if ('service_container' === $id) {
                 return true;
             }
             if (isset($this->aliases[$id])) {
@@ -2282,7 +2281,7 @@ namespace Symfony\Component\DependencyInjection
                     $ids[] = self::underscore($match[1]);
                 }
             }
-            $ids[] ='service_container';
+            $ids[] = 'service_container';
             return array_unique(array_merge($ids, array_keys($this->services)));
         }
         public function enterScope($name)
@@ -2372,18 +2371,17 @@ namespace Symfony\Component\DependencyInjection
          */
         public static function camelize($id)
         {
-            return strtr(ucwords(strtr($id, array('_'=>' ','.'=>'_ ','\\'=>'_ '))), array(' '=>''));
+            return strtr(ucwords(strtr($id, array('_'=>' ', '.'=>'_ ', '\\'=>'_ '))), array(' '=>''));
         }
         public static function underscore($id)
         {
-            return strtolower(preg_replace(array('/([A-Z]+)([A-Z][a-z])/','/([a-z\d])([A-Z])/'), array('\\1_\\2','\\1_\\2'), strtr($id,'_','.')));
+            return strtolower(preg_replace(array('/([A-Z]+)([A-Z][a-z])/', '/([a-z\d])([A-Z])/'), array('\\1_\\2', '\\1_\\2'), strtr($id, '_', '.')));
         }
     }
 }
 namespace Symfony\Component\HttpKernel
 {
     use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\HttpFoundation\Response;
     interface HttpKernelInterface
     {
         const MASTER_REQUEST = 1;
@@ -2393,8 +2391,6 @@ namespace Symfony\Component\HttpKernel
 }
 namespace Symfony\Component\HttpKernel
 {
-    use Symfony\Component\DependencyInjection\ContainerInterface;
-    use Symfony\Component\HttpKernel\Bundle\BundleInterface;
     use Symfony\Component\Config\Loader\LoaderInterface;
     interface KernelInterface extends HttpKernelInterface, \Serializable
     {
@@ -2477,7 +2473,6 @@ namespace Symfony\Component\HttpKernel
     use Symfony\Component\DependencyInjection\Loader\ClosureLoader;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\HttpKernel\Bundle\BundleInterface;
     use Symfony\Component\HttpKernel\Config\EnvParametersResource;
     use Symfony\Component\HttpKernel\Config\FileLocator;
     use Symfony\Component\HttpKernel\DependencyInjection\MergeExtensionConfigurationPass;
@@ -2498,12 +2493,12 @@ namespace Symfony\Component\HttpKernel
         protected $name;
         protected $startTime;
         protected $loadClassCache;
-        const VERSION ='2.6.7';
-        const VERSION_ID ='20607';
-        const MAJOR_VERSION ='2';
-        const MINOR_VERSION ='6';
-        const RELEASE_VERSION ='7';
-        const EXTRA_VERSION ='';
+        const VERSION = '2.6.7';
+        const VERSION_ID = '20607';
+        const MAJOR_VERSION = '2';
+        const MINOR_VERSION = '6';
+        const RELEASE_VERSION = '7';
+        const EXTRA_VERSION = '';
         public function __construct($environment, $debug)
         {
             $this->environment = $environment;
@@ -2599,18 +2594,18 @@ namespace Symfony\Component\HttpKernel
         }
         public function locateResource($name, $dir = null, $first = true)
         {
-            if ('@'!== $name[0]) {
+            if ('@' !== $name[0]) {
                 throw new \InvalidArgumentException(sprintf('A resource name must start with @ ("%s" given).', $name));
             }
-            if (false !== strpos($name,'..')) {
+            if (false !== strpos($name, '..')) {
                 throw new \RuntimeException(sprintf('File name "%s" contains invalid characters (..).', $name));
             }
             $bundleName = substr($name, 1);
-            $path ='';
-            if (false !== strpos($bundleName,'/')) {
+            $path = '';
+            if (false !== strpos($bundleName, '/')) {
                 list($bundleName, $path) = explode('/', $bundleName, 2);
             }
-            $isResource = 0 === strpos($path,'Resources') && null !== $dir;
+            $isResource = 0 === strpos($path, 'Resources') && null !== $dir;
             $overridePath = substr($path, 9);
             $resourceBundle = null;
             $bundles = $this->getBundle($bundleName, false);
@@ -2645,7 +2640,7 @@ namespace Symfony\Component\HttpKernel
         public function getName()
         {
             if (null === $this->name) {
-                $this->name = preg_replace('/[^a-zA-Z0-9_]+/','', basename($this->rootDir));
+                $this->name = preg_replace('/[^a-zA-Z0-9_]+/', '', basename($this->rootDir));
             }
             return $this->name;
         }
@@ -2661,7 +2656,7 @@ namespace Symfony\Component\HttpKernel
         {
             if (null === $this->rootDir) {
                 $r = new \ReflectionObject($this);
-                $this->rootDir = str_replace('\\','/', dirname($r->getFileName()));
+                $this->rootDir = str_replace('\\', '/', dirname($r->getFileName()));
             }
             return $this->rootDir;
         }
@@ -2669,7 +2664,7 @@ namespace Symfony\Component\HttpKernel
         {
             return $this->container;
         }
-        public function loadClassCache($name ='classes', $extension ='.php')
+        public function loadClassCache($name = 'classes', $extension = '.php')
         {
             $this->loadClassCache = array($name, $extension);
         }
@@ -2743,7 +2738,7 @@ namespace Symfony\Component\HttpKernel
         }
         protected function getContainerClass()
         {
-            return $this->name.ucfirst($this->environment).($this->debug ?'Debug':'').'ProjectContainer';
+            return $this->name.ucfirst($this->environment).($this->debug ? 'Debug' : '').'ProjectContainer';
         }
         protected function getContainerBaseClass()
         {
@@ -2774,7 +2769,7 @@ namespace Symfony\Component\HttpKernel
                 $bundles[$name] = get_class($bundle);
             }
             return array_merge(
-                array('kernel.root_dir'=> realpath($this->rootDir) ?: $this->rootDir,'kernel.environment'=> $this->environment,'kernel.debug'=> $this->debug,'kernel.name'=> $this->name,'kernel.cache_dir'=> realpath($this->getCacheDir()) ?: $this->getCacheDir(),'kernel.logs_dir'=> realpath($this->getLogDir()) ?: $this->getLogDir(),'kernel.bundles'=> $bundles,'kernel.charset'=> $this->getCharset(),'kernel.container_class'=> $this->getContainerClass(),
+                array('kernel.root_dir'=> realpath($this->rootDir) ?: $this->rootDir, 'kernel.environment'=> $this->environment, 'kernel.debug'=> $this->debug, 'kernel.name'=> $this->name, 'kernel.cache_dir'=> realpath($this->getCacheDir()) ?: $this->getCacheDir(), 'kernel.logs_dir'=> realpath($this->getLogDir()) ?: $this->getLogDir(), 'kernel.bundles'=> $bundles, 'kernel.charset'=> $this->getCharset(), 'kernel.container_class'=> $this->getContainerClass(),
                 ),
                 $this->getEnvParameters()
             );
@@ -2783,15 +2778,15 @@ namespace Symfony\Component\HttpKernel
         {
             $parameters = array();
             foreach ($_SERVER as $key => $value) {
-                if (0 === strpos($key,'SYMFONY__')) {
-                    $parameters[strtolower(str_replace('__','.', substr($key, 9)))] = $value;
+                if (0 === strpos($key, 'SYMFONY__')) {
+                    $parameters[strtolower(str_replace('__', '.', substr($key, 9)))] = $value;
                 }
             }
             return $parameters;
         }
         protected function buildContainer()
         {
-            foreach (array('cache'=> $this->getCacheDir(),'logs'=> $this->getLogDir()) as $name => $dir) {
+            foreach (array('cache'=> $this->getCacheDir(), 'logs'=> $this->getLogDir()) as $name => $dir) {
                 if (!is_dir($dir)) {
                     if (false === @mkdir($dir, 0777, true) && !is_dir($dir)) {
                         throw new \RuntimeException(sprintf("Unable to create the %s directory (%s)\n", $name, $dir));
@@ -2846,7 +2841,7 @@ namespace Symfony\Component\HttpKernel
             if (class_exists('ProxyManager\Configuration') && class_exists('Symfony\Bridge\ProxyManager\LazyProxy\PhpDumper\ProxyDumper')) {
                 $dumper->setProxyDumper(new ProxyDumper(md5((string) $cache)));
             }
-            $content = $dumper->dump(array('class'=> $class,'base_class'=> $baseClass,'file'=> (string) $cache));
+            $content = $dumper->dump(array('class'=> $class, 'base_class'=> $baseClass, 'file'=> (string) $cache));
             if (!$this->debug) {
                 $content = static::stripComments($content);
             }
@@ -2873,8 +2868,8 @@ namespace Symfony\Component\HttpKernel
             if (!function_exists('token_get_all')) {
                 return $source;
             }
-            $rawChunk ='';
-            $output ='';
+            $rawChunk = '';
+            $output = '';
             $tokens = token_get_all($source);
             $ignoreSpace = false;
             for (reset($tokens); false !== $token = current($tokens); next($tokens)) {
@@ -2886,13 +2881,13 @@ namespace Symfony\Component\HttpKernel
                         $token = next($tokens);
                         $output .= $token[1];
                     } while ($token[0] !== T_END_HEREDOC);
-                    $rawChunk ='';
+                    $rawChunk = '';
                 } elseif (T_WHITESPACE === $token[0]) {
                     if ($ignoreSpace) {
                         $ignoreSpace = false;
                         continue;
                     }
-                    $rawChunk .= preg_replace(array('/\n{2,}/S'),"\n", $token[1]);
+                    $rawChunk .= preg_replace(array('/\n{2,}/S'), "\n", $token[1]);
                 } elseif (in_array($token[0], array(T_COMMENT, T_DOC_COMMENT))) {
                     $ignoreSpace = true;
                 } else {
@@ -2927,7 +2922,7 @@ namespace Symfony\Component\ClassLoader
             if (!extension_loaded('apc')) {
                 throw new \RuntimeException('Unable to use ApcClassLoader as APC is not enabled.');
             }
-            if (!method_exists($decorated,'findFile')) {
+            if (!method_exists($decorated, 'findFile')) {
                 throw new \InvalidArgumentException('The class finder must implement a "findFile" method.');
             }
             $this->prefix = $prefix;
@@ -2935,11 +2930,11 @@ namespace Symfony\Component\ClassLoader
         }
         public function register($prepend = false)
         {
-            spl_autoload_register(array($this,'loadClass'), true, $prepend);
+            spl_autoload_register(array($this, 'loadClass'), true, $prepend);
         }
         public function unregister()
         {
-            spl_autoload_unregister(array($this,'loadClass'));
+            spl_autoload_unregister(array($this, 'loadClass'));
         }
         public function loadClass($class)
         {
@@ -2965,7 +2960,6 @@ namespace Symfony\Component\HttpKernel\Bundle
 {
     use Symfony\Component\DependencyInjection\ContainerAwareInterface;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
-    use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
     interface BundleInterface extends ContainerAwareInterface
     {
 
@@ -3016,7 +3010,6 @@ namespace Symfony\Component\HttpKernel\Bundle
     use Symfony\Component\DependencyInjection\Container;
     use Symfony\Component\Console\Application;
     use Symfony\Component\Finder\Finder;
-    use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
     abstract class Bundle extends ContainerAware implements BundleInterface
     {
         protected $name;
@@ -3037,7 +3030,7 @@ namespace Symfony\Component\HttpKernel\Bundle
                 $class = $this->getContainerExtensionClass();
                 if (class_exists($class)) {
                     $extension = new $class();
-                    $basename = preg_replace('/Bundle$/','', $this->getName());
+                    $basename = preg_replace('/Bundle$/', '', $this->getName());
                     $expectedAlias = Container::underscore($basename);
                     if ($expectedAlias != $extension->getAlias()) {
                         throw new \LogicException(sprintf('Users will expect the alias of the default extension of a bundle to be the underscored version of the bundle name ("%s"). You can override "Bundle::getContainerExtension()" if you want to use "%s" or another alias.',
@@ -3056,7 +3049,7 @@ namespace Symfony\Component\HttpKernel\Bundle
         public function getNamespace()
         {
             $class = get_class($this);
-            return substr($class, 0, strrpos($class,'\\'));
+            return substr($class, 0, strrpos($class, '\\'));
         }
         public function getPath()
         {
@@ -3075,7 +3068,7 @@ namespace Symfony\Component\HttpKernel\Bundle
                 return $this->name;
             }
             $name = get_class($this);
-            $pos = strrpos($name,'\\');
+            $pos = strrpos($name, '\\');
             return $this->name = false === $pos ? $name : substr($name, $pos + 1);
         }
         public function registerCommands(Application $application)
@@ -3089,11 +3082,11 @@ namespace Symfony\Component\HttpKernel\Bundle
             foreach ($finder as $file) {
                 $ns = $prefix;
                 if ($relativePath = $file->getRelativePath()) {
-                    $ns .='\\'.strtr($relativePath,'/','\\');
+                    $ns .= '\\'.strtr($relativePath, '/', '\\');
                 }
                 $class = $ns.'\\'.$file->getBasename('.php');
                 if ($this->container) {
-                    $alias ='console.command.'.strtolower(str_replace('\\','_', $class));
+                    $alias = 'console.command.'.strtolower(str_replace('\\', '_', $class));
                     if ($this->container->has($alias)) {
                         continue;
                     }
@@ -3106,14 +3099,13 @@ namespace Symfony\Component\HttpKernel\Bundle
         }
         protected function getContainerExtensionClass()
         {
-            $basename = preg_replace('/Bundle$/','', $this->getName());
+            $basename = preg_replace('/Bundle$/', '', $this->getName());
             return $this->getNamespace().'\\DependencyInjection\\'.$basename.'Extension';
         }
     }
 }
 namespace Symfony\Component\Config
 {
-    use Symfony\Component\Config\Resource\ResourceInterface;
     use Symfony\Component\Filesystem\Exception\IOException;
     use Symfony\Component\Filesystem\Filesystem;
     class ConfigCache
@@ -3155,6 +3147,10 @@ namespace Symfony\Component\Config
             }
             return true;
         }
+
+        /**
+         * @param string $content
+         */
         public function write($content, array $metadata = null)
         {
             $mode = 0666;
@@ -3257,7 +3253,7 @@ namespace Symfony\Component\HttpKernel
                 if (!$response instanceof Response) {
                     $msg = sprintf('The controller must return a response (%s given).', $this->varToString($response));
                     if (null === $response) {
-                        $msg .=' Did you forget to add a return statement somewhere in your controller?';
+                        $msg .= ' Did you forget to add a return statement somewhere in your controller?';
                     }
                     throw new \LogicException($msg);
                 }
@@ -3360,15 +3356,15 @@ namespace Symfony\Component\HttpKernel\DependencyInjection
         {
             $request->headers->set('X-Php-Ob-Level', ob_get_level());
             $this->container->enterScope('request');
-            $this->container->set('request', $request,'request');
+            $this->container->set('request', $request, 'request');
             try {
                 $response = parent::handle($request, $type, $catch);
             } catch (\Exception $e) {
-                $this->container->set('request', null,'request');
+                $this->container->set('request', null, 'request');
                 $this->container->leaveScope('request');
                 throw $e;
             }
-            $this->container->set('request', null,'request');
+            $this->container->set('request', null, 'request');
             $this->container->leaveScope('request');
             return $response;
         }

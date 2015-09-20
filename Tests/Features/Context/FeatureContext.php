@@ -4,9 +4,6 @@ namespace Victoire\Tests\Features\Context;
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Behat\Hook\Scope\AfterStepScope;
-use Behat\Behat\Hook\Scope\BeforeScenarioScope;
-use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Exception\UnsupportedDriverActionException;
 use Behat\Symfony2Extension\Context\KernelDictionary;
 use Behat\Symfony2Extension\Driver\KernelDriver;
@@ -54,12 +51,14 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
 
     /**
      * @Then /^I should see the css property "(.+)" of "(.+)" with "(.+)"$/
+     * @param string $property
+     * @param string $value
      */
     public function iShouldSeeCssOfWith($property, $elementId, $value) {
-        $script = "return $('#" . $elementId . "').css('" . $property . "') === '" . $value . "';";
+        $script = "return $('#".$elementId."').css('".$property."') === '".$value."';";
         $evaluated = $this->getSession()->evaluateScript($script);
         if (!$evaluated) {
-            throw new \RuntimeException('The element with id "' . $elementId . '" and css property "' . $property . ': ' . $value . ';" not found.');
+            throw new \RuntimeException('The element with id "'.$elementId.'" and css property "'.$property.': '.$value.';" not found.');
         }
     }
 
@@ -72,6 +71,6 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
         $parse_url = parse_url($base_url);
         $base_url = rtrim($base_url, $parse_url['path']);
         $url = rtrim($base_url, DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.ltrim($url, DIRECTORY_SEPARATOR);
-        $this->iShouldSeeCssOfWith('background-image', $id, 'url("' . $url . '")');
+        $this->iShouldSeeCssOfWith('background-image', $id, 'url("'.$url.'")');
     }
 }

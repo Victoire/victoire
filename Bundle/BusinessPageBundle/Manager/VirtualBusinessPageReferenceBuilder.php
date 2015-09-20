@@ -4,12 +4,8 @@ namespace Victoire\Bundle\BusinessPageBundle\Manager;
 
 use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\BlogBundle\Entity\Article;
-use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
-use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
-use Victoire\Bundle\BusinessPageBundle\Manager\Interfaces\VirtualBusinessPageReferenceBuilderInterface;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Manager\BaseReferenceBuilder;
-use Victoire\Bundle\CoreBundle\Manager\Interfaces\ReferenceBuilderInterface;
 
 /**
 * VirtualBusinessPageReferenceBuilder

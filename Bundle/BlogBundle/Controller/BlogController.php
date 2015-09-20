@@ -46,7 +46,6 @@ class BlogController extends BasePageController
      *
      * @Route("/index/{blogId}/{tab}", name="victoire_blog_index", defaults={"blogId" = null, "tab" = "articles"})
      * @param Request $request
-     * @param integer|null $id
      *
      * @return JsonResponse
      */

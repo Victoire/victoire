@@ -28,7 +28,7 @@ class BusinessTemplateController extends Controller
      * List all business entity page pattern
      * @Route("/", name="victoire_business_template_index")
      *
-     * @return Json
+     * @return JsonResponse
      *
      */
     public function indexAction()
@@ -68,7 +68,6 @@ class BusinessTemplateController extends Controller
 
     /**
      * show BusinessTemplate
-     * @param Template $template The template
      *
      * @Route("/show/{id}", name="victoire_business_template_show")
      * @ParamConverter("template", class="VictoireBusinessPageBundle:BusinessTemplate")

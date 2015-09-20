@@ -67,7 +67,7 @@ class CategoryFilter extends BaseFilter
                     $qb->andWhere($qb->expr()->in('main_item', $subquery->getDql()))
                                 ->setParameter($parameter, $category);
                 }
-            }else{
+            } else {
                 $qb = $qb
                     ->join('main_item.category', 'c')
                     ->andWhere('c.id IN (:category)')

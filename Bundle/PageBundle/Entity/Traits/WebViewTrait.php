@@ -142,7 +142,7 @@ trait WebViewTrait
     /**
      * Set url
      *
-     * @param url $url
+     * @param string $url
      */
     public function setUrl($url)
     {

@@ -2,13 +2,10 @@
 
 namespace Victoire\Tests\Features\Context;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
-
 use Behat\Mink\Element\Element;
 use Behat\Symfony2Extension\Context\KernelDictionary;
 use Knp\FriendlyContexts\Context\MinkContext;
 use Knp\FriendlyContexts\Context\RawMinkContext;
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Output\NullOutput;
 
 /**
  * This class gives some usefull methods for Victoire navigation

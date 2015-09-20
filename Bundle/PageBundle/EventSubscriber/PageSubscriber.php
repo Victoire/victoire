@@ -10,11 +10,8 @@ use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
 use Doctrine\ORM\UnitOfWork;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
-use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
-use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
 use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
-use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\PageBundle\Helper\UserCallableHelper;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
@@ -42,7 +39,7 @@ class PageSubscriber implements EventSubscriber
     {
         $this->router          = $router;
         $this->userClass       = $userClass;
-        $this->userCallableHelper    = $userCallableHelper;
+        $this->userCallableHelper = $userCallableHelper;
         $this->viewCacheHelper = $viewCacheHelper;
         $this->urlBuilder = $urlBuilder;
     }

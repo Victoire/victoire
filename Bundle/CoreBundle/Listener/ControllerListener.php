@@ -19,7 +19,7 @@ class ControllerListener {
                 $controller = $_controller[0];
             }
             // preExecute method verification
-            if(method_exists($controller,'preExecute')) {
+            if (method_exists($controller, 'preExecute')) {
                 $controller->preExecute();
             }
         }

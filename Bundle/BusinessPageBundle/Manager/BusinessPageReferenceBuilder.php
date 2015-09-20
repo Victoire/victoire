@@ -3,8 +3,6 @@
 namespace Victoire\Bundle\BusinessPageBundle\Manager;
 
 use Doctrine\ORM\EntityManager;
-use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
-use Victoire\Bundle\BusinessPageBundle\Manager\Interfaces\BusinessPageReferenceBuilderInterface;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Manager\BaseReferenceBuilder;
 

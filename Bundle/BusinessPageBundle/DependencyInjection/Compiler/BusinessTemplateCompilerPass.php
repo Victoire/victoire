@@ -16,7 +16,7 @@ class BusinessTemplateCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        if(!$container->hasDefinition('victoire_business_page.BusinessTemplate_chain')){
+        if (!$container->hasDefinition('victoire_business_page.BusinessTemplate_chain')) {
             return;
         }
         $chainDefinition = $container->getDefinition(

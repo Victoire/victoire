@@ -115,7 +115,7 @@ class WidgetStyleType extends AbstractType
                         'data-refreshOnChange' => "true",
                     ],
                 ))
-                ->get('containerBackgroundType'.$key)->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($key) {
+                ->get('containerBackgroundType'.$key)->addEventListener(FormEvents::PRE_SUBMIT, function(FormEvent $event) use ($key) {
                     self::generateBackgroundFields($event->getForm()->getParent(), $key, $event->getData());
                 })
             ;
@@ -123,7 +123,7 @@ class WidgetStyleType extends AbstractType
         }
 
         // add theme field
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
             $data = $event->getData();
             $form = $event->getForm();
             //guess the bundle name
@@ -154,6 +154,9 @@ class WidgetStyleType extends AbstractType
         });
     }
 
+    /**
+     * @param string $responsiveKey
+     */
     private function generateBackgroundFields(FormInterface $form, $responsiveKey, $type = null) {
         /**
          * Build the part of form as the good type
@@ -199,8 +202,7 @@ class WidgetStyleType extends AbstractType
                     'vic_help_block' => 'widget_layout.form.containerBackgroundOverlay.help.label',
                 ))
             ;
-        }
-        else {
+        } else {
             $form
                 ->remove('containerBackgroundImage'.$responsiveKey)
                 ->remove('containerBackgroundRepeat'.$responsiveKey)
@@ -241,6 +243,7 @@ class WidgetStyleType extends AbstractType
     /**
      * Get the bundle name from an Entity namespace
      *
+     * @param string $entityNamespace
      * @return string
      * @author lenybernard
      **/

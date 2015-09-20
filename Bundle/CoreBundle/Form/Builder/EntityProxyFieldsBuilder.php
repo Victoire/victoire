@@ -49,8 +49,8 @@ class EntityProxyFieldsBuilder
                         //Create form types with field as key and values as choices
                         //TODO Add some formatter Class or a buildField method responsible to create this type
                         $label = $this->translator->trans(
-                            'widget_' . strtolower($widgetName) . '.form.' . $receiverProperty->getFieldName(
-                            ) . '.label',
+                            'widget_'.strtolower($widgetName).'.form.'.$receiverProperty->getFieldName(
+                            ).'.label',
                             array(),
                             'victoire'
                         );

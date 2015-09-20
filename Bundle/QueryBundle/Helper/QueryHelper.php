@@ -21,7 +21,6 @@ class QueryHelper
     /**
      * Constructor
      *
-     * @param EntityManager        $entityManager
      * @param BusinessEntityHelper $businessEntityHelper
      * @param CurrentViewHelper    $currentView
      */
@@ -136,16 +135,16 @@ class QueryHelper
                 ->andWhere('main_item.id IN ('.$subQuery->getQuery()->getDql().' '.$query.')');
             if ($orderBy) {
                 foreach ($orderBy as $addOrderBy) {
-                    $itemsQueryBuilder->addOrderBy('main_item.' . $addOrderBy['by'], $addOrderBy['order']);
+                    $itemsQueryBuilder->addOrderBy('main_item.'.$addOrderBy['by'], $addOrderBy['order']);
                 }
             }
         }
 
-        if(method_exists($containerEntity, 'getOrderBy')) {
+        if (method_exists($containerEntity, 'getOrderBy')) {
             $orderBy = json_decode($containerEntity->getOrderBy(), true);
             if ($orderBy) {
                 foreach ($orderBy as $addOrderBy) {
-                    $itemsQueryBuilder->addOrderBy('main_item.' . $addOrderBy['by'], $addOrderBy['order']);
+                    $itemsQueryBuilder->addOrderBy('main_item.'.$addOrderBy['by'], $addOrderBy['order']);
                 }
             }
         }

@@ -98,7 +98,7 @@ class Widget extends BaseWidget
      */
     public function getChildrenSlot()
     {
-        return $this->childrenSlot ? : $this->getId();
+        return $this->childrenSlot ?: $this->getId();
     }
 
     /**

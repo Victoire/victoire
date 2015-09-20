@@ -18,7 +18,7 @@ class WidgetItemChain
     public function addWidgetItem(WidgetItemInterface $widgetItem)
     {
         $classname = get_class($widgetItem);
-        $parsedClassname = explode( '\\', $classname);
+        $parsedClassname = explode('\\', $classname);
         $name = preg_replace('/Widget/', '', end($parsedClassname), 1);
         $newWidgetItem = array(
             'class' => $classname,

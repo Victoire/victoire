@@ -56,6 +56,7 @@ class ViewReferenceHelper
     }
 
     /**
+     * @param \SimpleXMLElement $xml
      * @return array
      */
     public function convertXmlCacheToArray($xml)
@@ -65,15 +66,15 @@ class ViewReferenceHelper
         $viewsReferences = [];
 
         foreach ($cachedArray['viewReference'] as $cachedViewReference) {
-            $viewReference['id']              = !empty($cachedViewReference['@attributes']['id']) ? $cachedViewReference['@attributes']['id'] : null ;
-            $viewReference['locale']          = !empty($cachedViewReference['@attributes']['locale']) ? $cachedViewReference['@attributes']['locale'] : null ;
-            $viewReference['entityId']        = !empty($cachedViewReference['@attributes']['entityId']) ? $cachedViewReference['@attributes']['entityId'] : null ;
-            $viewReference['entityNamespace'] = !empty($cachedViewReference['@attributes']['entityNamespace']) ? $cachedViewReference['@attributes']['entityNamespace'] : null ;
-            $viewReference['url']             = !empty($cachedViewReference['@attributes']['url']) ? $cachedViewReference['@attributes']['url'] : null ;
-            $viewReference['viewId']          = !empty($cachedViewReference['@attributes']['viewId']) ? $cachedViewReference['@attributes']['viewId'] : null ;
-            $viewReference['viewNamespace']   = !empty($cachedViewReference['@attributes']['viewNamespace']) ? $cachedViewReference['@attributes']['viewNamespace'] : null ;
-            $viewReference['patternId']       = !empty($cachedViewReference['@attributes']['patternId']) ? $cachedViewReference['@attributes']['patternId'] : null ;
-            $viewReference['name']            = !empty($cachedViewReference['@attributes']['name']) ? $cachedViewReference['@attributes']['name'] : null ;
+            $viewReference['id']              = !empty($cachedViewReference['@attributes']['id']) ? $cachedViewReference['@attributes']['id'] : null;
+            $viewReference['locale']          = !empty($cachedViewReference['@attributes']['locale']) ? $cachedViewReference['@attributes']['locale'] : null;
+            $viewReference['entityId']        = !empty($cachedViewReference['@attributes']['entityId']) ? $cachedViewReference['@attributes']['entityId'] : null;
+            $viewReference['entityNamespace'] = !empty($cachedViewReference['@attributes']['entityNamespace']) ? $cachedViewReference['@attributes']['entityNamespace'] : null;
+            $viewReference['url']             = !empty($cachedViewReference['@attributes']['url']) ? $cachedViewReference['@attributes']['url'] : null;
+            $viewReference['viewId']          = !empty($cachedViewReference['@attributes']['viewId']) ? $cachedViewReference['@attributes']['viewId'] : null;
+            $viewReference['viewNamespace']   = !empty($cachedViewReference['@attributes']['viewNamespace']) ? $cachedViewReference['@attributes']['viewNamespace'] : null;
+            $viewReference['patternId']       = !empty($cachedViewReference['@attributes']['patternId']) ? $cachedViewReference['@attributes']['patternId'] : null;
+            $viewReference['name']            = !empty($cachedViewReference['@attributes']['name']) ? $cachedViewReference['@attributes']['name'] : null;
 
             $viewsReferences[] = $viewReference;
         }
@@ -91,7 +92,7 @@ class ViewReferenceHelper
         foreach ($viewsReferences as $key => $viewReference) {
             // If viewReference is a persisted page, we want to clean virtual BEPs
             if (!empty($viewReference['type']) && $viewReference['type'] == 'business_page') {
-                $viewsReferences = array_filter($viewsReferences, function ($_viewReference) use ($viewReference) {
+                $viewsReferences = array_filter($viewsReferences, function($_viewReference) use ($viewReference) {
 
                         // If my current viewReference already exists as a virtualBusinessPage, I remove it from viewReferences
                         $shouldRemove = !($_viewReference['viewNamespace'] == 'Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage'
@@ -121,7 +122,7 @@ class ViewReferenceHelper
             $url = $viewReference['url'];
             $i = 1;
             while (in_array($url, $urls)) {
-                $url = $viewReference['url'] . "-" . $i;
+                $url = $viewReference['url']."-".$i;
                 $i++;
             }
             $viewsReferences[$key]['url'] = $url;

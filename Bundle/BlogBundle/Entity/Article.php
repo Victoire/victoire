@@ -499,8 +499,7 @@ class Article
 
         if ($this->publishedAt) {
             return strftime('%d %B %Y', $this->publishedAt->getTimestamp());
-        }
-        else {
+        } else {
             return "";
         }
     }

@@ -3,7 +3,6 @@ namespace Victoire\Bundle\WidgetMapBundle\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
-use Doctrine\Common\Persistence\ObjectManager;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 
 class WidgetMapToArrayTransformer implements DataTransformerInterface

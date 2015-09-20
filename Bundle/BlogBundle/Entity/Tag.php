@@ -165,7 +165,7 @@ class Tag
     }
 
     /**
-     * @return mixed
+     * @return Blog
      */
     public function getBlog()
     {
@@ -173,7 +173,7 @@ class Tag
     }
 
     /**
-     * @param mixed $blog
+     * @param Blog $blog
      */
     public function setBlog(Blog $blog)
     {

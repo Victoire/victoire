@@ -188,7 +188,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
                     //if parent and current have a same business property type we merge the properties and remove
                     //duplicates if properties are the same;
                     $businessProperties[$key] = array_unique(array_merge($parentProperty, $businessProperties[$key]));
-                }else{
+                } else {
                     //else we had a business property type for the parent properties
                     $businessProperties[$key] = $parentProperty;
                 }
@@ -229,9 +229,9 @@ class AnnotationDriver extends DoctrineAnnotationDriver
         }
 
         //Set receiver properties as required if necessary
-        foreach($receiverPropertiesTypes as $type => $receiverProperties) {
+        foreach ($receiverPropertiesTypes as $type => $receiverProperties) {
             /* @var ReceiverProperty[] $receiverProperties */
-            foreach($receiverProperties as $receiverProperty) {
+            foreach ($receiverProperties as $receiverProperty) {
                 $receiverPropertyName = $receiverProperty->getFieldName();
                 $refProperty = $class->getProperty($receiverPropertyName);
                 $annotations = $this->reader->getPropertyAnnotations($refProperty);

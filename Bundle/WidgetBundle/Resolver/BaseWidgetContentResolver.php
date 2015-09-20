@@ -99,7 +99,7 @@ class BaseWidgetContentResolver
      *
      * @param Widget $widget The widget
      *
-     * @return array The list of entities
+     * @return \Doctrine\ORM\QueryBuilder The list of entities
      */
     public function getWidgetQueryBuilder(Widget $widget)
     {
@@ -137,7 +137,7 @@ class BaseWidgetContentResolver
         $this->queryHelper = $queryHelper;
     }
     /**
-     * @param QueryHelper $entityManager
+     * @param EntityManager $entityManager
      */
     public function setEntityManager(EntityManager $entityManager)
     {

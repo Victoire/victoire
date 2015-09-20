@@ -101,7 +101,7 @@ class WidgetMapBuilder
 
                             array_splice($widgetMap[$slot->getId()], $position - 1, 0, array($viewWidgetMap));
                             array_map(
-                                function ($key, $_widgetMap) {
+                                function($key, $_widgetMap) {
                                     $_widgetMap->setPosition($key + 1);
                                 },
                                 array_keys($widgetMap[$slot->getId()]),
@@ -124,7 +124,7 @@ class WidgetMapBuilder
                             }
                             array_splice($widgetMap[$slot->getId()], $viewWidgetMap->getPosition() - 1, 0, array($viewWidgetMap));
                             array_map(
-                                function ($key, $_widgetMap) {
+                                function($key, $_widgetMap) {
                                     $_widgetMap->setPosition($key + 1);
                                 },
                                 array_keys($widgetMap[$slot->getId()]),

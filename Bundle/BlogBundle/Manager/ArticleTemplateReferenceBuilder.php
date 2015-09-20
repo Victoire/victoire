@@ -10,7 +10,7 @@ use Victoire\Bundle\CoreBundle\Manager\BaseReferenceBuilder;
 
 class ArticleTemplateReferenceBuilder extends BaseReferenceBuilder
 {
-    public function buildReference(View $view, EntityManager $em){
+    public function buildReference(View $view, EntityManager $em) {
 
         return array();
     }

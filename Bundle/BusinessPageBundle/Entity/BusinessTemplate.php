@@ -2,7 +2,6 @@
 namespace Victoire\Bundle\BusinessPageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\PageBundle\Entity\PageStatus;
 use Victoire\Bundle\SeoBundle\Entity\PageSeo;
 use Victoire\Bundle\TemplateBundle\Entity\Template;

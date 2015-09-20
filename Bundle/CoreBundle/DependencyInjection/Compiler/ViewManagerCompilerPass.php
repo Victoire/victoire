@@ -16,7 +16,7 @@ class ViewManagerCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        if(!$container->hasDefinition('victoire_core.chain.view_reference_builder_chain')){
+        if (!$container->hasDefinition('victoire_core.chain.view_reference_builder_chain')) {
             return;
         }
         $definition = $container->getDefinition(
@@ -27,8 +27,8 @@ class ViewManagerCompilerPass implements CompilerPassInterface
         );
         foreach ($taggedServices as $id => $tagAttributes) {
             foreach ($tagAttributes as $attributes) {
-                if( !array_key_exists('view', $attributes)){
-                    throw new InvalidConfigurationException("View class attribute is not defined for " . $id);
+                if (!array_key_exists('view', $attributes)) {
+                    throw new InvalidConfigurationException("View class attribute is not defined for ".$id);
                 }
                 $definition->addMethodCall(
                     'addViewReferenceBuilder',

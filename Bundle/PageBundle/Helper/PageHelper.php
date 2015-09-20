@@ -24,7 +24,6 @@ use Victoire\Bundle\CoreBundle\Provider\ViewReferenceProvider;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\SeoBundle\Entity\PageSeo;
 use Victoire\Bundle\SeoBundle\Helper\PageSeoHelper;
 use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter as BETParameterConverter;
@@ -65,8 +64,7 @@ class PageHelper extends ViewHelper
      * @param BusinessEntityHelper $businessEntityHelper
      * @param EntityManager $entityManager
      * @param ViewCacheHelper $viewCacheHelper
-     * @param ViewReferenceBuilderChain $viewReferenceBuilderChain
-     * @param BusinessTemplateChain $BusinessTemplateChain
+     * @param ViewReferenceBuilderChain $viewReferenceBuilder
      * @param CurrentViewHelper $currentViewHelper
      * @param EventDispatcherInterface $eventDispatcher
      * @param TemplateMapper $victoireTemplating
@@ -158,8 +156,8 @@ class PageHelper extends ViewHelper
 
     /**
      * generates a response from a page url
-     * @param string $url
      *
+     * @param View $view
      * @return Response
      */
     public function renderPage($view)
@@ -313,8 +311,8 @@ class PageHelper extends ViewHelper
         $errorMessage = 'The page was not found';
         if ($parameters) {
 
-            array_walk($parameters, function ($key, $parameter) {
-                    return $key . ': '. $parameter;
+            array_walk($parameters, function($key, $parameter) {
+                    return $key.': '.$parameter;
                 });
             $errorMessage .= " for parameters ".implode(', ', $parameters);
         }

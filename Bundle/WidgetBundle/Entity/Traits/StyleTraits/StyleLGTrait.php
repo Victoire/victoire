@@ -305,7 +305,7 @@ trait StyleLGTrait {
 
     /**
      * Set image
-     * @param string|Media $image
+     * @param Media $image
      * @return $this
      */
     public function setContainerBackgroundImageLG(Media $image = null)

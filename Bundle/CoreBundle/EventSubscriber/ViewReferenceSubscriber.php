@@ -7,7 +7,6 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\UnitOfWork;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Victoire\Bundle\BusinessPageBundle\Builder\BusinessPageBuilder;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
@@ -101,7 +100,7 @@ class ViewReferenceSubscriber implements EventSubscriber
 
     /**
      * Change url recursively for the WebViewInterface given
-     * @param WebViewInterface $view
+     * @param View $view
      *
      * @return void
      */
@@ -116,7 +115,7 @@ class ViewReferenceSubscriber implements EventSubscriber
         }
 
         foreach ($viewReferences as $key => $viewReference) {
-            if ($view instanceof WebViewInterface && $view->getId() ) {
+            if ($view instanceof WebViewInterface && $view->getId()) {
                 $this->addRouteHistory($viewReference['view'], $em, $uow);
             }
         }
@@ -129,7 +128,7 @@ class ViewReferenceSubscriber implements EventSubscriber
 
     /**
      * Manage urls
-     * @param WebViewInterface $view
+     * @param View $view
      *
      * @return void
      */
@@ -157,7 +156,7 @@ class ViewReferenceSubscriber implements EventSubscriber
 
             // Get BusinessPages of the given BusinessTemplate
             $inheritors = $em->getRepository('Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage')->findByTemplate($view);
-            foreach($inheritors as $instance) {
+            foreach ($inheritors as $instance) {
                 $this->manageViewUrl($instance, $em, $uow);
             }
         }
@@ -167,7 +166,6 @@ class ViewReferenceSubscriber implements EventSubscriber
      * Record the route history of the page
      *
      * @param WebViewInterface $view
-     * @param string           $initialUrl
      */
     protected function addRouteHistory(WebViewInterface $view, EntityManager $em, UnitOfWork $uow)
     {

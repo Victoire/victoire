@@ -5,7 +5,6 @@ namespace Victoire\Bundle\BusinessEntityBundle\EventSubscriber;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Symfony\Component\DependencyInjection\Container;
-use Victoire\Bundle\BlogBundle\Entity\Article;
 use Victoire\Bundle\BusinessPageBundle\Repository\BusinessPageRepository;
 
 class BusinessEntitySubscriber implements EventSubscriber
