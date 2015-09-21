@@ -42,7 +42,7 @@ the specific language governing permissions and limitations under the Apache Lic
     "use strict";
     /*global document, window, jQuery, console */
 
-    if (window.Select2 !== undefined) {
+    if (window.vicSelect2 !== undefined) {
         return;
     }
 
@@ -3316,7 +3316,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     if ("tags" in opts) {opts.multiple = multiple = true;}
                 }
 
-                select2 = multiple ? new window.Select2["class"].multi() : new window.Select2["class"].single();
+                select2 = multiple ? new window.vicSelect2["class"].multi() : new window.vicSelect2["class"].single();
                 select2.init(opts);
             } else if (typeof(args[0]) === "string") {
 
@@ -3428,7 +3428,7 @@ the specific language governing permissions and limitations under the Apache Lic
     };
 
     // exports
-    window.Select2 = {
+    window.vicSelect2 = {
         query: {
             ajax: ajax,
             local: local,
