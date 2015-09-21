@@ -3,7 +3,7 @@ Feature: Test asynchronous widget
 
   Background:
     Given I am logged in as "anakin@victoire.io"
-    And I wait 2 seconds
+    And I resize the window to 1024x720
 
   Scenario: I create an asynchronous widget
     When I switch to "layout" mode
