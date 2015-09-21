@@ -4,8 +4,11 @@
 function BlogCategory(blogCategoryElement)
 {
     this.element = $vic(blogCategoryElement);
-    this.index = $vic(blogCategoryElement).children('[data-init="true"]').length;
-
+    if ($vic(blogCategoryElement).data('index')) {
+        this.index = $vic(blogCategoryElement).data('index');
+    } else {
+        this.index = $vic(blogCategoryElement).children('[data-init="true"]').length;
+    }
 
     var lastMaxId = 0;
     $vic('[data-init=true]').each(function(index, el) {
