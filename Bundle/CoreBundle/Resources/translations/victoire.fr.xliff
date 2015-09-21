@@ -218,6 +218,14 @@
         <source>victoire.widget.type.asynchronous.label</source>
         <target>Chargement asynchrone ?</target>
       </trans-unit>
+      <trans-unit id="23" resname="form.link_type.route_parameters.placeholder">
+        <source>form.link_type.route_parameters.placeholder</source>
+        <target>["id":"{{item.id}}", "name": "Yoda"]</target>
+      </trans-unit>
+      <trans-unit id="23" resname="form.link_type.route.placeholder">
+        <source>form.link_type.route.placeholder</source>
+        <target>victoire_route</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
