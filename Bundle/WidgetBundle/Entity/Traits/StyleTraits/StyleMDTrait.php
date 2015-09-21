@@ -86,7 +86,7 @@ trait StyleMDTrait {
      * @var string
      *
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\MediaBundle\Entity\Media")
-     * @ORM\JoinColumn(name="container_background_image_md_id", referencedColumnName="id", onDelete="CASCADE", nullable=true)
+     * @ORM\JoinColumn(name="container_background_image_md_id", referencedColumnName="id", onDelete="SET NULL", nullable=true)
      */
     protected $containerBackgroundImageMD;
 
