@@ -80,13 +80,13 @@ class LinkType extends AbstractType
             'label'                          => 'form.link_type.route.label',
             'vic_vic_widget_form_group_attr' => array('class' => 'vic-form-group vic-hidden route-type'),
             'required'                       => true,
-            'attr' => array('novalidate' => 'novalidate'),
+            'attr' => array('novalidate' => 'novalidate', 'placeholder' => 'form.link_type.route.placeholder'),
         ))
         ->add($builder->create('route_parameters', 'text', array(
                 'label'                          => 'form.link_type.route_parameters.label',
                 'vic_vic_widget_form_group_attr' => array('class' => 'vic-form-group vic-hidden route-type'),
                 'required'  => true,
-                'attr' => array('novalidate' => 'novalidate'),
+                'attr' => array('novalidate' => 'novalidate', 'placeholder' => 'form.link_type.route_parameters.placeholder'),
             ))->addModelTransformer($transformer)
         )
 
