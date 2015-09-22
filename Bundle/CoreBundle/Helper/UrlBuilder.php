@@ -1,24 +1,17 @@
 <?php
 namespace Victoire\Bundle\CoreBundle\Helper;
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\UnitOfWork;
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
-use Symfony\Component\HttpFoundation\RequestStack;
-use Victoire\Bundle\CoreBundle\Entity\Route;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
-use Victoire\Bundle\PageBundle\Repository\PageRepository;
 
 /**
  * ref: victoire_core.url_builder
  */
 class UrlBuilder
 {
-    
+
     /**
      * Builds the page's url by get all page parents slugs and implode them with "/".
      * @param WebViewInterface $view
-     * @param integer $depth
      *
      * @return string $url
      */
@@ -48,9 +41,9 @@ class UrlBuilder
     /**
      * Get the array of slugs of the parents
      * @param WebViewInterface $view
-     * @param array            $slugs
+     * @param string[]            $slugs
      *
-     * @return array
+     * @return string[]
      */
     protected function getParentSlugs(WebViewInterface $view, array $slugs)
     {
