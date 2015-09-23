@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\WidgetBundle\Twig;
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -20,6 +21,7 @@ class LinkExtension extends \Twig_Extension
     protected $businessEntityHelper; // @victoire_business_page.business_entity_helper
     protected $BusinessPageHelper; // @victoire_business_page.business_page_helper
     protected $pageHelper;
+    protected $em; // @doctrine.orm.entity_manager
 
     public function __construct(
         Router $router,
@@ -27,7 +29,8 @@ class LinkExtension extends \Twig_Extension
         $analytics,
         BusinessEntityHelper $businessEntityHelper,
         BusinessPageHelper $BusinessPageHelper,
-        PageHelper $pageHelper
+        PageHelper $pageHelper,
+        EntityManager $em
     )
     {
         $this->router = $router;
@@ -36,6 +39,7 @@ class LinkExtension extends \Twig_Extension
         $this->businessEntityHelper = $businessEntityHelper;
         $this->BusinessPageHelper = $BusinessPageHelper;
         $this->pageHelper = $pageHelper;
+        $this->em = $em;
     }
     /**
      * Returns a list of functions to add to the existing list.
@@ -194,7 +198,7 @@ class LinkExtension extends \Twig_Extension
     {
         if (!$patternId) {
             $patternId = $this->BusinessPageHelper
-                ->guessBestPatternIdForEntity(new \ReflectionClass($businessEntityInstance), $businessEntityInstance->getId());
+                ->guessBestPatternIdForEntity(new \ReflectionClass($businessEntityInstance), $businessEntityInstance->getId(), $this->em);
         }
 
         $page = $this->pageHelper->findPageByParameters(array(

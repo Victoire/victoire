@@ -176,20 +176,25 @@ class BusinessPageHelper
 
     /**
      * Guess the best pattern to represent given reflectionClass
+     *
      * @param \ReflectionClass $refClass
      * @param integer          $entityId
+     * @param EntityManager    $em
      * @param string           $originalRefClassName When digging into parentClass, we do not have to forget originalClass to be able to get reference after all
      *
      * @return View
+     * @throws \Exception
      */
-    public function guessBestPatternIdForEntity($refClass, $entityId, $originalRefClassName = null)
+    public function guessBestPatternIdForEntity($refClass, $entityId, $em, $originalRefClassName = null)
     {
+        $refClassName = $em->getClassMetadata($refClass->name)->name;
+
         $viewReference = null;
         if (!$originalRefClassName) {
-            $originalRefClassName = $refClass->name;
+            $originalRefClassName = $refClassName;
         }
 
-        $businessEntity = $this->businessEntityHelper->findByEntityClassname($refClass->name);
+        $businessEntity = $this->businessEntityHelper->findByEntityClassname($refClassName);
 
         if ($businessEntity) {
             $parameters = array(
@@ -203,9 +208,9 @@ class BusinessPageHelper
         if (!$viewReference) {
             $parentRefClass = $refClass->getParentClass();
             if ($parentRefClass) {
-                $viewReference['patternId'] = $this->guessBestPatternIdForEntity($parentRefClass, $entityId, $originalRefClassName);
+                $viewReference['patternId'] = $this->guessBestPatternIdForEntity($parentRefClass, $entityId, $em, $originalRefClassName);
             } else {
-                throw new \Exception(sprintf('Cannot find a BusinessTemplate that can display the requested BusinessEntity ("%s", "%s".)', $refClass->name, $entityId));
+                throw new \Exception(sprintf('Cannot find a BusinessTemplate that can display the requested BusinessEntity ("%s", "%s".)', $refClassName, $entityId));
             }
         }
 

@@ -62,6 +62,7 @@ services:
             - @victoire_core.helper.business_entity_helper
             - @victoire_business_page.business_page_helper
             - @victoire_page.page_helper
+            - @doctrine.orm.entity_manager
         tags:
             - { name: twig.extension }
 
