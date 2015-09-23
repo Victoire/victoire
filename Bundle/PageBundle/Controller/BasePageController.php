@@ -50,7 +50,7 @@ class BasePageController extends Controller
         $refClass = new \ReflectionClass($entity);
 
         $patternId = $this->container->get('victoire_business_page.business_page_helper')
-            ->guessBestPatternIdForEntity($refClass, $entityId);
+            ->guessBestPatternIdForEntity($refClass, $entityId, $this->container->get('doctrine.orm.entity_manager'));
 
         $page = $this->container->get('victoire_page.page_helper')->findPageByParameters(array(
             'viewId' => $patternId,
