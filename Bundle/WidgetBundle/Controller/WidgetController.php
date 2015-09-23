@@ -289,11 +289,19 @@ class WidgetController extends Controller
             $this->get('victoire_widget.widget_helper')->deleteById($id);
             $this->get('doctrine.orm.entity_manager')->flush();
 
+            if ($view instanceof Template) {
+                $redirect = $this->generateUrl('victoire_template_show', ['slug' => $view->getSlug()]);
+            } else if ($view instanceof BusinessTemplate) {
+                $redirect = $this->generateUrl('victoire_business_template_show', ['id' => $view->getId()]);
+            } else {
+                $redirect = $this->generateUrl('victoire_core_page_show', array(
+                        'url' => $view->getUrl(),
+                    ));
+            }
+
             return new JsonResponse(array(
                     'success'  => true,
-                    'redirect' => $this->generateUrl('victoire_core_page_show', array(
-                            'url' => $view->getUrl(),
-                        )),
+                    'redirect' => $redirect
                 ));
         } catch (Exception $ex) {
             return $this->getJsonReponseFromException($ex);

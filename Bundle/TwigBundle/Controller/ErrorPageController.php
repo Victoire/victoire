@@ -14,7 +14,7 @@ use Victoire\Bundle\TwigBundle\Entity\ErrorPage;
  * @param Request $request The request
  * @param string  $code    The error page code
  *
- * @Route("/error", name="victoire_template_show")
+ * @Route("/error", name="victoire_error_show")
  */
 class ErrorPageController extends Controller
 {
