@@ -9,8 +9,6 @@ use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 class UrlBuilder
 {
 
-
-
     /**
      * Builds the page's url by get all page parents slugs and implode them with "/".
      * @param WebViewInterface $view
@@ -19,12 +17,11 @@ class UrlBuilder
      */
     public function buildUrl(WebViewInterface $view)
     {
+        $slug = [];
         // build url binded with parents url
-        if (method_exists($view, 'isHomepage') && $view->isHomepage()) {
-            $slug = array('');
-        } else if (method_exists($view, 'getStaticUrl') && $view->getStaticUrl() != null && $view->getStaticUrl() != '') {
+        if (method_exists($view, 'getStaticUrl') && $view->getStaticUrl() != null && $view->getStaticUrl() != '' ) {
             $slug = array($view->getStaticUrl());
-        } else {
+        } else if (!(method_exists($view, 'isHomepage') && $view->isHomepage())) {
             $slug = array($view->getSlug());
         }
 
@@ -46,21 +43,19 @@ class UrlBuilder
      * @param WebViewInterface $view
      * @param string[]            $slugs
      *
-     * @return array
+     * @return string[]
      */
     protected function getParentSlugs(WebViewInterface $view, array $slugs)
     {
         $parent = $view->getParent();
 
         if ($parent !== null) {
-            if (method_exists($parent, 'isHomepage') && $parent->isHomepage()) {
-                $slug = '';
-            } else if (method_exists($parent, 'getStaticUrl') && $parent->getStaticUrl() != null && $parent->getStaticUrl() != '') {
-                $slug = $parent->getStaticUrl();
-            } else {
-                $slug = $parent->getSlug();
+            if (method_exists($parent, 'getStaticUrl') && $parent->getStaticUrl() != null && $parent->getStaticUrl() != '' ) {
+                array_push($slugs, $parent->getStaticUrl());
+            } else if (!(method_exists($parent, 'isHomepage') && $parent->isHomepage())) {
+                array_push($slugs, $parent->getSlug());
             }
-            array_push($slugs, $slug);
+
             if ($parent->getParent() !== null) {
                 $slugs = array_merge($slugs, $this->getParentSlugs($parent, $slugs));
             }
