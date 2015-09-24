@@ -34,13 +34,7 @@ class LinkType extends AbstractType
             ->add('linkType', 'choice', array(
                 'label'       => 'form.link_type.linkType.label',
                 'required'    => true,
-                'choices'     => array(
-                    'none'           => 'form.link_type.linkType.none',
-                    'viewReference'  => 'form.link_type.linkType.view_reference',
-                    'route'          => 'form.link_type.linkType.route',
-                    'url'            => 'form.link_type.linkType.url',
-                    'attachedWidget' => 'form.link_type.linkType.widget',
-                ),
+                'choices'     => $options['linkTypeChoices'],
                 'attr'        => array(
                     'data-role' => 'vic-linkType-select',
                     'onchange'  => 'showSelectedLinkType($vic(this));',
@@ -119,7 +113,22 @@ class LinkType extends AbstractType
             'data_class'         => 'Victoire\Bundle\CoreBundle\Entity\Link',
             'translation_domain' => 'victoire',
             'horizontal'          => false,
+            'linkTypeChoices'    => $this->getDefaultLinkTypeChoices()
         ));
+    }
+
+    /**
+     * @return array
+     */
+    public static function getDefaultLinkTypeChoices()
+    {
+        return array(
+            'none'           => 'form.link_type.linkType.none',
+            'viewReference'  => 'form.link_type.linkType.view_reference',
+            'route'          => 'form.link_type.linkType.route',
+            'url'            => 'form.link_type.linkType.url',
+            'attachedWidget' => 'form.link_type.linkType.widget',
+        );
     }
 
     /**
