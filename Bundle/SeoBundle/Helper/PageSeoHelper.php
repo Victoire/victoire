@@ -88,9 +88,16 @@ class PageSeoHelper
                     foreach ($businessProperties as $businessProperty) {
                         //parse of seo attributes
                         foreach ($this->pageSeoAttributes as $seoAttribute) {
-                            $string = $this->getEntityAttributeValue($pageSeo, $seoAttribute);
-                            $updatedString = $this->parameterConverter->setBusinessPropertyInstance($string, $businessProperty, $entity);
-                            $this->setEntityAttributeValue($pageSeo, $seoAttribute, $updatedString);
+                            $value = $this->getEntityAttributeValue($pageSeo, $seoAttribute);
+                            // we only update value if its a string and (if its a VBP or its a BP where value is not defined)
+                            if (is_string($value) && ($page instanceof VirtualBusinessPage || $page instanceof BusinessPage && $value == null )) {
+                                $value = $this->parameterConverter->setBusinessPropertyInstance(
+                                    $value,
+                                    $businessProperty,
+                                    $entity
+                                );
+                            }
+                            $this->setEntityAttributeValue($pageSeo, $seoAttribute, $value);
                         }
                     }
                 }
