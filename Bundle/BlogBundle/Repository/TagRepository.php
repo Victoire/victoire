@@ -36,6 +36,7 @@ class TagRepository extends EntityRepository
             ->leftJoin('t_tag.blog', 'blog');
         if ($blog) {
             $this->qb = $this->qb->where('blog.id = :blogId')
+                ->orWhere('blog.id IS NULL')
             ->setParameters(['blogId' => $blog->getId()]);
         }
 

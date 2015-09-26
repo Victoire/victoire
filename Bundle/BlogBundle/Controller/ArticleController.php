@@ -130,7 +130,16 @@ class ArticleController extends Controller
 
         $form->handleRequest($request);
         $novalidate = $request->query->get('novalidate', false);
+
         if ($novalidate === false && $form->isValid()) {
+
+            if (count($article->getTags())) {
+                /** @var Tag $tag */
+                foreach ($article->getTags() as $tag) {
+                    $tag->setBlog($article->getBlog());
+                    $this->get('doctrine.orm.entity_manager')->persist($tag);
+                }
+            }
             $this->get('doctrine.orm.entity_manager')->flush();
 
             $pattern = $article->getPattern();
