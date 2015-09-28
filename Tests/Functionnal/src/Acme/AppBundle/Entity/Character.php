@@ -41,7 +41,7 @@ class Character
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=55)
-     * @VIC\BusinessProperty({"textable", "businessParameter"})
+     * @VIC\BusinessProperty({"textable", "businessParameter", "seoable"})
      */
     private $name;
 
