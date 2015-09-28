@@ -53,7 +53,6 @@ class PageSeoController extends Controller
                 'id' => $page->getId()
             )
         );
-
         //create the form
         $form = $this->container->get('form.factory')->create('seo_page', $pageSeo,
             array(
@@ -72,8 +71,12 @@ class PageSeoController extends Controller
             $this->congrat('victoire_seo.save.success');
 
             //redirect to the page url
-            $pageUrl = $page->getUrl();
-            $url = $this->generateUrl('victoire_core_page_show', array('url' => $pageUrl));
+            if($page instanceof BusinessTemplate)
+            {
+                $url = $this->generateUrl('victoire_business_template_show', array('id' => $page->getId()));
+            }else{
+                $url = $this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl()));
+            }
 
             return new JsonResponse(array(
                 'success' => true,
