@@ -15,6 +15,7 @@ class BusinessEntity
     protected $class = null;
     protected $name = null;
     protected $businessProperties = array();
+    protected $disable = false;
 
     public static function __set_state($array)
     {
@@ -23,6 +24,7 @@ class BusinessEntity
         $businessEntity->setClass($array['class']);
         $businessEntity->setName($array['name']);
         $businessEntity->setBusinessProperties($array['businessProperties']);
+        $businessEntity->setDisable($array['disable']);
 
         return $businessEntity;
     }
@@ -84,6 +86,40 @@ class BusinessEntity
     public function setClass($class)
     {
         $this->class = $class;
+    }
+
+    /**
+     * Is disable
+     *
+     * @return boolean
+     */
+    public function isDisable()
+    {
+        return $this->disable;
+    }
+
+    /**
+     * Set disable
+     *
+     * @param boolean $disable
+     */
+    public function setDisable($disable)
+    {
+        $this->disable = $disable;
+    }
+
+    /**
+     * Set disable if BusinessEntity dont have all receiverProperties required
+     *
+     * @param array $receiverProperties
+     */
+    public function setDisableForReceiverProperties($receiverProperties = array())
+    {
+        foreach ($receiverProperties as $receiverProperty => $value) {
+            if (!array_key_exists($receiverProperty, $this->businessProperties)) {
+                $this->disable = true;
+            }
+        }
     }
 
     /**

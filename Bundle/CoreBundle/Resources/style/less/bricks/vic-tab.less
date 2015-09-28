@@ -3,7 +3,8 @@
     border-color: @vic-navTabs-borderColor;
 
     > li {
-        > a {
+        > a,
+        > span {
             padding-right: @vic-navTabs-item-horizontalPadding;
             padding-left: @vic-navTabs-item-horizontalPadding;
             font-size: @vic-navTabs-item-fontSize;
@@ -14,7 +15,8 @@
 
         &,
         &.vic-active {
-            > a {
+            > a,
+            > span {
                 border-color: @vic-navTabs-borderColor;
             }
         }
@@ -29,6 +31,11 @@
                     color: @vic-navTabs-item-active-color;
                     font-weight: @vic-navTabs-item-active_fontWeight;
                 }
+            }
+        }
+        &.vic-disable {
+            > span {
+                color: @vic-navTabs-item-disable-color;
             }
         }
     }

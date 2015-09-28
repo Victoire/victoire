@@ -4104,6 +4104,12 @@ textarea.vic-input-group-sm > .vic-input-group-btn > .vic-btn {
   padding: 10px 15px;
 }
 
+.vic-nav > li > span {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+}
+
 .vic-nav > li > a:hover,
 .vic-nav > li > a:focus {
   text-decoration: none;
@@ -4154,6 +4160,13 @@ textarea.vic-input-group-sm > .vic-input-group-btn > .vic-btn {
   line-height: 1.428571429;
   border: 1px solid transparent;
   border-radius: 4px 4px 0 0;
+}
+
+.vic-nav-tabs > li > span {
+    margin-right: 2px;
+    line-height: 1.428571429;
+    border: 1px solid transparent;
+    border-radius: 4px 4px 0 0;
 }
 
 .vic-nav-tabs > li > a:hover {
