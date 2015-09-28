@@ -61,16 +61,12 @@ class EntityProxyFieldsBuilder
                                 'title' => $label
                             )
                         );
+
+                        if(!$receiverProperty->isRequired()) {
+                            $options = array_merge(array('required' => false), $options);
+                        }
+
                         $builder->add($receiverProperty->getFieldName(), 'choice', $options);
-                    } else if ($receiverProperty->isRequired()) {
-                        throw new \Exception(
-                            sprintf(
-                                'The Entity %s doesn\'t have a %s property, which is required by %s widget',
-                                $namespace,
-                                $type,
-                                $widgetName
-                            )
-                        );
                     }
                 }
             }
