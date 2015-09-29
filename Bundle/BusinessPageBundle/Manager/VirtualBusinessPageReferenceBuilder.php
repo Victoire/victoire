@@ -28,7 +28,6 @@ class VirtualBusinessPageReferenceBuilder extends BaseReferenceBuilder
             'entityId'        => $view->getBusinessEntity()->getId(),
             'entityNamespace' => $em->getClassMetadata(get_class($view->getBusinessEntity()))->name,
             'viewNamespace'   => $em->getClassMetadata(get_class($view))->name,
-            'type'            => $view::TYPE,
             'view'            => $view,
         );
 
