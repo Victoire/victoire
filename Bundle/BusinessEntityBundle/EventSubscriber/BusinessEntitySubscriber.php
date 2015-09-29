@@ -46,10 +46,10 @@ class BusinessEntitySubscriber implements EventSubscriber
         if ($businessEntity) {
             $viewCacheHelper = $this->container->get('victoire_core.view_cache_helper');
             //remove all references which refer to the entity
-            $viewCacheHelper->removeViewsReferencesByParameters(array(
+            $viewCacheHelper->removeViewsReferencesByParameters([array(
                         'entityId' => $entity->getId(),
                         'entityNamespace' => get_class($entity),
-            ));
+            )]);
         }
     }
     public function updateBusinessPagesAndRegerateCache(LifecycleEventArgs $eventArgs)
