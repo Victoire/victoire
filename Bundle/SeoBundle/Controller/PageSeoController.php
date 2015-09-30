@@ -71,7 +71,7 @@ class PageSeoController extends Controller
             $this->congrat('victoire_seo.save.success');
 
             //redirect to the page url
-            if($page instanceof BusinessTemplate)
+            if(!method_exists($page, "getUrl"))
             {
                 $url = $this->generateUrl('victoire_business_template_show', array('id' => $page->getId()));
             }else{
