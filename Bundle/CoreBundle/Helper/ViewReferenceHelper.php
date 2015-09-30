@@ -65,6 +65,12 @@ class ViewReferenceHelper
         $cachedArray = json_decode(json_encode((array) $xml), TRUE);
         $viewsReferences = [];
 
+        // if the xml contains only one reference, it'll be flatten so it will miss one deep level, so we re-create it
+        if (count($cachedArray['viewReference']) === 1) {
+            $cachedArray = array_map(function($el) {
+                    return [$el];
+                }, $cachedArray);
+        }
         foreach ($cachedArray['viewReference'] as $cachedViewReference) {
             $viewReference['id']              = !empty($cachedViewReference['@attributes']['id']) ? $cachedViewReference['@attributes']['id'] : null;
             $viewReference['locale']          = !empty($cachedViewReference['@attributes']['locale']) ? $cachedViewReference['@attributes']['locale'] : null;
