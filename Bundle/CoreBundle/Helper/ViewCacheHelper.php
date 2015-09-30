@@ -164,11 +164,16 @@ XML;
     public function removeViewsReferencesByParameters($parameters)
     {
         $rootNode = $this->readCache();
-
-        $viewsReferencesToRemove = $this->getAllReferenceByParameters($parameters);
-        foreach ($viewsReferencesToRemove as $viewReferenceToRemove) {
-            $this->viewReferenceHelper->removeViewReference($rootNode, $viewReferenceToRemove);
+        foreach ($parameters as $parameter) {
+            if (isset($parameter['view'])) {
+                unset($parameter['view']);
+            }
+            $viewsReferencesToRemove = $this->getAllReferenceByParameters($parameter);
+            foreach ($viewsReferencesToRemove as $viewReferenceToRemove) {
+                $this->viewReferenceHelper->removeViewReference($rootNode, $viewReferenceToRemove);
+            }
         }
+
         $this->writeFile($rootNode);
     }
 

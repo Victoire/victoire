@@ -65,6 +65,12 @@ class ViewReferenceHelper
         $cachedArray = json_decode(json_encode((array) $xml), TRUE);
         $viewsReferences = [];
 
+        // if the xml contains only one reference, it'll be flatten so it will miss one deep level, so we re-create it
+        if (count($cachedArray['viewReference']) === 1) {
+            $cachedArray = array_map(function($el) {
+                    return [$el];
+                }, $cachedArray);
+        }
         foreach ($cachedArray['viewReference'] as $cachedViewReference) {
             $viewReference['id']              = !empty($cachedViewReference['@attributes']['id']) ? $cachedViewReference['@attributes']['id'] : null;
             $viewReference['locale']          = !empty($cachedViewReference['@attributes']['locale']) ? $cachedViewReference['@attributes']['locale'] : null;
@@ -91,7 +97,7 @@ class ViewReferenceHelper
 
         foreach ($viewsReferences as $key => $viewReference) {
             // If viewReference is a persisted page, we want to clean virtual BEPs
-            if (!empty($viewReference['type']) && $viewReference['type'] == 'business_page') {
+            if (!empty($viewReference['viewNamespace']) && $viewReference['viewNamespace'] == 'Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage') {
                 $viewsReferences = array_filter($viewsReferences, function($_viewReference) use ($viewReference) {
 
                         // If my current viewReference already exists as a virtualBusinessPage, I remove it from viewReferences
