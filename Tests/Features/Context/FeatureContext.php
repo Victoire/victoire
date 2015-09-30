@@ -73,4 +73,20 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
         $url = rtrim($base_url, DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.ltrim($url, DIRECTORY_SEPARATOR);
         $this->iShouldSeeCssOfWith('background-image', $id, 'url("'.$url.'")');
     }
+
+    /**
+     * @Then the title should be :title
+     */
+    public function theTitleShouldBe($title)
+    {
+        $element = $this->getSession()->getPage()->find(
+            'xpath',
+            sprintf('//title[normalize-space(text()) = "%s"]', $title)
+        );
+
+        if (null === $element) {
+            $message = sprintf('"%s" is not the title of the page', $title);
+            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
+        }
+    }
 }

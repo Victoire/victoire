@@ -9,6 +9,7 @@ Feature: Create business entity pages
             | Yoda   | bright | 17500         | yoda   |
         And I resize the window to 1024x720
 
+    @smartStep
     Scenario: I can create a new Business entity page pattern and create some content in the pattern
         Given I open the hamburger menu
         Then I should see "Représentation métier"

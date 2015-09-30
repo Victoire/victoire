@@ -6,6 +6,7 @@ use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
+use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
 
 /**
  * The seo helper brings some seo functions for pages
@@ -90,7 +91,7 @@ class PageSeoHelper
                         foreach ($this->pageSeoAttributes as $seoAttribute) {
                             $value = $this->getEntityAttributeValue($pageSeo, $seoAttribute);
                             // we only update value if its a string and (if its a VBP or its a BP where value is not defined)
-                            if (is_string($value) && ($page instanceof VirtualBusinessPage || $page instanceof BusinessPage && $value == null )) {
+                            if (is_string($value) && ($page instanceof VirtualBusinessPage || ($page instanceof BusinessPage && $value == null ))) {
                                 $value = $this->parameterConverter->setBusinessPropertyInstance(
                                     $value,
                                     $businessProperty,
