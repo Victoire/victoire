@@ -1,10 +1,11 @@
 <?php
+
 namespace Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTraits;
 
 use Victoire\Bundle\MediaBundle\Entity\Media;
 
-trait StyleLGTrait {
-
+trait StyleLGTrait
+{
     /**
      * @var string
      *
@@ -42,6 +43,7 @@ trait StyleLGTrait {
 
     /**
      * @var string
+     *
      * @deprecated
      * @ORM\Column(name="container_background_lg", type="string", length=255, nullable=true)
      */
@@ -107,11 +109,13 @@ trait StyleLGTrait {
 
     /**
      * @param string $containerMarginLG
+     *
      * @return $this
      */
     public function setContainerMarginLG($containerMarginLG)
     {
         $this->containerMarginLG = $containerMarginLG;
+
         return $this;
     }
 
@@ -125,11 +129,13 @@ trait StyleLGTrait {
 
     /**
      * @param string $containerPaddingLG
+     *
      * @return $this
      */
     public function setContainerPaddingLG($containerPaddingLG)
     {
         $this->containerPaddingLG = $containerPaddingLG;
+
         return $this;
     }
 
@@ -143,11 +149,13 @@ trait StyleLGTrait {
 
     /**
      * @param string $containerWidthLG
+     *
      * @return $this
      */
     public function setContainerWidthLG($containerWidthLG)
     {
         $this->containerWidthLG = $containerWidthLG;
+
         return $this;
     }
 
@@ -161,11 +169,13 @@ trait StyleLGTrait {
 
     /**
      * @param string $containerHeightLG
+     *
      * @return $this
      */
     public function setContainerHeightLG($containerHeightLG)
     {
         $this->containerHeightLG = $containerHeightLG;
+
         return $this;
     }
 
@@ -179,11 +189,13 @@ trait StyleLGTrait {
 
     /**
      * @param string $textAlignLG
+     *
      * @return $this
      */
     public function setTextAlignLG($textAlignLG)
     {
         $this->textAlignLG = $textAlignLG;
+
         return $this;
     }
 
@@ -197,11 +209,13 @@ trait StyleLGTrait {
 
     /**
      * @param string $containerBackgroundLG
+     *
      * @return $this
      */
     public function setContainerBackgroundLG($containerBackgroundLG)
     {
         $this->containerBackgroundLG = $containerBackgroundLG;
+
         return $this;
     }
 
@@ -215,11 +229,13 @@ trait StyleLGTrait {
 
     /**
      * @param string $containerBackgroundTypeLG
+     *
      * @return $this
      */
     public function setContainerBackgroundTypeLG($containerBackgroundTypeLG)
     {
         $this->containerBackgroundTypeLG = $containerBackgroundTypeLG;
+
         return $this;
     }
 
@@ -233,11 +249,13 @@ trait StyleLGTrait {
 
     /**
      * @param string $containerBackgroundRepeatLG
+     *
      * @return $this
      */
     public function setContainerBackgroundRepeatLG($containerBackgroundRepeatLG)
     {
         $this->containerBackgroundRepeatLG = $containerBackgroundRepeatLG;
+
         return $this;
     }
 
@@ -251,11 +269,13 @@ trait StyleLGTrait {
 
     /**
      * @param string $containerBackgroundPositionLG
+     *
      * @return $this
      */
     public function setContainerBackgroundPositionLG($containerBackgroundPositionLG)
     {
         $this->containerBackgroundPositionLG = $containerBackgroundPositionLG;
+
         return $this;
     }
 
@@ -269,11 +289,13 @@ trait StyleLGTrait {
 
     /**
      * @param string $containerBackgroundSizeLG
+     *
      * @return $this
      */
     public function setContainerBackgroundSizeLG($containerBackgroundSizeLG)
     {
         $this->containerBackgroundSizeLG = $containerBackgroundSizeLG;
+
         return $this;
     }
 
@@ -287,11 +309,13 @@ trait StyleLGTrait {
 
     /**
      * @param string $containerBackgroundColorLG
+     *
      * @return $this
      */
     public function setContainerBackgroundColorLG($containerBackgroundColorLG)
     {
         $this->containerBackgroundColorLG = $containerBackgroundColorLG;
+
         return $this;
     }
 
@@ -304,13 +328,16 @@ trait StyleLGTrait {
     }
 
     /**
-     * Set image
+     * Set image.
+     *
      * @param Media $image
+     *
      * @return $this
      */
     public function setContainerBackgroundImageLG(Media $image = null)
     {
         $this->containerBackgroundImageLG = $image;
+
         return $this;
     }
 
@@ -324,12 +351,13 @@ trait StyleLGTrait {
 
     /**
      * @param string $containerBackgroundOverlayLG
+     *
      * @return $this
      */
     public function setContainerBackgroundOverlayLG($containerBackgroundOverlayLG)
     {
         $this->containerBackgroundOverlayLG = $containerBackgroundOverlayLG;
+
         return $this;
     }
-
 }

@@ -4,20 +4,20 @@ namespace Victoire\Bundle\SeoBundle\Helper;
 
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
+use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
 
 /**
  * The seo helper brings some seo functions for pages
- * ref: victoire_seo.helper.pageseo_helper
+ * ref: victoire_seo.helper.pageseo_helper.
  */
 class PageSeoHelper
 {
     protected $businessEntityHelper = null;
     protected $parameterConverter = null;
 
-    protected $pageSeoAttributes = array(
+    protected $pageSeoAttributes = [
         'metaTitle',
         'metaDescription',
         'relAuthor',
@@ -41,10 +41,10 @@ class PageSeoHelper
         'metaRobotsFollow',
         'metaRobotsAdvanced',
         'relCanonical',
-        'keyword');
+        'keyword', ];
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param BusinessEntityHelper $businessEntityHelper
      * @param ParameterConverter   $parameterConverter
@@ -56,7 +56,7 @@ class PageSeoHelper
     }
 
     /**
-     * Generate a seo for the page using the current entity
+     * Generate a seo for the page using the current entity.
      *
      * @param Page   $page
      * @param Entity $entity
@@ -78,11 +78,9 @@ class PageSeoHelper
 
             //the page seo might not exist yet
             if ($pageSeo !== null) {
-
                 $businessEntity = $this->businessEntityHelper->findByEntityInstance($entity);
 
                 if ($businessEntity !== null) {
-
                     $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
 
                     //parse the business properties
@@ -91,7 +89,7 @@ class PageSeoHelper
                         foreach ($this->pageSeoAttributes as $seoAttribute) {
                             $value = $this->getEntityAttributeValue($pageSeo, $seoAttribute);
                             // we only update value if its a string and (if its a VBP or its a BP where value is not defined)
-                            if (is_string($value) && ($page instanceof VirtualBusinessPage || ($page instanceof BusinessPage && $value == null ))) {
+                            if (is_string($value) && ($page instanceof VirtualBusinessPage || ($page instanceof BusinessPage && $value == null))) {
                                 $value = $this->parameterConverter->setBusinessPropertyInstance(
                                     $value,
                                     $businessProperty,
@@ -107,7 +105,7 @@ class PageSeoHelper
     }
 
     /**
-     * Get the content of an attribute of an entity given
+     * Get the content of an attribute of an entity given.
      *
      * @param \Victoire\Bundle\SeoBundle\Entity\PageSeo $entity
      * @param string                                    $field
@@ -118,13 +116,13 @@ class PageSeoHelper
     {
         $functionName = 'get'.ucfirst($field);
 
-        $fieldValue = call_user_func(array($entity, $functionName));
+        $fieldValue = call_user_func([$entity, $functionName]);
 
         return $fieldValue;
     }
 
     /**
-     * Update the value of the entity
+     * Update the value of the entity.
      *
      * @param \Victoire\Bundle\SeoBundle\Entity\PageSeo $entity
      * @param string                                    $field
@@ -136,6 +134,6 @@ class PageSeoHelper
     {
         $functionName = 'set'.ucfirst($field);
 
-        call_user_func(array($entity, $functionName), $value);
+        call_user_func([$entity, $functionName], $value);
     }
 }

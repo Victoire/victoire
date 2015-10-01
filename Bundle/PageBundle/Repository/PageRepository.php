@@ -1,8 +1,9 @@
 <?php
+
 namespace Victoire\Bundle\PageBundle\Repository;
 
 /**
- * The Page repository
+ * The Page repository.
  */
 class PageRepository extends BasePageRepository
 {

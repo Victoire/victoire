@@ -6,14 +6,14 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
- * This is the class that validates and merges configuration from your app/config files
+ * This is the class that validates and merges configuration from your app/config files.
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
  */
 class Configuration implements ConfigurationInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getConfigTreeBuilder()
     {
@@ -29,7 +29,7 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->children()
                 ->variableNode('base_paths')
-                ->defaultValue(array('%kernel.root_dir%/../src', '%kernel.root_dir%/../vendor/victoire/victoire/Bundle/BlogBundle', '%kernel.root_dir%/../vendor/friendsofvictoire'))
+                ->defaultValue(['%kernel.root_dir%/../src', '%kernel.root_dir%/../vendor/victoire/victoire/Bundle/BlogBundle', '%kernel.root_dir%/../vendor/friendsofvictoire'])
                 ->end()
             ->end()
             ->children()
@@ -39,12 +39,12 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->children()
                 ->variableNode('templates')
-                ->defaultValue(array('layout' => 'VictoireCoreBundle::layout.html.twig'))
+                ->defaultValue(['layout' => 'VictoireCoreBundle::layout.html.twig'])
                 ->end()
             ->end()
             ->children()
                 ->variableNode('layouts')
-                ->defaultValue(array())
+                ->defaultValue([])
                 ->end()
             ->end()
             ->children()
@@ -56,7 +56,7 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('name')->end()
                         ->end()
                     ->end()
-                ->defaultValue(array())
+                ->defaultValue([])
                 ->end()
             ->end()
             ->children()

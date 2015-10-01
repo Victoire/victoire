@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\WidgetBundle\Command;
 
 use Doctrine\DBAL\Types\Type;
@@ -16,14 +17,14 @@ use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Victoire\Bundle\WidgetBundle\Generator\WidgetGenerator;
 
 /**
- * Create a new Widget for VictoireCMS
+ * Create a new Widget for VictoireCMS.
  */
 class CreateWidgetCommand extends GenerateBundleCommand
 {
     protected $skeletonDirs;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function configure()
     {
@@ -31,7 +32,7 @@ class CreateWidgetCommand extends GenerateBundleCommand
 
         $this
             ->setName('victoire:generate:widget')
-            ->setDefinition(array(
+            ->setDefinition([
                 new InputOption('namespace', '', InputOption::VALUE_REQUIRED, 'The namespace of the widget bundle to create'),
                 new InputOption('dir', '', InputOption::VALUE_REQUIRED, 'The directory where to create the bundle'),
                 new InputOption('bundle-name', '', InputOption::VALUE_REQUIRED, 'The optional bundle name'),
@@ -44,7 +45,7 @@ class CreateWidgetCommand extends GenerateBundleCommand
                 new InputOption('parent', '', InputOption::VALUE_REQUIRED, 'The widget this widget will extends'),
                 new InputOption('packagist-parent-name', '', InputOption::VALUE_REQUIRED, 'The packagist name of the widget you want to extends'),
                 new InputOption('content-resolver', '', InputOption::VALUE_NONE, 'Whether to generate a blank ContentResolver to customize widget rendering logic'),
-            ))
+            ])
             ->setDescription('Generate a new widget')
             ->setHelp(<<<EOT
 The <info>victoire:generate:widget</info> command helps you to generate new widgets.
@@ -64,15 +65,17 @@ EOT
     }
 
     /**
-     * Take arguments and options defined in $this->interact() and generate a new Widget
+     * Take arguments and options defined in $this->interact() and generate a new Widget.
+     *
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
      * @see Command
+     *
      * @throws \InvalidArgumentException When namespace doesn't end with Bundle
      * @throws \RuntimeException         When bundle can't be executed
      *
-     * @return integer|null
+     * @return int|null
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -87,7 +90,7 @@ EOT
             }
         }
 
-        foreach (array('namespace', 'dir') as $option) {
+        foreach (['namespace', 'dir'] as $option) {
             if (null === $input->getOption($option)) {
                 throw new \RuntimeException(sprintf('The "%s" option must be provided.', $option));
             }
@@ -96,7 +99,7 @@ EOT
         $namespace = Validators::validateBundleNamespace($input->getOption('namespace'));
 
         if (!$bundle = $input->getOption('bundle-name')) {
-            $bundle = strtr($namespace, array('\\' => ''));
+            $bundle = strtr($namespace, ['\\' => '']);
         }
 
         $orgname = $input->getOption('org-name');
@@ -118,7 +121,7 @@ EOT
         }
 
         $bundle = Validators::validateBundleName($bundle);
-        $dir    = Validators::validateTargetDir($input->getOption('dir'), $bundle, $namespace);
+        $dir = Validators::validateTargetDir($input->getOption('dir'), $bundle, $namespace);
 
         if (null === $input->getOption('format')) {
             $input->setOption('format', 'annotation');
@@ -144,7 +147,7 @@ EOT
 
         $output->writeln('Generating the bundle code: <info>OK</info>');
 
-        $errors = array();
+        $errors = [];
         $runner = $questionHelper->getRunner($output, $errors);
 
         // check that the namespace is already autoloaded
@@ -157,7 +160,8 @@ EOT
     }
 
     /**
-     * get a generator for given widget and type, and attach it skeleton dirs
+     * get a generator for given widget and type, and attach it skeleton dirs.
+     *
      * @return $generator
      */
     protected function getEntityGenerator()
@@ -173,8 +177,9 @@ EOT
 
         return $generator;
     }
+
     /**
-     * get a generator for given widget and type, and attach it skeleton dirs
+     * get a generator for given widget and type, and attach it skeleton dirs.
      *
      * @return $generator
      */
@@ -193,9 +198,11 @@ EOT
     }
 
     /**
-     * Collect options and arguments
-     * @param  InputInterface  $input
-     * @param  OutputInterface $output
+     * Collect options and arguments.
+     *
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     *
      * @return void
      */
     protected function interact(InputInterface $input, OutputInterface $output)
@@ -218,18 +225,18 @@ EOT
         }
 
         if (null === $namespace) {
-            $output->writeln(array(
+            $output->writeln([
                 '',
                 'Your application code must be written in <comment>widget bundles</comment>. This command helps',
                 'you generate them easily.',
                 '',
                 'Each widget is hosted under a namespace (like <comment>Victoire/Widget/YourAwesomeWidgetNameBundle</comment>).',
                 '',
-                'If you want for example a BlogWidget, the Widget Name should be Blog'
-            ));
+                'If you want for example a BlogWidget, the Widget Name should be Blog',
+            ]);
 
             $question = new Question($questionHelper->getQuestion('Widget name', $input->getOption('bundle-name')));
-            $question->setValidator(function($answer) {
+            $question->setValidator(function ($answer) {
                 return self::validateWidgetName($answer, false);
             });
 
@@ -241,19 +248,19 @@ EOT
 
             $bundle = 'VictoireWidget'.$name.'Bundle';
             $input->setOption('bundle-name', $bundle);
-            $namespace = "Victoire\\Widget\\".$name."Bundle";
+            $namespace = 'Victoire\\Widget\\'.$name.'Bundle';
             $input->setOption('namespace', $namespace);
         }
 
         $orgname = $input->getOption('org-name');
 
         if (null === $orgname) {
-            $output->writeln(array(
+            $output->writeln([
                 '',
                 'A composer.json file will be generated, we need to knpw under which organisation you will publish the widget',
                 '',
                 'The default organisation will be FriendsOfVictoire',
-            ));
+            ]);
             $question = new ConfirmationQuestion($questionHelper->getQuestion('Under which organisation do you want to publish your widget ?', 'friendsofvictoire'), false);
 
             $orgname = $questionHelper->ask($input, $output, $question);
@@ -266,17 +273,17 @@ EOT
         $question = new ConfirmationQuestion($questionHelper->getQuestion('Does your widget extends another widget ?', 'no', '?'), false);
 
         if (null === $parent && $questionHelper->ask($input, $output, $question)) {
-            $output->writeln(array(
+            $output->writeln([
                 '',
                 'A widget can extends another to reproduce it\'s behavior',
                 '',
                 'If you wabt to do so, please give the name of the widget to extend',
                 '',
-                'If you want to extends the TestWidget, the widget name should be Test'
-            ));
+                'If you want to extends the TestWidget, the widget name should be Test',
+            ]);
 
             $question = new Question($questionHelper->getQuestion('Parent widget name', false));
-            $question->setValidator(function($answer) {
+            $question->setValidator(function ($answer) {
                 return self::validateWidgetName($answer, false);
             });
             $parent = $questionHelper->ask($input, $output, $question);
@@ -293,15 +300,15 @@ EOT
 
         $dir = dirname($this->getContainer()->getParameter('kernel.root_dir')).'/src';
 
-        $output->writeln(array(
+        $output->writeln([
             '',
             'The bundle can be generated anywhere. The suggested default directory uses',
             'the standard conventions.',
             '',
-        ));
+        ]);
 
         $question = new Question($questionHelper->getQuestion('Target directory', $dir), $dir);
-        $question->setValidator(function($dir) use ($bundle, $namespace) {
+        $question->setValidator(function ($dir) use ($bundle, $namespace) {
                 return Validators::validateTargetDir($dir, $bundle, $namespace);
         });
         $dir = $questionHelper->ask($input, $output, $question);
@@ -316,15 +323,15 @@ EOT
         }
 
         if (null === $format) {
-            $output->writeln(array(
+            $output->writeln([
                 '',
                 'Determine the format to use for the generated configuration.',
                 '',
-            ));
+            ]);
 
             $question = new Question($questionHelper->getQuestion('Configuration format (yml, xml, php, or annotation)', 'annotation'), 'annotation');
             $question->setValidator(
-                array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateFormat')
+                ['Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateFormat']
             );
             $format = $questionHelper->ask($input, $output, $question);
             $input->setOption('format', $format);
@@ -347,23 +354,24 @@ EOT
         ///////////////////////
 
         $input->setOption('fields', $this->addFields($input, $output, $questionHelper));
-        $entity = "Widget".$name;
+        $entity = 'Widget'.$name;
         $input->setOption('entity', $bundle.':'.$entity);
 
         // summary
-        $output->writeln(array(
+        $output->writeln([
             '',
             $this->getHelper('formatter')->formatBlock('Summary before generation', 'bg=blue;fg=white', true),
             '',
             sprintf("You are going to generate a \"<info>%s\\%s</info>\" widget bundle\nin \"<info>%s</info>\" using the \"<info>%s</info>\" format.", $namespace, $bundle, $dir, $format),
             '',
-        ));
+        ]);
     }
 
     /**
-     * Check that provided widget name is correct
+     * Check that provided widget name is correct.
      *
-     * @param  string $widget
+     * @param string $widget
+     *
      * @return string $widget
      */
     public static function validateWidgetName($widget)
@@ -380,7 +388,7 @@ EOT
     }
 
     /**
-     * Instanciate a new WidgetGenerator
+     * Instanciate a new WidgetGenerator.
      *
      * @return $generator
      */
@@ -393,7 +401,7 @@ EOT
     }
 
     /**
-     * Instanciate a new Entity generator
+     * Instanciate a new Entity generator.
      *
      * @return $generator
      */
@@ -403,10 +411,11 @@ EOT
     }
 
     /**
-     * transform console's output string fields into an array of fields
+     * transform console's output string fields into an array of fields.
      *
-     * @param  string $input
-     * @return array  $fields
+     * @param string $input
+     *
+     * @return array $fields
      */
     private function parseFields($input)
     {
@@ -414,7 +423,7 @@ EOT
             return $input;
         }
 
-        $fields = array();
+        $fields = [];
         foreach (explode(' ', $input) as $value) {
             $elements = explode(':', $value);
             $name = $elements[0];
@@ -424,31 +433,31 @@ EOT
                 $type = isset($matches[1][0]) ? $matches[1][0] : $type;
                 $length = isset($matches[2][0]) ? $matches[2][0] : null;
 
-                $fields[$name] = array('fieldName' => $name, 'type' => $type, 'length' => $length);
+                $fields[$name] = ['fieldName' => $name, 'type' => $type, 'length' => $length];
             }
         }
 
         return $fields;
     }
 
-
     /**
-     * Interactively ask user to add field to his new Entity
+     * Interactively ask user to add field to his new Entity.
      *
-     * @param  InputInterface  $input
-     * @param  OutputInterface $output
-     * @param  QuestionHelper  $questionHelper
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     * @param QuestionHelper  $questionHelper
+     *
      * @return $fields
      */
     private function addFields(InputInterface $input, OutputInterface $output, QuestionHelper $questionHelper)
     {
         $fields = $this->parseFields($input->getOption('fields'));
-        $output->writeln(array(
+        $output->writeln([
             '',
             'Instead of starting with a blank entity, you can add some fields now.',
             'Note that the primary key will be added automatically (named <comment>id</comment>).',
             '',
-        ));
+        ]);
         $output->write('<info>Available types:</info> ');
 
         $types = array_keys(Type::getTypesMap());
@@ -468,7 +477,7 @@ EOT
         }
         $output->writeln('');
 
-        $fieldValidator = function($type) use ($types) {
+        $fieldValidator = function ($type) use ($types) {
             if (!in_array($type, $types)) {
                 throw new \InvalidArgumentException(sprintf('Invalid type "%s".', $type));
             }
@@ -476,14 +485,14 @@ EOT
             return $type;
         };
 
-        $lengthValidator = function($length) {
+        $lengthValidator = function ($length) {
             if (!$length) {
                 return $length;
             }
 
-            $result = filter_var($length, FILTER_VALIDATE_INT, array(
-                'options' => array('min_range' => 1)
-            ));
+            $result = filter_var($length, FILTER_VALIDATE_INT, [
+                'options' => ['min_range' => 1],
+            ]);
 
             if (false === $result) {
                 throw new \InvalidArgumentException(sprintf('Invalid length "%s".', $length));
@@ -496,10 +505,9 @@ EOT
             $output->writeln('');
             $generator = $this->getEntityGenerator();
 
-
             $question = new Question($questionHelper->getQuestion('New field name (press <return> to stop adding fields)', null));
             $question->setValidator(
-                function($name) use ($fields, $generator) {
+                function ($name) use ($fields, $generator) {
                     if (isset($fields[$name]) || 'id' == $name) {
                         throw new \InvalidArgumentException(sprintf('Field "%s" is already defined.', $name));
                     }
@@ -540,7 +548,7 @@ EOT
             $question->setAutocompleterValues($types);
             $type = $questionHelper->ask($input, $output, $question);
 
-            $data = array('columnName' => $columnName, 'fieldName' => lcfirst(Container::camelize($columnName)), 'type' => $type);
+            $data = ['columnName' => $columnName, 'fieldName' => lcfirst(Container::camelize($columnName)), 'type' => $type];
 
             if ($type == 'string') {
                 $question = new Question($questionHelper->getQuestion('Field length', 255), 255);
@@ -554,11 +562,11 @@ EOT
         return $fields;
     }
 
-
-
     /**
-     * Validate Entity short namepace
-     * @param  string    $shortcut
+     * Validate Entity short namepace.
+     *
+     * @param string $shortcut
+     *
      * @return $shortcut
      */
     protected function parseShortcutNotation($shortcut)
@@ -569,12 +577,11 @@ EOT
             throw new \InvalidArgumentException(sprintf('The entity name must contain a : ("%s" given, expecting something like AcmeBlogBundle:Blog/Post)', $entity));
         }
 
-        return array(substr($entity, 0, $pos), substr($entity, $pos + 1));
+        return [substr($entity, 0, $pos), substr($entity, $pos + 1)];
     }
 
     protected function isReservedKeyword($keyword)
     {
-        return in_array($keyword, array('widget'));
+        return in_array($keyword, ['widget']);
     }
-
 }

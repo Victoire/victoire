@@ -22,8 +22,10 @@ class WidgetMapManager
         $this->builder = $builder;
         $this->helper = $helper;
     }
+
     /**
-     * compute the widget map for view
+     * compute the widget map for view.
+     *
      * @param View  $view
      * @param array $sortedWidget
      *
@@ -40,7 +42,7 @@ class WidgetMapManager
     }
 
     /**
-     * Delete the widget from the view
+     * Delete the widget from the view.
      *
      * @param View   $view
      * @param Widget $widget
@@ -100,7 +102,7 @@ class WidgetMapManager
     }
 
     /**
-     * Get the slots for the view by the sorted slots given by the sortable js script when ordering widgets
+     * Get the slots for the view by the sorted slots given by the sortable js script when ordering widgets.
      *
      * @param View $view
      */
@@ -167,7 +169,7 @@ class WidgetMapManager
     }
 
     /**
-     * create a widgetMap for the new Widget cloned
+     * create a widgetMap for the new Widget cloned.
      *
      * @return void
      **/

@@ -3,12 +3,10 @@
 namespace Victoire\Bundle\SeoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Victoire\Bundle\CoreBundle\Entity\View;
-use Victoire\Bundle\PageBundle\Entity\Page;
 
 /**
- * PageSeo
+ * PageSeo.
  *
  * @ORM\Table("vic_page_seo")
  * @ORM\Entity()
@@ -18,7 +16,7 @@ class PageSeo
     use \Gedmo\Timestampable\Traits\TimestampableEntity;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -73,7 +71,6 @@ class PageSeo
      *
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\MediaBundle\Entity\Media")
      * @ORM\JoinColumn(name="ogImage_id", referencedColumnName="id", onDelete="SET NULL")
-     *
      */
     protected $ogImage;
 
@@ -131,7 +128,6 @@ class PageSeo
      *
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\MediaBundle\Entity\Media")
      * @ORM\JoinColumn(name="twitterImage_id", referencedColumnName="id", onDelete="SET NULL")
-     *
      */
     protected $twitterImage;
 
@@ -186,7 +182,7 @@ class PageSeo
     protected $metaRobotsAdvanced;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="sitemap_indexed", type="boolean", nullable=true, options={"default" = true})
      */
@@ -204,7 +200,7 @@ class PageSeo
      *
      * @ORM\Column(name="sitemap_changeFreq", type="string", length=255, nullable=true, options={"default" = "monthly"})
      */
-    protected $sitemapChangeFreq = "monthly";
+    protected $sitemapChangeFreq = 'monthly';
 
     /**
      * @var string
@@ -225,13 +221,11 @@ class PageSeo
      *
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\PageBundle\Entity\Page", inversedBy="referers", cascade={"persist"})
      * @ORM\JoinColumn(name="redirect_to", referencedColumnName="id", onDelete="SET NULL")
-     *
      */
     protected $redirectTo;
 
     /**
-     * contructor
-     *
+     * contructor.
      **/
     public function __construct()
     {
@@ -240,9 +234,9 @@ class PageSeo
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -250,7 +244,8 @@ class PageSeo
     }
 
     /**
-     * Set redirectTo
+     * Set redirectTo.
+     *
      * @param View $redirectTo
      *
      * @return PageSeo
@@ -263,7 +258,7 @@ class PageSeo
     }
 
     /**
-     * Get redirectTo
+     * Get redirectTo.
      *
      * @return string
      */
@@ -273,7 +268,8 @@ class PageSeo
     }
 
     /**
-     * Set metaTitle
+     * Set metaTitle.
+     *
      * @param string $metaTitle
      *
      * @return PageSeo
@@ -286,7 +282,7 @@ class PageSeo
     }
 
     /**
-     * Get metaTitle
+     * Get metaTitle.
      *
      * @return string
      */
@@ -296,7 +292,8 @@ class PageSeo
     }
 
     /**
-     * Set metaDescription
+     * Set metaDescription.
+     *
      * @param string $metaDescription
      *
      * @return PageSeo
@@ -309,7 +306,7 @@ class PageSeo
     }
 
     /**
-     * Get metaDescription
+     * Get metaDescription.
      *
      * @return string
      */
@@ -319,7 +316,8 @@ class PageSeo
     }
 
     /**
-     * Set relAuthor
+     * Set relAuthor.
+     *
      * @param string $relAuthor
      *
      * @return PageSeo
@@ -332,7 +330,7 @@ class PageSeo
     }
 
     /**
-     * Get relAuthor
+     * Get relAuthor.
      *
      * @return string
      */
@@ -342,7 +340,8 @@ class PageSeo
     }
 
     /**
-     * Set relPublisher
+     * Set relPublisher.
+     *
      * @param string $relPublisher
      *
      * @return PageSeo
@@ -355,7 +354,7 @@ class PageSeo
     }
 
     /**
-     * Get relPublisher
+     * Get relPublisher.
      *
      * @return string
      */
@@ -365,7 +364,8 @@ class PageSeo
     }
 
     /**
-     * Set ogTitle
+     * Set ogTitle.
+     *
      * @param string $ogTitle
      *
      * @return PageSeo
@@ -378,7 +378,7 @@ class PageSeo
     }
 
     /**
-     * Get ogTitle
+     * Get ogTitle.
      *
      * @return string
      */
@@ -388,7 +388,8 @@ class PageSeo
     }
 
     /**
-     * Set ogType
+     * Set ogType.
+     *
      * @param string $ogType
      *
      * @return PageSeo
@@ -401,7 +402,7 @@ class PageSeo
     }
 
     /**
-     * Get ogType
+     * Get ogType.
      *
      * @return string
      */
@@ -411,7 +412,8 @@ class PageSeo
     }
 
     /**
-     * Set ogImage
+     * Set ogImage.
+     *
      * @param Image $ogImage
      *
      * @return PageSeo
@@ -424,7 +426,7 @@ class PageSeo
     }
 
     /**
-     * Get ogImage
+     * Get ogImage.
      *
      * @return string
      */
@@ -434,7 +436,8 @@ class PageSeo
     }
 
     /**
-     * Set ogUrl
+     * Set ogUrl.
+     *
      * @param string $ogUrl
      *
      * @return PageSeo
@@ -447,7 +450,7 @@ class PageSeo
     }
 
     /**
-     * Get ogUrl
+     * Get ogUrl.
      *
      * @return string
      */
@@ -457,7 +460,8 @@ class PageSeo
     }
 
     /**
-     * Set ogDescription
+     * Set ogDescription.
+     *
      * @param string $ogDescription
      *
      * @return PageSeo
@@ -470,7 +474,7 @@ class PageSeo
     }
 
     /**
-     * Get ogDescription
+     * Get ogDescription.
      *
      * @return string
      */
@@ -480,7 +484,8 @@ class PageSeo
     }
 
     /**
-     * Set fbAdmins
+     * Set fbAdmins.
+     *
      * @param string $fbAdmins
      *
      * @return PageSeo
@@ -493,7 +498,7 @@ class PageSeo
     }
 
     /**
-     * Get fbAdmins
+     * Get fbAdmins.
      *
      * @return string
      */
@@ -503,7 +508,8 @@ class PageSeo
     }
 
     /**
-     * Set twitterCard
+     * Set twitterCard.
+     *
      * @param string $twitterCard
      *
      * @return PageSeo
@@ -516,7 +522,7 @@ class PageSeo
     }
 
     /**
-     * Get twitterCard
+     * Get twitterCard.
      *
      * @return string
      */
@@ -526,7 +532,8 @@ class PageSeo
     }
 
     /**
-     * Set twitterUrl
+     * Set twitterUrl.
+     *
      * @param string $twitterUrl
      *
      * @return PageSeo
@@ -539,7 +546,7 @@ class PageSeo
     }
 
     /**
-     * Get twitterUrl
+     * Get twitterUrl.
      *
      * @return string
      */
@@ -549,7 +556,8 @@ class PageSeo
     }
 
     /**
-     * Set twitterTitle
+     * Set twitterTitle.
+     *
      * @param string $twitterTitle
      *
      * @return PageSeo
@@ -562,7 +570,7 @@ class PageSeo
     }
 
     /**
-     * Get twitterTitle
+     * Get twitterTitle.
      *
      * @return string
      */
@@ -572,7 +580,8 @@ class PageSeo
     }
 
     /**
-     * Set twitterDescription
+     * Set twitterDescription.
+     *
      * @param string $twitterDescription
      *
      * @return PageSeo
@@ -585,7 +594,7 @@ class PageSeo
     }
 
     /**
-     * Get twitterDescription
+     * Get twitterDescription.
      *
      * @return string
      */
@@ -595,7 +604,8 @@ class PageSeo
     }
 
     /**
-     * Set twitterImage
+     * Set twitterImage.
+     *
      * @param Image $twitterImage
      *
      * @return PageSeo
@@ -608,7 +618,7 @@ class PageSeo
     }
 
     /**
-     * Get twitterImage
+     * Get twitterImage.
      *
      * @return string
      */
@@ -618,7 +628,8 @@ class PageSeo
     }
 
     /**
-     * Set schemaPageType
+     * Set schemaPageType.
+     *
      * @param string $schemaPageType
      *
      * @return PageSeo
@@ -631,7 +642,7 @@ class PageSeo
     }
 
     /**
-     * Get schemaPageType
+     * Get schemaPageType.
      *
      * @return string
      */
@@ -641,7 +652,8 @@ class PageSeo
     }
 
     /**
-     * Set schemaName
+     * Set schemaName.
+     *
      * @param string $schemaName
      *
      * @return PageSeo
@@ -654,7 +666,7 @@ class PageSeo
     }
 
     /**
-     * Get schemaName
+     * Get schemaName.
      *
      * @return string
      */
@@ -664,7 +676,8 @@ class PageSeo
     }
 
     /**
-     * Set schemaDescription
+     * Set schemaDescription.
+     *
      * @param string $schemaDescription
      *
      * @return PageSeo
@@ -677,7 +690,7 @@ class PageSeo
     }
 
     /**
-     * Get schemaDescription
+     * Get schemaDescription.
      *
      * @return string
      */
@@ -687,7 +700,8 @@ class PageSeo
     }
 
     /**
-     * Set schemaImage
+     * Set schemaImage.
+     *
      * @param Image $schemaImage
      *
      * @return PageSeo
@@ -700,7 +714,7 @@ class PageSeo
     }
 
     /**
-     * Get schemaImage
+     * Get schemaImage.
      *
      * @return string
      */
@@ -710,7 +724,8 @@ class PageSeo
     }
 
     /**
-     * Set metaRobotsIndex
+     * Set metaRobotsIndex.
+     *
      * @param string $metaRobotsIndex
      *
      * @return PageSeo
@@ -723,7 +738,7 @@ class PageSeo
     }
 
     /**
-     * Get metaRobotsIndex
+     * Get metaRobotsIndex.
      *
      * @return string
      */
@@ -733,7 +748,8 @@ class PageSeo
     }
 
     /**
-     * Set metaRobotsFollow
+     * Set metaRobotsFollow.
+     *
      * @param string $metaRobotsFollow
      *
      * @return PageSeo
@@ -746,7 +762,7 @@ class PageSeo
     }
 
     /**
-     * Get metaRobotsFollow
+     * Get metaRobotsFollow.
      *
      * @return string
      */
@@ -756,7 +772,8 @@ class PageSeo
     }
 
     /**
-     * Set metaRobotsAdvanced
+     * Set metaRobotsAdvanced.
+     *
      * @param string $metaRobotsAdvanced
      *
      * @return PageSeo
@@ -769,7 +786,7 @@ class PageSeo
     }
 
     /**
-     * Get metaRobotsAdvanced
+     * Get metaRobotsAdvanced.
      *
      * @return string
      */
@@ -779,8 +796,9 @@ class PageSeo
     }
 
     /**
-     * Set sitemapIndexed
-     * @param boolean $sitemapIndexed
+     * Set sitemapIndexed.
+     *
+     * @param bool $sitemapIndexed
      *
      * @return PageSeo
      */
@@ -792,9 +810,9 @@ class PageSeo
     }
 
     /**
-     * Get sitemapIndexed
+     * Get sitemapIndexed.
      *
-     * @return boolean
+     * @return bool
      */
     public function isSitemapIndexed()
     {
@@ -802,7 +820,8 @@ class PageSeo
     }
 
     /**
-     * Set sitemapPriority
+     * Set sitemapPriority.
+     *
      * @param float $sitemapPriority
      *
      * @return PageSeo
@@ -815,7 +834,7 @@ class PageSeo
     }
 
     /**
-     * Get sitemapPriority
+     * Get sitemapPriority.
      *
      * @return float
      */
@@ -825,7 +844,8 @@ class PageSeo
     }
 
     /**
-     * Set sitemapChangeFreq
+     * Set sitemapChangeFreq.
+     *
      * @param float $sitemapChangeFreq
      *
      * @return PageSeo
@@ -838,7 +858,7 @@ class PageSeo
     }
 
     /**
-     * Get sitemapChangeFreq
+     * Get sitemapChangeFreq.
      *
      * @return float
      */
@@ -848,7 +868,8 @@ class PageSeo
     }
 
     /**
-     * Set relCanonical
+     * Set relCanonical.
+     *
      * @param string $relCanonical
      *
      * @return PageSeo
@@ -861,7 +882,7 @@ class PageSeo
     }
 
     /**
-     * Get relCanonical
+     * Get relCanonical.
      *
      * @return string
      */
@@ -871,7 +892,8 @@ class PageSeo
     }
 
     /**
-     * Set keyword
+     * Set keyword.
+     *
      * @param string $keyword
      *
      * @return PageSeo
@@ -884,7 +906,7 @@ class PageSeo
     }
 
     /**
-     * Get keyword
+     * Get keyword.
      *
      * @return string
      */

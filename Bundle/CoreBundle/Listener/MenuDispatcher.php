@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\CoreBundle\Listener;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -6,16 +7,14 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Security\Core\SecurityContext;
 
 /**
- * This class add items in admin menu
- *
- *
+ * This class add items in admin menu.
  **/
 class MenuDispatcher
 {
     protected $eventDispatcher;
 
     /**
-     * Construct function to include eventDispatcher
+     * Construct function to include eventDispatcher.
      *
      * @param EventDispatcherInterface $eventDispatcher
      * @param SecurityContext          $securityContext
@@ -24,11 +23,10 @@ class MenuDispatcher
     {
         $this->eventDispatcher = $eventDispatcher;
         $this->securityContext = $securityContext;
-
     }
 
     /**
-     * Dispatch event to build the Victoire's global menu items
+     * Dispatch event to build the Victoire's global menu items.
      *
      * @param GetResponseEvent $event
      *

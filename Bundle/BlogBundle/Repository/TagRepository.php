@@ -1,13 +1,13 @@
 <?php
+
 namespace Victoire\Bundle\BlogBundle\Repository;
 
-use Doctrine\ORM\Query;
 use Doctrine\ORM\EntityRepository;
 use Victoire\Bundle\BlogBundle\Entity\Blog;
 use Victoire\Bundle\CoreBundle\Repository\StateFullRepositoryTrait;
 
 /**
- * The Tag repository
+ * The Tag repository.
  */
 class TagRepository extends EntityRepository
 {
@@ -16,22 +16,22 @@ class TagRepository extends EntityRepository
     public function getAll()
     {
         $this->qb = $this->getInstance('t_tag')
-                    ->join('t_tag.articles', 't_article')
-        ;
+                    ->join('t_tag.articles', 't_article');
 
         return $this;
-
     }
+
     public function filterByArticles($articles)
     {
         $this->qb
             ->andWhere($this->qb->expr()->in('t_article', $articles->getDql()))
             ->setParameters($articles->getParameters());
+
         return $this;
     }
+
     public function filterByBlog(Blog $blog = null)
     {
-
         $this->qb = $this->getInstance('t_tag')
             ->leftJoin('t_tag.blog', 'blog');
         if ($blog) {

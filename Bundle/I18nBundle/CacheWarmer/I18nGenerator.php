@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\I18nBundle\CacheWarmer;
 
 use Sensio\Bundle\GeneratorBundle\Generator\Generator;
@@ -12,7 +13,8 @@ class I18nGenerator extends Generator
     private $fileLocator;
 
     /**
-     * Constructor
+     * Constructor.
+     *
      * @param array       $availableLocales Got from I18n config
      * @param FileLocator $fileLocator
      */
@@ -32,6 +34,6 @@ class I18nGenerator extends Generator
         $skeletonDirs = $this->fileLocator->locate('@VictoireI18nBundle/CacheWarmer/Skeleton/');
         $this->setSkeletonDirs($skeletonDirs);
 
-        return $this->render('I18n.php.twig', array('locales' => $this->applicationLocales));
+        return $this->render('I18n.php.twig', ['locales' => $this->applicationLocales]);
     }
 }

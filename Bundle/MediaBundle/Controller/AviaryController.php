@@ -2,24 +2,24 @@
 
 namespace Victoire\Bundle\MediaBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Victoire\Bundle\MediaBundle\Entity\Folder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Victoire\Bundle\MediaBundle\Entity\Folder;
 use Victoire\Bundle\MediaBundle\Entity\Media;
 use Victoire\Bundle\MediaBundle\Helper\MediaManager;
 
 /**
- * controllerclass which Aviary can use to upload the edited image and add it to the database
+ * controllerclass which Aviary can use to upload the edited image and add it to the database.
  */
 class AviaryController extends Controller
 {
-
     /**
      * @param int $folderId The id of the Folder
      * @param int $mediaId  The id of the image
      *
      * @Route("/aviary/{folderId}/{mediaId}", requirements={"folderId" = "\d+", "mediaId" = "\d+"}, name="VictoireMediaBundle_aviary")
+     *
      * @return RedirectResponse
      */
     public function indexAction($folderId, $mediaId)
@@ -41,6 +41,6 @@ class AviaryController extends Controller
         $em->persist($media);
         $em->flush();
 
-        return new RedirectResponse($this->generateUrl('VictoireMediaBundle_folder_show', array('folderId' => $folder->getId())));
+        return new RedirectResponse($this->generateUrl('VictoireMediaBundle_folder_show', ['folderId' => $folder->getId()]));
     }
 }

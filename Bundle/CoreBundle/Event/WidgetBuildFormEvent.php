@@ -1,13 +1,12 @@
 <?php
+
 namespace Victoire\Bundle\CoreBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 use Victoire\Bundle\WidgetBundle\Model\Widget;
 
 /**
- *
  * @author Paul Andrieux
- *
  */
 class WidgetBuildFormEvent extends Event
 {
@@ -15,7 +14,7 @@ class WidgetBuildFormEvent extends Event
     private $form;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param Widget $widget
      * @param string $form
@@ -27,7 +26,7 @@ class WidgetBuildFormEvent extends Event
     }
 
     /**
-     * Get the widget
+     * Get the widget.
      *
      * @return Widget
      */
@@ -37,7 +36,7 @@ class WidgetBuildFormEvent extends Event
     }
 
     /**
-     * Get the form
+     * Get the form.
      *
      * @return Form
      */

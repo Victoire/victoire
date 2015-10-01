@@ -32,7 +32,7 @@ class CmsExtension extends \Twig_Extension_Core
     protected $twig;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param WidgetRenderer         $widgetRenderer
      * @param TemplateMapper         $templating
@@ -64,38 +64,38 @@ class CmsExtension extends \Twig_Extension_Core
     }
 
     /**
-     * register twig functions
+     * register twig functions.
      *
      * @return array The list of extensions
      */
     public function getFunctions()
     {
-        return array(
-            'cms_widget_unlink_action'   => new \Twig_Function_Method($this, 'cmsWidgetUnlinkAction', array('is_safe' => array('html'))),
-            'cms_slot_widgets'           => new \Twig_Function_Method($this, 'cmsSlotWidgets', array('is_safe' => array('html'))),
-            'cms_slot_actions'           => new \Twig_Function_Method($this, 'cmsSlotActions', array('is_safe' => array('html'))),
-            'cms_widget'                 => new \Twig_Function_Method($this, 'cmsWidget', array('is_safe' => array('html'))),
-            'cms_widget_extra_css_class' => new \Twig_Function_Method($this, 'cmsWidgetExtraCssClass', array('is_safe' => array('html'))),
-            'is_business_entity_allowed' => new \Twig_Function_Method($this, 'isBusinessEntityAllowed', array('is_safe' => array('html'))),
-        );
+        return [
+            'cms_widget_unlink_action'   => new \Twig_Function_Method($this, 'cmsWidgetUnlinkAction', ['is_safe' => ['html']]),
+            'cms_slot_widgets'           => new \Twig_Function_Method($this, 'cmsSlotWidgets', ['is_safe' => ['html']]),
+            'cms_slot_actions'           => new \Twig_Function_Method($this, 'cmsSlotActions', ['is_safe' => ['html']]),
+            'cms_widget'                 => new \Twig_Function_Method($this, 'cmsWidget', ['is_safe' => ['html']]),
+            'cms_widget_extra_css_class' => new \Twig_Function_Method($this, 'cmsWidgetExtraCssClass', ['is_safe' => ['html']]),
+            'is_business_entity_allowed' => new \Twig_Function_Method($this, 'isBusinessEntityAllowed', ['is_safe' => ['html']]),
+        ];
     }
 
     /**
-     * register twig filters
+     * register twig filters.
      *
      * @return array The list of filters
      */
     public function getFilters()
     {
-        return array(
+        return [
             'hash' => new \Twig_Filter_Method($this, 'hash'),
             'date' => new \Twig_Filter_Method($this, 'twigVicDateFormatFilter'),
 
-        );
+        ];
     }
 
     /**
-     * get extension name
+     * get extension name.
      *
      * @return string The name
      */
@@ -105,16 +105,16 @@ class CmsExtension extends \Twig_Extension_Core
     }
 
     /**
-     * render unlink action for a widgetId
+     * render unlink action for a widgetId.
      *
-     * @param integer $widgetId The widgetId to unlink
+     * @param int $widgetId The widgetId to unlink
      *
      * @return string the widget unlink action
      */
     public function cmsWidgetUnlinkAction($widgetId, $view)
     {
         $viewReference = $reference = $this->viewCacheHelper->getReferenceByParameters(
-            array('viewId' => $view->getId())
+            ['viewId' => $view->getId()]
         );
         if (!$viewReference && $view->getId() != '') {
             $viewReference = $view->setReference(['id' => $view->getId()]);
@@ -128,20 +128,20 @@ class CmsExtension extends \Twig_Extension_Core
     }
 
     /**
-     * render all widgets in a slot
+     * render all widgets in a slot.
      *
      * @param string $slotId
      * @param string $slotOptions
      *
      * @return string HTML markup of the widget with action button if needed
      */
-    public function cmsSlotWidgets($slotId, $slotOptions = array())
+    public function cmsSlotWidgets($slotId, $slotOptions = [])
     {
         $currentView = $this->currentViewHelper->getCurrentView();
         //services
         $em = $this->entityManager;
 
-        $result = "";
+        $result = '';
         $slotOptions = $this->widgetRenderer->computeOptions($slotId, $slotOptions);
         $slotNewContentButton = $this->isRoleVictoireGranted() ? $this->widgetRenderer->renderActions($slotId, $slotOptions) : '';
 
@@ -192,7 +192,8 @@ class CmsExtension extends \Twig_Extension_Core
     }
 
     /**
-     * Render a widget
+     * Render a widget.
+     *
      * @param Widget $widget
      *
      * @return string
@@ -211,15 +212,14 @@ class CmsExtension extends \Twig_Extension_Core
     }
 
     /**
-     * hash some string with given algorithm
+     * hash some string with given algorithm.
      *
      * @param string $value     The string to hash
      * @param string $algorithm The algorithm we have to use to hash the string
      *
      * @return string
-     *
      */
-    public function hash($value, $algorithm = "md5")
+    public function hash($value, $algorithm = 'md5')
     {
         try {
             return hash($algorithm, $value);
@@ -232,13 +232,13 @@ class CmsExtension extends \Twig_Extension_Core
 
     /**
      * Converts a date to the given format.
+     *
      * @param string              $format   A format
      * @param DateTimeZone|string $timezone A timezone
      *
      * <pre>
      *   {{ post.published_at|date("m/d/Y") }}
      * </pre>
-     *
      *
      * @return string The formatted date
      */
@@ -254,7 +254,7 @@ class CmsExtension extends \Twig_Extension_Core
     }
 
     /**
-     * Get the extra class for this kind of widget
+     * Get the extra class for this kind of widget.
      *
      * @param Widget $widget
      *
@@ -268,12 +268,12 @@ class CmsExtension extends \Twig_Extension_Core
     }
 
     /**
-     * Is the business entity type allowed for the widget and the view context
+     * Is the business entity type allowed for the widget and the view context.
      *
      * @param string $formEntityName The business entity name
      * @param View   $view           The view
      *
-     * @return boolean Does the form allows this kind of business entity in this view
+     * @return bool Does the form allows this kind of business entity in this view
      */
     public function isBusinessEntityAllowed($formEntityName, View $view)
     {
@@ -291,9 +291,9 @@ class CmsExtension extends \Twig_Extension_Core
     }
 
     /**
-     * Does the current user have the role victoire granted
+     * Does the current user have the role victoire granted.
      *
-     * @return boolean
+     * @return bool
      */
     protected function isRoleVictoireGranted()
     {
@@ -307,9 +307,9 @@ class CmsExtension extends \Twig_Extension_Core
     }
 
     /**
-     * Does the current user have the role victoire granted
+     * Does the current user have the role victoire granted.
      *
-     * @return boolean
+     * @return bool
      */
     protected function isRoleVictoireDeveloperGranted()
     {

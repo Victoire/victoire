@@ -65,12 +65,12 @@ class IconExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        $functions = array(
-            new \Twig_SimpleFunction('victoire_icon', array($this, 'renderIcon'), array('is_safe' => array('html'))),
-        );
+        $functions = [
+            new \Twig_SimpleFunction('victoire_icon', [$this, 'renderIcon'], ['is_safe' => ['html']]),
+        ];
 
         if ($this->shortcut) {
-            $functions[] = new \Twig_SimpleFunction($this->shortcut, array($this, 'renderIcon'), array('is_safe' => array('html')));
+            $functions[] = new \Twig_SimpleFunction($this->shortcut, [$this, 'renderIcon'], ['is_safe' => ['html']]);
         }
 
         return $functions;
@@ -79,18 +79,18 @@ class IconExtension extends \Twig_Extension
     /**
      * Renders the icon.
      *
-     * @param string  $icon
-     * @param boolean $inverted
+     * @param string $icon
+     * @param bool   $inverted
      *
      * @return Response
      */
     public function renderIcon($icon, $inverted = false)
     {
         $template = $this->getIconTemplate();
-        $context = array(
-            'icon' => $icon,
+        $context = [
+            'icon'     => $icon,
             'inverted' => $inverted,
-        );
+        ];
 
         return $template->renderBlock($this->iconSet, $context);
     }

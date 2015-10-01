@@ -12,7 +12,6 @@ use Victoire\Bundle\PageBundle\Helper\PageHelper;
 
 /**
  * Twig extension for rendering a link.
- *
  */
 class LinkExtension extends \Twig_Extension
 {
@@ -31,8 +30,7 @@ class LinkExtension extends \Twig_Extension
         BusinessPageHelper $BusinessPageHelper,
         PageHelper $pageHelper,
         EntityManager $em
-    )
-    {
+    ) {
         $this->router = $router;
         $this->request = $requestStack->getCurrentRequest();
         $this->analytics = $analytics;
@@ -41,6 +39,7 @@ class LinkExtension extends \Twig_Extension
         $this->pageHelper = $pageHelper;
         $this->em = $em;
     }
+
     /**
      * Returns a list of functions to add to the existing list.
      *
@@ -48,23 +47,24 @@ class LinkExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('vic_link_url', array($this, 'victoireLinkUrl')),
-            new \Twig_SimpleFunction('vic_link', array($this, 'victoireLink'), array('is_safe' => array('html'))),
-            new \Twig_SimpleFunction('vic_menu_link', array($this, 'victoireMenuLink'), array('is_safe' => array('html'))),
-            new \Twig_SimpleFunction('vic_business_link', array($this, 'victoireBusinessLink'), array('is_safe' => array('html'))),
-        );
+        return [
+            new \Twig_SimpleFunction('vic_link_url', [$this, 'victoireLinkUrl']),
+            new \Twig_SimpleFunction('vic_link', [$this, 'victoireLink'], ['is_safe' => ['html']]),
+            new \Twig_SimpleFunction('vic_menu_link', [$this, 'victoireMenuLink'], ['is_safe' => ['html']]),
+            new \Twig_SimpleFunction('vic_business_link', [$this, 'victoireBusinessLink'], ['is_safe' => ['html']]),
+        ];
     }
 
     /**
-     * Generate the complete link (with the a tag)
+     * Generate the complete link (with the a tag).
+     *
      * @param array  $parameters   The link parameters (go to LinkTrait to have the list)
      * @param string $avoidRefresh Do we have to refresh or not ?
      * @param array  $url          Fallback url
      *
      * @return string
      */
-    public function victoireLinkUrl($parameters, $avoidRefresh = true, $url = "#")
+    public function victoireLinkUrl($parameters, $avoidRefresh = true, $url = '#')
     {
         $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH;
         extract($parameters); //will assign $linkType, $attachedWidget, $routeParameters, $route, $page, $analyticsTrackCode
@@ -74,8 +74,8 @@ class LinkExtension extends \Twig_Extension
                     $viewReference = $viewReference['id'];
                 }
 
-                $page = $this->pageHelper->findPageByParameters(array('id' => $viewReference));
-                $linkUrl = $this->router->generate('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl()), $referenceType);
+                $page = $this->pageHelper->findPageByParameters(['id' => $viewReference]);
+                $linkUrl = $this->router->generate('victoire_core_page_show', ['_locale' => $page->getLocale(), 'url' => $page->getUrl()], $referenceType);
                 if ($this->request->getRequestUri() != $linkUrl || !$avoidRefresh) {
                     $url = $linkUrl;
                 }
@@ -89,14 +89,14 @@ class LinkExtension extends \Twig_Extension
                 if ($attachedWidget && method_exists($attachedWidget->getView(), 'getUrl')) {
 
                     //create base url
-                    $url = $this->router->generate('victoire_core_page_show', array('_locale'=> $attachedWidget->getView()->getLocale(), 'url' => $attachedWidget->getView()->getUrl()), $referenceType);
+                    $url = $this->router->generate('victoire_core_page_show', ['_locale' => $attachedWidget->getView()->getLocale(), 'url' => $attachedWidget->getView()->getUrl()], $referenceType);
 
                     //If widget in the same view
                     if (rtrim($this->request->getRequestUri(), '/') == rtrim($url, '/')) {
-                        $url = "";
+                        $url = '';
                     }
                     //Add anchor part
-                    $url .= "#vic-widget-".$attachedWidget->getId()."-container-anchor";
+                    $url .= '#vic-widget-'.$attachedWidget->getId().'-container-anchor';
                 }
                 break;
         }
@@ -105,22 +105,23 @@ class LinkExtension extends \Twig_Extension
     }
 
     /**
-     * Generate the complete link (with the a tag)
+     * Generate the complete link (with the a tag).
+     *
      * @param array  $parameters The link parameters (go to LinkTrait to have the list)
      * @param string $label      link label
      * @param array  $attr       custom attributes
      *
      * @return string
      */
-    public function victoireLink($parameters, $label, $attr = array(), $currentClass = 'active', $url = "#")
+    public function victoireLink($parameters, $label, $attr = [], $currentClass = 'active', $url = '#')
     {
         $referenceLink = UrlGeneratorInterface::ABSOLUTE_PATH;
         extract($parameters); //will assign $linkType, $attachedWidget, $routeParameters, $route, $page, $analyticsTrackCode
 
         if ($linkType == 'attachedWidget' && $attachedWidget && method_exists($attachedWidget->getView(), 'getUrl')) {
-            $viewUrl = $this->router->generate('victoire_core_page_show', array('_locale' => $attachedWidget->getView()->getLocale(), 'url' => $attachedWidget->getView()->getUrl()), $referenceLink);
+            $viewUrl = $this->router->generate('victoire_core_page_show', ['_locale' => $attachedWidget->getView()->getLocale(), 'url' => $attachedWidget->getView()->getUrl()], $referenceLink);
             if (rtrim($this->request->getRequestUri(), '/') == rtrim($viewUrl, '/')) {
-                $attr["data-scroll"] = "smooth";
+                $attr['data-scroll'] = 'smooth';
             }
         }
 
@@ -130,9 +131,9 @@ class LinkExtension extends \Twig_Extension
         }
 
         //Build the target attribute
-        if ($target == "ajax-modal") {
+        if ($target == 'ajax-modal') {
             $attr['data-toggle'] = 'ajax-modal';
-        } elseif ($target == "") {
+        } elseif ($target == '') {
             $attr['target'] = '_parent';
         } else {
             $attr['target'] = $target;
@@ -144,7 +145,7 @@ class LinkExtension extends \Twig_Extension
         }
 
         //Assemble and prepare attributes
-        $attributes = array();
+        $attributes = [];
         foreach ($attr as $key => $_attr) {
             if (is_array($_attr)) {
                 $attr = implode($_attr, ' ');
@@ -158,29 +159,30 @@ class LinkExtension extends \Twig_Extension
         //Creates a new twig environment
         $twigEnv = new \Twig_Environment(new \Twig_Loader_String());
 
-        return $twigEnv->render('{{ link|raw }}', array('link' => '<a href="'.$url.'" '.implode($attributes, ' ').'>'.$label.'</a>'));
+        return $twigEnv->render('{{ link|raw }}', ['link' => '<a href="'.$url.'" '.implode($attributes, ' ').'>'.$label.'</a>']);
     }
 
     /**
-     * Generate the complete menu link item (with the li tag)
+     * Generate the complete menu link item (with the li tag).
+     *
      * @param array  $parameters The link parameters (go to LinkTrait to have the list)
      * @param string $label      link label
      * @param array  $attr       custom attributes
      *
      * @return string
      */
-    public function victoireMenuLink($parameters, $label, $attr = array())
+    public function victoireMenuLink($parameters, $label, $attr = [])
     {
-        $linkAttr = array();
+        $linkAttr = [];
         //is the link is active
         if ($this->request->getRequestUri() == $this->victoireLinkUrl($parameters, false)) {
             if (!isset($attr['class'])) {
-                $linkAttr['class'] = "";
+                $linkAttr['class'] = '';
             }
-            $linkAttr['class'] .= "active"; //avoid to refresh page when not needed
+            $linkAttr['class'] .= 'active'; //avoid to refresh page when not needed
         }
 
-        $linkAttributes = array();
+        $linkAttributes = [];
         foreach ($linkAttr as $key => $_attr) {
             if (is_array($_attr)) {
                 $linkAttr = implode($_attr, ' ');
@@ -191,7 +193,6 @@ class LinkExtension extends \Twig_Extension
         }
 
         return '<li '.implode($linkAttributes, ' ').'>'.$this->victoireLink($parameters, $label, $attr, false, '#top').'</li>';
-
     }
 
     public function victoireBusinessLink($businessEntityInstance, $patternId = null, $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
@@ -201,25 +202,26 @@ class LinkExtension extends \Twig_Extension
                 ->guessBestPatternIdForEntity(new \ReflectionClass($businessEntityInstance), $businessEntityInstance->getId(), $this->em);
         }
 
-        $page = $this->pageHelper->findPageByParameters(array(
+        $page = $this->pageHelper->findPageByParameters([
             'patternId' => $patternId,
-            'entityId' => $businessEntityInstance->getId()
-        ));
+            'entityId'  => $businessEntityInstance->getId(),
+        ]);
 
-        $parameters = array(
-            'linkType' => 'route',
-            'route' => 'victoire_core_page_show',
-            'routeParameters' => array(
+        $parameters = [
+            'linkType'        => 'route',
+            'route'           => 'victoire_core_page_show',
+            'routeParameters' => [
                 'url' => $page->getUrl(),
-            ),
+            ],
             'referenceType' => $referenceType,
-        );
+        ];
 
         return $this->victoireLinkUrl($parameters);
     }
 
     /**
-     * Add a given attribute to given attributes
+     * Add a given attribute to given attributes.
+     *
      * @param string $label
      * @param string $value
      * @param array  $attr  The current attributes array
@@ -229,9 +231,9 @@ class LinkExtension extends \Twig_Extension
     protected function addAttr($label, $value, &$attr)
     {
         if (!isset($attr[$label])) {
-            $attr[$label] = "";
+            $attr[$label] = '';
         } else {
-            $attr[$label] .= " ";
+            $attr[$label] .= ' ';
         }
         $attr[$label] .= $value;
 

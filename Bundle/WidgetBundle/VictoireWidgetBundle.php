@@ -9,9 +9,8 @@ use Victoire\Bundle\WidgetBundle\DependencyInjection\Compiler\WidgetItemPass;
 
 class VictoireWidgetBundle extends Bundle
 {
-
     /**
-     * Build bundle
+     * Build bundle.
      *
      * @param ContainerBuilder $container
      */

@@ -48,7 +48,7 @@ class WidgetMap
     }
 
     /**
-     * Set the action
+     * Set the action.
      *
      * @param string $action
      *
@@ -65,7 +65,7 @@ class WidgetMap
     }
 
     /**
-     * Get the action
+     * Get the action.
      *
      * @return string The action
      */
@@ -75,7 +75,7 @@ class WidgetMap
     }
 
     /**
-     * Set the widget id
+     * Set the widget id.
      *
      * @param string $widgetId
      */
@@ -85,7 +85,7 @@ class WidgetMap
     }
 
     /**
-     * Get the widget id
+     * Get the widget id.
      *
      * @return string The widget id
      */
@@ -95,9 +95,9 @@ class WidgetMap
     }
 
     /**
-     * Set the position
+     * Set the position.
      *
-     * @param integer $position
+     * @param int $position
      */
     public function setPosition($position)
     {
@@ -105,9 +105,9 @@ class WidgetMap
     }
 
     /**
-     * Get the position
+     * Get the position.
      *
-     * @return integer
+     * @return int
      */
     public function getPosition()
     {
@@ -115,9 +115,9 @@ class WidgetMap
     }
 
     /**
-     * Get the replacedWidgetId
+     * Get the replacedWidgetId.
      *
-     * @return integer the id of the replaced widget
+     * @return int the id of the replaced widget
      */
     public function getReplacedWidgetId()
     {
@@ -125,9 +125,9 @@ class WidgetMap
     }
 
     /**
-     * Set the replaced widget id
+     * Set the replaced widget id.
      *
-     * @param integer $replacedWidgetId
+     * @param int $replacedWidgetId
      */
     public function setReplacedWidgetId($replacedWidgetId)
     {
@@ -135,7 +135,7 @@ class WidgetMap
     }
 
     /**
-     * Set the position reference
+     * Set the position reference.
      *
      * @param unknown $positionReference
      */
@@ -145,9 +145,9 @@ class WidgetMap
     }
 
     /**
-     * Get the positionReference
+     * Get the positionReference.
      *
-     * @return integer The position reference
+     * @return int The position reference
      */
     public function getPositionReference()
     {

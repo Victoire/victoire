@@ -10,7 +10,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Victoire\Bundle\TwigBundle\Entity\ErrorPage;
 
 /**
- * Show an error page
+ * Show an error page.
+ *
  * @param Request $request The request
  * @param string  $code    The error page code
  *
@@ -19,10 +20,11 @@ use Victoire\Bundle\TwigBundle\Entity\ErrorPage;
 class ErrorPageController extends Controller
 {
     /**
-     * Show an error page
+     * Show an error page.
      *
      * @Route("/{code}", name="victoire_errorPage_show")
      * @ParamConverter("page", class="VictoireTwigBundle:ErrorPage")
+     *
      * @return Response
      */
     public function showAction(ErrorPage $page)
@@ -35,11 +37,11 @@ class ErrorPageController extends Controller
         $victoireTemplating = $this->container->get('victoire_templating');
         $layout = 'AppBundle:Layout:'.$page->getTemplate()->getLayout().'.html.twig';
 
-        $parameters = array(
+        $parameters = [
             'view'   => $page,
             'id'     => $page->getId(),
             'locale' => $page->getLocale(),
-        );
+        ];
 
         $this->get('victoire_widget_map.builder')->build($page);
         $this->container->get('victoire_core.current_view')->setCurrentView($page);

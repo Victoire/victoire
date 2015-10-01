@@ -1,8 +1,9 @@
 <?php
+
 namespace Victoire\Bundle\CoreBundle\Annotations\Cache;
 
 /**
- * this class handle cache system
+ * this class handle cache system.
  **/
 class Cache
 {
@@ -17,14 +18,13 @@ class Cache
     private $debug;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param unknown $cache
      * @param unknown $debug
      */
     public function __construct($cache, $debug)
     {
-
         $reflClass = new \ReflectionClass($this);
         $this->uniqId = md5(dirname($reflClass->getFileName()));
         $this->cache = $cache;
@@ -40,7 +40,7 @@ class Cache
      */
     public function fetch($id)
     {
-        $id = $this->uniqId + '-' +$id;
+        $id = $this->uniqId + '-' + $id;
         if ($this->contains($id)) {
             return $this->cache->fetch($id);
         }
@@ -54,11 +54,11 @@ class Cache
      * @param string $id   The cache id.
      * @param mixed  $data The cache entry/data.
      *
-     * @return boolean TRUE if the entry was successfully stored in the cache, FALSE otherwise.
+     * @return bool TRUE if the entry was successfully stored in the cache, FALSE otherwise.
      */
     public function save($id, $data)
     {
-        $id = $this->uniqId + '-' +$id;
+        $id = $this->uniqId + '-' + $id;
         if (!$this->apcIsEnabled()) {
             return false;
         }
@@ -86,5 +86,4 @@ class Cache
         //consider cache enabled only if apc is loaded and enabled and debug is false
         return extension_loaded('apc') && ini_get('apc.enabled');
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\TwigBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -6,7 +7,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Victoire\Bundle\CoreBundle\Entity\View;
 
 /**
- * Error Page
+ * Error Page.
  *
  * @ORM\Entity(repositoryClass="Victoire\Bundle\TwigBundle\Repository\ErrorPageRepository")
  * @UniqueEntity(fields={"code", "locale"})
@@ -27,12 +28,11 @@ class ErrorPage extends View
      *
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\TemplateBundle\Entity\Template", cascade={"persist"})
      * @ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="CASCADE")
-     *
      */
     protected $template;
 
     /**
-     * Get code
+     * Get code.
      *
      * @return string
      */
@@ -42,9 +42,10 @@ class ErrorPage extends View
     }
 
     /**
-     * Set code
+     * Set code.
      *
-     * @param  string $code
+     * @param string $code
+     *
      * @return $this
      */
     public function setCode($code)

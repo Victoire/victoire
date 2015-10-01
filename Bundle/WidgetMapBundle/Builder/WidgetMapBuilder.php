@@ -8,7 +8,7 @@ use Victoire\Bundle\WidgetMapBundle\DataTransformer\WidgetMapToArrayTransformer;
 use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 
 /**
- * View WidgetMap builder
+ * View WidgetMap builder.
  *
  * ref: victoire_widget_map.builder
  */
@@ -18,7 +18,7 @@ class WidgetMapBuilder
     protected $widgetMapTransformer;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param WidgetMapHelper $helper Widget map helper
      */
@@ -30,13 +30,13 @@ class WidgetMapBuilder
 
     public function rebuild(View $view)
     {
-        $widgetMap = array();
+        $widgetMap = [];
         if ($view->getTemplate()) {
             $widgetMap = $view->getTemplate()->getWidgetMap();
         }
         foreach ($view->getWidgets() as $widget) {
             if (!isset($widgetMap[$widget->getSlot()])) {
-                $widgetMap[$widget->getSlot()] = array();
+                $widgetMap[$widget->getSlot()] = [];
             }
             //create the new widget map
             $widgetMapEntry = new WidgetMap();
@@ -47,7 +47,7 @@ class WidgetMapBuilder
             $widgetMap[$widget->getSlot()][] = $widgetMapEntry;
         }
 
-        $widgetMapAsArray = array();
+        $widgetMapAsArray = [];
         foreach ($widgetMap as $slotId => $widgetMapItems) {
             foreach ($widgetMapItems as $widgetMapItem) {
                 $widgetMapAsArray[$slotId][] = $this->widgetMapTransformer->transform($widgetMapItem);
@@ -60,7 +60,7 @@ class WidgetMapBuilder
     public function build(View $view, $updatePage = true)
     {
         $viewWidgetMaps = null;
-        $widgetMap = array();
+        $widgetMap = [];
 
         //get the template widget map
         $template = $view->getTemplate();
@@ -72,7 +72,7 @@ class WidgetMapBuilder
         // build the view widgetMaps for each its slots
         foreach ($view->getSlots() as $slot) {
             if (empty($widgetMap[$slot->getId()])) {
-                $widgetMap[$slot->getId()] = array();
+                $widgetMap[$slot->getId()] = [];
             }
 
             if ($slot !== null) {
@@ -99,9 +99,9 @@ class WidgetMapBuilder
                                 }
                             }
 
-                            array_splice($widgetMap[$slot->getId()], $position - 1, 0, array($viewWidgetMap));
+                            array_splice($widgetMap[$slot->getId()], $position - 1, 0, [$viewWidgetMap]);
                             array_map(
-                                function($key, $_widgetMap) {
+                                function ($key, $_widgetMap) {
                                     $_widgetMap->setPosition($key + 1);
                                 },
                                 array_keys($widgetMap[$slot->getId()]),
@@ -122,9 +122,9 @@ class WidgetMapBuilder
                                     break;
                                 }
                             }
-                            array_splice($widgetMap[$slot->getId()], $viewWidgetMap->getPosition() - 1, 0, array($viewWidgetMap));
+                            array_splice($widgetMap[$slot->getId()], $viewWidgetMap->getPosition() - 1, 0, [$viewWidgetMap]);
                             array_map(
-                                function($key, $_widgetMap) {
+                                function ($key, $_widgetMap) {
                                     $_widgetMap->setPosition($key + 1);
                                 },
                                 array_keys($widgetMap[$slot->getId()]),
@@ -150,12 +150,10 @@ class WidgetMapBuilder
             }
         }
 
-
         if ($updatePage) {
             $view->setBuiltWidgetMap($widgetMap);
         }
 
         return $widgetMap;
     }
-
 }

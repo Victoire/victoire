@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\BusinessEntityBundle\Generator;
 
 use Sensio\Bundle\GeneratorBundle\Generator\Generator;
@@ -14,7 +15,8 @@ class EntityProxyGenerator extends Generator
     private $fileLocator;
 
     /**
-     * Constructor
+     * Constructor.
+     *
      * @param BusinessEntityHelper $businessEntityHelper
      * @param FileLocator          $fileLocator
      */
@@ -35,6 +37,6 @@ class EntityProxyGenerator extends Generator
         $skeletonDirs = $this->fileLocator->locate('@VictoireCoreBundle/CacheWarmer/skeleton/');
         $this->setSkeletonDirs($skeletonDirs);
 
-        return $this->render('EntityProxy.php.twig', array('businessEntities' => $businessEntities));
+        return $this->render('EntityProxy.php.twig', ['businessEntities' => $businessEntities]);
     }
 }

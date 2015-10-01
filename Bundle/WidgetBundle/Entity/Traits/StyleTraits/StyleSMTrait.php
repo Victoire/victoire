@@ -1,10 +1,11 @@
 <?php
+
 namespace Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTraits;
 
 use Victoire\Bundle\MediaBundle\Entity\Media;
 
-trait StyleSMTrait {
-
+trait StyleSMTrait
+{
     /**
      * @var string
      *
@@ -42,6 +43,7 @@ trait StyleSMTrait {
 
     /**
      * @var string
+     *
      * @deprecated
      * @ORM\Column(name="container_background_sm", type="string", length=255, nullable=true)
      */
@@ -107,11 +109,13 @@ trait StyleSMTrait {
 
     /**
      * @param string $containerMarginSM
+     *
      * @return $this
      */
     public function setContainerMarginSM($containerMarginSM)
     {
         $this->containerMarginSM = $containerMarginSM;
+
         return $this;
     }
 
@@ -125,11 +129,13 @@ trait StyleSMTrait {
 
     /**
      * @param string $containerPaddingSM
+     *
      * @return $this
      */
     public function setContainerPaddingSM($containerPaddingSM)
     {
         $this->containerPaddingSM = $containerPaddingSM;
+
         return $this;
     }
 
@@ -143,11 +149,13 @@ trait StyleSMTrait {
 
     /**
      * @param string $containerWidthSM
+     *
      * @return $this
      */
     public function setContainerWidthSM($containerWidthSM)
     {
         $this->containerWidthSM = $containerWidthSM;
+
         return $this;
     }
 
@@ -161,11 +169,13 @@ trait StyleSMTrait {
 
     /**
      * @param string $containerHeightSM
+     *
      * @return $this
      */
     public function setContainerHeightSM($containerHeightSM)
     {
         $this->containerHeightSM = $containerHeightSM;
+
         return $this;
     }
 
@@ -179,11 +189,13 @@ trait StyleSMTrait {
 
     /**
      * @param string $textAlignSM
+     *
      * @return $this
      */
     public function setTextAlignSM($textAlignSM)
     {
         $this->textAlignSM = $textAlignSM;
+
         return $this;
     }
 
@@ -197,11 +209,13 @@ trait StyleSMTrait {
 
     /**
      * @param string $containerBackgroundSM
+     *
      * @return $this
      */
     public function setContainerBackgroundSM($containerBackgroundSM)
     {
         $this->containerBackgroundSM = $containerBackgroundSM;
+
         return $this;
     }
 
@@ -215,11 +229,13 @@ trait StyleSMTrait {
 
     /**
      * @param string $containerBackgroundTypeSM
+     *
      * @return $this
      */
     public function setContainerBackgroundTypeSM($containerBackgroundTypeSM)
     {
         $this->containerBackgroundTypeSM = $containerBackgroundTypeSM;
+
         return $this;
     }
 
@@ -233,11 +249,13 @@ trait StyleSMTrait {
 
     /**
      * @param string $containerBackgroundRepeatSM
+     *
      * @return $this
      */
     public function setContainerBackgroundRepeatSM($containerBackgroundRepeatSM)
     {
         $this->containerBackgroundRepeatSM = $containerBackgroundRepeatSM;
+
         return $this;
     }
 
@@ -251,11 +269,13 @@ trait StyleSMTrait {
 
     /**
      * @param string $containerBackgroundPositionSM
+     *
      * @return $this
      */
     public function setContainerBackgroundPositionSM($containerBackgroundPositionSM)
     {
         $this->containerBackgroundPositionSM = $containerBackgroundPositionSM;
+
         return $this;
     }
 
@@ -269,11 +289,13 @@ trait StyleSMTrait {
 
     /**
      * @param string $containerBackgroundSizeSM
+     *
      * @return $this
      */
     public function setContainerBackgroundSizeSM($containerBackgroundSizeSM)
     {
         $this->containerBackgroundSizeSM = $containerBackgroundSizeSM;
+
         return $this;
     }
 
@@ -287,11 +309,13 @@ trait StyleSMTrait {
 
     /**
      * @param string $containerBackgroundColorSM
+     *
      * @return $this
      */
     public function setContainerBackgroundColorSM($containerBackgroundColorSM)
     {
         $this->containerBackgroundColorSM = $containerBackgroundColorSM;
+
         return $this;
     }
 
@@ -304,13 +328,16 @@ trait StyleSMTrait {
     }
 
     /**
-     * Set image
+     * Set image.
+     *
      * @param Media $image
+     *
      * @return $this
      */
     public function setContainerBackgroundImageSM(Media $image = null)
     {
         $this->containerBackgroundImageSM = $image;
+
         return $this;
     }
 
@@ -324,12 +351,13 @@ trait StyleSMTrait {
 
     /**
      * @param string $containerBackgroundOverlaySM
+     *
      * @return $this
      */
     public function setContainerBackgroundOverlaySM($containerBackgroundOverlaySM)
     {
         $this->containerBackgroundOverlaySM = $containerBackgroundOverlaySM;
+
         return $this;
     }
-
 }

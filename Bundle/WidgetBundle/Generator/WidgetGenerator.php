@@ -1,12 +1,13 @@
 <?php
+
 namespace Victoire\Bundle\WidgetBundle\Generator;
 
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\DependencyInjection\Container;
 use Sensio\Bundle\GeneratorBundle\Generator\Generator;
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
- * This class build all classes, views and config files relative to a WidgetBundle
+ * This class build all classes, views and config files relative to a WidgetBundle.
  */
 class WidgetGenerator extends Generator
 {
@@ -15,7 +16,7 @@ class WidgetGenerator extends Generator
     private $skeletonDirs;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param Filesystem $filesystem
      */
@@ -25,7 +26,7 @@ class WidgetGenerator extends Generator
     }
 
     /**
-     * set templating
+     * set templating.
      *
      * @param unknown $templating
      */
@@ -35,20 +36,20 @@ class WidgetGenerator extends Generator
     }
 
     /**
-     * build WidgetBundle files
+     * build WidgetBundle files.
+     *
      * @param string $namespace
      * @param string $format
      */
     public function generate($namespace, $bundle, $dir, $format, $structure, $fields = null, $parent = null, $packagistParentName = null, $contentResolver = false, $parentContentResolver = false, $orgname = null)
     {
-
         $dir .= '/'.strtr($namespace, '\\', '/');
         if (file_exists($dir)) {
             if (!is_dir($dir)) {
                 throw new \RuntimeException(sprintf('Unable to generate the bundle as the target directory "%s" exists but is a file.', realpath($dir)));
             }
             $files = scandir($dir);
-            if ($files !== array('.', '..')) {
+            if ($files !== ['.', '..']) {
                 throw new \RuntimeException(sprintf('Unable to generate the bundle as the target directory "%s" is not empty.', realpath($dir)));
             }
             if (!is_writable($dir)) {
@@ -58,7 +59,7 @@ class WidgetGenerator extends Generator
 
         $basename = substr($bundle, 0, -6);
         $widget = str_replace('VictoireWidget', '', $basename);
-        $_fields = array();
+        $_fields = [];
 
         foreach ($fields as $_field) {
             $_fields[] = $_field['fieldName'];
@@ -74,7 +75,7 @@ class WidgetGenerator extends Generator
             $toStringProperty = 'description';
         }
 
-        $parameters = array(
+        $parameters = [
             'namespace'               => $namespace,
             'bundle'                  => $bundle,
             'parent'                  => $parent,
@@ -88,12 +89,12 @@ class WidgetGenerator extends Generator
             'content_resolver'        => $contentResolver,
             'parent_content_resolver' => $parentContentResolver,
             'extension_alias'         => Container::underscore($basename),
-        );
+        ];
 
         $this->renderFile('bundle/Bundle.php.twig', $dir.'/'.$bundle.'.php', $parameters);
         $this->renderFile('README.md.twig', $dir.'/README.md', $parameters);
         $this->renderFile('composer.json.twig', $dir.'/composer.json', $parameters);
-        $this->renderFile('bundle/Extension.php.twig', $dir.'/DependencyInjection/'.$basename.'Extension.php', array_merge($parameters, array('format' => 'yml')));
+        $this->renderFile('bundle/Extension.php.twig', $dir.'/DependencyInjection/'.$basename.'Extension.php', array_merge($parameters, ['format' => 'yml']));
         $this->renderFile('bundle/Configuration.php.twig', $dir.'/DependencyInjection/Configuration.php', $parameters);
 
         $this->renderFile('widget/entity.php.twig', $dir.'/Entity/Widget'.$widget.'.php', $parameters);
@@ -114,11 +115,10 @@ class WidgetGenerator extends Generator
             $parameters['parentResolver'] = class_exists('Victoire\\Widget\\'.$parent.'Bundle\\Widget\\Resolver\\Widget'.$parent.'ContentResolver');
             $this->renderFile('widget/ContentResolver.php.twig', $dir.'/Widget/Resolver/Widget'.$widget.'ContentResolver.php', $parameters);
         }
-
     }
 
     /**
-     * write WidgetBundle files
+     * write WidgetBundle files.
      */
     protected function render($template, $parameters)
     {
@@ -129,7 +129,7 @@ class WidgetGenerator extends Generator
     }
 
     /**
-     * configure available skeletons twig files
+     * configure available skeletons twig files.
      */
     public function setSkeletonDirs($skeletonDirs)
     {

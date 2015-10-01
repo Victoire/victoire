@@ -3,10 +3,9 @@
 namespace Victoire\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Route
+ * Route.
  *
  * @ORM\Table("vic_route_history")
  * @ORM\Entity(repositoryClass="Victoire\Bundle\CoreBundle\Repository\RouteRepository")
@@ -16,7 +15,7 @@ class Route
     use \Gedmo\Timestampable\Traits\TimestampableEntity;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -40,7 +39,7 @@ class Route
     protected $url;
 
     /**
-     * contructor
+     * contructor.
      **/
     public function __construct()
     {
@@ -49,7 +48,7 @@ class Route
     }
 
     /**
-     * The to string method
+     * The to string method.
      *
      * @return string
      */
@@ -59,9 +58,9 @@ class Route
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -69,7 +68,7 @@ class Route
     }
 
     /**
-     * Set view
+     * Set view.
      *
      * @param View $view
      *
@@ -83,7 +82,7 @@ class Route
     }
 
     /**
-     * Get view
+     * Get view.
      *
      * @return \stdClass
      */
@@ -93,7 +92,7 @@ class Route
     }
 
     /**
-     * Set url
+     * Set url.
      *
      * @param string $url
      *
@@ -107,7 +106,7 @@ class Route
     }
 
     /**
-     * Get url
+     * Get url.
      *
      * @return string
      */

@@ -1,15 +1,14 @@
 <?php
+
 namespace Victoire\Bundle\CoreBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event;
-use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Doctrine\ORM\QueryBuilder;
+use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
+use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
- *
  * @author Paul Andrieux
- *
  */
 class WidgetQueryEvent extends Event
 {
@@ -18,7 +17,7 @@ class WidgetQueryEvent extends Event
     private $request;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param Widget       $widget
      * @param QueryBuilder $qb
@@ -32,7 +31,7 @@ class WidgetQueryEvent extends Event
     }
 
     /**
-     * Get the widget
+     * Get the widget.
      *
      * @return Widget
      */
@@ -42,7 +41,7 @@ class WidgetQueryEvent extends Event
     }
 
     /**
-     * Get the queryBuilder
+     * Get the queryBuilder.
      *
      * @return QueryBuilder
      */
@@ -52,7 +51,7 @@ class WidgetQueryEvent extends Event
     }
 
     /**
-     * Get the request
+     * Get the request.
      *
      * @return Request
      */

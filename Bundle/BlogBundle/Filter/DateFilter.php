@@ -2,13 +2,13 @@
 
 namespace Victoire\Bundle\BlogBundle\Filter;
 
-use Victoire\Bundle\FilterBundle\Filter\BaseFilter;
-use Symfony\Component\Form\FormBuilderInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
+use Victoire\Bundle\FilterBundle\Filter\BaseFilter;
 
 /**
- * DateFilter form type
+ * DateFilter form type.
  */
 class DateFilter extends BaseFilter
 {
@@ -16,7 +16,7 @@ class DateFilter extends BaseFilter
     protected $request;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param EntityManager $em
      * @param unknown       $request
@@ -28,7 +28,7 @@ class DateFilter extends BaseFilter
     }
 
     /**
-     * Build the query
+     * Build the query.
      *
      * @param QueryBuilder &$qb
      * @param array        $parameters
@@ -59,7 +59,8 @@ class DateFilter extends BaseFilter
     }
 
     /**
-     * define form fields
+     * define form fields.
+     *
      * @param FormBuilderInterface $builder
      * @param array                $options
      *
@@ -68,20 +69,20 @@ class DateFilter extends BaseFilter
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $articles = $this->em->getRepository('VictoireBlogBundle:Article')->getAll(true)->run();
-        $years = $months = $days = array();
+        $years = $months = $days = [];
         foreach ($articles as $key => $_article) {
             $years[$_article->getPublishedAt()->format('Y')] = $_article->getPublishedAt()->format('Y');
 
             if ($options['widget']->getFormat() != 'year') {
                 //init $months array
                 if (!isset($months[$_article->getPublishedAt()->format('Y')])) {
-                    $months[$_article->getPublishedAt()->format('Y')] = array();
+                    $months[$_article->getPublishedAt()->format('Y')] = [];
                 }
                 $months[$_article->getPublishedAt()->format('Y')][] = $_article->getPublishedAt()->format('M');
                 if ($options['widget']->getFormat() != 'month') {
                     //init $days array
                     if (!isset($days[$_article->getPublishedAt()->format('M')])) {
-                        $days[$_article->getPublishedAt()->format('M')] = array();
+                        $days[$_article->getPublishedAt()->format('M')] = [];
                     }
                     //assign values
                     $days[$_article->getPublishedAt()->format('M')][] = $_article->getPublishedAt()->format('M');
@@ -89,31 +90,30 @@ class DateFilter extends BaseFilter
             }
         }
 
-        $data = array('year' => null, 'month' => null, 'day' => null);
+        $data = ['year' => null, 'month' => null, 'day' => null];
         if ($this->request->query->has('filter') && array_key_exists('date_filter', $this->request->query->get('filter'))) {
             $_request = $this->request->query->get('filter')['date_filter'];
             $data = $_request;
         }
 
-        if (in_array($options['widget']->getFormat(), array('year', 'month', 'day'))) {
+        if (in_array($options['widget']->getFormat(), ['year', 'month', 'day'])) {
             if (!$data['year']) {
                 // set default value to date filter and set listing to request while not better way
                 $data['year'] = $options['widget']->getDefaultValue();
                 $this->request->query->replace(
-                    array(
-                        'filter' => array(
-                            $this->getName() => array(
-                                'year' => $options['widget']->getDefaultValue()
-                            ),
-                        'listing' => $options['widget']->getListing()->getId()
-                        )
-                    )
+                    [
+                        'filter' => [
+                            $this->getName() => [
+                                'year' => $options['widget']->getDefaultValue(),
+                            ],
+                        'listing' => $options['widget']->getListing()->getId(),
+                        ],
+                    ]
                 );
-
             }
             $builder
                 ->add(
-                    'year', 'choice', array(
+                    'year', 'choice', [
                         'label'       => false,
                         'choices'     => $years,
                         'required'    => false,
@@ -121,13 +121,13 @@ class DateFilter extends BaseFilter
                         'multiple'    => false,
                         'empty_value' => false,
                         'data'        => $data['year'],
-                    )
+                    ]
                 );
         }
     }
 
     /**
-     * Get the filters
+     * Get the filters.
      *
      * @param array $filters
      *
@@ -139,7 +139,8 @@ class DateFilter extends BaseFilter
     }
 
     /**
-     * get form name
+     * get form name.
+     *
      * @return string name
      */
     public function getName()

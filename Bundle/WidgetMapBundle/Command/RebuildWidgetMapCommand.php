@@ -1,31 +1,20 @@
 <?php
+
 namespace Victoire\Bundle\WidgetMapBundle\Command;
 
-use Doctrine\DBAL\Types\Type;
-use Sensio\Bundle\GeneratorBundle\Command\GenerateBundleCommand;
-use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
-use Sensio\Bundle\GeneratorBundle\Command\Validators;
-use Sensio\Bundle\GeneratorBundle\Generator\DoctrineEntityGenerator;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\ConfirmationQuestion;
-use Symfony\Component\Console\Question\Question;
-use Symfony\Component\DependencyInjection\Container;
-use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Victoire\Bundle\CoreBundle\Entity\View;
-use Victoire\Bundle\CoreBundle\Repository\ViewRepository;
-use Victoire\Bundle\WidgetBundle\Generator\WidgetGenerator;
 
 /**
- * Create a new Widget for VictoireCMS
+ * Create a new Widget for VictoireCMS.
  */
 class RebuildWidgetMapCommand extends ContainerAwareCommand
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function configure()
     {
@@ -47,9 +36,9 @@ class RebuildWidgetMapCommand extends ContainerAwareCommand
     {
         $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
         $repo = $entityManager->getRepository('VictoireCoreBundle:View');
-        $params = array();
+        $params = [];
         if ($input->getArgument('viewId')) {
-            $params = array('id' => $input->getArgument('viewId'));
+            $params = ['id' => $input->getArgument('viewId')];
         }
 
         $progress = $this->getHelperSet()->get('progress');

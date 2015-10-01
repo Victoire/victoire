@@ -8,7 +8,7 @@ use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 
 /**
  * article Manager
- * ref. victoire_blog.manager.article
+ * ref. victoire_blog.manager.article.
  */
 class ArticleManager
 {
@@ -17,13 +17,15 @@ class ArticleManager
      */
     private $entityManager;
 
-    public function __construct(EntityManager $entityManager) {
+    public function __construct(EntityManager $entityManager)
+    {
         $this->entityManager = $entityManager;
     }
 
     /**
-     * Delete a given article
-     * @param Article            $article
+     * Delete a given article.
+     *
+     * @param Article $article
      */
     public function delete(Article $article, BusinessPage $bep)
     {

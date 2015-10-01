@@ -11,10 +11,10 @@ namespace Victoire\Bundle\FormBundle\Form\Extension;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Extension for Form Legend handling.
@@ -64,15 +64,15 @@ class LegendFormTypeExtension extends AbstractTypeExtension
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'vic_render_fieldset' => $this->renderFieldset,
-            'vic_show_legend' => $this->showLegend,
-            'vic_show_child_legend' => $this->showChildLegend,
-            'vic_legend_tag' => $this->legendTag,
-            'vic_label_render' => true,
+        $resolver->setDefaults([
+            'vic_render_fieldset'          => $this->renderFieldset,
+            'vic_show_legend'              => $this->showLegend,
+            'vic_show_child_legend'        => $this->showChildLegend,
+            'vic_legend_tag'               => $this->legendTag,
+            'vic_label_render'             => true,
             'vic_render_required_asterisk' => $this->renderRequiredAsterisk,
-            'vic_render_optional_text' => $this->renderOptionalText,
-        ));
+            'vic_render_optional_text'     => $this->renderOptionalText,
+        ]);
     }
 
     /**

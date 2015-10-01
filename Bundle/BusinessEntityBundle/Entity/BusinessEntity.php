@@ -1,24 +1,23 @@
 <?php
+
 namespace Victoire\Bundle\BusinessEntityBundle\Entity;
 
 /**
- * The business Entity
- *
+ * The business Entity.
  */
 class BusinessEntity
 {
-
     const CACHE_CLASSES = 'victoire_business_entity_classes';
     const CACHE_WIDGETS = 'victoire_business_entity_widgets';
 
     protected $id = null;
     protected $class = null;
     protected $name = null;
-    protected $businessProperties = array();
+    protected $businessProperties = [];
 
     public static function __set_state($array)
     {
-        $businessEntity = new BusinessEntity();
+        $businessEntity = new self();
         $businessEntity->setId($array['id']);
         $businessEntity->setClass($array['class']);
         $businessEntity->setName($array['name']);
@@ -28,7 +27,7 @@ class BusinessEntity
     }
 
     /**
-     * Get the id
+     * Get the id.
      *
      * @return string The id
      */
@@ -38,7 +37,8 @@ class BusinessEntity
     }
 
     /**
-     * Set the id
+     * Set the id.
+     *
      * @param string $id
      */
     public function setId($id)
@@ -47,7 +47,7 @@ class BusinessEntity
     }
 
     /**
-     * Get the name
+     * Get the name.
      *
      * @return string The name
      */
@@ -57,7 +57,7 @@ class BusinessEntity
     }
 
     /**
-     * Set the name
+     * Set the name.
      *
      * @param string $name
      */
@@ -67,7 +67,7 @@ class BusinessEntity
     }
 
     /**
-     * Get the class
+     * Get the class.
      *
      * @return string The class
      */
@@ -77,7 +77,7 @@ class BusinessEntity
     }
 
     /**
-     * Set the class
+     * Set the class.
      *
      * @param string $class
      */
@@ -87,7 +87,7 @@ class BusinessEntity
     }
 
     /**
-     * Add a business property
+     * Add a business property.
      *
      * @param BusinessProperty $businessProperty
      */
@@ -97,7 +97,7 @@ class BusinessEntity
         $type = $businessProperty->getType();
 
         if (!isset($this->businessProperties[$type])) {
-            $this->businessProperties[$type] = array();
+            $this->businessProperties[$type] = [];
         }
 
         //add the business property indexed by the type
@@ -105,7 +105,7 @@ class BusinessEntity
     }
 
     /**
-     * Get the business properties
+     * Get the business properties.
      *
      * @return array The business properties
      */
@@ -115,7 +115,7 @@ class BusinessEntity
     }
 
     /**
-     * Get the business properties
+     * Get the business properties.
      *
      * @return array The business properties
      */
@@ -125,7 +125,7 @@ class BusinessEntity
     }
 
     /**
-     * Get the business properties by type
+     * Get the business properties by type.
      *
      * @param string $type
      *
@@ -133,7 +133,7 @@ class BusinessEntity
      */
     public function getBusinessPropertiesByType($type)
     {
-        $bp = array();
+        $bp = [];
 
         if (isset($this->businessProperties[$type])) {
             $bp = $this->businessProperties[$type];
@@ -141,5 +141,4 @@ class BusinessEntity
 
         return $bp;
     }
-
 }

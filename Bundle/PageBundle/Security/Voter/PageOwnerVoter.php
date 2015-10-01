@@ -1,16 +1,16 @@
 <?php
+
 namespace Victoire\Bundle\PageBundle\Security\Voter;
 
-use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Victoire\Bundle\PageBundle\Entity\Page;
 
 /**
- * This class decides yes or no if the user is granted to do some action on a given page
+ * This class decides yes or no if the user is granted to do some action on a given page.
  */
 class PageOwnerVoter implements VoterInterface
 {
-
     private $userClass;
 
     public function __construct($userClass)
@@ -19,7 +19,7 @@ class PageOwnerVoter implements VoterInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function supportsAttribute($attribute)
     {
@@ -27,7 +27,7 @@ class PageOwnerVoter implements VoterInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function supportsClass($page)
     {
@@ -35,7 +35,7 @@ class PageOwnerVoter implements VoterInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function vote(TokenInterface $token, $page, array $attributes)
     {

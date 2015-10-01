@@ -2,20 +2,20 @@
 
 namespace Victoire\Bundle\FormBundle\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
- * This is the class that loads and manages your bundle configuration
+ * This is the class that loads and manages your bundle configuration.
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
 class VictoireFormExtension extends Extension
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -28,7 +28,7 @@ class VictoireFormExtension extends Extension
         $xmlLoader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $xmlLoader->load('twig.xml');
 
-        /**
+        /*
          * Form
          */
 
@@ -46,7 +46,7 @@ class VictoireFormExtension extends Extension
             }
         }
 
-        /**
+        /*
          * Icons
          */
         if (isset($config['icons'])) {

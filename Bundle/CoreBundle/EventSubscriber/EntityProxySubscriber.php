@@ -1,21 +1,22 @@
 <?php
+
 namespace Victoire\Bundle\CoreBundle\EventSubscriber;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
-use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Victoire\Bundle\BusinessEntityBundle\Reader\BusinessEntityCacheReader;
 
 /**
- * This class build the entity EntityProxy with activated widgets relations
+ * This class build the entity EntityProxy with activated widgets relations.
  **/
 class EntityProxySubscriber implements EventSubscriber
 {
     protected static $cacheReader;
 
     /**
-     * contructor
+     * contructor.
+     *
      * @param BusinessEntityCacheReader $cacheReader
      */
     public function setBusinessEntityCacheReader(BusinessEntityCacheReader $cacheReader)
@@ -24,19 +25,20 @@ class EntityProxySubscriber implements EventSubscriber
     }
 
     /**
-     * bind to LoadClassMetadata method
+     * bind to LoadClassMetadata method.
      *
      * @return string[]
      */
     public function getSubscribedEvents()
     {
-        return array(
+        return [
             'loadClassMetadata',
-        );
+        ];
     }
 
     /**
-     * Insert enabled widgets in base widget add relationship between BusinessEntities and EntityProxy
+     * Insert enabled widgets in base widget add relationship between BusinessEntities and EntityProxy.
+     *
      * @param LoadClassMetadataEventArgs $eventArgs
      */
     public static function loadClassMetadata($eventArgs)
@@ -47,13 +49,13 @@ class EntityProxySubscriber implements EventSubscriber
             if ($metadatas->name === 'Victoire\Bundle\CoreBundle\Entity\EntityProxy') {
                 foreach (self::$cacheReader->getBusinessClasses() as $entity) {
                     if (!$metadatas->hasAssociation($entity->getId())) {
-                        $metadatas->mapOneToOne(array(
+                        $metadatas->mapOneToOne([
                             'fieldName'    => $entity->getId(),
                             'targetEntity' => $entity->getClass(),
-                            'cascade'      => array('persist')
-                            )
+                            'cascade'      => ['persist'],
+                            ]
                         );
-                        $metadatas->associationMappings[$entity->getId()]['joinColumns'][0]['onDelete'] = "CASCADE";
+                        $metadatas->associationMappings[$entity->getId()]['joinColumns'][0]['onDelete'] = 'CASCADE';
                     }
                 }
             }

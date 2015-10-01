@@ -11,12 +11,12 @@ namespace Victoire\Bundle\FormBundle\Form\Extension;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Mopa\Bundle\BootstrapBundle\Form\Type\TabsType;
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\FormFactoryInterface;
-use Mopa\Bundle\BootstrapBundle\Form\Type\TabsType;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Extension for Adding Tabs to Form type.
@@ -58,9 +58,9 @@ class TabbedFormTypeExtension extends AbstractTypeExtension
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'tabs_class' => $this->options['class'],
-        ));
+        ]);
     }
 
     /**
@@ -83,7 +83,7 @@ class TabbedFormTypeExtension extends AbstractTypeExtension
         $activeTab = null;
         $tabIndex = 0;
         $foundInvalid = false;
-        $tabs = array();
+        $tabs = [];
 
         foreach ($view->children as $child) {
             if (in_array('tab', $child->vars['block_prefixes'])) {
@@ -95,13 +95,13 @@ class TabbedFormTypeExtension extends AbstractTypeExtension
                     $foundInvalid = !$valid;
                 }
 
-                $tabs[$tabIndex] = array(
+                $tabs[$tabIndex] = [
                     'id'                 => $child->vars['id'],
                     'label'              => $child->vars['label'],
                     'icon'               => $child->vars['icon'],
                     'active'             => false,
                     'translation_domain' => $child->vars['translation_domain'],
-                );
+                ];
 
                 $tabIndex++;
             }
@@ -110,14 +110,14 @@ class TabbedFormTypeExtension extends AbstractTypeExtension
         $activeTab->vars['tab_active'] = true;
         $tabs[$activeTab->vars['tab_index']]['active'] = true;
 
-        $tabsForm = $this->formFactory->create(new TabsType(), null, array(
+        $tabsForm = $this->formFactory->create(new TabsType(), null, [
             'tabs' => $tabs,
-            'attr' => array(
+            'attr' => [
                 'class' => $options['tabs_class'],
-            ),
-        ));
+            ],
+        ]);
 
-        $view->vars['tabs']     = $tabs;
+        $view->vars['tabs'] = $tabs;
         $view->vars['vic_tabbed'] = true;
         $view->vars['tabsView'] = $tabsForm->createView();
     }

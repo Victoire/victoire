@@ -1,11 +1,12 @@
 <?php
+
 namespace Victoire\Bundle\CoreBundle\Helper;
 
 use Victoire\Bundle\CoreBundle\Entity\View;
 
 /**
  * This Helper give you the current view (BasePage or Template)
- * ~ victoire_core.current_view
+ * ~ victoire_core.current_view.
  */
 class CurrentViewHelper
 {
@@ -13,7 +14,7 @@ class CurrentViewHelper
     protected $mainCurrentView;
 
     /**
-     * Get currentView
+     * Get currentView.
      *
      * @return View
      */
@@ -21,8 +22,9 @@ class CurrentViewHelper
     {
         return $this->currentView;
     }
+
     /**
-     * Get mainCurrentView
+     * Get mainCurrentView.
      *
      * @return View
      */
@@ -32,7 +34,7 @@ class CurrentViewHelper
     }
 
     /**
-     * Set currentView
+     * Set currentView.
      *
      * @param View $currentView
      *
@@ -52,7 +54,7 @@ class CurrentViewHelper
      * This method allow you to get the current view using a Current View Helper as a method
      * ex.
      * $currentViewHelper = $this->get('victoire_core.current_view');
-     * $currentView = $currentViewHelper();
+     * $currentView = $currentViewHelper();.
      *
      * @return View The current View
      */
@@ -62,5 +64,4 @@ class CurrentViewHelper
             return $this->currentView;
         }
     }
-
 }

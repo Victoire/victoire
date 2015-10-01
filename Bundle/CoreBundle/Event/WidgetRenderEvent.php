@@ -1,13 +1,12 @@
 <?php
+
 namespace Victoire\Bundle\CoreBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
- *
  * @author Paul Andrieux
- *
  */
 class WidgetRenderEvent extends Event
 {
@@ -15,7 +14,7 @@ class WidgetRenderEvent extends Event
     private $html;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param Widget $widget
      * @param string $html
@@ -27,7 +26,7 @@ class WidgetRenderEvent extends Event
     }
 
     /**
-     * Get the widget
+     * Get the widget.
      *
      * @return Widget
      */
@@ -37,7 +36,7 @@ class WidgetRenderEvent extends Event
     }
 
     /**
-     * Get the html
+     * Get the html.
      *
      * @return string
      */

@@ -1,40 +1,41 @@
 <?php
+
 namespace Victoire\Bundle\WidgetBundle\Entity\Traits;
 
 use Victoire\Bundle\MediaBundle\Entity\Media;
-use Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTraits\StyleXSTrait;
-use Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTraits\StyleSMTrait;
-use Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTraits\StyleMDTrait;
 use Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTraits\StyleLGTrait;
+use Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTraits\StyleMDTrait;
+use Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTraits\StyleSMTrait;
+use Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTraits\StyleXSTrait;
 
 /**
- * Style trait adds fields to place a widget in its container
+ * Style trait adds fields to place a widget in its container.
  */
 trait StyleTrait
 {
     /*******************        RESPONSIVE PROPERTIES         **********************/
         use StyleXSTrait;
-        use StyleSMTrait;
-        use StyleMDTrait;
-        use StyleLGTrait;
+    use StyleSMTrait;
+    use StyleMDTrait;
+    use StyleLGTrait;
 
     /*******************  GLOBAL PROPERTIES (NON RESPONSIVE)  **********************/
-    public static $tags = array(
-        "section",
-        "header",
-        "footer",
-        "nav",
-        "article",
-        "aside",
-        "div",
-    );
+    public static $tags = [
+        'section',
+        'header',
+        'footer',
+        'nav',
+        'article',
+        'aside',
+        'div',
+    ];
 
     /**
      * @var string
      *
      * @ORM\Column(name="container_tag", type="string", length=255, options={"default" = "div"})
      */
-    protected $containerTag = "div";
+    protected $containerTag = 'div';
 
     /**
      * @var string
@@ -80,6 +81,7 @@ trait StyleTrait
 
     /**
      * @var string
+     *
      * @deprecated
      * @ORM\Column(name="container_background", type="string", length=255, nullable=true)
      */
@@ -136,7 +138,8 @@ trait StyleTrait
     protected $containerBackgroundOverlay;
 
     /**
-     * Set containerTag
+     * Set containerTag.
+     *
      * @param string $containerTag
      *
      * @return $this
@@ -144,11 +147,12 @@ trait StyleTrait
     public function setContainerTag($containerTag)
     {
         $this->containerTag = $containerTag;
+
         return $this;
     }
 
     /**
-     * Get containerTag
+     * Get containerTag.
      *
      * @return string
      */
@@ -158,7 +162,8 @@ trait StyleTrait
     }
 
     /**
-     * Set containerClass
+     * Set containerClass.
+     *
      * @param string $containerClass
      *
      * @return $this
@@ -166,11 +171,12 @@ trait StyleTrait
     public function setContainerClass($containerClass)
     {
         $this->containerClass = $containerClass;
+
         return $this;
     }
 
     /**
-     * Get containerClass
+     * Get containerClass.
      *
      * @return string
      */
@@ -180,7 +186,8 @@ trait StyleTrait
     }
 
     /**
-     * Set containerWidth
+     * Set containerWidth.
+     *
      * @param string $containerWidth
      *
      * @return $this
@@ -188,11 +195,12 @@ trait StyleTrait
     public function setContainerWidth($containerWidth)
     {
         $this->containerWidth = $containerWidth;
+
         return $this;
     }
 
     /**
-     * Get containerWidth
+     * Get containerWidth.
      *
      * @return string
      */
@@ -202,7 +210,8 @@ trait StyleTrait
     }
 
     /**
-     * Set containerHeight
+     * Set containerHeight.
+     *
      * @param string $containerHeight
      *
      * @return $this
@@ -210,11 +219,12 @@ trait StyleTrait
     public function setContainerHeight($containerHeight)
     {
         $this->containerHeight = $containerHeight;
+
         return $this;
     }
 
     /**
-     * Get containerHeight
+     * Get containerHeight.
      *
      * @return string
      */
@@ -224,7 +234,8 @@ trait StyleTrait
     }
 
     /**
-     * Set containerMargin
+     * Set containerMargin.
+     *
      * @param string $containerMargin
      *
      * @return $this
@@ -232,11 +243,12 @@ trait StyleTrait
     public function setContainerMargin($containerMargin)
     {
         $this->containerMargin = $containerMargin;
+
         return $this;
     }
 
     /**
-     * Get containerMargin
+     * Get containerMargin.
      *
      * @return string
      */
@@ -246,7 +258,8 @@ trait StyleTrait
     }
 
     /**
-     * Set containerPadding
+     * Set containerPadding.
+     *
      * @param string $containerPadding
      *
      * @return $this
@@ -254,11 +267,12 @@ trait StyleTrait
     public function setContainerPadding($containerPadding)
     {
         $this->containerPadding = $containerPadding;
+
         return $this;
     }
 
     /**
-     * Get containerPadding
+     * Get containerPadding.
      *
      * @return string
      */
@@ -268,7 +282,7 @@ trait StyleTrait
     }
 
     /**
-     * Get textAlign
+     * Get textAlign.
      *
      * @return string
      */
@@ -278,7 +292,8 @@ trait StyleTrait
     }
 
     /**
-     * Set textAlign
+     * Set textAlign.
+     *
      * @param string $textAlign
      *
      * @return $this
@@ -286,6 +301,7 @@ trait StyleTrait
     public function setTextAlign($textAlign)
     {
         $this->textAlign = $textAlign;
+
         return $this;
     }
 
@@ -299,11 +315,13 @@ trait StyleTrait
 
     /**
      * @param string $containerBackground
+     *
      * @return $this
      */
     public function setContainerBackground($containerBackground)
     {
         $this->containerBackground = $containerBackground;
+
         return $this;
     }
 
@@ -333,11 +351,13 @@ trait StyleTrait
 
     /**
      * @param string $containerBackgroundRepeat
+     *
      * @return $this
      */
     public function setContainerBackgroundRepeat($containerBackgroundRepeat)
     {
         $this->containerBackgroundRepeat = $containerBackgroundRepeat;
+
         return $this;
     }
 
@@ -351,11 +371,13 @@ trait StyleTrait
 
     /**
      * @param string $containerBackgroundPosition
+     *
      * @return $this
      */
     public function setContainerBackgroundPosition($containerBackgroundPosition)
     {
         $this->containerBackgroundPosition = $containerBackgroundPosition;
+
         return $this;
     }
 
@@ -369,11 +391,13 @@ trait StyleTrait
 
     /**
      * @param string $containerBackgroundSize
+     *
      * @return $this
      */
     public function setContainerBackgroundSize($containerBackgroundSize)
     {
         $this->containerBackgroundSize = $containerBackgroundSize;
+
         return $this;
     }
 
@@ -387,11 +411,13 @@ trait StyleTrait
 
     /**
      * @param string $containerBackgroundColor
+     *
      * @return $this
      */
     public function setContainerBackgroundColor($containerBackgroundColor)
     {
         $this->containerBackgroundColor = $containerBackgroundColor;
+
         return $this;
     }
 
@@ -404,13 +430,16 @@ trait StyleTrait
     }
 
     /**
-     * Set image
+     * Set image.
+     *
      * @param string|Media $image
+     *
      * @return $this
      */
     public function setContainerBackgroundImage(Media $image = null)
     {
         $this->containerBackgroundImage = $image;
+
         return $this;
     }
 
@@ -424,12 +453,13 @@ trait StyleTrait
 
     /**
      * @param string $containerBackgroundOverlay
+     *
      * @return $this
      */
     public function setContainerBackgroundOverlay($containerBackgroundOverlay)
     {
         $this->containerBackgroundOverlay = $containerBackgroundOverlay;
+
         return $this;
     }
-
 }

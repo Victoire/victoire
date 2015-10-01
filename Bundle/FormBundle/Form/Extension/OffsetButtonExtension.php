@@ -11,19 +11,18 @@ namespace Victoire\Bundle\FormBundle\Form\Extension;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Extension for Offsetting a button
+ * Extension for Offsetting a button.
  *
  * @author peshi <peshis@gmail.com>
  */
 class OffsetButtonExtension extends AbstractTypeExtension
 {
-
     /**
      * {@inheritdoc}
      */
@@ -38,9 +37,9 @@ class OffsetButtonExtension extends AbstractTypeExtension
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(
-            array(
+            [
                 'vic_button_offset' => null,
-            )
+            ]
         );
     }
 
@@ -50,6 +49,5 @@ class OffsetButtonExtension extends AbstractTypeExtension
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['vic_button_offset'] = $options['vic_button_offset'];
-
     }
 }

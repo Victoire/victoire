@@ -2,15 +2,13 @@
 
 namespace Victoire\Bundle\CoreBundle\DependencyInjection\Compiler;
 
-
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * Class ViewManagerCompilerPass
- * @package Victoire\Bundle\CoreBundle\DependencyInjection\Compiler
+ * Class ViewManagerCompilerPass.
  */
 class ViewManagerCompilerPass implements CompilerPassInterface
 {
@@ -28,14 +26,13 @@ class ViewManagerCompilerPass implements CompilerPassInterface
         foreach ($taggedServices as $id => $tagAttributes) {
             foreach ($tagAttributes as $attributes) {
                 if (!array_key_exists('view', $attributes)) {
-                    throw new InvalidConfigurationException("View class attribute is not defined for ".$id);
+                    throw new InvalidConfigurationException('View class attribute is not defined for '.$id);
                 }
                 $definition->addMethodCall(
                     'addViewReferenceBuilder',
-                    array(new Reference($id), $attributes['view'])
+                    [new Reference($id), $attributes['view']]
                 );
             }
-
         }
     }
 }

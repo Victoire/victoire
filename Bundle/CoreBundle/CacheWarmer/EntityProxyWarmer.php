@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\CoreBundle\CacheWarmer;
 
 use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmer;
@@ -15,10 +16,10 @@ class EntityProxyWarmer extends CacheWarmer
     private $fileLocator;
 
     /**
-     * Constructor
+     * Constructor.
+     *
      * @param BusinessEntityHelper $businessEntityHelper
      * @param FileLocator          $fileLocator
-     *
      */
     public function __construct(BusinessEntityHelper $businessEntityHelper, FileLocator $fileLocator)
     {
@@ -48,15 +49,15 @@ class EntityProxyWarmer extends CacheWarmer
         $cacheContent = $generator->generate();
 
         $this->writeCacheFile($file, $cacheContent);
-        if (!class_exists("Victoire\\Bundle\\CoreBundle\\Entity\\EntityProxy")) {
+        if (!class_exists('Victoire\\Bundle\\CoreBundle\\Entity\\EntityProxy')) {
             include_once $file;
         }
     }
 
     /**
-     * IS the warmer optionnal
+     * IS the warmer optionnal.
      *
-     * @return boolean
+     * @return bool
      */
     public function isOptional()
     {

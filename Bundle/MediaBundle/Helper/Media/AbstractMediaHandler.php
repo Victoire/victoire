@@ -2,15 +2,14 @@
 
 namespace Victoire\Bundle\MediaBundle\Helper\Media;
 
-use Victoire\Bundle\MediaBundle\Entity\Media;
 use Symfony\Component\Form\AbstractType;
+use Victoire\Bundle\MediaBundle\Entity\Media;
 
 /**
- * AbstractMediaHandler
+ * AbstractMediaHandler.
  */
 abstract class AbstractMediaHandler
 {
-
     /**
      * @return string
      */
@@ -67,7 +66,7 @@ abstract class AbstractMediaHandler
     abstract public function removeMedia(Media $media);
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getShowTemplate(Media $media)
     {
@@ -82,12 +81,11 @@ abstract class AbstractMediaHandler
      */
     public function getImageUrl(Media $media, $basepath)
     {
-        return null;
+        return;
     }
 
     /**
      * @return array
      */
     abstract public function getAddFolderActions();
-
 }

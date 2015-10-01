@@ -6,14 +6,14 @@ use Symfony\Component\EventDispatcher\Event;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 
 /**
- * This Event provides current Page entity to which listen it
+ * This Event provides current Page entity to which listen it.
  */
 class TemplateMenuContextualEvent extends Event
 {
     protected $template;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function __construct(Template $template)
     {
@@ -21,7 +21,8 @@ class TemplateMenuContextualEvent extends Event
     }
 
     /**
-     * get Template
+     * get Template.
+     *
      * @return Template $template
      */
     public function getTemplate()

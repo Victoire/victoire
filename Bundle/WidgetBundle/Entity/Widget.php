@@ -8,7 +8,7 @@ use Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTrait;
 use Victoire\Bundle\WidgetBundle\Model\Widget as BaseWidget;
 
 /**
- * Widget
+ * Widget.
  *
  * @ORM\Table("vic_widget")
  * @ORM\Entity(repositoryClass="Victoire\Bundle\WidgetBundle\Repository\WidgetRepository")
@@ -20,12 +20,13 @@ class Widget extends BaseWidget
     use StyleTrait;
     use QueryTrait;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->childrenSlot = uniqid();
     }
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -66,7 +67,6 @@ class Widget extends BaseWidget
      *
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\CoreBundle\Entity\View", inversedBy="widgets", cascade={"persist"})
      * @ORM\JoinColumn(name="view_id", referencedColumnName="id", onDelete="CASCADE")
-     *
      */
     protected $view;
 
@@ -75,7 +75,7 @@ class Widget extends BaseWidget
      *
      * @ORM\Column(name="fields", type="array")
      */
-    protected $fields = array();
+    protected $fields = [];
 
     /**
      * @var string
@@ -85,7 +85,8 @@ class Widget extends BaseWidget
     protected $mode = self::MODE_STATIC;
 
     /**
-     * Auto simple mode: joined entity
+     * Auto simple mode: joined entity.
+     *
      * @var EntityProxy
      *
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\CoreBundle\Entity\EntityProxy", inversedBy="widgets", cascade={"persist"})

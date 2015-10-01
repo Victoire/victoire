@@ -1,11 +1,11 @@
 <?php
+
 namespace Victoire\Bundle\CoreBundle\Cache;
 
 use Doctrine\Common\Cache\PhpFileCache;
-use Symfony\Component\HttpKernel\Config\FileLocator;
 
 /**
- * this class handle cache system
+ * this class handle cache system.
  **/
 class VictoireCache extends PhpFileCache
 {
@@ -13,9 +13,9 @@ class VictoireCache extends PhpFileCache
     protected $debug;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param boolean      $debug       The debug environment
+     * @param bool $debug The debug environment
      */
     public function __construct($debug, $directory, $extension = self::EXTENSION)
     {
@@ -45,7 +45,7 @@ class VictoireCache extends PhpFileCache
      * @param string $id   The cache id.
      * @param mixed  $data The cache entry/data.
      *
-     * @return boolean TRUE if the entry was successfully stored in the cache, FALSE otherwise.
+     * @return bool TRUE if the entry was successfully stored in the cache, FALSE otherwise.
      */
     public function save($id, $data, $ttl = 20)
     {
@@ -55,5 +55,4 @@ class VictoireCache extends PhpFileCache
             parent::save($id, $data);
         }
     }
-
 }

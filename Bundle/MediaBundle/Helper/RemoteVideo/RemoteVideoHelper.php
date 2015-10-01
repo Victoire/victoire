@@ -1,15 +1,15 @@
 <?php
 
 namespace Victoire\Bundle\MediaBundle\Helper\RemoteVideo;
+
 use Victoire\Bundle\MediaBundle\Entity\Media;
 
 /**
  * Victoire\Bundle\MediaBundle\Entity\Video
- * Class that defines a video in the system
+ * Class that defines a video in the system.
  */
 class RemoteVideoHelper
 {
-
     /**
      * @var Media
      */
@@ -58,7 +58,8 @@ class RemoteVideoHelper
     }
 
     /**
-     * Set code
+     * Set code.
+     *
      * @param string $code
      *
      * @return RemoteVideoHelper
@@ -79,7 +80,8 @@ class RemoteVideoHelper
     }
 
     /**
-     * Set thumbnail url
+     * Set thumbnail url.
+     *
      * @param string $url
      *
      * @return RemoteVideoHelper
@@ -92,7 +94,7 @@ class RemoteVideoHelper
     }
 
     /**
-     * Get type
+     * Get type.
      *
      * @return string|null
      */
@@ -102,7 +104,8 @@ class RemoteVideoHelper
     }
 
     /**
-     * Set type
+     * Set type.
+     *
      * @param string $type
      *
      * @return RemoteVideoHelper
@@ -113,5 +116,4 @@ class RemoteVideoHelper
 
         return $this;
     }
-
 }

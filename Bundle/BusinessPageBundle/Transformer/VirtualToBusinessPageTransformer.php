@@ -7,7 +7,6 @@ use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
 
 class VirtualToBusinessPageTransformer
 {
-
     public function transform(VirtualBusinessPage &$sourceObject)
     {
         $bp = new BusinessPage();
@@ -27,5 +26,4 @@ class VirtualToBusinessPageTransformer
 
         $sourceObject = $bp;
     }
-
 }

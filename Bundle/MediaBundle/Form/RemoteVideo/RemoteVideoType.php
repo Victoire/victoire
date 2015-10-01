@@ -2,23 +2,21 @@
 
 namespace Victoire\Bundle\MediaBundle\Form\RemoteVideo;
 
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-use Symfony\Component\Form\FormBuilderInterface;
-
-use Symfony\Component\Form\AbstractType;
-
 /**
- * RemoteVideoType
+ * RemoteVideoType.
  */
 class RemoteVideoType extends AbstractType
 {
-
     /**
      * Builds the form.
      *
      * This method is called for each type in the hierarchy starting form the
      * top most type. Type extensions can further modify the form.
+     *
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
      *
@@ -29,8 +27,8 @@ class RemoteVideoType extends AbstractType
         $builder
             ->add('name', 'text')
             ->add('code', 'text')
-            ->add('type', 'choice', array(
-                'choices'   => array('youtube' => 'youtube', 'vimeo' => 'vimeo', 'dailymotion' => 'dailymotion')));
+            ->add('type', 'choice', [
+                'choices'   => ['youtube' => 'youtube', 'vimeo' => 'vimeo', 'dailymotion' => 'dailymotion'], ]);
     }
 
     /**
@@ -50,8 +48,8 @@ class RemoteVideoType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
                 'data_class' => 'Victoire\Bundle\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper',
-        ));
+        ]);
     }
 }

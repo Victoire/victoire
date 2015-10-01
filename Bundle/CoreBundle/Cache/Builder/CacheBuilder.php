@@ -7,7 +7,7 @@ use Victoire\Bundle\CoreBundle\Cache\VictoireCache;
 
 /**
  * Build victoire data entities
- * ref: victoire_core.cache_builder
+ * ref: victoire_core.cache_builder.
  */
 class CacheBuilder
 {
@@ -19,7 +19,7 @@ class CacheBuilder
     }
 
     /**
-     * save BusinessEntity
+     * save BusinessEntity.
      */
     public function saveBusinessEntity(BusinessEntity $businessEntity)
     {
@@ -29,13 +29,13 @@ class CacheBuilder
     }
 
     /**
-     * save Widget
+     * save Widget.
      */
     public function saveWidgetReceiverProperties($widgetName, $receiverProperties)
     {
-        $widgets = $this->cache->get(BusinessEntity::CACHE_WIDGETS, array());
+        $widgets = $this->cache->get(BusinessEntity::CACHE_WIDGETS, []);
         if (!array_key_exists($widgetName, $widgets)) {
-            $widgets[$widgetName] = array();
+            $widgets[$widgetName] = [];
         }
 
         $widgets[$widgetName]['receiverProperties'] = $receiverProperties;
@@ -43,13 +43,13 @@ class CacheBuilder
     }
 
     /**
-     * add a BusinessEntity For Widget
+     * add a BusinessEntity For Widget.
      */
     public function addWidgetBusinessEntity($widgetName, $businessEntity)
     {
-        $widgets = $this->cache->get(BusinessEntity::CACHE_WIDGETS, array());
+        $widgets = $this->cache->get(BusinessEntity::CACHE_WIDGETS, []);
         if (!array_key_exists($widgetName, $widgets)) {
-            $widgets[$widgetName] = array('businessEntities' => array());
+            $widgets[$widgetName] = ['businessEntities' => []];
         }
         $widgets[$widgetName]['businessEntities'][$businessEntity->getId()] = $businessEntity;
         $this->cache->save(BusinessEntity::CACHE_WIDGETS, $widgets);

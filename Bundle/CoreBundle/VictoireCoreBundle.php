@@ -9,12 +9,12 @@ use Victoire\Bundle\CoreBundle\DependencyInjection\Compiler\TraductionCompilerPa
 use Victoire\Bundle\CoreBundle\DependencyInjection\Compiler\ViewManagerCompilerPass;
 
 /**
- * Victoire Core Bundle
+ * Victoire Core Bundle.
  */
 class VictoireCoreBundle extends Bundle
 {
     /**
-     * Boot the bundle
+     * Boot the bundle.
      */
     public function boot()
     {
@@ -23,11 +23,11 @@ class VictoireCoreBundle extends Bundle
 
         $proxyDriver = $this->container->get('victoire_core.entity_proxy.cache_driver');
         $driverChain->addDriver($proxyDriver, 'Victoire');
-
     }
 
     /**
-     * Build bundle
+     * Build bundle.
+     *
      * @param ContainerBuilder $container
      */
     public function build(ContainerBuilder $container)

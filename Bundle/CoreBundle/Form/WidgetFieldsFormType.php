@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\CoreBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
@@ -7,16 +8,14 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Victoire\Bundle\CoreBundle\Form\Builder\EntityProxyFieldsBuilder;
 
 /**
- *
  * @author Paul Andrieux
- *
  */
 class WidgetFieldsFormType extends AbstractType
 {
     private $entityProxyFieldsBuilder;
 
     /**
-     * constructor
+     * constructor.
      *
      * @return void
      **/
@@ -26,7 +25,8 @@ class WidgetFieldsFormType extends AbstractType
     }
 
     /**
-     * define form fields
+     * define form fields.
+     *
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
@@ -36,24 +36,25 @@ class WidgetFieldsFormType extends AbstractType
     }
 
     /**
-     * bind to Menu entity
+     * bind to Menu entity.
+     *
      * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(
-            array(
+            [
                 'data_class'         => null,
                 'namespace'          => null,
-                'fields'             => array(),
+                'fields'             => [],
                 'widget'             => null,
-                'translation_domain' => 'victoire'
-            )
+                'translation_domain' => 'victoire',
+            ]
         );
     }
 
     /**
-     * get form name
+     * get form name.
      *
      * @return string The form name
      */
