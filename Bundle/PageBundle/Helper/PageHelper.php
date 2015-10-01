@@ -181,7 +181,12 @@ class PageHelper extends ViewHelper
         $eventName = 'victoire_core.'.$type.'_menu.contextual';
         $this->eventDispatcher->dispatch($eventName, $event);
 
-        $layout = 'AppBundle:Layout:'.$view->getTemplate()->getLayout().'.html.twig';
+        if (method_exists($view, "getLayout") && $view->getLayout()) {
+            $viewLayout = $view->getLayout();
+        }else{
+            $viewLayout = $view->getTemplate()->getLayout();
+        }
+        $layout = 'AppBundle:Layout:'.$viewLayout.'.html.twig';
 
         $this->currentViewHelper->setCurrentView($view);
         //create the response

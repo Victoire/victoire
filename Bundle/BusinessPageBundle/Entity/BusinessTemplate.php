@@ -46,7 +46,13 @@ class BusinessTemplate extends Template
      */
     public function getInstances() { return $this->inheritors; }
     public function setInstances($inheritors) { $this->inheritors = $inheritors; return $this; }
-    public function getLayout() { return $this->getTemplate()->getLayout(); }
+
+    /**
+     * @return string
+     */
+    public function getLayout() {
+        return $this->layout ? $this->layout : $this->getTemplate()->getLayout();
+    }
 
     /**
      * Set seo
