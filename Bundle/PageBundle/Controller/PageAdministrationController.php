@@ -11,7 +11,7 @@ use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 
 /**
- * Page Administration Controller
+ * Page Administration Controller.
  *
  * @Route("/victoire-dcms/page")
  */
@@ -20,22 +20,23 @@ class PageAdministrationController extends PageController
     protected $routes;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
-        $this->routes = array(
+        $this->routes = [
             'new'       => 'victoire_core_page_new',
             'show'      => 'victoire_core_page_show',
             'settings'  => 'victoire_core_page_settings',
             'translate' => 'victoire_core_page_translate',
             'detach'    => 'victoire_core_page_detach',
-        );
+        ];
     }
 
     /**
-     * New page
-     * @param boolean $isHomepage Is the page a homepage
+     * New page.
+     *
+     * @param bool $isHomepage Is the page a homepage
      *
      * @Route("/new", name="victoire_core_page_new", defaults={"isHomepage" : false})
      * @Route("/homepage/new", name="victoire_core_homepage_new", defaults={"isHomepage" : true})
@@ -49,7 +50,8 @@ class PageAdministrationController extends PageController
     }
 
     /**
-     * Page settings
+     * Page settings.
+     *
      * @param Request  $request
      * @param BasePage $page
      *
@@ -65,7 +67,8 @@ class PageAdministrationController extends PageController
     }
 
     /**
-     * Page translation
+     * Page translation.
+     *
      * @param Request  $request
      * @param BasePage $page
      *
@@ -79,8 +82,10 @@ class PageAdministrationController extends PageController
     {
         return new JsonResponse(parent::translateAction($request, $page));
     }
+
     /**
-     * Page delete
+     * Page delete.
+     *
      * @param BasePage $page
      *
      * @return JsonResponse
@@ -94,7 +99,7 @@ class PageAdministrationController extends PageController
     }
 
     /**
-     * getNewPageType
+     * getNewPageType.
      *
      * @return string
      */
@@ -104,7 +109,7 @@ class PageAdministrationController extends PageController
     }
 
     /**
-     * getPageSettingsType
+     * getPageSettingsType.
      *
      * @return string
      */
@@ -114,7 +119,7 @@ class PageAdministrationController extends PageController
     }
 
     /**
-     * getBusinessPageType
+     * getBusinessPageType.
      *
      * @return string
      */
@@ -123,9 +128,8 @@ class PageAdministrationController extends PageController
         return 'victoire_business_page_type';
     }
 
-
     /**
-     * getPageTranslateType
+     * getPageTranslateType.
      *
      * @return string
      */
@@ -135,7 +139,7 @@ class PageAdministrationController extends PageController
     }
 
     /**
-     * getNewPage
+     * getNewPage.
      *
      * @return \Victoire\Bundle\PageBundle\Entity\Page
      */
@@ -145,17 +149,17 @@ class PageAdministrationController extends PageController
     }
 
     /**
-     * getBaseTemplatePath
+     * getBaseTemplatePath.
      *
      * @return string
      */
     protected function getBaseTemplatePath()
     {
-        return "VictoirePageBundle:Page";
+        return 'VictoirePageBundle:Page';
     }
 
     /**
-     * getRoutes
+     * getRoutes.
      *
      * @param string $action
      *

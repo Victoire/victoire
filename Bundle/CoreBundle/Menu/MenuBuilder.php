@@ -1,12 +1,13 @@
 <?php
+
 namespace Victoire\Bundle\CoreBundle\Menu;
 
 use Knp\Menu\FactoryInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
 use Knp\Menu\ItemInterface;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
- * Build a KnpMenu
+ * Build a KnpMenu.
  */
 class MenuBuilder
 {
@@ -17,7 +18,8 @@ class MenuBuilder
     protected $leftNavbar;
 
     /**
-     * build a KnpMenu
+     * build a KnpMenu.
+     *
      * @param FactoryInterface         $factory
      * @param SecurityContextInterface $securityContext
      */
@@ -25,51 +27,51 @@ class MenuBuilder
     {
         $this->factory = $factory;
         $this->securityContext = $securityContext;
-        $this->menu    = $this->factory->createItem('root');
+        $this->menu = $this->factory->createItem('root');
         $this->menu->setChildrenAttribute('class', 'nav');
 
         $this->leftNavbar = $this->initLeftNavbar();
 
-        $this->topNavbar  = $this->initTopNavbar();
+        $this->topNavbar = $this->initTopNavbar();
     }
 
     /**
-     * create top menu defined in the contructor
+     * create top menu defined in the contructor.
      *
      * @return \Knp\Menu\ItemInterface
      */
     public function initTopNavbar()
     {
-        $this->topNavbar = $this->factory->createItem('root', array(
-                'childrenAttributes' => array(
-                    'id'    => "vic-topNavbar-left",
-                    'class' => "vic-list-unstyled vic-menu-main-list vic-hidden-xs vic-hidden-sm"
-                )
-            )
+        $this->topNavbar = $this->factory->createItem('root', [
+                'childrenAttributes' => [
+                    'id'    => 'vic-topNavbar-left',
+                    'class' => 'vic-list-unstyled vic-menu-main-list vic-hidden-xs vic-hidden-sm',
+                ],
+            ]
         );
 
         return $this->topNavbar;
     }
 
     /**
-     * create left menu defined in the contructor
+     * create left menu defined in the contructor.
      *
      * @return \Knp\Menu\ItemInterface
      */
     public function initLeftNavbar()
     {
-        $this->leftNavbar = $this->factory->createItem('root', array(
-            'childrenAttributes' => array(
-                'class' => ""
-                )
-            )
+        $this->leftNavbar = $this->factory->createItem('root', [
+            'childrenAttributes' => [
+                'class' => '',
+                ],
+            ]
         );
 
         return $this->leftNavbar;
     }
 
     /**
-     * Create the dropdown menu
+     * Create the dropdown menu.
      *
      * @param ItemInterface $rootItem
      * @param string        $title
@@ -78,25 +80,25 @@ class MenuBuilder
      *
      * @return \Knp\Menu\ItemInterface
      */
-    public function createDropdownMenuItem(ItemInterface $rootItem, $title, $attributes = array(), $caret = true)
+    public function createDropdownMenuItem(ItemInterface $rootItem, $title, $attributes = [], $caret = true)
     {
         // Add child to dropdown, still normal KnpMenu usage
         $options = array_merge(
-            array(
-                'dropdown'   => true,
-                'childrenAttributes' => array(
-                    'class' => 'vic-dropdown-menu'
-                ),
-                'attributes' => array(
+            [
+                'dropdown'           => true,
+                'childrenAttributes' => [
+                    'class' => 'vic-dropdown-menu',
+                ],
+                'attributes' => [
                     'class'       => 'vic-dropdown',
-                    'data-toggle' => 'vic-dropdown'
-                ),
-                'linkAttributes' => array(
-                    'class' => 'vic-dropdown-toggle',
-                    'data-toggle' => 'vic-dropdown'
-                ),
-                'uri'   => "#",
-            ),
+                    'data-toggle' => 'vic-dropdown',
+                ],
+                'linkAttributes' => [
+                    'class'       => 'vic-dropdown-toggle',
+                    'data-toggle' => 'vic-dropdown',
+                ],
+                'uri'   => '#',
+            ],
             $attributes
         );
 
@@ -106,7 +108,7 @@ class MenuBuilder
     }
 
     /**
-     * return menu
+     * return menu.
      *
      * @return \Knp\Menu\ItemInterface
      */
@@ -116,7 +118,7 @@ class MenuBuilder
     }
 
     /**
-     * return topNavbar
+     * return topNavbar.
      *
      * @return \Knp\Menu\ItemInterface
      */
@@ -126,7 +128,7 @@ class MenuBuilder
     }
 
     /**
-     * return leftNavbar
+     * return leftNavbar.
      *
      * @return \Knp\Menu\ItemInterface
      */
@@ -136,10 +138,11 @@ class MenuBuilder
     }
 
     /**
-     * return leftNavbar
+     * return leftNavbar.
+     *
      * @param string $role The role to check
      *
-     * @return boolean Is the user granted ?
+     * @return bool Is the user granted ?
      */
     public function isgranted($role)
     {

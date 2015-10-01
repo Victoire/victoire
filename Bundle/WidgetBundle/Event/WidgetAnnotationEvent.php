@@ -20,7 +20,7 @@ class WidgetAnnotationEvent extends Event
     }
 
     /**
-     * Get widget name
+     * Get widget name.
      *
      * @return string
      */
@@ -30,7 +30,7 @@ class WidgetAnnotationEvent extends Event
     }
 
     /**
-     * Get receiverProperties
+     * Get receiverProperties.
      *
      * @return array
      */
@@ -38,5 +38,4 @@ class WidgetAnnotationEvent extends Event
     {
         return $this->receiverProperties;
     }
-
 }

@@ -2,14 +2,13 @@
 
 namespace Victoire\Bundle\I18nBundle\Listener;
 
-use Victoire\Bundle\TemplateBundle\Listener\TemplateMenuListener;
 use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
+use Victoire\Bundle\TemplateBundle\Listener\TemplateMenuListener;
 
 class I18nTemplateMenuListener extends TemplateMenuListener
 {
-
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function __construct(MenuBuilder $menuBuilder)
     {
@@ -17,7 +16,7 @@ class I18nTemplateMenuListener extends TemplateMenuListener
     }
 
     /**
-     * This method is call to replace the base contextual TemplateMenuListener to add a new item in the menu when I18n is activated
+     * This method is call to replace the base contextual TemplateMenuListener to add a new item in the menu when I18n is activated.
      *
      * @param TemplateMenuContextualEvent $event
      *
@@ -29,10 +28,10 @@ class I18nTemplateMenuListener extends TemplateMenuListener
         $template = $event->getTemplate();
 
         $mainItem->addChild('menu.template.i18n.addTranslation',
-            array(
-                'route' => 'victoire_template_translate',
-                'routeParameters' => array('slug' => $template->getSlug())
-                )
+            [
+                'route'           => 'victoire_template_translate',
+                'routeParameters' => ['slug' => $template->getSlug()],
+                ]
         )->setLinkAttribute('data-toggle', 'vic-modal');
 
         return $mainItem;

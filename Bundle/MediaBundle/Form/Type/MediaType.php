@@ -2,20 +2,19 @@
 
 namespace Victoire\Bundle\MediaBundle\Form\Type;
 
-use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\AbstractType;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Victoire\Bundle\MediaBundle\Helper\MediaManager;
 
 /**
- * MediaType
+ * MediaType.
  */
 class MediaType extends AbstractType
 {
-
     /**
      * @var MediaManager
      */
@@ -41,6 +40,7 @@ class MediaType extends AbstractType
      *
      * This method is called for each type in the hierarchy starting form the
      * top most type. Type extensions can further modify the form.
+     *
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
      *
@@ -69,12 +69,12 @@ class MediaType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         parent::setDefaultOptions($resolver);
-        $resolver->setDefaults(array(
-            'compound' => false,
-            'chooser'		=> 'VictoireMediaBundle_chooser',
-            'mediatype'		=> null,
+        $resolver->setDefaults([
+            'compound'                => false,
+            'chooser'                 => 'VictoireMediaBundle_chooser',
+            'mediatype'               => null,
             'current_value_container' => new CurrentValueContainer(),
-        ));
+        ]);
     }
 
     /**

@@ -1,23 +1,23 @@
 <?php
+
 namespace Victoire\Bundle\CoreBundle\Translation;
 
 use JMS\TranslationBundle\Model\Message;
 use JMS\TranslationBundle\Translation\TranslationContainerInterface;
 
 /**
- *
  * @author Paul Andrieux
- *
  */
 class DynamicTranslations implements TranslationContainerInterface
 {
     /**
-     * usage example: new Message('example.keymap')->addSource('path/to/source/file', '514', '10'),
+     * usage example: new Message('example.keymap')->addSource('path/to/source/file', '514', '10'),.
+     *
      * @return array the keys to register in jms translation
      */
     public static function getTranslationMessages()
     {
-        return array(
+        return [
             new Message('menu.page', 'victoire'),
             new Message('menu.preview', 'victoire'),
             new Message('menu.page.settings', 'victoire'),
@@ -42,6 +42,6 @@ class DynamicTranslations implements TranslationContainerInterface
             new Message('menu.leftnavbar.404.label', 'victoire'),
             new Message('menu.leftnavbar.sitemap.label', 'victoire'),
             new Message('menu.leftnavbar.sandbox.label', 'victoire'),
-        );
+        ];
     }
 }

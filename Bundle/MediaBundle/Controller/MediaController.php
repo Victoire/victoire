@@ -16,12 +16,12 @@ use Victoire\Bundle\MediaBundle\Helper\BulkUploadHelper;
 use Victoire\Bundle\MediaBundle\Helper\MediaManager;
 
 /**
- * MediaController
+ * MediaController.
+ *
  * @Route("/victoire-media/media")
  */
 class MediaController extends Controller
 {
-
     /**
      * @param int $mediaId
      *
@@ -51,18 +51,18 @@ class MediaController extends Controller
                 $media = $helper->getMedia();
                 $em->getRepository('VictoireMediaBundle:Media')->save($media);
 
-                return new RedirectResponse($this->generateUrl('VictoireMediaBundle_media_show', array('mediaId'  => $media->getId())));
+                return new RedirectResponse($this->generateUrl('VictoireMediaBundle_media_show', ['mediaId'  => $media->getId()]));
             }
         }
         $showTemplate = $mediaManager->getHandler($media)->getShowTemplate($media);
 
-        return $this->render($showTemplate, array(
-                'handler' => $handler,
-                'mediamanager' => $this->get('victoire_media.media_manager'),
+        return $this->render($showTemplate, [
+                'handler'       => $handler,
+                'mediamanager'  => $this->get('victoire_media.media_manager'),
                 'editform'      => $form->createView(),
-                'media' => $media,
-                'helper' => $helper,
-                'folder' => $folder));
+                'media'         => $media,
+                'helper'        => $helper,
+                'folder'        => $folder, ]);
     }
 
     /**
@@ -85,7 +85,7 @@ class MediaController extends Controller
 
         $this->get('session')->getFlashBag()->add('success', 'Entry \''.$medianame.'\' has been deleted!');
 
-        return new RedirectResponse($this->generateUrl('VictoireMediaBundle_folder_show', array('folderId'  => $folder->getId())));
+        return new RedirectResponse($this->generateUrl('VictoireMediaBundle_folder_show', ['folderId'  => $folder->getId()]));
     }
 
     /**
@@ -120,21 +120,20 @@ class MediaController extends Controller
 
                 $this->get('session')->getFlashBag()->add('success', 'New entry has been uploaded');
 
-                return new RedirectResponse($this->generateUrl('VictoireMediaBundle_folder_show', array('folderId'  => $folder->getId())));
+                return new RedirectResponse($this->generateUrl('VictoireMediaBundle_folder_show', ['folderId'  => $folder->getId()]));
             }
         }
 
         $formView = $form->createView();
         $filesfield = $formView->children['files'];
-        $filesfield->vars = array_replace($filesfield->vars, array(
-            'full_name' => 'victoire_mediabundle_bulkupload[files][]'
-        ));
+        $filesfield->vars = array_replace($filesfield->vars, [
+            'full_name' => 'victoire_mediabundle_bulkupload[files][]',
+        ]);
 
-        return array(
+        return [
             'form'      => $formView,
-            'folder'   => $folder
-        );
-
+            'folder'    => $folder,
+        ];
     }
 
     /**
@@ -163,12 +162,12 @@ class MediaController extends Controller
             $media->setFolder($folder);
             $em->getRepository('VictoireMediaBundle:Media')->save($media);
 
-            return new Response(json_encode(array('status'=>'File was uploaded successfuly!')));
+            return new Response(json_encode(['status' => 'File was uploaded successfuly!']));
         }
 
         $this->getRequest()->getSession()->getFlashBag()->add('notice', 'Could not recognize what you dropped!');
 
-        return new Response(json_encode(array('status'=>'Could not recognize anything!')));
+        return new Response(json_encode(['status' => 'Could not recognize anything!']));
     }
 
     /**
@@ -183,7 +182,7 @@ class MediaController extends Controller
      */
     public function createAction($folderId, $type)
     {
-        return $this->createAndRedirect($folderId, $type, "VictoireMediaBundle_folder_show");
+        return $this->createAndRedirect($folderId, $type, 'VictoireMediaBundle_folder_show');
     }
 
     /**
@@ -198,7 +197,7 @@ class MediaController extends Controller
      */
     public function createModalAction($folderId, $type)
     {
-        return $this->createAndRedirect($folderId, $type, "VictoireMediaBundle_chooser_show_folder");
+        return $this->createAndRedirect($folderId, $type, 'VictoireMediaBundle_chooser_show_folder');
     }
 
     /**
@@ -233,14 +232,14 @@ class MediaController extends Controller
 
                 $this->get('session')->getFlashBag()->add('success', 'Media \''.$media->getName().'\' has been created!');
 
-                return new RedirectResponse($this->generateUrl($redirectUrl, array("folderId" => $folder->getId())));
+                return new RedirectResponse($this->generateUrl($redirectUrl, ['folderId' => $folder->getId()]));
             }
         }
 
-        return array(
-            'type' => $type,
-            'form' => $form->createView(),
-            'folder' => $folder
-        );
+        return [
+            'type'   => $type,
+            'form'   => $form->createView(),
+            'folder' => $folder,
+        ];
     }
 }

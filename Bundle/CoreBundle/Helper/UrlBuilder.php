@@ -1,16 +1,17 @@
 <?php
+
 namespace Victoire\Bundle\CoreBundle\Helper;
 
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 
 /**
- * ref: victoire_core.url_builder
+ * ref: victoire_core.url_builder.
  */
 class UrlBuilder
 {
-
     /**
      * Builds the page's url by get all page parents slugs and implode them with "/".
+     *
      * @param WebViewInterface $view
      *
      * @return string $url
@@ -19,10 +20,10 @@ class UrlBuilder
     {
         $slug = [];
         // build url binded with parents url
-        if (method_exists($view, 'getStaticUrl') && $view->getStaticUrl() != null && $view->getStaticUrl() != '' ) {
-            $slug = array($view->getStaticUrl());
-        } else if (!(method_exists($view, 'isHomepage') && $view->isHomepage())) {
-            $slug = array($view->getSlug());
+        if (method_exists($view, 'getStaticUrl') && $view->getStaticUrl() != null && $view->getStaticUrl() != '') {
+            $slug = [$view->getStaticUrl()];
+        } elseif (!(method_exists($view, 'isHomepage') && $view->isHomepage())) {
+            $slug = [$view->getSlug()];
         }
 
         //get the slug of the parents
@@ -33,15 +34,14 @@ class UrlBuilder
         //build an url based on the slugs
         $url = implode('/', $url);
 
-
         return $url;
-
     }
 
     /**
-     * Get the array of slugs of the parents
+     * Get the array of slugs of the parents.
+     *
      * @param WebViewInterface $view
-     * @param string[]            $slugs
+     * @param string[]         $slugs
      *
      * @return string[]
      */
@@ -50,9 +50,9 @@ class UrlBuilder
         $parent = $view->getParent();
 
         if ($parent !== null) {
-            if (method_exists($parent, 'getStaticUrl') && $parent->getStaticUrl() != null && $parent->getStaticUrl() != '' ) {
+            if (method_exists($parent, 'getStaticUrl') && $parent->getStaticUrl() != null && $parent->getStaticUrl() != '') {
                 array_push($slugs, $parent->getStaticUrl());
-            } else if (!(method_exists($parent, 'isHomepage') && $parent->isHomepage())) {
+            } elseif (!(method_exists($parent, 'isHomepage') && $parent->isHomepage())) {
                 array_push($slugs, $parent->getSlug());
             }
 
@@ -63,6 +63,4 @@ class UrlBuilder
 
         return array_unique($slugs);
     }
-
-
 }

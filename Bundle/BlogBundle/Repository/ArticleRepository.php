@@ -1,13 +1,14 @@
 <?php
+
 namespace Victoire\Bundle\BlogBundle\Repository;
 
-use Doctrine\ORM\Query;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
 use Victoire\Bundle\BlogBundle\Entity\Article;
 use Victoire\Bundle\CoreBundle\Repository\StateFullRepositoryTrait;
 
 /**
- * The Article repository
+ * The Article repository.
  */
 class ArticleRepository extends EntityRepository
 {
@@ -16,7 +17,7 @@ class ArticleRepository extends EntityRepository
     /**
      * Get all articles in the repository.
      *
-     * @param boolean $excludeUnpublished Should we get only the published BasePages ?
+     * @param bool $excludeUnpublished Should we get only the published BasePages ?
      *
      * @return ArticleRepository
      */
@@ -39,7 +40,8 @@ class ArticleRepository extends EntityRepository
     }
 
     /**
-     * Get very next festivals query builder
+     * Get very next festivals query builder.
+     *
      * @param method        $method        The method to run
      * @param hydrationMode $hydrationMode How the results will be (Object ? Array )
      *
@@ -55,12 +57,12 @@ class ArticleRepository extends EntityRepository
         if ($listingQuery) {
             $dql = $this->createQueryBuilder('a_article')
                 ->leftJoin('a_article.blog', 'blog')
-                ->getDql()
-            ;
+                ->getDql();
             $dql = $dql.' '.$listingQuery;
             $this->qb
                 ->andWhere($this->qb->expr()->in('article', $dql));
         }
+
         return $this;
     }
 }

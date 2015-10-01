@@ -1,12 +1,11 @@
 <?php
+
 namespace Victoire\Bundle\PageBundle\Helper;
 
 use Symfony\Component\DependencyInjection\Container;
 
 /**
- *
  * @author Paul Andrieux
- *
  */
 class UserCallableHelper
 {
@@ -16,8 +15,7 @@ class UserCallableHelper
     private $container;
 
     /**
-     * Constructor
-     *
+     * Constructor.
      */
     public function __construct(Container $container)
     {
@@ -25,9 +23,9 @@ class UserCallableHelper
     }
 
     /**
-     * Get the current user
+     * Get the current user.
      *
-     * @return NULL
+     * @return null
      */
     public function getCurrentUser()
     {
@@ -40,6 +38,6 @@ class UserCallableHelper
             }
         }
 
-        return null;
+        return;
     }
 }

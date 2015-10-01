@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\BusinessEntityBundle\Entity;
 
 /**
@@ -10,7 +11,7 @@ class BusinessProperty
     protected $entityProperty = null;
 
     /**
-     * Set the type
+     * Set the type.
      *
      * @param string $type
      */
@@ -28,7 +29,7 @@ class BusinessProperty
     }
 
     /**
-     * Get the property that is tagged
+     * Get the property that is tagged.
      *
      * @return string The entity property
      */
@@ -38,7 +39,8 @@ class BusinessProperty
     }
 
     /**
-     * Set the entity property
+     * Set the entity property.
+     *
      * @param string $property
      */
     public function setEntityProperty($property)
@@ -47,7 +49,7 @@ class BusinessProperty
     }
 
     /**
-     * Display object as string
+     * Display object as string.
      *
      * @return string
      */
@@ -57,13 +59,13 @@ class BusinessProperty
     }
 
     /**
-     * setState (convert from array to object)
+     * setState (convert from array to object).
      *
      * @return string
      */
     public static function __set_state($array)
     {
-        $businessPropery = new BusinessProperty();
+        $businessPropery = new self();
         $businessPropery->setType($array['type']);
         $businessPropery->setEntityProperty($array['entityProperty']);
 

@@ -20,7 +20,7 @@ use Victoire\Bundle\CoreBundle\Provider\ViewReferenceProvider;
 
 /**
  * Tracks if a slug changed and re-compute the view cache
- * ref: victoire_core.url_subscriber
+ * ref: victoire_core.url_subscriber.
  */
 class ViewReferenceSubscriber implements EventSubscriber
 {
@@ -30,9 +30,9 @@ class ViewReferenceSubscriber implements EventSubscriber
     protected $viewReferenceProvider;
 
     /**
-     * @param UrlBuilder $urlBuilder
-     * @param ViewCacheHelper $viewCacheHelper
-     * @param BusinessPageBuilder $businessPageBuilder
+     * @param UrlBuilder           $urlBuilder
+     * @param ViewCacheHelper      $viewCacheHelper
+     * @param BusinessPageBuilder  $businessPageBuilder
      * @param ViewReferenceBuilder $viewReferenceBuilder
      */
     public function __construct(
@@ -41,29 +41,30 @@ class ViewReferenceSubscriber implements EventSubscriber
         BusinessPageBuilder $businessPageBuilder,
         ViewReferenceBuilder $viewReferenceBuilder,
         ViewReferenceProvider $viewReferenceProvider
-    )
-    {
+    ) {
         $this->urlBuilder = $urlBuilder;
         $this->viewCacheHelper = $viewCacheHelper;
         $this->businessPageBuilder = $businessPageBuilder;
         $this->viewReferenceBuilder = $viewReferenceBuilder;
         $this->viewReferenceProvider = $viewReferenceProvider;
     }
+
     /**
-     * bind to LoadClassMetadata method
+     * bind to LoadClassMetadata method.
      *
      * @return string[]
      */
     public function getSubscribedEvents()
     {
-        return array(
+        return [
             'onFlush',
             'postPersist',
-        );
+        ];
     }
 
     /**
-     * Will rebuild url if needed and update cache
+     * Will rebuild url if needed and update cache.
+     *
      * @param OnFlushEventArgs $eventArgs
      */
     public function onFlush(OnFlushEventArgs $eventArgs)
@@ -91,7 +92,8 @@ class ViewReferenceSubscriber implements EventSubscriber
     }
 
     /**
-     * When a page is inserted, compute its url and children urls
+     * When a page is inserted, compute its url and children urls.
+     *
      * @param LifecycleEventArgs $eventArgs
      */
     public function postPersist(LifecycleEventArgs $eventArgs)
@@ -104,7 +106,8 @@ class ViewReferenceSubscriber implements EventSubscriber
     }
 
     /**
-     * Change url recursively for the WebViewInterface given
+     * Change url recursively for the WebViewInterface given.
+     *
      * @param View $view
      *
      * @return void
@@ -126,7 +129,7 @@ class ViewReferenceSubscriber implements EventSubscriber
         }
 
         foreach ($viewReferences as $key => $viewReference) {
-            if ($view instanceof WebViewInterface && $view->getId() && !$delete ) {
+            if ($view instanceof WebViewInterface && $view->getId() && !$delete) {
                 $this->addRouteHistory($viewReference['view'], $em, $uow);
             }
         }
@@ -134,11 +137,11 @@ class ViewReferenceSubscriber implements EventSubscriber
         foreach ($view->getChildren() as $_child) {
             $this->manageView($_child, $em, $uow, $delete);
         }
-
     }
 
     /**
-     * Manage urls
+     * Manage urls.
+     *
      * @param View $view
      *
      * @return void
@@ -167,14 +170,14 @@ class ViewReferenceSubscriber implements EventSubscriber
 
             // Get BusinessPages of the given BusinessTemplate
             $inheritors = $em->getRepository('Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage')->findByTemplate($view);
-            foreach($inheritors as $instance) {
+            foreach ($inheritors as $instance) {
                 $this->manageView($instance, $em, $uow, $delete);
             }
         }
     }
 
     /**
-     * Record the route history of the page
+     * Record the route history of the page.
      *
      * @param WebViewInterface $view
      */
@@ -191,15 +194,5 @@ class ViewReferenceSubscriber implements EventSubscriber
         $meta = $em->getClassMetadata(get_class($route));
         $em->persist($route);
         $uow->computeChangeSet($meta, $route);
-
-
     }
-
-
-
-
-
-
-
-
 }

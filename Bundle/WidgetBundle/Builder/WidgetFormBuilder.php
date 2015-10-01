@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\WidgetBundle\Builder;
 
 use Symfony\Component\DependencyInjection\Container;
@@ -11,7 +12,6 @@ use Victoire\Bundle\WidgetBundle\Model\Widget;
 
 class WidgetFormBuilder
 {
-
     private $container;
 
     public function __construct(Container $container)
@@ -20,7 +20,8 @@ class WidgetFormBuilder
     }
 
     /**
-     * create form new for a widget
+     * create form new for a widget.
+     *
      * @param Form   $form
      * @param Widget $widget
      * @param string $slot
@@ -36,19 +37,20 @@ class WidgetFormBuilder
 
         return $this->container->get('victoire_templating')->render(
             $templateName,
-            array(
-                "widget" => $widget,
+            [
+                'widget' => $widget,
                 'form'   => $form->createView(),
-                "slot"   => $slot,
-                "entity" => $entity,
-                "view"   => $view
-            )
+                'slot'   => $slot,
+                'entity' => $entity,
+                'view'   => $view,
+            ]
         );
     }
 
     /**
-     * render Widget form
-     * @param Form $form
+     * render Widget form.
+     *
+     * @param Form   $form
      * @param Widget $widget
      * @param object $entity
      *
@@ -61,30 +63,32 @@ class WidgetFormBuilder
 
         return $this->container->get('victoire_templating')->render(
             $templateName,
-            array(
-                "widget" => $widget,
+            [
+                'widget' => $widget,
                 'form'   => $form->createView(),
                 'id'     => $widget->getId(),
-                'entity' => $entity
-            )
+                'entity' => $entity,
+            ]
         );
     }
 
     /**
-     * Generates new forms for each available business entities
+     * Generates new forms for each available business entities.
      *
-     * @param string $slot
+     * @param string           $slot
      * @param View             $view
      * @param Widget           $widget
      * @param BusinessEntity[] $classes
      * @param int              $position
+     *
      * @throws \Exception
+     *
      * @return Form[]
      */
     public function renderNewWidgetForms($slot, View $view, Widget $widget, $classes, $position = 0)
     {
         //the static form
-        $forms['static'] = array();
+        $forms['static'] = [];
         $forms['static']['main'] = $this->renderNewForm($this->buildForm($widget, $view, null, null, Widget::MODE_STATIC, $position), $widget, $slot, $view, null);
 
         // Build each form relative to business entities
@@ -93,7 +97,7 @@ class WidgetFormBuilder
             $entityForms = $this->buildEntityForms($widget, $view, $businessEntity->getId(), $businessEntity->getClass());
 
             //the list of forms
-            $forms[$businessEntity->getId()] = array();
+            $forms[$businessEntity->getId()] = [];
 
             //foreach of the entity form
             foreach ($entityForms as $formMode => $entityForm) {
@@ -107,15 +111,15 @@ class WidgetFormBuilder
 
     /**
      * @param Widget $widget
-     * @param View    $view
-     * @param string  $businessEntityId
-     * @param string  $namespace
+     * @param View   $view
+     * @param string $businessEntityId
+     * @param string $namespace
      *
      * @return array
      */
     protected function buildEntityForms($widget, View $view, $businessEntityId = null, $namespace = null, $position = 0)
     {
-        $forms = array();
+        $forms = [];
 
         //get the entity form
         $entityForm = $this->buildForm($widget, $view, $businessEntityId, $namespace, Widget::MODE_ENTITY, $position);
@@ -133,18 +137,18 @@ class WidgetFormBuilder
     }
 
     /**
-     * create a form with given widget
+     * create a form with given widget.
      *
-     * @param Widget  $widget
-     * @param View    $view
-     * @param string  $businessEntityId
-     * @param string  $namespace
-     * @param string  $formMode
-     * @param integer $position
-     *
-     * @return $form
+     * @param Widget $widget
+     * @param View   $view
+     * @param string $businessEntityId
+     * @param string $namespace
+     * @param string $formMode
+     * @param int    $position
      *
      * @throws \Exception
+     *
+     * @return $form
      */
     public function buildWidgetForm(Widget $widget, View $view, $businessEntityId = null, $namespace = null, $formMode = Widget::MODE_STATIC, $position = 0)
     {
@@ -164,7 +168,7 @@ class WidgetFormBuilder
         $formFactory = $container->get('form.factory');
 
         $formAlias = 'victoire_widget_form_'.strtolower($this->container->get('victoire_widget.widget_helper')->getWidgetName($widget));
-        $filters = array();
+        $filters = [];
         if ($this->container->has('victoire_core.filter_chain')) {
             $filters = $this->container->get('victoire_core.filter_chain')->getFilters();
         }
@@ -173,40 +177,40 @@ class WidgetFormBuilder
         if ($widget->getId() === null) {
             $viewReference = $view->getReference();
             $formUrl = $router->generate('victoire_core_widget_create',
-                array(
+                [
                     'mode'              => $formMode,
                     'viewReference'     => $viewReference['id'],
                     'slot'              => $widget->getSlot(),
                     'type'              => $widget->getType(),
                     'businessEntityId'  => $businessEntityId,
-                    'positionReference' => $position
-                )
+                    'positionReference' => $position,
+                ]
             );
         } else {
             $viewReference = $widget->getCurrentView()->getReference();
             $formUrl = $router->generate('victoire_core_widget_update',
-                array(
+                [
                     'id'               => $widget->getId(),
                     'viewReference'    => $viewReference['id'],
                     'businessEntityId' => $businessEntityId,
-                    'mode'             => $formMode
-                )
+                    'mode'             => $formMode,
+                ]
             );
         }
-        $params = array(
+        $params = [
             'businessEntityId' => $businessEntityId,
             'namespace'        => $namespace,
             'mode'             => $formMode,
             'action'           => $formUrl,
             'method'           => 'POST',
             'filters'          => $filters,
-        );
+        ];
 
         /** @var Form $mockForm Get the base form to get the name */
         $mockForm = $formFactory->create($formAlias, $widget, $params);
         //Prefix base name with form mode to avoid to have unique form fields ids
         $form = $formFactory->createNamed(
-            sprintf("%s_%s_%s", $businessEntityId, $formMode, $mockForm->getName()),
+            sprintf('%s_%s_%s', $businessEntityId, $formMode, $mockForm->getName()),
             $formAlias,
             $widget,
             $params
@@ -216,18 +220,18 @@ class WidgetFormBuilder
     }
 
     /**
-     * create a form with given widget
+     * create a form with given widget.
      *
-     * @param Widget  $widget     the widget
-     * @param View    $view       the page
-     * @param string  $businessEntityId the entity class
-     * @param string  $namespace  the namespace
-     * @param string  $formMode   the form mode
-     * @param integer $position
-     *
-     * @return $form
+     * @param Widget $widget           the widget
+     * @param View   $view             the page
+     * @param string $businessEntityId the entity class
+     * @param string $namespace        the namespace
+     * @param string $formMode         the form mode
+     * @param int    $position
      *
      * @throws \Exception
+     *
+     * @return $form
      */
     public function buildForm($widget, View $view, $businessEntityId = null, $namespace = null, $formMode = Widget::MODE_STATIC, $position = 0)
     {
@@ -252,14 +256,15 @@ class WidgetFormBuilder
 
     /**
      * Call the build form with selected parameter switch the parameters
-     * The call is not the same if an entity is provided or not
+     * The call is not the same if an entity is provided or not.
      *
-     * @param Widget  $widget
-     * @param View    $view
-     * @param string  $businessEntityId
-     * @param integer $position
+     * @param Widget $widget
+     * @param View   $view
+     * @param string $businessEntityId
+     * @param int    $position
      *
      * @throws \Exception
+     *
      * @return \Symfony\Component\Form\Form
      */
     public function callBuildFormSwitchParameters(Widget $widget, $view, $businessEntityId, $position = 0)

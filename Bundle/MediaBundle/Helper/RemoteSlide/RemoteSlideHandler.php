@@ -2,20 +2,19 @@
 
 namespace Victoire\Bundle\MediaBundle\Helper\RemoteSlide;
 
+use Victoire\Bundle\MediaBundle\Entity\Media;
 use Victoire\Bundle\MediaBundle\Form\RemoteSlide\RemoteSlideType;
 use Victoire\Bundle\MediaBundle\Helper\Media\AbstractMediaHandler;
-use Victoire\Bundle\MediaBundle\Entity\Media;
 
 /**
- * RemoteSlideStrategy
+ * RemoteSlideStrategy.
  */
 class RemoteSlideHandler extends AbstractMediaHandler
 {
-
     /**
      * @var string
      */
-    const CONTENT_TYPE = "remote/slide";
+    const CONTENT_TYPE = 'remote/slide';
 
     const TYPE = 'slide';
 
@@ -24,7 +23,7 @@ class RemoteSlideHandler extends AbstractMediaHandler
      */
     public function getName()
     {
-        return "Remote Slide Handler";
+        return 'Remote Slide Handler';
     }
 
     /**
@@ -32,7 +31,7 @@ class RemoteSlideHandler extends AbstractMediaHandler
      */
     public function getType()
     {
-        return RemoteSlideHandler::TYPE;
+        return self::TYPE;
     }
 
     /**
@@ -50,7 +49,7 @@ class RemoteSlideHandler extends AbstractMediaHandler
      */
     public function canHandle($object)
     {
-        if ((is_string($object)) || ($object instanceof Media && $object->getContentType() == RemoteSlideHandler::CONTENT_TYPE)) {
+        if ((is_string($object)) || ($object instanceof Media && $object->getContentType() == self::CONTENT_TYPE)) {
             return true;
         }
 
@@ -107,11 +106,10 @@ class RemoteSlideHandler extends AbstractMediaHandler
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function updateMedia(Media $media)
     {
-
     }
 
     /**
@@ -119,16 +117,16 @@ class RemoteSlideHandler extends AbstractMediaHandler
      *
      * @return array
      */
-    public function getAddUrlFor(array $params = array())
+    public function getAddUrlFor(array $params = [])
     {
-        return array(
-                'slide' => array(
+        return [
+                'slide' => [
                         'path'   => 'VictoireMediaBundle_folder_slidecreate',
-                        'params' => array(
-                                'folderId' => $params['folderId']
-                        )
-                )
-        );
+                        'params' => [
+                                'folderId' => $params['folderId'],
+                        ],
+                ],
+        ];
     }
 
     /**
@@ -141,7 +139,7 @@ class RemoteSlideHandler extends AbstractMediaHandler
         $result = null;
         if (is_string($data)) {
             if (strpos($data, 'http') !== 0) {
-                $data = "http://".$data;
+                $data = 'http://'.$data;
             }
             $parsedUrl = parse_url($data);
             switch ($parsedUrl['host']) {
@@ -151,7 +149,7 @@ class RemoteSlideHandler extends AbstractMediaHandler
                     $slide = new RemoteSlideHelper($result);
                     $slide->setType('slideshare');
                     $json = json_decode(file_get_contents('http://www.slideshare.net/api/oembed/2?url='.$data.'&format=json'));
-                    $slide->setCode($json->{"slideshow_id"});
+                    $slide->setCode($json->{'slideshow_id'});
                     $result = $slide->getMedia();
                     $result->setName('SlideShare '.$data);
                     break;
@@ -162,7 +160,7 @@ class RemoteSlideHandler extends AbstractMediaHandler
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getShowTemplate(Media $media)
     {
@@ -187,10 +185,10 @@ class RemoteSlideHandler extends AbstractMediaHandler
      */
     public function getAddFolderActions()
     {
-        return array(
-                RemoteSlideHandler::TYPE => array(
-                    'type' => RemoteSlideHandler::TYPE,
-                    'name' => 'media.slide.add')
-                );
+        return [
+                self::TYPE => [
+                    'type' => self::TYPE,
+                    'name' => 'media.slide.add', ],
+                ];
     }
 }

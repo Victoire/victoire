@@ -6,7 +6,6 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Victoire\Bundle\CoreBundle\Entity\View;
-use Victoire\Bundle\I18nBundle\Resolver\LocaleResolver;
 
 class ViewSubscriber implements EventSubscriber
 {
@@ -14,7 +13,8 @@ class ViewSubscriber implements EventSubscriber
     private $localeResolver;
 
     /**
-     * Constructor
+     * Constructor.
+     *
      * @param $defaultLocale the default locale of the application
      */
     public function __construct($defaultLocale)
@@ -36,12 +36,12 @@ class ViewSubscriber implements EventSubscriber
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getSubscribedEvents()
     {
-        return array(
+        return [
             'prePersist',
-        );
+        ];
     }
 }

@@ -2,13 +2,13 @@
 
 namespace Victoire\Bundle\BlogBundle\Filter;
 
-use Victoire\Bundle\FilterBundle\Filter\BaseFilter;
-use Symfony\Component\Form\FormBuilderInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
+use Victoire\Bundle\FilterBundle\Filter\BaseFilter;
 
 /**
- * TagFilter form type
+ * TagFilter form type.
  */
 class TagFilter extends BaseFilter
 {
@@ -16,7 +16,7 @@ class TagFilter extends BaseFilter
     protected $request;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param EntityManager $em
      * @param unknown       $request
@@ -28,7 +28,7 @@ class TagFilter extends BaseFilter
     }
 
     /**
-     * Build the query
+     * Build the query.
      *
      * @param QueryBuilder &$qb
      * @param array        $parameters
@@ -46,15 +46,13 @@ class TagFilter extends BaseFilter
         }
 
         if (count($parameters['tags']) > 0) {
-
             if (array_key_exists('strict', $parameters)) {
                 $repository = $this->em->getRepository('VictoireBlogBundle:Article');
                 foreach ($parameters['tags'] as $index => $tag) {
                     $parameter = ':tag'.$index;
                     $subquery = $repository->createQueryBuilder('article_'.$index)
                                 ->join('article_'.$index.'.tags', 'tag_'.$index)
-                                ->where('tag_'.$index.' = '.$parameter)
-                                ;
+                                ->where('tag_'.$index.' = '.$parameter);
                     $qb->andWhere($qb->expr()->in('main_item', $subquery->getDql()))
                                 ->setParameter($parameter, $tag);
                 }
@@ -70,7 +68,8 @@ class TagFilter extends BaseFilter
     }
 
     /**
-     * define form fields
+     * define form fields.
+     *
      * @param FormBuilderInterface $builder
      * @param array                $options
      *
@@ -96,7 +95,7 @@ class TagFilter extends BaseFilter
         $tagQb->filterByArticles($articleQb->getInstance('article'));
         $tags = $tagQb->getInstance('t_tag')->getQuery()->getResult();
         //the blank value
-        $tagsChoices = array();
+        $tagsChoices = [];
 
         foreach ($tags as $tag) {
             $tagsChoices[$tag->getId()] = $tag->getTitle();
@@ -105,7 +104,7 @@ class TagFilter extends BaseFilter
         $data = null;
         if ($this->request->query->has('filter') && array_key_exists('tag_filter', $this->request->query->get('filter'))) {
             if ($options['multiple']) {
-                $data = array();
+                $data = [];
                 foreach ($this->request->query->get('filter')['tag_filter']['tags'] as $id => $selectedTag) {
                     $data[$id] = $selectedTag;
                 }
@@ -116,19 +115,19 @@ class TagFilter extends BaseFilter
 
         $builder
             ->add(
-                'tags', 'choice', array(
-                    'label' => false,
-                    'choices' => $tagsChoices,
+                'tags', 'choice', [
+                    'label'    => false,
+                    'choices'  => $tagsChoices,
                     'required' => false,
                     'expanded' => true,
                     'multiple' => $options['multiple'],
-                    'data' => $data,
-                )
+                    'data'     => $data,
+                ]
             );
     }
 
     /**
-     * Get the filters
+     * Get the filters.
      *
      * @param array $filters
      *
@@ -140,7 +139,8 @@ class TagFilter extends BaseFilter
     }
 
     /**
-     * get form name
+     * get form name.
+     *
      * @return string name
      */
     public function getName()

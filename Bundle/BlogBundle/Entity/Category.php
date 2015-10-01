@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Category
+ * Category.
  *
  * @ORM\Table("vic_category")
  * @ORM\Entity(repositoryClass="Victoire\Bundle\BlogBundle\Repository\CategoryRepository")
@@ -15,7 +15,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class Category
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -44,7 +44,8 @@ class Category
     protected $articles;
 
     /**
-     * blog of the category
+     * blog of the category.
+     *
      * @ORM\ManyToOne(targetEntity="Blog", inversedBy="categories")
      * @ORM\JoinColumn(name="blog_id", referencedColumnName="id", onDelete="cascade")
      */
@@ -87,20 +88,20 @@ class Category
      */
     protected $children;
 
-    /**
-     * Constructor
-     *
-     */
+        /**
+         * Constructor.
+         */
         public function __construct()
         {
-        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
+            $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+            $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
         }
 
     /**
-     * undocumented function
+     * undocumented function.
      *
      * @return void
+     *
      * @author
      **/
     public function __toString()
@@ -109,9 +110,9 @@ class Category
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -119,7 +120,7 @@ class Category
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
      *
@@ -133,7 +134,7 @@ class Category
     }
 
     /**
-     * Get title
+     * Get title.
      *
      * @return string
      */
@@ -143,7 +144,7 @@ class Category
     }
 
     /**
-     * Set slug
+     * Set slug.
      *
      * @param string $slug
      *
@@ -157,7 +158,7 @@ class Category
     }
 
     /**
-     * Get slug
+     * Get slug.
      *
      * @return string
      */
@@ -167,7 +168,7 @@ class Category
     }
 
     /**
-     * Set articles
+     * Set articles.
      *
      * @param string $articles
      *
@@ -181,7 +182,7 @@ class Category
     }
 
     /**
-     * Get articles
+     * Get articles.
      *
      * @return string
      */
@@ -191,8 +192,9 @@ class Category
     }
 
     /**
-     * Set lft
-     * @param integer $lft
+     * Set lft.
+     *
+     * @param int $lft
      *
      * @return Menu
      */
@@ -204,9 +206,9 @@ class Category
     }
 
     /**
-     * Get lft
+     * Get lft.
      *
-     * @return integer
+     * @return int
      */
     public function getLft()
     {
@@ -214,8 +216,9 @@ class Category
     }
 
     /**
-     * Set lvl
-     * @param integer $lvl
+     * Set lvl.
+     *
+     * @param int $lvl
      *
      * @return Menu
      */
@@ -227,9 +230,9 @@ class Category
     }
 
     /**
-     * Get lvl
+     * Get lvl.
      *
-     * @return integer
+     * @return int
      */
     public function getLvl()
     {
@@ -237,8 +240,9 @@ class Category
     }
 
     /**
-     * Set rgt
-     * @param integer $rgt
+     * Set rgt.
+     *
+     * @param int $rgt
      *
      * @return Menu
      */
@@ -250,9 +254,9 @@ class Category
     }
 
     /**
-     * Get rgt
+     * Get rgt.
      *
-     * @return integer
+     * @return int
      */
     public function getRgt()
     {
@@ -260,8 +264,9 @@ class Category
     }
 
     /**
-     * Set root
-     * @param integer $root
+     * Set root.
+     *
+     * @param int $root
      *
      * @return Menu
      */
@@ -273,9 +278,9 @@ class Category
     }
 
     /**
-     * Get root
+     * Get root.
      *
-     * @return integer
+     * @return int
      */
     public function getRoot()
     {
@@ -283,7 +288,8 @@ class Category
     }
 
     /**
-     * Set parent
+     * Set parent.
+     *
      * @param Menu $parent
      *
      * @return Menu
@@ -296,7 +302,7 @@ class Category
     }
 
     /**
-     * Get parent
+     * Get parent.
      *
      * @return Menu
      */
@@ -306,7 +312,8 @@ class Category
     }
 
     /**
-     * Add child
+     * Add child.
+     *
      * @param Menu $child
      *
      * @return Menu
@@ -320,7 +327,7 @@ class Category
     }
 
     /**
-     * Remove children
+     * Remove children.
      *
      * @param Menu $child
      */
@@ -330,7 +337,7 @@ class Category
     }
 
     /**
-     * Remove children
+     * Remove children.
      *
      * @param Menu $child
      */
@@ -338,8 +345,10 @@ class Category
     {
         $this->children->removeElement($child);
     }
+
     /**
-     * Set children
+     * Set children.
+     *
      * @param array $children
      *
      * @return \Victoire\Bundle\BlogBundle\Entity\Category
@@ -352,7 +361,7 @@ class Category
     }
 
     /**
-     * Get children
+     * Get children.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -362,27 +371,27 @@ class Category
     }
 
     /**
-     * Get the name
+     * Get the name.
      *
      * @return string
      */
     public function getName()
     {
-        return "menu";
+        return 'menu';
     }
 
     /**
-     * Get the options
+     * Get the options.
      *
      * @return array
      */
     public function getOptions()
     {
-        return array();
+        return [];
     }
 
     /**
-     * Get blog
+     * Get blog.
      *
      * @return string
      */
@@ -392,7 +401,7 @@ class Category
     }
 
     /**
-     * Set blog
+     * Set blog.
      *
      * @param string $blog
      *

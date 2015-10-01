@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\PageBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
@@ -6,21 +7,22 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Page Type
+ * Page Type.
  */
 class PageType extends BasePageType
 {
-
     /*
     * Constructor
     */
+
     public function __construct($availableLocales, RequestStack $requestStack)
     {
         parent::__construct($availableLocales, $requestStack);
     }
 
     /**
-     * define form fields
+     * define form fields.
+     *
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
@@ -32,19 +34,21 @@ class PageType extends BasePageType
     }
 
     /**
-     * bind to Page entity
+     * bind to Page entity.
+     *
      * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class'         => 'Victoire\Bundle\PageBundle\Entity\Page',
-            'translation_domain' => 'victoire'
-        ));
+            'translation_domain' => 'victoire',
+        ]);
     }
 
     /**
-     * get form name
+     * get form name.
+     *
      * @return string name
      */
     public function getName()

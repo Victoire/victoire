@@ -2,9 +2,9 @@
 
 namespace Victoire\Bundle\BlogBundle\Listener;
 
-use Symfony\Component\Form\FormEvent;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Form\FormEvent;
 use Victoire\Widget\FilterBundle\Event\WidgetFilterSetDefaultValueEvent;
 
 /**
@@ -17,7 +17,7 @@ class BlogFilterListener
     private $eventDispatcher;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param EntityManager $em
      */
@@ -26,9 +26,8 @@ class BlogFilterListener
         $this->em = $em;
         $this->eventDispatcher = $eventDispatcher;
     }
+
     /**
-     *
-     *
      * @param FormEvent $event
      */
     public function manageExtraFiltersFields(FormEvent $event)
@@ -42,29 +41,29 @@ class BlogFilterListener
         switch ($data) {
             case 'date_filter':
                 $form->remove('multiple');
-                $form->add('format', 'choice', array(
+                $form->add('format', 'choice', [
                     'label'   => 'widget_filter.form.date.format.label',
-                    'choices' => array(
+                    'choices' => [
                         'year'  => 'widget_filter.form.date.format.choices.year.label',
                         'month' => 'widget_filter.form.date.format.choices.month.label',
-                        'day' => 'widget_filter.form.date.format.choices.day.label',
-                    ),
-                    'attr' => array(
-                        'data-refreshOnChange' => "true",
-                    ),
-                ));
+                        'day'   => 'widget_filter.form.date.format.choices.day.label',
+                    ],
+                    'attr' => [
+                        'data-refreshOnChange' => 'true',
+                    ],
+                ]);
                 $eventDefaultValue = 'victoire.widget_filter.form.date.set_default_value';
                 break;
             case 'tag_filter':
-                $form->add('multiple', null, array(
+                $form->add('multiple', null, [
                     'label' => 'widget_filter.form.multiple.label',
-                ));
+                ]);
                 $eventDefaultValue = 'victoire.widget_filter.form.tag.set_default_value';
             break;
             case 'category_filter':
-                $form->add('multiple', null, array(
+                $form->add('multiple', null, [
                     'label' => 'widget_filter.form.multiple.label',
-                ));
+                ]);
                 $eventDefaultValue = 'victoire.widget_filter.form.category.set_default_value';
                 break;
         }
@@ -72,6 +71,5 @@ class BlogFilterListener
             $defaultValueEvent = new WidgetFilterSetDefaultValueEvent($form, $data);
             $this->eventDispatcher->dispatch($eventDefaultValue, $defaultValueEvent);
         }
-
     }
 }

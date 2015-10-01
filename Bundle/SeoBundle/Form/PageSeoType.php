@@ -9,9 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Victoire\Bundle\SeoBundle\DataTransformer\PageToIdTransformer;
 
 /**
- *
  * @author Paul Andrieux
- *
  */
 class PageSeoType extends AbstractType
 {
@@ -33,103 +31,103 @@ class PageSeoType extends AbstractType
         $pageToIdTransformer = new PageToIdTransformer($entityManager);
 
         $builder
-            ->add('metaTitle', null, array(
+            ->add('metaTitle', null, [
                 'label' => 'form.pageSeo.metaTitle.label',
-            ))
-            ->add('metaDescription', null, array(
+            ])
+            ->add('metaDescription', null, [
                 'label' => 'form.pageSeo.metaDescription.label',
-            ))
-            ->add('relAuthor', null, array(
+            ])
+            ->add('relAuthor', null, [
                 'label' => 'form.pageSeo.relAuthor.label',
-            ))
-            ->add('relPublisher', null, array(
+            ])
+            ->add('relPublisher', null, [
                 'label' => 'form.pageSeo.relPublisher.label',
-            ))
-            ->add('ogTitle', null, array(
-                'label'      => 'form.pageSeo.ogTitle.label',
+            ])
+            ->add('ogTitle', null, [
+                'label'          => 'form.pageSeo.ogTitle.label',
                 'vic_help_block' => 'form.pageSeo.ogTitle.vic_help_block',
-            ))
-            ->add('ogType', null, array(
+            ])
+            ->add('ogType', null, [
                 'label' => 'form.pageSeo.ogType.label',
-            ))
-            ->add('ogImage', 'media', array(
+            ])
+            ->add('ogImage', 'media', [
                 'label' => 'form.pageSeo.ogImage.label',
-            ))
-            ->add('ogUrl', null, array(
+            ])
+            ->add('ogUrl', null, [
                 'label' => 'form.pageSeo.ogUrl.label',
-            ))
-            ->add('ogDescription', null, array(
+            ])
+            ->add('ogDescription', null, [
                 'label' => 'form.pageSeo.ogDescription.label',
-            ))
-            ->add('fbAdmins', null, array(
+            ])
+            ->add('fbAdmins', null, [
                 'label' => 'form.pageSeo.fbAdmins.label',
-            ))
-            ->add('twitterCard', null, array(
-                'label'      => 'form.pageSeo.twitterCard.label',
+            ])
+            ->add('twitterCard', null, [
+                'label'          => 'form.pageSeo.twitterCard.label',
                 'vic_help_block' => 'form.pageSeo.twitterCard.vic_help_block',
-            ))
-            ->add('twitterUrl', null, array(
+            ])
+            ->add('twitterUrl', null, [
                 'label' => 'form.pageSeo.twitterUrl.label',
-            ))
-            ->add('twitterTitle', null, array(
+            ])
+            ->add('twitterTitle', null, [
                 'label' => 'form.pageSeo.twitterTitle.label',
-            ))
-            ->add('twitterDescription', null, array(
+            ])
+            ->add('twitterDescription', null, [
                 'label' => 'form.pageSeo.twitterDescription.label',
-            ))
-            ->add('twitterImage', 'media', array(
+            ])
+            ->add('twitterImage', 'media', [
                 'label' => 'form.pageSeo.twitterImage.label',
-            ))
-            ->add('schemaPageType', null, array(
+            ])
+            ->add('schemaPageType', null, [
                 'label' => 'form.pageSeo.schemaPageType.label',
-            ))
-            ->add('schemaName', null, array(
+            ])
+            ->add('schemaName', null, [
                 'label' => 'form.pageSeo.schemaName.label',
-            ))
-            ->add('schemaDescription', null, array(
+            ])
+            ->add('schemaDescription', null, [
                 'label' => 'form.pageSeo.schemaDescription.label',
-            ))
-            ->add('schemaImage', 'media', array(
+            ])
+            ->add('schemaImage', 'media', [
                 'label' => 'form.pageSeo.schemaImage.label',
-            ))
-            ->add('metaRobotsIndex', 'choice', array(
-                'label' => 'form.pageSeo.metaRobotsIndex.label',
+            ])
+            ->add('metaRobotsIndex', 'choice', [
+                'label'   => 'form.pageSeo.metaRobotsIndex.label',
                 'choices' => [
-                    'index' => 'form.pageSeo.metaRobotsIndex.values.index',
+                    'index'   => 'form.pageSeo.metaRobotsIndex.values.index',
                     'noindex' => 'form.pageSeo.metaRobotsIndex.values.noindex',
                 ],
-            ))
-            ->add('metaRobotsFollow', 'choice', array(
-                'label' => 'form.pageSeo.metaRobotsFollow.label',
+            ])
+            ->add('metaRobotsFollow', 'choice', [
+                'label'   => 'form.pageSeo.metaRobotsFollow.label',
                 'choices' => [
-                    'follow' => 'form.pageSeo.metaRobotsFollow.values.follow',
+                    'follow'   => 'form.pageSeo.metaRobotsFollow.values.follow',
                     'nofollow' => 'form.pageSeo.metaRobotsFollow.values.nofollow',
                 ],
-            ))
-            ->add('metaRobotsAdvanced', null, array(
+            ])
+            ->add('metaRobotsAdvanced', null, [
                 'label' => 'form.pageSeo.metaRobotsAdvanced.label',
-            ))
-            ->add('sitemapIndexed', null, array(
+            ])
+            ->add('sitemapIndexed', null, [
                 'label' => 'form.pageSeo.sitemapIndexed.label',
-            ))
-            ->add('sitemapPriority', null, array(
+            ])
+            ->add('sitemapPriority', null, [
                 'label' => 'form.pageSeo.sitemapPriority.label',
-            ))
+            ])
             ->add('sitemapPriority', 'choice',
-                array(
+                [
                     'label'   => 'form.pageSeo.sitemapPriority.label',
                     'choices' => array_combine(range(0, 1, 0.1), range(0, 1, 0.1)),
-            ))
-            ->add('relCanonical', null, array(
+            ])
+            ->add('relCanonical', null, [
                 'label' => 'form.pageSeo.relCanonical.label',
-            ))
-            ->add('keyword', null, array(
+            ])
+            ->add('keyword', null, [
                 'label' => 'form.pageSeo.keyword.label',
-            ))
-            ->add('redirectTo', null, array(
-                'label'      => 'form.pageSeo.redirectTo.label',
+            ])
+            ->add('redirectTo', null, [
+                'label'          => 'form.pageSeo.redirectTo.label',
                 'vic_help_block' => 'form.pageSeo.redirectTo.vic_help_block',
-            ));
+            ]);
     }
 
     /**
@@ -137,14 +135,14 @@ class PageSeoType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class'         => 'Victoire\Bundle\SeoBundle\Entity\PageSeo',
             'translation_domain' => 'victoire',
-        ));
+        ]);
     }
 
     /**
-     * The name of the form
+     * The name of the form.
      *
      * @return string
      */

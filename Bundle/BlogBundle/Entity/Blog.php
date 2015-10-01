@@ -6,11 +6,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 
 /**
- * PostPage
+ * PostPage.
  *
  * @ORM\Entity(repositoryClass="Victoire\Bundle\BlogBundle\Repository\BlogRepository"))
  * @ORM\Table("vic_blog")
- *
  */
 class Blog extends BasePage
 {
@@ -36,8 +35,7 @@ class Blog extends BasePage
     protected $tags;
 
     /**
-     * Constructor
-     *
+     * Constructor.
      */
     public function __construct()
     {
@@ -45,11 +43,20 @@ class Blog extends BasePage
         $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function getArticles() { return $this->articles; }
-    public function setArticles($articles) { $this->articles = $articles; return $this; }
+    public function getArticles()
+    {
+        return $this->articles;
+    }
+
+    public function setArticles($articles)
+    {
+        $this->articles = $articles;
+
+        return $this;
+    }
 
     /**
-     * Set categories
+     * Set categories.
      *
      * @param string $categories
      *
@@ -66,7 +73,7 @@ class Blog extends BasePage
     }
 
     /**
-     * Add category
+     * Add category.
      *
      * @param string $category
      *
@@ -81,7 +88,7 @@ class Blog extends BasePage
     }
 
     /**
-     * Remove category
+     * Remove category.
      *
      * @param string $category
      *
@@ -95,7 +102,7 @@ class Blog extends BasePage
     }
 
     /**
-     * Get categories
+     * Get categories.
      *
      * @return string
      */
@@ -105,7 +112,7 @@ class Blog extends BasePage
     }
 
     /**
-     * Get root categories
+     * Get root categories.
      *
      * @return string
      */
@@ -122,7 +129,7 @@ class Blog extends BasePage
     }
 
     /**
-     * Add rootCategory
+     * Add rootCategory.
      *
      * @param string $rootCategory
      *
@@ -137,7 +144,7 @@ class Blog extends BasePage
     }
 
     /**
-     * Remove rootCategory
+     * Remove rootCategory.
      *
      * @param string $rootCategory
      *

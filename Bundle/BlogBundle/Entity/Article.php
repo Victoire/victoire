@@ -6,9 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Victoire\Bundle\BusinessEntityBundle\Entity\Traits\BusinessEntityTrait;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Annotations as VIC;
-use Victoire\Bundle\BusinessEntityBundle\Entity\Traits\BusinessEntityTrait;
 use Victoire\Bundle\MediaBundle\Entity\Media;
 
 /**
@@ -22,10 +22,10 @@ class Article
     use BusinessEntityTrait;
     use TimestampableEntity;
 
-    const DRAFT       = "draft";
-    const PUBLISHED   = "published";
-    const UNPUBLISHED = "unpublished";
-    const SCHEDULED   = "scheduled";
+    const DRAFT = 'draft';
+    const PUBLISHED = 'published';
+    const UNPUBLISHED = 'unpublished';
+    const SCHEDULED = 'scheduled';
 
     /**
      * @VIC\BusinessProperty("businessParameter")
@@ -36,7 +36,7 @@ class Article
     private $id;
 
     /**
-     * Title is inherited from Page, just add the BusinessProperty annotation
+     * Title is inherited from Page, just add the BusinessProperty annotation.
      *
      * @ORM\Column(name="name", type="string", length=255)
      * @Assert\NotBlank()
@@ -52,7 +52,8 @@ class Article
     private $slug;
 
     /**
-     * Description is inherited from Page, just add the BusinessProperty annotation
+     * Description is inherited from Page, just add the BusinessProperty annotation.
+     *
      * @ORM\Column(name="description", type="text", nullable=true)
      * @VIC\BusinessProperty({"textable", "seoable"})
      */
@@ -64,7 +65,8 @@ class Article
     protected $status;
 
     /**
-     * Categories of the article
+     * Categories of the article.
+     *
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="articles")
      * @ORM\JoinColumn(onDelete="SET NULL")
      * @VIC\BusinessProperty({"textable", "seoable"})
@@ -72,7 +74,7 @@ class Article
     private $category;
 
     /**
-     * @var datetime $publishedAt
+     * @var datetime
      *
      * @ORM\Column(name="publishedAt", type="datetime", nullable=true)
      * @VIC\BusinessProperty({"dateable", "textable"})
@@ -81,13 +83,15 @@ class Article
 
     /**
      * This relation is dynamically added by ArticleSubscriber
-     * The property is needed here
+     * The property is needed here.
+     *
      * @VIC\BusinessProperty({"textable", "seoable"})
      */
     private $author;
 
     /**
-     * Tags of the article
+     * Tags of the article.
+     *
      * @ORM\ManyToMany(targetEntity="Tag", inversedBy="articles")
      * @ORM\JoinTable(name="vic_article_tags")
      * @Assert\Valid()
@@ -143,7 +147,7 @@ class Article
     private $deletedAt;
 
     /**
-     * to string method
+     * to string method.
      *
      * @return string
      */
@@ -153,9 +157,7 @@ class Article
     }
 
     /**
-     * Constructor
-     *
-     *
+     * Constructor.
      */
     public function __construct()
     {
@@ -163,9 +165,9 @@ class Article
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -173,8 +175,9 @@ class Article
     }
 
     /**
-     * Set id
-     * @param integer $id
+     * Set id.
+     *
+     * @param int $id
      */
     public function setId($id)
     {
@@ -182,7 +185,7 @@ class Article
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -192,7 +195,8 @@ class Article
     }
 
     /**
-     * Set name
+     * Set name.
+     *
      * @param string $name
      *
      * @return $this
@@ -205,7 +209,7 @@ class Article
     }
 
     /**
-     * Set description
+     * Set description.
      *
      * @param string $description
      *
@@ -219,7 +223,7 @@ class Article
     }
 
     /**
-     * Get description
+     * Get description.
      *
      * @return string
      */
@@ -229,7 +233,7 @@ class Article
     }
 
     /**
-     * Set category
+     * Set category.
      *
      * @param string $category
      *
@@ -243,7 +247,7 @@ class Article
     }
 
     /**
-     * Get category
+     * Get category.
      *
      * @return string
      */
@@ -253,7 +257,7 @@ class Article
     }
 
     /**
-     * Get the published at property
+     * Get the published at property.
      *
      * @return \DateTime
      */
@@ -267,7 +271,8 @@ class Article
     }
 
     /**
-     * Set publishedAt
+     * Set publishedAt.
+     *
      * @param \DateTime $publishedAt
      *
      * @return $this
@@ -280,7 +285,7 @@ class Article
     }
 
     /**
-     * Get deletedAt
+     * Get deletedAt.
      *
      * @return \DateTime
      */
@@ -290,7 +295,8 @@ class Article
     }
 
     /**
-     * Set deletedAt
+     * Set deletedAt.
+     *
      * @param \DateTime $deletedAt
      *
      * @return $this
@@ -303,7 +309,7 @@ class Article
     }
 
     /**
-     * Get the blog
+     * Get the blog.
      *
      * @return Blog
      */
@@ -313,7 +319,7 @@ class Article
     }
 
     /**
-     * Set the blog
+     * Set the blog.
      *
      * @param Blog $blog
      */
@@ -323,7 +329,7 @@ class Article
     }
 
     /**
-     * Set tags
+     * Set tags.
      *
      * @param string $tags
      *
@@ -337,7 +343,7 @@ class Article
     }
 
     /**
-     * Add tag
+     * Add tag.
      *
      * @param string $tag
      *
@@ -351,7 +357,7 @@ class Article
     }
 
     /**
-     * Remove tag
+     * Remove tag.
      *
      * @param string $tag
      *
@@ -365,7 +371,7 @@ class Article
     }
 
     /**
-     * Get tags
+     * Get tags.
      *
      * @return [Tag]
      */
@@ -375,7 +381,8 @@ class Article
     }
 
     /**
-     * Set image
+     * Set image.
+     *
      * @param Media $image
      *
      * @return Article
@@ -388,7 +395,7 @@ class Article
     }
 
     /**
-     * Get image
+     * Get image.
      *
      * @return string
      */
@@ -398,7 +405,7 @@ class Article
     }
 
     /**
-     * Get businessEntity
+     * Get businessEntity.
      *
      * @return Article
      */
@@ -408,7 +415,8 @@ class Article
     }
 
     /**
-     * Set pattern
+     * Set pattern.
+     *
      * @param BusinessTemplate $pattern
      *
      * @return Article
@@ -421,7 +429,7 @@ class Article
     }
 
     /**
-     * Get pattern
+     * Get pattern.
      *
      * @return BusinessTemplate
      */
@@ -431,7 +439,7 @@ class Article
     }
 
     /**
-     * Set status
+     * Set status.
      *
      * @param status $status
      */
@@ -444,7 +452,7 @@ class Article
     }
 
     /**
-     * Get status
+     * Get status.
      *
      * @return status
      */
@@ -454,7 +462,7 @@ class Article
     }
 
     /**
-     * Get slug
+     * Get slug.
      *
      * @return string
      */
@@ -464,7 +472,8 @@ class Article
     }
 
     /**
-     * Set slug
+     * Set slug.
+     *
      * @param string $slug
      *
      * @return $this
@@ -477,7 +486,7 @@ class Article
     }
 
     /**
-     * Get categoryTitle
+     * Get categoryTitle.
      *
      * @return string
      */
@@ -489,23 +498,23 @@ class Article
     }
 
     /**
-     * Get publishedAtString
+     * Get publishedAtString.
      *
      * @return string
      */
     public function getPublishedAtString()
     {
-        setlocale(LC_TIME, "fr_FR");
+        setlocale(LC_TIME, 'fr_FR');
 
         if ($this->publishedAt) {
             return strftime('%d %B %Y', $this->publishedAt->getTimestamp());
         } else {
-            return "";
+            return '';
         }
     }
 
     /**
-     * Get author
+     * Get author.
      *
      * @return string
      */
@@ -515,7 +524,7 @@ class Article
     }
 
     /**
-     * Set author
+     * Set author.
      *
      * @param string $author
      *
@@ -530,7 +539,7 @@ class Article
 
     public function getAuthorAvatar()
     {
-        $this->authorAvatar = "http://www.gravatar.com/avatar/".md5($this->author->getEmail())."?s=70";
+        $this->authorAvatar = 'http://www.gravatar.com/avatar/'.md5($this->author->getEmail()).'?s=70';
 
         return $this->authorAvatar;
     }

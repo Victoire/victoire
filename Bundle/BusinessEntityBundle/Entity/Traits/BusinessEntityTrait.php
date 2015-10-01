@@ -2,16 +2,13 @@
 
 namespace Victoire\Bundle\BusinessEntityBundle\Entity\Traits;
 
-use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
-
 /**
- * BusinessEntity trait adds relationship with the entity proxies
- *
+ * BusinessEntity trait adds relationship with the entity proxies.
  */
 trait BusinessEntityTrait
 {
     /**
-     * Association made dynamically in EntityProxySubscriber
+     * Association made dynamically in EntityProxySubscriber.
      */
     protected $proxy;
 
@@ -23,7 +20,7 @@ trait BusinessEntityTrait
     private $visibleOnFront = true;
 
     /**
-     * Set proxy
+     * Set proxy.
      *
      * @param \Victoire\Bundle\CoreBundle\Entity\EntityProxy $proxy
      *
@@ -37,7 +34,7 @@ trait BusinessEntityTrait
     }
 
     /**
-     * Get proxy
+     * Get proxy.
      *
      * @return \Victoire\Bundle\CoreBundle\Entity\EntityProxy
      */
@@ -47,7 +44,7 @@ trait BusinessEntityTrait
     }
 
     /**
-     * Is visibleOnFront
+     * Is visibleOnFront.
      *
      * @return string
      */
@@ -57,7 +54,7 @@ trait BusinessEntityTrait
     }
 
     /**
-     * Set visibleOnFront
+     * Set visibleOnFront.
      *
      * @param string $visibleOnFront
      *
@@ -71,7 +68,7 @@ trait BusinessEntityTrait
     }
 
     /**
-     * Get the content of an attribute of the current entity
+     * Get the content of an attribute of the current entity.
      *
      * @param string $field
      *

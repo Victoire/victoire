@@ -1,10 +1,11 @@
 <?php
+
 namespace Victoire\Bundle\WidgetBundle\Entity\Traits;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Link trait adds fields to create a link to a page, widget, url or route
+ * Link trait adds fields to create a link to a page, widget, url or route.
  *
  * @Assert\Callback(methods={"validateLink"})
  */
@@ -20,6 +21,7 @@ trait LinkTrait
      * @var string
      *
      * @ORM\Column(name="url", type="string", length=255, nullable=true)
+     *
      * @deprecated please run the victoire:legacy:linkMigrator command
      * \ will be removed in next major version
      */
@@ -29,6 +31,7 @@ trait LinkTrait
      * @var string
      *
      * @ORM\Column(name="target", type="string", length=10, nullable=true)
+     *
      * @deprecated please run the victoire:legacy:linkMigrator command
      * \ will be removed in next major version
      */
@@ -37,6 +40,7 @@ trait LinkTrait
     /**
      * @ORM\ManyToOne(targetEntity="Victoire\Bundle\PageBundle\Entity\BasePage")
      * @ORM\JoinColumn(name="attached_page_id", referencedColumnName="id", onDelete="cascade", nullable=true)
+     *
      * @deprecated please run the victoire:legacy:linkMigrator command
      * \ will be removed in next major version
      */
@@ -45,6 +49,7 @@ trait LinkTrait
     /**
      * @ORM\ManyToOne(targetEntity="Victoire\Bundle\WidgetBundle\Entity\Widget")
      * @ORM\JoinColumn(name="attached_widget_id", referencedColumnName="id", onDelete="cascade", nullable=true)
+     *
      * @deprecated please run the victoire:legacy:linkMigrator command
      * \ will be removed in next major version
      */
@@ -54,6 +59,7 @@ trait LinkTrait
      * @var string
      *
      * @ORM\Column(name="route", type="string", length=55, nullable=true)
+     *
      * @deprecated please run the victoire:legacy:linkMigrator command
      * \ will be removed in next major version
      */
@@ -63,15 +69,17 @@ trait LinkTrait
      * @var string
      *
      * @ORM\Column(name="route_parameters", type="array", nullable=true)
+     *
      * @deprecated please run the victoire:legacy:linkMigrator command
      * \ will be removed in next major version
      */
-    public $routeParameters = array();
+    public $routeParameters = [];
 
     /**
      * @var string
      *
      * @ORM\Column(name="link_type", type="string", length=255, nullable=true)
+     *
      * @deprecated please run the victoire:legacy:linkMigrator command
      * \ will be removed in next major version
      */
@@ -81,15 +89,16 @@ trait LinkTrait
      * @var string
      *
      * @ORM\Column(name="analytics_track_code", type="text", nullable=true)
+     *
      * @deprecated please run the victoire:legacy:linkMigrator command
      * \ will be removed in next major version
      */
     public $analyticsTrackCode;
 
     /**
-     * Has link
+     * Has link.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasLink()
     {
@@ -97,7 +106,7 @@ trait LinkTrait
     }
 
     /**
-     * Get link
+     * Get link.
      *
      * @return string
      */
@@ -107,7 +116,8 @@ trait LinkTrait
     }
 
     /**
-     * Set link
+     * Set link.
+     *
      * @param string $link
      *
      * @return $this

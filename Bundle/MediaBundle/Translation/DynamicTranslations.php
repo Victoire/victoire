@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\MediaBundle\Translation;
 
 use JMS\TranslationBundle\Model\Message;
@@ -8,8 +9,8 @@ class DynamicTranslations implements TranslationContainerInterface
 {
     public static function getTranslationMessages()
     {
-        return array(
+        return [
             new Message('menu.media'),
-        );
+        ];
     }
 }

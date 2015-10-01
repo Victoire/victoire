@@ -2,13 +2,13 @@
 
 namespace Victoire\Bundle\AnalyticsBundle\Helper;
 
+use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
-use Doctrine\ORM\EntityManager;
 
 /**
  * Analytics View helper
- * ref: victoire_analytics.view_helper
+ * ref: victoire_analytics.view_helper.
  */
 class AnalyticsViewHelper
 {
@@ -24,26 +24,26 @@ class AnalyticsViewHelper
     }
 
     /**
-     * Get the most read views by type
+     * Get the most read views by type.
      *
      * @return View[]
      **/
     public function getMostReadByViewType($viewNamespace, $number)
     {
-        $views = array();
+        $views = [];
 
         switch ($viewNamespace) {
             case 'Victoire\Bundle\PageBundle\Entity\Page':
 
-                $viewReferences = array();
+                $viewReferences = [];
                 $repo = $this->entityManager->getRepository($viewNamespace);
                 //get pages and viewReferenceIds
                 foreach ($repo->getAll()->run() as $key => $page) {
                     $viewReference = $this->viewCacheHelper->getReferenceByParameters(
-                        array(
+                        [
                             'viewNamespace' => $viewNamespace,
                             'viewId'        => $page->getId(),
-                        )
+                        ]
                     );
                     $viewReferences[$viewReference['id']] = $viewReference;
                 }
@@ -70,20 +70,20 @@ class AnalyticsViewHelper
     }
 
     /**
-     * Get the most read articles by blog
+     * Get the most read articles by blog.
      *
      * @return Article[]
      **/
     public function getMostReadArticlesByBlog($blog, $number)
     {
-        $viewReferences = array();
+        $viewReferences = [];
         //get articles and viewReferenceIds
         foreach ($blog->getArticles() as $key => $article) {
             $viewReference = $this->viewCacheHelper->getReferenceByParameters(
-                array(
+                [
                     'entityNamespace' => 'Victoire\Bundle\BlogBundle\Entity\Article',
-                    'entityId' => $article->getId(),
-                )
+                    'entityId'        => $article->getId(),
+                ]
             );
             $viewReferences[$viewReference['id']] = $viewReference;
         }
@@ -93,7 +93,7 @@ class AnalyticsViewHelper
             ->getQuery()
             ->getResult();
 
-        $views = array();
+        $views = [];
         //Now we get the most visited references, we'll get views with PageHelper
         foreach ($browseEvents as $browseEvent) {
             $views[] = $this->pageHelper->findPageByReference(
@@ -105,7 +105,7 @@ class AnalyticsViewHelper
     }
 
     /**
-     * Get number of unique visitor for a viewReference
+     * Get number of unique visitor for a viewReference.
      *
      * @param string $viewReferenceId
      */

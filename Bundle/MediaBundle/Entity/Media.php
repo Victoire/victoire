@@ -5,7 +5,7 @@ namespace Victoire\Bundle\MediaBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Media
+ * Media.
  *
  * @ORM\Entity(repositoryClass="Victoire\Bundle\MediaBundle\Repository\MediaRepository")
  * @ORM\Table(name="vic_media")
@@ -13,7 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Media
 {
-
     /**
      * @ORM\Id
      * @ORM\Column(type="bigint")
@@ -55,7 +54,7 @@ class Media
      *
      * @ORM\Column(type="array")
      */
-    protected $metadata = array();
+    protected $metadata = [];
 
     /**
      * @var \DateTime
@@ -106,7 +105,7 @@ class Media
     protected $deleted;
 
     /**
-     * constructor
+     * constructor.
      */
     public function __construct()
     {
@@ -116,7 +115,7 @@ class Media
     }
 
     /**
-     * Return string representation of entity; we return the url display directly the media without using any getter
+     * Return string representation of entity; we return the url display directly the media without using any getter.
      *
      * @return string
      */
@@ -126,7 +125,7 @@ class Media
     }
 
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -136,7 +135,7 @@ class Media
     }
 
     /**
-     * Set id
+     * Set id.
      *
      * @param int $id The unique identifier
      */
@@ -152,13 +151,13 @@ class Media
     {
         $size = $this->filesize;
         if ($size < 1024) {
-            return $size."b";
+            return $size.'b';
         } else {
-            $help = $size/1024;
+            $help = $size / 1024;
             if ($help < 1024) {
-                return round($help, 1)."kb";
+                return round($help, 1).'kb';
             } else {
-                return round(($help/1024), 1)."mb";
+                return round(($help / 1024), 1).'mb';
             }
         }
     }
@@ -172,7 +171,7 @@ class Media
     }
 
     /**
-     * Set uuid
+     * Set uuid.
      *
      * @param string $uuid
      */
@@ -182,7 +181,7 @@ class Media
     }
 
     /**
-     * Get uuid
+     * Get uuid.
      *
      * @return string
      */
@@ -192,7 +191,7 @@ class Media
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      */
@@ -202,7 +201,7 @@ class Media
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -212,7 +211,7 @@ class Media
     }
 
     /**
-     * Set location
+     * Set location.
      *
      * @param string $location
      */
@@ -222,7 +221,7 @@ class Media
     }
 
     /**
-     * Get location
+     * Get location.
      *
      * @return string
      */
@@ -232,7 +231,7 @@ class Media
     }
 
     /**
-     * Set contentType
+     * Set contentType.
      *
      * @param string $contentType
      */
@@ -242,7 +241,7 @@ class Media
     }
 
     /**
-     * Get contentType
+     * Get contentType.
      *
      * @return string
      */
@@ -252,21 +251,21 @@ class Media
     }
 
     /**
-     * Get contentType
+     * Get contentType.
      *
      * @return string
      */
     public function getContentTypeShort()
     {
         $contentType = $this->contentType;
-        $array       = explode("/", $contentType);
+        $array = explode('/', $contentType);
         $contentType = end($array);
 
         return $contentType;
     }
 
     /**
-     * Set metadata
+     * Set metadata.
      *
      * @param array $metadata
      *
@@ -280,7 +279,7 @@ class Media
     }
 
     /**
-     * Get metadata
+     * Get metadata.
      *
      * @return array
      */
@@ -290,7 +289,7 @@ class Media
     }
 
     /**
-     * Set the specified metadata value
+     * Set the specified metadata value.
      *
      * @param string $key
      * @param mixed  $value
@@ -305,7 +304,7 @@ class Media
     }
 
     /**
-     * Get the specified metadata value
+     * Get the specified metadata value.
      *
      * @param string $key
      *
@@ -317,7 +316,7 @@ class Media
     }
 
     /**
-     * Set createdAt
+     * Set createdAt.
      *
      * @param \DateTime $createdAt
      *
@@ -331,7 +330,7 @@ class Media
     }
 
     /**
-     * Get createdAt
+     * Get createdAt.
      *
      * @return \DateTime
      */
@@ -341,7 +340,7 @@ class Media
     }
 
     /**
-     * Set updatedAt
+     * Set updatedAt.
      *
      * @param \DateTime $updatedAt
      *
@@ -355,7 +354,7 @@ class Media
     }
 
     /**
-     * Get updatedAt
+     * Get updatedAt.
      *
      * @return \DateTime
      */
@@ -365,7 +364,7 @@ class Media
     }
 
     /**
-     * Set content
+     * Set content.
      *
      * @param mixed $content
      *
@@ -380,7 +379,7 @@ class Media
     }
 
     /**
-     * Get content
+     * Get content.
      *
      * @return mixed
      */
@@ -390,7 +389,7 @@ class Media
     }
 
     /**
-     * Set folder
+     * Set folder.
      *
      * @param Folder $folder
      *
@@ -404,7 +403,7 @@ class Media
     }
 
     /**
-     * Get folder
+     * Get folder.
      *
      * @return Folder
      */
@@ -471,5 +470,4 @@ class Media
     {
         $this->setUpdatedAt(new \DateTime());
     }
-
 }

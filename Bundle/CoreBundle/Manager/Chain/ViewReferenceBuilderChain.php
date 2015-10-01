@@ -8,8 +8,7 @@ use Victoire\Bundle\CoreBundle\Manager\BaseReferenceBuilder;
 use Victoire\Bundle\CoreBundle\Manager\Interfaces\ReferenceBuilderInterface;
 
 /**
- * Class ViewReferenceBuilderChain
- * @package Victoire\Bundle\CoreBundle\Manager\Chain
+ * Class ViewReferenceBuilderChain.
  */
 class ViewReferenceBuilderChain
 {
@@ -17,11 +16,12 @@ class ViewReferenceBuilderChain
 
     public function __construct()
     {
-        $this->viewsReferenceBuilders = array();
+        $this->viewsReferenceBuilders = [];
     }
 
     /**
-     * add a view Manager
+     * add a view Manager.
+     *
      * @param ReferenceBuilderInterface $viewManager
      */
     public function addViewReferenceBuilder(BaseReferenceBuilder $viewManager, $view)
@@ -31,12 +31,12 @@ class ViewReferenceBuilderChain
 
     /**
      * @param View $view
+     *
      * @return ReferenceBuilderInterface
      */
     public function getViewReferenceBuilder(View $view)
     {
-        if (array_key_exists($viewClass = get_class($view), $this->viewsReferenceBuilders))
-        {
+        if (array_key_exists($viewClass = get_class($view), $this->viewsReferenceBuilders)) {
             return $this->viewsReferenceBuilders[$viewClass];
         }
         throw new ServiceNotFoundException('No view reference builder found for '.$viewClass);

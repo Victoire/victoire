@@ -1,15 +1,16 @@
 <?php
+
 namespace Victoire\Bundle\CoreBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
 /**
- * The route repository
+ * The route repository.
  */
 class RouteRepository extends EntityRepository
 {
     /**
-     * Get the most recent route by url
+     * Get the most recent route by url.
      *
      * @param string $url The url to search
      *

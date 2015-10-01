@@ -2,16 +2,13 @@
 
 namespace Victoire\Bundle\MediaBundle\Form;
 
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-
 use Victoire\Bundle\MediaBundle\Entity\Folder;
 
-use Symfony\Component\Form\FormBuilderInterface;
-
-use Symfony\Component\Form\AbstractType;
-
 /**
- * FolderType
+ * FolderType.
  */
 class FolderType extends AbstractType
 {
@@ -33,6 +30,7 @@ class FolderType extends AbstractType
      *
      * This method is called for each type in the hierarchy starting form the
      * top most type. Type extensions can further modify the form.
+     *
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
      *
@@ -46,23 +44,23 @@ class FolderType extends AbstractType
         $type = $this;
         $builder
             ->add('name')
-            ->add('rel', 'choice', array(
-                'choices'   => array('media' => 'media', 'image' => 'image', 'slideshow' => 'slideshow', 'video' => 'video'),
-                ))
-            ->add('parent', 'entity', array('class' => 'Victoire\Bundle\MediaBundle\Entity\Folder', 'required' => false,
-                'query_builder' => function(\Doctrine\ORM\EntityRepository $er) use ($folder, $type) {
+            ->add('rel', 'choice', [
+                'choices'   => ['media' => 'media', 'image' => 'image', 'slideshow' => 'slideshow', 'video' => 'video'],
+                ])
+            ->add('parent', 'entity', ['class' => 'Victoire\Bundle\MediaBundle\Entity\Folder', 'required' => false,
+                'query_builder' => function (\Doctrine\ORM\EntityRepository $er) use ($folder, $type) {
                     $qb = $er->createQueryBuilder('folder');
 
                     if ($folder != null && $folder->getId() != null) {
-                        $ids = "folder.id != ".$folder->getId();
+                        $ids = 'folder.id != '.$folder->getId();
                         $ids .= $type->addChildren($folder);
                         $qb->andwhere($ids);
                     }
                     $qb->andWhere('folder.deleted != true');
 
                     return $qb;
-                }
-        ));
+                },
+        ]);
     }
 
     /**
@@ -82,9 +80,9 @@ class FolderType extends AbstractType
      */
     public function addChildren(Folder $folder)
     {
-        $ids = "";
+        $ids = '';
         foreach ($folder->getChildren() as $child) {
-            $ids .= " and folder.id != ".$child->getId();
+            $ids .= ' and folder.id != '.$child->getId();
             $ids .= $this->addChildren($child);
         }
 
@@ -98,8 +96,8 @@ class FolderType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
                 'data_class' => 'Victoire\Bundle\MediaBundle\Entity\Folder',
-        ));
+        ]);
     }
 }

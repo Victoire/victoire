@@ -2,13 +2,12 @@
 
 namespace Victoire\Bundle\QueryBundle\DoctrineFunctions;
 
-use Doctrine\ORM\Query\Lexer;
-use Doctrine\ORM\Query\Parser;
-use Doctrine\ORM\Query\SqlWalker;
 use Doctrine\ORM\Query\AST\Functions\FunctionNode;
+use Doctrine\ORM\Query\Lexer;
+use Doctrine\ORM\Query\SqlWalker;
 
 /**
- * RandFunction ::= "RAND" "(" ")"
+ * RandFunction ::= "RAND" "(" ")".
  */
 class Rand extends FunctionNode
 {

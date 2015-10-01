@@ -6,14 +6,15 @@ use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\CoreBundle\Entity\View;
 
 /**
-* PageManager
-*/
+ * PageManager.
+ */
 class PageReferenceBuilder extends BaseReferenceBuilder
 {
-    public function buildReference(View $view, EntityManager $em) {
+    public function buildReference(View $view, EntityManager $em)
+    {
         $view->setUrl($this->urlBuilder->buildUrl($view));
         $referenceId = $this->viewReferenceHelper->getViewReferenceId($view);
-        $viewsReference[] = array(
+        $viewsReference[] = [
             'id'              => $referenceId,
             'locale'          => $view->getLocale(),
             'viewId'          => $view->getId(),
@@ -21,9 +22,8 @@ class PageReferenceBuilder extends BaseReferenceBuilder
             'name'            => $view->getName(),
             'viewNamespace'   => get_class($view),
             'view'            => $view,
-        );
+        ];
 
         return $viewsReference;
-
     }
 }

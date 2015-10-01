@@ -2,23 +2,22 @@
 
 namespace Victoire\Bundle\MediaBundle\Form;
 
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-use Symfony\Component\Form\AbstractType;
-
 /**
- * BulkUploadType
+ * BulkUploadType.
  */
 class BulkUploadType extends AbstractType
 {
-
     /**
      * @var string
      */
     protected $accept;
 
     /**
-     * contructor
+     * contructor.
+     *
      * @param string $accept
      */
     public function __construct($accept = null)
@@ -31,6 +30,7 @@ class BulkUploadType extends AbstractType
      *
      * This method is called for each type in the hierarchy starting form the
      * top most type. Type extensions can further modify the form.
+     *
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
      *
@@ -39,14 +39,14 @@ class BulkUploadType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
-                'files', 'file', array(
-                "required" => false,
-                "attr" => array(
-                    "accept" => $this->accept,
-                    "multiple" => "multiple",
-                ),
-                'data_class' => null
-                )
+                'files', 'file', [
+                'required' => false,
+                'attr'     => [
+                    'accept'   => $this->accept,
+                    'multiple' => 'multiple',
+                ],
+                'data_class' => null,
+                ]
         );
     }
 
@@ -57,6 +57,6 @@ class BulkUploadType extends AbstractType
      */
     public function getName()
     {
-        return "victoire_mediabundle_bulkupload";
+        return 'victoire_mediabundle_bulkupload';
     }
 }

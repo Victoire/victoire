@@ -1,9 +1,9 @@
 <?php
+
 namespace Victoire\Bundle\QueryBundle\Entity\Traits;
 
 /**
- * Query trait adds the query fields
- *
+ * Query trait adds the query fields.
  */
 trait QueryTrait
 {
@@ -22,15 +22,15 @@ trait QueryTrait
     protected $orderBy;
 
     /**
-     *  Auto list mode: businessentity type
+     *  Auto list mode: businessentity type.
+     *
      * @var string
      * @ORM\Column(name="business_entity_id", type="string", nullable=true)
-     *
      */
     protected $businessEntityId;
 
     /**
-     * Get query
+     * Get query.
      *
      * @return string
      */
@@ -40,7 +40,7 @@ trait QueryTrait
     }
 
     /**
-     * Set query
+     * Set query.
      *
      * @param string $query
      */
@@ -50,7 +50,7 @@ trait QueryTrait
     }
 
     /**
-     * Get orderBy
+     * Get orderBy.
      *
      * @return string
      */
@@ -60,7 +60,7 @@ trait QueryTrait
     }
 
     /**
-     * Set orderBy
+     * Set orderBy.
      *
      * @param string $orderBy
      */
@@ -70,9 +70,9 @@ trait QueryTrait
     }
 
     /**
-     * Get businessEntityId
+     * Get businessEntityId.
      *
-     * @return integer
+     * @return int
      */
     public function getBusinessEntityId()
     {
@@ -80,9 +80,9 @@ trait QueryTrait
     }
 
     /**
-     * Set businessEntityId
+     * Set businessEntityId.
      *
-     * @param String $businessEntityId The business entity name
+     * @param string $businessEntityId The business entity name
      */
     public function setBusinessEntityId($businessEntityId)
     {

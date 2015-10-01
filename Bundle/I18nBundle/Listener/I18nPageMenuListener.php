@@ -2,14 +2,13 @@
 
 namespace Victoire\Bundle\I18nBundle\Listener;
 
-use Victoire\Bundle\PageBundle\Listener\PageMenuListener;
 use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
+use Victoire\Bundle\PageBundle\Listener\PageMenuListener;
 
 class I18nPageMenuListener extends PageMenuListener
 {
-
     /**
-     * Constructor
+     * Constructor.
      *
      * @param MenuBuilder $menuBuilder
      */
@@ -19,7 +18,7 @@ class I18nPageMenuListener extends PageMenuListener
     }
 
     /**
-     * This method is call to replace the base contextual PageMenuListener to add a new item in the menu when I18n is activated
+     * This method is call to replace the base contextual PageMenuListener to add a new item in the menu when I18n is activated.
      *
      * @param PageMenuContextualEvent $event
      *
@@ -33,10 +32,10 @@ class I18nPageMenuListener extends PageMenuListener
         $mainItem = $this->getMainItem();
 
         $mainItem->addChild('menu.page.i18n.addTranslation',
-            array(
-                'route' => 'victoire_core_page_translate',
-                'routeParameters' => array('id' => $page->getId())
-            )
+            [
+                'route'           => 'victoire_core_page_translate',
+                'routeParameters' => ['id' => $page->getId()],
+            ]
         )->setLinkAttribute('data-toggle', 'vic-modal');
 
         return $mainItem;

@@ -11,14 +11,14 @@ use Victoire\Bundle\TemplateBundle\Event\Menu\TemplateMenuContextualEvent;
  */
 
 /**
- * When dispatched, this listener add items to a KnpMenu
+ * When dispatched, this listener add items to a KnpMenu.
  */
 class TemplateMenuListener implements MenuListenerInterface
 {
     private $menuBuilder;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function __construct(MenuBuilder $menuBuilder)
     {
@@ -26,7 +26,7 @@ class TemplateMenuListener implements MenuListenerInterface
     }
 
     /**
-     * add a contextual menu item
+     * add a contextual menu item.
      *
      * @param TemplateMenuContextualEvent $event
      *
@@ -39,17 +39,17 @@ class TemplateMenuListener implements MenuListenerInterface
 
         //this contextual menu appears only for template
         $mainItem->addChild('menu.template.settings',
-            array(
-                'route' => 'victoire_template_settings',
-                'routeParameters' => array('slug' => $template->getSlug())
-                )
+            [
+                'route'           => 'victoire_template_settings',
+                'routeParameters' => ['slug' => $template->getSlug()],
+                ]
         )->setLinkAttribute('data-toggle', 'vic-modal');
 
         return $mainItem;
     }
 
     /**
-     * add a global menu item
+     * add a global menu item.
      *
      * @param Event $event
      *
@@ -58,14 +58,14 @@ class TemplateMenuListener implements MenuListenerInterface
     public function addGlobal(Event $event)
     {
         $mainItem = $this->getMainItem();
-        $mainItem->addChild('menu.template.new', array(
-            'route' => 'victoire_template_new'
-            )
+        $mainItem->addChild('menu.template.new', [
+            'route' => 'victoire_template_new',
+            ]
         )->setLinkAttribute('data-toggle', 'vic-modal');
 
-        $mainItem->addChild('menu.template.index', array(
-            'route' => 'victoire_template_index'
-            )
+        $mainItem->addChild('menu.template.index', [
+            'route' => 'victoire_template_index',
+            ]
         )->setLinkAttribute('data-toggle', 'vic-modal');
 
         return $mainItem;
@@ -78,7 +78,7 @@ class TemplateMenuListener implements MenuListenerInterface
         } else {
             return $this->menuBuilder->createDropdownMenuItem(
                 $this->menuBuilder->getTopNavbar(),
-                "menu.template"
+                'menu.template'
             );
         }
     }

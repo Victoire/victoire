@@ -3,11 +3,10 @@
 namespace Victoire\Bundle\MediaBundle\Form\Type;
 
 /**
- * CurrentValueContainer
+ * CurrentValueContainer.
  */
 class CurrentValueContainer
 {
-
     /**
      * @var object
      */

@@ -8,42 +8,45 @@ use Victoire\Bundle\CoreBundle\Form\WidgetType;
 use Victoire\Bundle\WidgetBundle\Model\Widget;
 
 /**
- * WidgetForce form type
+ * WidgetForce form type.
  */
 class WidgetForceType extends WidgetType
 {
     /**
-     * define form fields
+     * define form fields.
+     *
      * @param FormBuilderInterface $builder
+     *
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         if ($options['mode'] === Widget::MODE_STATIC) {
-            $builder->add('side', null, array(
+            $builder->add('side', null, [
                 'label' => 'widget_force.form.side.label',
-            ));
+            ]);
         }
         parent::buildForm($builder, $options);
     }
 
     /**
-     * bind form to WidgetForce entity
+     * bind form to WidgetForce entity.
+     *
      * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         parent::setDefaultOptions($resolver);
 
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class'         => 'Victoire\Widget\ForceBundle\Entity\WidgetForce',
             'widget'             => 'Force',
             'translation_domain' => 'victoire',
-        ));
+        ]);
     }
 
     /**
-     * get form name
+     * get form name.
      *
      * @return string The form name
      */

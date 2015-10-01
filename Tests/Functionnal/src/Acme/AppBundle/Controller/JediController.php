@@ -4,22 +4,21 @@ namespace Acme\AppBundle\Controller;
 
 use Acme\AppBundle\Entity\Jedi;
 use Acme\AppBundle\Form\JediType;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Victoire\Bundle\CoreBundle\Controller\BackendController;
 
 /**
  * Jedi controller.
- * Generated with generate:crud command
+ * Generated with generate:crud command.
  *
  * @Route("/jedi")
  */
 class JediController extends BackendController
 {
-
     /**
      * Lists all Jedi entities.
      *
@@ -33,9 +32,9 @@ class JediController extends BackendController
 
         $entities = $em->getRepository('AcmeAppBundle:Jedi')->findAll();
 
-        return array(
+        return [
             'entities' => $entities,
-        );
+        ];
     }
 
     /**
@@ -59,10 +58,10 @@ class JediController extends BackendController
             return $this->redirect($this->generateUrl('acme_app_jedi_index'));
         }
 
-        return array(
+        return [
             'entity' => $entity,
             'form'   => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -74,12 +73,12 @@ class JediController extends BackendController
      */
     private function createCreateForm(Jedi $entity)
     {
-        $form = $this->createForm(new JediType(), $entity, array(
+        $form = $this->createForm(new JediType(), $entity, [
             'action' => $this->generateUrl('acme_app_jedi_create'),
             'method' => 'POST',
-        ));
+        ]);
 
-        $form->add('submit', 'submit', array('label' => 'acme.app.jedi.form.button.create'));
+        $form->add('submit', 'submit', ['label' => 'acme.app.jedi.form.button.create']);
 
         return $form;
     }
@@ -94,12 +93,12 @@ class JediController extends BackendController
     public function newAction()
     {
         $entity = new Jedi();
-        $form   = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($entity);
 
-        return array(
+        return [
             'entity' => $entity,
             'form'   => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -121,10 +120,10 @@ class JediController extends BackendController
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return array(
+        return [
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
-        );
+        ];
     }
 
     /**
@@ -147,11 +146,11 @@ class JediController extends BackendController
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return array(
+        return [
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        ];
     }
 
     /**
@@ -163,12 +162,12 @@ class JediController extends BackendController
      */
     private function createEditForm(Jedi $entity)
     {
-        $form = $this->createForm(new JediType(), $entity, array(
-            'action' => $this->generateUrl('acme_app_jedi_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new JediType(), $entity, [
+            'action' => $this->generateUrl('acme_app_jedi_update', ['id' => $entity->getId()]),
             'method' => 'PUT',
-        ));
+        ]);
 
-        $form->add('submit', 'submit', array('label' => 'acme.app.jedi.form.button.update'));
+        $form->add('submit', 'submit', ['label' => 'acme.app.jedi.form.button.update']);
 
         return $form;
     }
@@ -200,11 +199,11 @@ class JediController extends BackendController
             return $this->redirect($this->generateUrl('acme_app_jedi_index'));
         }
 
-        return array(
+        return [
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        ];
     }
 
     /**
@@ -242,13 +241,12 @@ class JediController extends BackendController
      */
     private function createDeleteForm($id)
     {
-        return $this->createFormBuilder(null, array(
-                'translation_domain' => 'victoire'
-            ))
-            ->setAction($this->generateUrl('acme_app_jedi_delete', array('id' => $id)))
+        return $this->createFormBuilder(null, [
+                'translation_domain' => 'victoire',
+            ])
+            ->setAction($this->generateUrl('acme_app_jedi_delete', ['id' => $id]))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'acme.app.jedi.form.button.delete'))
-            ->getForm()
-        ;
+            ->add('submit', 'submit', ['label' => 'acme.app.jedi.form.button.delete'])
+            ->getForm();
     }
 }

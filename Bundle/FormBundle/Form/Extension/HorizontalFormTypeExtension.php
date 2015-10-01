@@ -11,10 +11,10 @@ namespace Victoire\Bundle\FormBundle\Form\Extension;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Extension for enabling Horizontal Forms.
@@ -43,9 +43,9 @@ class HorizontalFormTypeExtension extends AbstractTypeExtension
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['vic_horizontal']                     = $options['vic_horizontal'];
-        $view->vars['vic_horizontal_label_class']         = $options['vic_horizontal_label_class'];
-        $view->vars['vic_horizontal_label_offset_class']  = $options['vic_horizontal_label_offset_class'];
+        $view->vars['vic_horizontal'] = $options['vic_horizontal'];
+        $view->vars['vic_horizontal_label_class'] = $options['vic_horizontal_label_class'];
+        $view->vars['vic_horizontal_label_offset_class'] = $options['vic_horizontal_label_offset_class'];
         $view->vars['vic_horizontal_input_wrapper_class'] = $options['vic_horizontal_input_wrapper_class'];
     }
 
@@ -55,12 +55,12 @@ class HorizontalFormTypeExtension extends AbstractTypeExtension
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(
-            array(
+            [
                 'vic_horizontal'                     => $this->options['vic_horizontal'],
                 'vic_horizontal_label_class'         => $this->options['vic_horizontal_label_class'],
                 'vic_horizontal_label_offset_class'  => $this->options['vic_horizontal_label_offset_class'],
                 'vic_horizontal_input_wrapper_class' => $this->options['vic_horizontal_input_wrapper_class'],
-            )
+            ]
         );
     }
 

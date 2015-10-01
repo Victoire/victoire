@@ -1,9 +1,10 @@
 <?php
+
 namespace Victoire\Bundle\CoreBundle\Route;
 
 use Symfony\Component\Config\Loader\Loader;
-use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\Route;
+use Symfony\Component\Routing\RouteCollection;
 
 class RouteLoader extends Loader
 {
@@ -13,6 +14,7 @@ class RouteLoader extends Loader
     {
         $this->widgets = $widgets;
     }
+
     public function load($resource, $type = null)
     {
         $collection = new RouteCollection();
@@ -28,7 +30,7 @@ class RouteLoader extends Loader
 
     protected function addVictoireRouting(&$collection)
     {
-        $resources = array(
+        $resources = [
             '@VictoireAnalyticsBundle/Controller/',
             '@VictoireTemplateBundle/Controller/',
             '@VictoireBlogBundle/Controller/',
@@ -39,12 +41,13 @@ class RouteLoader extends Loader
             '@VictoireCoreBundle/Controller/',
             '@VictoireWidgetBundle/Controller/',
             '@VictoireSitemapBundle/Controller/',
-        );
+        ];
         foreach ($resources as $resource) {
             $importedRoutes = $this->import($resource, 'annotation');
             $collection->addCollection($importedRoutes);
         }
     }
+
     protected function addWidgetsRouting(&$collection)
     {
         foreach ($this->widgets as $widgetParams) {
@@ -59,12 +62,12 @@ class RouteLoader extends Loader
     protected function addShowBusinessPageByIdAction(&$collection)
     {
         $pattern = '/victoire-dcms-public/show-business-page-by-id/{entityId}/{type}';
-        $defaults = array(
+        $defaults = [
             '_controller' => 'VictoirePageBundle:Page:showBusinessPageById',
-        );
-        $requirements = array(
+        ];
+        $requirements = [
             'viewId' => '\d+',
-        );
+        ];
         $route = new Route($pattern, $defaults, $requirements);
         $routeName = 'victoire_core_business_page_show_by_id';
         $collection->add($routeName, $route);
@@ -73,13 +76,13 @@ class RouteLoader extends Loader
     protected function addShowPageByIdRoute(&$collection)
     {
         $pattern = '/victoire-dcms-public/show-page-by-id/{viewId}/{entityId}';
-        $defaults = array(
+        $defaults = [
             '_controller' => 'VictoirePageBundle:Page:showById',
-            'entityId' => null,
-        );
-        $requirements = array(
+            'entityId'    => null,
+        ];
+        $requirements = [
             'viewId' => '\d+',
-        );
+        ];
         $route = new Route($pattern, $defaults, $requirements);
         $routeName = 'victoire_core_page_show_by_id';
         $collection->add($routeName, $route);
@@ -89,12 +92,12 @@ class RouteLoader extends Loader
     {
         // prepare a new route
         $pattern = '/{url}';
-        $defaults = array(
+        $defaults = [
             '_controller' => 'VictoirePageBundle:Page:show',
-        );
-        $requirements = array(
+        ];
+        $requirements = [
             'url' => '^.*$',
-        );
+        ];
         $route = new Route($pattern, $defaults, $requirements);
 
         // add the new route to the route collection:

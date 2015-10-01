@@ -2,12 +2,12 @@
 
 namespace Victoire\Bundle\MediaBundle\DependencyInjection\Compiler;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * MediaHandlerCompilerPass
+ * MediaHandlerCompilerPass.
  */
 class MediaHandlerCompilerPass implements CompilerPassInterface
 {
@@ -25,7 +25,7 @@ class MediaHandlerCompilerPass implements CompilerPassInterface
         $definition = $container->getDefinition('victoire_media.media_manager');
 
         foreach ($container->findTaggedServiceIds('victoire_media.media_handler') as $id => $attributes) {
-            $definition->addMethodCall('addHandler', array(new Reference($id)));
+            $definition->addMethodCall('addHandler', [new Reference($id)]);
         }
     }
 }

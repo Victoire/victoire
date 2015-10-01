@@ -7,8 +7,8 @@ use Symfony\Component\DependencyInjection\Container;
 /**
  * @property Container container
  */
-trait VictoireAlertifyControllerTrait {
-
+trait VictoireAlertifyControllerTrait
+{
     /**
      * Alert message to flash bag.
      *
@@ -18,21 +18,21 @@ trait VictoireAlertifyControllerTrait {
     public function alert($content, $type = 'success')
     {
         if (!is_array($content)) {
-            $content = array(
-                'body' => $content
-            );
+            $content = [
+                'body' => $content,
+            ];
         }
 
-        $content = array_merge($content, array(
+        $content = array_merge($content, [
                 'context' => 'victoire',
-                'layout' => 'growl',
-                'effect' => 'jelly'
-            ));
+                'layout'  => 'growl',
+                'effect'  => 'jelly',
+            ]);
         $this->container->get('appventus_alertifybundle.helper.alertifyhelper')->alert($content, $type);
     }
 
     /**
-     * Congrats user through flash bag : all happened successfully
+     * Congrats user through flash bag : all happened successfully.
      *
      * @param string $content
      */
@@ -42,7 +42,7 @@ trait VictoireAlertifyControllerTrait {
     }
 
     /**
-     * Warn user through flash bag: something requires attention
+     * Warn user through flash bag: something requires attention.
      *
      * @param string $content
      */
@@ -52,7 +52,7 @@ trait VictoireAlertifyControllerTrait {
     }
 
     /**
-     * Inform user through flash bag: something have to be said
+     * Inform user through flash bag: something have to be said.
      *
      * @param string $content
      */
@@ -62,7 +62,7 @@ trait VictoireAlertifyControllerTrait {
     }
 
     /**
-     * Scold user through flash bag: something went wrong
+     * Scold user through flash bag: something went wrong.
      *
      * @param string $content
      */

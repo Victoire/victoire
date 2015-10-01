@@ -19,21 +19,19 @@ class BusinessEntityTypeExtension extends AbstractTypeExtension
     {
         if (!empty($options['data_class'])
             && $this->businessEntityHelper->findByEntityClassname($options['data_class'])) {
-
             $builder
             ->add(
                 'visibleOnFront',
                 'choice',
-                array(
-                    'choices' => array(
+                [
+                    'choices' => [
                         1 => 'businessEntity.form.visibleOnFront.yes',
                         0 => 'businessEntity.form.visibleOnFront.no',
-                    ),
-                    'label' => "businessEntity.form.visibleOnFront.label",
-                    'translation_domain' => 'victoire'
-                )
+                    ],
+                    'label'              => 'businessEntity.form.visibleOnFront.label',
+                    'translation_domain' => 'victoire',
+                ]
             );
-
         }
     }
 

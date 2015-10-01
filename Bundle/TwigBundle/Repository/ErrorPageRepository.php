@@ -5,13 +5,14 @@ namespace Victoire\Bundle\TwigBundle\Repository;
 use Victoire\Bundle\PageBundle\Repository\BasePageRepository;
 
 /**
- * The Page repository
+ * The Page repository.
  */
 class ErrorPageRepository extends BasePageRepository
 {
     /**
-     * Get a page according to the given code
-     * @param integer $code The error code
+     * Get a page according to the given code.
+     *
+     * @param int $code The error code
      *
      * @return Page
      */
@@ -28,7 +29,7 @@ class ErrorPageRepository extends BasePageRepository
         if (!$page && $deepMode) {
             // Check for a same family error
             // for example, for a 404 code, if the 404 error page doesn't exist, we check for a 400 errorPage
-            $page = $this->findOneByCode(floor($code/100)*100);
+            $page = $this->findOneByCode(floor($code / 100) * 100);
         }
 
         return $page;
