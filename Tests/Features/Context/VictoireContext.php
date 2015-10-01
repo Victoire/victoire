@@ -212,4 +212,16 @@ class VictoireContext extends RawMinkContext
         }
 
     }
+
+    /**
+     * @Then I should see disable tab :name
+     */
+    public function iShouldSeeDisableTab($name) {
+        $element = $this->findOrRetry($this->getSession()->getPage(), 'xpath', sprintf('descendant-or-self::li[@class="vic-disable" and normalize-space(.) = "%s"]', $name));
+
+        if (null === $element) {
+            $message = sprintf('Element not found in the page after 10 seconds"');
+            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
+        }
+    }
 }

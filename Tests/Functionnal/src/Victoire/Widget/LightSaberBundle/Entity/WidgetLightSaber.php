@@ -18,9 +18,8 @@ class WidgetLightSaber extends Widget
     /**
      * @var integer
      *
-     * @VIC\ReceiverProperty("imageable")
-     * @Assert\NotBlank()
-     * @ORM\Column(name="length", type="integer")
+     * @VIC\ReceiverProperty("imageable", required=true)
+     * @ORM\Column(name="length", type="integer", nullable=true)
      */
     protected $length;
 

@@ -56,7 +56,12 @@ class BusinessEntityCacheReader
         $widgetName = $this->widgetHelper->getWidgetName($widget);
         $widgetMetadatas = $this->fetch(BusinessEntity::CACHE_WIDGETS);
         if (isset($widgetMetadatas[$widgetName]) && array_key_exists('businessEntities', $widgetMetadatas[$widgetName])) {
-            return $widgetMetadatas[$widgetName]['businessEntities'];
+            /* @var BusinessEntity[] $businessEntities */
+            $businessEntities = $widgetMetadatas[$widgetName]['businessEntities'];
+            foreach($businessEntities as $businessEntity) {
+                $businessEntity->setDisableForReceiverProperties($widgetMetadatas[$widgetName]['receiverProperties']);
+            }
+            return $businessEntities;
         }
 
         return array();

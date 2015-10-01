@@ -174,6 +174,10 @@
         <source>victoire.widget.type.asynchronous.label</source>
         <target>Asynchronous load ?</target>
       </trans-unit>
+      <trans-unit id="24" resname="form.widget.tab.entity.disable.label">
+        <source>form.widget.tab.entity.disable.label</source>
+        <target>At least one one businessParameter is missing for this BusinessEntity to be available on this Widget</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

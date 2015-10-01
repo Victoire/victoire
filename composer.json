@@ -73,6 +73,8 @@
         "behat/mink-selenium2-driver": "~1.1",
         "behat/symfony2-extension": "~2.0",
         "knplabs/friendly-contexts": "dev-master",
+        "phpunit/php-code-coverage": "2.2.3",
+        "phpunit/phpunit-mock-objects": "2.3.7",
         "phpunit/phpunit": "4.6.*",
         "symfony/var-dumper": "~3.0@dev"
     },
