@@ -1,14 +1,14 @@
 <?php
+
 namespace Victoire\Bundle\BusinessPageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Victoire\Bundle\PageBundle\Entity\PageStatus;
 use Victoire\Bundle\SeoBundle\Entity\PageSeo;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
-use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 
 /**
- * BusinessTemplate
+ * BusinessTemplate.
  *
  * @ORM\Entity(repositoryClass="Victoire\Bundle\BusinessPageBundle\Repository\BusinessTemplateRepository")
  * @ORM\HasLifecycleCallbacks()
@@ -32,7 +32,7 @@ class BusinessTemplate extends Template
     protected $inheritors;
 
     /**
-     * contruct
+     * contruct.
      **/
     public function __construct()
     {
@@ -44,18 +44,29 @@ class BusinessTemplate extends Template
     /**
      * @return [BusinessPage]
      */
-    public function getInstances() { return $this->inheritors; }
-    public function setInstances($inheritors) { $this->inheritors = $inheritors; return $this; }
+    public function getInstances()
+    {
+        return $this->inheritors;
+    }
+
+    public function setInstances($inheritors)
+    {
+        $this->inheritors = $inheritors;
+
+        return $this;
+    }
 
     /**
      * @return string
      */
-    public function getLayout() {
+    public function getLayout()
+    {
         return $this->layout ? $this->layout : $this->getTemplate()->getLayout();
     }
 
     /**
-     * Set seo
+     * Set seo.
+     *
      * @param PageSeo $seo
      *
      * @return BusinessTemplate
@@ -68,7 +79,7 @@ class BusinessTemplate extends Template
     }
 
     /**
-     * Get seo
+     * Get seo.
      *
      * @return PageSeo
      */

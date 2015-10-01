@@ -1,18 +1,19 @@
 <?php
+
 namespace Victoire\Bundle\PageBundle\Security\Voter;
 
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
 /**
- * This class decides yes or no if the user is granted to see the debug
+ * This class decides yes or no if the user is granted to see the debug.
  */
 class PageDebugVoter implements VoterInterface
 {
     protected $userClass;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param unknown $userClass
      */
@@ -22,7 +23,7 @@ class PageDebugVoter implements VoterInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function supportsAttribute($attribute)
     {
@@ -30,7 +31,7 @@ class PageDebugVoter implements VoterInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function supportsClass($class)
     {
@@ -38,7 +39,7 @@ class PageDebugVoter implements VoterInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function vote(TokenInterface $token, $view, array $attributes)
     {

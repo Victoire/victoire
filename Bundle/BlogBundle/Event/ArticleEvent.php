@@ -1,10 +1,10 @@
 <?php
+
 namespace Victoire\Bundle\BlogBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Response;
 use Victoire\Bundle\BlogBundle\Entity\Article;
-
 
 class ArticleEvent extends Event
 {
@@ -12,9 +12,9 @@ class ArticleEvent extends Event
     private $article;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param Article       $article
+     * @param Article $article
      */
     public function __construct(Article $article)
     {
@@ -22,7 +22,7 @@ class ArticleEvent extends Event
     }
 
     /**
-     * Get the article
+     * Get the article.
      *
      * @return Article
      */
@@ -32,7 +32,7 @@ class ArticleEvent extends Event
     }
 
     /**
-     * Get response
+     * Get response.
      *
      * @return Response
      */
@@ -42,7 +42,7 @@ class ArticleEvent extends Event
     }
 
     /**
-     * Set response
+     * Set response.
      *
      * @param string $response
      *

@@ -8,7 +8,7 @@ use Victoire\Bundle\CoreBundle\Helper\ViewHelper;
 
 /**
  * Called (for example on kernel request) to create the viewsReference cache file
- * ref. victoire_core.cache_warmer.view_warmer
+ * ref. victoire_core.cache_warmer.view_warmer.
  */
 class ViewCacheWarmer
 {
@@ -27,7 +27,8 @@ class ViewCacheWarmer
     }
 
     /**
-     * Warm the view cache file (if needed or force mode)
+     * Warm the view cache file (if needed or force mode).
+     *
      * @param string $cacheDir Where does the viewsReferences file should take place
      */
     public function warmUp($cacheDir)

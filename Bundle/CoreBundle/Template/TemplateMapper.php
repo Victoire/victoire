@@ -1,12 +1,13 @@
 <?php
+
 namespace Victoire\Bundle\CoreBundle\Template;
 
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
  * The template mapper
- * ref: victoire_templating
+ * ref: victoire_templating.
  */
 class TemplateMapper
 {
@@ -15,7 +16,7 @@ class TemplateMapper
     protected $templates;
 
     /**
-     * constructor
+     * constructor.
      *
      * @param ContainerInterface $container
      */
@@ -27,7 +28,7 @@ class TemplateMapper
     }
 
     /**
-     * Render the template
+     * Render the template.
      *
      * @param string $view   The requested template key
      * @param array  $params The params to give to the template
@@ -42,14 +43,14 @@ class TemplateMapper
     }
 
     /**
-     * Render response with requested template
+     * Render response with requested template.
      *
      * @param string $view   The requested template key
      * @param array  $params The params to give to the template
      *
      * @return Response
      **/
-    public function renderResponse($view, $params = array())
+    public function renderResponse($view, $params = [])
     {
         //the template
         $template = $this->retrieveTemplate($view);
@@ -61,20 +62,20 @@ class TemplateMapper
     }
 
     /**
-     * Execute several strategies to retrive the template file
+     * Execute several strategies to retrive the template file.
      *
      * @param string $view The key of requested template
      *
-     * @return string file
-     *
      * @throws HttpException
+     *
+     * @return string file
      **/
     public function retrieveTemplate($view)
     {
-        list($bundle, $element, $view) = array_pad(explode(":", $view), 3, null);
+        list($bundle, $element, $view) = array_pad(explode(':', $view), 3, null);
 
         if ($view) {
-            $twigTemplate = $element.":".$view;
+            $twigTemplate = $element.':'.$view;
         } else {
             $twigTemplate = $element;
         }
@@ -88,8 +89,8 @@ class TemplateMapper
                     500,
                     sprintf('Requested template "%s" was not found neither in "%s" or "%s"',
                         $twigTemplate,
-                        sprintf("%s:%s", $this->appBundle, $twigTemplate),
-                        sprintf("%s:%s", $bundle, $twigTemplate)
+                        sprintf('%s:%s', $this->appBundle, $twigTemplate),
+                        sprintf('%s:%s', $bundle, $twigTemplate)
                     )
                 );
                 break;
@@ -99,7 +100,7 @@ class TemplateMapper
     }
 
     /**
-     * Get the global layout
+     * Get the global layout.
      *
      * @return Ambigous <\Victoire\Bundle\CoreBundle\Template\Template, void, boolean, string>
      */
@@ -109,11 +110,11 @@ class TemplateMapper
             return $this->templates['layout'];
         }
 
-        return $this->retrieveTemplate("VictoireCoreBundle:layout.html.twig");
+        return $this->retrieveTemplate('VictoireCoreBundle:layout.html.twig');
     }
 
     /**
-     * Apply strategy to retrive template
+     * Apply strategy to retrive template.
      *
      * @param string $template
      *

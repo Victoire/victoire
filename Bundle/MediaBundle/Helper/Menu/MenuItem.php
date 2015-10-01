@@ -3,7 +3,7 @@
 namespace Victoire\Bundle\MediaBundle\Helper\Menu;
 
 /**
- * A MenuItem is part of the menu in the admin interface, this will be build by the {@link MenuBuilder}
+ * A MenuItem is part of the menu in the admin interface, this will be build by the {@link MenuBuilder}.
  */
 class MenuItem
 {
@@ -35,15 +35,15 @@ class MenuItem
     /**
      * @var array
      */
-    private $routeParams = array();
+    private $routeParams = [];
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $active = false;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $offline = false;
 
@@ -55,10 +55,10 @@ class MenuItem
     /**
      * @var array
      */
-    private $attributes = array();
+    private $attributes = [];
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $appearInNavigation = true;
 
@@ -68,7 +68,7 @@ class MenuItem
     private $weight = -50;
 
     /**
-     * Construct the MenuItem
+     * Construct the MenuItem.
      *
      * @param MenuBuilder $menu
      */
@@ -78,7 +78,7 @@ class MenuItem
     }
 
     /**
-     * Get menu builder
+     * Get menu builder.
      *
      * @return MenuBuilder
      */
@@ -88,7 +88,7 @@ class MenuItem
     }
 
     /**
-     * Get internal name
+     * Get internal name.
      *
      * @return string
      */
@@ -98,7 +98,7 @@ class MenuItem
     }
 
     /**
-     * Set internal name
+     * Set internal name.
      *
      * @param string $internalName
      *
@@ -112,7 +112,7 @@ class MenuItem
     }
 
     /**
-     * Get role
+     * Get role.
      *
      * @return string
      */
@@ -122,7 +122,7 @@ class MenuItem
     }
 
     /**
-     * Set role
+     * Set role.
      *
      * @param string $role
      *
@@ -136,7 +136,7 @@ class MenuItem
     }
 
     /**
-     * Get parent menu item
+     * Get parent menu item.
      *
      * @return MenuItem|null
      */
@@ -146,7 +146,7 @@ class MenuItem
     }
 
     /**
-     * Set parent menu item
+     * Set parent menu item.
      *
      * @param MenuItem|null $parent
      *
@@ -160,7 +160,7 @@ class MenuItem
     }
 
     /**
-     * Get route for menu item
+     * Get route for menu item.
      *
      * @return string
      */
@@ -170,23 +170,23 @@ class MenuItem
     }
 
     /**
-     * Set route and parameters for menu item
+     * Set route and parameters for menu item.
      *
      * @param string $route  The route
      * @param array  $params The route parameters
      *
      * @return MenuItem
      */
-    public function setRoute($route, array $params = array())
+    public function setRoute($route, array $params = [])
     {
-        $this->route       = $route;
+        $this->route = $route;
         $this->routeParams = $params;
 
         return $this;
     }
 
     /**
-     * Get route parameters for menu item
+     * Get route parameters for menu item.
      *
      * @return array
      */
@@ -196,13 +196,13 @@ class MenuItem
     }
 
     /**
-     * Set route parameters
+     * Set route parameters.
      *
      * @param array $routeParams
      *
      * @return MenuItem
      */
-    public function setRouteParams(array $routeParams = array())
+    public function setRouteParams(array $routeParams = [])
     {
         $this->routeParams = $routeParams;
 
@@ -210,7 +210,7 @@ class MenuItem
     }
 
     /**
-     * Get children of current menu item
+     * Get children of current menu item.
      *
      * @return MenuItem[]
      */
@@ -224,13 +224,13 @@ class MenuItem
     }
 
     /**
-     * Warning: the adaptChildren method on the menuadaptors will not be called anymore for this menuitem
+     * Warning: the adaptChildren method on the menuadaptors will not be called anymore for this menuitem.
      *
      * @param array $children
      *
      * @return MenuItem
      */
-    public function setChildren(array $children = array())
+    public function setChildren(array $children = [])
     {
         $this->children = $children;
 
@@ -238,13 +238,13 @@ class MenuItem
     }
 
     /**
-     * Get children of current menu item that have the appearInNavigation flag set
+     * Get children of current menu item that have the appearInNavigation flag set.
      *
      * @return MenuItem[]
      */
     public function getNavigationChildren()
     {
-        $result   = array();
+        $result = [];
         $children = $this->getChildren();
         foreach ($children as $child) {
             if ($child->getAppearInNavigation()) {
@@ -256,13 +256,13 @@ class MenuItem
     }
 
     /**
-     * Return top children of current menu item
+     * Return top children of current menu item.
      *
      * @return TopMenuItem[]
      */
     public function getTopChildren()
     {
-        $result   = array();
+        $result = [];
         $children = $this->getChildren();
         foreach ($children as $child) {
             if ($child instanceof TopMenuItem) {
@@ -274,7 +274,7 @@ class MenuItem
     }
 
     /**
-     * Add attributes
+     * Add attributes.
      *
      * @param array $attributes
      *
@@ -288,7 +288,7 @@ class MenuItem
     }
 
     /**
-     * Get attributes
+     * Get attributes.
      *
      * @return array
      */
@@ -298,7 +298,7 @@ class MenuItem
     }
 
     /**
-     * Get menu item active state
+     * Get menu item active state.
      *
      * @return bool
      */
@@ -308,7 +308,7 @@ class MenuItem
     }
 
     /**
-     * Set menu item active state
+     * Set menu item active state.
      *
      * @param bool $active
      *
@@ -322,7 +322,7 @@ class MenuItem
     }
 
     /**
-     * Get menu item offline state
+     * Get menu item offline state.
      *
      * @return bool
      */
@@ -332,7 +332,7 @@ class MenuItem
     }
 
     /**
-     * Set menu item offline state
+     * Set menu item offline state.
      *
      * @param bool $offline
      *
@@ -346,7 +346,7 @@ class MenuItem
     }
 
     /**
-     * Get appearInNavigation flag
+     * Get appearInNavigation flag.
      *
      * @return bool
      */
@@ -356,7 +356,7 @@ class MenuItem
     }
 
     /**
-     * Set appearInNavigation flag
+     * Set appearInNavigation flag.
      *
      * @param bool $appearInNavigation
      *
@@ -370,7 +370,7 @@ class MenuItem
     }
 
     /**
-     * Get weight
+     * Get weight.
      *
      * @return int
      */
@@ -380,7 +380,7 @@ class MenuItem
     }
 
     /**
-     * Set weight
+     * Set weight.
      *
      * @param int $weight
      *
@@ -392,5 +392,4 @@ class MenuItem
 
         return $this;
     }
-
 }

@@ -1,10 +1,11 @@
 <?php
+
 namespace Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTraits;
 
 use Victoire\Bundle\MediaBundle\Entity\Media;
 
-trait StyleXSTrait {
-
+trait StyleXSTrait
+{
     /**
      * @var string
      *
@@ -42,6 +43,7 @@ trait StyleXSTrait {
 
     /**
      * @var string
+     *
      * @deprecated
      * @ORM\Column(name="container_background_xs", type="string", length=255, nullable=true)
      */
@@ -107,11 +109,13 @@ trait StyleXSTrait {
 
     /**
      * @param string $containerMarginXS
+     *
      * @return $this
      */
     public function setContainerMarginXS($containerMarginXS)
     {
         $this->containerMarginXS = $containerMarginXS;
+
         return $this;
     }
 
@@ -125,11 +129,13 @@ trait StyleXSTrait {
 
     /**
      * @param string $containerPaddingXS
+     *
      * @return $this
      */
     public function setContainerPaddingXS($containerPaddingXS)
     {
         $this->containerPaddingXS = $containerPaddingXS;
+
         return $this;
     }
 
@@ -143,11 +149,13 @@ trait StyleXSTrait {
 
     /**
      * @param string $containerHeightXS
+     *
      * @return $this
      */
     public function setContainerHeightXS($containerHeightXS)
     {
         $this->containerHeightXS = $containerHeightXS;
+
         return $this;
     }
 
@@ -161,11 +169,13 @@ trait StyleXSTrait {
 
     /**
      * @param string $containerWidthXS
+     *
      * @return $this
      */
     public function setContainerWidthXS($containerWidthXS)
     {
         $this->containerWidthXS = $containerWidthXS;
+
         return $this;
     }
 
@@ -179,11 +189,13 @@ trait StyleXSTrait {
 
     /**
      * @param string $textAlignXS
+     *
      * @return $this
      */
     public function setTextAlignXS($textAlignXS)
     {
         $this->textAlignXS = $textAlignXS;
+
         return $this;
     }
 
@@ -197,11 +209,13 @@ trait StyleXSTrait {
 
     /**
      * @param string $containerBackgroundXS
+     *
      * @return $this
      */
     public function setContainerBackgroundXS($containerBackgroundXS)
     {
         $this->containerBackgroundXS = $containerBackgroundXS;
+
         return $this;
     }
 
@@ -215,11 +229,13 @@ trait StyleXSTrait {
 
     /**
      * @param string $containerBackgroundTypeXS
+     *
      * @return $this
      */
     public function setContainerBackgroundTypeXS($containerBackgroundTypeXS)
     {
         $this->containerBackgroundTypeXS = $containerBackgroundTypeXS;
+
         return $this;
     }
 
@@ -233,11 +249,13 @@ trait StyleXSTrait {
 
     /**
      * @param string $containerBackgroundRepeatXS
+     *
      * @return $this
      */
     public function setContainerBackgroundRepeatXS($containerBackgroundRepeatXS)
     {
         $this->containerBackgroundRepeatXS = $containerBackgroundRepeatXS;
+
         return $this;
     }
 
@@ -251,11 +269,13 @@ trait StyleXSTrait {
 
     /**
      * @param string $containerBackgroundPositionXS
+     *
      * @return $this
      */
     public function setContainerBackgroundPositionXS($containerBackgroundPositionXS)
     {
         $this->containerBackgroundPositionXS = $containerBackgroundPositionXS;
+
         return $this;
     }
 
@@ -269,11 +289,13 @@ trait StyleXSTrait {
 
     /**
      * @param string $containerBackgroundSizeXS
+     *
      * @return $this
      */
     public function setContainerBackgroundSizeXS($containerBackgroundSizeXS)
     {
         $this->containerBackgroundSizeXS = $containerBackgroundSizeXS;
+
         return $this;
     }
 
@@ -287,11 +309,13 @@ trait StyleXSTrait {
 
     /**
      * @param string $containerBackgroundColorXS
+     *
      * @return $this
      */
     public function setContainerBackgroundColorXS($containerBackgroundColorXS)
     {
         $this->containerBackgroundColorXS = $containerBackgroundColorXS;
+
         return $this;
     }
 
@@ -304,13 +328,16 @@ trait StyleXSTrait {
     }
 
     /**
-     * Set image
+     * Set image.
+     *
      * @param Media $image
+     *
      * @return $this
      */
     public function setContainerBackgroundImageXS(Media $image = null)
     {
         $this->containerBackgroundImageXS = $image;
+
         return $this;
     }
 
@@ -324,12 +351,13 @@ trait StyleXSTrait {
 
     /**
      * @param string $containerBackgroundOverlayXS
+     *
      * @return $this
      */
     public function setContainerBackgroundOverlayXS($containerBackgroundOverlayXS)
     {
         $this->containerBackgroundOverlayXS = $containerBackgroundOverlayXS;
+
         return $this;
     }
-
 }

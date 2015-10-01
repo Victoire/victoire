@@ -6,7 +6,7 @@ use Symfony\Component\EventDispatcher\Event;
 use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
 
 /**
- * When dispatched, this listener add items to the victoire hamburger menu
+ * When dispatched, this listener add items to the victoire hamburger menu.
  */
 class HamburgerMenuListener
 {
@@ -14,7 +14,8 @@ class HamburgerMenuListener
     private $mainItem;
 
     /**
-     * Constructor
+     * Constructor.
+     *
      * @param MenuBuilder $menuBuilder
      */
     public function __construct(MenuBuilder $menuBuilder)
@@ -23,7 +24,8 @@ class HamburgerMenuListener
     }
 
     /**
-     * add global menu items
+     * add global menu items.
+     *
      * @param Event $event
      *
      * @return \Knp\Menu\ItemInterface
@@ -33,9 +35,9 @@ class HamburgerMenuListener
     {
         $this->mainItem = $this->menuBuilder->getLeftNavbar();
 
-        $this->mainItem->addChild('hamburger_menu.jedi', array(
+        $this->mainItem->addChild('hamburger_menu.jedi', [
                 'route' => 'acme_app_jedi_index',
-            )
+            ]
         );
 
         return $this->mainItem;

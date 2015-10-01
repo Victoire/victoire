@@ -13,7 +13,7 @@ use Victoire\Bundle\PageBundle\Entity\BasePage;
 
 /**
  * Page helper
- * ref: victoire_core.view_helper
+ * ref: victoire_core.view_helper.
  */
 class ViewHelper
 {
@@ -25,13 +25,15 @@ class ViewHelper
     protected $viewReferenceProvider;
 
     /**
-     * Constructor
+     * Constructor.
+     *
      * @param BETParameterConverter $parameterConverter
-     * @param BusinessEntityHelper $businessEntityHelper
-     * @param EntityManager $entityManager
-     * @param ViewReferenceBuilder $viewReferenceBuilder
-     * @param ViewReferenceHelper $viewReferenceHelper
+     * @param BusinessEntityHelper  $businessEntityHelper
+     * @param EntityManager         $entityManager
+     * @param ViewReferenceBuilder  $viewReferenceBuilder
+     * @param ViewReferenceHelper   $viewReferenceHelper
      * @param ViewReferenceProvider $viewReferenceProvider
+     *
      * @internal param $ViewManagerChain $$viewManagerChain
      */
     public function __construct(
@@ -51,22 +53,21 @@ class ViewHelper
     }
 
     //@todo Make it dynamic please
-    protected $pageParameters = array(
+    protected $pageParameters = [
         'name',
         'bodyId',
         'bodyClass',
         'slug',
         'url',
         'locale',
-    );
+    ];
 
     /**
      * @return array
      */
     public function buildViewsReferences()
     {
-
-        $views = $this->em->createQuery("SELECT v FROM VictoireCoreBundle:View v")->getResult();
+        $views = $this->em->createQuery('SELECT v FROM VictoireCoreBundle:View v')->getResult();
         $viewsReferences = [];
         foreach ($this->viewReferenceProvider->getReferencableViews($views, $this->em) as $viewReferencable) {
             $viewsReferences = array_merge($viewsReferences, $this->viewReferenceBuilder->buildViewReference($viewReferencable, $this->em));
@@ -77,10 +78,6 @@ class ViewHelper
 
         return $viewsReferences;
     }
-
-
-
-
 
     /**
      * @param View $view, the view to translatate
@@ -99,7 +96,7 @@ class ViewHelper
             if ($template->getI18n()->getTranslation($locale)) {
                 $template = $template->getI18n()->getTranslation($locale);
             } else {
-                $templateName = $template->getName()."-".$locale;
+                $templateName = $template->getName().'-'.$locale;
                 $this->em->refresh($view);
                 $template = $this->addTranslation($template, $templateName, $locale);
             }
@@ -124,14 +121,13 @@ class ViewHelper
      * @param $etmplateName the future name of the clone
      *
      * this methods allows you to clone a view and its widgets and also the widgetmap
-     *
      */
     public function cloneView(View $view, $templateName = null)
     {
         $clonedView = clone $view;
         $this->em->refresh($view);
         $widgetMapClone = $clonedView->getWidgetMap(false);
-        $arrayMapOfWidgetMap = array();
+        $arrayMapOfWidgetMap = [];
         if (null !== $templateName) {
             $clonedView->setName($templateName);
         }
@@ -185,7 +181,7 @@ class ViewHelper
                 }
             }
 
-            $clonedView->setSlots(array());
+            $clonedView->setSlots([]);
             $clonedView->setWidgetMap($widgetMapClone);
             $this->em->persist($clonedView);
             $this->em->flush();
@@ -199,7 +195,6 @@ class ViewHelper
      * @param $etmplateName the future name of the clone
      *
      * this methods allows you to clone a BusinessTemplate
-     *
      */
     protected function cloneBusinessTemplate(BusinessTemplate $view)
     {
@@ -207,6 +202,4 @@ class ViewHelper
         $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($businessEntityId);
         $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
     }
-
-
 }

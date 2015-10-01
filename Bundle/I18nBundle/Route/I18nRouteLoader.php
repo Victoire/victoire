@@ -8,7 +8,7 @@ use Victoire\Bundle\CoreBundle\Route\RouteLoader as BaseRouteLoader;
 use Victoire\Bundle\I18nBundle\Resolver\LocaleResolver;
 
 /**
- * The I18nRouteLoader overwrite Victoire default RouteLoader to
+ * The I18nRouteLoader overwrite Victoire default RouteLoader to.
  */
 class I18nRouteLoader extends BaseRouteLoader
 {
@@ -38,18 +38,19 @@ class I18nRouteLoader extends BaseRouteLoader
     }
 
     /**
-     * Add a homepage redirection route to the collection
+     * Add a homepage redirection route to the collection.
+     *
      * @param RouteCollection $collection The collection where to add the new route
      */
     protected function addHomepageRedirection(&$collection)
     {
         $route = new Route(
             '/',
-            array(
+            [
                 '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
                 'path'        => '/'.$this->localeResolver->defaultLocale, //@todo handle PATTERN_DOMAIN strategy
-                'permanent'   => true
-            )
+                'permanent'   => true,
+            ]
         );
 
         $collection->add('victoire_redirect_homepage', $route);

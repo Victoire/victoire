@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\WidgetBundle\Renderer;
 
 use Symfony\Component\DependencyInjection\Container;
@@ -11,7 +12,6 @@ use Victoire\Bundle\WidgetBundle\Model\Widget;
 
 class WidgetRenderer
 {
-
     private $container;
 
     public function __construct(Container $container)
@@ -20,7 +20,8 @@ class WidgetRenderer
     }
 
     /**
-     * render the Widget
+     * render the Widget.
+     *
      * @param Widget $widget
      * @param View   $view
      *
@@ -53,7 +54,8 @@ class WidgetRenderer
     }
 
     /**
-     * render a widget
+     * render a widget.
+     *
      * @param Widget $widget
      * @param View   $view
      *
@@ -75,8 +77,9 @@ class WidgetRenderer
     }
 
     /**
-     * prepare a widget to be rendered asynchronously
-     * @param integer $widgetId
+     * prepare a widget to be rendered asynchronously.
+     *
+     * @param int $widgetId
      *
      * @return string
      */
@@ -90,9 +93,10 @@ class WidgetRenderer
     }
 
     /**
-     * render widget unlink action
-     * @param integer $widgetId
-     * @param View    $view
+     * render widget unlink action.
+     *
+     * @param int  $widgetId
+     * @param View $view
      *
      * @return string
      */
@@ -100,44 +104,46 @@ class WidgetRenderer
     {
         return $this->container->get('victoire_templating')->render(
             'VictoireCoreBundle:Widget:widgetUnlinkAction.html.twig',
-            array(
-                "widgetId" => $widgetId,
-                "view" => $view,
-            )
+            [
+                'widgetId' => $widgetId,
+                'view'     => $view,
+            ]
         );
     }
 
     /**
-     * render slot actions
-     * @param Slot    $slot
-     * @param string   $options
+     * render slot actions.
+     *
+     * @param Slot   $slot
+     * @param string $options
      *
      * @return string
      */
-    public function renderActions($slot, $options = array())
+    public function renderActions($slot, $options = [])
     {
         return $this->container->get('victoire_templating')->render(
-            "VictoireCoreBundle:Widget:actions.html.twig",
-            array(
-                "slot"     => $slot,
-                'options'  => $options
-            )
+            'VictoireCoreBundle:Widget:actions.html.twig',
+            [
+                'slot'     => $slot,
+                'options'  => $options,
+            ]
         );
     }
 
     /**
-     * Compute slot options
-     * @param Slot    $slotId
-     * @param array   $options
+     * Compute slot options.
+     *
+     * @param Slot  $slotId
+     * @param array $options
      *
      * @return string
      */
-    public function computeOptions($slotId, $options = array())
+    public function computeOptions($slotId, $options = [])
     {
         $slots = $this->container->getParameter('victoire_core.slots');
 
         $availableWidgets = $this->container->getParameter('victoire_core.widgets');
-        $widgets = array();
+        $widgets = [];
 
         //If the slot is declared in config
         if (!empty($slots[$slotId]) && !empty($slots[$slotId]['widgets'])) {
@@ -168,9 +174,8 @@ class WidgetRenderer
         return $slots[$slotId];
     }
 
-
     /**
-     * Get the extra classes for the css
+     * Get the extra classes for the css.
      *
      * @return string The classes
      */

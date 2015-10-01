@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\CoreBundle\Listener;
 
-
 use Symfony\Component\EventDispatcher\Event;
 use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
 
@@ -11,7 +10,8 @@ class BackendMenuListener implements MenuListenerInterface
     private $menuBuilder;
 
     /**
-     * Constructor
+     * Constructor.
+     *
      * @param MenuBuilder $menuBuilder
      */
     public function __construct(MenuBuilder $menuBuilder)
@@ -20,18 +20,19 @@ class BackendMenuListener implements MenuListenerInterface
     }
 
     /**
-     * add a contextual menu item
+     * add a contextual menu item.
+     *
      * @param Event $event
      *
      * @return Ambigous <\Knp\Menu\ItemInterface, NULL>
      */
     public function addContextual($event)
     {
-        return null;
+        return;
     }
 
     /**
-     * add global menu items
+     * add global menu items.
      *
      * @param Event $event
      *
@@ -41,9 +42,9 @@ class BackendMenuListener implements MenuListenerInterface
     {
         $this->mainItem = $this->menuBuilder->getLeftNavbar();
 
-        $this->mainItem->addChild('hamburger_menu.backend.back_home', array(
+        $this->mainItem->addChild('hamburger_menu.backend.back_home', [
                 'route' => 'victoire_core_page_homepage',
-            )
+            ]
         );
 
         return $this->mainItem;

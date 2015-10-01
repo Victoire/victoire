@@ -14,7 +14,8 @@ class BrowseEventSubscriber implements EventSubscriber
     protected $userClass;
 
     /**
-     * Constructor
+     * Constructor.
+     *
      * @param string $userClass %victoire_core.user_class%
      */
     public function __construct($userClass)
@@ -23,19 +24,19 @@ class BrowseEventSubscriber implements EventSubscriber
     }
 
     /**
-     * bind to LoadClassMetadata method
+     * bind to LoadClassMetadata method.
      *
      * @return string[] The subscribed events
      */
     public function getSubscribedEvents()
     {
-        return array(
+        return [
             'loadClassMetadata',
-        );
+        ];
     }
 
     /**
-     * Insert enabled widgets in base widget DiscriminatorMap
+     * Insert enabled widgets in base widget DiscriminatorMap.
      *
      * @param LoadClassMetadataEventArgs $eventArgs
      */
@@ -45,18 +46,18 @@ class BrowseEventSubscriber implements EventSubscriber
 
         //Add author relation on BrowseEvent
         if ($this->userClass && $metadatas->name === 'Victoire\Bundle\AnalyticsBundle\Entity\BrowseEvent') {
-            $metadatas->mapManyToOne(array(
+            $metadatas->mapManyToOne([
                 'fieldName'    => 'author',
                 'targetEntity' => $this->userClass,
-                'cascade'      => array('persist'),
-                'joinColumns' => array(
-                    array(
-                        'name' => 'author_id',
+                'cascade'      => ['persist'],
+                'joinColumns'  => [
+                    [
+                        'name'                 => 'author_id',
                         'referencedColumnName' => 'id',
-                        'onDelete' => 'SET NULL',
-                    ),
-                ),
-            ));
+                        'onDelete'             => 'SET NULL',
+                    ],
+                ],
+            ]);
         }
     }
 }

@@ -11,13 +11,13 @@ namespace Victoire\Bundle\FormBundle\Form\Extension;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Extension for Form Widget Bootstrap handling
+ * Extension for Form Widget Bootstrap handling.
  *
  * @author phiamo <phiamo@googlemail.com>
  */
@@ -44,11 +44,11 @@ class WidgetFormTypeExtension extends AbstractTypeExtension
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         if (in_array('percent', $view->vars['block_prefixes']) && null === $options['vic_widget_addon_append']) {
-            $options['vic_widget_addon_append'] = array();
+            $options['vic_widget_addon_append'] = [];
         }
 
         if (in_array('money', $view->vars['block_prefixes']) && null === $options['vic_widget_addon_prepend']) {
-            $options['vic_widget_addon_prepend'] = array();
+            $options['vic_widget_addon_prepend'] = [];
         }
 
         $view->vars['vic_widget_form_control_class'] = $options['vic_widget_form_control_class'];
@@ -68,31 +68,31 @@ class WidgetFormTypeExtension extends AbstractTypeExtension
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'vic_widget_form_control_class' => 'vic-form-control',
-            'vic_widget_form_group' => true,
-            'vic_widget_addon_prepend' => null,
-            'vic_widget_addon_append' => null,
-            'vic_widget_prefix' => null,
-            'vic_widget_suffix' => null,
-            'vic_widget_type' => '',
-            'vic_widget_items_attr' => array(),
-            'vic_vic_widget_form_group_attr' => array(
-                'class' => 'vic-form-group'
-            ),
+        $resolver->setDefaults([
+            'vic_widget_form_control_class'  => 'vic-form-control',
+            'vic_widget_form_group'          => true,
+            'vic_widget_addon_prepend'       => null,
+            'vic_widget_addon_append'        => null,
+            'vic_widget_prefix'              => null,
+            'vic_widget_suffix'              => null,
+            'vic_widget_type'                => '',
+            'vic_widget_items_attr'          => [],
+            'vic_vic_widget_form_group_attr' => [
+                'class' => 'vic-form-group',
+            ],
             'vic_widget_vic_checkbox_label' => $this->options['vic_checkbox_label'],
-        ));
-        $resolver->setAllowedValues(array(
-            'vic_widget_type' => array(
+        ]);
+        $resolver->setAllowedValues([
+            'vic_widget_type' => [
                 'inline',
                 '',
-            ),
-            'vic_widget_vic_checkbox_label' => array(
+            ],
+            'vic_widget_vic_checkbox_label' => [
                 'label',
                 'widget',
                 'both',
-            )
-        ));
+            ],
+        ]);
     }
 
     /**

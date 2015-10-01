@@ -2,18 +2,17 @@
 
 namespace Victoire\Bundle\I18nBundle\Translation;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator as BaseTranslator;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Translation\MessageSelector;
 
 class Translator extends BaseTranslator
 {
-
     protected $container;
-    protected $options = array(
+    protected $options = [
         'cache_dir' => 'test',
         'debug'     => true,
-    );
+    ];
     protected $loaderIds;
 
     /**
@@ -26,7 +25,7 @@ class Translator extends BaseTranslator
      *
      * @api
      */
-    public function __construct(ContainerInterface $container, MessageSelector $selector, $loaderIds = array(), array $options = array())
+    public function __construct(ContainerInterface $container, MessageSelector $selector, $loaderIds = [], array $options = [])
     {
         parent::__construct($container, $selector, $loaderIds, $options);
         $this->selector = $selector;
@@ -38,7 +37,7 @@ class Translator extends BaseTranslator
      *
      * @api
      */
-    public function trans($id, array $parameters = array(), $domain = null, $locale = null)
+    public function trans($id, array $parameters = [], $domain = null, $locale = null)
     {
         if (null === $locale) {
             $locale = $this->getLocale();
@@ -60,7 +59,7 @@ class Translator extends BaseTranslator
      *
      * @api
      */
-    public function transChoice($id, $number, array $parameters = array(), $domain = null, $locale = null)
+    public function transChoice($id, $number, array $parameters = [], $domain = null, $locale = null)
     {
         if (null === $locale) {
             $locale = $this->getLocale();
@@ -88,7 +87,7 @@ class Translator extends BaseTranslator
     }
 
     /**
-     * get the local in the session
+     * get the local in the session.
      */
     public function getLocale()
     {
@@ -98,7 +97,8 @@ class Translator extends BaseTranslator
     }
 
     /**
-     * get the locale of the administration template
+     * get the locale of the administration template.
+     *
      * @return string
      */
     public function getVictoireLocale()
@@ -107,5 +107,4 @@ class Translator extends BaseTranslator
 
         return $this->locale;
     }
-
 }

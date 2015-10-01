@@ -4,18 +4,17 @@ namespace Victoire\Bundle\BusinessPageBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Victoire\Bundle\PageBundle\Form\PageSettingsType;
 
 /**
- * BusinessPageType
+ * BusinessPageType.
  */
 class BusinessPageType extends PageSettingsType
 {
-
     /*
     * Constructor
     */
+
     public function __construct($availableLocales, RequestStack $requestStack)
     {
         parent::__construct($availableLocales, $requestStack);
@@ -32,14 +31,14 @@ class BusinessPageType extends PageSettingsType
         parent::buildForm($builder, $options);
         $builder->remove('slug');
         $builder->add('slug', 'hidden');
-        $builder->add('staticUrl', 'slug', array(
-                'label' => 'form.page.type.slug.label'
-            )
+        $builder->add('staticUrl', 'slug', [
+                'label' => 'form.page.type.slug.label',
+            ]
         );
     }
 
     /**
-     * The name of the form
+     * The name of the form.
      *
      * @return string
      */

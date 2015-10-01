@@ -5,15 +5,14 @@ namespace Victoire\Bundle\MediaBundle\Helper;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * BulkUploadHelper
+ * BulkUploadHelper.
  */
 class BulkUploadHelper
 {
-
     /**
      * @var UploadedFile[]
      */
-    public $files = array();
+    public $files = [];
 
     /**
      * @param UploadedFile[] $files

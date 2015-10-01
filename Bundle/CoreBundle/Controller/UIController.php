@@ -8,14 +8,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Switch controller
+ * Switch controller.
  *
  * @Route("/victoire-dcms/ui")
  */
 class UIController extends Controller
 {
     /**
-     * Confirm modal
+     * Confirm modal.
+     *
      * @param Request $request An HTTP request.
      *
      * @return array
@@ -30,7 +31,7 @@ class UIController extends Controller
             $confirmCallback = null;
         }
 
-        return array(
+        return [
             'title'                => $request->get('title'),
             'body'                 => $request->get('body'),
             'id'                   => $request->get('id').'-'.uniqid().'-modal',
@@ -38,6 +39,6 @@ class UIController extends Controller
             'confirm_button_class' => $request->get('confirm_button_class', 'vic-btn-danger'),
             'type'                 => $request->get('type'),
             'confirmCallback'      => $confirmCallback,
-        );
+        ];
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\PageBundle\Entity;
 
 /**
@@ -11,15 +12,15 @@ class Slot
     protected $widgetMaps = null;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
-        $this->widgetMaps = array();
+        $this->widgetMaps = [];
     }
 
     /**
-     * Get the id
+     * Get the id.
      *
      * @return string The id
      */
@@ -29,7 +30,8 @@ class Slot
     }
 
     /**
-     * Set the id
+     * Set the id.
+     *
      * @param string $id
      */
     public function setId($id)
@@ -38,7 +40,7 @@ class Slot
     }
 
     /**
-     * Set the widget maps for this slot
+     * Set the widget maps for this slot.
      *
      * @param array $widgetMaps
      */
@@ -48,7 +50,7 @@ class Slot
     }
 
     /**
-     * Get the widget maps
+     * Get the widget maps.
      *
      * @return WidgetMap[] The widget maps
      */
@@ -58,7 +60,7 @@ class Slot
     }
 
     /**
-     * Add a widget map to the list of widget maps
+     * Add a widget map to the list of widget maps.
      *
      * @param WidgetMap $widgetMap
      */
@@ -68,7 +70,7 @@ class Slot
     }
 
     /**
-     * Update the given widgetMap
+     * Update the given widgetMap.
      *
      * @param WidgetMap $widgetMap
      *
@@ -90,9 +92,9 @@ class Slot
     }
 
     /**
-     * Get the widget map by the widget id
+     * Get the widget map by the widget id.
      *
-     * @param integer $widgetId
+     * @param int $widgetId
      *
      * @return WidgetMap
      */
@@ -115,7 +117,7 @@ class Slot
     }
 
     /**
-     * Remove the widget map from the slot
+     * Remove the widget map from the slot.
      *
      * @param WidgetMap $widgetMap
      */
@@ -132,5 +134,4 @@ class Slot
             }
         }
     }
-
 }

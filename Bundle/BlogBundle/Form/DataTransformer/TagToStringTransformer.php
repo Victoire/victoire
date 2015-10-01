@@ -16,15 +16,18 @@ class TagToStringTransformer implements DataTransformerInterface
     }
 
     /**
-     * String to Tags
-     * @param  mixed $array
+     * String to Tags.
+     *
+     * @param mixed $array
+     *
      * @internal param mixed $string
+     *
      * @return array
      */
     public function reverseTransform($array)
     {
         if (is_array($array) && array_key_exists(0, $array)) {
-            $newIds = array();
+            $newIds = [];
             $ids = explode(',', $array[0]);
             $repo = $this->em->getRepository('VictoireBlogBundle:Tag');
 
@@ -36,7 +39,7 @@ class TagToStringTransformer implements DataTransformerInterface
                 }
             }
 
-            $objectsArray = array();
+            $objectsArray = [];
             foreach ($ids as $title) {
                 if ($title !== '') {
                     $object = new Tag();
@@ -55,16 +58,15 @@ class TagToStringTransformer implements DataTransformerInterface
         }
 
         return $array;
-
     }
 
     /**
-     * @param  mixed  $array
+     * @param mixed $array
+     *
      * @return string
      */
     public function transform($array)
     {
         return $array;
     }
-
 }

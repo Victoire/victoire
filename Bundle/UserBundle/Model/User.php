@@ -4,10 +4,9 @@ namespace Victoire\Bundle\UserBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Victoire User model
+ * Victoire User model.
  */
 class User extends BaseUser implements VictoireUserInterface
 {
@@ -44,7 +43,7 @@ class User extends BaseUser implements VictoireUserInterface
     protected $pages;
 
     /**
-     * Get firstname
+     * Get firstname.
      *
      * @return string
      */
@@ -54,7 +53,8 @@ class User extends BaseUser implements VictoireUserInterface
     }
 
     /**
-     * Set firstname
+     * Set firstname.
+     *
      * @param string $firstname
      *
      * @return $this
@@ -67,7 +67,7 @@ class User extends BaseUser implements VictoireUserInterface
     }
 
     /**
-     * Get lastname
+     * Get lastname.
      *
      * @return string
      */
@@ -77,7 +77,8 @@ class User extends BaseUser implements VictoireUserInterface
     }
 
     /**
-     * Set lastname
+     * Set lastname.
+     *
      * @param string $lastname
      *
      * @return $this
@@ -90,17 +91,17 @@ class User extends BaseUser implements VictoireUserInterface
     }
 
     /**
-     * Get fullName
+     * Get fullName.
      *
      * @return string
      */
     public function getFullName()
     {
-        return $this->firstname." ".$this->lastname;
+        return $this->firstname.' '.$this->lastname;
     }
 
     /**
-     * Get locale
+     * Get locale.
      *
      * @return string
      */
@@ -110,7 +111,8 @@ class User extends BaseUser implements VictoireUserInterface
     }
 
     /**
-     * Set locale
+     * Set locale.
+     *
      * @param string $locale
      *
      * @return $this
@@ -121,5 +123,4 @@ class User extends BaseUser implements VictoireUserInterface
 
         return $this;
     }
-
 }

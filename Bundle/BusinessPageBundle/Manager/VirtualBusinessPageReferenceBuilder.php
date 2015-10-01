@@ -8,18 +8,17 @@ use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Manager\BaseReferenceBuilder;
 
 /**
-* VirtualBusinessPageReferenceBuilder
-*/
+ * VirtualBusinessPageReferenceBuilder.
+ */
 class VirtualBusinessPageReferenceBuilder extends BaseReferenceBuilder
 {
     public function buildReference(View $view, EntityManager $em)
     {
-
         if ($view->getBusinessEntity() instanceof Article) {
-            return array();
+            return [];
         }
         $referenceId = $this->viewReferenceHelper->getViewReferenceId($view);
-        $viewsReference[] = array(
+        $viewsReference[] = [
             'id'              => $referenceId,
             'locale'          => $view->getLocale(),
             'patternId'       => $view->getTemplate()->getId(),
@@ -29,7 +28,7 @@ class VirtualBusinessPageReferenceBuilder extends BaseReferenceBuilder
             'entityNamespace' => $em->getClassMetadata(get_class($view->getBusinessEntity()))->name,
             'viewNamespace'   => $em->getClassMetadata(get_class($view))->name,
             'view'            => $view,
-        );
+        ];
 
         return $viewsReference;
     }

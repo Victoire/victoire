@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\PageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -6,7 +7,7 @@ use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 
 /**
- * Page
+ * Page.
  *
  * @ORM\Entity(repositoryClass="Victoire\Bundle\PageBundle\Repository\BasePageRepository")
  * @ORM\Table("vic_base_page")
@@ -22,12 +23,11 @@ abstract class BasePage extends View implements WebViewInterface
      * Could be Template or BusinessTemplate
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\TemplateBundle\Entity\Template", inversedBy="inheritors", cascade={"persist"})
      * @ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="CASCADE")
-     *
      */
     protected $template;
 
     /**
-     * contruct
+     * contruct.
      **/
     public function __construct()
     {

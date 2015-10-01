@@ -33,9 +33,9 @@ class ExceptionController extends BaseExceptionController
      * @param DebugLoggerInterface $logger    A DebugLoggerInterface instance
      * @param string               $_format   The format to use for rendering (html, xml, ...)
      *
-     * @return Response
-     *
      * @throws \InvalidArgumentException When the exception template does not exist
+     *
+     * @return Response
      */
     public function showAction(Request $request, FlattenException $exception, DebugLoggerInterface $logger = null, $_format = 'html')
     {
@@ -43,29 +43,29 @@ class ExceptionController extends BaseExceptionController
         $code = $exception->getStatusCode();
 
         //get request extension
-        $uriArray = explode("/", $request->getRequestUri());
+        $uriArray = explode('/', $request->getRequestUri());
         $matches = preg_match('/^.*(\..*)$/', array_pop($uriArray), $matches);
 
         //if in production environment and the query is not a file
         if ($this->debug === false && 0 === $matches) {
             $page = $this->em->getRepository('VictoireTwigBundle:ErrorPage')->findOneByCode($code);
             if ($page) {
-                return $this->forward('VictoireTwigBundle:ErrorPage:show', array(
+                return $this->forward('VictoireTwigBundle:ErrorPage:show', [
                         'code' => $page->getCode(),
-                    )
+                    ]
                 );
             }
         }
 
         return new Response($this->twig->render(
             $this->findTemplate($request, $_format, $code, $this->debug),
-            array(
+            [
                 'status_code'    => $code,
                 'status_text'    => isset(Response::$statusTexts[$code]) ? Response::$statusTexts[$code] : '',
                 'exception'      => $exception,
                 'logger'         => $logger,
                 'currentContent' => $currentContent,
-            )
+            ]
         ));
     }
 
@@ -78,7 +78,7 @@ class ExceptionController extends BaseExceptionController
      *
      * @return Response A Response instance
      */
-    protected function forward($controller, array $path = array(), array $query = array())
+    protected function forward($controller, array $path = [], array $query = [])
     {
         $path['_controller'] = $controller;
         $subRequest = $this->request->duplicate($query, null, $path);

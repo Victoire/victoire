@@ -3,13 +3,13 @@
 namespace Victoire\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Victoire\Bundle\PageBundle\Entity\Page;
-use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\ExecutionContextInterface;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Victoire\Bundle\PageBundle\Entity\Page;
 
 /**
- * Victoire Link
+ * Victoire Link.
  *
  * @ORM\Entity
  * @ORM\Table("vic_link")
@@ -19,7 +19,7 @@ class Link
     use \Gedmo\Timestampable\Traits\TimestampableEntity;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -39,7 +39,7 @@ class Link
      *
      * @ORM\Column(name="target", type="string", length=10, nullable=true)
      */
-    protected $target = "_parent";
+    protected $target = '_parent';
 
     /**
      * @deprecated use $viewReference instead
@@ -72,14 +72,14 @@ class Link
      *
      * @ORM\Column(name="route_parameters", type="array", nullable=true)
      */
-    protected $routeParameters = array();
+    protected $routeParameters = [];
 
     /**
      * @var string
      *
      * @ORM\Column(name="link_type", type="string", length=255, nullable=true)
      */
-    protected $linkType = "none";
+    protected $linkType = 'none';
 
     /**
      * @var string
@@ -91,9 +91,9 @@ class Link
     protected $parameters;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -101,7 +101,8 @@ class Link
     }
 
     /**
-     * Set id
+     * Set id.
+     *
      * @param string $id
      *
      * @return $this
@@ -115,7 +116,7 @@ class Link
 
     public function getParameters()
     {
-        return $this->parameters = array(
+        return $this->parameters = [
             'linkType'           => $this->linkType,
             'url'                => $this->url,
             'page'               => $this->page,
@@ -125,11 +126,11 @@ class Link
             'attachedWidget'     => $this->attachedWidget,
             'target'             => $this->target,
             'analyticsTrackCode' => $this->analyticsTrackCode,
-        );
+        ];
     }
 
     /**
-     * Set url
+     * Set url.
      *
      * @param string $url
      *
@@ -143,7 +144,7 @@ class Link
     }
 
     /**
-     * Get url
+     * Get url.
      *
      * @return string
      */
@@ -153,7 +154,7 @@ class Link
     }
 
     /**
-     * Set target
+     * Set target.
      *
      * @param string $target
      *
@@ -167,7 +168,7 @@ class Link
     }
 
     /**
-     * Get target
+     * Get target.
      *
      * @return string
      */
@@ -177,7 +178,7 @@ class Link
     }
 
     /**
-     * Set route
+     * Set route.
      *
      * @param string $route
      *
@@ -191,7 +192,7 @@ class Link
     }
 
     /**
-     * Get route
+     * Get route.
      *
      * @return string
      */
@@ -201,7 +202,7 @@ class Link
     }
 
     /**
-     * Set routeParameters
+     * Set routeParameters.
      *
      * @param array $routeParameters
      *
@@ -215,7 +216,7 @@ class Link
     }
 
     /**
-     * Get routeParameters
+     * Get routeParameters.
      *
      * @return string
      */
@@ -227,6 +228,7 @@ class Link
     /**
      * @deprecated use view_reference instead
      * Set page
+     *
      * @param \Victoire\Bundle\PageBundle\Entity\Page $page
      *
      * @return Link
@@ -250,7 +252,7 @@ class Link
     }
 
     /**
-     * Get viewReference
+     * Get viewReference.
      *
      * @return string
      */
@@ -260,7 +262,7 @@ class Link
     }
 
     /**
-     * Set viewReference
+     * Set viewReference.
      *
      * @param string $viewReference
      *
@@ -274,7 +276,7 @@ class Link
     }
 
     /**
-     * Set linkType
+     * Set linkType.
      *
      * @param string $linkType
      *
@@ -288,7 +290,7 @@ class Link
     }
 
     /**
-     * Get linkType
+     * Get linkType.
      *
      * @return string
      */
@@ -296,8 +298,9 @@ class Link
     {
         return $this->linkType;
     }
+
     /**
-     * Get attachedWidget
+     * Get attachedWidget.
      *
      * @return string
      */
@@ -307,7 +310,7 @@ class Link
     }
 
     /**
-     * Set attachedWidget
+     * Set attachedWidget.
      *
      * @param string $attachedWidget
      *
@@ -326,9 +329,10 @@ class Link
     }
 
     /**
-     * undocumented function
+     * undocumented function.
      *
      * @return void
+     *
      * @author
      **/
     public function checkLink(ExecutionContextInterface $context)
@@ -356,14 +360,14 @@ class Link
             $context->addViolationAt(
                 'firstName',
                 'validator.link.error.message.'.$this->getLinkType().'Missing',
-                array(),
+                [],
                 null
             );
         }
     }
 
     /**
-     * Get analyticsTrackCode
+     * Get analyticsTrackCode.
      *
      * @return string
      */
@@ -373,7 +377,7 @@ class Link
     }
 
     /**
-     * Set analyticsTrackCode
+     * Set analyticsTrackCode.
      *
      * @param string $analyticsTrackCode
      *

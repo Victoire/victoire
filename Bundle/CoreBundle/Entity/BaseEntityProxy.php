@@ -6,14 +6,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Victoire\Bundle\WidgetBundle\Model\Widget;
 
 /**
- * The Entity proxy is the link between a view, a widget or any else with the BusinessEntity
+ * The Entity proxy is the link between a view, a widget or any else with the BusinessEntity.
  *
  * @ORM\MappedSuperclass
  */
 abstract class BaseEntityProxy
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -30,9 +30,9 @@ abstract class BaseEntityProxy
     protected $widgets;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -40,11 +40,13 @@ abstract class BaseEntityProxy
     }
 
     /**
-     * Get the entity of the proxy
+     * Get the entity of the proxy.
      *
      * @param string $entityId
-     * @return Object
+     *
      * @throws \Exception
+     *
+     * @return object
      */
     public function getEntity($entityId)
     {
@@ -54,13 +56,14 @@ abstract class BaseEntityProxy
         }
 
         $functionName = 'get'.ucfirst($entityId);
-        $entity = call_user_func(array($this, $functionName));
+        $entity = call_user_func([$this, $functionName]);
 
         return $entity;
     }
 
     /**
-     * Set the entity
+     * Set the entity.
+     *
      * @param $entity
      * @param $entityId
      *
@@ -72,11 +75,12 @@ abstract class BaseEntityProxy
         $method = 'set'.ucfirst($entityId);
 
         //set the entity
-        call_user_func(array($this, $method), $entity);
+        call_user_func([$this, $method], $entity);
     }
 
     /**
-     * Set widgets
+     * Set widgets.
+     *
      * @param string $widgets
      *
      * @return BaseEntityProxy
@@ -93,7 +97,7 @@ abstract class BaseEntityProxy
     }
 
     /**
-     * Get widgets
+     * Get widgets.
      *
      * @return string
      */
@@ -103,7 +107,8 @@ abstract class BaseEntityProxy
     }
 
     /**
-     * Add widget
+     * Add widget.
+     *
      * @param Widget $widget
      */
     public function addWidget(Widget $widget)
@@ -112,7 +117,8 @@ abstract class BaseEntityProxy
     }
 
     /**
-     * Remove widget
+     * Remove widget.
+     *
      * @param Widget $widget
      */
     public function removeWidget(Widget $widget)
@@ -121,7 +127,8 @@ abstract class BaseEntityProxy
     }
 
     /**
-     * has widget
+     * has widget.
+     *
      * @param Widget $widget
      *
      * @return bool

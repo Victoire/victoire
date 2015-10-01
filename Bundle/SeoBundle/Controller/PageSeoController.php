@@ -14,7 +14,7 @@ use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\SeoBundle\Entity\PageSeo;
 
 /**
- * The Page seo controller
+ * The Page seo controller.
  *
  * @Route("/victoire-dcms/seo")
  */
@@ -23,7 +23,8 @@ class PageSeoController extends Controller
     use VictoireAlertifyControllerTrait;
 
     /**
-     * BasePage settings
+     * BasePage settings.
+     *
      * @param BasePage $page
      *
      * @Route("/{id}", name="victoire_seo_pageSeo_settings")
@@ -36,7 +37,7 @@ class PageSeoController extends Controller
         //services
         $em = $this->getDoctrine()->getManager();
 
-        $businessProperties = array();
+        $businessProperties = [];
 
         //if the page is a business entity template page
         if ($page instanceof BusinessPage || $page instanceof BusinessTemplate) {
@@ -49,16 +50,16 @@ class PageSeoController extends Controller
 
         //url for the form
         $formUrl = $this->container->get('router')->generate('victoire_seo_pageSeo_settings',
-            array(
-                'id' => $page->getId()
-            )
+            [
+                'id' => $page->getId(),
+            ]
         );
         //create the form
         $form = $this->container->get('form.factory')->create('seo_page', $pageSeo,
-            array(
+            [
                 'action'  => $formUrl,
-                'method' => 'POST'
-            )
+                'method'  => 'POST',
+            ]
         );
 
         $form->handleRequest($this->get('request'));
@@ -71,30 +72,28 @@ class PageSeoController extends Controller
             $this->congrat('victoire_seo.save.success');
 
             //redirect to the page url
-            if(!method_exists($page, "getUrl"))
-            {
-                $url = $this->generateUrl('victoire_business_template_show', array('id' => $page->getId()));
-            }else{
-                $url = $this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl()));
+            if (!method_exists($page, 'getUrl')) {
+                $url = $this->generateUrl('victoire_business_template_show', ['id' => $page->getId()]);
+            } else {
+                $url = $this->generateUrl('victoire_core_page_show', ['url' => $page->getUrl()]);
             }
 
-            return new JsonResponse(array(
+            return new JsonResponse([
                 'success' => true,
-                'url' => $url
-            ));
-
+                'url'     => $url,
+            ]);
         }
 
-        return new JsonResponse(array(
+        return new JsonResponse([
             'success' => false,
             'html'    => $this->container->get('victoire_templating')->render(
                 'VictoireSeoBundle:PageSeo:settings.html.twig',
-                array(
+                [
                     'page'               => $page,
                     'form'               => $form->createView(),
-                    'businessProperties' => $businessProperties
-                )
-            )
-        ));
+                    'businessProperties' => $businessProperties,
+                ]
+            ),
+        ]);
     }
 }

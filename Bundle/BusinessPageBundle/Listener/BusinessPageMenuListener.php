@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\BusinessPageBundle\Listener;
 
 use Symfony\Component\EventDispatcher\Event;
@@ -7,14 +8,15 @@ use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
 use Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent;
 
 /**
- * When dispatched, this listener add items to a KnpMenu
+ * When dispatched, this listener add items to a KnpMenu.
  */
 class BusinessPageMenuListener implements MenuListenerInterface
 {
     protected $menuBuilder = null;
 
     /**
-     * Constructor
+     * Constructor.
+     *
      * @param MenuBuilder $menuBuilder
      */
     public function __construct(MenuBuilder $menuBuilder)
@@ -23,7 +25,8 @@ class BusinessPageMenuListener implements MenuListenerInterface
     }
 
     /**
-     * Add a global menu item
+     * Add a global menu item.
+     *
      * @param Event $event
      *
      * @return \Knp\Menu\ItemInterface
@@ -39,9 +42,9 @@ class BusinessPageMenuListener implements MenuListenerInterface
                 ->mainItem
                 ->addChild(
                     'menu.business_template',
-                    array(
+                    [
                         'route' => 'victoire_business_template_index',
-                    )
+                    ]
                 )
                 ->setLinkAttribute('data-toggle', 'vic-modal');
         }
@@ -50,7 +53,8 @@ class BusinessPageMenuListener implements MenuListenerInterface
     }
 
     /**
-     * Add the parent menu for a page that extends another one
+     * Add the parent menu for a page that extends another one.
+     *
      * @param PageMenuContextualEvent $event
      *
      * @return \Knp\Menu\ItemInterface
@@ -61,23 +65,23 @@ class BusinessPageMenuListener implements MenuListenerInterface
 
         //if there is a template, we add the link in the top bar
         $mainItem->addChild('menu.page.settings',
-            array(
+            [
                 'route'           => 'victoire_business_template_edit',
-                'routeParameters' => array('id' => $event->getPage()->getId()),
-            )
+                'routeParameters' => ['id' => $event->getPage()->getId()],
+            ]
         )->setLinkAttribute('data-toggle', 'vic-modal');
         $mainItem->addChild('menu.page.seoSettings',
-            array(
-                'route' => 'victoire_seo_pageSeo_settings',
-                'routeParameters' => array('id' => $event->getPage()->getId())
-            )
+            [
+                'route'           => 'victoire_seo_pageSeo_settings',
+                'routeParameters' => ['id' => $event->getPage()->getId()],
+            ]
         )->setLinkAttribute('data-toggle', 'vic-modal');
 
         return $mainItem;
     }
 
     /**
-     * Get the main item
+     * Get the main item.
      *
      * @return \Knp\Menu\ItemInterface <\Knp\Menu\ItemInterface, NULL>|\Knp\Menu\ItemInterface
      */
@@ -90,7 +94,7 @@ class BusinessPageMenuListener implements MenuListenerInterface
         } else {
             return $this->menuBuilder->createDropdownMenuItem(
                 $this->menuBuilder->getTopNavbar(),
-                "menu.page"
+                'menu.page'
             );
         }
     }

@@ -9,15 +9,14 @@ use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 
 /**
  * ref: victoire_core.helper.view_reference_helper
- * Class ViewReferenceHelper
- * @package Victoire\CoreBundle\Helper
+ * Class ViewReferenceHelper.
  */
 class ViewReferenceHelper
 {
-
     /**
      * @param View $view
      * @param $entity
+     *
      * @return string
      */
     public function getViewReferenceId(View $view, $entity = null)
@@ -28,7 +27,7 @@ class ViewReferenceHelper
             if ($view instanceof VirtualBusinessPage) {
                 $id = $view->getTemplate()->getId();
             }
-        } else if (!$view instanceof WebViewInterface) {
+        } elseif (!$view instanceof WebViewInterface) {
             return $view->getId();
         }
 
@@ -39,7 +38,6 @@ class ViewReferenceHelper
 
         return $refId;
     }
-
 
     /**
      * @param \SimpleXMLElement $rootNode
@@ -57,30 +55,30 @@ class ViewReferenceHelper
 
     /**
      * @param \SimpleXMLElement $xml
+     *
      * @return array
      */
     public function convertXmlCacheToArray($xml)
     {
-
-        $cachedArray = json_decode(json_encode((array) $xml), TRUE);
+        $cachedArray = json_decode(json_encode((array) $xml), true);
         $viewsReferences = [];
 
         // if the xml contains only one reference, it'll be flatten so it will miss one deep level, so we re-create it
         if (count($cachedArray['viewReference']) === 1) {
-            $cachedArray = array_map(function($el) {
+            $cachedArray = array_map(function ($el) {
                     return [$el];
                 }, $cachedArray);
         }
         foreach ($cachedArray['viewReference'] as $cachedViewReference) {
-            $viewReference['id']              = !empty($cachedViewReference['@attributes']['id']) ? $cachedViewReference['@attributes']['id'] : null;
-            $viewReference['locale']          = !empty($cachedViewReference['@attributes']['locale']) ? $cachedViewReference['@attributes']['locale'] : null;
-            $viewReference['entityId']        = !empty($cachedViewReference['@attributes']['entityId']) ? $cachedViewReference['@attributes']['entityId'] : null;
+            $viewReference['id'] = !empty($cachedViewReference['@attributes']['id']) ? $cachedViewReference['@attributes']['id'] : null;
+            $viewReference['locale'] = !empty($cachedViewReference['@attributes']['locale']) ? $cachedViewReference['@attributes']['locale'] : null;
+            $viewReference['entityId'] = !empty($cachedViewReference['@attributes']['entityId']) ? $cachedViewReference['@attributes']['entityId'] : null;
             $viewReference['entityNamespace'] = !empty($cachedViewReference['@attributes']['entityNamespace']) ? $cachedViewReference['@attributes']['entityNamespace'] : null;
-            $viewReference['url']             = !empty($cachedViewReference['@attributes']['url']) ? $cachedViewReference['@attributes']['url'] : null;
-            $viewReference['viewId']          = !empty($cachedViewReference['@attributes']['viewId']) ? $cachedViewReference['@attributes']['viewId'] : null;
-            $viewReference['viewNamespace']   = !empty($cachedViewReference['@attributes']['viewNamespace']) ? $cachedViewReference['@attributes']['viewNamespace'] : null;
-            $viewReference['patternId']       = !empty($cachedViewReference['@attributes']['patternId']) ? $cachedViewReference['@attributes']['patternId'] : null;
-            $viewReference['name']            = !empty($cachedViewReference['@attributes']['name']) ? $cachedViewReference['@attributes']['name'] : null;
+            $viewReference['url'] = !empty($cachedViewReference['@attributes']['url']) ? $cachedViewReference['@attributes']['url'] : null;
+            $viewReference['viewId'] = !empty($cachedViewReference['@attributes']['viewId']) ? $cachedViewReference['@attributes']['viewId'] : null;
+            $viewReference['viewNamespace'] = !empty($cachedViewReference['@attributes']['viewNamespace']) ? $cachedViewReference['@attributes']['viewNamespace'] : null;
+            $viewReference['patternId'] = !empty($cachedViewReference['@attributes']['patternId']) ? $cachedViewReference['@attributes']['patternId'] : null;
+            $viewReference['name'] = !empty($cachedViewReference['@attributes']['name']) ? $cachedViewReference['@attributes']['name'] : null;
 
             $viewsReferences[] = $viewReference;
         }
@@ -89,16 +87,14 @@ class ViewReferenceHelper
     }
 
     /**
-     *
      * @param $viewsReferences
      */
     public function cleanVirtualViews($viewsReferences)
     {
-
         foreach ($viewsReferences as $key => $viewReference) {
             // If viewReference is a persisted page, we want to clean virtual BEPs
             if (!empty($viewReference['viewNamespace']) && $viewReference['viewNamespace'] == 'Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage') {
-                $viewsReferences = array_filter($viewsReferences, function($_viewReference) use ($viewReference) {
+                $viewsReferences = array_filter($viewsReferences, function ($_viewReference) use ($viewReference) {
 
                         // If my current viewReference already exists as a virtualBusinessPage, I remove it from viewReferences
                         $shouldRemove = !($_viewReference['viewNamespace'] == 'Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage'
@@ -110,17 +106,13 @@ class ViewReferenceHelper
 
                     });
             }
-
         }
 
-
         return $viewsReferences;
-
     }
 
     public function uniqueUrls($viewsReferences)
     {
-
         $urls = [];
         foreach ($viewsReferences as $key => $viewReference) {
 
@@ -128,7 +120,7 @@ class ViewReferenceHelper
             $url = $viewReference['url'];
             $i = 1;
             while (in_array($url, $urls)) {
-                $url = $viewReference['url']."-".$i;
+                $url = $viewReference['url'].'-'.$i;
                 $i++;
             }
             $viewsReferences[$key]['url'] = $url;
@@ -137,5 +129,4 @@ class ViewReferenceHelper
 
         return $viewsReferences;
     }
-
 }

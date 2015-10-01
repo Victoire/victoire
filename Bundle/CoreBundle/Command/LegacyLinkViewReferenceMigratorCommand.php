@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\CoreBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -9,7 +10,7 @@ use Victoire\Bundle\CoreBundle\Entity\Link;
 class LegacyLinkViewReferenceMigratorCommand extends ContainerAwareCommand
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function configure()
     {
@@ -21,7 +22,8 @@ class LegacyLinkViewReferenceMigratorCommand extends ContainerAwareCommand
     }
 
     /**
-     * Get all links and transform page relation into viewReference
+     * Get all links and transform page relation into viewReference.
+     *
      * @param InputInterface  $input
      * @param OutputInterface $output
      *

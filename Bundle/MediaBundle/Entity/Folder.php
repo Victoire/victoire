@@ -8,7 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class that defines a folder from the MediaBundle in the database
+ * Class that defines a folder from the MediaBundle in the database.
  *
  * @ORM\Entity(repositoryClass="Victoire\Bundle\MediaBundle\Repository\FolderRepository")
  * @ORM\Table(name="vic_media_folders")
@@ -100,19 +100,19 @@ class Folder
     protected $deleted;
 
     /**
-     * constructor
+     * constructor.
      */
     public function __construct()
     {
         $this->children = new ArrayCollection();
-        $this->media    = new ArrayCollection();
+        $this->media = new ArrayCollection();
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
         $this->deleted = false;
     }
 
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -122,7 +122,7 @@ class Folder
     }
 
     /**
-     * Set id
+     * Set id.
      *
      * @param int $id The unique identifier
      */
@@ -184,7 +184,7 @@ class Folder
     }
 
     /**
-     * Set createdAd
+     * Set createdAd.
      *
      * @param \DateTime $createdAt
      *
@@ -198,7 +198,7 @@ class Folder
     }
 
     /**
-     * Get createdAd
+     * Get createdAd.
      *
      * @return \DateTime
      */
@@ -208,7 +208,7 @@ class Folder
     }
 
     /**
-     * Set updatedAt
+     * Set updatedAt.
      *
      * @param \DateTime $updatedAt
      *
@@ -222,7 +222,7 @@ class Folder
     }
 
     /**
-     * Get updatedAt
+     * Get updatedAt.
      *
      * @return \DateTime
      */
@@ -232,7 +232,7 @@ class Folder
     }
 
     /**
-     * Set parent
+     * Set parent.
      *
      * @param Folder $parent
      *
@@ -246,7 +246,7 @@ class Folder
     }
 
     /**
-     * Get parent
+     * Get parent.
      *
      * @return Folder
      */
@@ -260,18 +260,18 @@ class Folder
      */
     public function getParents()
     {
-        $parent  = $this->getParent();
-        $parents = array();
+        $parent = $this->getParent();
+        $parents = [];
         while ($parent != null) {
             $parents[] = $parent;
-            $parent    = $parent->getParent();
+            $parent = $parent->getParent();
         }
 
         return array_reverse($parents);
     }
 
     /**
-     * Add a child
+     * Add a child.
      *
      * @param Folder $child
      *
@@ -296,7 +296,7 @@ class Folder
             return $this->children;
         }
 
-        return $this->children->filter(function(Folder $entry) {
+        return $this->children->filter(function (Folder $entry) {
             if ($entry->isDeleted()) {
                 return false;
             }
@@ -338,7 +338,7 @@ class Folder
     }
 
     /**
-     * Add file
+     * Add file.
      *
      * @param Media $media
      *
@@ -352,7 +352,7 @@ class Folder
     }
 
     /**
-     * Get media
+     * Get media.
      *
      * @param bool $includeDeleted
      *
@@ -364,7 +364,7 @@ class Folder
             return $this->media;
         }
 
-        return $this->media->filter(function(Media $entry) {
+        return $this->media->filter(function (Media $entry) {
             if ($entry->isDeleted()) {
                 return false;
             }
@@ -424,5 +424,4 @@ class Folder
     {
         $this->setUpdatedAt(new \DateTime());
     }
-
 }

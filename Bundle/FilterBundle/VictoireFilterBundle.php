@@ -2,9 +2,8 @@
 
 namespace Victoire\Bundle\FilterBundle;
 
-use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Victoire\Bundle\FilterBundle\DependencyInjection\Compiler\FilterCompilerPass;
 
 /**
@@ -13,7 +12,7 @@ use Victoire\Bundle\FilterBundle\DependencyInjection\Compiler\FilterCompilerPass
 class VictoireFilterBundle extends Bundle
 {
     /**
-     * Build bundle
+     * Build bundle.
      *
      * @param ContainerBuilder $container
      */

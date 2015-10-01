@@ -2,19 +2,16 @@
 
 namespace Victoire\Bundle\MediaBundle\Helper\File;
 
+use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-
 use Victoire\Bundle\MediaBundle\Entity\Media;
 
-use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
-
 /**
- * FileHelper
+ * FileHelper.
  */
 class FileHelper
 {
-
     /**
      * @var Media
      */
@@ -102,21 +99,21 @@ class FileHelper
         fclose($saveFile);
         chmod($path, 0777);
 
-        $url      = parse_url($effectiveUrl);
-        $info     = pathinfo($url['path']);
-        $filename = $info['filename'].".".$info['extension'];
+        $url = parse_url($effectiveUrl);
+        $info = pathinfo($url['path']);
+        $filename = $info['filename'].'.'.$info['extension'];
 
         $upload = new UploadedFile($path, $filename);
         $this->getMedia()->setContent($upload);
 
         if ($this->getMedia() == null) {
             unlink($path);
-            throw new AccessDeniedException("Can not link file");
+            throw new AccessDeniedException('Can not link file');
         }
     }
 
     /**
-     * __destruct
+     * __destruct.
      */
     public function __destruct()
     {
@@ -124,5 +121,4 @@ class FileHelper
             unlink($this->path);
         }
     }
-
 }

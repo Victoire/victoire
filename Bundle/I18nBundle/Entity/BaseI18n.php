@@ -2,17 +2,16 @@
 
 namespace Victoire\Bundle\I18nBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Behat\Behat\Exception\Exception;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- *
  * @ORM\MappedSuperclass
  */
 abstract class BaseI18n
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -21,9 +20,9 @@ abstract class BaseI18n
     protected $id;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -31,11 +30,11 @@ abstract class BaseI18n
     }
 
     /**
-     * Get the entity of the proxy
-     *
-     * @return Entity
+     * Get the entity of the proxy.
      *
      * @throws Exception
+     *
+     * @return Entity
      */
     public function getEntity($entityName)
     {
@@ -45,13 +44,13 @@ abstract class BaseI18n
         }
 
         $functionName = 'get'.ucfirst($entityName);
-        $entity = call_user_func(array($this, $functionName));
+        $entity = call_user_func([$this, $functionName]);
 
         return $entity;
     }
 
     /**
-     * Set the entity
+     * Set the entity.
      *
      * @param unknown $entity
      *
@@ -62,7 +61,7 @@ abstract class BaseI18n
         $className = get_class($entity);
 
         //split
-        $namespaceEntries = explode("\\", $className);
+        $namespaceEntries = explode('\\', $className);
 
         $businessEntityName = array_pop($namespaceEntries);
 
@@ -74,6 +73,6 @@ abstract class BaseI18n
         $method = 'set'.ucfirst($businessEntityName);
 
         //set the entity
-        call_user_func(array($this, $method), $entity);
+        call_user_func([$this, $method], $entity);
     }
 }

@@ -21,8 +21,7 @@ use Victoire\Bundle\WidgetBundle\Event\WidgetAnnotationEvent;
 use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
 
 /**
- * Parse all files to get BusinessClasses
- *
+ * Parse all files to get BusinessClasses.
  **/
 class AnnotationDriver extends DoctrineAnnotationDriver
 {
@@ -32,11 +31,12 @@ class AnnotationDriver extends DoctrineAnnotationDriver
     protected $paths;
 
     /**
-     * construct
+     * construct.
+     *
      * @param Reader                   $reader
      * @param EventDispatcherInterface $eventDispatcher
      * @param WidgetHelper             $widgetHelper
-     * @param array                    $paths The paths where to search about Entities
+     * @param array                    $paths           The paths where to search about Entities
      */
     public function __construct(Reader $reader, EventDispatcherInterface $eventDispatcher, $widgetHelper, $paths)
     {
@@ -47,7 +47,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
     }
 
     /**
-     * Get all class names
+     * Get all class names.
      *
      * @return string[]
      */
@@ -56,8 +56,8 @@ class AnnotationDriver extends DoctrineAnnotationDriver
         if (!$this->paths) {
             throw MappingException::pathRequired();
         }
-        $classes = array();
-        $includedFiles = array();
+        $classes = [];
+        $includedFiles = [];
         foreach ($this->paths as $path) {
             if (!is_dir($path)) {
                 throw MappingException::fileMappingDriversRequireConfiguredDirectoryPath($path);
@@ -89,7 +89,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
     }
 
     /**
-     * Parse the given Class to find some annotations related to BusinessEntities
+     * Parse the given Class to find some annotations related to BusinessEntities.
      */
     public function parse(\ReflectionClass $class)
     {
@@ -142,9 +142,9 @@ class AnnotationDriver extends DoctrineAnnotationDriver
             }
 
             if ($isWidget) {
-                if ($this->widgetHelper->isEnabled(new $class->name)) {
+                if ($this->widgetHelper->isEnabled(new $class->name())) {
                     $event = new WidgetAnnotationEvent(
-                        $this->widgetHelper->getWidgetName(new $class->name),
+                        $this->widgetHelper->getWidgetName(new $class->name()),
                         $this->loadReceiverProperties($class)
                     );
 
@@ -158,13 +158,13 @@ class AnnotationDriver extends DoctrineAnnotationDriver
     }
 
     /**
-     * load business properties from ReflectionClass
+     * load business properties from ReflectionClass.
      *
-     * @return Array
+     * @return array
      **/
     protected function loadBusinessProperties(\ReflectionClass $class)
     {
-        $businessProperties = array();
+        $businessProperties = [];
         $properties = $class->getProperties();
         foreach ($properties as $property) {
             $annotations = $this->reader->getPropertyAnnotations($property);
@@ -202,16 +202,17 @@ class AnnotationDriver extends DoctrineAnnotationDriver
     }
 
     /**
-     * Load receiver properties and NotBlank constraints from ReflectionClass
+     * Load receiver properties and NotBlank constraints from ReflectionClass.
      *
      * @param \ReflectionClass $class
-     * @return array
+     *
      * @throws AnnotationException
+     *
+     * @return array
      */
     protected function loadReceiverProperties(\ReflectionClass $class)
     {
-
-        $receiverPropertiesTypes = array();
+        $receiverPropertiesTypes = [];
         $properties = $class->getProperties();
 
         //Store receiver properties
@@ -240,32 +241,29 @@ class AnnotationDriver extends DoctrineAnnotationDriver
                 $refProperty = $class->getProperty($receiverPropertyName);
                 $annotations = $this->reader->getPropertyAnnotations($refProperty);
 
-                    foreach ($annotations as $key => $annotationObj) {
-
-                        if ($annotationObj instanceof Column && $annotationObj->nullable === false) {
-                            throw new Exception(sprintf(
+                foreach ($annotations as $key => $annotationObj) {
+                    if ($annotationObj instanceof Column && $annotationObj->nullable === false) {
+                        throw new Exception(sprintf(
                                 'Property "%s" in class "%s" has a @ReceiverProperty annotation and by consequence must have "nullable=true" for ORM\Column annotation',
                                 $refProperty->name,
                                 $refProperty->class
                             ));
-                        } else if($annotationObj instanceof NotBlank) {
-                            throw new Exception(sprintf(
+                    } elseif ($annotationObj instanceof NotBlank) {
+                        throw new Exception(sprintf(
                                 'Property "%s" in class "%s" has a @ReceiverProperty annotation and by consequence can not use NotBlank annotation',
                                 $refProperty->name,
                                 $refProperty->class
                             ));
-                        } else if($annotationObj instanceof NotNull) {
-                            throw new Exception(sprintf(
+                    } elseif ($annotationObj instanceof NotNull) {
+                        throw new Exception(sprintf(
                                 'Property "%s" in class "%s" has a @ReceiverProperty annotation and by consequence can not use NotNull annotation',
                                 $refProperty->name,
                                 $refProperty->class
                             ));
-                        } else if ($annotationObj instanceof ReceiverPropertyAnnotation && $annotationObj->isRequired()) {
-                            $receiverProperty->setRequired(true);
-                        }
-
+                    } elseif ($annotationObj instanceof ReceiverPropertyAnnotation && $annotationObj->isRequired()) {
+                        $receiverProperty->setRequired(true);
                     }
-
+                }
             }
         }
 

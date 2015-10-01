@@ -2,15 +2,15 @@
 
 namespace Victoire\Bundle\MediaBundle\Form\Type;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Form\Exception\TransformationFailedException;
-use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Victoire\Bundle\MediaBundle\Entity\Media;
 
 /**
- * IdToMediaTransformer
+ * IdToMediaTransformer.
  */
 class IdToMediaTransformer implements DataTransformerInterface
 {
@@ -20,7 +20,6 @@ class IdToMediaTransformer implements DataTransformerInterface
     private $objectManager;
 
     /**
-     *
      * @var CurrentValueContainer
      */
     private $currentValueContainer;
@@ -32,16 +31,16 @@ class IdToMediaTransformer implements DataTransformerInterface
     public function __construct(ObjectManager $objectManager, CurrentValueContainer $currentValueContainer)
     {
         $this->objectManager = $objectManager;
-            $this->currentValueContainer = $currentValueContainer;
+        $this->currentValueContainer = $currentValueContainer;
     }
 
     /**
      * @param Media $entity The value in the original representation
      *
-     * @return mixed The value in the transformed representation
-     *
      * @throws UnexpectedTypeException   when the argument is not an object
      * @throws \InvalidArgumentException when the parameter is a collection
+     *
+     * @return mixed The value in the transformed representation
      */
     public function transform($entity)
     {
@@ -59,24 +58,24 @@ class IdToMediaTransformer implements DataTransformerInterface
 
         $this->currentValueContainer->setCurrentValue($entity);
 
-        return array(
-            "ent"=>$entity,
-            "id" => $entity->getId()
-        );
+        return [
+            'ent' => $entity,
+            'id'  => $entity->getId(),
+        ];
     }
 
     /**
      * @param string $key
      *
-     * @return Media
-     *
      * @throws UnexpectedTypeException       when the parameter is not numeric
      * @throws TransformationFailedException when the media item cannot be loaded/found
+     *
+     * @return Media
      */
     public function reverseTransform($key)
     {
         if ('' === $key || null === $key) {
-            return null;
+            return;
         }
 
         if (!is_numeric($key)) {

@@ -7,14 +7,14 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
- * This is the class that validates and merges configuration from your app/config files
+ * This is the class that validates and merges configuration from your app/config files.
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
  */
 class Configuration implements ConfigurationInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getConfigTreeBuilder()
     {
@@ -27,7 +27,8 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * Add form configuration
+     * Add form configuration.
+     *
      * @param ArrayNodeDefinition $rootNode The root node
      */
     protected function addFormConfig(ArrayNodeDefinition $rootNode)
@@ -38,19 +39,19 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('templating')
-                            ->defaultValue("VictoireFormBundle:Form:fields.html.twig")
+                            ->defaultValue('VictoireFormBundle:Form:fields.html.twig')
                             ->end()
                         ->booleanNode('vic_horizontal')
                             ->defaultTrue()
                             ->end()
                         ->scalarNode('vic_horizontal_label_class')
-                            ->defaultValue("")
+                            ->defaultValue('')
                             ->end()
                         ->scalarNode('vic_horizontal_label_offset_class')
-                            ->defaultValue("vic-col-lg-offset-3")
+                            ->defaultValue('vic-col-lg-offset-3')
                             ->end()
                         ->scalarNode('vic_horizontal_input_wrapper_class')
-                            ->defaultValue("")
+                            ->defaultValue('')
                             ->end()
                         ->booleanNode('vic_render_fieldset')
                             ->defaultValue(true)
@@ -100,10 +101,10 @@ class Configuration implements ConfigurationInterface
                                             ->defaultValue(null)
                                         ->end()
                                         ->scalarNode('trigger')
-                                            ->defaultValue("hover")
+                                            ->defaultValue('hover')
                                         ->end()
                                         ->scalarNode('toggle')
-                                            ->defaultValue("vic-popover")
+                                            ->defaultValue('vic-popover')
                                         ->end()
                                         ->scalarNode('placement')
                                             ->defaultValue('right')
@@ -167,7 +168,7 @@ class Configuration implements ConfigurationInterface
                                             ->addDefaultsIfNotSet()
                                             ->children()
                                                 ->scalarNode('class')
-                                                    ->defaultValue("btn btn-default")
+                                                    ->defaultValue('btn btn-default')
                                                 ->end()
                                             ->end()
                                         ->end()
@@ -175,12 +176,12 @@ class Configuration implements ConfigurationInterface
                                             ->addDefaultsIfNotSet()
                                             ->children()
                                                 ->scalarNode('class')
-                                                    ->defaultValue("vic-col-lg-3")
+                                                    ->defaultValue('vic-col-lg-3')
                                                 ->end()
                                             ->end()
                                         ->end()
                                         ->scalarNode('label')
-                                            ->defaultValue("victoire.collection.button.label.remove_item")
+                                            ->defaultValue('victoire.collection.button.label.remove_item')
                                         ->end()
                                         ->scalarNode('icon')
                                             ->defaultValue(null)
@@ -197,12 +198,12 @@ class Configuration implements ConfigurationInterface
                                             ->addDefaultsIfNotSet()
                                             ->children()
                                                 ->scalarNode('class')
-                                                    ->defaultValue("vic-btn vic-btn-default")
+                                                    ->defaultValue('vic-btn vic-btn-default')
                                                 ->end()
                                             ->end()
                                         ->end()
                                         ->scalarNode('label')
-                                            ->defaultValue("victoire.collection.button.label.add_item")
+                                            ->defaultValue('victoire.collection.button.label.add_item')
                                         ->end()
                                         ->scalarNode('icon')
                                             ->defaultValue(null)
@@ -220,12 +221,13 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * Add icon configuration
+     * Add icon configuration.
+     *
      * @param ArrayNodeDefinition $rootNode The root node
      */
     protected function addIconsConfig(ArrayNodeDefinition $rootNode)
     {
-        $iconSets = array('glyphicons', 'fontawesome', 'fontawesome4');
+        $iconSets = ['glyphicons', 'fontawesome', 'fontawesome4'];
 
         $rootNode
             ->children()

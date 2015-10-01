@@ -3,11 +3,10 @@
 namespace Acme\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Victoire\Bundle\CoreBundle\Annotations as VIC;
 
 /**
- * Jedi
+ * Jedi.
  *
  * @ORM\Entity
  * @ORM\Table("character_jedi")
@@ -24,7 +23,7 @@ class Jedi extends Character
     private $side;
 
     /**
-     * Get side
+     * Get side.
      *
      * @return string
      */
@@ -34,7 +33,8 @@ class Jedi extends Character
     }
 
     /**
-     * Set side
+     * Set side.
+     *
      * @param string $side
      *
      * @return $this

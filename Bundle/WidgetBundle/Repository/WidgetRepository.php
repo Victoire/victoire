@@ -1,15 +1,16 @@
 <?php
+
 namespace Victoire\Bundle\WidgetBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
 /**
- * The widget Repository
+ * The widget Repository.
  */
 class WidgetRepository extends EntityRepository
 {
     /**
-     * Get all the widget within a list of ids
+     * Get all the widget within a list of ids.
      *
      * @param array $widgetIds
      *
@@ -23,7 +24,7 @@ class WidgetRepository extends EntityRepository
     }
 
     /**
-     * Find all the widgets in a list of ids
+     * Find all the widgets in a list of ids.
      *
      * @param array $widgetIds
      *

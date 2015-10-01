@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\PageBundle\Entity\Traits;
 
 use Victoire\Bundle\CoreBundle\Annotations as VIC;
@@ -7,8 +8,7 @@ use Victoire\Bundle\PageBundle\Entity\PageStatus;
 use Victoire\Bundle\SeoBundle\Entity\PageSeo;
 
 /**
- * This trait make a view displayable for public
- *
+ * This trait make a view displayable for public.
  */
 trait WebViewTrait
 {
@@ -27,7 +27,7 @@ trait WebViewTrait
 
     /**
      * @var string
-     * This property is computed by the method PageSubscriber::buildUrl
+     *             This property is computed by the method PageSubscriber::buildUrl
      */
     protected $url;
 
@@ -42,7 +42,7 @@ trait WebViewTrait
     protected $status = PageStatus::PUBLISHED;
 
     /**
-     * @var datetime $publishedAt
+     * @var datetime
      *
      * @ORM\Column(name="publishedAt", type="datetime")
      * @VIC\BusinessProperty("date")
@@ -57,7 +57,8 @@ trait WebViewTrait
     protected $homepage;
 
     /**
-     * Set seo
+     * Set seo.
+     *
      * @param PageSeo $seo
      *
      * @return WebViewTrait
@@ -70,7 +71,7 @@ trait WebViewTrait
     }
 
     /**
-     * Get seo
+     * Get seo.
      *
      * @return PageSeo
      */
@@ -80,7 +81,7 @@ trait WebViewTrait
     }
 
     /**
-     * Get referers
+     * Get referers.
      *
      * @return string
      */
@@ -90,7 +91,7 @@ trait WebViewTrait
     }
 
     /**
-     * Set the refere
+     * Set the refere.
      *
      * @param string $referers
      */
@@ -100,7 +101,7 @@ trait WebViewTrait
     }
 
     /**
-     * Set routes
+     * Set routes.
      *
      * @param routes $routes
      */
@@ -110,7 +111,7 @@ trait WebViewTrait
     }
 
     /**
-     * Remove route
+     * Remove route.
      *
      * @param Route $route
      */
@@ -120,7 +121,7 @@ trait WebViewTrait
     }
 
     /**
-     * Add route
+     * Add route.
      *
      * @param Route $route
      */
@@ -130,7 +131,7 @@ trait WebViewTrait
     }
 
     /**
-     * Get routes
+     * Get routes.
      *
      * @return routes
      */
@@ -140,7 +141,7 @@ trait WebViewTrait
     }
 
     /**
-     * Set url
+     * Set url.
      *
      * @param string $url
      */
@@ -150,7 +151,7 @@ trait WebViewTrait
     }
 
     /**
-     * Get url
+     * Get url.
      *
      * @return url
      */
@@ -160,7 +161,7 @@ trait WebViewTrait
     }
 
     /**
-     * Set status
+     * Set status.
      *
      * @param status $status
      */
@@ -170,7 +171,7 @@ trait WebViewTrait
     }
 
     /**
-     * Get status
+     * Get status.
      *
      * @return status
      */
@@ -180,7 +181,7 @@ trait WebViewTrait
     }
 
     /**
-     * Set publishedAt
+     * Set publishedAt.
      *
      * @param publishedAt $publishedAt
      */
@@ -190,7 +191,7 @@ trait WebViewTrait
     }
 
     /**
-     * Get publishedAt
+     * Get publishedAt.
      *
      * @return publishedAt
      */
@@ -200,7 +201,7 @@ trait WebViewTrait
     }
 
     /**
-     * Is this page published
+     * Is this page published.
      *
      * @return bool is published ?
      */
@@ -218,9 +219,9 @@ trait WebViewTrait
     }
 
     /**
-     * Get homepage
+     * Get homepage.
      *
-     * @return boolean
+     * @return bool
      */
     public function isHomepage()
     {
@@ -228,9 +229,10 @@ trait WebViewTrait
     }
 
     /**
-     * Set homepage
+     * Set homepage.
      *
-     * @param  string $homepage
+     * @param string $homepage
+     *
      * @return $this
      */
     public function setHomepage($homepage)

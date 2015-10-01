@@ -3,7 +3,7 @@
 namespace Victoire\Bundle\BlogBundle;
 
 /**
- * Contains all events thrown in the VictoireBlogBundle
+ * Contains all events thrown in the VictoireBlogBundle.
  */
 final class VictoireBlogEvents
 {

@@ -14,10 +14,8 @@ abstract class BaseFilter extends AbstractType implements BaseFilterInterface
     protected $request;
 
     /**
-     *
      * @param EntityManager $em
-     *
-     * @param Request $request
+     * @param Request       $request
      */
     public function __construct(EntityManager $em, $request)
     {
@@ -35,13 +33,13 @@ abstract class BaseFilter extends AbstractType implements BaseFilterInterface
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'csrf_protection' => false,
             'widget'          => null,
             'multiple'        => false,
             'filter'          => null,
             'listing_id'      => null,
-        ));
+        ]);
     }
 
     public function getName()
