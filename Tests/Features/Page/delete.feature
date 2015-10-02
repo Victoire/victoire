@@ -11,7 +11,7 @@ Scenario: I can delete a new page
     Given I select the option "Paramètres de la page" in the dropdown "Page"
     Then I should see "Supprimer"
     Given I follow "Supprimer"
-    Then I should see "Cette action va supprimer définitivement cette page. Cette action est irréversible. Etes vous sûr ?"
+    Then I should see "Cette action va supprimer définitivement cette page. Cette action est irréversible. Êtes-vous sûr ?"
     Given I press "J'ai bien compris, je confirme la suppression"
 #    Then I should see "Victoire !"
     And I wait 10 seconds

@@ -15,7 +15,7 @@ Scenario: Abort Delete
     And I edit the "Force" widget
     Then I should see "Supprimer"
     Given I follow "Supprimer"
-    Then I should see "Cette action va supprimer définitivement ce contenu. Cette action est irréversible. Etes vous sûr ?"
+    Then I should see "Cette action va définitivement supprimer ce contenu. Cette action est irréversible. Êtes-vous sûr ?"
     Given I press "Annuler"
     And I wait 1 second
     And I follow "Annuler"
@@ -34,7 +34,7 @@ Scenario: Create and delete a widget
     And I edit the "Force" widget
     Then I should see "Supprimer"
     Given I follow "Supprimer"
-    Then I should see "Cette action va supprimer définitivement ce contenu. Cette action est irréversible. Etes vous sûr ?"
+    Then I should see "Cette action va définitivement supprimer ce contenu. Cette action est irréversible. Êtes-vous sûr ?"
     Given I press "J'ai bien compris, je confirme la suppression"
     Then I wait 2 seconds
     And I should not see "Widget #"

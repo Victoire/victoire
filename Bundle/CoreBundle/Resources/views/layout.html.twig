@@ -27,7 +27,7 @@
         <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
         {% endstylesheets %}
 
-        {% if is_granted('ROLE_VICTOIRE') %}
+        {% if is_granted('ROLE_VICTOIRE') or app.request.attributes.get('_route') == 'fos_user_security_login' %}
             {% stylesheets filter='less, cssrewrite' injector="victoire-edit, alertify-codrops-notification"
              %}
             <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
