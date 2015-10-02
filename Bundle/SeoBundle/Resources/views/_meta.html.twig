@@ -17,7 +17,7 @@
     {% if view.seo.ogImage %}<meta property="og:image" content="{{ app.request.getSchemeAndHttpHost() ~ view.seo.ogImage }}"/>{% endif %}
     {% if view.seo.ogUrl %}<meta property="og:url" content="{{ view.seo.ogUrl }}"/>{% endif %}
     {% if view.seo.ogDescription %}<meta property="og:description" content="{{ view.seo.ogDescription }}"/>{% endif %}
-    {% if view.seo.fbAdmins %}<meta name="fb:admins" content="{{ view.seo.fbAdmins }}"/>{% endif %}
+    {% if view.seo.fbAdmins %}<meta property="fb:admins" content="{{ view.seo.fbAdmins }}"/>{% endif %}
 
     <!-- Twitter -->
     {% if view.seo.twitterCard %}<meta name="twitter:card" content="{{ view.seo|default({'twitterCard': 'summary'}).twitterCard }}"/>{% endif %}
