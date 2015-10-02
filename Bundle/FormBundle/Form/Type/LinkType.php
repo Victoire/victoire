@@ -37,9 +37,9 @@ class LinkType extends AbstractType
                 'choices'     => array(
                     'none'           => 'form.link_type.linkType.none',
                     'viewReference'  => 'form.link_type.linkType.view_reference',
-                    'route'          => 'form.link_type.linkType.route',
                     'url'            => 'form.link_type.linkType.url',
                     'attachedWidget' => 'form.link_type.linkType.widget',
+                    'route'          => 'form.link_type.linkType.route',
                 ),
                 'attr'        => array(
                     'data-role' => 'vic-linkType-select',
@@ -50,7 +50,7 @@ class LinkType extends AbstractType
                 'label'                          => 'form.link_type.url.label',
                 'vic_vic_widget_form_group_attr' => array('class' => 'vic-form-group vic-hidden url-type'),
                 'required'                       => true,
-                'attr'                           => array('novalidate' => 'novalidate'),
+                'attr'                           => array('novalidate' => 'novalidate', 'placeholder' => 'form.link_type.url.placeholder'),
             ))
         ;
 

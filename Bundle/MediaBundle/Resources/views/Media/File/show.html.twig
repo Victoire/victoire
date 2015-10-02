@@ -1,7 +1,7 @@
 {% extends 'VictoireMediaBundle:Media:show.html.twig' %}
 
 {% block extraactions %}
-    <a href="{{ asset(media.url) }}" class="btn">{{ 'media.media.download.action'|trans }}</a>
+    <a href="{{ asset(media.url) }}" class="btn">{{ 'media.media.download.action'|trans({}, 'victoire') }}</a>
 {% endblock %}
 
 {% block preview %}
@@ -10,6 +10,6 @@
 
 {% block mediainfo %}
     {{ parent() }}
-    <dt>{{ 'media.media.mediainfo.downloadlink'|trans }}:</dt>
+    <dt>{{ 'media.media.mediainfo.downloadlink'|trans({}, 'victoire') }} :</dt>
     	<dd><a href="{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(media.url) }}" target="_blank">{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(media.url) }}</a></dd>
 {% endblock %}

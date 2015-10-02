@@ -35,15 +35,19 @@ class PageSeoType extends AbstractType
         $builder
             ->add('metaTitle', null, array(
                 'label' => 'form.pageSeo.metaTitle.label',
+                'attr'  => array('placeholder' => 'form.pageSeo.metaTitle.placeholder'),
             ))
             ->add('metaDescription', null, array(
                 'label' => 'form.pageSeo.metaDescription.label',
+                'attr'  => array('placeholder' => 'form.pageSeo.metaDescription.placeholder'),
             ))
             ->add('relAuthor', null, array(
                 'label' => 'form.pageSeo.relAuthor.label',
+                'attr'  => array('placeholder' => 'form.pageSeo.relAuthor.placeholder'),
             ))
             ->add('relPublisher', null, array(
                 'label' => 'form.pageSeo.relPublisher.label',
+                'attr'  => array('placeholder' => 'form.pageSeo.relPublisher.placeholder'),
             ))
             ->add('ogTitle', null, array(
                 'label'      => 'form.pageSeo.ogTitle.label',
@@ -51,37 +55,54 @@ class PageSeoType extends AbstractType
             ))
             ->add('ogType', null, array(
                 'label' => 'form.pageSeo.ogType.label',
+                'attr'  => array('placeholder' => 'form.pageSeo.ogType.placeholder'),
             ))
             ->add('ogImage', 'media', array(
                 'label' => 'form.pageSeo.ogImage.label',
             ))
             ->add('ogUrl', null, array(
                 'label' => 'form.pageSeo.ogUrl.label',
+                'attr'  => array('placeholder' => 'form.pageSeo.ogUrl.placeholder'),
             ))
             ->add('ogDescription', null, array(
                 'label' => 'form.pageSeo.ogDescription.label',
             ))
             ->add('fbAdmins', null, array(
                 'label' => 'form.pageSeo.fbAdmins.label',
+                'attr'  => array('placeholder' => 'form.pageSeo.fbAdmins.placeholder'),
             ))
-            ->add('twitterCard', null, array(
-                'label'      => 'form.pageSeo.twitterCard.label',
-                'vic_help_block' => 'form.pageSeo.twitterCard.vic_help_block',
+            ->add('twitterCard', 'choice',
+                array(
+                    'label'   => 'form.pageSeo.twitterCard.label',
+                    'choices' => array(
+                        'summary'               => 'form.pageSeo.twitterCard.summary.label',
+                        'summary_large_image'   => 'form.pageSeo.twitterCard.summary_large_image.label',
+                        'photo'                 => 'form.pageSeo.twitterCard.photo.label',
+                        'app'                   => 'form.pageSeo.twitterCard.app.label',
+                        'player'                => 'form.pageSeo.twitterCard.player.label',
+                        'product'               => 'form.pageSeo.twitterCard.product.label',
+                    ),
+                    'preferred_choices' => array('summary'),
+                    'vic_help_block' => 'form.pageSeo.twitterCard.vic_help_block',
             ))
             ->add('twitterUrl', null, array(
                 'label' => 'form.pageSeo.twitterUrl.label',
+                'attr'  => array('placeholder' => 'form.pageSeo.twitterUrl.placeholder'),
             ))
             ->add('twitterTitle', null, array(
                 'label' => 'form.pageSeo.twitterTitle.label',
+                'attr'  => array('placeholder' => 'form.pageSeo.twitterTitle.placeholder'),
             ))
             ->add('twitterDescription', null, array(
                 'label' => 'form.pageSeo.twitterDescription.label',
+                'attr'  => array('placeholder' => 'form.pageSeo.twitterDescription.placeholder'),
             ))
             ->add('twitterImage', 'media', array(
                 'label' => 'form.pageSeo.twitterImage.label',
             ))
             ->add('schemaPageType', null, array(
                 'label' => 'form.pageSeo.schemaPageType.label',
+                'vic_help_block' => 'form.pageSeo.schemaPageType.vic_help_block',
             ))
             ->add('schemaName', null, array(
                 'label' => 'form.pageSeo.schemaName.label',
@@ -111,6 +132,20 @@ class PageSeoType extends AbstractType
             ))
             ->add('sitemapIndexed', null, array(
                 'label' => 'form.pageSeo.sitemapIndexed.label',
+            ))
+            ->add('sitemapChangeFreq', 'choice',
+                array(
+                    'label'   => 'form.pageSeo.sitemapChangeFreq.label',
+                    'choices' => array(
+                        'always'  => 'form.pageSeo.sitemapChangeFreq.format.choices.always.label',
+                        'hourly'  => 'form.pageSeo.sitemapChangeFreq.format.choices.hourly.label',
+                        'daily'   => 'form.pageSeo.sitemapChangeFreq.format.choices.daily.label',
+                        'weekly'  => 'form.pageSeo.sitemapChangeFreq.format.choices.weekly.label',
+                        'monthly' => 'form.pageSeo.sitemapChangeFreq.format.choices.monthly.label',
+                        'yearly'  => 'form.pageSeo.sitemapChangeFreq.format.choices.yearly.label',
+                        'never'   => 'form.pageSeo.sitemapChangeFreq.format.choices.never.label',
+                    ),
+                    'preferred_choices' => array('monthly'),
             ))
             ->add('sitemapPriority', null, array(
                 'label' => 'form.pageSeo.sitemapPriority.label',

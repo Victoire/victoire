@@ -80,7 +80,7 @@
       </trans-unit>
       <trans-unit id="07b2988c1c5daf0bdf6be270bede6fc8424cd688" resname="modal.form.article.settings.action.delete.confirm.body">
         <source>modal.form.article.settings.action.delete.confirm.body</source>
-        <target>Cette action va supprimer définitivement cet article. Cette action est irréversible. Etes vous sûr ?</target>
+        <target>Cette action va supprimer définitivement cet article. Cette action est irréversible. Êtes-vous sûr ?</target>
       </trans-unit>
       <trans-unit id="131320710e98bb9e085c0b3eecb26ebcdd8dc5a8" resname="modal.form.article.settings.action.delete.confirm.title">
         <source>modal.form.article.settings.action.delete.confirm.title</source>
@@ -148,11 +148,11 @@
       </trans-unit>
       <trans-unit id="30" resname="widget_filter.form.date.format.choices.year.label">
         <source>widget_filter.form.date.format.choices.year.label</source>
-        <target>À l'année</target>
+        <target>Annuellement</target>
       </trans-unit>
       <trans-unit id="31" resname="widget_filter.form.date.format.choices.month.label">
         <source>widget_filter.form.date.format.choices.month.label</source>
-        <target>Au mois</target>
+        <target>Mensuellement</target>
       </trans-unit>
       <trans-unit id="32" resname="widget_filter.date_filter">
         <source>widget_filter.date_filter</source>

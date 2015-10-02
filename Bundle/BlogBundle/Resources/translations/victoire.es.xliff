@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+  <file date="2013-11-28T17:11:45Z" source-language="en" target-language="es" datatype="plaintext" original="not.available">
+    <header>
+      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
+      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
+    </header>
+    <body>
+      <trans-unit id="1" resname="form.widget.tab.article.label">
+        <source>form.widget.tab.article.label</source>
+        <target state="new">Artículo</target>
+      </trans-unit>
+      <trans-unit id="2" resname="entity_proxy.form.article.label">
+        <source>entity_proxy.form.article.label</source>
+        <target>Artículo</target>
+      </trans-unit>
+      <trans-unit id="9b39444d8d4d52ee8371bd147a45392b465249a8" resname="menu.blog">
+        <source>menu.blog</source>
+        <target>Blog</target>
+      </trans-unit>
+      <trans-unit id="9b39444d8d4d52ee8371bd147a45392b465249a8" resname="menu.leftnavbar.blog.label">
+        <source>menu.leftnavbar.blog.label</source>
+        <target><![CDATA[<i class="vic-menuImg vic-menuImg-network"></i> Blog]]></target>
+      </trans-unit>
+      <trans-unit id="44ee3ff9b926d8e0fe6e8e356600ad5c77166029" resname="menu.blog.article.new">
+        <source>menu.blog.article.new</source>
+        <target><![CDATA[<i class="vic-menuImg vic-menuImg-new"></i> Nuevo artículo]]></target>
+      </trans-unit>
+      <trans-unit id="3" resname="victoire_blog.index.title">
+        <source>victoire_blog.index.title</source>
+        <target>Administrar blogs</target>
+      </trans-unit>
+      <trans-unit id="4" resname="menu.blog.new">
+        <source>menu.blog.new</source>
+        <target><![CDATA[<i class="vic-menuImg vic-menuImg-new"></i> Nuevo blog]]></target>
+      </trans-unit>
+      <trans-unit id="5" resname="modal.blog.button.new.label">
+        <source>modal.blog.button.new.label</source>
+        <target>Crear nuevo blog</target>
+      </trans-unit>
+      <trans-unit id="6" resname="modal.blog.list.empty.notice">
+        <source>modal.blog.list.empty.notice</source>
+        <target>Aún no ha creado ningún blog. Este es el momento :)</target>
+      </trans-unit>
+      <trans-unit id="7" resname="modal.blog.list.title">
+        <source>modal.blog.list.title</source>
+        <target>Blogs lista</target>
+      </trans-unit>
+      <trans-unit id="8" resname="modal.blog.list.articlesList.title">
+        <source>modal.blog.list.articlesList.title</source>
+        <target>Lista de artículos</target>
+      </trans-unit>
+      <trans-unit id="9" resname="modal.blog.list.articlesList.new_article">
+        <source>modal.blog.list.articlesList.new_article</source>
+        <target><![CDATA[<span class="fa fa-check-circle"></span> Crear un nuevo artículo]]></target>
+      </trans-unit>
+      <trans-unit id="10" resname="modal.blog.list.articlesList.empty.notice">
+        <source>modal.blog.list.articlesList.empty.notice</source>
+        <target>Aún no ha creado ningún artículo. Este es el momento :)</target>
+      </trans-unit>
+      <trans-unit id="11" resname="modal.blog.button.new.title">
+        <source>modal.blog.button.new.title</source>
+        <target>Crear nuevo blog</target>
+      </trans-unit>
+      <trans-unit id="604de4ede156d22c87184505b9794ba2ad9c5062" resname="menu.blog.article.settings">
+          <source>menu.blog.article.settings</source>
+          <target><![CDATA[<i class="vic-menuImg vic-menuImg-gear"></i> Configuración del artículo]]></target>
+      </trans-unit>
+      <trans-unit id="12" resname="menu.blog.settings">
+          <source>menu.blog.settings</source>
+          <target><![CDATA[<i class="vic-menuImg vic-menuImg-gear"></i> Configuración del blog]]></target>
+      </trans-unit>
+      <trans-unit id="604de4ede156d22c87184505b9794ba2ad9c5064" resname="widget_filter.category_filter">
+        <source>widget_filter.category_filter</source>
+        <target>Categorías</target>
+      </trans-unit>
+      <trans-unit id="604de4ede156d22c87184505b9794ba2ad9c5063" resname="widget_filter.tag_filter">
+        <source>widget_filter.tag_filter</source>
+        <target>Etiquetas</target>
+      </trans-unit>
+      <trans-unit id="07b2988c1c5daf0bdf6be270bede6fc8424cd688" resname="modal.form.article.settings.action.delete.confirm.body">
+        <source>modal.form.article.settings.action.delete.confirm.body</source>
+        <target>Esta acción eliminará permanentemente el artículo. Esta acción es irreversible. ¿ Seguro ?</target>
+      </trans-unit>
+      <trans-unit id="131320710e98bb9e085c0b3eecb26ebcdd8dc5a8" resname="modal.form.article.settings.action.delete.confirm.title">
+        <source>modal.form.article.settings.action.delete.confirm.title</source>
+        <target>¿ Esto es su respuesta final ?</target>
+      </trans-unit>
+      <trans-unit id="13" resname="modal.blog.new.title">
+        <source>modal.blog.new.title</source>
+        <target>Crear nuevo blog</target>
+      </trans-unit>
+      <trans-unit id="14" resname="modal.article.new.title">
+        <source>modal.article.new.title</source>
+        <target>Crear un nuevo artículo</target>
+      </trans-unit>
+      <trans-unit id="15" resname="modal.form.article.settings.title">
+        <source>modal.form.article.settings.title</source>
+        <target><![CDATA[Configuración del artículo <strong>%articleName%</strong>]]></target>
+      </trans-unit>
+      <trans-unit id="16" resname="modal.form.blog.settings.title">
+        <source>modal.form.blog.settings.title</source>
+        <target><![CDATA[Configuración del blog] <strong>%blogName%</strong>]]></target>
+      </trans-unit>
+      <trans-unit id="17" resname="victoire.blog.article.delete.success">
+        <source>victoire.blog.article.delete.success</source>
+        <target>El artículo ha sido eliminado</target>
+      </trans-unit>
+      <trans-unit id="18" resname="blog.form.title.label">
+        <source>blog.form.title.label</source>
+        <target>Categoría</target>
+      </trans-unit>
+      <trans-unit id="20" resname="victoire.blog.category.add.sub.label">
+        <source> victoire.blog.category.add.sub.label</source>
+        <target>Añadir subcategoría</target>
+      </trans-unit>
+      <trans-unit id="21" resname="victoire.blog.category.add.main.label">
+        <source>victoire.blog.category.add.main.label</source>
+        <target>Añadir una categoría principal</target>
+      </trans-unit>
+      <trans-unit id="22" resname="victoire.blog.choose.blog.label">
+        <source>victoire.blog.choose.blog.label</source>
+        <target>Eliges a tu blog</target>
+      </trans-unit>
+      <trans-unit id="23" resname="victoire.blog.nav.articles.label">
+        <source>victoire.blog.nav.articles.label</source>
+        <target>Lista de artículos</target>
+      </trans-unit>
+      <trans-unit id="24" resname="victoire.blog.nav.settings.label">
+        <source>victoire.blog.nav.settings.label</source>
+        <target>Configuración</target>
+      </trans-unit>
+      <trans-unit id="25" resname="victoire.blog.nav.category.label">
+        <source>victoire.blog.nav.category.label</source>
+        <target>Lista de categorías</target>
+      </trans-unit>
+      <trans-unit id="26" resname="modal.button.settings.title">
+        <source>modal.button.settings.title</source>
+        <target>Modificar</target>
+      </trans-unit>
+      <trans-unit id="27" resname="modal.button.category.title">
+        <source>modal.button.settings.title</source>
+        <target>Modificar</target>
+      </trans-unit>
+      <trans-unit id="29" resname="widget_filter.form.date.format.label">
+        <source>widget_filter.form.date.format.label</source>
+        <target>Frecuencia</target>
+      </trans-unit>
+      <trans-unit id="30" resname="widget_filter.form.date.format.choices.year.label">
+        <source>widget_filter.form.date.format.choices.year.label</source>
+        <target>Anual</target>
+      </trans-unit>
+      <trans-unit id="31" resname="widget_filter.form.date.format.choices.month.label">
+        <source>widget_filter.form.date.format.choices.month.label</source>
+        <target>Mensual</target>
+      </trans-unit>
+      <trans-unit id="32" resname="widget_filter.date_filter">
+        <source>widget_filter.date_filter</source>
+        <target>Fecha de publicación</target>
+      </trans-unit>
+      <trans-unit id="33" resname="modal.blog.list.articlesList.empty.notice.label">
+        <source>modal.blog.list.articlesList.empty.notice.label</source>
+        <target>Crear artículo ahora</target>
+      </trans-unit>
+      <trans-unit id="34" resname="modal.blog.list.articlesList.status.draft">
+        <source>modal.blog.list.articlesList.status.draft</source>
+        <target>Borrador</target>
+      </trans-unit>
+      <trans-unit id="35" resname="modal.blog.list.articlesList.status.published">
+        <source>modal.blog.list.articlesList.status.published</source>
+        <target>Publicado</target>
+      </trans-unit>
+      <trans-unit id="36" resname="modal.blog.list.articlesList.status.unpublished">
+        <source>modal.blog.list.articlesList.status.unpublished</source>
+        <target>A la espera de revisíon</target>
+      </trans-unit>
+      <trans-unit id="37" resname="modal.blog.list.articlesList.status.scheduled">
+        <source>modal.blog.list.articlesList.status.scheduled</source>
+        <target>Planificado</target>
+      </trans-unit>
+      <trans-unit id="38" resname="form.blog.type.slug.label">
+        <source>form.blog.type.slug.label</source>
+        <target>URL</target>
+      </trans-unit>
+      <trans-unit id="39" resname="victoire_blog.noresult">
+        <source>victoire_blog.noresult</source>
+        <target>Ningún resultado</target>
+      </trans-unit>
+      <trans-unit id="40" resname="form.article.name.label">
+        <source>form.article.name.label</source>
+        <target>Nombre del artículo</target>
+      </trans-unit>
+      <trans-unit id="41" resname="form.article.description.label">
+        <source>form.article.description.label</source>
+        <target>Descripción</target>
+      </trans-unit>
+      <trans-unit id="42" resname="form.article.image.label">
+        <source>form.article.image.label</source>
+        <target>Imagen</target>
+      </trans-unit>
+      <trans-unit id="43" resname="form.article.category.label">
+        <source>form.article.category.label</source>
+        <target>Categoría</target>
+      </trans-unit>
+      <trans-unit id="44" resname="widget_filter.form.date.default.label">
+        <source>widget_filter.form.date.default.label</source>
+        <target>Fecha predeterminada</target>
+      </trans-unit>
+      <trans-unit id="45" resname="widget_filter.form.date.default.empty_value.label">
+        <source>widget_filter.form.date.default.empty_value.label</source>
+        <target>Eliges una fecha</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

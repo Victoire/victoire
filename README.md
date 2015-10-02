@@ -6,7 +6,7 @@
 [![Build status...](https://img.shields.io/travis/Victoire/victoire/master.svg)](http://travis-ci.org/Victoire/victoire)
 [![Scrutinizer Quality Score](https://img.shields.io/scrutinizer/g/Victoire/Victoire.svg)](https://scrutinizer-ci.com/g/Victoire/victoire/)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/d5307bf2-eac4-43db-bd49-dd9e85e360a5/mini.png)](https://insight.sensiolabs.com/projects/d5307bf2-eac4-43db-bd49-dd9e85e360a5)
-[![Dependency Status](https://www.versioneye.com/php/victoire:victoire/1.0.1/badge.svg)](https://www.versioneye.com/php/victoire:victoire/1.0.1)
+[![Dependency Status](https://www.versioneye.com/php/victoire:victoire/badge.svg)](https://www.versioneye.com/php/victoire:victoire)
 [![Reference Status](https://www.versioneye.com/php/victoire:victoire/reference_badge.svg?style=flat)](https://www.versioneye.com/php/victoire:victoire/references)
 [![Documentation Status](https://readthedocs.org/projects/victoiredcms/badge/?version=latest)](https://readthedocs.org/projects/victoiredcms/)
 

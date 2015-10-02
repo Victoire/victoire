@@ -20,11 +20,11 @@
             </trans-unit>
             <trans-unit id="5" resname="modal.sitemap.caption">
                 <source>modal.sitemap.caption</source>
-                <target>Visualisez l'arborescence du site et glissez/déposez les pages pour les réorganiser à votre gré</target>
+                <target>Visualisez l'arborescence du site et glissez/déposez les pages pour les réorganiser</target>
             </trans-unit>
             <trans-unit id="6" resname="sitemap.changedPriority.success">
                 <source>sitemap.changedPriority.success</source>
-                <target>Ok commandant ;) Changement de priorité pour la page "%pageName%" éffectué !</target>
+                <target>Ok commandant ;) Changement de priorité pour la page "%pageName%" esffectué !</target>
             </trans-unit>
             <trans-unit id="7" resname="modal.sitemap.priority.label">
                 <source>modal.sitemap.priority.label</source>

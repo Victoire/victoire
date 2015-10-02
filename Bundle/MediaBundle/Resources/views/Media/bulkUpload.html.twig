@@ -2,13 +2,13 @@
 
 {% block title %}
     {% set title = 'media.media.bulkupload.addto' %}
-    {{ title | trans({'%folder%': folder.name|trans }) }}
+    {{ title |trans({'%folder%': folder.name}, 'victoire') }}
 {% endblock%}
 
 {% block header %}
     <div class="page-header">
         {% set title = 'media.media.bulkupload.addto' %}
-        <h1>{{ title | trans({'%folder%': folder.name|trans }) | capitalize | raw }}</h1>
+        <h1>{{ title |trans({'%folder%': folder.name}, 'victoire') | capitalize | raw }}</h1>
     </div>
 {% endblock %}
 
@@ -20,8 +20,8 @@
             {{ form_widget(form) }}
             <div class="input_prop">
                 <div class="btn_group">
-                    <button class="btn" onclick="window.location = '{{ path('VictoireMediaBundle_folder_show', { 'folderId' : folder.id } ) }}'" type="reset">{{ 'form.cancel' | trans }}</button>
-                    <button class="btn btn-primary" type="submit">{{ 'media.bulkupload.upload' | trans }}</button>
+                    <button class="btn" onclick="window.location = '{{ path('VictoireMediaBundle_folder_show', { 'folderId' : folder.id } ) }}'" type="reset">{{ 'form.cancel' |trans({}, 'victoire') }}</button>
+                    <button class="btn btn-primary" type="submit">{{ 'media.bulkupload.upload' |trans({}, 'victoire') }}</button>
                 </div>
             </div>
         </div>

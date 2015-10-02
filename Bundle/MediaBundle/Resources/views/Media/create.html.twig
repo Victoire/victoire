@@ -1,10 +1,10 @@
 {% extends 'VictoireMediaBundle:Default:layout.html.twig' %}
 
-{% block title %}{{ 'media.media.new' | trans({'%folder%': folder.name|trans }) | raw }}{% endblock%}
+{% block title %}{{ 'media.media.new' |trans({'%folder%': folder.name}, 'victoire') | raw }}{% endblock%}
 
 {% block header %}
     <div class="page-header">
-        <h1>{{ 'media.media.addto'| trans({'%folder%': folder.name|trans }) | raw }}</h1>
+        <h1>{{ 'media.media.addto'|trans({'%folder%': folder.name}, 'victoire') | raw }}</h1>
     </div>
 {% endblock %}
 
@@ -16,8 +16,8 @@
             {{ form_widget(form) }}
             <div class="input_prop">
                 <div class="btn_group">
-                    <button class="btn" onclick="window.location = '{{ path('VictoireMediaBundle_folder_show', { 'folderId' : folder.id } ) }}'" type="reset">{{ 'form.cancel' | trans }}</button>
-                    <button class="btn btn-primary" type="submit">{{ 'media.file.add' | trans }}</button>
+                    <button class="btn" onclick="window.location = '{{ path('VictoireMediaBundle_folder_show', { 'folderId' : folder.id } ) }}'" type="reset">{{ 'form.cancel' |trans({}, 'victoire') }}</button>
+                    <button class="btn btn-primary" type="submit">{{ 'media.file.add' |trans({}, 'victoire') }}</button>
                 </div>
             </div>
          </div>

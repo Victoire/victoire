@@ -7,11 +7,11 @@
     <div class="main_actions btn-group">
         {% block actions %}
             {% for addaction in mediamanager.getFolderAddActions() %}
-                <a href="{{ path('VictoireMediaBundle_media_create', { 'folderId' : folder.id, 'type': addaction.type }) }}" class="btn {% if loop.first %}btn-primary{% endif %}">{{ addaction.name |trans }}</a>
+                <a href="{{ path('VictoireMediaBundle_media_create', { 'folderId' : folder.id, 'type': addaction.type }) }}" class="btn {% if loop.first %}btn-primary{% endif %}">{{ addaction.name |trans({}, 'victoire') }}</a>
             {% endfor %}
-            <a href="{{ path('VictoireMediaBundle_media_bulk_upload', { 'folderId' : folder.id }) }}" class="btn">{{ 'media.bulkupload.bulkupload' |trans }}</a>
-            <button class="btn" data-target="#addsub-modal" data-toggle="modal" type="button">{{ 'media.folder.addsub.action' |trans }}</button>
-            <button class="btn" data-target="#delete-modal" data-toggle="modal" type="button">{{ 'media.folder.delete.action' |trans }}</button>
+            <a href="{{ path('VictoireMediaBundle_media_bulk_upload', { 'folderId' : folder.id }) }}" class="btn">{{ 'media.bulkupload.bulkupload' |trans({}, 'victoire') }}</a>
+            <button class="btn" data-target="#addsub-modal" data-toggle="modal" type="button">{{ 'media.folder.addsub.action' |trans({}, 'victoire') }}</button>
+            <button class="btn" data-target="#delete-modal" data-toggle="modal" type="button">{{ 'media.folder.delete.action' |trans({}, 'victoire') }}</button>
         {% endblock %}
     </div>
 
@@ -25,8 +25,8 @@
 
     <!--=========Tabs=========-->
     <ul class="nav nav-tabs">
-        <li class="active"><a href="#imagegallery" data-toggle="tab">{{ 'media.folder.contenttab.title' | trans }}</a></li>
-        <li><a href="#properties" data-toggle="tab">{{ 'media.folder.propertiestab.title' | trans }}</a></li>
+        <li class="active"><a href="#imagegallery" data-toggle="tab">{{ 'media.folder.contenttab.title' |trans({}, 'victoire') }}</a></li>
+        <li><a href="#properties" data-toggle="tab">{{ 'media.folder.propertiestab.title' |trans({}, 'victoire') }}</a></li>
     </ul>
 
     <div class="tab-content">
@@ -44,7 +44,7 @@
                         {% else %}
                             <tr>
                                 <td class="no_item">
-                                	{{ 'media.folder.sub.no' |trans }}
+                                	{{ 'media.folder.sub.no' |trans({}, 'victoire') }}
                             	</td>
                             </tr>
                         {% endfor %}
@@ -73,11 +73,11 @@
                             <p class="img_name">{{ media.name }}</p>
                         </a>
                         <a class="del" href="{{ path('VictoireMediaBundle_media_delete', { 'mediaId': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="close-btn" title="delete">close</a>
-                     	<span class="helper">Click to edit</span>
+                     	<span class="helper">{{ 'media.edit.helper'|trans({}, 'victoire') }}</span>
                      </li>
                 {% else %}
             		<li class="no_item">
-            			{{ 'media.media.no' |trans }}
+            			{{ 'media.media.no' |trans({}, 'victoire') }}
             		</li>
                 {% endfor %}
                 </ul>
@@ -173,8 +173,8 @@
                     {{ form_widget(editform) }}
                     <div class="input_prop">
                     	<div class="btn_group">
-                        	<button class="btn" onclick="window.location = '{{ path('VictoireMediaBundle_folder_show', { 'folderId' : folder.id } ) }}'" type="reset">{{ 'form.cancel' |trans }}</button>
-                        	<button class="btn btn-primary" type="submit">{{ 'media.folder.save' |trans }}</button>
+                        	<button class="btn" onclick="window.location = '{{ path('VictoireMediaBundle_folder_show', { 'folderId' : folder.id } ) }}'" type="reset">{{ 'form.cancel' |trans({}, 'victoire') }}</button>
+                        	<button class="btn btn-primary" type="submit">{{ 'media.folder.save' |trans({}, 'victoire') }}</button>
                        	</div>
                     </div>
                 </div>

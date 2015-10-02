@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\PageBundle\Entity\Page;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * PageSeo
@@ -29,14 +30,16 @@ class PageSeo
     /**
      * @var string
      *
-     * @ORM\Column(name="meta_title", type="string", length=255, nullable=true)
+     * @ORM\Column(name="meta_title", type="string", nullable=true)
+     * @Assert\Length(max = 60)
      */
     protected $metaTitle;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="meta_description", type="text", nullable=true)
+     * @ORM\Column(name="meta_description", type="string", length=255, nullable=true)
+     * @Assert\Length(max = 155)
      */
     protected $metaDescription;
 
@@ -73,7 +76,6 @@ class PageSeo
      *
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\MediaBundle\Entity\Media")
      * @ORM\JoinColumn(name="ogImage_id", referencedColumnName="id", onDelete="SET NULL")
-     *
      */
     protected $ogImage;
 
@@ -85,7 +87,7 @@ class PageSeo
     protected $ogUrl;
 
     /**
-     * @var string
+     * @var text
      *
      * @ORM\Column(name="ogDescription", type="text", nullable=true)
      */
@@ -103,12 +105,13 @@ class PageSeo
      *
      * @ORM\Column(name="twitterCard", type="string", length=255, nullable=true)
      */
-    protected $twitterCard;
+    protected $twitterCard = 'summary';
 
     /**
      * @var string
      *
      * @ORM\Column(name="twitterUrl", type="string", length=255, nullable=true)
+     * @Assert\Length(max = 15)
      */
     protected $twitterUrl;
 
@@ -116,13 +119,15 @@ class PageSeo
      * @var string
      *
      * @ORM\Column(name="twitterTitle", type="string", length=255, nullable=true)
+     * @Assert\Length(max = 70)
      */
     protected $twitterTitle;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="twitterDescription", type="text", nullable=true)
+     * @ORM\Column(name="twitterDescription", type="string", length=255, nullable=true)
+     * @Assert\Length(max = 200)
      */
     protected $twitterDescription;
 
@@ -131,7 +136,6 @@ class PageSeo
      *
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\MediaBundle\Entity\Media")
      * @ORM\JoinColumn(name="twitterImage_id", referencedColumnName="id", onDelete="SET NULL")
-     *
      */
     protected $twitterImage;
 
@@ -200,11 +204,11 @@ class PageSeo
     protected $sitemapPriority = 0.8;
 
     /**
-     * @var float
+     * @var string
      *
-     * @ORM\Column(name="sitemap_changeFreq", type="string", length=255, nullable=true, options={"default" = "monthly"})
+     * @ORM\Column(name="sitemap_changeFreq", type="string", length=20, nullable=true, options={"default" = "monthly"})
      */
-    protected $sitemapChangeFreq = "monthly";
+    protected $sitemapChangeFreq = 'monthly';
 
     /**
      * @var string

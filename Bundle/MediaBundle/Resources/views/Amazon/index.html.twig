@@ -5,14 +5,14 @@
 {% endblock %}
 
 {% block subbreadcrumb %}
-    <li><a href="{{ path('VictoireMediaBundle_media_images') }}">{{ 'menu.images'|trans }}</a> <span class="divider">/</span></li>
+    <li><a href="{{ path('VictoireMediaBundle_media_images') }}">{{ 'menu.images'|trans({}, 'victoire') }}</a> <span class="divider">/</span></li>
 {% endblock %}
 
 {% block content %}
     <div class="page-header">
-        <h1>{{ 'aviary.title'|trans }}</h1>
+        <h1>{{ 'aviary.title'|trans({}, 'victoire') }}</h1>
     </div>
     <div>
-        <p>{{ 'aviary.nothing'|trans }}</p>
+        <p>{{ 'aviary.nothing'||trans({}, 'victoire') }}</p>
     </div>
 {% endblock %}

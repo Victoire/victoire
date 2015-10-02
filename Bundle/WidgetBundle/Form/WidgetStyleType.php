@@ -77,21 +77,23 @@ class WidgetStyleType extends AbstractType
             $builder
                 ->add('containerMargin'.$key, null, array(
                     'label' => 'widget_layout.form.containerMargin'.$key.'.label',
+                    'attr'  => array('placeholder' => 'widget_layout.form.containerMargin.placeholder'),
                     'vic_help_block' => 'widget_layout.form.containerMargin.help_block',
                     'required' => false,
                 ))
                 ->add('containerPadding'.$key, null, array(
                     'label' => 'widget_layout.form.containerPadding'.$key.'.label',
+                    'attr'  => array('placeholder' => 'widget_layout.form.containerPadding.placeholder'),
                     'vic_help_block' => 'widget_layout.form.containerPadding.help_block',
                     'required' => false,
                 ))
                 ->add('containerWidth'.$key, null, array(
                     'label' => 'widget_layout.form.containerWidth'.$key.'.label',
-                    'vic_help_block' => 'widget_layout.form.containerWidth.help.label',
+                    'attr'  => array('placeholder' => 'widget_layout.form.containerWidth.placeholder'),
                 ))
                 ->add('containerHeight'.$key, null, array(
                     'label' => 'widget_layout.form.containerHeight'.$key.'.label',
-                    'vic_help_block' => 'widget_layout.form.containerHeight.help.label',
+                    'attr'  => array('placeholder' => 'widget_layout.form.containerWidth.placeholder'),
                 ))
                 ->add('textAlign'.$key, 'choice', array(
                     'label' => 'widget_layout.form.textAlign'.$key.'.label',
@@ -170,7 +172,6 @@ class WidgetStyleType extends AbstractType
                 ))
                 ->add('containerBackgroundRepeat'.$responsiveKey, 'choice', array(
                     'label' => 'widget_layout.form.containerBackgroundRepeat'.$responsiveKey.'.label',
-                    'vic_help_block' => 'widget_layout.form.containerBackgroundRepeat.help.label',
                     'choices' => array(
                         'no-repeat' => 'widget_layout.form.containerBackgroundRepeat.choices.noRepeat.label',
                         'repeat'    => 'widget_layout.form.containerBackgroundRepeat.choices.repeat.label',
@@ -180,7 +181,6 @@ class WidgetStyleType extends AbstractType
                 ))
                 ->add('containerBackgroundPosition'.$responsiveKey, 'choice', array(
                     'label' => 'widget_layout.form.containerBackgroundPosition'.$responsiveKey.'.label',
-                    'vic_help_block' => 'widget_layout.form.containerBackgroundPosition.help.label',
                     'choices' => array(
                         'center center' => 'widget_layout.form.containerBackgroundRepeat.choices.center.center.label',
                         'center right'  => 'widget_layout.form.containerBackgroundRepeat.choices.center.right.label',
@@ -195,11 +195,11 @@ class WidgetStyleType extends AbstractType
                 ))
                 ->add('containerBackgroundSize'.$responsiveKey, null, array(
                     'label' => 'widget_layout.form.containerBackgroundSize'.$responsiveKey.'.label',
-                    'vic_help_block' => 'widget_layout.form.containerBackgroundSize.help.label',
+                    'attr'  => array('placeholder' => 'widget_layout.form.containerWidth.placeholder'),
                 ))
                 ->add('containerBackgroundOverlay'.$responsiveKey, null, array(
                     'label' => 'widget_layout.form.containerBackgroundOverlay'.$responsiveKey.'.label',
-                    'vic_help_block' => 'widget_layout.form.containerBackgroundOverlay.help.label',
+                    'attr'  => array('placeholder' => 'widget_layout.form.containerBackgroundOverlay.placeholder'),
                 ))
             ;
         } else {
@@ -211,7 +211,7 @@ class WidgetStyleType extends AbstractType
                 ->remove('containerBackgroundOverlay'.$responsiveKey)
                 ->add('containerBackgroundColor'.$responsiveKey, null, array(
                     'label' => 'widget_layout.form.containerBackgroundColor'.$responsiveKey.'.label',
-                    'vic_help_block' => 'widget_layout.form.containerBackgroundColor.help.label',
+                    'attr'  => array('placeholder' => 'widget_layout.form.containerBackgroundColor.placeholder'),
                 ))
             ;
         }

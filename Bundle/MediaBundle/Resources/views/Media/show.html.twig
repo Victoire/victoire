@@ -1,7 +1,7 @@
 {% extends 'VictoireMediaBundle:Default:layout.html.twig' %}
 
 {% block header %}
-     <h1>{{ 'media.media.title'|trans }} <small>{{ media.name }}</small></h1>
+     <h1>{{ 'media.media.title'|trans({}, 'victoire') }} <small>{{ media.name }}</small></h1>
 {% endblock %}
 
 {% block content %}
@@ -12,7 +12,7 @@
     <div class="main_actions btn-group">
         {% block extraactions %}{% endblock %}
         {% block actions %}
-            <a href="{{ path('VictoireMediaBundle_media_delete', { 'mediaId': media.id }) }}" data-target="#sure-modal-{{ media.id }}" data-toggle="modal" class="btn">{{ 'form.delete'|trans }}</a>
+            <a href="{{ path('VictoireMediaBundle_media_delete', { 'mediaId': media.id }) }}" data-target="#sure-modal-{{ media.id }}" data-toggle="modal" class="btn">{{ 'form.delete'|trans({}, 'victoire') }}</a>
         {% endblock %}
     </div>
 
@@ -28,7 +28,7 @@
 	<!--=========Tabs=========-->
     <ul class="nav nav-tabs">
         <li class="active"><a href="#imagegallery" data-toggle="tab">{{ 'media.media.contenttab.title'|trans|capitalize }}</a></li>
-        <li><a href="#properties" data-toggle="tab">{{ 'media.media.propertiestab.title' | trans }}</a></li>
+        <li><a href="#properties" data-toggle="tab">{{ 'media.media.propertiestab.title' |trans({}, 'victoire') }}</a></li>
     </ul>
 
     <div class="tab-content">
@@ -37,13 +37,13 @@
 			<div class="properties">
 				<dl>
 				    {% block mediainfo %}
-    				    <dt>{{ 'media.media.mediainfo.name'|trans }}:</dt>
+    				    <dt>{{ 'media.media.mediainfo.name'|trans({}, 'victoire') }}:</dt>
     				    	<dd>{{ media.name }}</dd>
-    				    <dt>{{ 'media.media.mediainfo.contenttype'|trans }}:</dt>
+    				    <dt>{{ 'media.media.mediainfo.contenttype'|trans({}, 'victoire') }}:</dt>
     				    	<dd>{{ media.contentType }}</dd>
-    				    <dt>{{ 'media.media.mediainfo.createdat'|trans }}:</dt>
+    				    <dt>{{ 'media.media.mediainfo.createdat'|trans({}, 'victoire') }}:</dt>
     				    	<dd>{{ media.createdat|date|escape }}</dd>
-    				    <dt>{{ 'media.media.mediainfo.updatedat'|trans }}:</dt>
+    				    <dt>{{ 'media.media.mediainfo.updatedat'|trans({}, 'victoire') }}:</dt>
     				    	<dd>{{ media.updatedat|date|escape }}</dd>
 				    {% endblock %}
 				</dl>
@@ -65,8 +65,8 @@
                     {{ form_widget(editform) }}
                     <div class="input_prop">
                     	<div class="btn_group">
-                        	<button class="btn" onclick="window.location = '{{ path('VictoireMediaBundle_media_show', { 'mediaId' : media.id } ) }}'" type="reset">{{ 'form.cancel' |trans }}</button>
-                        	<button class="btn btn-primary" type="submit">{{ 'form.save' |trans }}</button>
+                        	<button class="btn" onclick="window.location = '{{ path('VictoireMediaBundle_media_show', { 'mediaId' : media.id } ) }}'" type="reset">{{ 'form.cancel' |trans({}, 'victoire') }}</button>
+                        	<button class="btn btn-primary" type="submit">{{ 'form.save' |trans({}, 'victoire') }}</button>
                        	</div>
                     </div>
                 </div>

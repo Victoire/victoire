@@ -8,7 +8,7 @@
     <body>
       <trans-unit id="ae09b10bb421ce0836f15dd43ee191805ab8e3da" resname="modal.form.businessEntity.settings.businessProperties">
         <source>modal.form.businessEntity.settings.businessProperties</source>
-        <target>Propriété de l'entité:</target>
+        <target>Propriété de l'entité :</target>
       </trans-unit>
       <trans-unit id="ae09b10bb421ce0836f15dd43ee191805ab8e3db" resname="businessEntity.form.visibleOnFront.label">
         <source>businessEntity.form.visibleOnFront.label</source>

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+  <file source-language="en" target-language="es" datatype="plaintext" original="not.available">
+    <header>
+      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
+      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
+    </header>
+    <body>
+      <trans-unit id="79fd52cd95aad0a35b167f6a03b414b7b4f8eb7c" resname="entity_proxy.form.empty_value">
+        <source>entity_proxy.form.empty_value</source>
+        <target>Por favor, seleccione una entidad</target>
+      </trans-unit>
+      <trans-unit id="aad0a35b79fd52cd95a03b414b7b4f8eb7c167f6" resname="entity_proxy.form.label">
+        <source>entity_proxy.form.label</source>
+        <target>Entitad</target>
+      </trans-unit>
+      <trans-unit id="5ec78416cc19bcd441bf69345e854bf535488535" resname="error_occured">
+        <source>error_occured</source>
+        <target>Ocurrió un error</target>
+      </trans-unit>
+      <trans-unit id="5388360d9636ad4b61bf60291deb7d679b6ff2c3" resname="form.widget.tab.entity_instance.label">
+        <source>form.widget.tab.entity_instance.label</source>
+        <target>Entidad actual</target>
+      </trans-unit>
+      <trans-unit id="b7c8b58d12f169a6040d907e356a133de28b5eee" resname="form.widget.tab.picker.label">
+        <source>form.widget.tab.picker.label</source>
+        <target>Selección</target>
+      </trans-unit>
+      <trans-unit id="1c35acaf15f741a76567a68a91bbfc4d280a3249" resname="form.widget.tab.query.label">
+        <source>form.widget.tab.query.label</source>
+        <target>Consulta</target>
+      </trans-unit>
+      <trans-unit id="c4dc18d2f6573e619afaa0cc9696ab1e7fdf29e5" resname="menu.leftnavbar.404.label">
+        <source>menu.leftnavbar.404.label</source>
+        <target>HTTP 404</target>
+      </trans-unit>
+      <trans-unit id="e577c14cd7a0f2b2312a4daef64cdb77f9dd8837" resname="menu.leftnavbar.img.label">
+        <source>menu.leftnavbar.img.label</source>
+        <target state="new">menu.leftnavbar.img.label</target>
+      </trans-unit>
+      <trans-unit id="420f842be6f0ed4e505a77069b39b2a9e5951c3a" resname="menu.leftnavbar.network.label">
+        <source>menu.leftnavbar.network.label</source>
+        <target>Red</target>
+      </trans-unit>
+      <trans-unit id="1468cdaa5a094e7fc462d045d829d884051439d3" resname="menu.page">
+        <source>menu.page</source>
+        <target>Página</target>
+      </trans-unit>
+      <trans-unit id="7269b57341e3d2887e9ff29432859d64756ff595" resname="menu.parent">
+        <source>menu.parent</source>
+        <target>Plantilla padre</target>
+      </trans-unit>
+      <trans-unit id="b56be300a76acfd99efb0bb2d8010cd61ac1d8f4" resname="menu.preview">
+        <source>menu.preview</source>
+        <target>Vista previa</target>
+      </trans-unit>
+      <trans-unit id="0d78177827ece7fd6e7cf7426c5be1299b611988" resname="modal.button.create.title">
+        <source>modal.button.create.title</source>
+        <target>Crear</target>
+      </trans-unit>
+      <trans-unit resname="modal.button.cancel.title">
+        <source>modal.button.cancel.title</source>
+        <target>Cancelar</target>
+      </trans-unit>
+      <trans-unit id="07b2988c1c5daf0bdf6be270bede6fc8424cd688" resname="modal.button.delete.confirm.body">
+        <source>modal.button.delete.confirm.body</source>
+        <target><![CDATA[Esta acción eliminará permanentemente este contenido de la base de datos. Esta acción es irreversible.<br/><strong> ¿ Está seguro?</strong>]]></target>
+      </trans-unit>
+      <trans-unit id="131320710e98bb9e085c0b3eecb26ebcdd8dc5a8" resname="modal.button.delete.confirm.title">
+        <source>modal.button.delete.confirm.title</source>
+        <target>¿ Esto es su respuesta final ?</target>
+      </trans-unit>
+      <trans-unit id="bede6fc8424c07b2988c1c5daf088bdf6be270d6" resname="modal.button.unlink.confirm.body">
+        <source>modal.button.unlink.confirm.body</source>
+        <target><![CDATA[Esta acción eliminará permanentemente este contenido de la base de datos. Esta acción es irreversible.<br/><strong> ¿ Está seguro ?</strong>]]></target>
+      </trans-unit>
+      <trans-unit id="26ebcdd8dc5a8131320710e98bb9e085c0b3eecb" resname="modal.button.unlink.confirm.title">
+        <source>modal.button.unlink.confirm.title</source>
+        <target>¿ Esto es su respuesta final ?</target>
+      </trans-unit>
+      <trans-unit resname="modal.button.delete.confirm.ok.label">
+        <source>modal.button.delete.confirm.ok.label</source>
+        <target>¡ Sí, quiero borrar !</target>
+      </trans-unit>
+      <trans-unit resname="modal.button.delete.confirm.cancel.label">
+        <source>modal.button.delete.confirm.cancel.label</source>
+        <target>Cancelar</target>
+      </trans-unit>
+      <trans-unit id="71923cd8ca737329416b829fdb8663e532457a2c" resname="modal.button.delete.title">
+        <source>modal.button.delete.title</source>
+        <target>Borrar</target>
+      </trans-unit>
+      <trans-unit resname="modal.button.update.title">
+        <source>modal.button.update.title</source>
+        <target>Guardar</target>
+      </trans-unit>
+      <trans-unit id="9a84dc1132d73a2f0abce302a49337045c823482" resname="modal.mandatory_fields.label">
+        <source>modal.mandatory_fields.label</source>
+        <target>Campos obligatorios</target>
+      </trans-unit>
+      <trans-unit id="f39fc96feb4ef136347994d198e544cea70ebf40" resname="victoire.menu.publication.scheduled.tooltip">
+        <source>victoire.menu.publication.scheduled.tooltip</source>
+        <target>Esta página se publica a partir de %publication_date%.</target>
+      </trans-unit>
+      <trans-unit id="ceb669459413ff95ae62ceaad270428e24379ba9" resname="victoire_core.edit_mode_switch">
+        <source>victoire_core.edit_mode_switch</source>
+        <target>Modo de edición</target>
+      </trans-unit>
+      <trans-unit id="18fd04000e8580063916cb16b059fcf9f900e398" resname="widget.dropdown.action.label">
+        <source>widget.dropdown.action.label</source>
+        <target>Nuevo contenido</target>
+      </trans-unit>
+      <trans-unit id="e73f4ed23832568330c963f0e40ac22daa9ab2c9" resname="widget.form.entity.fields.label">
+        <source>widget.form.entity.fields.label</source>
+        <target>Campos</target>
+      </trans-unit>
+      <trans-unit id="baa2a4733047849f29b3c0f2093e33f58fcfc8ea" resname="victoire.theme.default.label">
+        <source>victoire.theme.default.label</source>
+        <target>Predeterminado</target>
+      </trans-unit>
+      <trans-unit id="f20da08ae6b8cbd8d13f9076c53583b0238842b9" resname="widget.form.theme.label">
+        <source>widget.form.theme.label</source>
+        <target>Tema</target>
+      </trans-unit>
+      <trans-unit resname="victoire.widget.inherited.notice">
+        <source>victoire.widget.inherited.notice</source>
+        <target><![CDATA[<strong>¡ Advertencia ! </strong>Este contenido es propiedad de una plantilla padre (<i>%templateName%</i>).<br/>Si desea editar el contenido SOLAMENTE en esta página, seguir adelante, estás en el lugar correcto.<br/>Sin embargo, si desea modificar este widget en la plantilla de los padres, y que afecten a donde quiera que se utiliza en el sitio web, usted tiene que hacer clic en este enlace :<a href="%templateEditLink%" data-modal="close" data-toggle="vic-modal"> editar el contenido original</a>.]]></target>
+      </trans-unit>
+      <trans-unit id="9" resname="navbar.mode.edit">
+        <source>navbar.mode.edit</source>
+        <target>Editar contenido</target>
+      </trans-unit>
+      <trans-unit id="10" resname="navbar.mode.layout">
+        <source>navbar.mode.layout</source>
+        <target>Crear contenido</target>
+      </trans-unit>
+      <trans-unit id="11" resname="navbar.mode.readonly">
+        <source>navbar.mode.readonly</source>
+        <target>Vista previa</target>
+      </trans-unit>
+      <trans-unit id="12" resname="navbar.mode.style">
+        <source>navbar.mode.style</source>
+        <target>Estilo</target>
+      </trans-unit>
+      <trans-unit id="13" resname="victoire.login.mail.label">
+        <source>victoire.login.mail.label</source>
+        <target>Dirección de correo electrónico</target>
+      </trans-unit>
+      <trans-unit id="14" resname="victoire.login.password.label">
+        <source>victoire.login.password.label</source>
+        <target>Contraseña</target>
+      </trans-unit>
+      <trans-unit id="15" resname="victoire.theme.default.label">
+        <source>victoire.theme.default.label</source>
+        <target>Estándar</target>
+      </trans-unit>
+      <trans-unit id="16" resname="victoire.login.submit.label">
+        <source>victoire.login.submit.label</source>
+        <target>Embarcarse</target>
+      </trans-unit>
+      <trans-unit id="17" resname="victoire.reset.request.title">
+        <source>victoire.reset.request.title</source>
+        <target>Restablecer la contraseña</target>
+      </trans-unit>
+      <trans-unit id="18" resname="victoire.reset.request.submit.label">
+        <source>victoire.reset.request.submit.label</source>
+        <target>Siguiente</target>
+      </trans-unit>
+      <trans-unit id="19" resname="victoire.login.link.label">
+        <source>victoire.login.link.label</source>
+        <target>Iniciar sesión</target>
+      </trans-unit>
+      <trans-unit id="20" resname="victoire.login.meta.title">
+        <source>victoire.login.meta.title</source>
+        <target>Boarding inminente</target>
+      </trans-unit>
+      <trans-unit id="21" resname="victoire.widget.stylize.container.heading">
+        <source>victoire.widget.stylize.container.heading</source>
+        <target>General</target>
+      </trans-unit>
+      <trans-unit id="22" resname="victoire.widget.stylize.layout.heading">
+        <source>victoire.widget.stylize.layout.heading</source>
+        <target>Específico</target>
+      </trans-unit>
+      <trans-unit id="23" resname="victoire.widget.stylize.global.heading">
+        <source>victoire.widget.stylize.global.heading</source>
+        <target>Avanzado</target>
+      </trans-unit>
+      <trans-unit id="24" resname="hamburger_menu.backend.back_home">
+        <source>hamburger_menu.backend.back_home</source>
+        <target>Volver a la página web</target>
+      </trans-unit>
+      <trans-unit id="25" resname="victoire.widget.type.asynchronous.label">
+        <source>victoire.widget.type.asynchronous.label</source>
+        <target>¿ Carga asíncrona ?</target>
+      </trans-unit>
+      <trans-unit id="26" resname="victoire.login.forgot.label">
+        <source>victoire.login.forgot.label</source>
+        <target>Hé olvidado mi contraseña</target>
+      </trans-unit>
+      <trans-unit id="27" resname="vicmenu.logout.label">
+        <source>vicmenu.logout.label</source>
+        <target>Deconectarse</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

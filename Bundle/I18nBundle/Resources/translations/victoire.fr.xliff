@@ -15,12 +15,20 @@
         <target><![CDATA[<i class="vic-menuImg vic-menuImg-lang"></i> Traduire]]></target>
       </trans-unit>
       <trans-unit id="49rcgyxQhptjDvkJZfJ2hUr5CyuFD9SF8DSFDS9F" resname="victoire.i18n.viewType.locale.fr">
-        <source>menu.template.i18n.addTranslation</source>
+        <source>victoire.i18n.viewType.locale.fr</source>
         <target>Français</target>
       </trans-unit>
-      <trans-unit id="GZZrYPX7jDcUbZum.9g79QtvEr3qdyVVSx4F7Cr4" resname="victoire.i18n.viewType.locale.en">
-        <source>menu.template.i18n.addTranslation</source>
+      <trans-unit id="1" resname="victoire.i18n.viewType.locale.en">
+        <source>victoire.i18n.viewType.locale.en</source>
         <target>Anglais</target>
+      </trans-unit>
+      <trans-unit id="2" resname="victoire.i18n.viewType.locale.es">
+        <source>victoire.i18n.viewType.locale.es</source>
+        <target>Espagnol</target>
+      </trans-unit>
+      <trans-unit id="3" resname="form.view.type.locale.label">
+        <source>form.view.type.locale.label</source>
+        <target>Langue</target>
       </trans-unit>
     </body>
   </file>

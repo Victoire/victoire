@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+  <file date="2013-11-27T18:15:06Z" source-language="en" target-language="en" datatype="plaintext" original="not.available">
+    <header>
+      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
+      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
+    </header>
+    <body>
+      <trans-unit id="0" resname="victoire_widget.stylize.title">
+        <source>victoire_widget.stylize.title</source>
+        <target><![CDATA[Edit widget style - <strong>#%widgetId%</strong>]]></target>
+      </trans-unit>
+      <trans-unit id="1" resname="widget_layout.form.containerTag.label">
+        <source>widget_layout.form.containerTag.label</source>
+        <target>HTML structural element type</target>
+      </trans-unit>
+      <trans-unit id="2" resname="widget_layout.form.containerClass.label">
+        <source>widget_layout.form.containerClass.label</source>
+        <target>CSS class value</target>
+      </trans-unit>
+      <trans-unit id="3" resname="widget_layout.form.containerWidth.label">
+        <source>widget_layout.form.containerWidth.label</source>
+        <target>Width of the container</target>
+      </trans-unit>
+      <trans-unit id="4" resname="widget_layout.form.containerMargin.label">
+        <source>widget_layout.form.containerMargin.label</source>
+        <target>Margin</target>
+      </trans-unit>
+      <trans-unit id="5" resname="widget_layout.form.containerPadding.label">
+        <source>widget_layout.form.containerPadding.label</source>
+        <target>Padding</target>
+      </trans-unit>
+      <trans-unit id="6" resname="widget_layout.form.containerMarginXS.label">
+        <source>widget_layout.form.containerMarginXS.label</source>
+        <target>Margin</target>
+      </trans-unit>
+      <trans-unit id="7" resname="widget_layout.form.containerPaddingXS.label">
+        <source>widget_layout.form.containerPaddingXS.label</source>
+        <target>Padding</target>
+      </trans-unit>
+      <trans-unit id="8" resname="widget_layout.form.containerMarginSM.label">
+        <source>widget_layout.form.containerMarginSM.label</source>
+        <target>Margin</target>
+      </trans-unit>
+      <trans-unit id="9" resname="widget_layout.form.containerPaddingSM.label">
+        <source>widget_layout.form.containerPaddingSM.label</source>
+        <target>Padding</target>
+      </trans-unit>
+      <trans-unit id="10" resname="widget_layout.form.containerMarginMD.label">
+        <source>widget_layout.form.containerMarginMD.label</source>
+        <target>Margin</target>
+      </trans-unit>
+      <trans-unit id="11" resname="widget_layout.form.containerPaddingMD.label">
+        <source>widget_layout.form.containerPaddingMD.label</source>
+        <target>Padding</target>
+      </trans-unit>
+      <trans-unit id="12" resname="widget_layout.form.containerMarginLG.label">
+        <source>widget_layout.form.containerMarginLG.label</source>
+        <target>Margin</target>
+      </trans-unit>
+      <trans-unit id="13" resname="widget_layout.form.containerPaddingLG.label">
+        <source>widget_layout.form.containerPaddingLG.label</source>
+        <target>Padding</target>
+      </trans-unit>
+      <trans-unit id="14" resname="widget_layout.tab.containerMargin.XS.label">
+        <source>widget_layout.tab.containerMargin.XS.label</source>
+        <target><![CDATA[<svg width="13" height="23" viewBox="0 0 13 23" xmlns="http://www.w3.org/2000/svg"><title>Smartphones</title><path d="M11.1115455 0L1.8787411.00329607C.8400371 0-.0021553.95586127.0000041 2.1347569L.012961 20.8784274C.012961 22.0518296.8475952 23 1.887379 23l9.2284854-.0043948C12.159967 23 12.9989203 22.0496322 13 20.8740327l-.0107973-18.7535588C12.9848837.94707175 12.1459305.00219738 11.1115455 0zM6.5334738 22.6583071c-.5754981-.0054935-1.0419432-.4779307-1.0408634-1.0569409-.0010798-.5888984.4621261-1.0591382 1.0365445-1.0602369.5819765.0010987 1.0419432.4713385 1.0419432 1.0536448.0021594.5877997-.4621261 1.0591382-1.0376243 1.063533zM.5452698 20.257667L.5312332 1.7787809l11.9278201-.0065921.0107974 18.4755899-11.9245809.0098883zm5.5142009.8811502l-.004319.9921181.97392.0032961-.0021595-.9910194-.9674415-.0043948z" fill-rule="evenodd"/></svg>]]></target>
+      </trans-unit>
+      <trans-unit id="15" resname="widget_layout.tab.containerMargin.SM.label">
+        <source>widget_layout.tab.containerMargin.SM.label</source>
+        <target><![CDATA[<svg width="18" height="23" viewBox="0 0 18 23" xmlns="http://www.w3.org/2000/svg"><title>Tablets</title><path d="M17.9557536 1.5815343c-.0034034-.8778425-.6820441-1.58345827-1.5151997-1.58153036L1.5104598.0179978C.6732201.01735514-.0047398.73261046.000025 1.6136662L.042908 21.41782c.0013613.8771999.6779599 1.5847436 1.516561 1.582173l14.9253293-.0192791c.8413238.0012853 1.516561-.7107569 1.5151996-1.5892421l-.0442443-19.8099375zM9.0034149 22.7365117c-.465587-.0032132-.8413238-.3553784-.8399625-.7885159-.0034034-.4408492.3696107-.7930145.8317943-.7949424.469671.0012853.8406431.3489521.8420045.7859454.0027227.4408492-.3696107.7936571-.8338363.7975129zM1.4267359 1.3212662H16.573287V20.409522H1.4267359V1.3212662zm7.181883 20.2527146h.7827851v.7422461h-.7827851v-.7422461z" fill-rule="evenodd"/></svg>]]></target>
+      </trans-unit>
+      <trans-unit id="16" resname="widget_layout.tab.containerMargin.MD.label">
+        <source>widget_layout.tab.containerMargin.MD.label</source>
+        <target><![CDATA[<svg width="43" height="23" viewBox="0 0 43 23" xmlns="http://www.w3.org/2000/svg"><title>Laptops</title><path d="M4.5354521 21.1329546V1.4925593C4.5354521.66673077 5.250199 0 6.0886891 0h30.8162225c.8410765 0 1.5532352.66667072 1.553237 1.4925593v19.6403953h4.3555251c.1032592 0 .1863263.0652653.1863263.1461847v.8506767C42.9995651 22.3426507 42.0064875 23 39.8133168 23h-36.62682C1.2824146 23 0 22.3668543 0 22.0976048v-.8184655c0-.0809194.0829429-.1461847.1860778-.1461847h4.3493743zM5.9023007 2.3481061v17.5812334H37.033759V2.3481061H5.9023007zm15.6566291-.9633256c.1372527 0 .2485179-.1078239.2485179-.2408314s-.1112652-.24083138-.2485179-.24083138c-.1372526 0-.2485179.10782388-.2485179.24083138s.1112653.2408314.2485179.2408314zm4.5975816 19.808382v.1858616c0 .1325175-.2692245.1725385-.4730092.1725385h-8.3608533c-.2144088 0-.4855596-.0399608-.4855596-.1725385v-.1858616h9.3194221z" fill-rule="evenodd"/></svg>]]></target>
+      </trans-unit>
+      <trans-unit id="17" resname="widget_layout.tab.containerMargin.LG.label">
+        <source>widget_layout.tab.containerMargin.LG.label</source>
+        <target><![CDATA[<svg width="34" height="23" viewBox="0 0 34 23" xmlns="http://www.w3.org/2000/svg"><title>Desktop</title><path d="M32.3099465 0H1.9257778C1.1387744 0 .5.61231947.5 1.3687141v16.9581811c0 .7555053.6387744 1.3687141 1.4257778 1.3687141h12.8685946v1.8409605c0 .092048.0314986.1805386.0870845.2654718h-2.2651246c-.3450957 0-.6239515.2685846-.6239515.5989792 0 .3303946.2788558.5989792.6239515.5989792h9.029463c.3455589 0 .6253412-.2685846.6253412-.5989792 0-.3303946-.2797823-.5989792-.6253412-.5989792h-2.266051c.0560491-.0849332.0884742-.1734238.0884742-.2654718v-1.8409605h12.841728c.7879299 0 1.4257778-.6132088 1.4257778-1.3687141V1.3687141C33.7357243.61231947 33.0978764 0 32.3099465 0zM17.1312954 17.5816175c-.2959948 0-.5345509-.2298978-.5345509-.5136013 0-.2837036.2385561-.5122673.5345509-.5122673.2955316 0 .5336245.2285637.5336245.5122673 0 .2837035-.2380929.5136013-.5336245.5136013zM1.6446059 1.0796744h30.9738422v14.3919533H1.6446059V1.0796744z" fill-rule="evenodd"/></svg>]]></target>
+      </trans-unit>
+      <trans-unit id="18" resname="widget_layout.form.containerBackground.label">
+        <source>widget_layout.form.containerBackground.label</source>
+        <target>Background</target>
+      </trans-unit>
+      <trans-unit id="19" resname="widget_layout.form.containerTag.help_block">
+        <source>widget_layout.form.containerTag.help_block</source>
+        <target><![CDATA[More information about this choice <a href="http://www.w3.org/wiki/HTML_structural_elements" target="_blank">here</a>]]></target>
+      </trans-unit>
+      <trans-unit id="20" resname="widget_layout.form.containerMargin.placeholder">
+        <source>widget_layout.form.containerMargin.placeholder</source>
+        <target>units : pixels, % or "auto"</target>
+      </trans-unit>
+      <trans-unit id="21" resname="widget_layout.form.containerPadding.placeholder">
+        <source>widget_layout.form.containerPadding.placeholder</source>
+        <target>units : pixels, % or "auto"</target>
+      </trans-unit>
+     <trans-unit id="22" resname="widget_layout.form.containerMargin.help_block">
+        <source>widget_layout.form.containerMargin.help_block</source>
+        <target><![CDATA[Eg : 10px 10px 10px 10px (top; right; bottom; left)</br><a href="hhttp://www.w3schools.com/css/css_padding.asp" target="_blank">more info</a>]]></target>
+      </trans-unit>
+      <trans-unit id="23" resname="widget_layout.form.containerPadding.help_block">
+        <source>widget_layout.form.containerPadding.help_block</source>
+        <target><![CDATA[Eg : 10px 10px 10px 10px (top; right; bottom; left)</br><a href="http://www.w3schools.com/css/css_margin.asp" target="_blank">more info</a>]]></target>
+      </trans-unit>
+      <trans-unit id="33" resname="widget_layout.form.textAlign.label">
+        <source>widget_layout.form.textAlign.label</source>
+        <target>Alignment</target>
+      </trans-unit>
+      <trans-unit id="34" resname="widget_layout.form.textAlign.choices.center.label">
+        <source>widget_layout.form.textAlign.choices.center.label</source>
+        <target>Centered</target>
+      </trans-unit>
+      <trans-unit id="35" resname="widget_layout.form.textAlign.choices.right.label">
+        <source>widget_layout.form.textAlign.choices.right.label</source>
+        <target>Right</target>
+      </trans-unit>
+      <trans-unit id="36" resname="widget_layout.form.textAlign.choices.justify.label">
+        <source>widget_layout.form.textAlign.choices.justify.label</source>
+        <target>Justified</target>
+      </trans-unit>
+      <trans-unit id="37" resname="widget_layout.form.textAlign.choices.left.label">
+        <source>widget_layout.form.textAlign.choices.left.label</source>
+        <target>Left</target>
+      </trans-unit>
+      <trans-unit id="38" resname="widget_layout.form.containerWidthXS.label">
+        <source>widget_layout.form.containerWidthXS.label</source>
+        <target>Container's width</target>
+      </trans-unit>
+      <trans-unit id="39" resname="widget_layout.form.containerWidthSM.label">
+        <source>widget_layout.form.containerWidthSM.label</source>
+        <target>Container's width</target>
+      </trans-unit>
+      <trans-unit id="40" resname="widget_layout.form.containerWidthMD.label">
+        <source>widget_layout.form.containerWidthMD.label</source>
+        <target>Container's width</target>
+      </trans-unit>
+      <trans-unit id="41" resname="widget_layout.form.containerWidthLG.label">
+        <source>widget_layout.form.containerWidthLG.label</source>
+        <target>Container's width</target>
+      </trans-unit>
+      <trans-unit id="38" resname="widget_layout.form.containerHeightXS.label">
+        <source>widget_layout.form.containerHeightXS.label</source>
+        <target>Container's minimum height</target>
+      </trans-unit>
+      <trans-unit id="38" resname="widget_layout.form.containerHeight.label">
+        <source>widget_layout.form.containerHeight.label</source>
+        <target>Container's minimum height</target>
+      </trans-unit>
+      <trans-unit id="39" resname="widget_layout.form.containerHeightSM.label">
+        <source>widget_layout.form.containerHeightSM.label</source>
+        <target>Container's minimum height</target>
+      </trans-unit>
+      <trans-unit id="40" resname="widget_layout.form.containerHeightMD.label">
+        <source>widget_layout.form.containerHeightMD.label</source>
+        <target>Container's minimum height</target>
+      </trans-unit>
+      <trans-unit id="41" resname="widget_layout.form.containerHeightLG.label">
+        <source>widget_layout.form.containerHeightLG.label</source>
+        <target>Container's minimum height</target>
+      </trans-unit>
+      <trans-unit id="42" resname="widget_layout.form.containerBackgroundXS.label">
+        <source>widget_layout.form.containerBackgroundXS.label</source>
+        <target>Background</target>
+      </trans-unit>
+      <trans-unit id="43" resname="widget_layout.form.containerBackgroundSM.label">
+        <source>widget_layout.form.containerBackgroundSM.label</source>
+        <target>Background</target>
+      </trans-unit>
+      <trans-unit id="44" resname="widget_layout.form.containerBackgroundMD.label">
+        <source>widget_layout.form.containerBackgroundMD.label</source>
+        <target>Background</target>
+      </trans-unit>
+      <trans-unit id="45" resname="widget_layout.form.containerBackgroundLG.label">
+        <source>widget_layout.form.containerBackgroundLG.label</source>
+        <target>Background</target>
+      </trans-unit>
+      <trans-unit id="101" resname="widget_layout.form.textAlignXS.label">
+        <source>widget_layout.form.textAlignXS.label</source>
+        <target>Alignment</target>
+      </trans-unit>
+      <trans-unit id="46" resname="widget_layout.form.textAlignSM.label">
+        <source>widget_layout.form.textAlignSM.label</source>
+        <target>Alignment</target>
+      </trans-unit>
+      <trans-unit id="47" resname="widget_layout.form.textAlignMD.label">
+        <source>widget_layout.form.textAlignMD.label</source>
+        <target>Alignment</target>
+      </trans-unit>
+      <trans-unit id="48" resname="widget_layout.form.textAlignLG.label">
+        <source>widget_layout.form.textAlignLG.label</source>
+        <target>Alignment</target>
+      </trans-unit>
+      <trans-unit id="49" resname="victoire_widget.delete.success">
+        <source>victoire_widget.delete.success</source>
+        <target>The widget has been deleted</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerBackgroundType.label">
+        <source>widget_layout.form.containerBackgroundType.label</source>
+        <target>Background</target>
+      </trans-unit>
+      <trans-unit id="51" resname="widget_layout.form.containerBackgroundTypeXS.label">
+        <source>widget_layout.form.containerBackgroundTypeXS.label</source>
+        <target>Background for a very small screen</target>
+      </trans-unit>
+      <trans-unit id="52" resname="widget_layout.form.containerBackgroundTypeSM.label">
+        <source>widget_layout.form.containerBackgroundTypeSM.label</source>
+        <target>Background for a small screen</target>
+      </trans-unit>
+      <trans-unit id="53" resname="widget_layout.form.containerBackgroundTypeMD.label">
+        <source>widget_layout.form.containerBackgroundTypeMD.label</source>
+        <target>Background for an average screen</target>
+      </trans-unit>
+      <trans-unit id="54" resname="widget_layout.form.containerBackgroundTypeLG.label">
+        <source>widget_layout.form.containerBackgroundTypeLG.label</source>
+        <target>Background for a large screen</target>
+      </trans-unit>
+      <trans-unit id="55" resname="widget_layout.form.containerBackgroundImage.label">
+        <source>widget_layout.form.containerBackgroundImage.label</source>
+        <target>Picture</target>
+      </trans-unit>
+      <trans-unit id="56" resname="widget_layout.form.containerBackgroundImageXS.label">
+        <source>widget_layout.form.containerBackgroundImageXS.label</source>
+        <target>Picture</target>
+      </trans-unit>
+      <trans-unit id="57" resname="widget_layout.form.containerBackgroundImageSM.label">
+        <source>widget_layout.form.containerBackgroundImageSM.label</source>
+        <target>Picture</target>
+      </trans-unit>
+      <trans-unit id="58" resname="widget_layout.form.containerBackgroundImageMD.label">
+        <source>widget_layout.form.containerBackgroundImageMD.label</source>
+        <target>Picture</target>
+      </trans-unit>
+      <trans-unit id="59" resname="widget_layout.form.containerBackgroundImageLG.label">
+        <source>widget_layout.form.containerBackgroundImageLG.label</source>
+        <target>Picture</target>
+      </trans-unit>
+      <trans-unit id="60" resname="widget_layout.form.containerBackgroundType.choices.color.label">
+        <source>widget_layout.form.containerBackgroundType.choices.color.label</source>
+        <target>Use a color</target>
+      </trans-unit>
+      <trans-unit id="61" resname="widget_layout.form.containerBackgroundType.choices.image.label">
+        <source>widget_layout.form.containerBackgroundType.choices.image.label</source>
+        <target>Use a picture</target>
+      </trans-unit>
+      <trans-unit id="62" resname="widget_layout.form.containerBackgroundColor.label">
+        <source>widget_layout.form.containerBackgroundColor.label</source>
+        <target>Color</target>
+      </trans-unit>
+      <trans-unit id="63" resname="widget_layout.form.containerBackgroundColorXS.label">
+        <source>widget_layout.form.containerBackgroundColorXS.label</source>
+        <target>Color</target>
+      </trans-unit>
+      <trans-unit id="64" resname="widget_layout.form.containerBackgroundColorSM.label">
+        <source>widget_layout.form.containerBackgroundColorSM.label</source>
+        <target>Color</target>
+      </trans-unit>
+      <trans-unit id="65" resname="widget_layout.form.containerBackgroundColorMD.label">
+        <source>widget_layout.form.containerBackgroundColorMD.label</source>
+        <target>Color</target>
+      </trans-unit>
+      <trans-unit id="66" resname="widget_layout.form.containerBackgroundColorLG.label">
+        <source>widget_layout.form.containerBackgroundColorLG.label</source>
+        <target>Color</target>
+      </trans-unit>
+      <trans-unit id="67" resname="widget_layout.form.containerBackgroundColor.placeholder">
+        <source>widget_layout.form.containerBackgroundColor.placeholder</source>
+        <target>eg .: blue, # 0000FF or rgb (0, 0, 255)</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerBackgroundRepeat.label">
+        <source>widget_layout.form.containerBackgroundRepeat.label</source>
+        <target>Repeating picture</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerBackgroundRepeatXS.label">
+        <source>widget_layout.form.containerBackgroundRepeatXS.label</source>
+        <target>Repeating picture</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerBackgroundRepeatSM.label">
+        <source>widget_layout.form.containerBackgroundRepeatSM.label</source>
+        <target>Repeating picture</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerBackgroundRepeatMD.label">
+        <source>widget_layout.form.containerBackgroundRepeatMD.label</source>
+        <target>Repeating picture</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerBackgroundRepeatLG.label">
+        <source>widget_layout.form.containerBackgroundRepeatLG.label</source>
+        <target>Repeating picture</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerBackgroundPosition.label">
+        <source>widget_layout.form.containerBackgroundPosition.label</source>
+        <target>Position in the container</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerBackgroundPositionXS.label">
+        <source>widget_layout.form.containerBackgroundPositionXS.label</source>
+        <target>Position in the container</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerBackgroundPositionSM.label">
+        <source>widget_layout.form.containerBackgroundPositionSM.label</source>
+        <target>Position in the container</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerBackgroundPositionMD.label">
+        <source>widget_layout.form.containerBackgroundPositionMD.label</source>
+        <target>Position in the container</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerBackgroundPositionLG.label">
+        <source>widget_layout.form.containerBackgroundPositionLG.label</source>
+        <target>Position in the container</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerBackgroundSize.label">
+        <source>widget_layout.form.containerBackgroundSize.label</source>
+        <target>Size within the container</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerBackgroundSizeXS.label">
+        <source>widget_layout.form.containerBackgroundSizeXS.label</source>
+        <target>Size within the container</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerBackgroundSizeSM.label">
+        <source>widget_layout.form.containerBackgroundSizeSM.label</source>
+        <target>Size within the container</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerBackgroundSizeMD.label">
+        <source>widget_layout.form.containerBackgroundSizeMD.label</source>
+        <target>Size within the container</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerBackgroundSizeLG.label">
+        <source>widget_layout.form.containerBackgroundSizeLG.label</source>
+        <target>Size within the container</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerBackgroundOverlay.label">
+        <source>widget_layout.form.containerBackgroundOverlay.label</source>
+        <target>Overlay</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerBackgroundOverlayXS.label">
+        <source>widget_layout.form.containerBackgroundOverlayXS.label</source>
+        <target>Overlay</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerBackgroundOverlaySM.label">
+        <source>widget_layout.form.containerBackgroundOverlaySM.label</source>
+        <target>Overlay</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerBackgroundOverlayMD.label">
+        <source>widget_layout.form.containerBackgroundOverlayMD.label</source>
+        <target>Overlay</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerBackgroundOverlayLG.label">
+        <source>widget_layout.form.containerBackgroundOverlayLG.label</source>
+        <target>Overlay</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerBackgroundRepeat.choices.noRepeat.label">
+        <source>widget_layout.form.containerBackgroundRepeat.choices.noRepeat.label</source>
+        <target>No repeating</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerBackgroundRepeat.choices.repeat.label">
+        <source>widget_layout.form.containerBackgroundRepeat.choices.repeat.label</source>
+        <target>Repeating horizontal and vertical</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerBackgroundRepeat.choices.repeatX.label">
+        <source>widget_layout.form.containerBackgroundRepeat.choices.repeatX.label</source>
+        <target>Repeating horizontal</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerBackgroundRepeat.choices.repeatY.label">
+        <source>widget_layout.form.containerBackgroundRepeat.choices.repeatY.label</source>
+        <target>Repeating vertical</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerBackgroundRepeat.choices.center.center.label">
+        <source>widget_layout.form.containerBackgroundRepeat.choices.center.center.label</source>
+        <target>Centered</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerBackgroundRepeat.choices.center.right.label">
+        <source>widget_layout.form.containerBackgroundRepeat.choices.center.right.label</source>
+        <target>Centered to the right</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerBackgroundRepeat.choices.center.left.label">
+        <source>widget_layout.form.containerBackgroundRepeat.choices.center.left.label</source>
+        <target>Centered to the left</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerBackgroundRepeat.choices.top.center.label">
+        <source>widget_layout.form.containerBackgroundRepeat.choices.top.center.label</source>
+        <target>Centered top</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerBackgroundRepeat.choices.top.right.label">
+        <source>widget_layout.form.containerBackgroundRepeat.choices.top.right.label</source>
+        <target>Top right</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerBackgroundRepeat.choices.top.left.label">
+        <source>widget_layout.form.containerBackgroundRepeat.choices.top.left.label</source>
+        <target>Top left</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerBackgroundRepeat.choices.bottom.center.label">
+        <source>widget_layout.form.containerBackgroundRepeat.choices.bottom.center.label</source>
+        <target>Centered on bottom</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerBackgroundRepeat.choices.bottom.right.label">
+        <source>widget_layout.form.containerBackgroundRepeat.choices.bottom.right.label</source>
+        <target>Bottom right</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerBackgroundRepeat.choices.bottom.left.label">
+        <source>widget_layout.form.containerBackgroundRepeat.choices.bottom.left.label</source>
+        <target>Bottom left</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerWidth.placeholder">
+        <source>widget_layout.form.containerWidth.placeholder</source>
+        <target>eg. : 80% or 80px</target>
+      </trans-unit>
+      <trans-unit id="50" resname="widget_layout.form.containerBackgroundOverlay.placeholder">
+        <source>widget_layout.form.containerBackgroundOverlay.placeholder</source>
+        <target>eg. : linear-gradient(to bottom right, rgba(0, 0, 0, 0.5), #dc4225)</target>
+      </trans-unit>
+      <trans-unit id="100" resname="widget_layout.form.containerBackground.help_block">
+        <source>widget_layout.form.containerBackground.help_block</source>
+        <target>This field is deprecated and will be removed soon. Thank you not to use it.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
