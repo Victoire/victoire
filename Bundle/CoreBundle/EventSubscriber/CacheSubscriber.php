@@ -10,7 +10,7 @@ use Victoire\Bundle\WidgetBundle\Event\WidgetAnnotationEvent;
 
 /**
  * Save victoire temp data in cache file
- * ref: victoire_core.cache_subscriber
+ * ref: victoire_core.cache_subscriber.
  */
 class CacheSubscriber implements EventSubscriberInterface
 {
@@ -44,15 +44,15 @@ class CacheSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * bound to BusinessEntity or widget annotation load events
+     * bound to BusinessEntity or widget annotation load events.
      *
      * @return array The subscribed events
      */
     public static function getSubscribedEvents()
     {
-        return array(
+        return [
             'victoire.business_entity_annotation_load' => 'addBusinessEntityInfo',
-            'victoire.widget_annotation_load'          => 'addWidgetInfo'
-        );
+            'victoire.widget_annotation_load'          => 'addWidgetInfo',
+        ];
     }
 }

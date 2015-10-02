@@ -5,7 +5,7 @@ namespace Victoire\Bundle\TwigBundle\Listener;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 /**
- * KernelRequestListener will do some things like adding config as globals (ie responsive vars)
+ * KernelRequestListener will do some things like adding config as globals (ie responsive vars).
  *
  * @author Leny BERNARD <leny@appventus.com>
  */

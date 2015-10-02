@@ -2,16 +2,15 @@
 
 namespace Victoire\Bundle\BusinessEntityBundle\Handler;
 
-use Gedmo\Sluggable\SluggableListener;
-use Gedmo\Sluggable\Mapping\Event\SluggableAdapter;
-use Victoire\Bundle\BusinessEntityBundle\Transliterator\Transliterator;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Gedmo\Sluggable\Handler\SlugHandlerInterface;
+use Gedmo\Sluggable\Mapping\Event\SluggableAdapter;
+use Gedmo\Sluggable\SluggableListener;
+use Victoire\Bundle\BusinessEntityBundle\Transliterator\Transliterator;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 
 /**
- * Sluggable handler which keep twig variable after urlization
- *
+ * Sluggable handler which keep twig variable after urlization.
  */
 class TwigSlugHandler implements SlugHandlerInterface
 {
@@ -20,9 +19,8 @@ class TwigSlugHandler implements SlugHandlerInterface
      */
     protected $sluggable;
 
-
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function __construct(SluggableListener $sluggable)
     {
@@ -31,38 +29,38 @@ class TwigSlugHandler implements SlugHandlerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function onChangeDecision(SluggableAdapter $ea, array &$config, $object, &$slug, &$needToChangeSlug)
     {
-        $this->sluggable->setTransliterator(array($this, 'transliterate'));
+        $this->sluggable->setTransliterator([$this, 'transliterate']);
         $needToChangeSlug = true;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function onSlugCompletion(SluggableAdapter $ea, array &$config, $object, &$slug)
     {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function validate(array $options, ClassMetadata $meta)
     {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function postSlugBuild(SluggableAdapter $ea, array &$config, $object, &$slug)
     {
-        $this->sluggable->setTransliterator(array($this, 'transliterate'));
+        $this->sluggable->setTransliterator([$this, 'transliterate']);
     }
 
     /**
-     * Transliterates the slug and keep twig variable
+     * Transliterates the slug and keep twig variable.
      *
      * @param string $text
      * @param string $separator
@@ -77,11 +75,12 @@ class TwigSlugHandler implements SlugHandlerInterface
         } else {
             $slug = $this->transliterator->urlize($text, $separator);
         }
+
         return $slug;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function handlesUrlization()
     {

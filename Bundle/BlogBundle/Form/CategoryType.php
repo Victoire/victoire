@@ -2,35 +2,36 @@
 
 namespace Victoire\Bundle\BlogBundle\Form;
 
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Category form type
+ * Category form type.
  */
 class CategoryType extends AbstractType
 {
     /**
-     * define form fields
+     * define form fields.
+     *
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', 'text', array(
-                'label'    => 'blog.form.title.label',
-                'required' => true,
-                'constraints' => array(
-                    new \Symfony\Component\Validator\Constraints\NotBlank()
-                ),
-                'attr'          => array(
-                    "class"     => "vic-blogCategoryWidget-formControl"
-                    )
+            ->add('title', 'text', [
+                'label'       => 'blog.form.title.label',
+                'required'    => true,
+                'constraints' => [
+                    new \Symfony\Component\Validator\Constraints\NotBlank(),
+                ],
+                'attr'          => [
+                    'class'     => 'vic-blogCategoryWidget-formControl',
+                    ],
 
-                )
+                ]
             )
             ->remove('removeButton');
 
@@ -39,7 +40,7 @@ class CategoryType extends AbstractType
          */
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
-            function($event) {
+            function ($event) {
                 $entity = $event->getData();
 
                 if ($entity !== null) {
@@ -61,7 +62,7 @@ class CategoryType extends AbstractType
          */
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function($event) {
+            function ($event) {
                 $rawData = $event->getData();
                 if (isset($rawData['children'])) {
                     $addChildren = true;
@@ -79,41 +80,43 @@ class CategoryType extends AbstractType
     }
 
     /**
-     * Add the items field to the form
+     * Add the items field to the form.
      *
      * @param Form $form
      */
     protected function addChildrenField($form)
     {
         $form->add('children', 'collection',
-            array(
-                'type' => 'victoire_form_blog_category',
-                'required'     => false,
-                'allow_add'    => true,
-                'allow_delete' => true,
+            [
+                'type'          => 'victoire_form_blog_category',
+                'required'      => false,
+                'allow_add'     => true,
+                'allow_delete'  => true,
                 'prototype'     => true,
-                'by_reference' => false
-            )
+                'by_reference'  => false,
+            ]
         );
     }
+
     /**
-     * bind form to WidgetRedactor entity
+     * bind form to WidgetRedactor entity.
+     *
      * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         parent::setDefaultOptions($resolver);
 
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class'         => 'Victoire\Bundle\BlogBundle\Entity\Category',
             'cascade_validation' => true,
-            'translation_domain' => 'victoire'
+            'translation_domain' => 'victoire',
 
-        ));
+        ]);
     }
 
     /**
-     * get form name
+     * get form name.
      *
      * @return string The name of the form
      */

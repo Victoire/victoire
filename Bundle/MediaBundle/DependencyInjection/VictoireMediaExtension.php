@@ -1,25 +1,25 @@
 <?php
+
 namespace Victoire\Bundle\MediaBundle\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\Container;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
+use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\Yaml\Yaml;
 
 /**
- * This is the class that loads and manages your bundle configuration
+ * This is the class that loads and manages your bundle configuration.
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
 class VictoireMediaExtension extends Extension implements PrependExtensionInterface
 {
-
     /**
-     * Loads configuration
+     * Loads configuration.
      *
      * @param array            $configs   Configuration
      * @param ContainerBuilder $container Container
@@ -35,7 +35,7 @@ class VictoireMediaExtension extends Extension implements PrependExtensionInterf
 
         $container->setParameter('twig.form.resources', array_merge(
             $container->getParameter('twig.form.resources'),
-            array('VictoireMediaBundle:Form:formWidgets.html.twig')
+            ['VictoireMediaBundle:Form:formWidgets.html.twig']
         ));
 
         $loader->load('services.yml');
@@ -44,14 +44,13 @@ class VictoireMediaExtension extends Extension implements PrependExtensionInterf
 
     public function prepend(ContainerBuilder $container)
     {
-
         if (!$container->hasParameter('victoire_media.upload_dir')) {
             $container->setParameter('victoire_media.upload_dir', '/uploads/media/');
         }
 
         $twigConfig['globals']['upload_dir'] = $container->getParameter('victoire_media.upload_dir');
         $twigConfig['globals']['mediabundleisactive'] = true;
-        $twigConfig['globals']['mediamanager'] = "@victoire_media.media_manager";
+        $twigConfig['globals']['mediamanager'] = '@victoire_media.media_manager';
         $container->prependExtensionConfig('twig', $twigConfig);
 
         $liipConfig = Yaml::parse(file_get_contents(__DIR__.'/../Resources/config/liip_imagine.yml'));

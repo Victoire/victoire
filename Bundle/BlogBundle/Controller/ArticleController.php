@@ -15,14 +15,15 @@ use Victoire\Bundle\BlogBundle\Event\ArticleEvent;
 use Victoire\Bundle\BlogBundle\VictoireBlogEvents;
 
 /**
- * article Controller
+ * article Controller.
  *
  * @Route("/victoire-dcms/article")
  */
 class ArticleController extends Controller
 {
     /**
-     * Create article
+     * Create article.
+     *
      * @Route("/create", name="victoire_blog_article_create")
      *
      * @return JsonResponse
@@ -62,34 +63,33 @@ class ArticleController extends Controller
             $event = new ArticleEvent($article);
             $dispatcher->dispatch(VictoireBlogEvents::CREATE_ARTICLE, $event);
             if (null === $response = $event->getResponse()) {
-                $response = new JsonResponse(array(
-                    "success"  => true,
-                    'url'     => $this->generateUrl('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl())),
-                ));
+                $response = new JsonResponse([
+                    'success'  => true,
+                    'url'      => $this->generateUrl('victoire_core_page_show', ['_locale' => $page->getLocale(), 'url' => $page->getUrl()]),
+                ]);
             }
 
             return $response;
-
         } else {
             $formErrorHelper = $this->container->get('victoire_form.error_helper');
 
             return new JsonResponse(
-                array(
-                    "success" => false,
-                    "message" => $formErrorHelper->getRecursiveReadableErrors($form),
+                [
+                    'success' => false,
+                    'message' => $formErrorHelper->getRecursiveReadableErrors($form),
                     'html'    => $this->container->get('victoire_templating')->render(
                         'VictoireBlogBundle:Article:new.html.twig',
-                        array(
+                        [
                             'form' => $form->createView(),
-                        )
+                        ]
                     ),
-                )
+                ]
             );
         }
     }
 
     /**
-     * New article
+     * New article.
      *
      * @Route("/new/{id}", name="victoire_blog_article_newBlogArticle")
      * @Template()
@@ -103,17 +103,17 @@ class ArticleController extends Controller
         $form = $this->createForm('victoire_article_type', $article);
 
         return new JsonResponse(
-            array(
+            [
                 'html' => $this->container->get('victoire_templating')->render(
                     'VictoireBlogBundle:Article:new.html.twig',
-                    array('form' => $form->createView())
+                    ['form' => $form->createView()]
                 ),
-            )
+            ]
         );
     }
 
     /**
-     * Article settings
+     * Article settings.
      *
      * @param Request $request
      * @param Article $article
@@ -121,18 +121,18 @@ class ArticleController extends Controller
      * @Route("/{id}/settings", name="victoire_blog_article_settings")
      *
      * @ParamConverter("article", class="VictoireBlogBundle:Article")
+     *
      * @return JsonResponse
      */
     public function settingsAction(Request $request, Article $article)
     {
         $form = $this->createForm('victoire_article_settings_type', $article);
-        $businessProperties = array();
+        $businessProperties = [];
 
         $form->handleRequest($request);
         $novalidate = $request->query->get('novalidate', false);
 
         if ($novalidate === false && $form->isValid()) {
-
             if (count($article->getTags())) {
                 /** @var Tag $tag */
                 foreach ($article->getTags() as $tag) {
@@ -144,40 +144,40 @@ class ArticleController extends Controller
 
             $pattern = $article->getPattern();
 
-            $page = $this->container->get('victoire_page.page_helper')->findPageByParameters(array(
-                'viewId' => $pattern->getId(),
+            $page = $this->container->get('victoire_page.page_helper')->findPageByParameters([
+                'viewId'   => $pattern->getId(),
                 'entityId' => $article->getId(),
-            ));
+            ]);
 
-            $response = array(
+            $response = [
                 'success' => true,
-                'url'     => $this->generateUrl('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl())),
-            );
+                'url'     => $this->generateUrl('victoire_core_page_show', ['_locale' => $page->getLocale(), 'url' => $page->getUrl()]),
+            ];
         } else {
             if ($novalidate === false) {
-                $template = "VictoireBlogBundle:Article:settings.html.twig";
+                $template = 'VictoireBlogBundle:Article:settings.html.twig';
             } else {
-                $template = "VictoireBlogBundle:Article:_form.html.twig";
+                $template = 'VictoireBlogBundle:Article:_form.html.twig';
             }
-            $response = array(
+            $response = [
                 'success' => false,
                 'html'    => $this->container->get('victoire_templating')->render(
                     $template,
-                    array(
-                        'action'            => $this->generateUrl('victoire_blog_article_settings', ['id' => $article->getId()]),
+                    [
+                        'action'             => $this->generateUrl('victoire_blog_article_settings', ['id' => $article->getId()]),
                         'article'            => $article,
                         'form'               => $form->createView(),
                         'businessProperties' => $businessProperties,
-                    )
+                    ]
                 ),
-            );
+            ];
         }
 
         return new JsonResponse($response);
     }
 
     /**
-     * Page delete
+     * Page delete.
      *
      * @param Article $article
      *
@@ -189,29 +189,29 @@ class ArticleController extends Controller
     public function deleteAction(Article $article)
     {
         $bep = $this->get('victoire_page.page_helper')->findPageByParameters(
-            array(
+            [
                 'patternId' => $article->getPattern()->getId(),
                 'entityId'  => $article->getId(),
-            )
+            ]
         );
 
         $this->get('victoire_blog.manager.article')->delete($article, $bep);
 
         //redirect to the homepage
-        $homepageUrl = $this->generateUrl('victoire_core_page_show', array(
+        $homepageUrl = $this->generateUrl('victoire_core_page_show', [
                 '_locale' => $article->getBlog()->getLocale(),
-                'url' => $article->getBlog()->getUrl(),
-            )
+                'url'     => $article->getBlog()->getUrl(),
+            ]
         );
 
-        $message = $this->get('translator')->trans('victoire.blog.article.delete.success', array(), 'victoire');
+        $message = $this->get('translator')->trans('victoire.blog.article.delete.success', [], 'victoire');
         $this->get('session')->getFlashBag()->add('success', $message);
 
-        $response = array(
+        $response = [
             'success' => true,
             'url'     => $homepageUrl,
             'message' => $message,
-        );
+        ];
 
         return new JsonResponse($response);
     }

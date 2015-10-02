@@ -2,11 +2,10 @@
 
 namespace Victoire\Bundle\BusinessPageBundle\Chain;
 
-use Symfony\Component\HttpFoundation\Request;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 
 /**
- * BusinessTemplate chain
+ * BusinessTemplate chain.
  */
 class BusinessTemplateChain
 {
@@ -14,7 +13,7 @@ class BusinessTemplateChain
 
     public function __construct()
     {
-        $this->patterns = array();
+        $this->patterns = [];
     }
 
     /**
@@ -39,8 +38,8 @@ class BusinessTemplateChain
 
         return $this->patterns['default'];
     }
+
     /**
-     *
      * @return array
      */
     public function getBusinessTemplates()

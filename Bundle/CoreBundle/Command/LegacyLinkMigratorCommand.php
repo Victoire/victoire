@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\CoreBundle\Command;
 
 use Doctrine\ORM\Tools\DisconnectedClassMetadataFactory;
@@ -10,7 +11,7 @@ use Victoire\Bundle\CoreBundle\Entity\Link;
 class LegacyLinkMigratorCommand extends ContainerAwareCommand
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function configure()
     {
@@ -22,7 +23,8 @@ class LegacyLinkMigratorCommand extends ContainerAwareCommand
     }
 
     /**
-     * Read declared business entities and BusinessEntityPatternPages to generate their urls
+     * Read declared business entities and BusinessEntityPatternPages to generate their urls.
+     *
      * @param InputInterface  $input
      * @param OutputInterface $output
      *

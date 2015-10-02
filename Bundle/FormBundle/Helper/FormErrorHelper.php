@@ -5,17 +5,17 @@ namespace Victoire\Bundle\FormBundle\Helper;
 use JMS\TranslationBundle\Annotation\Ignore;
 
 /**
- * A service that give errors from a form as a string
+ * A service that give errors from a form as a string.
  *
  * service: victoire_form.error_helper
- *
  */
 class FormErrorHelper
 {
     protected $translator = null;
 
     /**
-     * The constructor
+     * The constructor.
+     *
      * @param Translator $translator The translator service
      * @param booleand   $debug      Is debug mode enabled ? It will be verbose then.
      */
@@ -30,8 +30,8 @@ class FormErrorHelper
      *
      * This method should only be used in ajax calls.
      *
-     * @param Form    $form         The form to parse
-     * @param boolean $withChildren Do we parse the embedded forms
+     * @param Form $form         The form to parse
+     * @param bool $withChildren Do we parse the embedded forms
      *
      * @return string A string representation of all errors
      */
@@ -48,7 +48,7 @@ class FormErrorHelper
 
             //get the translated label
             if ($labelId !== null) {
-                $label = $this->translator->trans(/** @Ignore */$labelId, array(), $translationDomain).' : ';
+                $label = $this->translator->trans(/* @Ignore */$labelId, [], $translationDomain).' : ';
             } else {
                 $label = '';
             }
@@ -64,7 +64,7 @@ class FormErrorHelper
             }
 
             //add the error
-            $errors .= $label.$this->translator->trans(/** @Ignore */$error->getMessage(), array(), $translationDomain)."\n";
+            $errors .= $label.$this->translator->trans(/* @Ignore */$error->getMessage(), [], $translationDomain)."\n";
         }
 
         //do we parse the children

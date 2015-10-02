@@ -7,10 +7,9 @@ use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\CoreBundle\Manager\Chain\ViewReferenceBuilderChain;
 
-
 /**
  * Page helper
- * ref: victoire_core.view_reference_builder
+ * ref: victoire_core.view_reference_builder.
  */
 class ViewReferenceBuilder
 {
@@ -21,22 +20,18 @@ class ViewReferenceBuilder
         $this->viewReferenceBuilderChain = $viewReferenceBuilderChain;
     }
 
-
-
     /**
-     * compute the viewReference relative to a View + entity
-     * @param WebViewInterface                $view
+     * compute the viewReference relative to a View + entity.
+     *
+     * @param WebViewInterface $view
      *
      * @return array
      */
     public function buildViewReference(WebViewInterface $view, EntityManager $em = null)
     {
-
         $viewManager = $this->viewReferenceBuilderChain->getViewReferenceBuilder($view);
         $viewReferences = $viewManager->buildReference($view, $em);
 
         return $viewReferences;
     }
-
-
 }

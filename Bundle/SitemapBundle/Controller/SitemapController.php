@@ -11,16 +11,18 @@ use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\SeoBundle\Entity\PageSeo;
 
 /**
- * Victoire sitemap controller
+ * Victoire sitemap controller.
+ *
  * @Route("/sitemap")
  */
 class SitemapController extends Controller
 {
     /**
-     * Change the sitemap priority for the given page
+     * Change the sitemap priority for the given page.
      *
      * @Route(".{_format}", name="victoire_sitemap_xml", Requirements={"_format" = "xml"})
      * @Template("VictoireSitemapBundle:Sitemap:sitemap.xml.twig")
+     *
      * @return template
      */
     public function xmlAction()
@@ -30,35 +32,36 @@ class SitemapController extends Controller
             ->getAll()
             ->run();
 
-        $indexedPages = array();
+        $indexedPages = [];
         foreach ($pages as $page) {
             if (!$page->getSeo() || $page->getSeo()->isSitemapIndexed()) {
                 $indexedPages[] = $page;
             }
         }
 
-        return array(
+        return [
             'pages' => $indexedPages,
-        );
+        ];
     }
 
     /**
-     * Show sitemap as tree and reorganize it by dnd
+     * Show sitemap as tree and reorganize it by dnd.
      *
      * @Route("/reorganize", name="victoire_sitemap_reorganize", options={"expose"=true})
      * @Template()
+     *
      * @return JsonResponse
      */
     public function reorganizeAction()
     {
         $em = $this->getDoctrine()->getManager();
         $pageRepo = $em->getRepository('VictoirePageBundle:BasePage');
-        $response = array(
+        $response = [
             'success' => false,
-        );
-        if ($this->get('request')->getMethod() === "POST") {
+        ];
+        if ($this->get('request')->getMethod() === 'POST') {
             $sorted = $this->getRequest()->request->get('sorted');
-            $depths = array();
+            $depths = [];
             //reorder pages positions
             foreach ($sorted as $item) {
                 $depths[$item['depth']][$item['item_id']] = 1;
@@ -76,43 +79,44 @@ class SitemapController extends Controller
             }
             $em->flush();
 
-            $response = array(
+            $response = [
                 'success' => true,
-                'message' => $this->get('translator')->trans('sitemap.changed.success', array(), 'victoire'),
-            );
+                'message' => $this->get('translator')->trans('sitemap.changed.success', [], 'victoire'),
+            ];
         }
 
         $allPages = $em->getRepository('VictoirePageBundle:BasePage')->findAll();
-        $forms = array();
+        $forms = [];
         foreach ($allPages as $_page) {
             $forms[$_page->getId()] = $this->createSitemapPriorityType($_page)->createView();
         }
 
-        $pages = $em->getRepository('VictoirePageBundle:BasePage')->findByParent(null, array('position' => 'ASC'));
+        $pages = $em->getRepository('VictoirePageBundle:BasePage')->findByParent(null, ['position' => 'ASC']);
         $response['html'] = $this->container->get('victoire_templating')->render(
             'VictoireSitemapBundle:Sitemap:reorganize.html.twig',
-            array(
+            [
                 'pages' => $pages,
                 'forms' => $forms,
-            )
+            ]
         );
 
         return new JsonResponse($response);
     }
 
     /**
-     * Change the sitemap priority for the given page
+     * Change the sitemap priority for the given page.
      *
      * @Route("/changePriority/{id}", name="victoire_sitemap_changePriority", options={"expose"=true})
+     *
      * @return JsonResponse
      */
     public function changePriorityAction(Request $request, BasePage $page)
     {
         $form = $this->createSitemapPriorityType($page);
         $form->handleRequest($request);
-        $params = array(
+        $params = [
             'success' => $form->isValid(),
-        );
+        ];
         if ($form->isValid()) {
             if (!$page->getSeo()) {
                 $seo = new PageSeo();
@@ -124,10 +128,10 @@ class SitemapController extends Controller
             // congratulate user, the action succeed
             $message = $this->get('translator')->trans(
                 'sitemap.changedPriority.success',
-                array(
+                [
                     '%priority%' => $page->getSeo()->getSitemapPriority(),
                     '%pageName%' => $page->getName(),
-                    ),
+                    ],
                 'victoire'
             );
             $params['message'] = $message;
@@ -137,7 +141,7 @@ class SitemapController extends Controller
     }
 
     /**
-     * Create a sitemap priority type
+     * Create a sitemap priority type.
      *
      * @return \Symfony\Component\Form\Form The form
      **/
@@ -146,19 +150,19 @@ class SitemapController extends Controller
         $form = $this->createForm(
             'victoire_sitemap_priority_pageseo_type',
             $page->getSeo(),
-            array(
-                'action' => $this->generateUrl('victoire_sitemap_changePriority', array(
+            [
+                'action'     => $this->generateUrl('victoire_sitemap_changePriority', [
                         'id' => $page->getId(),
-                    )
+                    ]
                 ),
                 'method' => 'PUT',
-                'attr' => array(
+                'attr'   => [
                     'class'       => 'sitemapPriorityForm form-inline',
                     'data-pageId' => $page->getId(),
                     'id'          => 'sitemap-priority-type-'.$page->getId(),
                     'style'       => 'display: inline;',
-                ),
-            )
+                ],
+            ]
         );
 
         return $form;

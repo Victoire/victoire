@@ -6,16 +6,16 @@ use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
 
 /**
  * Parameter Converter
- * ref: victoire_business_entity.converter.parameter_converter
+ * ref: victoire_business_entity.converter.parameter_converter.
  */
 class ParameterConverter
 {
     /**
-     * Replace the code string with the value of the entity attribute
+     * Replace the code string with the value of the entity attribute.
      *
      * @param string           $string
      * @param BusinessProperty $businessProperty
-     * @param Object           $entity
+     * @param object           $entity
      *
      * @throws \Exception
      *

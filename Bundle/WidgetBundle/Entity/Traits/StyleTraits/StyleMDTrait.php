@@ -1,10 +1,11 @@
 <?php
+
 namespace Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTraits;
 
 use Victoire\Bundle\MediaBundle\Entity\Media;
 
-trait StyleMDTrait {
-
+trait StyleMDTrait
+{
     /**
      * @var string
      *
@@ -42,6 +43,7 @@ trait StyleMDTrait {
 
     /**
      * @var string
+     *
      * @deprecated
      * @ORM\Column(name="container_background_md", type="string", length=255, nullable=true)
      */
@@ -107,11 +109,13 @@ trait StyleMDTrait {
 
     /**
      * @param string $containerMarginMD
+     *
      * @return $this
      */
     public function setContainerMarginMD($containerMarginMD)
     {
         $this->containerMarginMD = $containerMarginMD;
+
         return $this;
     }
 
@@ -125,11 +129,13 @@ trait StyleMDTrait {
 
     /**
      * @param string $containerPaddingMD
+     *
      * @return $this
      */
     public function setContainerPaddingMD($containerPaddingMD)
     {
         $this->containerPaddingMD = $containerPaddingMD;
+
         return $this;
     }
 
@@ -143,11 +149,13 @@ trait StyleMDTrait {
 
     /**
      * @param string $containerWidthMD
+     *
      * @return $this
      */
     public function setContainerWidthMD($containerWidthMD)
     {
         $this->containerWidthMD = $containerWidthMD;
+
         return $this;
     }
 
@@ -161,11 +169,13 @@ trait StyleMDTrait {
 
     /**
      * @param string $containerHeightMD
+     *
      * @return $this
      */
     public function setContainerHeightMD($containerHeightMD)
     {
         $this->containerHeightMD = $containerHeightMD;
+
         return $this;
     }
 
@@ -179,11 +189,13 @@ trait StyleMDTrait {
 
     /**
      * @param string $textAlignMD
+     *
      * @return $this
      */
     public function setTextAlignMD($textAlignMD)
     {
         $this->textAlignMD = $textAlignMD;
+
         return $this;
     }
 
@@ -197,11 +209,13 @@ trait StyleMDTrait {
 
     /**
      * @param string $containerBackgroundMD
+     *
      * @return $this
      */
     public function setContainerBackgroundMD($containerBackgroundMD)
     {
         $this->containerBackgroundMD = $containerBackgroundMD;
+
         return $this;
     }
 
@@ -215,11 +229,13 @@ trait StyleMDTrait {
 
     /**
      * @param string $containerBackgroundTypeMD
+     *
      * @return $this
      */
     public function setContainerBackgroundTypeMD($containerBackgroundTypeMD)
     {
         $this->containerBackgroundTypeMD = $containerBackgroundTypeMD;
+
         return $this;
     }
 
@@ -233,11 +249,13 @@ trait StyleMDTrait {
 
     /**
      * @param string $containerBackgroundRepeatMD
+     *
      * @return $this
      */
     public function setContainerBackgroundRepeatMD($containerBackgroundRepeatMD)
     {
         $this->containerBackgroundRepeatMD = $containerBackgroundRepeatMD;
+
         return $this;
     }
 
@@ -251,11 +269,13 @@ trait StyleMDTrait {
 
     /**
      * @param string $containerBackgroundPositionMD
+     *
      * @return $this
      */
     public function setContainerBackgroundPositionMD($containerBackgroundPositionMD)
     {
         $this->containerBackgroundPositionMD = $containerBackgroundPositionMD;
+
         return $this;
     }
 
@@ -269,11 +289,13 @@ trait StyleMDTrait {
 
     /**
      * @param string $containerBackgroundSizeMD
+     *
      * @return $this
      */
     public function setContainerBackgroundSizeMD($containerBackgroundSizeMD)
     {
         $this->containerBackgroundSizeMD = $containerBackgroundSizeMD;
+
         return $this;
     }
 
@@ -287,11 +309,13 @@ trait StyleMDTrait {
 
     /**
      * @param string $containerBackgroundColorMD
+     *
      * @return $this
      */
     public function setContainerBackgroundColorMD($containerBackgroundColorMD)
     {
         $this->containerBackgroundColorMD = $containerBackgroundColorMD;
+
         return $this;
     }
 
@@ -304,13 +328,16 @@ trait StyleMDTrait {
     }
 
     /**
-     * Set image
+     * Set image.
+     *
      * @param Media $image
+     *
      * @return $this
      */
     public function setContainerBackgroundImageMD(Media $image = null)
     {
         $this->containerBackgroundImageMD = $image;
+
         return $this;
     }
 
@@ -324,12 +351,13 @@ trait StyleMDTrait {
 
     /**
      * @param string $containerBackgroundOverlayMD
+     *
      * @return $this
      */
     public function setContainerBackgroundOverlayMD($containerBackgroundOverlayMD)
     {
         $this->containerBackgroundOverlayMD = $containerBackgroundOverlayMD;
+
         return $this;
     }
-
 }

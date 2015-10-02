@@ -7,7 +7,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Victoire\Bundle\CoreBundle\Annotations as VIC;
 
 /**
- * Character
+ * Character.
  *
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type", type="string")
@@ -23,12 +23,13 @@ class Character
     /**
      * @return string
      */
-    public function __toString() {
+    public function __toString()
+    {
         return $this->name;
     }
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -63,9 +64,9 @@ class Character
     protected $slug;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -73,7 +74,7 @@ class Character
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -83,7 +84,8 @@ class Character
     }
 
     /**
-     * Set name
+     * Set name.
+     *
      * @param string $name
      *
      * @return $this
@@ -96,7 +98,7 @@ class Character
     }
 
     /**
-     * Get midiChlorians
+     * Get midiChlorians.
      *
      * @return string
      */
@@ -106,7 +108,8 @@ class Character
     }
 
     /**
-     * Set midiChlorians
+     * Set midiChlorians.
+     *
      * @param string $midiChlorians
      *
      * @return $this
@@ -119,7 +122,7 @@ class Character
     }
 
     /**
-     * Get slug
+     * Get slug.
      *
      * @return string
      */
@@ -129,7 +132,8 @@ class Character
     }
 
     /**
-     * Set slug
+     * Set slug.
+     *
      * @param string $slug
      *
      * @return $this

@@ -2,12 +2,12 @@
 
 namespace Victoire\Bundle\MediaBundle\Repository;
 
-use Victoire\Bundle\MediaBundle\Entity\Media;
-use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityNotFoundException;
+use Doctrine\ORM\EntityRepository;
+use Victoire\Bundle\MediaBundle\Entity\Media;
 
 /**
- * MediaRepository
+ * MediaRepository.
  */
 class MediaRepository extends EntityRepository
 {
@@ -37,8 +37,9 @@ class MediaRepository extends EntityRepository
     /**
      * @param int $mediaId
      *
-     * @return object
      * @throws EntityNotFoundException
+     *
+     * @return object
      */
     public function getMedia($mediaId)
     {
@@ -53,10 +54,11 @@ class MediaRepository extends EntityRepository
     }
 
     /**
-     * @param integer $pictureId
+     * @param int $pictureId
+     *
+     * @throws EntityNotFoundException
      *
      * @return object
-     * @throws EntityNotFoundException
      */
     public function getPicture($pictureId)
     {

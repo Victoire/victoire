@@ -11,7 +11,7 @@ use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
 
 /**
- * Page extension
+ * Page extension.
  */
 class PageExtension extends \Twig_Extension
 {
@@ -20,13 +20,13 @@ class PageExtension extends \Twig_Extension
     protected $pageHelper = null;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param BusinessPageHelper $BusinessTemplateHelper
-     * @param Router $router
-     * @param PageHelper $pageHelper
-     * @param CurrentViewHelper $currentViewHelper
-     * @param EntityManager $entityManager
+     * @param Router             $router
+     * @param PageHelper         $pageHelper
+     * @param CurrentViewHelper  $currentViewHelper
+     * @param EntityManager      $entityManager
      */
     public function __construct(BusinessPageHelper $BusinessTemplateHelper, Router $router, PageHelper $pageHelper, CurrentViewHelper $currentViewHelper, EntityManager $entityManager)
     {
@@ -38,30 +38,30 @@ class PageExtension extends \Twig_Extension
     }
 
     /**
-     * register twig functions
+     * register twig functions.
      *
      * @return array The list of extensions
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('vic_current_page_reference', array($this, 'victoireCurrentPageReference')),
-            'cms_page_business_page_pattern_sitemap' => new \Twig_Function_Method($this, 'cmsPageBusinessPagePatternSiteMap', array('is_safe' => array('html'))),
-        );
+        return [
+            new \Twig_SimpleFunction('vic_current_page_reference', [$this, 'victoireCurrentPageReference']),
+            'cms_page_business_page_pattern_sitemap' => new \Twig_Function_Method($this, 'cmsPageBusinessPagePatternSiteMap', ['is_safe' => ['html']]),
+        ];
     }
 
     /**
-     * register twig filters
+     * register twig filters.
      *
      * @return array The list of filters
      */
     public function getFilters()
     {
-        return array();
+        return [];
     }
 
     /**
-     * get extension name
+     * get extension name.
      *
      * @return string The name
      */
@@ -71,7 +71,7 @@ class PageExtension extends \Twig_Extension
     }
 
     /**
-     * Get the ol li for the generated page of a business entity page pattern
+     * Get the ol li for the generated page of a business entity page pattern.
      *
      * @param BasePage $page
      *
@@ -81,7 +81,7 @@ class PageExtension extends \Twig_Extension
     {
         $html = '';
 
-        $urls = array();
+        $urls = [];
 
         //the template link to the page
         $BusinessTemplate = $page;
@@ -119,12 +119,12 @@ class PageExtension extends \Twig_Extension
 
                 $title = $pageEntity->getName();
 
-                $itemsToAdd[$url] = array(
+                $itemsToAdd[$url] = [
                     'item'      => $item,
                     'url'       => $url,
                     'title'     => $title,
                     'generated' => $generated,
-                );
+                ];
 
                 unset($url);
             }
@@ -133,7 +133,7 @@ class PageExtension extends \Twig_Extension
             $html .= '<ol>';
             foreach ($itemsToAdd as $item) {
                 $itemUrl = $item['url'];
-                $itemUrl = $this->router->generate('victoire_core_page_show', array('url' => $itemUrl));
+                $itemUrl = $this->router->generate('victoire_core_page_show', ['url' => $itemUrl]);
                 $title = $item['title'];
                 $generated = $item['generated'];
 
@@ -144,7 +144,7 @@ class PageExtension extends \Twig_Extension
                     $class = '';
                 }
 
-                $html .= "<li><div class='".$class."'><a href='".$itemUrl."' title='".$title."'>".$title."</a></div>";
+                $html .= "<li><div class='".$class."'><a href='".$itemUrl."' title='".$title."'>".$title.'</a></div>';
             }
             $html .= '</ol>';
         }
@@ -153,7 +153,7 @@ class PageExtension extends \Twig_Extension
     }
 
     /**
-     * Get the list of urls of the children
+     * Get the list of urls of the children.
      *
      * @param BasePage $page
      *
@@ -161,7 +161,7 @@ class PageExtension extends \Twig_Extension
      */
     protected function getChildrenUrls(BasePage $page)
     {
-        $urls = array();
+        $urls = [];
 
         $children = $page->getInstances();
 

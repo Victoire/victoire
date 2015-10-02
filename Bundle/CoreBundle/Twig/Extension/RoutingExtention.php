@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\CoreBundle\Twig\Extension;
 
 use Symfony\Bridge\Twig\Extension\RoutingExtension;
@@ -6,11 +7,10 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
 
 /**
- * class RoutingExtension
+ * class RoutingExtension.
  */
 class RoutingExtention extends RoutingExtension
 {
-
     private $pageHelper;
     private $generator;
 
@@ -21,10 +21,10 @@ class RoutingExtention extends RoutingExtension
         parent::__construct($generator);
     }
 
-    public function getPath($name, $parameters = array(), $relative = false)
+    public function getPath($name, $parameters = [], $relative = false)
     {
         if ($name == 'victoire_core_page_show_by_id') {
-            $params = array('viewId' => $parameters['viewId']);
+            $params = ['viewId' => $parameters['viewId']];
             unset($parameters['viewId']);
             if (!empty($parameters['entityId'])) {
                 $params['entityId'] = $parameters['entityId'];

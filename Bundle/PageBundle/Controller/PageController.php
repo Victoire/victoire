@@ -1,9 +1,9 @@
 <?php
+
 namespace Victoire\Bundle\PageBundle\Controller;
 
 /**
- * undocumented class
- *
+ * undocumented class.
  **/
 class PageController extends BasePageController
 {

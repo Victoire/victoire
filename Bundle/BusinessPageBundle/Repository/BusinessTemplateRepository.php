@@ -6,14 +6,14 @@ use Doctrine\ORM\EntityRepository;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 
 /**
- * The Business Entity PagePattern repository
+ * The Business Entity PagePattern repository.
  */
 class BusinessTemplateRepository extends EntityRepository
 {
     private $queryBuilder;
 
     /**
-     * Get query builder instance
+     * Get query builder instance.
      */
     public function getInstance()
     {
@@ -21,7 +21,8 @@ class BusinessTemplateRepository extends EntityRepository
     }
 
     /**
-     * Find the pagePatterns for the business entity
+     * Find the pagePatterns for the business entity.
+     *
      * @param BusinessEntity $businessEntity
      *
      * @return array The list of pagePatterns
@@ -34,7 +35,8 @@ class BusinessTemplateRepository extends EntityRepository
     }
 
     /**
-     * get the pagePatterns for the business entity query
+     * get the pagePatterns for the business entity query.
+     *
      * @param string $businessEntityId
      *
      * @return QueryBuilder
@@ -48,7 +50,8 @@ class BusinessTemplateRepository extends EntityRepository
     }
 
     /**
-     * Find the business entity page pattern that looks like this url
+     * Find the business entity page pattern that looks like this url.
+     *
      * @param string $url
      *
      * @return array The list of pagePatterns

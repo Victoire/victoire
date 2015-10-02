@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Widget\ForceBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -6,7 +7,7 @@ use Victoire\Bundle\CoreBundle\Annotations as VIC;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
- * WidgetForce
+ * WidgetForce.
  *
  * @ORM\Table("vic_widget_force")
  * @ORM\Entity
@@ -22,9 +23,9 @@ class WidgetForce extends Widget
     protected $side;
 
     /**
-     * To String function
+     * To String function.
      *
-     * @return String
+     * @return string
      */
     public function __toString()
     {
@@ -32,9 +33,10 @@ class WidgetForce extends Widget
     }
 
     /**
-     * Set side
+     * Set side.
      *
      * @param $side
+     *
      * @return $this
      */
     public function setSide($side)
@@ -45,7 +47,7 @@ class WidgetForce extends Widget
     }
 
     /**
-     * Get side
+     * Get side.
      *
      * @return string
      */

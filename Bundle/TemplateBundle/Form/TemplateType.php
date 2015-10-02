@@ -8,15 +8,15 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Victoire\Bundle\CoreBundle\Form\ViewType;
 
 /**
- * Template type
+ * Template type.
  */
 class TemplateType extends ViewType
 {
-
     protected $layouts;
 
     /**
-     * constructor
+     * constructor.
+     *
      * @param EntityManager $layouts
      */
     public function __construct($layouts, $availableLocales, RequestStack $requestStack)
@@ -26,7 +26,8 @@ class TemplateType extends ViewType
     }
 
     /**
-     * define form fields
+     * define form fields.
+     *
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
@@ -34,30 +35,31 @@ class TemplateType extends ViewType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('layout', 'choice', array(
-                'label' => 'form.template.type.layout.label',
-                'choices' => $options['layouts']
-            )
+        $builder->add('layout', 'choice', [
+                'label'   => 'form.template.type.layout.label',
+                'choices' => $options['layouts'],
+            ]
         );
     }
 
     /**
-     * bind to Template entity
+     * bind to Template entity.
+     *
      * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(
-            array(
+            [
                 'data_class'         => 'Victoire\Bundle\TemplateBundle\Entity\Template',
                 'translation_domain' => 'victoire',
-                'layouts'            => $this->layouts
-            )
+                'layouts'            => $this->layouts,
+            ]
         );
     }
 
     /**
-     * get form name
+     * get form name.
      */
     public function getName()
     {

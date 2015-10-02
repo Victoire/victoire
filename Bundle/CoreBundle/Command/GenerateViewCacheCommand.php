@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\CoreBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -7,9 +8,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class GenerateViewCacheCommand extends ContainerAwareCommand
 {
-
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function configure()
     {
@@ -21,7 +21,8 @@ class GenerateViewCacheCommand extends ContainerAwareCommand
     }
 
     /**
-     * Read declared business entities and BusinessEntityPatternPages to generate their urls
+     * Read declared business entities and BusinessEntityPatternPages to generate their urls.
+     *
      * @param InputInterface  $input
      * @param OutputInterface $output
      *

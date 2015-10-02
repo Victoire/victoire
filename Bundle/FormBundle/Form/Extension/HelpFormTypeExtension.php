@@ -11,15 +11,15 @@ namespace Victoire\Bundle\FormBundle\Form\Extension;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\Exception\InvalidArgumentException;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\Exception\InvalidArgumentException;
+use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Extension for Help Forms handling
+ * Extension for Help Forms handling.
  *
  * @author phiamo <phiamo@googlemail.com>
  */
@@ -28,7 +28,7 @@ class HelpFormTypeExtension extends AbstractTypeExtension
     /**
      * @var array
      */
-    protected $options = array();
+    protected $options = [];
 
     /**
      * {@inheritdoc}
@@ -61,9 +61,8 @@ class HelpFormTypeExtension extends AbstractTypeExtension
                 $options['vic_help_label_tooltip']['icon'] = $this->options['vic_help_label_tooltip']['icon'];
             }
             if (!isset($options['vic_help_label_tooltip']['placement'])) {
-                    $options['vic_help_label_tooltip']['placement'] = $this->options['vic_help_label_tooltip']['placement'];
+                $options['vic_help_label_tooltip']['placement'] = $this->options['vic_help_label_tooltip']['placement'];
             }
-
         }
 
         if (null !== $options['vic_help_label_popover'] && !is_array($options['vic_help_label_popover'])) {
@@ -123,13 +122,13 @@ class HelpFormTypeExtension extends AbstractTypeExtension
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'vic_help_block' => null,
-            'vic_help_label' => null,
-            'vic_help_label_tooltip' => $this->options['vic_help_label_tooltip'],
-            'vic_help_label_popover' => $this->options['vic_help_label_popover'],
-            'vic_help_widget_popover' => $this->options['vic_help_widget_popover']
-        ));
+        $resolver->setDefaults([
+            'vic_help_block'          => null,
+            'vic_help_label'          => null,
+            'vic_help_label_tooltip'  => $this->options['vic_help_label_tooltip'],
+            'vic_help_label_popover'  => $this->options['vic_help_label_popover'],
+            'vic_help_widget_popover' => $this->options['vic_help_widget_popover'],
+        ]);
     }
 
     /**

@@ -5,8 +5,7 @@ namespace Victoire\Bundle\CoreBundle\Twig\Extension;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 
 /**
- * Provides some gloval variabls to twig
- *
+ * Provides some gloval variabls to twig.
  */
 class GlobalsExtension extends \Twig_Extension
 {
@@ -14,7 +13,7 @@ class GlobalsExtension extends \Twig_Extension
     protected $session;
 
     /**
-     * contructor
+     * contructor.
      *
      * @param TemplateMapper $templateMapper
      * @param unknown        $session
@@ -26,20 +25,20 @@ class GlobalsExtension extends \Twig_Extension
     }
 
     /**
-     * Get the globals
+     * Get the globals.
      *
      * @return array
      */
     public function getGlobals()
     {
-        return array(
-            "global_layout" => $this->templateMapper->getGlobalLayout(),
-            "edit_mode"     => $this->session->get('victoire.edit_mode', false),
-        );
+        return [
+            'global_layout' => $this->templateMapper->getGlobalLayout(),
+            'edit_mode'     => $this->session->get('victoire.edit_mode', false),
+        ];
     }
 
     /**
-     * The name of the extension
+     * The name of the extension.
      *
      * @return string
      */

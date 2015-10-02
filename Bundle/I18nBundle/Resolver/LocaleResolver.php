@@ -5,13 +5,13 @@ namespace Victoire\Bundle\I18nBundle\Resolver;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
-* A class to guess the locale form URL
-* ref: victoire_i18n.locale_resolver
-*/
+ * A class to guess the locale form URL
+ * ref: victoire_i18n.locale_resolver.
+ */
 class LocaleResolver
 {
     const PATTERN_PARAMETER = 'parameter'; // pass the locale the normal way, ie. http://acme.dn/fr
-    const PATTERN_DOMAIN    = 'domain';
+    const PATTERN_DOMAIN = 'domain';
 
     public $localePattern;
     protected $localeDomainConfig;
@@ -19,7 +19,7 @@ class LocaleResolver
     public $defaultLocale;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param string $localePattern      What is the strategy to resolve locale
      * @param string $localeDomainConfig The locale domain config
@@ -36,7 +36,7 @@ class LocaleResolver
 
     /**
      * set the local depending on patterns
-     * it also set the victoire_locale wich is the locale of the application admin
+     * it also set the victoire_locale wich is the locale of the application admin.
      */
     public function resolve(Request $request)
     {
@@ -55,6 +55,7 @@ class LocaleResolver
      * @param Request $request
      *
      * @throws \Exception
+     *
      * @return string
      *
      * resolves the locale from httpHost or host
@@ -66,7 +67,7 @@ class LocaleResolver
 
         if (array_key_exists($host, $this->localeDomainConfig)) {
             return $this->localeDomainConfig[$host];
-        } else if (array_key_exists($httpHost, $this->localeDomainConfig)) {
+        } elseif (array_key_exists($httpHost, $this->localeDomainConfig)) {
             return $this->localeDomainConfig[$httpHost];
         }
 
@@ -75,11 +76,9 @@ class LocaleResolver
             $httpHost,
             implode(',', $this->localeDomainConfig)
         ));
-
     }
 
     /**
-     *
      * @return string
      *
      * This method resolves the domain from locale

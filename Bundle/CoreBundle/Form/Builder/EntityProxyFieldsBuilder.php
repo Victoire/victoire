@@ -2,12 +2,12 @@
 
 namespace Victoire\Bundle\CoreBundle\Form\Builder;
 
+use Symfony\Component\Translation\TranslatorInterface;
 use Victoire\Bundle\BusinessEntityBundle\Entity\ReceiverProperty;
 use Victoire\Bundle\BusinessEntityBundle\Reader\BusinessEntityCacheReader;
-use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * Edit Page Type
+ * Edit Page Type.
  */
 class EntityProxyFieldsBuilder
 {
@@ -15,7 +15,7 @@ class EntityProxyFieldsBuilder
     private $translator;
 
     /**
-     * define form fields
+     * define form fields.
      */
     public function __construct(BusinessEntityCacheReader $cacheReader, TranslatorInterface $translator)
     {
@@ -24,12 +24,14 @@ class EntityProxyFieldsBuilder
     }
 
     /**
-     * Build
+     * Build.
+     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param string $widgetName
-     * @param string $namespace
+     * @param string                                       $widgetName
+     * @param string                                       $namespace
      *
      * @throws \Exception
+     *
      * @return array The all list of fields type to add for the entity namespace given
      */
     public function buildForEntityAndWidgetType(&$builder, $widgetName, $namespace)
@@ -51,19 +53,19 @@ class EntityProxyFieldsBuilder
                         $label = $this->translator->trans(
                             'widget_'.strtolower($widgetName).'.form.'.$receiverProperty->getFieldName(
                             ).'.label',
-                            array(),
+                            [],
                             'victoire'
                         );
-                        $options = array(
+                        $options = [
                             'choices' => array_combine($businessProperties[$type], $businessProperties[$type]),
                             'label'   => $label,
-                            'attr'    => array(
-                                'title' => $label
-                            )
-                        );
+                            'attr'    => [
+                                'title' => $label,
+                            ],
+                        ];
 
-                        if(!$receiverProperty->isRequired()) {
-                            $options = array_merge(array('required' => false), $options);
+                        if (!$receiverProperty->isRequired()) {
+                            $options = array_merge(['required' => false], $options);
                         }
 
                         $builder->add($receiverProperty->getFieldName(), 'choice', $options);

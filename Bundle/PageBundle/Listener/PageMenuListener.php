@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\PageBundle\Listener;
 
 use Symfony\Component\EventDispatcher\Event;
@@ -7,14 +8,14 @@ use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
 use Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent;
 
 /**
- * When dispatched, this listener add items to a KnpMenu
+ * When dispatched, this listener add items to a KnpMenu.
  */
 class PageMenuListener implements MenuListenerInterface
 {
     private $menuBuilder;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param MenuBuilder $menuBuilder
      */
@@ -24,7 +25,7 @@ class PageMenuListener implements MenuListenerInterface
     }
 
     /**
-     * add a contextual menu item
+     * add a contextual menu item.
      *
      * @param PageMenuContextualEvent $event
      *
@@ -37,23 +38,23 @@ class PageMenuListener implements MenuListenerInterface
 
         $mainItem = $this->getMainItem();
         $mainItem->addChild('menu.page.settings',
-            array(
-                'route' => 'victoire_core_page_settings',
-                'routeParameters' => array('id' => $page->getId())
-            )
+            [
+                'route'           => 'victoire_core_page_settings',
+                'routeParameters' => ['id' => $page->getId()],
+            ]
         )->setLinkAttribute('data-toggle', 'vic-modal');
         $mainItem->addChild('menu.page.seoSettings',
-            array(
-                'route' => 'victoire_seo_pageSeo_settings',
-                'routeParameters' => array('id' => $page->getId())
-            )
+            [
+                'route'           => 'victoire_seo_pageSeo_settings',
+                'routeParameters' => ['id' => $page->getId()],
+            ]
         )->setLinkAttribute('data-toggle', 'vic-modal');
 
         return $mainItem;
     }
 
     /**
-     * add global menu items
+     * add global menu items.
      *
      * @param Event $event
      *
@@ -63,9 +64,9 @@ class PageMenuListener implements MenuListenerInterface
     {
         $mainItem = $this->getMainItem();
 
-        $mainItem->addChild('menu.page.new', array(
-            'route'     => 'victoire_core_page_new'
-            )
+        $mainItem->addChild('menu.page.new', [
+            'route'     => 'victoire_core_page_new',
+            ]
         )
         ->setExtra('translation_domain', 'victoire')
         ->setLinkAttribute('data-toggle', 'vic-modal');
@@ -74,7 +75,7 @@ class PageMenuListener implements MenuListenerInterface
     }
 
     /**
-     * Get the main item
+     * Get the main item.
      *
      * @return \Knp\Menu\ItemInterface <\Knp\Menu\ItemInterface, NULL>|\Knp\Menu\ItemInterface
      */
@@ -87,7 +88,7 @@ class PageMenuListener implements MenuListenerInterface
         } else {
             return $this->menuBuilder->createDropdownMenuItem(
                 $this->menuBuilder->getTopNavbar(),
-                "menu.page"
+                'menu.page'
             );
         }
     }

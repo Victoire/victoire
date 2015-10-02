@@ -1,9 +1,9 @@
 <?php
+
 namespace Victoire\Bundle\BusinessEntityBundle\Helper;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Config\Definition\Exception\Exception;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
 use Victoire\Bundle\BusinessEntityBundle\Reader\BusinessEntityCacheReader;
@@ -12,7 +12,7 @@ use Victoire\Bundle\CoreBundle\Cache\Builder\CacheBuilder;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
- * The BusinessEntityHelper
+ * The BusinessEntityHelper.
  *
  * ref: victoire_core.helper.queriable_business_entity_helper
  */
@@ -23,7 +23,8 @@ class BusinessEntityHelper
     protected $entityManager;
 
     /**
-     * Constructor
+     * Constructor.
+     *
      * @param BusinessEntityCacheReader $reader
      * @param CacheBuilder              $builder
      */
@@ -35,7 +36,6 @@ class BusinessEntityHelper
 
     /**
      * Set the EntityManagerInterface instance this helper instance should use.
-     *
      */
     public function setEntityManager(EntityManagerInterface $entityManager)
     {
@@ -43,7 +43,8 @@ class BusinessEntityHelper
     }
 
     /**
-     * Get a business entity by its id
+     * Get a business entity by its id.
+     *
      * @param string $id
      *
      * @throws \Exception
@@ -54,14 +55,14 @@ class BusinessEntityHelper
     {
         $businessEntity = $this->reader->findById($id);
         if ($businessEntity === null) {
-            throw new \Exception("\"".$id."\" does not seems to be a valid BusinessEntity");
+            throw new \Exception('"'.$id.'" does not seems to be a valid BusinessEntity');
         }
 
         return $businessEntity;
     }
 
     /**
-     * Get all business entities
+     * Get all business entities.
      *
      * @return BusinessEntity
      */
@@ -71,7 +72,8 @@ class BusinessEntityHelper
     }
 
     /**
-     * this method get annotated business classes (from cache if enabled)
+     * this method get annotated business classes (from cache if enabled).
+     *
      * @param Widget $widget
      *
      * @return array $businessClasses
@@ -82,7 +84,8 @@ class BusinessEntityHelper
     }
 
     /**
-     * Get a business entity
+     * Get a business entity.
+     *
      * @param Entity $entity
      *
      * @return BusinessEntity
@@ -100,7 +103,7 @@ class BusinessEntityHelper
     }
 
     /**
-     * Get a business entity by classname
+     * Get a business entity by classname.
      *
      * @param string $classname
      *
@@ -128,7 +131,8 @@ class BusinessEntityHelper
     }
 
     /**
-     * Find a entity by the business entity and the attributeValue
+     * Find a entity by the business entity and the attributeValue.
+     *
      * @param BusinessEntity $businessEntity
      * @param string         $attributeName
      * @param string         $attributeValue
@@ -146,17 +150,17 @@ class BusinessEntityHelper
         $functionName = 'findOneBy'.ucfirst($attributeName);
 
         //get the entity
-        $entity = call_user_func(array($repo, $functionName), $attributeValue);
+        $entity = call_user_func([$repo, $functionName], $attributeValue);
 
         return $entity;
     }
 
     /**
-     * Get the entity from the page and the id given
+     * Get the entity from the page and the id given.
      *
      * @param BusinessTemplate $page             The page
-     * @param string                    $entityIdentifier The identifier for the business entity
-     * @param string                    $attributeName    The name of the attribute used to identify an entity
+     * @param string           $entityIdentifier The identifier for the business entity
+     * @param string           $attributeName    The name of the attribute used to identify an entity
      *
      * @throws \Exception
      *
@@ -164,7 +168,6 @@ class BusinessEntityHelper
      */
     public function getEntityByPageAndBusinessIdentifier(BusinessTemplate $page, $entityIdentifier, $attributeName)
     {
-
         if (!$this->entityManager) {
             throw new \Exception('EntityManager not defined, you should use the "victoire_core.helper.queriable_business_entity_helper" service');
         }
@@ -190,7 +193,8 @@ class BusinessEntityHelper
     }
 
     /**
-     * create a BusinessEntity from an annotation object
+     * create a BusinessEntity from an annotation object.
+     *
      * @param string $className
      * @param array  $businessProperties
      *
@@ -227,11 +231,13 @@ class BusinessEntityHelper
         if (!$this->entityManager) {
             throw new \Exception('EntityManager not defined, you should use the "victoire_core.helper.queriable_business_entity_helper" service');
         }
+
         return $this->entityManager->getRepository($businessEntity->getClass())->findOneById($id);
     }
 
     /**
-     * will save business entity
+     * will save business entity.
+     *
      * @param BusinessEntity $businessEntity
      *
      * @return void
@@ -242,7 +248,8 @@ class BusinessEntityHelper
     }
 
     /**
-     * will save widget receiver properties
+     * will save widget receiver properties.
+     *
      * @param string $widgetName
      * @param array  $receiverProperties
      *
@@ -254,7 +261,8 @@ class BusinessEntityHelper
     }
 
     /**
-     * will add widget business entity
+     * will add widget business entity.
+     *
      * @param string $widgetName
      * @param string $businessEntity
      *

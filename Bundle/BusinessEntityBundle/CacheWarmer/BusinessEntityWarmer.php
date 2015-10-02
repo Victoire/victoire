@@ -1,25 +1,24 @@
 <?php
+
 namespace Victoire\Bundle\BusinessEntityBundle\CacheWarmer;
 
 use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmer;
-use Symfony\Component\HttpKernel\Config\FileLocator;
 use Victoire\Bundle\BusinessEntityBundle\Annotation\AnnotationDriver;
-use Victoire\Bundle\BusinessEntityBundle\Doctrine\MetadataBuilder;
 use Victoire\Bundle\BusinessEntityBundle\Generator\EntityProxyGenerator;
 
 /**
  * The BusinessEntityWarmer object, called in warmup event parse all objects, save in apc
  * and instanciate the EntityProxyGenerator to generate the entity proxy class.
- * ref: victoire_business_entity.warmer
+ * ref: victoire_business_entity.warmer.
  */
 class BusinessEntityWarmer extends CacheWarmer
 {
     private $driver;
 
     /**
-     * Constructor
-     * @param AnnotationDriver $driver
+     * Constructor.
      *
+     * @param AnnotationDriver $driver
      */
     public function __construct(AnnotationDriver $driver)
     {
@@ -41,9 +40,9 @@ class BusinessEntityWarmer extends CacheWarmer
     }
 
     /**
-     * IS the warmer optionnal
+     * IS the warmer optionnal.
      *
-     * @return boolean
+     * @return bool
      */
     public function isOptional()
     {

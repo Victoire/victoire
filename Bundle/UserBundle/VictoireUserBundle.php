@@ -7,7 +7,8 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 class VictoireUserBundle extends Bundle
 {
     /**
-     * Who's your daddy
+     * Who's your daddy.
+     *
      * @return string Your father bundle's name
      */
     public function getParent()

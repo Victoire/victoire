@@ -6,12 +6,12 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The menu adaptor can be used to configure the main menu, to do this you need to implement this interface and tag
- * your interface with 'Victoire_admin.menu.adaptor'
+ * your interface with 'Victoire_admin.menu.adaptor'.
  */
 interface MenuAdaptorInterface
 {
     /**
-     * In this method you can add children for a specific parent, but also remove and change the already created children
+     * In this method you can add children for a specific parent, but also remove and change the already created children.
      *
      * @param MenuBuilder   $menu      The MenuBuilder
      * @param MenuItem[]    &$children The current children

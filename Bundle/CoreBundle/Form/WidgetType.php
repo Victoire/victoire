@@ -1,20 +1,22 @@
 <?php
+
 namespace Victoire\Bundle\CoreBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
- * Base Widget form type
+ * Base Widget form type.
  */
 class WidgetType extends AbstractType
 {
     /**
-     * Define form fields
+     * Define form fields.
+     *
      * @param FormBuilderInterface $builder The builder
      * @param array                $options The options
      *
@@ -56,22 +58,22 @@ class WidgetType extends AbstractType
         }
 
         //add the mode to the form
-        $builder->add('mode', 'hidden', array(
+        $builder->add('mode', 'hidden', [
             'data' => $mode,
-        ));
-        $builder->add('asynchronous', null, array(
+        ]);
+        $builder->add('asynchronous', null, [
                 'label'    => 'victoire.widget.type.asynchronous.label',
-                'required' => false
-            ));
+                'required' => false,
+            ]);
         $builder->add('theme', 'hidden');
 
         //add the slot to the form
-        $builder->add('slot', 'hidden', array());
+        $builder->add('slot', 'hidden', []);
 
         //we use the PRE_SUBMIT event to set the mode option
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function(FormEvent $event) {
+            function (FormEvent $event) {
                 $options = $this->options;
 
                 //we get the raw data for the widget form
@@ -99,7 +101,7 @@ class WidgetType extends AbstractType
     }
 
     /**
-     * Add the fields for the business entity mode
+     * Add the fields for the business entity mode.
      *
      * @param unknown $form
      */
@@ -107,15 +109,15 @@ class WidgetType extends AbstractType
     {
         $options = $this->options;
 
-        $form->add('fields', 'widget_fields', array(
-            'label' => 'widget.form.entity.fields.label',
+        $form->add('fields', 'widget_fields', [
+            'label'     => 'widget.form.entity.fields.label',
             'namespace' => $options['namespace'],
             'widget'    => $options['widget'],
-        ));
+        ]);
     }
 
     /**
-     * Add the fields for the form and the entity mode
+     * Add the fields for the form and the entity mode.
      *
      * @param unknown $form
      */
@@ -124,20 +126,20 @@ class WidgetType extends AbstractType
         $options = $this->options;
 
         $form
-        ->add('fields', 'widget_fields', array(
-            'label' => 'widget.form.entity.fields.label',
+        ->add('fields', 'widget_fields', [
+            'label'     => 'widget.form.entity.fields.label',
             'namespace' => $options['namespace'],
             'widget'    => $options['widget'],
-        ))
-        ->add('entity_proxy', 'entity_proxy', array(
+        ])
+        ->add('entity_proxy', 'entity_proxy', [
             'business_entity_id' => $options['businessEntityId'],
-            'namespace' => $options['namespace'],
-            'widget'      => $options['widget'],
-        ));
+            'namespace'          => $options['namespace'],
+            'widget'             => $options['widget'],
+        ]);
     }
 
     /**
-     * Add the fields to the form for the query mode
+     * Add the fields to the form for the query mode.
      *
      * @param unknown $form
      */
@@ -146,35 +148,35 @@ class WidgetType extends AbstractType
         $options = $this->options;
 
         $form->add('query');
-        $form->add('fields', 'widget_fields', array(
-            'label' => 'widget.form.entity.fields.label',
+        $form->add('fields', 'widget_fields', [
+            'label'     => 'widget.form.entity.fields.label',
             'namespace' => $options['namespace'],
             'widget'    => $options['widget'],
-        ));
+        ]);
     }
 
     /**
-     * bind form to WidgetRedactor entity
-     * @param OptionsResolverInterface $resolver
+     * bind form to WidgetRedactor entity.
      *
+     * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class'         => 'Victoire\Bundle\WidgetBundle\Entity\Widget',
             'translation_domain' => 'victoire',
-        ));
+        ]);
 
-        $resolver->setOptional(array('widget'));
-        $resolver->setOptional(array('filters'));
-        $resolver->setOptional(array('slot'));
-        $resolver->setOptional(array('mode'));
-        $resolver->setOptional(array('namespace'));
-        $resolver->setOptional(array('businessEntityId'));
+        $resolver->setOptional(['widget']);
+        $resolver->setOptional(['filters']);
+        $resolver->setOptional(['slot']);
+        $resolver->setOptional(['mode']);
+        $resolver->setOptional(['namespace']);
+        $resolver->setOptional(['businessEntityId']);
     }
 
     /**
-     * get form name
+     * get form name.
      *
      * @return string
      */

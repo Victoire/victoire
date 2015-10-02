@@ -8,7 +8,7 @@ use Victoire\Bundle\PageBundle\Entity\Slot;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 
 /**
- * ref: victoire_widget_map.helper
+ * ref: victoire_widget_map.helper.
  */
 class WidgetMapHelper
 {
@@ -18,13 +18,14 @@ class WidgetMapHelper
     {
         $this->em = $em;
     }
+
     /**
-     * Get the next availaible position for the widgetmap array
+     * Get the next availaible position for the widgetmap array.
      *
-     * @param integer $position  The position required
-     * @param array   $widgetMap The list of widget map
+     * @param int   $position  The position required
+     * @param array $widgetMap The list of widget map
      *
-     * @return integer The next position available
+     * @return int The next position available
      */
     public function getNextAvailaiblePosition($position, $widgetMap)
     {
@@ -40,10 +41,10 @@ class WidgetMapHelper
     }
 
     /**
-     * Guess the position of the widget relatively to the positionReference
+     * Guess the position of the widget relatively to the positionReference.
      *
-     * @param Widget  $widget            The widget to position
-     * @param integer $positionReference Id of the parent widget
+     * @param Widget $widget            The widget to position
+     * @param int    $positionReference Id of the parent widget
      *
      * @return WidgetMap The position of the widget
      */
@@ -82,11 +83,13 @@ class WidgetMapHelper
     }
 
     /**
-     * undocumented function
+     * undocumented function.
      *
      *
-     * @param  \Victoire\Bundle\CoreBundle\Entity\View $view
+     * @param \Victoire\Bundle\CoreBundle\Entity\View $view
+     *
      * @return void
+     *
      * @author
      **/
     public function insertWidgetMapInSlot($slotId, WidgetMap $widgetMapEntry, $view)
@@ -107,9 +110,10 @@ class WidgetMapHelper
     }
 
     /**
-     * Find a widgetMap by widgetId and view
-     * @param integer $widgetId
-     * @param View    $view
+     * Find a widgetMap by widgetId and view.
+     *
+     * @param int  $widgetId
+     * @param View $view
      *
      * @return WidgetMap
      **/
@@ -122,16 +126,16 @@ class WidgetMapHelper
                     //update the widget map
                     $view->updateWidgetMapBySlots();
 
-                    return array(
+                    return [
                         'success'  => true,
-                    );
+                    ];
                 }
             }
         }
 
-        return array(
+        return [
             'success'  => false,
-            'message' => 'The widget isn\'t present in widgetMap...',
-        );
+            'message'  => 'The widget isn\'t present in widgetMap...',
+        ];
     }
 }

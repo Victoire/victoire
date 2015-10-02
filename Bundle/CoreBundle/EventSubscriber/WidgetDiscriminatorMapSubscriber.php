@@ -1,9 +1,10 @@
 <?php
+
 namespace Victoire\Bundle\CoreBundle\EventSubscriber;
 
+use Behat\Behat\Exception\Exception;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
-use Behat\Behat\Exception\Exception;
 
 /**
  * This class listen Widget Entity metadata load and insert enabled widgets to it's DistriminatorMap.
@@ -13,7 +14,8 @@ class WidgetDiscriminatorMapSubscriber implements EventSubscriber
     protected static $widgets;
 
     /**
-     * contructor
+     * contructor.
+     *
      * @param array $widgets
      */
     public function setWidgets($widgets)
@@ -22,19 +24,19 @@ class WidgetDiscriminatorMapSubscriber implements EventSubscriber
     }
 
     /**
-     * bind to LoadClassMetadata method
+     * bind to LoadClassMetadata method.
      *
      * @return string[]
      */
     public function getSubscribedEvents()
     {
-        return array(
+        return [
             'loadClassMetadata',
-        );
+        ];
     }
 
     /**
-     * Insert enabled widgets in base widget DiscriminatorMap
+     * Insert enabled widgets in base widget DiscriminatorMap.
      *
      * @param LoadClassMetadataEventArgs $eventArgs
      *

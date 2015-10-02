@@ -6,19 +6,18 @@ use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 use Victoire\Bundle\CoreBundle\Entity\View;
 
 /**
- * Widget Model
- *
+ * Widget Model.
  */
 abstract class Widget
 {
-
     const MODE_ENTITY = 'entity';
     const MODE_QUERY = 'query';
     const MODE_STATIC = 'static';
     const MODE_BUSINESS_ENTITY = 'businessEntity';
 
     /**
-     * The entity linked to the widget
+     * The entity linked to the widget.
+     *
      * @var unknown
      */
     protected $entity;
@@ -46,7 +45,7 @@ abstract class Widget
     }
 
     /**
-     * Set the entity proxy
+     * Set the entity proxy.
      *
      * @param EntityProxy $entityProxy
      */
@@ -56,7 +55,7 @@ abstract class Widget
     }
 
     /**
-     * Get the entity proxy
+     * Get the entity proxy.
      *
      * @return EntityProxy
      */
@@ -66,7 +65,7 @@ abstract class Widget
     }
 
     /**
-     * to string
+     * to string.
      *
      * @return string
      */
@@ -76,9 +75,9 @@ abstract class Widget
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -86,7 +85,7 @@ abstract class Widget
     }
 
     /**
-     * Set fields
+     * Set fields.
      *
      * @param string $fields
      *
@@ -100,7 +99,7 @@ abstract class Widget
     }
 
     /**
-     * Get fields
+     * Get fields.
      *
      * @return string
      */
@@ -110,9 +109,9 @@ abstract class Widget
     }
 
     /**
-     * Set The Id
+     * Set The Id.
      *
-     * @param integer $id The id
+     * @param int $id The id
      */
     public function setId($id)
     {
@@ -120,7 +119,7 @@ abstract class Widget
     }
 
     /**
-     * Set slot
+     * Set slot.
      *
      * @param string $slot
      *
@@ -134,7 +133,7 @@ abstract class Widget
     }
 
     /**
-     * Get slot
+     * Get slot.
      *
      * @return string
      */
@@ -144,7 +143,7 @@ abstract class Widget
     }
 
     /**
-     * Set theme
+     * Set theme.
      *
      * @param string $theme
      *
@@ -158,7 +157,7 @@ abstract class Widget
     }
 
     /**
-     * Get theme
+     * Get theme.
      *
      * @return string
      */
@@ -168,7 +167,7 @@ abstract class Widget
     }
 
     /**
-     * Set view
+     * Set view.
      *
      * @param string $view
      *
@@ -185,7 +184,7 @@ abstract class Widget
     }
 
     /**
-     * Get view
+     * Get view.
      *
      * @return View
      */
@@ -195,7 +194,7 @@ abstract class Widget
     }
 
     /**
-     * Set the entity
+     * Set the entity.
      *
      * @param unknown $entity
      */
@@ -205,7 +204,7 @@ abstract class Widget
     }
 
     /**
-     * Get the entity
+     * Get the entity.
      *
      * @return number
      */
@@ -227,18 +226,18 @@ abstract class Widget
     }
 
     /**
-     * Get the content
+     * Get the content.
      *
      * @return unknown
      */
     public function getValue()
     {
         //return $this->getContent();
-        return null;
+        return;
     }
 
     /**
-     * Set the current view
+     * Set the current view.
      *
      * @param \Victoire\Bundle\CoreBundle\Entity\View $currentView
      *
@@ -252,7 +251,7 @@ abstract class Widget
     }
 
     /**
-     * Get the current view
+     * Get the current view.
      *
      * @return \Victoire\Bundle\CoreBundle\Entity\View The current view
      */
@@ -262,7 +261,7 @@ abstract class Widget
     }
 
     /**
-     * Get the type of the object
+     * Get the type of the object.
      *
      * @return string The type
      */
@@ -272,9 +271,9 @@ abstract class Widget
     }
 
     /**
-     * Guess the type of this by exploding and getting the last item
+     * Guess the type of this by exploding and getting the last item.
      *
-     * @return String The guessed type
+     * @return string The guessed type
      */
     protected function guessType()
     {
@@ -284,7 +283,8 @@ abstract class Widget
     }
 
     /**
-     * Set the mode
+     * Set the mode.
+     *
      * @param string $mode
      */
     public function setMode($mode)
@@ -293,7 +293,7 @@ abstract class Widget
     }
 
     /**
-     * Get the mode
+     * Get the mode.
      *
      * @return string
      */
@@ -303,9 +303,9 @@ abstract class Widget
     }
 
     /**
-     * Get the view id
+     * Get the view id.
      *
-     * @return integer The view id
+     * @return int The view id
      */
     public function getViewId()
     {
@@ -321,7 +321,7 @@ abstract class Widget
     }
 
     /**
-     * Clone a widget
+     * Clone a widget.
      */
     public function __clone()
     {
@@ -337,7 +337,6 @@ abstract class Widget
             throw new \Exception(sprintf('A property $widget was found in %s object.
                 The $widget property is reserved for Victoire.
                 You should chose a different property name.', get_called_class()));
-
         }
     }
 }

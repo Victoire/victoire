@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\I18nBundle\Entity\Traits;
 
 trait I18nTrait
@@ -11,7 +12,7 @@ trait I18nTrait
     protected $locale;
 
     /**
-     * Get locale
+     * Get locale.
      *
      * @return string
      */
@@ -21,7 +22,7 @@ trait I18nTrait
     }
 
     /**
-     * Set locale
+     * Set locale.
      *
      * @param string $locale
      *

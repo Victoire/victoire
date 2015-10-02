@@ -1,8 +1,9 @@
 <?php
+
 namespace Victoire\Bundle\CoreBundle\Annotations;
 
 /**
- * Marks a field with text sementical behavior
+ * Marks a field with text sementical behavior.
  *
  * @Annotation
  **/
@@ -11,10 +12,9 @@ class BusinessProperty
     private $types;
 
     /**
-     * define supported types
+     * define supported types.
      *
      * @param array $types supported types (text, media, date)
-     *
      **/
     public function __construct($types = null)
     {
@@ -22,21 +22,21 @@ class BusinessProperty
     }
 
     /**
-     * Get types
+     * Get types.
      *
-     * @return NULL|multitype:NULL
+     * @return null|multitype:NULL
      */
     public function getTypes()
     {
         if (!array_key_exists('value', $this->types)) {
-            return null;
+            return;
         }
 
         //return an array, no matter one or many types defined
         if (count($this->types['value']) > 1) {
             return $this->types['value'];
         } else {
-            return array($this->types['value']);
+            return [$this->types['value']];
         }
     }
 }

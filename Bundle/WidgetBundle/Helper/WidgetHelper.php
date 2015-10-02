@@ -15,7 +15,7 @@ class WidgetHelper
     }
 
     /**
-     * The name of the widget
+     * The name of the widget.
      *
      * @return string
      */
@@ -28,11 +28,12 @@ class WidgetHelper
             }
         }
 
-        throw new \Exception("Widget name not found for widget ".get_class($widget).". Is this widget right declared in AppKernel ?");
+        throw new \Exception('Widget name not found for widget '.get_class($widget).'. Is this widget right declared in AppKernel ?');
     }
 
     /**
-     * check if widget is allowed for slot
+     * check if widget is allowed for slot.
+     *
      * @param Widget $widget
      * @param string $slot
      *
@@ -47,12 +48,13 @@ class WidgetHelper
     }
 
     /**
-     * create a new WidgetRedactor
-     * @param string $type
-     * @param \Victoire\Bundle\CoreBundle\Entity\View $view
-     * @param string $slot
+     * create a new WidgetRedactor.
      *
+     * @param string                                  $type
+     * @param \Victoire\Bundle\CoreBundle\Entity\View $view
+     * @param string                                  $slot
      * @param $mode
+     *
      * @return Widget $widget
      */
     public function newWidgetInstance($type, $view, $slot, $mode)
@@ -68,7 +70,8 @@ class WidgetHelper
     }
 
     /**
-     * Get the name of the template to display for an action
+     * Get the name of the template to display for an action.
+     *
      * @param string $action
      * @param Widget $widget
      *
@@ -85,8 +88,9 @@ class WidgetHelper
     }
 
     /**
-     * Delete manually a widget with its id
-     * @param integer $widgetId
+     * Delete manually a widget with its id.
+     *
+     * @param int $widgetId
      *
      * @return string
      */
@@ -94,15 +98,16 @@ class WidgetHelper
     {
         $entityManager = $this->container->get('doctrine.orm.entity_manager');
         $connection = $entityManager->getConnection();
-        $statement = $connection->prepare("DELETE FROM vic_widget WHERE id = :id");
+        $statement = $connection->prepare('DELETE FROM vic_widget WHERE id = :id');
         $statement->bindValue('id', $widgetId);
         $statement->execute();
     }
 
     /**
-     * Check in the driver chain if the given widget is enabled
+     * Check in the driver chain if the given widget is enabled.
      *
      * @param Widget $widget
+     *
      * @return bool
      */
     public function isEnabled(Widget $widget)

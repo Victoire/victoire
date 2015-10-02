@@ -6,12 +6,11 @@ use Symfony\Component\Form\AbstractType;
 
 class FilterChain
 {
-
     private $filters;
 
     public function __construct()
     {
-        $this->filters = array();
+        $this->filters = [];
     }
 
     public function addFilter(AbstractType $filter)

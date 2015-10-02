@@ -10,11 +10,11 @@ use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
 use Doctrine\ORM\UnitOfWork;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
-use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
-use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
 use Victoire\Bundle\CoreBundle\Entity\View;
-use Victoire\Bundle\PageBundle\Helper\UserCallableHelper;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
+use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
+use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
+use Victoire\Bundle\PageBundle\Helper\UserCallableHelper;
 
 /**
  * This class listen Page Entity changes.
@@ -28,7 +28,8 @@ class PageSubscriber implements EventSubscriber
     protected $urlBuilder;
 
     /**
-     * Constructor
+     * Constructor.
+     *
      * @param Router             $router             @router
      * @param UserCallableHelper $userCallableHelper @victoire_page.user_callable
      * @param string             $userClass          %victoire_core.user_class%
@@ -37,25 +38,25 @@ class PageSubscriber implements EventSubscriber
      */
     public function __construct($router, $userCallableHelper, $userClass, $viewCacheHelper, $urlBuilder)
     {
-        $this->router          = $router;
-        $this->userClass       = $userClass;
+        $this->router = $router;
+        $this->userClass = $userClass;
         $this->userCallableHelper = $userCallableHelper;
         $this->viewCacheHelper = $viewCacheHelper;
         $this->urlBuilder = $urlBuilder;
     }
 
     /**
-     * bind to LoadClassMetadata method
+     * bind to LoadClassMetadata method.
      *
      * @return string[] The subscribed events
      */
     public function getSubscribedEvents()
     {
-        return array(
+        return [
             'loadClassMetadata',
             'postLoad',
             'onFlush',
-        );
+        ];
     }
 
     /**
@@ -76,7 +77,7 @@ class PageSubscriber implements EventSubscriber
     }
 
     /**
-     * Insert enabled widgets in base widget DiscriminatorMap
+     * Insert enabled widgets in base widget DiscriminatorMap.
      *
      * @param LoadClassMetadataEventArgs $eventArgs
      */
@@ -89,19 +90,19 @@ class PageSubscriber implements EventSubscriber
 
         //Add author relation on view
         if ($this->userClass && $metadata->name === 'Victoire\Bundle\CoreBundle\Entity\View') {
-            $metadata->mapManyToOne(array(
+            $metadata->mapManyToOne([
                 'fieldName'    => 'author',
                 'targetEntity' => $this->userClass,
-                'cascade'      => array('persist'),
+                'cascade'      => ['persist'],
                 'inversedBy'   => 'pages',
-                'joinColumns' => array(
-                    array(
-                        'name' => 'author_id',
+                'joinColumns'  => [
+                    [
+                        'name'                 => 'author_id',
                         'referencedColumnName' => 'id',
-                        'onDelete' => 'SET NULL',
-                    ),
-                ),
-            ));
+                        'onDelete'             => 'SET NULL',
+                    ],
+                ],
+            ]);
         }
 
         // if $pages property exists, add the inversed side on User
@@ -119,7 +120,5 @@ class PageSubscriber implements EventSubscriber
         if ($entity instanceof WebViewInterface) {
             $entity->setUrl($this->urlBuilder->buildUrl($entity));
         }
-
     }
-
 }

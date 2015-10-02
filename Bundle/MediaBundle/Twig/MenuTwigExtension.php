@@ -5,17 +5,17 @@ namespace Victoire\Bundle\MediaBundle\Twig;
 use Victoire\Bundle\MediaBundle\Helper\Menu\MenuBuilder;
 
 /**
- * MenuTwigExtension
+ * MenuTwigExtension.
  */
 class MenuTwigExtension extends \Twig_Extension
 {
     /**
-     * @var MenuBuilder $menuBuilder
+     * @var MenuBuilder
      */
     protected $menuBuilder;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param MenuBuilder $menuBuilder
      */
@@ -31,9 +31,9 @@ class MenuTwigExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
+        return [
             'admin_menu_get'  => new \Twig_Function_Method($this, 'getAdminMenu'),
-        );
+        ];
     }
 
     /**

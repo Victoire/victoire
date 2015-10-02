@@ -6,11 +6,10 @@ use Victoire\Bundle\MediaBundle\Entity\Media;
 
 /**
  * Victoire\Bundle\MediaBundle\Entity\Video
- * Class that defines a video in the system
+ * Class that defines a video in the system.
  */
 class RemoteSlideHelper
 {
-
     /**
      * @var Media
      */
@@ -59,7 +58,8 @@ class RemoteSlideHelper
     }
 
     /**
-     * Set code
+     * Set code.
+     *
      * @param string $code
      *
      * @return RemoteSlideHelper
@@ -80,7 +80,8 @@ class RemoteSlideHelper
     }
 
     /**
-     * Set thumbnail url
+     * Set thumbnail url.
+     *
      * @param string $url
      *
      * @return RemoteSlideHelper
@@ -93,7 +94,7 @@ class RemoteSlideHelper
     }
 
     /**
-     * Get type
+     * Get type.
      *
      * @return string
      */
@@ -103,7 +104,8 @@ class RemoteSlideHelper
     }
 
     /**
-     * Set type
+     * Set type.
+     *
      * @param string $type
      *
      * @return RemoteSlideHelper
@@ -114,5 +116,4 @@ class RemoteSlideHelper
 
         return $this;
     }
-
 }

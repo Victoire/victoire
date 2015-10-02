@@ -1,6 +1,6 @@
 <?php
-namespace Victoire\Bundle\BusinessPageBundle\Builder;
 
+namespace Victoire\Bundle\BusinessPageBundle\Builder;
 
 use Doctrine\ORM\EntityManager;
 use Gedmo\Sluggable\Util\Urlizer;
@@ -19,27 +19,26 @@ use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
  */
 class BusinessPageBuilder
 {
-
     protected $businessEntityHelper;
     protected $urlBuilder;
     protected $parameterConverter;
     protected $entityProxyProvider;
 
     //@todo Make it dynamic please
-    protected $pageParameters = array(
+    protected $pageParameters = [
         'name',
         'bodyId',
         'bodyClass',
         'slug',
         'url',
         'locale',
-    );
+    ];
 
     /**
      * @param BusinessEntityHelper $businessEntityHelper
-     * @param UrlBuilder $urlBuilder
-     * @param ParameterConverter $parameterConverter
-     * @param EntityProxyProvider $entityProxyProvider
+     * @param UrlBuilder           $urlBuilder
+     * @param ParameterConverter   $parameterConverter
+     * @param EntityProxyProvider  $entityProxyProvider
      */
     public function __construct(BusinessEntityHelper $businessEntityHelper, UrlBuilder $urlBuilder, ParameterConverter $parameterConverter, EntityProxyProvider $entityProxyProvider)
     {
@@ -47,14 +46,13 @@ class BusinessPageBuilder
         $this->urlBuilder = $urlBuilder;
         $this->parameterConverter = $parameterConverter;
         $this->entityProxyProvider = $entityProxyProvider;
-
     }
 
     /**
-     * Generate update the page parameters with the entity
-     * @param BusinessTemplate $bepPattern
-     * @param BusinessEntity                    $entity
+     * Generate update the page parameters with the entity.
      *
+     * @param BusinessTemplate $bepPattern
+     * @param BusinessEntity   $entity
      */
     public function generateEntityPageFromPattern(BusinessTemplate $bepPattern, $entity, EntityManager $em)
     {
@@ -65,7 +63,7 @@ class BusinessPageBuilder
         $accessor = PropertyAccess::createPropertyAccessor();
 
         foreach ($patternProperties as $property) {
-            if (!in_array($property->getName(), array('id', 'widgetMap', 'slots', 'seo', 'i18n', 'widgets')) && !$property->isStatic()) {
+            if (!in_array($property->getName(), ['id', 'widgetMap', 'slots', 'seo', 'i18n', 'widgets']) && !$property->isStatic()) {
                 $value = $accessor->getValue($bepPattern, $property->getName());
                 $setMethod = 'set'.ucfirst($property->getName());
                 if (method_exists($page, $setMethod)) {
@@ -123,7 +121,7 @@ class BusinessPageBuilder
     }
 
     /**
-     * Get the list of business properties usable for the url
+     * Get the list of business properties usable for the url.
      *
      * @param BusinessEntity $businessEntity
      *
@@ -144,10 +142,10 @@ class BusinessPageBuilder
     }
 
     /**
-     * Generate update the page parameters with the entity
+     * Generate update the page parameters with the entity.
      *
      * @param BusinessPage $page
-     * @param Entity   $entity
+     * @param Entity       $entity
      */
     public function updatePageParametersByEntity(BusinessPage $page, $entity)
     {
@@ -183,10 +181,10 @@ class BusinessPageBuilder
     }
 
     /**
-     * Get the content of an attribute of an entity given
+     * Get the content of an attribute of an entity given.
      *
      * @param BusinessPage $entity
-     * @param strin              $field
+     * @param strin        $field
      *
      * @return mixed
      */
@@ -194,16 +192,17 @@ class BusinessPageBuilder
     {
         $functionName = 'get'.ucfirst($field);
 
-        $fieldValue = call_user_func(array($entity, $functionName));
+        $fieldValue = call_user_func([$entity, $functionName]);
 
         return $fieldValue;
     }
 
     /**
-     * Update the value of the entity
+     * Update the value of the entity.
+     *
      * @param BusinessPage $entity
-     * @param string             $field
-     * @param string             $value
+     * @param string       $field
+     * @param string       $value
      *
      * @return mixed
      */
@@ -211,6 +210,6 @@ class BusinessPageBuilder
     {
         $functionName = 'set'.ucfirst($field);
 
-        call_user_func(array($entity, $functionName), $value);
+        call_user_func([$entity, $functionName], $value);
     }
 }

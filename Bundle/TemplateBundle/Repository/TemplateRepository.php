@@ -6,15 +6,14 @@ use Doctrine\ORM\Query;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 
 /**
- * The Page repository
+ * The Page repository.
  */
 class TemplateRepository extends NestedTreeRepository
 {
-
     private $qb;
 
     /**
-     * Get query builder instance
+     * Get query builder instance.
      */
     public function getInstance()
     {
@@ -41,7 +40,8 @@ class TemplateRepository extends NestedTreeRepository
     }
 
     /**
-     * Run query builder instance
+     * Run query builder instance.
+     *
      * @param method        $method        The method to run
      * @param hydrationMode $hydrationMode How the results will be (Object ? Array )
      *

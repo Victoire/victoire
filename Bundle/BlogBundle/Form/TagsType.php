@@ -34,9 +34,8 @@ class TagsType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-
         $view->vars['enable_creation'] = $options['enable_creation'];
-        $view->vars['tags'] = array();
+        $view->vars['tags'] = [];
         foreach ($view->vars['choices'] as $choice) {
             $view->vars['tags'][$choice->data->getId()] = $choice->data->__toString();
         }
@@ -73,10 +72,9 @@ class TagsType extends AbstractType
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'enable_creation' => true,
-            'class'           => 'Victoire\Bundle\BlogBundle\Entity\Tag'
-        ));
+            'class'           => 'Victoire\Bundle\BlogBundle\Entity\Tag',
+        ]);
     }
-
 }

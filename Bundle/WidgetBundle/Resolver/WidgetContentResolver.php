@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\WidgetBundle\Resolver;
 
 use Victoire\Bundle\WidgetBundle\Model\Widget;
@@ -6,7 +7,6 @@ use Victoire\Bundle\WidgetBundle\Resolver\Chain\WidgetContentResolverChain;
 
 class WidgetContentResolver
 {
-
     private $widgetContentResolverChain;
 
     public function __construct(WidgetContentResolverChain $widgetContentResolverChain)
@@ -15,12 +15,13 @@ class WidgetContentResolver
     }
 
     /**
-     * Get content for the widget
+     * Get content for the widget.
      *
      * @param Widget $widget
      *
-     * @return Ambigous   <string, unknown, \Victoire\Bundle\CoreBundle\Widget\Managers\mixed, mixed>
      * @throws \Exception
+     *
+     * @return Ambigous <string, unknown, \Victoire\Bundle\CoreBundle\Widget\Managers\mixed, mixed>
      */
     public function getWidgetContent(Widget $widget)
     {
@@ -55,5 +56,4 @@ class WidgetContentResolver
 
         return $parameters;
     }
-
 }

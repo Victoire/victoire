@@ -4,13 +4,12 @@ namespace Victoire\Bundle\MediaBundle\EventListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
-
 use Victoire\Bundle\MediaBundle\Entity\Media;
-use Victoire\Bundle\MediaBundle\Helper\MediaManager;
 use Victoire\Bundle\MediaBundle\Helper\ClassLookup;
+use Victoire\Bundle\MediaBundle\Helper\MediaManager;
 
 /**
- * DoctrineMediaListener
+ * DoctrineMediaListener.
  */
 class DoctrineMediaListener
 {
