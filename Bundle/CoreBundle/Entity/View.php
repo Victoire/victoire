@@ -5,6 +5,7 @@ namespace Victoire\Bundle\CoreBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\I18nBundle\Entity\I18n;
@@ -42,6 +43,7 @@ abstract class View
      *
      * @Assert\NotBlank()
      * @ORM\Column(name="name", type="string", length=255)
+     * @Serializer\Groups({"search"})
      */
     protected $name;
 
@@ -149,6 +151,7 @@ abstract class View
 
     /**
      * @ORM\Column(name="locale", type="string")
+     * @Serializer\Groups({"search"})
      */
     protected $locale;
 
