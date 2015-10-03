@@ -27,10 +27,8 @@ class VictoirePageExtension extends Extension implements PrependExtensionInterfa
         $loader->load('services.yml');
     }
 
-
-
     /**
-     * @param  ContainerBuilder $container
+     * @param ContainerBuilder $container
      *
      * @return void
      */
@@ -43,7 +41,7 @@ class VictoirePageExtension extends Extension implements PrependExtensionInterfa
                     'types' => [
                          'Pages' => [
                             'serializer'  => [
-                                'groups' => ['search']
+                                'groups' => ['search'],
                             ],
                             'mappings'    => [],
                             'persistence' => [
@@ -52,11 +50,11 @@ class VictoirePageExtension extends Extension implements PrependExtensionInterfa
                                 'provider' => [],
                                 'listener' => [],
                                 'finder'   => [],
-                            ]
-                        ]
-                    ]
-                ]
-            ]
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ];
 
         foreach ($container->getExtensions() as $name => $extension) {
