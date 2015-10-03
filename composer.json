@@ -49,6 +49,7 @@
         "friendsofvictoire/button-widget": "dev-master",
         "incenteev/composer-parameter-handler" : "~2.0",
         "jms/di-extra-bundle" : "1.4.*@dev",
+        "jms/serializer-bundle": "^1.0",
         "jms/translation-bundle" : "1.1.*@dev",
         "knplabs/gaufrette" : "v0.1.7",
         "knplabs/knp-menu" : "2.0.*@dev",
