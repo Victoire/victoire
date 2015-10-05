@@ -91,6 +91,7 @@ Feature: Manage jedis
         Then I should not see an ".slug-is-correct.vic-hidden" element
         And I should see an ".slug-is-not-correct.vic-hidden" element
         When I submit the widget
+        And I wait 5 seconds
         Then I should see "Page modifiée avec succès"
         And I should be on "/fr/dark-vador"
         Given I select the option "Paramètres de la page" in the dropdown "Page"
