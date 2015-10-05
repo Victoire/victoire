@@ -36,7 +36,7 @@ class CreateWidgetCommand extends GenerateBundleCommand
                 new InputOption('namespace', '', InputOption::VALUE_REQUIRED, 'The namespace of the widget bundle to create'),
                 new InputOption('dir', '', InputOption::VALUE_REQUIRED, 'The directory where to create the bundle'),
                 new InputOption('bundle-name', '', InputOption::VALUE_REQUIRED, 'The optional bundle name'),
-                new InputOption('org-name', '', InputOption::VALUE_REQUIRED, 'Your organisation name'),
+                new InputOption('orgname', '', InputOption::VALUE_REQUIRED, 'Your organisation name'),
                 new InputOption('widget-name', '', InputOption::VALUE_REQUIRED, 'The widget name'),
                 new InputOption('format', '', InputOption::VALUE_REQUIRED, 'Use the format for configuration files (php, xml, yml, or annotation)'),
                 new InputOption('structure', '', InputOption::VALUE_NONE, 'Whether to generate the whole directory structure'),
@@ -102,10 +102,10 @@ EOT
             $bundle = strtr($namespace, ['\\' => '']);
         }
 
-        $orgname = $input->getOption('org-name');
+        $orgname = $input->getOption('orgname');
 
-        if (null === $input->getOption('org-name')) {
-            $orgname = $input->setOption('org-name', 'friendsofsymfony');
+        if (null === $input->getOption('orgname')) {
+            $orgname = $input->setOption('orgname', 'friendsofvictoire');
         }
 
         $parent = $input->getOption('parent');
@@ -252,21 +252,21 @@ EOT
             $input->setOption('namespace', $namespace);
         }
 
-        $orgname = $input->getOption('org-name');
+        $orgname = $input->getOption('orgname');
 
         if (null === $orgname) {
             $output->writeln([
                 '',
-                'A composer.json file will be generated, we need to knpw under which organisation you will publish the widget',
+                'A composer.json file will be generated, we need to know under which organisation you will publish the widget',
                 '',
-                'The default organisation will be FriendsOfVictoire',
+                'The default organisation will be friendsofvictoire',
             ]);
-            $question = new ConfirmationQuestion($questionHelper->getQuestion('Under which organisation do you want to publish your widget ?', 'friendsofvictoire'), false);
+            $question = new Question($questionHelper->getQuestion('Under which organisation do you want to publish your widget ?', 'friendsofvictoire'), 'friendsofvictoire');
 
             $orgname = $questionHelper->ask($input, $output, $question);
         }
 
-        $input->setOption('org-name', $orgname);
+        $input->setOption('orgname', $orgname);
 
         $parent = $input->getOption('parent');
 

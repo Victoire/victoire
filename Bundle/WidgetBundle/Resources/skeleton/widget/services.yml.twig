@@ -11,11 +11,11 @@ services:
         tags:
             - { name: victoire_widget.widget_content_resolver, alias: {{widget}} }
 
-    #alias to the entity
+    #entity alias
     victoire.widget.{{ widget|lower }}:
         class: {{ namespace }}\Entity\Widget{{ widget }}
 
-    #alias to the form
+    #form alias
     victoire.widget.form.{{ widget|lower }}:
         class: {{ namespace }}\Form\Widget{{ widget }}Type
         tags:
