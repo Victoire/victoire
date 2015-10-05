@@ -3,9 +3,8 @@
 namespace Victoire\Bundle\SeoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Victoire\Bundle\CoreBundle\Entity\View;
-use Victoire\Bundle\PageBundle\Entity\Page;
 use Symfony\Component\Validator\Constraints as Assert;
+use Victoire\Bundle\CoreBundle\Entity\View;
 
 /**
  * PageSeo.

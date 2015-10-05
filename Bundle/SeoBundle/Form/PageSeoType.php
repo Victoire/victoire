@@ -6,7 +6,6 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Victoire\Bundle\SeoBundle\DataTransformer\PageToIdTransformer;
 
 /**
  */
@@ -46,7 +45,7 @@ class PageSeoType extends AbstractType
                 'attr'  => ['placeholder' => 'form.pageSeo.relPublisher.placeholder'],
             ])
             ->add('ogTitle', null, [
-                'label'      => 'form.pageSeo.ogTitle.label',
+                'label'          => 'form.pageSeo.ogTitle.label',
                 'vic_help_block' => 'form.pageSeo.ogTitle.vic_help_block',
             ])
             ->add('ogType', null, [
@@ -79,7 +78,7 @@ class PageSeoType extends AbstractType
                         'product'               => 'form.pageSeo.twitterCard.product.label',
                     ],
                     'preferred_choices' => ['summary'],
-                    'vic_help_block' => 'form.pageSeo.twitterCard.vic_help_block',
+                    'vic_help_block'    => 'form.pageSeo.twitterCard.vic_help_block',
             ])
             ->add('twitterUrl', null, [
                 'label' => 'form.pageSeo.twitterUrl.label',
@@ -97,7 +96,7 @@ class PageSeoType extends AbstractType
                 'label' => 'form.pageSeo.twitterImage.label',
             ])
             ->add('schemaPageType', null, [
-                'label' => 'form.pageSeo.schemaPageType.label',
+                'label'          => 'form.pageSeo.schemaPageType.label',
                 'vic_help_block' => 'form.pageSeo.schemaPageType.vic_help_block',
             ])
             ->add('schemaName', null, [

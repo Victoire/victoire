@@ -45,9 +45,7 @@ class LinkType extends AbstractType
                 'vic_vic_widget_form_group_attr' => ['class' => 'vic-form-group vic-hidden url-type'],
                 'required'                       => true,
                 'attr'                           => ['novalidate' => 'novalidate', 'placeholder' => 'form.link_type.url.placeholder'],
-            ])
-        ;
-
+            ]);
 
         $rawPages = $this->viewCacheHelper->getAllViewsReferences();
         $pages = [];
