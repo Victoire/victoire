@@ -54,8 +54,8 @@ assetic:
 doctrine:
     dbal:
         driver:   "pdo_mysql"
-        host:     "localhost"
-        port:     "8889"
+        host:     "127.0.0.1"
+        port:     "3306"
         dbname:   "victoire"
         user:     "travis"
         password: ~
