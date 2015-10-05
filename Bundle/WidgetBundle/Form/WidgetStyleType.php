@@ -206,8 +206,7 @@ class WidgetStyleType extends AbstractType
                     'label'          => 'widget_layout.form.containerBackgroundOverlay'.$responsiveKey.'.label',
                     'attr'           => ['placeholder' => 'widget_layout.form.containerBackgroundOverlay.placeholder'],
                     'vic_help_block' => 'widget_layout.form.containerBackgroundOverlay.help.label',
-                ])
-            ;
+                ]);
         } else {
             $form
                 ->remove('containerBackgroundImage'.$responsiveKey)
