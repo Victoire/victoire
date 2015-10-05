@@ -2,14 +2,14 @@
 
 namespace Victoire\Bundle\BlogBundle\Filter;
 
-use Victoire\Bundle\FilterBundle\Filter\BaseFilter;
-use Symfony\Component\Form\FormBuilderInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 use Victoire\Bundle\BlogBundle\Entity\Category;
+use Victoire\Bundle\FilterBundle\Filter\BaseFilter;
 
 /**
- * CategoryFilter form type
+ * CategoryFilter form type.
  */
 class CategoryFilter extends BaseFilter
 {
@@ -17,10 +17,8 @@ class CategoryFilter extends BaseFilter
     protected $request;
 
     /**
-     *
      * @param EntityManager $em
-     *
-     * @param Request $request
+     * @param Request       $request
      */
     public function __construct(EntityManager $em, $request)
     {
@@ -29,7 +27,7 @@ class CategoryFilter extends BaseFilter
     }
 
     /**
-     * Build the query
+     * Build the query.
      *
      * @param QueryBuilder &$qb
      * @param array        $parameters
@@ -39,7 +37,7 @@ class CategoryFilter extends BaseFilter
     public function buildQuery(QueryBuilder $qb, array $parameters)
     {
         if (!is_array($parameters['category'])) {
-            $parameters['category'] = array($parameters['category']);
+            $parameters['category'] = [$parameters['category']];
         }
         $childrenArray = [];
         //clean the parameters from the blank value
@@ -49,11 +47,9 @@ class CategoryFilter extends BaseFilter
                 unset($parameters['category'][$index]);
             } else {
                 $parentCategory = $this->em->getRepository('VictoireBlogBundle:Category')->findOneById($parameter);
-                $childrenArray = array_merge($childrenArray, $this->getCategoryChildrens($parentCategory, array()));
-
+                $childrenArray = array_merge($childrenArray, $this->getCategoryChildrens($parentCategory, []));
             }
         }
-
 
         if (count($childrenArray) > 0) {
             if (array_key_exists('strict', $parameters)) {
@@ -62,8 +58,7 @@ class CategoryFilter extends BaseFilter
                     $parameter = ':category'.$index;
                     $subquery = $repository->createQueryBuilder('article_'.$index)
                                 ->join('article_'.$index.'.category', 'category_'.$index)
-                                ->where('category_'.$index.' = '.$parameter)
-                                ;
+                                ->where('category_'.$index.' = '.$parameter);
                     $qb->andWhere($qb->expr()->in('main_item', $subquery->getDql()))
                                 ->setParameter($parameter, $category);
                 }
@@ -86,16 +81,17 @@ class CategoryFilter extends BaseFilter
         foreach ($childrens as $children) {
             $childrenArray = $this->getCategoryChildrens($children, $childrenArray);
         }
+
         return $childrenArray;
     }
 
     /**
-     * define form fields
+     * define form fields.
+     *
      * @param FormBuilderInterface $builder
      * @param array                $options
      *
      * @SuppressWarnings checkUnusedFunctionParameters
-     *
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -120,7 +116,7 @@ class CategoryFilter extends BaseFilter
         $categories = $categoryQb->getInstance('c_category')->getQuery()->getResult();
         //the blank value
 
-        $categoriesChoices = array();
+        $categoriesChoices = [];
 
         foreach ($categories as $category) {
             $categoriesChoices[$category->getId()] = $category->getTitle();
@@ -129,7 +125,7 @@ class CategoryFilter extends BaseFilter
         $data = null;
         if ($this->request->query->has('filter') && array_key_exists('category_filter', $this->request->query->get('filter'))) {
             if ($options['multiple']) {
-                $data = array();
+                $data = [];
                 foreach ($this->request->query->get('filter')['category_filter']['category'] as $id => $selectedCategory) {
                     $data[$id] = $selectedCategory;
                 }
@@ -140,7 +136,7 @@ class CategoryFilter extends BaseFilter
 
         $builder
             ->add(
-                'category', 'choice', array(
+                'category', 'choice', [
                     'label'       => false,
                     'choices'     => $categoriesChoices,
                     'required'    => false,
@@ -148,12 +144,12 @@ class CategoryFilter extends BaseFilter
                     'empty_value' => 'Tous',
                     'multiple'    => $options['multiple'],
                     'data'        => $data,
-                )
+                ]
             );
     }
 
     /**
-     * Get the filters
+     * Get the filters.
      *
      * @param array $filters
      *
@@ -165,7 +161,8 @@ class CategoryFilter extends BaseFilter
     }
 
     /**
-     * get form name
+     * get form name.
+     *
      * @return string name
      */
     public function getName()

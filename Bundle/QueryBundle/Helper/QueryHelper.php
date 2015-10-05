@@ -10,16 +10,15 @@ use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 
 /**
  * The QueryHelper helps to build query in Victoire's components
- * ref: victoire_query.query_helper
+ * ref: victoire_query.query_helper.
  */
 class QueryHelper
 {
     protected $businessEntityHelper = null;
     protected $currentView;
 
-
     /**
-     * Constructor
+     * Constructor.
      *
      * @param BusinessEntityHelper $businessEntityHelper
      * @param CurrentViewHelper    $currentView
@@ -32,13 +31,13 @@ class QueryHelper
 
     /**
      * Get the query builder base. This makes a "select  from item XXX"
-     * use the item for doing the left join or where dql
+     * use the item for doing the left join or where dql.
      *
      * @param \Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate $containerEntity
      *
-     * @return QueryBuilder
-     *
      * @throws Exception
+     *
+     * @return QueryBuilder
      */
     public function getQueryBuilder($containerEntity, EntityManager $em)
     {
@@ -73,15 +72,17 @@ class QueryHelper
             ->select('main_item')
             ->from($businessClass, 'main_item');
 
-        $refClass = new $businessClass;
+        $refClass = new $businessClass();
         if (method_exists($refClass, 'getDeletedAt')) {
             $itemsQueryBuilder->where('main_item.deletedAt IS NULL');
         }
+
         return $itemsQueryBuilder;
     }
 
     /**
-     * Check that the object is not null and has the query trait
+     * Check that the object is not null and has the query trait.
+     *
      * @param \Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate $containerEntity
      *
      * @throws \Exception
@@ -99,7 +100,7 @@ class QueryHelper
     }
 
     /**
-     * Get the results from the sql after adding the
+     * Get the results from the sql after adding the.
      *
      * @param mixed        $containerEntity
      * @param QueryBuilder $itemsQueryBuilder
@@ -126,7 +127,6 @@ class QueryHelper
         }
         $orderBy = json_decode($containerEntity->getOrderBy(), true);
         if ($query !== '' && $query !== null) {
-
             $subQuery = $em->createQueryBuilder()
                                 ->select('item.id')
                                 ->from($itemsQueryBuilder->getRootEntities()[0], 'item');
@@ -157,22 +157,21 @@ class QueryHelper
             // NEW
             $metadatas = $em->getClassMetadata(get_class($currentEntity));
             foreach ($metadatas->fieldMappings as $fieldName => $field) {
-                if (strpos($query, ":".$fieldName) !== false) {
+                if (strpos($query, ':'.$fieldName) !== false) {
                     $itemsQueryBuilder->setParameter($fieldName, $metadatas->getFieldValue($currentEntity, $fieldName));
                 }
             }
             foreach ($metadatas->associationMappings as $fieldName => $field) {
-                if (strpos($query, ":".$fieldName) !== false) {
+                if (strpos($query, ':'.$fieldName) !== false) {
                     $itemsQueryBuilder->setParameter($fieldName, $metadatas->getFieldValue($currentEntity, $fieldName)->getId());
                 }
             }
 
-            if (strpos($query, ":currentEntity") !== false) {
+            if (strpos($query, ':currentEntity') !== false) {
                 $itemsQueryBuilder->setParameter('currentEntity', $currentEntity->getId());
             }
         }
 
         return $itemsQueryBuilder;
     }
-
 }

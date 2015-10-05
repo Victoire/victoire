@@ -10,7 +10,7 @@ use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 
 /**
- * Template
+ * Template.
  *
  * @ORM\Entity(repositoryClass="Victoire\Bundle\TemplateBundle\Repository\TemplateRepository")
  */
@@ -38,12 +38,11 @@ class Template extends View
      * Could be Template or BusinessTemplate
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\TemplateBundle\Entity\Template", inversedBy="inheritors", cascade={"persist"})
      * @ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="CASCADE")
-     *
      */
     protected $template;
 
     /**
-     * contruct
+     * contruct.
      **/
     public function __construct()
     {
@@ -54,7 +53,7 @@ class Template extends View
     }
 
     /**
-     * to string
+     * to string.
      *
      * @return string
      **/
@@ -63,11 +62,13 @@ class Template extends View
         return 'Modèle > '.$this->name;
     }
 
-        /**
-         * add page
-         * @param BasePage $page
-         * @return Template
-         **/
+    /**
+     * add page.
+     *
+     * @param BasePage $page
+     *
+     * @return Template
+     **/
     public function addPage(BasePage $page)
     {
         $page->setTemplate($this);
@@ -77,8 +78,10 @@ class Template extends View
     }
 
     /**
-     * set page
-     * @param  array    $pages
+     * set page.
+     *
+     * @param array $pages
+     *
      * @return Template
      **/
     public function setPages(array $pages)
@@ -91,8 +94,10 @@ class Template extends View
     }
 
     /**
-     * remove page
-     * @param  BasePage $page
+     * remove page.
+     *
+     * @param BasePage $page
+     *
      * @return Template
      **/
     public function removePage($page)
@@ -103,7 +108,7 @@ class Template extends View
     }
 
     /**
-     * Get pages (all Pages having this object as Template)
+     * Get pages (all Pages having this object as Template).
      *
      * @return ArrayCollection
      */
@@ -113,7 +118,8 @@ class Template extends View
     }
 
     /**
-     * Set layout
+     * Set layout.
+     *
      * @param string $layout
      *
      * @return Template
@@ -126,7 +132,7 @@ class Template extends View
     }
 
     /**
-     * Get layout
+     * Get layout.
      *
      * @return string
      */
@@ -136,7 +142,8 @@ class Template extends View
     }
 
     /**
-     * Set inheritors
+     * Set inheritors.
+     *
      * @param string $inheritors
      *
      * @return Template
@@ -149,7 +156,7 @@ class Template extends View
     }
 
     /**
-     * Get inheritors (all Templates having this object as Template)
+     * Get inheritors (all Templates having this object as Template).
      *
      * @return [Template]
      */
@@ -178,10 +185,9 @@ class Template extends View
             $context->addViolationAt(
                 'layout',
                 'data.template.templateform.view.type.template.layout.validator_message',
-                array(),
+                [],
                 null
             );
-
         }
     }
 }

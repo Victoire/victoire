@@ -2,21 +2,21 @@
 
 namespace Victoire\Bundle\CoreBundle\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\Yaml\Yaml;
 
 /**
- * This is the class that loads and manages your bundle configuration
+ * This is the class that loads and manages your bundle configuration.
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
 class VictoireCoreExtension extends Extension
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -34,7 +34,7 @@ class VictoireCoreExtension extends Extension
             $yamlParser = new Yaml($container, $path.'/Resources/config/config.yml');
             $victoireConfig = $yamlParser->parse($path.'/Resources/config/config.yml');
             if (is_array($victoireConfig) && array_key_exists('victoire_core', $victoireConfig)) {
-                $config['widgets'] = array_merge($config['widgets'], $victoireConfig['victoire_core']['widgets'] ?: array());
+                $config['widgets'] = array_merge($config['widgets'], $victoireConfig['victoire_core']['widgets'] ?: []);
             }
         }
 

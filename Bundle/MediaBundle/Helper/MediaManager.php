@@ -2,19 +2,19 @@
 
 namespace Victoire\Bundle\MediaBundle\Helper;
 
-use Victoire\Bundle\MediaBundle\Helper\File\FileHandler;
 use Victoire\Bundle\MediaBundle\Entity\Media;
+use Victoire\Bundle\MediaBundle\Helper\File\FileHandler;
 use Victoire\Bundle\MediaBundle\Helper\Media\AbstractMediaHandler;
 
 /**
- * MediaManager
+ * MediaManager.
  */
 class MediaManager
 {
     /**
      * @var AbstractMediaHandler[]
      */
-    protected $handlers = array();
+    protected $handlers = [];
 
     /**
      * @param AbstractMediaHandler $handler Media handler
@@ -27,7 +27,7 @@ class MediaManager
     }
 
     /**
-     * Returns handler to handle the Media item which can handle the item. If no handler is found, it returns FileHandler
+     * Returns handler to handle the Media item which can handle the item. If no handler is found, it returns FileHandler.
      *
      * @param Media $media
      *
@@ -45,7 +45,7 @@ class MediaManager
     }
 
     /**
-     * Returns handler to handle the Media item based on the Type. If no handler is found, it returns FileHandler
+     * Returns handler to handle the Media item based on the Type. If no handler is found, it returns FileHandler.
      *
      * @param string $type
      *
@@ -117,7 +117,7 @@ class MediaManager
             }
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -125,7 +125,7 @@ class MediaManager
      */
     public function getFolderAddActions()
     {
-        $result = array();
+        $result = [];
         foreach ($this->handlers as $handler) {
             $actions = $handler->getAddFolderActions();
             if ($actions) {

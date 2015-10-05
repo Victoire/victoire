@@ -5,17 +5,18 @@ namespace Victoire\Bundle\CoreBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
+use Victoire\Bundle\I18nBundle\Entity\I18n;
 use Victoire\Bundle\PageBundle\Entity\Slot;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
-use Victoire\Bundle\I18nBundle\Entity\I18n;
 
 /**
  * Victoire View
- * A victoire view is a visual representation with a widget map
+ * A victoire view is a visual representation with a widget map.
  *
  * @Gedmo\Tree(type="nested")
  * @ORM\InheritanceType("SINGLE_TABLE")
@@ -29,7 +30,7 @@ abstract class View
     use \Gedmo\Timestampable\Traits\TimestampableEntity;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -42,6 +43,7 @@ abstract class View
      *
      * @Assert\NotBlank()
      * @ORM\Column(name="name", type="string", length=255)
+     * @Serializer\Groups({"search"})
      */
     protected $name;
 
@@ -119,10 +121,10 @@ abstract class View
      * @ORM\OneToMany(targetEntity="View", mappedBy="parent")
      * @ORM\OrderBy({"lft" = "ASC"})
      */
-    protected $children = array();
+    protected $children = [];
 
     /**
-     * This relation is dynamicly added by PageSubscriber
+     * This relation is dynamicly added by PageSubscriber.
      */
     protected $author;
 
@@ -136,12 +138,12 @@ abstract class View
     /**
      * @ORM\Column(name="widget_map", type="array")
      */
-    protected $widgetMap = array();
+    protected $widgetMap = [];
 
-    protected $builtWidgetMap = array();
+    protected $builtWidgetMap = [];
 
     //the slot contains the widget maps entities
-    protected $slots = array();
+    protected $slots = [];
 
     //The reference is related to viewsReferences.xml file which list all app views.
     //This is used to speed up the routing system and identify virtual pages (BusinessPage)
@@ -149,6 +151,7 @@ abstract class View
 
     /**
      * @ORM\Column(name="locale", type="string")
+     * @Serializer\Groups({"search"})
      */
     protected $locale;
 
@@ -161,17 +164,17 @@ abstract class View
     protected $i18n;
 
     /**
-     * contruct
+     * contruct.
      **/
     public function __construct()
     {
         $this->children = new ArrayCollection();
         $this->widgets = new ArrayCollection();
-        $this->widgetMap = array();
+        $this->widgetMap = [];
     }
 
     /**
-     * to string
+     * to string.
      *
      * @return string
      **/
@@ -181,9 +184,9 @@ abstract class View
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -191,7 +194,8 @@ abstract class View
     }
 
     /**
-     * Set id
+     * Set id.
+     *
      * @param id $id
      */
     public function setId($id)
@@ -200,7 +204,7 @@ abstract class View
     }
 
     /**
-     * Get locale
+     * Get locale.
      *
      * @return string
      */
@@ -210,7 +214,8 @@ abstract class View
     }
 
     /**
-     * Set locale
+     * Set locale.
+     *
      * @param $locale
      */
     public function setLocale($locale)
@@ -219,7 +224,7 @@ abstract class View
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -229,7 +234,8 @@ abstract class View
     }
 
     /**
-     * Set name
+     * Set name.
+     *
      * @param string $name
      *
      * @return View
@@ -242,7 +248,8 @@ abstract class View
     }
 
     /**
-     * Set slug
+     * Set slug.
+     *
      * @param string $slug
      *
      * @return View
@@ -255,7 +262,7 @@ abstract class View
     }
 
     /**
-     * Get slug
+     * Get slug.
      *
      * @return string
      */
@@ -265,7 +272,8 @@ abstract class View
     }
 
     /**
-     * Set template
+     * Set template.
+     *
      * @param View $template
      *
      * @return View
@@ -278,7 +286,7 @@ abstract class View
     }
 
     /**
-     * Get template
+     * Get template.
      *
      * @return Template
      */
@@ -288,9 +296,9 @@ abstract class View
     }
 
     /**
-     * Set parent
-     * @param View $parent
+     * Set parent.
      *
+     * @param View $parent
      */
     public function setParent(View $parent = null)
     {
@@ -298,7 +306,7 @@ abstract class View
     }
 
     /**
-     * Get parent
+     * Get parent.
      *
      * @return View parent
      */
@@ -306,8 +314,10 @@ abstract class View
     {
         return $this->parent;
     }
+
     /**
-     * Set children
+     * Set children.
+     *
      * @param string $children
      *
      * @return View
@@ -325,7 +335,7 @@ abstract class View
     }
 
     /**
-     * Get children
+     * Get children.
      *
      * @return string
      */
@@ -335,13 +345,13 @@ abstract class View
     }
 
     /**
-     * Get WebView children
+     * Get WebView children.
      *
      * @return string
      */
     public function getWebViewChildren()
     {
-        $webViewChildren = array();
+        $webViewChildren = [];
         foreach ($this->children as $child) {
             if (!$child instanceof BusinessTemplate) {
                 $webViewChildren[] = $child;
@@ -352,7 +362,7 @@ abstract class View
     }
 
     /**
-     * Add child
+     * Add child.
      *
      * @param View $child
      */
@@ -362,7 +372,7 @@ abstract class View
     }
 
     /**
-     * Remove child
+     * Remove child.
      *
      * @param View $child
      */
@@ -372,9 +382,9 @@ abstract class View
     }
 
     /**
-     * Get the left value
+     * Get the left value.
      *
-     * @return integer
+     * @return int
      */
     public function getLft()
     {
@@ -382,9 +392,9 @@ abstract class View
     }
 
     /**
-     * Set the left value
+     * Set the left value.
      *
-     * @param integer $lft
+     * @param int $lft
      */
     public function setLft($lft)
     {
@@ -392,9 +402,9 @@ abstract class View
     }
 
     /**
-     * Get the right value
+     * Get the right value.
      *
-     * @return integer
+     * @return int
      */
     public function getRgt()
     {
@@ -402,9 +412,9 @@ abstract class View
     }
 
     /**
-     * Set the right value
+     * Set the right value.
      *
-     * @param integer $rgt
+     * @param int $rgt
      */
     public function setRgt($rgt)
     {
@@ -412,9 +422,9 @@ abstract class View
     }
 
     /**
-     * Get the level value
+     * Get the level value.
      *
-     * @return integer
+     * @return int
      */
     public function getLvl()
     {
@@ -422,9 +432,9 @@ abstract class View
     }
 
     /**
-     * Set the level value
+     * Set the level value.
      *
-     * @param integer $lvl
+     * @param int $lvl
      */
     public function setLvl($lvl)
     {
@@ -432,9 +442,9 @@ abstract class View
     }
 
     /**
-     * Get the root value
+     * Get the root value.
      *
-     * @return integer
+     * @return int
      */
     public function getRoot()
     {
@@ -442,9 +452,9 @@ abstract class View
     }
 
     /**
-     * Set the root value
+     * Set the root value.
      *
-     * @param integer $root
+     * @param int $root
      */
     public function setRoot($root)
     {
@@ -452,12 +462,11 @@ abstract class View
     }
 
     /**
-     * Set undeletable
+     * Set undeletable.
      *
-     * @param boolean $undeletable
+     * @param bool $undeletable
      *
      * @return View The current instance
-     *
      */
     public function setUndeletable($undeletable)
     {
@@ -467,7 +476,7 @@ abstract class View
     }
 
     /**
-     * Is the widget is undeletable
+     * Is the widget is undeletable.
      *
      * @return string
      */
@@ -477,7 +486,7 @@ abstract class View
     }
 
     /**
-     * Get author
+     * Get author.
      *
      * @return string
      */
@@ -487,7 +496,7 @@ abstract class View
     }
 
     /**
-     * Set author
+     * Set author.
      *
      * @param string $author
      *
@@ -501,7 +510,7 @@ abstract class View
     }
 
     /**
-     * Get bodyId
+     * Get bodyId.
      *
      * @return string
      */
@@ -511,7 +520,8 @@ abstract class View
     }
 
     /**
-     * Set bodyId
+     * Set bodyId.
+     *
      * @param string $bodyId
      *
      * @return $this
@@ -524,7 +534,7 @@ abstract class View
     }
 
     /**
-     * Get bodyClass
+     * Get bodyClass.
      *
      * @return string
      */
@@ -534,7 +544,8 @@ abstract class View
     }
 
     /**
-     * Set bodyClass
+     * Set bodyClass.
+     *
      * @param string $bodyClass
      *
      * @return $this
@@ -547,7 +558,8 @@ abstract class View
     }
 
     /**
-     * Initialize I18n table
+     * Initialize I18n table.
+     *
      * @ORM\PrePersist
      */
     public function initI18n()
@@ -559,7 +571,7 @@ abstract class View
     }
 
     /**
-     * Get i18n
+     * Get i18n.
      *
      * @return string
      */
@@ -569,7 +581,8 @@ abstract class View
     }
 
     /**
-     * Set i18n
+     * Set i18n.
+     *
      * @param string $i18n
      *
      * @return $this
@@ -583,7 +596,8 @@ abstract class View
     }
 
     /**
-     * Set widgets
+     * Set widgets.
+     *
      * @param string $widgets
      *
      * @return View
@@ -600,7 +614,7 @@ abstract class View
     }
 
     /**
-     * Get widgets
+     * Get widgets.
      *
      * @return Widget[]
      */
@@ -610,14 +624,15 @@ abstract class View
     }
 
     /**
-     * Get widgets
+     * Get widgets.
+     *
      * @param string $slot
      *
      * @return string
      */
     public function getWidgetsForSlot($slot)
     {
-        $widgets = array();
+        $widgets = [];
         foreach ($this->getWidgets() as $widget) {
             if ($widget->getSlot() === $slot) {
                 $widgets[] = $widget;
@@ -628,7 +643,8 @@ abstract class View
     }
 
     /**
-     * Add widget
+     * Add widget.
+     *
      * @param Widget $widget
      */
     public function addWidget(Widget $widget)
@@ -637,7 +653,8 @@ abstract class View
     }
 
     /**
-     * Remove widget
+     * Remove widget.
+     *
      * @param Widget $widget
      */
     public function removeWidget(Widget $widget)
@@ -646,7 +663,8 @@ abstract class View
     }
 
     /**
-     * has widget
+     * has widget.
+     *
      * @param Widget $widget
      *
      * @return bool
@@ -657,7 +675,7 @@ abstract class View
     }
 
     /**
-     * Set widgetMap
+     * Set widgetMap.
      *
      * @param widgetMap $widgetMap
      */
@@ -667,7 +685,7 @@ abstract class View
     }
 
     /**
-     * Get widgetMap
+     * Get widgetMap.
      *
      * @return widgetMap
      */
@@ -681,7 +699,7 @@ abstract class View
     }
 
     /**
-     * Method called once the entity is loaded
+     * Method called once the entity is loaded.
      *
      * @ORM\PostLoad
      */
@@ -690,7 +708,7 @@ abstract class View
         $widgetMap = $this->widgetMap;
 
         //the slots of the page
-        $slots = array();
+        $slots = [];
 
         //convert the widget map array as objects
         foreach ($widgetMap as $slotId => $_widgetMapEntries) {
@@ -702,7 +720,7 @@ abstract class View
                 $_widgetMap->setAction(@$_widgetMapEntry['action']);
                 $_widgetMap->setPosition(@$_widgetMapEntry['position']);
                 $_widgetMap->setPositionReference(@$_widgetMapEntry['positionReference']);
-                $_widgetMap->setAsynchronous(isset($_widgetMapEntry['asynchronous'])?$_widgetMapEntry['asynchronous']:null);
+                $_widgetMap->setAsynchronous(isset($_widgetMapEntry['asynchronous']) ? $_widgetMapEntry['asynchronous'] : null);
                 $_widgetMap->setReplacedWidgetId(@$_widgetMapEntry['replacedWidgetId']);
                 $_widgetMap->setWidgetId(intval($_widgetMapEntry['widgetId']));
 
@@ -717,7 +735,7 @@ abstract class View
     }
 
     /**
-     * Method before updating a page
+     * Method before updating a page.
      *
      * @ORM\PrePersist
      * @ORM\PreUpdate
@@ -731,7 +749,8 @@ abstract class View
     }
 
     /**
-     * Set the slots
+     * Set the slots.
+     *
      * @param unknown $slots
      */
     public function setSlots($slots)
@@ -743,7 +762,7 @@ abstract class View
     }
 
     /**
-     * Convert slots to a widget map
+     * Convert slots to a widget map.
      *
      * @return array The widget map
      */
@@ -751,18 +770,18 @@ abstract class View
     {
         $slots = $this->getSlots();
 
-        $widgetMap = array();
+        $widgetMap = [];
 
         //parse the slots
         foreach ($slots as $slot) {
             $slotId = $slot->getId();
-            $widgetMap[$slotId] = array();
+            $widgetMap[$slotId] = [];
 
             $widgetMaps = $slot->getWidgetMaps();
 
             //parse the widget map objects
             foreach ($widgetMaps as $_widgetMap) {
-                $widgetMapEntry = array();
+                $widgetMapEntry = [];
                 $widgetMapEntry['action'] = $_widgetMap->getAction();
                 $widgetMapEntry['position'] = $_widgetMap->getPosition();
                 $widgetMapEntry['asynchronous'] = $_widgetMap->isAsynchronous();
@@ -779,8 +798,7 @@ abstract class View
     }
 
     /**
-     * This function update the widgetMap array using the slots entities array
-     *
+     * This function update the widgetMap array using the slots entities array.
      */
     public function updateWidgetMapBySlots()
     {
@@ -792,7 +810,7 @@ abstract class View
     }
 
     /**
-     * Get the slot by the slotId
+     * Get the slot by the slotId.
      *
      * @param string $slotId
      *
@@ -802,13 +820,13 @@ abstract class View
     {
         foreach ($this->slots as $slot) {
             if ($slot->getId() === $slotId) {
-
                 return $slot;
             }
         }
     }
+
     /**
-     * Update the given slot
+     * Update the given slot.
      *
      * @param Slot $slot
      *
@@ -834,7 +852,7 @@ abstract class View
     }
 
     /**
-     * Add a slot to the slots array
+     * Add a slot to the slots array.
      *
      * @param Slot $slot The slot to add
      */
@@ -844,7 +862,8 @@ abstract class View
     }
 
     /**
-     * Remove slots
+     * Remove slots.
+     *
      * @param Slot $slots
      */
     public function removeSlot(Slot $slots)
@@ -853,7 +872,7 @@ abstract class View
     }
 
     /**
-     * Get the slots
+     * Get the slots.
      *
      * @return Slot[] The slots
      */
@@ -863,9 +882,9 @@ abstract class View
     }
 
     /**
-     * Get discriminator type
+     * Get discriminator type.
      *
-     * @return integer
+     * @return int
      */
     public function getType()
     {
@@ -875,9 +894,9 @@ abstract class View
     }
 
     /**
-     * Set position
+     * Set position.
      *
-     * @param integer $position
+     * @param int $position
      */
     public function setPosition($position)
     {
@@ -885,9 +904,9 @@ abstract class View
     }
 
     /**
-     * Get position
+     * Get position.
      *
-     * @return integer
+     * @return int
      */
     public function getPosition()
     {
@@ -895,7 +914,7 @@ abstract class View
     }
 
     /**
-     * Get reference
+     * Get reference.
      *
      * @return string
      */
@@ -905,7 +924,8 @@ abstract class View
     }
 
     /**
-     * Set reference
+     * Set reference.
+     *
      * @param string $reference
      *
      * @return $this
@@ -918,7 +938,7 @@ abstract class View
     }
 
     /**
-     * Get builtWidgetMap
+     * Get builtWidgetMap.
      *
      * @return string
      */
@@ -928,9 +948,10 @@ abstract class View
     }
 
     /**
-     * Set builtWidgetMap
+     * Set builtWidgetMap.
      *
-     * @param  string $builtWidgetMap
+     * @param string $builtWidgetMap
+     *
      * @return $this
      */
     public function setBuiltWidgetMap($builtWidgetMap)

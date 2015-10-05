@@ -57,13 +57,8 @@ Feature: Edit a widget
         And I submit the widget
         Then I should see "Victoire !"
         And I should see "Le Côté obscure de la force"
-
-    Scenario: I can edit widget for an entity with missing receiver property but field is not display
+      
+    Scenario: I cannot edit widget for an entity with missing business parameter
         When I select "Force" from the "1" select of "content" slot
         Then I should see "Créer"
-        When I follow "Vaisseaux"
-        And I follow "Choix"
-        Then I should not see "Côté de la force"
-        When I follow the tab "Jedi"
-        And I follow "Choix"
-        Then I should see "Côté de la force"
+        And I should see disable tab "Vaisseaux"

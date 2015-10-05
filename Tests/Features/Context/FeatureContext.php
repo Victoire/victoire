@@ -5,9 +5,9 @@ namespace Victoire\Tests\Features\Context;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Mink\Exception\UnsupportedDriverActionException;
+use Behat\Symfony2Extension\Context\KernelAwareContext;
 use Behat\Symfony2Extension\Context\KernelDictionary;
 use Behat\Symfony2Extension\Driver\KernelDriver;
-use Behat\Symfony2Extension\Context\KernelAwareContext;
 use Knp\FriendlyContexts\Context\RawMinkContext;
 
 /**
@@ -23,7 +23,7 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
      */
     public function iWaitSeconds($nbr)
     {
-        $this->getSession()->wait($nbr*1000);
+        $this->getSession()->wait($nbr * 1000);
     }
 
     public function getSymfonyProfile()
@@ -51,10 +51,12 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
 
     /**
      * @Then /^I should see the css property "(.+)" of "(.+)" with "(.+)"$/
+     *
      * @param string $property
      * @param string $value
      */
-    public function iShouldSeeCssOfWith($property, $elementId, $value) {
+    public function iShouldSeeCssOfWith($property, $elementId, $value)
+    {
         $script = "return $('#".$elementId."').css('".$property."') === '".$value."';";
         $evaluated = $this->getSession()->evaluateScript($script);
         if (!$evaluated) {
@@ -65,12 +67,29 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
     /**
      * @Then I should see background-image of :id with relative url :url
      */
-    public function iShouldSeeBackgroundImageWithRelativeUrl($id, $url) {
+    public function iShouldSeeBackgroundImageWithRelativeUrl($id, $url)
+    {
         $session = $this->getSession();
         $base_url = $session->getCurrentUrl();
         $parse_url = parse_url($base_url);
         $base_url = rtrim($base_url, $parse_url['path']);
         $url = rtrim($base_url, DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.ltrim($url, DIRECTORY_SEPARATOR);
         $this->iShouldSeeCssOfWith('background-image', $id, 'url("'.$url.'")');
+    }
+
+    /**
+     * @Then the title should be :title
+     */
+    public function theTitleShouldBe($title)
+    {
+        $element = $this->getSession()->getPage()->find(
+            'xpath',
+            sprintf('//title[normalize-space(text()) = "%s"]', $title)
+        );
+
+        if (null === $element) {
+            $message = sprintf('"%s" is not the title of the page', $title);
+            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
+        }
     }
 }

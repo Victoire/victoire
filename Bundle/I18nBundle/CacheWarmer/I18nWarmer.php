@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\I18nBundle\CacheWarmer;
 
 use Behat\Behat\Exception\Exception;
@@ -14,7 +15,8 @@ class I18nWarmer extends CacheWarmer
     protected $fileLocator;
 
     /**
-     * Constructor
+     * Constructor.
+     *
      * @param array       $availableLocales Got from I18n config
      * @param FileLocator $fileLocator
      */
@@ -54,9 +56,9 @@ class I18nWarmer extends CacheWarmer
     }
 
     /**
-     * IS the warmer optionnal
+     * IS the warmer optionnal.
      *
-     * @return boolean
+     * @return bool
      */
     public function isOptional()
     {

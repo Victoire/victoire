@@ -7,12 +7,13 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Victoire\Bundle\BusinessPageBundle\DependencyInjection\Compiler\BusinessTemplateCompilerPass;
 
 /**
- * The Business Entity Page Pattern bundle
+ * The Business Entity Page Pattern bundle.
  */
 class VictoireBusinessPageBundle extends Bundle
 {
     /**
-     * Build bundle
+     * Build bundle.
+     *
      * @param ContainerBuilder $container
      */
     public function build(ContainerBuilder $container)

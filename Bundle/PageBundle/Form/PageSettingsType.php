@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\PageBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
@@ -6,13 +7,12 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Victoire\Bundle\PageBundle\Entity\PageStatus;
 
 /**
- * Edit Page Type
+ * Edit Page Type.
  */
 class PageSettingsType extends PageType
 {
-
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct($availableLocales, RequestStack $requestStack)
     {
@@ -20,7 +20,8 @@ class PageSettingsType extends PageType
     }
 
     /**
-     * define form fields
+     * define form fields.
+     *
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
@@ -28,26 +29,26 @@ class PageSettingsType extends PageType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('slug', null, array(
-                'label' => 'form.page.type.slug.label'
-            ))
-            ->add('status', 'choice', array(
+            ->add('slug', null, [
+                'label' => 'form.page.type.slug.label',
+            ])
+            ->add('status', 'choice', [
                 'label'   => 'form.page.type.status.label',
-                'choices' => array(
+                'choices' => [
                     PageStatus::DRAFT       => 'form.page.type.status.choice.label.draft',
                     PageStatus::PUBLISHED   => 'form.page.type.status.choice.label.published',
                     PageStatus::UNPUBLISHED => 'form.page.type.status.choice.label.unpublished',
                     PageStatus::SCHEDULED   => 'form.page.type.status.choice.label.scheduled',
-                )
-            ))
-            ->add('publishedAt', null, array(
+                ],
+            ])
+            ->add('publishedAt', null, [
                 'widget'             => 'single_text',
-                'vic_datetimepicker' => true
-            ));
+                'vic_datetimepicker' => true,
+            ]);
     }
 
     /**
-     * get form name
+     * get form name.
      */
     public function getName()
     {

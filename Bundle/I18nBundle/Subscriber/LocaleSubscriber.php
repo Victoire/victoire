@@ -16,7 +16,8 @@ class LocaleSubscriber implements EventSubscriberInterface
     private $localeResolver;
 
     /**
-     * Constructor
+     * Constructor.
+     *
      * @param $defaultLocale the default locale of the application
      */
     public function __construct($defaultLocale, LocaleResolver $localeResolver)
@@ -49,9 +50,9 @@ class LocaleSubscriber implements EventSubscriberInterface
         }
     }
 
-
     /**
-     * This method will be called on user login in order to set the victoire locale
+     * This method will be called on user login in order to set the victoire locale.
+     *
      * @param InteractiveLoginEvent $event
      */
     public function onLogin(InteractiveLoginEvent $event)
@@ -65,13 +66,13 @@ class LocaleSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function getSubscribedEvents()
     {
-        return array(
+        return [
             SecurityEvents::INTERACTIVE_LOGIN => 'onLogin',
-            KernelEvents::REQUEST             => 'onKernelRequest'
-        );
+            KernelEvents::REQUEST             => 'onKernelRequest',
+        ];
     }
 }

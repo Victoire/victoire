@@ -2,23 +2,22 @@
 
 namespace Victoire\Bundle\MediaBundle\Helper\File;
 
-use Victoire\Bundle\MediaBundle\Helper\Media\AbstractMediaHandler;
-use Victoire\Bundle\MediaBundle\Form\File\FileType;
-use Symfony\Component\HttpFoundation\File\MimeType\FileBinaryMimeTypeGuesser;
-use Gaufrette\Filesystem;
-use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
 use Gaufrette\Adapter\Local;
+use Gaufrette\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
-use Victoire\Bundle\MediaBundle\Entity\Media;
+use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
+use Symfony\Component\HttpFoundation\File\MimeType\FileBinaryMimeTypeGuesser;
 use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesserInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Victoire\Bundle\MediaBundle\Entity\Media;
+use Victoire\Bundle\MediaBundle\Form\File\FileType;
+use Victoire\Bundle\MediaBundle\Helper\Media\AbstractMediaHandler;
 
 /**
- * FileHandler
+ * FileHandler.
  */
 class FileHandler extends AbstractMediaHandler
 {
-
     /**
      * @var string
      */
@@ -35,20 +34,21 @@ class FileHandler extends AbstractMediaHandler
     public $mimeTypeGuesser = null;
 
     /**
-     * constructor
+     * constructor.
      */
     public function __construct()
     {
-        $this->fileSystem = new Filesystem(new \Gaufrette\Adapter\Local("uploads/media/", true));
+        $this->fileSystem = new Filesystem(new \Gaufrette\Adapter\Local('uploads/media/', true));
         //we use a specific symfony mimetypeguesser because de default (FileinfoMimeTypeGuesser) is unable to recognize MS documents
         $this->mimeTypeGuesser = new FileBinaryMimeTypeGuesser();
     }
+
     /**
      * @return string
      */
     public function getName()
     {
-        return "File Handler";
+        return 'File Handler';
     }
 
     /**
@@ -56,7 +56,7 @@ class FileHandler extends AbstractMediaHandler
      */
     public function getType()
     {
-        return FileHandler::TYPE;
+        return self::TYPE;
     }
 
     /**
@@ -120,7 +120,7 @@ class FileHandler extends AbstractMediaHandler
             $media->setName($content->getClientOriginalName());
         }
 
-        $metadata = array();
+        $metadata = [];
 
         $media->setFileSize(filesize($media->getContent()));
         $media->setMetadata($metadata);
@@ -165,7 +165,7 @@ class FileHandler extends AbstractMediaHandler
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function updateMedia(Media $media)
     {
@@ -180,7 +180,7 @@ class FileHandler extends AbstractMediaHandler
     public function createNew($data)
     {
         if ($data instanceof File) {
-            /** @var $data File */
+            /* @var $data File */
 
             $media = new Media();
             if (method_exists($media, 'getClientOriginalName')) {
@@ -193,11 +193,11 @@ class FileHandler extends AbstractMediaHandler
             return $media;
         }
 
-        return null;
+        return;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getShowTemplate(Media $media)
     {
@@ -209,11 +209,10 @@ class FileHandler extends AbstractMediaHandler
      */
     public function getAddFolderActions()
     {
-        return array(
-                FileHandler::TYPE => array(
-                        'type' => FileHandler::TYPE,
-                        'name' => 'media.file.add')
-        );
+        return [
+                self::TYPE => [
+                        'type' => self::TYPE,
+                        'name' => 'media.file.add', ],
+        ];
     }
-
 }

@@ -9,6 +9,7 @@ Feature: Create business entity pages
             | Yoda   | bright | 17500         | yoda   |
         And I resize the window to 1024x720
 
+    @smartStep
     Scenario: I can create a new Business entity page pattern and create some content in the pattern
         Given I open the hamburger menu
         Then I should see "Représentation métier"
@@ -117,7 +118,7 @@ Feature: Create business entity pages
         When I fill in "Côté de la force" with "Nouveau"
         And I submit the widget
         Then I should see "Le Côté Nouveau de la force"
-        Given I am on "/fr/fiche-jedi-%7B%7Bitem.slug%7D%7D"
+        Given I am on "/fr/victoire-dcms/business-template/show/5"
         Then I should not see "Le Côté Nouveau de la force"
 
     Scenario: I add a BusinessEntity and check if its representation is accessible

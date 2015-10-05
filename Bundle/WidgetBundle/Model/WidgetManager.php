@@ -25,7 +25,7 @@ use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 use Victoire\Bundle\WidgetMapBundle\Manager\WidgetMapManager;
 
 /**
- * This manager handles crud operations on a Widget
+ * This manager handles crud operations on a Widget.
  */
 class WidgetManager
 {
@@ -43,7 +43,8 @@ class WidgetManager
     protected $virtualToBpTransformer; // %victoire_core.slots%
 
     /**
-     * construct
+     * construct.
+     *
      * @param WidgetHelper              $widgetHelper
      * @param WidgetFormBuilder         $widgetFormBuilder
      * @param WidgetContentResolver     $widgetContentResolver
@@ -75,8 +76,7 @@ class WidgetManager
         PageHelper $pageHelper,
         $slots,
         VirtualToBusinessPageTransformer $virtualToBpTransformer
-    )
-    {
+    ) {
         $this->widgetFormBuilder = $widgetFormBuilder;
         $this->widgetHelper = $widgetHelper;
         $this->widgetContentResolver = $widgetContentResolver;
@@ -95,11 +95,12 @@ class WidgetManager
     }
 
     /**
-     * new widget
-     * @param string  $type
-     * @param string  $slot
-     * @param View    $view
-     * @param integer $position
+     * new widget.
+     *
+     * @param string $type
+     * @param string $slot
+     * @param View   $view
+     * @param int    $position
      *
      * @return template
      */
@@ -111,32 +112,33 @@ class WidgetManager
         $classes = $this->cacheReader->getBusinessClassesForWidget($widget);
         $forms = $this->widgetFormBuilder->renderNewWidgetForms($slot, $view, $widget, $classes, $position);
 
-        return array(
-            "html" => $this->victoireTemplating->render(
-                "VictoireCoreBundle:Widget:Form/new.html.twig",
-                array(
+        return [
+            'html' => $this->victoireTemplating->render(
+                'VictoireCoreBundle:Widget:Form/new.html.twig',
+                [
                     'view'    => $view,
                     'classes' => $classes,
                     'widget'  => $widget,
                     'forms'   => $forms,
-                )
+                ]
             ),
-        );
+        ];
     }
 
     /**
-     * Create a widget
-     * @param string  $mode
-     * @param string  $type
-     * @param string  $slotId
-     * @param View    $view
-     * @param string  $entity
-     * @param integer $positionReference
+     * Create a widget.
      *
+     * @param string $mode
      * @param string $type
-     * @throws \Exception
-     * @return Template
+     * @param string $slotId
+     * @param View   $view
+     * @param string $entity
+     * @param int    $positionReference
+     * @param string $type
      *
+     * @throws \Exception
+     *
+     * @return Template
      */
     public function createWidget($mode, $type, $slotId, View $view, $entity, $positionReference)
     {
@@ -191,30 +193,30 @@ class WidgetManager
             //get the html for the widget
             $htmlWidget = $this->widgetRenderer->renderContainer($widget, $view);
 
-            $response = array(
-                "success"  => true,
+            $response = [
+                'success'  => true,
                 'widgetId' => $widget->getId(),
-                "html"     => $htmlWidget,
-            );
+                'html'     => $htmlWidget,
+            ];
         } else {
             //get the errors as a string
-            $response = array(
-                "success" => false,
-                "message" => $noValidate === false ? $formErrorHelper->getRecursiveReadableErrors($form) : null,
-                "html"    => $this->widgetFormBuilder->renderNewForm($form, $widget, $slotId, $view, $entity),
-            );
+            $response = [
+                'success' => false,
+                'message' => $noValidate === false ? $formErrorHelper->getRecursiveReadableErrors($form) : null,
+                'html'    => $this->widgetFormBuilder->renderNewForm($form, $widget, $slotId, $view, $entity),
+            ];
         }
 
         return $response;
     }
 
     /**
-     * edit a widget
+     * edit a widget.
      *
      * @param Request $request
      * @param Widget  $widget
      * @param View    $currentView
-     * @param string  $businessEntityId  The entity name is used to know which form to submit
+     * @param string  $businessEntityId The entity name is used to know which form to submit
      *
      * @return template
      */
@@ -259,43 +261,43 @@ class WidgetManager
                 $this->entityManager->persist($currentView);
                 $this->entityManager->flush();
 
-                $response = array(
+                $response = [
                     'view'        => $currentView,
                     'success'     => true,
                     'html'        => $this->widgetRenderer->render($widget, $currentView),
                     'widgetId'    => $initialWidgetId,
-                );
+                ];
             } else {
                 $formErrorHelper = $this->formErrorHelper;
                 //Return a message for developer in console and form view in order to refresh view and show form errors
-                $response = array(
-                    "success" => false,
-                    "message" => $noValidate === false ? $formErrorHelper->getRecursiveReadableErrors($form) : null,
-                    "html"    => $this->widgetFormBuilder->renderForm($form, $widget, $businessEntityId),
-                );
+                $response = [
+                    'success' => false,
+                    'message' => $noValidate === false ? $formErrorHelper->getRecursiveReadableErrors($form) : null,
+                    'html'    => $this->widgetFormBuilder->renderForm($form, $widget, $businessEntityId),
+                ];
             }
         } else {
             $forms = $this->widgetFormBuilder->renderNewWidgetForms($widget->getSlot(), $currentView, $widget, $classes);
 
-            $response = array(
-                "success"  => true,
-                "html"     => $this->victoireTemplating->render(
-                    "VictoireCoreBundle:Widget:Form/edit.html.twig",
-                    array(
+            $response = [
+                'success'  => true,
+                'html'     => $this->victoireTemplating->render(
+                    'VictoireCoreBundle:Widget:Form/edit.html.twig',
+                    [
                         'view'    => $currentView,
                         'classes' => $classes,
                         'forms'   => $forms,
                         'widget'  => $widget,
-                    )
+                    ]
                 ),
-            );
+            ];
         }
 
         return $response;
     }
 
     /**
-     * Remove a widget
+     * Remove a widget.
      *
      * @param Widget $widget
      *
@@ -320,21 +322,21 @@ class WidgetManager
         $this->entityManager->persist($view);
         $this->entityManager->flush();
 
-        return array(
-            "success"  => true,
-            "widgetId" => $widgetId,
-        );
+        return [
+            'success'  => true,
+            'widgetId' => $widgetId,
+        ];
     }
 
     /**
-     * Overwrite the widget for the current view because the widget is not linked to the current view, a copy is created
+     * Overwrite the widget for the current view because the widget is not linked to the current view, a copy is created.
      *
      * @param View   $view
      * @param Widget $widget
      *
-     * @return Widget The widget
-     *
      * @throws \Exception The slot does not exists
+     *
+     * @return Widget The widget
      */
     public function overwriteWidget(View $view, Widget $widget)
     {
@@ -348,7 +350,7 @@ class WidgetManager
         foreach ($associations as $name => $values) {
             if ($values['type'] === ClassMetadataInfo::ONE_TO_MANY) {
                 $relatedEntities = $accessor->getValue($widget, $values['fieldName']);
-                $relatedEntitiesCopies = array();
+                $relatedEntitiesCopies = [];
                 foreach ($relatedEntities as $relatedEntity) {
                     $relatedEntityCopy = clone $relatedEntity;
                     $this->entityManager->persist($relatedEntity);

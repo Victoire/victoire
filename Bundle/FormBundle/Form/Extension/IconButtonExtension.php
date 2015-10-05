@@ -11,14 +11,13 @@ namespace Victoire\Bundle\FormBundle\Form\Extension;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Extension for Button Icons handling
+ * Extension for Button Icons handling.
  *
  * @author phiamo <phiamo@googlemail.com>
  */
@@ -37,10 +36,10 @@ class IconButtonExtension extends AbstractTypeExtension
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'vic_icon' => null,
+        $resolver->setDefaults([
+            'vic_icon'          => null,
             'vic_icon_inverted' => false,
-        ));
+        ]);
     }
 
     /**

@@ -4,11 +4,11 @@ namespace Victoire\Bundle\MediaBundle\Helper\Services;
 
 use Doctrine\ORM\EntityManager;
 use Gaufrette\Filesystem;
+use Symfony\Component\HttpFoundation\File\File;
 use Victoire\Bundle\MediaBundle\Entity\Folder;
-use Victoire\Bundle\MediaBundle\Repository\FolderRepository;
 use Victoire\Bundle\MediaBundle\Entity\Media;
 use Victoire\Bundle\MediaBundle\Helper\File\FileHandler;
-use Symfony\Component\HttpFoundation\File\File;
+use Victoire\Bundle\MediaBundle\Repository\FolderRepository;
 
 // TODO: Would be cool if we could pass on the folder name. Or the path with a locale.
 // TODO: Needs severe cleanup where the filesystem is not manipulated. But how do you detect the context of a running process?
@@ -21,11 +21,9 @@ use Symfony\Component\HttpFoundation\File\File;
  * This is especially useful in migrations or places where you want to automate the uploading of media.
  *
  * Class MediaCreatorService
- * @package Victoire\Bundle\MediaBundle\Helper\Services
  */
 class MediaCreatorService
 {
-
     /** @var EntityManager */
     protected $em;
     /** @var FolderRepository */
@@ -50,15 +48,15 @@ class MediaCreatorService
      *
      * @return Media
      */
-    public function createFile($filePath, $folderId, $context = MediaCreatorService::CONTEXT_WEB)
+    public function createFile($filePath, $folderId, $context = self::CONTEXT_WEB)
     {
         $fileHandler = new FileHandler();
 
         // Get file from FilePath.
         $data = new File($filePath, true);
 
-        if ($context == MediaCreatorService::CONTEXT_CONSOLE) {
-            $fileHandler->fileSystem = new Filesystem(new \Gaufrette\Adapter\Local("web/uploads/media/", true));
+        if ($context == self::CONTEXT_CONSOLE) {
+            $fileHandler->fileSystem = new Filesystem(new \Gaufrette\Adapter\Local('web/uploads/media/', true));
         }
 
         /** @var $media Media */

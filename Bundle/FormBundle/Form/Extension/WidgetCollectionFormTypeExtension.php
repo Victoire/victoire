@@ -11,11 +11,11 @@ namespace Victoire\Bundle\FormBundle\Form\Extension;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\Exception\InvalidArgumentException;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\Exception\InvalidArgumentException;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Extension for Form collections.
@@ -81,12 +81,12 @@ class WidgetCollectionFormTypeExtension extends AbstractTypeExtension
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'vic_omit_collection_item' => true === $this->options['vic_render_collection_item'] ? false : true,
-            'vic_widget_add_btn' => $this->options['vic_widget_add_btn'],
-            'vic_widget_remove_btn' => $this->options['vic_widget_remove_btn'],
-            'vic_prototype_names' => array()
-        ));
+            'vic_widget_add_btn'       => $this->options['vic_widget_add_btn'],
+            'vic_widget_remove_btn'    => $this->options['vic_widget_remove_btn'],
+            'vic_prototype_names'      => [],
+        ]);
     }
 
     /**

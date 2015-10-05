@@ -5,12 +5,11 @@ namespace Victoire\Bundle\CoreBundle\Helper;
 use Symfony\Component\Config\Util\XmlUtils;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
-use Victoire\Bundle\CoreBundle\Builder\ViewReferenceBuilder;
 use Victoire\Bundle\CoreBundle\Entity\View;
 
 /**
  * View cache helper
- * ref: victoire_core.view_cache_helper
+ * ref: victoire_core.view_cache_helper.
  */
 class ViewCacheHelper
 {
@@ -19,8 +18,8 @@ class ViewCacheHelper
     private $viewReferenceHelper;
 
     /**
-     * @param string $cacheDir
-     * @param RequestStack $requestStack
+     * @param string              $cacheDir
+     * @param RequestStack        $requestStack
      * @param ViewReferenceHelper $viewReferenceHelper
      */
     public function __construct($cacheDir, RequestStack $requestStack, ViewReferenceHelper $viewReferenceHelper)
@@ -31,7 +30,7 @@ class ViewCacheHelper
     }
 
     /**
-     * Write given views references in a xml file
+     * Write given views references in a xml file.
      *
      * @return void
      */
@@ -53,7 +52,7 @@ XML;
     }
 
     /**
-     * get the content of the view cache file
+     * get the content of the view cache file.
      *
      * @return \SimpleXMLElement
      */
@@ -62,12 +61,13 @@ XML;
         return new \SimpleXMLElement(file_get_contents($this->xmlFile));
     }
 
-
     /**
      * update or insert values of given view cache
      * The given view can only be a WebView cause it have to got an url
-     * if you want to update a BusinessTemplate and all its BP|VBP, you have to call updateTemplate method
+     * if you want to update a BusinessTemplate and all its BP|VBP, you have to call updateTemplate method.
+     *
      * @param $viewReferences
+     *
      * @internal param View $view
      * @internal param null|BusinessEntity $entity
      *
@@ -79,8 +79,8 @@ XML;
 
         foreach ($viewReferences as $key => $_viewReference) {
             $parameters = [
-                'patternId' => !empty($_viewReference['patternId']) ? $_viewReference['patternId'] : null,
-                'entityId' => !empty($_viewReference['entityId']) ? $_viewReference['entityId'] : null,
+                'patternId'     => !empty($_viewReference['patternId']) ? $_viewReference['patternId'] : null,
+                'entityId'      => !empty($_viewReference['entityId']) ? $_viewReference['entityId'] : null,
                 'viewNamespace' => 'Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage',
             ];
 
@@ -104,28 +104,27 @@ XML;
         $this->write($allViewsReferences);
 
         return $viewReferences;
-
     }
 
     public function getReferenceByParameters($parameters)
     {
-        $viewReference = array();
-        $arguments = array();
+        $viewReference = [];
+        $arguments = [];
 
         foreach ($parameters as $key => $value) {
             $arguments[$key] = '@'.$key.'="'.$value.'"';
         }
 
-        if ($xmlReference = $this->readCache()->xpath("//viewReference[".implode(' and ', $arguments)."]")) {
-            $viewReference['id']              = XmlUtils::phpize($xmlReference[0]['id']);
-            $viewReference['locale']          = XmlUtils::phpize($xmlReference[0]['locale']);
-            $viewReference['entityId']        = XmlUtils::phpize($xmlReference[0]['entityId']);
+        if ($xmlReference = $this->readCache()->xpath('//viewReference['.implode(' and ', $arguments).']')) {
+            $viewReference['id'] = XmlUtils::phpize($xmlReference[0]['id']);
+            $viewReference['locale'] = XmlUtils::phpize($xmlReference[0]['locale']);
+            $viewReference['entityId'] = XmlUtils::phpize($xmlReference[0]['entityId']);
             $viewReference['entityNamespace'] = XmlUtils::phpize($xmlReference[0]['entityNamespace']);
-            $viewReference['url']             = XmlUtils::phpize($xmlReference[0]['url']);
-            $viewReference['viewId']          = XmlUtils::phpize($xmlReference[0]['viewId']);
-            $viewReference['viewNamespace']   = XmlUtils::phpize($xmlReference[0]['viewNamespace']);
-            $viewReference['patternId']       = XmlUtils::phpize($xmlReference[0]['patternId']);
-            $viewReference['name']            = XmlUtils::phpize($xmlReference[0]['name']);
+            $viewReference['url'] = XmlUtils::phpize($xmlReference[0]['url']);
+            $viewReference['viewId'] = XmlUtils::phpize($xmlReference[0]['viewId']);
+            $viewReference['viewNamespace'] = XmlUtils::phpize($xmlReference[0]['viewNamespace']);
+            $viewReference['patternId'] = XmlUtils::phpize($xmlReference[0]['patternId']);
+            $viewReference['name'] = XmlUtils::phpize($xmlReference[0]['name']);
         } else {
             $viewReference = null;
         }
@@ -135,18 +134,19 @@ XML;
 
     /**
      * @param array $parameters
+     *
      * @return array
      */
     public function getAllReferenceByParameters($parameters)
     {
-        $viewsReferences = array();
-        $arguments = array();
+        $viewsReferences = [];
+        $arguments = [];
 
         foreach ($parameters as $key => $value) {
             $arguments[$key] = '@'.$key.'="'.$value.'"';
         }
 
-        if ($xmlReferences = $this->readCache()->xpath("//viewReference[".implode(' and ', $arguments)."]")) {
+        if ($xmlReferences = $this->readCache()->xpath('//viewReference['.implode(' and ', $arguments).']')) {
             foreach ($xmlReferences as $xmlReference) {
                 $viewsReferences[] = current($xmlReference->attributes());
             }
@@ -156,29 +156,34 @@ XML;
     }
 
     /**
-     * remove all views reference that match with parameters
+     * remove all views reference that match with parameters.
      *
      * @param $parameters
+     *
      * @return void
      **/
     public function removeViewsReferencesByParameters($parameters)
     {
         $rootNode = $this->readCache();
-
-        $viewsReferencesToRemove = $this->getAllReferenceByParameters($parameters);
-        foreach ($viewsReferencesToRemove as $viewReferenceToRemove) {
-            $this->viewReferenceHelper->removeViewReference($rootNode, $viewReferenceToRemove);
+        foreach ($parameters as $parameter) {
+            if (isset($parameter['view'])) {
+                unset($parameter['view']);
+            }
+            $viewsReferencesToRemove = $this->getAllReferenceByParameters($parameter);
+            foreach ($viewsReferencesToRemove as $viewReferenceToRemove) {
+                $this->viewReferenceHelper->removeViewReference($rootNode, $viewReferenceToRemove);
+            }
         }
+
         $this->writeFile($rootNode);
     }
 
-
-
     /**
-     * write \SimpleXMLElement in the cache file
+     * write \SimpleXMLElement in the cache file.
+     *
      * @param \SimpleXMLElement $rootNode
      *
-     * @return integer
+     * @return int
      */
     protected function writeFile(\SimpleXMLElement $rootNode)
     {
@@ -196,11 +201,10 @@ XML;
         return $dom->save($this->xmlFile);
     }
 
-
     /**
      * Does the cache file exists ?
      *
-     * @return boolean
+     * @return bool
      **/
     public function fileExists()
     {
@@ -208,16 +212,15 @@ XML;
     }
 
     /**
-     * This method get all views (BasePage and Template) in DB and return the references, including non persisted Business entity page (pattern and businessEntityId based)
+     * This method get all views (BasePage and Template) in DB and return the references, including non persisted Business entity page (pattern and businessEntityId based).
+     *
      * @return array the computed views as array
      */
     public function getAllViewsReferences()
     {
-
         $xml = $this->readCache();
         $viewsReferences = $this->viewReferenceHelper->convertXmlCacheToArray($xml);
 
         return $viewsReferences;
     }
-
 }

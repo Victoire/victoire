@@ -3,10 +3,10 @@
 namespace Victoire\Bundle\BlogBundle\Form\Extension;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
-use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\FormInterface;
 
 class HierarchyTreeExtension extends AbstractType
 {
@@ -19,8 +19,9 @@ class HierarchyTreeExtension extends AbstractType
     {
         $this->propertyAccessor = $propertyAccessor ?: PropertyAccess::createPropertyAccessor();
     }
+
     /**
-     * Retourne le nom du type de champ qui est étendu
+     * Retourne le nom du type de champ qui est étendu.
      *
      * @return string Le nom du type qui est étendu
      */
@@ -33,8 +34,9 @@ class HierarchyTreeExtension extends AbstractType
     {
         return 'hierarchy_tree';
     }
+
     /**
-     * genere le formulaire
+     * genere le formulaire.
      *
      * @param \Symfony\Component\Form\FormView      $view
      * @param \Symfony\Component\Form\FormInterface $form
@@ -47,7 +49,6 @@ class HierarchyTreeExtension extends AbstractType
             $level = $this->propertyAccessor->getValue($dataNode, 'lvl');
 
             $choice->label = str_repeat(str_repeat('&#160;', $level), 4).$choice->label;
-
         }
     }
 }

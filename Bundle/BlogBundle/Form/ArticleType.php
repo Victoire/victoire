@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\BlogBundle\Form;
 
 use Doctrine\ORM\EntityManager;
@@ -19,7 +20,7 @@ class ArticleType extends AbstractType
     private $entityManager;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct(EntityManager $entityManager)
     {
@@ -27,7 +28,8 @@ class ArticleType extends AbstractType
     }
 
     /**
-     * define form fields
+     * define form fields.
+     *
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
@@ -36,65 +38,63 @@ class ArticleType extends AbstractType
         $viewToIdTransformer = new ViewToIdTransformer($this->entityManager);
 
         $builder
-            ->add('name', null, array(
+            ->add('name', null, [
                     'label' => 'form.article.name.label',
-                ))
-            ->add('description', null, array(
-                    'label' => 'form.article.description.label',
-                    'required' => false))
-            ->add('image', 'media', array(
+                ])
+            ->add('description', null, [
+                    'label'    => 'form.article.description.label',
+                    'required' => false, ])
+            ->add('image', 'media', [
                     'required' => false,
-                    'label' => 'form.article.image.label',
-                ))
+                    'label'    => 'form.article.image.label',
+                ])
             ->add(
-                $builder->create('blog', 'hidden', array(
-                        'label' => 'form.article.blog.label')
+                $builder->create('blog', 'hidden', [
+                        'label' => 'form.article.blog.label', ]
                 )->addModelTransformer($viewToIdTransformer)
             )
             ->add(
                 'tags',
                 'tags',
-                array(
+                [
                     'required' => false,
                     'multiple' => true,
-                )
+                ]
             )
             ->remove('visibleOnFront');
 
-        $builder->get('blog')->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+        $builder->get('blog')->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
                 $data = $event->getData();
                 $form = $event->getForm();
                 $this->manageCategories($data, $form->getParent());
             });
 
-        $builder->get('blog')->addEventListener(FormEvents::PRE_SUBMIT, function(FormEvent $event) {
+        $builder->get('blog')->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
                 $form = $event->getForm();
                 $data = $event->getData();
                 $this->manageCategories($data, $form->getParent());
             });
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
                 $form = $event->getForm();
                 $data = $event->getData();
                 $this->manageTags($data, $form);
             });
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, function(FormEvent $event) {
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
                 $form = $event->getForm();
                 $data = $form->getData();
                 $this->manageTags($data, $form);
             });
 
-
-
-        $articlePatterns = function(EntityRepository $repo) {
+        $articlePatterns = function (EntityRepository $repo) {
             return $repo->getInstance()->andWhere("pattern.businessEntityId = 'article'");
         };
-        $builder->add('pattern', null, array(
+        $builder->add('pattern', null, [
                 'label'         => 'form.view.type.pattern.label',
                 'property'      => 'name',
                 'required'      => true,
                 'query_builder' => $articlePatterns,
-            ));
+            ]);
     }
 
     /**
@@ -105,23 +105,24 @@ class ArticleType extends AbstractType
         $form->add(
             'tags',
             'tags',
-            array(
-                'required' => false,
-                'multiple' => true,
-                'query_builder' => function(TagRepository $er) use ($data){
+            [
+                'required'      => false,
+                'multiple'      => true,
+                'query_builder' => function (TagRepository $er) use ($data) {
                     $qb = $er->filterByBlog($data->getBlog())->getInstance();
                     $er->clearInstance();
+
                     return $qb;
-                }
-            )
+                },
+            ]
         );
     }
-
 
     /**
      * @param \Symfony\Component\Form\FormInterface|null $form
      */
-    protected function manageCategories($blogId, $form) {
+    protected function manageCategories($blogId, $form)
+    {
         $categoryRepo = $this->entityManager->getRepository('Victoire\Bundle\BlogBundle\Entity\Category');
 
         if ($blogId) {
@@ -132,30 +133,31 @@ class ArticleType extends AbstractType
             $categoryRepo->clearInstance();
         }
 
-        $form->add('category', 'hierarchy_tree', array(
-                'required' => false,
-                'label' => 'form.article.category.label',
-                'class' => "Victoire\\Bundle\\BlogBundle\\Entity\\Category",
+        $form->add('category', 'hierarchy_tree', [
+                'required'      => false,
+                'label'         => 'form.article.category.label',
+                'class'         => 'Victoire\\Bundle\\BlogBundle\\Entity\\Category',
                 'query_builder' => $queryBuilder,
-                'empty_value' => "Pas de catégorie",
-                "empty_data" => null
-            ));
+                'empty_value'   => 'Pas de catégorie',
+                'empty_data'    => null,
+            ]);
     }
 
     /**
-     * bind to Page entity
+     * bind to Page entity.
+     *
      * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
                 'data_class'         => 'Victoire\Bundle\BlogBundle\Entity\Article',
-                'translation_domain' => 'victoire'
-            ));
+                'translation_domain' => 'victoire',
+            ]);
     }
 
     /**
-     * get form name
+     * get form name.
      *
      * @return string The name of the form
      */

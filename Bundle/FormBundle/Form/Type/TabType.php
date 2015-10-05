@@ -28,10 +28,10 @@ class TabType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'icon' => null,
+        $resolver->setDefaults([
+            'icon'       => null,
             'error_icon' => 'remove-sign',
-        ));
+        ]);
     }
 
     /**

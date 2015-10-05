@@ -7,7 +7,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 class VictoireTwigBundle extends Bundle
 {
     /**
-     * Get parent bundle
+     * Get parent bundle.
      *
      * @return string
      **/

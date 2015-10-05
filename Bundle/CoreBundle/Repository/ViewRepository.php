@@ -7,14 +7,14 @@ use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 use Victoire\Bundle\PageBundle\Entity\PageStatus;
 
 /**
- * The View repository
+ * The View repository.
  */
 class ViewRepository extends NestedTreeRepository
 {
     private $queryBuilder;
 
     /**
-     * Get query builder instance
+     * Get query builder instance.
      */
     public function getInstance()
     {
@@ -22,7 +22,7 @@ class ViewRepository extends NestedTreeRepository
     }
 
     /**
-     * Get the query builder for a view  by url
+     * Get the query builder for a view  by url.
      *
      * @param string $url The url
      *
@@ -37,7 +37,8 @@ class ViewRepository extends NestedTreeRepository
     }
 
     /**
-     * Filter the query by the sitemap index (=visibility)
+     * Filter the query by the sitemap index (=visibility).
+     *
      * @param bool $indexed
      *
      * @return ViewRepository
@@ -55,7 +56,7 @@ class ViewRepository extends NestedTreeRepository
     /**
      * Get all rentals in the repository.
      *
-     * @param boolean $excludeUnpublished Should we get only the published Views ?
+     * @param bool $excludeUnpublished Should we get only the published Views ?
      *
      * @return ViewRepository
      */
@@ -77,7 +78,8 @@ class ViewRepository extends NestedTreeRepository
     }
 
     /**
-     * Run instance
+     * Run instance.
+     *
      * @param string $method
      * @param string $hydrationMode
      *
@@ -89,7 +91,8 @@ class ViewRepository extends NestedTreeRepository
     }
 
     /**
-     * Get the the view that is a homepage and a published one
+     * Get the the view that is a homepage and a published one.
+     *
      * @param string $locale
      *
      * @return Page

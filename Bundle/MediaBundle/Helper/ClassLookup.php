@@ -1,15 +1,16 @@
 <?php
+
 namespace Victoire\Bundle\MediaBundle\Helper;
 
 use Doctrine\ORM\Proxy\Proxy;
 
 /**
- * Helper for looking up the classname, not the ORM proxy
+ * Helper for looking up the classname, not the ORM proxy.
  */
 class ClassLookup
 {
     /**
-     * Get full class name of object (ie. class name including full namespace)
+     * Get full class name of object (ie. class name including full namespace).
      *
      * @param mixed $object
      *
@@ -21,7 +22,7 @@ class ClassLookup
     }
 
     /**
-     * Get class name of object (ie. class name without namespace)
+     * Get class name of object (ie. class name without namespace).
      *
      * @param mixed $object
      *
@@ -29,7 +30,7 @@ class ClassLookup
      */
     public static function getClassName($object)
     {
-        $className = explode('\\', ClassLookup::getClass($object));
+        $className = explode('\\', self::getClass($object));
 
         return array_pop($className);
     }

@@ -2,32 +2,32 @@
 
 namespace Victoire\Bundle\MediaBundle\Helper\Menu;
 
-use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * The MenuBuilder will build the top menu and the side menu of the admin interface
+ * The MenuBuilder will build the top menu and the side menu of the admin interface.
  */
 class MenuBuilder
 {
     /**
-     * @var TranslatorInterface $translator
+     * @var TranslatorInterface
      */
     private $translator;
 
     /**
-     * @var MenuAdaptorInterface[] $adaptors
+     * @var MenuAdaptorInterface[]
      */
-    private $adaptors = array();
+    private $adaptors = [];
 
     /**
-     * @var TopMenuItem[] $topMenuItems
+     * @var TopMenuItem[]
      */
     private $topMenuItems = null;
 
     /**
-     * @var ContainerInterface $container
+     * @var ContainerInterface
      */
     private $container;
 
@@ -37,7 +37,7 @@ class MenuBuilder
     private $currentCache = null;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param TranslatorInterface $translator The translator
      * @param ContainerInterface  $container  The container
@@ -47,11 +47,11 @@ class MenuBuilder
     public function __construct(TranslatorInterface $translator, ContainerInterface $container)
     {
         $this->translator = $translator;
-        $this->container  = $container;
+        $this->container = $container;
     }
 
     /**
-     * Add menu adaptor
+     * Add menu adaptor.
      *
      * @param MenuAdaptorInterface $adaptor
      */
@@ -61,7 +61,7 @@ class MenuBuilder
     }
 
     /**
-     * Get current menu item
+     * Get current menu item.
      *
      * @return MenuItem|null
      */
@@ -74,12 +74,12 @@ class MenuBuilder
         $active = null;
         do {
             /* @var MenuItem[] $children */
-            $children         = $this->getChildren($active);
+            $children = $this->getChildren($active);
             $foundActiveChild = false;
             foreach ($children as $child) {
                 if ($child->getActive()) {
                     $foundActiveChild = true;
-                    $active           = $child;
+                    $active = $child;
                     break;
                 }
             }
@@ -90,13 +90,13 @@ class MenuBuilder
     }
 
     /**
-     * Get breadcrumb path for current menu item
+     * Get breadcrumb path for current menu item.
      *
      * @return MenuItem[]
      */
     public function getBreadCrumb()
     {
-        $result  = array();
+        $result = [];
         $current = $this->getCurrent();
         while (!is_null($current)) {
             array_unshift($result, $current);
@@ -107,7 +107,7 @@ class MenuBuilder
     }
 
     /**
-     * Get top parent menu of current menu item
+     * Get top parent menu of current menu item.
      *
      * @return TopMenuItem|null
      */
@@ -121,11 +121,11 @@ class MenuBuilder
             $current = $current->getParent();
         }
 
-        return null;
+        return;
     }
 
     /**
-     * Get all top menu items
+     * Get all top menu items.
      *
      * @return MenuItem[]
      */
@@ -134,7 +134,7 @@ class MenuBuilder
         if (is_null($this->topMenuItems)) {
             /* @var $request Request */
             $request = $this->container->get('request');
-            $this->topMenuItems = array();
+            $this->topMenuItems = [];
             foreach ($this->adaptors as $menuAdaptor) {
                 $menuAdaptor->adaptChildren($this, $this->topMenuItems, null, $request);
             }
@@ -144,7 +144,7 @@ class MenuBuilder
     }
 
     /**
-     * Get immediate children of the specified menu item
+     * Get immediate children of the specified menu item.
      *
      * @param MenuItem $parent
      *
@@ -157,12 +157,11 @@ class MenuBuilder
         }
         /* @var $request Request */
         $request = $this->container->get('request');
-        $result = array();
+        $result = [];
         foreach ($this->adaptors as $menuAdaptor) {
             $menuAdaptor->adaptChildren($this, $result, $parent, $request);
         }
 
         return $result;
     }
-
 }

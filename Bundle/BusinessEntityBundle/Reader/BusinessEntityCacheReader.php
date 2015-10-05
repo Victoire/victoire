@@ -9,7 +9,7 @@ use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
 use Victoire\Bundle\WidgetBundle\Model\Widget;
 
 /**
- * The BusinessEntity Cache Reader
+ * The BusinessEntity Cache Reader.
  *
  * ref: victoire_business_entity.cache_reader
  */
@@ -20,11 +20,11 @@ class BusinessEntityCacheReader
     protected $driver; // @victoire_business_entity.annotation_driver
 
     /**
-     * Constructor
+     * Constructor.
+     *
      * @param VictoireCache    $cache
      * @param WidgetHelper     $widgetHelper
      * @param AnnotationDriver $driver       If cache returns empty results, we try to refectch data
-     *
      */
     public function __construct(VictoireCache $cache, WidgetHelper $widgetHelper, AnnotationDriver $driver)
     {
@@ -34,7 +34,7 @@ class BusinessEntityCacheReader
     }
 
     /**
-     * this method get annotated business classes (from cache if enabled)
+     * this method get annotated business classes (from cache if enabled).
      *
      * @return array $businessClasses
      **/
@@ -46,7 +46,8 @@ class BusinessEntityCacheReader
     }
 
     /**
-     * this method get annotated business classes (from cache if enabled)
+     * this method get annotated business classes (from cache if enabled).
+     *
      * @param Widget $widget
      *
      * @return array $businessClasses
@@ -56,11 +57,16 @@ class BusinessEntityCacheReader
         $widgetName = $this->widgetHelper->getWidgetName($widget);
         $widgetMetadatas = $this->fetch(BusinessEntity::CACHE_WIDGETS);
         if (isset($widgetMetadatas[$widgetName]) && array_key_exists('businessEntities', $widgetMetadatas[$widgetName])) {
-            return $widgetMetadatas[$widgetName]['businessEntities'];
+            /* @var BusinessEntity[] $businessEntities */
+            $businessEntities = $widgetMetadatas[$widgetName]['businessEntities'];
+            foreach ($businessEntities as $businessEntity) {
+                $businessEntity->setDisableForReceiverProperties($widgetMetadatas[$widgetName]['receiverProperties']);
+            }
+
+            return $businessEntities;
         }
 
-        return array();
-
+        return [];
     }
 
     /**
@@ -75,12 +81,12 @@ class BusinessEntityCacheReader
             return $widgetMetadatas[$namespace]->getBusinessProperties();
         }
 
-        return array();
+        return [];
     }
 
     /**
-     *
      * @param string $widgetName
+     *
      * @return array
      */
     public function getReceiverProperties($widgetName)
@@ -91,14 +97,17 @@ class BusinessEntityCacheReader
             return $widgetMetadatas[$widgetName]['receiverProperties'];
         }
 
-        return array();
+        return [];
     }
 
     /**
-     * Fetch in Cache system and try to reparse Annotation if no results
+     * Fetch in Cache system and try to reparse Annotation if no results.
+     *
      * @param $key
-     * @return mixed
+     *
      * @throws \Doctrine\ORM\Mapping\MappingException
+     *
+     * @return mixed
      */
     protected function fetch($key)
     {
@@ -109,14 +118,14 @@ class BusinessEntityCacheReader
             foreach ($this->driver->getAllClassNames() as $className) {
                 $this->driver->parse(new \ReflectionClass($className));
             }
-            $results = $this->cache->fetch($key, array());
+            $results = $this->cache->fetch($key, []);
         }
 
         return $results;
     }
 
     /**
-     * Get a business entity by its id
+     * Get a business entity by its id.
      *
      * @param string $id
      *

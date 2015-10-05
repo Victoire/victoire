@@ -1,17 +1,18 @@
 <?php
+
 namespace Victoire\Bundle\PageBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
+use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 
 /**
- * The base page controller is used to interact with all kind of pages
+ * The base page controller is used to interact with all kind of pages.
  **/
 class BasePageController extends Controller
 {
@@ -27,7 +28,7 @@ class BasePageController extends Controller
 
     public function showByIdAction(Request $request, $viewId, $entityId = null)
     {
-        $parameters = array('viewId' => $viewId);
+        $parameters = ['viewId' => $viewId];
         if ($entityId) {
             $parameters['entityId'] = $entityId;
         }
@@ -35,7 +36,7 @@ class BasePageController extends Controller
         $this->get('victoire_widget_map.builder')->build($page);
 
         return $this->redirect($this->generateUrl('victoire_core_page_show', array_merge(
-                array('url' => $page->getUrl()),
+                ['url' => $page->getUrl()],
                 $request->query->all()
             )
         ));
@@ -52,18 +53,19 @@ class BasePageController extends Controller
         $patternId = $this->container->get('victoire_business_page.business_page_helper')
             ->guessBestPatternIdForEntity($refClass, $entityId, $this->container->get('doctrine.orm.entity_manager'));
 
-        $page = $this->container->get('victoire_page.page_helper')->findPageByParameters(array(
-            'viewId' => $patternId,
+        $page = $this->container->get('victoire_page.page_helper')->findPageByParameters([
+            'viewId'   => $patternId,
             'entityId' => $entityId,
-        ));
+        ]);
         $this->get('victoire_widget_map.builder')->build($page);
 
-        return $this->redirect($this->generateUrl('victoire_core_page_show', array('url' => $page->getUrl())));
+        return $this->redirect($this->generateUrl('victoire_core_page_show', ['url' => $page->getUrl()]));
     }
 
     /**
-     * New page
-     * @param boolean $isHomepage
+     * New page.
+     *
+     * @param bool $isHomepage
      *
      * @return template
      */
@@ -98,28 +100,28 @@ class BasePageController extends Controller
                         ->generateEntityPageFromPattern($page->getTemplate(), $page, $em);
             }
 
-            $this->congrat($this->get('translator')->trans('victoire_page.create.success', array(), 'victoire'));
+            $this->congrat($this->get('translator')->trans('victoire_page.create.success', [], 'victoire'));
 
-            return array(
-                "success"  => true,
-                'url'     => $this->generateUrl('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl())),
-            );
+            return [
+                'success'  => true,
+                'url'      => $this->generateUrl('victoire_core_page_show', ['_locale' => $page->getLocale(), 'url' => $page->getUrl()]),
+            ];
         } else {
             $formErrorHelper = $this->container->get('victoire_form.error_helper');
 
-            return array(
-                "success" => false,
-                "message" => $formErrorHelper->getRecursiveReadableErrors($form),
+            return [
+                'success' => false,
+                'message' => $formErrorHelper->getRecursiveReadableErrors($form),
                 'html'    => $this->container->get('victoire_templating')->render(
                     $this->getBaseTemplatePath().':new.html.twig',
-                    array('form' => $form->createView())
+                    ['form' => $form->createView()]
                 ),
-            );
+            ];
         }
     }
 
     /**
-     * Page settings
+     * Page settings.
      *
      * @param Request  $request
      * @param BasePage $page
@@ -130,7 +132,7 @@ class BasePageController extends Controller
     {
         $entityManager = $this->getDoctrine()->getManager();
         $form = $this->createForm($this->getPageSettingsType(), $page);
-        $businessProperties = array();
+        $businessProperties = [];
 
         //if the page is a business entity page pattern
         if ($page instanceof BusinessTemplate) {
@@ -150,32 +152,32 @@ class BasePageController extends Controller
             $entityManager->persist($page);
             $entityManager->flush();
 
-            $this->congrat($this->get('translator')->trans('victoire_page.update.success', array(), 'victoire'));
+            $this->congrat($this->get('translator')->trans('victoire_page.update.success', [], 'victoire'));
 
-            return array(
+            return [
                 'success' => true,
-                'url'     => $this->generateUrl('victoire_core_page_show', array('_locale' => $page->getLocale(), 'url' => $page->getUrl())),
-            );
+                'url'     => $this->generateUrl('victoire_core_page_show', ['_locale' => $page->getLocale(), 'url' => $page->getUrl()]),
+            ];
         }
         //we display the form
         $errors = $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form);
 
-        return  array(
+        return  [
             'success' => empty($errors),
-            'html' => $this->container->get('victoire_templating')->render(
+            'html'    => $this->container->get('victoire_templating')->render(
                 $this->getBaseTemplatePath().':settings.html.twig',
-                array(
-                    'page' => $page,
-                    'form' => $form->createView(),
+                [
+                    'page'               => $page,
+                    'form'               => $form->createView(),
                     'businessProperties' => $businessProperties,
-                )
+                ]
             ),
             'message' => $errors,
-        );
+        ];
     }
 
     /**
-     * Page translation
+     * Page translation.
      *
      * @param Request  $request
      * @param BasePage $page
@@ -187,7 +189,7 @@ class BasePageController extends Controller
         $entityManager = $this->getDoctrine()->getManager();
         $form = $this->createForm($this->getPageTranslateType(), $page);
 
-        $businessProperties = array();
+        $businessProperties = [];
 
         if ($page instanceof BusinessTemplate) {
             $businessEntityId = $page->getBusinessEntityId();
@@ -200,26 +202,27 @@ class BasePageController extends Controller
         if ($form->isValid()) {
             $clone = $this->get('victoire_core.view_helper')->addTranslation($page, $page->getName(), $page->getLocale());
 
-            return array(
+            return [
                 'success' => true,
-                'url' => $this->generateUrl('victoire_core_page_show', array('_locale' => $clone->getLocale(), 'url' => $clone->getUrl())),
-            );
+                'url'     => $this->generateUrl('victoire_core_page_show', ['_locale' => $clone->getLocale(), 'url' => $clone->getUrl()]),
+            ];
         }
         $errors = $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form);
 
-        return array(
+        return [
             'success' => empty($errors),
-            'html' => $this->container->get('victoire_templating')->render(
+            'html'    => $this->container->get('victoire_templating')->render(
                 $this->getBaseTemplatePath().':translate.html.twig',
-                array(
-                    'page' => $page,
-                    'form' => $form->createView(),
+                [
+                    'page'               => $page,
+                    'form'               => $form->createView(),
                     'businessProperties' => $businessProperties,
-                )
+                ]
             ),
             'message' => $errors,
-        );
+        ];
     }
+
     /**
      * @param Page $page The page to delete
      *
@@ -232,7 +235,7 @@ class BasePageController extends Controller
         try {
             //it should not be allowed to try to delete an undeletable page
             if ($page->isUndeletable()) {
-                $message = $this->get('translator')->trans('page.undeletable', array(), 'victoire');
+                $message = $this->get('translator')->trans('page.undeletable', [], 'victoire');
                 throw new \Exception($message);
             }
 
@@ -248,22 +251,22 @@ class BasePageController extends Controller
             //redirect to the homepage
             $homepageUrl = $this->generateUrl('victoire_core_page_homepage');
 
-            $response = array(
+            $response = [
                 'success' => true,
                 'url'     => $homepageUrl,
-            );
+            ];
         } catch (\Exception $ex) {
-            $response = array(
+            $response = [
                 'success' => false,
                 'message' => $ex->getMessage(),
-            );
+            ];
         }
 
         return $response;
     }
 
     /**
-     * Show homepage or redirect to new page
+     * Show homepage or redirect to new page.
      *
      * ==========================
      * find homepage
@@ -274,8 +277,8 @@ class BasePageController extends Controller
      * ==========================
      *
      * @Route("/", name="victoire_core_page_homepage")
-     * @return template
      *
+     * @return template
      */
     public function homepageAction(Request $request)
     {

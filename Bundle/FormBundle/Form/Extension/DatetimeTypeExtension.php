@@ -11,10 +11,10 @@ namespace Victoire\Bundle\FormBundle\Form\Extension;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Extension for Datetime type.
@@ -38,9 +38,9 @@ class DatetimeTypeExtension extends AbstractTypeExtension
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setOptional(array(
-            'vic_datetimepicker'
-        ));
+        $resolver->setOptional([
+            'vic_datetimepicker',
+        ]);
     }
 
     /**

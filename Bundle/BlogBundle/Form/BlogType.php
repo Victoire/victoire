@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\BlogBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
@@ -7,20 +8,22 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Victoire\Bundle\PageBundle\Form\BasePageType;
 
 /**
- * Blog form type
+ * Blog form type.
  */
 class BlogType extends BasePageType
 {
     /*
     * Constructor
     */
+
     public function __construct($availableLocales, RequestStack $requestStack)
     {
         parent::__construct($availableLocales, $requestStack);
     }
 
     /**
-     * define form fields
+     * define form fields.
+     *
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
@@ -30,21 +33,22 @@ class BlogType extends BasePageType
     }
 
     /**
-     * bind to Page entity
+     * bind to Page entity.
+     *
      * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(
-            array(
+            [
                 'data_class'         => 'Victoire\Bundle\BlogBundle\Entity\Blog',
-                'translation_domain' => 'victoire'
-            )
+                'translation_domain' => 'victoire',
+            ]
         );
     }
 
     /**
-     * get form name
+     * get form name.
      *
      * @return string The name of the form
      */

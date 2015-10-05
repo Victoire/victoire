@@ -13,7 +13,7 @@ class BaseWidgetContentResolver
     protected $entityManager;
 
     /**
-     * Get the static content of the widget
+     * Get the static content of the widget.
      *
      * @param Widget $widget
      *
@@ -23,7 +23,7 @@ class BaseWidgetContentResolver
     {
         $reflect = new \ReflectionClass($widget);
         $widgetProperties = $reflect->getProperties();
-        $parameters = array('widget' => $widget);
+        $parameters = ['widget' => $widget];
         $accessor = PropertyAccess::createPropertyAccessor();
 
         foreach ($widgetProperties as $property) {
@@ -37,7 +37,8 @@ class BaseWidgetContentResolver
     }
 
     /**
-     * Get the business entity content
+     * Get the business entity content.
+     *
      * @param Widget $widget
      *
      * @return string
@@ -53,12 +54,11 @@ class BaseWidgetContentResolver
     }
 
     /**
-     * Get the content of the widget by the entity linked to it
+     * Get the content of the widget by the entity linked to it.
      *
      * @param Widget $widget
      *
      * @return string
-     *
      */
     public function getWidgetEntityContent(Widget $widget)
     {
@@ -72,12 +72,11 @@ class BaseWidgetContentResolver
     }
 
     /**
-     * Get the content of the widget for the query mode
+     * Get the content of the widget for the query mode.
      *
      * @param Widget $widget
      *
      * @return string
-     *
      */
     public function getWidgetQueryContent(Widget $widget)
     {
@@ -95,7 +94,7 @@ class BaseWidgetContentResolver
     }
 
     /**
-     * Get the widget query result
+     * Get the widget query result.
      *
      * @param Widget $widget The widget
      *
@@ -136,6 +135,7 @@ class BaseWidgetContentResolver
     {
         $this->queryHelper = $queryHelper;
     }
+
     /**
      * @param EntityManager $entityManager
      */

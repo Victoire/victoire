@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Victoire\Bundle\UserBundle\Model\User;
 
 /**
- * BrowseEvent
+ * BrowseEvent.
  *
  * @ORM\Table("vic_analytics_browse_event")
  * @ORM\Entity(repositoryClass="Victoire\Bundle\AnalyticsBundle\Repository\BrowseEventRepository")
@@ -17,7 +17,7 @@ class BrowseEvent
     use \Gedmo\Timestampable\Traits\TimestampableEntity;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -51,9 +51,9 @@ class BrowseEvent
     private $author;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -61,7 +61,7 @@ class BrowseEvent
     }
 
     /**
-     * Set ip
+     * Set ip.
      *
      * @param string $ip
      *
@@ -75,7 +75,7 @@ class BrowseEvent
     }
 
     /**
-     * Get ip
+     * Get ip.
      *
      * @return string
      */
@@ -85,7 +85,7 @@ class BrowseEvent
     }
 
     /**
-     * Set viewReferenceId
+     * Set viewReferenceId.
      *
      * @param string $viewReferenceId
      *
@@ -99,7 +99,7 @@ class BrowseEvent
     }
 
     /**
-     * Get viewReferenceId
+     * Get viewReferenceId.
      *
      * @return string
      */
@@ -109,7 +109,7 @@ class BrowseEvent
     }
 
     /**
-     * Get referer
+     * Get referer.
      *
      * @return string
      */
@@ -119,7 +119,8 @@ class BrowseEvent
     }
 
     /**
-     * Set referer
+     * Set referer.
+     *
      * @param string $referer
      *
      * @return $this
@@ -132,7 +133,7 @@ class BrowseEvent
     }
 
     /**
-     * Get author
+     * Get author.
      *
      * @return string
      */
@@ -142,7 +143,8 @@ class BrowseEvent
     }
 
     /**
-     * Set author
+     * Set author.
+     *
      * @param User $author
      *
      * @return $this

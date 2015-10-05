@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Tag
+ * Tag.
  *
  * @ORM\Table("vic_tag")
  * @ORM\Entity(repositoryClass="Victoire\Bundle\BlogBundle\Repository\TagRepository")
@@ -14,7 +14,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class Tag
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -48,9 +48,10 @@ class Tag
     protected $blog;
 
     /**
-     * undocumented function
+     * undocumented function.
      *
      * @return string
+     *
      * @author
      **/
     public function __toString()
@@ -59,9 +60,9 @@ class Tag
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -69,7 +70,7 @@ class Tag
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
      *
@@ -83,7 +84,7 @@ class Tag
     }
 
     /**
-     * Get title
+     * Get title.
      *
      * @return string
      */
@@ -93,7 +94,7 @@ class Tag
     }
 
     /**
-     * Set slug
+     * Set slug.
      *
      * @param string $slug
      *
@@ -107,7 +108,7 @@ class Tag
     }
 
     /**
-     * Get slug
+     * Get slug.
      *
      * @return string
      */
@@ -117,7 +118,7 @@ class Tag
     }
 
     /**
-     * Set pages
+     * Set pages.
      *
      * @param \stdClass $pages
      *
@@ -131,7 +132,7 @@ class Tag
     }
 
     /**
-     * Get pages
+     * Get pages.
      *
      * @return \stdClass
      */
@@ -141,7 +142,7 @@ class Tag
     }
 
     /**
-     * Set articles
+     * Set articles.
      *
      * @param string $articles
      *
@@ -155,7 +156,7 @@ class Tag
     }
 
     /**
-     * Get articles
+     * Get articles.
      *
      * @return string
      */

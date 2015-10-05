@@ -2,12 +2,12 @@
 
 namespace Victoire\Bundle\MediaBundle\Repository;
 
-use Victoire\Bundle\MediaBundle\Entity\Folder;
-use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityNotFoundException;
+use Doctrine\ORM\EntityRepository;
+use Victoire\Bundle\MediaBundle\Entity\Folder;
 
 /**
- * FolderRepository
+ * FolderRepository.
  */
 class FolderRepository extends EntityRepository
 {
@@ -34,7 +34,6 @@ class FolderRepository extends EntityRepository
         $folder->setDeleted(true);
         $em->persist($folder);
         $em->flush();
-
     }
 
     /**
@@ -84,8 +83,9 @@ class FolderRepository extends EntityRepository
     /**
      * @param int $folderId
      *
-     * @return Folder
      * @throws EntityNotFoundException
+     *
+     * @return Folder
      */
     public function getFolder($folderId)
     {
@@ -103,12 +103,11 @@ class FolderRepository extends EntityRepository
     {
         $em = $this->getEntityManager();
 
-        $folder = $em->getRepository('VictoireMediaBundle:Folder')->findOneBy(array('parent' => NULL));
+        $folder = $em->getRepository('VictoireMediaBundle:Folder')->findOneBy(['parent' => null]);
         if (!$folder) {
             throw new EntityNotFoundException('No first top folder found (where parent is NULL)');
         }
 
         return $folder;
     }
-
 }

@@ -2,15 +2,12 @@
 
 namespace Victoire\Bundle\BusinessPageBundle\DependencyInjection\Compiler;
 
-
-use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * Class BusinessTemplateCompilerPass
- * @package Victoire\Bundle\CoreBundle\DependencyInjection\Compiler
+ * Class BusinessTemplateCompilerPass.
  */
 class BusinessTemplateCompilerPass implements CompilerPassInterface
 {
@@ -30,7 +27,7 @@ class BusinessTemplateCompilerPass implements CompilerPassInterface
             foreach ($tagAttributes as $attributes) {
                 $chainDefinition->addMethodCall(
                     'addBusinessTemplate',
-                    array(new Reference($id), $attributes["alias"])
+                    [new Reference($id), $attributes['alias']]
                 );
             }
         }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\CoreBundle\Handler;
 
 use Symfony\Bundle\FrameworkBundle\Templating\TemplateReference;
@@ -8,7 +9,7 @@ use Symfony\Component\Security\Core\SecurityContext;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 
 /**
- * ref: victoire_core.widget_exception_handler
+ * ref: victoire_core.widget_exception_handler.
  */
 class WidgetExceptionHandler
 {
@@ -18,11 +19,11 @@ class WidgetExceptionHandler
     protected $templating;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param SecurityContext $security
      * @param TwigEngine      $twig
-     * @param boolean         $debug      The debug variable environment
+     * @param bool            $debug      The debug variable environment
      * @param TemplateMapper  $templating The victoire templating
      */
     public function __construct(SecurityContext $security, $twig, $debug, TemplateMapper $templating)
@@ -34,11 +35,11 @@ class WidgetExceptionHandler
     }
 
     /**
-     * Handle response for an exception for a widget
+     * Handle response for an exception for a widget.
      *
-     * @param View    $currentView
-     * @param Widget  $widget
-     * @param integer $widgetId
+     * @param View   $currentView
+     * @param Widget $widget
+     * @param int    $widgetId
      *
      * @return string The html with the Error
      */
@@ -54,13 +55,13 @@ class WidgetExceptionHandler
             $exception = FlattenException::create($ex);
             $exceptionResult = $this->twig->render(
                 $template,
-                array(
+                [
                     'status_code'    => $ex->getCode(),
                     'status_text'    => 500,
                     'exception'      => $exception,
                     'logger'         => null,
                     'currentContent' => null,
-                )
+                ]
             );
 
             $exceptionResult .= '</div>';
@@ -68,12 +69,12 @@ class WidgetExceptionHandler
             //only a user victoire can see that there is an error
             $result = $this->templating->render(
                 'VictoireCoreBundle:Widget:showError.html.twig',
-                array(
-                    "widget" => $widget,
-                    "widgetId" => $widgetId,
-                    "currentView" => $currentView,
-                    "error" => $exceptionResult,
-                )
+                [
+                    'widget'      => $widget,
+                    'widgetId'    => $widgetId,
+                    'currentView' => $currentView,
+                    'error'       => $exceptionResult,
+                ]
             );
         } else {
             //environnement not debug
@@ -81,12 +82,12 @@ class WidgetExceptionHandler
             if ($this->security->isGranted('ROLE_VICTOIRE')) {
                 $result = $this->templating->render(
                     'VictoireCoreBundle:Widget:showError.html.twig',
-                    array(
-                        "widget" => $widget,
-                        "widgetId" => $widgetId,
-                        "currentView" => $currentView,
-                        "error" => $ex->getMessage(),
-                    )
+                    [
+                        'widget'      => $widget,
+                        'widgetId'    => $widgetId,
+                        'currentView' => $currentView,
+                        'error'       => $ex->getMessage(),
+                    ]
                 );
             }
         }

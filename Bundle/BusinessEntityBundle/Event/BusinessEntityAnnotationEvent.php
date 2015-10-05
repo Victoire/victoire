@@ -20,7 +20,7 @@ class BusinessEntityAnnotationEvent extends Event
     }
 
     /**
-     * Get businessEntity
+     * Get businessEntity.
      *
      * @return BusinessEntity
      */
@@ -30,7 +30,7 @@ class BusinessEntityAnnotationEvent extends Event
     }
 
     /**
-     * Get widgets
+     * Get widgets.
      *
      * @return array
      */
@@ -38,5 +38,4 @@ class BusinessEntityAnnotationEvent extends Event
     {
         return $this->widgets;
     }
-
 }

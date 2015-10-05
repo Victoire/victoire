@@ -49,6 +49,7 @@
         "friendsofvictoire/button-widget": "dev-master",
         "incenteev/composer-parameter-handler" : "~2.0",
         "jms/di-extra-bundle" : "1.4.*@dev",
+        "jms/serializer-bundle": "^1.0",
         "jms/translation-bundle" : "1.1.*@dev",
         "knplabs/gaufrette" : "v0.1.7",
         "knplabs/knp-menu" : "2.0.*@dev",
@@ -73,6 +74,8 @@
         "behat/mink-selenium2-driver": "~1.1",
         "behat/symfony2-extension": "~2.0",
         "knplabs/friendly-contexts": "dev-master",
+        "phpunit/php-code-coverage": "2.2.3",
+        "phpunit/phpunit-mock-objects": "2.3.7",
         "phpunit/phpunit": "4.6.*",
         "symfony/var-dumper": "~3.0@dev"
     },
@@ -100,6 +103,7 @@
         "friendsofvictoire/render-widget": "render widget",
         "friendsofvictoire/richlist-widget": "richlist widget",
         "friendsofvictoire/sharethis-widget": "sharethis widget",
+        "friendsofvictoire/search-widget": "elastic search widget",
         "friendsofvictoire/siblingsmenu-widget": "siblingsmenu widget",
         "friendsofvictoire/simplecontactform-widget": "simplecontactform widget",
         "friendsofvictoire/sitemap-widget": "sitemap widget",
@@ -133,7 +137,7 @@
     ],
     "extra": {
         "branch-alias": {
-            "dev-master": "1.1-dev"
+            "dev-master": "1.2-dev"
         }
     }
 }

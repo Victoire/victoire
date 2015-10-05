@@ -3,16 +3,14 @@
 namespace Victoire\Bundle\MediaBundle\Helper\Image;
 
 use Symfony\Component\HttpFoundation\File\File;
-
-use Victoire\Bundle\MediaBundle\Helper\File\FileHandler;
 use Victoire\Bundle\MediaBundle\Entity\Media;
+use Victoire\Bundle\MediaBundle\Helper\File\FileHandler;
 
 /**
- * FileHandler
+ * FileHandler.
  */
 class ImageHandler extends FileHandler
 {
-
     protected $aviaryApiKey;
 
     /**
@@ -37,7 +35,7 @@ class ImageHandler extends FileHandler
      */
     public function getName()
     {
-        return "Image Handler";
+        return 'Image Handler';
     }
 
     /**
@@ -63,7 +61,7 @@ class ImageHandler extends FileHandler
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getShowTemplate(Media $media)
     {
@@ -80,5 +78,4 @@ class ImageHandler extends FileHandler
     {
         return $basepath.$media->getUrl();
     }
-
 }

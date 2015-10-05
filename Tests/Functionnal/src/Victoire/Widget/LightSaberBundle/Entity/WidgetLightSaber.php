@@ -1,26 +1,24 @@
 <?php
+
 namespace Victoire\Widget\LightSaberBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\CoreBundle\Annotations as VIC;
-use Symfony\Component\Validator\Constraints as Assert;
+use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
- * WidgetLightSaber
+ * WidgetLightSaber.
  *
  * @ORM\Table("vic_widget_lightsaber")
  * @ORM\Entity
  */
 class WidgetLightSaber extends Widget
 {
-
     /**
-     * @var integer
+     * @var int
      *
-     * @VIC\ReceiverProperty("imageable")
-     * @Assert\NotBlank()
-     * @ORM\Column(name="length", type="integer")
+     * @VIC\ReceiverProperty("imageable", required=true)
+     * @ORM\Column(name="length", type="integer", nullable=true)
      */
     protected $length;
 
@@ -39,18 +37,17 @@ class WidgetLightSaber extends Widget
     protected $color;
 
     /**
-     * To String function
+     * To String function.
      *
-     * @return String
+     * @return string
      */
     public function __toString()
     {
         return 'LightSaber #'.$this->id;
     }
 
-
     /**
-     * Set length
+     * Set length.
      *
      * @param string $length
      */
@@ -62,9 +59,9 @@ class WidgetLightSaber extends Widget
     }
 
     /**
-     * Get length
+     * Get length.
      *
-     * @return integer
+     * @return int
      */
     public function getLength()
     {
@@ -72,7 +69,7 @@ class WidgetLightSaber extends Widget
     }
 
     /**
-     * Set crystal
+     * Set crystal.
      *
      * @param string $crystal
      */
@@ -84,7 +81,7 @@ class WidgetLightSaber extends Widget
     }
 
     /**
-     * Get crystal
+     * Get crystal.
      *
      * @return string
      */
@@ -94,7 +91,7 @@ class WidgetLightSaber extends Widget
     }
 
     /**
-     * Set color
+     * Set color.
      *
      * @param string $color
      */
@@ -106,7 +103,7 @@ class WidgetLightSaber extends Widget
     }
 
     /**
-     * Get color
+     * Get color.
      *
      * @return string
      */
@@ -114,5 +111,4 @@ class WidgetLightSaber extends Widget
     {
         return $this->color;
     }
-
 }

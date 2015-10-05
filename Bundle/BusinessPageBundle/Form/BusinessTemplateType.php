@@ -8,14 +8,14 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Victoire\Bundle\CoreBundle\Form\ViewType;
 
 /**
- * BusinessTemplateType
+ * BusinessTemplateType.
  */
 class BusinessTemplateType extends ViewType
 {
-
     /*
     * Constructor
     */
+
     public function __construct($availableLocales, RequestStack $requestStack)
     {
         parent::__construct($availableLocales, $requestStack);
@@ -33,12 +33,12 @@ class BusinessTemplateType extends ViewType
 
         $builder
             ->add('businessEntityId', 'hidden')
-            ->add('query', null, array(
-                    'label' => 'victoire.form.business_template.query.label'
+            ->add('query', null, [
+                    'label' => 'victoire.form.business_template.query.label',
 
-                ))->add('slug', null, array(
-                    'label' => 'victoire.form.business_template.slug.label'
-                )
+                ])->add('slug', null, [
+                    'label' => 'victoire.form.business_template.slug.label',
+                ]
             );
     }
 
@@ -49,16 +49,16 @@ class BusinessTemplateType extends ViewType
     {
         parent::setDefaultOptions($resolver);
 
-        $resolver->setOptional(array('businessProperty'));
+        $resolver->setOptional(['businessProperty']);
 
-        $resolver->setDefaults(array(
-                'data_class' => 'Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate',
-                'translationDomain' => 'victoire'
-        ));
+        $resolver->setDefaults([
+                'data_class'        => 'Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate',
+                'translationDomain' => 'victoire',
+        ]);
     }
 
     /**
-     * The name of the form
+     * The name of the form.
      *
      * @return string
      */

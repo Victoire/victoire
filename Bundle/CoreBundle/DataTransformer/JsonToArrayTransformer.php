@@ -2,8 +2,8 @@
 
 namespace Victoire\Bundle\CoreBundle\DataTransformer;
 
-use Symfony\Component\Form\DataTransformerInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Form\DataTransformerInterface;
 
 class JsonToArrayTransformer implements DataTransformerInterface
 {
@@ -13,19 +13,20 @@ class JsonToArrayTransformer implements DataTransformerInterface
     private $om;
 
     /**
-     * constructor
+     * constructor.
      */
     public function __construct()
     {
     }
 
     /**
-     * Transforms a php array into json array
+     * Transforms a php array into json array.
      *
-     * @param  array $array
-     * @return json  array
+     * @param array $array
+     *
+     * @return json array
      */
-    public function transform($array = array())
+    public function transform($array = [])
     {
         return is_array($array) ? json_encode($array) : null;
     }
@@ -33,11 +34,12 @@ class JsonToArrayTransformer implements DataTransformerInterface
     /**
      * Transforms a json array into a php array.
      *
-     * @param  string $json The json array
+     * @param string $json The json array
+     *
      * @return string
      */
     public function reverseTransform($json)
     {
-        return $json === '' ? array() : json_decode($json, true);
+        return $json === '' ? [] : json_decode($json, true);
     }
 }

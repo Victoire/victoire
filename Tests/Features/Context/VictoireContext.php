@@ -1,6 +1,7 @@
 <?php
 
 namespace Victoire\Tests\Features\Context;
+
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\Mink\Element\Element;
 use Behat\Symfony2Extension\Context\KernelDictionary;
@@ -8,7 +9,8 @@ use Knp\FriendlyContexts\Context\MinkContext;
 use Knp\FriendlyContexts\Context\RawMinkContext;
 
 /**
- * This class gives some usefull methods for Victoire navigation
+ * This class gives some usefull methods for Victoire navigation.
+ *
  * @property MinkContext minkContext
  */
 class VictoireContext extends RawMinkContext
@@ -25,6 +27,7 @@ class VictoireContext extends RawMinkContext
 
     /**
      * @BeforeScenario
+     *
      * @param BeforeScenarioScope $scope
      */
     public function resetViewsReference(BeforeScenarioScope $scope)
@@ -75,7 +78,6 @@ class VictoireContext extends RawMinkContext
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
         $element->click();
-
     }
 
     /**
@@ -90,7 +92,6 @@ class VictoireContext extends RawMinkContext
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
         $element->click();
-
     }
 
     /**
@@ -169,7 +170,8 @@ class VictoireContext extends RawMinkContext
     /**
      * @Then /^I attach image with id "(\d+)" to victoire field "(.+)"$/
      */
-    public function attachImageToVictoireScript($imageId, $fieldId) {
+    public function attachImageToVictoireScript($imageId, $fieldId)
+    {
         $script = sprintf('$("#%s input").val(%d)', $fieldId, $imageId);
         $this->getSession()->executeScript($script);
     }
@@ -177,7 +179,8 @@ class VictoireContext extends RawMinkContext
     /**
      * @Then I should find css element :element with selector :selector and value :value
      */
-    public function iShouldFindCssWithSelectorAndValue($element, $selector, $value) {
+    public function iShouldFindCssWithSelectorAndValue($element, $selector, $value)
+    {
         $css = sprintf('%s[%s="%s"]', $element, $selector, $value);
         $session = $this->getSession();
         $element = $this->findOrRetry($session->getPage(), 'css', $css);
@@ -189,16 +192,17 @@ class VictoireContext extends RawMinkContext
     }
 
     /**
-     * Try to find value in element and retry for a given time
+     * Try to find value in element and retry for a given time.
+     *
      * @param Element $element
      * @param string  $selectorType xpath|css
      * @param string  $value
-     * @param integer $timeout
+     * @param int     $timeout
      */
     protected function findOrRetry(Element $element, $selectorType, $value, $timeout = 10000)
     {
         if ($timeout <= 0) {
-            return null;
+            return;
         }
 
         $item = $element->find($selectorType, $value);
@@ -210,6 +214,18 @@ class VictoireContext extends RawMinkContext
 
             return $this->findOrRetry($element, $selectorType, $value, $timeout - 100);
         }
+    }
 
+    /**
+     * @Then I should see disable tab :name
+     */
+    public function iShouldSeeDisableTab($name)
+    {
+        $element = $this->findOrRetry($this->getSession()->getPage(), 'xpath', sprintf('descendant-or-self::li[@class="vic-disable" and normalize-space(.) = "%s"]', $name));
+
+        if (null === $element) {
+            $message = sprintf('Element not found in the page after 10 seconds"');
+            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
+        }
     }
 }

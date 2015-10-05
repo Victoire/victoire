@@ -3,18 +3,17 @@
 namespace Victoire\Bundle\MediaBundle\Helper\Menu;
 
 /**
- * A MenuItem which represents an item in the top menu
+ * A MenuItem which represents an item in the top menu.
  */
 class TopMenuItem extends MenuItem
 {
-
     /**
-     * @var boolean
+     * @var bool
      */
     private $appearInSidebar = false;
 
     /**
-     * @param boolean $appearInSidebar
+     * @param bool $appearInSidebar
      */
     public function setAppearInSidebar($appearInSidebar)
     {
@@ -24,11 +23,10 @@ class TopMenuItem extends MenuItem
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getAppearInSidebar()
     {
         return $this->appearInSidebar;
     }
-
 }

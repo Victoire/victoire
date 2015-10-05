@@ -2,19 +2,19 @@
 
 namespace Victoire\Bundle\MediaBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
-use Victoire\Bundle\MediaBundle\Entity\Folder;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Victoire\Bundle\MediaBundle\Form\FolderType;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Victoire\Bundle\MediaBundle\Entity\Folder;
+use Victoire\Bundle\MediaBundle\Form\FolderType;
 
 /**
  * folder controller.
- * @Route("/victoire-media/folder")
  *
+ * @Route("/victoire-media/folder")
  */
 class FolderController extends Controller
 {
@@ -39,13 +39,13 @@ class FolderController extends Controller
         $subForm = $this->createForm(new FolderType($sub), $sub);
         $editForm = $this->createForm(new FolderType($folder), $folder);
 
-        return array(
+        return [
             'mediamanager'  => $this->get('victoire_media.media_manager'),
             'subform'       => $subForm->createView(),
             'editform'      => $editForm->createView(),
             'folder'        => $folder,
             'folders'       => $folders,
-        );
+        ];
     }
 
     /**
@@ -74,7 +74,7 @@ class FolderController extends Controller
             $folderId = $parentFolder->getId();
         }
 
-        return new RedirectResponse($this->generateUrl('VictoireMediaBundle_folder_show', array('folderId'  => $folderId)));
+        return new RedirectResponse($this->generateUrl('VictoireMediaBundle_folder_show', ['folderId'  => $folderId]));
     }
 
     /**
@@ -103,18 +103,17 @@ class FolderController extends Controller
 
                 $this->get('session')->getFlashBag()->add('success', 'Folder \''.$folder->getName().'\' has been created!');
 
-                return new Response('<script>window.location="'.$this->generateUrl('VictoireMediaBundle_folder_show', array('folderId' => $folder->getId())).'"</script>');
+                return new Response('<script>window.location="'.$this->generateUrl('VictoireMediaBundle_folder_show', ['folderId' => $folder->getId()]).'"</script>');
             }
         }
 
         $galleries = $em->getRepository('VictoireMediaBundle:Folder')->getAllFolders();
 
-        return $this->render('VictoireMediaBundle:Folder:addsub-modal.html.twig', array(
-            'subform' => $form->createView(),
+        return $this->render('VictoireMediaBundle:Folder:addsub-modal.html.twig', [
+            'subform'   => $form->createView(),
             'galleries' => $galleries,
-            'folder' => $folder,
-            'parent' => $parent
-        ));
+            'folder'    => $folder,
+            'parent'    => $parent,
+        ]);
     }
-
 }

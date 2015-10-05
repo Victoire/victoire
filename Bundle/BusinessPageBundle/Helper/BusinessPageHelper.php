@@ -1,20 +1,21 @@
 <?php
+
 namespace Victoire\Bundle\BusinessPageBundle\Helper;
 
 use Doctrine\DBAL\Schema\View;
+use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
-use Victoire\Bundle\QueryBundle\Helper\QueryHelper;
 use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
-use Doctrine\ORM\EntityManager;
+use Victoire\Bundle\QueryBundle\Helper\QueryHelper;
 
 /**
  * The business entity page pattern helper
- * ref: victoire_business_page.business_page_helper
+ * ref: victoire_business_page.business_page_helper.
  */
 class BusinessPageHelper
 {
@@ -23,7 +24,6 @@ class BusinessPageHelper
     protected $businessEntityHelper = null;
     protected $parameterConverter = null;
     protected $urlBuilder = null;
-
 
     /**
      * @param QueryHelper          $queryHelper
@@ -40,14 +40,15 @@ class BusinessPageHelper
     }
 
     /**
-     * Is the entity allowed for the business entity page
+     * Is the entity allowed for the business entity page.
      *
-     * @param BusinessTemplate $bepPattern
+     * @param BusinessTemplate                               $bepPattern
      * @param \Victoire\Bundle\PageBundle\Helper\Entity|null $entity
+     * @param EntityManager                                  $em
      *
-     * @param EntityManager $em
      * @throws \Exception
-     * @return boolean
+     *
+     * @return bool
      */
     public function isEntityAllowed(BusinessTemplate $bepPattern, $entity, EntityManager $em = null)
     {
@@ -85,11 +86,12 @@ class BusinessPageHelper
     }
 
     /**
-     * Get the list of entities allowed for the BusinessTemplate page
+     * Get the list of entities allowed for the BusinessTemplate page.
      *
      * @param BusinessTemplate $bepPattern
      *
      * @throws \Exception
+     *
      * @return array
      */
     public function getEntitiesAllowed(BusinessTemplate $bepPattern, EntityManager $em)
@@ -110,7 +112,7 @@ class BusinessPageHelper
     }
 
     /**
-     * Get the list of business properties usable for the url
+     * Get the list of business properties usable for the url.
      *
      * @param BusinessEntity $businessEntity
      *
@@ -131,11 +133,11 @@ class BusinessPageHelper
     }
 
     /**
-     * Get the position of the identifier in the url of a business entity page pattern
+     * Get the position of the identifier in the url of a business entity page pattern.
      *
      * @param BusinessTemplate $bepPattern
      *
-     * @return integer The position
+     * @return int The position
      */
     public function getIdentifierPositionInUrl(BusinessTemplate $bepPattern)
     {
@@ -163,10 +165,10 @@ class BusinessPageHelper
 
                 if ($searchWord === $keyword) {
                     //the array start at index 0 but we want the position to start at 1
-                    $position = array(
+                    $position = [
                         'position'         => $index + 1,
-                        'businessProperty' => $businessProperty
-                    );
+                        'businessProperty' => $businessProperty,
+                    ];
                 }
             }
         }
@@ -175,15 +177,16 @@ class BusinessPageHelper
     }
 
     /**
-     * Guess the best pattern to represent given reflectionClass
+     * Guess the best pattern to represent given reflectionClass.
      *
      * @param \ReflectionClass $refClass
-     * @param integer          $entityId
+     * @param int              $entityId
      * @param EntityManager    $em
      * @param string           $originalRefClassName When digging into parentClass, we do not have to forget originalClass to be able to get reference after all
      *
-     * @return View
      * @throws \Exception
+     *
+     * @return View
      */
     public function guessBestPatternIdForEntity($refClass, $entityId, $em, $originalRefClassName = null)
     {
@@ -197,10 +200,10 @@ class BusinessPageHelper
         $businessEntity = $this->businessEntityHelper->findByEntityClassname($refClassName);
 
         if ($businessEntity) {
-            $parameters = array(
-                'entityId' => $entityId,
-                'entityNamespace' => $originalRefClassName
-            );
+            $parameters = [
+                'entityId'        => $entityId,
+                'entityNamespace' => $originalRefClassName,
+            ];
 
             $viewReference = $this->viewCacheHelper->getReferenceByParameters($parameters);
         }
@@ -215,8 +218,5 @@ class BusinessPageHelper
         }
 
         return $viewReference['patternId'];
-
     }
-
-
 }

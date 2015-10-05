@@ -1,8 +1,9 @@
 <?php
+
 namespace Victoire\Bundle\CoreBundle\DependencyInjection\Compiler;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\Finder\Finder;
 
@@ -15,13 +16,11 @@ use Symfony\Component\Finder\Finder;
  *
  * @author Paul Andrieux
  * @author Leny Bernard
- *
  **/
 class TraductionCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-
         $definition = $container->getDefinition('jms_translation.config_factory');
         $victoireBasePath = $container->getParameterBag()->get('kernel.root_dir').'/../src/Victoire';
         if (file_exists($victoireBasePath)) {
@@ -32,15 +31,14 @@ class TraductionCompilerPass implements CompilerPassInterface
             foreach ($finder as $bundle) {
                 //We inject a new config in jms_translation
                 $def = new Definition('JMS\TranslationBundle\Translation\ConfigBuilder');
-                $def->addMethodCall('setTranslationsDir', array($victoireBasePath."/".$bundle->getFilename().'/Resources/translations'));
-                $def->addMethodCall('setScanDirs', array(array($victoireBasePath."/".$bundle->getFilename())));
+                $def->addMethodCall('setTranslationsDir', [$victoireBasePath.'/'.$bundle->getFilename().'/Resources/translations']);
+                $def->addMethodCall('setScanDirs', [[$victoireBasePath.'/'.$bundle->getFilename()]]);
 
                 $definition->addMethodCall(
                     'addBuilder',
-                    array($bundle->getFilename(), $def)
+                    [$bundle->getFilename(), $def]
                 );
             }
         }
-
     }
 }

@@ -201,6 +201,17 @@
       <trans-unit id="27" resname="vicmenu.logout.label">
         <source>vicmenu.logout.label</source>
         <target>Log out</target>
+      <trans-unit id="28" resname="form.widget.tab.entity.disable.label">
+        <source>form.widget.tab.entity.disable.label</source>
+        <target>At least one one businessParameter is missing for this BusinessEntity to be available on this Widget</target>
+      </trans-unit>
+      <trans-unit id="29" resname="form.link_type.route_parameters.placeholder">
+        <source>form.link_type.route_parameters.placeholder</source>
+        <target>["id":"{{item.id}}", "name": "Yoda"]</target>
+      </trans-unit>
+      <trans-unit id="30" resname="form.link_type.route.placeholder">
+        <source>form.link_type.route.placeholder</source>
+        <target>Route name</target>
       </trans-unit>
     </body>
   </file>

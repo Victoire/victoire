@@ -2,21 +2,20 @@
 
 namespace Victoire\Bundle\MediaBundle\Form;
 
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-use Symfony\Component\Form\AbstractType;
-
 /**
- * MediaType
+ * MediaType.
  */
 class MediaType extends AbstractType
 {
-
     /**
      * Builds the form.
      *
      * This method is called for each type in the hierarchy starting form the
      * top most type. Type extensions can further modify the form.
+     *
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
      *
@@ -24,7 +23,7 @@ class MediaType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', 'text', array('required' => false));
+        $builder->add('name', 'text', ['required' => false]);
         $builder->add('file', 'file');
     }
 
@@ -37,5 +36,4 @@ class MediaType extends AbstractType
     {
         return 'victoire_mediabundle_mediatype';
     }
-
 }

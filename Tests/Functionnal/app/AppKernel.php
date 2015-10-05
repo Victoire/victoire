@@ -1,7 +1,7 @@
 <?php
 
-use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
+use Symfony\Component\HttpKernel\Kernel;
 
 require_once __DIR__.'/autoload.php';
 
@@ -12,7 +12,7 @@ class AppKernel extends Kernel
      */
     public function registerBundles()
     {
-        return array(
+        return [
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
@@ -30,6 +30,7 @@ class AppKernel extends Kernel
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new JMS\AopBundle\JMSAopBundle(),
             new JMS\TranslationBundle\JMSTranslationBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new Liip\ImagineBundle\LiipImagineBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
@@ -60,7 +61,7 @@ class AppKernel extends Kernel
             new Victoire\Widget\ButtonBundle\VictoireWidgetButtonBundle(),
             new Victoire\Widget\TextBundle\VictoireWidgetTextBundle(),
             new Acme\AppBundle\AcmeAppBundle(),
-        );
+        ];
     }
 
     /**
@@ -70,6 +71,7 @@ class AppKernel extends Kernel
     {
         $loader->load(__DIR__.'/config/config_'.$this->getEnvironment().'.yml');
     }
+
     /**
      * @return string
      */
@@ -77,6 +79,7 @@ class AppKernel extends Kernel
     {
         return sys_get_temp_dir().'/Victoire/cache';
     }
+
     /**
      * @return string
      */

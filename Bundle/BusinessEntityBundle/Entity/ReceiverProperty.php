@@ -1,8 +1,9 @@
 <?php
+
 namespace Victoire\Bundle\BusinessEntityBundle\Entity;
 
 /**
- * ReceiverProperty
+ * ReceiverProperty.
  */
 class ReceiverProperty
 {
@@ -26,7 +27,7 @@ class ReceiverProperty
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isRequired()
     {
@@ -34,7 +35,7 @@ class ReceiverProperty
     }
 
     /**
-     * @param boolean $required
+     * @param bool $required
      */
     public function setRequired($required)
     {
@@ -42,13 +43,13 @@ class ReceiverProperty
     }
 
     /**
-     * setState (convert from array to object)
+     * setState (convert from array to object).
      *
      * @return string
      */
     public static function __set_state($array)
     {
-        $receiverProperty = new ReceiverProperty();
+        $receiverProperty = new self();
         $receiverProperty->setFieldName($array['fieldName']);
         $receiverProperty->setRequired($array['required']);
 

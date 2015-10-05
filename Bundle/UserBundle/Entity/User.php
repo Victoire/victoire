@@ -1,8 +1,9 @@
 <?php
+
 namespace Victoire\Bundle\UserBundle\Entity;
 
-use Victoire\Bundle\UserBundle\Model\User as VictoireUserModel;
 use Doctrine\ORM\Mapping as ORM;
+use Victoire\Bundle\UserBundle\Model\User as VictoireUserModel;
 
 /**
  * @ORM\Entity

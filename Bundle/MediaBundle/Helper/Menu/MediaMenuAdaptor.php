@@ -4,11 +4,11 @@ namespace Victoire\Bundle\MediaBundle\Helper\Menu;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
-use Victoire\Bundle\MediaBundle\Entity\Media;
 use Victoire\Bundle\MediaBundle\Entity\Folder;
+use Victoire\Bundle\MediaBundle\Entity\Media;
 
 /**
- * The Media Menu Adaptor
+ * The Media Menu Adaptor.
  */
 class MediaMenuAdaptor implements MenuAdaptorInterface
 {
@@ -26,7 +26,7 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
     }
 
     /**
-     * In this method you can add children for a specific parent, but also remove and change the already created children
+     * In this method you can add children for a specific parent, but also remove and change the already created children.
      *
      * @param MenuBuilder $menu      The MenuBuilder
      * @param MenuItem[]  &$children The current children
@@ -35,18 +35,17 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
      */
     public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
     {
-
-        $mediaRoutes = array(
+        $mediaRoutes = [
             'Show media'    => 'VictoireMediaBundle_media_show',
             'Edit metadata' => 'VictoireMediaBundle_metadata_edit',
             'Edit slide'    => 'VictoireMediaBundle_slide_edit',
-            'Edit video'    => 'VictoireMediaBundle_video_edit'
-        );
+            'Edit video'    => 'VictoireMediaBundle_video_edit',
+        ];
 
-        $createRoutes = array(
-            'Create' => 'VictoireMediaBundle_media_create',
-            'Bulk upload' => 'VictoireMediaBundle_media_bulk_upload'
-        );
+        $createRoutes = [
+            'Create'      => 'VictoireMediaBundle_media_create',
+            'Bulk upload' => 'VictoireMediaBundle_media_bulk_upload',
+        ];
 
         $allRoutes = array_merge($createRoutes, $mediaRoutes);
 
@@ -60,7 +59,7 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
                 $currentFolder = $this->em->getRepository('VictoireMediaBundle:Folder')->findOneById($currentId);
             } elseif (in_array($request->attributes->get('_route'), $mediaRoutes)) {
                 /* @var Media $media */
-                $media     = $this->em->getRepository('VictoireMediaBundle:Media')->getMedia($request->get('mediaId'));
+                $media = $this->em->getRepository('VictoireMediaBundle:Media')->getMedia($request->get('mediaId'));
                 $currentFolder = $media->getFolder();
             } elseif (in_array($request->attributes->get('_route'), $createRoutes)) {
                 $currentId = $request->get('folderId');
@@ -72,13 +71,13 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
             if (isset($currentFolder)) {
                 $parents = $currentFolder->getParents();
             } else {
-                $parents = array();
+                $parents = [];
             }
 
             foreach ($galleries as $folder) {
                 $menuitem = new TopMenuItem($menu);
                 $menuitem->setRoute('VictoireMediaBundle_folder_show');
-                $menuitem->setRouteparams(array('folderId' => $folder->getId()));
+                $menuitem->setRouteparams(['folderId' => $folder->getId()]);
                 $menuitem->setInternalname($folder->getName());
                 $menuitem->setParent($parent);
                 $menuitem->setRole($folder->getRel());
@@ -108,7 +107,7 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
                 /* @var Folder $currentFolder */
                 $currentFolder = $this->em->getRepository('VictoireMediaBundle:Folder')->findOneById($currentId);
             } elseif (in_array($request->attributes->get('_route'), $mediaRoutes)) {
-                $media     = $this->em->getRepository('VictoireMediaBundle:Media')->getMedia($request->get('mediaId'));
+                $media = $this->em->getRepository('VictoireMediaBundle:Media')->getMedia($request->get('mediaId'));
                 $currentFolder = $media->getFolder();
             } elseif (in_array($request->attributes->get('_route'), $createRoutes)) {
                 $currentId = $request->get('folderId');
@@ -122,13 +121,13 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
             if (isset($currentFolder)) {
                 $parentGalleries = $currentFolder->getParents();
             } else {
-                $parentGalleries = array();
+                $parentGalleries = [];
             }
 
             foreach ($galleries as $folder) {
                 $menuitem = new MenuItem($menu);
                 $menuitem->setRoute('VictoireMediaBundle_folder_show');
-                $menuitem->setRouteparams(array('folderId' => $folder->getId()));
+                $menuitem->setRouteparams(['folderId' => $folder->getId()]);
                 $menuitem->setInternalname($folder->getName());
                 $menuitem->setParent($parent);
                 $menuitem->setRole($folder->getRel());
@@ -164,8 +163,6 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
 
                 $children[] = $menuitem;
             }
-
         }
-
     }
 }

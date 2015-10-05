@@ -1,23 +1,24 @@
 <?php
+
 namespace Victoire\Bundle\I18nBundle\Form;
 
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Victoire\Bundle\CoreBundle\Entity\View;
 
 /**
- * Edit Page Type
+ * Edit Page Type.
  */
 class PageTranslateType extends AbstractType
 {
-
     protected $availableLocales;
     protected $currentLocale;
+
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct($availableLocales, RequestStack $requestStack)
     {
@@ -26,7 +27,8 @@ class PageTranslateType extends AbstractType
     }
 
     /**
-     * define form fields
+     * define form fields.
+     *
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
@@ -35,25 +37,25 @@ class PageTranslateType extends AbstractType
         $builder
             ->add('name');
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             $view = $event->getData();
             $form = $event->getForm();
 
                 if (!$form->has('locale')) {
-                $form->add('locale', 'choice', array(
+                    $form->add('locale', 'choice', [
                         'expanded' => false,
                         'multiple' => false,
                         'choices'  => $this->getAvailableLocales($view),
                         'label'    => 'form.view.type.locale.label',
-                        'data'     => $this->currentLocale
-                    )
+                        'data'     => $this->currentLocale,
+                    ]
                 );
-            }
+                }
         });
     }
 
     /**
-     * get form name
+     * get form name.
      */
     public function getName()
     {
@@ -62,7 +64,7 @@ class PageTranslateType extends AbstractType
 
     protected function getAvailableLocales(View $view)
     {
-        $choices = array();
+        $choices = [];
         $i18n = $view->getI18n();
 
         foreach ($this->availableLocales as $localeVal) {

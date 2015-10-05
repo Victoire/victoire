@@ -3,9 +3,8 @@
 namespace Victoire\Bundle\WidgetBundle\Entity;
 
 /**
-* WidgetItemInterface
-*/
+ * WidgetItemInterface.
+ */
 interface WidgetItemInterface
 {
-
 }

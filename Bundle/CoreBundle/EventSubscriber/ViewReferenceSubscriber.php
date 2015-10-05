@@ -20,7 +20,7 @@ use Victoire\Bundle\CoreBundle\Provider\ViewReferenceProvider;
 
 /**
  * Tracks if a slug changed and re-compute the view cache
- * ref: victoire_core.url_subscriber
+ * ref: victoire_core.url_subscriber.
  */
 class ViewReferenceSubscriber implements EventSubscriber
 {
@@ -30,9 +30,9 @@ class ViewReferenceSubscriber implements EventSubscriber
     protected $viewReferenceProvider;
 
     /**
-     * @param UrlBuilder $urlBuilder
-     * @param ViewCacheHelper $viewCacheHelper
-     * @param BusinessPageBuilder $businessPageBuilder
+     * @param UrlBuilder           $urlBuilder
+     * @param ViewCacheHelper      $viewCacheHelper
+     * @param BusinessPageBuilder  $businessPageBuilder
      * @param ViewReferenceBuilder $viewReferenceBuilder
      */
     public function __construct(
@@ -41,29 +41,30 @@ class ViewReferenceSubscriber implements EventSubscriber
         BusinessPageBuilder $businessPageBuilder,
         ViewReferenceBuilder $viewReferenceBuilder,
         ViewReferenceProvider $viewReferenceProvider
-    )
-    {
+    ) {
         $this->urlBuilder = $urlBuilder;
         $this->viewCacheHelper = $viewCacheHelper;
         $this->businessPageBuilder = $businessPageBuilder;
         $this->viewReferenceBuilder = $viewReferenceBuilder;
         $this->viewReferenceProvider = $viewReferenceProvider;
     }
+
     /**
-     * bind to LoadClassMetadata method
+     * bind to LoadClassMetadata method.
      *
      * @return string[]
      */
     public function getSubscribedEvents()
     {
-        return array(
+        return [
             'onFlush',
             'postPersist',
-        );
+        ];
     }
 
     /**
-     * Will rebuild url if needed and update cache
+     * Will rebuild url if needed and update cache.
+     *
      * @param OnFlushEventArgs $eventArgs
      */
     public function onFlush(OnFlushEventArgs $eventArgs)
@@ -79,14 +80,20 @@ class ViewReferenceSubscriber implements EventSubscriber
                     || array_key_exists('staticUrl', $uow->getEntityChangeSet($entity))
                     || array_key_exists('parent', $uow->getEntityChangeSet($entity)))
                 )) {
-                    $this->manageViewUrl($entity, $entityManager, $uow);
+                    $this->manageView($entity, $entityManager, $uow);
                 }
+            }
+        }
+        foreach ($uow->getScheduledEntityDeletions() as $entity) {
+            if ($entity instanceof View) {
+                $this->manageView($entity, $entityManager, $uow, true);
             }
         }
     }
 
     /**
-     * When a page is inserted, compute its url and children urls
+     * When a page is inserted, compute its url and children urls.
+     *
      * @param LifecycleEventArgs $eventArgs
      */
     public function postPersist(LifecycleEventArgs $eventArgs)
@@ -94,47 +101,54 @@ class ViewReferenceSubscriber implements EventSubscriber
         $entity = $eventArgs->getEntity();
         if ($entity instanceof View) {
             $em = $eventArgs->getEntityManager();
-            $this->manageViewUrl($entity, $em, $em->getUnitOfWork());
+            $this->manageView($entity, $em, $em->getUnitOfWork());
         }
     }
 
     /**
-     * Change url recursively for the WebViewInterface given
+     * Change url recursively for the WebViewInterface given.
+     *
      * @param View $view
      *
      * @return void
      */
-    protected function updateCache(View $view, EntityManager $em, UnitOfWork $uow)
+    protected function updateCache(View $view, EntityManager $em, UnitOfWork $uow, $delete = false)
     {
         $viewReferences = [];
         $referencableViews = $this->viewReferenceProvider->getReferencableViews($view, $em);
 
         foreach ($referencableViews as $referencableView) {
+            $referencableReferences = $this->viewReferenceBuilder->buildViewReference($referencableView, $em);
+            $viewReferences = array_merge($viewReferences, $referencableReferences);
 
-            $viewReferences = array_merge($viewReferences, $this->viewCacheHelper->update($this->viewReferenceBuilder->buildViewReference($referencableView, $em)));
+            if ($delete) {
+                $this->viewCacheHelper->removeViewsReferencesByParameters($referencableReferences);
+            } else {
+                $this->viewCacheHelper->update($referencableReferences);
+            }
         }
 
         foreach ($viewReferences as $key => $viewReference) {
-            if ($view instanceof WebViewInterface && $view->getId()) {
+            if ($view instanceof WebViewInterface && $view->getId() && !$delete) {
                 $this->addRouteHistory($viewReference['view'], $em, $uow);
             }
         }
 
         foreach ($view->getChildren() as $_child) {
-            $this->manageViewUrl($_child, $em, $uow);
+            $this->manageView($_child, $em, $uow, $delete);
         }
-
     }
 
     /**
-     * Manage urls
+     * Manage urls.
+     *
      * @param View $view
      *
      * @return void
      */
-    protected function manageViewUrl(View $view, EntityManager $em, UnitOfWork $uow)
+    protected function manageView(View $view, EntityManager $em, UnitOfWork $uow, $delete = false)
     {
-        if ($view instanceof BusinessPage) {
+        if ($view instanceof BusinessPage && !$delete) {
             $oldSlug = $view->getSlug();
             $staticUrl = $view->getStaticUrl();
             $computedPage = $this->businessPageBuilder->generateEntityPageFromPattern($view->getTemplate(), $view->getBusinessEntity(), $em);
@@ -150,20 +164,20 @@ class ViewReferenceSubscriber implements EventSubscriber
             $uow->computeChangeSet($meta, $view);
         }
 
-        $this->updateCache($view, $em, $uow);
+        $this->updateCache($view, $em, $uow, $delete);
 
         if ($view instanceof BusinessTemplate) {
 
             // Get BusinessPages of the given BusinessTemplate
             $inheritors = $em->getRepository('Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage')->findByTemplate($view);
             foreach ($inheritors as $instance) {
-                $this->manageViewUrl($instance, $em, $uow);
+                $this->manageView($instance, $em, $uow, $delete);
             }
         }
     }
 
     /**
-     * Record the route history of the page
+     * Record the route history of the page.
      *
      * @param WebViewInterface $view
      */
@@ -180,15 +194,5 @@ class ViewReferenceSubscriber implements EventSubscriber
         $meta = $em->getClassMetadata(get_class($route));
         $em->persist($route);
         $uow->computeChangeSet($meta, $route);
-
-
     }
-
-
-
-
-
-
-
-
 }

@@ -31,95 +31,105 @@ class LinkType extends AbstractType
     {
         $transformer = new JsonToArrayTransformer();
         $builder
-            ->add('linkType', 'choice', array(
+            ->add('linkType', 'choice', [
                 'label'       => 'form.link_type.linkType.label',
                 'required'    => true,
-                'choices'     => array(
-                    'none'           => 'form.link_type.linkType.none',
-                    'viewReference'  => 'form.link_type.linkType.view_reference',
-                    'url'            => 'form.link_type.linkType.url',
-                    'attachedWidget' => 'form.link_type.linkType.widget',
-                    'route'          => 'form.link_type.linkType.route',
-                ),
-                'attr'        => array(
+                'choices'     => $options['linkTypeChoices'],
+                'attr'        => [
                     'data-role' => 'vic-linkType-select',
                     'onchange'  => 'showSelectedLinkType($vic(this));',
-                ),
-            ))
-            ->add('url', null, array(
+                ],
+            ])
+            ->add('url', null, [
                 'label'                          => 'form.link_type.url.label',
-                'vic_vic_widget_form_group_attr' => array('class' => 'vic-form-group vic-hidden url-type'),
+                'vic_vic_widget_form_group_attr' => ['class' => 'vic-form-group vic-hidden url-type'],
                 'required'                       => true,
-                'attr'                           => array('novalidate' => 'novalidate', 'placeholder' => 'form.link_type.url.placeholder'),
-            ))
+                'attr'                           => ['novalidate' => 'novalidate', 'placeholder' => 'form.link_type.url.placeholder'],
+            ])
         ;
 
+
         $rawPages = $this->viewCacheHelper->getAllViewsReferences();
-        $pages = array();
+        $pages = [];
         foreach ($rawPages as $page) {
             $pages[$page['id']] = $page['name'];
         }
 
-        $builder->add('viewReference', 'choice', array(
+        $builder->add('viewReference', 'choice', [
             'label'                          => 'form.link_type.view_reference.label',
             'required'                       => true,
-            'attr'                           => array('novalidate' => 'novalidate'),
+            'attr'                           => ['novalidate' => 'novalidate'],
             'empty_value'                    => 'form.link_type.view_reference.blank',
             'choices'                        => $pages,
-            'vic_vic_widget_form_group_attr' => array('class' => 'vic-form-group vic-hidden viewReference-type'),
-        ))
-        ->add('attachedWidget', 'entity', array(
+            'vic_vic_widget_form_group_attr' => ['class' => 'vic-form-group vic-hidden viewReference-type'],
+        ])
+        ->add('attachedWidget', 'entity', [
             'label'                          => 'form.link_type.attachedWidget.label',
             'empty_value'                    => 'form.link_type.attachedWidget.blank',
             'class'                          => 'VictoireWidgetBundle:Widget',
-            'vic_vic_widget_form_group_attr' => array('class' => 'vic-form-group vic-hidden attachedWidget-type'),
+            'vic_vic_widget_form_group_attr' => ['class' => 'vic-form-group vic-hidden attachedWidget-type'],
             'required'                       => true,
-            'attr' => array('novalidate' => 'novalidate'),
-        ))
-        ->add('route', null, array(
+            'attr'                           => ['novalidate' => 'novalidate'],
+        ])
+        ->add('route', null, [
             'label'                          => 'form.link_type.route.label',
-            'vic_vic_widget_form_group_attr' => array('class' => 'vic-form-group vic-hidden route-type'),
+            'vic_vic_widget_form_group_attr' => ['class' => 'vic-form-group vic-hidden route-type'],
             'required'                       => true,
-            'attr' => array('novalidate' => 'novalidate', 'placeholder' => 'form.link_type.route.placeholder'),
-        ))
-        ->add($builder->create('route_parameters', 'text', array(
+            'attr'                           => ['novalidate' => 'novalidate', 'placeholder' => 'form.link_type.route.placeholder'],
+        ])
+        ->add($builder->create('route_parameters', 'text', [
                 'label'                          => 'form.link_type.route_parameters.label',
-                'vic_vic_widget_form_group_attr' => array('class' => 'vic-form-group vic-hidden route-type'),
-                'required'  => true,
-                'attr' => array('novalidate' => 'novalidate', 'placeholder' => 'form.link_type.route_parameters.placeholder'),
-            ))->addModelTransformer($transformer)
+                'vic_vic_widget_form_group_attr' => ['class' => 'vic-form-group vic-hidden route-type'],
+                'required'                       => true,
+                'attr'                           => ['novalidate' => 'novalidate', 'placeholder' => 'form.link_type.route_parameters.placeholder'],
+            ])->addModelTransformer($transformer)
         )
 
-        ->add('target', 'choice', array(
+        ->add('target', 'choice', [
             'label'     => 'form.link_type.target.label',
             'required'  => true,
-            'choices'   => array(
+            'choices'   => [
                 '_parent'    => 'form.link_type.choice.target.parent',
                 '_blank'     => 'form.link_type.choice.target.blank',
                 'ajax-modal' => 'form.link_type.choice.target.ajax-modal',
-            ),
-            'vic_vic_widget_form_group_attr' => array('class' => 'vic-form-group viewReference-type page-type url-type route-type attachedWidget-type'),
-        ));
+            ],
+            'vic_vic_widget_form_group_attr' => ['class' => 'vic-form-group viewReference-type page-type url-type route-type attachedWidget-type'],
+        ]);
 
         if (!empty($this->analytics['google']) && $this->analytics['google']['enabled']) {
-            $builder->add('analytics_track_code', null, array(
+            $builder->add('analytics_track_code', null, [
                 'label'          => 'form.link_type.analytics_track_code.label',
                 'required'       => false,
-                'attr'           => array(
+                'attr'           => [
                     'placeholder' => 'form.link_type.analytics_track_code.placeholder',
-                ),
-                'vic_vic_widget_form_group_attr' => array('class' => 'vic-form-group analytics-type'),
-            ));
+                ],
+                'vic_vic_widget_form_group_attr' => ['class' => 'vic-form-group analytics-type'],
+            ]);
         }
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class'         => 'Victoire\Bundle\CoreBundle\Entity\Link',
-            'translation_domain' => 'victoire',
+        $resolver->setDefaults([
+            'data_class'          => 'Victoire\Bundle\CoreBundle\Entity\Link',
+            'translation_domain'  => 'victoire',
             'horizontal'          => false,
-        ));
+            'linkTypeChoices'     => $this->getDefaultLinkTypeChoices(),
+        ]);
+    }
+
+    /**
+     * @return array
+     */
+    public static function getDefaultLinkTypeChoices()
+    {
+        return [
+            'none'           => 'form.link_type.linkType.none',
+            'viewReference'  => 'form.link_type.linkType.view_reference',
+            'route'          => 'form.link_type.linkType.route',
+            'url'            => 'form.link_type.linkType.url',
+            'attachedWidget' => 'form.link_type.linkType.widget',
+        ];
     }
 
     /**

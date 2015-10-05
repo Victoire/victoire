@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\WidgetMapBundle\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
@@ -10,38 +11,41 @@ class WidgetMapToArrayTransformer implements DataTransformerInterface
     /**
      * Transforms an object (WidgetMap) to an array.
      *
-     * @param  WidgetMap|null $widgetMap
+     * @param WidgetMap|null $widgetMap
+     *
      * @return string
      */
     public function transform($widgetMap)
     {
         if (null === $widgetMap) {
-            return array();
+            return [];
         }
 
-        $widgetMapAsArray = array(
+        $widgetMapAsArray = [
             'action'            => $widgetMap->getAction(),
             'position'          => $widgetMap->getPosition(),
             'asynchronous'      => $widgetMap->isAsynchronous(),
             'positionReference' => $widgetMap->getPositionReference(),
             'replacedWidgetId'  => $widgetMap->getReplacedWidgetId(),
-            'widgetId'          => $widgetMap->getWidgetId()
-        );
+            'widgetId'          => $widgetMap->getWidgetId(),
+        ];
 
         return $widgetMapAsArray;
     }
 
     /**
      * Transforms an array to an object (WidgetMap).
-     * @param  array $widgetMapAsArray
+     *
+     * @param array $widgetMapAsArray
+     *
+     * @throws TransformationFailedException if object (issue) is not found.
      *
      * @return WidgetMap|null
-     * @throws TransformationFailedException if object (issue) is not found.
      */
     public function reverseTransform($widgetMapAsArray)
     {
         if (!$widgetMapAsArray) {
-            return null;
+            return;
         }
 
         $widgetMap = new WidgetMap();

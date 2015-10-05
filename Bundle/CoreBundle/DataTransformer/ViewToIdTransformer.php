@@ -8,9 +8,7 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 use Victoire\Bundle\CoreBundle\Entity\View;
 
 /**
- *
  * @author Leny Bernard
- *
  */
 class ViewToIdTransformer implements DataTransformerInterface
 {
@@ -30,13 +28,14 @@ class ViewToIdTransformer implements DataTransformerInterface
     /**
      * Transforms an object (View) to a string (id).
      *
-     * @param  View|null $view
+     * @param View|null $view
+     *
      * @return string
      */
     public function transform($view)
     {
         if (null === $view) {
-            return "";
+            return '';
         }
 
         return $view->getId();
@@ -47,18 +46,19 @@ class ViewToIdTransformer implements DataTransformerInterface
      *
      * @param string $id
      *
-     * @return View|null
      * @throws TransformationFailedException if object (View) is not found.
+     *
+     * @return View|null
      */
     public function reverseTransform($id)
     {
         if (!$id) {
-            return null;
+            return;
         }
 
         $view = $this->om
             ->getRepository('VictoireCoreBundle:View')
-            ->findOneBy(array('id' => $id));
+            ->findOneBy(['id' => $id]);
 
         if (null === $view) {
             throw new TransformationFailedException(sprintf(

@@ -1,40 +1,54 @@
 <?php
+
 namespace Victoire\Bundle\CoreBundle\Annotations;
 
 /**
- * Marks a field with text sementical behavior
+ * Marks a field with text sementical behavior.
  *
  * @Annotation
  **/
 class ReceiverProperty
 {
-    private $types;
+    private $types = [];
+    private $required = false;
 
     /**
-     * define supported types
+     * define supported types.
      *
      * @param array $types supported types (text, media, date)
-     *
      **/
-    public function __construct($types = null)
+    public function __construct($data)
     {
-        $this->types = $types;
+        if (array_key_exists('required', $data)) {
+            $this->required = $data['required'];
+        }
+
+        if (array_key_exists('value', $data)) {
+            if (count($data['value']) > 1) {
+                $this->types = $data['value'];
+            } else {
+                $this->types = [$data['value']];
+            }
+        }
     }
 
     /**
-     * Get types
+     * Get types.
      *
-     * @return NULL|multitype:NULL
+     * @return null|multitype:NULL
      */
     public function getTypes()
     {
-        if (!array_key_exists('value', $this->types)) {
-            return null;
-        }
-        if (count($this->types['value']) > 1) {
-            return $this->types['value'];
-        } else {
-            return array($this->types['value']);
-        }
+        return $this->types;
+    }
+
+    /**
+     * Is required.
+     *
+     * @return bool
+     */
+    public function isRequired()
+    {
+        return $this->required;
     }
 }

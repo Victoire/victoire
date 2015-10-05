@@ -18,27 +18,29 @@ class BusinessEntitySubscriber implements EventSubscriber
     }
 
     /**
-     * bind to LoadClassMetadata method
+     * bind to LoadClassMetadata method.
      *
      * @return string[] The subscribed events
      */
     public function getSubscribedEvents()
     {
-        return array(
+        return [
             'postPersist',
             'postUpdate',
-            'preRemove'
-        );
+            'preRemove',
+        ];
     }
 
     public function postPersist(LifecycleEventArgs $eventArgs)
     {
         $this->updateBusinessPagesAndRegerateCache($eventArgs);
     }
+
     public function postUpdate(LifecycleEventArgs $eventArgs)
     {
         $this->updateBusinessPagesAndRegerateCache($eventArgs);
     }
+
     public function preRemove(LifecycleEventArgs $eventArgs)
     {
         $entity = $eventArgs->getEntity();
@@ -46,12 +48,13 @@ class BusinessEntitySubscriber implements EventSubscriber
         if ($businessEntity) {
             $viewCacheHelper = $this->container->get('victoire_core.view_cache_helper');
             //remove all references which refer to the entity
-            $viewCacheHelper->removeViewsReferencesByParameters(array(
-                        'entityId' => $entity->getId(),
+            $viewCacheHelper->removeViewsReferencesByParameters([[
+                        'entityId'        => $entity->getId(),
                         'entityNamespace' => get_class($entity),
-            ));
+            ]]);
         }
     }
+
     public function updateBusinessPagesAndRegerateCache(LifecycleEventArgs $eventArgs)
     {
         $entityManager = $eventArgs->getEntityManager();
@@ -89,7 +92,7 @@ class BusinessEntitySubscriber implements EventSubscriber
                         $staticUrl = $businessPage->getStaticUrl();
 
                         if ($staticUrl) {
-                            $staticUrl = preg_replace('/' . $oldSlug . '/', $newSlug, $staticUrl);
+                            $staticUrl = preg_replace('/'.$oldSlug.'/', $newSlug, $staticUrl);
                             $businessPage->setStaticUrl($staticUrl);
                         }
 
@@ -109,14 +112,13 @@ class BusinessEntitySubscriber implements EventSubscriber
                         )->buildViewReference($virtualBusinessPage, $entityManager);
                         //we update cache with the computed page
                         $this->container->get('victoire_core.view_cache_helper')->update($viewReferences);
-
                     }
                 } else {
                     $rootNode = $this->container->get('victoire_core.view_cache_helper')->readCache();
 
                     $parameters = [
-                        'patternId' => $businessTemplate->getId(),
-                        'entityId' => $entity->getId(),
+                        'patternId'     => $businessTemplate->getId(),
+                        'entityId'      => $entity->getId(),
                         'viewNamespace' => 'Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage',
                     ];
 
@@ -128,13 +130,8 @@ class BusinessEntitySubscriber implements EventSubscriber
 
                     $viewReferences = $this->container->get('victoire_core.helper.view_reference_helper')->convertXmlCacheToArray($rootNode);
                     $this->container->get('victoire_core.view_cache_helper')->write($viewReferences);
-
-
                 }
             }
         }
-
     }
-
-
 }
