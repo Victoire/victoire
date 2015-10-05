@@ -113,7 +113,7 @@ class WidgetGenerator extends Generator
 
         if ($contentResolver) {
             $parameters['parentResolver'] = class_exists('Victoire\\Widget\\'.$parent.'Bundle\\Widget\\Resolver\\Widget'.$parent.'ContentResolver');
-            $this->renderFile('widget/ContentResolver.php.twig', $dir.'/Widget/Resolver/Widget'.$widget.'ContentResolver.php', $parameters);
+            $this->renderFile('widget/ContentResolver.php.twig', $dir.'/Resolver/Widget'.$widget.'ContentResolver.php', $parameters);
         }
     }
 
