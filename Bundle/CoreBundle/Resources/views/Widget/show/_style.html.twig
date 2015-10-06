@@ -28,26 +28,26 @@
 {% set style = selector ~ '{' ~ _self.displayStyle(globalStyle) ~ '}' %}
 
 {% if globalStyle|length %}
-    {% if mediaQuery is defined and mediaQuery %}
+    {%- if mediaQuery is defined and mediaQuery -%}
         {{ "@media all #{mediaQuery}{" }}
             {{ style|raw }}
-        {% if bgType|default(null) == 'image' %}
+        {%- if bgType|default(null) == 'image' -%}
             {{ bgOverlay|default(null)|raw }}
-        {% endif %}
+        {%- endif -%}
         {{ '}' }}
-    {% else %}
+    {%- else -%}
         {{ style|raw }}
         {{ bgOverlay|default|raw }}
-    {% endif %}
+    {%- endif -%}
 {% endif %}
 {% endspaceless %}
 
 {% macro displayStyle(styles) %}
-    {% if styles is iterable %}
-        {% for style in styles %}
+    {%- if styles is iterable -%}
+        {%- for style in styles -%}
             {{ _self.displayStyle(style) }}
-        {% endfor %}
-    {% else %}
+        {%- endfor -%}
+    {%- else -%}
         {{ styles|trim != '' ? styles|trim|raw }}
-    {% endif %}
+    {%- endif -%}
 {% endmacro %}
