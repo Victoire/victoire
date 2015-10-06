@@ -37,6 +37,7 @@ script:
 
 
 notifications:
+    slack: appventus:Xy4yq4kXpBK9XHgfz8t9VBPl
     hipchat:
         rooms:
             - 32c78704ec6fd7ad1445cf106d1107@Victoire
