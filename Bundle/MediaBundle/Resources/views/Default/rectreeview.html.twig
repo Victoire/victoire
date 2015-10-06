@@ -1,5 +1,5 @@
 <li id="{{ menuitem.internalname }}" class="{% if menuitem.active %}jstree-open{% endif %} {% if currentMenuItem is not null and currentMenuItem.internalname == menuitem.internalname  %}active{% endif %} {% if menuitem.offline %}offline{% endif %}" {% if menuitem.role %} rel="{{menuitem.role}}" {% endif %}>
-    <a href="{{ path(menuitem.route, menuitem.routeparams) }}">{{ menuitem.internalname | trans }}</a>
+    <a href="{{ path(menuitem.route, menuitem.routeparams) }}">{{ menuitem.internalname |trans({}, 'victoire') }}</a>
     <ul>
         {% for menuitem in menuitem.navigationChildren %}
             {% include 'VictoireMediaBundle:Default:rectreeview.html.twig' %}

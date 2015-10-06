@@ -67,14 +67,14 @@ Feature: Manage jedis
         When I open the hamburger menu
         Then I should see "Représentation métier"
         When I follow "Représentation métier"
-        Then I should see "Ajouter une représentation"
+        Then I should see "Ajouter une représentation métier"
         When I follow the tab "Jedi"
-        And I follow "Ajouter une représentation"
+        And I follow "Ajouter une représentation métier"
         Then I should see "Créer une représentation métier"
         When I fill in "Nom" with "Fiche Jedi - {{item.name}}"
-        And I fill in "Url" with "fiche-jedi-{{item.slug}}"
+        And I fill in "URL" with "fiche-jedi-{{item.slug}}"
         And I follow "Créer"
-        Then I should see "La représentation métier a bien été créé"
+        Then I should see "La représentation métier a bien été créée"
         Given I am on "/fr/fiche-jedi-anakin"
         And I switch to "layout" mode
         When I select "Force" from the "1" select of "content" slot
@@ -91,6 +91,7 @@ Feature: Manage jedis
         Then I should not see an ".slug-is-correct.vic-hidden" element
         And I should see an ".slug-is-not-correct.vic-hidden" element
         When I submit the widget
+        And I wait 5 seconds
         Then I should see "Page modifiée avec succès"
         And I should be on "/fr/dark-vador"
         Given I select the option "Paramètres de la page" in the dropdown "Page"

@@ -37,7 +37,7 @@ class WidgetStyleType extends AbstractType
      * @param FormBuilderInterface $builder The builder
      * @param array                $options The options
      *
-     * @throws Exception
+     * @throws \Exception
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -78,20 +78,24 @@ class WidgetStyleType extends AbstractType
             $builder
                 ->add('containerMargin'.$key, null, [
                     'label'          => 'widget_layout.form.containerMargin'.$key.'.label',
+                    'attr'           => ['placeholder' => 'widget_layout.form.containerMargin.placeholder'],
                     'vic_help_block' => 'widget_layout.form.containerMargin.help_block',
                     'required'       => false,
                 ])
                 ->add('containerPadding'.$key, null, [
                     'label'          => 'widget_layout.form.containerPadding'.$key.'.label',
+                    'attr'           => ['placeholder' => 'widget_layout.form.containerPadding.placeholder'],
                     'vic_help_block' => 'widget_layout.form.containerPadding.help_block',
                     'required'       => false,
                 ])
                 ->add('containerWidth'.$key, null, [
                     'label'          => 'widget_layout.form.containerWidth'.$key.'.label',
+                    'attr'           => ['placeholder' => 'widget_layout.form.containerWidth.placeholder'],
                     'vic_help_block' => 'widget_layout.form.containerWidth.help.label',
                 ])
                 ->add('containerHeight'.$key, null, [
                     'label'          => 'widget_layout.form.containerHeight'.$key.'.label',
+                    'attr'           => ['placeholder' => 'widget_layout.form.containerWidth.placeholder'],
                     'vic_help_block' => 'widget_layout.form.containerHeight.help.label',
                 ])
                 ->add('textAlign'.$key, 'choice', [
@@ -195,10 +199,12 @@ class WidgetStyleType extends AbstractType
                 ])
                 ->add('containerBackgroundSize'.$responsiveKey, null, [
                     'label'          => 'widget_layout.form.containerBackgroundSize'.$responsiveKey.'.label',
+                    'attr'           => ['placeholder' => 'widget_layout.form.containerWidth.placeholder'],
                     'vic_help_block' => 'widget_layout.form.containerBackgroundSize.help.label',
                 ])
                 ->add('containerBackgroundOverlay'.$responsiveKey, null, [
                     'label'          => 'widget_layout.form.containerBackgroundOverlay'.$responsiveKey.'.label',
+                    'attr'           => ['placeholder' => 'widget_layout.form.containerBackgroundOverlay.placeholder'],
                     'vic_help_block' => 'widget_layout.form.containerBackgroundOverlay.help.label',
                 ]);
         } else {
@@ -210,6 +216,7 @@ class WidgetStyleType extends AbstractType
                 ->remove('containerBackgroundOverlay'.$responsiveKey)
                 ->add('containerBackgroundColor'.$responsiveKey, null, [
                     'label'          => 'widget_layout.form.containerBackgroundColor'.$responsiveKey.'.label',
+                    'attr'           => ['placeholder' => 'widget_layout.form.containerBackgroundColor.placeholder'],
                     'vic_help_block' => 'widget_layout.form.containerBackgroundColor.help.label',
                 ]);
         }

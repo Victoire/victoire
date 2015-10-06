@@ -9,3 +9,4 @@
 /node_modules/*
 /nohup.out
 /selenium-server-standalone-2.45.0.jar
+/.behat.yml

@@ -5,13 +5,13 @@
     <form action="{{ path('VictoireMediaBundle_media_modal_create', { 'folderId' : folder.id, 'type': 'file' }  ) }}" method="post" {{ form_enctype(fileform) }}>
         <div class="modal-header">
             <button class="close" data-dismiss="modal">&times;</button>
-            <h3>{{ 'media.file.modal.title' | trans }}</h3>
+            <h3>{{ 'media.file.modal.title' |trans({}, 'victoire') }}</h3>
         </div>
         <div class="modal-body--upload">{{ form_widget(fileform) }}</div>
         <div class="modal-footer">
             <div class="btn_group">
-                <button class="btn btn-primary" type="submit">{{ 'media.file.modal.save' | trans }}</button>
-                <button class="btn" type="reset" data-dismiss="modal">{{ 'form.cancel' | trans }}</button>
+                <button class="btn btn-primary" type="submit">{{ 'media.file.modal.save' |trans({}, 'victoire') }}</button>
+                <button class="btn" type="reset" data-dismiss="modal">{{ 'form.cancel' |trans({}, 'victoire') }}</button>
             </div>
         </div>
     </form>

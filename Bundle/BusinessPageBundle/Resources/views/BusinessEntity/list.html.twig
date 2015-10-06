@@ -4,8 +4,8 @@
     <div class="vic-row">
         <div class="vic-col-sm-6">
             {% spaceless %}
-            <h1 class="vic-businessentity-list-heading">
-                Liste des représentations de l’objet métier "{{ businessEntity.getName }}"
+            <h1 class="vic-businessentity-list-heading">{{ 'business_template.listEntities'|trans({}, 'victoire') }}
+                "{{ businessEntity.getName }}"
             </h1>
             {% endspaceless %}
         </div>

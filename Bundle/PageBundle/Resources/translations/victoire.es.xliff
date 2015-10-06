@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+  <file source-language="en" target-language="es" datatype="plaintext" original="not.available">
+    <header>
+      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
+      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
+    </header>
+    <body>
+        <trans-unit id="1" resname="new.page.modal.header">
+            <source>new.page.modal.header</source>
+            <target>Nueva página</target>
+        </trans-unit>
+        <trans-unit id="2" resname="new.template.modal.header">
+            <source>new.template.modal.header</source>
+            <target>Nueva plantilla</target>
+        </trans-unit>
+        <trans-unit id="3" resname="form.view.type.name.label">
+            <source>form.view.type.name.label</source>
+            <target>Nombre</target>
+        </trans-unit>
+        <trans-unit id="4" resname="form.view.type.parent.label">
+            <source>form.view.type.parent.label</source>
+            <target>Página padre</target>
+        </trans-unit>
+        <trans-unit id="5" resname="form.view.type.pattern.label">
+            <source>form.view.type.pattern.label</source>
+            <target>Plantilla de usar</target>
+        </trans-unit>
+        <trans-unit id="8" resname="page.undeletable">
+            <source>page.undeletable</source>
+            <target>Esta página no puede ser eliminado</target>
+        </trans-unit>
+        <trans-unit id="9" resname="modal.form.page.settings.title">
+            <source>modal.form.page.settings.title</source>
+            <target><![CDATA[Configuración de página <strong>%pageName%</strong>]]></target>
+        </trans-unit>
+        <trans-unit id="f4ds5f4ds5f4d56s4f56ds86f7d86s4f24" resname="modal.form.page.newtranslation.title">
+            <source>modal.form.page.newtranslation.title</source>
+            <target><![CDATA[Nueva traducción de página <strong>%pageName%</strong>]]></target>
+        </trans-unit>
+        <trans-unit id="10" resname="modal.form.template.settings.title">
+            <source>modal.form.template.settings.title</source>
+            <target><![CDATA[Configuración de plantilla <strong>%templateName%</strong>]]></target>
+        </trans-unit>
+        <trans-unit id="11" resname="form.page.type.slug.label">
+            <source>form.page.type.slug.label</source>
+            <target>URL</target>
+        </trans-unit>
+        <trans-unit id="12" resname="form.page.type.status.label">
+            <source>form.page.type.status.label</source>
+            <target>Estado de la publicación</target>
+        </trans-unit>
+        <trans-unit id="13" resname="form.page.type.status.choice.label.draft">
+            <source>form.page.type.status.choice.label.draft</source>
+            <target>Calado</target>
+        </trans-unit>
+        <trans-unit id="14" resname="form.page.type.status.choice.label.published">
+            <source>form.page.type.status.choice.label.published</source>
+            <target>Publicado</target>
+        </trans-unit>
+        <trans-unit id="15" resname="form.page.type.status.choice.label.unpublished">
+            <source>form.page.type.status.choice.label.unpublished</source>
+            <target>Inédito</target>
+        </trans-unit>
+        <trans-unit id="16" resname="form.page.type.status.choice.label.scheduled">
+            <source>form.page.type.status.choice.label.scheduled</source>
+            <target>Publicado desde</target>
+        </trans-unit>
+        <trans-unit id="17" resname="victoire.menu.publication.scheduled.tooltip">
+            <source>victoire.menu.publication.scheduled.tooltip</source>
+            <target>Esta página se publica a partir de %publication_date%.</target>
+        </trans-unit>
+        <trans-unit id="18" resname="index.template.modal.header">
+            <source>index.template.modal.header</source>
+            <target>Lista de plantillas</target>
+        </trans-unit>
+        <trans-unit id="19" resname="form.template.type.name.label">
+            <source>form.template.type.name.label</source>
+            <target>Nombre</target>
+        </trans-unit>
+        <trans-unit id="20" resname="form.template.type.template.label">
+            <source>form.template.type.template.label</source>
+            <target>Plantilla de usar</target>
+        </trans-unit>
+        <trans-unit id="21" resname="form.template.type.layout.label">
+            <source>form.template.type.layout.label</source>
+            <target>Diseño</target>
+        </trans-unit>
+        <trans-unit id="988d30bf1d090a16c4c086005c745ec82dfc20d7" resname="menu.page.new">
+            <source>menu.page.new</source>
+            <target><![CDATA[<i class="vic-menuImg vic-menuImg-new"></i> Nueva página]]></target>
+        </trans-unit>
+        <trans-unit id="da05b847ec5c3af60439eddb617f5a682c88963b" resname="menu.page.settings">
+            <source>menu.page.settings</source>
+            <target><![CDATA[<i class="vic-menuImg vic-menuImg-gear"></i> Configuración de página]]></target>
+        </trans-unit>
+        <trans-unit id="f6f4243e5ddbf57050e0876a9ad4408dc17a6113" resname="menu.page.template">
+            <source>menu.page.template</source>
+            <target><![CDATA[<i class="vic-menuImg vic-menuImg-gear"></i> Plantilla de la página]]></target>
+        </trans-unit>
+        <trans-unit id="24" resname="menu.template.index">
+            <source>menu.template.index</source>
+            <target><![CDATA[<i class="vic-menuImg vic-menuImg-gear"></i> Lista de plantillas]]></target>
+        </trans-unit>
+        <trans-unit id="eaeab063c6c4371efab54c81387875c285203f54" resname="menu.template">
+            <source>menu.template</source>
+            <target>Plantilla</target>
+        </trans-unit>
+        <trans-unit id="eaec515f32ede19c5d5b5048ca8ca296443454ab" resname="menu.template.new">
+            <source>menu.template.new</source>
+            <target><![CDATA[<i class="vic-menuImg vic-menuImg-new"></i> Nueva plantilla]]></target>
+        </trans-unit>
+        <trans-unit id="6a352f12741976c2b1287940116a2fe66616fa68" resname="menu.template.settings">
+            <source>menu.template.settings</source>
+            <target><![CDATA[<i class="vic-menuImg vic-menuImg-gear"></i> Configuración de plantilla]]></target>
+        </trans-unit>
+        <trans-unit id="10e981313207b6ebcdd8dc5a8b9e085c0b3eecb2" resname="modal.form.page.settings.action.delete.confirm.title">
+            <source>modal.form.page.settings.action.delete.confirm.title</source>
+            <target>¿ Esto es su respuesta final ?</target>
+        </trans-unit>
+        <trans-unit id="f0bdf6be270bede6fc8424cd68807b2988c1c5da" resname="modal.form.page.settings.action.delete.confirm.body">
+            <source>modal.form.page.settings.action.delete.confirm.body</source>
+            <target><![CDATA[Esta acción eliminará permanentemente esta página. Esta acción es irreversible.<br/><strong> ¿ Está seguro ?</strong>]]></target>
+        </trans-unit>
+        <trans-unit id="fdsfdsf0bdf6be270be" resname="victoire_page.create.success">
+            <source>victoire_page.create.success</source>
+            <target>Página creada con éxito</target>
+        </trans-unit>
+        <trans-unit id="fdsfdsf0bdf6be270be" resname="victoire_page.update.success">
+            <source>victoire_page.update.success</source>
+            <target>Página éxito modificado</target>
+        </trans-unit>
+    </body>
+  </file>
+</xliff>

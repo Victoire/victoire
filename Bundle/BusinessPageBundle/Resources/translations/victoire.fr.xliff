@@ -12,11 +12,11 @@
       </trans-unit>
       <trans-unit id="8eebf03437d3711e7a615d6acbb00258319c2546" resname="business_template.edit.title">
         <source>business_template.edit.title</source>
-        <target>Edition d'une représentation métier</target>
+        <target>Modifier une représentation métier</target>
       </trans-unit>
       <trans-unit id="f6caec6dabceeba3182322b3466fcafa8d8f51ab" resname="list.action.add">
         <source>list.action.add</source>
-        <target>Ajouter une représentation</target>
+        <target>Ajouter une représentation métier</target>
       </trans-unit>
       <trans-unit id="fb1d64fdeabb5f2fe1671d4f3fb72ccca7722ed3" resname="list.action.edit">
         <source>list.action.edit</source>
@@ -35,7 +35,7 @@
         <target>Les objets concernés par cette représentation</target>
       </trans-unit>
       <trans-unit id="9a84dc1132d73a2f0abce302a49337045c823482" resname="modal.mandatory_fields.label">
-        <source>Mandatory fields</source>
+        <source>modal.mandatory_fields.label</source>
         <target>Champs obligatoires</target>
       </trans-unit>
       <trans-unit id="19ccbd8b16123d88eb230626a5b1110504c35954" resname="menu.business_template">
@@ -44,7 +44,7 @@
       </trans-unit>
       <trans-unit id="16123d88eb230626a519ccbd8bb1110504c35954" resname="victoire.business_template.create.success">
         <source>victoire.business_template.create.success</source>
-        <target>La représentation métier a bien été créé</target>
+        <target>La représentation métier a bien été créée</target>
       </trans-unit>
       <trans-unit id="16123d88eb230619ccbd8b26a5b1110504c35954" resname="victoire.business_template.edit.success">
         <source>victoire.business_template.edit.success</source>
@@ -56,7 +56,7 @@
       </trans-unit>
       <trans-unit id="1" resname="victoire.form.business_template.slug.label">
         <source>victoire.form.business_template.slug.label</source>
-        <target>Url</target>
+        <target>URL</target>
       </trans-unit>
       <trans-unit id="4c359543d88eb230619ccbd8b26a5b1110501612" resname="victoire.form.business_template.query.label">
         <source>victoire.form.business_template.query.label</source>
@@ -64,7 +64,7 @@
       </trans-unit>
       <trans-unit id="230619ccbd8b26a54c359543d88ebb1110501612" resname="victoire.form.business_template.query.vic_help_block">
         <source>victoire.form.business_template.query.vic_help_block</source>
-        <target><![CDATA[<i class="fa fa-info-circle"></i> <em>Cette partie est réservée aux développeurs</em>. Utilisez ce champ pour définir quels instances sont autorisés à utiliser cette représentation métier]]></target>
+        <target><![CDATA[<i class="fa fa-info-circle"></i> <em>Cette partie est réservée aux développeurs</em>. Utilisez ce champ pour définir quelles instances sont autorisées à utiliser cette représentation métier]]></target>
       </trans-unit>
       <trans-unit id="d8b26a54c359543d88ebb111050161FDSFD2" resname="victoire.form.business_template.query.url.fieldset">
         <source>victoire.form.business_template.query.url.fieldset</source>
@@ -72,7 +72,7 @@
       </trans-unit>
       <trans-unit id="d8b26a54c359543d88ebb111050161FDSFD2" resname="victoire.form.business_template.slug.vic_help_block">
         <source>victoire.form.business_template.slug.vic_help_block</source>
-        <target><![CDATA[<i class="fa fa-info-circle"></i> Utilisez une proprieté de l'entité pour dynamiser l'url.]]></target>
+        <target><![CDATA[<i class="fa fa-info-circle"></i> Utilisez une proprieté de l'entité pour dynamiser l'URL.]]></target>
       </trans-unit>
       <trans-unit id="d8b26a54c359543d88ebb111050161FDSFD2" resname="victoire.form.business_template.name.vic_help_block">
         <source>victoire.form.business_template.name.vic_help_block</source>
@@ -82,9 +82,10 @@
         <source>business_template.listEntities.empty</source>
         <target><![CDATA[<div class="vic-alert vic-alert-info">Cette représentation métier n'est pas utilisée.</div>]]></target>
       </trans-unit>
+      <trans-unit id="2" resname="business_template.listEntities">
+        <source>business_template.listEntities</source>
+        <target>Liste des représentations de l’objet métier</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
-
-
-

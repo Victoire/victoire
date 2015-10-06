@@ -16,15 +16,15 @@ Feature: Create business entity pages
         When I follow "Représentation métier"
         And I close the hamburger menu
         Then I should see "Jedi"
-        Then I should see "Ajouter une représentation"
+        Then I should see "Ajouter une représentation métier"
         When I follow the tab "Jedi"
-        And I should see "Ajouter une représentation"
-        And I follow "Ajouter une représentation"
+        And I should see "Ajouter une représentation métier"
+        And I follow "Ajouter une représentation métier"
         Then I should see "Créer une représentation métier"
         When I fill in "Nom" with "Fiche Jedi - {{item.name}}"
-        And I fill in "Url" with "fiche-jedi-{{item.slug}}"
+        And I fill in "URL" with "fiche-jedi-{{item.slug}}"
         And I follow "Créer"
-        Then I should see "La représentation métier a bien été créé"
+        Then I should see "La représentation métier a bien été créée"
         And I wait 5 seconds
         And I should be on "/fr/victoire-dcms/business-template/show/5"
         Then I switch to "layout" mode
@@ -46,16 +46,16 @@ Feature: Create business entity pages
         Then I should see "Représentation métier"
         When I follow "Représentation métier"
         And I close the hamburger menu
-        Then I should see "Ajouter une représentation"
+        Then I should see "Ajouter une représentation métier"
         When I follow the tab "Jedi"
-        And I should see "Ajouter une représentation"
-        And I follow "Ajouter une représentation"
+        And I should see "Ajouter une représentation métier"
+        And I follow "Ajouter une représentation métier"
         Then I should see "Créer une représentation métier"
         When I fill in "Nom" with "Fiche Jedi Dark - {{item.name}}"
-        And I fill in "Url" with "fiche-jedi-dark-{{item.slug}}"
+        And I fill in "URL" with "fiche-jedi-dark-{{item.slug}}"
         And I fill in "victoire_business_template_type[query]" with "WHERE item.side='dark'"
         And I follow "Créer"
-        Then I should see "La représentation métier a bien été créé"
+        Then I should see "La représentation métier a bien été créée"
         And I wait 5 seconds
         And I should be on "/fr/victoire-dcms/business-template/show/5"
         Then I switch to "layout" mode
@@ -68,16 +68,16 @@ Feature: Create business entity pages
         When I open the hamburger menu
         And I follow "Représentation métier"
         And I close the hamburger menu
-        Then I should see "Ajouter une représentation"
+        Then I should see "Ajouter une représentation métier"
         When I follow the tab "Jedi"
-        And I should see "Ajouter une représentation"
-        And I follow "Ajouter une représentation"
+        And I should see "Ajouter une représentation métier"
+        And I follow "Ajouter une représentation métier"
         Then I should see "Créer une représentation métier"
         When I fill in "Nom" with "Fiche Jedi Bright - {{item.name}}"
-        And I fill in "Url" with "fiche-jedi-bright-{{item.slug}}"
+        And I fill in "URL" with "fiche-jedi-bright-{{item.slug}}"
         And I fill in "victoire_business_template_type[query]" with "WHERE item.side='bright'"
         And I follow "Créer"
-        Then I should see "La représentation métier a bien été créé"
+        Then I should see "La représentation métier a bien été créée"
         And I wait 5 seconds
         And I should be on "/fr/victoire-dcms/business-template/show/6"
         Then I switch to "layout" mode
@@ -102,15 +102,15 @@ Feature: Create business entity pages
         Then I should see "Représentation métier"
         When I follow "Représentation métier"
         And I close the hamburger menu
-        Then I should see "Ajouter une représentation"
+        Then I should see "Ajouter une représentation métier"
         When I follow the tab "Jedi"
-        And I should see "Ajouter une représentation"
-        And I follow "Ajouter une représentation"
+        And I should see "Ajouter une représentation métier"
+        And I follow "Ajouter une représentation métier"
         Then I should see "Créer une représentation métier"
         When I fill in "Nom" with "Fiche Jedi - {{item.name}}"
-        And I fill in "Url" with "fiche-jedi-{{item.slug}}"
+        And I fill in "URL" with "fiche-jedi-{{item.slug}}"
         And I follow "Créer"
-        Then I should see "La représentation métier a bien été créé"
+        Then I should see "La représentation métier a bien été créée"
         Given I am on "/fr/fiche-jedi-yoda"
         And I switch to "layout" mode
         When I select "Force" from the "1" select of "content" slot
@@ -126,15 +126,15 @@ Feature: Create business entity pages
         Then I should see "Représentation métier"
         When I follow "Représentation métier"
         And I close the hamburger menu
-        Then I should see "Ajouter une représentation"
+        Then I should see "Ajouter une représentation métier"
         When I follow the tab "Jedi"
-        And I should see "Ajouter une représentation"
-        And I follow "Ajouter une représentation"
+        And I should see "Ajouter une représentation métier"
+        And I follow "Ajouter une représentation métier"
         Then I should see "Créer une représentation métier"
         When I fill in "Nom" with "Fiche Jedi - {{item.name}}"
-        And I fill in "Url" with "fiche-jedi-{{item.slug}}"
+        And I fill in "URL" with "fiche-jedi-{{item.slug}}"
         And I follow "Créer"
-        Then I should see "La représentation métier a bien été créé"
+        Then I should see "La représentation métier a bien été créée"
         And I should be on "/fr/victoire-dcms/business-template/show/5"
         Then I switch to "layout" mode
         When I select "Force" from the "1" select of "content" slot

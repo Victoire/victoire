@@ -87,9 +87,9 @@
             <ul class="breadcrumb">
                 {% for breadcrumbitem in breadcrumbitems %}
                 {% if loop.last %}
-                <li class="active">{{ breadcrumbitem.internalname | trans }}</li>
+                <li class="active">{{ breadcrumbitem.internalname |trans({}, 'victoire') }}</li>
                 {% else %}
-                <li><a href="{{ path(breadcrumbitem.route, breadcrumbitem.routeparams) }}">{{ breadcrumbitem.internalname | trans }}</a></li>
+                <li><a href="{{ path(breadcrumbitem.route, breadcrumbitem.routeparams) }}">{{ breadcrumbitem.internalname |trans({}, 'victoire') }}</a></li>
                 {% endif %}
                 {% endfor %}
             </ul>
@@ -111,7 +111,7 @@
             <!--Content-header-->
             {% block header %}
             <div class="page-header">
-                {% if adminmenu.current %}<h1>{{ adminmenu.current.internalname | trans }} {% block page_header_addition %}{% endblock %}</h1>{% endif %}
+                {% if adminmenu.current %}<h1>{{ adminmenu.current.internalname |trans({}, 'victoire') }} {% block page_header_addition %}{% endblock %}</h1>{% endif %}
                 {% block extra_actions_header %}{% endblock %}
             </div>
             {% endblock %}

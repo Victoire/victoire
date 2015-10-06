@@ -15,6 +15,7 @@ Background:
         Then I should see "Nom"
         When I fill in "Nom" with "The Jedi network"
         And I follow "Créer"
+        Then I should see "Page créée avec succès"
         And I wait 5 seconds
         And I switch to "layout" mode
         When I select "Force" from the "1" select of "content" slot

@@ -10,8 +10,9 @@ Background:
         When I select the option "Paramètres de l'article" in the dropdown "Blog"
         Then I should see "Supprimer"
         Given I follow "Supprimer"
-        Then I should see "Cette action va supprimer définitivement cet article. Cette action est irréversible. Etes vous sûr ?"
+        Then I should see "Cette action va supprimer définitivement cet article. Cette action est irréversible. Êtes-vous sûr ?"
         Given I press "J'ai bien compris, je confirme la suppression"
+        #TODO Then I should see "L'article a bien été supprimé"
         And I wait 10 seconds
         And I should be on "/fr/the-jedi-network"
 
@@ -23,7 +24,8 @@ Background:
         And I follow "Paramètres"
         And I should see "Supprimer"
         Given I follow "Supprimer"
-        Then I should see "Cette action va supprimer définitivement cette page. Cette action est irréversible. Etes vous sûr ?"
+        Then I should see "Cette action va supprimer définitivement cette page. Cette action est irréversible. Êtes-vous sûr ?"
         Given I press "J'ai bien compris, je confirme la suppression"
+        #TODO Then I should see "Victoire !"
         And I wait 10 seconds
         And I should be on "/fr/"

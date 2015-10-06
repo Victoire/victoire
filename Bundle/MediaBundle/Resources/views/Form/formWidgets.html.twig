@@ -5,7 +5,7 @@
 
         <div class="input_media hasnomedia">
             <div class="preview"></div>
-            <a data-toggle="modal" src="{{ path('VictoireMediaBundle_chooser') }}" class="choose vic-btn vic-btn-default"><i class="fa fa-picture-o"></i> {{ 'media.widget.choose' | trans }}</a>
+            <a data-toggle="modal" src="{{ path('VictoireMediaBundle_chooser') }}" class="choose vic-btn vic-btn-default"><i class="fa fa-picture-o"></i>{{ 'media.widget.choose'|trans({}, 'victoire') }}</a>
         </div>
 
         <div class="input_media hasmedia">
@@ -14,12 +14,12 @@
                 {% set handler = mediamanager.getHandler(media) %}
                 {% set thumbnailurl =  handler.getImageUrl(media, app.request.basePath, 210, 150) %}
                 <div class="preview" {% if thumbnailurl != "" %}style="background-image: url('{{ thumbnailurl }}');"{% endif %}>
-                    <button class="del vic-btn vic-btn-danger vic-btn-bordered"><i class="fa fa-trash-o"></i> {{ 'media.widget.delete'|trans }}</button>
+                    <button class="del vic-btn vic-btn-danger vic-btn-bordered"><i class="fa fa-trash-o"></i> {{ 'media.widget.delete'|trans({}, 'victoire') }}</button>
                 </div>
                 <p class="title">{{ media.name }}</p>
             {% else %}
                 <div class="preview">
-                    <button class="del vic-btn vic-btn-danger vic-btn-bordered"><i class="fa fa-trash-o"></i> {{ 'media.widget.delete'|trans }}</button>
+                    <button class="del vic-btn vic-btn-danger vic-btn-bordered"><i class="fa fa-trash-o"></i> {{ 'media.widget.delete'|trans({}, 'victoire') }}</button>
                 </div>
                 <p class="title"></p>
             {% endif %}

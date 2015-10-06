@@ -13,13 +13,13 @@ Feature: Mercenary is not a BusinessEntity itself but extends Character which is
         Given I open the hamburger menu
             Then I should see "Représentation métier"
             When I follow "Représentation métier"
-            Then I should see "Ajouter une représentation"
+            Then I should see "Ajouter une représentation métier"
             When I follow the tab "Character"
-            And I should see "Ajouter une représentation"
-            And I follow "Ajouter une représentation"
+            And I should see "Ajouter une représentation métier"
+            And I follow "Ajouter une représentation métier"
             Then I should see "Créer une représentation métier"
             When I fill in "Nom" with "Fiche Personnage - {{item.name}}"
-            And I fill in "Url" with "fiche-personnage-{{item.slug}}"
+            And I fill in "URL" with "fiche-personnage-{{item.slug}}"
             And I follow "Créer"
             And I wait 10 seconds
             And I should be on "/fr/victoire-dcms/business-template/show/5"

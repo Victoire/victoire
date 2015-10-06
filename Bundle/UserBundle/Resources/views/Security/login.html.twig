@@ -50,6 +50,6 @@
     <div class="vic-form-group -vic-login vic-text-center">
         <button class="vic-btn vic-btn-success vic-btn-block -vic-login" type="submit" id="_submit" name="_submit">{{ 'victoire.login.submit.label'|trans({}, 'victoire') }}</button>
     </div>
-        <p class="vic-help-block">J'ai oublié mon <a href="{{ path('fos_user_resetting_request') }}">mot de passe</a></p>
+        <p class="vic-help-block"><a href="{{ path('fos_user_resetting_request') }}">{{ 'victoire.login.forgot.label'|trans({}, 'victoire') }}</a></p>
 </form>
 {% endblock fos_user_content %}

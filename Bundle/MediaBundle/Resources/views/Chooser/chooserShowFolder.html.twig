@@ -35,9 +35,9 @@
 
 {% block subbreadcrumb %}
     {% for parent in folder.parents %}
-        <li><a href="{{ path('VictoireMediaBundle_image_chooser_show_folder', { 'folderId': parent.id, 'type': type, 'CKEditorFuncNum': cKEditorFuncNum }) }}">{{ parent.name | trans }}</a></li>
+        <li><a href="{{ path('VictoireMediaBundle_image_chooser_show_folder', { 'folderId': parent.id, 'type': type, 'CKEditorFuncNum': cKEditorFuncNum }) }}">{{ parent.name |trans({}, 'victoire') }}</a></li>
     {% endfor %}
-	<li class="active">{{ folder.name | trans }}</li>
+	<li class="active">{{ folder.name |trans({}, 'victoire') }}</li>
 {% endblock %}
 
 {% block body %}
@@ -55,11 +55,11 @@
             </div>
         </aside>
 		<div class="content">
-        	<h1>{{ folder.name | trans }}</h1>
+        	<h1>{{ folder.name |trans({}, 'victoire') }}</h1>
             <div class="main_actions btn-group">
                 <div class="main_actions btn-group">
                     {% for addaction in mediamanager.getFolderAddActions() %}
-                        <a href="{{ path('VictoireMediaBundle_media_create', { 'folderId' : folder.id, 'type': addaction.type }) }}" data-toggle="modal" data-target="#add{{ addaction.type }}-modal" class="btn {% if loop.first %}btn-primary{% endif %}">{{ addaction.name |trans }}</a>
+                        <a href="{{ path('VictoireMediaBundle_media_create', { 'folderId' : folder.id, 'type': addaction.type }) }}" data-toggle="modal" data-target="#add{{ addaction.type }}-modal" class="btn {% if loop.first %}btn-primary{% endif %}">{{ addaction.name |trans({}, 'victoire') }}</a>
                     {% endfor %}
                 </div>
             </div>
@@ -68,7 +68,7 @@
                 	<tbody>
         		        {% for child in folder.children %}
         		            <tr>
-        		            	<td><a href="{{ path('VictoireMediaBundle_chooser_show_folder', { 'folderId' :child.id, 'type' : type, 'CKEditorFuncNum': cKEditorFuncNum }) }}">{{ child.name | trans }}</td>
+        		            	<td><a href="{{ path('VictoireMediaBundle_chooser_show_folder', { 'folderId' :child.id, 'type' : type, 'CKEditorFuncNum': cKEditorFuncNum }) }}">{{ child.name |trans({}, 'victoire') }}</td>
         		            </tr>
         		        {% endfor %}
         			</tbody>
@@ -91,7 +91,7 @@
             		                {% endif %}
             		                <p class="img_name">{{ media.name }}</p>
             		            </a>
-            		            <span class="helper">Click to select</span>
+            		            <span class="helper">{{ 'media.select.helper'|trans({}, 'victoire') }}</span>
             		         </li>
         		         {% endif %}
         		    {% endfor %}
