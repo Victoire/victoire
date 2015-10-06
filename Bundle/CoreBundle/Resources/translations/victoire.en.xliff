@@ -201,6 +201,7 @@
       <trans-unit id="27" resname="vicmenu.logout.label">
         <source>vicmenu.logout.label</source>
         <target>Log out</target>
+      </trans-unit>
       <trans-unit id="28" resname="form.widget.tab.entity.disable.label">
         <source>form.widget.tab.entity.disable.label</source>
         <target>At least one one businessParameter is missing for this BusinessEntity to be available on this Widget</target>
