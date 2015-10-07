@@ -20,7 +20,7 @@
       </trans-unit>
       <trans-unit id="3" resname="widget_layout.form.containerWidth.label">
         <source>widget_layout.form.containerWidth.label</source>
-        <target>Width of the container</target>
+        <target>Container's width</target>
       </trans-unit>
       <trans-unit id="4" resname="widget_layout.form.containerMargin.label">
         <source>widget_layout.form.containerMargin.label</source>
@@ -140,23 +140,23 @@
       </trans-unit>
       <trans-unit id="38" resname="widget_layout.form.containerHeightXS.label">
         <source>widget_layout.form.containerHeightXS.label</source>
-        <target>Container's minimum height</target>
+        <target>Minimum height</target>
       </trans-unit>
       <trans-unit id="38" resname="widget_layout.form.containerHeight.label">
         <source>widget_layout.form.containerHeight.label</source>
-        <target>Container's minimum height</target>
+        <target>Minimum height</target>
       </trans-unit>
       <trans-unit id="39" resname="widget_layout.form.containerHeightSM.label">
         <source>widget_layout.form.containerHeightSM.label</source>
-        <target>Container's minimum height</target>
+        <target>Minimum height</target>
       </trans-unit>
       <trans-unit id="40" resname="widget_layout.form.containerHeightMD.label">
         <source>widget_layout.form.containerHeightMD.label</source>
-        <target>Container's minimum height</target>
+        <target>Minimum height</target>
       </trans-unit>
       <trans-unit id="41" resname="widget_layout.form.containerHeightLG.label">
         <source>widget_layout.form.containerHeightLG.label</source>
-        <target>Container's minimum height</target>
+        <target>Minimum height</target>
       </trans-unit>
       <trans-unit id="42" resname="widget_layout.form.containerBackgroundXS.label">
         <source>widget_layout.form.containerBackgroundXS.label</source>
