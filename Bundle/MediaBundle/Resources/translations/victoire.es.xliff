@@ -270,6 +270,14 @@
         <source>form.cancel</source>
         <target>Cancelar</target>
       </trans-unit>
+      <trans-unit id="70" resname="form.save">
+        <source>form.save</source>
+        <target>Guardar</target>
+      </trans-unit>
+      <trans-unit id="69" resname="form.delete">
+        <source>form.delete</source>
+        <target>Borrar</target>
+      </trans-unit>
       <trans-unit id="66" resname="Type">
         <source>Type</source>
         <target>Origen</target>

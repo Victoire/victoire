@@ -91,12 +91,10 @@ class WidgetStyleType extends AbstractType
                 ->add('containerWidth'.$key, null, [
                     'label'          => 'widget_layout.form.containerWidth'.$key.'.label',
                     'attr'           => ['placeholder' => 'widget_layout.form.containerWidth.placeholder'],
-                    'vic_help_block' => 'widget_layout.form.containerWidth.help.label',
                 ])
                 ->add('containerHeight'.$key, null, [
                     'label'          => 'widget_layout.form.containerHeight'.$key.'.label',
                     'attr'           => ['placeholder' => 'widget_layout.form.containerWidth.placeholder'],
-                    'vic_help_block' => 'widget_layout.form.containerHeight.help.label',
                 ])
                 ->add('textAlign'.$key, 'choice', [
                     'label'       => 'widget_layout.form.textAlign'.$key.'.label',
@@ -174,7 +172,6 @@ class WidgetStyleType extends AbstractType
                 ])
                 ->add('containerBackgroundRepeat'.$responsiveKey, 'choice', [
                     'label'          => 'widget_layout.form.containerBackgroundRepeat'.$responsiveKey.'.label',
-                    'vic_help_block' => 'widget_layout.form.containerBackgroundRepeat.help.label',
                     'choices'        => [
                         'no-repeat' => 'widget_layout.form.containerBackgroundRepeat.choices.noRepeat.label',
                         'repeat'    => 'widget_layout.form.containerBackgroundRepeat.choices.repeat.label',
@@ -184,7 +181,6 @@ class WidgetStyleType extends AbstractType
                 ])
                 ->add('containerBackgroundPosition'.$responsiveKey, 'choice', [
                     'label'          => 'widget_layout.form.containerBackgroundPosition'.$responsiveKey.'.label',
-                    'vic_help_block' => 'widget_layout.form.containerBackgroundPosition.help.label',
                     'choices'        => [
                         'center center' => 'widget_layout.form.containerBackgroundRepeat.choices.center.center.label',
                         'center right'  => 'widget_layout.form.containerBackgroundRepeat.choices.center.right.label',
@@ -200,12 +196,10 @@ class WidgetStyleType extends AbstractType
                 ->add('containerBackgroundSize'.$responsiveKey, null, [
                     'label'          => 'widget_layout.form.containerBackgroundSize'.$responsiveKey.'.label',
                     'attr'           => ['placeholder' => 'widget_layout.form.containerWidth.placeholder'],
-                    'vic_help_block' => 'widget_layout.form.containerBackgroundSize.help.label',
                 ])
                 ->add('containerBackgroundOverlay'.$responsiveKey, null, [
                     'label'          => 'widget_layout.form.containerBackgroundOverlay'.$responsiveKey.'.label',
                     'attr'           => ['placeholder' => 'widget_layout.form.containerBackgroundOverlay.placeholder'],
-                    'vic_help_block' => 'widget_layout.form.containerBackgroundOverlay.help.label',
                 ]);
         } else {
             $form
@@ -217,7 +211,6 @@ class WidgetStyleType extends AbstractType
                 ->add('containerBackgroundColor'.$responsiveKey, null, [
                     'label'          => 'widget_layout.form.containerBackgroundColor'.$responsiveKey.'.label',
                     'attr'           => ['placeholder' => 'widget_layout.form.containerBackgroundColor.placeholder'],
-                    'vic_help_block' => 'widget_layout.form.containerBackgroundColor.help.label',
                 ]);
         }
     }
