@@ -278,6 +278,14 @@
         <source>media.edit.helper</source>
         <target>Click to edit</target>
       </trans-unit>
+      <trans-unit id="68" resname="form.save">
+        <source>form.save</source>
+        <target>Save</target>
+      </trans-unit>
+      <trans-unit id="69" resname="form.delete">
+        <source>form.delete</source>
+        <target>Delete</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

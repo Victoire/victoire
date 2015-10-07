@@ -266,7 +266,15 @@
         <source>youtube</source>
         <target>Youtube</target>
       </trans-unit>
-      <trans-unit id="65" resname="form.cancel">
+      <trans-unit id="65" resname="form.save">
+        <source>form.save</source>
+        <target>Sauvegarder</target>
+      </trans-unit>
+      <trans-unit id="69" resname="form.delete">
+        <source>form.delete</source>
+        <target>Supprimer</target>
+      </trans-unit>
+      <trans-unit id="66" resname="form.cancel">
         <source>form.cancel</source>
         <target>Annuler</target>
       </trans-unit>

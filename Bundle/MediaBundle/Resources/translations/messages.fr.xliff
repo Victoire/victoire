@@ -274,6 +274,14 @@
         <source>media.edit.helper</source>
         <target>Cliquer pour éditer</target>
       </trans-unit>
+      <trans-unit id="66" resname="form.save">
+        <source>form.save</source>
+        <target>Sauvegarder</target>
+      </trans-unit>
+      <trans-unit id="69" resname="form.delete">
+        <source>form.delete</source>
+        <target>Supprimer</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
