@@ -53,3 +53,14 @@ services:
 
     victoire_business_entity.provider.entity_proxy_provider:
         class: Victoire\Bundle\BusinessEntityBundle\Provider\EntityProxyProvider
+
+    ####################################################################################################################
+    # Security voter
+    ####################################################################################################################
+    victoire_business_entity.security.voter.business_entity_owner_voter:
+        class: Victoire\Bundle\BusinessEntityBundle\Security\Voter\BusinessEntityOwnerVoter
+        arguments:
+            - '%victoire_core.user_class%'
+            - '@victoire_core.helper.business_entity_helper'
+        tags:
+            - { name: security.voter }

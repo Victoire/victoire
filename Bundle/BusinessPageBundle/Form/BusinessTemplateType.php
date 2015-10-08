@@ -32,6 +32,7 @@ class BusinessTemplateType extends ViewType
         parent::buildForm($builder, $options);
 
         $builder
+            ->add('authorRestricted')
             ->add('businessEntityId', 'hidden')
             ->add('query', null, [
                     'label' => 'victoire.form.business_template.query.label',

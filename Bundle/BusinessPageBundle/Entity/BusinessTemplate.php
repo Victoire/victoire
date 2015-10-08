@@ -32,6 +32,13 @@ class BusinessTemplate extends Template
     protected $inheritors;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="author_restricted", type="boolean")
+     */
+    protected $authorRestricted;
+
+    /**
      * contruct.
      **/
     public function __construct()
@@ -87,4 +94,21 @@ class BusinessTemplate extends Template
     {
         return $this->seo;
     }
+
+    /**
+     * @return boolean
+     */
+    public function isAuthorRestricted()
+    {
+        return $this->authorRestricted;
+    }
+
+    /**
+     * @param boolean $authorRestricted
+     */
+    public function setAuthorRestricted($authorRestricted)
+    {
+        $this->authorRestricted = $authorRestricted;
+    }
+
 }
