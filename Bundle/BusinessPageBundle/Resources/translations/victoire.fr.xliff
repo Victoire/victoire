@@ -62,6 +62,10 @@
         <source>victoire.form.business_template.query.label</source>
         <target><![CDATA[<i class="fa fa-database"></i> Requête <strong>BETA</strong>]]></target>
       </trans-unit>
+      <trans-unit id="4c359543d88eb230619ccbd8b26a5b1110501613" resname="victoire.form.business_template.author_restricted.label">
+        <source>victoire.form.business_template.author_restricted.label</source>
+        <target>Restreindre à l'auteur de l'entité</target>
+      </trans-unit>
       <trans-unit id="230619ccbd8b26a54c359543d88ebb1110501612" resname="victoire.form.business_template.query.vic_help_block">
         <source>victoire.form.business_template.query.vic_help_block</source>
         <target><![CDATA[<i class="fa fa-info-circle"></i> <em>Cette partie est réservée aux développeurs</em>. Utilisez ce champ pour définir quelles instances sont autorisées à utiliser cette représentation métier]]></target>

@@ -62,6 +62,10 @@
         <source>victoire.form.business_template.query.label</source>
         <target><![CDATA[<i class="fa fa-database"></i> Query <strong>BETA</strong>]]></target>
       </trans-unit>
+      <trans-unit id="4c359543d88eb230619ccbd8b26a5b1110501613" resname="victoire.form.business_template.author_restricted.label">
+        <source>victoire.form.business_template.author_restricted.label</source>
+        <target>Restrict to the entity's author</target>
+      </trans-unit>
       <trans-unit id="230619ccbd8b26a54c359543d88ebb1110501612" resname="victoire.form.business_template.query.vic_help_block">
         <source>victoire.form.business_template.query.vic_help_block</source>
         <target><![CDATA[<i class="fa fa-info-circle"></i> <em>This field is for developers only.</em> Use this field to define which authorities are authorized to use this business template]]></target>

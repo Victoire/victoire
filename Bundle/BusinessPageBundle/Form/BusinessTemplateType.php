@@ -32,15 +32,16 @@ class BusinessTemplateType extends ViewType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add('authorRestricted')
-            ->add('businessEntityId', 'hidden')
+            ->add('authorRestricted', null, [
+                'label' => 'victoire.form.business_template.author_restricted.label',
+            ])
             ->add('query', null, [
-                    'label' => 'victoire.form.business_template.query.label',
-
-                ])->add('slug', null, [
-                    'label' => 'victoire.form.business_template.slug.label',
-                ]
-            );
+                'label' => 'victoire.form.business_template.query.label',
+            ])
+            ->add('slug', null, [
+                'label' => 'victoire.form.business_template.slug.label',
+            ])
+            ->add('businessEntityId', 'hidden');
     }
 
     /**
@@ -54,7 +55,7 @@ class BusinessTemplateType extends ViewType
 
         $resolver->setDefaults([
                 'data_class'        => 'Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate',
-                'translationDomain' => 'victoire',
+                'translation_domain' => 'victoire',
         ]);
     }
 
