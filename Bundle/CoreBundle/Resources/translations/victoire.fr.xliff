@@ -146,10 +146,6 @@
         <source>victoire.login.password.label</source>
         <target>Mot de passe</target>
       </trans-unit>
-      <trans-unit id="15" resname="victoire.theme.default.label">
-        <source>victoire.theme.default.label</source>
-        <target>Standard</target>
-      </trans-unit>
       <trans-unit id="16" resname="victoire.login.submit.label">
         <source>victoire.login.submit.label</source>
         <target>Embarquer</target>
@@ -209,6 +205,10 @@
       <trans-unit id="30" resname="form.widget.tab.entity.disable.label">
         <source>form.widget.tab.entity.disable.label</source>
         <target>Il manque au moins un businessParameter pour que cette BusinessEntity soit utilisable avec ce Widget</target>
+      </trans-unit>
+      <trans-unit id="31" resname="form.widget.tab.manual.label">
+        <source>form.widget.tab.manual.label</source>
+        <target>Manuel</target>
       </trans-unit>
     </body>
   </file>

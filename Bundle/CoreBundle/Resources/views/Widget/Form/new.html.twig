@@ -11,7 +11,7 @@
 
     {% if classes|length %}
         <ul class="vic-nav vic-nav-tabs vic-modal-nav-tabs">
-            <li class="{% if constant('MODE_STATIC', widget) == widget.mode %}vic-active {% endif %}vic-seperate"><a href="#picker-static" data-toggle="vic-tab">Manuel</a></li>
+            <li class="{% if constant('MODE_STATIC', widget) == widget.mode %}vic-active {% endif %}vic-seperate"><a href="#picker-static" data-toggle="vic-tab">{{ ('form.widget.tab.manual.label')|trans({}, 'victoire') }}</a></li>
             {% for class, namespace in classes %}
                 {% if namespace.disable %}
                     <li class="vic-disable"><span title="{{ ('form.widget.tab.entity.disable.label')|trans({}, 'victoire') }}">{{ ('form.widget.tab.' ~ class|lower ~ '.label')|trans({}, 'victoire') }}</span></li>

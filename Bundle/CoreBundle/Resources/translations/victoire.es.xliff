@@ -150,10 +150,6 @@
         <source>victoire.login.password.label</source>
         <target>Contraseña</target>
       </trans-unit>
-      <trans-unit id="15" resname="victoire.theme.default.label">
-        <source>victoire.theme.default.label</source>
-        <target>Estándar</target>
-      </trans-unit>
       <trans-unit id="16" resname="victoire.login.submit.label">
         <source>victoire.login.submit.label</source>
         <target>Embarcarse</target>
@@ -213,6 +209,10 @@
       <trans-unit id="30" resname="form.link_type.route.placeholder">
         <source>form.link_type.route.placeholder</source>
         <target>Route name</target>
+      </trans-unit>
+      <trans-unit id="31" resname="form.widget.tab.manual.label">
+        <source>form.widget.tab.manual.label</source>
+        <target>Manual</target>
       </trans-unit>
     </body>
   </file>
