@@ -106,3 +106,13 @@ services:
             - "@doctrine.orm.entity_manager"
         tags:
             - { name: twig.extension }
+
+    ####################################################################################################################
+    # ViewReference
+    ####################################################################################################################
+
+    victoire_page.page_reference_builder:
+        class: Victoire\Bundle\PageBundle\Builder\PageReferenceBuilder
+        parent: victoire_view_reference.base_view_reference.builder
+        tags:
+            - { name: victoire_view_reference.view_reference.builder, view: Victoire\Bundle\PageBundle\Entity\Page }

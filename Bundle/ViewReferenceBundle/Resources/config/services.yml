@@ -1,0 +1,35 @@
+services:
+    victoire_view_reference.builder:
+        class: Victoire\Bundle\ViewReferenceBundle\Builder\ViewReferenceBuilder
+        arguments:
+            - "@victoire_view_reference.builder_chain"
+
+    victoire_view_reference.base_view_reference.builder:
+        class: Victoire\Bundle\ViewReferenceBundle\Builder\BaseReferenceBuilder
+        abstract: true
+        arguments:
+            - @victoire_view_reference.helper
+            - @victoire_core.url_builder
+
+    victoire_view_reference.helper:
+        class: Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper
+
+    victoire_view_reference.provider:
+        class: Victoire\Bundle\ViewReferenceBundle\Provider\ViewReferenceProvider
+        arguments:
+            - @victoire_business_page.business_page_helper
+            - @victoire_business_page.business_page_builder
+
+    victoire_view_reference.event_subscriber:
+        class: Victoire\Bundle\ViewReferenceBundle\EventSubscriber\ViewReferenceSubscriber
+        arguments:
+            - "@victoire_core.url_builder"
+            - "@victoire_core.view_cache_helper"
+            - "@victoire_business_page.business_page_builder"
+            - "@victoire_view_reference.builder"
+            - "@victoire_view_reference.provider"
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+
+    victoire_view_reference.builder_chain:
+        class: Victoire\Bundle\ViewReferenceBundle\Builder\Chain\ViewReferenceBuilderChain

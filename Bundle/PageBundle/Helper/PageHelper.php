@@ -15,7 +15,6 @@ use Victoire\Bundle\BusinessPageBundle\Builder\BusinessPageBuilder;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
-use Victoire\Bundle\CoreBundle\Builder\ViewReferenceBuilder;
 use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Event\PageRenderEvent;
@@ -23,13 +22,14 @@ use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
 use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
 use Victoire\Bundle\CoreBundle\Helper\ViewHelper;
-use Victoire\Bundle\CoreBundle\Helper\ViewReferenceHelper;
-use Victoire\Bundle\CoreBundle\Manager\Chain\ViewReferenceBuilderChain;
-use Victoire\Bundle\CoreBundle\Provider\ViewReferenceProvider;
+use Victoire\Bundle\ViewReferenceBundle\Builder\Chain\ViewReferenceBuilderChain;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\SeoBundle\Helper\PageSeoHelper;
+use Victoire\Bundle\ViewReferenceBundle\Builder\ViewReferenceBuilder;
+use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
+use Victoire\Bundle\ViewReferenceBundle\Provider\ViewReferenceProvider;
 use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
 use Victoire\Bundle\WidgetMapBundle\Warmer\WidgetDataWarmer;
 
@@ -49,7 +49,7 @@ class PageHelper extends ViewHelper
     protected $token_storage; // @security.authorization_checker
     protected $authorizationChecker; // @security.authorization_checker
     protected $widgetMapBuilder; // @victoire_widget_map.builder
-    protected $viewReferenceBuilderChain; // @victoire_core.chain.view_reference_builder_chain
+    protected $viewReferenceBuilderChain; // @victoire_view_reference.builder_chain
     protected $urlBuilder; // @victoire_core.url_builder
     protected $viewCacheHelper;
     protected $widgetDataWarmer;

@@ -106,14 +106,13 @@ class BusinessEntitySubscriber implements EventSubscriber
                             'victoire_core.view_reference_builder'
                         )->buildViewReference($businessPage, $entityManager);
                         //we update the cache bor the persisted page
-                        $this->container->get('victoire_core.view_cache_helper')->update($viewReferences);
                     } else {
                         $viewReferences = $this->container->get(
                             'victoire_core.view_reference_builder'
                         )->buildViewReference($virtualBusinessPage, $entityManager);
                         //we update cache with the computed page
-                        $this->container->get('victoire_core.view_cache_helper')->update($viewReferences);
                     }
+                    $this->container->get('victoire_core.view_cache_helper')->update($viewReferences);
                 } else {
                     $rootNode = $this->container->get('victoire_core.view_cache_helper')->readCache();
 
@@ -123,13 +122,13 @@ class BusinessEntitySubscriber implements EventSubscriber
                         'viewNamespace' => 'Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage',
                     ];
 
-                    $viewReferenceHelper = $this->container->get('victoire_core.helper.view_reference_helper');
+                    $viewReferenceHelper = $this->container->get('victoire_view_reference.helper');
                     $viewsReferencesToRemove = $this->container->get('victoire_core.view_cache_helper')->getAllReferenceByParameters($parameters);
                     foreach ($viewsReferencesToRemove as $viewReferenceToRemove) {
                         $viewReferenceHelper->removeViewReference($rootNode, $viewReferenceToRemove);
                     }
 
-                    $viewReferences = $this->container->get('victoire_core.helper.view_reference_helper')->convertXmlCacheToArray($rootNode);
+                    $viewReferences = $this->container->get('victoire_view_reference.helper')->convertXmlCacheToArray($rootNode);
                     $this->container->get('victoire_core.view_cache_helper')->write($viewReferences);
                 }
             }

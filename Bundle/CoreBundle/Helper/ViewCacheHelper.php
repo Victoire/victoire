@@ -3,7 +3,7 @@
 namespace Victoire\Bundle\CoreBundle\Helper;
 
 use Symfony\Component\Config\Util\XmlUtils;
-use Symfony\Component\HttpFoundation\RequestStack;
+use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
 
 /**
  * View cache helper
@@ -12,18 +12,15 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class ViewCacheHelper
 {
     private $xmlFile;
-    private $requestStack;
     private $viewReferenceHelper;
 
     /**
      * @param string              $cacheDir
-     * @param RequestStack        $requestStack
      * @param ViewReferenceHelper $viewReferenceHelper
      */
-    public function __construct($cacheDir, RequestStack $requestStack, ViewReferenceHelper $viewReferenceHelper)
+    public function __construct($cacheDir, ViewReferenceHelper $viewReferenceHelper)
     {
         $this->xmlFile = $cacheDir.'/victoire/viewsReferences.xml';
-        $this->requestStack = $requestStack;
         $this->viewReferenceHelper = $viewReferenceHelper;
     }
 
@@ -65,9 +62,6 @@ XML;
      * if you want to update a BusinessTemplate and all its BP|VBP, you have to call updateTemplate method.
      *
      * @param $viewReferences
-     *
-     * @internal param View $view
-     * @internal param null|BusinessEntity $entity
      *
      * @return \SimpleXMLElement
      */

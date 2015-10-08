@@ -1,10 +1,10 @@
 <?php
 
-namespace Victoire\Bundle\BlogBundle\Manager;
+namespace Victoire\Bundle\BlogBundle\Builder;
 
 use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\CoreBundle\Entity\View;
-use Victoire\Bundle\CoreBundle\Manager\BaseReferenceBuilder;
+use Victoire\Bundle\ViewReferenceBundle\Builder\BaseReferenceBuilder;
 
 class ArticleTemplateReferenceBuilder extends BaseReferenceBuilder
 {

@@ -159,7 +159,7 @@ class WidgetController extends Controller
         $view = $this->getViewByReferenceId($viewReference);
         $widgetView = $widget->getView();
 
-        $widgetViewReferenceId = $this->get('victoire_core.helper.view_reference_helper')
+        $widgetViewReferenceId = $this->get('victoire_view_reference.helper')
             ->getViewReferenceId($widgetView);
 
         $widgetView->setReference(['id' => $widgetViewReferenceId]);
@@ -197,7 +197,7 @@ class WidgetController extends Controller
         $view = $this->getViewByReferenceId($viewReference);
         $widgetView = $widget->getView();
 
-        $widgetViewReferenceId = $this->get('victoire_core.helper.view_reference_helper')
+        $widgetViewReferenceId = $this->get('victoire_view_reference.helper')
             ->getViewReferenceId($widgetView);
 
         $widgetView->setReference(['id' => $widgetViewReferenceId]);

@@ -1,14 +1,14 @@
 <?php
 
-namespace Victoire\Bundle\CoreBundle\Builder;
+namespace Victoire\Bundle\ViewReferenceBundle\Builder;
 
 use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
-use Victoire\Bundle\CoreBundle\Manager\Chain\ViewReferenceBuilderChain;
+use Victoire\Bundle\ViewReferenceBundle\Builder\Chain\ViewReferenceBuilderChain;
 
 /**
  * Page helper
- * ref: victoire_core.view_reference_builder.
+ * ref: victoire_view_reference.builder.
  */
 class ViewReferenceBuilder
 {

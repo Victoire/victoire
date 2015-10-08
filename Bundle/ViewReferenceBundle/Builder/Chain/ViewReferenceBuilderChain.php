@@ -1,11 +1,10 @@
 <?php
 
-namespace Victoire\Bundle\CoreBundle\Manager\Chain;
+namespace Victoire\Bundle\ViewReferenceBundle\Builder\Chain;
 
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use Victoire\Bundle\CoreBundle\Entity\View;
-use Victoire\Bundle\CoreBundle\Manager\BaseReferenceBuilder;
-use Victoire\Bundle\CoreBundle\Manager\Interfaces\ReferenceBuilderInterface;
+use Victoire\Bundle\ViewReferenceBundle\Builder\BaseReferenceBuilder;
 
 /**
  * Class ViewReferenceBuilderChain.
@@ -22,17 +21,18 @@ class ViewReferenceBuilderChain
     /**
      * add a view Manager.
      *
-     * @param ReferenceBuilderInterface $viewManager
+     * @param BaseReferenceBuilder $viewManager
+     * @param string               $viewClassName
      */
-    public function addViewReferenceBuilder(BaseReferenceBuilder $viewManager, $view)
+    public function addViewReferenceBuilder(BaseReferenceBuilder $viewManager, $viewClassName)
     {
-        $this->viewsReferenceBuilders[$view] = $viewManager;
+        $this->viewsReferenceBuilders[$viewClassName] = $viewManager;
     }
 
     /**
      * @param View $view
      *
-     * @return ReferenceBuilderInterface
+     * @return BaseReferenceBuilder
      */
     public function getViewReferenceBuilder(View $view)
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Victoire\Bundle\CoreBundle\DependencyInjection\Compiler;
+namespace Victoire\Bundle\ViewReferenceBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -8,20 +8,20 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * Class ViewManagerCompilerPass.
+ * Class ViewReferenceBuilderCompilerPass.
  */
-class ViewManagerCompilerPass implements CompilerPassInterface
+class ViewReferenceBuilderCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('victoire_core.chain.view_reference_builder_chain')) {
+        if (!$container->hasDefinition('victoire_view_reference.builder_chain')) {
             return;
         }
         $definition = $container->getDefinition(
-            'victoire_core.chain.view_reference_builder_chain'
+            'victoire_view_reference.builder_chain'
         );
         $taggedServices = $container->findTaggedServiceIds(
-            'victoire_core.view_manager'
+            'victoire_view_reference.view_reference.builder'
         );
         foreach ($taggedServices as $id => $tagAttributes) {
             foreach ($tagAttributes as $attributes) {

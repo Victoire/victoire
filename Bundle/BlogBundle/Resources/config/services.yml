@@ -169,16 +169,16 @@ services:
 
 
     victoire_blog.manager.blog_reference_builder:
-        class: Victoire\Bundle\BlogBundle\Manager\BlogReferenceBuilder
-        parent: victoire_core.manager.page_reference_builder
+        class: Victoire\Bundle\BlogBundle\Builder\BlogReferenceBuilder
+        parent: victoire_view_reference.base_view_reference.builder
         tags:
-            - { name: victoire_core.view_manager, view: Victoire\Bundle\BlogBundle\Entity\Blog }
+            - { name: victoire_view_reference.view_reference.builder, view: Victoire\Bundle\BlogBundle\Entity\Blog }
 
     victoire_blog.manager.article_template_reference_builder:
-        class: Victoire\Bundle\BlogBundle\Manager\ArticleTemplateReferenceBuilder
-        parent: victoire_core.manager.page_reference_builder
+        class: Victoire\Bundle\BlogBundle\Builder\ArticleTemplateReferenceBuilder
+        parent: victoire_view_reference.base_view_reference.builder
         tags:
-            - { name: victoire_core.view_manager, view: Victoire\Bundle\BlogBundle\Entity\ArticleTemplate }
+            - { name: victoire_view_reference.view_reference.builder, view: Victoire\Bundle\BlogBundle\Entity\ArticleTemplate }
 
     victoire_blog.articleTemplate:
         class: Victoire\Bundle\BlogBundle\Entity\ArticleTemplate

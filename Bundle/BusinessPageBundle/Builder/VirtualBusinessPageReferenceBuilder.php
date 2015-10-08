@@ -1,11 +1,11 @@
 <?php
 
-namespace Victoire\Bundle\BusinessPageBundle\Manager;
+namespace Victoire\Bundle\BusinessPageBundle\Builder;
 
 use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\BlogBundle\Entity\Article;
 use Victoire\Bundle\CoreBundle\Entity\View;
-use Victoire\Bundle\CoreBundle\Manager\BaseReferenceBuilder;
+use Victoire\Bundle\ViewReferenceBundle\Builder\BaseReferenceBuilder;
 
 /**
  * VirtualBusinessPageReferenceBuilder.

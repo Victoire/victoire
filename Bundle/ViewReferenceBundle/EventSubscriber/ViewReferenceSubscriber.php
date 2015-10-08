@@ -1,6 +1,6 @@
 <?php
 
-namespace Victoire\Bundle\CoreBundle\EventSubscriber;
+namespace Victoire\Bundle\ViewReferenceBundle\EventSubscriber;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\EntityManager;
@@ -10,17 +10,17 @@ use Doctrine\ORM\UnitOfWork;
 use Victoire\Bundle\BusinessPageBundle\Builder\BusinessPageBuilder;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
-use Victoire\Bundle\CoreBundle\Builder\ViewReferenceBuilder;
 use Victoire\Bundle\CoreBundle\Entity\Route;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
 use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
-use Victoire\Bundle\CoreBundle\Provider\ViewReferenceProvider;
+use Victoire\Bundle\ViewReferenceBundle\Builder\ViewReferenceBuilder;
+use Victoire\Bundle\ViewReferenceBundle\Provider\ViewReferenceProvider;
 
 /**
  * Tracks if a slug changed and re-compute the view cache
- * ref: victoire_core.url_subscriber.
+ * ref: victoire_view_reference.event_subscriber.
  */
 class ViewReferenceSubscriber implements EventSubscriber
 {

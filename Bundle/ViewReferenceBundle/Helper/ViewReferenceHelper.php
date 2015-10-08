@@ -1,6 +1,6 @@
 <?php
 
-namespace Victoire\Bundle\CoreBundle\Helper;
+namespace Victoire\Bundle\ViewReferenceBundle\Helper;
 
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
@@ -8,8 +8,7 @@ use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 
 /**
- * ref: victoire_core.helper.view_reference_helper
- * Class ViewReferenceHelper.
+ * ref: victoire_view_reference.helper
  */
 class ViewReferenceHelper
 {

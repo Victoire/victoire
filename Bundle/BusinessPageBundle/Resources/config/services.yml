@@ -46,16 +46,16 @@ services:
             -  { name: victoire_core.bussinessEntityPagePattern, alias: default }
 
     victoire_business_page.manager.business_page_reference_builder:
-        class: Victoire\Bundle\BusinessPageBundle\Manager\BusinessPageReferenceBuilder
-        parent: victoire_core.manager.base_view_manager
+        class: Victoire\Bundle\BusinessPageBundle\Builder\BusinessPageReferenceBuilder
+        parent: victoire_view_reference.base_view_reference.builder
         tags:
-            - { name: victoire_core.view_manager, view: Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage }
+            - { name: victoire_view_reference.view_reference.builder, view: Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage }
 
     victoire_business_page.manager.virtual_business_page_reference_builder:
-        class: Victoire\Bundle\BusinessPageBundle\Manager\VirtualBusinessPageReferenceBuilder
-        parent: victoire_core.manager.base_view_manager
+        class: Victoire\Bundle\BusinessPageBundle\Builder\VirtualBusinessPageReferenceBuilder
+        parent: victoire_view_reference.base_view_reference.builder
         tags:
-            - { name: victoire_core.view_manager, view: Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage }
+            - { name: victoire_view_reference.view_reference.builder, view: Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage }
 
     victoire_business_page.transformer.virtual_to_business_page_transformer:
         class: Victoire\Bundle\BusinessPageBundle\Transformer\VirtualToBusinessPageTransformer

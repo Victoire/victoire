@@ -1,6 +1,6 @@
 <?php
 
-namespace Victoire\Bundle\CoreBundle\Provider;
+namespace Victoire\Bundle\ViewReferenceBundle\Provider;
 
 use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\BusinessPageBundle\Builder\BusinessPageBuilder;
@@ -11,6 +11,7 @@ use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 /**
  * @property BusinessPageHelper businessPageHelper
  * @property BusinessPageBuilder businessPageBuilder
+ * ref. victoire_view_reference.provider
  */
 class ViewReferenceProvider
 {
