@@ -347,7 +347,6 @@ class PageHelper extends ViewHelper
                 throw new AccessDeniedException('You are not allowed to see this page');
             }
         } elseif ($page instanceof BusinessPage) {
-
             if ($page->getTemplate()->isAuthorRestricted() && !$this->authorizationChecker->isGranted('BUSINESS_ENTITY_OWNER', $page->getBusinessEntity())) {
                 throw new AccessDeniedException('You are not allowed to see this page');
             }

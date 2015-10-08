@@ -54,7 +54,7 @@ class BusinessTemplateType extends ViewType
         $resolver->setOptional(['businessProperty']);
 
         $resolver->setDefaults([
-                'data_class'        => 'Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate',
+                'data_class'         => 'Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate',
                 'translation_domain' => 'victoire',
         ]);
     }

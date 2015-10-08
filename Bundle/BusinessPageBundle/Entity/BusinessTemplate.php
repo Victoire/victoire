@@ -32,7 +32,7 @@ class BusinessTemplate extends Template
     protected $inheritors;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="author_restricted", type="boolean")
      */
@@ -96,7 +96,7 @@ class BusinessTemplate extends Template
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isAuthorRestricted()
     {
@@ -104,11 +104,10 @@ class BusinessTemplate extends Template
     }
 
     /**
-     * @param boolean $authorRestricted
+     * @param bool $authorRestricted
      */
     public function setAuthorRestricted($authorRestricted)
     {
         $this->authorRestricted = $authorRestricted;
     }
-
 }

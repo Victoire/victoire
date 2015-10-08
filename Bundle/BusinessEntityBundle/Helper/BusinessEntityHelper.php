@@ -132,7 +132,7 @@ class BusinessEntityHelper
 
     /**
      * Find a entity by the business entity and the attributeValue.
-     * Must be called by the service victoire_core.helper.queriable_business_entity_helper
+     * Must be called by the service victoire_core.helper.queriable_business_entity_helper.
      *
      * @param BusinessEntity $businessEntity
      * @param string         $attributeName
@@ -161,7 +161,7 @@ class BusinessEntityHelper
 
     /**
      * Get the entity from the page and the id given.
-     * Must be called by the service victoire_core.helper.queriable_business_entity_helper
+     * Must be called by the service victoire_core.helper.queriable_business_entity_helper.
      *
      * @param BusinessTemplate $page             The page
      * @param string           $entityIdentifier The identifier for the business entity
@@ -232,12 +232,14 @@ class BusinessEntityHelper
     }
 
     /**
-     * Must be called by the service victoire_core.helper.queriable_business_entity_helper
+     * Must be called by the service victoire_core.helper.queriable_business_entity_helper.
      *
      * @param BusinessEntity $businessEntity
      * @param $id
-     * @return mixed
+     * 
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function getByBusinessEntityAndId(BusinessEntity $businessEntity, $id)
     {
