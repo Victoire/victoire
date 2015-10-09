@@ -53,9 +53,9 @@ Component | Description
 [**WidgetBundle**][15] | Contains all the base widget logic to be able to use Widgets
 [**WidgetMapBundle**][16] | Each view has a widget map, this bundle contains all the widget maps logic
 
-##Bug tracking
+##Troubleshooting
 
-Victoire uses GitHub issues. If you have found a bug, please create an issue.
+Victoire uses GitHub issues, feel free to [create your own](https://github.com/victoire/victoire/issues/new) or develpp [an existing one](https://github.com/victoire/victoire/issues).
 
 ##MIT License
 
