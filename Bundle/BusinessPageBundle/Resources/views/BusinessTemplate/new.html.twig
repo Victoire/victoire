@@ -43,8 +43,11 @@
     </div>
     <div class="vic-row">
         <div class="vic-col-md-12">
-            {{ form_row(form.query) }}
             {{ 'victoire.form.business_template.query.vic_help_block'|trans|raw }}
+            {{ form_row(form.query) }}
+            <div class="form-group">
+                {{ form_row(form.authorRestricted) }}
+            </div>
             {{ form_rest(form) }}
         </div>
     </div>

@@ -132,6 +132,7 @@ class BusinessEntityHelper
 
     /**
      * Find a entity by the business entity and the attributeValue.
+     * Must be called by the service victoire_core.helper.queriable_business_entity_helper.
      *
      * @param BusinessEntity $businessEntity
      * @param string         $attributeName
@@ -141,6 +142,9 @@ class BusinessEntityHelper
      */
     protected function findEntityByBusinessEntityAndAttribute(BusinessEntity $businessEntity, $attributeName, $attributeValue)
     {
+        if (!$this->entityManager) {
+            throw new \Exception('EntityManager not defined, you should use the "victoire_core.helper.queriable_business_entity_helper" service');
+        }
         //retrieve the class of the business entity
         $class = $businessEntity->getClass();
 
@@ -157,6 +161,7 @@ class BusinessEntityHelper
 
     /**
      * Get the entity from the page and the id given.
+     * Must be called by the service victoire_core.helper.queriable_business_entity_helper.
      *
      * @param BusinessTemplate $page             The page
      * @param string           $entityIdentifier The identifier for the business entity
@@ -164,7 +169,7 @@ class BusinessEntityHelper
      *
      * @throws \Exception
      *
-     * @return The entity
+     * @return entity
      */
     public function getEntityByPageAndBusinessIdentifier(BusinessTemplate $page, $entityIdentifier, $attributeName)
     {
@@ -226,6 +231,16 @@ class BusinessEntityHelper
         return $businessEntity;
     }
 
+    /**
+     * Must be called by the service victoire_core.helper.queriable_business_entity_helper.
+     *
+     * @param BusinessEntity $businessEntity
+     * @param $id
+     * 
+     * @throws \Exception
+     *
+     * @return mixed
+     */
     public function getByBusinessEntityAndId(BusinessEntity $businessEntity, $id)
     {
         if (!$this->entityManager) {
