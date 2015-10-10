@@ -19,6 +19,7 @@ services:
         arguments:
             - @victoire_business_page.business_page_helper
             - @victoire_business_page.business_page_builder
+            - @victoire_view_reference.helper
 
     victoire_view_reference.event_subscriber:
         class: Victoire\Bundle\ViewReferenceBundle\EventSubscriber\ViewReferenceSubscriber

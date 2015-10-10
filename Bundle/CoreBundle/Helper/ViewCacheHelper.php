@@ -3,6 +3,7 @@
 namespace Victoire\Bundle\CoreBundle\Helper;
 
 use Symfony\Component\Config\Util\XmlUtils;
+use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
 
 /**
@@ -27,23 +28,33 @@ class ViewCacheHelper
     /**
      * Write given views references in a xml file.
      *
-     * @return void
+     * @param [] $viewsTree
+     *
+     * @return \SimpleXMLElement
      */
-    public function write($viewsReferences)
+    public function generateXml($nodes, $rootNode = null, $writeFile = true)
     {
+        if (is_null($rootNode)) {
         $xml = <<<'XML'
 <?xml version='1.0' encoding='UTF-8' ?>
 <viewReferences/>
 XML;
         $rootNode = new \SimpleXMLElement($xml);
-        foreach ($viewsReferences as $viewReference) {
+        }
+        foreach ($nodes as $node) {
             $itemNode = $rootNode->addChild('viewReference');
-            foreach ($viewReference as $key => $value) {
+            /** @var WebViewInterface $view */
+            $view = $node['view'];
+            foreach ($view->getViewReference() as $key => $value) {
                 $itemNode->addAttribute($key, $value);
+            }
+            if (!empty($node['children'])) {
+                $childrenNode = $itemNode->addChild('children');
+                $this->generateXml($node['children'], $childrenNode, false);
             }
         }
 
-        $this->writeFile($rootNode);
+        return $writeFile ? $this->writeFile($rootNode) : $rootNode;
     }
 
     /**

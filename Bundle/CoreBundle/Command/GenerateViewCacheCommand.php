@@ -31,6 +31,6 @@ class GenerateViewCacheCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $viewsReferences = $this->getContainer()->get('victoire_core.view_helper')->buildViewsReferences();
-        $this->getContainer()->get('victoire_core.view_cache_helper')->write($viewsReferences);
+        $this->getContainer()->get('victoire_core.view_cache_helper')->generateXml($viewsReferences);
     }
 }

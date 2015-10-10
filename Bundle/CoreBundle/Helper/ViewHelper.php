@@ -7,6 +7,7 @@ use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter as BETPara
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Entity\View;
+use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\ViewReferenceBundle\Builder\ViewReferenceBuilder;
 use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
@@ -64,20 +65,32 @@ class ViewHelper
     ];
 
     /**
-     * @return array
+     * @return WebViewInterface[]
      */
     public function buildViewsReferences()
     {
-        $views = $this->em->createQuery('SELECT v FROM VictoireCoreBundle:View v')->getResult();
-        $viewsReferences = [];
-        foreach ($this->viewReferenceProvider->getReferencableViews($views, $this->em) as $viewReferencable) {
-            $viewsReferences = array_merge($viewsReferences, $this->viewReferenceBuilder->buildViewReference($viewReferencable, $this->em));
+        $viewsHierarchy = $this->em->getRepository('VictoireCoreBundle:View')->getRootNodes();
+        $views = $this->viewReferenceProvider->getReferencableViews($viewsHierarchy, $this->em);
+
+        $this->buildViewReferenceRecursively($views);
+
+        return $views;
+    }
+
+    /**
+     * @param [] $tree
+     */
+    public function buildViewReferenceRecursively($tree) {
+        foreach ($tree as $branch) {
+            /** @var WebViewInterface $view */
+            $view = $branch['view'];
+            $view->setViewReference($this->viewReferenceBuilder->buildViewReference($view, $this->em));
+            if (!empty($branch['children'])) {
+                /** @var WebViewInterface $children */
+                $children = $branch['children'];
+                $this->buildViewReferenceRecursively($children);
+            }
         }
-
-        $viewsReferences = $this->viewReferenceHelper->cleanVirtualViews($viewsReferences);
-        $viewsReferences = $this->viewReferenceHelper->uniqueUrls($viewsReferences);
-
-        return $viewsReferences;
     }
 
     /**

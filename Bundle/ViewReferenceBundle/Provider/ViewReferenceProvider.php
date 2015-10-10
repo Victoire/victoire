@@ -4,9 +4,12 @@ namespace Victoire\Bundle\ViewReferenceBundle\Provider;
 
 use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\BusinessPageBundle\Builder\BusinessPageBuilder;
+use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
+use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
+use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
 
 /**
  * @property BusinessPageHelper businessPageHelper
@@ -17,20 +20,25 @@ class ViewReferenceProvider
 {
     protected $businessPageHelper;
     protected $businessPageBuilder;
+    protected $viewReferenceHelper;
 
     /**
      * @param BusinessPageHelper  $businessPageHelper
      * @param BusinessPageBuilder $businessPageBuilder
+     * @param ViewReferenceHelper $viewReferenceHelper
      */
-    public function __construct(BusinessPageHelper $businessPageHelper, BusinessPageBuilder $businessPageBuilder)
+    public function __construct(BusinessPageHelper $businessPageHelper, BusinessPageBuilder $businessPageBuilder, ViewReferenceHelper $viewReferenceHelper)
     {
         $this->businessPageHelper = $businessPageHelper;
         $this->businessPageBuilder = $businessPageBuilder;
+        $this->viewReferenceHelper = $viewReferenceHelper;
     }
 
     /**
-     * @param [View]        $views
+     * @param View[] $views
      * @param EntityManager $em
+     *
+     * @return WebViewInterface[]
      */
     public function getReferencableViews($views, EntityManager $em)
     {
@@ -39,7 +47,8 @@ class ViewReferenceProvider
             $views = [$views];
         }
 
-        foreach ($views as $view) {
+        $businessPages = $this->findBusinessPages($views);
+        foreach ($views as $key => $view) {
             if ($view instanceof BusinessTemplate) {
                 $entities = $this->businessPageHelper->getEntitiesAllowed($view, $em);
 
@@ -48,17 +57,35 @@ class ViewReferenceProvider
                     $currentPattern = clone $view;
                     $page = $this->businessPageBuilder->generateEntityPageFromTemplate($currentPattern, $entity, $em);
                     $this->businessPageBuilder->updatePageParametersByEntity($page, $entity);
+                    if (!array_key_exists($this->viewReferenceHelper->getViewReferenceId($page, $entity), $businessPages)) {
+                        $referencableViews[$key] = ['view' => $page];
+                    }
 
-                    $referencableViews[] = $page;
-
-                    //I refresh this partial entity from em. If I don't do it, everytime I'll request this entity from em it'll be partially populated
-                    $em->refresh($entity);
+                    //refresh this partial entity from em otherwise next time entity'll be partially populated
+                    $em->refresh($entity); //@todo still needed ? I don't think so
                 }
             } elseif ($view instanceof WebViewInterface) {
-                $referencableViews[] = $view;
+                $referencableViews[$key] = ['view' => $view];
+            }
+            if (isset($referencableViews[$key]) && $view->hasChildren()) {
+                $referencableViews[$key]['children'] = $this->getReferencableViews($view->getChildren(), $em);
             }
         }
 
         return $referencableViews;
+    }
+
+    public function findBusinessPages($tree) {
+        $businessPages = [];
+        foreach ($tree as $key => $view) {
+            if ($view instanceof BusinessPage) {
+                $businessPages[$this->viewReferenceHelper->getViewReferenceId($view, $view->getBusinessEntity())] = $view;
+            }
+            if ($view->hasChildren()) {
+                self::findBusinessPages($view->getChildren());
+            }
+        }
+
+        return $businessPages;
     }
 }

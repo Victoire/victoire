@@ -33,6 +33,16 @@ interface WebViewInterface
 
     public function getStatus();
 
+    public function setChildren($children);
+
+    public function getChildren();
+
+    public function hasChildren();
+
+    public function setViewReference(array $viewReference);
+
+    public function getViewReference();
+
     public function setPublishedAt($publishedAt);
 
     public function getPublishedAt();

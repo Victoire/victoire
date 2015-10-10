@@ -108,7 +108,6 @@ class ViewReferenceSubscriber implements EventSubscriber
 
     /**
      * Change url recursively for the WebViewInterface given.
-     *
      * @param View $view
      *
      * @return void
