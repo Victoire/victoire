@@ -306,6 +306,10 @@
         <source>form.pageSeo.twitterCard.product.label</source>
         <target>Product Card</target>
       </trans-unit>
+      <trans-unit id="42" resname="form.pageSeo.keyword.placeholder">
+        <source>form.pageSeo.keyword.placeholder</source>
+        <target>indiquez les expressions et mots clés relatifs à votre site séparés par des virgules</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

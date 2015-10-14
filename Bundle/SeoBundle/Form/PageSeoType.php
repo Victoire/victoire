@@ -154,6 +154,7 @@ class PageSeoType extends AbstractType
             ])
             ->add('keyword', null, [
                 'label' => 'form.pageSeo.keyword.label',
+                'attr'  => ['placeholder' => 'form.pageSeo.keyword.placeholder'],
             ])
             ->add('redirectTo', null, [
                 'label'          => 'form.pageSeo.redirectTo.label',
