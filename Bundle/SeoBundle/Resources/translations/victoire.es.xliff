@@ -12,11 +12,11 @@
       </trans-unit>
       <trans-unit id="4c4f990524dc7e0381ae6cdda138667b41f74beb" resname="form.pageSeo.keyword.label">
         <source>form.pageSeo.keyword.label</source>
-        <target>Palabra clave principal</target>
+        <target>Meta etiqueta "Keywords"</target>
       </trans-unit>
       <trans-unit id="a75bc323a866d5065225cf0337d03778c9368210" resname="form.pageSeo.metaDescription.label">
         <source>form.pageSeo.metaDescription.label</source>
-        <target>Descripción</target>
+        <target>Meta etiqueta "Description"</target>
       </trans-unit>
       <trans-unit id="8785e80490a7e12295c668b1fd7e05f96cec55d0" resname="form.pageSeo.metaRobotsAdvanced.label">
         <source>form.pageSeo.metaRobotsAdvanced.label</source>
@@ -32,7 +32,7 @@
       </trans-unit>
       <trans-unit id="2c7ab4736e80d548511eca8323815287ef91d2f9" resname="form.pageSeo.metaTitle.label">
         <source>form.pageSeo.metaTitle.label</source>
-        <target>Título</target>
+        <target>Meta etiqueta "Title"</target>
       </trans-unit>
       <trans-unit id="72731a4116742dc25b0edf1e76d87f5da98d7149" resname="form.pageSeo.ogDescription.label">
         <source>form.pageSeo.ogDescription.label</source>
@@ -140,7 +140,7 @@
       </trans-unit>
       <trans-unit id="1" resname="modal.form.pageSeo.general.title">
         <source>modal.form.pageSeo.general.title</source>
-        <target>General</target>
+        <target>Meta Etiquetas</target>
       </trans-unit>
       <trans-unit id="5" resname="form.pageSeo.metaRobotsIndex.values.index">
         <source>form.pageSeo.metaRobotsIndex.values.index</source>
