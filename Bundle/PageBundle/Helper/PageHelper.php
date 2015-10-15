@@ -4,6 +4,7 @@ namespace Victoire\Bundle\PageBundle\Helper;
 
 use Doctrine\Orm\EntityManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
@@ -148,14 +149,16 @@ class PageHelper extends ViewHelper
 
     /**
      * generates a response from a page url.
-     *
      * @param string $url
      *
      * @return Response
      */
     public function renderPageByUrl($url, $locale, $isAjax = false)
     {
-        $page = $this->findPageByParameters(['url' => $url, 'locale' => $locale]);
+        $page = $this->findPageByReference($this->viewCacheHelper->getReferenceByUrl($url, $locale), [
+            'url'    => $url,
+            'locale' => $locale
+        ]);
 
         return $this->renderPage($page, $isAjax);
     }

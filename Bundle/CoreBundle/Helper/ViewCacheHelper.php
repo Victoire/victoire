@@ -107,8 +107,41 @@ XML;
         $this->write($allViewsReferences);
 
         return $viewReferences;
+
+    /**
+     * @param $url
+     * @param $locale
+     * @return null|\SimpleXMLElement
+     */
+    public function getReferenceByUrl($url, $locale)
+    {
+
+        //Every page is the children of someone and the mother of every page is the homepage (empty slug)
+        $xpath = sprintf('//viewReference[@slug="" and @locale="%s"]', $locale);
+
+        $urlParts = explode('/', $url);
+        if ($url !== "") {
+            //add every hierarchy item in the xpath var
+            $xpath .= sprintf(
+                '/children/viewReference[@slug="%s"]',
+                implode('"]/children/viewReference[@slug="', $urlParts)
+            );
     }
 
+
+        if ($xmlReference = $this->readCache()->xpath($xpath)) {
+            $viewReference = $xmlReference[0]->attributes();
+        } else {
+            $viewReference = null;
+        }
+
+        return $viewReference;
+    }
+
+    /**
+     * @param $parameters
+     * @return array
+     */
     public function getReferenceByParameters($parameters)
     {
         $viewReference = [];
