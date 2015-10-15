@@ -28,9 +28,9 @@ class ViewReferenceBuilder
      */
     public function buildViewReference(WebViewInterface $view, EntityManager $em = null)
     {
-        $viewManager = $this->viewReferenceBuilderChain->getViewReferenceBuilder($view);
-        $viewReferences = $viewManager->buildReference($view, $em);
+        $viewReferenceBuilder = $this->viewReferenceBuilderChain->getViewReferenceBuilder($view);
+        $viewReference = $viewReferenceBuilder->buildReference($view, $em);
 
-        return $viewReferences;
+        return $viewReference;
     }
 }

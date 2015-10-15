@@ -8,20 +8,22 @@ use Victoire\Bundle\ViewReferenceBundle\Builder\BaseReferenceBuilder;
 
 class BlogReferenceBuilder extends BaseReferenceBuilder
 {
+    /**
+     * @inheritdoc
+     */
     public function buildReference(View $view, EntityManager $em)
     {
         $view->setUrl($this->urlBuilder->buildUrl($view));
         $referenceId = $this->viewReferenceHelper->getViewReferenceId($view);
-        $viewsReference[] = [
+
+        return [
             'id'              => $referenceId,
             'locale'          => $view->getLocale(),
             'viewId'          => $view->getId(),
-            'url'             => $view->getUrl(),
+            'slug'            => $view->getSlug(),
             'name'            => $view->getName(),
             'viewNamespace'   => $em->getClassMetadata(get_class($view))->name,
             'view'            => $view,
         ];
-
-        return $viewsReference;
     }
 }

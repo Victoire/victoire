@@ -26,5 +26,11 @@ abstract class BaseReferenceBuilder
         $this->urlBuilder = $urlBuilder;
     }
 
+    /**
+     * @param View $view
+     * @param EntityManager $em
+     *
+     * @return array
+     */
     abstract public function buildReference(View $view, EntityManager $em);
 }

@@ -33,12 +33,12 @@ class BusinessEntitySubscriber implements EventSubscriber
 
     public function postPersist(LifecycleEventArgs $eventArgs)
     {
-        $this->updateBusinessPagesAndRegerateCache($eventArgs);
+        $this->updateBusinessPagesAndRegenerateCache($eventArgs);
     }
 
     public function postUpdate(LifecycleEventArgs $eventArgs)
     {
-        $this->updateBusinessPagesAndRegerateCache($eventArgs);
+        $this->updateBusinessPagesAndRegenerateCache($eventArgs);
     }
 
     public function preRemove(LifecycleEventArgs $eventArgs)
@@ -55,7 +55,7 @@ class BusinessEntitySubscriber implements EventSubscriber
         }
     }
 
-    public function updateBusinessPagesAndRegerateCache(LifecycleEventArgs $eventArgs)
+    public function updateBusinessPagesAndRegenerateCache(LifecycleEventArgs $eventArgs)
     {
         $entityManager = $eventArgs->getEntityManager();
         $entity = $eventArgs->getEntity();
@@ -102,18 +102,18 @@ class BusinessEntitySubscriber implements EventSubscriber
                         $entityManager->persist($businessPage);
                         $entityManager->flush();
 
-                        $viewReferences = $this->container->get(
-                            'victoire_core.view_reference_builder'
+                        $viewReference = $this->container->get(
+                            'victoire_view_reference.builder'
                         )->buildViewReference($businessPage, $entityManager);
-                        //we update the cache bor the persisted page
                     } else {
-                        $viewReferences = $this->container->get(
-                            'victoire_core.view_reference_builder'
+                        $viewReference = $this->container->get(
+                            'victoire_view_reference.builder'
                         )->buildViewReference($virtualBusinessPage, $entityManager);
-                        //we update cache with the computed page
                     }
-                    $this->container->get('victoire_core.view_cache_helper')->update($viewReferences);
+                    //we update cache with the computed or persisted page
+                    $this->container->get('victoire_core.view_cache_helper')->update($viewReference);
                 } else {
+                    //Business Entity changed, so we need to remove potential obsolete businessTemplate
                     $rootNode = $this->container->get('victoire_core.view_cache_helper')->readCache();
 
                     $parameters = [
