@@ -42,7 +42,7 @@ class BusinessPageHelper
     /**
      * Is the entity allowed for the business entity page.
      *
-     * @param BusinessTemplate                               $bepPattern
+     * @param BusinessTemplate                               $businessTemplate
      * @param \Victoire\Bundle\PageBundle\Helper\Entity|null $entity
      * @param EntityManager                                  $em
      *
@@ -50,7 +50,7 @@ class BusinessPageHelper
      *
      * @return bool
      */
-    public function isEntityAllowed(BusinessTemplate $bepPattern, $entity, EntityManager $em = null)
+    public function isEntityAllowed(BusinessTemplate $businessTemplate, $entity, EntityManager $em = null)
     {
         $allowed = true;
 
@@ -65,12 +65,12 @@ class BusinessPageHelper
         $entityId = $entity->getId();
 
         //the base of the query
-        $baseQuery = $queryHelper->getQueryBuilder($bepPattern, $em);
+        $baseQuery = $queryHelper->getQueryBuilder($businessTemplate, $em);
 
         $baseQuery->andWhere('main_item.id = '.$entityId);
 
         //filter with the query of the page
-        $items = $queryHelper->buildWithSubQuery($bepPattern, $baseQuery, $em)
+        $items = $queryHelper->buildWithSubQuery($businessTemplate, $baseQuery, $em)
             ->getQuery()->getResult();
 
         //only one page can be found because we filter on the
@@ -88,23 +88,23 @@ class BusinessPageHelper
     /**
      * Get the list of entities allowed for the BusinessTemplate page.
      *
-     * @param BusinessTemplate $bepPattern
+     * @param BusinessTemplate $businessTemplate
      *
      * @throws \Exception
      *
      * @return array
      */
-    public function getEntitiesAllowed(BusinessTemplate $bepPattern, EntityManager $em)
+    public function getEntitiesAllowed(BusinessTemplate $businessTemplate, EntityManager $em)
     {
         //the base of the query
-        $baseQuery = $this->queryHelper->getQueryBuilder($bepPattern, $em);
+        $baseQuery = $this->queryHelper->getQueryBuilder($businessTemplate, $em);
 
         // add this fake condition to ensure that there is always a "where" clause.
         // In query mode, usage of "AND" will be always valid instead of "WHERE"
         $baseQuery->andWhere('1 = 1');
 
         //filter with the query of the page
-        $items = $this->queryHelper->buildWithSubQuery($bepPattern, $baseQuery, $em)
+        $items = $this->queryHelper->buildWithSubQuery($businessTemplate, $baseQuery, $em)
             ->getQuery()
             ->getResult();
 
@@ -135,22 +135,22 @@ class BusinessPageHelper
     /**
      * Get the position of the identifier in the url of a business entity page pattern.
      *
-     * @param BusinessTemplate $bepPattern
+     * @param BusinessTemplate $businessTemplate
      *
      * @return int The position
      */
-    public function getIdentifierPositionInUrl(BusinessTemplate $bepPattern)
+    public function getIdentifierPositionInUrl(BusinessTemplate $businessTemplate)
     {
         $position = null;
 
-        $url = $bepPattern->getUrl();
+        $url = $businessTemplate->getUrl();
 
         // split on the / character
         $keywords = preg_split("/\//", $url);
         // preg_match_all('/\{\%\s*([^\%\}]*)\s*\%\}|\{\{\s*([^\}\}]*)\s*\}\}/i', $url, $matches);
 
         //the business property link to the page
-        $businessEntityId = $bepPattern->getBusinessEntityId();
+        $businessEntityId = $businessTemplate->getBusinessEntityId();
 
         $businessEntity = $this->businessEntityHelper->findById($businessEntityId);
 

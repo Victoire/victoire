@@ -84,48 +84,4 @@ class ViewReferenceHelper
 
         return $viewsReferences;
     }
-
-    /**
-     * @param $viewsReferences
-     */
-    public function cleanVirtualViews($viewsReferences)
-    {
-        foreach ($viewsReferences as $key => $viewReference) {
-            // If viewReference is a persisted page, we want to clean virtual BEPs
-            if (!empty($viewReference['viewNamespace']) && $viewReference['viewNamespace'] == 'Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage') {
-                $viewsReferences = array_filter($viewsReferences, function ($_viewReference) use ($viewReference) {
-
-                        // If my current viewReference already exists as a virtualBusinessPage, I remove it from viewReferences
-                        $shouldRemove = !($_viewReference['viewNamespace'] == 'Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage'
-                            && !empty($_viewReference['entityNamespace']) && $_viewReference['entityNamespace'] == $viewReference['entityNamespace']
-                            && !empty($_viewReference['entityId']) && $_viewReference['entityId'] == $viewReference['entityId']
-                            && !empty($_viewReference['patternId']) && $_viewReference['patternId'] == $viewReference['patternId']);
-
-                        return $shouldRemove;
-
-                    });
-            }
-        }
-
-        return $viewsReferences;
-    }
-
-    public function uniqueUrls($viewsReferences)
-    {
-        $urls = [];
-        foreach ($viewsReferences as $key => $viewReference) {
-
-            // while viewReference url is found in viewreferences, increment the url slug to be unique
-            $url = $viewReference['url'];
-            $i = 1;
-            while (in_array($url, $urls)) {
-                $url = $viewReference['url'].'-'.$i;
-                $i++;
-            }
-            $viewsReferences[$key]['url'] = $url;
-            $urls[] = $url;
-        }
-
-        return $viewsReferences;
-    }
 }

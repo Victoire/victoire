@@ -36,7 +36,7 @@ class LegacyLinkViewReferenceMigratorCommand extends ContainerAwareCommand
 
         $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
 
-        $links = $entityManager->getRepository("Victoire\Bundle\CoreBundle\Entity\Link")->findAll();
+        $links = $entityManager->getRepository("Victoire\\Bundle\\CoreBundle\\Entity\\Link")->findAll();
 
         $progress->start($output, count($links));
         $counter = 0;
