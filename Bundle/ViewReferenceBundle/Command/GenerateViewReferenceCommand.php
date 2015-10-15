@@ -1,12 +1,12 @@
 <?php
 
-namespace Victoire\Bundle\CoreBundle\Command;
+namespace Victoire\Bundle\ViewReferenceBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class GenerateViewCacheCommand extends ContainerAwareCommand
+class GenerateViewReferenceCommand extends ContainerAwareCommand
 {
     /**
      * {@inheritdoc}
@@ -16,7 +16,8 @@ class GenerateViewCacheCommand extends ContainerAwareCommand
         parent::configure();
 
         $this
-            ->setName('victoire:generate:view-cache')
+            ->setName('victoire:viewReference:generate')
+            ->setAliases(['victoire:generate:view-cache'])
             ->setDescription('write view references in a xml cache file');
     }
 
