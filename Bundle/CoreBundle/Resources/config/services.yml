@@ -6,6 +6,11 @@ services:
             - @victoire_business_entity.cache_reader
             - @translator
 
+    victoire_core.widget_subscriber:
+        class: Victoire\Bundle\CoreBundle\EventSubscriber\WidgetSubscriber
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+
 #  ==================  MENU ================== #
     victoire_core.admin_menu_builder:
         class: Victoire\Bundle\CoreBundle\Menu\MenuBuilder
@@ -223,6 +228,7 @@ services:
 
     victoire_core.url_builder:
         class: Victoire\Bundle\CoreBundle\Helper\UrlBuilder
+
 
 #  ==================  Chain ================== #
 

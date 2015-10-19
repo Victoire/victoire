@@ -164,6 +164,13 @@ abstract class View
     protected $i18n;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="cssHash", type="string", length=40 ,nullable=false)
+     */
+    protected $cssHash;
+
+    /**
      * contruct.
      **/
     public function __construct()
@@ -960,4 +967,37 @@ abstract class View
 
         return $this;
     }
+
+    /**
+     * Get CSS hash
+     *
+     * @return string
+     */
+    public function getCssHash()
+    {
+        return $this->cssHash;
+    }
+
+    /**
+     * Set CSS hash
+     *
+     * @param string $cssHash
+     *
+     * @return $this
+     */
+    public function setCssHash($cssHash)
+    {
+        $this->cssHash = $cssHash;
+
+        return $this;
+    }
+
+    /**
+     * Change cssHash
+     */
+    public function changeCssHash()
+    {
+        $this->cssHash = sha1(uniqid());
+    }
+
 }
