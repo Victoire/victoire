@@ -6,6 +6,8 @@ use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\ViewReferenceBundle\Builder\BaseReferenceBuilder;
+use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
+use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 /**
  * PageManager.
@@ -18,15 +20,17 @@ class PageReferenceBuilder extends BaseReferenceBuilder
     public function buildReference(View $view, EntityManager $em)
     {
         $view->setUrl($this->urlBuilder->buildUrl($view));
-        $referenceId = $this->viewReferenceHelper->getViewReferenceId($view);
-        return [
-            'id'              => $referenceId,
-            'locale'          => $view->getLocale(),
-            'viewId'          => $view->getId(),
-            'slug'            => $view->isHomepage() ? '' : $view->getSlug(),
-            'name'            => $view->getName(),
-            'viewNamespace'   => get_class($view),
-            'view'            => $view,
-        ];
+        $referenceId = ViewReferenceHelper::generateViewReferenceId($view);
+
+        $viewReference = new ViewReference();
+        $viewReference->setId($referenceId);
+        $viewReference->setLocale($view->getLocale());
+        $viewReference->setViewId($view->getId());
+        $viewReference->setSlug($view->isHomepage() ? '' : $view->getSlug());
+        $viewReference->setName($view->getName());
+        $viewReference->setViewNamespace(get_class($view));
+        $viewReference->setView($view);
+
+        return $viewReference;
     }
 }

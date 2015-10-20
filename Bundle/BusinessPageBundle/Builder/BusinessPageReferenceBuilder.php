@@ -5,6 +5,8 @@ namespace Victoire\Bundle\BusinessPageBundle\Builder;
 use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\ViewReferenceBundle\Builder\BaseReferenceBuilder;
+use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
+use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 /**
  * BusinessPageReferenceBuilder.
@@ -17,19 +19,21 @@ class BusinessPageReferenceBuilder extends BaseReferenceBuilder
     public function buildReference(View $view, EntityManager $em)
     {
         $view->setUrl($this->urlBuilder->buildUrl($view));
-        $referenceId = $this->viewReferenceHelper->getViewReferenceId($view);
+        $referenceId = ViewReferenceHelper::generateViewReferenceId($view);
 
-        return [
-            'id'              => $referenceId,
-            'locale'          => $view->getLocale(),
-            'viewId'          => $view->getId(),
-            'patternId'       => $view->getTemplate()->getId(),
-            'slug'            => $view->getSlug(),
-            'name'            => $view->getName(),
-            'entityId'        => $view->getBusinessEntity()->getId(),
-            'entityNamespace' => $em->getClassMetadata(get_class($view->getBusinessEntity()))->name,
-            'viewNamespace'   => $em->getClassMetadata(get_class($view))->name,
-            'view'            => $view,
-        ];
+        $viewReference = new ViewReference();
+
+        $viewReference->setId($referenceId);
+        $viewReference->setLocale($view->getLocale());
+        $viewReference->setViewId($view->getId());
+        $viewReference->setPatternId($view->getTemplate()->getId());
+        $viewReference->setSlug($view->getSlug());
+        $viewReference->setName($view->getName());
+        $viewReference->setEntityId($view->getBusinessEntity()->getId());
+        $viewReference->setEntityNamespace($em->getClassMetadata(get_class($view->getBusinessEntity()))->name);
+        $viewReference->setViewNamespace($em->getClassMetadata(get_class($view))->name);
+        $viewReference->setView($view);
+
+        return $viewReference;
     }
 }

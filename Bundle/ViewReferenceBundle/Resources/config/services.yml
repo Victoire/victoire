@@ -1,3 +1,6 @@
+parameters:
+    victoire_view_reference.transformer.xmlToViewReference.class: Victoire\Bundle\ViewReferenceBundle\Transformer\XmlToViewReferenceTransformer
+
 services:
     victoire_view_reference.builder:
         class: Victoire\Bundle\ViewReferenceBundle\Builder\ViewReferenceBuilder
@@ -33,4 +36,6 @@ services:
             - { name: doctrine.event_subscriber, connection: default }
 
     victoire_view_reference.builder_chain:
-        class: Victoire\Bundle\ViewReferenceBundle\Builder\Chain\ViewReferenceBuilderChain
+        class: Victoire\Bundle\ViewReferenceBundle\Builder\Chain\ViewReferenceBuilderChain    victoire_view_reference.transformer.xmlToViewReference:
+    victoire_view_reference.transformer.xmlToViewReference:
+        class: %victoire_view_reference.transformer.xmlToViewReference.class%

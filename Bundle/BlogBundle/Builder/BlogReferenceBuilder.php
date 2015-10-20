@@ -5,6 +5,8 @@ namespace Victoire\Bundle\BlogBundle\Builder;
 use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\ViewReferenceBundle\Builder\BaseReferenceBuilder;
+use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
+use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 class BlogReferenceBuilder extends BaseReferenceBuilder
 {
@@ -14,16 +16,17 @@ class BlogReferenceBuilder extends BaseReferenceBuilder
     public function buildReference(View $view, EntityManager $em)
     {
         $view->setUrl($this->urlBuilder->buildUrl($view));
-        $referenceId = $this->viewReferenceHelper->getViewReferenceId($view);
+        $referenceId = ViewReferenceHelper::generateViewReferenceId($view);
 
-        return [
-            'id'              => $referenceId,
-            'locale'          => $view->getLocale(),
-            'viewId'          => $view->getId(),
-            'slug'            => $view->getSlug(),
-            'name'            => $view->getName(),
-            'viewNamespace'   => $em->getClassMetadata(get_class($view))->name,
-            'view'            => $view,
-        ];
+        $viewReference = new ViewReference();
+        $viewReference->setId($referenceId);
+        $viewReference->setLocale($view->getLocale());
+        $viewReference->setViewId($view->getId());
+        $viewReference->setSlug($view->getSlug());
+        $viewReference->setName($view->getName());
+        $viewReference->setViewNamespace($em->getClassMetadata(get_class($view))->name);
+        $viewReference->setView($view);
+
+        return $viewReference;
     }
 }
