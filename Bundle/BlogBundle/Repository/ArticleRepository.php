@@ -40,6 +40,20 @@ class ArticleRepository extends EntityRepository
     }
 
     /**
+     * Filter repositoy by Blog.
+     *
+     * @return ArticleRepository
+     */
+    public function filterByBlog(Blog $blog)
+    {
+        $this->getInstance()
+            ->andWhere('article.blog = :blog')
+            ->setParameter('blog', $blog);
+
+        return $this;
+    }
+
+    /**
      * Get very next festivals query builder.
      *
      * @param method        $method        The method to run
