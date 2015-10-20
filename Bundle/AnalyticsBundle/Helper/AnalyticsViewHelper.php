@@ -74,11 +74,16 @@ class AnalyticsViewHelper
      *
      * @return Article[]
      **/
-    public function getMostReadArticlesByBlog($blog, $number)
+    public function getMostReadArticlesByBlog($blog, $number, $excludeUnpublished = true)
     {
         $viewReferences = [];
         //get articles and viewReferenceIds
-        foreach ($blog->getArticles() as $key => $article) {
+        $articles = $this->entityManager->getRepository('Victoire\Bundle\BlogBundle\Entity\Article')
+                    ->getAll($excludeUnpublished)
+                    ->filterByBlog($blog)
+                    ->run();
+
+        foreach ($articles as $key => $article) {
             $viewReference = $this->viewCacheHelper->getReferenceByParameters(
                 [
                     'entityNamespace' => 'Victoire\Bundle\BlogBundle\Entity\Article',
