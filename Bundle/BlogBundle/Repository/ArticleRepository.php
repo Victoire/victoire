@@ -5,6 +5,7 @@ namespace Victoire\Bundle\BlogBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 use Victoire\Bundle\BlogBundle\Entity\Article;
+use Victoire\Bundle\BlogBundle\Entity\Blog;
 use Victoire\Bundle\CoreBundle\Repository\StateFullRepositoryTrait;
 
 /**
