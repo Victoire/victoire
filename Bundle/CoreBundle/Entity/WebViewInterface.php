@@ -3,6 +3,7 @@
 namespace Victoire\Bundle\CoreBundle\Entity;
 
 use Victoire\Bundle\SeoBundle\Entity\PageSeo;
+use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 /**
  * Victoire View.
@@ -39,8 +40,11 @@ interface WebViewInterface
 
     public function hasChildren();
 
-    public function setViewReference(array $viewReference);
+    public function setViewReference(ViewReference $viewReference);
 
+    /**
+     * @return ViewReference
+     */
     public function getViewReference();
 
     public function setPublishedAt($publishedAt);

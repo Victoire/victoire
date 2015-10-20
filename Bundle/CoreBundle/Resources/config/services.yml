@@ -138,15 +138,6 @@ services:
         tags:
             - { name: kernel.cache_warmer, priority: 100} #Must be lower than victoire_business_entity.warmer
 
-    victoire_core.cache_warmer.view_warmer:
-        class: Victoire\Bundle\CoreBundle\CacheWarmer\ViewCacheWarmer
-        arguments:
-            - @victoire_core.view_helper
-            - @victoire_view_reference.cache.driver
-            - @doctrine.orm.entity_manager
-        tags:
-        - { name: kernel.event_listener, event: kernel.request, method: warmUp }
-
     victoire_core.entity_proxy.cache_driver:
         class: Victoire\Bundle\CoreBundle\CacheWarmer\EntityProxyCacheDriver
         arguments:

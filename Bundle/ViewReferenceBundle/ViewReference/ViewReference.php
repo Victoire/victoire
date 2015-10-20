@@ -3,6 +3,8 @@
 namespace Victoire\Bundle\ViewReferenceBundle\ViewReference;
 
 
+use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
+
 class ViewReference
 {
     private $id;
@@ -15,6 +17,7 @@ class ViewReference
     private $patternId;
     private $name;
     private $children;
+    private $view;
 
     /**
      * looks like ref_{view.id}[_{view.businessEntity.id}]
@@ -175,5 +178,21 @@ class ViewReference
     public function setChildren($children)
     {
         $this->children = $children;
+    }
+
+    /**
+     * @return WebViewInterface
+     */
+    public function getView()
+    {
+        return $this->view;
+    }
+
+    /**
+     * @param WebViewInterface $view
+     */
+    public function setView($view)
+    {
+        $this->view = $view;
     }
 }

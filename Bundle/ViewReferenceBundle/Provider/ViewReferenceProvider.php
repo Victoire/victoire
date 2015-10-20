@@ -57,9 +57,6 @@ class ViewReferenceProvider
                     if (!array_key_exists(ViewReferenceHelper::generateViewReferenceId($page, $entity), $businessPages)) {
                         $referencableViews[$key] = ['view' => $page];
                     }
-
-                    //refresh this partial entity from em otherwise next time entity'll be partially populated
-                    $em->refresh($entity); //@todo still needed ? I don't think so
                 }
             } elseif ($view instanceof WebViewInterface) {
                 $referencableViews[$key] = ['view' => $view];
@@ -76,7 +73,7 @@ class ViewReferenceProvider
         $businessPages = [];
         foreach ($tree as $key => $view) {
             if ($view instanceof BusinessPage) {
-                $businessPages[$this->viewReferenceHelper->getViewReferenceId($view, $view->getBusinessEntity())] = $view;
+                $businessPages[ViewReferenceHelper::generateViewReferenceId($view, $view->getBusinessEntity())] = $view;
             }
             if ($view->hasChildren()) {
                 self::findBusinessPages($view->getChildren());

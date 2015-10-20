@@ -5,6 +5,7 @@ namespace Victoire\Bundle\PageBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
+use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 /**
  * Page.
@@ -31,10 +32,10 @@ abstract class BasePage extends View implements WebViewInterface
     }
 
     /**
-     * @param mixed $viewReference
+     * @param ViewReference $viewReference
      * @return BasePage
      */
-    public function setViewReference(array $viewReference)
+    public function setViewReference(ViewReference $viewReference)
     {
         $this->viewReference = $viewReference;
 
@@ -42,7 +43,7 @@ abstract class BasePage extends View implements WebViewInterface
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function getViewReference()
     {

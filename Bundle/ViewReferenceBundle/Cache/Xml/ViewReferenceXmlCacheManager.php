@@ -41,7 +41,8 @@ XML;
 
             /** @var WebViewInterface $view */
             $view = $node['view'];
-            foreach ($view->getViewReference() as $key => $value) {
+            $arrayTransformer = new ArrayToViewReferenceTransformer();
+            foreach ($arrayTransformer->reverseTransform($view->getViewReference()) as $key => $value) {
                 $itemNode->addAttribute($key, $value);
             }
             if (!empty($node['children'])) {

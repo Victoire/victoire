@@ -29,7 +29,7 @@ class XmlToViewReferenceTransformer implements DataTransformerInterface
         foreach ($cachedArray['viewReference'] as $cachedViewReference) {
             foreach ($cachedViewReference['@attributes'] as $prop => $value) {
                 $methodName = 'set'.ucfirst($prop);
-                if (method_exists($viewReference, $methodName)) {
+                if (method_exists($viewReference, $methodName) && $value != '') {
                     $viewReference->$methodName((string) $value);
                 }
             }
@@ -56,8 +56,8 @@ XML;
 
         foreach (ViewReferenceHelper::properties as $prop) {
             $methodName = 'get'.ucfirst($prop);
-            if (method_exists($viewReference, $methodName)) {
-                $element->addAttribute($prop, $viewReference->$methodName);
+            if (method_exists($viewReference, $methodName) && $viewReference->$methodName() != '') {
+                $element->addAttribute($prop, $viewReference->$methodName());
             }
 
         }

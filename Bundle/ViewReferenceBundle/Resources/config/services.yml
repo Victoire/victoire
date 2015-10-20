@@ -3,6 +3,7 @@ parameters:
     victoire_view_reference.cache.manager.class: Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheManager
     victoire_view_reference.cache.repository.class: Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheRepository
     victoire_view_reference.transformer.xmlToViewReference.class: Victoire\Bundle\ViewReferenceBundle\Transformer\XmlToViewReferenceTransformer
+    victoire_view_reference.cache_warmer.class: Victoire\Bundle\ViewReferenceBundle\Cache\ViewCacheWarmer
 
 services:
     victoire_view_reference.builder:
@@ -57,3 +58,13 @@ services:
 
     victoire_view_reference.transformer.xmlToViewReference:
         class: %victoire_view_reference.transformer.xmlToViewReference.class%
+
+    victoire_view_reference.cache_warmer:
+        class: %victoire_view_reference.cache_warmer.class%
+        arguments:
+            - @victoire_core.view_helper
+            - @victoire_view_reference.cache.driver
+            - @victoire_view_reference.cache.manager
+            - @doctrine.orm.entity_manager
+        tags:
+        - { name: kernel.event_listener, event: kernel.request, method: warmUp }
