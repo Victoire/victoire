@@ -349,7 +349,7 @@ if (typeof $vic === "undefined") { throw new Error("Bootstrap requires $vic") }
 
     if (pos > (this.$vicitems.length - 1) || pos < 0) return
 
-    if (this.sliding)       return this.$vicelement.one('slid.bs.carousel', function () { that.to(pos) })
+    if (this.sliding)       return this.$vicelement.one('slid.bs.vic-carousel', function () { that.to(pos) })
     if (activeIndex == pos) return this.pause().cycle()
 
     return this.slide(pos > activeIndex ? 'next' : 'prev', $vic(this.$vicitems[pos]))
@@ -395,13 +395,13 @@ if (typeof $vic === "undefined") { throw new Error("Bootstrap requires $vic") }
 
     isCycling && this.pause()
 
-    var e = $vic.Event('slide.bs.carousel', { relatedTarget: $vicnext[0], direction: direction })
+    var e = $vic.Event('slide.bs.vic-carousel', { relatedTarget: $vicnext[0], direction: direction })
 
     if ($vicnext.hasClass('vic-active')) return
 
     if (this.$vicindicators.length) {
       this.$vicindicators.find('.vic-active').removeClass('vic-active')
-      this.$vicelement.one('slid.bs.carousel', function () {
+      this.$vicelement.one('slid.bs.vic-carousel', function () {
         var $vicnextIndicator = $vic(that.$vicindicators.children()[that.getActiveIndex()])
         $vicnextIndicator && $vicnextIndicator.addClass('vic-active')
       })
@@ -449,7 +449,7 @@ if (typeof $vic === "undefined") { throw new Error("Bootstrap requires $vic") }
       var options = $vic.extend({}, Carousel.DEFAULTS, $victhis.data(), typeof option == 'object' && option)
       var action  = typeof option == 'string' ? option : options.slide
 
-      if (!data) $victhis.data('bs.carousel', (data = new Carousel(this, options)))
+      if (!data) $victhis.data('bs.vic-carousel', (data = new Carousel(this, options)))
       if (typeof option == 'number') data.to(option)
       else if (action) data[action]()
       else if (options.interval) data.pause().cycle()
@@ -471,7 +471,7 @@ if (typeof $vic === "undefined") { throw new Error("Bootstrap requires $vic") }
   // CAROUSEL DATA-API
   // =================
 
-  $vic(document).on('click.bs.carousel.data-api', '[data-slide], [data-slide-to]', function (e) {
+  $vic(document).on('click.bs.vic-carousel.data-api', '[data-slide], [data-slide-to]', function (e) {
     var $victhis   = $vic(this), href
     var $victarget = $vic($victhis.attr('data-target') || (href = $victhis.attr('href')) && href.replace(/.*(?=#[^\s]+$vic)/, '')) //strip for ie7
     var options = $vic.extend({}, $victarget.data(), $victhis.data())
