@@ -46,9 +46,9 @@ class BusinessEntitySubscriber implements EventSubscriber
         $entity = $eventArgs->getEntity();
         $businessEntity = $this->container->get('victoire_core.helper.business_entity_helper')->findByEntityInstance($entity);
         if ($businessEntity) {
-            $viewCacheHelper = $this->container->get('victoire_core.view_cache_helper');
+            $viewCacheWriter = $this->container->get('victoire_view_reference.cache.writer');
             //remove all references which refer to the entity
-            $viewCacheHelper->removeViewsReferencesByParameters([[
+            $viewCacheWriter->removeViewsReferencesByParameters([[
                         'entityId'        => $entity->getId(),
                         'entityNamespace' => get_class($entity),
             ]]);
@@ -111,10 +111,10 @@ class BusinessEntitySubscriber implements EventSubscriber
                         )->buildViewReference($virtualBusinessPage, $entityManager);
                     }
                     //we update cache with the computed or persisted page
-                    $this->container->get('victoire_core.view_cache_helper')->update($viewReference);
+                    $this->container->get('victoire_view_reference.cache.writer')->update($viewReference);
                 } else {
                     //Business Entity changed, so we need to remove potential obsolete businessTemplate
-                    $rootNode = $this->container->get('victoire_core.view_cache_helper')->readCache();
+                    $rootNode = $this->container->get('victoire_view_reference.cache.writer')->readCache();
 
                     $parameters = [
                         'patternId'     => $businessTemplate->getId(),
@@ -123,13 +123,13 @@ class BusinessEntitySubscriber implements EventSubscriber
                     ];
 
                     $viewReferenceHelper = $this->container->get('victoire_view_reference.helper');
-                    $viewsReferencesToRemove = $this->container->get('victoire_core.view_cache_helper')->getAllReferenceByParameters($parameters);
+                    $viewsReferencesToRemove = $this->container->get('victoire_view_reference.cache.writer')->getAllReferenceByParameters($parameters);
                     foreach ($viewsReferencesToRemove as $viewReferenceToRemove) {
                         $viewReferenceHelper->removeViewReference($rootNode, $viewReferenceToRemove);
                     }
 
                     $viewReferences = $this->container->get('victoire_view_reference.helper')->convertXmlCacheToArray($rootNode);
-                    $this->container->get('victoire_core.view_cache_helper')->write($viewReferences);
+                    $this->container->get('victoire_view_reference.cache.writer')->write($viewReferences);
                 }
             }
         }

@@ -3,8 +3,9 @@
 namespace Victoire\Bundle\AnalyticsBundle\Helper;
 
 use Doctrine\ORM\EntityManager;
-use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
+use Victoire\Bundle\BlogBundle\Entity\Article;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
+use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheReader;
 
 /**
  * Analytics View helper
@@ -12,14 +13,14 @@ use Victoire\Bundle\PageBundle\Helper\PageHelper;
  */
 class AnalyticsViewHelper
 {
-    protected $viewCacheHelper;
+    protected $viewCacheReader;
     protected $entityManager;
     protected $pageHelper;
 
-    public function __construct(ViewCacheHelper $viewCacheHelper, EntityManager $entityManager, PageHelper $pageHelper)
+    public function __construct(ViewReferenceXmlCacheReader $viewCacheReader, EntityManager $entityManager, PageHelper $pageHelper)
     {
         $this->entityManager = $entityManager;
-        $this->viewCacheHelper = $viewCacheHelper;
+        $this->viewCacheReader = $viewCacheReader;
         $this->pageHelper = $pageHelper;
     }
 
@@ -39,7 +40,7 @@ class AnalyticsViewHelper
                 $repo = $this->entityManager->getRepository($viewNamespace);
                 //get pages and viewReferenceIds
                 foreach ($repo->getAll()->run() as $key => $page) {
-                    $viewReference = $this->viewCacheHelper->getReferenceByParameters(
+                    $viewReference = $this->viewCacheReader->getOneReferenceByParameters(
                         [
                             'viewNamespace' => $viewNamespace,
                             'viewId'        => $page->getId(),
@@ -84,7 +85,7 @@ class AnalyticsViewHelper
                     ->run();
 
         foreach ($articles as $key => $article) {
-            $viewReference = $this->viewCacheHelper->getReferenceByParameters(
+            $viewReference = $this->viewCacheReader->getOneReferenceByParameters(
                 [
                     'entityNamespace' => 'Victoire\Bundle\BlogBundle\Entity\Article',
                     'entityId'        => $article->getId(),

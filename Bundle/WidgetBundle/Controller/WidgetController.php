@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
+use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
@@ -160,7 +161,7 @@ class WidgetController extends Controller
         $widgetView = $widget->getView();
 
         $widgetViewReferenceId = $this->get('victoire_view_reference.helper')
-            ->getViewReferenceId($widgetView);
+            ->generateViewReferenceId($widgetView);
 
         $widgetView->setReference(['id' => $widgetViewReferenceId]);
         $this->get('victoire_core.current_view')->setCurrentView($view);
@@ -197,8 +198,7 @@ class WidgetController extends Controller
         $view = $this->getViewByReferenceId($viewReference);
         $widgetView = $widget->getView();
 
-        $widgetViewReferenceId = $this->get('victoire_view_reference.helper')
-            ->getViewReferenceId($widgetView);
+        $widgetViewReferenceId = ViewReferenceHelper::generateViewReferenceId($widgetView);
 
         $widgetView->setReference(['id' => $widgetViewReferenceId]);
         $this->get('victoire_core.current_view')->setCurrentView($view);

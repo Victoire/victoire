@@ -1,4 +1,6 @@
 parameters:
+    victoire_view_reference.cache.writer.class: Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheWriter
+    victoire_view_reference.cache.reader.class: Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheReader
     victoire_view_reference.transformer.xmlToViewReference.class: Victoire\Bundle\ViewReferenceBundle\Transformer\XmlToViewReferenceTransformer
 
 services:
@@ -22,13 +24,12 @@ services:
         arguments:
             - @victoire_business_page.business_page_helper
             - @victoire_business_page.business_page_builder
-            - @victoire_view_reference.helper
 
     victoire_view_reference.event_subscriber:
         class: Victoire\Bundle\ViewReferenceBundle\EventSubscriber\ViewReferenceSubscriber
         arguments:
             - "@victoire_core.url_builder"
-            - "@victoire_core.view_cache_helper"
+            - "@victoire_view_reference.cache.writer"
             - "@victoire_business_page.business_page_builder"
             - "@victoire_view_reference.builder"
             - "@victoire_view_reference.provider"
@@ -36,6 +37,16 @@ services:
             - { name: doctrine.event_subscriber, connection: default }
 
     victoire_view_reference.builder_chain:
-        class: Victoire\Bundle\ViewReferenceBundle\Builder\Chain\ViewReferenceBuilderChain    victoire_view_reference.transformer.xmlToViewReference:
+        class: Victoire\Bundle\ViewReferenceBundle\Builder\Chain\ViewReferenceBuilderChain
+
+    victoire_view_reference.cache.reader:
+        class: %victoire_view_reference.cache.reader.class%
+        arguments:
+            - "%victoire_view_reference.cache.path%"
+
+    victoire_view_reference.cache.writer:
+        class: %victoire_view_reference.cache.writer.class%
+        parent: "victoire_view_reference.cache.reader"
+
     victoire_view_reference.transformer.xmlToViewReference:
         class: %victoire_view_reference.transformer.xmlToViewReference.class%

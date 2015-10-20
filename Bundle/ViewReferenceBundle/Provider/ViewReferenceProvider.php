@@ -20,18 +20,15 @@ class ViewReferenceProvider
 {
     protected $businessPageHelper;
     protected $businessPageBuilder;
-    protected $viewReferenceHelper;
 
     /**
      * @param BusinessPageHelper  $businessPageHelper
      * @param BusinessPageBuilder $businessPageBuilder
-     * @param ViewReferenceHelper $viewReferenceHelper
      */
-    public function __construct(BusinessPageHelper $businessPageHelper, BusinessPageBuilder $businessPageBuilder, ViewReferenceHelper $viewReferenceHelper)
+    public function __construct(BusinessPageHelper $businessPageHelper, BusinessPageBuilder $businessPageBuilder)
     {
         $this->businessPageHelper = $businessPageHelper;
         $this->businessPageBuilder = $businessPageBuilder;
-        $this->viewReferenceHelper = $viewReferenceHelper;
     }
 
     /**
@@ -57,7 +54,7 @@ class ViewReferenceProvider
                     $currentPattern = clone $view;
                     $page = $this->businessPageBuilder->generateEntityPageFromTemplate($currentPattern, $entity, $em);
                     $this->businessPageBuilder->updatePageParametersByEntity($page, $entity);
-                    if (!array_key_exists($this->viewReferenceHelper->getViewReferenceId($page, $entity), $businessPages)) {
+                    if (!array_key_exists(ViewReferenceHelper::generateViewReferenceId($page, $entity), $businessPages)) {
                         $referencableViews[$key] = ['view' => $page];
                     }
 

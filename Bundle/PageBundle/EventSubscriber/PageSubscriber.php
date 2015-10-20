@@ -33,7 +33,7 @@ class PageSubscriber implements EventSubscriber
      * @param Router             $router             @router
      * @param UserCallableHelper $userCallableHelper @victoire_page.user_callable
      * @param string             $userClass          %victoire_core.user_class%
-     * @param ViewCacheHelper    $viewCacheHelper    @victoire_core.view_cache_helper
+     * @param ViewCacheHelper    $viewCacheHelper    @victoire_view_reference.cache.writer
      * @param UrlBuilder         $urlBuilder         @victoire_core.url_builder
      */
     public function __construct($router, $userCallableHelper, $userClass, $viewCacheHelper, $urlBuilder)

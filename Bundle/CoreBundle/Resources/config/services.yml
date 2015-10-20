@@ -79,7 +79,7 @@ services:
             - "@security.context"
             - "@victoire_core.widget_exception_handler"
             - "@victoire_core.current_view"
-            - "@victoire_core.view_cache_helper"
+            - "@victoire_view_reference.cache.reader"
             - "@twig"
         tags:
             - { name: twig.extension }
@@ -99,12 +99,6 @@ services:
         arguments:
             - "%kernel.debug%"
             - "%victoire_core.cache_dir%"
-
-    victoire_core.view_cache_helper:
-        class: Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper
-        arguments:
-            - "%kernel.cache_dir%"
-            - "@victoire_view_reference.helper"
 
     victoire_core.cache_builder:
         class: Victoire\Bundle\CoreBundle\Cache\Builder\CacheBuilder
@@ -148,7 +142,7 @@ services:
         class: Victoire\Bundle\CoreBundle\CacheWarmer\ViewCacheWarmer
         arguments:
             - @victoire_core.view_helper
-            - @victoire_core.view_cache_helper
+            - @victoire_view_reference.cache.writer
             - @doctrine.orm.entity_manager
         tags:
         - { name: kernel.event_listener, event: kernel.request, method: warmUp }

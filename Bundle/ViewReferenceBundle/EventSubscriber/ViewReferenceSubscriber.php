@@ -14,8 +14,8 @@ use Victoire\Bundle\CoreBundle\Entity\Route;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
-use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
 use Victoire\Bundle\ViewReferenceBundle\Builder\ViewReferenceBuilder;
+use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheWriter;
 use Victoire\Bundle\ViewReferenceBundle\Provider\ViewReferenceProvider;
 
 /**
@@ -25,25 +25,25 @@ use Victoire\Bundle\ViewReferenceBundle\Provider\ViewReferenceProvider;
 class ViewReferenceSubscriber implements EventSubscriber
 {
     protected $urlBuilder;
-    protected $viewCacheHelper;
+    protected $viewCacheWriter;
     protected $businessPageBuilder;
     protected $viewReferenceProvider;
 
     /**
      * @param UrlBuilder           $urlBuilder
-     * @param ViewCacheHelper      $viewCacheHelper
+     * @param ViewReferenceXmlCacheWriter $viewCacheWriter
      * @param BusinessPageBuilder  $businessPageBuilder
      * @param ViewReferenceBuilder $viewReferenceBuilder
      */
     public function __construct(
         UrlBuilder $urlBuilder,
-        ViewCacheHelper $viewCacheHelper,
+        ViewReferenceXmlCacheWriter $viewCacheWriter,
         BusinessPageBuilder $businessPageBuilder,
         ViewReferenceBuilder $viewReferenceBuilder,
         ViewReferenceProvider $viewReferenceProvider
     ) {
         $this->urlBuilder = $urlBuilder;
-        $this->viewCacheHelper = $viewCacheHelper;
+        $this->viewCacheWriter = $viewCacheWriter;
         $this->businessPageBuilder = $businessPageBuilder;
         $this->viewReferenceBuilder = $viewReferenceBuilder;
         $this->viewReferenceProvider = $viewReferenceProvider;
@@ -122,9 +122,9 @@ class ViewReferenceSubscriber implements EventSubscriber
             $viewReferences = array_merge($viewReferences, $referencableReferences);
 
             if ($delete) {
-                $this->viewCacheHelper->removeViewsReferencesByParameters($referencableReferences);
+                $this->viewCacheWriter->removeViewsReferencesByParameters($referencableReferences);
             } else {
-                $this->viewCacheHelper->update($referencableReferences);
+                $this->viewCacheWriter->update($referencableReferences);
             }
         }
 

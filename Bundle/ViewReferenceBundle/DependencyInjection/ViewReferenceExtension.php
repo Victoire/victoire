@@ -24,5 +24,9 @@ class ViewReferenceExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+
+        $container->setParameter(
+            'victoire_view_reference.cache.path', $config['cache_path']
+        );
     }
 }

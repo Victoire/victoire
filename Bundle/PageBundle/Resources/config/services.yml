@@ -10,7 +10,7 @@ services:
             - "@router"
             - "@victoire_page.user_callable"
             - "%victoire_core.user_class%"
-            - "@victoire_core.view_cache_helper"
+            - "@victoire_view_reference.cache.writer"
             - "@victoire_core.url_builder"
         tags:
             - { name: doctrine.event_subscriber, connection: default, priority: -1 }
@@ -30,8 +30,8 @@ services:
             - "@victoire_core.url_builder"
             - "@victoire_business_page.business_page_builder"
             - "@victoire_business_page.business_page_helper"
-            - "@victoire_core.view_cache_helper"
             - "@victoire_widget_map.widget_data_warmer"
+            - "@victoire_view_reference.cache.reader"
 
     victoire_page.matcher.url_matcher:
         class: Victoire\Bundle\PageBundle\Matcher\UrlMatcher
@@ -39,7 +39,6 @@ services:
             - "@doctrine.orm.entity_manager"
             - "@victoire_business_page.business_page_helper"
             - "@victoire_core.helper.queriable_business_entity_helper"
-
 
     ####################################################################################################################
     # Security voter

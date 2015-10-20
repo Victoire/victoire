@@ -7,7 +7,7 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
-class XMLToViewReferenceTransformer implements DataTransformerInterface
+class XmlToViewReferenceTransformer implements DataTransformerInterface
 {
 
     /**

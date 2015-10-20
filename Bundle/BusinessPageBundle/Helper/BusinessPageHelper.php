@@ -10,8 +10,8 @@ use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
-use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
 use Victoire\Bundle\QueryBundle\Helper\QueryHelper;
+use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheReader;
 
 /**
  * The business entity page pattern helper
@@ -20,20 +20,22 @@ use Victoire\Bundle\QueryBundle\Helper\QueryHelper;
 class BusinessPageHelper
 {
     protected $queryHelper = null;
-    protected $viewCacheHelper = null;
+    protected $viewCacheReader = null;
     protected $businessEntityHelper = null;
     protected $parameterConverter = null;
     protected $urlBuilder = null;
 
     /**
-     * @param QueryHelper          $queryHelper
+     * @param QueryHelper $queryHelper
+     * @param ViewReferenceXmlCacheReader $viewCacheReader
      * @param BusinessEntityHelper $businessEntityHelper
-     * @param ParameterConverter   $parameterConverter
+     * @param ParameterConverter $parameterConverter
+     * @param UrlBuilder $urlBuilder
      */
-    public function __construct(QueryHelper $queryHelper, ViewCacheHelper $viewCacheHelper, BusinessEntityHelper $businessEntityHelper, ParameterConverter $parameterConverter, UrlBuilder $urlBuilder)
+    public function __construct(QueryHelper $queryHelper, ViewReferenceXmlCacheReader $viewCacheReader, BusinessEntityHelper $businessEntityHelper, ParameterConverter $parameterConverter, UrlBuilder $urlBuilder)
     {
         $this->queryHelper = $queryHelper;
-        $this->viewCacheHelper = $viewCacheHelper;
+        $this->viewCacheReader = $viewCacheReader;
         $this->businessEntityHelper = $businessEntityHelper;
         $this->parameterConverter = $parameterConverter;
         $this->urlBuilder = $urlBuilder;
@@ -205,7 +207,7 @@ class BusinessPageHelper
                 'entityNamespace' => $originalRefClassName,
             ];
 
-            $viewReference = $this->viewCacheHelper->getReferenceByParameters($parameters);
+            $viewReference = $this->viewCacheReader->getOneReferenceByParameters($parameters);
         }
 
         if (!$viewReference) {

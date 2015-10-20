@@ -9,9 +9,9 @@ use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Handler\WidgetExceptionHandler;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
-use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
+use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheReader;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer;
 
@@ -33,13 +33,13 @@ class CmsExtension extends \Twig_Extension_Core
     /**
      * Constructor.
      *
-     * @param WidgetRenderer         $widgetRenderer
-     * @param TemplateMapper         $templating
-     * @param SecurityContext        $securityContext
-     * @param WidgetExceptionHandler $widgetExceptionHandler
-     * @param CurrentViewHelper      $currentViewHelper
-     * @param ViewCacheHelper        $viewCacheHelper
-     * @param \Twig_Environment      $twig
+     * @param WidgetRenderer              $widgetRenderer
+     * @param TemplateMapper              $templating
+     * @param SecurityContext             $securityContext
+     * @param WidgetExceptionHandler      $widgetExceptionHandler
+     * @param CurrentViewHelper           $currentViewHelper
+     * @param ViewReferenceXmlCacheReader $viewCacheReader
+     * @param \Twig_Environment           $twig
      */
     public function __construct(
         WidgetRenderer $widgetRenderer,
@@ -47,7 +47,7 @@ class CmsExtension extends \Twig_Extension_Core
         SecurityContext $securityContext,
         WidgetExceptionHandler $widgetExceptionHandler,
         CurrentViewHelper $currentViewHelper,
-        ViewCacheHelper $viewCacheHelper,
+        ViewReferenceXmlCacheReader $viewCacheReader,
         \Twig_Environment $twig
     ) {
         $this->widgetRenderer = $widgetRenderer;
@@ -55,7 +55,7 @@ class CmsExtension extends \Twig_Extension_Core
         $this->securityContext = $securityContext;
         $this->widgetExceptionHandler = $widgetExceptionHandler;
         $this->currentViewHelper = $currentViewHelper;
-        $this->viewCacheHelper = $viewCacheHelper;
+        $this->viewCacheReader = $viewCacheReader;
         $this->twig = $twig;
     }
 
@@ -109,7 +109,7 @@ class CmsExtension extends \Twig_Extension_Core
      */
     public function cmsWidgetUnlinkAction($widgetId, $view)
     {
-        $viewReference = $reference = $this->viewCacheHelper->getReferenceByParameters(
+        $viewReference = $reference = $this->viewCacheReader->getOneReferenceByParameters(
             ['viewId' => $view->getId()]
         );
         if (!$viewReference && $view->getId() != '') {

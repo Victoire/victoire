@@ -20,9 +20,10 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('victoire_view_reference');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+                ->scalarNode('cache_path')->defaultValue('%kernel.cache_dir%/victoire/viewsReferences.xml')->end()
+            ->end();
 
         return $treeBuilder;
     }
