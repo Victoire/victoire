@@ -11,7 +11,7 @@ use Victoire\Bundle\CoreBundle\Handler\WidgetExceptionHandler;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
-use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheReader;
+use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheRepository;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer;
 
@@ -38,7 +38,7 @@ class CmsExtension extends \Twig_Extension_Core
      * @param SecurityContext             $securityContext
      * @param WidgetExceptionHandler      $widgetExceptionHandler
      * @param CurrentViewHelper           $currentViewHelper
-     * @param ViewReferenceXmlCacheReader $viewCacheReader
+     * @param ViewReferenceXmlCacheRepository $viewCacheRepository
      * @param \Twig_Environment           $twig
      */
     public function __construct(
@@ -47,7 +47,7 @@ class CmsExtension extends \Twig_Extension_Core
         SecurityContext $securityContext,
         WidgetExceptionHandler $widgetExceptionHandler,
         CurrentViewHelper $currentViewHelper,
-        ViewReferenceXmlCacheReader $viewCacheReader,
+        ViewReferenceXmlCacheRepository $viewCacheRepository,
         \Twig_Environment $twig
     ) {
         $this->widgetRenderer = $widgetRenderer;
@@ -55,7 +55,7 @@ class CmsExtension extends \Twig_Extension_Core
         $this->securityContext = $securityContext;
         $this->widgetExceptionHandler = $widgetExceptionHandler;
         $this->currentViewHelper = $currentViewHelper;
-        $this->viewCacheReader = $viewCacheReader;
+        $this->viewCacheRepository = $viewCacheRepository;
         $this->twig = $twig;
     }
 
@@ -109,7 +109,7 @@ class CmsExtension extends \Twig_Extension_Core
      */
     public function cmsWidgetUnlinkAction($widgetId, $view)
     {
-        $viewReference = $reference = $this->viewCacheReader->getOneReferenceByParameters(
+        $viewReference = $reference = $this->viewCacheRepository->getOneReferenceByParameters(
             ['viewId' => $view->getId()]
         );
         if (!$viewReference && $view->getId() != '') {

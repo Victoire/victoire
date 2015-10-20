@@ -5,7 +5,7 @@ namespace Victoire\Bundle\AnalyticsBundle\Helper;
 use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\BlogBundle\Entity\Article;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
-use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheReader;
+use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheRepository;
 
 /**
  * Analytics View helper
@@ -13,14 +13,14 @@ use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheReader;
  */
 class AnalyticsViewHelper
 {
-    protected $viewCacheReader;
+    protected $viewCacheRepository;
     protected $entityManager;
     protected $pageHelper;
 
-    public function __construct(ViewReferenceXmlCacheReader $viewCacheReader, EntityManager $entityManager, PageHelper $pageHelper)
+    public function __construct(ViewReferenceXmlCacheRepository $viewCacheRepository, EntityManager $entityManager, PageHelper $pageHelper)
     {
         $this->entityManager = $entityManager;
-        $this->viewCacheReader = $viewCacheReader;
+        $this->viewCacheRepository = $viewCacheRepository;
         $this->pageHelper = $pageHelper;
     }
 
@@ -40,7 +40,7 @@ class AnalyticsViewHelper
                 $repo = $this->entityManager->getRepository($viewNamespace);
                 //get pages and viewReferenceIds
                 foreach ($repo->getAll()->run() as $key => $page) {
-                    $viewReference = $this->viewCacheReader->getOneReferenceByParameters(
+                    $viewReference = $this->viewCacheRepository->getOneReferenceByParameters(
                         [
                             'viewNamespace' => $viewNamespace,
                             'viewId'        => $page->getId(),
@@ -85,7 +85,7 @@ class AnalyticsViewHelper
                     ->run();
 
         foreach ($articles as $key => $article) {
-            $viewReference = $this->viewCacheReader->getOneReferenceByParameters(
+            $viewReference = $this->viewCacheRepository->getOneReferenceByParameters(
                 [
                     'entityNamespace' => 'Victoire\Bundle\BlogBundle\Entity\Article',
                     'entityId'        => $article->getId(),

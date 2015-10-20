@@ -79,7 +79,7 @@ services:
             - "@security.context"
             - "@victoire_core.widget_exception_handler"
             - "@victoire_core.current_view"
-            - "@victoire_view_reference.cache.reader"
+            - "@victoire_view_reference.cache.repository"
             - "@twig"
         tags:
             - { name: twig.extension }
@@ -142,7 +142,7 @@ services:
         class: Victoire\Bundle\CoreBundle\CacheWarmer\ViewCacheWarmer
         arguments:
             - @victoire_core.view_helper
-            - @victoire_view_reference.cache.writer
+            - @victoire_view_reference.cache.driver
             - @doctrine.orm.entity_manager
         tags:
         - { name: kernel.event_listener, event: kernel.request, method: warmUp }

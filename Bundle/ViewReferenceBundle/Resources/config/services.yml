@@ -1,6 +1,7 @@
 parameters:
-    victoire_view_reference.cache.writer.class: Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheWriter
-    victoire_view_reference.cache.reader.class: Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheReader
+    victoire_view_reference.cache.driver.class: Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheDriver
+    victoire_view_reference.cache.manager.class: Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheManager
+    victoire_view_reference.cache.repository.class: Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheRepository
     victoire_view_reference.transformer.xmlToViewReference.class: Victoire\Bundle\ViewReferenceBundle\Transformer\XmlToViewReferenceTransformer
 
 services:
@@ -29,7 +30,7 @@ services:
         class: Victoire\Bundle\ViewReferenceBundle\EventSubscriber\ViewReferenceSubscriber
         arguments:
             - "@victoire_core.url_builder"
-            - "@victoire_view_reference.cache.writer"
+            - "@victoire_view_reference.cache.manager"
             - "@victoire_business_page.business_page_builder"
             - "@victoire_view_reference.builder"
             - "@victoire_view_reference.provider"
@@ -39,14 +40,20 @@ services:
     victoire_view_reference.builder_chain:
         class: Victoire\Bundle\ViewReferenceBundle\Builder\Chain\ViewReferenceBuilderChain
 
-    victoire_view_reference.cache.reader:
-        class: %victoire_view_reference.cache.reader.class%
+    victoire_view_reference.cache.driver:
+        class: %victoire_view_reference.cache.driver.class%
         arguments:
             - "%victoire_view_reference.cache.path%"
 
-    victoire_view_reference.cache.writer:
-        class: %victoire_view_reference.cache.writer.class%
-        parent: "victoire_view_reference.cache.reader"
+    victoire_view_reference.cache.manager:
+        class: %victoire_view_reference.cache.manager.class%
+        arguments:
+            - "@victoire_view_reference.cache.driver"
+
+    victoire_view_reference.cache.repository:
+        class: %victoire_view_reference.cache.repository.class%
+        arguments:
+            - "@victoire_view_reference.cache.driver"
 
     victoire_view_reference.transformer.xmlToViewReference:
         class: %victoire_view_reference.transformer.xmlToViewReference.class%

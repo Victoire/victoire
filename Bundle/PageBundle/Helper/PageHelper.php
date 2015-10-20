@@ -28,7 +28,7 @@ use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\SeoBundle\Helper\PageSeoHelper;
 use Victoire\Bundle\ViewReferenceBundle\Builder\ViewReferenceBuilder;
-use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheReader;
+use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheRepository;
 use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
 use Victoire\Bundle\ViewReferenceBundle\Provider\ViewReferenceProvider;
 use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
@@ -53,7 +53,7 @@ class PageHelper extends ViewHelper
     protected $viewReferenceBuilderChain; // @victoire_view_reference.builder_chain
     protected $urlBuilder; // @victoire_core.url_builder
     protected $widgetDataWarmer;
-    protected $viewCacheReader;
+    protected $viewCacheRepository;
 
     protected $pageParameters = [
         'name',
@@ -67,7 +67,7 @@ class PageHelper extends ViewHelper
      * @param BETParameterConverter     $parameterConverter
      * @param BusinessEntityHelper      $businessEntityHelper
      * @param EntityManager             $entityManager
-     * @param ViewReferenceXmlCacheReader $viewCacheReader
+     * @param ViewReferenceXmlCacheRepository $viewCacheRepository
      * @param ViewReferenceBuilderChain $viewReferenceBuilder
      * @param CurrentViewHelper         $currentViewHelper
      * @param EventDispatcherInterface  $eventDispatcher
@@ -99,7 +99,7 @@ class PageHelper extends ViewHelper
         BusinessPageBuilder $businessPageBuilder,
         BusinessPageHelper $businessPageHelper,
         WidgetDataWarmer $widgetDataWarmer,
-        ViewReferenceXmlCacheReader $viewCacheReader
+        ViewReferenceXmlCacheRepository $viewCacheRepository
     ) {
         parent::__construct($parameterConverter, $businessEntityHelper, $entityManager, $viewReferenceBuilder, $viewReferenceHelper, $viewReferenceProvider);
         $this->businessPageBuilder = $businessPageBuilder;
@@ -109,7 +109,7 @@ class PageHelper extends ViewHelper
         $this->eventDispatcher = $eventDispatcher;
         $this->victoireTemplating = $victoireTemplating;
         $this->pageSeoHelper = $pageSeoHelper;
-        $this->viewCacheReader = $viewCacheReader;
+        $this->viewCacheRepository = $viewCacheRepository;
         $this->session = $session;
         $this->tokenStorage = $tokenStorage;
         $this->authorizationChecker = $authorization_checker;
@@ -134,11 +134,11 @@ class PageHelper extends ViewHelper
             }
             $this->checkPageValidity($page, $entity, $parameters);
         } else {
-            $viewReference = $this->viewCacheReader->getOneReferenceByParameters($parameters);
+            $viewReference = $this->viewCacheRepository->getOneReferenceByParameters($parameters);
             if ($viewReference === null && !empty($parameters['viewId'])) {
                 $parameters['patternId'] = $parameters['viewId'];
                 unset($parameters['viewId']);
-                $viewReference = $this->viewCacheReader->getOneReferenceByParameters($parameters);
+                $viewReference = $this->viewCacheRepository->getOneReferenceByParameters($parameters);
             }
 
             $page = $this->findPageByReference($viewReference, $parameters);
@@ -155,7 +155,7 @@ class PageHelper extends ViewHelper
      */
     public function renderPageByUrl($url, $locale, $isAjax = false)
     {
-        $page = $this->findPageByReference($this->viewCacheReader->getReferenceByUrl($url, $locale), [
+        $page = $this->findPageByReference($this->viewCacheRepository->getReferenceByUrl($url, $locale), [
             'url'    => $url,
             'locale' => $locale
         ]);

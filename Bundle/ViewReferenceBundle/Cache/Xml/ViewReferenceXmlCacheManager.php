@@ -8,17 +8,26 @@ use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
 use Victoire\Bundle\ViewReferenceBundle\Transformer\ArrayToViewReferenceTransformer;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
-class ViewReferenceXmlCacheWriter extends ViewReferenceXmlCacheReader
+class ViewReferenceXmlCacheManager
 {
+    protected $driver;
+
+    /**
+     * @param ViewReferenceXmlCacheDriver $driver
+     */
+    public function __construct(ViewReferenceXmlCacheDriver $driver)
+    {
+        $this->driver = $driver;
+    }
+
     /**
      * Write given views references in a xml file.
      * @param array $nodes
      * @param null $rootNode
-     * @param bool $writeFile
      *
      * @return \SimpleXMLElement
      */
-    public function generateXml(array $nodes, $rootNode = null, $writeFile = true)
+    public function generateXml(array $nodes, $rootNode = null)
     {
         if (is_null($rootNode)) {
             $xml = <<<'XML'
@@ -37,11 +46,11 @@ XML;
             }
             if (!empty($node['children'])) {
                 $childrenNode = $itemNode->addChild('children');
-                $this->generateXml($node['children'], $childrenNode, false);
+                $this->generateXml($node['children'], $childrenNode);
             }
         }
 
-        return $writeFile ? $this->writeFile($rootNode) : $rootNode;
+        return $rootNode;
     }
 
     /**
@@ -52,14 +61,14 @@ XML;
      **/
     public function removeViewsReferencesByParameters($parameters)
     {
-        $rootNode = $this->readCache();
+        $rootNode = $this->driver->readCache();
         $counter = 0;
         foreach ($rootNode->xpath(ViewReferenceHelper::buildXpath($parameters)) as $item) {
             unset($item[0]);
             $counter++;
         }
 
-        $this->writeFile($rootNode);
+        $this->driver->writeFile($rootNode);
 
         return $counter;
     }
@@ -78,25 +87,18 @@ XML;
     }
 
     /**
-     * write \SimpleXMLElement in the cache file.
-     *
-     * @param \SimpleXMLElement $rootNode
-     *
-     * @return int
-     */
-    protected function writeFile(\SimpleXMLElement $rootNode)
+     * add
+     **/
+    public function add($viewReference)
     {
-        if (!is_dir(dirname($this->xmlFile))) {
-            mkdir(dirname($this->xmlFile), 0777, true);
-        }
+        //@todo implements add method
+    }
 
-        //Used to format result and have a proper indentation
-        $dom = new \DOMDocument('1.0');
-        $dom->preserveWhiteSpace = false;
-        $dom->formatOutput = true;
-        $dom->loadXML($rootNode->asXML());
-        $dom->saveXML();
-
-        return $dom->save($this->xmlFile);
+    /**
+     * flush
+     **/
+    public function flush()
+    {
+        $this->driver->writeFile($this->viewsReferences);
     }
 }

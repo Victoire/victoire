@@ -32,6 +32,8 @@ class GenerateViewReferenceCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $viewsReferences = $this->getContainer()->get('victoire_core.view_helper')->buildViewsReferences();
-        $this->getContainer()->get('victoire_view_reference.cache.writer')->generateXml($viewsReferences);
+        $this->getContainer()->get('victoire_view_reference.cache.driver')->writeFile(
+            $this->getContainer()->get('victoire_view_reference.cache.manager')->generateXml($viewsReferences)
+        );
     }
 }

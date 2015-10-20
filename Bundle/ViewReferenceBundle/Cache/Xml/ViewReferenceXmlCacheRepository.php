@@ -2,36 +2,22 @@
 
 namespace Victoire\Bundle\ViewReferenceBundle\Cache\Xml;
 
-use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
-use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
-use Victoire\Bundle\CoreBundle\Entity\View;
-use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
 use Victoire\Bundle\ViewReferenceBundle\Transformer\XMLToViewReferenceTransformer;
 
 /**
- * ref: victoire_view_reference.cache.reader
+ * ref: victoire_view_reference.cache.repository
  */
-class ViewReferenceXmlCacheReader
+class ViewReferenceXmlCacheRepository
 {
-    protected $xmlFile;
+    protected $driver;
 
     /**
-     * @param string              $filePath
+     * @param ViewReferenceXmlCacheDriver $driver
      */
-    public function __construct($filePath)
+    public function __construct(ViewReferenceXmlCacheDriver $driver)
     {
-        $this->xmlFile = $filePath;
-    }
-
-    /**
-     * get the content of the view cache file.
-     *
-     * @return \SimpleXMLElement
-     */
-    public function readCache()
-    {
-        return new \SimpleXMLElement(file_get_contents($this->xmlFile));
+        $this->driver = $driver;
     }
 
     /**
@@ -54,7 +40,7 @@ class ViewReferenceXmlCacheReader
             );
         }
 
-        if ($xmlReference = $this->readCache()->xpath($xpath)) {
+        if ($xmlReference = $this->driver->readCache()->xpath($xpath)) {
             $viewReference = $xmlReference[0]->attributes();
         } else {
             $viewReference = null;
@@ -87,7 +73,7 @@ class ViewReferenceXmlCacheReader
         $arguments = [];
         $viewRefTransformer = new XMLToViewReferenceTransformer();
 
-        if ($xmlReferences = $this->readCache()->xpath(ViewReferenceHelper::buildXpath($parameters))) {
+        if ($xmlReferences = $this->driver->readCache()->xpath(ViewReferenceHelper::buildXpath($parameters))) {
             foreach ($xmlReferences as $xmlReference) {
                 $viewReference = current($xmlReference->attributes());
                 if ($transform === true) {
@@ -107,7 +93,7 @@ class ViewReferenceXmlCacheReader
      */
     public function getTree($node = null)
     {
-        $node = $node ?: $this->readCache();
+        $node = $node ?: $this->driver->readCache();
         $viewRefTransformer = new XMLToViewReferenceTransformer();
         $viewsReferences = [];
         foreach ($node->children() as $child) {
@@ -120,15 +106,5 @@ class ViewReferenceXmlCacheReader
 
 
         return $viewsReferences;
-    }
-
-    /**
-     * Does the cache file exists ?
-     *
-     * @return bool
-     **/
-    public function fileExists()
-    {
-        return file_exists($this->xmlFile);
     }
 }
