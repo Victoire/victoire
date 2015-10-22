@@ -3,6 +3,7 @@
 namespace Victoire\Bundle\WidgetBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Victoire\Bundle\CoreBundle\Entity\View;
 
 /**
  * The widget Repository.
@@ -35,5 +36,16 @@ class WidgetRepository extends EntityRepository
         $qb = $this->getAllIn($widgetIds);
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Find all widgets for a given View.
+     *
+     * @param View $view
+     * @return multitype
+     */
+    public function findAllWidgetsForView(View $view)
+    {
+        return $this->findAllIn($view->getWidgetsIds());
     }
 }
