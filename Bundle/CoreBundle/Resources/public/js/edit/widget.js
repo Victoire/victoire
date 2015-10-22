@@ -51,6 +51,7 @@ $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(
             if (response.hasOwnProperty("redirect")) {
                 window.location.replace(response.redirect);
             } else {
+                updateViewCssHash(response);
                 closeModal();
                 $vic('.vic-creating').after(response.html);
                 var slot = $vic('.vic-creating').parent('.vic-slot');
@@ -61,7 +62,6 @@ $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(
                     var object = {data: response.html, timestamp: new Date().getTime()};
                     localStorage.setItem('victoire__widget__html__' + response.widgetId, JSON.stringify(object));
                 }
-
                 congrat(response.message, 10000);
             }
 
@@ -115,6 +115,7 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update"]', function(
             if (response.hasOwnProperty("redirect")) {
                 window.location.replace(response.redirect);
             } else {
+                updateViewCssHash(response);
                 closeModal();
                 $vic(".vic-widget", '#vic-widget-' + response.widgetId + '-container').replaceWith(response.html);
                 slideTo($vic('> .vic-anchor', '#vic-widget-' + response.widgetId + '-container'));
@@ -157,6 +158,7 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="delete"], .vic-hover
                 if (response.hasOwnProperty("redirect")) {
                     window.location.replace(response.redirect);
                 } else {
+                    updateViewCssHash(response);
                     closeModal();
                     widget = $vic('#vic-widget-' + response.widgetId + '-container');
                     slot = widget.parents('.vic-slot');
@@ -199,4 +201,13 @@ function generateNewWidgetUrl(select){
             '_locale'          : locale
         }
     );
+}
+
+//Update View css file if hash is returned
+function updateViewCssHash(response) {
+    if(response.viewCssHash) {
+        $pageScope = angular.element($("body")).scope();
+        $pageScope.viewCssHash = response.viewCssHash;
+        $pageScope.$apply();
+    }
 }
