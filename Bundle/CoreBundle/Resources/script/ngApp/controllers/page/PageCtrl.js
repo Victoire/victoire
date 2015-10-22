@@ -1,10 +1,11 @@
 ngApp.controller("PageController",
     ["$scope", "$timeout", "widgetLocalStorageService", "widgetAPIService", "$sce",
         function($scope, $timeout, $widgetLocalStorageService, $widgetAPI, $sce) {
-            $scope.init = function() {
+            $scope.init = function(viewCssHash) {
                 $timeout(function() {
                     $scope.loadAsynchronousWidgets();
                 });
+                $scope.viewCssHash = viewCssHash;
             };
 
             $scope.feedAsynchronousWidget = function(widget) {

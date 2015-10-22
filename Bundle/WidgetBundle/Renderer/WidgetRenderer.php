@@ -13,10 +13,12 @@ use Victoire\Bundle\WidgetBundle\Model\Widget;
 class WidgetRenderer
 {
     private $container;
+    private $victoireTwigResponsive;
 
-    public function __construct(Container $container)
+    public function __construct(Container $container, $victoireTwigResponsive)
     {
         $this->container = $container;
+        $this->victoireTwigResponsive = $victoireTwigResponsive;
     }
 
     /**
@@ -184,5 +186,22 @@ class WidgetRenderer
         $cssClass = 'vic-widget-'.strtolower($this->container->get('victoire_widget.widget_helper')->getWidgetName($widget));
 
         return $cssClass;
+    }
+
+    /**
+     * Render the CSS style for a Widget.
+     *
+     * @param Widget $widget
+     * @return mixed
+     */
+    public function renderStyle(Widget $widget)
+    {
+        return $this->container->get('victoire_templating')->render(
+            'VictoireCoreBundle:Widget:style/style.html.twig',
+            array(
+                'widget' => $widget,
+                'victoire_twig_responsive' => $this->victoireTwigResponsive
+            )
+        );
     }
 }

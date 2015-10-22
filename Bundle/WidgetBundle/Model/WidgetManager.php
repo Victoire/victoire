@@ -266,6 +266,7 @@ class WidgetManager
                     'success'     => true,
                     'html'        => $this->widgetRenderer->render($widget, $currentView),
                     'widgetId'    => $initialWidgetId,
+                    'viewCssHash' => $currentView->getCssHash()
                 ];
             } else {
                 $formErrorHelper = $this->formErrorHelper;
@@ -325,6 +326,7 @@ class WidgetManager
         return [
             'success'  => true,
             'widgetId' => $widgetId,
+            'viewCssHash' => $view->getCssHash()
         ];
     }
 

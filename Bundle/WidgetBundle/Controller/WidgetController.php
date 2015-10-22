@@ -224,10 +224,11 @@ class WidgetController extends Controller
                 }
                 $this->get('doctrine.orm.entity_manager')->flush();
                 $params = [
-                    'view'     => $view,
-                    'success'  => true,
-                    'html'     => $this->get('victoire_widget.widget_renderer')->render($widget, $view),
-                    'widgetId' => $widget->getId(),
+                    'view'        => $view,
+                    'success'     => true,
+                    'html'        => $this->get('victoire_widget.widget_renderer')->render($widget, $view),
+                    'widgetId'    => $widget->getId(),
+                    'viewCssHash' => $view->getCssHash()
                 ];
             } else {
                 $template = ($request->query->get('novalidate', false) !== false) ? 'VictoireCoreBundle:Widget/Form/stylize:form.html.twig' : 'VictoireCoreBundle:Widget/Form:stylize.html.twig';

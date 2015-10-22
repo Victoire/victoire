@@ -6,6 +6,13 @@ services:
             - @victoire_business_entity.cache_reader
             - @translator
 
+    victoire_core.widget_subscriber:
+        class: Victoire\Bundle\CoreBundle\EventSubscriber\WidgetSubscriber
+        arguments:
+            - @victoire_core.view_css_builder
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+
 #  ==================  MENU ================== #
     victoire_core.admin_menu_builder:
         class: Victoire\Bundle\CoreBundle\Menu\MenuBuilder
@@ -158,6 +165,15 @@ services:
         tags:
         - { name: kernel.event_listener, event: kernel.request, method: warmUp }
 
+    victoire_core.cache_warmer.view_css_warmer:
+        class: Victoire\Bundle\CoreBundle\CacheWarmer\ViewCssWarmer
+        arguments:
+            - @victoire_core.view_css_builder
+            - @doctrine.orm.entity_manager
+            - @victoire_widget_map.builder
+        tags:
+            - { name: kernel.cache_warmer }
+
     victoire_core.entity_proxy.cache_driver:
         class: Victoire\Bundle\CoreBundle\CacheWarmer\EntityProxyCacheDriver
         arguments:
@@ -202,6 +218,11 @@ services:
         class: Victoire\Bundle\CoreBundle\Builder\ViewReferenceBuilder
         arguments:
             - "@victoire_core.chain.view_reference_builder_chain"
+    victoire_core.view_css_builder:
+        class: Victoire\Bundle\CoreBundle\Builder\ViewCssBuilder
+        arguments:
+            - @victoire_widget.widget_renderer
+            - '%kernel.root_dir%'
 
     victoire_core.current_view:
         class: Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper
@@ -223,6 +244,7 @@ services:
 
     victoire_core.url_builder:
         class: Victoire\Bundle\CoreBundle\Helper\UrlBuilder
+
 
 #  ==================  Chain ================== #
 

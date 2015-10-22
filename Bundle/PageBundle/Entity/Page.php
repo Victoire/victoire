@@ -15,7 +15,7 @@ class Page extends BasePage
     const TYPE = 'page';
 
     /**
-     * contruct.
+     * Construct.
      **/
     public function __construct()
     {

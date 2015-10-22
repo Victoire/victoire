@@ -164,7 +164,22 @@ abstract class View
     protected $i18n;
 
     /**
-     * contruct.
+     * @var string
+     *
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\TemplateBundle\Entity\Template", inversedBy="inheritors", cascade={"persist"})
+     * @ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected $template;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cssHash", type="string", length=40 ,nullable=true)
+     */
+    protected $cssHash;
+
+    /**
+     * Construct.
      **/
     public function __construct()
     {
@@ -624,6 +639,28 @@ abstract class View
     }
 
     /**
+     * Get widgets ids as array
+     *
+     * @return array
+     */
+    public function getWidgetsIds()
+    {
+
+        $widgetIds = array();
+
+        $extractWidgetIds = function($widgetMap) {
+            /* @var $widgetMap WidgetMap */
+            return $widgetMap->getWidgetId();
+        };
+
+        foreach($this->getWidgetMap() as $widgetMapArray) {
+            $widgetIds = array_merge(array_map($extractWidgetIds, $widgetMapArray), $widgetIds);
+        }
+
+        return $widgetIds;
+    }
+
+    /**
      * Get widgets.
      *
      * @param string $slot
@@ -960,4 +997,37 @@ abstract class View
 
         return $this;
     }
+
+    /**
+     * Get CSS hash
+     *
+     * @return string
+     */
+    public function getCssHash()
+    {
+        return $this->cssHash;
+    }
+
+    /**
+     * Set CSS hash
+     *
+     * @param string $cssHash
+     *
+     * @return $this
+     */
+    public function setCssHash($cssHash)
+    {
+        $this->cssHash = $cssHash;
+
+        return $this;
+    }
+
+    /**
+     * Change cssHash
+     */
+    public function changeCssHash()
+    {
+        $this->cssHash = sha1(uniqid());
+    }
+
 }
