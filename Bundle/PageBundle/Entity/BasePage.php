@@ -18,16 +18,7 @@ abstract class BasePage extends View implements WebViewInterface
     use \Victoire\Bundle\PageBundle\Entity\Traits\WebViewTrait;
 
     /**
-     * @var string
-     *
-     * Could be Template or BusinessTemplate
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\TemplateBundle\Entity\Template", inversedBy="inheritors", cascade={"persist"})
-     * @ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="CASCADE")
-     */
-    protected $template;
-
-    /**
-     * contruct.
+     * Construct.
      **/
     public function __construct()
     {

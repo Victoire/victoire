@@ -21,7 +21,7 @@ class Template extends View
     /**
      * @var string
      *
-     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\TemplateBundle\Entity\Template", mappedBy="template")
+     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\CoreBundle\Entity\View", mappedBy="template")
      */
     protected $inheritors;
 
@@ -33,16 +33,7 @@ class Template extends View
     protected $layout;
 
     /**
-     * @var string
-     *
-     * Could be Template or BusinessTemplate
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\TemplateBundle\Entity\Template", inversedBy="inheritors", cascade={"persist"})
-     * @ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="CASCADE")
-     */
-    protected $template;
-
-    /**
-     * contruct.
+     * Construct.
      **/
     public function __construct()
     {

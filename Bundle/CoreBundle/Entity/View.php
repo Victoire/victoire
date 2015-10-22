@@ -166,12 +166,20 @@ abstract class View
     /**
      * @var string
      *
-     * @ORM\Column(name="cssHash", type="string", length=40 ,nullable=false)
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\TemplateBundle\Entity\Template", inversedBy="inheritors", cascade={"persist"})
+     * @ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected $template;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cssHash", type="string", length=40 ,nullable=true)
      */
     protected $cssHash;
 
     /**
-     * contruct.
+     * Construct.
      **/
     public function __construct()
     {
@@ -628,6 +636,28 @@ abstract class View
     public function getWidgets()
     {
         return $this->widgets;
+    }
+
+    /**
+     * Get widgets ids as array
+     *
+     * @return array
+     */
+    public function getWidgetsIds()
+    {
+
+        $widgetIds = array();
+
+        $extractWidgetIds = function($widgetMap) {
+            /* @var $widgetMap WidgetMap */
+            return $widgetMap->getWidgetId();
+        };
+
+        foreach($this->getWidgetMap() as $widgetMap) {
+            $widgetIds = array_merge(array_map($extractWidgetIds, $widgetMap), $widgetIds);
+        }
+
+        return $widgetIds;
     }
 
     /**
