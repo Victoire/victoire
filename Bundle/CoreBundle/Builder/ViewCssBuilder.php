@@ -84,6 +84,17 @@ class ViewCssBuilder
     }
 
     /**
+     * Get href for link markup for a View.
+     *
+     * @param View $view
+     * @return string
+     */
+    public function getHref(View $view)
+    {
+        return $this->webDir . '/' . $view->getCssHash() .  '.css';
+    }
+
+    /**
      * Remove css file.
      *
      * @param $hash

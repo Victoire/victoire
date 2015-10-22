@@ -178,7 +178,8 @@ class PageExtension extends \Twig_Extension
         }
 
         return sprintf(
-            '<link ng-href="%s" rel="stylesheet" type="text/css" rel="stylesheet"/>',
+            '<link href="%s" ng-href="%s" rel="stylesheet" type="text/css" rel="stylesheet"/>',
+            $this->viewCssBuilder->getHref($currentView),
             $this->viewCssBuilder->getAngularHref($currentView)
         );
     }
