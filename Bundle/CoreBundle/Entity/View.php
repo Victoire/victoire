@@ -653,8 +653,8 @@ abstract class View
             return $widgetMap->getWidgetId();
         };
 
-        foreach($this->getWidgetMap() as $widgetMap) {
-            $widgetIds = array_merge(array_map($extractWidgetIds, $widgetMap), $widgetIds);
+        foreach($this->getWidgetMap() as $widgetMapArray) {
+            $widgetIds = array_merge(array_map($extractWidgetIds, $widgetMapArray), $widgetIds);
         }
 
         return $widgetIds;
