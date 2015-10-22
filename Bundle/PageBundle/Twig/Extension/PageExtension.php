@@ -6,7 +6,9 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
+use Victoire\Bundle\CoreBundle\Builder\ViewCssBuilder;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
+use Victoire\Bundle\CoreBundle\Helper\ViewHelper;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
 
@@ -23,17 +25,26 @@ class PageExtension extends \Twig_Extension
      * Constructor.
      *
      * @param BusinessPageHelper $BusinessTemplateHelper
-     * @param Router             $router
-     * @param PageHelper         $pageHelper
-     * @param CurrentViewHelper  $currentViewHelper
-     * @param EntityManager      $entityManager
+     * @param Router $router
+     * @param PageHelper $pageHelper
+     * @param CurrentViewHelper $currentViewHelper
+     * @param ViewCssBuilder $viewCssBuilder
+     * @param EntityManager $entityManager
      */
-    public function __construct(BusinessPageHelper $BusinessTemplateHelper, Router $router, PageHelper $pageHelper, CurrentViewHelper $currentViewHelper, EntityManager $entityManager)
+    public function __construct(
+        BusinessPageHelper $BusinessTemplateHelper,
+        Router $router,
+        PageHelper $pageHelper,
+        CurrentViewHelper $currentViewHelper,
+        ViewCssBuilder $viewCssBuilder,
+        EntityManager $entityManager
+    )
     {
         $this->BusinessTemplateHelper = $BusinessTemplateHelper;
         $this->router = $router;
         $this->pageHelper = $pageHelper;
         $this->currentViewHelper = $currentViewHelper;
+        $this->viewCssBuilder = $viewCssBuilder;
         $this->entityManager = $entityManager;
     }
 
@@ -47,6 +58,7 @@ class PageExtension extends \Twig_Extension
         return [
             new \Twig_SimpleFunction('vic_current_page_reference', [$this, 'victoireCurrentPageReference']),
             'cms_page_business_page_pattern_sitemap' => new \Twig_Function_Method($this, 'cmsPageBusinessPagePatternSiteMap', ['is_safe' => ['html']]),
+            'cms_page_css' => new \Twig_Function_Method($this, 'cmsPageCss', ['is_safe' => ['html']])
         ];
     }
 
@@ -150,6 +162,25 @@ class PageExtension extends \Twig_Extension
         }
 
         return $html;
+    }
+
+    /**
+     * Construct CSS link markup for the style of all the Widgets contained in the current View.
+     *
+     * @return string
+     */
+    public function cmsPageCss()
+    {
+        $currentView = $this->currentViewHelper->getCurrentView();
+
+        if(!$currentView) {
+            return '';
+        }
+
+        return sprintf(
+            '<link ng-href="%s" rel="stylesheet" type="text/css" rel="stylesheet"/>',
+            $this->viewCssBuilder->getAngularHref($currentView)
+        );
     }
 
     /**
