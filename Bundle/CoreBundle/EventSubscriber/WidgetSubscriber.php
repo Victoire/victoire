@@ -3,66 +3,125 @@
 namespace Victoire\Bundle\CoreBundle\EventSubscriber;
 
 use Doctrine\Common\EventSubscriber;
-use Doctrine\ORM\Event\LifecycleEventArgs;
-use Doctrine\ORM\Event\PostFlushEventArgs;
+use Doctrine\ORM\Event\OnFlushEventArgs;
+use Victoire\Bundle\CoreBundle\Builder\ViewCssBuilder;
+use Victoire\Bundle\CoreBundle\Entity\View;
+use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
+use Victoire\Bundle\WidgetBundle\Repository\WidgetRepository;
+use Victoire\Bundle\CoreBundle\Repository\ViewRepository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\UnitOfWork;
 
 class WidgetSubscriber implements EventSubscriber
 {
 
-    protected $views = array();
+    private $viewCssBuilder;
+    /* @var UnitOfWork $uow */
+    private $uow;
+    /* @var EntityManager $em */
+    private $em;
+    /* @var WidgetRepository $widgetRepo */
+    private $widgetRepo;
+    /* @var ViewRepository $viewRepo */
+    private $viewRepo;
 
+    /**
+     * Construct.
+     *
+     * @param ViewCssBuilder $viewCssBuilder
+     */
+    public function __construct(ViewCssBuilder $viewCssBuilder)
+    {
+        $this->viewCssBuilder = $viewCssBuilder;
+    }
+
+    /**
+     * Get SubscribedEvents.
+     *
+     * @return array
+     */
     public function getSubscribedEvents()
     {
         return array(
-            'preUpdate',
-            'postFlush'
+            'onFlush'
         );
     }
 
     /**
-     * Change cssHash of views when a widget is updated
+     * Change cssHash of views when a widget is updated or deleted.
      *
-     * @param LifecycleEventArgs $args
+     * @param OnFlushEventArgs $args
      */
-    public function preUpdate(LifecycleEventArgs $args)
+    public function onFlush(OnFlushEventArgs $args)
     {
-        $em = $args->getEntityManager();
-        $uow = $em->getUnitOfWork();
+        $this->em = $args->getEntityManager();
+        $this->uow = $this->em->getUnitOfWork();
+        $this->widgetRepo = $this->em->getRepository('Victoire\Bundle\WidgetBundle\Entity\Widget');
+        $this->viewRepo = $this->em->getRepository('Victoire\Bundle\CoreBundle\Entity\View');
 
-        $entities = array_merge(
-            $uow->getScheduledEntityInsertions(),
-            $uow->getScheduledEntityUpdates()
-        );
+        $updatedEntities = $this->uow->getScheduledEntityUpdates();
+        $deletedEntities = $this->uow->getScheduledEntityDeletions();
 
-        foreach ($entities as $entity) {
+        //Update CSS of this widget View and its inheritors if this View is a Template
+        foreach (array_merge($updatedEntities, $deletedEntities) as $entity) {
+
             if (!($entity instanceof Widget)) {
                 continue;
             }
 
             $view = $entity->getView();
-            $view->changeCssHash();
-            $this->views[] = $view;
+            $this->updateViewCss($view);
+            $this->updateTemplateInheritorsCss($view);
+
+        }
+
+        //Remove CSS of this widget View and update its inheritors if this View is a Template
+        foreach ($deletedEntities as $entity) {
+
+            if (!($entity instanceof View)) {
+                continue;
+            }
+
+            $this->viewCssBuilder->removeCssFile($entity->getCssHash());
+            $this->updateTemplateInheritorsCss($entity);
+
         }
     }
 
     /**
-     * Persist and flush updated views
+     * Change view cssHash, update css file and persist new cssHash
      *
-     * @param PostFlushEventArgs $event
+     * @param View $view
      */
-    public function postFlush(PostFlushEventArgs $event)
+    public function updateViewCss(View $view)
     {
-        if(!empty($this->views)) {
+        $oldHash = $view->getCssHash();
+        $view->changeCssHash();
 
-            $em = $event->getEntityManager();
+        //Update css file
+        $widgets = $this->widgetRepo->findAllWidgetsForView($view);
+        $this->viewCssBuilder->updateViewCss($oldHash, $view, $widgets);
 
-            foreach ($this->views as $view) {
-                $em->persist($view);
-            }
+        //Update hash in database
+        $metadata = $this->em->getClassMetadata(get_class($view));
+        $this->uow->recomputeSingleEntityChangeSet($metadata, $view);
+    }
 
-            $this->views = array();
-            $em->flush();
+    /**
+     * Update a Template inheritors (View) if necessary
+     *
+     * @param View $view
+     */
+    public function updateTemplateInheritorsCss(View $view)
+    {
+        if(!($view instanceof Template)) {
+            return;
+        }
+        foreach($view->getInheritors() as $inheritor) {
+            $this->updateViewCss($inheritor);
+            $this->updateTemplateInheritorsCss($inheritor);
         }
     }
+
 }
