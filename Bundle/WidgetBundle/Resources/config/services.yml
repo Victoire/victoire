@@ -20,7 +20,9 @@ services:
 
     victoire_widget.widget_renderer:
         class: Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer
-        arguments: [@service_container]
+        arguments:
+            - @service_container
+            - %victoire_twig.responsive%
 
     victoire_widget.widget_manager:
         class: Victoire\Bundle\WidgetBundle\Model\WidgetManager
