@@ -34,7 +34,6 @@ $vic(document).on('change', 'select[data-refreshOnChange="true"], input:checkbox
     }).done(function(response){
         $target.html(response.html);
         var scripts = $target.find("script");
-        evalAll(scripts);
         loading(false);
     }).fail(function(response) {
         console.log(response);
