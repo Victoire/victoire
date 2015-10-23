@@ -192,16 +192,17 @@ class WidgetRenderer
      * Render the CSS style for a Widget.
      *
      * @param Widget $widget
+     *
      * @return mixed
      */
     public function renderStyle(Widget $widget)
     {
         return $this->container->get('victoire_templating')->render(
             'VictoireCoreBundle:Widget:style/style.html.twig',
-            array(
-                'widget' => $widget,
-                'victoire_twig_responsive' => $this->victoireTwigResponsive
-            )
+            [
+                'widget'                   => $widget,
+                'victoire_twig_responsive' => $this->victoireTwigResponsive,
+            ]
         );
     }
 }

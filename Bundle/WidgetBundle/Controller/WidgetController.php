@@ -228,7 +228,7 @@ class WidgetController extends Controller
                     'success'     => true,
                     'html'        => $this->get('victoire_widget.widget_renderer')->render($widget, $view),
                     'widgetId'    => $widget->getId(),
-                    'viewCssHash' => $view->getCssHash()
+                    'viewCssHash' => $view->getCssHash(),
                 ];
             } else {
                 $template = ($request->query->get('novalidate', false) !== false) ? 'VictoireCoreBundle:Widget/Form/stylize:form.html.twig' : 'VictoireCoreBundle:Widget/Form:stylize.html.twig';

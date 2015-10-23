@@ -3,19 +3,18 @@
 namespace Victoire\Bundle\CoreBundle\EventSubscriber;
 
 use Doctrine\Common\EventSubscriber;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\OnFlushEventArgs;
+use Doctrine\ORM\UnitOfWork;
 use Victoire\Bundle\CoreBundle\Builder\ViewCssBuilder;
 use Victoire\Bundle\CoreBundle\Entity\View;
+use Victoire\Bundle\CoreBundle\Repository\ViewRepository;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetBundle\Repository\WidgetRepository;
-use Victoire\Bundle\CoreBundle\Repository\ViewRepository;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\UnitOfWork;
 
 class WidgetSubscriber implements EventSubscriber
 {
-
     private $viewCssBuilder;
     /* @var UnitOfWork $uow */
     private $uow;
@@ -43,9 +42,9 @@ class WidgetSubscriber implements EventSubscriber
      */
     public function getSubscribedEvents()
     {
-        return array(
-            'onFlush'
-        );
+        return [
+            'onFlush',
+        ];
     }
 
     /**
@@ -65,7 +64,6 @@ class WidgetSubscriber implements EventSubscriber
 
         //Update CSS of this widget View and its inheritors if this View is a Template
         foreach (array_merge($updatedEntities, $deletedEntities) as $entity) {
-
             if (!($entity instanceof Widget)) {
                 continue;
             }
@@ -73,24 +71,21 @@ class WidgetSubscriber implements EventSubscriber
             $view = $entity->getView();
             $this->updateViewCss($view);
             $this->updateTemplateInheritorsCss($view);
-
         }
 
         //Remove CSS of this widget View and update its inheritors if this View is a Template
         foreach ($deletedEntities as $entity) {
-
             if (!($entity instanceof View)) {
                 continue;
             }
 
             $this->viewCssBuilder->removeCssFile($entity->getCssHash());
             $this->updateTemplateInheritorsCss($entity);
-
         }
     }
 
     /**
-     * Change view cssHash, update css file and persist new cssHash
+     * Change view cssHash, update css file and persist new cssHash.
      *
      * @param View $view
      */
@@ -109,19 +104,18 @@ class WidgetSubscriber implements EventSubscriber
     }
 
     /**
-     * Update a Template inheritors (View) if necessary
+     * Update a Template inheritors (View) if necessary.
      *
      * @param View $view
      */
     public function updateTemplateInheritorsCss(View $view)
     {
-        if(!($view instanceof Template)) {
+        if (!($view instanceof Template)) {
             return;
         }
-        foreach($view->getInheritors() as $inheritor) {
+        foreach ($view->getInheritors() as $inheritor) {
             $this->updateViewCss($inheritor);
             $this->updateTemplateInheritorsCss($inheritor);
         }
     }
-
 }
