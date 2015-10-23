@@ -37,6 +37,9 @@ class ViewCssWarmer extends CacheWarmer
      */
     public function warmUp($cacheDir)
     {
+        if (!$this->entityManager->getConnection()->isConnected()) {
+            return;
+        }
         $viewRepo = $this->entityManager->getRepository('Victoire\Bundle\CoreBundle\Entity\View');
         $widgetRepo = $this->entityManager->getRepository('Victoire\Bundle\WidgetBundle\Entity\Widget');
         $views = $viewRepo->findAll();
