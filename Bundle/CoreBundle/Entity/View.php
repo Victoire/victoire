@@ -639,21 +639,20 @@ abstract class View
     }
 
     /**
-     * Get widgets ids as array
+     * Get widgets ids as array.
      *
      * @return array
      */
     public function getWidgetsIds()
     {
+        $widgetIds = [];
 
-        $widgetIds = array();
-
-        $extractWidgetIds = function($widgetMap) {
+        $extractWidgetIds = function ($widgetMap) {
             /* @var $widgetMap WidgetMap */
             return $widgetMap->getWidgetId();
         };
 
-        foreach($this->getWidgetMap() as $widgetMapArray) {
+        foreach ($this->getWidgetMap() as $widgetMapArray) {
             $widgetIds = array_merge(array_map($extractWidgetIds, $widgetMapArray), $widgetIds);
         }
 
@@ -999,7 +998,7 @@ abstract class View
     }
 
     /**
-     * Get CSS hash
+     * Get CSS hash.
      *
      * @return string
      */
@@ -1009,7 +1008,7 @@ abstract class View
     }
 
     /**
-     * Set CSS hash
+     * Set CSS hash.
      *
      * @param string $cssHash
      *
@@ -1023,11 +1022,10 @@ abstract class View
     }
 
     /**
-     * Change cssHash
+     * Change cssHash.
      */
     public function changeCssHash()
     {
         $this->cssHash = sha1(uniqid());
     }
-
 }
