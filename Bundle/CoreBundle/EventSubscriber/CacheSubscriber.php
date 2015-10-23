@@ -3,7 +3,6 @@
 namespace Victoire\Bundle\CoreBundle\EventSubscriber;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\BusinessEntityBundle\Event\BusinessEntityAnnotationEvent;
 use Victoire\Bundle\CoreBundle\Cache\Builder\CacheBuilder;
 use Victoire\Bundle\WidgetBundle\Event\WidgetAnnotationEvent;

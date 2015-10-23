@@ -4,8 +4,6 @@ namespace Victoire\Bundle\CoreBundle\Helper;
 
 use Symfony\Component\Config\Util\XmlUtils;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
-use Victoire\Bundle\CoreBundle\Entity\View;
 
 /**
  * View cache helper

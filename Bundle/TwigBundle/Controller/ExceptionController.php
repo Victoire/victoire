@@ -2,14 +2,12 @@
 
 namespace Victoire\Bundle\TwigBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Bundle\TwigBundle\Controller\ExceptionController as BaseExceptionController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\FlattenException;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
-use Victoire\Bundle\TwigBundle\Entity\ErrorPage;
 
 class ExceptionController extends BaseExceptionController
 {

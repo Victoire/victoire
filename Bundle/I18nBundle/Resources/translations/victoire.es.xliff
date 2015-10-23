@@ -30,6 +30,18 @@
         <source>form.view.type.locale.label</source>
         <target>Idioma</target>
       </trans-unit>
+      <trans-unit id="4" resname="victoire.i18n.viewType.locale.de">
+        <source>victoire.i18n.viewType.locale.de</source>
+        <target>Alemán</target>
+      </trans-unit>
+      <trans-unit id="5" resname="victoire.i18n.viewType.locale.nl">
+        <source>victoire.i18n.viewType.locale.nl</source>
+        <target>Holandés</target>
+      </trans-unit>
+      <trans-unit id="6" resname="victoire.i18n.viewType.locale.it">
+        <source>victoire.i18n.viewType.locale.it</source>
+        <target>Italiano</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

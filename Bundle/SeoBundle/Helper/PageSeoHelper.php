@@ -4,6 +4,7 @@ namespace Victoire\Bundle\SeoBundle\Helper;
 
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
+use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
