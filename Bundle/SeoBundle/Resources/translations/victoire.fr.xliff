@@ -12,11 +12,11 @@
       </trans-unit>
       <trans-unit id="4c4f990524dc7e0381ae6cdda138667b41f74beb" resname="form.pageSeo.keyword.label">
         <source>form.pageSeo.keyword.label</source>
-        <target>Mot clé principal</target>
+        <target>Meta balise "Keywords"</target>
       </trans-unit>
       <trans-unit id="a75bc323a866d5065225cf0337d03778c9368210" resname="form.pageSeo.metaDescription.label">
         <source>form.pageSeo.metaDescription.label</source>
-        <target>Description</target>
+        <target>Meta Balise "Description"</target>
       </trans-unit>
       <trans-unit id="8785e80490a7e12295c668b1fd7e05f96cec55d0" resname="form.pageSeo.metaRobotsAdvanced.label">
         <source>form.pageSeo.metaRobotsAdvanced.label</source>
@@ -32,7 +32,7 @@
       </trans-unit>
       <trans-unit id="2c7ab4736e80d548511eca8323815287ef91d2f9" resname="form.pageSeo.metaTitle.label">
         <source>form.pageSeo.metaTitle.label</source>
-        <target>Titre</target>
+        <target>Meta Balise "Title"</target>
       </trans-unit>
       <trans-unit id="72731a4116742dc25b0edf1e76d87f5da98d7149" resname="form.pageSeo.ogDescription.label">
         <source>form.pageSeo.ogDescription.label</source>
@@ -160,7 +160,7 @@
       </trans-unit>
       <trans-unit id="5" resname="modal.form.pageSeo.general.title">
         <source>modal.form.pageSeo.general.title</source>
-        <target>Général</target>
+        <target>Meta Balises</target>
       </trans-unit>
       <trans-unit id="6" resname="modal.form.pageSeo.socialmedia.title">
         <source>modal.form.pageSeo.socialmedia.title</source>
@@ -305,6 +305,10 @@
       <trans-unit id="41" resname="form.pageSeo.twitterCard.product.label">
         <source>form.pageSeo.twitterCard.product.label</source>
         <target>Product Card</target>
+      </trans-unit>
+      <trans-unit id="42" resname="form.pageSeo.keyword.placeholder">
+        <source>form.pageSeo.keyword.placeholder</source>
+        <target>indiquez les expressions et mots clés relatifs à votre site séparés par des virgules</target>
       </trans-unit>
     </body>
   </file>

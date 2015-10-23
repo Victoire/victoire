@@ -30,7 +30,7 @@
     <!-- Robots advanced {{ view.seo.metaRobotsAdvanced }} -->
 
     {% if view.seo.relCanonical %}<link rel="canonical" href="{{ view.seo.relCanonical }}"/>{% endif %}
-    {% if view.seo.keyword %}<meta name="keyword" content="{{ view.seo.keyword }}"/>{% endif %}
+    {% if view.seo.keyword %}<meta name="keywords" content="{{ view.seo.keyword }}"/>{% endif %}
     {% if view.seo.metaRobotsAdvanced %}
         <meta name="robots" content="{{ view.seo.metaRobotsAdvanced }}"/>
     {% else %}
