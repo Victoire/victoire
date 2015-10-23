@@ -3,18 +3,17 @@
 namespace Victoire\Bundle\CoreBundle\CacheWarmer;
 
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmer;
 use Victoire\Bundle\CoreBundle\Builder\ViewCssBuilder;
 use Victoire\Bundle\CoreBundle\Entity\View;
-use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmer;
 use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
 
 /**
  * Called (for example on kernel request) to create the widgets.css file
- * ref. victoire_core.cache_warmer.view_css_warmer
+ * ref. victoire_core.cache_warmer.view_css_warmer.
  */
 class ViewCssWarmer extends CacheWarmer
 {
-
     private $viewCssBuilder;
     private $entityManager;
     private $widgetMapBuilder;
@@ -46,8 +45,7 @@ class ViewCssWarmer extends CacheWarmer
 
         /* @var $views View[] */
         foreach ($views as $view) {
-
-            if(!$viewHash = $view->getCssHash()) {
+            if (!$viewHash = $view->getCssHash()) {
                 $view->changeCssHash();
                 $this->entityManager->persist($view);
                 $this->entityManager->flush($view);
@@ -56,7 +54,6 @@ class ViewCssWarmer extends CacheWarmer
             $this->widgetMapBuilder->build($view);
             $widgets = $widgetRepo->findAllWidgetsForView($view);
             $this->viewCssBuilder->generateViewCss($view, $widgets);
-
         }
     }
 
@@ -69,5 +66,4 @@ class ViewCssWarmer extends CacheWarmer
     {
         return false;
     }
-
 }

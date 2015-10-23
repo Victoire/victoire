@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\CoreBundle\Builder;
 
-use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer;
 
@@ -12,7 +11,6 @@ use Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer;
  */
 class ViewCssBuilder
 {
-
     private $widgetRenderer;
     private $webDir;
     private $viewCssDir;
@@ -27,14 +25,14 @@ class ViewCssBuilder
     {
         $this->widgetRenderer = $widgetRenderer;
         $this->webDir = '/view-css';
-        $this->viewCssDir = $kernelRootDir . '/../web' .$this->webDir;
+        $this->viewCssDir = $kernelRootDir.'/../web'.$this->webDir;
     }
 
     /**
      * Update css by removing old file and writing new file.
      *
      * @param $oldHash
-     * @param View $view
+     * @param View  $view
      * @param array $widgets
      */
     public function updateViewCss($oldHash, View $view, array $widgets)
@@ -46,7 +44,7 @@ class ViewCssBuilder
     /**
      * Construct css file and write it.
      *
-     * @param View $view
+     * @param View  $view
      * @param array $widgets
      */
     public function generateViewCss(View $view, array $widgets)
@@ -66,6 +64,7 @@ class ViewCssBuilder
      * Get css path for a View.
      *
      * @param View $view
+     *
      * @return string
      */
     public function getViewCssFile(View $view)
@@ -80,18 +79,19 @@ class ViewCssBuilder
      */
     public function getAngularHref()
     {
-        return $this->webDir . '/{[{viewCssHash}]}.css';
+        return $this->webDir.'/{[{viewCssHash}]}.css';
     }
 
     /**
      * Get href for link markup for a View.
      *
      * @param View $view
+     *
      * @return string
      */
     public function getHref(View $view)
     {
-        return $this->webDir . '/' . $view->getCssHash() .  '.css';
+        return $this->webDir.'/'.$view->getCssHash().'.css';
     }
 
     /**
@@ -102,7 +102,7 @@ class ViewCssBuilder
     public function removeCssFile($hash)
     {
         $file = $this->getViewCssFileFromHash($hash);
-        if(file_exists($file)) {
+        if (file_exists($file)) {
             unlink($file);
         }
     }
@@ -116,7 +116,7 @@ class ViewCssBuilder
             return;
         }
 
-        $files = glob($this->viewCssDir . DIRECTORY_SEPARATOR . '*');
+        $files = glob($this->viewCssDir.DIRECTORY_SEPARATOR.'*');
         foreach ($files as $file) {
             if (is_file($file)) {
                 unlink($file);
@@ -128,11 +128,12 @@ class ViewCssBuilder
      * Construct and return css path from a hash.
      *
      * @param $hash
+     *
      * @return string
      */
     private function getViewCssFileFromHash($hash)
     {
-        return $this->viewCssDir . DIRECTORY_SEPARATOR . $hash . '.css';
+        return $this->viewCssDir.DIRECTORY_SEPARATOR.$hash.'.css';
     }
 
     /**
@@ -149,5 +150,4 @@ class ViewCssBuilder
         $file = $this->getViewCssFile($view);
         file_put_contents($file, $css);
     }
-
 }

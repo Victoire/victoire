@@ -42,6 +42,7 @@ class WidgetRepository extends EntityRepository
      * Find all widgets for a given View.
      *
      * @param View $view
+     *
      * @return multitype
      */
     public function findAllWidgetsForView(View $view)
