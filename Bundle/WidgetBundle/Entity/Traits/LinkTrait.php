@@ -2,8 +2,6 @@
 
 namespace Victoire\Bundle\WidgetBundle\Entity\Traits;
 
-use Symfony\Component\Validator\Constraints as Assert;
-
 /**
  * Link trait adds fields to create a link to a page, widget, url or route.
  *

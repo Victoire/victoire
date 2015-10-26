@@ -4,7 +4,6 @@ namespace Victoire\Bundle\BusinessPageBundle\Manager\Interfaces;
 
 use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
 use Victoire\Bundle\CoreBundle\Manager\Interfaces\ReferenceBuilderInterface;
-use Victoire\Bundle\PageBundle\Entity\Page;
 
 /**
  * List page managers methods.

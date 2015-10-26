@@ -2,7 +2,6 @@
 
 namespace Bundle\WidgetBundle\Tests\Generator;
 
-use Sensio\Bundle\GeneratorBundle\Model\Bundle;
 use Sensio\Bundle\GeneratorBundle\Tests\Generator\GeneratorTest;
 use Victoire\Bundle\WidgetBundle\Generator\WidgetGenerator;
 

@@ -3,7 +3,6 @@
 namespace Victoire\Bundle\WidgetBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
-use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
  *

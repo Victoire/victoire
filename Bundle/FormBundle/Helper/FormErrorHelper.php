@@ -2,8 +2,6 @@
 
 namespace Victoire\Bundle\FormBundle\Helper;
 
-use JMS\TranslationBundle\Annotation\Ignore;
-
 /**
  * A service that give errors from a form as a string.
  *

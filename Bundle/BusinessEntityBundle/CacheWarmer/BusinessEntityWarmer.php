@@ -4,7 +4,6 @@ namespace Victoire\Bundle\BusinessEntityBundle\CacheWarmer;
 
 use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmer;
 use Victoire\Bundle\BusinessEntityBundle\Annotation\AnnotationDriver;
-use Victoire\Bundle\BusinessEntityBundle\Generator\EntityProxyGenerator;
 
 /**
  * The BusinessEntityWarmer object, called in warmup event parse all objects, save in apc

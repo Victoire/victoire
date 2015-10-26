@@ -2,8 +2,6 @@
 
 namespace Victoire\Bundle\CoreBundle\Controller;
 
-use Symfony\Component\DependencyInjection\Container;
-
 /**
  * @property Container container
  */
