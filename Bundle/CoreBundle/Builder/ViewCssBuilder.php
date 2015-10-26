@@ -138,7 +138,6 @@ class ViewCssBuilder
         return file_exists($file);
     }
 
-
     /**
      * Construct and return css path from a hash.
      *

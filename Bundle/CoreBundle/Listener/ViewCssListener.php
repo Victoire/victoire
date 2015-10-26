@@ -29,7 +29,7 @@ class ViewCssListener
      * Generate cssHash and css file for current View if cssHash has not been set yet.
      *
      * @param PageRenderEvent $event
-     * 
+     *
      * @throws \Exception
      */
     public function onRenderPage(PageRenderEvent $event)
@@ -47,7 +47,5 @@ class ViewCssListener
             $widgets = $widgetRepo->findAllWidgetsForView($currentView);
             $this->viewCssBuilder->generateViewCss($currentView, $widgets);
         }
-
     }
-
 }
