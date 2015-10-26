@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\PageBundle\Entity\Traits;
 
+use Victoire\Bundle\CoreBundle\Annotations as Vic;
 use Victoire\Bundle\CoreBundle\Entity\Route;
 use Victoire\Bundle\PageBundle\Entity\PageStatus;
 use Victoire\Bundle\SeoBundle\Entity\PageSeo;
