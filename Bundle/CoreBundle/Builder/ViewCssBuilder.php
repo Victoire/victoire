@@ -129,7 +129,7 @@ class ViewCssBuilder
      *
      * @param View $view
      *
-     * @return boolean
+     * @return bool
      */
     public function cssFileExists(View $view)
     {

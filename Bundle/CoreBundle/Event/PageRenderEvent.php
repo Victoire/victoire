@@ -34,5 +34,4 @@ class PageRenderEvent extends Event
     {
         $this->currentView = $currentView;
     }
-
 }
