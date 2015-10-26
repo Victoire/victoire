@@ -18,6 +18,7 @@ use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
 use Victoire\Bundle\CoreBundle\Builder\ViewReferenceBuilder;
 use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 use Victoire\Bundle\CoreBundle\Entity\View;
+use Victoire\Bundle\CoreBundle\Event\PageRenderEvent;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
 use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
@@ -189,8 +190,12 @@ class PageHelper extends ViewHelper
         }
         $layout = 'AppBundle:Layout:'.$viewLayout.'.html.twig';
 
+        //Set currentView and dispatch victoire.on_render_page event with this currentView
         $this->currentViewHelper->setCurrentView($view);
-        //create the response
+        $event = new PageRenderEvent($view);
+        $this->eventDispatcher->dispatch('victoire.on_render_page', $event);
+
+        //Create the response
         $response = $this->victoireTemplating->renderResponse($layout, [
             'view' => $view,
         ]);
