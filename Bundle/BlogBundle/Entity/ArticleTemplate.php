@@ -8,10 +8,10 @@ use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 /**
  * ArticleTemplate (extends BusinessTemplate).
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Victoire\Bundle\BlogBundle\Repository\ArticleTemplateRepository")
  */
-class ArticleTemplate extends BusinessTemplate
-{
+class ArticleTemplate extends BusinessTemplate {
+
     const TYPE = 'article_template';
 
     /**
@@ -23,4 +23,5 @@ class ArticleTemplate extends BusinessTemplate
     {
         return sprintf('%s main_item.pattern = %s', $this->query ? $this->query.' AND ' : 'WHERE ', $this->getId());
     }
+
 }
