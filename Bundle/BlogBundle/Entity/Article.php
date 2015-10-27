@@ -106,7 +106,7 @@ class Article
 
     /**
      * @var BusinessTemplate
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate")
+     * @ORM\ManyToOne(targetEntity="ArticleTemplate")
      * @ORM\JoinColumn(name="pattern_id", referencedColumnName="id", onDelete="SET NULL")
      * @Assert\NotNull()
      */
