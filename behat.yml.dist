@@ -28,12 +28,11 @@ default:
                 debug: true
          Behat\MinkExtension\ServiceContainer\MinkExtension:
              base_url:           'http://localhost:8000'
-             selenium2:          ~
+             selenium2:
+                 wd_host: 127.0.0.1:8643/wd/hub
              goutte:             ~
              symfony2: ~
              default_session:    symfony2
-             javascript_session: selenium2
-             browser_name: firefox
              files_path:         Tests/Features/
          Knp\FriendlyContexts\Extension:
              entities:
