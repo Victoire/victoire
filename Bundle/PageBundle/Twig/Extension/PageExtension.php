@@ -171,7 +171,7 @@ class PageExtension extends \Twig_Extension
     {
         $currentView = $this->currentViewHelper->getCurrentView();
 
-        if (!$currentView) {
+        if (!$currentView || !$this->viewCssBuilder->cssFileExists($currentView)) {
             return '';
         }
 

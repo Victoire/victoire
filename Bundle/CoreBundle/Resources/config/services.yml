@@ -165,15 +165,6 @@ services:
         tags:
         - { name: kernel.event_listener, event: kernel.request, method: warmUp }
 
-    victoire_core.cache_warmer.view_css_warmer:
-        class: Victoire\Bundle\CoreBundle\CacheWarmer\ViewCssWarmer
-        arguments:
-            - @victoire_core.view_css_builder
-            - @doctrine.orm.entity_manager
-            - @victoire_widget_map.builder
-        tags:
-            - { name: kernel.cache_warmer }
-
     victoire_core.entity_proxy.cache_driver:
         class: Victoire\Bundle\CoreBundle\CacheWarmer\EntityProxyCacheDriver
         arguments:
@@ -223,6 +214,15 @@ services:
         arguments:
             - @victoire_widget.widget_renderer
             - '%kernel.root_dir%'
+
+    victoire_core.view_css_listener:
+        class: Victoire\Bundle\CoreBundle\Listener\ViewCssListener
+        arguments:
+            - @victoire_core.view_css_builder
+            - @doctrine.orm.entity_manager
+            - @victoire_widget_map.builder
+        tags:
+            - { name: kernel.event_listener, event: victoire.on_render_page, method: onRenderPage }
 
     victoire_core.current_view:
         class: Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper

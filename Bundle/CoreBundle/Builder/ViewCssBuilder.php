@@ -125,6 +125,20 @@ class ViewCssBuilder
     }
 
     /**
+     * Tell if css file exists for a given View.
+     *
+     * @param View $view
+     *
+     * @return bool
+     */
+    public function cssFileExists(View $view)
+    {
+        $file = $this->getViewCssFileFromHash($view->getCssHash());
+
+        return file_exists($file);
+    }
+
+    /**
      * Construct and return css path from a hash.
      *
      * @param $hash
