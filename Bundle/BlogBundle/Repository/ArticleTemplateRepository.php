@@ -13,4 +13,30 @@ class ArticleTemplateRepository extends EntityRepository {
 
     use StateFullRepositoryTrait;
 
+    /**
+     * @param $blog_id
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getCount($alias = 'at') {
+        $this->qb->select("count($alias.id)");
+
+        return $this;
+    }
+
+    /**
+     * @param $blog_id
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function filterByBlog($blog_id) {
+        $this->clearInstance();
+        $this->qb = $this->getInstance('at');
+
+        $this->qb
+            ->join('at.parent', 'parent')
+            ->andWhere('parent.id = :id')
+            ->setParameter('id', $blog_id);
+
+        return $this;
+    }
+
 }
