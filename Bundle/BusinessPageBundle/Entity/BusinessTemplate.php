@@ -110,4 +110,21 @@ class BusinessTemplate extends Template
     {
         $this->authorRestricted = $authorRestricted;
     }
+
+    /**
+     * Get inheritors (all Templates having this object as Template).
+     *
+     * @return [Template]
+     */
+    public function getTemplateInheritors()
+    {
+        $templateInheritors = [];
+        foreach ($this->inheritors as $inheritor) {
+            if ($inheritor instanceof BusinessTemplate) {
+                $templateInheritors[] = $inheritor;
+            }
+        }
+
+        return $templateInheritors;
+    }
 }

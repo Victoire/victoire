@@ -147,13 +147,29 @@ class Template extends View
     }
 
     /**
-     * Get inheritors (all Templates having this object as Template).
+     * Get inheritors (all Views having this object as Template).
      *
      * @return [Template]
      */
     public function getInheritors()
     {
         return $this->inheritors;
+    }
+    /**
+     * Get inheritors (all Templates having this object as Template).
+     *
+     * @return [Template]
+     */
+    public function getTemplateInheritors()
+    {
+        $templateInheritors = [];
+        foreach ($this->inheritors as $inheritor) {
+            if ($inheritor instanceof Template) {
+                $templateInheritors[] = $inheritor;
+            }
+        }
+
+        return $templateInheritors;
     }
 
     /**

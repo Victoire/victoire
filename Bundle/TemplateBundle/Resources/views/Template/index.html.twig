@@ -13,9 +13,9 @@
 {% macro templatesHierarchy(templates) %}
     {% for template in templates %}
       <li id="list_{{template.id}}"><a href="{{path('victoire_template_show', {'slug' : template.slug })}}">{{ template.name }}</a>
-      {% if template.inheritors %}
+      {% if template.templateInheritors %}
           <ol>
-            {{ _self.templatesHierarchy(template.inheritors) }}
+            {{ _self.templatesHierarchy(template.templateInheritors) }}
           </ol>
       {% endif %}
       </li>
