@@ -120,7 +120,7 @@ class BusinessTemplate extends Template
     {
         $templateInheritors = [];
         foreach ($this->inheritors as $inheritor) {
-            if ($inheritor instanceof BusinessTemplate) {
+            if ($inheritor instanceof self) {
                 $templateInheritors[] = $inheritor;
             }
         }

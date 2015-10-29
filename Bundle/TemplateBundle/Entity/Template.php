@@ -155,6 +155,7 @@ class Template extends View
     {
         return $this->inheritors;
     }
+
     /**
      * Get inheritors (all Templates having this object as Template).
      *
@@ -164,7 +165,7 @@ class Template extends View
     {
         $templateInheritors = [];
         foreach ($this->inheritors as $inheritor) {
-            if ($inheritor instanceof Template) {
+            if ($inheritor instanceof self) {
                 $templateInheritors[] = $inheritor;
             }
         }
