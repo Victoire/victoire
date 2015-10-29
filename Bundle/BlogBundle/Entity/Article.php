@@ -46,7 +46,7 @@ class Article
 
     /**
      * @ORM\Column(name="slug", type="string", length=255)
-     * @Gedmo\Slug(fields={"name"}, updatable=false, unique=false)
+     * @Gedmo\Slug(fields={"name"}, updatable=false, unique=true)
      * @VIC\BusinessProperty("businessParameter")
      */
     private $slug;
