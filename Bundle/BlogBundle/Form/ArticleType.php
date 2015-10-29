@@ -50,7 +50,7 @@ class ArticleType extends AbstractType
                 'label'    => 'form.article.image.label',
             ])
             ->add($builder
-                ->create('blog', 'hidden', ['label' => 'form.article.blog.label',])
+                ->create('blog', 'hidden', ['label' => 'form.article.blog.label'])
                 ->addModelTransformer($viewToIdTransformer))
             ->add('pattern')
             ->add('tags', 'tags', [
@@ -146,7 +146,7 @@ class ArticleType extends AbstractType
         } else {
             $form->add('pattern', 'victoire_article_template_type', [
                 'data_class' => null,
-                'data' => $articleTemplateRepo->filterByBlog($blog_id)->run('getSingleResult'),
+                'data'       => $articleTemplateRepo->filterByBlog($blog_id)->run('getSingleResult'),
             ]);
         }
     }

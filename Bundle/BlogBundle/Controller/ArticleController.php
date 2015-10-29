@@ -26,6 +26,7 @@ class ArticleController extends Controller
      *
      * @Route("/create/{id}", name="victoire_blog_article_create")
      * @ParamConverter("blog", class="VictoireBlogBundle:Blog")
+     *
      * @return JsonResponse
      */
     public function createAction(Blog $blog)
@@ -81,7 +82,7 @@ class ArticleController extends Controller
                     'html'    => $this->container->get('victoire_templating')->render(
                         'VictoireBlogBundle:Article:new.html.twig',
                         [
-                            'form' => $form->createView(),
+                            'form'   => $form->createView(),
                             'blogId' => $blog->getId(),
                         ]
                     ),

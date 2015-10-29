@@ -29,7 +29,8 @@ class ArticleTemplateType extends HiddenType
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options) {
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
         $builder->addModelTransformer(new ViewToIdTransformer($this->entityManager));
     }
 
@@ -38,14 +39,16 @@ class ArticleTemplateType extends HiddenType
      *
      * @param OptionsResolverInterface $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver) {
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
         $resolver->setDefaults([
             'data_class'         => 'Victoire\Bundle\BlogBundle\Entity\ArticleTemplate',
             'translation_domain' => 'victoire',
         ]);
     }
 
-    public function getParent() {
+    public function getParent()
+    {
         return 'hidden';
     }
 
@@ -54,7 +57,8 @@ class ArticleTemplateType extends HiddenType
      *
      * @return string The name of the form
      */
-    public function getName() {
+    public function getName()
+    {
         return 'victoire_article_template_type';
     }
 }
