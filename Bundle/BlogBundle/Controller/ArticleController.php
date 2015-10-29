@@ -24,14 +24,15 @@ class ArticleController extends Controller
     /**
      * Create article.
      *
-     * @Route("/create", name="victoire_blog_article_create")
-     *
+     * @Route("/create/{id}", name="victoire_blog_article_create")
+     * @ParamConverter("blog", class="VictoireBlogBundle:Blog")
      * @return JsonResponse
      */
-    public function createAction()
+    public function createAction(Blog $blog)
     {
         $entityManager = $this->get('doctrine.orm.entity_manager');
         $article = new Article();
+        $article->setBlog($blog);
         $form = $this->createForm('victoire_article_type', $article);
 
         $form->handleRequest($this->get('request'));
@@ -81,6 +82,7 @@ class ArticleController extends Controller
                         'VictoireBlogBundle:Article:new.html.twig',
                         [
                             'form' => $form->createView(),
+                            'blogId' => $blog->getId(),
                         ]
                     ),
                 ]
@@ -106,7 +108,7 @@ class ArticleController extends Controller
             [
                 'html' => $this->container->get('victoire_templating')->render(
                     'VictoireBlogBundle:Article:new.html.twig',
-                    ['form' => $form->createView()]
+                    ['form' => $form->createView(), 'blogId' => $blog->getId()]
                 ),
             ]
         );

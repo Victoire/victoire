@@ -11,7 +11,7 @@
 {% endblock modal_header_title %}
 
 {% block modal_body_content %}
-    {% include "VictoireBlogBundle:Article:_form.html.twig" with {'action': path('victoire_blog_article_create')} %}
+    {% include "VictoireBlogBundle:Article:_form.html.twig" with {'action': path('victoire_blog_article_create', {id: blogId})} %}
 {% endblock modal_body_content %}
 
 {% block modal_footer_content %}
