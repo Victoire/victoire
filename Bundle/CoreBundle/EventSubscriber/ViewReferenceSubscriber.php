@@ -78,7 +78,8 @@ class ViewReferenceSubscriber implements EventSubscriber
             if ($entity instanceof View) {
                 if (((array_key_exists('slug', $uow->getEntityChangeSet($entity)) //the slug of the page has been modified
                     || array_key_exists('staticUrl', $uow->getEntityChangeSet($entity))
-                    || array_key_exists('parent', $uow->getEntityChangeSet($entity)))
+                    || array_key_exists('parent', $uow->getEntityChangeSet($entity))
+                    || array_key_exists('template', $uow->getEntityChangeSet($entity)))
                 )) {
                     $this->manageView($entity, $entityManager, $uow);
                 }
