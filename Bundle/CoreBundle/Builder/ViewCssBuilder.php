@@ -158,10 +158,12 @@ class ViewCssBuilder
      */
     private function writeCssFile(View $view, $css)
     {
+        $oldmask = umask(0);
         if (!is_dir($this->viewCssDir)) {
             mkdir($this->viewCssDir, 0777, true);
         }
         $file = $this->getViewCssFile($view);
         file_put_contents($file, $css);
+        umask($oldmask);
     }
 }
