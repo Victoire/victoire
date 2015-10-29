@@ -63,6 +63,7 @@ class ArticleType extends AbstractType
             $data = $event->getData();
             $parent = $event->getForm()->getParent();
             $this->manageCategories($data, $parent);
+            $this->manageTemplate($data, $parent);
         });
 
         $builder->get('blog')->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
@@ -80,32 +81,6 @@ class ArticleType extends AbstractType
             $form = $event->getForm();
             $data = $form->getData();
             $this->manageTags($data, $form);
-        });
-
-        $builder->get('pattern')->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-            $articleTemplateRepo = $this->entityManager->getRepository('VictoireBlogBundle:ArticleTemplate');
-
-            $form = $event->getForm()->getParent();
-            $blog = $form->getData()->getBlog();
-            if ($blog) {
-                $blog_id = $blog->getId();
-                if ($articleTemplateRepo->filterByBlog($blog_id)->getCount('parent')->run('getSingleScalarResult') > 1) {
-                    $articlePatterns = function (EntityRepository $repo) use ($blog_id) {
-                        return $repo->filterByBlog($blog_id)->getInstance();
-                    };
-                    $form->add('pattern', null, [
-                        'label'         => 'form.view.type.pattern.label',
-                        'property'      => 'name',
-                        'required'      => true,
-                        'query_builder' => $articlePatterns,
-                    ]);
-                } else {
-                    $form->add('pattern', 'victoire_article_template_type', [
-                        'data_class' => null,
-                        'data' => $articleTemplateRepo->filterByBlog($blog_id)->run('getSingleResult'),
-                    ]);
-                }
-            }
         });
     }
 
@@ -149,6 +124,31 @@ class ArticleType extends AbstractType
             'empty_value'   => 'Pas de catégorie',
             'empty_data'    => null,
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface|null $form
+     */
+    protected function manageTemplate($blog_id, $form)
+    {
+        $articleTemplateRepo = $this->entityManager->getRepository('VictoireBlogBundle:ArticleTemplate');
+
+        if ($articleTemplateRepo->filterByBlog($blog_id)->getCount('parent')->run('getSingleScalarResult') > 1) {
+            $articlePatterns = function (EntityRepository $repo) use ($blog_id) {
+                return $repo->filterByBlog($blog_id)->getInstance();
+            };
+            $form->add('pattern', null, [
+                'label'         => 'form.view.type.pattern.label',
+                'property'      => 'name',
+                'required'      => true,
+                'query_builder' => $articlePatterns,
+            ]);
+        } else {
+            $form->add('pattern', 'victoire_article_template_type', [
+                'data_class' => null,
+                'data' => $articleTemplateRepo->filterByBlog($blog_id)->run('getSingleResult'),
+            ]);
+        }
     }
 
     /**
