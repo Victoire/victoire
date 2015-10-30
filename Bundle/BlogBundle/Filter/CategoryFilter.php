@@ -5,6 +5,7 @@ namespace Victoire\Bundle\BlogBundle\Filter;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 use Victoire\Bundle\BlogBundle\Entity\Category;
 use Victoire\Bundle\FilterBundle\Filter\BaseFilter;
 
@@ -15,15 +16,19 @@ class CategoryFilter extends BaseFilter
 {
     protected $em;
     protected $request;
+    protected $translator;
+
 
     /**
      * @param EntityManager $em
-     * @param Request       $request
+     * @param \Victoire\Bundle\FilterBundle\Filter\Request $request
+     * @param TranslatorInterface $translator
      */
-    public function __construct(EntityManager $em, $request)
+    public function __construct(EntityManager $em, $request, TranslatorInterface $translator)
     {
         $this->em = $em;
         $this->request = $request;
+        $this->translator = $translator;
     }
 
     /**
@@ -57,10 +62,10 @@ class CategoryFilter extends BaseFilter
                 foreach ($childrenArray as $index => $category) {
                     $parameter = ':category'.$index;
                     $subquery = $repository->createQueryBuilder('article_'.$index)
-                                ->join('article_'.$index.'.category', 'category_'.$index)
-                                ->where('category_'.$index.' = '.$parameter);
+                        ->join('article_'.$index.'.category', 'category_'.$index)
+                        ->where('category_'.$index.' = '.$parameter);
                     $qb->andWhere($qb->expr()->in('main_item', $subquery->getDql()))
-                                ->setParameter($parameter, $category);
+                        ->setParameter($parameter, $category);
                 }
             } else {
                 $qb = $qb
@@ -113,15 +118,9 @@ class CategoryFilter extends BaseFilter
         }
         //filter categoriess with right articles
         $categoryQb->filterByArticles($articleQb->getInstance('article'));
-        $categories = $categoryQb->getInstance('c_category')->getQuery()->getResult();
-        //the blank value
-
-        $categoriesChoices = [];
-
-        foreach ($categories as $category) {
-            $categoriesChoices[$category->getId()] = $category->getTitle();
-        }
-
+        $categories = $categoryQb->orderByHierarchy()->getInstance('c_category')->getQuery()->getResult();
+        //build the tree for categories
+        $tree = $categoryQb->buildTree($categoryQb->getNodesHierarchy());
         $data = null;
         if ($this->request->query->has('filter') && array_key_exists('category_filter', $this->request->query->get('filter'))) {
             if ($options['multiple']) {
@@ -133,19 +132,59 @@ class CategoryFilter extends BaseFilter
                 $data = $this->request->query->get('filter')['category_filter']['tags'];
             }
         }
-
         $builder
             ->add(
-                'category', 'choice', [
+                'category', 'choice_tree', [
                     'label'       => false,
-                    'choices'     => $categoriesChoices,
+                    'choices'     => $this->buildHierarchy($tree, $categories),
                     'required'    => false,
                     'expanded'    => true,
-                    'empty_value' => 'Tous',
-                    'multiple'    => $options['multiple'],
+                    'empty_value' => $this->translator->trans('blog.category_filter.empty_value.label'),
+                    'multiple'    => false,
                     'data'        => $data,
                 ]
             );
+    }
+
+    /**
+     * @param $categories
+     * @param $validCategories
+     * @return array
+     */
+    public function buildHierarchy($categories, $validCategories)
+    {
+        $hierarchy = [];
+        foreach($categories as $category)
+        {
+            $isValid= false;
+            $categoryHierarchy = [];
+            //if we have children we try to build their hierarchy
+            if(count($children = $category['__children']))
+            {
+                $categoryHierarchy = $this->buildHierarchy($children, $validCategories);
+            }
+            // try to match with listed categories
+            foreach($validCategories as $key => $validCategory)
+            {
+                if($validCategory->getId() == $category['id'] )
+                {
+                    $isValid = true;
+                    //unset the valid category
+                    unset($validCategories[$key]);
+                }
+            }
+            // if the current category is valid or if a children is valid
+            if($isValid || count($categoryHierarchy) > 0)
+            {
+                //add a node
+                $node = [];
+                $node['label'] = $category['title'];
+                $node['value'] = $category['id'];
+                $node['choice_list'] = $categoryHierarchy;
+                $hierarchy[] = $node;
+            }
+        }
+        return $hierarchy;
     }
 
     /**
