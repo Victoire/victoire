@@ -109,10 +109,12 @@ class ArticleType extends AbstractType
         $categoryRepo = $this->entityManager->getRepository('Victoire\Bundle\BlogBundle\Entity\Category');
 
         if ($blogId) {
-            $queryBuilder = $categoryRepo->getOrderedCategories($blogId)->getInstance();
+            $queryBuilder = $categoryRepo->getOrderedCategories($blogId)
+                ->orderByHierarchy()
+                ->getInstance();
             $categoryRepo->clearInstance();
         } else {
-            $queryBuilder = $categoryRepo->getAll()->getInstance();
+            $queryBuilder = $categoryRepo->getAll()->orderByHierarchy()->getInstance();
             $categoryRepo->clearInstance();
         }
 
