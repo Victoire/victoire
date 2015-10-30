@@ -1,0 +1,92 @@
+{%- block choice_tree_widget -%}
+    {% if expanded %}
+
+        {{- block('choice_tree_widget_expanded') -}}
+    {% else %}
+        {{- block('choice_tree_widget_collapsed') -}}
+    {% endif %}
+{%- endblock choice_tree_widget -%}
+
+{%- block choice_tree_widget_expanded -%}
+    {% spaceless %}
+        {% set label_attr = label_attr|merge({'class': (label_attr.class|default(''))}) %}
+        {% set label_attr = label_attr|merge({'class': (label_attr.class ~ ' ' ~ (widget_type != '' ? (multiple ? 'checkbox' : 'radio') ~ '-' ~ widget_type : ''))}) %}
+        {% if expanded %}
+            {% set attr = attr|merge({'class': attr.class|default('') ~ ' ' ~ horizontal_input_wrapper_class}) %}
+        {% endif %}
+        {% if widget_type == 'inline-btn' %}
+            <div class="btn-group" data-toggle="buttons">
+        {% endif %}
+        {% for child in form %}
+
+            {% set marginLeft = 0 %}
+            {%  if child.vars.level > 0 %}
+                {% for i in 1..child.vars.level  %}
+                    {% set marginLeft = marginLeft + 20 %}
+                {% endfor %}
+            {% endif %}
+            {% if widget_type not in ['inline', 'inline-btn'] %}
+                <div class="{{ multiple ? 'checkbox' : 'radio' }}" style="margin-left: {{ marginLeft }}px"
+                {%- if widget_type == 'inline-btn' %} class="btn-group" data-toggle="buttons"{% endif %} >
+            {% endif %}
+            {% if widget_type == 'inline-btn' %}
+                {% set label_attr = label_attr|default({})|merge({'class': 'btn ' ~ label_attr.class|default('')}) %}
+            {% endif %}
+            {% if child.vars.checked and widget_type == 'inline-btn' %}
+                {% set label_attr_copy = label_attr|default({})|merge({'class': 'active ' ~ label_attr.class|default('')}) %}
+            {% else %}
+                {% set label_attr_copy = label_attr|default({}) %}
+            {% endif %}
+            <label{% for attrname, attrvalue in label_attr_copy %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+            {{ form_widget(child, {'horizontal_label_class': horizontal_label_class, 'horizontal_input_wrapper_class': horizontal_input_wrapper_class, 'attr': {'class': attr.widget_class|default('') }}) }}
+            {% if widget_type == 'inline-btn' or widget_checkbox_label == 'widget'%}
+                {{ child.vars.label|trans({}, translation_domain)|raw }}
+            {% else %}
+                {{ child.vars.label|trans({}, translation_domain) }}
+            {% endif %}
+            </label>
+            {% if widget_type not in ['inline', 'inline-btn'] %}
+                </div>
+            {% endif %}
+        {% endfor %}
+        {% if widget_type == 'inline-btn' %}
+            </div>
+        {% endif %}
+    {% endspaceless %}
+{%- endblock choice_tree_widget_expanded -%}
+{%- block choice_tree_widget_collapsed -%}
+    {%- if required and placeholder is none and not placeholder_in_choices and not multiple -%}
+        {% set required = false %}
+    {%- endif -%}
+    <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+        {%- if placeholder is not none -%}
+            <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ placeholder != '' ? placeholder|trans({}, translation_domain) }}</option>
+        {%- endif -%}
+        {%- set options = choices -%}
+        {{- block('choice_tree_widget_options') -}}
+    </select>
+{%- endblock choice_tree_widget_collapsed -%}
+{%- block choice_tree_widget_options -%}
+    {% for group_label, choice in options %}
+        {%- if choice is iterable -%}
+            {% set options = choice %}
+            {{- block('choice_tree_widget_options') -}}
+        {%- else -%}
+            {% set index = "" %}
+            {%  if choice.level > 0 %}
+                {% for i in 1..choice.level  %}
+                    {% set index = index ~ "&nbsp;&nbsp;" %}
+                {% endfor %}
+            {% endif %}
+            <option value="{{ choice.value }}"{% if choice is selectedchoice(value) %} selected="selected"{% endif %}>{{ index|raw }}{{ choice.label|trans({}, translation_domain) }}</option>
+        {%- endif -%}
+    {% endfor %}
+{%- endblock choice_tree_widget_options -%}
+{%- block radio_level_widget -%}
+    {{- block('radio_widget') -}}
+{%- endblock radio_level_widget -%}
+{%- block checkbox_level_widget -%}
+
+    <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %}/>
+
+{%- endblock checkbox_level_widget -%}
