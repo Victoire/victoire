@@ -4,6 +4,7 @@ namespace Victoire\Bundle\BlogBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
@@ -12,7 +13,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class VictoireBlogExtension extends Extension
+class VictoireBlogExtension extends Extension implements PrependExtensionInterface
 {
     /**
      * Load configuration.
@@ -27,5 +28,14 @@ class VictoireBlogExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function prepend(ContainerBuilder $container)
+    {
+        // we inject blog fields
+        $container->prependExtensionConfig('twig', array('form_themes' => array("VictoireBlogBundle:Form:fields.html.twig")));
     }
 }
