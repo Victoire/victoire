@@ -40,7 +40,8 @@ class CategoryRepository extends NestedTreeRepository
     }
 
     /**
-     * Order categories by tree hierarchy
+     * Order categories by tree hierarchy.
+     *
      * @return $this
      */
     public function orderByHierarchy()
@@ -55,6 +56,7 @@ class CategoryRepository extends NestedTreeRepository
 
     /**
      * @param $articles
+     *
      * @return $this
      */
     public function filterByArticles($articles)

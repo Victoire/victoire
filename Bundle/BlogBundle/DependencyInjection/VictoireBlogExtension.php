@@ -31,11 +31,11 @@ class VictoireBlogExtension extends Extension implements PrependExtensionInterfa
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function prepend(ContainerBuilder $container)
     {
         // we inject blog fields
-        $container->prependExtensionConfig('twig', array('form_themes' => array("VictoireBlogBundle:Form:fields.html.twig")));
+        $container->prependExtensionConfig('twig', ['form_themes' => ['VictoireBlogBundle:Form:fields.html.twig']]);
     }
 }

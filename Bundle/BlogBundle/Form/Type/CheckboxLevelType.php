@@ -10,7 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class CheckboxLevelType extends CheckboxType
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getParent()
     {
@@ -18,7 +18,7 @@ class CheckboxLevelType extends CheckboxType
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -31,7 +31,7 @@ class CheckboxLevelType extends CheckboxType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         parent::setDefaultOptions($resolver);
-        $resolver->setDefaults(array("level"=> 0));
+        $resolver->setDefaults(['level' => 0]);
     }
 
     /**
@@ -40,9 +40,8 @@ class CheckboxLevelType extends CheckboxType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         parent::buildView($view, $form, $options);
-        $view->vars = array_replace($view->vars, array(
-            'level' => $options['level']
-        ));
+        $view->vars = array_replace($view->vars, [
+            'level' => $options['level'],
+        ]);
     }
-
 }

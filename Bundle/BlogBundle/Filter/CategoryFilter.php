@@ -18,11 +18,10 @@ class CategoryFilter extends BaseFilter
     protected $request;
     protected $translator;
 
-
     /**
-     * @param EntityManager $em
+     * @param EntityManager                                $em
      * @param \Victoire\Bundle\FilterBundle\Filter\Request $request
-     * @param TranslatorInterface $translator
+     * @param TranslatorInterface                          $translator
      */
     public function __construct(EntityManager $em, $request, TranslatorInterface $translator)
     {
@@ -149,33 +148,29 @@ class CategoryFilter extends BaseFilter
     /**
      * @param $categories
      * @param $validCategories
+     *
      * @return array
      */
     public function buildHierarchy($categories, $validCategories)
     {
         $hierarchy = [];
-        foreach($categories as $category)
-        {
-            $isValid= false;
+        foreach ($categories as $category) {
+            $isValid = false;
             $categoryHierarchy = [];
             //if we have children we try to build their hierarchy
-            if(count($children = $category['__children']))
-            {
+            if (count($children = $category['__children'])) {
                 $categoryHierarchy = $this->buildHierarchy($children, $validCategories);
             }
             // try to match with listed categories
-            foreach($validCategories as $key => $validCategory)
-            {
-                if($validCategory->getId() == $category['id'] )
-                {
+            foreach ($validCategories as $key => $validCategory) {
+                if ($validCategory->getId() == $category['id']) {
                     $isValid = true;
                     //unset the valid category
                     unset($validCategories[$key]);
                 }
             }
             // if the current category is valid or if a children is valid
-            if($isValid || count($categoryHierarchy) > 0)
-            {
+            if ($isValid || count($categoryHierarchy) > 0) {
                 //add a node
                 $node = [];
                 $node['label'] = $category['title'];
@@ -184,6 +179,7 @@ class CategoryFilter extends BaseFilter
                 $hierarchy[] = $node;
             }
         }
+
         return $hierarchy;
     }
 

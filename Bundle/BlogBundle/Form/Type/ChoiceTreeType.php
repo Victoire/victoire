@@ -2,22 +2,21 @@
 
 namespace Victoire\Bundle\BlogBundle\Form\Type;
 
+use Symfony\Component\Form\Exception\LogicException;
+use Symfony\Component\Form\Extension\Core\DataTransformer\ChoicesToBooleanArrayTransformer;
+use Symfony\Component\Form\Extension\Core\DataTransformer\ChoicesToValuesTransformer;
+use Symfony\Component\Form\Extension\Core\DataTransformer\ChoiceToBooleanArrayTransformer;
+use Symfony\Component\Form\Extension\Core\DataTransformer\ChoiceToValueTransformer;
+use Symfony\Component\Form\Extension\Core\EventListener\FixCheckboxInputListener;
+use Symfony\Component\Form\Extension\Core\EventListener\FixRadioInputListener;
+use Symfony\Component\Form\Extension\Core\EventListener\MergeCollectionListener;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Exception\LogicException;
-use Symfony\Component\Form\Extension\Core\EventListener\FixRadioInputListener;
-use Symfony\Component\Form\Extension\Core\EventListener\FixCheckboxInputListener;
-use Symfony\Component\Form\Extension\Core\EventListener\MergeCollectionListener;
-use Symfony\Component\Form\Extension\Core\DataTransformer\ChoiceToValueTransformer;
-use Symfony\Component\Form\Extension\Core\DataTransformer\ChoiceToBooleanArrayTransformer;
-use Symfony\Component\Form\Extension\Core\DataTransformer\ChoicesToValuesTransformer;
-use Symfony\Component\Form\Extension\Core\DataTransformer\ChoicesToBooleanArrayTransformer;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Class ChoiceTreeType based on ChoiceType
- * @package Victoire\Bundle\BlogBundle\Form\Type
+ * Class ChoiceTreeType based on ChoiceType.
  */
 class ChoiceTreeType extends ChoiceType
 {
@@ -26,7 +25,7 @@ class ChoiceTreeType extends ChoiceType
      *
      * @var array
      */
-    private $treeChoiceListCache = array();
+    private $treeChoiceListCache = [];
 
     /**
      * {@inheritdoc}
@@ -43,11 +42,11 @@ class ChoiceTreeType extends ChoiceType
 
             // Check if the choices already contain the empty value
             // Only add the empty value option if this is not the case
-            if (null !== $options['placeholder'] && 0 === count($options['choice_list']->getChoicesForValues(array('')))) {
+            if (null !== $options['placeholder'] && 0 === count($options['choice_list']->getChoicesForValues(['']))) {
                 $placeholderView = new TreeChoiceView(null, '', $options['placeholder'], 0);
 
                 // "placeholder" is a reserved index
-                $this->addSubForms($builder, array('placeholder' => $placeholderView), $options);
+                $this->addSubForms($builder, ['placeholder' => $placeholderView], $options);
             }
 
             $this->addSubForms($builder, $preferredViews, $options);
@@ -87,10 +86,10 @@ class ChoiceTreeType extends ChoiceType
 
         $treeChoiceList = function (Options $options) use (&$treeChoiceListCache) {
             // Harden against NULL values (like in EntityType and ModelType)
-            $choices = null !== $options['choices'] ? $options['choices'] : array();
+            $choices = null !== $options['choices'] ? $options['choices'] : [];
 
             // Reuse existing choice lists in order to increase performance
-            $hash = hash('sha256', serialize(array($choices, $options['preferred_choices'])));
+            $hash = hash('sha256', serialize([$choices, $options['preferred_choices']]));
 
             if (!isset($treeChoiceListCache[$hash])) {
                 $treeChoiceListCache[$hash] = new TreeChoiceList($choices, $options['preferred_choices']);
@@ -99,7 +98,7 @@ class ChoiceTreeType extends ChoiceType
             return $treeChoiceListCache[$hash];
         };
 
-        $resolver->setDefaults(array('choice_list' => $treeChoiceList));
+        $resolver->setDefaults(['choice_list' => $treeChoiceList]);
     }
 
     /**
@@ -120,18 +119,17 @@ class ChoiceTreeType extends ChoiceType
     private function addSubForms(FormBuilderInterface $builder, array $choiceViews, array $options)
     {
         foreach ($choiceViews as $i => $choiceView) {
-
             if (is_array($choiceView)) {
                 // Flatten groups
                 $this->addSubForms($builder, $choiceView, $options);
             } else {
-                $choiceOpts = array(
-                    'value' => $choiceView->value,
-                    'label' => $choiceView->label,
-                    'level' => $choiceView->level,
+                $choiceOpts = [
+                    'value'              => $choiceView->value,
+                    'label'              => $choiceView->label,
+                    'level'              => $choiceView->level,
                     'translation_domain' => $options['translation_domain'],
-                    'block_name' => 'entry',
-                );
+                    'block_name'         => 'entry',
+                ];
 
                 if ($options['multiple']) {
                     $choiceType = 'checkbox_level';

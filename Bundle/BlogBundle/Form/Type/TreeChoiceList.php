@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\BlogBundle\Form\Type;
 
-
 use Symfony\Component\Form\Exception\InvalidConfigurationException;
 use Symfony\Component\Form\Extension\Core\ChoiceList\SimpleChoiceList;
 use Symfony\Component\Form\FormConfigBuilder;
@@ -12,8 +11,7 @@ class TreeChoiceList extends SimpleChoiceList
     protected function addChoices(array &$bucketForPreferred, array &$bucketForRemaining, $choices, array $labels, array $preferredChoices, $level = 0)
     {
         // Add choices to the nested buckets
-        if(array_key_exists("label", $choices))
-        {
+        if (array_key_exists('label', $choices)) {
             $this->addChoice(
                 $bucketForPreferred,
                 $bucketForRemaining,
@@ -23,12 +21,11 @@ class TreeChoiceList extends SimpleChoiceList
                 $level
             );
 
-            if (count($choices["choice_list"]) > 0) {
-                $this->addChoices($bucketForPreferred, $bucketForRemaining, $choices["choice_list"], $labels, $preferredChoices, $level + 1);
+            if (count($choices['choice_list']) > 0) {
+                $this->addChoices($bucketForPreferred, $bucketForRemaining, $choices['choice_list'], $labels, $preferredChoices, $level + 1);
             }
-        }else{
+        } else {
             foreach ($choices as $choice => $label) {
-
                 if (is_array($label)) {
                     $this->addChoices(
                         $bucketForPreferred,
@@ -51,7 +48,6 @@ class TreeChoiceList extends SimpleChoiceList
             }
         }
     }
-
 
     /**
      * Adds a new choice.
@@ -90,5 +86,4 @@ class TreeChoiceList extends SimpleChoiceList
             $bucketForRemaining[$index] = $view;
         }
     }
-
 }
