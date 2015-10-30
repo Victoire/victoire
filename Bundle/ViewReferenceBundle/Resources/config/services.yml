@@ -4,6 +4,10 @@ parameters:
     victoire_view_reference.cache.repository.class: Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheRepository
     victoire_view_reference.transformer.xmlToViewReference.class: Victoire\Bundle\ViewReferenceBundle\Transformer\XmlToViewReferenceTransformer
     victoire_view_reference.cache_warmer.class: Victoire\Bundle\ViewReferenceBundle\Cache\ViewCacheWarmer
+    victoire_view_reference.array_transformer.base_page.class: Victoire\Bundle\ViewReferenceBundle\Transformer\ArrayToViewReferenceTransformer
+    victoire_view_reference.array_transformer.business_page.class: Victoire\Bundle\ViewReferenceBundle\Transformer\ArrayToBusinessPageReferenceTransformer
+    victoire_view_reference.xml_transformer.base_page.class: Victoire\Bundle\ViewReferenceBundle\Transformer\XmlToViewReferenceTransformer
+    victoire_view_reference.xml_transformer.business_page.class: Victoire\Bundle\ViewReferenceBundle\Transformer\XmlToBusinessPageReferenceTransformer
 
 services:
     victoire_view_reference.builder:
@@ -41,6 +45,9 @@ services:
     victoire_view_reference.builder_chain:
         class: Victoire\Bundle\ViewReferenceBundle\Builder\Chain\ViewReferenceBuilderChain
 
+    victoire_view_reference.transformer_chain:
+        class: Victoire\Bundle\ViewReferenceBundle\Builder\Chain\ViewReferenceTransformerChain
+
     victoire_view_reference.cache.driver:
         class: %victoire_view_reference.cache.driver.class%
         arguments:
@@ -50,11 +57,13 @@ services:
         class: %victoire_view_reference.cache.manager.class%
         arguments:
             - "@victoire_view_reference.cache.driver"
+            - "@victoire_view_reference.transformer_chain"
 
     victoire_view_reference.cache.repository:
         class: %victoire_view_reference.cache.repository.class%
         arguments:
             - "@victoire_view_reference.cache.driver"
+            - "@victoire_view_reference.transformer_chain"
 
     victoire_view_reference.transformer.xmlToViewReference:
         class: %victoire_view_reference.transformer.xmlToViewReference.class%
@@ -68,3 +77,33 @@ services:
             - @doctrine.orm.entity_manager
         tags:
         - { name: kernel.event_listener, event: kernel.request, method: warmUp }
+
+    victoire_view_reference.array_transformer.base_page:
+        class: %victoire_view_reference.array_transformer.base_page.class%
+        tags:
+        - { name: victoire_view_reference.transformer, viewNamespace: Victoire\Bundle\PageBundle\Entity\BasePage, outputFormat: array }
+
+    victoire_view_reference.array_transformer.business_page:
+        class: %victoire_view_reference.array_transformer.business_page.class%
+        tags:
+        - { name: victoire_view_reference.transformer, viewNamespace: Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage, outputFormat: array }
+
+    victoire_view_reference.array_transformer.virtual_business_page:
+        class: %victoire_view_reference.array_transformer.business_page.class%
+        tags:
+        - { name: victoire_view_reference.transformer, viewNamespace: Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage, outputFormat: array }
+
+    victoire_view_reference.xml_transformer.base_page:
+        class: %victoire_view_reference.xml_transformer.base_page.class%
+        tags:
+        - { name: victoire_view_reference.transformer, viewNamespace: Victoire\Bundle\PageBundle\Entity\BasePage, outputFormat: xml }
+
+    victoire_view_reference.xml_transformer.business_page:
+        class: %victoire_view_reference.xml_transformer.business_page.class%
+        tags:
+        - { name: victoire_view_reference.transformer, viewNamespace: Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage, outputFormat: xml }
+
+    victoire_view_reference.xml_transformer.virtual_business_page:
+        class: %victoire_view_reference.xml_transformer.business_page.class%
+        tags:
+        - { name: victoire_view_reference.transformer, viewNamespace: Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage, outputFormat: xml }

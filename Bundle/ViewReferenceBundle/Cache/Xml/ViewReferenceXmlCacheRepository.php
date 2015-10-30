@@ -2,8 +2,10 @@
 
 namespace Victoire\Bundle\ViewReferenceBundle\Cache\Xml;
 
+use Gedmo\Uploadable\Mapping\Driver\Xml;
+use Victoire\Bundle\ViewReferenceBundle\Builder\Chain\ViewReferenceTransformerChain;
 use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
-use Victoire\Bundle\ViewReferenceBundle\Transformer\XMLToViewReferenceTransformer;
+use Victoire\Bundle\ViewReferenceBundle\Transformer\XmlToViewReferenceTransformer;
 
 /**
  * ref: victoire_view_reference.cache.repository
@@ -14,10 +16,12 @@ class ViewReferenceXmlCacheRepository
 
     /**
      * @param ViewReferenceXmlCacheDriver $driver
+     * @param ViewReferenceTransformerChain $viewReferenceTransformerChain
      */
-    public function __construct(ViewReferenceXmlCacheDriver $driver)
+    public function __construct(ViewReferenceXmlCacheDriver $driver, ViewReferenceTransformerChain $viewReferenceTransformerChain)
     {
         $this->driver = $driver;
+        $this->viewReferenceTransformerChain = $viewReferenceTransformerChain;
     }
 
     /**
@@ -41,7 +45,12 @@ class ViewReferenceXmlCacheRepository
         }
 
         if ($xmlReference = $this->driver->readCache()->xpath($xpath)) {
-            $viewReference = $xmlReference[0]->attributes();
+            $attr = $xmlReference[0]->attributes();
+            $transformer = $this->viewReferenceTransformerChain->getViewReferenceTransformer(
+                (string) $attr['viewNamespace'], 'xml'
+            );
+
+            $viewReference = $transformer->transform($xmlReference[0]);
         } else {
             $viewReference = null;
         }

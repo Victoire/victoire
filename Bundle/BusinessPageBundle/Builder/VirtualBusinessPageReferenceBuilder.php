@@ -7,7 +7,7 @@ use Victoire\Bundle\BlogBundle\Entity\Article;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\ViewReferenceBundle\Builder\BaseReferenceBuilder;
 use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
-use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
+use Victoire\Bundle\ViewReferenceBundle\ViewReference\BusinessPageReference;
 
 /**
  * VirtualBusinessPageReferenceBuilder.
@@ -23,7 +23,7 @@ class VirtualBusinessPageReferenceBuilder extends BaseReferenceBuilder
             return [];
         }
 
-        $viewReference = new ViewReference();
+        $viewReference = new BusinessPageReference();
         $viewReference->setId(ViewReferenceHelper::generateViewReferenceId($view));
         $viewReference->setLocale($view->getLocale());
         $viewReference->setPatternId($view->getTemplate()->getId());

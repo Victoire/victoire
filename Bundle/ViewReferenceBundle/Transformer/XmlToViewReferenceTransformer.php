@@ -9,6 +9,12 @@ use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 class XmlToViewReferenceTransformer implements DataTransformerInterface
 {
+    const CLASSNAME = 'Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference';
+
+    public function __construct() {
+        $refClass = new \ReflectionClass(self::CLASSNAME);
+        $this->properties = $refClass->getProperties();
+    }
 
     /**
      * SimpleXMLElement to ViewReference
@@ -19,20 +25,12 @@ class XmlToViewReferenceTransformer implements DataTransformerInterface
      */
     public function transform($xmlElement)
     {
-        $cachedArray = json_decode(json_encode((array) $xmlElement), true);
-        // if the xml contains only one reference, it'll be flatten so it will miss one deep level, so we re-create it
-        if (count($cachedArray['viewReference']) === 1) {
-            $cachedArray['viewReference'] = [$cachedArray['viewReference']];
-        }
+        $className = self::CLASSNAME;
+        $viewReference = new $className;
 
-        $viewReference = new ViewReference();
-        foreach ($cachedArray['viewReference'] as $cachedViewReference) {
-            foreach ($cachedViewReference['@attributes'] as $prop => $value) {
-                $methodName = 'set'.ucfirst($prop);
-                if (method_exists($viewReference, $methodName) && $value != '') {
-                    $viewReference->$methodName((string) $value);
-                }
-            }
+        foreach ($xmlElement->attributes() as $prop => $value) {
+            $methodName = 'set'.ucfirst($prop);
+            $viewReference->$methodName((string) $value);
         }
 
         return $viewReference;
@@ -54,12 +52,9 @@ XML;
 
         $element = new \SimpleXMLElement($xml);
 
-        foreach (ViewReferenceHelper::properties as $prop) {
-            $methodName = 'get'.ucfirst($prop);
-            if (method_exists($viewReference, $methodName) && $viewReference->$methodName() != '') {
-                $element->addAttribute($prop, $viewReference->$methodName());
-            }
-
+        foreach ($this->properties as $prop) {
+            $methodName = 'get'.ucfirst($prop->getName());
+            $element->addAttribute($prop->getName(), $viewReference->$methodName());
         }
 
         return $element;

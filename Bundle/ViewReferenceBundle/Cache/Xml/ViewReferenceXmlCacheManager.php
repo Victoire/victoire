@@ -4,6 +4,7 @@ namespace Victoire\Bundle\ViewReferenceBundle\Cache\Xml;
 
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\PageBundle\Entity\Traits\WebViewTrait;
+use Victoire\Bundle\ViewReferenceBundle\Builder\Chain\ViewReferenceTransformerChain;
 use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
 use Victoire\Bundle\ViewReferenceBundle\Transformer\ArrayToViewReferenceTransformer;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
@@ -15,9 +16,10 @@ class ViewReferenceXmlCacheManager
     /**
      * @param ViewReferenceXmlCacheDriver $driver
      */
-    public function __construct(ViewReferenceXmlCacheDriver $driver)
+    public function __construct(ViewReferenceXmlCacheDriver $driver, ViewReferenceTransformerChain $viewReferenceTransformerChain)
     {
         $this->driver = $driver;
+        $this->viewReferenceTransformerChain = $viewReferenceTransformerChain;
     }
 
     /**
@@ -41,7 +43,9 @@ XML;
 
             /** @var WebViewInterface $view */
             $view = $node['view'];
-            $arrayTransformer = new ArrayToViewReferenceTransformer();
+            $arrayTransformer = $this->viewReferenceTransformerChain->getViewReferenceTransformer(
+                $view->getViewReference()->getViewNamespace(), 'array'
+            );
             foreach ($arrayTransformer->reverseTransform($view->getViewReference()) as $key => $value) {
                 $itemNode->addAttribute($key, $value);
             }

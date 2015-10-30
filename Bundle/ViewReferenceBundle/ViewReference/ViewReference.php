@@ -7,17 +7,14 @@ use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 
 class ViewReference
 {
-    private $id;
-    private $locale;
-    private $entityId;
-    private $entityNamespace;
-    private $slug;
-    private $viewId;
-    private $viewNamespace;
-    private $patternId;
-    private $name;
-    private $children;
-    private $view;
+    protected $id;
+    protected $locale;
+    protected $slug;
+    protected $name;
+    protected $children;
+    protected $viewId;
+    protected $viewNamespace;
+    protected $view;
 
     /**
      * looks like ref_{view.id}[_{view.businessEntity.id}]
@@ -69,102 +66,6 @@ class ViewReference
     }
 
     /**
-     * @return int
-     */
-    public function getPatternId()
-    {
-        return $this->patternId;
-    }
-
-    /**
-     * @param int $patternId
-     */
-    public function setPatternId($patternId)
-    {
-        $this->patternId = $patternId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getViewNamespace()
-    {
-        return $this->viewNamespace;
-    }
-
-    /**
-     * @param string $viewNamespace
-     */
-    public function setViewNamespace($viewNamespace)
-    {
-        $this->viewNamespace = $viewNamespace;
-    }
-
-    /**
-     * @return int
-     */
-    public function getViewId()
-    {
-        return $this->viewId;
-    }
-
-    /**
-     * @param int $viewId
-     */
-    public function setViewId($viewId)
-    {
-        $this->viewId = $viewId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-
-    /**
-     * @param string $slug
-     */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEntityNamespace()
-    {
-        return $this->entityNamespace;
-    }
-
-    /**
-     * @param string $entityNamespace
-     */
-    public function setEntityNamespace($entityNamespace)
-    {
-        $this->entityNamespace = $entityNamespace;
-    }
-
-    /**
-     * @return int
-     */
-    public function getEntityId()
-    {
-        return $this->entityId;
-    }
-
-    /**
-     * @param int $entityId
-     */
-    public function setEntityId($entityId)
-    {
-        $this->entityId = $entityId;
-    }
-
-    /**
      * @return ViewReference[]
      */
     public function getChildren()
@@ -194,5 +95,53 @@ class ViewReference
     public function setView($view)
     {
         $this->view = $view;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getViewId()
+    {
+        return $this->viewId;
+    }
+
+    /**
+     * @param mixed $viewId
+     */
+    public function setViewId($viewId)
+    {
+        $this->viewId = $viewId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getViewNamespace()
+    {
+        return $this->viewNamespace;
+    }
+
+    /**
+     * @param mixed $viewNamespace
+     */
+    public function setViewNamespace($viewNamespace)
+    {
+        $this->viewNamespace = $viewNamespace;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param mixed $slug
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
     }
 }

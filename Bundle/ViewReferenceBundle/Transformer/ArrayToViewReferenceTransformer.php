@@ -9,6 +9,10 @@ use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 class ArrayToViewReferenceTransformer implements DataTransformerInterface
 {
+    public function __construct() {
+        $refClass = new \ReflectionClass('Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference');
+        $this->properties = $refClass->getProperties();
+    }
 
     /**
      * Array to ViewReference
@@ -23,9 +27,7 @@ class ArrayToViewReferenceTransformer implements DataTransformerInterface
         foreach ($array['viewReference'] as $array) {
             foreach ($array as $prop => $value) {
                 $methodName = 'set'.ucfirst($prop);
-                if (method_exists($viewReference, $methodName) && $value != '') {
-                    $viewReference->$methodName((string) $value);
-                }
+                $viewReference->$methodName((string) $value);
             }
         }
 
@@ -42,12 +44,9 @@ class ArrayToViewReferenceTransformer implements DataTransformerInterface
     public function reverseTransform($viewReference)
     {
         $array = [];
-        foreach (ViewReferenceHelper::properties as $prop) {
-            $methodName = 'get'.ucfirst($prop);
-            if (method_exists($viewReference, $methodName) && $viewReference->$methodName() != '') {
-                $array[$prop] = $viewReference->$methodName();
-            }
-
+        foreach ($this->properties as $prop) {
+            $methodName = 'get'.ucfirst($prop->getName());
+            $array[$prop->getName()] = $viewReference->$methodName();
         }
 
         return $array;

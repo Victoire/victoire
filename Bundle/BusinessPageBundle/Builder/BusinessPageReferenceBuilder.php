@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\ViewReferenceBundle\Builder\BaseReferenceBuilder;
 use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
+use Victoire\Bundle\ViewReferenceBundle\ViewReference\BusinessPageReference;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 /**
@@ -21,7 +22,7 @@ class BusinessPageReferenceBuilder extends BaseReferenceBuilder
         $view->setUrl($this->urlBuilder->buildUrl($view));
         $referenceId = ViewReferenceHelper::generateViewReferenceId($view);
 
-        $viewReference = new ViewReference();
+        $viewReference = new BusinessPageReference();
 
         $viewReference->setId($referenceId);
         $viewReference->setLocale($view->getLocale());
