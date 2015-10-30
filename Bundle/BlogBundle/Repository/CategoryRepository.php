@@ -28,6 +28,9 @@ class CategoryRepository extends NestedTreeRepository
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function getAll()
     {
         $this->qb = $this->getInstance('c_category')
@@ -36,6 +39,24 @@ class CategoryRepository extends NestedTreeRepository
         return $this;
     }
 
+    /**
+     * Order categories by tree hierarchy
+     * @return $this
+     */
+    public function orderByHierarchy()
+    {
+        $this->qb
+            ->addOrderBy('c_category.root')
+            ->addOrderBy('c_category.lft')
+            ->addOrderBy('c_category.lvl');
+
+        return $this;
+    }
+
+    /**
+     * @param $articles
+     * @return $this
+     */
     public function filterByArticles($articles)
     {
         $this->qb
