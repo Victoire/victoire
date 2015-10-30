@@ -55,6 +55,12 @@ services:
             - "@request_stack"
         tags:
             - { name: form.type, alias: victoire_article_type }
+    victoire_blog.article.container.form.type:
+        class: Victoire\Bundle\BlogBundle\Form\ArticleTemplateType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type, alias: victoire_article_template_type }
 
     victoire_blog.article_settings.form.type:
         class: Victoire\Bundle\BlogBundle\Form\ArticleSettingsType

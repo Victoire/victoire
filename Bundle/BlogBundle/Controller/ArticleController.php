@@ -24,14 +24,16 @@ class ArticleController extends Controller
     /**
      * Create article.
      *
-     * @Route("/create", name="victoire_blog_article_create")
+     * @Route("/create/{id}", name="victoire_blog_article_create")
+     * @ParamConverter("blog", class="VictoireBlogBundle:Blog")
      *
      * @return JsonResponse
      */
-    public function createAction()
+    public function createAction(Blog $blog)
     {
         $entityManager = $this->get('doctrine.orm.entity_manager');
         $article = new Article();
+        $article->setBlog($blog);
         $form = $this->createForm('victoire_article_type', $article);
 
         $form->handleRequest($this->get('request'));
@@ -80,7 +82,8 @@ class ArticleController extends Controller
                     'html'    => $this->container->get('victoire_templating')->render(
                         'VictoireBlogBundle:Article:new.html.twig',
                         [
-                            'form' => $form->createView(),
+                            'form'   => $form->createView(),
+                            'blogId' => $blog->getId(),
                         ]
                     ),
                 ]
@@ -106,7 +109,7 @@ class ArticleController extends Controller
             [
                 'html' => $this->container->get('victoire_templating')->render(
                     'VictoireBlogBundle:Article:new.html.twig',
-                    ['form' => $form->createView()]
+                    ['form' => $form->createView(), 'blogId' => $blog->getId()]
                 ),
             ]
         );
@@ -127,24 +130,31 @@ class ArticleController extends Controller
     public function settingsAction(Request $request, Article $article)
     {
         $form = $this->createForm('victoire_article_settings_type', $article);
+        $pageHelper = $this->get('victoire_page.page_helper');
         $businessProperties = [];
 
+        $businessPage = $pageHelper->findPageByParameters([
+            'viewId'   => $article->getPattern()->getId(),
+            'entityId' => $article->getId(),
+        ]);
         $form->handleRequest($request);
         $novalidate = $request->query->get('novalidate', false);
 
         if ($novalidate === false && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
             if (count($article->getTags())) {
                 /** @var Tag $tag */
                 foreach ($article->getTags() as $tag) {
                     $tag->setBlog($article->getBlog());
-                    $this->get('doctrine.orm.entity_manager')->persist($tag);
+                    $em->persist($tag);
                 }
             }
-            $this->get('doctrine.orm.entity_manager')->flush();
+            $businessPage->setTemplate($article->getPattern());
+            $em->flush();
 
             $pattern = $article->getPattern();
 
-            $page = $this->container->get('victoire_page.page_helper')->findPageByParameters([
+            $page = $pageHelper->findPageByParameters([
                 'viewId'   => $pattern->getId(),
                 'entityId' => $article->getId(),
             ]);

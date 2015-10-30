@@ -8,7 +8,7 @@ use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 /**
  * ArticleTemplate (extends BusinessTemplate).
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Victoire\Bundle\BlogBundle\Repository\ArticleTemplateRepository")
  */
 class ArticleTemplate extends BusinessTemplate
 {

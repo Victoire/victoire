@@ -46,7 +46,7 @@ class Article
 
     /**
      * @ORM\Column(name="slug", type="string", length=255)
-     * @Gedmo\Slug(fields={"name"}, updatable=false, unique=false)
+     * @Gedmo\Slug(fields={"name"}, updatable=false, unique=true)
      * @VIC\BusinessProperty("businessParameter")
      */
     private $slug;
@@ -106,7 +106,7 @@ class Article
 
     /**
      * @var BusinessTemplate
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate")
+     * @ORM\ManyToOne(targetEntity="ArticleTemplate")
      * @ORM\JoinColumn(name="pattern_id", referencedColumnName="id", onDelete="SET NULL")
      * @Assert\NotNull()
      */

@@ -35,7 +35,6 @@ Background:
         Then I should see "Créer un nouvel article"
         When I fill in "Nom de l'article" with "I'm your father."
         When I fill in "Description" with "This is a great description."
-        When I select "{{item.name}}" from "Modèle à utiliser"
         And I follow "Créer"
         And I wait 10 seconds
         Then I should be on "/fr/the-jedi-network/i-m-your-father"

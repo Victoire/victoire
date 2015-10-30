@@ -39,62 +39,49 @@ class ArticleType extends AbstractType
 
         $builder
             ->add('name', null, [
-                    'label' => 'form.article.name.label',
-                ])
+                'label' => 'form.article.name.label',
+            ])
             ->add('description', null, [
-                    'label'    => 'form.article.description.label',
-                    'required' => false, ])
+                'label'    => 'form.article.description.label',
+                'required' => false,
+            ])
             ->add('image', 'media', [
-                    'required' => false,
-                    'label'    => 'form.article.image.label',
-                ])
-            ->add(
-                $builder->create('blog', 'hidden', [
-                        'label' => 'form.article.blog.label', ]
-                )->addModelTransformer($viewToIdTransformer)
-            )
-            ->add(
-                'tags',
-                'tags',
-                [
-                    'required' => false,
-                    'multiple' => true,
-                ]
-            )
+                'required' => false,
+                'label'    => 'form.article.image.label',
+            ])
+            ->add($builder
+                ->create('blog', 'hidden', ['label' => 'form.article.blog.label'])
+                ->addModelTransformer($viewToIdTransformer))
+            ->add('pattern')
+            ->add('tags', 'tags', [
+                'required' => false,
+                'multiple' => true,
+            ])
             ->remove('visibleOnFront');
 
         $builder->get('blog')->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-                $data = $event->getData();
-                $form = $event->getForm();
-                $this->manageCategories($data, $form->getParent());
-            });
+            $data = $event->getData();
+            $parent = $event->getForm()->getParent();
+            $this->manageCategories($data, $parent);
+            $this->manageTemplate($data, $parent);
+        });
 
         $builder->get('blog')->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
-                $form = $event->getForm();
-                $data = $event->getData();
-                $this->manageCategories($data, $form->getParent());
-            });
+            $data = $event->getData();
+            $parent = $event->getForm()->getParent();
+            $this->manageCategories($data, $parent);
+        });
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-                $form = $event->getForm();
-                $data = $event->getData();
-                $this->manageTags($data, $form);
-            });
+            $data = $event->getData();
+            $form = $event->getForm();
+            $this->manageTags($data, $form);
+        });
         $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
-                $form = $event->getForm();
-                $data = $form->getData();
-                $this->manageTags($data, $form);
-            });
-
-        $articlePatterns = function (EntityRepository $repo) {
-            return $repo->getInstance()->andWhere("pattern.businessEntityId = 'article'");
-        };
-        $builder->add('pattern', null, [
-                'label'         => 'form.view.type.pattern.label',
-                'property'      => 'name',
-                'required'      => true,
-                'query_builder' => $articlePatterns,
-            ]);
+            $form = $event->getForm();
+            $data = $form->getData();
+            $this->manageTags($data, $form);
+        });
     }
 
     /**
@@ -102,20 +89,16 @@ class ArticleType extends AbstractType
      */
     protected function manageTags($data, $form)
     {
-        $form->add(
-            'tags',
-            'tags',
-            [
-                'required'      => false,
-                'multiple'      => true,
-                'query_builder' => function (TagRepository $er) use ($data) {
-                    $qb = $er->filterByBlog($data->getBlog())->getInstance();
-                    $er->clearInstance();
+        $form->add('tags', 'tags', [
+            'required'      => false,
+            'multiple'      => true,
+            'query_builder' => function (TagRepository $er) use ($data) {
+                $qb = $er->filterByBlog($data->getBlog())->getInstance();
+                $er->clearInstance();
 
-                    return $qb;
-                },
-            ]
-        );
+                return $qb;
+            },
+        ]);
     }
 
     /**
@@ -134,13 +117,38 @@ class ArticleType extends AbstractType
         }
 
         $form->add('category', 'hierarchy_tree', [
-                'required'      => false,
-                'label'         => 'form.article.category.label',
-                'class'         => 'Victoire\\Bundle\\BlogBundle\\Entity\\Category',
-                'query_builder' => $queryBuilder,
-                'empty_value'   => 'Pas de catégorie',
-                'empty_data'    => null,
+            'required'      => false,
+            'label'         => 'form.article.category.label',
+            'class'         => 'Victoire\\Bundle\\BlogBundle\\Entity\\Category',
+            'query_builder' => $queryBuilder,
+            'empty_value'   => 'Pas de catégorie',
+            'empty_data'    => null,
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface|null $form
+     */
+    protected function manageTemplate($blog_id, $form)
+    {
+        $articleTemplateRepo = $this->entityManager->getRepository('VictoireBlogBundle:ArticleTemplate');
+
+        if ($articleTemplateRepo->filterByBlog($blog_id)->getCount('parent')->run('getSingleScalarResult') > 1) {
+            $articlePatterns = function (EntityRepository $repo) use ($blog_id) {
+                return $repo->filterByBlog($blog_id)->getInstance();
+            };
+            $form->add('pattern', null, [
+                'label'         => 'form.view.type.pattern.label',
+                'property'      => 'name',
+                'required'      => true,
+                'query_builder' => $articlePatterns,
             ]);
+        } else {
+            $form->add('pattern', 'victoire_article_template_type', [
+                'data_class' => null,
+                'data'       => $articleTemplateRepo->filterByBlog($blog_id)->run('getSingleResult'),
+            ]);
+        }
     }
 
     /**
