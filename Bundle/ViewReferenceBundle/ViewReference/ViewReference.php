@@ -10,11 +10,8 @@ class ViewReference
     protected $id;
     protected $locale;
     protected $slug;
-    protected $name;
-    protected $children;
     protected $viewId;
     protected $viewNamespace;
-    protected $view;
 
     /**
      * looks like ref_{view.id}[_{view.businessEntity.id}]
@@ -47,54 +44,6 @@ class ViewReference
     public function setLocale($locale)
     {
         $this->locale = $locale;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return ViewReference[]
-     */
-    public function getChildren()
-    {
-        return $this->children;
-    }
-
-    /**
-     * @param  ViewReference[] $children
-     */
-    public function setChildren($children)
-    {
-        $this->children = $children;
-    }
-
-    /**
-     * @return WebViewInterface
-     */
-    public function getView()
-    {
-        return $this->view;
-    }
-
-    /**
-     * @param WebViewInterface $view
-     */
-    public function setView($view)
-    {
-        $this->view = $view;
     }
 
     /**

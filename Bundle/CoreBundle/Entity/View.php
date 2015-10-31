@@ -13,6 +13,7 @@ use Victoire\Bundle\I18nBundle\Entity\I18n;
 use Victoire\Bundle\PageBundle\Entity\Slot;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
+use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
@@ -963,7 +964,7 @@ abstract class View
     /**
      * Get reference.
      *
-     * @return string
+     * @return ViewReference
      */
     public function getReference()
     {
@@ -973,11 +974,11 @@ abstract class View
     /**
      * Set reference.
      *
-     * @param string $reference
+     * @param ViewReference $reference
      *
      * @return $this
      */
-    public function setReference($reference)
+    public function setReference(ViewReference $reference)
     {
         $this->reference = $reference;
 

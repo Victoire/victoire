@@ -23,9 +23,7 @@ class BlogReferenceBuilder extends BaseReferenceBuilder
         $viewReference->setLocale($view->getLocale());
         $viewReference->setViewId($view->getId());
         $viewReference->setSlug($view->getSlug());
-        $viewReference->setName($view->getName());
         $viewReference->setViewNamespace($em->getClassMetadata(get_class($view))->name);
-        $viewReference->setView($view);
 
         return $viewReference;
     }

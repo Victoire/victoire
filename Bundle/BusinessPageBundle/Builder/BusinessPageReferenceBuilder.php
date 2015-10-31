@@ -27,13 +27,11 @@ class BusinessPageReferenceBuilder extends BaseReferenceBuilder
         $viewReference->setId($referenceId);
         $viewReference->setLocale($view->getLocale());
         $viewReference->setViewId($view->getId());
-        $viewReference->setPatternId($view->getTemplate()->getId());
+        $viewReference->setTemplateId($view->getTemplate()->getId());
         $viewReference->setSlug($view->getSlug());
-        $viewReference->setName($view->getName());
         $viewReference->setEntityId($view->getBusinessEntity()->getId());
         $viewReference->setEntityNamespace($em->getClassMetadata(get_class($view->getBusinessEntity()))->name);
         $viewReference->setViewNamespace($em->getClassMetadata(get_class($view))->name);
-        $viewReference->setView($view);
 
         return $viewReference;
     }

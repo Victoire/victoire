@@ -51,7 +51,7 @@ class BusinessPageReference extends ViewReference
     /**
      * @param mixed $templateId
      */
-    public function setPatternId($templateId)
+    public function setTemplateId($templateId)
     {
         $this->templateId = $templateId;
     }

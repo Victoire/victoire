@@ -27,9 +27,7 @@ class PageReferenceBuilder extends BaseReferenceBuilder
         $viewReference->setLocale($view->getLocale());
         $viewReference->setViewId($view->getId());
         $viewReference->setSlug($view->isHomepage() ? '' : $view->getSlug());
-        $viewReference->setName($view->getName());
         $viewReference->setViewNamespace(get_class($view));
-        $viewReference->setView($view);
 
         return $viewReference;
     }
