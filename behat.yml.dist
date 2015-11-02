@@ -50,21 +50,21 @@ default:
                      Page:              Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/page.yml
                      ErrorPage:         Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/errorPage.yml
                      Blog:              Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/blog.yml
-                     BlogPattern:       Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/pattern.yml
+                     BlogTemplate:      Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/template.yml
                      Article:           Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/article.yml
                      BlogBEP:           Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/bep.yml
                      Character:         Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/character.yml
                      Mercenary:         Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/mercenary.yml
                      Jedi:              Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/jedi.yml
-                     CharacterPatterns: Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/pattern.yml
+                     CharacterTemplates: Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/template.yml
                  dependencies:
-                     Template:          [User]
-                     ErrorPage:         [Template, User]
-                     Page:              [Template, User]
-                     Blog:              [Template, BlogPattern, User]
-                     Article:           [Template, BlogBEP, BlogPattern, User, Blog]
-                     CharacterPatterns: [Template, User]
-                     MediaFile:         [Media]
+                     Template:           [User]
+                     ErrorPage:          [Template, User]
+                     Page:               [Template, User]
+                     Blog:               [Template, BlogTemplate, User]
+                     Article:            [Template, BlogBEP, BlogTemplate, User, Blog]
+                     CharacterTemplates: [Template, User]
+                     MediaFile:          [Media]
              symfony_kernel:
                  bootstrap: Tests/Functionnal/app/autoload.php
                  path: Tests/Functionnal/app/AppKernel.php

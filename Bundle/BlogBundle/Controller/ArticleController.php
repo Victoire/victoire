@@ -52,7 +52,7 @@ class ArticleController extends Controller
 
             //Auto creation of the BEP
             $page = $this->container->get('victoire_business_page.business_page_builder')
-                                ->generateEntityPageFromPattern($article->getPattern(), $article, $entityManager);
+                                ->generateEntityPageFromTemplate($article->getTemplate(), $article, $entityManager);
 
             // Transform VBP into BP
             $this->container->get('victoire_business_page.transformer.virtual_to_business_page_transformer')->transform($page);
@@ -134,7 +134,7 @@ class ArticleController extends Controller
         $businessProperties = [];
 
         $businessPage = $pageHelper->findPageByParameters([
-            'viewId'   => $article->getPattern()->getId(),
+            'viewId'   => $article->getTemplate()->getId(),
             'entityId' => $article->getId(),
         ]);
         $form->handleRequest($request);
@@ -149,13 +149,13 @@ class ArticleController extends Controller
                     $em->persist($tag);
                 }
             }
-            $businessPage->setTemplate($article->getPattern());
+            $businessPage->setTemplate($article->getTemplate());
             $em->flush();
 
-            $pattern = $article->getPattern();
+            $template = $article->getTemplate();
 
             $page = $pageHelper->findPageByParameters([
-                'viewId'   => $pattern->getId(),
+                'viewId'   => $template->getId(),
                 'entityId' => $article->getId(),
             ]);
 
@@ -200,7 +200,7 @@ class ArticleController extends Controller
     {
         $bep = $this->get('victoire_page.page_helper')->findPageByParameters(
             [
-                'patternId' => $article->getPattern()->getId(),
+                'patternId' => $article->getTemplate()->getId(),
                 'entityId'  => $article->getId(),
             ]
         );

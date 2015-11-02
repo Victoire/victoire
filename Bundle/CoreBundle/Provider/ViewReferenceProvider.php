@@ -45,7 +45,7 @@ class ViewReferenceProvider
                 // for each business entity
                 foreach ($entities as $entity) {
                     $currentPattern = clone $view;
-                    $page = $this->businessPageBuilder->generateEntityPageFromPattern($currentPattern, $entity, $em);
+                    $page = $this->businessPageBuilder->generateEntityPageFromTemplate($currentPattern, $entity, $em);
                     $this->businessPageBuilder->updatePageParametersByEntity($page, $entity);
 
                     $referencableViews[] = $page;

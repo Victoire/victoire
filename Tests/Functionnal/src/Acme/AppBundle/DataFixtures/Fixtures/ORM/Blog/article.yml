@@ -5,7 +5,7 @@ Victoire\Bundle\BlogBundle\Entity\Article:
         description: This is a great article description
         slug: i-m-your-father
         status: published
-        pattern: @pattern_article
+        template: @template_article
         blog: @blog-jedi-network
         publishedAt: <dateTime('now')>
         createdAt: <dateTime('now')>

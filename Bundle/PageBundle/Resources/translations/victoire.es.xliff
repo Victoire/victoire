@@ -22,8 +22,8 @@
             <source>form.view.type.parent.label</source>
             <target>Página padre</target>
         </trans-unit>
-        <trans-unit id="5" resname="form.view.type.pattern.label">
-            <source>form.view.type.pattern.label</source>
+        <trans-unit id="5" resname="form.view.type.template.label">
+            <source>form.view.type.template.label</source>
             <target>Plantilla de usar</target>
         </trans-unit>
         <trans-unit id="8" resname="page.undeletable">

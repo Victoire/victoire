@@ -1,20 +1,20 @@
 .businessProperties {
     background-color: @vic-businessProperties-backgroundColor;
+    padding: @vic-businessProperties-padding;
     float: left;
-    position: fixed;
-    top: @vic-businessProperties-top;
-    z-index: 1;
+    width: 100%;
+    .radius-bottom(@vic-businessProperties-borderRadius);
 
     .businessProperty,
     .businessPropertyTitle {
         float: left;
         margin: @vic-businessProperty-marginVertical @vic-businessProperty-marginHorizontal;
-        padding: @vic-businessProperty-padding;
+        padding: @vic-businessProperty-paddingVertical @vic-businessProperty-paddingHorizontal;
     }
 
     .businessProperty {
         border-width: @vic-businessProperty-borderWidth;
-        border-solid: @vic-businessProperty-borderStyle;
+        border-style: @vic-businessProperty-borderStyle;
         border-color: @vic-businessProperty-borderColor;
         .radius(@vic-businessProperty-borderRadius);
         cursor: pointer;
@@ -28,5 +28,9 @@
         a {
             color: @vic-businessParameter-color;
         }
+    }
+
+    .businessProperties-description {
+        margin: 2px 5px 6px 5px;
     }
 }

@@ -210,6 +210,10 @@
         <source>widget_filter.form.date.default.empty_value.label</source>
         <target>Pick a date</target>
       </trans-unit>
+      <trans-unit id="46" resname="form.article.type.template.label">
+        <source>form.article.type.template.label</source>
+        <target>Template</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

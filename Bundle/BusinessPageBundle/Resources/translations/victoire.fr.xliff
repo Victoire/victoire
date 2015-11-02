@@ -58,6 +58,14 @@
         <source>victoire.form.business_template.slug.label</source>
         <target>URL</target>
       </trans-unit>
+      <trans-unit id="Ncd8JXVBzq6i5wXgYB6DH61yZrBT96rrDCU94Mln" resname="victoire.form.business_template.backend_name.label">
+        <source>victoire.form.business_template.backend_name.label</source>
+        <target>Libellé</target>
+      </trans-unit>
+      <trans-unit id="HlNLMNAxkSXtYAyo0kp10pHU3N28qjTPyc9UXUfe" resname="victoire.form.business_template.backend_name.help_block">
+        <source>victoire.form.business_template.backend_name.help_block</source>
+        <target>Vos visiteurs ne verront pas ce libellé</target>
+      </trans-unit>
       <trans-unit id="4c359543d88eb230619ccbd8b26a5b1110501612" resname="victoire.form.business_template.query.label">
         <source>victoire.form.business_template.query.label</source>
         <target><![CDATA[<i class="fa fa-database"></i> Requête <strong>BETA</strong>]]></target>
@@ -74,9 +82,13 @@
         <source>victoire.form.business_template.query.url.fieldset</source>
         <target>URL</target>
       </trans-unit>
-      <trans-unit id="d8b26a54c359543d88ebb111050161FDSFD2" resname="victoire.form.business_template.slug.vic_help_block">
-        <source>victoire.form.business_template.slug.vic_help_block</source>
-        <target><![CDATA[<i class="fa fa-info-circle"></i> Utilisez une proprieté de l'entité pour dynamiser l'URL.]]></target>
+      <trans-unit id="d8b26a54c359543d88ebb111050161FDSFD2" resname="victoire.form.business_template.slug.vic_business_property_picker">
+        <source>victoire.form.business_template.slug.vic_business_property_picker</source>
+        <target>Vous devez utiliser au moins une proprieté de l'entité pour dynamiser l'URL</target>
+      </trans-unit>
+      <trans-unit id="58JJ9yBL8DubsE8bpLRORFePDATen2Jj6BovN7yM" resname="victoire.form.business_template.name.vic_business_property_picker">
+        <source>victoire.form.business_template.name.vic_business_property_picker</source>
+        <target>Vous pouvez utiliser des propriétés de l'entité pour le titre de la page</target>
       </trans-unit>
       <trans-unit id="d8b26a54c359543d88ebb111050161FDSFD2" resname="victoire.form.business_template.name.vic_help_block">
         <source>victoire.form.business_template.name.vic_help_block</source>
