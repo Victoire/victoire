@@ -34,28 +34,24 @@ class BlogMenuListener implements MenuListenerInterface
     public function addContextual($event)
     {
         $mainItem = $this->getMainItem();
-        $currentBlog = $event->getPage()->getBusinessEntity()->getBlog();
         $currentArticle = $event->getPage()->getBusinessEntity();
+        $currentBlog = $currentArticle->getBlog();
 
-        $mainItem->addChild('menu.blog.article.settings',
+        $mainItem->addChild('menu.blog.settings',
             [
-                'route'           => 'victoire_blog_article_settings',
-                'routeParameters' => ['id' => $currentArticle->getId()],
-                ]
-        )->setLinkAttribute('data-toggle', 'vic-modal');
-
-        $mainItem->addChild('menu.blog.article.settings',
-            [
-                'route'           => 'victoire_blog_article_settings',
-                'routeParameters' => ['id' => $currentArticle->getId()],
-                ]
+                'route'           => 'victoire_blog_index',
+                'routeParameters' => [
+                    'blogId' => $currentBlog->getId(),
+                    'tab'    => 'settings',
+                ],
+            ]
         )->setLinkAttribute('data-toggle', 'vic-modal');
 
         $mainItem->addChild('menu.blog.article.new',
             [
                 'route'           => 'victoire_blog_article_newBlogArticle',
                 'routeParameters' => ['id' => $currentBlog->getId()],
-                ]
+            ]
         )->setLinkAttribute('data-toggle', 'vic-modal');
 
         return $mainItem;
@@ -134,7 +130,7 @@ class BlogMenuListener implements MenuListenerInterface
             return $this->menuBuilder->createDropdownMenuItem(
                 $this->menuBuilder->getTopNavbar(),
                 'menu.blog',
-                ['attributes' => ['class' => 'vic-pull-left vic-text-center']]
+                ['attributes' => ['class' => 'vic-pull-left vic-text-left']]
             );
         }
     }
