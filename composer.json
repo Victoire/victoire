@@ -62,7 +62,7 @@
         "stof/doctrine-extensions-bundle" : "1.2.*@dev",
         "symfony/assetic-bundle" : "~2.3",
         "symfony/monolog-bundle" : "~2.4",
-        "symfony/symfony" : ">=2.4.2, <2.7.0",
+        "symfony/symfony" : ">=2.4.2, <=2.7.x-dev",
         "symfony/swiftmailer-bundle" : "~2.3",
         "twig/extensions" : "~1.0"
     },
