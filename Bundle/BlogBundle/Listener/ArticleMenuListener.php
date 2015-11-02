@@ -41,7 +41,7 @@ class ArticleMenuListener implements MenuListenerInterface
             [
                 'route'           => 'victoire_blog_article_settings',
                 'routeParameters' => [
-                    'id' => $currentArticle->getId(),
+                    'id'      => $currentArticle->getId(),
                     'page_id' => $page->getId(),
                 ],
             ]
@@ -61,7 +61,6 @@ class ArticleMenuListener implements MenuListenerInterface
      */
     public function addGlobal(Event $event)
     {
-
     }
 
     /**
