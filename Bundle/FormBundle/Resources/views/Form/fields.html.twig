@@ -519,9 +519,17 @@
 {# Help #}
 
 {% block form_help %}
-{% spaceless %}
-{% if vic_help_block %}<p class="vic-help-block">{{ vic_help_block|trans({}, translation_domain)|raw }}</p>{%endif %}
-{% endspaceless %}
+    {% spaceless %}
+        {% if vic_help_block %}
+            <p class="vic-help-block">{{ vic_help_block|trans({}, translation_domain)|raw }}</p>
+        {%endif %}
+        {% if vic_business_property_picker %}
+            {% include 'VictoireBusinessEntityBundle:BusinessProperty:list.html.twig' with {
+                'description': vic_business_property_picker_description|trans({}, translation_domain)|raw,
+                'businessProperties': businessProperties
+            } %}
+        {% endif %}
+    {% endspaceless %}
 {% endblock form_help %}
 
 {% block form_vic_widget_add_btn %}

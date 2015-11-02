@@ -9,6 +9,7 @@
         <parameter key="victoire_form.form.type_extension.vic_offset_button.class">Victoire\Bundle\FormBundle\Form\Extension\OffsetButtonExtension</parameter>
         <parameter key="victoire_form.form.type_extension.vic_button.class">Victoire\Bundle\FormBundle\Form\Extension\IconButtonExtension</parameter>
         <parameter key="victoire_form.form.type_extension.vic_help.class">Victoire\Bundle\FormBundle\Form\Extension\HelpFormTypeExtension</parameter>
+        <parameter key="victoire_form.form.type_extension.vic_business_property_picker.class">Victoire\Bundle\FormBundle\Form\Extension\BusinessPropertyPickerTypeExtension</parameter>
         <parameter key="victoire_form.form.type_extension.vic_legend.class">Victoire\Bundle\FormBundle\Form\Extension\LegendFormTypeExtension</parameter>
         <parameter key="victoire_form.form.type_extension.vic_error.class">Victoire\Bundle\FormBundle\Form\Extension\ErrorTypeFormTypeExtension</parameter>
         <parameter key="victoire_form.form.type_extension.vic_widget.class">Victoire\Bundle\FormBundle\Form\Extension\WidgetFormTypeExtension</parameter>
@@ -45,6 +46,10 @@
                 <argument key="vic_help_widget_popover">%victoire_form.form.vic_help_widget.popover%</argument>
             </argument>
 
+            <tag name="form.type_extension" alias="form" />
+        </service>
+
+        <service id="victoire_form.form.type_extension.vic_business_property_picker" class="%victoire_form.form.type_extension.vic_business_property_picker.class%">
             <tag name="form.type_extension" alias="form" />
         </service>
 

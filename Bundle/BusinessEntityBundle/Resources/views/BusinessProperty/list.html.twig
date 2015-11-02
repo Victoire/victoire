@@ -1,16 +1,21 @@
 {% trans_default_domain "victoire" %}
 
 {% if businessProperties|length > 0 %}
-<div class='businessProperties'>
-    {% for businessProperty in businessProperties %}
-        <div class='businessProperty {{ businessProperty.type }}'>
-            <a onClick='businessProperty.addPropertyToCurrentInput("{{ businessProperty.entityProperty }}")' title="{{ businessProperty.type }}">{{ businessProperty.entityProperty }}</a>
-        </div>
-    {% endfor %}
-</div>
+    <div class="businessProperties">
+        {% if description is defined and description %}
+            <div class="businessProperties-description">
+                <i class="fa fa-info-circle"></i> {{ description }}
+            </div>
+        {% endif %}
+        {% for businessProperty in businessProperties %}
+            <div class="businessProperty {{ businessProperty.type }}">
+                <a onClick="businessProperty.addPropertyToCurrentInput('{{ businessProperty.entityProperty }}')" title="{{ businessProperty.type }}">{{ businessProperty.entityProperty }}</a>
+            </div>
+        {% endfor %}
+    </div>
 
-<script type="text/javascript">
-    //init the event handler for the business entity property
-    businessProperty.initPropertyHelper();
-</script>
+    <script type="text/javascript">
+        //init the event handler for the business entity property
+        businessProperty.initPropertyHelper();
+    </script>
 {% endif %}
