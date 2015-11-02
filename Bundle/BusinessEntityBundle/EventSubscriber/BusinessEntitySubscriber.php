@@ -69,7 +69,7 @@ class BusinessEntitySubscriber implements EventSubscriber
                     $bepRepo = $entityManager->getRepository('VictoireBusinessPageBundle:BusinessPage');
                     $virtualBusinessPage = $this->container->get(
                         'victoire_business_page.business_page_builder'
-                    )->generateEntityPageFromPattern($businessTemplate, $entity, $entityManager);
+                    )->generateEntityPageFromTemplate($businessTemplate, $entity, $entityManager);
                     // Get the BusinessPage if exists for the given entity
                     $businessPage = $bepRepo->findPageByBusinessEntityAndPattern(
                         $businessTemplate,

@@ -152,7 +152,7 @@ class ViewReferenceSubscriber implements EventSubscriber
         if ($view instanceof BusinessPage && !$delete) {
             $oldSlug = $view->getSlug();
             $staticUrl = $view->getStaticUrl();
-            $computedPage = $this->businessPageBuilder->generateEntityPageFromPattern($view->getTemplate(), $view->getBusinessEntity(), $em);
+            $computedPage = $this->businessPageBuilder->generateEntityPageFromTemplate($view->getTemplate(), $view->getBusinessEntity(), $em);
             $newSlug = $computedPage->getSlug();
 
             if ($staticUrl) {

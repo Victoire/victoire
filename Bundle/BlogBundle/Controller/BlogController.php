@@ -282,7 +282,7 @@ class BlogController extends BasePageController
         foreach ($blog->getArticles() as $_article) {
             $bep = $this->get('victoire_page.page_helper')->findPageByParameters(
                 [
-                    'patternId' => $_article->getPattern()->getId(),
+                    'patternId' => $_article->getTemplate()->getId(),
                     'entityId'  => $_article->getId(),
                 ]
             );

@@ -9,6 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Victoire\Bundle\BlogBundle\Repository\ArticleTemplateRepository;
 use Victoire\Bundle\BlogBundle\Repository\TagRepository;
 use Victoire\Bundle\CoreBundle\DataTransformer\ViewToIdTransformer;
 
@@ -52,7 +53,7 @@ class ArticleType extends AbstractType
             ->add($builder
                 ->create('blog', 'hidden', ['label' => 'form.article.blog.label'])
                 ->addModelTransformer($viewToIdTransformer))
-            ->add('pattern')
+            ->add('template')
             ->add('tags', 'tags', [
                 'required' => false,
                 'multiple' => true,
@@ -134,17 +135,17 @@ class ArticleType extends AbstractType
         $articleTemplateRepo = $this->entityManager->getRepository('VictoireBlogBundle:ArticleTemplate');
 
         if ($articleTemplateRepo->filterByBlog($blog_id)->getCount('parent')->run('getSingleScalarResult') > 1) {
-            $articlePatterns = function (EntityRepository $repo) use ($blog_id) {
+            $articleTemplates = function (ArticleTemplateRepository $repo) use ($blog_id) {
                 return $repo->filterByBlog($blog_id)->getInstance();
             };
-            $form->add('pattern', null, [
-                'label'         => 'form.view.type.pattern.label',
-                'property'      => 'name',
+            $form->add('template', null, [
+                'label'         => 'form.article.type.template.label',
+                'property'      => 'backendName',
                 'required'      => true,
-                'query_builder' => $articlePatterns,
+                'query_builder' => $articleTemplates,
             ]);
         } else {
-            $form->add('pattern', 'victoire_article_template_type', [
+            $form->add('template', 'victoire_article_template_type', [
                 'data_class' => null,
                 'data'       => $articleTemplateRepo->filterByBlog($blog_id)->run('getSingleResult'),
             ]);

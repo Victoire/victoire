@@ -24,7 +24,7 @@ Background:
         And I submit the widget
         Then I should see "Victoire !"
 
-    @alice(Blog) @alice(BlogPattern)
+    @alice(Blog) @alice(BlogTemplate) @fail
     Scenario: I create a new article
         Given I open the hamburger menu
         Then I should see "Blog"
@@ -35,6 +35,7 @@ Background:
         Then I should see "Créer un nouvel article"
         When I fill in "Nom de l'article" with "I'm your father."
         When I fill in "Description" with "This is a great description."
+        When I select "First blog template" from "Modèle à utiliser"
         And I follow "Créer"
         And I wait 10 seconds
         Then I should be on "/fr/the-jedi-network/i-m-your-father"

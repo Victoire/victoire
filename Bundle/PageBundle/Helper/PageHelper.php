@@ -213,7 +213,7 @@ class PageHelper extends ViewHelper
      */
     public function updatePageWithEntity(BusinessTemplate $page, $entity)
     {
-        $page = $this->businessPageBuilder->generateEntityPageFromPattern($page, $entity, $this->entityManager);
+        $page = $this->businessPageBuilder->generateEntityPageFromTemplate($page, $entity, $this->entityManager);
         $this->pageSeoHelper->updateSeoByEntity($page, $entity);
 
         //update the parameters of the page
