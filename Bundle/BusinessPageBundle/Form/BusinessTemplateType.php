@@ -33,29 +33,29 @@ class BusinessTemplateType extends ViewType
 
         $builder
             ->add('name', null, [
-                'label' => 'form.view.type.name.label',
+                'label'                        => 'form.view.type.name.label',
                 'vic_business_property_picker' => [
-                    'description' => 'victoire.form.business_template.name.vic_business_property_picker'
-                ]
+                    'description' => 'victoire.form.business_template.name.vic_business_property_picker',
+                ],
             ])
             ->add('backendName', null, [
-                'label' => 'victoire.form.business_template.backend_name.label',
-                'vic_help_block' => 'victoire.form.business_template.backend_name.help_block'
+                'label'          => 'victoire.form.business_template.backend_name.label',
+                'vic_help_block' => 'victoire.form.business_template.backend_name.help_block',
             ])
             ->add('authorRestricted', null, [
                 'label' => 'victoire.form.business_template.author_restricted.label',
             ])
             ->add('query', null, [
-                'label' => 'victoire.form.business_template.query.label',
+                'label'                        => 'victoire.form.business_template.query.label',
                 'vic_business_property_picker' => [
-                    'description' => false
-                ]
+                    'description' => false,
+                ],
             ])
             ->add('slug', null, [
-                'label' => 'victoire.form.business_template.slug.label',
+                'label'                        => 'victoire.form.business_template.slug.label',
                 'vic_business_property_picker' => [
-                    'description' => 'victoire.form.business_template.slug.vic_business_property_picker'
-                ]
+                    'description' => 'victoire.form.business_template.slug.vic_business_property_picker',
+                ],
             ])
             ->add('businessEntityId', 'hidden');
     }
