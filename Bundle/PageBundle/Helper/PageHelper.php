@@ -255,24 +255,6 @@ class PageHelper extends ViewHelper
     }
 
     /**
-     * Search a page in the route history according to giver url.
-     *
-     * @param string $url
-     *
-     * @return BasePage|null
-     */
-    public function findPageInRouteHistory($url)
-    {
-        $route = $this->entityManager->getRepository('VictoireCoreBundle:Route')->findOneMostRecentByUrl($url);
-        if ($route !== null) {
-            //the page linked to the old url
-            return $route->getPage();
-        }
-
-        return;
-    }
-
-    /**
      * find the page according to given url. If not found, try in route history, if seo redirect, return target.
      *
      * @return View
@@ -287,9 +269,6 @@ class PageHelper extends ViewHelper
             $page = $this->entityManager->getRepository('VictoireCoreBundle:View')->findOneById($viewReference['patternId']);
         }
 
-        if (!$page && !empty($viewReference['url'])) {
-            $page = $this->findPageInRouteHistory($viewReference['url']);
-        }
 
         if ($page instanceof BasePage
             && $page->getSeo()

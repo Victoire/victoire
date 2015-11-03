@@ -127,10 +127,6 @@ class ViewReferenceSubscriber implements EventSubscriber
                 $this->viewCacheManager->update($referencableReferences);
             }
         }
-
-        foreach ($viewReferences as $key => $viewReference) {
-            if ($view instanceof WebViewInterface && $view->getId() && !$delete) {
-                $this->addRouteHistory($viewReference['view'], $em, $uow);
             }
         }
 
@@ -174,25 +170,5 @@ class ViewReferenceSubscriber implements EventSubscriber
                 $this->manageView($instance, $em, $uow, $delete);
             }
         }
-    }
-
-    /**
-     * Record the route history of the page.
-     *
-     * @param WebViewInterface $view
-     */
-    protected function addRouteHistory(WebViewInterface $view, EntityManager $em, UnitOfWork $uow)
-    {
-        $route = new Route();
-        $route->setUrl($view->getUrl());
-        $route->setView($view);
-
-        $meta = $em->getClassMetadata(get_class($view));
-        $em->persist($view);
-        $uow->computeChangeSet($meta, $view);
-
-        $meta = $em->getClassMetadata(get_class($route));
-        $em->persist($route);
-        $uow->computeChangeSet($meta, $route);
     }
 }
