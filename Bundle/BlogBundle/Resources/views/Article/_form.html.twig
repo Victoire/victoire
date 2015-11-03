@@ -1,55 +1,47 @@
 {% form_theme form 'VictoireFormBundle:Form:fields.html.twig' %}
+
 <form method="POST" action="{{ action }}">
     <div class="vic-row">
-        <div class="vic-col-md-4">
+        {% set date = form.publishedAt is defined ? true : false %}
+        {{  _self.global(form, date) }}
+    </div>
+
+    <div class="vic-row">
+        <div class="col-md-6">
             {{ form_row(form.name) }}
+        </div>
+        <div class="vic-col-md-6">
+            {{ form_row(form.slug) }}
+        </div>
+    </div>
+
+    <div class="vic-row">
+        <div class="vic-col-md-12">
+            <h1>Article</h1> {# TRAD #}
+        </div>
+    </div>
+    <br>
+    <div class="vic-row">
+        <div class="col-md-6">
             {{ form_row(form.image) }}
         </div>
-        <div class="vic-col-md-8">
-            <div class="vic-row">
-                <div class="vic-col-md-6">
-                    {{ form_row(form.template) }}
-                </div>
-                {% if form.status is defined %}
-                <div class="vic-col-md-6">
-                    {{ form_row(form.status) }}
-                </div>
-                {% endif %}
-            </div>
-            {% if form.slug is defined %}
-                <div class="vic-row">
-                    <div class="vic-col-md-6">
-                        <div class="vic-form-group">
-                            <label for="victoire_article_settings_type_bodyClass">
-                                 {{ 'form.page.type.slug.label'|trans({}, 'victoire') }}
-                             </label>
+        <div class="vic-col-md-6">
+            {{ form_row(form.description, {attr: {rows: 12}}) }}
+        </div>
+    </div>
+    <br>
+    <div class="vic-row">
+        <div class="col-md-6">
+            {{ form_row(form.category) }}
+        </div>
+        <div class="vic-col-md-6">
+            {{ form_row(form.tags) }}
+        </div>
+    </div>
 
-                            {{ form_widget(form.slug) }}
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
-            <div class="vic-row">
-                <div class="vic-col-md-6" id="vic-blog-article-setting-description">
-                    {{ form_row(form.description) }}
-                </div>
-                <div class="vic-col-md-6">
-                    {{ form_row(form.category) }}
-                    {{ form_row(form.tags) }}
-                    {% if form.publishedAt is defined %}
-                        <div class="vic-form-group">
-                            <div class="publication-date-container">
-                                {{ form_widget(form.publishedAt) }}
-                            </div>
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="vic-row">
-                <div class="vic-col-md-12">
-                    {{ form_rest(form) }}
-                </div>
-            </div>
+    <div class="vic-row">
+        <div class="vic-col-md-12">
+            {{ form_rest(form) }}
         </div>
     </div>
 </form>
@@ -58,3 +50,18 @@
 %}
 <script type="text/javascript" src="{{ asset_url }}"></script>
 {% endjavascripts %}
+
+{% macro global(form, t) %}
+    {% set col = {md: 4, lg: 3} %}
+    <div class="vic-col-md-{{ t ? 12 - col.lg * 2 : 12 - col.lg }} vic-col-lg-{{ t ? 12 - col.lg * 2 : 12 - col.lg }}">
+        <h1>Global</h1> {# TRAD #}
+    </div>
+    <div class="vic-col-md-3 vic-col-lg-3">
+        {{ form_row(form.status) }}
+    </div>
+    {% if t %}
+        <div class="vic-col-md-3 vic-col-lg-3">
+            {{ form_row(form.publishedAt) }}
+        </div>
+    {% endif %}
+{% endmacro %}
