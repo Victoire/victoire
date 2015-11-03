@@ -5,14 +5,16 @@
         {% set date = form.publishedAt is defined ? true : false %}
         {{  _self.global(form, date) }}
     </div>
-
+    <br>
     <div class="vic-row">
         <div class="col-md-6">
             {{ form_row(form.name) }}
         </div>
+        {% if form.slug is defined %}
         <div class="vic-col-md-6">
             {{ form_row(form.slug) }}
         </div>
+        {% endif %}
     </div>
 
     <div class="vic-row">
@@ -56,12 +58,14 @@
     <div class="vic-col-md-{{ t ? 12 - col.lg * 2 : 12 - col.lg }} vic-col-lg-{{ t ? 12 - col.lg * 2 : 12 - col.lg }}">
         <h1>Global</h1> {# TRAD #}
     </div>
-    <div class="vic-col-md-3 vic-col-lg-3">
-        {{ form_row(form.status) }}
-    </div>
-    {% if t %}
+    {% if form.status is defined %}
         <div class="vic-col-md-3 vic-col-lg-3">
-            {{ form_row(form.publishedAt) }}
+            {{ form_row(form.status) }}
         </div>
+        {% if t %}
+            <div class="vic-col-md-3 vic-col-lg-3">
+                {{ form_row(form.publishedAt) }}
+            </div>
+        {% endif %}
     {% endif %}
 {% endmacro %}
