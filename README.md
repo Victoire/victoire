@@ -6,7 +6,7 @@
 [![Build status...](https://img.shields.io/travis/Victoire/victoire/master.svg)](http://travis-ci.org/Victoire/victoire)
 [![Scrutinizer Quality Score](https://img.shields.io/scrutinizer/g/Victoire/Victoire.svg)](https://scrutinizer-ci.com/g/Victoire/victoire/)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/d5307bf2-eac4-43db-bd49-dd9e85e360a5/mini.png)](https://insight.sensiolabs.com/projects/d5307bf2-eac4-43db-bd49-dd9e85e360a5)
-[![Dependency Status](https://www.versioneye.com/php/victoire:victoire/badge.svg)](https://www.versioneye.com/php/victoire:victoire)
+[![Dependency Status](https://www.versioneye.com/php/victoire:victoire/1.3.0/badge.svg)](https://www.versioneye.com/php/victoire:victoire/1.3.0)
 [![Reference Status](https://www.versioneye.com/php/victoire:victoire/reference_badge.svg?style=flat)](https://www.versioneye.com/php/victoire:victoire/references)
 [![Documentation Status](https://readthedocs.org/projects/victoiredcms/badge/?version=latest)](https://readthedocs.org/projects/victoiredcms/)
 
@@ -52,6 +52,10 @@ Component | Description
 [**UserBundle**][14] | Extends [FosUserBundle][12], this bundle brings a ready to use system you can override
 [**WidgetBundle**][15] | Contains all the base widget logic to be able to use Widgets
 [**WidgetMapBundle**][16] | Each view has a widget map, this bundle contains all the widget maps logic
+
+##Widgets
+
+All the widgets that you can use with a Victoire's website are available on the *[Friends Of Victoire](https://github.com/FriendsOfVictoire)* page.
 
 ##Troubleshooting
 
