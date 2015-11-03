@@ -71,12 +71,12 @@ class CmsExtension extends \Twig_Extension_Core
     public function getFunctions()
     {
         return [
-            'cms_widget_unlink_action'   => new \Twig_Function_Method($this, 'cmsWidgetUnlinkAction', ['is_safe' => ['html']]),
-            'cms_slot_widgets'           => new \Twig_Function_Method($this, 'cmsSlotWidgets', ['is_safe' => ['html']]),
-            'cms_slot_actions'           => new \Twig_Function_Method($this, 'cmsSlotActions', ['is_safe' => ['html']]),
-            'cms_widget'                 => new \Twig_Function_Method($this, 'cmsWidget', ['is_safe' => ['html']]),
-            'cms_widget_extra_css_class' => new \Twig_Function_Method($this, 'cmsWidgetExtraCssClass', ['is_safe' => ['html']]),
-            'is_business_entity_allowed' => new \Twig_Function_Method($this, 'isBusinessEntityAllowed', ['is_safe' => ['html']]),
+            new \Twig_SimpleFunction('cms_widget_unlink_action', [$this, 'cmsWidgetUnlinkAction'], ['is_safe' => ['html']]),
+            new \Twig_SimpleFunction('cms_slot_widgets', [$this, 'cmsSlotWidgets'], ['is_safe' => ['html']]),
+            new \Twig_SimpleFunction('cms_slot_actions', [$this, 'cmsSlotActions'], ['is_safe' => ['html']]),
+            new \Twig_SimpleFunction('cms_widget', [$this, 'cmsWidget'], ['is_safe' => ['html']]),
+            new \Twig_SimpleFunction('cms_widget_extra_css_class', [$this, 'cmsWidgetExtraCssClass'], ['is_safe' => ['html']]),
+            new \Twig_SimpleFunction('is_business_entity_allowed', [$this, 'isBusinessEntityAllowed'], ['is_safe' => ['html']]),
         ];
     }
 
@@ -88,8 +88,8 @@ class CmsExtension extends \Twig_Extension_Core
     public function getFilters()
     {
         return [
-            'hash' => new \Twig_Filter_Method($this, 'hash'),
-            'date' => new \Twig_Filter_Method($this, 'twigVicDateFormatFilter'),
+            new \Twig_SimpleFilter('hash', [$this, 'hash']),
+            new \Twig_SimpleFilter('date', [$this, 'twigVicDateFormatFilter']),
 
         ];
     }
