@@ -4,6 +4,7 @@ namespace Victoire\Bundle\I18nBundle\Translation;
 
 use Symfony\Bundle\FrameworkBundle\Translation\Translator as BaseTranslator;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Translation\MessageSelector;
 
 class Translator extends BaseTranslator
@@ -12,8 +13,10 @@ class Translator extends BaseTranslator
     protected $options = [
         'cache_dir' => 'test',
         'debug'     => true,
+        'resource_files' => array(),
     ];
     protected $loaderIds;
+    protected $requestStack;
 
     /**
      * @var MessageSelector
@@ -91,7 +94,7 @@ class Translator extends BaseTranslator
      */
     public function getLocale()
     {
-        $this->locale = $this->container->get('request')->getLocale();
+        $this->locale = $this->getCurrentLocale();
 
         return $this->locale;
     }
@@ -103,8 +106,22 @@ class Translator extends BaseTranslator
      */
     public function getVictoireLocale()
     {
-        $this->locale = $this->container->get('request')->getSession()->get('victoire_locale');
+        $this->locale = $this->container->get('session')->get('victoire_locale');
 
         return $this->locale;
+    }
+
+    public function setRequestStack(RequestStack $requestStack)
+    {
+        $this->requestStack = $requestStack;
+    }
+
+    public function getCurrentLocale()
+    {
+        if ($this->requestStack) {
+            return $this->requestStack->getCurrentRequest()->getLocale();
+        }
+
+        return $this->container->getParameter('kernel.default_locale');
     }
 }
