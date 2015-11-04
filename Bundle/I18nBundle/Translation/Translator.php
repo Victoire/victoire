@@ -11,9 +11,9 @@ class Translator extends BaseTranslator
 {
     protected $container;
     protected $options = [
-        'cache_dir' => 'test',
-        'debug'     => true,
-        'resource_files' => array(),
+        'cache_dir'      => 'test',
+        'debug'          => true,
+        'resource_files' => [],
     ];
     protected $loaderIds;
     protected $requestStack;
