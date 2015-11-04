@@ -171,6 +171,11 @@ class ArticleController extends Controller
             $template = 'VictoireBlogBundle:Article:';
             $template .= ($novalidate === false) ? 'settings.html.twig' : '_form.html.twig';
 
+            $page = $pageHelper->findPageByParameters([
+                'viewId'   => $article->getTemplate()->getId(),
+                'entityId' => $article->getId(),
+            ]);
+
             $response = [
                 'success' => false,
                 'html'    => $this->get('victoire_templating')->render($template, [
@@ -180,6 +185,7 @@ class ArticleController extends Controller
                     'article'            => $article,
                     'form'               => $form->createView(),
                     'businessProperties' => $businessProperties,
+                    'page'               => $page,
                 ]),
             ];
         }
