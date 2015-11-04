@@ -17,13 +17,14 @@
 {% endblock tags_widget %}
 
 {% block slug_widget %}
-
     {{ block('form_widget') }}
     <i id="{{id}}-correct" class="fa fa-check slug-is-correct vic-hidden"></i>
     <i id="{{id}}-not-correct" class="fa fa-remove slug-is-not-correct vic-hidden"></i>
-<script>
-    addSlugValidation('{{id}}');
-</script>
+    <script>
+        <!--
+        addSlugValidation('{{id}}');
+        -->
+    </script>
 {% endblock %}
 
 {% block button_attributes %}

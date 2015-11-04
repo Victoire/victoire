@@ -214,6 +214,18 @@
         <source>form.article.type.template.label</source>
         <target>Plantilla</target>
       </trans-unit>
+      <trans-unit id="47" resname="form.article.settings.type.publish.label">
+        <source>form.article.settings.type.publish.label</source>
+        <target><![CDATA[&nbsp;]]></target>
+      </trans-unit>
+      <trans-unit id="48" resname="form.article.settings.type.global.title">
+        <source>form.article.settings.type.global.title</source>
+        <target>Global</target>
+      </trans-unit>
+      <trans-unit id="49" resname="form.article.settings.type.article.title">
+        <source>form.article.settings.type.article.title</source>
+        <target>Artículo</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

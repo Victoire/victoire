@@ -1,60 +1,92 @@
 {% form_theme form 'VictoireFormBundle:Form:fields.html.twig' %}
+{% trans_default_domain "victoire" %}
+
 <form method="POST" action="{{ action }}">
     <div class="vic-row">
-        <div class="vic-col-md-4">
+        {% set date = form.publishedAt is defined ? true : false %}
+        {{  _self.global(form, date) }}
+    </div>
+    <br>
+    <div class="vic-row">
+        <div class="col-md-6">
             {{ form_row(form.name) }}
+        </div>
+        {% if form.slug is defined %}
+        <div class="vic-col-md-6">
+            <div class="vic-form-group">
+                <label for="victoire_page_settings_type_bodyClass" class="vic-control-label control-label vic-optional">
+                    {{ 'form.page.type.slug.label'|trans({}, 'victoire') }}
+                </label>
+
+                <div class="vic-form-url-slug">
+                    {{ url('victoire_core_page_show', {'url' : page.url })|replace({(page.slug): ''}) }}
+                    {{ form_widget(form.slug) }}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="vic-row">
+        <div class="vic-col-md-12">
+            <h1>{{ 'form.article.settings.type.article.title'|trans }}</h1>
+        </div>
+    </div>
+    <br>
+    <div class="vic-row">
+        <div class="col-md-6">
             {{ form_row(form.image) }}
         </div>
-        <div class="vic-col-md-8">
-            <div class="vic-row">
-                <div class="vic-col-md-6">
-                    {{ form_row(form.template) }}
-                </div>
-                {% if form.status is defined %}
-                <div class="vic-col-md-6">
-                    {{ form_row(form.status) }}
-                </div>
-                {% endif %}
-            </div>
-            {% if form.slug is defined %}
-                <div class="vic-row">
-                    <div class="vic-col-md-6">
-                        <div class="vic-form-group">
-                            <label for="victoire_article_settings_type_bodyClass">
-                                 {{ 'form.page.type.slug.label'|trans({}, 'victoire') }}
-                             </label>
+        <div class="vic-col-md-6">
+            {{ form_row(form.description, {attr: {rows: 12}}) }}
+        </div>
+    </div>
+    <br>
+    <div class="vic-row">
+        <div class="col-md-6">
+            {{ form_row(form.category) }}
+        </div>
+        <div class="vic-col-md-6">
+            {{ form_row(form.tags) }}
+        </div>
+    </div>
 
-                            {{ form_widget(form.slug) }}
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
-            <div class="vic-row">
-                <div class="vic-col-md-6" id="vic-blog-article-setting-description">
-                    {{ form_row(form.description) }}
-                </div>
-                <div class="vic-col-md-6">
-                    {{ form_row(form.category) }}
-                    {{ form_row(form.tags) }}
-                    {% if form.publishedAt is defined %}
-                        <div class="vic-form-group">
-                            <div class="publication-date-container">
-                                {{ form_widget(form.publishedAt) }}
-                            </div>
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="vic-row">
-                <div class="vic-col-md-12">
-                    {{ form_rest(form) }}
-                </div>
-            </div>
+    <div class="vic-row">
+        <div class="vic-col-md-12">
+            {{ form_rest(form) }}
         </div>
     </div>
 </form>
+
+<script type="text/javascript">
+    $vic('#victoire_page_settings_type_status').on('change', function(){
+        if ($vic(this).val() == '{{ constant('Victoire\\Bundle\\PageBundle\\Entity\\PageStatus::SCHEDULED') }}') {
+            $vic('.publication-date-container').removeClass('vic-hidden');
+        } else {
+            $vic('.publication-date-container').addClass('vic-hidden');
+        }
+    });
+</script>
+
 {% javascripts
     '@VictoireFormBundle/Resources/public/js/datetimepicker-init.js'
 %}
 <script type="text/javascript" src="{{ asset_url }}"></script>
 {% endjavascripts %}
+
+{% macro global(form, datePicker) %}
+    {% set col = 3 %}
+    <div class="vic-col-md-{{ datePicker ? 12 - col * 2 : 12 - col }}">
+        <h1>{{ 'form.article.settings.type.global.title'|trans }}</h1>
+    </div>
+    {% if form.status is defined %}
+        <div class="vic-col-md-{{ col }}">
+            {{ form_row(form.status) }}
+        </div>
+        {% if datePicker %}
+            <div class="vic-col-md-{{ col }}">
+                {{ form_row(form.publishedAt) }}
+            </div>
+        {% endif %}
+    {% endif %}
+{% endmacro %}

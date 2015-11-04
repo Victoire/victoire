@@ -20,6 +20,12 @@ services:
         tags:
             - { name: kernel.event_listener, event: victoire_core.article_menu.contextual, method: addContextual}
 
+    victoire_blog.article_settings_menu.contextual:
+        class: Victoire\Bundle\BlogBundle\Listener\ArticleMenuListener
+        arguments: ["@victoire_core.admin_menu_builder"]
+        tags:
+            - { name: kernel.event_listener, event: victoire_core.article_menu.contextual, method: addContextual}
+
     victoire_blog.blog_menu.contextual:
         class: Victoire\Bundle\BlogBundle\Listener\BlogMenuListener
         arguments: ["@victoire_core.admin_menu_builder"]

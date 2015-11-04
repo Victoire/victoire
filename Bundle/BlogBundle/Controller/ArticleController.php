@@ -142,6 +142,7 @@ class ArticleController extends Controller
 
         if ($novalidate === false && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
             if (count($article->getTags())) {
                 /** @var Tag $tag */
                 foreach ($article->getTags() as $tag) {
@@ -149,37 +150,43 @@ class ArticleController extends Controller
                     $em->persist($tag);
                 }
             }
-            $businessPage->setTemplate($article->getTemplate());
-            $em->flush();
-
             $template = $article->getTemplate();
-
+            $businessPage->setTemplate($template);
             $page = $pageHelper->findPageByParameters([
                 'viewId'   => $template->getId(),
                 'entityId' => $article->getId(),
             ]);
+            $page->setStatus($article->getStatus());
+
+            $em->flush();
 
             $response = [
                 'success' => true,
-                'url'     => $this->generateUrl('victoire_core_page_show', ['_locale' => $page->getLocale(), 'url' => $page->getUrl()]),
+                'url'     => $this->generateUrl('victoire_core_page_show', [
+                    '_locale' => $page->getLocale(),
+                    'url'     => $page->getUrl(),
+                ]),
             ];
         } else {
-            if ($novalidate === false) {
-                $template = 'VictoireBlogBundle:Article:settings.html.twig';
-            } else {
-                $template = 'VictoireBlogBundle:Article:_form.html.twig';
-            }
+            $template = 'VictoireBlogBundle:Article:';
+            $template .= ($novalidate === false) ? 'settings.html.twig' : '_form.html.twig';
+
+            $page = $pageHelper->findPageByParameters([
+                'viewId'   => $article->getTemplate()->getId(),
+                'entityId' => $article->getId(),
+            ]);
+
             $response = [
                 'success' => false,
-                'html'    => $this->container->get('victoire_templating')->render(
-                    $template,
-                    [
-                        'action'             => $this->generateUrl('victoire_blog_article_settings', ['id' => $article->getId()]),
-                        'article'            => $article,
-                        'form'               => $form->createView(),
-                        'businessProperties' => $businessProperties,
-                    ]
-                ),
+                'html'    => $this->get('victoire_templating')->render($template, [
+                    'action'             => $this->generateUrl('victoire_blog_article_settings', [
+                        'id' => $article->getId(),
+                    ]),
+                    'article'            => $article,
+                    'form'               => $form->createView(),
+                    'businessProperties' => $businessProperties,
+                    'page'               => $page,
+                ]),
             ];
         }
 
