@@ -150,15 +150,15 @@ class ArticleController extends Controller
                     $em->persist($tag);
                 }
             }
-            $businessPage->setTemplate($article->getTemplate());
-
-            $em->flush();
-
             $template = $article->getTemplate();
+            $businessPage->setTemplate($template);
             $page = $pageHelper->findPageByParameters([
                 'viewId'   => $template->getId(),
                 'entityId' => $article->getId(),
             ]);
+            $page->setStatus($article->getStatus());
+
+            $em->flush();
 
             $response = [
                 'success' => true,
