@@ -32,6 +32,9 @@ services:
     victoire_i18n.translator:
         class: Victoire\Bundle\I18nBundle\Translation\Translator
         arguments: ["@service_container", "@translator.selector",{}, {cache_dir:"%kernel.cache_dir%/translations%", debug: "%kernel.debug%"}]
+        scope: request
+        calls:
+            - [ setRequestStack, ["@request_stack"] ]
 
     victoire_i18n.locale_subscriber:
         class: Victoire\Bundle\I18nBundle\Subscriber\LocaleSubscriber

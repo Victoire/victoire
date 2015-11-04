@@ -56,8 +56,13 @@ class EntityProxyFieldsBuilder
                             [],
                             'victoire'
                         );
+                        $choices = [];
+                        foreach ($businessProperties[$type] as $choice) {
+                            $choices[$choice->getEntityProperty()] = $choice->getEntityProperty();
+                        }
+
                         $options = [
-                            'choices' => array_combine($businessProperties[$type], $businessProperties[$type]),
+                            'choices' => $choices,
                             'label'   => $label,
                             'attr'    => [
                                 'title' => $label,
