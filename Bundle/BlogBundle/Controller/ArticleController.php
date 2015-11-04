@@ -164,7 +164,7 @@ class ArticleController extends Controller
                 'success' => true,
                 'url'     => $this->generateUrl('victoire_core_page_show', [
                     '_locale' => $page->getLocale(),
-                    'url' => $page->getUrl()
+                    'url'     => $page->getUrl(),
                 ]),
             ];
         } else {
@@ -180,7 +180,7 @@ class ArticleController extends Controller
                 'success' => false,
                 'html'    => $this->get('victoire_templating')->render($template, [
                     'action'             => $this->generateUrl('victoire_blog_article_settings', [
-                        'id' => $article->getId()
+                        'id' => $article->getId(),
                     ]),
                     'article'            => $article,
                     'form'               => $form->createView(),

@@ -3,7 +3,6 @@
 namespace Victoire\Bundle\BlogBundle\Form;
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -151,8 +150,7 @@ class ArticleType extends AbstractType
                     'data'       => $articleTemplateRepo->filterByBlog($blog_id)->run('getSingleResult'),
                 ]);
             }
-        }
-        else {
+        } else {
             $form->remove('template');
         }
     }

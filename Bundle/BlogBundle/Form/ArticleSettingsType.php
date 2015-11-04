@@ -65,7 +65,7 @@ class ArticleSettingsType extends ArticleType
                     ->add('publishedAt', null, [
                         'widget'             => 'single_text',
                         'vic_datetimepicker' => true,
-                        'label'              => '&nbsp;'
+                        'label'              => '&nbsp;',
                     ]);
                 break;
             default:

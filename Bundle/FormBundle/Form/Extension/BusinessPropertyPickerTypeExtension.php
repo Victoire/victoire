@@ -16,7 +16,7 @@ class BusinessPropertyPickerTypeExtension extends AbstractTypeExtension
     {
         $view->vars['vic_business_property_picker'] = $options['vic_business_property_picker'];
 
-        if(is_array($options['vic_business_property_picker'])) {
+        if (is_array($options['vic_business_property_picker'])) {
             if (array_key_exists('description', $options['vic_business_property_picker'])) {
                 $view->vars['vic_business_property_picker_description'] = $options['vic_business_property_picker']['description'];
             }
@@ -29,8 +29,8 @@ class BusinessPropertyPickerTypeExtension extends AbstractTypeExtension
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults([
-            'vic_business_property_picker' => null,
-            'vic_business_property_picker_description' => null
+            'vic_business_property_picker'             => null,
+            'vic_business_property_picker_description' => null,
         ]);
     }
 
