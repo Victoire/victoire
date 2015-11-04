@@ -96,6 +96,7 @@ class BusinessEntitySubscriber implements EventSubscriber
                             $businessPage->setStaticUrl($staticUrl);
                         }
 
+                        $businessPage->setName($virtualBusinessPage->getName());
                         $businessPage->setSlug($virtualBusinessPage->getSlug());
 
                         $entityManager->persist($businessPage);
