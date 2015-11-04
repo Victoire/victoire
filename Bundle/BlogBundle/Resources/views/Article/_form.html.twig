@@ -74,17 +74,17 @@
 <script type="text/javascript" src="{{ asset_url }}"></script>
 {% endjavascripts %}
 
-{% macro global(form, t) %}
-    {% set col = {md: 4, lg: 3} %}
-    <div class="vic-col-md-{{ t ? 12 - col.lg * 2 : 12 - col.lg }} vic-col-lg-{{ t ? 12 - col.lg * 2 : 12 - col.lg }}">
+{% macro global(form, datePicker) %}
+    {% set col = 3 %}
+    <div class="vic-col-md-{{ datePicker ? 12 - col * 2 : 12 - col }}">
         <h1>{{ 'form.article.settings.type.global.title'|trans }}</h1>
     </div>
     {% if form.status is defined %}
-        <div class="vic-col-md-3 vic-col-lg-3">
+        <div class="vic-col-md-{{ col }}">
             {{ form_row(form.status) }}
         </div>
-        {% if t %}
-            <div class="vic-col-md-3 vic-col-lg-3">
+        {% if datePicker %}
+            <div class="vic-col-md-{{ col }}">
                 {{ form_row(form.publishedAt) }}
             </div>
         {% endif %}
