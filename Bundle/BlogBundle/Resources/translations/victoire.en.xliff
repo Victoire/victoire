@@ -213,6 +213,9 @@
       <trans-unit id="46" resname="form.article.type.template.label">
         <source>form.article.type.template.label</source>
         <target>Template</target>
+      <trans-unit id="47" resname="menu.blog.translate">
+        <source>menu.blog.translate</source>
+        <target>Translate</target>
       </trans-unit>
       <trans-unit id="47" resname="form.article.settings.type.publish.label">
         <source>form.article.settings.type.publish.label</source>
