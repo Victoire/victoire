@@ -52,6 +52,18 @@ services:
         class: Victoire\Bundle\BlogBundle\Form\CategoryType
         tags:
             - { name: form.type , alias: victoire_form_blog_category}
+    victoire.form.blog.choice_tree_type:
+        class: Victoire\Bundle\BlogBundle\Form\Type\ChoiceTreeType
+        tags:
+            - { name: form.type , alias: choice_tree }
+    victoire.form.blog.radio_level_type:
+        class: Victoire\Bundle\BlogBundle\Form\Type\RadioLevelType
+        tags:
+            - { name: form.type , alias: radio_level }
+    victoire.form.blog.checkbox_level_type:
+        class: Victoire\Bundle\BlogBundle\Form\Type\CheckboxLevelType
+        tags:
+            - { name: form.type , alias: checkbox_level }
     #ARTICLE
     victoire_blog.article.form.type:
         class: Victoire\Bundle\BlogBundle\Form\ArticleType
@@ -112,6 +124,7 @@ services:
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@request="
+            - "@translator"
         tags:
             - { name: form.type, alias: category_filter }
             - { name: victoire_core.filter }
