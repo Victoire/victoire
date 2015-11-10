@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\CoreBundle\Twig\Extension;
 
-use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\SecurityContext;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
@@ -12,6 +11,7 @@ use Victoire\Bundle\CoreBundle\Handler\WidgetExceptionHandler;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
+use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer;
 
@@ -25,7 +25,6 @@ class CmsExtension extends \Twig_Extension_Core
     protected $widgetRenderer;
     protected $templating;
     protected $securityContext;
-    protected $entityManager;
     protected $widgetMapBuilder;
     protected $widgetExceptionHandler;
     protected $currentViewHelper;
@@ -37,7 +36,6 @@ class CmsExtension extends \Twig_Extension_Core
      * @param WidgetRenderer         $widgetRenderer
      * @param TemplateMapper         $templating
      * @param SecurityContext        $securityContext
-     * @param EntityManager          $entityManager
      * @param WidgetExceptionHandler $widgetExceptionHandler
      * @param CurrentViewHelper      $currentViewHelper
      * @param ViewCacheHelper        $viewCacheHelper
@@ -47,7 +45,6 @@ class CmsExtension extends \Twig_Extension_Core
         WidgetRenderer $widgetRenderer,
         TemplateMapper $templating,
         SecurityContext $securityContext,
-        EntityManager $entityManager,
         WidgetExceptionHandler $widgetExceptionHandler,
         CurrentViewHelper $currentViewHelper,
         ViewCacheHelper $viewCacheHelper,
@@ -56,7 +53,6 @@ class CmsExtension extends \Twig_Extension_Core
         $this->widgetRenderer = $widgetRenderer;
         $this->templating = $templating;
         $this->securityContext = $securityContext;
-        $this->entityManager = $entityManager;
         $this->widgetExceptionHandler = $widgetExceptionHandler;
         $this->currentViewHelper = $currentViewHelper;
         $this->viewCacheHelper = $viewCacheHelper;
@@ -138,8 +134,6 @@ class CmsExtension extends \Twig_Extension_Core
     public function cmsSlotWidgets($slotId, $slotOptions = [])
     {
         $currentView = $this->currentViewHelper->getCurrentView();
-        //services
-        $em = $this->entityManager;
 
         $result = '';
         $slotOptions = $this->widgetRenderer->computeOptions($slotId, $slotOptions);
@@ -147,6 +141,7 @@ class CmsExtension extends \Twig_Extension_Core
 
         if (!empty($currentView->getWidgetMap()[$slotId])) {
             //parse the widget maps
+            /* @var WidgetMap $widgetMap */
             foreach ($currentView->getWidgetMap()[$slotId] as $widgetMap) {
                 $widget = null;
                 try {
@@ -156,12 +151,12 @@ class CmsExtension extends \Twig_Extension_Core
                     if (!$widgetMap->isAsynchronous()) {
 
                         //get the widget
-                        $widgetRepo = $em->getRepository('VictoireWidgetBundle:Widget');
-                        $widget = $widgetRepo->findOneById($widgetId);
+                        $widget = $widgetMap->getWidget();
 
                         //test widget
                         if ($widget === null) {
                             throw new \Exception('The widget with the id:['.$widgetId.'] was not found.');
+                            return '';
                         }
 
                         //render this widget
