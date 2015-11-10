@@ -39,6 +39,13 @@ class BusinessTemplate extends Template
     protected $authorRestricted;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="backendName", type="string", length=255)
+     */
+    protected $backendName;
+
+    /**
      * contruct.
      **/
     public function __construct()
@@ -109,6 +116,26 @@ class BusinessTemplate extends Template
     public function setAuthorRestricted($authorRestricted)
     {
         $this->authorRestricted = $authorRestricted;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBackendName()
+    {
+        return $this->backendName;
+    }
+
+    /**
+     * @param string $backendName
+     *
+     * @return $this
+     */
+    public function setBackendName($backendName)
+    {
+        $this->backendName = $backendName;
+
+        return $this;
     }
 
     /**

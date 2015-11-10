@@ -17,13 +17,14 @@
 {% endblock tags_widget %}
 
 {% block slug_widget %}
-
     {{ block('form_widget') }}
     <i id="{{id}}-correct" class="fa fa-check slug-is-correct vic-hidden"></i>
     <i id="{{id}}-not-correct" class="fa fa-remove slug-is-not-correct vic-hidden"></i>
-<script>
-    addSlugValidation('{{id}}');
-</script>
+    <script>
+        <!--
+        addSlugValidation('{{id}}');
+        -->
+    </script>
 {% endblock %}
 
 {% block button_attributes %}
@@ -519,9 +520,17 @@
 {# Help #}
 
 {% block form_help %}
-{% spaceless %}
-{% if vic_help_block %}<p class="vic-help-block">{{ vic_help_block|trans({}, translation_domain)|raw }}</p>{%endif %}
-{% endspaceless %}
+    {% spaceless %}
+        {% if vic_help_block %}
+            <p class="vic-help-block">{{ vic_help_block|trans({}, translation_domain)|raw }}</p>
+        {%endif %}
+        {% if vic_business_property_picker %}
+            {% include 'VictoireBusinessEntityBundle:BusinessProperty:list.html.twig' with {
+                'description': vic_business_property_picker_description|trans({}, translation_domain)|raw,
+                'businessProperties': businessProperties
+            } %}
+        {% endif %}
+    {% endspaceless %}
 {% endblock form_help %}
 
 {% block form_vic_widget_add_btn %}

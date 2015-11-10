@@ -107,10 +107,10 @@ class Article
     /**
      * @var BusinessTemplate
      * @ORM\ManyToOne(targetEntity="ArticleTemplate")
-     * @ORM\JoinColumn(name="pattern_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="SET NULL")
      * @Assert\NotNull()
      */
-    private $pattern;
+    private $template;
 
     /**
      * @var string
@@ -415,27 +415,27 @@ class Article
     }
 
     /**
-     * Set pattern.
+     * Set template.
      *
-     * @param BusinessTemplate $pattern
+     * @param ArticleTemplate $template
      *
      * @return Article
      */
-    public function setPattern(BusinessTemplate $pattern)
+    public function setTemplate(ArticleTemplate $template)
     {
-        $this->pattern = $pattern;
+        $this->template = $template;
 
         return $this;
     }
 
     /**
-     * Get pattern.
+     * Get template.
      *
-     * @return BusinessTemplate
+     * @return ArticleTemplate
      */
-    public function getPattern()
+    public function getTemplate()
     {
-        return $this->pattern;
+        return $this->template;
     }
 
     /**

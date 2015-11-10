@@ -11,40 +11,37 @@
 
     {{ form_start(form) }}
     <div class="vic-row">
-        <div class="vic-col-xs-12">
-            {{ form_row(form.name) }}
-            {{ 'victoire.form.business_template.name.vic_help_block'|trans|raw }}
+        <div class="vic-col-xs-12 vic-col-sm-6 vic-col-md-6">
+            {{ form_row(form.name, { 'businessProperties':businessProperties }) }}
+        </div>
+        <div class="vic-col-xs-12 vic-col-sm-6 vic-col-md-6">
+            {{ form_row(form.backendName) }}
         </div>
     </div>
     <div class="vic-row">
-        <div class="{% if form.parent is defined and form.parent and form.slug is defined %}vic-col-xs-12 vic-col-sm-12 vic-col-md-6 vic-well{% else %}vic-col-xs-12 vic-col-sm-12 vic-col-md-6{% endif %}">
-            {% if form.parent is defined and form.parent %}
+        {% if form.parent is defined and form.parent %}
             <div class="vic-col-xs-12 vic-col-sm-6 vic-col-md-6">
                 {{ form_row(form.parent) }}
             </div>
-            {% endif %}
-            {% if form.slug is defined %}
-            <div class="vic-col-xs-12 {% if form.parent is defined and form.parent %}vic-col-sm-6 vic-col-md-6{% else %}vic-col-sm-12 vic-col-md-12{% endif %}">
-                {{ form_row(form.slug) }}
-                {{ 'victoire.form.business_template.slug.vic_help_block'|trans|raw }}
-                {% include 'VictoireBusinessEntityBundle:BusinessProperty:list.html.twig' with { 'businessProperties':businessProperties } %}
+        {% endif %}
+        {% if form.slug is defined %}
+            <div class="vic-col-xs-12 vic-col-sm-6 vic-col-md-6">
+                {{ form_row(form.slug, { 'businessProperties':businessProperties }) }}
             </div>
-            {% endif %}
-        </div>
-        <div class="vic-col-sm-6 vic-col-md-6">
+        {% endif %}
+        <div class="vic-col-xs-12 vic-col-sm-6 vic-col-md-6">
             {{ form_row(form.template) }}
         </div>
-        <div class="vic-col-sm-6 vic-col-md-6">
-            {% if form.locale is defined %}
-            {{ form_row(form.locale) }}
-            {% endif %}
-
-        </div>
+        {% if form.locale is defined %}
+            <div class="vic-col-xs-12 vic-col-sm-6 vic-col-md-6">
+                {{ form_row(form.locale) }}
+            </div>
+        {% endif %}
     </div>
     <div class="vic-row">
         <div class="vic-col-md-12">
             {{ 'victoire.form.business_template.query.vic_help_block'|trans|raw }}
-            {{ form_row(form.query) }}
+            {{ form_row(form.query, { 'businessProperties':businessProperties }) }}
             <div class="form-group">
                 {{ form_row(form.authorRestricted) }}
             </div>

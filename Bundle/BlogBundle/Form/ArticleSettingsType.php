@@ -22,7 +22,7 @@ class ArticleSettingsType extends ArticleType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('slug', null, [
+            ->add('slug', 'slug', [
                 'label' => 'form.page.type.slug.label',
             ])
             ->add('status', 'choice', [
@@ -65,6 +65,7 @@ class ArticleSettingsType extends ArticleType
                     ->add('publishedAt', null, [
                         'widget'             => 'single_text',
                         'vic_datetimepicker' => true,
+                        'label'              => 'form.article.settings.type.publish.label',
                     ]);
                 break;
             default:

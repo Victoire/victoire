@@ -51,20 +51,20 @@ class BusinessPageBuilder
     /**
      * Generate update the page parameters with the entity.
      *
-     * @param BusinessTemplate $bepPattern
+     * @param BusinessTemplate $bepTemplate
      * @param BusinessEntity   $entity
      */
-    public function generateEntityPageFromPattern(BusinessTemplate $bepPattern, $entity, EntityManager $em)
+    public function generateEntityPageFromTemplate(BusinessTemplate $bepTemplate, $entity, EntityManager $em)
     {
         $page = new VirtualBusinessPage();
 
-        $reflect = new \ReflectionClass($bepPattern);
-        $patternProperties = $reflect->getProperties();
+        $reflect = new \ReflectionClass($bepTemplate);
+        $templateProperties = $reflect->getProperties();
         $accessor = PropertyAccess::createPropertyAccessor();
 
-        foreach ($patternProperties as $property) {
+        foreach ($templateProperties as $property) {
             if (!in_array($property->getName(), ['id', 'widgetMap', 'slots', 'seo', 'i18n', 'widgets']) && !$property->isStatic()) {
-                $value = $accessor->getValue($bepPattern, $property->getName());
+                $value = $accessor->getValue($bepTemplate, $property->getName());
                 $setMethod = 'set'.ucfirst($property->getName());
                 if (method_exists($page, $setMethod)) {
                     $accessor->setValue($page, $property->getName(), $value);
@@ -110,8 +110,8 @@ class BusinessPageBuilder
             $page->setSlug($pageSlug);
             $page->setName($pageName);
             $page->setEntityProxy($entityProxy);
-            $page->setTemplate($bepPattern);
-            if ($seo = $bepPattern->getSeo()) {
+            $page->setTemplate($bepTemplate);
+            if ($seo = $bepTemplate->getSeo()) {
                 $pageSeo = clone $seo;
                 $page->setSeo($pageSeo);
             }

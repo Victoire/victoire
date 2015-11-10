@@ -1,6 +1,7 @@
 Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate:
-    pattern_character:
+    template_character:
         name: "Character {{item.name}}"
+        backendName: "Character template"
         slug: "character-{{item.slug}}"
         url: "character-{{item.slug}}"
         businessEntityId: character
@@ -12,7 +13,7 @@ Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate:
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
 
-    pattern_jedi:
+    template_jedi:
         name: "Jedi {{item.name}}"
         slug: "jedi-{{item.slug}}"
         url: "jedi-{{item.slug}}"
@@ -25,7 +26,7 @@ Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate:
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
 
-    pattern_mercenary:
+    template_mercenary:
         name: "Mercenary {{item.name}}"
         slug: "mercenary-{{item.slug}}"
         url: "mercenary-{{item.slug}}"
