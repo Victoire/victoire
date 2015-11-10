@@ -166,6 +166,9 @@ class PageHelper extends ViewHelper
     {
         $event = new \Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent($view);
 
+        //Build WidgetMap
+        $this->widgetMapBuilder->build($view, true, true);
+
         //Dispatch contextual event regarding page type
         if ($view->getType() == 'business_page') {
             //Dispatch also an event with the Business entity name
@@ -302,7 +305,7 @@ class PageHelper extends ViewHelper
         }
 
         $this->checkPageValidity($page, $entity, $parameters);
-        $this->widgetMapBuilder->build($page);
+
         if (!empty($viewReference['url'])) {
             $page->setUrl($viewReference['url']);
         } else {
