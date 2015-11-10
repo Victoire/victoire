@@ -2,6 +2,8 @@
 
 namespace Victoire\Bundle\WidgetBundle\Entity\Traits;
 
+use Victoire\Bundle\CoreBundle\Entity\Link;
+
 /**
  * Link trait adds fields to create a link to a page, widget, url or route.
  *
@@ -106,7 +108,7 @@ trait LinkTrait
     /**
      * Get link.
      *
-     * @return string
+     * @return Link
      */
     public function getLink()
     {
