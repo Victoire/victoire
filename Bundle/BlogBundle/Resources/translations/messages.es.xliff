@@ -18,6 +18,10 @@
         <source>blog.date_filter.label</source>
         <target>Fecha</target>
       </trans-unit>
+      <trans-unit id="4" resname="blog.category_filter.empty_value.label">
+        <source>blog.category_filter.empty_value.label</source>
+        <target>Todos</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
