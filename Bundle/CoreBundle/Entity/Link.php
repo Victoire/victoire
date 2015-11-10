@@ -89,6 +89,7 @@ class Link
     protected $analyticsTrackCode;
 
     protected $parameters;
+    protected $viewReferencePage;
 
     /**
      * Get id.
@@ -121,6 +122,7 @@ class Link
             'url'                => $this->url,
             'page'               => $this->page,
             'viewReference'      => $this->viewReference,
+            'viewReferencePage'  => $this->viewReferencePage,
             'route'              => $this->route,
             'routeParameters'    => $this->routeParameters,
             'attachedWidget'     => $this->attachedWidget,
@@ -386,6 +388,30 @@ class Link
     public function setAnalyticsTrackCode($analyticsTrackCode)
     {
         $this->analyticsTrackCode = $analyticsTrackCode;
+
+        return $this;
+    }
+
+    /**
+     * Get viewReferencePage.
+     *
+     * @return mixed
+     */
+    public function getViewReferencePage()
+    {
+        return $this->viewReferencePage;
+    }
+
+    /**
+     * Set viewReferencePage.
+     *
+     * @param mixed $viewReferencePage
+     *
+     * @return $this
+     */
+    public function setViewReferencePage($viewReferencePage)
+    {
+        $this->viewReferencePage = $viewReferencePage;
 
         return $this;
     }
