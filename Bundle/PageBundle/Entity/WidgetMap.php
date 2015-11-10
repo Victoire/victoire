@@ -2,6 +2,8 @@
 
 namespace Victoire\Bundle\PageBundle\Entity;
 
+use Victoire\Bundle\WidgetBundle\Entity\Widget;
+
 /**
  *
  */
@@ -16,6 +18,9 @@ class WidgetMap
 
     //the id of the widget
     protected $widgetId = null;
+
+    //the widget
+    protected $widget = null;
 
     //the id of the widget replaced (only in action replace)
     protected $replacedWidgetId = null;
@@ -152,5 +157,25 @@ class WidgetMap
     public function getPositionReference()
     {
         return $this->positionReference;
+    }
+
+    /**
+     * @return Widget
+     */
+    public function getWidget()
+    {
+        return $this->widget;
+    }
+
+    /**
+     * @param Widget $widget
+     *
+     * @return $this
+     */
+    public function setWidget(Widget $widget)
+    {
+        $this->widget = $widget;
+
+        return $this;
     }
 }
