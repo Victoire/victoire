@@ -4,6 +4,16 @@ services:
         arguments:
             - "@victoire_widget_map.helper"
             - "@victoire_widget_map.datatransformer.widgetmap_to_array"
+            - "@victoire_widget_map.widget_data_warmer"
+            - "@doctrine.orm.entity_manager"
+
+    victoire_widget_map.widget_data_warmer:
+        class: Victoire\Bundle\WidgetMapBundle\Warmer\WidgetDataWarmer
+        arguments:
+            - "@annotation_reader"
+            - "@victoire_core.view_cache_helper"
+            - "@doctrine.orm.entity_manager"
+            - ["\Victoire\Bundle\MediaBundle\Entity\Media"]
 
     victoire_widget_map.manager:
         class: Victoire\Bundle\WidgetMapBundle\Manager\WidgetMapManager
