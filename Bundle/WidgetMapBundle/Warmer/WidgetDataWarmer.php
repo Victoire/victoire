@@ -5,20 +5,20 @@ namespace Victoire\Bundle\WidgetMapBundle\Warmer;
 use Doctrine\Common\Annotations\Reader;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\PersistentCollection;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Entity\Link;
+use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
 use Victoire\Bundle\MediaBundle\Entity\Media;
 use Victoire\Bundle\PageBundle\Entity\Page;
+use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 use Victoire\Bundle\WidgetBundle\Entity\Traits\LinkTrait;
-use Doctrine\ORM\Mapping\OneToMany;
-use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Widget\ListingBundle\Entity\WidgetListing;
 use Victoire\Widget\ListingBundle\Entity\WidgetListingItem;
-use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 use Victoire\Widget\MenuBundle\Entity\WidgetMenu;
 
 /**
@@ -38,10 +38,10 @@ class WidgetDataWarmer
     /**
      * Constructor.
      *
-     * @param Reader $reader
+     * @param Reader          $reader
      * @param ViewCacheHelper $viewCacheHelper
-     * @param EntityManager $entityManager
-     * @param array $manyToOneAssociations
+     * @param EntityManager   $entityManager
+     * @param array           $manyToOneAssociations
      */
     public function __construct(Reader $reader, ViewCacheHelper $viewCacheHelper, EntityManager $entityManager, array $manyToOneAssociations)
     {
@@ -55,7 +55,7 @@ class WidgetDataWarmer
     /**
      * Warm widgets, links and medias.
      *
-     * @param View $view
+     * @param View     $view
      * @param Widget[] $viewWidgets
      */
     public function warm(View $view, array $viewWidgets)
@@ -71,7 +71,7 @@ class WidgetDataWarmer
     /**
      * Populate widgets in View's widgetMap.
      *
-     * @param View $view
+     * @param View     $view
      * @param Widget[] $viewWidgets
      */
     private function populateWidgets(View $view, array $viewWidgets)
@@ -79,8 +79,8 @@ class WidgetDataWarmer
         foreach ($view->getWidgetMap() as $widgetMapArray) {
             /* @var WidgetMap[] $widgetMapArray */
             foreach ($widgetMapArray as $widgetMap) {
-                foreach($viewWidgets as $viewWidget) {
-                    if($widgetMap->getWidgetId() == $viewWidget->getId()) {
+                foreach ($viewWidgets as $viewWidget) {
+                    if ($widgetMap->getWidgetId() == $viewWidget->getId()) {
                         $widgetMap->setWidget($viewWidget);
                     }
                 }
@@ -92,17 +92,17 @@ class WidgetDataWarmer
      * Pass throw all widgets and ManyToOne relations to extract all missing associations.
      *
      * @param Widget[]|WidgetListingItem[] $entities
-     * @param array $linkIds
-     * @param array $associatedEntities
+     * @param array                        $linkIds
+     * @param array                        $associatedEntities
      */
     private function extractAssociatedEntities(array $entities, &$linkIds, &$associatedEntities)
     {
-        foreach($entities as $entity) {
+        foreach ($entities as $entity) {
             $reflect = new \ReflectionClass($entity);
             $properties = $reflect->getProperties();
 
             //If entity has LinkTrait, store the entity link id
-            if($this->hasLinkTrait($reflect) && ($entity instanceof Widget || $entity instanceof WidgetListingItem)) {
+            if ($this->hasLinkTrait($reflect) && ($entity instanceof Widget || $entity instanceof WidgetListingItem)) {
                 /* @var $entity LinkTrait */
                 $linkIds[] = $entity->getLink()->getId();
             }
@@ -128,7 +128,7 @@ class WidgetDataWarmer
                     && ($annotationObj instanceof OneToMany)) {
 
                         /* @var PersistentCollection $collection */
-                        if($collection = $this->accessor->getValue($entity, $property->getName())) {
+                        if ($collection = $this->accessor->getValue($entity, $property->getName())) {
                             $this->extractAssociatedEntities($collection->toArray(), $linkIds, $associatedEntities);
                         }
                     }
@@ -144,15 +144,14 @@ class WidgetDataWarmer
      */
     private function setAssociatedEntities(array $repositories)
     {
-        foreach($repositories as $repositoryName => $associatedEntitiesToWarm) {
-
+        foreach ($repositories as $repositoryName => $associatedEntitiesToWarm) {
             $idsToSearch = $this->extractAssociatedEntitiesIds($associatedEntitiesToWarm);
             $foundEntities = $this->em->getRepository($repositoryName)->findById(array_values($idsToSearch));
 
             /* @var AssociatedEntityToWarm[] $associatedEntitiesToWarm */
-            foreach($associatedEntitiesToWarm as $associatedEntityToWarm) {
-                foreach($foundEntities as $foundEntitie) {
-                    if($foundEntitie->getId() == $associatedEntityToWarm->getEntityId()) {
+            foreach ($associatedEntitiesToWarm as $associatedEntityToWarm) {
+                foreach ($foundEntities as $foundEntitie) {
+                    if ($foundEntitie->getId() == $associatedEntityToWarm->getEntityId()) {
                         $inheritorEntity = $associatedEntityToWarm->getInheritorEntity();
                         $inheritorPropertyName = $associatedEntityToWarm->getInheritorPropertyName();
                         $this->accessor->setValue($inheritorEntity, $inheritorPropertyName, $foundEntitie);
@@ -175,8 +174,8 @@ class WidgetDataWarmer
         /* @var Link[] $links */
         $links = $this->em->getRepository('VictoireCoreBundle:Link')->findById($linkIds);
 
-        foreach($links as $link) {
-            if($link->getParameters()['linkType'] == 'viewReference') {
+        foreach ($links as $link) {
+            if ($link->getParameters()['linkType'] == 'viewReference') {
                 $viewReference = $this->viewCacheHelper->getReferenceByParameters(['id' => $link->getParameters()['viewReference']]);
 
                 if (!empty($viewReference['viewId'])) {
@@ -190,12 +189,12 @@ class WidgetDataWarmer
         /* @var Page[] $pages */
         $pages = $this->em->getRepository('VictoireCoreBundle:View')->findById($viewIdsForLinks);
 
-        foreach($links as $link) {
+        foreach ($links as $link) {
             $searchedLinkId = $link->getId();
-            foreach($viewIdsForLinks as $linkId => $pageId) {
-                foreach($pages as $page) {
-                    if($linkId == $searchedLinkId && $pageId == $page->getId()) {
-                        if(!($page instanceof BusinessTemplate)){
+            foreach ($viewIdsForLinks as $linkId => $pageId) {
+                foreach ($pages as $page) {
+                    if ($linkId == $searchedLinkId && $pageId == $page->getId()) {
+                        if (!($page instanceof BusinessTemplate)) {
                             $link->setViewReferencePage($page);
                         }
                         break 2;
@@ -209,6 +208,7 @@ class WidgetDataWarmer
      * Check if reflection class has LinkTrait.
      *
      * @param \ReflectionClass $reflect
+     *
      * @return bool
      */
     private function hasLinkTrait(\ReflectionClass $reflect)
@@ -216,14 +216,14 @@ class WidgetDataWarmer
         $linkTraitName = 'Victoire\Bundle\WidgetBundle\Entity\Traits\LinkTrait';
 
         $traits = $reflect->getTraits();
-        foreach($traits as $trait) {
-            if($trait->getName() == $linkTraitName ) {
+        foreach ($traits as $trait) {
+            if ($trait->getName() == $linkTraitName) {
                 return true;
             }
         }
 
-        if($parentClass = $reflect->getParentClass()) {
-            if($this->hasLinkTrait($parentClass)) {
+        if ($parentClass = $reflect->getParentClass()) {
+            if ($this->hasLinkTrait($parentClass)) {
                 return true;
             }
         }
@@ -235,12 +235,13 @@ class WidgetDataWarmer
      * Extract entities ids from an array of AssociatedEntityToWarm.
      *
      * @param AssociatedEntityToWarm[] $associatedEntitiesToWarm
+     *
      * @return array
      */
     private function extractAssociatedEntitiesIds(array $associatedEntitiesToWarm)
     {
         $extractedIds = [];
-        foreach($associatedEntitiesToWarm as $associatedEntityToWarm) {
+        foreach ($associatedEntitiesToWarm as $associatedEntityToWarm) {
             $extractedIds[] = $associatedEntityToWarm->getEntityId();
         }
 

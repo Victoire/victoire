@@ -4,7 +4,6 @@ namespace Victoire\Bundle\WidgetMapBundle\Warmer;
 
 class AssociatedEntityToWarm
 {
-
     protected $inheritorEntity;
     protected $inheritorPropertyName;
     protected $entityId;
@@ -14,7 +13,7 @@ class AssociatedEntityToWarm
      *
      * @param null $inheritorEntity
      * @param null $inheritorPropertyName
-     * @param null $entityId for ManyToOne type
+     * @param null $entityId              for ManyToOne type
      */
     public function __construct($inheritorEntity = null, $inheritorPropertyName = null, $entityId = null)
     {
@@ -64,7 +63,7 @@ class AssociatedEntityToWarm
     }
 
     /**
-     * Get entity id for ManyToOne type
+     * Get entity id for ManyToOne type.
      *
      * @return int
      */
@@ -85,4 +84,3 @@ class AssociatedEntityToWarm
         return $this;
     }
 }
-

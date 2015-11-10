@@ -75,7 +75,7 @@ class LinkExtension extends \Twig_Extension
                     $viewReference = $viewReference['id'];
                 }
 
-                $page = $viewReferencePage ? : $this->pageHelper->findPageByParameters(['id' => $viewReference]);
+                $page = $viewReferencePage ?: $this->pageHelper->findPageByParameters(['id' => $viewReference]);
                 $linkUrl = $this->router->generate('victoire_core_page_show', ['_locale' => $page->getLocale(), 'url' => $page->getUrl()], $referenceType);
                 if ($this->request->getRequestUri() != $linkUrl || !$avoidRefresh) {
                     $url = $linkUrl;

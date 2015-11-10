@@ -156,6 +156,7 @@ class CmsExtension extends \Twig_Extension_Core
                         //test widget
                         if ($widget === null) {
                             throw new \Exception('The widget with the id:['.$widgetId.'] was not found.');
+
                             return '';
                         }
 

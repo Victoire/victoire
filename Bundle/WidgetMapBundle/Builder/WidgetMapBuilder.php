@@ -4,8 +4,8 @@ namespace Victoire\Bundle\WidgetMapBundle\Builder;
 
 use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\CoreBundle\Entity\View;
-use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
+use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetMapBundle\DataTransformer\WidgetMapToArrayTransformer;
 use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 use Victoire\Bundle\WidgetMapBundle\Warmer\WidgetDataWarmer;
@@ -166,7 +166,7 @@ class WidgetMapBuilder
         }
 
         //Populate widgets with their data if needed
-        if($loadWidgets) {
+        if ($loadWidgets) {
             $widgetRepo = $this->em->getRepository('Victoire\Bundle\WidgetBundle\Entity\Widget');
             $viewWidgets = $widgetRepo->findAllWidgetsForView($view);
             $this->widgetDataWarmer->warm($view, $viewWidgets);
