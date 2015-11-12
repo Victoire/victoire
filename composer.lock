@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9c2095f00479615ff7d2aacc3a75c52d",
-    "content-hash": "1a4f3854e857cf6cc3c1f2279df55d08",
+    "hash": "4ab171c647181cde1ac36d9f6d1797fa",
+    "content-hash": "32ed3b6e911df199c9e2ada6e0ed7b62",
     "packages": [
         {
             "name": "appventus/alertify-bundle",
@@ -97,7 +97,7 @@
                     "email": "paul@appventus.com"
                 },
                 {
-                    "name": "Leny Bernard",
+                    "name": "Leny BERNARD",
                     "email": "leny@appventus.com"
                 }
             ],
@@ -564,7 +564,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/5674222e181c9236abdabed19fc660f35619d82c",
+                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/a5b3ba908ba68f3e14e42762a7b940fde65ed7da",
                 "reference": "5674222e181c9236abdabed19fc660f35619d82c",
                 "shasum": ""
             },
@@ -642,7 +642,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineCacheBundle/zipball/30f0ed4b5681842a2a78b861f54136782fbea963",
+                "url": "https://api.github.com/repos/doctrine/DoctrineCacheBundle/zipball/28c7df5d4f94bf822e0bc45a4dddffb897bb7a84",
                 "reference": "30f0ed4b5681842a2a78b861f54136782fbea963",
                 "shasum": ""
             },
@@ -725,7 +725,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineFixturesBundle/zipball/817c2d233fde0fe85cb7e4d25d43fbfcd028aef8",
+                "url": "https://api.github.com/repos/doctrine/DoctrineFixturesBundle/zipball/0f1a2f91b349e10f5c343f75ab71d23aace5b029",
                 "reference": "817c2d233fde0fe85cb7e4d25d43fbfcd028aef8",
                 "shasum": ""
             },
@@ -782,7 +782,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/inflector/zipball/097e7ba84f64a427e55008117ef2bb94096731dc",
+                "url": "https://api.github.com/repos/doctrine/inflector/zipball/90b2128806bfde671b6952ab8bea493942c1fdae",
                 "reference": "097e7ba84f64a427e55008117ef2bb94096731dc",
                 "shasum": ""
             },
@@ -957,7 +957,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/d39a73cce6b0a426da6bbced8c06e03afd4c0f55",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/089a0ac60b5681f84afafa330b5eb3f0e38adaa6",
                 "reference": "d39a73cce6b0a426da6bbced8c06e03afd4c0f55",
                 "shasum": ""
             },
@@ -1034,7 +1034,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSJsRoutingBundle/zipball/cc33cfd500cb056808a9f937d6c2e589b23ba936",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSJsRoutingBundle/zipball/e481171a0826e9372bfec28acd6bf5fb50c4106a",
                 "reference": "cc33cfd500cb056808a9f937d6c2e589b23ba936",
                 "shasum": ""
             },
@@ -1268,7 +1268,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/e0d369d63f3e04ac3cc18e8ccebfc92d9f0d8822",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/cd5fb1c262e1734366e77688b011a0f0422ce06d",
                 "reference": "e0d369d63f3e04ac3cc18e8ccebfc92d9f0d8822",
                 "shasum": ""
             },
@@ -1318,7 +1318,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/ae8974e4920a20c27b3a660ab89580b260b569a8",
+                "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/6b70b205a6fc09f519c4573d94edae4765f6b04b",
                 "reference": "ae8974e4920a20c27b3a660ab89580b260b569a8",
                 "shasum": ""
             },
@@ -1454,7 +1454,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Incenteev/ParameterHandler/zipball/f7b677a5f9bfd8bf5f165a0ff96ce7426b870312",
+                "url": "https://api.github.com/repos/Incenteev/ParameterHandler/zipball/d7ce7f06136109e81d1cb9d57066c4d4a99cf1cc",
                 "reference": "f7b677a5f9bfd8bf5f165a0ff96ce7426b870312",
                 "shasum": ""
             },
@@ -1494,6 +1494,65 @@
                 "parameters management"
             ],
             "time": "2015-10-07 14:51:08"
+        },
+        {
+            "name": "infinite-networks/form-bundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Charlie-Lucas/InfiniteFormBundle.git",
+                "reference": "9c38a1b7acc1274536bbe751def10738f659645e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Charlie-Lucas/InfiniteFormBundle/zipball/9c38a1b7acc1274536bbe751def10738f659645e",
+                "reference": "9c38a1b7acc1274536bbe751def10738f659645e",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/common": "~2.3",
+                "php": ">=5.3.2",
+                "symfony/form": "~2.3",
+                "symfony/framework-bundle": "~2.3"
+            },
+            "conflict": {
+                "twig/twig": "<1.12"
+            },
+            "require-dev": {
+                "components/jquery": "*",
+                "components/qunit": "*",
+                "doctrine/doctrine-bundle": "~1.2",
+                "doctrine/orm": "~2.3",
+                "robloach/component-installer": "~0.1.1",
+                "symfony/phpunit-bridge": "^2.7",
+                "symfony/symfony": "^2.3.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Infinite\\FormBundle\\": ""
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tim Nagel",
+                    "email": "t.nagel@infinite.net.au"
+                }
+            ],
+            "description": "A collection of useful form types and extensions for Symfony2",
+            "support": {
+                "issues": "https://github.com/infinite-networks/InfiniteFormBundle/issues",
+                "source": "https://github.com/Charlie-Lucas/InfiniteFormBundle/tree/master"
+            },
+            "time": "2015-11-12 08:44:41"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -1875,7 +1934,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/JMSSerializerBundle/zipball/a63cd330588eff18f6deb0251fd142d2c1fe30b6",
+                "url": "https://api.github.com/repos/schmittjoh/JMSSerializerBundle/zipball/3e396c980545350c2efb65a50041d2a9f9d6562e",
                 "reference": "a63cd330588eff18f6deb0251fd142d2c1fe30b6",
                 "shasum": ""
             },
@@ -2221,7 +2280,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kriswallsmith/assetic/zipball/cb92b179dddfb8a3f341d53bd27e088f24d9c2e5",
+                "url": "https://api.github.com/repos/kriswallsmith/assetic/zipball/63c1f0dac8e144a6f9b4b139da5202cd12e0891d",
                 "reference": "cb92b179dddfb8a3f341d53bd27e088f24d9c2e5",
                 "shasum": ""
             },
@@ -2850,7 +2909,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/security-checker/zipball/7735fd97ff7303d9df776b8dbc970f949399abc9",
+                "url": "https://api.github.com/repos/sensiolabs/security-checker/zipball/21696b0daa731064c23cfb694c60a2584a7b6e93",
                 "reference": "7735fd97ff7303d9df776b8dbc970f949399abc9",
                 "shasum": ""
             },
@@ -3367,7 +3426,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/e7e334c8b200b74c5937f9497f81e77202c9a97a",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/9d5e74602634cdd1e7899cddcbded01bc584f7a8",
                 "reference": "e7e334c8b200b74c5937f9497f81e77202c9a97a",
                 "shasum": ""
             },
@@ -3470,7 +3529,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/Behat/zipball/dc6df78862e1c1e1faa7bffd396d7c3179d6749d",
+                "url": "https://api.github.com/repos/Behat/Behat/zipball/149f8881a1df56496c37094f32d05b53e0cde37b",
                 "reference": "dc6df78862e1c1e1faa7bffd396d7c3179d6749d",
                 "shasum": ""
             },
@@ -3962,7 +4021,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/Goutte/zipball/751a3dc5c4d86ec3e97c9f27133ef9694d9243cc",
+                "url": "https://api.github.com/repos/FriendsOfPHP/Goutte/zipball/3cbc6ed222422a28400e470050f14928a153207e",
                 "reference": "751a3dc5c4d86ec3e97c9f27133ef9694d9243cc",
                 "shasum": ""
             },
@@ -5287,7 +5346,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/82159e61debcd09790b20154b350b1c083029aa6",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/0b6a8940385311a24e060ec1fe35680e17c74497",
                 "reference": "82159e61debcd09790b20154b350b1c083029aa6",
                 "shasum": ""
             },
@@ -5343,7 +5402,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/e49a364acdc4b8cced0210e73045c3b8d827ee9d",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/1f8908dda47aa8452d8f72064d9947b9503bcc0b",
                 "reference": "e49a364acdc4b8cced0210e73045c3b8d827ee9d",
                 "shasum": ""
             },
@@ -5406,6 +5465,7 @@
         "doctrine/doctrine-fixtures-bundle": 20,
         "friendsofsymfony/jsrouting-bundle": 20,
         "friendsofsymfony/user-bundle": 20,
+        "infinite-networks/form-bundle": 20,
         "jms/di-extra-bundle": 20,
         "jms/translation-bundle": 20,
         "knplabs/knp-menu": 20,
