@@ -2,10 +2,13 @@
 
 namespace Victoire\Bundle\WidgetMapBundle\Builder;
 
+use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
+use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetMapBundle\DataTransformer\WidgetMapToArrayTransformer;
 use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
+use Victoire\Bundle\WidgetMapBundle\Warmer\WidgetDataWarmer;
 
 /**
  * View WidgetMap builder.
@@ -16,16 +19,24 @@ class WidgetMapBuilder
 {
     protected $helper;
     protected $widgetMapTransformer;
+    protected $widgetDataWarmer;
+    protected $em;
 
     /**
      * Constructor.
      *
      * @param WidgetMapHelper $helper Widget map helper
      */
-    public function __construct(WidgetMapHelper $helper, WidgetMapToArrayTransformer $widgetMapTransformer)
-    {
+    public function __construct(
+        WidgetMapHelper $helper,
+        WidgetMapToArrayTransformer $widgetMapTransformer,
+        WidgetDataWarmer $widgetDataWarmer,
+        EntityManager $entityManager
+    ) {
         $this->helper = $helper;
         $this->widgetMapTransformer = $widgetMapTransformer;
+        $this->widgetDataWarmer = $widgetDataWarmer;
+        $this->em = $entityManager;
     }
 
     public function rebuild(View $view)
@@ -57,7 +68,7 @@ class WidgetMapBuilder
         $view->setWidgetMap($widgetMapAsArray);
     }
 
-    public function build(View $view, $updatePage = true)
+    public function build(View $view, $updatePage = true, $loadWidgets = false)
     {
         $viewWidgetMaps = null;
         $widgetMap = [];
@@ -152,6 +163,13 @@ class WidgetMapBuilder
 
         if ($updatePage) {
             $view->setBuiltWidgetMap($widgetMap);
+        }
+
+        //Populate widgets with their data if needed
+        if ($loadWidgets) {
+            $widgetRepo = $this->em->getRepository('Victoire\Bundle\WidgetBundle\Entity\Widget');
+            $viewWidgets = $widgetRepo->findAllWidgetsForView($view);
+            $this->widgetDataWarmer->warm($view, $viewWidgets);
         }
 
         return $widgetMap;

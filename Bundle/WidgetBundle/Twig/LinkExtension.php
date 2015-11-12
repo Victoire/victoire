@@ -67,19 +67,19 @@ class LinkExtension extends \Twig_Extension
     public function victoireLinkUrl($parameters, $avoidRefresh = true, $url = '#')
     {
         $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH;
-        extract($parameters); //will assign $linkType, $attachedWidget, $routeParameters, $route, $page, $analyticsTrackCode
+        extract($parameters); //will assign $linkType $url $page $viewReference $viewReferencePage $route $routeParameters $attachedWidget $target $analyticsTrackCode
+
         switch ($linkType) {
             case 'viewReference':
                 if (is_array($viewReference)) {
                     $viewReference = $viewReference['id'];
                 }
 
-                $page = $this->pageHelper->findPageByParameters(['id' => $viewReference]);
+                $page = $viewReferencePage ?: $this->pageHelper->findPageByParameters(['id' => $viewReference]);
                 $linkUrl = $this->router->generate('victoire_core_page_show', ['_locale' => $page->getLocale(), 'url' => $page->getUrl()], $referenceType);
                 if ($this->request->getRequestUri() != $linkUrl || !$avoidRefresh) {
                     $url = $linkUrl;
                 }
-
                 break;
             case 'route':
                 $url = $this->router->generate($route, $routeParameters, $referenceType);
@@ -247,6 +247,6 @@ class LinkExtension extends \Twig_Extension
      */
     public function getName()
     {
-        return 'victoire_link_extention';
+        return 'victoire_link_extension';
     }
 }

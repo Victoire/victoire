@@ -76,7 +76,6 @@ services:
             - "@Victoire_widget.widget_renderer"
             - "@victoire_templating"
             - "@security.context"
-            - "@doctrine.orm.entity_manager"
             - "@victoire_core.widget_exception_handler"
             - "@victoire_core.current_view"
             - "@victoire_core.view_cache_helper"

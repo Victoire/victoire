@@ -33,7 +33,6 @@ class BasePageController extends Controller
             $parameters['entityId'] = $entityId;
         }
         $page = $this->container->get('victoire_page.page_helper')->findPageByParameters($parameters);
-        $this->get('victoire_widget_map.builder')->build($page);
 
         return $this->redirect($this->generateUrl('victoire_core_page_show', array_merge(
                 ['url' => $page->getUrl()],
