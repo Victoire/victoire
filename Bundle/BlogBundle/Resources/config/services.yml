@@ -112,6 +112,7 @@ services:
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@request="
+            - "@translator"
         tags:
             - { name: form.type, alias: category_filter }
             - { name: victoire_core.filter }
