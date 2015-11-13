@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
+use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
@@ -68,12 +69,12 @@ class LinkExtension extends \Twig_Extension
     public function victoireLinkUrl($parameters, $avoidRefresh = true, $url = '#')
     {
         $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH;
-        extract($parameters); //will assign $linkType $url $page $viewReference $viewReferencePage $route $routeParameters $attachedWidget $target $analyticsTrackCode
 
-        switch ($linkType) {
+        $viewReference = isset($parameters['viewReference']) ? $parameters['viewReference'] : null;
+        switch ($parameters['linkType']) {
             case 'viewReference':
-                if (is_array($viewReference)) {
-                    $viewReference = $viewReference['id'];
+                if ($viewReference instanceof ViewReference) {
+                    $viewReference = $viewReference->getId();
                 }
 
                 if (isset($viewReferencePage) && $viewReferencePage) {
@@ -88,9 +89,10 @@ class LinkExtension extends \Twig_Extension
                 }
                 break;
             case 'route':
-                $url = $this->router->generate($route, $routeParameters, $referenceType);
+                $url = $this->router->generate($parameters['route'], $parameters['routeParameters'], $referenceType);
                 break;
             case 'attachedWidget':
+                $attachedWidget = $parameters['attachedWidget'];
                 //fallback when a widget is deleted cascading the relation as null (widget_id = null)
                 if ($attachedWidget && method_exists($attachedWidget->getView(), 'getUrl')) {
 
@@ -122,9 +124,10 @@ class LinkExtension extends \Twig_Extension
     public function victoireLink($parameters, $label, $attr = [], $currentClass = 'active', $url = '#')
     {
         $referenceLink = UrlGeneratorInterface::ABSOLUTE_PATH;
-        extract($parameters); //will assign $linkType, $attachedWidget, $routeParameters, $route, $page, $analyticsTrackCode
+        $analyticsTrackCode = $parameters['analyticsTrackCode'];
+        $attachedWidget = $parameters['attachedWidget'];
 
-        if ($linkType == 'attachedWidget' && $attachedWidget && method_exists($attachedWidget->getView(), 'getUrl')) {
+        if ($parameters['linkType'] == 'attachedWidget' && $attachedWidget && method_exists($attachedWidget->getView(), 'getUrl')) {
             $viewUrl = $this->router->generate('victoire_core_page_show', ['_locale' => $attachedWidget->getView()->getLocale(), 'url' => $attachedWidget->getView()->getUrl()], $referenceLink);
             if (rtrim($this->request->getRequestUri(), '/') == rtrim($viewUrl, '/')) {
                 $attr['data-scroll'] = 'smooth';
@@ -137,12 +140,12 @@ class LinkExtension extends \Twig_Extension
         }
 
         //Build the target attribute
-        if ($target == 'ajax-modal') {
+        if ($parameters['target'] == 'ajax-modal') {
             $attr['data-toggle'] = 'ajax-modal';
-        } elseif ($target == '') {
+        } elseif ($parameters['target'] == '') {
             $attr['target'] = '_parent';
         } else {
-            $attr['target'] = $target;
+            $attr['target'] = $parameters['target'];
         }
 
         //Add the analytics tracking code attribute
