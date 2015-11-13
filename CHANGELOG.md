@@ -2,7 +2,19 @@
 
 ## [Unreleased](https://github.com/Victoire/victoire/tree/HEAD)
 
-[Full Changelog](https://github.com/Victoire/victoire/compare/1.3.2...HEAD)
+[Full Changelog](https://github.com/Victoire/victoire/compare/1.3.4...HEAD)
+
+## [1.3.4](https://github.com/victoire/victoire/tree/1.3.4) (2015-11-13)
+[Full Changelog](https://github.com/victoire/victoire/compare/1.3.3...1.3.4)
+
+**Merged pull requests:**
+
+- WidgetDataWarmer : check if link exist when entity has LinkTrait [\#272](https://github.com/Victoire/victoire/pull/272) ([gregumo](https://github.com/gregumo))
+- use a choice\_tree form type for category-filter [\#270](https://github.com/Victoire/victoire/pull/270) ([Charlie-Lucas](https://github.com/Charlie-Lucas))
+- Widget Rendering Refactor [\#268](https://github.com/Victoire/victoire/pull/268) ([gregumo](https://github.com/gregumo))
+
+## [1.3.3](https://github.com/Victoire/victoire/tree/1.3.3) (2015-11-04)
+[Full Changelog](https://github.com/Victoire/victoire/compare/1.3.2...1.3.3)
 
 **Merged pull requests:**
 
