@@ -24,6 +24,7 @@ class RouteLoader extends Loader
         $this->addShowPageByIdRoute($collection);
         $this->addShowBusinessPageByIdAction($collection);
         $this->addShowPageRoute($collection);
+        $this->addShowHomePageRoute($collection);
 
         return $collection;
     }
@@ -104,9 +105,20 @@ class RouteLoader extends Loader
         $route = new Route($pattern, $defaults, $requirements);
 
         // add the new route to the route collection:
-        $routeName = 'victoire_core_page_show';
+        $collection->add('victoire_core_page_show', $route);
+    }
 
-        $collection->add($routeName, $route);
+    protected function addShowHomePageRoute(RouteCollection &$collection)
+    {
+        // prepare a new route
+        $pattern = '/';
+        $defaults = [
+            '_controller' => 'VictoirePageBundle:Page:show',
+        ];
+        $route = new Route($pattern, $defaults);
+
+        // add the new route to the route collection:
+        $collection->add('victoire_core_homepage_show', $route);
     }
 
     public function supports($resource, $type = null)

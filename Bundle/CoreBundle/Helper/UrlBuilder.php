@@ -52,7 +52,7 @@ class UrlBuilder
         if ($parent !== null) {
             if (method_exists($parent, 'getStaticUrl') && $parent->getStaticUrl() != null && $parent->getStaticUrl() != '') {
                 array_push($slugs, $parent->getStaticUrl());
-            } elseif (!(method_exists($parent, 'isHomepage') && $parent->isHomepage())) {
+            } elseif (!(method_exists($parent, 'isHomepage') || !$parent->isHomepage())) {
                 array_push($slugs, $parent->getSlug());
             }
 
