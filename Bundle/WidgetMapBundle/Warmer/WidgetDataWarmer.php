@@ -104,7 +104,9 @@ class WidgetDataWarmer
             //If entity has LinkTrait, store the entity link id
             if ($this->hasLinkTrait($reflect) && ($entity instanceof Widget || $entity instanceof WidgetListingItem)) {
                 /* @var $entity LinkTrait */
-                $linkIds[] = $entity->getLink()->getId();
+                if($entity->getLink()) {
+                    $linkIds[] = $entity->getLink()->getId();
+                }
             }
 
             foreach ($properties as $property) {
@@ -113,12 +115,11 @@ class WidgetDataWarmer
 
                     //If entity has ManyToOne association, store them to construct a single query for each type
                     if ($annotationObj instanceof ManyToOne && in_array($annotationObj->targetEntity, $this->manyToOneAssociations)) {
-                        /* @var Media $media */
-                        if ($media = $this->accessor->getValue($entity, $property->getName())) {
-                            $associatedEntities['\Victoire\Bundle\MediaBundle\Entity\Media'][] = new AssociatedEntityToWarm(
+                        if ($targetEntity = $this->accessor->getValue($entity, $property->getName())) {
+                            $associatedEntities[$annotationObj->targetEntity][] = new AssociatedEntityToWarm(
                                 $entity,
                                 $property->getName(),
-                                $media->getId()
+                                $targetEntity->getId()
                             );
                         }
                     }
