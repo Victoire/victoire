@@ -84,24 +84,34 @@ abstract class ViewType extends AbstractType
                 // Si aucune donnée n'est passée au formulaire, la donnée est "null".
                 // Ce doit être considéré comme une nouvelle "View"
                 if (!$view || null === $view->getId()) {
-                    $getAllPageWithoutMe = function (EntityRepository $bpr) {
-                        return $bpr->getAll()->getInstance();
+                    $getAllPageWithoutMe = function (EntityRepository $repo) {
+                        return $repo->getAll()->getInstance();
                     };
                 } else {
-                    $getAllPageWithoutMe = function (EntityRepository $bpr) use ($view) {
-                        return $bpr->getAll()
+                    $getAllPageWithoutMe = function (EntityRepository $repo) use ($view) {
+                        return $repo->getAll()
                             ->getInstance()
                             ->andWhere('page.id != :pageId')
                             ->setParameter('pageId', $view->getId());
                     };
                 }
 
+                if ($view instanceof Template) {
+                    $class = 'Victoire\Bundle\TemplateBundle\Entity\Template';
+                    $required = false;
+                } else {
+                    $class = 'Victoire\Bundle\PageBundle\Entity\BasePage';
+                    $required = true;
+                }
+
                 $form->add(
                     'parent',
                     null,
                     [
+                        'class'         => $class,
                         'label'         => 'form.view.type.parent.label',
                         'query_builder' => $getAllPageWithoutMe,
+                        'required'      => $required,
                     ]
                 );
             }
