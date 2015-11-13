@@ -3,7 +3,6 @@ Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage:
         name: "I'm your father."
         author: @anakin
         locale: fr
-        parent: @home
         template: @pattern_article
         status: published
         parent: @blog-jedi-network

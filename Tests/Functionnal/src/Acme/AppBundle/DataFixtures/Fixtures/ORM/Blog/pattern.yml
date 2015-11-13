@@ -3,7 +3,6 @@ Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate:
         name: "{{item.name}}"
         slug: "{{item.slug}}"
         businessEntityId: article
-        parent: @home
         author: @anakin
         locale: fr
         template: @template_base
