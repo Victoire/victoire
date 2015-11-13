@@ -22,14 +22,6 @@ interface WebViewInterface
 
     public function setReferers($referers);
 
-    public function setRoutes($routes);
-
-    public function removeRoute(Route $route);
-
-    public function addRoute(Route $route);
-
-    public function getRoutes();
-
     public function setStatus($status);
 
     public function getStatus();

@@ -2,8 +2,7 @@
 
 namespace Victoire\Bundle\PageBundle\Entity\Traits;
 
-use Victoire\Bundle\CoreBundle\Annotations as Vic;
-use Victoire\Bundle\CoreBundle\Entity\Route;
+use Victoire\Bundle\CoreBundle\Annotations as VIC;
 use Victoire\Bundle\PageBundle\Entity\PageStatus;
 use Victoire\Bundle\SeoBundle\Entity\PageSeo;
 
@@ -17,13 +16,6 @@ trait WebViewTrait
      * @ORM\JoinColumn(name="seo_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $seo;
-
-    /**
-     * @var string
-     *
-     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\CoreBundle\Entity\Route", mappedBy="view", cascade={"persist", "remove"})
-     */
-    protected $routes;
 
     /**
      * @var string
@@ -42,7 +34,7 @@ trait WebViewTrait
     protected $status = PageStatus::PUBLISHED;
 
     /**
-     * @var datetime
+     * @var \Datetime
      *
      * @ORM\Column(name="publishedAt", type="datetime")
      * @VIC\BusinessProperty("date")
@@ -98,46 +90,6 @@ trait WebViewTrait
     public function setReferers($referers)
     {
         $this->referers = $referers;
-    }
-
-    /**
-     * Set routes.
-     *
-     * @param routes $routes
-     */
-    public function setRoutes($routes)
-    {
-        $this->routes = $routes;
-    }
-
-    /**
-     * Remove route.
-     *
-     * @param Route $route
-     */
-    public function removeRoute(Route $route)
-    {
-        $this->routes->remove($route);
-    }
-
-    /**
-     * Add route.
-     *
-     * @param Route $route
-     */
-    public function addRoute(Route $route)
-    {
-        $this->routes[] = $route;
-    }
-
-    /**
-     * Get routes.
-     *
-     * @return routes
-     */
-    public function getRoutes()
-    {
-        return $this->routes;
     }
 
     /**
