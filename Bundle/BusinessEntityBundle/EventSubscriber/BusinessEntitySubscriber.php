@@ -3,18 +3,52 @@
 namespace Victoire\Bundle\BusinessEntityBundle\EventSubscriber;
 
 use Doctrine\Common\EventSubscriber;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PostFlushEventArgs;
 use Symfony\Component\DependencyInjection\Container;
+use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
+use Victoire\Bundle\BusinessPageBundle\Builder\BusinessPageBuilder;
+use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
+use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
 use Victoire\Bundle\BusinessPageBundle\Repository\BusinessPageRepository;
+use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheDriver;
+use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheManager;
+use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
+use Victoire\Bundle\ViewReferenceBundle\Provider\ViewReferenceProvider;
 
 class BusinessEntitySubscriber implements EventSubscriber
 {
-    /** @var Container */
-    private $container;
+    protected $viewCacheManager;
+    protected $viewCacheDriver;
+    protected $businessPageBuilder;
+    protected $viewReferenceProvider;
+    protected $viewReferenceHelper;
 
-    public function __construct(Container $container)
-    {
-        $this->container = $container;
+    /**
+     * @param ViewReferenceXmlCacheManager $viewCacheManager
+     * @param ViewReferenceXmlCacheDriver $viewCacheDriver
+     * @param BusinessPageBuilder $businessPageBuilder
+     * @param ViewReferenceProvider $viewReferenceProvider
+     * @param ViewReferenceHelper $viewReferenceHelper
+     * @param BusinessEntityHelper $businessEntityHelper
+     * @param BusinessPageHelper $businessPageHelper
+     */
+    public function __construct(ViewReferenceXmlCacheManager $viewCacheManager,
+                                ViewReferenceXmlCacheDriver  $viewCacheDriver,
+                                BusinessPageBuilder          $businessPageBuilder,
+                                ViewReferenceProvider        $viewReferenceProvider,
+                                ViewReferenceHelper          $viewReferenceHelper,
+                                BusinessEntityHelper         $businessEntityHelper,
+                                BusinessPageHelper           $businessPageHelper
+    ) {
+        $this->viewCacheManager = $viewCacheManager;
+        $this->viewCacheDriver = $viewCacheDriver;
+        $this->businessPageBuilder = $businessPageBuilder;
+        $this->viewReferenceProvider = $viewReferenceProvider;
+        $this->viewReferenceHelper = $viewReferenceHelper;
+        $this->businessEntityHelper = $businessEntityHelper;
+        $this->businessPageHelper = $businessPageHelper;
     }
 
     /**
@@ -27,7 +61,7 @@ class BusinessEntitySubscriber implements EventSubscriber
         return [
             'postPersist',
             'postUpdate',
-            'preRemove',
+            'postFlush',
         ];
     }
 
@@ -41,36 +75,53 @@ class BusinessEntitySubscriber implements EventSubscriber
         $this->updateBusinessPagesAndRegenerateCache($eventArgs);
     }
 
-    public function preRemove(LifecycleEventArgs $eventArgs)
-    {
-        $entity = $eventArgs->getEntity();
-        $businessEntity = $this->container->get('victoire_core.helper.business_entity_helper')->findByEntityInstance($entity);
-        if ($businessEntity) {
-            $viewCacheManager = $this->container->get('victoire_view_reference.cache.manager');
-            //remove all references which refer to the entity
-            $viewCacheManager->removeViewsReferencesByParameters([[
-                        'entityId'        => $entity->getId(),
-                        'entityNamespace' => get_class($entity),
-            ]]);
-        }
-    }
-
-    public function updateBusinessPagesAndRegenerateCache(LifecycleEventArgs $eventArgs)
+    /**
+     * then refresh viewsReference
+     * @param LifecycleEventArgs $eventArgs
+     */
+    public function postFlush(PostFlushEventArgs $eventArgs)
     {
         $entityManager = $eventArgs->getEntityManager();
+        $viewsHierarchy = $entityManager->getRepository('VictoireCoreBundle:View')->getRootNodes();
+        $views = $this->viewReferenceProvider->getReferencableViews($viewsHierarchy, $entityManager);
+
+        $this->viewReferenceHelper->buildViewReferenceRecursively($views, $entityManager);
+        $this->viewCacheDriver->writeFile(
+            $this->viewCacheManager->generateXml($views)
+        );
+    }
+
+    /**
+     *
+     * get BusinessTemplate concerned by this entity (if so)
+     * then get BusinessPages
+     * for each BusinessPage, update its slug according to the new slug
+     * then refresh viewsReference
+     *
+     * @param LifecycleEventArgs $eventArgs
+     * @throws \Exception
+     */
+    public function updateBusinessPagesAndRegenerateCache(LifecycleEventArgs $eventArgs)
+    {
+        /** @var EntityManager $entityManager */
+        $entityManager = $eventArgs->getEntityManager();
         $entity = $eventArgs->getEntity();
-        $businessEntity = $this->container->get('victoire_core.helper.business_entity_helper')->findByEntityInstance($entity);
+        $businessEntity = $this->businessEntityHelper->findByEntityInstance($entity);
 
         if ($businessEntity) {
             $businessTemplates = $entityManager->getRepository('VictoireBusinessPageBundle:BusinessTemplate')->findPagePatternByBusinessEntity($businessEntity);
             foreach ($businessTemplates as $businessTemplate) {
-                if ($this->container->get('victoire_business_page.business_page_helper')->isEntityAllowed($businessTemplate, $entity, $entityManager)) {
+                if ($this->businessPageHelper->isEntityAllowed($businessTemplate, $entity, $entityManager)) {
                     /** @var BusinessPageRepository $bepRepo */
                     $bepRepo = $entityManager->getRepository('VictoireBusinessPageBundle:BusinessPage');
-                    $virtualBusinessPage = $this->container->get(
-                        'victoire_business_page.business_page_builder'
-                    )->generateEntityPageFromTemplate($businessTemplate, $entity, $entityManager);
+
+                    $virtualBusinessPage = $this->businessPageBuilder->generateEntityPageFromTemplate(
+                        $businessTemplate,
+                        $entity,
+                        $entityManager
+                    );
                     // Get the BusinessPage if exists for the given entity
+                    /** @var BusinessPage $businessPage */
                     $businessPage = $bepRepo->findPageByBusinessEntityAndPattern(
                         $businessTemplate,
                         $entity,
@@ -78,10 +129,10 @@ class BusinessEntitySubscriber implements EventSubscriber
                     );
                     // If there is diff between persisted BEP and computed, persist the change
                     $scheduledForRemove = false;
-                    foreach ($eventArgs->getEntityManager()->getUnitOfWork()->getScheduledEntityDeletions(
-                    ) as $deletion) {
+                    foreach ($eventArgs->getEntityManager()->getUnitOfWork()->getScheduledEntityDeletions() as $deletion) {
                         if (get_class($deletion) == get_class($businessPage)
-                            && $deletion->getId() === $businessPage->getId()) {
+                            && $deletion->getId() === $businessPage->getId()
+                        ) {
                             $scheduledForRemove = true;
                         }
                     }
@@ -92,7 +143,7 @@ class BusinessEntitySubscriber implements EventSubscriber
                         $staticUrl = $businessPage->getStaticUrl();
 
                         if ($staticUrl) {
-                            $staticUrl = preg_replace('/'.$oldSlug.'/', $newSlug, $staticUrl);
+                            $staticUrl = preg_replace('/' . $oldSlug . '/', $newSlug, $staticUrl);
                             $businessPage->setStaticUrl($staticUrl);
                         }
 
@@ -101,35 +152,7 @@ class BusinessEntitySubscriber implements EventSubscriber
 
                         $entityManager->persist($businessPage);
                         $entityManager->flush();
-
-                        $viewReference = $this->container->get(
-                            'victoire_view_reference.builder'
-                        )->buildViewReference($businessPage, $entityManager);
-                    } else {
-                        $viewReference = $this->container->get(
-                            'victoire_view_reference.builder'
-                        )->buildViewReference($virtualBusinessPage, $entityManager);
                     }
-                    //we update cache with the computed or persisted page
-                    $this->container->get('victoire_view_reference.cache.manager')->update($viewReference);
-                } else {
-                    //Business Entity changed, so we need to remove potential obsolete businessTemplate
-                    $rootNode = $this->container->get('victoire_view_reference.cache.manager')->readCache();
-
-                    $parameters = [
-                        'patternId'     => $businessTemplate->getId(),
-                        'entityId'      => $entity->getId(),
-                        'viewNamespace' => 'Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage',
-                    ];
-
-                    $viewReferenceHelper = $this->container->get('victoire_view_reference.helper');
-                    $viewsReferencesToRemove = $this->container->get('victoire_view_reference.cache.manager')->getAllReferenceByParameters($parameters);
-                    foreach ($viewsReferencesToRemove as $viewReferenceToRemove) {
-                        $viewReferenceHelper->removeViewReference($rootNode, $viewReferenceToRemove);
-                    }
-
-                    $viewReferences = $this->container->get('victoire_view_reference.helper')->convertXmlCacheToArray($rootNode);
-                    $this->container->get('victoire_view_reference.cache.manager')->write($viewReferences);
                 }
             }
         }
