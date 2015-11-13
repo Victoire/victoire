@@ -73,3 +73,8 @@ services:
             - "@request_stack"
         tags:
             - { name: form.type, alias: victoire_view_translate_type }
+
+    victoire_i18n.view_translation_manager:
+        class: Victoire\Bundle\I18nBundle\Manager\ViewTranslationManager
+        arguments:
+            - "@doctrine.orm.entity_manager"
