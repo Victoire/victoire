@@ -9,10 +9,10 @@ use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 class XmlToViewReferenceTransformer implements DataTransformerInterface
 {
-    const CLASSNAME = 'Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference';
+    public $className = 'Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference';
 
     public function __construct() {
-        $refClass = new \ReflectionClass(self::CLASSNAME);
+        $refClass = new \ReflectionClass($this->className);
         $this->properties = $refClass->getProperties();
     }
 
@@ -25,7 +25,7 @@ class XmlToViewReferenceTransformer implements DataTransformerInterface
      */
     public function transform($xmlElement)
     {
-        $className = self::CLASSNAME;
+        $className = $this->className;
         $viewReference = new $className;
 
         foreach ($xmlElement->attributes() as $prop => $value) {

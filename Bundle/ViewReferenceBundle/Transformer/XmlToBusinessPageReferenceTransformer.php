@@ -9,5 +9,5 @@ use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 class XmlToBusinessPageReferenceTransformer extends XmlToViewReferenceTransformer
 {
-    const className = 'Victoire\Bundle\ViewReferenceBundle\ViewReference\BusinessPageReference';
+    public $className = 'Victoire\Bundle\ViewReferenceBundle\ViewReference\BusinessPageReference';
 }

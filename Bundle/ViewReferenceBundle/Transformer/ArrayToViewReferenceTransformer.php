@@ -9,8 +9,10 @@ use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 class ArrayToViewReferenceTransformer implements DataTransformerInterface
 {
+    public $className = 'Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference';
+
     public function __construct() {
-        $refClass = new \ReflectionClass('Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference');
+        $refClass = new \ReflectionClass($this->className);
         $this->properties = $refClass->getProperties();
     }
 
@@ -23,7 +25,8 @@ class ArrayToViewReferenceTransformer implements DataTransformerInterface
      */
     public function transform($array)
     {
-        $viewReference = new ViewReference();
+        $className = $this->className;
+        $viewReference = new $className;
         foreach ($array['viewReference'] as $array) {
             foreach ($array as $prop => $value) {
                 $methodName = 'set'.ucfirst($prop);

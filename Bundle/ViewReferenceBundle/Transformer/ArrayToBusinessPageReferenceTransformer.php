@@ -10,8 +10,5 @@ use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 class ArrayToBusinessPageReferenceTransformer extends ArrayToViewReferenceTransformer
 {
-    public function __construct() {
-        $refClass = new \ReflectionClass('Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference');
-        $this->properties = $refClass->getProperties();
-    }
+    public $className = 'Victoire\Bundle\ViewReferenceBundle\ViewReference\BusinessPageReference';
 }
