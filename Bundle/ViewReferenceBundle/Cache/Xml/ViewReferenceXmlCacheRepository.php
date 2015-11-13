@@ -5,7 +5,9 @@ namespace Victoire\Bundle\ViewReferenceBundle\Cache\Xml;
 use Gedmo\Uploadable\Mapping\Driver\Xml;
 use Victoire\Bundle\ViewReferenceBundle\Builder\Chain\ViewReferenceTransformerChain;
 use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
+use Victoire\Bundle\ViewReferenceBundle\Transformer\XmlToBusinessPageReferenceTransformer;
 use Victoire\Bundle\ViewReferenceBundle\Transformer\XmlToViewReferenceTransformer;
+use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 /**
  * ref: victoire_view_reference.cache.repository
@@ -13,6 +15,7 @@ use Victoire\Bundle\ViewReferenceBundle\Transformer\XmlToViewReferenceTransforme
 class ViewReferenceXmlCacheRepository
 {
     protected $driver;
+    protected $viewReferenceTransformerChain;
 
     /**
      * @param ViewReferenceXmlCacheDriver $driver
@@ -27,7 +30,8 @@ class ViewReferenceXmlCacheRepository
     /**
      * @param $url
      * @param $locale
-     * @return null|\SimpleXMLElement
+     *
+     * @return ViewReference
      */
     public function getReferenceByUrl($url, $locale)
     {
@@ -36,7 +40,7 @@ class ViewReferenceXmlCacheRepository
         $xpath = sprintf('//viewReference[@slug="" and @locale="%s"]', $locale);
 
         $urlParts = explode('/', $url);
-        if ($url !== "") {
+        if ($url) {
             //add every hierarchy item in the xpath var
             $xpath .= sprintf(
                 '/children/viewReference[@slug="%s"]',
@@ -80,13 +84,16 @@ class ViewReferenceXmlCacheRepository
     {
         $viewsReferences = [];
         $arguments = [];
-        $viewRefTransformer = new XMLToViewReferenceTransformer();
 
         if ($xmlReferences = $this->driver->readCache()->xpath(ViewReferenceHelper::buildXpath($parameters))) {
             foreach ($xmlReferences as $xmlReference) {
-                $viewReference = current($xmlReference->attributes());
                 if ($transform === true) {
-                    $viewReference = $viewRefTransformer->reverseTransform($viewReference);
+                    if (isset($xmlReference['entityId'])) {
+                        $viewRefTransformer = new XMLToBusinessPageReferenceTransformer();
+                    } else {
+                        $viewRefTransformer = new XMLToViewReferenceTransformer();
+                    }
+                    $viewReference = $viewRefTransformer->transform($xmlReference);
                 }
                 $viewsReferences[] = $viewReference;
             }

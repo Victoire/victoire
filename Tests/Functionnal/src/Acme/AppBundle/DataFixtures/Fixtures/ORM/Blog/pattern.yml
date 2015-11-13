@@ -1,0 +1,14 @@
+Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate:
+    pattern_article:
+        name: "{{item.name}}"
+        slug: "{{item.slug}}"
+        businessEntityId: article
+        parent: @home
+        author: @anakin
+        locale: fr
+        template: @template_base
+        status: published
+        parent: @blog-jedi-network
+        publishedAt: <dateTime('now')>
+        createdAt: <dateTime('now')>
+        updatedAt: <dateTime('now')>

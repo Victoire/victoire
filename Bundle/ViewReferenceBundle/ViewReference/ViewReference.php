@@ -10,6 +10,10 @@ class ViewReference
     protected $id;
     protected $locale;
     protected $slug;
+    /**
+     * @var string built by ViewReferenceCacheRepo
+     */
+    protected $url;
     protected $viewId;
     protected $viewNamespace;
 
@@ -92,5 +96,21 @@ class ViewReference
     public function setSlug($slug)
     {
         $this->slug = $slug;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * @param string $url
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
     }
 }

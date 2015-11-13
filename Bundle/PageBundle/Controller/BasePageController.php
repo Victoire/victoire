@@ -5,6 +5,7 @@ namespace Victoire\Bundle\PageBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
@@ -18,7 +19,7 @@ class BasePageController extends Controller
 {
     use VictoireAlertifyControllerTrait;
 
-    public function showAction(Request $request, $url)
+    public function showAction(Request $request, $url = '')
     {
         $response = $this->container->get('victoire_page.page_helper')->renderPageByUrl(
             $url,
@@ -104,14 +105,21 @@ class BasePageController extends Controller
             if (null !== $this->container->get('victoire_core.helper.business_entity_helper')->findByEntityInstance($page)) {
                 $page = $this->container
                         ->get('victoire_business_page.business_page_builder')
-                        ->generateEntityPageFromTemplate($page->getTemplate(), $page, $em);
+                        ->generateEntityPageFromTemplate($page->getTemplate(), $page, $entityManager);
             }
 
             $this->congrat($this->get('translator')->trans('victoire_page.create.success', [], 'victoire'));
 
+            $urlBuilder = $this->container->get('victoire_core.url_builder');
             return [
                 'success'  => true,
-                'url'      => $this->generateUrl('victoire_core_page_show', ['_locale' => $page->getLocale(), 'url' => $page->getUrl()]),
+                'url'      => $this->generateUrl(
+                    'victoire_core_page_show',
+                    [
+                        '_locale' => $page->getLocale(),
+                        'url'     => $urlBuilder->buildUrl($page)
+                    ]
+                ),
             ];
         } else {
             $formErrorHelper = $this->container->get('victoire_form.error_helper');
@@ -193,7 +201,6 @@ class BasePageController extends Controller
      */
     protected function translateAction(Request $request, BasePage $page)
     {
-        $entityManager = $this->getDoctrine()->getManager();
         $form = $this->createForm($this->getPageTranslateType(), $page);
 
         $businessProperties = [];
@@ -207,7 +214,7 @@ class BasePageController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $clone = $this->get('victoire_core.view_helper')->addTranslation($page, $page->getName(), $page->getLocale());
+            $clone = $this->get('victoire_i18n.view_translation_manager')->addTranslation($page, $page->getName(), $page->getLocale());
 
             return [
                 'success' => true,
@@ -233,7 +240,7 @@ class BasePageController extends Controller
     /**
      * @param Page $page The page to delete
      *
-     * @return template
+     * @return Response
      */
     public function deleteAction(BasePage $page)
     {
@@ -270,35 +277,5 @@ class BasePageController extends Controller
         }
 
         return $response;
-    }
-
-    /**
-     * Show homepage or redirect to new page.
-     *
-     * ==========================
-     * find homepage
-     * if homepage
-     *     forward show(homepage)
-     * else
-     *     redirect to welcome page (dashboard)
-     * ==========================
-     *
-     * @Route("/", name="victoire_core_page_homepage")
-     *
-     * @return template
-     */
-    public function homepageAction(Request $request)
-    {
-        //services
-        $entityManager = $this->getDoctrine()->getManager();
-
-        //get the homepage
-        $homepage = $entityManager->getRepository('VictoirePageBundle:BasePage')->findOneByHomepage($request->getLocale());
-
-        if ($homepage !== null) {
-            return $this->showAction($request, $homepage->getUrl());
-        } else {
-            throw new \Exception(sprintf('There isn\'t any homepage for "%s" locale, please create one.', $request->getLocale()));
-        }
     }
 }

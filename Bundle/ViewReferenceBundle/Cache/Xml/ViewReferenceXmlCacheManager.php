@@ -29,7 +29,7 @@ class ViewReferenceXmlCacheManager
      *
      * @return \SimpleXMLElement
      */
-    public function generateXml(array $nodes, $rootNode = null)
+    public function generateXml(array $nodes, $rootNode = null, $url = '')
     {
         if (is_null($rootNode)) {
             $xml = <<<'XML'
@@ -43,15 +43,21 @@ XML;
 
             /** @var WebViewInterface $view */
             $view = $node['view'];
+            $viewReference = $view->getViewReference();
             $arrayTransformer = $this->viewReferenceTransformerChain->getViewReferenceTransformer(
-                $view->getViewReference()->getViewNamespace(), 'array'
+                $viewReference->getViewNamespace(), 'array'
             );
-            foreach ($arrayTransformer->reverseTransform($view->getViewReference()) as $key => $value) {
+            foreach ($arrayTransformer->reverseTransform($viewReference) as $key => $value) {
                 $itemNode->addAttribute($key, $value);
             }
+
+            $_url = ltrim($url.'/'.$viewReference->getSlug(), '/');
+            $itemNode->attributes()->url = $_url;
+
+            //Build url thanks to hierarchy
             if (!empty($node['children'])) {
                 $childrenNode = $itemNode->addChild('children');
-                $this->generateXml($node['children'], $childrenNode);
+                $this->generateXml($node['children'], $childrenNode, $_url);
             }
         }
 
