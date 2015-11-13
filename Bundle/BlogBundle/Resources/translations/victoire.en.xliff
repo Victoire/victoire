@@ -226,6 +226,10 @@
         <source>form.article.settings.type.article.title</source>
         <target>Article</target>
       </trans-unit>
+      <trans-unit id="50" resname="menu.blog.translate">
+        <source>menu.blog.translate</source>
+        <target>Translate</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

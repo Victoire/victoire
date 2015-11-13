@@ -53,6 +53,10 @@ Component | Description
 [**WidgetBundle**][15] | Contains all the base widget logic to be able to use Widgets
 [**WidgetMapBundle**][16] | Each view has a widget map, this bundle contains all the widget maps logic
 
+##Widgets
+
+All the widgets that you can use with a Victoire's website are available on the *[Friends Of Victoire](https://github.com/FriendsOfVictoire)* page.
+
 ##Troubleshooting
 
 Victoire uses GitHub issues, feel free to [create your own](https://github.com/victoire/victoire/issues/new) or develpp [an existing one](https://github.com/victoire/victoire/issues).
