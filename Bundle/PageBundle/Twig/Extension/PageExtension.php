@@ -103,10 +103,14 @@ class PageExtension extends \Twig_Extension
         return $urls;
     }
 
+    /**
+     * Return the current viewReference->id
+     * @return string
+     */
     public function victoireCurrentPageReference()
     {
         $currentView = $this->currentViewHelper;
 
-        return $currentView->getMainCurrentView()->getReference()['id'];
+        return $currentView->getMainCurrentView()->getReference()->getId();
     }
 }

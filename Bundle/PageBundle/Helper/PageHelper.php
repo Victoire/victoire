@@ -240,11 +240,11 @@ class PageHelper extends ViewHelper
     /**
      * read the cache to find entity according tu given url.
      *
-     * @param array $viewReference
+     * @param BusinessPageReference $viewReference
      *
-     * @return BusinessEntity|null
+     * @return object|null
      */
-    protected function findEntityByReference($viewReference)
+    protected function findEntityByReference(ViewReference $viewReference)
     {
         $entity = null;
         if (!empty($viewReference['entityId'])) {
@@ -255,11 +255,11 @@ class PageHelper extends ViewHelper
     }
 
     /**
-     * find the page according to given url. If not found, try in route history, if seo redirect, return target.
+     * find the page according to given url.
      *
      * @return View
      */
-    public function findPageByReference($viewReference, $parameters = null)
+    public function findPageByReference($viewReference, $entity = null)
     {
         $page = null;
         //get the page
@@ -302,12 +302,12 @@ class PageHelper extends ViewHelper
     }
 
     /**
-     * If the valid is not valid, an exception is thrown.
+     * If the page is not valid, an exception is thrown.
+     * @param mixed $page
+     * @param mixed $entity
+     * @param mixed $parameters
      *
-     * @param Page   $page
-     * @param Entity $entity
-     *
-     * @throws NotFoundHttpException
+     * @throws \Exception
      */
     protected function checkPageValidity($page, $entity = null, $parameters = null)
     {

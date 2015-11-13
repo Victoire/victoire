@@ -86,7 +86,7 @@ class BusinessEntityHelper
     /**
      * Get a business entity.
      *
-     * @param Entity $entity
+     * @param object $entity
      *
      * @return BusinessEntity
      */

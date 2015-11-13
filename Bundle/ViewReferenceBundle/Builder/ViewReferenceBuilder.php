@@ -3,11 +3,13 @@
 namespace Victoire\Bundle\ViewReferenceBundle\Builder;
 
 use Doctrine\ORM\EntityManager;
+use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\ViewReferenceBundle\Builder\Chain\ViewReferenceBuilderChain;
+use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 /**
- * Page helper
+ * View Reference builder
  * ref: victoire_view_reference.builder.
  */
 class ViewReferenceBuilder
@@ -24,9 +26,9 @@ class ViewReferenceBuilder
      *
      * @param WebViewInterface $view
      *
-     * @return array
+     * @return ViewReference
      */
-    public function buildViewReference(WebViewInterface $view, EntityManager $em = null)
+    public function buildViewReference(View $view, EntityManager $em = null)
     {
         $viewReferenceBuilder = $this->viewReferenceBuilderChain->getViewReferenceBuilder($view);
         $viewReference = $viewReferenceBuilder->buildReference($view, $em);

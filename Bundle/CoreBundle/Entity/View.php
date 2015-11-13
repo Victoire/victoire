@@ -978,7 +978,7 @@ abstract class View
      *
      * @return $this
      */
-    public function setReference(ViewReference $reference)
+    public function setReference($reference)
     {
         $this->reference = $reference;
 

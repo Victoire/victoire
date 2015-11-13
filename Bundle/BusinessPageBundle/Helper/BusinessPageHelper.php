@@ -45,7 +45,7 @@ class BusinessPageHelper
      * Is the entity allowed for the business entity page.
      *
      * @param BusinessTemplate                               $businessTemplate
-     * @param \Victoire\Bundle\PageBundle\Helper\Entity|null $entity
+     * @param object|null      $entity
      * @param EntityManager                                  $em
      *
      * @throws \Exception

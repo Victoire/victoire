@@ -201,15 +201,15 @@ class LinkExtension extends \Twig_Extension
         return '<li '.implode($linkAttributes, ' ').'>'.$this->victoireLink($parameters, $label, $attr, false, '#top').'</li>';
     }
 
-    public function victoireBusinessLink($businessEntityInstance, $patternId = null, $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
+    public function victoireBusinessLink($businessEntityInstance, $templateId = null, $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
-        if (!$patternId) {
-            $patternId = $this->BusinessPageHelper
+        if (!$templateId) {
+            $templateId = $this->BusinessPageHelper
                 ->guessBestPatternIdForEntity(new \ReflectionClass($businessEntityInstance), $businessEntityInstance->getId(), $this->em);
         }
 
         $page = $this->pageHelper->findPageByParameters([
-            'patternId' => $patternId,
+            'templateId' => $templateId,
             'entityId'  => $businessEntityInstance->getId(),
         ]);
 

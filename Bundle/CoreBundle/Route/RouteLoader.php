@@ -28,7 +28,7 @@ class RouteLoader extends Loader
         return $collection;
     }
 
-    protected function addVictoireRouting(&$collection)
+    protected function addVictoireRouting(RouteCollection &$collection)
     {
         $resources = [
             '@VictoireAnalyticsBundle/Controller/',
@@ -48,7 +48,7 @@ class RouteLoader extends Loader
         }
     }
 
-    protected function addWidgetsRouting(&$collection)
+    protected function addWidgetsRouting(RouteCollection &$collection)
     {
         foreach ($this->widgets as $widgetParams) {
             $controllerResource = '@VictoireWidget'.$widgetParams['name'].'Bundle/Controller/';
@@ -59,7 +59,7 @@ class RouteLoader extends Loader
         }
     }
 
-    protected function addShowBusinessPageByIdAction(&$collection)
+    protected function addShowBusinessPageByIdAction(RouteCollection &$collection)
     {
         $pattern = '/victoire-dcms-public/show-business-page-by-id/{entityId}/{type}';
         $defaults = [
@@ -73,7 +73,7 @@ class RouteLoader extends Loader
         $collection->add($routeName, $route);
     }
 
-    protected function addShowPageByIdRoute(&$collection)
+    protected function addShowPageByIdRoute(RouteCollection &$collection)
     {
         $pattern = '/victoire-dcms-public/show-page-by-id/{viewId}/{entityId}';
         $defaults = [
@@ -91,7 +91,7 @@ class RouteLoader extends Loader
         $collection->add($routeName, $route);
     }
 
-    protected function addShowPageRoute(&$collection)
+    protected function addShowPageRoute(RouteCollection &$collection)
     {
         // prepare a new route
         $pattern = '/{url}';

@@ -14,16 +14,13 @@ use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
  */
 abstract class BaseReferenceBuilder
 {
-    protected $viewReferenceHelper;
     protected $urlBuilder;
 
     /**
-     * @param ViewReferenceHelper $viewReferenceHelper
      * @param UrlBuilder          $urlBuilder
      */
-    public function __construct(ViewReferenceHelper $viewReferenceHelper, UrlBuilder $urlBuilder)
+    public function __construct(UrlBuilder $urlBuilder)
     {
-        $this->viewReferenceHelper = $viewReferenceHelper;
         $this->urlBuilder = $urlBuilder;
     }
 
