@@ -52,7 +52,7 @@ class WidgetCssGenerateCommand extends ContainerAwareCommand
                 $entityManager->flush($view);
             }
 
-            $widgetMapBuilder->build($view);
+            $widgetMapBuilder->build($view, true);
             $widgets = $widgetRepo->findAllWidgetsForView($view);
             $viewCssBuilder->generateViewCss($view, $widgets);
 
