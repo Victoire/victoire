@@ -39,14 +39,12 @@ class WidgetDataWarmer
      *
      * @param Reader          $reader
      * @param ViewCacheHelper $viewCacheHelper
-     * @param EntityManager   $entityManager
      * @param array           $manyToOneAssociations
      */
-    public function __construct(Reader $reader, ViewCacheHelper $viewCacheHelper, EntityManager $entityManager, array $manyToOneAssociations)
+    public function __construct(Reader $reader, ViewCacheHelper $viewCacheHelper, array $manyToOneAssociations)
     {
         $this->reader = $reader;
         $this->viewCacheHelper = $viewCacheHelper;
-        $this->em = $entityManager;
         $this->accessor = PropertyAccess::createPropertyAccessor();
         $this->manyToOneAssociations = $manyToOneAssociations;
     }
@@ -54,11 +52,16 @@ class WidgetDataWarmer
     /**
      * Warm widgets, links and medias.
      *
-     * @param View     $view
-     * @param Widget[] $viewWidgets
+     * @param EntityManager $em
+     * @param View $view
      */
-    public function warm(View $view, array $viewWidgets)
+    public function warm(EntityManager $em, View $view)
     {
+        $this->em = $em;
+
+        $widgetRepo = $this->em->getRepository('Victoire\Bundle\WidgetBundle\Entity\Widget');
+        $viewWidgets = $widgetRepo->findAllWidgetsForView($view);
+
         $this->populateWidgets($view, $viewWidgets);
 
         $linkIds = $associatedEntities = [];
@@ -75,12 +78,13 @@ class WidgetDataWarmer
      */
     private function populateWidgets(View $view, array $viewWidgets)
     {
-        foreach ($view->getWidgetMap() as $widgetMapArray) {
+        foreach ($view->getWidgetMap() as $slotId => $widgetMapArray) {
             /* @var WidgetMap[] $widgetMapArray */
             foreach ($widgetMapArray as $widgetMap) {
                 foreach ($viewWidgets as $viewWidget) {
                     if ($widgetMap->getWidgetId() == $viewWidget->getId()) {
                         $widgetMap->setWidget($viewWidget);
+                        break;
                     }
                 }
             }
