@@ -53,7 +53,7 @@ class WidgetDataWarmer
      * Warm widgets, links and medias.
      *
      * @param EntityManager $em
-     * @param View $view
+     * @param View          $view
      */
     public function warm(EntityManager $em, View $view)
     {

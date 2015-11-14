@@ -14,12 +14,11 @@ use Victoire\Bundle\WidgetBundle\Entity\Widget;
  */
 class WidgetMapManipulator
 {
-
     /**
      * Guess the position of the widget relatively to the positionReference.
      *
-     * @param Widget $widget The widget to position
-     * @param int $positionReference Id of the parent widget
+     * @param Widget $widget            The widget to position
+     * @param int    $positionReference Id of the parent widget
      *
      * @return WidgetMap The position of the widget
      */
@@ -47,10 +46,10 @@ class WidgetMapManipulator
             $widgetMapEntry->setPositionReference($positionReference);
         } else {
             foreach ($slot as $key => $_widgetMap) {
-                if ($_widgetMap->getWidgetId() === (int)$positionReference) {
+                if ($_widgetMap->getWidgetId() === (int) $positionReference) {
                     $widgetMapEntry->setPosition($_widgetMap->getPosition() + 1);
                     break;
-                } elseif (0 === (int)$positionReference) {
+                } elseif (0 === (int) $positionReference) {
                     $widgetMapEntry->setPosition(1);
                 }
             }

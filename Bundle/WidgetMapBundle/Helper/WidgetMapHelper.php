@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\WidgetMapBundle\Helper;
 
-use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\PageBundle\Entity\Slot;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
@@ -15,7 +14,6 @@ use Victoire\Bundle\PageBundle\Entity\WidgetMap;
  */
 class WidgetMapHelper
 {
-
     /**
      * Get the next availaible position for the widgetmap array.
      *

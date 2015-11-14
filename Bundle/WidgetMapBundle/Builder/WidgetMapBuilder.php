@@ -2,13 +2,10 @@
 
 namespace Victoire\Bundle\WidgetMapBundle\Builder;
 
-use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetMapBundle\DataTransformer\WidgetMapToArrayTransformer;
-use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
-use Victoire\Bundle\WidgetMapBundle\Warmer\WidgetDataWarmer;
 
 /**
  * View WidgetMap builder.
@@ -24,7 +21,8 @@ class WidgetMapBuilder
      *
      * @param WidgetMapToArrayTransformer $widgetMapTransformer
      */
-    public function __construct(WidgetMapToArrayTransformer $widgetMapTransformer) {
+    public function __construct(WidgetMapToArrayTransformer $widgetMapTransformer)
+    {
         $this->widgetMapTransformer = $widgetMapTransformer;
     }
 
