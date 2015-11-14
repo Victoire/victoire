@@ -31,6 +31,7 @@ services:
             - "@victoire_business_page.business_page_builder"
             - "@victoire_business_page.business_page_helper"
             - "@victoire_core.view_cache_helper"
+            - "@victoire_widget_map.widget_data_warmer"
 
     victoire_page.matcher.url_matcher:
         class: Victoire\Bundle\PageBundle\Matcher\UrlMatcher
