@@ -12,10 +12,12 @@ use Victoire\Bundle\CoreBundle\Repository\ViewRepository;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetBundle\Repository\WidgetRepository;
+use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
 
 class WidgetSubscriber implements EventSubscriber
 {
     private $viewCssBuilder;
+    private $widgetMapBuilder;
     /* @var UnitOfWork $uow */
     private $uow;
     /* @var EntityManager $em */
@@ -30,9 +32,10 @@ class WidgetSubscriber implements EventSubscriber
      *
      * @param ViewCssBuilder $viewCssBuilder
      */
-    public function __construct(ViewCssBuilder $viewCssBuilder)
+    public function __construct(ViewCssBuilder $viewCssBuilder, WidgetMapBuilder $widgetMapBuilder)
     {
         $this->viewCssBuilder = $viewCssBuilder;
+        $this->widgetMapBuilder = $widgetMapBuilder;
     }
 
     /**
@@ -95,6 +98,7 @@ class WidgetSubscriber implements EventSubscriber
         $view->changeCssHash();
 
         //Update css file
+        $this->widgetMapBuilder->build($view, true);
         $widgets = $this->widgetRepo->findAllWidgetsForView($view);
         $this->viewCssBuilder->updateViewCss($oldHash, $view, $widgets);
 

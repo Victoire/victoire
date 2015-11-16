@@ -10,6 +10,7 @@ services:
         class: Victoire\Bundle\CoreBundle\EventSubscriber\WidgetSubscriber
         arguments:
             - @victoire_core.view_css_builder
+            - @victoire_widget_map.builder
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 

@@ -31,6 +31,7 @@ use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\SeoBundle\Helper\PageSeoHelper;
 use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
+use Victoire\Bundle\WidgetMapBundle\Warmer\WidgetDataWarmer;
 
 /**
  * Page helper
@@ -51,6 +52,7 @@ class PageHelper extends ViewHelper
     protected $viewReferenceBuilderChain; // @victoire_core.chain.view_reference_builder_chain
     protected $urlBuilder; // @victoire_core.url_builder
     protected $viewCacheHelper;
+    protected $widgetDataWarmer;
 
     protected $pageParameters = [
         'name',
@@ -75,6 +77,7 @@ class PageHelper extends ViewHelper
      * @param AuthorizationChecker      $authorization_checker
      * @param WidgetMapBuilder          $widgetMapBuilder
      * @param UrlBuilder                $urlBuilder
+     * @param WidgetDataWarmer          $widgetDataWarmer
      */
     public function __construct(
         BETParameterConverter $parameterConverter,
@@ -94,7 +97,8 @@ class PageHelper extends ViewHelper
         UrlBuilder $urlBuilder,
         BusinessPageBuilder $businessPageBuilder,
         BusinessPageHelper $businessPageHelper,
-        ViewCacheHelper $viewCacheHelper
+        ViewCacheHelper $viewCacheHelper,
+        WidgetDataWarmer $widgetDataWarmer
     ) {
         parent::__construct($parameterConverter, $businessEntityHelper, $entityManager, $viewReferenceBuilder, $viewReferenceHelper, $viewReferenceProvider);
         $this->businessPageBuilder = $businessPageBuilder;
@@ -110,6 +114,7 @@ class PageHelper extends ViewHelper
         $this->authorizationChecker = $authorization_checker;
         $this->widgetMapBuilder = $widgetMapBuilder;
         $this->urlBuilder = $urlBuilder;
+        $this->widgetDataWarmer = $widgetDataWarmer;
     }
 
     /**
@@ -167,7 +172,10 @@ class PageHelper extends ViewHelper
         $event = new \Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent($view);
 
         //Build WidgetMap
-        $this->widgetMapBuilder->build($view, true, true);
+        $this->widgetMapBuilder->build($view, true);
+
+        //Populate widgets with their data
+        $this->widgetDataWarmer->warm($this->em, $view);
 
         //Dispatch contextual event regarding page type
         if ($view->getType() == 'business_page') {
@@ -305,7 +313,6 @@ class PageHelper extends ViewHelper
         }
 
         $this->checkPageValidity($page, $entity, $parameters);
-        $this->widgetMapBuilder->build($page);
 
         if (!empty($viewReference['url'])) {
             $page->setUrl($viewReference['url']);

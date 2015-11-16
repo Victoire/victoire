@@ -2,13 +2,10 @@
 
 namespace Victoire\Bundle\WidgetMapBundle\Builder;
 
-use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetMapBundle\DataTransformer\WidgetMapToArrayTransformer;
-use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
-use Victoire\Bundle\WidgetMapBundle\Warmer\WidgetDataWarmer;
 
 /**
  * View WidgetMap builder.
@@ -17,58 +14,19 @@ use Victoire\Bundle\WidgetMapBundle\Warmer\WidgetDataWarmer;
  */
 class WidgetMapBuilder
 {
-    protected $helper;
     protected $widgetMapTransformer;
-    protected $widgetDataWarmer;
-    protected $em;
 
     /**
      * Constructor.
      *
-     * @param WidgetMapHelper $helper Widget map helper
+     * @param WidgetMapToArrayTransformer $widgetMapTransformer
      */
-    public function __construct(
-        WidgetMapHelper $helper,
-        WidgetMapToArrayTransformer $widgetMapTransformer,
-        WidgetDataWarmer $widgetDataWarmer,
-        EntityManager $entityManager
-    ) {
-        $this->helper = $helper;
-        $this->widgetMapTransformer = $widgetMapTransformer;
-        $this->widgetDataWarmer = $widgetDataWarmer;
-        $this->em = $entityManager;
-    }
-
-    public function rebuild(View $view)
+    public function __construct(WidgetMapToArrayTransformer $widgetMapTransformer)
     {
-        $widgetMap = [];
-        if ($view->getTemplate()) {
-            $widgetMap = $view->getTemplate()->getWidgetMap();
-        }
-        foreach ($view->getWidgets() as $widget) {
-            if (!isset($widgetMap[$widget->getSlot()])) {
-                $widgetMap[$widget->getSlot()] = [];
-            }
-            //create the new widget map
-            $widgetMapEntry = new WidgetMap();
-            $widgetMapEntry->setAction(WidgetMap::ACTION_CREATE);
-            $widgetMapEntry->setWidgetId($widget->getId());
-            $widgetMapEntry->setAsynchronous($widget->isAsynchronous());
-            $widgetMapEntry = $this->helper->generateWidgetPosition($widgetMapEntry, $widget, $widgetMap, null);
-            $widgetMap[$widget->getSlot()][] = $widgetMapEntry;
-        }
-
-        $widgetMapAsArray = [];
-        foreach ($widgetMap as $slotId => $widgetMapItems) {
-            foreach ($widgetMapItems as $widgetMapItem) {
-                $widgetMapAsArray[$slotId][] = $this->widgetMapTransformer->transform($widgetMapItem);
-            }
-        }
-
-        $view->setWidgetMap($widgetMapAsArray);
+        $this->widgetMapTransformer = $widgetMapTransformer;
     }
 
-    public function build(View $view, $updatePage = true, $loadWidgets = false)
+    public function build(View $view, $updatePage = true)
     {
         $viewWidgetMaps = null;
         $widgetMap = [];
@@ -163,13 +121,6 @@ class WidgetMapBuilder
 
         if ($updatePage) {
             $view->setBuiltWidgetMap($widgetMap);
-        }
-
-        //Populate widgets with their data if needed
-        if ($loadWidgets) {
-            $widgetRepo = $this->em->getRepository('Victoire\Bundle\WidgetBundle\Entity\Widget');
-            $viewWidgets = $widgetRepo->findAllWidgetsForView($view);
-            $this->widgetDataWarmer->warm($view, $viewWidgets);
         }
 
         return $widgetMap;
