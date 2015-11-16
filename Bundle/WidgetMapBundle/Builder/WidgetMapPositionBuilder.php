@@ -1,18 +1,18 @@
 <?php
 
-namespace Victoire\Bundle\WidgetMapBundle\Manipulator;
+namespace Victoire\Bundle\WidgetMapBundle\Builder;
 
 use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
- * View WidgetMap manipulator.
- * This class allow to manipulate a WidgetMap by using the entity manager.
+ * View WidgetMap position builder.
+ * This class allow to change widget's positions in WidgetMap by using the entity manager.
  *
- * ref: victoire_widget_map.builder
+ * ref: victoire_widget_map.position_builder
  */
-class WidgetMapManipulator
+class WidgetMapPositionBuilder
 {
     /**
      * Guess the position of the widget relatively to the positionReference.

@@ -23,7 +23,7 @@ use Victoire\Bundle\WidgetBundle\Resolver\WidgetContentResolver;
 use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
 use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 use Victoire\Bundle\WidgetMapBundle\Manager\WidgetMapManager;
-use Victoire\Bundle\WidgetMapBundle\Manipulator\WidgetMapManipulator;
+use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapPositionBuilder;
 
 /**
  * This manager handles crud operations on a Widget.
@@ -37,7 +37,7 @@ class WidgetManager
     protected $formErrorHelper; // @victoire_form.error_helper
     protected $request; // @request
     protected $widgetMapManager;
-    protected $widgetMapManipulator;
+    protected $widgetMapPositionBuilder;
     protected $cacheReader; // @victoire_business_entity.cache_reader
     protected $victoireTemplating;
     protected $pageHelper;
@@ -57,7 +57,7 @@ class WidgetManager
      * @param WidgetMapManager          $widgetMapManager
      * @param WidgetMapHelper           $widgetMapHelper
      * @param WidgetMapBuilder          $widgetMapBuilder
-     * @param WidgetMapManipulator      $widgetMapManipulator
+     * @param WidgetMapPositionBuilder  $widgetMapPositionBuilder
      * @param BusinessEntityCacheReader $cacheReader
      * @param TemplateMapper            $victoireTemplating
      * @param PageHelper                $pageHelper
@@ -74,7 +74,7 @@ class WidgetManager
         WidgetMapManager $widgetMapManager,
         WidgetMapHelper $widgetMapHelper,
         WidgetMapBuilder $widgetMapBuilder,
-        WidgetMapManipulator $widgetMapManipulator,
+        WidgetMapPositionBuilder $widgetMapPositionBuilder,
         BusinessEntityCacheReader $cacheReader,
         TemplateMapper $victoireTemplating,
         PageHelper $pageHelper,
@@ -91,7 +91,7 @@ class WidgetManager
         $this->widgetMapManager = $widgetMapManager;
         $this->widgetMapHelper = $widgetMapHelper;
         $this->widgetMapBuilder = $widgetMapBuilder;
-        $this->widgetMapManipulator = $widgetMapManipulator;
+        $this->widgetMapPositionBuilder = $widgetMapPositionBuilder;
         $this->cacheReader = $cacheReader;
         $this->victoireTemplating = $victoireTemplating;
         $this->pageHelper = $pageHelper;
@@ -187,7 +187,7 @@ class WidgetManager
 
             $widgetMap = $this->widgetMapBuilder->build($view, false);
 
-            $widgetMapEntry = $this->widgetMapManipulator->generateWidgetPosition($this->entityManager, $widgetMapEntry, $widget, $widgetMap, $positionReference);
+            $widgetMapEntry = $this->widgetMapPositionBuilder->generateWidgetPosition($this->entityManager, $widgetMapEntry, $widget, $widgetMap, $positionReference);
             $this->widgetMapHelper->insertWidgetMapInSlot($slotId, $widgetMapEntry, $view);
 
             $this->entityManager->persist($view);
