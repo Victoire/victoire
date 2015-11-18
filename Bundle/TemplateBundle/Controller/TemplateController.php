@@ -74,6 +74,11 @@ class TemplateController extends Controller
         ];
 
         $this->get('victoire_widget_map.builder')->build($template);
+        $this->get('victoire_widget_map.widget_data_warmer')->warm(
+            $this->get('doctrine.orm.entity_manager'),
+            $template
+        );
+
         $this->container->get('victoire_core.current_view')->setCurrentView($template);
 
         //create the response
