@@ -148,16 +148,15 @@ class QueryHelper
             $orderBy = json_decode($containerEntity->getOrderBy(), true);
             if ($orderBy) {
                 foreach ($orderBy as $addOrderBy) {
-
                     $reflectionClass = new \ReflectionClass($itemsQueryBuilder->getRootEntities()[0]);
                     $reflectionProperty = $reflectionClass->getProperty($addOrderBy['by']);
 
                     //If ordering field is an association, treat it as a boolean
-                    if($this->isAssociationField($reflectionProperty)) {
-                        $itemsQueryBuilder->addSelect('CASE WHEN main_item.' . $addOrderBy['by'] . ' IS NULL THEN 0 ELSE 1 END AS HIDDEN caseOrder');
+                    if ($this->isAssociationField($reflectionProperty)) {
+                        $itemsQueryBuilder->addSelect('CASE WHEN main_item.'.$addOrderBy['by'].' IS NULL THEN 0 ELSE 1 END AS HIDDEN caseOrder');
                         $itemsQueryBuilder->addOrderBy('caseOrder', $addOrderBy['order']);
                     } else {
-                        $itemsQueryBuilder->addOrderBy('main_item.' . $addOrderBy['by'], $addOrderBy['order']);
+                        $itemsQueryBuilder->addOrderBy('main_item.'.$addOrderBy['by'], $addOrderBy['order']);
                     }
                 }
             }
@@ -190,9 +189,10 @@ class QueryHelper
     }
 
     /**
-     * Check if field is a OneToOne, OneToMany, ManyToOne or ManyToMany association
+     * Check if field is a OneToOne, OneToMany, ManyToOne or ManyToMany association.
      *
      * @param \ReflectionProperty $field
+     *
      * @return bool
      */
     private function isAssociationField(\ReflectionProperty $field)
@@ -203,6 +203,7 @@ class QueryHelper
                 return true;
             }
         }
+
         return false;
     }
 }
