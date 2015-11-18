@@ -4,3 +4,4 @@ services:
         arguments:
             - "@victoire_core.helper.business_entity_helper"
             - "@victoire_core.current_view"
+            - "@annotation_reader"

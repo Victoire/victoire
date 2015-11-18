@@ -2,7 +2,12 @@
 
 namespace Victoire\Bundle\QueryBundle\Helper;
 
+use Doctrine\Common\Annotations\Reader;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\OneToOne;
 use Doctrine\ORM\QueryBuilder;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
@@ -16,17 +21,20 @@ class QueryHelper
 {
     protected $businessEntityHelper = null;
     protected $currentView;
+    protected $reader;
 
     /**
      * Constructor.
      *
      * @param BusinessEntityHelper $businessEntityHelper
      * @param CurrentViewHelper    $currentView
+     * @param Reader               $reader
      */
-    public function __construct(BusinessEntityHelper $businessEntityHelper, CurrentViewHelper $currentView)
+    public function __construct(BusinessEntityHelper $businessEntityHelper, CurrentViewHelper $currentView, Reader $reader)
     {
         $this->businessEntityHelper = $businessEntityHelper;
         $this->currentView = $currentView;
+        $this->reader = $reader;
     }
 
     /**
@@ -125,7 +133,7 @@ class QueryHelper
         if (method_exists($containerEntity, 'additionnalQueryPart')) {
             $query = $containerEntity->additionnalQueryPart();
         }
-        $orderBy = json_decode($containerEntity->getOrderBy(), true);
+
         if ($query !== '' && $query !== null) {
             $subQuery = $em->createQueryBuilder()
                                 ->select('item.id')
@@ -133,18 +141,24 @@ class QueryHelper
 
             $itemsQueryBuilder
                 ->andWhere('main_item.id IN ('.$subQuery->getQuery()->getDql().' '.$query.')');
-            if ($orderBy) {
-                foreach ($orderBy as $addOrderBy) {
-                    $itemsQueryBuilder->addOrderBy('main_item.'.$addOrderBy['by'], $addOrderBy['order']);
-                }
-            }
         }
 
+        //Add ORDER BY if set
         if (method_exists($containerEntity, 'getOrderBy')) {
             $orderBy = json_decode($containerEntity->getOrderBy(), true);
             if ($orderBy) {
                 foreach ($orderBy as $addOrderBy) {
-                    $itemsQueryBuilder->addOrderBy('main_item.'.$addOrderBy['by'], $addOrderBy['order']);
+
+                    $reflectionClass = new \ReflectionClass($itemsQueryBuilder->getRootEntities()[0]);
+                    $reflectionProperty = $reflectionClass->getProperty($addOrderBy['by']);
+
+                    //If ordering field is an association, treat it as a boolean
+                    if($this->isAssociationField($reflectionProperty)) {
+                        $itemsQueryBuilder->addSelect('CASE WHEN main_item.' . $addOrderBy['by'] . ' IS NULL THEN 0 ELSE 1 END AS HIDDEN caseOrder');
+                        $itemsQueryBuilder->addOrderBy('caseOrder', $addOrderBy['order']);
+                    } else {
+                        $itemsQueryBuilder->addOrderBy('main_item.' . $addOrderBy['by'], $addOrderBy['order']);
+                    }
                 }
             }
         }
@@ -173,5 +187,22 @@ class QueryHelper
         }
 
         return $itemsQueryBuilder;
+    }
+
+    /**
+     * Check if field is a OneToOne, OneToMany, ManyToOne or ManyToMany association
+     *
+     * @param \ReflectionProperty $field
+     * @return bool
+     */
+    private function isAssociationField(\ReflectionProperty $field)
+    {
+        $annotations = $this->reader->getPropertyAnnotations($field);
+        foreach ($annotations as $key => $annotationObj) {
+            if ($annotationObj instanceof OneToOne || $annotationObj instanceof OneToMany || $annotationObj instanceof ManyToOne || $annotationObj instanceof ManyToMany) {
+                return true;
+            }
+        }
+        return false;
     }
 }
