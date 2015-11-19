@@ -416,6 +416,7 @@ class PageHelper extends ViewHelper
      *
      * @param View $view
      * @param bool $isAjax
+     *
      * @return string
      */
     private function guessBestLayoutForView(View $view, $isAjax)
