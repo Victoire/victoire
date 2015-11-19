@@ -153,11 +153,11 @@ class PageHelper extends ViewHelper
      *
      * @return Response
      */
-    public function renderPageByUrl($url, $locale)
+    public function renderPageByUrl($url, $locale, $isAjax = false)
     {
         $page = $this->findPageByParameters(['url' => $url, 'locale' => $locale]);
 
-        return $this->renderPage($page);
+        return $this->renderPage($page, $isAjax);
     }
 
     /**
@@ -167,7 +167,7 @@ class PageHelper extends ViewHelper
      *
      * @return Response
      */
-    public function renderPage($view)
+    public function renderPage($view, $isAjax = false)
     {
         $event = new \Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent($view);
 
@@ -194,12 +194,8 @@ class PageHelper extends ViewHelper
         $eventName = 'victoire_core.'.$type.'_menu.contextual';
         $this->eventDispatcher->dispatch($eventName, $event);
 
-        if (method_exists($view, 'getLayout') && $view->getLayout()) {
-            $viewLayout = $view->getLayout();
-        } else {
-            $viewLayout = $view->getTemplate()->getLayout();
-        }
-        $layout = 'AppBundle:Layout:'.$viewLayout.'.html.twig';
+        //Determine which layout to use
+        $layout = $this->guessBestLayoutForView($view, $isAjax);
 
         //Set currentView and dispatch victoire.on_render_page event with this currentView
         $this->currentViewHelper->setCurrentView($view);
@@ -413,5 +409,26 @@ class PageHelper extends ViewHelper
         $newPage->setEntityProxy($entityProxy);
 
         return $newPage;
+    }
+
+    /**
+     * Guess which layout to use for a given View.
+     *
+     * @param View $view
+     * @param bool $isAjax
+     *
+     * @return string
+     */
+    private function guessBestLayoutForView(View $view, $isAjax)
+    {
+        if ($isAjax) {
+            $viewLayout = 'modal';
+        } elseif (method_exists($view, 'getLayout') && $view->getLayout()) {
+            $viewLayout = $view->getLayout();
+        } else {
+            $viewLayout = $view->getTemplate()->getLayout();
+        }
+
+        return 'AppBundle:Layout:'.$viewLayout.'.html.twig';
     }
 }
