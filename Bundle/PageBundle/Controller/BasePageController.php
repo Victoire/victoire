@@ -20,7 +20,11 @@ class BasePageController extends Controller
 
     public function showAction(Request $request, $url)
     {
-        $response = $this->container->get('victoire_page.page_helper')->renderPageByUrl($url, $request->getLocale());
+        $response = $this->container->get('victoire_page.page_helper')->renderPageByUrl(
+            $url,
+            $request->getLocale(),
+            $request->isXmlHttpRequest()
+        );
 
         //throw an exception is the page is not valid
         return $response;
