@@ -80,6 +80,11 @@ class BusinessTemplateController extends Controller
         $view->setReference(['id' => $view->getId()]);
 
         $this->get('victoire_widget_map.builder')->build($view);
+        $this->get('victoire_widget_map.widget_data_warmer')->warm(
+            $this->get('doctrine.orm.entity_manager'),
+            $view
+        );
+
         $this->container->get('victoire_core.current_view')->setCurrentView($view);
 
         return $this->container->get('victoire_page.page_helper')->renderPage($view);
