@@ -44,6 +44,11 @@ class ErrorPageController extends Controller
         ];
 
         $this->get('victoire_widget_map.builder')->build($page);
+        $this->get('victoire_widget_map.widget_data_warmer')->warm(
+            $this->get('doctrine.orm.entity_manager'),
+            $page
+        );
+
         $this->container->get('victoire_core.current_view')->setCurrentView($page);
 
         //create the response

@@ -20,7 +20,11 @@ class BasePageController extends Controller
 
     public function showAction(Request $request, $url)
     {
-        $response = $this->container->get('victoire_page.page_helper')->renderPageByUrl($url, $request->getLocale());
+        $response = $this->container->get('victoire_page.page_helper')->renderPageByUrl(
+            $url,
+            $request->getLocale(),
+            $request->isXmlHttpRequest()
+        );
 
         //throw an exception is the page is not valid
         return $response;
@@ -57,6 +61,10 @@ class BasePageController extends Controller
             'entityId' => $entityId,
         ]);
         $this->get('victoire_widget_map.builder')->build($page);
+        $this->get('victoire_widget_map.widget_data_warmer')->warm(
+            $this->get('doctrine.orm.entity_manager'),
+            $page
+        );
 
         return $this->redirect($this->generateUrl('victoire_core_page_show', ['url' => $page->getUrl()]));
     }
