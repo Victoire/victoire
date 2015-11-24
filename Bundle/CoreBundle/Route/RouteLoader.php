@@ -83,7 +83,10 @@ class RouteLoader extends Loader
         $requirements = [
             'viewId' => '\d+',
         ];
-        $route = new Route($pattern, $defaults, $requirements);
+        $options = [
+            'expose' => true,
+        ];
+        $route = new Route($pattern, $defaults, $requirements, $options);
         $routeName = 'victoire_core_page_show_by_id';
         $collection->add($routeName, $route);
     }

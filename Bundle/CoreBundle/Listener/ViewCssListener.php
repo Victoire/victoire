@@ -37,10 +37,9 @@ class ViewCssListener
     {
         $currentView = $event->getCurrentView();
 
-        if($currentView instanceof VirtualBusinessPage)
-        {
+        if ($currentView instanceof VirtualBusinessPage) {
             $currentView->setCssHash($currentView->getTemplate()->getCssHash());
-        } else if (!$viewHash = $currentView->getCssHash()) {
+        } elseif (!$viewHash = $currentView->getCssHash()) {
             $currentView->changeCssHash();
             $this->entityManager->persist($currentView);
             $this->entityManager->flush($currentView);
