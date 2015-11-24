@@ -3,6 +3,7 @@
 namespace Victoire\Bundle\CoreBundle\Listener;
 
 use Doctrine\ORM\EntityManager;
+use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
 use Victoire\Bundle\CoreBundle\Builder\ViewCssBuilder;
 use Victoire\Bundle\CoreBundle\Event\PageRenderEvent;
 use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
@@ -36,7 +37,10 @@ class ViewCssListener
     {
         $currentView = $event->getCurrentView();
 
-        if (!$viewHash = $currentView->getCssHash()) {
+        if($currentView instanceof VirtualBusinessPage)
+        {
+            $currentView->setCssHash($currentView->getTemplate()->getCssHash());
+        } else if (!$viewHash = $currentView->getCssHash()) {
             $currentView->changeCssHash();
             $this->entityManager->persist($currentView);
             $this->entityManager->flush($currentView);
