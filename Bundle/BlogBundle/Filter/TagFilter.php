@@ -37,6 +37,12 @@ class TagFilter extends BaseFilter
      */
     public function buildQuery(QueryBuilder $qb, array $parameters)
     {
+
+        //Handle single tag
+        if (!is_array($parameters['tags'])) {
+            $parameters['tags'] = [$parameters['tags']];
+        }
+
         //clean the parameters from the blank value
         foreach ($parameters['tags'] as $index => $parameter) {
             //the blank value is removed
