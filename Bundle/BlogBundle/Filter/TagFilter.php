@@ -116,13 +116,13 @@ class TagFilter extends BaseFilter
         $builder
             ->add(
                 'tags', 'choice', [
-                    'label'    => false,
-                    'choices'  => $tagsChoices,
-                    'empty_value' => "blog.tag_filter.empty_value",
-                    'required' => false,
-                    'expanded' => true,
-                    'multiple' => $options['multiple'],
-                    'data'     => $data,
+                    'label'       => false,
+                    'choices'     => $tagsChoices,
+                    'empty_value' => 'blog.tag_filter.empty_value',
+                    'required'    => false,
+                    'expanded'    => true,
+                    'multiple'    => $options['multiple'],
+                    'data'        => $data,
                 ]
             );
     }
