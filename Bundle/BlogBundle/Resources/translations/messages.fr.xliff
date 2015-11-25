@@ -14,6 +14,10 @@
         <source>blog.tag_filter.label</source>
         <target>Étiquettes</target>
       </trans-unit>
+      <trans-unit id="2" resname="blog.tag_filter.empty_value">
+        <source>blog.tag_filter.empty_value</source>
+        <target>Aucun filtre</target>
+      </trans-unit>
       <trans-unit id="3" resname="blog.date_filter.label">
         <source>blog.date_filter.label</source>
         <target>Date</target>
