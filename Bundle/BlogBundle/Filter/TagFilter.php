@@ -39,7 +39,7 @@ class TagFilter extends BaseFilter
     {
 
         //Handle single tag
-        if(!is_array($parameters['tags'])) {
+        if (!is_array($parameters['tags'])) {
             $parameters['tags'] = [$parameters['tags']];
         }
 
