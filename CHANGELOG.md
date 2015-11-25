@@ -2,7 +2,28 @@
 
 ## [Unreleased](https://github.com/Victoire/victoire/tree/HEAD)
 
-[Full Changelog](https://github.com/Victoire/victoire/compare/1.3.4...HEAD)
+[Full Changelog](https://github.com/Victoire/victoire/compare/1.3.5...HEAD)
+
+## [1.3.5](https://github.com/Victoire/victoire/tree/1.3.5) (2015-11-25)
+[Full Changelog](https://github.com/Victoire/victoire/compare/1.3.4...1.3.5)
+
+**Closed issues:**
+
+- \[Insight\] The composer.lock is not up to date. - in composer.lock, line 0 [\#242](https://github.com/Victoire/victoire/issues/242)
+- Generate viewReference when a new business entity is add [\#33](https://github.com/Victoire/victoire/issues/33)
+
+**Merged pull requests:**
+
+- Add empty value in tags fields [\#282](https://github.com/Victoire/victoire/pull/282) ([vincent-chapron](https://github.com/vincent-chapron))
+- fix cssHash for virtual BP and expose victoire\_core\_page\_show\_by\_id route [\#281](https://github.com/Victoire/victoire/pull/281) ([Charlie-Lucas](https://github.com/Charlie-Lucas))
+- Render pages in a modal layout if request is Ajax [\#280](https://github.com/Victoire/victoire/pull/280) ([gregumo](https://github.com/gregumo))
+- Call WidgetDataWarmer warm method after WidgetMap build when necessary [\#279](https://github.com/Victoire/victoire/pull/279) ([gregumo](https://github.com/gregumo))
+- Add isset check on viewReferencePage for manual call to vic\_link\_url [\#278](https://github.com/Victoire/victoire/pull/278) ([gregumo](https://github.com/gregumo))
+- Remove orderBy duplicata and manage orderBy for association fields in QueryHelper [\#277](https://github.com/Victoire/victoire/pull/277) ([gregumo](https://github.com/gregumo))
+- add Disqus in the list of widgets that can display articles [\#276](https://github.com/Victoire/victoire/pull/276) ([Charlie-Lucas](https://github.com/Charlie-Lucas))
+- Refactor EntityManager injections to avoid conflict between WidgetCss command and WidgetMapDataWarmer [\#275](https://github.com/Victoire/victoire/pull/275) ([gregumo](https://github.com/gregumo))
+- Add Slider Nav in the list of the widgets that can display article [\#274](https://github.com/Victoire/victoire/pull/274) ([Charlie-Lucas](https://github.com/Charlie-Lucas))
+- Restore good version for incenteev/composer-parameter-handler [\#273](https://github.com/Victoire/victoire/pull/273) ([gregumo](https://github.com/gregumo))
 
 ## [1.3.4](https://github.com/victoire/victoire/tree/1.3.4) (2015-11-13)
 [Full Changelog](https://github.com/victoire/victoire/compare/1.3.3...1.3.4)
