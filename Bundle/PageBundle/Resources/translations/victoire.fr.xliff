@@ -58,6 +58,10 @@
             <source>form.page.type.status.label</source>
             <target>Statut de publication</target>
         </trans-unit>
+        <trans-unit id="25" resname="form.article.settings.type.publish.label">
+            <source>form.article.settings.type.publish.label</source>
+            <target>Date de publication</target>
+        </trans-unit>
         <trans-unit id="13" resname="form.page.type.status.choice.label.draft">
             <source>form.page.type.status.choice.label.draft</source>
             <target>Brouillon</target>

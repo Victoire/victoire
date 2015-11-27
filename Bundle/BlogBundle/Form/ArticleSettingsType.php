@@ -55,7 +55,7 @@ class ArticleSettingsType extends ArticleType
     }
 
     /**
-     * Add the related  status according to the status field.
+     * Add the related status according to the status field.
      **/
     public static function manageRelatedStatus($status, $form)
     {

@@ -130,6 +130,10 @@
             <source>victoire_page.update.success</source>
             <target>Página éxito modificado</target>
         </trans-unit>
+        <trans-unit id="25" resname="form.article.settings.type.publish.label">
+            <source>form.article.settings.type.publish.label</source>
+            <target>Fecha de publicación</target>
+        </trans-unit>
     </body>
   </file>
 </xliff>
