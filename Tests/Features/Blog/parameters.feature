@@ -14,7 +14,7 @@ Background:
         And I should see "Nom"
         When I fill in "Nom" with "The NEW Jedi network"
         And I press "Modifier"
-        Then I should see "Victoire"
+        Then I should see "Victoire !"
         Given I open the hamburger menu
 
     Scenario: I change the blog's url
@@ -26,7 +26,7 @@ Background:
         Then I should see "URL"
         #TODO And I fill in "URL" with "the-new-jedi-network"
         #TODO And I press "Modifier"
-        #TODO Then I should see "Victoire"
+        #TODO Then I should see "Victoire !"
 
     Scenario: I change the blog's status to draft
         Given I open the hamburger menu
@@ -37,7 +37,7 @@ Background:
         Then I should see "Statut de publication"
         And I select "Brouillon" from "Statut de publication"
         And I press "Modifier"
-        Then I should see "Victoire"
+        Then I should see "Victoire !"
         And I wait 5 seconds
         And I should be on "/fr/the-jedi-network"
         #TODO Given I open the hamburger menu
@@ -51,7 +51,7 @@ Background:
         Then I should see "Page parente"
         And I select "Test" from "Page parente"
         And I press "Modifier"
-        Then I should see "Victoire"
+        Then I should see "Victoire !"
         Then I go to "/fr/test/the-jedi-network"
         Given I open the hamburger menu
 
@@ -64,7 +64,7 @@ Background:
         Then I should see "Modèle"
         And I select "Two columns" from "Modèle"
         And I press "Modifier"
-        Then I should see "Victoire"
+        Then I should see "Victoire !"
         Then I go to "/fr/the-jedi-network"
         Given I open the hamburger menu
 
@@ -77,7 +77,7 @@ Background:
         Then I should see "Langue"
         And I select "Anglais" from "Langue"
         And I press "Modifier"
-        Then I should see "Victoire"
+        Then I should see "Victoire !"
         Then I go to "/fr/the-jedi-network"
         Given I open the hamburger menu
 
@@ -91,7 +91,7 @@ Background:
         Then I should see "Statut de publication"
         And I select "Brouillon" from "Statut de publication"
         And I follow "Mettre à jour"
-        Then I should see "Victoire"
+        Then I should see "Victoire !"
         And I wait 5 seconds
         And I should be on "/fr/the-jedi-network/i-m-your-father"
         #TODO Given I open the hamburger menu - the page is not found
@@ -108,7 +108,7 @@ Background:
         And I wait 5 seconds
         #TODO Then I fill in "Date de publication" with "11/11/2045"
         #TODO And I follow "Mettre à jour"
-        #TODO Then I should see "Victoire"
+        #TODO Then I should see "Victoire !"
         #TODO And I wait 5 seconds
         #TODO And I should be on "/fr/the-jedi-network/i-m-your-father"
         #TODO Given I open the hamburger menu
@@ -121,7 +121,7 @@ Background:
         And I should see "I'm your father."
         When I follow "Modifier les paramètres"
         #TODO Then I fill in "Nom de l'article" with "My name is Anakin"
-        #TODO Then I should see "Victoire"
+        #TODO Then I should see "Victoire !"
         #TODO And I wait 5 seconds
         #TODO And I should be on "/fr/the-jedi-network/i-m-your-father"
         #TODO And I select the option "Paramètres de la page" in the dropdown "Page"
@@ -137,5 +137,5 @@ Background:
         Then I should see "Catégorie"
         When I fill in "Catégorie" with "Naboo"
         #TODO And I press "Modifier" - impossible to specify the button, links to the first it finds, which is on the parameters tab
-        #TODO Then I should see "Victoire"
+        #TODO Then I should see "Victoire !"
 
