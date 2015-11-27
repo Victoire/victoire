@@ -1558,7 +1558,7 @@ namespace Symfony\Component\HttpFoundation
             503 => 'Service Unavailable',
             504 => 'Gateway Timeout',
             505 => 'HTTP Version Not Supported',
-            506 => 'Variant Also Negotiates (Experimental)', 507 => 'Insufficient Storage', 508 => 'Loop Detected', 510 => 'Not Extended', 511 => 'Network Authentication Required',];
+            506 => 'Variant Also Negotiates (Experimental)', 507 => 'Insufficient Storage', 508 => 'Loop Detected', 510 => 'Not Extended', 511 => 'Network Authentication Required', ];
 
         public function __construct($content = '', $status = 200, $headers = [])
         {
