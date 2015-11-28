@@ -111,14 +111,14 @@ class BusinessEntityCacheReader
      */
     protected function fetch($key)
     {
-        $results = $this->cache->fetch($key, null);
+        $results = $this->cache->get($key, null);
 
         if (!$results) {
             //Reparse all entities to find some @VIC Annotation
             foreach ($this->driver->getAllClassNames() as $className) {
                 $this->driver->parse(new \ReflectionClass($className));
             }
-            $results = $this->cache->fetch($key, []);
+            $results = $this->cache->get($key, []);
         }
 
         return $results;
