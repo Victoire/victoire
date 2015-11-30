@@ -6,7 +6,11 @@ use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\PageBundle\Entity\Traits\WebViewTrait;
 use Victoire\Bundle\ViewReferenceBundle\Builder\Chain\ViewReferenceTransformerChain;
 use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
+use Victoire\Bundle\ViewReferenceBundle\Transformer\ArrayToBusinessPageReferenceTransformer;
 use Victoire\Bundle\ViewReferenceBundle\Transformer\ArrayToViewReferenceTransformer;
+use Victoire\Bundle\ViewReferenceBundle\Transformer\XmlToBusinessPageReferenceTransformer;
+use Victoire\Bundle\ViewReferenceBundle\Transformer\XmlToViewReferenceTransformer;
+use Victoire\Bundle\ViewReferenceBundle\ViewReference\BusinessPageReference;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 class ViewReferenceXmlCacheManager
@@ -65,6 +69,41 @@ XML;
     }
 
     /**
+     * add
+     **/
+    public function add(ViewReference $viewReference)
+    {
+        if ($viewReference instanceof BusinessPageReference) {
+            $transformer = new XmlToBusinessPageReferenceTransformer();
+            $xmlReference = $transformer->transform($viewReference);
+        } else {
+            $transformer = new XmlToViewReferenceTransformer();
+            $xmlReference = $transformer->transform($viewReference);
+        }
+        $nodes = $this->driver->readCache();
+        $nodes->addChild($xmlReference);
+
+        return $this->driver->writeFile($nodes);
+    }
+
+    /**
+     * remove a viewReference
+     * @param ViewReference $viewReference
+     *
+     * @return int the number of viewReference deleted
+     **/
+    public function remove(ViewReference $viewReference)
+    {
+        if ($viewReference instanceof BusinessPageReference) {
+            $transformer = new ArrayToBusinessPageReferenceTransformer();
+        } else {
+            $transformer = new ArrayToViewReferenceTransformer();
+        }
+
+        return $this->removeViewsReferencesByParameters($transformer->reverseTransform($viewReference));
+    }
+
+    /**
      * remove every matching viewsReferences
      * @param $parameters
      *
@@ -82,34 +121,5 @@ XML;
         $this->driver->writeFile($rootNode);
 
         return $counter;
-    }
-
-    /**
-     * remove a viewReference
-     * @param ViewReference $viewReference
-     *
-     * @return int the number of viewReference deleted
-     **/
-    public function removeViewReference(ViewReference $viewReference)
-    {
-        $transformer = new ArrayToViewReferenceTransformer();
-
-        return $this->removeViewsReferencesByParameters($transformer->reverseTransform($viewReference));
-    }
-
-    /**
-     * add
-     **/
-    public function add($viewReference)
-    {
-        //@todo implements add method
-    }
-
-    /**
-     * flush
-     **/
-    public function flush()
-    {
-        $this->driver->writeFile($this->viewsReferences);
     }
 }

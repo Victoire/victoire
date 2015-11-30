@@ -8,7 +8,7 @@ use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
 use Victoire\Bundle\ViewReferenceBundle\Transformer\ArrayToViewReferenceTransformer;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
-class ViewReferenceXmlCacheDriver extends ViewReferenceXmlCacheRepository
+class ViewReferenceXmlCacheDriver
 {
     protected $xmlFile;
 

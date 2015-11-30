@@ -65,7 +65,7 @@ class ViewReferenceXmlCacheRepository
     /**
      * Return the first viewReference according to the parameters
      * @param $parameters
-     * @return array|null
+     * @return ViewReference|null
      */
     public function getOneReferenceByParameters($parameters, $transform = true)
     {
@@ -78,7 +78,7 @@ class ViewReferenceXmlCacheRepository
     /**
      * @param array $parameters
      *
-     * @return array
+     * @return ViewReference[]
      */
     public function getReferencesByParameters($parameters, $transform = true)
     {
