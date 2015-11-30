@@ -68,58 +68,5 @@ XML;
         return $rootNode;
     }
 
-    /**
-     * add
-     **/
-    public function add(ViewReference $viewReference)
-    {
-        if ($viewReference instanceof BusinessPageReference) {
-            $transformer = new XmlToBusinessPageReferenceTransformer();
-            $xmlReference = $transformer->transform($viewReference);
-        } else {
-            $transformer = new XmlToViewReferenceTransformer();
-            $xmlReference = $transformer->transform($viewReference);
-        }
-        $nodes = $this->driver->readCache();
-        $nodes->addChild($xmlReference);
-
-        return $this->driver->writeFile($nodes);
-    }
-
-    /**
-     * remove a viewReference
-     * @param ViewReference $viewReference
-     *
-     * @return int the number of viewReference deleted
-     **/
-    public function remove(ViewReference $viewReference)
-    {
-        if ($viewReference instanceof BusinessPageReference) {
-            $transformer = new ArrayToBusinessPageReferenceTransformer();
-        } else {
-            $transformer = new ArrayToViewReferenceTransformer();
-        }
-
-        return $this->removeViewsReferencesByParameters($transformer->reverseTransform($viewReference));
-    }
-
-    /**
-     * remove every matching viewsReferences
-     * @param $parameters
-     *
-     * @return int
-     **/
-    public function removeViewsReferencesByParameters($parameters)
-    {
-        $rootNode = $this->driver->readCache();
-        $counter = 0;
-        foreach ($rootNode->xpath(ViewReferenceHelper::buildXpath($parameters)) as $item) {
-            unset($item[0]);
-            $counter++;
-        }
-
-        $this->driver->writeFile($rootNode);
-
-        return $counter;
-    }
+    #have a look to git history to find "add" and "remove" methods
 }
