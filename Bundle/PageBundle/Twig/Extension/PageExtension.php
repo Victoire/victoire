@@ -80,6 +80,24 @@ class PageExtension extends \Twig_Extension
     }
 
     /**
+     * Construct CSS link markup for the style of all the Widgets contained in the current View.
+     *
+     * @return string
+     */
+    public function cmsPageCss()
+    {
+        $currentView = $this->currentViewHelper->getCurrentView();
+        if (!$currentView || !$this->viewCssBuilder->cssFileExists($currentView)) {
+            return '';
+        }
+        return sprintf(
+            '<link href="%s" ng-href="%s" rel="stylesheet" type="text/css" rel="stylesheet"/>',
+            $this->viewCssBuilder->getHref($currentView),
+            $this->viewCssBuilder->getAngularHref($currentView)
+        );
+    }
+
+    /**
      * Get the list of urls of the children.
      *
      * @param BasePage $page
