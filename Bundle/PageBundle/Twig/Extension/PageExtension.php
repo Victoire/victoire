@@ -4,7 +4,6 @@ namespace Victoire\Bundle\PageBundle\Twig\Extension;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
-use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
 use Victoire\Bundle\CoreBundle\Builder\ViewCssBuilder;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
@@ -90,6 +89,7 @@ class PageExtension extends \Twig_Extension
         if (!$currentView || !$this->viewCssBuilder->cssFileExists($currentView)) {
             return '';
         }
+
         return sprintf(
             '<link href="%s" ng-href="%s" rel="stylesheet" type="text/css" rel="stylesheet"/>',
             $this->viewCssBuilder->getHref($currentView),
@@ -122,7 +122,8 @@ class PageExtension extends \Twig_Extension
     }
 
     /**
-     * Return the current viewReference->id
+     * Return the current viewReference->id.
+     *
      * @return string
      */
     public function victoireCurrentPageReference()

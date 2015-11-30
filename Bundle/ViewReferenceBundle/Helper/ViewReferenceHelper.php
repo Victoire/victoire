@@ -3,13 +3,12 @@
 namespace Victoire\Bundle\ViewReferenceBundle\Helper;
 
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
-use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\ViewReferenceBundle\Builder\ViewReferenceBuilder;
 
 /**
- * ref: victoire_view_reference.helper
+ * ref: victoire_view_reference.helper.
  */
 class ViewReferenceHelper
 {
@@ -20,11 +19,14 @@ class ViewReferenceHelper
 
     /**
      * Constructor.
+     *
      * @param ViewReferenceBuilder $viewReferenceBuilder
      */
-    public function __construct(ViewReferenceBuilder $viewReferenceBuilder) {
+    public function __construct(ViewReferenceBuilder $viewReferenceBuilder)
+    {
         $this->viewReferenceBuilder = $viewReferenceBuilder;
     }
+
     /**
      * @param View  $view
      * @param mixed $entity
@@ -37,7 +39,6 @@ class ViewReferenceHelper
         if ($view instanceof BusinessPage) {
             $id = $view->getTemplate()->getId();
             $entity = $view->getBusinessEntity();
-
         } elseif (!$view instanceof WebViewInterface) {
             return $view->getId();
         }
@@ -52,6 +53,7 @@ class ViewReferenceHelper
 
     /**
      * @param array $parameters
+     *
      * @return string
      */
     public static function buildXpath(array $parameters)
@@ -67,7 +69,8 @@ class ViewReferenceHelper
     /**
      * @param [] $tree
      */
-    public function buildViewReferenceRecursively($tree, $entityManager) {
+    public function buildViewReferenceRecursively($tree, $entityManager)
+    {
         foreach ($tree as $branch) {
             /** @var WebViewInterface $view */
             $view = $branch['view'];

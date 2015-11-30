@@ -10,7 +10,7 @@ use Victoire\Bundle\ViewReferenceBundle\Transformer\XmlToViewReferenceTransforme
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 /**
- * ref: victoire_view_reference.cache.repository
+ * ref: victoire_view_reference.cache.repository.
  */
 class ViewReferenceXmlCacheRepository
 {
@@ -18,7 +18,7 @@ class ViewReferenceXmlCacheRepository
     protected $viewReferenceTransformerChain;
 
     /**
-     * @param ViewReferenceXmlCacheDriver $driver
+     * @param ViewReferenceXmlCacheDriver   $driver
      * @param ViewReferenceTransformerChain $viewReferenceTransformerChain
      */
     public function __construct(ViewReferenceXmlCacheDriver $driver, ViewReferenceTransformerChain $viewReferenceTransformerChain)
@@ -63,8 +63,10 @@ class ViewReferenceXmlCacheRepository
     }
 
     /**
-     * Return the first viewReference according to the parameters
+     * Return the first viewReference according to the parameters.
+     *
      * @param $parameters
+     *
      * @return ViewReference|null
      */
     public function getOneReferenceByParameters($parameters, $transform = true)
@@ -106,15 +108,15 @@ class ViewReferenceXmlCacheRepository
      * get the content of the view cache file.
      *
      * @param \SimpleXMLElement $node
-     * @param int $depth
+     * @param int               $depth
+     *
      * @return \array[]
      */
     public function getChoices(\SimpleXMLElement $node = null, $depth = 0)
     {
         $viewsReferences = [];
 
-        $prefixFn = function($depth, $char0 = '└', $char = '─')
-        {
+        $prefixFn = function ($depth, $char0 = '└', $char = '─') {
             $prefix = $char0;
             for ($i = 0; $i <= $depth; $i++) {
                 $prefix .= $char;
@@ -138,9 +140,8 @@ class ViewReferenceXmlCacheRepository
                 $viewsReferences[$viewReference->getId()] = $prefix.$viewReference->getName();
             }
 
-            $viewsReferences = array_merge($viewsReferences, $this->getChoices($child, $depth+1));
+            $viewsReferences = array_merge($viewsReferences, $this->getChoices($child, $depth + 1));
         }
-
 
         return $viewsReferences;
     }
@@ -148,7 +149,8 @@ class ViewReferenceXmlCacheRepository
     /**
      * @param \SimpleXMLElement $xmlElement
      */
-    public static function findTransformerFromXmlElement($xmlElement) {
+    public static function findTransformerFromXmlElement($xmlElement)
+    {
         if (isset($xmlElement['entityId'])) {
             $viewRefTransformer = new XMLToBusinessPageReferenceTransformer();
         } else {

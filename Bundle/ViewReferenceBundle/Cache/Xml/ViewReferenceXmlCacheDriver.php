@@ -2,12 +2,6 @@
 
 namespace Victoire\Bundle\ViewReferenceBundle\Cache\Xml;
 
-use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
-use Victoire\Bundle\PageBundle\Entity\Traits\WebViewTrait;
-use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
-use Victoire\Bundle\ViewReferenceBundle\Transformer\ArrayToViewReferenceTransformer;
-use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
-
 class ViewReferenceXmlCacheDriver
 {
     protected $xmlFile;

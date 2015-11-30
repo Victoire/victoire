@@ -36,7 +36,6 @@ class VictoireContext extends RawMinkContext
         $this->getContainer()->get('victoire_view_reference.cache.driver')->writeFile(
             $this->getContainer()->get('victoire_view_reference.cache.manager')->generateXml($viewsReferences)
         );
-
     }
 
     /**

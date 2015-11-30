@@ -9,7 +9,6 @@ use Victoire\Bundle\ViewReferenceBundle\DependencyInjection\Compiler\ViewReferen
 
 class ViewReferenceBundle extends Bundle
 {
-
     /**
      * Build bundle.
      *

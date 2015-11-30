@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\PageBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -112,13 +111,14 @@ class BasePageController extends Controller
             $this->congrat($this->get('translator')->trans('victoire_page.create.success', [], 'victoire'));
 
             $urlBuilder = $this->container->get('victoire_core.url_builder');
+
             return [
                 'success'  => true,
                 'url'      => $this->generateUrl(
                     'victoire_core_page_show',
                     [
                         '_locale' => $page->getLocale(),
-                        'url'     => $urlBuilder->buildUrl($page)
+                        'url'     => $urlBuilder->buildUrl($page),
                     ]
                 ),
             ];
@@ -168,7 +168,7 @@ class BasePageController extends Controller
             $entityManager->persist($page);
             $entityManager->flush();
             /** @var ViewReference $viewReference */
-            $viewReference =  $this->container->get('victoire_view_reference.cache.repository')
+            $viewReference = $this->container->get('victoire_view_reference.cache.repository')
                 ->getOneReferenceByParameters(['viewId' => $page->getId()]);
 
             $page->setReference($viewReference);

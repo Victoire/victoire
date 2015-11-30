@@ -215,7 +215,7 @@ class ArticleController extends Controller
 
         $blogViewReference = $this->container->get('victoire_view_reference.cache.repository')->getOneReferenceByParameters(
             [
-                'viewId' => $article->getBlog()->getId()
+                'viewId' => $article->getBlog()->getId(),
             ]
         );
         $this->get('victoire_blog.manager.article')->delete($article, $bep);

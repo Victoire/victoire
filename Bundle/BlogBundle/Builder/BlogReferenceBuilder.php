@@ -11,7 +11,7 @@ use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 class BlogReferenceBuilder extends BaseReferenceBuilder
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function buildReference(View $view, EntityManager $em)
     {

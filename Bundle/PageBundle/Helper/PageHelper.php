@@ -11,7 +11,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\VarDumper\VarDumper;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessPageBundle\Builder\BusinessPageBuilder;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
@@ -54,20 +53,20 @@ class PageHelper
     protected $widgetDataWarmer;
 
     /**
-     * @param BusinessEntityHelper $businessEntityHelper
-     * @param EntityManager $entityManager
-     * @param ViewReferenceHelper $viewReferenceHelper
-     * @param CurrentViewHelper $currentViewHelper
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param TemplateMapper $victoireTemplating
-     * @param PageSeoHelper $pageSeoHelper
-     * @param Session $session
-     * @param TokenStorage $tokenStorage
-     * @param AuthorizationChecker $authorizationChecker
-     * @param WidgetMapBuilder $widgetMapBuilder
-     * @param BusinessPageBuilder $businessPageBuilder
-     * @param BusinessPageHelper $businessPageHelper
-     * @param WidgetDataWarmer $widgetDataWarmer
+     * @param BusinessEntityHelper            $businessEntityHelper
+     * @param EntityManager                   $entityManager
+     * @param ViewReferenceHelper             $viewReferenceHelper
+     * @param CurrentViewHelper               $currentViewHelper
+     * @param EventDispatcherInterface        $eventDispatcher
+     * @param TemplateMapper                  $victoireTemplating
+     * @param PageSeoHelper                   $pageSeoHelper
+     * @param Session                         $session
+     * @param TokenStorage                    $tokenStorage
+     * @param AuthorizationChecker            $authorizationChecker
+     * @param WidgetMapBuilder                $widgetMapBuilder
+     * @param BusinessPageBuilder             $businessPageBuilder
+     * @param BusinessPageHelper              $businessPageHelper
+     * @param WidgetDataWarmer                $widgetDataWarmer
      * @param ViewReferenceXmlCacheRepository $viewCacheRepository
      */
     public function __construct(
@@ -146,6 +145,7 @@ class PageHelper
     /**
      * generates a response from a page url.
      * if seo redirect, return target.
+     *
      * @param string $url
      *
      * @return Response
@@ -297,6 +297,7 @@ class PageHelper
 
     /**
      * If the page is not valid, an exception is thrown.
+     *
      * @param mixed $page
      * @param mixed $entity
      * @param mixed $parameters
@@ -307,7 +308,7 @@ class PageHelper
     {
         $errorMessage = 'The page was not found';
         if ($parameters) {
-            $errorMessage .= ' for parameters "'.implode('", "', $parameters). '"';
+            $errorMessage .= ' for parameters "'.implode('", "', $parameters).'"';
         }
         $isPageOwner = false;
 

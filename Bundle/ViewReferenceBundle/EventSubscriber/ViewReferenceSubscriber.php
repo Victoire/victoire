@@ -2,12 +2,9 @@
 
 namespace Victoire\Bundle\ViewReferenceBundle\EventSubscriber;
 
-use Doctrine\Common\EventArgs;
 use Doctrine\Common\EventSubscriber;
-use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use Doctrine\ORM\Event\OnClearEventArgs;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Event\PostFlushEventArgs;
 use Doctrine\ORM\Events;
@@ -40,11 +37,11 @@ class ViewReferenceSubscriber implements EventSubscriber
 
     /**
      * @param ViewReferenceXmlCacheManager $viewCacheManager
-     * @param ViewReferenceXmlCacheDriver $viewCacheDriver
-     * @param BusinessPageBuilder $businessPageBuilder
-     * @param ViewReferenceProvider $viewReferenceProvider
-     * @param ViewReferenceHelper $viewReferenceHelper
-     * @param BusinessEntityHelper $businessEntityHelper
+     * @param ViewReferenceXmlCacheDriver  $viewCacheDriver
+     * @param BusinessPageBuilder          $businessPageBuilder
+     * @param ViewReferenceProvider        $viewReferenceProvider
+     * @param ViewReferenceHelper          $viewReferenceHelper
+     * @param BusinessEntityHelper         $businessEntityHelper
      */
     public function __construct(ViewReferenceXmlCacheManager $viewCacheManager,
                                 ViewReferenceXmlCacheDriver  $viewCacheDriver,
@@ -93,7 +90,7 @@ class ViewReferenceSubscriber implements EventSubscriber
                     || array_key_exists('template', $uow->getEntityChangeSet($entity)))
                 )) {
                     // Get BusinessPages of the given BusinessTemplate
-                    $inheritors = $entityManager->getRepository('Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage')->findBy(array('Template' => $entity));
+                    $inheritors = $entityManager->getRepository('Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage')->findBy(['Template' => $entity]);
                     foreach ($inheritors as $instance) {
                         $this->updateBusinessPageUrl($instance, $entityManager, $uow);
                     }
@@ -182,7 +179,7 @@ class ViewReferenceSubscriber implements EventSubscriber
         $viewRepository = $entityManager->getRepository('VictoireCoreBundle:View');
         $tree = $viewRepository->getRootNodes();
 
-        $insertFunc = function($views, $toInsert) use (&$insertFunc) {
+        $insertFunc = function ($views, $toInsert) use (&$insertFunc) {
             foreach ($views as $_view) {
                 if ($toInsert->getParent() === $_view) {
                     $_view->addChild($toInsert);

@@ -4,7 +4,6 @@ namespace Victoire\Bundle\PageBundle\Builder;
 
 use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\CoreBundle\Entity\View;
-use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\ViewReferenceBundle\Builder\BaseReferenceBuilder;
 use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
@@ -15,7 +14,7 @@ use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 class PageReferenceBuilder extends BaseReferenceBuilder
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function buildReference(View $view, EntityManager $em)
     {

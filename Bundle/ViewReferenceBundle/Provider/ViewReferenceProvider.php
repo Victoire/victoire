@@ -32,7 +32,7 @@ class ViewReferenceProvider
     }
 
     /**
-     * @param View[] $views
+     * @param View[]        $views
      * @param EntityManager $em
      *
      * @return WebViewInterface[]
@@ -69,7 +69,8 @@ class ViewReferenceProvider
         return $referencableViews;
     }
 
-    public function findBusinessPages($tree) {
+    public function findBusinessPages($tree)
+    {
         $businessPages = [];
         foreach ($tree as $key => $view) {
             if ($view instanceof BusinessPage) {

@@ -12,10 +12,9 @@ use Doctrine\ORM\UnitOfWork;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
-use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
+use Victoire\Bundle\PageBundle\Helper\UserCallableHelper;
 use Victoire\Bundle\ViewReferenceBundle\Builder\ViewReferenceBuilder;
 use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheRepository;
-use Victoire\Bundle\PageBundle\Helper\UserCallableHelper;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 /**
@@ -31,11 +30,12 @@ class PageSubscriber implements EventSubscriber
     /**
      * Constructor.
      *
-     * @param Router $router @router
-     * @param UserCallableHelper $userCallableHelper @victoire_page.user_callable
-     * @param string $userClass %victoire_core.user_class%
-     * @param ViewReferenceBuilder $viewReferenceBuilder
+     * @param Router                          $router                          @router
+     * @param UserCallableHelper              $userCallableHelper              @victoire_page.user_callable
+     * @param string                          $userClass                       %victoire_core.user_class%
+     * @param ViewReferenceBuilder            $viewReferenceBuilder
      * @param ViewReferenceXmlCacheRepository $viewReferenceXmlCacheRepository
+     *
      * @internal param ViewReferenceBuilder $urlBuilder @victoire_view_reference.builder
      */
     public function __construct(
@@ -44,8 +44,7 @@ class PageSubscriber implements EventSubscriber
         $userClass,
         ViewReferenceBuilder $viewReferenceBuilder,
         ViewReferenceXmlCacheRepository $viewReferenceXmlCacheRepository
-    )
-    {
+    ) {
         $this->router = $router;
         $this->userClass = $userClass;
         $this->userCallableHelper = $userCallableHelper;
@@ -121,7 +120,8 @@ class PageSubscriber implements EventSubscriber
 
     /**
      * If entity is a View
-     * it will find the ViewReference related to the current view and populate its url
+     * it will find the ViewReference related to the current view and populate its url.
+     *
      * @param LifecycleEventArgs $eventArgs
      */
     public function postLoad(LifecycleEventArgs $eventArgs)
@@ -130,7 +130,7 @@ class PageSubscriber implements EventSubscriber
 
         if ($entity instanceof View) {
             $viewReference = $this->viewReferenceXmlCacheRepository->getOneReferenceByParameters([
-                'viewId' => $entity->getId()
+                'viewId' => $entity->getId(),
             ]);
             if ($viewReference instanceof ViewReference && $entity instanceof WebViewInterface) {
                 $entity->setViewReference($viewReference);

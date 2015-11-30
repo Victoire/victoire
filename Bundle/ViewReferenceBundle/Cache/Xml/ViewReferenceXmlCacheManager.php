@@ -3,14 +3,7 @@
 namespace Victoire\Bundle\ViewReferenceBundle\Cache\Xml;
 
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
-use Victoire\Bundle\PageBundle\Entity\Traits\WebViewTrait;
 use Victoire\Bundle\ViewReferenceBundle\Builder\Chain\ViewReferenceTransformerChain;
-use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
-use Victoire\Bundle\ViewReferenceBundle\Transformer\ArrayToBusinessPageReferenceTransformer;
-use Victoire\Bundle\ViewReferenceBundle\Transformer\ArrayToViewReferenceTransformer;
-use Victoire\Bundle\ViewReferenceBundle\Transformer\XmlToBusinessPageReferenceTransformer;
-use Victoire\Bundle\ViewReferenceBundle\Transformer\XmlToViewReferenceTransformer;
-use Victoire\Bundle\ViewReferenceBundle\ViewReference\BusinessPageReference;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 class ViewReferenceXmlCacheManager
@@ -28,8 +21,9 @@ class ViewReferenceXmlCacheManager
 
     /**
      * Write given views references in a xml file.
+     *
      * @param array $nodes
-     * @param null $rootNode
+     * @param null  $rootNode
      *
      * @return \SimpleXMLElement
      */

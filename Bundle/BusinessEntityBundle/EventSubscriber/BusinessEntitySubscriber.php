@@ -2,23 +2,16 @@
 
 namespace Victoire\Bundle\BusinessEntityBundle\EventSubscriber;
 
-use Doctrine\Common\EventArgs;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use Doctrine\ORM\Event\PostFlushEventArgs;
 use Doctrine\ORM\UnitOfWork;
-use Symfony\Component\DependencyInjection\Container;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessPageBundle\Builder\BusinessPageBuilder;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
 use Victoire\Bundle\BusinessPageBundle\Repository\BusinessPageRepository;
-use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheDriver;
-use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheManager;
-use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
-use Victoire\Bundle\ViewReferenceBundle\Provider\ViewReferenceProvider;
 
 class BusinessEntitySubscriber implements EventSubscriber
 {
@@ -27,9 +20,9 @@ class BusinessEntitySubscriber implements EventSubscriber
     protected $businessPageBuilder;
 
     /**
-     * @param BusinessPageBuilder $businessPageBuilder
+     * @param BusinessPageBuilder  $businessPageBuilder
      * @param BusinessEntityHelper $businessEntityHelper
-     * @param BusinessPageHelper $businessPageHelper
+     * @param BusinessPageHelper   $businessPageHelper
      */
     public function __construct(BusinessPageBuilder          $businessPageBuilder,
                                 BusinessEntityHelper         $businessEntityHelper,
@@ -48,7 +41,7 @@ class BusinessEntitySubscriber implements EventSubscriber
     public function getSubscribedEvents()
     {
         return [
-            'postUpdate'
+            'postUpdate',
         ];
     }
 
@@ -76,16 +69,17 @@ class BusinessEntitySubscriber implements EventSubscriber
     }
 
     /**
-     *
      * get BusinessTemplate concerned by this entity (if so)
      * then get BusinessPages
-     * for each BusinessPage, update its slug according to the new slug (if so)
+     * for each BusinessPage, update its slug according to the new slug (if so).
      *
      * @param $entity
      * @param BusinessEntity $businessEntity
      * @param EntityManager  $entityManager
      * @param array          $deletions
+     *
      * @throws \Exception
+     *
      * @internal param LifecycleEventArgs $eventArgs
      */
     public function updateBusinessPages($entity, BusinessEntity $businessEntity, EntityManager $entityManager, $deletions)
@@ -123,7 +117,7 @@ class BusinessEntitySubscriber implements EventSubscriber
                     $staticUrl = $businessPage->getStaticUrl();
 
                     if ($staticUrl) {
-                        $staticUrl = preg_replace('/' . $oldSlug . '/', $newSlug, $staticUrl);
+                        $staticUrl = preg_replace('/'.$oldSlug.'/', $newSlug, $staticUrl);
                         $businessPage->setStaticUrl($staticUrl);
                     }
 

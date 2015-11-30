@@ -3,22 +3,22 @@
 namespace Victoire\Bundle\ViewReferenceBundle\Transformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Form\Exception\TransformationFailedException;
-use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 class ArrayToViewReferenceTransformer implements DataTransformerInterface
 {
     public $className = 'Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference';
 
-    public function __construct() {
+    public function __construct()
+    {
         $refClass = new \ReflectionClass($this->className);
         $this->properties = $refClass->getProperties();
     }
 
     /**
      * Array to ViewReference
-     * @inheritdoc
+     * {@inheritdoc}
+     *
      * @param array $array
      *
      * @return ViewReference
@@ -26,7 +26,7 @@ class ArrayToViewReferenceTransformer implements DataTransformerInterface
     public function transform($array)
     {
         $className = $this->className;
-        $viewReference = new $className;
+        $viewReference = new $className();
         foreach ($array['viewReference'] as $array) {
             foreach ($array as $prop => $value) {
                 $methodName = 'set'.ucfirst($prop);
@@ -39,7 +39,8 @@ class ArrayToViewReferenceTransformer implements DataTransformerInterface
 
     /**
      * View Reference to array
-     * @inheritdoc
+     * {@inheritdoc}
+     *
      * @param ViewReference $viewReference
      *
      * @return array

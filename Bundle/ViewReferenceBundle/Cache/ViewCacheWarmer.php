@@ -18,8 +18,8 @@ class ViewCacheWarmer
     private $viewCacheManager;
 
     /**
-     * @param ViewHelper                  $viewHelper      @victoire_page.page_helper
-     * @param ViewReferenceXmlCacheDriver $viewCacheDriver @victoire_view_reference.cache.driver
+     * @param ViewHelper                   $viewHelper       @victoire_page.page_helper
+     * @param ViewReferenceXmlCacheDriver  $viewCacheDriver  @victoire_view_reference.cache.driver
      * @param ViewReferenceXmlCacheManager $viewCacheManager @victoire_view_reference.cache.manager
      */
     public function __construct(
@@ -27,8 +27,7 @@ class ViewCacheWarmer
         ViewReferenceXmlCacheDriver $viewCacheDriver,
         ViewReferenceXmlCacheManager $viewCacheManager,
         EntityManager $entityManager
-    )
-    {
+    ) {
         $this->viewHelper = $viewHelper;
         $this->viewCacheDriver = $viewCacheDriver;
         $this->viewCacheManager = $viewCacheManager;

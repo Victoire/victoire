@@ -33,6 +33,7 @@ abstract class BasePage extends View implements WebViewInterface
 
     /**
      * @param ViewReference $viewReference
+     *
      * @return BasePage
      */
     public function setViewReference(ViewReference $viewReference)
@@ -43,7 +44,7 @@ abstract class BasePage extends View implements WebViewInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getViewReference()
     {

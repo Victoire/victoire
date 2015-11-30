@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\ViewReferenceBundle\Builder\Chain;
 
-use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use Symfony\Component\Form\DataTransformerInterface;
 
 /**
@@ -42,7 +41,7 @@ class ViewReferenceTransformerChain
      */
     public function getViewReferenceTransformer($viewNamespace, $outputFormat = 'xml')
     {
-        switch(array_key_exists($viewNamespace, $this->viewsReferenceTransformers)) {
+        switch (array_key_exists($viewNamespace, $this->viewsReferenceTransformers)) {
             case true:
                 return $this->viewsReferenceTransformers[$viewNamespace][$outputFormat];
             case false:

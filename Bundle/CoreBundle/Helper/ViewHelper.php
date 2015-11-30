@@ -3,13 +3,8 @@
 namespace Victoire\Bundle\CoreBundle\Helper;
 
 use Doctrine\Orm\EntityManager;
-use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter as BETParameterConverter;
-use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
-use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
-use Victoire\Bundle\PageBundle\Entity\BasePage;
-use Victoire\Bundle\ViewReferenceBundle\Builder\ViewReferenceBuilder;
 use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
 use Victoire\Bundle\ViewReferenceBundle\Provider\ViewReferenceProvider;
 
@@ -36,8 +31,9 @@ class ViewHelper
      * Constructor.
      *
      * @internal param $ViewManagerChain $$viewManagerChain
-     * @param EntityManager $entityManager
-     * @param ViewReferenceHelper $viewReferenceHelper
+     *
+     * @param EntityManager         $entityManager
+     * @param ViewReferenceHelper   $viewReferenceHelper
      * @param ViewReferenceProvider $viewReferenceProvider
      */
     public function __construct(
@@ -45,7 +41,6 @@ class ViewHelper
         ViewReferenceProvider $viewReferenceProvider,
         ViewReferenceHelper $viewReferenceHelper
     ) {
-
         $this->entityManager = $entityManager;
         $this->viewReferenceProvider = $viewReferenceProvider;
         $this->viewReferenceHelper = $viewReferenceHelper;

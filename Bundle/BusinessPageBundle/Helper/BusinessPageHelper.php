@@ -13,7 +13,6 @@ use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
 use Victoire\Bundle\QueryBundle\Helper\QueryHelper;
 use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheRepository;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\BusinessPageReference;
-use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 /**
  * The business entity page pattern helper
@@ -28,11 +27,11 @@ class BusinessPageHelper
     protected $urlBuilder = null;
 
     /**
-     * @param QueryHelper $queryHelper
+     * @param QueryHelper                     $queryHelper
      * @param ViewReferenceXmlCacheRepository $viewCacheRepository
-     * @param BusinessEntityHelper $businessEntityHelper
-     * @param ParameterConverter $parameterConverter
-     * @param UrlBuilder $urlBuilder
+     * @param BusinessEntityHelper            $businessEntityHelper
+     * @param ParameterConverter              $parameterConverter
+     * @param UrlBuilder                      $urlBuilder
      */
     public function __construct(QueryHelper $queryHelper, ViewReferenceXmlCacheRepository $viewCacheRepository, BusinessEntityHelper $businessEntityHelper, ParameterConverter $parameterConverter, UrlBuilder $urlBuilder)
     {
@@ -220,7 +219,7 @@ class BusinessPageHelper
             } else {
                 throw new \Exception(sprintf('Cannot find a BusinessTemplate that can display the requested BusinessEntity ("%s", "%s".)', $refClassName, $entityId));
             }
-        } else if ($viewReference instanceof BusinessPageReference) {
+        } elseif ($viewReference instanceof BusinessPageReference) {
             $templateId = $viewReference->getTemplateId();
         }
 

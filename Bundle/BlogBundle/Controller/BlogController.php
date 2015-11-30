@@ -129,17 +129,16 @@ class BlogController extends BasePageController
             $entityManager->persist($blog);
             $entityManager->flush();
 
-
             /** @var ViewReference $reference */
-            $reference =  $this->container->get('victoire_view_reference.cache.repository')
+            $reference = $this->container->get('victoire_view_reference.cache.repository')
             ->getOneReferenceByParameters(['viewId' => $blog->getId()]);
 
             return new JsonResponse([
                 'success' => true,
                 'url'     => $this->generateUrl(
                     'victoire_core_page_show', [
-                        '_locale' => $blog->getLocale(), 'url' => $reference->getUrl()
-                ])
+                        '_locale' => $blog->getLocale(), 'url' => $reference->getUrl(),
+                ]),
             ]);
         }
         //we display the form

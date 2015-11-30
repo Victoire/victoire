@@ -3,22 +3,22 @@
 namespace Victoire\Bundle\ViewReferenceBundle\Transformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Form\Exception\TransformationFailedException;
-use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 class XmlToViewReferenceTransformer implements DataTransformerInterface
 {
     public $className = 'Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference';
 
-    public function __construct() {
+    public function __construct()
+    {
         $refClass = new \ReflectionClass($this->className);
         $this->properties = $refClass->getProperties();
     }
 
     /**
      * SimpleXMLElement to ViewReference
-     * @inheritdoc
+     * {@inheritdoc}
+     *
      * @param \SimpleXMLElement $xml
      *
      * @return ViewReference
@@ -26,7 +26,7 @@ class XmlToViewReferenceTransformer implements DataTransformerInterface
     public function transform($xmlElement)
     {
         $className = $this->className;
-        $viewReference = new $className;
+        $viewReference = new $className();
 
         foreach ($xmlElement->attributes() as $prop => $value) {
             $methodName = 'set'.ucfirst($prop);
@@ -38,7 +38,8 @@ class XmlToViewReferenceTransformer implements DataTransformerInterface
 
     /**
      * View Reference to SimpleXMLElement
-     * @inheritdoc
+     * {@inheritdoc}
+     *
      * @param ViewReference $viewReference
      *
      * @return \SimpleXMLElement $xml
