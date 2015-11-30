@@ -15,6 +15,7 @@ use Victoire\Bundle\BlogBundle\Repository\BlogRepository;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\PageBundle\Controller\BasePageController;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
+use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 /**
  * blog Controller.
@@ -122,22 +123,24 @@ class BlogController extends BasePageController
         $form = $this->createForm($this->getPageSettingsType(), $blog);
         $businessProperties = [];
 
-        //if the page is a business entity page
-        if ($blog instanceof BusinessTemplate) {
-            //we can use the business entity properties on the seo
-            $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($blog->getBusinessEntityId());
-            $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
-        }
-
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $entityManager->persist($blog);
             $entityManager->flush();
 
+
+            /** @var ViewReference $reference */
+            $reference =  $this->container->get('victoire_view_reference.cache.repository')
+            ->getOneReferenceByParameters(['viewId' => $blog->getId()]);
+
             return new JsonResponse([
                 'success' => true,
-                'url'     => $this->generateUrl('victoire_core_page_show', ['_locale' => $blog->getLocale(), 'url' => $blog->getUrl()]), ]);
+                'url'     => $this->generateUrl(
+                    'victoire_core_page_show', [
+                        '_locale' => $blog->getLocale(), 'url' => $reference->getUrl()
+                ])
+            ]);
         }
         //we display the form
         $errors = $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form);
@@ -282,8 +285,8 @@ class BlogController extends BasePageController
         foreach ($blog->getArticles() as $_article) {
             $bep = $this->get('victoire_page.page_helper')->findPageByParameters(
                 [
-                    'patternId' => $_article->getTemplate()->getId(),
-                    'entityId'  => $_article->getId(),
+                    'templateId' => $_article->getTemplate()->getId(),
+                    'entityId'   => $_article->getId(),
                 ]
             );
             $this->get('victoire_blog.manager.article')->delete($_article, $bep);

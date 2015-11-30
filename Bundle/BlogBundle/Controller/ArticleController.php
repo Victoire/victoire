@@ -64,10 +64,11 @@ class ArticleController extends Controller
             $dispatcher = $this->get('event_dispatcher');
             $event = new ArticleEvent($article);
             $dispatcher->dispatch(VictoireBlogEvents::CREATE_ARTICLE, $event);
+            $url = $this->container->get('victoire_core.url_builder')->buildUrl($page);
             if (null === $response = $event->getResponse()) {
                 $response = new JsonResponse([
                     'success'  => true,
-                    'url'      => $this->generateUrl('victoire_core_page_show', ['_locale' => $page->getLocale(), 'url' => $page->getUrl()]),
+                    'url'      => $this->generateUrl('victoire_core_page_show', ['_locale' => $page->getLocale(), 'url' => $url]),
                 ]);
             }
 
@@ -207,26 +208,27 @@ class ArticleController extends Controller
     {
         $bep = $this->get('victoire_page.page_helper')->findPageByParameters(
             [
-                'patternId' => $article->getTemplate()->getId(),
-                'entityId'  => $article->getId(),
+                'templateId' => $article->getTemplate()->getId(),
+                'entityId'   => $article->getId(),
             ]
         );
 
+        $blogViewReference = $this->container->get('victoire_view_reference.cache.repository')->getOneReferenceByParameters(
+            [
+                'viewId' => $article->getBlog()->getId()
+            ]
+        );
         $this->get('victoire_blog.manager.article')->delete($article, $bep);
-
-        //redirect to the homepage
-        $homepageUrl = $this->generateUrl('victoire_core_page_show', [
-                '_locale' => $article->getBlog()->getLocale(),
-                'url'     => $article->getBlog()->getUrl(),
-            ]
-        );
 
         $message = $this->get('translator')->trans('victoire.blog.article.delete.success', [], 'victoire');
         $this->get('session')->getFlashBag()->add('success', $message);
 
         $response = [
             'success' => true,
-            'url'     => $homepageUrl,
+            'url'     => $this->generateUrl('victoire_core_page_show', [
+                    'url'     => $blogViewReference->getUrl(),
+                ]
+            ),
             'message' => $message,
         ];
 

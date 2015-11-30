@@ -304,8 +304,12 @@ class WidgetController extends Controller
             } elseif ($view instanceof BusinessTemplate) {
                 $redirect = $this->generateUrl('victoire_business_template_show', ['id' => $view->getId()]);
             } else {
+
+                $viewReference = $this->container->get('victoire_view_reference.cache.repository')
+                    ->getOneReferenceByParameters(['viewId' => $view->getId()]);
+
                 $redirect = $this->generateUrl('victoire_core_page_show', [
-                        'url' => $view->getUrl(),
+                        'url' => $viewReference->getUrl(),
                     ]);
             }
 

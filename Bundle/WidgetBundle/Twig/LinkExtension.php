@@ -213,7 +213,7 @@ class LinkExtension extends \Twig_Extension
 
         $page = $this->pageHelper->findPageByParameters([
             'templateId' => $templateId,
-            'entityId'  => $businessEntityInstance->getId(),
+            'entityId'   => $businessEntityInstance->getId(),
         ]);
 
         $parameters = [
