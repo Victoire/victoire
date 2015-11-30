@@ -2,20 +2,24 @@
 
 namespace Victoire\Bundle\ViewReferenceBundle\EventSubscriber;
 
+use Doctrine\Common\EventArgs;
 use Doctrine\Common\EventSubscriber;
+use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\OnClearEventArgs;
 use Doctrine\ORM\Event\OnFlushEventArgs;
+use Doctrine\ORM\Event\PostFlushEventArgs;
+use Doctrine\ORM\Events;
 use Doctrine\ORM\UnitOfWork;
+use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessPageBundle\Builder\BusinessPageBuilder;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
-use Victoire\Bundle\CoreBundle\Entity\Route;
 use Victoire\Bundle\CoreBundle\Entity\View;
-use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
-use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
-use Victoire\Bundle\ViewReferenceBundle\Builder\ViewReferenceBuilder;
+use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheDriver;
 use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheManager;
+use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
 use Victoire\Bundle\ViewReferenceBundle\Provider\ViewReferenceProvider;
 
 /**
@@ -24,50 +28,57 @@ use Victoire\Bundle\ViewReferenceBundle\Provider\ViewReferenceProvider;
  */
 class ViewReferenceSubscriber implements EventSubscriber
 {
-    protected $urlBuilder;
     protected $viewCacheManager;
+    protected $viewCacheDriver;
     protected $businessPageBuilder;
     protected $viewReferenceProvider;
+    protected $viewReferenceHelper;
+    protected $insertedEntities = [];
+    protected $updatedEntities = [];
+    protected $deletedEntities = [];
+    protected $flushedEntities = [];
 
     /**
-     * @param UrlBuilder           $urlBuilder
      * @param ViewReferenceXmlCacheManager $viewCacheManager
-     * @param BusinessPageBuilder  $businessPageBuilder
-     * @param ViewReferenceBuilder $viewReferenceBuilder
+     * @param ViewReferenceXmlCacheDriver $viewCacheDriver
+     * @param BusinessPageBuilder $businessPageBuilder
+     * @param ViewReferenceProvider $viewReferenceProvider
+     * @param ViewReferenceHelper $viewReferenceHelper
+     * @param BusinessEntityHelper $businessEntityHelper
      */
-    public function __construct(
-        UrlBuilder $urlBuilder,
-        ViewReferenceXmlCacheManager $viewCacheManager,
-        BusinessPageBuilder $businessPageBuilder,
-        ViewReferenceBuilder $viewReferenceBuilder,
-        ViewReferenceProvider $viewReferenceProvider
+    public function __construct(ViewReferenceXmlCacheManager $viewCacheManager,
+                                ViewReferenceXmlCacheDriver  $viewCacheDriver,
+                                BusinessPageBuilder          $businessPageBuilder,
+                                ViewReferenceProvider        $viewReferenceProvider,
+                                ViewReferenceHelper          $viewReferenceHelper,
+                                BusinessEntityHelper         $businessEntityHelper
     ) {
-        $this->urlBuilder = $urlBuilder;
         $this->viewCacheManager = $viewCacheManager;
+        $this->viewCacheDriver = $viewCacheDriver;
         $this->businessPageBuilder = $businessPageBuilder;
-        $this->viewReferenceBuilder = $viewReferenceBuilder;
         $this->viewReferenceProvider = $viewReferenceProvider;
+        $this->viewReferenceHelper = $viewReferenceHelper;
+        $this->businessEntityHelper = $businessEntityHelper;
     }
 
     /**
-     * bind to LoadClassMetadata method.
-     *
      * @return string[]
      */
     public function getSubscribedEvents()
     {
         return [
-            'onFlush',
-            'postPersist',
+            Events::onFlush,
+            Events::postFlush,
+            Events::postUpdate,
         ];
     }
 
     /**
      * Will rebuild url if needed and update cache.
      *
-     * @param OnFlushEventArgs $eventArgs
+     * @param PostFlushEventArgs $eventArgs
      */
-    public function onFlush(OnFlushEventArgs $eventArgs)
+    public function postUpdate(LifecycleEventArgs $eventArgs)
     {
         /** @var EntityManager $entityManager */
         $entityManager = $eventArgs->getEntityManager();
@@ -75,100 +86,124 @@ class ViewReferenceSubscriber implements EventSubscriber
         $uow = $entityManager->getUnitOfWork();
 
         foreach ($uow->getScheduledEntityUpdates() as $entity) {
-            if ($entity instanceof View) {
+            if ($entity instanceof BusinessTemplate) {
                 if (((array_key_exists('slug', $uow->getEntityChangeSet($entity)) //the slug of the page has been modified
                     || array_key_exists('staticUrl', $uow->getEntityChangeSet($entity))
                     || array_key_exists('parent', $uow->getEntityChangeSet($entity))
                     || array_key_exists('template', $uow->getEntityChangeSet($entity)))
                 )) {
-                    $this->manageView($entity, $entityManager, $uow);
+                    // Get BusinessPages of the given BusinessTemplate
+                    $inheritors = $entityManager->getRepository('Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage')->findBy(array('Template' => $entity));
+                    foreach ($inheritors as $instance) {
+                        $this->updateBusinessPageUrl($instance, $entityManager, $uow);
+                    }
                 }
             }
         }
+    }
+
+    /**
+     * @param OnFlushEventArgs $eventArgs
+     */
+    public function onFlush(OnFlushEventArgs $eventArgs)
+    {
+        $uow = $eventArgs->getEntityManager()->getUnitOfWork();
+
+        foreach ($uow->getScheduledEntityInsertions() as $entity) {
+            //If entity is a BusinessEntity or just a view
+            if ($this->businessEntityHelper->findByEntityInstance($entity) || $entity instanceof View) {
+                $this->flushedEntities[] = $entity;
+                $this->insertedEntities[] = $entity;
+                break;
+            }
+        }
+
+        foreach ($uow->getScheduledEntityUpdates() as $entity) {
+            //If entity is a BusinessEntity or just a view
+            if ($this->businessEntityHelper->findByEntityInstance($entity) || $entity instanceof View) {
+                $this->updatedEntities[] = $entity;
+                $this->flushedEntities[] = $entity;
+                break;
+            }
+        }
+
         foreach ($uow->getScheduledEntityDeletions() as $entity) {
-            if ($entity instanceof View) {
-                $this->manageView($entity, $entityManager, $uow, true);
+            //If entity is a BusinessEntity or just a view
+            if ($this->businessEntityHelper->findByEntityInstance($entity) || $entity instanceof View) {
+                $this->deletedEntities[] = $entity;
+                $this->flushedEntities[] = $entity;
+                break;
             }
         }
     }
 
     /**
-     * When a page is inserted, compute its url and children urls.
-     *
-     * @param LifecycleEventArgs $eventArgs
+     * @param PostFlushEventArgs $eventArgs
      */
-    public function postPersist(LifecycleEventArgs $eventArgs)
+    public function postFlush(PostFlushEventArgs $eventArgs)
     {
-        $entity = $eventArgs->getEntity();
-        if ($entity instanceof View) {
-            $em = $eventArgs->getEntityManager();
-            $this->manageView($entity, $em, $em->getUnitOfWork());
-        }
-    }
-
-    /**
-     * Change url recursively for the WebViewInterface given.
-     * @param View $view
-     *
-     * @return void
-     */
-    protected function updateCache(View $view, EntityManager $em, UnitOfWork $uow, $delete = false)
-    {
-        $viewReferences = [];
-        $referencableViews = $this->viewReferenceProvider->getReferencableViews($view, $em);
-
-        foreach ($referencableViews as $referencableView) {
-            $referencableReferences = $this->viewReferenceBuilder->buildViewReference($referencableView, $em);
-            $viewReferences = array_merge($viewReferences, $referencableReferences);
-
-            if ($delete) {
-                $this->viewCacheManager->removeViewsReferencesByParameters($referencableReferences);
-            } else {
-                $this->viewCacheManager->update($referencableReferences);
-            }
-        }
-            }
-        }
-
-        foreach ($view->getChildren() as $_child) {
-            $this->manageView($_child, $em, $uow, $delete);
+        if (count($this->flushedEntities)) {
+            $this->rebuildViewsReferenceCache($eventArgs);
         }
     }
 
     /**
      * Manage urls.
      *
-     * @param View $view
+     * @param View $page
      *
      * @return void
      */
-    protected function manageView(View $view, EntityManager $em, UnitOfWork $uow, $delete = false)
+    protected function updateBusinessPageUrl(BusinessPage $page, EntityManager $em, UnitOfWork $uow)
     {
-        if ($view instanceof BusinessPage && !$delete) {
-            $oldSlug = $view->getSlug();
-            $staticUrl = $view->getStaticUrl();
-            $computedPage = $this->businessPageBuilder->generateEntityPageFromTemplate($view->getTemplate(), $view->getBusinessEntity(), $em);
-            $newSlug = $computedPage->getSlug();
+        $oldSlug = $page->getSlug();
+        $staticUrl = $page->getStaticUrl();
+        $computedPage = $this->businessPageBuilder->generateEntityPageFromTemplate($page->getTemplate(), $page->getBusinessEntity(), $em);
+        $newSlug = $computedPage->getSlug();
 
-            if ($staticUrl) {
-                $staticUrl = preg_replace('/'.$oldSlug.'/', $newSlug, $staticUrl);
-                $view->setStaticUrl($staticUrl);
+        if ($staticUrl) {
+            $staticUrl = preg_replace('/'.$oldSlug.'/', $newSlug, $staticUrl);
+            $page->setStaticUrl($staticUrl);
+        }
+        $page->setSlug($newSlug);
+        $meta = $em->getClassMetadata(get_class($page));
+        $em->persist($page);
+        $uow->computeChangeSet($meta, $page);
+    }
+
+    /**
+     * @param PostFlushEventArgs $eventArgs
+     */
+    protected function rebuildViewsReferenceCache(PostFlushEventArgs $eventArgs)
+    {
+        //Rebuild viewsReferences xml cache
+        /** @var EntityManager $entityManager */
+        $entityManager = $eventArgs->getEntityManager();
+        $viewRepository = $entityManager->getRepository('VictoireCoreBundle:View');
+        $tree = $viewRepository->getRootNodes();
+
+        $insertFunc = function($views, $toInsert) use (&$insertFunc) {
+            foreach ($views as $_view) {
+                if ($toInsert->getParent() === $_view) {
+                    $_view->addChild($toInsert);
+                    break;
+                }
+                $insertFunc($_view->getChildren(), $toInsert);
             }
-            $view->setSlug($newSlug);
-            $meta = $em->getClassMetadata(get_class($view));
-            $em->persist($view);
-            $uow->computeChangeSet($meta, $view);
+        };
+
+        foreach ($this->insertedEntities as $_insertedEntity) {
+            if ($_insertedEntity instanceof View) {
+                $insertFunc($tree, $_insertedEntity);
+            }
         }
 
-        $this->updateCache($view, $em, $uow, $delete);
+        $views = $this->viewReferenceProvider->getReferencableViews($tree, $entityManager);
+        $this->viewReferenceHelper->buildViewReferenceRecursively($views, $entityManager);
 
-        if ($view instanceof BusinessTemplate) {
-
-            // Get BusinessPages of the given BusinessTemplate
-            $inheritors = $em->getRepository('Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage')->findByTemplate($view);
-            foreach ($inheritors as $instance) {
-                $this->manageView($instance, $em, $uow, $delete);
-            }
-        }
+        $this->viewCacheDriver->writeFile(
+            $this->viewCacheManager->generateXml($views)
+        );
+        //End of viewsReferences xml cache rebuild
     }
 }

@@ -21,6 +21,8 @@ services:
 
     victoire_view_reference.helper:
         class: Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper
+        arguments:
+            - @victoire_view_reference.builder
 
     victoire_view_reference.provider:
         class: Victoire\Bundle\ViewReferenceBundle\Provider\ViewReferenceProvider
@@ -31,11 +33,12 @@ services:
     victoire_view_reference.event_subscriber:
         class: Victoire\Bundle\ViewReferenceBundle\EventSubscriber\ViewReferenceSubscriber
         arguments:
-            - "@victoire_core.url_builder"
-            - "@victoire_view_reference.cache.manager"
-            - "@victoire_business_page.business_page_builder"
-            - "@victoire_view_reference.builder"
-            - "@victoire_view_reference.provider"
+            - @victoire_view_reference.cache.manager
+            - @victoire_view_reference.cache.driver
+            - @victoire_business_page.business_page_builder
+            - @victoire_view_reference.provider
+            - @victoire_view_reference.helper
+            - @victoire_core.helper.business_entity_helper
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 

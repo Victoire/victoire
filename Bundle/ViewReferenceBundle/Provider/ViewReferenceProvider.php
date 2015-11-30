@@ -50,12 +50,12 @@ class ViewReferenceProvider
                 $entities = $this->businessPageHelper->getEntitiesAllowed($view, $em);
 
                 // for each business entity
-                foreach ($entities as $entity) {
+                foreach ($entities as $k => $entity) {
                     $currentPattern = clone $view;
                     $page = $this->businessPageBuilder->generateEntityPageFromTemplate($currentPattern, $entity, $em);
                     $this->businessPageBuilder->updatePageParametersByEntity($page, $entity);
                     if (!array_key_exists(ViewReferenceHelper::generateViewReferenceId($page, $entity), $businessPages)) {
-                        $referencableViews[$key] = ['view' => $page];
+                        $referencableViews[] = ['view' => $page];
                     }
                 }
             } elseif ($view instanceof WebViewInterface) {
