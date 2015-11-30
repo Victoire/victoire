@@ -17,17 +17,18 @@ services:
 
     victoire_page.page_helper:
         class: Victoire\Bundle\PageBundle\Helper\PageHelper
-        parent: victoire_core.view_helper
         arguments:
+            - "@victoire_core.helper.business_entity_helper"
+            - "@fos_user.entity_manager"
+            - "@victoire_view_reference.helper"
             - "@victoire_core.current_view"
             - "@event_dispatcher"
-            - "@victoire_templating"
+            - "@victoire_core.template_mapper"
             - "@victoire_seo.helper.pageseo_helper"
             - "@session"
             - "@security.token_storage"
             - "@security.authorization_checker"
             - "@victoire_widget_map.builder"
-            - "@victoire_core.url_builder"
             - "@victoire_business_page.business_page_builder"
             - "@victoire_business_page.business_page_helper"
             - "@victoire_widget_map.widget_data_warmer"
