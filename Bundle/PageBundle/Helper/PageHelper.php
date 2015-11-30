@@ -136,7 +136,7 @@ class PageHelper extends ViewHelper
         } else {
             $viewReference = $this->viewCacheRepository->getOneReferenceByParameters($parameters);
             if ($viewReference === null && !empty($parameters['viewId'])) {
-                $parameters['patternId'] = $parameters['viewId'];
+                $parameters['templateId'] = $parameters['viewId'];
                 unset($parameters['viewId']);
                 $viewReference = $this->viewCacheRepository->getOneReferenceByParameters($parameters);
             }

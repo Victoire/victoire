@@ -15,6 +15,10 @@ class ViewReference
     protected $viewId;
     protected $viewNamespace;
 
+    function __construct($id = null) {
+        $this->id = $id;
+    }
+
     /**
      * looks like ref_{view.id}[_{view.businessEntity.id}]
      * @return string

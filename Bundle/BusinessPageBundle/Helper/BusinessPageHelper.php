@@ -12,6 +12,8 @@ use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
 use Victoire\Bundle\QueryBundle\Helper\QueryHelper;
 use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheRepository;
+use Victoire\Bundle\ViewReferenceBundle\ViewReference\BusinessPageReference;
+use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 /**
  * The business entity page pattern helper
@@ -44,9 +46,9 @@ class BusinessPageHelper
     /**
      * Is the entity allowed for the business entity page.
      *
-     * @param BusinessTemplate                               $businessTemplate
+     * @param BusinessTemplate $businessTemplate
      * @param object|null      $entity
-     * @param EntityManager                                  $em
+     * @param EntityManager    $em
      *
      * @throws \Exception
      *
@@ -192,6 +194,7 @@ class BusinessPageHelper
      */
     public function guessBestPatternIdForEntity($refClass, $entityId, $em, $originalRefClassName = null)
     {
+        $templateId = null;
         $refClassName = $em->getClassMetadata($refClass->name)->name;
 
         $viewReference = null;
@@ -213,12 +216,14 @@ class BusinessPageHelper
         if (!$viewReference) {
             $parentRefClass = $refClass->getParentClass();
             if ($parentRefClass) {
-                $viewReference['patternId'] = $this->guessBestPatternIdForEntity($parentRefClass, $entityId, $em, $originalRefClassName);
+                $templateId = $this->guessBestPatternIdForEntity($parentRefClass, $entityId, $em, $originalRefClassName);
             } else {
                 throw new \Exception(sprintf('Cannot find a BusinessTemplate that can display the requested BusinessEntity ("%s", "%s".)', $refClassName, $entityId));
             }
+        } else if ($viewReference instanceof BusinessPageReference) {
+            $templateId = $viewReference->getTemplateId();
         }
 
-        return $viewReference['patternId'];
+        return $templateId;
     }
 }

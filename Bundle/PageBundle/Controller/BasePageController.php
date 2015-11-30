@@ -11,6 +11,7 @@ use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
+use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 /**
  * The base page controller is used to interact with all kind of pages.
@@ -54,11 +55,11 @@ class BasePageController extends Controller
 
         $refClass = new \ReflectionClass($entity);
 
-        $patternId = $this->container->get('victoire_business_page.business_page_helper')
+        $templateId = $this->container->get('victoire_business_page.business_page_helper')
             ->guessBestPatternIdForEntity($refClass, $entityId, $this->container->get('doctrine.orm.entity_manager'));
 
         $page = $this->container->get('victoire_page.page_helper')->findPageByParameters([
-            'viewId'   => $patternId,
+            'viewId'   => $templateId,
             'entityId' => $entityId,
         ]);
         $this->get('victoire_widget_map.builder')->build($page);
@@ -75,7 +76,7 @@ class BasePageController extends Controller
      *
      * @param bool $isHomepage
      *
-     * @return template
+     * @return []
      */
     protected function newAction($isHomepage = false)
     {
@@ -166,12 +167,18 @@ class BasePageController extends Controller
         if ($form->isValid()) {
             $entityManager->persist($page);
             $entityManager->flush();
+            /** @var ViewReference $viewReference */
+            $viewReference =  $this->container->get('victoire_view_reference.cache.repository')
+                ->getOneReferenceByParameters(['viewId' => $page->getId()]);
+
+            $page->setReference($viewReference);
+            $this->get('victoire_core.current_view')->setCurrentView($page);
 
             $this->congrat($this->get('translator')->trans('victoire_page.update.success', [], 'victoire'));
 
             return [
                 'success' => true,
-                'url'     => $this->generateUrl('victoire_core_page_show', ['_locale' => $page->getLocale(), 'url' => $page->getUrl()]),
+                'url'     => $this->generateUrl('victoire_core_page_show', ['_locale' => $page->getLocale(), 'url' => $viewReference->getUrl()]),
             ];
         }
         //we display the form

@@ -12,6 +12,7 @@ use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheRepository;
+use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer;
 
@@ -109,13 +110,13 @@ class CmsExtension extends \Twig_Extension_Core
      */
     public function cmsWidgetUnlinkAction($widgetId, $view)
     {
-        $viewReference = $reference = $this->viewCacheRepository->getOneReferenceByParameters(
+        $viewReference = $this->viewCacheRepository->getOneReferenceByParameters(
             ['viewId' => $view->getId()]
         );
         if (!$viewReference && $view->getId() != '') {
-            $viewReference = $view->setReference(['id' => $view->getId()]);
+            $viewReference = $view->setReference(new ViewReference($view->getId()));
         } elseif ($view instanceof VirtualBusinessPage) {
-            $viewReference = $view->setReference(['id' => $view->getTemplate()->getId()]);
+            $viewReference = $view->setReference(new ViewReference($view->getTemplate()->getId()));
         }
 
         $view->setReference($viewReference);

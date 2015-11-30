@@ -179,7 +179,7 @@ class WidgetFormBuilder
             $formUrl = $router->generate('victoire_core_widget_create',
                 [
                     'mode'              => $formMode,
-                    'viewReference'     => $viewReference['id'],
+                    'viewReference'     => $viewReference->getId(),
                     'slot'              => $widget->getSlot(),
                     'type'              => $widget->getType(),
                     'businessEntityId'  => $businessEntityId,
@@ -191,7 +191,7 @@ class WidgetFormBuilder
             $formUrl = $router->generate('victoire_core_widget_update',
                 [
                     'id'               => $widget->getId(),
-                    'viewReference'    => $viewReference['id'],
+                    'viewReference'    => $viewReference->getId(),
                     'businessEntityId' => $businessEntityId,
                     'mode'             => $formMode,
                 ]
