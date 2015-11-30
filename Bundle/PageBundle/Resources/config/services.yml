@@ -7,10 +7,11 @@ services:
     page.subscriber:
         class: Victoire\Bundle\PageBundle\EventSubscriber\PageSubscriber
         arguments:
-            - "@router"
-            - "@victoire_page.user_callable"
-            - "%victoire_core.user_class%"
-            - "@victoire_core.url_builder"
+            - @router.default
+            - @victoire_page.user_callable
+            - %victoire_core.user_class%
+            - @victoire_view_reference.builder
+            - @victoire_view_reference.cache.repository
         tags:
             - { name: doctrine.event_subscriber, connection: default, priority: -1 }
 
