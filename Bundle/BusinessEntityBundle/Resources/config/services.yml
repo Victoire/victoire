@@ -15,11 +15,7 @@ services:
     victoire_business_entity.business_entity_subscriber:
         class: "%victoire_business_entity.business_entity_subscriber_class%"
         arguments:
-            - @victoire_view_reference.cache.manager
-            - @victoire_view_reference.cache.driver
             - @victoire_business_page.business_page_builder
-            - @victoire_view_reference.provider
-            - @victoire_view_reference.helper
             - @victoire_core.helper.business_entity_helper
             - @victoire_business_page.business_page_helper
         tags:
