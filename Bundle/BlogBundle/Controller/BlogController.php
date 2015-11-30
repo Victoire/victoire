@@ -137,7 +137,7 @@ class BlogController extends BasePageController
 
             return new JsonResponse([
                 'success' => true,
-                'url'     => $this->generateUrl('victoire_core_page_show', ['_locale' => $blog->getLocale(), 'url' => $blog->getUrl()]),]);
+                'url'     => $this->generateUrl('victoire_core_page_show', ['_locale' => $blog->getLocale(), 'url' => $blog->getUrl()]), ]);
         }
         //we display the form
         $errors = $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form);
@@ -197,7 +197,7 @@ class BlogController extends BasePageController
 
             return new JsonResponse([
                 'success' => true,
-                'url'     => $this->generateUrl('victoire_core_page_show', ['_locale' => $blog->getLocale(), 'url' => $blog->getUrl()]),]);
+                'url'     => $this->generateUrl('victoire_core_page_show', ['_locale' => $blog->getLocale(), 'url' => $blog->getUrl()]), ]);
         }
         //we display the form
         $errors = $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form);
