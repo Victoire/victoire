@@ -2,13 +2,11 @@
 
 namespace Victoire\Bundle\ViewReferenceBundle\ViewReference;
 
-
-use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
-
 class ViewReference
 {
     protected $id;
     protected $locale;
+    protected $name;
     protected $slug;
     /**
      * @var string built by ViewReferenceCacheRepo
@@ -48,6 +46,22 @@ class ViewReference
     public function setLocale($locale)
     {
         $this->locale = $locale;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
     }
 
     /**

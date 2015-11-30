@@ -15,12 +15,11 @@ class BlogReferenceBuilder extends BaseReferenceBuilder
      */
     public function buildReference(View $view, EntityManager $em)
     {
-        $view->setUrl($this->urlBuilder->buildUrl($view));
         $referenceId = ViewReferenceHelper::generateViewReferenceId($view);
-
         $viewReference = new ViewReference();
         $viewReference->setId($referenceId);
         $viewReference->setLocale($view->getLocale());
+        $viewReference->setName($view->getName());
         $viewReference->setViewId($view->getId());
         $viewReference->setSlug($view->getSlug());
         $viewReference->setViewNamespace($em->getClassMetadata(get_class($view))->name);

@@ -3,6 +3,7 @@
 namespace Victoire\Bundle\BusinessPageBundle\Builder;
 
 use Doctrine\ORM\EntityManager;
+use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\ViewReferenceBundle\Builder\BaseReferenceBuilder;
 use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
@@ -15,24 +16,29 @@ use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 class BusinessPageReferenceBuilder extends BaseReferenceBuilder
 {
     /**
-     * @inheritdoc
+     * @param BusinessPage  $businessPage
+     * @param EntityManager $em
+     *
+     * @return BusinessPageReference|ViewReference
      */
-    public function buildReference(View $view, EntityManager $em)
+    public function buildReference(View $businessPage, EntityManager $em)
     {
-        $view->setUrl($this->urlBuilder->buildUrl($view));
-        $referenceId = ViewReferenceHelper::generateViewReferenceId($view);
+        $referenceId = ViewReferenceHelper::generateViewReferenceId($businessPage);
+        $businessPageReference = new BusinessPageReference();
+        $businessPageReference->setId($referenceId);
+        $businessPageReference->setLocale($businessPage->getLocale());
+        $businessPageReference->setName($businessPage->getName());
+        $businessPageReference->setViewId($businessPage->getId());
+        $businessPageReference->setTemplateId($businessPage->getTemplate()->getId());
+        $businessPageReference->setSlug(
+            $businessPage->getStaticUrl() != '' ?
+                $businessPage->getStaticUrl() :
+                $businessPage->getSlug()
+        );
+        $businessPageReference->setEntityId($businessPage->getBusinessEntity()->getId());
+        $businessPageReference->setEntityNamespace($em->getClassMetadata(get_class($businessPage->getBusinessEntity()))->name);
+        $businessPageReference->setViewNamespace($em->getClassMetadata(get_class($businessPage))->name);
 
-        $viewReference = new BusinessPageReference();
-
-        $viewReference->setId($referenceId);
-        $viewReference->setLocale($view->getLocale());
-        $viewReference->setViewId($view->getId());
-        $viewReference->setTemplateId($view->getTemplate()->getId());
-        $viewReference->setSlug($view->getSlug());
-        $viewReference->setEntityId($view->getBusinessEntity()->getId());
-        $viewReference->setEntityNamespace($em->getClassMetadata(get_class($view->getBusinessEntity()))->name);
-        $viewReference->setViewNamespace($em->getClassMetadata(get_class($view))->name);
-
-        return $viewReference;
+        return $businessPageReference;
     }
 }

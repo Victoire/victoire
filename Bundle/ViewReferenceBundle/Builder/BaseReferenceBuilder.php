@@ -14,16 +14,6 @@ use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
  */
 abstract class BaseReferenceBuilder
 {
-    protected $urlBuilder;
-
-    /**
-     * @param UrlBuilder          $urlBuilder
-     */
-    public function __construct(UrlBuilder $urlBuilder)
-    {
-        $this->urlBuilder = $urlBuilder;
-    }
-
     /**
      * @param View $view
      * @param EntityManager $em

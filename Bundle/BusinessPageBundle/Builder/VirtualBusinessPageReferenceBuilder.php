@@ -12,26 +12,6 @@ use Victoire\Bundle\ViewReferenceBundle\ViewReference\BusinessPageReference;
 /**
  * VirtualBusinessPageReferenceBuilder.
  */
-class VirtualBusinessPageReferenceBuilder extends BaseReferenceBuilder
+class VirtualBusinessPageReferenceBuilder extends BusinessPageReferenceBuilder
 {
-    /**
-     * @inheritdoc
-     */
-    public function buildReference(View $view, EntityManager $em)
-    {
-        if ($view->getBusinessEntity() instanceof Article) {
-            return [];
-        }
-
-        $viewReference = new BusinessPageReference();
-        $viewReference->setId(ViewReferenceHelper::generateViewReferenceId($view));
-        $viewReference->setLocale($view->getLocale());
-        $viewReference->setTemplateId($view->getTemplate()->getId());
-        $viewReference->setSlug($view->getSlug());
-        $viewReference->setEntityId($view->getBusinessEntity()->getId());
-        $viewReference->setEntityNamespace($em->getClassMetadata(get_class($view->getBusinessEntity()))->name);
-        $viewReference->setViewNamespace($em->getClassMetadata(get_class($view))->name);
-
-        return $viewReference;
-    }
 }

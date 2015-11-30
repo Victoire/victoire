@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\ViewReferenceBundle\Builder\Chain;
 
+use Doctrine\Common\Util\ClassUtils;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\ViewReferenceBundle\Builder\BaseReferenceBuilder;
@@ -36,7 +37,7 @@ class ViewReferenceBuilderChain
      */
     public function getViewReferenceBuilder(View $view)
     {
-        if (array_key_exists($viewClass = get_class($view), $this->viewsReferenceBuilders)) {
+        if (array_key_exists($viewClass = ClassUtils::getClass($view), $this->viewsReferenceBuilders)) {
             return $this->viewsReferenceBuilders[$viewClass];
         }
         throw new ServiceNotFoundException('No view reference builder found for '.$viewClass);
