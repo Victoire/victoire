@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\CoreBundle\Form;
 
+use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -96,7 +97,7 @@ abstract class ViewType extends AbstractType
                     };
                 }
 
-                if ($view instanceof Template) {
+                if (ClassUtils::getClass($view) == 'Victoire\Bundle\TemplateBundle\Entity\Template') {
                     $class = 'Victoire\Bundle\TemplateBundle\Entity\Template';
                     $required = false;
                 } else {
