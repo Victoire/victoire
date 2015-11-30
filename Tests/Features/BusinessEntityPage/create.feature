@@ -24,9 +24,9 @@ Feature: Create business entity pages
         When I fill in "Nom" with "Fiche Jedi - {{item.name}}"
         And I fill in "URL" with "fiche-jedi-{{item.slug}}"
         And I follow "Créer"
-        Then I should see "La représentation métier a bien été créée"
         And I wait 5 seconds
-        And I should be on "/fr/victoire-dcms/business-template/show/5"
+        Then I should be on "/fr/victoire-dcms/business-template/show/5"
+        And I should see "La représentation métier a bien été créée"
         Then I switch to "layout" mode
         When I select "Force" from the "1" select of "content" slot
         Then I should see "Créer"
@@ -55,9 +55,9 @@ Feature: Create business entity pages
         And I fill in "URL" with "fiche-jedi-dark-{{item.slug}}"
         And I fill in "victoire_business_template_type[query]" with "WHERE item.side='dark'"
         And I follow "Créer"
-        Then I should see "La représentation métier a bien été créée"
         And I wait 5 seconds
-        And I should be on "/fr/victoire-dcms/business-template/show/5"
+        Then I should be on "/fr/victoire-dcms/business-template/show/5"
+        And I should see "La représentation métier a bien été créée"
         Then I switch to "layout" mode
         When I select "Force" from the "1" select of "content" slot
         Then I should see "Créer"
@@ -77,9 +77,9 @@ Feature: Create business entity pages
         And I fill in "URL" with "fiche-jedi-bright-{{item.slug}}"
         And I fill in "victoire_business_template_type[query]" with "WHERE item.side='bright'"
         And I follow "Créer"
-        Then I should see "La représentation métier a bien été créée"
         And I wait 5 seconds
-        And I should be on "/fr/victoire-dcms/business-template/show/6"
+        Then I should be on "/fr/victoire-dcms/business-template/show/6"
+        And I should see "La représentation métier a bien été créée"
         Then I switch to "layout" mode
         When I select "Force" from the "1" select of "content" slot
         Then I should see "Créer"
@@ -110,6 +110,7 @@ Feature: Create business entity pages
         When I fill in "Nom" with "Fiche Jedi - {{item.name}}"
         And I fill in "URL" with "fiche-jedi-{{item.slug}}"
         And I follow "Créer"
+        And I wait 5 seconds
         Then I should see "La représentation métier a bien été créée"
         Given I am on "/fr/fiche-jedi-yoda"
         And I switch to "layout" mode
@@ -117,6 +118,7 @@ Feature: Create business entity pages
         Then I should see "Créer"
         When I fill in "Côté de la force" with "Nouveau"
         And I submit the widget
+        And I wait 5 seconds
         Then I should see "Le Côté Nouveau de la force"
         Given I am on "/fr/victoire-dcms/business-template/show/5"
         Then I should not see "Le Côté Nouveau de la force"
@@ -134,8 +136,9 @@ Feature: Create business entity pages
         When I fill in "Nom" with "Fiche Jedi - {{item.name}}"
         And I fill in "URL" with "fiche-jedi-{{item.slug}}"
         And I follow "Créer"
-        Then I should see "La représentation métier a bien été créée"
-        And I should be on "/fr/victoire-dcms/business-template/show/5"
+        And I wait 5 seconds
+        Then I should be on "/fr/victoire-dcms/business-template/show/5"
+        And I should see "La représentation métier a bien été créée"
         Then I switch to "layout" mode
         When I select "Force" from the "1" select of "content" slot
         Then I should see "Créer"
