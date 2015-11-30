@@ -43,7 +43,7 @@ class BackendMenuListener implements MenuListenerInterface
         $this->mainItem = $this->menuBuilder->getLeftNavbar();
 
         $this->mainItem->addChild('hamburger_menu.backend.back_home', [
-                'route' => 'victoire_core_page_homepage',
+                'route' => 'victoire_core_homepage_show',
             ]
         );
 

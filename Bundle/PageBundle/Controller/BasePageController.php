@@ -263,7 +263,8 @@ class BasePageController extends Controller
             $entityManager->flush();
 
             //redirect to the homepage
-            $homepageUrl = $this->generateUrl('victoire_core_page_homepage');
+
+            $homepageUrl = $this->generateUrl('victoire_core_homepage_show');
 
             $response = [
                 'success' => true,
