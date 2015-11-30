@@ -47,19 +47,12 @@ class LinkType extends AbstractType
                 'attr'                           => ['novalidate' => 'novalidate', 'placeholder' => 'form.link_type.url.placeholder'],
             ]);
 
-        $rawPages = $this->viewCacheRepository->getTree();
-        //@fixme adapt to tree
-//        $pages = [];
-//        foreach ($rawPages as $page) {
-//            $pages[$page['id']] = $page['name'];
-//        }
-
         $builder->add('viewReference', 'choice', [
             'label'                          => 'form.link_type.view_reference.label',
             'required'                       => true,
             'attr'                           => ['novalidate' => 'novalidate'],
             'empty_value'                    => 'form.link_type.view_reference.blank',
-            'choices'                        => $pages,
+            'choices'                        => $this->viewCacheRepository->getChoices(),
             'vic_vic_widget_form_group_attr' => ['class' => 'vic-form-group vic-hidden viewReference-type'],
         ])
         ->add('attachedWidget', 'entity', [

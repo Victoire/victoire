@@ -105,22 +105,56 @@ class ViewReferenceXmlCacheRepository
     /**
      * get the content of the view cache file.
      *
-     * @return []
+     * @param \SimpleXMLElement $node
+     * @param int $depth
+     * @return \array[]
      */
-    public function getTree($node = null)
+    public function getChoices(\SimpleXMLElement $node = null, $depth = 0)
     {
-        $node = $node ?: $this->driver->readCache();
-        $viewRefTransformer = new XMLToViewReferenceTransformer();
         $viewsReferences = [];
+
+        $prefixFn = function($depth, $char0 = '└', $char = '─')
+        {
+            $prefix = $char0;
+            for ($i = 0; $i <= $depth; $i++) {
+                $prefix .= $char;
+            }
+
+            return $prefix;
+        };
+
+        if (null === $node) {
+            $node = $this->driver->readCache();
+        }
+
         foreach ($node->children() as $child) {
-            $viewReference = $viewRefTransformer->transform($child);
-            $viewReference->setChildren($this->getTree($child));
-            $viewsReferences[] = [
-                'viewReference' => $viewReference,
-            ];
+            $viewReferenceTransformer = self::findTransformerFromXmlElement($child);
+            $viewReference = $viewReferenceTransformer->transform($child);
+            if ($viewReference->getName() != '') {
+                $prefix = '';
+                if ($depth > 0) {
+                    $prefix = $prefixFn($depth).' ';
+                }
+                $viewsReferences[$viewReference->getId()] = $prefix.$viewReference->getName();
+            }
+
+            $viewsReferences = array_merge($viewsReferences, $this->getChoices($child, $depth+1));
         }
 
 
         return $viewsReferences;
+    }
+
+    /**
+     * @param \SimpleXMLElement $xmlElement
+     */
+    public static function findTransformerFromXmlElement($xmlElement) {
+        if (isset($xmlElement['entityId'])) {
+            $viewRefTransformer = new XMLToBusinessPageReferenceTransformer();
+        } else {
+            $viewRefTransformer = new XMLToViewReferenceTransformer();
+        }
+
+        return $viewRefTransformer;
     }
 }
