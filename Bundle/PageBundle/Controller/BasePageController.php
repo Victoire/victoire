@@ -71,7 +71,7 @@ class BasePageController extends Controller
             $this->generateUrl(
                 'victoire_core_page_show',
                 [
-                    'url' => $page->getReference()->Url()
+                    'url' => $page->getReference()->Url(),
                 ]
             )
         );
@@ -117,7 +117,7 @@ class BasePageController extends Controller
 
             $this->congrat($this->get('translator')->trans('victoire_page.create.success', [], 'victoire'));
             $viewReference = $this->get('victoire_view_reference.cache.repository')->getOneReferenceByParameters([
-                'viewId' => $page->getId()
+                'viewId' => $page->getId(),
             ]);
 
             return [
@@ -188,7 +188,7 @@ class BasePageController extends Controller
                 'url'     => $this->generateUrl(
                     'victoire_core_page_show', [
                         '_locale' => $page->getLocale(),
-                        'url' => $viewReference->getUrl()
+                        'url'     => $viewReference->getUrl(),
                     ]
                 ),
             ];

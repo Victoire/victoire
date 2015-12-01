@@ -146,7 +146,7 @@ class WidgetController extends Controller
                     'redirect' => $this->generateUrl(
                         'victoire_core_page_show',
                         [
-                            'url' => $reference->getUrl()
+                            'url' => $reference->getUrl(),
                         ]
                     ),
                 ]);

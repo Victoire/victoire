@@ -5,7 +5,6 @@ namespace Victoire\Bundle\PageBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
-use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 /**
  * Page.

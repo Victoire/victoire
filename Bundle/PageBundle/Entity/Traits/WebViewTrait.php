@@ -107,7 +107,7 @@ trait WebViewTrait
 
     /**
      * Get url.
-     * Be careful with this method, it's heavy. Prefer the use of the ViewReference->getUrl() as long as possible
+     * Be careful with this method, it's heavy. Prefer the use of the ViewReference->getUrl() as long as possible.
      *
      * @return string
      */
@@ -129,7 +129,7 @@ trait WebViewTrait
         } else {
             $urlBuilder = new UrlBuilder();
 
-            /** @var WebViewInterface $this */
+            /* @var WebViewInterface $this */
             return $urlBuilder->buildUrl($this);
         }
     }
