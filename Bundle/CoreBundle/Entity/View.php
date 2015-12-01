@@ -8,10 +8,12 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
+use Victoire\Bundle\I18nBundle\Entity\BaseI18n;
 use Victoire\Bundle\I18nBundle\Entity\I18n;
 use Victoire\Bundle\PageBundle\Entity\Slot;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
+use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
@@ -333,7 +335,7 @@ abstract class View
     /**
      * Set children.
      *
-     * @param string $children
+     * @param View[] $children
      *
      * @return View
      */
@@ -352,11 +354,21 @@ abstract class View
     /**
      * Get children.
      *
-     * @return string
+     * @return View[]
      */
     public function getChildren()
     {
         return $this->children;
+    }
+
+    /**
+     * Has children.
+     *
+     * @return bool
+     */
+    public function hasChildren()
+    {
+        return count($this->children);
     }
 
     /**
@@ -588,7 +600,7 @@ abstract class View
     /**
      * Get i18n.
      *
-     * @return string
+     * @return BaseI18n
      */
     public function getI18n()
     {
@@ -602,7 +614,7 @@ abstract class View
      *
      * @return $this
      */
-    public function setI18n(I18n $i18n)
+    public function setI18n(BaseI18n $i18n)
     {
         $this->i18n = $i18n;
         $this->i18n->setTranslation($this->getLocale(), $this);
@@ -952,7 +964,7 @@ abstract class View
     /**
      * Get reference.
      *
-     * @return string
+     * @return ViewReference
      */
     public function getReference()
     {
@@ -962,7 +974,7 @@ abstract class View
     /**
      * Set reference.
      *
-     * @param string $reference
+     * @param ViewReference $reference
      *
      * @return $this
      */

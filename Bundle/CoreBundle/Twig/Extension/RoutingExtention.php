@@ -31,7 +31,7 @@ class RoutingExtention extends RoutingExtension
                 unset($parameters['entityId']);
             }
             $page = $this->pageHelper->findPageByParameters($params);
-            $parameters['url'] = $page->getUrl();
+            $parameters['url'] = $page->getReference()->getUrl();
 
             $name = 'victoire_core_page_show';
         }

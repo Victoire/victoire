@@ -10,8 +10,9 @@ use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
-use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
 use Victoire\Bundle\QueryBundle\Helper\QueryHelper;
+use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheRepository;
+use Victoire\Bundle\ViewReferenceBundle\ViewReference\BusinessPageReference;
 
 /**
  * The business entity page pattern helper
@@ -20,20 +21,22 @@ use Victoire\Bundle\QueryBundle\Helper\QueryHelper;
 class BusinessPageHelper
 {
     protected $queryHelper = null;
-    protected $viewCacheHelper = null;
+    protected $viewCacheRepository = null;
     protected $businessEntityHelper = null;
     protected $parameterConverter = null;
     protected $urlBuilder = null;
 
     /**
-     * @param QueryHelper          $queryHelper
-     * @param BusinessEntityHelper $businessEntityHelper
-     * @param ParameterConverter   $parameterConverter
+     * @param QueryHelper                     $queryHelper
+     * @param ViewReferenceXmlCacheRepository $viewCacheRepository
+     * @param BusinessEntityHelper            $businessEntityHelper
+     * @param ParameterConverter              $parameterConverter
+     * @param UrlBuilder                      $urlBuilder
      */
-    public function __construct(QueryHelper $queryHelper, ViewCacheHelper $viewCacheHelper, BusinessEntityHelper $businessEntityHelper, ParameterConverter $parameterConverter, UrlBuilder $urlBuilder)
+    public function __construct(QueryHelper $queryHelper, ViewReferenceXmlCacheRepository $viewCacheRepository, BusinessEntityHelper $businessEntityHelper, ParameterConverter $parameterConverter, UrlBuilder $urlBuilder)
     {
         $this->queryHelper = $queryHelper;
-        $this->viewCacheHelper = $viewCacheHelper;
+        $this->viewCacheRepository = $viewCacheRepository;
         $this->businessEntityHelper = $businessEntityHelper;
         $this->parameterConverter = $parameterConverter;
         $this->urlBuilder = $urlBuilder;
@@ -42,15 +45,15 @@ class BusinessPageHelper
     /**
      * Is the entity allowed for the business entity page.
      *
-     * @param BusinessTemplate                               $bepPattern
-     * @param \Victoire\Bundle\PageBundle\Helper\Entity|null $entity
-     * @param EntityManager                                  $em
+     * @param BusinessTemplate $businessTemplate
+     * @param object|null      $entity
+     * @param EntityManager    $em
      *
      * @throws \Exception
      *
      * @return bool
      */
-    public function isEntityAllowed(BusinessTemplate $bepPattern, $entity, EntityManager $em = null)
+    public function isEntityAllowed(BusinessTemplate $businessTemplate, $entity, EntityManager $em = null)
     {
         $allowed = true;
 
@@ -65,12 +68,12 @@ class BusinessPageHelper
         $entityId = $entity->getId();
 
         //the base of the query
-        $baseQuery = $queryHelper->getQueryBuilder($bepPattern, $em);
+        $baseQuery = $queryHelper->getQueryBuilder($businessTemplate, $em);
 
         $baseQuery->andWhere('main_item.id = '.$entityId);
 
         //filter with the query of the page
-        $items = $queryHelper->buildWithSubQuery($bepPattern, $baseQuery, $em)
+        $items = $queryHelper->buildWithSubQuery($businessTemplate, $baseQuery, $em)
             ->getQuery()->getResult();
 
         //only one page can be found because we filter on the
@@ -88,23 +91,23 @@ class BusinessPageHelper
     /**
      * Get the list of entities allowed for the BusinessTemplate page.
      *
-     * @param BusinessTemplate $bepPattern
+     * @param BusinessTemplate $businessTemplate
      *
      * @throws \Exception
      *
      * @return array
      */
-    public function getEntitiesAllowed(BusinessTemplate $bepPattern, EntityManager $em)
+    public function getEntitiesAllowed(BusinessTemplate $businessTemplate, EntityManager $em)
     {
         //the base of the query
-        $baseQuery = $this->queryHelper->getQueryBuilder($bepPattern, $em);
+        $baseQuery = $this->queryHelper->getQueryBuilder($businessTemplate, $em);
 
         // add this fake condition to ensure that there is always a "where" clause.
         // In query mode, usage of "AND" will be always valid instead of "WHERE"
         $baseQuery->andWhere('1 = 1');
 
         //filter with the query of the page
-        $items = $this->queryHelper->buildWithSubQuery($bepPattern, $baseQuery, $em)
+        $items = $this->queryHelper->buildWithSubQuery($businessTemplate, $baseQuery, $em)
             ->getQuery()
             ->getResult();
 
@@ -135,22 +138,22 @@ class BusinessPageHelper
     /**
      * Get the position of the identifier in the url of a business entity page pattern.
      *
-     * @param BusinessTemplate $bepPattern
+     * @param BusinessTemplate $businessTemplate
      *
      * @return int The position
      */
-    public function getIdentifierPositionInUrl(BusinessTemplate $bepPattern)
+    public function getIdentifierPositionInUrl(BusinessTemplate $businessTemplate)
     {
         $position = null;
 
-        $url = $bepPattern->getUrl();
+        $url = $businessTemplate->getUrl();
 
         // split on the / character
         $keywords = preg_split("/\//", $url);
         // preg_match_all('/\{\%\s*([^\%\}]*)\s*\%\}|\{\{\s*([^\}\}]*)\s*\}\}/i', $url, $matches);
 
         //the business property link to the page
-        $businessEntityId = $bepPattern->getBusinessEntityId();
+        $businessEntityId = $businessTemplate->getBusinessEntityId();
 
         $businessEntity = $this->businessEntityHelper->findById($businessEntityId);
 
@@ -190,6 +193,7 @@ class BusinessPageHelper
      */
     public function guessBestPatternIdForEntity($refClass, $entityId, $em, $originalRefClassName = null)
     {
+        $templateId = null;
         $refClassName = $em->getClassMetadata($refClass->name)->name;
 
         $viewReference = null;
@@ -205,18 +209,20 @@ class BusinessPageHelper
                 'entityNamespace' => $originalRefClassName,
             ];
 
-            $viewReference = $this->viewCacheHelper->getReferenceByParameters($parameters);
+            $viewReference = $this->viewCacheRepository->getOneReferenceByParameters($parameters);
         }
 
         if (!$viewReference) {
             $parentRefClass = $refClass->getParentClass();
             if ($parentRefClass) {
-                $viewReference['patternId'] = $this->guessBestPatternIdForEntity($parentRefClass, $entityId, $em, $originalRefClassName);
+                $templateId = $this->guessBestPatternIdForEntity($parentRefClass, $entityId, $em, $originalRefClassName);
             } else {
                 throw new \Exception(sprintf('Cannot find a BusinessTemplate that can display the requested BusinessEntity ("%s", "%s".)', $refClassName, $entityId));
             }
+        } elseif ($viewReference instanceof BusinessPageReference) {
+            $templateId = $viewReference->getTemplateId();
         }
 
-        return $viewReference['patternId'];
+        return $templateId;
     }
 }

@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
+use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
@@ -93,6 +94,13 @@ class WidgetController extends Controller
     {
         try {
             $view = $this->getViewByReferenceId($viewReference);
+
+            if (!$reference = $this->container->get('victoire_view_reference.cache.repository')
+                ->getOneReferenceByParameters(['id' => $viewReference])) {
+                $reference = new ViewReference($viewReference);
+            }
+
+            $view->setReference($reference);
             $response = new JsonResponse($this->get('widget_manager')->newWidget(Widget::MODE_STATIC, $type, $slot, $view, $positionReference));
         } catch (Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
@@ -122,6 +130,12 @@ class WidgetController extends Controller
 
             $isNewPage = $view->getId() === null ? true : false;
 
+            if (!$reference = $this->container->get('victoire_view_reference.cache.repository')
+                ->getOneReferenceByParameters(['id' => $viewReference])) {
+                $reference = new ViewReference($viewReference);
+            }
+
+            $view->setReference($reference);
             $this->get('victoire_core.current_view')->setCurrentView($view);
 
             $response = $this->get('widget_manager')->createWidget($mode, $type, $slot, $view, $businessEntityId, $positionReference);
@@ -129,7 +143,12 @@ class WidgetController extends Controller
             if ($isNewPage) {
                 $response = new JsonResponse([
                     'success'  => true,
-                    'redirect' => $this->generateUrl('victoire_core_page_show', ['url' => $view->getUrl()]),
+                    'redirect' => $this->generateUrl(
+                        'victoire_core_page_show',
+                        [
+                            'url' => $reference->getUrl(),
+                        ]
+                    ),
                 ]);
             } else {
                 $response = new JsonResponse($response);
@@ -159,10 +178,12 @@ class WidgetController extends Controller
         $view = $this->getViewByReferenceId($viewReference);
         $widgetView = $widget->getView();
 
-        $widgetViewReferenceId = $this->get('victoire_core.helper.view_reference_helper')
-            ->getViewReferenceId($widgetView);
+        if (!$reference = $this->container->get('victoire_view_reference.cache.repository')
+            ->getOneReferenceByParameters(['viewId' => $view->getId()])) {
+            $reference = new ViewReference($viewReference);
+        }
 
-        $widgetView->setReference(['id' => $widgetViewReferenceId]);
+        $widgetView->setReference($reference);
         $this->get('victoire_core.current_view')->setCurrentView($view);
         try {
             $response = new JsonResponse(
@@ -197,10 +218,10 @@ class WidgetController extends Controller
         $view = $this->getViewByReferenceId($viewReference);
         $widgetView = $widget->getView();
 
-        $widgetViewReferenceId = $this->get('victoire_core.helper.view_reference_helper')
-            ->getViewReferenceId($widgetView);
+        $widgetViewReference = $this->container->get('victoire_view_reference.cache.repository')
+            ->getOneReferenceByParameters(['viewId' => $view->getId()]);
 
-        $widgetView->setReference(['id' => $widgetViewReferenceId]);
+        $widgetView->setReference($widgetViewReference);
         $this->get('victoire_core.current_view')->setCurrentView($view);
         try {
             $form = $this->container->get('form.factory')->create('victoire_widget_style_type', $widget, [
@@ -304,8 +325,11 @@ class WidgetController extends Controller
             } elseif ($view instanceof BusinessTemplate) {
                 $redirect = $this->generateUrl('victoire_business_template_show', ['id' => $view->getId()]);
             } else {
+                $viewReference = $this->container->get('victoire_view_reference.cache.repository')
+                    ->getOneReferenceByParameters(['viewId' => $view->getId()]);
+
                 $redirect = $this->generateUrl('victoire_core_page_show', [
-                        'url' => $view->getUrl(),
+                        'url' => $viewReference->getUrl(),
                     ]);
             }
 

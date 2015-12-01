@@ -2,6 +2,7 @@ Victoire\Bundle\BlogBundle\Entity\Blog:
     blog-jedi-network:
         template: @template_base
         author: @anakin
+        parent: @home
         name: The Jedi Network
         locale: fr
         slug: the-jedi-network

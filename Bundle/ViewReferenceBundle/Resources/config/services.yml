@@ -1,0 +1,109 @@
+parameters:
+    victoire_view_reference.cache.driver.class: Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheDriver
+    victoire_view_reference.cache.manager.class: Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheManager
+    victoire_view_reference.cache.repository.class: Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheRepository
+    victoire_view_reference.transformer.xmlToViewReference.class: Victoire\Bundle\ViewReferenceBundle\Transformer\XmlToViewReferenceTransformer
+    victoire_view_reference.cache_warmer.class: Victoire\Bundle\ViewReferenceBundle\Cache\ViewCacheWarmer
+    victoire_view_reference.array_transformer.base_page.class: Victoire\Bundle\ViewReferenceBundle\Transformer\ArrayToViewReferenceTransformer
+    victoire_view_reference.array_transformer.business_page.class: Victoire\Bundle\ViewReferenceBundle\Transformer\ArrayToBusinessPageReferenceTransformer
+    victoire_view_reference.xml_transformer.base_page.class: Victoire\Bundle\ViewReferenceBundle\Transformer\XmlToViewReferenceTransformer
+    victoire_view_reference.xml_transformer.business_page.class: Victoire\Bundle\ViewReferenceBundle\Transformer\XmlToBusinessPageReferenceTransformer
+
+services:
+    victoire_view_reference.builder:
+        class: Victoire\Bundle\ViewReferenceBundle\Builder\ViewReferenceBuilder
+        arguments:
+            - "@victoire_view_reference.builder_chain"
+
+    victoire_view_reference.base_view_reference.builder:
+        class: Victoire\Bundle\ViewReferenceBundle\Builder\BaseReferenceBuilder
+        abstract: true
+
+    victoire_view_reference.helper:
+        class: Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper
+        arguments:
+            - @victoire_view_reference.builder
+
+    victoire_view_reference.provider:
+        class: Victoire\Bundle\ViewReferenceBundle\Provider\ViewReferenceProvider
+        arguments:
+            - @victoire_business_page.business_page_helper
+            - @victoire_business_page.business_page_builder
+
+    victoire_view_reference.event_subscriber:
+        class: Victoire\Bundle\ViewReferenceBundle\EventSubscriber\ViewReferenceSubscriber
+        arguments:
+            - @victoire_view_reference.cache.manager
+            - @victoire_view_reference.cache.driver
+            - @victoire_business_page.business_page_builder
+            - @victoire_view_reference.provider
+            - @victoire_view_reference.helper
+            - @victoire_core.helper.business_entity_helper
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+
+    victoire_view_reference.builder_chain:
+        class: Victoire\Bundle\ViewReferenceBundle\Builder\Chain\ViewReferenceBuilderChain
+
+    victoire_view_reference.transformer_chain:
+        class: Victoire\Bundle\ViewReferenceBundle\Builder\Chain\ViewReferenceTransformerChain
+
+    victoire_view_reference.cache.driver:
+        class: %victoire_view_reference.cache.driver.class%
+        arguments:
+            - "%victoire_view_reference.cache.path%"
+
+    victoire_view_reference.cache.manager:
+        class: %victoire_view_reference.cache.manager.class%
+        arguments:
+            - "@victoire_view_reference.cache.driver"
+            - "@victoire_view_reference.transformer_chain"
+
+    victoire_view_reference.cache.repository:
+        class: %victoire_view_reference.cache.repository.class%
+        arguments:
+            - "@victoire_view_reference.cache.driver"
+            - "@victoire_view_reference.transformer_chain"
+
+    victoire_view_reference.transformer.xmlToViewReference:
+        class: %victoire_view_reference.transformer.xmlToViewReference.class%
+
+    victoire_view_reference.cache_warmer:
+        class: %victoire_view_reference.cache_warmer.class%
+        arguments:
+            - @victoire_core.view_helper
+            - @victoire_view_reference.cache.driver
+            - @victoire_view_reference.cache.manager
+            - @doctrine.orm.entity_manager
+        tags:
+        - { name: kernel.event_listener, event: kernel.request, method: warmUp }
+
+    victoire_view_reference.array_transformer.base_page:
+        class: %victoire_view_reference.array_transformer.base_page.class%
+        tags:
+        - { name: victoire_view_reference.transformer, viewNamespace: Victoire\Bundle\PageBundle\Entity\BasePage, outputFormat: array }
+
+    victoire_view_reference.array_transformer.business_page:
+        class: %victoire_view_reference.array_transformer.business_page.class%
+        tags:
+        - { name: victoire_view_reference.transformer, viewNamespace: Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage, outputFormat: array }
+
+    victoire_view_reference.array_transformer.virtual_business_page:
+        class: %victoire_view_reference.array_transformer.business_page.class%
+        tags:
+        - { name: victoire_view_reference.transformer, viewNamespace: Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage, outputFormat: array }
+
+    victoire_view_reference.xml_transformer.base_page:
+        class: %victoire_view_reference.xml_transformer.base_page.class%
+        tags:
+        - { name: victoire_view_reference.transformer, viewNamespace: Victoire\Bundle\PageBundle\Entity\BasePage, outputFormat: xml }
+
+    victoire_view_reference.xml_transformer.business_page:
+        class: %victoire_view_reference.xml_transformer.business_page.class%
+        tags:
+        - { name: victoire_view_reference.transformer, viewNamespace: Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage, outputFormat: xml }
+
+    victoire_view_reference.xml_transformer.virtual_business_page:
+        class: %victoire_view_reference.xml_transformer.business_page.class%
+        tags:
+        - { name: victoire_view_reference.transformer, viewNamespace: Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage, outputFormat: xml }

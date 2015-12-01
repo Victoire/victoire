@@ -12,6 +12,7 @@ use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\SeoBundle\Entity\PageSeo;
+use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 /**
  * The Page seo controller.
@@ -69,13 +70,19 @@ class PageSeoController extends Controller
             $page->setSeo($pageSeo);
             $em->persist($page);
             $em->flush();
+            /** @var ViewReference $viewReference */
+            $viewReference = $this->container->get('victoire_view_reference.cache.repository')
+                ->getOneReferenceByParameters(['viewId' => $page->getId()]);
+
+            $page->setReference($viewReference);
+            $this->get('victoire_core.current_view')->setCurrentView($page);
             $this->congrat('victoire_seo.save.success');
 
             //redirect to the page url
             if (!method_exists($page, 'getUrl')) {
                 $url = $this->generateUrl('victoire_business_template_show', ['id' => $page->getId()]);
             } else {
-                $url = $this->generateUrl('victoire_core_page_show', ['url' => $page->getUrl()]);
+                $url = $this->generateUrl('victoire_core_page_show', ['url' => $viewReference->getUrl()]);
             }
 
             return new JsonResponse([

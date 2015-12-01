@@ -13,6 +13,6 @@ services:
     victoire_analytics.view_helper:
         class: %victoire_analytics_view_helper_class%
         arguments:
-            - @victoire_core.view_cache_helper
+            - @victoire_view_reference.cache.repository
             - @doctrine.orm.entity_manager
             - @victoire_page.page_helper

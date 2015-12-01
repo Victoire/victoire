@@ -16,6 +16,7 @@ Victoire\Bundle\PageBundle\Entity\Page:
         template: @template_two_cols
         author: @anakin
         name: Test
+        parent: @home
         locale: fr
         slug: test
         homepage: false

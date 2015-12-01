@@ -19,9 +19,9 @@ Feature: Edit a widget
         When I fill in "Nom" with "Fiche Jedi - {{item.name}}"
         And I fill in "URL" with "fiche-jedi-{{item.slug}}"
         And I follow "Créer"
-        Then I should see "La représentation métier a bien été créée"
         And I wait 5 seconds
-        And I should be on "/fr/victoire-dcms/business-template/show/5"
+        Then I should be on "/fr/victoire-dcms/business-template/show/5"
+        And I should see "La représentation métier a bien été créée"
         Then I switch to "layout" mode
 
     Scenario: I can create a new Business entity page pattern, create a widget and edit this widget

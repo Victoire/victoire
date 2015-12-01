@@ -25,11 +25,11 @@ class BusinessPageRepository extends EntityRepository
         $qb->join('BusinessPage.template', 'template');
         $qb->join('proxy.'.$businessEntity->getId(), 'entity');
 
-        $qb->where('template.id = :patternId');
+        $qb->where('template.id = :templateId');
 
         $qb->andWhere('entity.id = :entityId');
 
-        $qb->setParameter(':patternId', $pattern);
+        $qb->setParameter(':templateId', $pattern);
         $qb->setParameter(':entityId', $entity->getId());
         $result = $qb->getQuery()->getOneOrNullResult();
 

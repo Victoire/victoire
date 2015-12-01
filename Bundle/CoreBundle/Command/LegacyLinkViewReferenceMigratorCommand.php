@@ -36,14 +36,14 @@ class LegacyLinkViewReferenceMigratorCommand extends ContainerAwareCommand
 
         $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
 
-        $links = $entityManager->getRepository("Victoire\Bundle\CoreBundle\Entity\Link")->findAll();
+        $links = $entityManager->getRepository('Victoire\\Bundle\\CoreBundle\\Entity\\Link')->findAll();
 
         $progress->start($output, count($links));
         $counter = 0;
         foreach ($links as $link) {
             $progress->advance();
             if ($link->getLinkType() == 'page' && $page = $link->getPage()) {
-                $viewReference = $this->getContainer()->get('victoire_core.helper.view_reference_helper')->getViewReferenceId($page);
+                $viewReference = $this->getContainer()->get('victoire_view_reference.helper')->generateViewReferenceId($page);
                 $link->setViewReference($viewReference);
                 $link->setLinkType('viewReference');
             }

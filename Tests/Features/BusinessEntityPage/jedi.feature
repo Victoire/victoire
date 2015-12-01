@@ -74,6 +74,7 @@ Feature: Manage jedis
         When I fill in "Nom" with "Fiche Jedi - {{item.name}}"
         And I fill in "URL" with "fiche-jedi-{{item.slug}}"
         And I follow "Créer"
+        And I wait 5 seconds
         Then I should see "La représentation métier a bien été créée"
         Given I am on "/fr/fiche-jedi-anakin"
         And I switch to "layout" mode
@@ -81,6 +82,7 @@ Feature: Manage jedis
         Then I should see "Créer"
         When I fill in "Côté de la force" with "Nouveau"
         And I submit the widget
+        And I wait 5 seconds
         Then I should see "Le Côté Nouveau de la force"
         Given I select the option "Paramètres de la page" in the dropdown "Page"
         And I should see "Mettre à jour"
@@ -102,6 +104,7 @@ Feature: Manage jedis
         When I submit the widget
         Then I should see "Page modifiée avec succès"
         Given I am on "/fr/fiche-jedi-anakin"
+        And I wait 5 seconds
         Then I should see "Le Côté Nouveau de la force"
 
 

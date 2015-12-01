@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
 use Victoire\Bundle\CoreBundle\Entity\View;
+use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 /**
  * BusinessTemplate controller.
@@ -77,7 +78,7 @@ class BusinessTemplateController extends Controller
     {
         //add the view to twig
         $this->get('twig')->addGlobal('view', $view);
-        $view->setReference(['id' => $view->getId()]);
+        $view->setReference(new ViewReference($view->getId()));
 
         $this->get('victoire_widget_map.builder')->build($view);
         $this->get('victoire_widget_map.widget_data_warmer')->warm(

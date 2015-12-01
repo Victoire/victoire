@@ -11,9 +11,11 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Entity\Link;
 use Victoire\Bundle\CoreBundle\Entity\View;
-use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
+use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheRepository;
+use Victoire\Bundle\ViewReferenceBundle\ViewReference\BusinessPageReference;
+use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 use Victoire\Bundle\WidgetBundle\Entity\Traits\LinkTrait;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Widget\ListingBundle\Entity\WidgetListing;
@@ -29,7 +31,7 @@ use Victoire\Widget\MenuBundle\Entity\WidgetMenu;
 class WidgetDataWarmer
 {
     protected $reader;
-    protected $viewCacheHelper;
+    protected $viewReferenceXmlCacheRepository;
     protected $em;
     protected $accessor;
     protected $manyToOneAssociations;
@@ -37,14 +39,14 @@ class WidgetDataWarmer
     /**
      * Constructor.
      *
-     * @param Reader          $reader
-     * @param ViewCacheHelper $viewCacheHelper
-     * @param array           $manyToOneAssociations
+     * @param Reader                          $reader
+     * @param ViewReferenceXmlCacheRepository $viewReferenceXmlCacheRepository
+     * @param array                           $manyToOneAssociations
      */
-    public function __construct(Reader $reader, ViewCacheHelper $viewCacheHelper, array $manyToOneAssociations)
+    public function __construct(Reader $reader, ViewReferenceXmlCacheRepository $viewReferenceXmlCacheRepository, array $manyToOneAssociations)
     {
         $this->reader = $reader;
-        $this->viewCacheHelper = $viewCacheHelper;
+        $this->viewReferenceXmlCacheRepository = $viewReferenceXmlCacheRepository;
         $this->accessor = PropertyAccess::createPropertyAccessor();
         $this->manyToOneAssociations = $manyToOneAssociations;
     }
@@ -180,12 +182,12 @@ class WidgetDataWarmer
 
         foreach ($links as $link) {
             if ($link->getParameters()['linkType'] == 'viewReference') {
-                $viewReference = $this->viewCacheHelper->getReferenceByParameters(['id' => $link->getParameters()['viewReference']]);
+                $viewReference = $this->viewReferenceXmlCacheRepository->getOneReferenceByParameters(['id' => $link->getParameters()['viewReference']]);
 
-                if (!empty($viewReference['viewId'])) {
-                    $viewIdsForLinks[$link->getId()] = $viewReference['viewId'];
-                } elseif (!empty($viewReference['patternId'])) {
-                    $viewIdsForLinks[$link->getId()] = $viewReference['patternId'];
+                if ($viewReference instanceof ViewReference && $viewReference->getViewId()) {
+                    $viewIdsForLinks[$link->getId()] = $viewReference->getViewId();
+                } elseif ($viewReference instanceof BusinessPageReference && $viewReference->getTemplateId()) {
+                    $viewIdsForLinks[$link->getId()] = $viewReference->getTemplateId();
                 }
             }
         }

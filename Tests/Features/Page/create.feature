@@ -28,5 +28,6 @@ Scenario: I can change the name and the url of a given page
     Then I fill in "Nom" with "anoth"
     Then I fill in "victoire_page_settings_type_slug" with "anoth"
     And I submit the widget
+    And I wait 5 seconds
+    Then I should be on "/fr/anoth"
     And I should see "Page modifiée avec succès"
-    And I should be on "/fr/anoth"

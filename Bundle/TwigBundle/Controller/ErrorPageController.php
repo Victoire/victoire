@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Victoire\Bundle\TwigBundle\Entity\ErrorPage;
+use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 /**
  * Show an error page.
@@ -31,7 +32,7 @@ class ErrorPageController extends Controller
     {
         //add the view to twig
         $this->container->get('twig')->addGlobal('view', $page);
-        $page->setReference(['id' => $page->getId()]);
+        $page->setReference(new ViewReference($page->getId()));
 
         //the victoire templating
         $victoireTemplating = $this->container->get('victoire_templating');

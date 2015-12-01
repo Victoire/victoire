@@ -57,7 +57,7 @@ class UrlBuilder
             }
 
             if ($parent->getParent() !== null) {
-                $slugs = array_merge($slugs, $this->getParentSlugs($parent, $slugs));
+                $slugs = $this->getParentSlugs($parent, $slugs);
             }
         }
 

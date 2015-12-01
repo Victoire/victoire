@@ -3,10 +3,10 @@
 namespace Victoire\Bundle\BusinessPageBundle\Builder;
 
 use Doctrine\ORM\EntityManager;
-use Gedmo\Sluggable\Util\Urlizer;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessEntityBundle\Provider\EntityProxyProvider;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
@@ -30,7 +30,6 @@ class BusinessPageBuilder
         'bodyId',
         'bodyClass',
         'slug',
-        'url',
         'locale',
     ];
 
@@ -51,20 +50,20 @@ class BusinessPageBuilder
     /**
      * Generate update the page parameters with the entity.
      *
-     * @param BusinessTemplate $bepTemplate
+     * @param BusinessTemplate $businessTemplate
      * @param BusinessEntity   $entity
      */
-    public function generateEntityPageFromTemplate(BusinessTemplate $bepTemplate, $entity, EntityManager $em)
+    public function generateEntityPageFromTemplate(BusinessTemplate $businessTemplate, $entity, EntityManager $em)
     {
         $page = new VirtualBusinessPage();
 
-        $reflect = new \ReflectionClass($bepTemplate);
+        $reflect = new \ReflectionClass($businessTemplate);
         $templateProperties = $reflect->getProperties();
         $accessor = PropertyAccess::createPropertyAccessor();
 
         foreach ($templateProperties as $property) {
             if (!in_array($property->getName(), ['id', 'widgetMap', 'slots', 'seo', 'i18n', 'widgets']) && !$property->isStatic()) {
-                $value = $accessor->getValue($bepTemplate, $property->getName());
+                $value = $accessor->getValue($businessTemplate, $property->getName());
                 $setMethod = 'set'.ucfirst($property->getName());
                 if (method_exists($page, $setMethod)) {
                     $accessor->setValue($page, $property->getName(), $value);
@@ -110,8 +109,9 @@ class BusinessPageBuilder
             $page->setSlug($pageSlug);
             $page->setName($pageName);
             $page->setEntityProxy($entityProxy);
-            $page->setTemplate($bepTemplate);
-            if ($seo = $bepTemplate->getSeo()) {
+
+            $page->setTemplate($businessTemplate);
+            if ($seo = $businessTemplate->getSeo()) {
                 $pageSeo = clone $seo;
                 $page->setSeo($pageSeo);
             }
@@ -173,9 +173,6 @@ class BusinessPageBuilder
                         $this->setEntityAttributeValue($page, $pageAttribute, $updatedString);
                     }
                 }
-
-                $urlizer = new Urlizer();
-                $page->setSlug($urlizer->urlize($page->getName()));
             }
         }
     }
@@ -184,7 +181,7 @@ class BusinessPageBuilder
      * Get the content of an attribute of an entity given.
      *
      * @param BusinessPage $entity
-     * @param strin        $field
+     * @param string       $field
      *
      * @return mixed
      */

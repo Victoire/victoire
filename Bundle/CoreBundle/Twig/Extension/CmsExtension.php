@@ -9,9 +9,10 @@ use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Handler\WidgetExceptionHandler;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
-use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
+use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheRepository;
+use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer;
 
@@ -33,13 +34,13 @@ class CmsExtension extends \Twig_Extension_Core
     /**
      * Constructor.
      *
-     * @param WidgetRenderer         $widgetRenderer
-     * @param TemplateMapper         $templating
-     * @param SecurityContext        $securityContext
-     * @param WidgetExceptionHandler $widgetExceptionHandler
-     * @param CurrentViewHelper      $currentViewHelper
-     * @param ViewCacheHelper        $viewCacheHelper
-     * @param \Twig_Environment      $twig
+     * @param WidgetRenderer                  $widgetRenderer
+     * @param TemplateMapper                  $templating
+     * @param SecurityContext                 $securityContext
+     * @param WidgetExceptionHandler          $widgetExceptionHandler
+     * @param CurrentViewHelper               $currentViewHelper
+     * @param ViewReferenceXmlCacheRepository $viewCacheRepository
+     * @param \Twig_Environment               $twig
      */
     public function __construct(
         WidgetRenderer $widgetRenderer,
@@ -47,7 +48,7 @@ class CmsExtension extends \Twig_Extension_Core
         SecurityContext $securityContext,
         WidgetExceptionHandler $widgetExceptionHandler,
         CurrentViewHelper $currentViewHelper,
-        ViewCacheHelper $viewCacheHelper,
+        ViewReferenceXmlCacheRepository $viewCacheRepository,
         \Twig_Environment $twig
     ) {
         $this->widgetRenderer = $widgetRenderer;
@@ -55,7 +56,7 @@ class CmsExtension extends \Twig_Extension_Core
         $this->securityContext = $securityContext;
         $this->widgetExceptionHandler = $widgetExceptionHandler;
         $this->currentViewHelper = $currentViewHelper;
-        $this->viewCacheHelper = $viewCacheHelper;
+        $this->viewCacheRepository = $viewCacheRepository;
         $this->twig = $twig;
     }
 
@@ -109,13 +110,13 @@ class CmsExtension extends \Twig_Extension_Core
      */
     public function cmsWidgetUnlinkAction($widgetId, $view)
     {
-        $viewReference = $reference = $this->viewCacheHelper->getReferenceByParameters(
+        $viewReference = $this->viewCacheRepository->getOneReferenceByParameters(
             ['viewId' => $view->getId()]
         );
         if (!$viewReference && $view->getId() != '') {
-            $viewReference = $view->setReference(['id' => $view->getId()]);
+            $viewReference = $view->setReference(new ViewReference($view->getId()));
         } elseif ($view instanceof VirtualBusinessPage) {
-            $viewReference = $view->setReference(['id' => $view->getTemplate()->getId()]);
+            $viewReference = $view->setReference(new ViewReference($view->getTemplate()->getId()));
         }
 
         $view->setReference($viewReference);

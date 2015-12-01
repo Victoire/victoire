@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\TemplateBundle\Event\Menu\TemplateMenuContextualEvent;
+use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 /**
  * Template Controller.
@@ -55,7 +56,7 @@ class TemplateController extends Controller
     {
         //add the view to twig
         $this->get('twig')->addGlobal('view', $template);
-        $template->setReference(['id' => $template->getId()]);
+        $template->setReference(new ViewReference($template->getId()));
         $event = new TemplateMenuContextualEvent($template);
 
         //TODO : il serait bon de faire des constantes pour les noms d'évents
@@ -179,7 +180,7 @@ class TemplateController extends Controller
 
         $form->handleRequest($request);
         if ($form->isValid()) {
-            $clone = $this->get('victoire_core.view_helper')->addTranslation($template, $template->getName(), $template->getLocale());
+            $clone = $this->get('victoire_i18n.view_translation_manager')->addTranslation($template, $template->getName(), $template->getLocale());
 
             return new JsonResponse(
                 [

@@ -12,9 +12,10 @@ use Doctrine\ORM\UnitOfWork;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
-use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
-use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
 use Victoire\Bundle\PageBundle\Helper\UserCallableHelper;
+use Victoire\Bundle\ViewReferenceBundle\Builder\ViewReferenceBuilder;
+use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheRepository;
+use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 /**
  * This class listen Page Entity changes.
@@ -24,25 +25,31 @@ class PageSubscriber implements EventSubscriber
     protected $router;
     protected $userClass;
     protected $userCallableHelper;
-    protected $viewCacheHelper;
     protected $urlBuilder;
 
     /**
      * Constructor.
      *
-     * @param Router             $router             @router
-     * @param UserCallableHelper $userCallableHelper @victoire_page.user_callable
-     * @param string             $userClass          %victoire_core.user_class%
-     * @param ViewCacheHelper    $viewCacheHelper    @victoire_core.view_cache_helper
-     * @param UrlBuilder         $urlBuilder         @victoire_core.url_builder
+     * @param Router                          $router                          @router
+     * @param UserCallableHelper              $userCallableHelper              @victoire_page.user_callable
+     * @param string                          $userClass                       %victoire_core.user_class%
+     * @param ViewReferenceBuilder            $viewReferenceBuilder
+     * @param ViewReferenceXmlCacheRepository $viewReferenceXmlCacheRepository
+     *
+     * @internal param ViewReferenceBuilder $urlBuilder @victoire_view_reference.builder
      */
-    public function __construct($router, $userCallableHelper, $userClass, $viewCacheHelper, $urlBuilder)
-    {
+    public function __construct(
+        Router $router,
+        UserCallableHelper $userCallableHelper,
+        $userClass,
+        ViewReferenceBuilder $viewReferenceBuilder,
+        ViewReferenceXmlCacheRepository $viewReferenceXmlCacheRepository
+    ) {
         $this->router = $router;
         $this->userClass = $userClass;
         $this->userCallableHelper = $userCallableHelper;
-        $this->viewCacheHelper = $viewCacheHelper;
-        $this->urlBuilder = $urlBuilder;
+        $this->viewReferenceBuilder = $viewReferenceBuilder;
+        $this->viewReferenceXmlCacheRepository = $viewReferenceXmlCacheRepository;
     }
 
     /**
@@ -111,14 +118,26 @@ class PageSubscriber implements EventSubscriber
         }
     }
 
+    /**
+     * If entity is a View
+     * it will find the ViewReference related to the current view and populate its url.
+     *
+     * @param LifecycleEventArgs $eventArgs
+     */
     public function postLoad(LifecycleEventArgs $eventArgs)
     {
         $entity = $eventArgs->getEntity();
+
         if ($entity instanceof View) {
-            $entity->setReference(['id' => $entity->getId()]);
-        }
-        if ($entity instanceof WebViewInterface) {
-            $entity->setUrl($this->urlBuilder->buildUrl($entity));
+            $viewReference = $this->viewReferenceXmlCacheRepository->getOneReferenceByParameters([
+                'viewId' => $entity->getId(),
+            ]);
+            if ($viewReference instanceof ViewReference && $entity instanceof WebViewInterface) {
+                $entity->setReference($viewReference);
+                $entity->setUrl($viewReference->getUrl());
+            } else {
+                $entity->setReference(new ViewReference($entity->getId()));
+            }
         }
     }
 }

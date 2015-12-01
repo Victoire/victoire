@@ -8,7 +8,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Victoire\Bundle\CoreBundle\DataTransformer\JsonToArrayTransformer;
-use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
+use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheRepository;
 
 /**
  * Type for Victoire Link.
@@ -16,12 +16,12 @@ use Victoire\Bundle\CoreBundle\Helper\ViewCacheHelper;
 class LinkType extends AbstractType
 {
     private $analytics;
-    private $viewCacheHelper;
+    private $viewCacheRepository;
 
-    public function __construct($analytics, ViewCacheHelper $viewCacheHelper)
+    public function __construct($analytics, ViewReferenceXmlCacheRepository $viewCacheRepository)
     {
         $this->analytics = $analytics;
-        $this->viewCacheHelper = $viewCacheHelper;
+        $this->viewCacheRepository = $viewCacheRepository;
     }
 
     /**
@@ -47,18 +47,12 @@ class LinkType extends AbstractType
                 'attr'                           => ['novalidate' => 'novalidate', 'placeholder' => 'form.link_type.url.placeholder'],
             ]);
 
-        $rawPages = $this->viewCacheHelper->getAllViewsReferences();
-        $pages = [];
-        foreach ($rawPages as $page) {
-            $pages[$page['id']] = $page['name'];
-        }
-
         $builder->add('viewReference', 'choice', [
             'label'                          => 'form.link_type.view_reference.label',
             'required'                       => true,
             'attr'                           => ['novalidate' => 'novalidate'],
             'empty_value'                    => 'form.link_type.view_reference.blank',
-            'choices'                        => $pages,
+            'choices'                        => $this->viewCacheRepository->getChoices(),
             'vic_vic_widget_form_group_attr' => ['class' => 'vic-form-group vic-hidden viewReference-type'],
         ])
         ->add('attachedWidget', 'entity', [

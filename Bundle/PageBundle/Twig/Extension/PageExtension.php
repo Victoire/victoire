@@ -4,7 +4,6 @@ namespace Victoire\Bundle\PageBundle\Twig\Extension;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
-use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
 use Victoire\Bundle\CoreBundle\Builder\ViewCssBuilder;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
@@ -55,7 +54,6 @@ class PageExtension extends \Twig_Extension
     {
         return [
             new \Twig_SimpleFunction('vic_current_page_reference', [$this, 'victoireCurrentPageReference']),
-            'cms_page_business_page_pattern_sitemap' => new \Twig_Function_Method($this, 'cmsPageBusinessPagePatternSiteMap', ['is_safe' => ['html']]),
             'cms_page_css'                           => new \Twig_Function_Method($this, 'cmsPageCss', ['is_safe' => ['html']]),
         ];
     }
@@ -81,88 +79,6 @@ class PageExtension extends \Twig_Extension
     }
 
     /**
-     * Get the ol li for the generated page of a business entity page pattern.
-     *
-     * @param BasePage $page
-     *
-     * @return string The html
-     */
-    public function cmsPageBusinessPagePatternSiteMap(BasePage $page)
-    {
-        $html = '';
-
-        $urls = [];
-
-        //the template link to the page
-        $BusinessTemplate = $page;
-
-        //
-        if ($page instanceof BusinessTemplate) {
-            //get the list of url of the children to avoid to have it twice.
-            $childrenUrls = $this->getChildrenUrls($page);
-
-            //services
-            $BusinessTemplateHelper = $this->BusinessTemplateHelper;
-            $pageHelper = $this->pageHelper;
-
-            //the items allowed for the template
-            $items = $BusinessTemplateHelper->getEntitiesAllowed($BusinessTemplate, $this->entityManager);
-
-            //parse entities
-            foreach ($items as $item) {
-                $pageEntity = clone $BusinessTemplate;
-
-                //update url using the entity instance
-                $pageHelper->updatePageParametersByEntity($pageEntity, $item);
-
-                $url = $pageEntity->getUrl();
-
-                //if the url does no exists in the children
-                if (!in_array($url, $childrenUrls)) {
-                    $generated = true;
-                } else {
-                    $generated = false;
-                }
-
-                //update the parameters of the page
-                $pageHelper->updatePageParametersByEntity($pageEntity, $item);
-
-                $title = $pageEntity->getName();
-
-                $itemsToAdd[$url] = [
-                    'item'      => $item,
-                    'url'       => $url,
-                    'title'     => $title,
-                    'generated' => $generated,
-                ];
-
-                unset($url);
-            }
-
-            //render the ol li
-            $html .= '<ol>';
-            foreach ($itemsToAdd as $item) {
-                $itemUrl = $item['url'];
-                $itemUrl = $this->router->generate('victoire_core_page_show', ['url' => $itemUrl]);
-                $title = $item['title'];
-                $generated = $item['generated'];
-
-                //the class to identify the generated pages
-                if ($generated) {
-                    $class = 'generated';
-                } else {
-                    $class = '';
-                }
-
-                $html .= "<li><div class='".$class."'><a href='".$itemUrl."' title='".$title."'>".$title.'</a></div>';
-            }
-            $html .= '</ol>';
-        }
-
-        return $html;
-    }
-
-    /**
      * Construct CSS link markup for the style of all the Widgets contained in the current View.
      *
      * @return string
@@ -170,7 +86,6 @@ class PageExtension extends \Twig_Extension
     public function cmsPageCss()
     {
         $currentView = $this->currentViewHelper->getCurrentView();
-
         if (!$currentView || !$this->viewCssBuilder->cssFileExists($currentView)) {
             return '';
         }
@@ -206,10 +121,15 @@ class PageExtension extends \Twig_Extension
         return $urls;
     }
 
+    /**
+     * Return the current viewReference->id.
+     *
+     * @return string
+     */
     public function victoireCurrentPageReference()
     {
         $currentView = $this->currentViewHelper;
 
-        return $currentView->getMainCurrentView()->getReference()['id'];
+        return $currentView->getMainCurrentView()->getReference()->getId();
     }
 }
