@@ -2,7 +2,15 @@
 
 ## [Unreleased](https://github.com/Victoire/victoire/tree/HEAD)
 
-[Full Changelog](https://github.com/Victoire/victoire/compare/1.3.5...HEAD)
+## [1.3.6](https://github.com/Victoire/victoire/tree/1.3.6) (2015-12-01)
+[Full Changelog](https://github.com/Victoire/victoire/compare/1.3.5...1.3.6)
+
+**Merged pull requests:**
+
+- Manage views references tree [\#290](https://github.com/Victoire/victoire/pull/290) ([lenybernard](https://github.com/lenybernard))
+- Change Date format in Sitemap [\#289](https://github.com/Victoire/victoire/pull/289) ([talbotseb](https://github.com/talbotseb))
+- Call get method to use really default value [\#285](https://github.com/Victoire/victoire/pull/285) ([leblanc-simon](https://github.com/leblanc-simon))
+- Handle single tag for TagFilter query parameters [\#283](https://github.com/Victoire/victoire/pull/283) ([gregumo](https://github.com/gregumo))
 
 ## [1.3.5](https://github.com/Victoire/victoire/tree/1.3.5) (2015-11-25)
 [Full Changelog](https://github.com/Victoire/victoire/compare/1.3.4...1.3.5)
@@ -25,12 +33,13 @@
 - Add Slider Nav in the list of the widgets that can display article [\#274](https://github.com/Victoire/victoire/pull/274) ([Charlie-Lucas](https://github.com/Charlie-Lucas))
 - Restore good version for incenteev/composer-parameter-handler [\#273](https://github.com/Victoire/victoire/pull/273) ([gregumo](https://github.com/gregumo))
 
-## [1.3.4](https://github.com/victoire/victoire/tree/1.3.4) (2015-11-13)
-[Full Changelog](https://github.com/victoire/victoire/compare/1.3.3...1.3.4)
+## [1.3.4](https://github.com/Victoire/victoire/tree/1.3.4) (2015-11-13)
+[Full Changelog](https://github.com/Victoire/victoire/compare/1.3.3...1.3.4)
 
 **Merged pull requests:**
 
-- WidgetDataWarmer : check if link exist when entity has LinkTrait [\#272](https://github.com/Victoire/victoire/pull/272) ([gregumo](https://github.com/gregumo))
+- WidgetDataWarmer : check if link exist when entity has LinkTrait and … [\#272](https://github.com/Victoire/victoire/pull/272) ([gregumo](https://github.com/gregumo))
+- Update Composer : branch-alias : 1.3.x-dev & added suggest widgets [\#271](https://github.com/Victoire/victoire/pull/271) ([talbotseb](https://github.com/talbotseb))
 - use a choice\_tree form type for category-filter [\#270](https://github.com/Victoire/victoire/pull/270) ([Charlie-Lucas](https://github.com/Charlie-Lucas))
 - Widget Rendering Refactor [\#268](https://github.com/Victoire/victoire/pull/268) ([gregumo](https://github.com/gregumo))
 
@@ -86,10 +95,6 @@
 ## [1.2.1](https://github.com/Victoire/victoire/tree/1.2.1) (2015-10-20)
 [Full Changelog](https://github.com/Victoire/victoire/compare/1.2.0...1.2.1)
 
-**Implemented enhancements:**
-
-- Fix/vicms 711 add en es translations [\#224](https://github.com/Victoire/victoire/pull/224) ([talbotseb](https://github.com/talbotseb))
-
 **Merged pull requests:**
 
 - allow to exclude unpublished article for most read [\#237](https://github.com/Victoire/victoire/pull/237) ([Charlie-Lucas](https://github.com/Charlie-Lucas))
@@ -104,6 +109,7 @@
 - Applied fixes from StyleCI [\#227](https://github.com/Victoire/victoire/pull/227) ([lenybernard](https://github.com/lenybernard))
 - Fix/widget command generation [\#226](https://github.com/Victoire/victoire/pull/226) ([lenybernard](https://github.com/lenybernard))
 - enable elast search for Pages \(see the friendsofvictoire/search-widget\) [\#225](https://github.com/Victoire/victoire/pull/225) ([lenybernard](https://github.com/lenybernard))
+- Fix/vicms 711 add en es translations [\#224](https://github.com/Victoire/victoire/pull/224) ([talbotseb](https://github.com/talbotseb))
 - Applied fixes from StyleCI [\#223](https://github.com/Victoire/victoire/pull/223) ([lenybernard](https://github.com/lenybernard))
 - fix getter for layout\(Business Template\) [\#221](https://github.com/Victoire/victoire/pull/221) ([Charlie-Lucas](https://github.com/Charlie-Lucas))
 - Bugfix/page deletion [\#220](https://github.com/Victoire/victoire/pull/220) ([paulandrieux](https://github.com/paulandrieux))
@@ -266,8 +272,6 @@
 - Fix/printed widget style [\#67](https://github.com/Victoire/victoire/pull/67) ([LoicGoyet](https://github.com/LoicGoyet))
 
 ## [1.0.0](https://github.com/Victoire/victoire/tree/1.0.0) (2015-04-22)
-[Full Changelog](https://github.com/Victoire/victoire/compare/0.1.3...1.0.0)
-
 **Closed issues:**
 
 - \[Insight\] Absolute path constants \_\_DIR\_\_ and \_\_FILE\_\_ should not be used - in Bundle/CoreBundle/Cache/ApcCache.php, line 22 [\#28](https://github.com/Victoire/victoire/issues/28)
@@ -334,10 +338,6 @@
 - fix a bug on view due to old code [\#5](https://github.com/Victoire/victoire/pull/5) ([poneymagique](https://github.com/poneymagique))
 - Fix/vicms 397 widgetmap positionreference [\#1](https://github.com/Victoire/victoire/pull/1) ([paulandrieux](https://github.com/paulandrieux))
 
-## [0.1.3](https://github.com/Victoire/victoire/tree/0.1.3) (2014-05-06)
-[Full Changelog](https://github.com/Victoire/victoire/compare/0.1.0...0.1.3)
-
-## [0.1.0](https://github.com/Victoire/victoire/tree/0.1.0) (2014-04-29)
 
 
 \* *This Change Log was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
