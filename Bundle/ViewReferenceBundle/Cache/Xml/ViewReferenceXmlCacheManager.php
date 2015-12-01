@@ -30,11 +30,7 @@ class ViewReferenceXmlCacheManager
     public function generateXml(array $nodes, $rootNode = null, $url = '')
     {
         if (is_null($rootNode)) {
-            $xml = <<<'XML'
-<?xml version='1.0' encoding='UTF-8' ?>
-<viewReferences/>
-XML;
-            $rootNode = new \SimpleXMLElement($xml);
+            $rootNode = new \SimpleXMLElement(ViewReferenceXmlCacheDriver::$baseRootNode);
         }
         foreach ($nodes as $node) {
             $itemNode = $rootNode->addChild('viewReference');

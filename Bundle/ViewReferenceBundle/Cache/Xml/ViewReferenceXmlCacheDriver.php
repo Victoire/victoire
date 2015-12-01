@@ -5,6 +5,10 @@ namespace Victoire\Bundle\ViewReferenceBundle\Cache\Xml;
 class ViewReferenceXmlCacheDriver
 {
     protected $xmlFile;
+    public static $baseRootNode = <<<'XML'
+<?xml version='1.0' encoding='UTF-8' ?>
+<viewReferences/>
+XML;
 
     /**
      * @param string $filePath
@@ -31,7 +35,13 @@ class ViewReferenceXmlCacheDriver
      */
     public function readCache()
     {
-        return new \SimpleXMLElement(file_get_contents($this->xmlFile));
+        if ($this->fileExists()) {
+            $xmlElement = new \SimpleXMLElement(file_get_contents($this->xmlFile));
+        } else {
+            $xmlElement = new \SimpleXMLElement(self::$baseRootNode);
+        }
+
+        return $xmlElement;
     }
 
     /**
