@@ -82,7 +82,13 @@ class LinkExtension extends \Twig_Extension
                     $page = $this->pageHelper->findPageByParameters(['id' => $viewReference]);
                 }
 
-                $linkUrl = $this->router->generate('victoire_core_page_show', ['_locale' => $page->getLocale(), 'url' => $page->getUrl()], $referenceType);
+                $linkUrl = $this->router->generate(
+                    'victoire_core_page_show', [
+                        '_locale' => $page->getLocale(),
+                        'url'     => $page->getReference()->getUrl()
+                    ],
+                    $referenceType
+                );
                 if ($this->request->getRequestUri() != $linkUrl || !$avoidRefresh) {
                     $url = $linkUrl;
                 }
@@ -219,7 +225,7 @@ class LinkExtension extends \Twig_Extension
             'linkType'        => 'route',
             'route'           => 'victoire_core_page_show',
             'routeParameters' => [
-                'url' => $page->getUrl(),
+                'url' => $page->getReference()->getUrl(),
             ],
             'referenceType' => $referenceType,
         ];

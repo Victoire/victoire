@@ -30,7 +30,6 @@ class BusinessPageBuilder
         'bodyId',
         'bodyClass',
         'slug',
-        'url',
         'locale',
     ];
 
@@ -182,7 +181,7 @@ class BusinessPageBuilder
      * Get the content of an attribute of an entity given.
      *
      * @param BusinessPage $entity
-     * @param strin        $field
+     * @param string       $field
      *
      * @return mixed
      */

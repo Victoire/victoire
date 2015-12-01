@@ -37,7 +37,7 @@ class ViewReferenceXmlCacheManager
 
             /** @var WebViewInterface $view */
             $view = $node['view'];
-            $viewReference = $view->getViewReference();
+            $viewReference = $view->getReference();
             $arrayTransformer = $this->viewReferenceTransformerChain->getViewReferenceTransformer(
                 $viewReference->getViewNamespace(), 'array'
             );

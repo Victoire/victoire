@@ -2,7 +2,10 @@
 
 namespace Victoire\Bundle\PageBundle\Entity\Traits;
 
+use Doctrine\Common\Util\ClassUtils;
 use Victoire\Bundle\CoreBundle\Annotations as VIC;
+use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
+use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
 use Victoire\Bundle\PageBundle\Entity\PageStatus;
 use Victoire\Bundle\SeoBundle\Entity\PageSeo;
 
@@ -104,18 +107,37 @@ trait WebViewTrait
 
     /**
      * Get url.
+     * Be careful with this method, it's heavy. Prefer the use of the ViewReference->getUrl() as long as possible
      *
-     * @return url
+     * @return string
      */
-    public function getUrl()
+    public function getUrl($useViewReference = true)
     {
-        return $this->url;
+        if (true === $useViewReference) {
+            if (null !== $this->getReference()) {
+                return $this->getReference()->getUrl();
+            } else {
+                throw new \Exception(
+                    sprintf(
+                        'No reference is attached to this view for now [#%s, "%s","%s"]',
+                        $this->getId(),
+                        ClassUtils::getClass($this),
+                        $this->getName()
+                    )
+                );
+            }
+        } else {
+            $urlBuilder = new UrlBuilder();
+
+            /** @var WebViewInterface $this */
+            return $urlBuilder->buildUrl($this);
+        }
     }
 
     /**
      * Set status.
      *
-     * @param status $status
+     * @param string $status
      */
     public function setStatus($status)
     {
@@ -125,7 +147,7 @@ trait WebViewTrait
     /**
      * Get status.
      *
-     * @return status
+     * @return string
      */
     public function getStatus()
     {
@@ -135,7 +157,7 @@ trait WebViewTrait
     /**
      * Set publishedAt.
      *
-     * @param publishedAt $publishedAt
+     * @param \DateTime $publishedAt
      */
     public function setPublishedAt($publishedAt)
     {
@@ -145,7 +167,7 @@ trait WebViewTrait
     /**
      * Get publishedAt.
      *
-     * @return publishedAt
+     * @return \DateTime
      */
     public function getPublishedAt()
     {
@@ -155,7 +177,7 @@ trait WebViewTrait
     /**
      * Is this page published.
      *
-     * @return bool is published ?
+     * @return bool
      */
     public function isPublished()
     {
@@ -183,7 +205,7 @@ trait WebViewTrait
     /**
      * Set homepage.
      *
-     * @param string $homepage
+     * @param bool $homepage
      *
      * @return $this
      */

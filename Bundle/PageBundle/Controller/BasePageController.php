@@ -40,7 +40,7 @@ class BasePageController extends Controller
         $page = $this->container->get('victoire_page.page_helper')->findPageByParameters($parameters);
 
         return $this->redirect($this->generateUrl('victoire_core_page_show', array_merge(
-                ['url' => $page->getUrl()],
+                ['url' => $page->getReference()->getUrl()],
                 $request->query->all()
             )
         ));
@@ -67,7 +67,14 @@ class BasePageController extends Controller
             $page
         );
 
-        return $this->redirect($this->generateUrl('victoire_core_page_show', ['url' => $page->getUrl()]));
+        return $this->redirect(
+            $this->generateUrl(
+                'victoire_core_page_show',
+                [
+                    'url' => $page->getReference()->Url()
+                ]
+            )
+        );
     }
 
     /**
@@ -109,8 +116,9 @@ class BasePageController extends Controller
             }
 
             $this->congrat($this->get('translator')->trans('victoire_page.create.success', [], 'victoire'));
-
-            $urlBuilder = $this->container->get('victoire_core.url_builder');
+            $viewReference = $this->get('victoire_view_reference.cache.repository')->getOneReferenceByParameters([
+                'viewId' => $page->getId()
+            ]);
 
             return [
                 'success'  => true,
@@ -118,7 +126,7 @@ class BasePageController extends Controller
                     'victoire_core_page_show',
                     [
                         '_locale' => $page->getLocale(),
-                        'url'     => $urlBuilder->buildUrl($page),
+                        'url'     => $viewReference->getUrl(),
                     ]
                 ),
             ];
@@ -172,13 +180,17 @@ class BasePageController extends Controller
                 ->getOneReferenceByParameters(['viewId' => $page->getId()]);
 
             $page->setReference($viewReference);
-            $this->get('victoire_core.current_view')->setCurrentView($page);
 
             $this->congrat($this->get('translator')->trans('victoire_page.update.success', [], 'victoire'));
 
             return [
                 'success' => true,
-                'url'     => $this->generateUrl('victoire_core_page_show', ['_locale' => $page->getLocale(), 'url' => $viewReference->getUrl()]),
+                'url'     => $this->generateUrl(
+                    'victoire_core_page_show', [
+                        '_locale' => $page->getLocale(),
+                        'url' => $viewReference->getUrl()
+                    ]
+                ),
             ];
         }
         //we display the form

@@ -74,7 +74,7 @@ class ViewReferenceHelper
         foreach ($tree as $branch) {
             /** @var WebViewInterface $view */
             $view = $branch['view'];
-            $view->setViewReference($this->viewReferenceBuilder->buildViewReference($view, $entityManager));
+            $view->setReference($this->viewReferenceBuilder->buildViewReference($view, $entityManager));
             if (!empty($branch['children'])) {
                 /** @var WebViewInterface $children */
                 $children = $branch['children'];

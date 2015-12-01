@@ -128,7 +128,7 @@ class PageHelper
 
             if ($viewReference instanceof ViewReference) {
                 $page = $this->findPageByReference($viewReference, $this->findEntityByReference($viewReference));
-                $page->setUrl($viewReference->getUrl());
+                $page->setReference($viewReference);
             } else {
                 $parametersAsString = [];
                 foreach ($parameters as $key => $value) {

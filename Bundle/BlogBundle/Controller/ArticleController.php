@@ -165,7 +165,7 @@ class ArticleController extends Controller
                 'success' => true,
                 'url'     => $this->generateUrl('victoire_core_page_show', [
                     '_locale' => $page->getLocale(),
-                    'url'     => $page->getUrl(),
+                    'url'     => $page->getReference()->getUrl(),
                 ]),
             ];
         } else {

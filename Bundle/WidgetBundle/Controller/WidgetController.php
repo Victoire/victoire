@@ -136,7 +136,6 @@ class WidgetController extends Controller
             }
 
             $view->setReference($reference);
-
             $this->get('victoire_core.current_view')->setCurrentView($view);
 
             $response = $this->get('widget_manager')->createWidget($mode, $type, $slot, $view, $businessEntityId, $positionReference);
@@ -144,7 +143,12 @@ class WidgetController extends Controller
             if ($isNewPage) {
                 $response = new JsonResponse([
                     'success'  => true,
-                    'redirect' => $this->generateUrl('victoire_core_page_show', ['url' => $view->getUrl()]),
+                    'redirect' => $this->generateUrl(
+                        'victoire_core_page_show',
+                        [
+                            'url' => $reference->getUrl()
+                        ]
+                    ),
                 ]);
             } else {
                 $response = new JsonResponse($response);

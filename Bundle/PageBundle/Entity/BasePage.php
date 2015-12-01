@@ -18,8 +18,6 @@ abstract class BasePage extends View implements WebViewInterface
 {
     use \Victoire\Bundle\PageBundle\Entity\Traits\WebViewTrait;
 
-    protected $viewReference;
-
     /**
      * Construct.
      **/
@@ -29,25 +27,5 @@ abstract class BasePage extends View implements WebViewInterface
         $this->publishedAt = new \DateTime();
         $this->status = PageStatus::PUBLISHED;
         $this->homepage = false;
-    }
-
-    /**
-     * @param ViewReference $viewReference
-     *
-     * @return BasePage
-     */
-    public function setViewReference(ViewReference $viewReference)
-    {
-        $this->viewReference = $viewReference;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getViewReference()
-    {
-        return $this->viewReference;
     }
 }

@@ -133,7 +133,7 @@ class PageSubscriber implements EventSubscriber
                 'viewId' => $entity->getId(),
             ]);
             if ($viewReference instanceof ViewReference && $entity instanceof WebViewInterface) {
-                $entity->setViewReference($viewReference);
+                $entity->setReference($viewReference);
                 $entity->setUrl($viewReference->getUrl());
             } else {
                 $entity->setReference(new ViewReference($entity->getId()));
