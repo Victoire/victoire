@@ -129,7 +129,7 @@ class ViewReferenceXmlCacheRepository
             $node = $this->driver->readCache();
         }
 
-        foreach ($node->children() as $child) {
+        foreach ($node as $child) {
             $viewReferenceTransformer = self::findTransformerFromXmlElement($child);
             $viewReference = $viewReferenceTransformer->transform($child);
             if ($viewReference->getName() != '') {

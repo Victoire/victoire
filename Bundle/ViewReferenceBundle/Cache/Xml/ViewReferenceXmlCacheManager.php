@@ -50,8 +50,7 @@ class ViewReferenceXmlCacheManager
 
             //Build url thanks to hierarchy
             if (!empty($node['children'])) {
-                $childrenNode = $itemNode->addChild('children');
-                $this->generateXml($node['children'], $childrenNode, $_url);
+                $this->generateXml($node['children'], $itemNode, $_url);
             }
         }
 
