@@ -43,8 +43,8 @@ class ViewReferenceXmlCacheRepository
         if ($url) {
             //add every hierarchy item in the xpath var
             $xpath .= sprintf(
-                '/children/viewReference[@slug="%s"]',
-                implode('"]/children/viewReference[@slug="', $urlParts)
+                '/viewReference[@slug="%s"]',
+                implode('"]/viewReference[@slug="', $urlParts)
             );
         }
 
@@ -67,37 +67,46 @@ class ViewReferenceXmlCacheRepository
      *
      * @param $parameters
      *
-     * @return ViewReference|null
+     * @return ViewReference|\SimpleXMLElement|null
      */
-    public function getOneReferenceByParameters($parameters, $transform = true)
+    public function getOneReferenceByParameters($parameters, $transform = true, $keepChildren = false)
     {
-        $viewReferences = $this->getReferencesByParameters($parameters, $transform);
+        $viewReferences = $this->getReferencesByParameters($parameters, $transform, $keepChildren);
         if (count($viewReferences)) {
             return $viewReferences[0];
         }
     }
 
+
     /**
      * @param array $parameters
      *
-     * @return ViewReference[]
+     * @return ViewReference[]|\SimpleXMLElement[]
      */
-    public function getReferencesByParameters($parameters, $transform = true)
+    public function getReferencesByParameters($parameters, $transform = true, $keepChildren = false)
     {
         $viewsReferences = [];
-        $arguments = [];
 
+        /** @var \SimpleXmlElement[] $xmlReferences */
         if ($xmlReferences = $this->driver->readCache()->xpath(ViewReferenceHelper::buildXpath($parameters))) {
-            foreach ($xmlReferences as $xmlReference) {
+            foreach ($xmlReferences as $reference) {
                 if ($transform === true) {
-                    if (isset($xmlReference['entityId'])) {
-                        $viewRefTransformer = new XMLToBusinessPageReferenceTransformer();
-                    } else {
-                        $viewRefTransformer = new XMLToViewReferenceTransformer();
-                    }
-                    $viewReference = $viewRefTransformer->transform($xmlReference);
+                    $transformViewReferenceFn = function ($parentViewReference) use (&$transformViewReferenceFn, $keepChildren) {
+                        $transformer = ViewReferenceXmlCacheRepository::findTransformerFromXmlElement($parentViewReference);
+                        $reference = $transformer->transform($parentViewReference);
+                        if ($keepChildren) {
+                            foreach ($parentViewReference->children() as $child) {
+                                $reference->addChild($transformViewReferenceFn($child));
+                            }
+                        }
+
+                        return $reference;
+                    };
+
+                    $reference = $transformViewReferenceFn($reference);
+
                 }
-                $viewsReferences[] = $viewReference;
+                $viewsReferences[] = $reference;
             }
         }
 
