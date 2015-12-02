@@ -42,7 +42,9 @@ class ViewReferenceXmlCacheManager
                 $viewReference->getViewNamespace(), 'array'
             );
             foreach ($arrayTransformer->reverseTransform($viewReference) as $key => $value) {
-                $itemNode->addAttribute($key, $value);
+                if (!is_array($value)) {
+                    $itemNode->addAttribute($key, $value);
+                }
             }
 
             $_url = ltrim($url.'/'.$viewReference->getSlug(), '/');
@@ -50,8 +52,7 @@ class ViewReferenceXmlCacheManager
 
             //Build url thanks to hierarchy
             if (!empty($node['children'])) {
-                $childrenNode = $itemNode->addChild('children');
-                $this->generateXml($node['children'], $childrenNode, $_url);
+                $this->generateXml($node['children'], $itemNode, $_url);
             }
         }
 
