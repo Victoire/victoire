@@ -77,7 +77,6 @@ class ViewReferenceXmlCacheRepository
         }
     }
 
-
     /**
      * @param array $parameters
      *
@@ -104,7 +103,6 @@ class ViewReferenceXmlCacheRepository
                     };
 
                     $reference = $transformViewReferenceFn($reference);
-
                 }
                 $viewsReferences[] = $reference;
             }

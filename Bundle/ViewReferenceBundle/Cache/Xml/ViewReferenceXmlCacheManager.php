@@ -3,7 +3,6 @@
 namespace Victoire\Bundle\ViewReferenceBundle\Cache\Xml;
 
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
-use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\ViewReferenceBundle\Builder\Chain\ViewReferenceTransformerChain;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
@@ -44,8 +43,8 @@ class ViewReferenceXmlCacheManager
             );
             foreach ($arrayTransformer->reverseTransform($viewReference) as $key => $value) {
                 if (!is_array($value)) {
-                $itemNode->addAttribute($key, $value);
-            }
+                    $itemNode->addAttribute($key, $value);
+                }
             }
 
             $_url = ltrim($url.'/'.$viewReference->getSlug(), '/');
