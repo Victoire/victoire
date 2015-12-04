@@ -1,20 +1,12 @@
-#Setup
+#How to install Victoire DCMS ?
 
-## From scratch ([victoire/demo](https://github.com/Victoire/demo) repo`)
+You actually have two ways to install it :
 
-    composer create-project victoire/demo myProject 1.1.*@dev
+## 1. From scratch using Victoire Demo
 
-Then, import the database in var/dump/db.sql
+Follow the instructions on [victoire demo Readme](https://github.com/Victoire/demo/blob/master/README.md)
 
-OR do it yourself by doing the usual stuff (doctrine:schema:update etc). You can also load fixtures with the following lines :
-
-    php bin/console doctrine:database:create
-    php bin/console doctrine:schema:create
-    php bin/console victoire:generate:view-cache --env=dev
-    
-and populate your database according your needs with the available fixtures/seeds : https://github.com/Victoire/victoire/blob/master/behat.yml.dist#L44
-
-## In an existing Symfony project
+## 2. In an existing Symfony project
 
 - Install Victoire core :
 
@@ -31,9 +23,11 @@ and populate your database according your needs with the available fixtures/seed
     new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
     new JMS\AopBundle\JMSAopBundle(),
     new JMS\TranslationBundle\JMSTranslationBundle(),
+    new JMS\SerializerBundle\JMSSerializerBundle(),
     new JMS\DiExtraBundle\JMSDiExtraBundle($this),
     new Liip\ImagineBundle\LiipImagineBundle(),
     new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+    new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle(),
     //Victoire bundles
     new Victoire\Bundle\AnalyticsBundle\VictoireAnalyticsBundle(),
     new Victoire\Bundle\BlogBundle\VictoireBlogBundle(),
@@ -52,8 +46,15 @@ and populate your database according your needs with the available fixtures/seed
     new Victoire\Bundle\TemplateBundle\VictoireTemplateBundle(),
     new Victoire\Bundle\TwigBundle\VictoireTwigBundle(),
     new Victoire\Bundle\UserBundle\VictoireUserBundle(),
+    new Victoire\Bundle\ViewReferenceBundle\ViewReferenceBundle(),
     new Victoire\Bundle\WidgetBundle\VictoireWidgetBundle(),
     new Victoire\Bundle\WidgetMapBundle\VictoireWidgetMapBundle(),
+    //Victoire test bundles
+    new Victoire\Widget\ForceBundle\VictoireWidgetForceBundle(),
+    new Victoire\Widget\LightSaberBundle\VictoireWidgetLightSaberBundle(),
+    new Victoire\Widget\ButtonBundle\VictoireWidgetButtonBundle(),
+    new Victoire\Widget\TextBundle\VictoireWidgetTextBundle(),
+    new Acme\AppBundle\AcmeAppBundle(),
 ```
 
 - create victoire.yml config file:
@@ -90,16 +91,16 @@ Get the whole Victoire Widget list [**here**](http://packagist.org/search/?tags=
 Check victoire dependencies:
 
 ```json
-    "knplabs/knp-menu"                       : "2.0.0-alpha1",
-    "knplabs/knp-menu-bundle"                : "2.0.0-alpha1",
-    "friendsofsymfony/user-bundle"           : "dev-master",
+    "knplabs/knp-menu"                       : "2.1.*@dev",
+    "knplabs/knp-menu-bundle"                : "2.1.*@dev",
+    "friendsofsymfony/user-bundle"           : "2.0.*@dev",
     "stof/doctrine-extensions-bundle"        : "1.2.*@dev",
     "appventus/assetic-injector-bundle"      : "dev-master",
     "appventus/alertify-bundle"              : "dev-master",
     "appventus/shortcuts-bundle"             : "dev-master",
     "knplabs/gaufrette"                      : "v0.1.7",
     "knplabs/knp-gaufrette-bundle"           : "v0.1.7",
-    "knplabs/knp-components"                 : "dev-master",
+    "knplabs/knp-components"                 : "1.3.*@dev",
 ```
 
 - setup routing:
@@ -137,6 +138,7 @@ Check victoire dependencies:
 ```
 
 - add this config in stof_doctrine_extensions (imported in config.yml)
+
 ```yml
     stof_doctrine_extensions:
         default_locale: fr_FR
@@ -146,15 +148,19 @@ Check victoire dependencies:
 ```
 
 - install FOSJSRouting
+```
+    composer require friendsofsymfony/jsrouting-bundle
+```
 
-- enable the localizeddate filter:
+- enable the localizeddate filter
+
 ```yml
         twig.extension.intl:
             class: Twig_Extensions_Extension_Intl
             tags:
                 - { name: twig.extension }
 ```
-- import the victoire config file:
+- import the victoire config file
 
 ```yml
 imports:
@@ -165,5 +171,3 @@ Use the following information to login and start to create your website
 |Login|Password|
 |-----|--------|
 |`anakin@victoire.io`|test|
-
-
