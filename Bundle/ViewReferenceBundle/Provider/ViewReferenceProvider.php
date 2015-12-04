@@ -45,7 +45,7 @@ class ViewReferenceProvider
         }
 
         $businessPages = $this->findBusinessPages($views);
-        foreach ($views as $key => $view) {
+        foreach ($views as $view) {
             if ($view instanceof BusinessTemplate) {
                 $entities = $this->businessPageHelper->getEntitiesAllowed($view, $em);
 
@@ -59,10 +59,11 @@ class ViewReferenceProvider
                     }
                 }
             } elseif ($view instanceof WebViewInterface) {
-                $referencableViews[$key] = ['view' => $view];
-            }
-            if (isset($referencableViews[$key]) && $view->hasChildren()) {
-                $referencableViews[$key]['children'] = $this->getReferencableViews($view->getChildren(), $em);
+                $referencableView = ['view' => $view];
+                if ($view->getChildren()) {
+                    $referencableView['children'] = $this->getReferencableViews($view->getChildren(), $em);
+                }
+                $referencableViews[] = $referencableView;
             }
         }
 
@@ -72,7 +73,7 @@ class ViewReferenceProvider
     public function findBusinessPages($tree)
     {
         $businessPages = [];
-        foreach ($tree as $key => $view) {
+        foreach ($tree as $view) {
             if ($view instanceof BusinessPage) {
                 $businessPages[ViewReferenceHelper::generateViewReferenceId($view, $view->getBusinessEntity())] = $view;
             }
