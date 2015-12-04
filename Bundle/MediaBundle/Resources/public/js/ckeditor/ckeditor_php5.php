@@ -157,7 +157,7 @@ class CKEditor
         $out .= $this->script($js);
 
         if (!$this->returnOutput) {
-            print $out;
+            echo $out;
             $out = '';
         }
 
@@ -195,7 +195,7 @@ class CKEditor
         $out .= $this->script($js);
 
         if (!$this->returnOutput) {
-            print $out;
+            echo $out;
             $out = '';
         }
 
@@ -250,7 +250,7 @@ class CKEditor
         $out .= $this->script($js);
 
         if (!$this->returnOutput) {
-            print $out;
+            echo $out;
             $out = '';
         }
 
