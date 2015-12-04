@@ -92,6 +92,10 @@ class PageSeoType extends AbstractType
                 'label' => 'form.pageSeo.twitterDescription.label',
                 'attr'  => ['placeholder' => 'form.pageSeo.twitterDescription.placeholder'],
             ])
+            ->add('twitterCreator', null, [
+                'label' => 'form.pageSeo.twitterCreator.label',
+                'attr'  => ['placeholder' => 'form.pageSeo.twitterCreator.placeholder'],
+            ])
             ->add('twitterImage', 'media', [
                 'label' => 'form.pageSeo.twitterImage.label',
             ])
