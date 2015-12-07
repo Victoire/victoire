@@ -177,6 +177,8 @@ class WidgetController extends Controller
     {
         $view = $this->getViewByReferenceId($viewReference);
         $widgetView = $widget->getView();
+        $this->get('victoire_widget_map.builder')->build($widgetView, true);
+        $this->get('victoire_widget_map.widget_data_warmer')->warm($this->getDoctrine()->getManager(), $view);
 
         if (!$reference = $this->container->get('victoire_view_reference.cache.repository')
             ->getOneReferenceByParameters(['viewId' => $view->getId()])) {
