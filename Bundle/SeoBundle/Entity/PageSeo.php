@@ -116,6 +116,14 @@ class PageSeo
     /**
      * @var string
      *
+     * @ORM\Column(name="twitterCreator", type="string", length=255, nullable=true)
+     * @Assert\Length(max = 15)
+     */
+    protected $twitterCreator;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="twitterTitle", type="string", length=255, nullable=true)
      * @Assert\Length(max = 70)
      */
@@ -559,6 +567,30 @@ class PageSeo
     public function getTwitterUrl()
     {
         return $this->twitterUrl;
+    }
+
+    /**
+     * Set twitterCreator.
+     *
+     * @param string $twitterCreator
+     *
+     * @return PageSeo
+     */
+    public function setTwitterCreator($twitterCreator)
+    {
+        $this->twitterCreator = $twitterCreator;
+
+        return $this;
+    }
+
+    /**
+     * Get twitterCreator.
+     *
+     * @return string
+     */
+    public function getTwitterCreator()
+    {
+        return $this->twitterCreator;
     }
 
     /**

@@ -8,7 +8,7 @@
     <body>
       <trans-unit id="923aba5bd6faee45cae298942b6f495b06dbdbd8" resname="form.pageSeo.fbAdmins.label">
         <source>form.pageSeo.fbAdmins.label</source>
-        <target>ID de la página Facebook</target>
+        <target>ID de los administradores de la página Facebook</target>
       </trans-unit>
       <trans-unit id="4c4f990524dc7e0381ae6cdda138667b41f74beb" resname="form.pageSeo.keyword.label">
         <source>form.pageSeo.keyword.label</source>
@@ -200,7 +200,7 @@
       </trans-unit>
       <trans-unit id="15" resname="form.pageSeo.fbAdmins.placeholder">
         <source>form.pageSeo.fbAdmins.placeholder</source>
-        <target>Utilice el ID de la página Facebook</target>
+        <target>Utilice el ID de los administradores de la página Facebook, separados con coma</target>
       </trans-unit>
       <trans-unit id="16" resname="form.pageSeo.relAuthor.placeholder">
         <source>form.pageSeo.relAuthor.placeholder</source>
