@@ -112,6 +112,8 @@ class LinkExtension extends \Twig_Extension
                     $url .= '#vic-widget-'.$attachedWidget->getId().'-container-anchor';
                 }
                 break;
+            default:
+                $url = $parameters['url'];
         }
 
         return $url;
