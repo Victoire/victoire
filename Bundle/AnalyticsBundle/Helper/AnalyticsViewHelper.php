@@ -46,7 +46,7 @@ class AnalyticsViewHelper
                             'viewId'        => $page->getId(),
                         ]
                     );
-                    $viewReferences[$viewReference['id']] = $viewReference;
+                    $viewReferences[$viewReference->getId()] = $viewReference;
                 }
                 //get pager
                 $browseEvents = $this->entityManager->getRepository('Victoire\Bundle\AnalyticsBundle\Entity\BrowseEvent')
@@ -85,13 +85,14 @@ class AnalyticsViewHelper
                     ->run();
 
         foreach ($articles as $key => $article) {
-            $viewReference = $this->viewCacheRepository->getOneReferenceByParameters(
+            if ($viewReference = $this->viewCacheRepository->getOneReferenceByParameters(
                 [
                     'entityNamespace' => 'Victoire\Bundle\BlogBundle\Entity\Article',
                     'entityId'        => $article->getId(),
                 ]
-            );
-            $viewReferences[$viewReference['id']] = $viewReference;
+            )) {
+                $viewReferences[$viewReference->getId()] = $viewReference;
+            }
         }
         //get pager
         $browseEvents = $this->entityManager->getRepository('Victoire\Bundle\AnalyticsBundle\Entity\BrowseEvent')
