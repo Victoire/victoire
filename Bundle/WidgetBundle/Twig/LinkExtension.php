@@ -67,7 +67,7 @@ class LinkExtension extends \Twig_Extension
      */
     public function victoireLinkUrl($parameters, $avoidRefresh = true, $url = '#')
     {
-        $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH;
+        $referenceType = isset($parameters['referenceType']) ? $parameters['referenceType'] : UrlGeneratorInterface::ABSOLUTE_PATH;
 
         $viewReference = isset($parameters['viewReference']) ? $parameters['viewReference'] : null;
         switch ($parameters['linkType']) {
