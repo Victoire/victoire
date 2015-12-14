@@ -65,7 +65,7 @@ class WidgetSubscriber implements EventSubscriber
         $updatedEntities = $this->uow->getScheduledEntityUpdates();
         $deletedEntities = $this->uow->getScheduledEntityDeletions();
 
-        //Update CSS of this widget View and its inheritors if this View is a Template
+        //Update View's CSS and inheritors of updated and deleted widgets
         foreach (array_merge($updatedEntities, $deletedEntities) as $entity) {
             if (!($entity instanceof Widget)) {
                 continue;
@@ -76,13 +76,23 @@ class WidgetSubscriber implements EventSubscriber
             $this->updateTemplateInheritorsCss($view);
         }
 
-        //Remove CSS of this widget View and update its inheritors if this View is a Template
+        //Remove CSS of deleted View and update its inheritors
         foreach ($deletedEntities as $entity) {
             if (!($entity instanceof View)) {
                 continue;
             }
 
             $this->viewCssBuilder->removeCssFile($entity->getCssHash());
+            $this->updateTemplateInheritorsCss($entity);
+        }
+
+        //Update CSS of updated View and its inheritors
+        foreach ($updatedEntities as $entity) {
+            if (!($entity instanceof View)) {
+                continue;
+            }
+
+            $this->updateViewCss($entity);
             $this->updateTemplateInheritorsCss($entity);
         }
     }
