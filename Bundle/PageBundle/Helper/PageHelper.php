@@ -167,7 +167,7 @@ class PageHelper
             $this->widgetMapBuilder->build($page);
             $this->checkPageValidity($page, $entity, ['url' => $url, 'locale' => $locale]);
 
-            return $this->renderPage($page);
+            return $this->renderPage($page, $isAjax);
         } else {
             throw new NotFoundHttpException(sprintf('Page not found (url: "%s", locale: "%s")', $url, $locale));
         }
