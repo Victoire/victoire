@@ -1,4 +1,21 @@
-{% extends '::frontLayout.html.twig' %}
+{% extends '::base.html.twig' %}
+
+
+{% block head_style %}
+    {% stylesheets filter='less, cssrewrite' injector="victoire-edit, alertify-codrops-notification" %}
+    <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+    {% endstylesheets %}
+{% endblock head_style %}
+
+{% block head_script %}
+    <!-- HEAD_SCRIPT -->
+    {% javascripts injector="victoire-head" %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <!-- END HEAD_SCRIPT -->
+
+    {{ parent() }}
+{% endblock head_script %}
 
 {% block body %}
 {% block content %}
