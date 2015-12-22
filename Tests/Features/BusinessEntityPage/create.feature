@@ -148,7 +148,6 @@ Feature: Create business entity pages
         And I submit the widget
         Then I should see "Victoire !"
         Then I should see "Le Côté jedi -> side de la force"
-
         Given I am on "/victoire-dcms/backend/jedi/"
         When I follow "Nouveau jedi"
         Then I should be on "/victoire-dcms/backend/jedi/new"
@@ -162,5 +161,54 @@ Feature: Create business entity pages
         Given I am on "/fr/fiche-jedi-mace-windu"
         Then I should see "Le Côté obscure de la force"
 
+    Scenario: I can create businessPage of the same entity on different businessTemplates
+        Given the following Jedis:
+            | name   | side   | midiChlorians | slug   |
+            | Anakin | Double | 20000         | anakin |
+        Given I open the hamburger menu
+        Then I should see "Représentation métier"
+        When I follow "Représentation métier"
+        And I close the hamburger menu
+        Then I should see "Jedi"
+        Then I should see "Ajouter une représentation métier"
+        When I follow the tab "Jedi"
+        And I should see "Ajouter une représentation métier"
+        And I follow "Ajouter une représentation métier"
+        Then I should see "Créer une représentation métier"
+        When I fill in "Nom" with "Fiche Jedi - {{item.name}}"
+        And I fill in "URL" with "fiche-jedi-{{item.slug}}"
+        And I fill in "victoire_business_template_type_query" with "WHERE LOWER(item.side) LIKE LOWER('bright') OR WHERE LOWER(item.side) LIKE LOWER('double')"
+        And I follow "Créer"
+        And I wait 5 seconds
+        And I switch to "layout" mode
+        When I select "Force" from the "1" select of "content" slot
+        Then I should see "Créer"
+        And I fill in "Côté de la force" with "Bright"
+        And I submit the widget
+        And I wait 5 seconds
+        Given I open the hamburger menu
+        Then I should see "Représentation métier"
+        When I follow "Représentation métier"
+        And I close the hamburger menu
+        Then I should see "Jedi"
+        Then I should see "Ajouter une représentation métier"
+        When I follow the tab "Jedi"
+        And I should see "Ajouter une représentation métier"
+        And I follow "Ajouter une représentation métier"
+        Then I should see "Créer une représentation métier"
+        When I fill in "Nom" with "Fiche Sith - {{item.name}}"
+        And I fill in "URL" with "fiche-sith-{{item.slug}}"
+        And I fill in "victoire_business_template_type_query" with "WHERE LOWER(item.side) LIKE LOWER('dark') OR WHERE LOWER(item.side) LIKE LOWER('double')"
+        And I follow "Créer"
+        And I wait 5 seconds
+        When I select "Force" from the "1" select of "content" slot
+        And I fill in "Côté de la force" with "Dark"
+        Then I should see "Créer"
+        And I submit the widget
+        And I wait 5 seconds
+        Given I am on "/fr/fiche-jedi-anakin"
+        Then I should see "Le Côté Bright de la force"
+        Given I am on "/fr/fiche-sith-anakin"
+        Then I should see "Le Côté Dark de la force"
 
 
