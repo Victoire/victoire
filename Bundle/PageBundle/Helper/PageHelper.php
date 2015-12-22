@@ -239,11 +239,6 @@ class PageHelper
         //update the parameters of the page
         $this->businessPageBuilder->updatePageParametersByEntity($page, $entity);
 
-        $businessEntity = $this->businessEntityHelper->findByEntityInstance($entity);
-        $entityProxy = new EntityProxy();
-        $entityProxy->setEntity($entity, $businessEntity->getName());
-        $page->setEntityProxy($entityProxy);
-
         return $page;
     }
 
