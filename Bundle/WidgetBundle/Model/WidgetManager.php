@@ -358,6 +358,7 @@ class WidgetManager
 
         return $widgetCopy;
     }
+
     public function cloneEntity($entity)
     {
         $entityCopy = clone $entity;
@@ -387,6 +388,7 @@ class WidgetManager
         }
 
         $this->entityManager->persist($entityCopy);
+
         return $entityCopy;
     }
 }
