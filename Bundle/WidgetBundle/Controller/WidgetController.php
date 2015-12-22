@@ -180,12 +180,12 @@ class WidgetController extends Controller
         $this->get('victoire_widget_map.builder')->build($widgetView, true);
         $this->get('victoire_widget_map.widget_data_warmer')->warm($this->getDoctrine()->getManager(), $view);
 
-        if (!$reference = $this->container->get('victoire_view_reference.cache.repository')
+        if ($view instanceof BusinessTemplate && !$reference = $this->container->get('victoire_view_reference.cache.repository')
             ->getOneReferenceByParameters(['viewId' => $view->getId()])) {
             $reference = new ViewReference($viewReference);
+            $widgetView->setReference($reference);
         }
 
-        $widgetView->setReference($reference);
         $this->get('victoire_core.current_view')->setCurrentView($view);
         try {
             $response = new JsonResponse(
