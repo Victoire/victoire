@@ -57,8 +57,32 @@ Feature: Edit a widget
         And I submit the widget
         Then I should see "Victoire !"
         And I should see "Le Côté obscure de la force"
-      
+
     Scenario: I cannot edit widget for an entity with missing business parameter
         When I select "Force" from the "1" select of "content" slot
         Then I should see "Créer"
         And I should see disable tab "Vaisseaux"
+
+    Scenario: I can edit the original widget from a child page
+        Given the following Jedis:
+            | name   | side   | midiChlorians | slug   |
+            | Anakin | Dark   | 20000         | anakin |
+        When I select "Force" from the "1" select of "content" slot
+        Then I should see "Créer"
+        When I fill in "Côté de la force" with "Obscure"
+        When I submit the widget
+        Then I should see "Victoire !"
+        And I should see "Le Côté Obscure de la force"
+        Given I am on "/fr/fiche-jedi-anakin"
+        When I switch to "edit" mode
+        And I edit the "Force" widget
+        Then I should see "Attention ! Ce contenu appartient à un modèle parent"
+        And I follow "modifier le contenu original"
+        And I wait 5 seconds
+        Then I should not see "Attention ! Ce contenu appartient à un modèle parent"
+        When I fill in "Côté de la force" with "Dark"
+        And I submit the widget
+        Then I should see "Victoire"
+        Given I am on "/fr/victoire-dcms/business-template/show/5"
+        Then I should see "Le Côté Dark de la force"
+
