@@ -163,8 +163,8 @@ Feature: Create business entity pages
 
     Scenario: I can create businessPage of the same entity on different businessTemplates
         Given the following Jedis:
-            | name   | side   | midiChlorians | slug   |
-            | Anakin | Double | 20000         | anakin |
+            | name     | side   | midiChlorians | slug     |
+            | Kylo Ren | Double | 20000         | kylo-ren |
         Given I open the hamburger menu
         Then I should see "Représentation métier"
         When I follow "Représentation métier"
@@ -177,7 +177,7 @@ Feature: Create business entity pages
         Then I should see "Créer une représentation métier"
         When I fill in "Nom" with "Fiche Jedi - {{item.name}}"
         And I fill in "URL" with "fiche-jedi-{{item.slug}}"
-        And I fill in "victoire_business_template_type_query" with "WHERE LOWER(item.side) LIKE LOWER('bright') OR WHERE LOWER(item.side) LIKE LOWER('double')"
+        And I fill in "victoire_business_template_type_query" with "WHERE LOWER(item.side) LIKE LOWER('bright') OR LOWER(item.side) LIKE LOWER('double')"
         And I follow "Créer"
         And I wait 5 seconds
         And I switch to "layout" mode
@@ -198,17 +198,17 @@ Feature: Create business entity pages
         Then I should see "Créer une représentation métier"
         When I fill in "Nom" with "Fiche Sith - {{item.name}}"
         And I fill in "URL" with "fiche-sith-{{item.slug}}"
-        And I fill in "victoire_business_template_type_query" with "WHERE LOWER(item.side) LIKE LOWER('dark') OR WHERE LOWER(item.side) LIKE LOWER('double')"
+        And I fill in "victoire_business_template_type_query" with "WHERE LOWER(item.side) LIKE LOWER('dark') OR LOWER(item.side) LIKE LOWER('double')"
         And I follow "Créer"
         And I wait 5 seconds
         When I select "Force" from the "1" select of "content" slot
-        And I fill in "Côté de la force" with "Dark"
         Then I should see "Créer"
+        And I fill in "Côté de la force" with "Dark"
         And I submit the widget
         And I wait 5 seconds
-        Given I am on "/fr/fiche-jedi-anakin"
-        Then I should see "Le Côté Bright de la force"
-        Given I am on "/fr/fiche-sith-anakin"
-        Then I should see "Le Côté Dark de la force"
+        Given I am on "/fr/fiche-jedi-kylo-ren"
+        Then I should see "Le côté Bright de la force"
+        Given I am on "/fr/fiche-sith-kylo-ren"
+        Then I should see "Le côté Dark de la force"
 
 

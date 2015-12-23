@@ -57,7 +57,7 @@ Feature: Edit a widget
         And I submit the widget
         Then I should see "Victoire !"
         And I should see "Le Côté obscure de la force"
-      
+
     Scenario: I cannot edit widget for an entity with missing business parameter
         When I select "Force" from the "1" select of "content" slot
         Then I should see "Créer"
@@ -79,7 +79,7 @@ Feature: Edit a widget
         Then I should see "Attention ! Ce contenu appartient à un modèle parent"
         And I follow "modifier le contenu original"
         And I wait 5 seconds
-        Then |I should not see "Attention ! Ce contenu appartient à un modèle parent"
+        Then I should not see "Attention ! Ce contenu appartient à un modèle parent"
         When I fill in "Côté de la force" with "Dark"
         And I submit the widget
         Then I should see "Victoire"
