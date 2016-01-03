@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
 use Doctrine\ORM\QueryBuilder;
+use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
@@ -219,7 +220,11 @@ class QueryHelper
         return false;
     }
 
-    public function getCurrentUser() {
+    /**
+     * @return UserInterface|string
+     */
+    public function getCurrentUser()
+    {
         return $this->tokenStorage->getToken()->getUser();
     }
 }
