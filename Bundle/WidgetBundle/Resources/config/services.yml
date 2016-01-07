@@ -35,9 +35,7 @@ services:
             - @victoire_form.error_helper
             - @request
             - @victoire_widget_map.manager
-            - @victoire_widget_map.helper
             - @victoire_widget_map.builder
-            - @victoire_widget_map.position_builder
             - @victoire_business_entity.cache_reader
             - @victoire_core.template_mapper
             - @victoire_page.page_helper
