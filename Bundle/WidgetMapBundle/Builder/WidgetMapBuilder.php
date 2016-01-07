@@ -2,10 +2,10 @@
 
 namespace Victoire\Bundle\WidgetMapBundle\Builder;
 
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\CoreBundle\Entity\View;
-use Victoire\Bundle\PageBundle\Entity\WidgetMap;
-use Victoire\Bundle\WidgetBundle\Entity\Widget;
-use Victoire\Bundle\WidgetMapBundle\DataTransformer\WidgetMapToArrayTransformer;
+use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 
 /**
  * View WidgetMap builder.
@@ -14,115 +14,66 @@ use Victoire\Bundle\WidgetMapBundle\DataTransformer\WidgetMapToArrayTransformer;
  */
 class WidgetMapBuilder
 {
-    protected $widgetMapTransformer;
 
-    /**
-     * Constructor.
-     *
-     * @param WidgetMapToArrayTransformer $widgetMapTransformer
-     */
-    public function __construct(WidgetMapToArrayTransformer $widgetMapTransformer)
+    public function build(View $view, EntityManager $em = null, $updatePage = true)
     {
-        $this->widgetMapTransformer = $widgetMapTransformer;
-    }
+        $widgetMaps = $view->getWidgetMaps()->toArray();
+        $template = clone $view;
+        $builtWidgetMap = [];
 
-    public function build(View $view, $updatePage = true)
-    {
-        $viewWidgetMaps = null;
-        $widgetMap = [];
-
-        //get the template widget map
-        $template = $view->getTemplate();
-
-        if ($template !== null) {
-            $widgetMap = $this->build($template);
+        while (null !== $template = $template->getTemplate()) {
+            $widgetMaps = array_merge($widgetMaps, $template->getWidgetMaps()->toArray());
+        }
+        $slots = [];
+        /** @var WidgetMap $widgetMapItem */
+        foreach ($widgetMaps as $widgetMapItem) {
+            $id = $widgetMapItem->getId();
+            if ($widgetMapItem->getReplaced()) {
+                $id = $widgetMapItem->getReplaced()->getId();
+            }
+            if (empty($slots[$widgetMapItem->getSlot()][$id]) || !empty($slots[$widgetMapItem->getSlot()][$id]) && $slots[$widgetMapItem->getSlot()][$id]->getAction() !== WidgetMap::ACTION_OVERWRITE) {
+                $slots[$widgetMapItem->getSlot()][$id] = $widgetMapItem;
+            }
         }
 
-        // build the view widgetMaps for each its slots
-        foreach ($view->getSlots() as $slot) {
-            if (empty($widgetMap[$slot->getId()])) {
-                $widgetMap[$slot->getId()] = [];
-            }
+        foreach ($slots as $slot => $widgetMaps) {
+            $mainWidgetMap = null;
+            $builtWidgetMap[$slot] = [];
 
-            if ($slot !== null) {
-                $viewWidgetMaps = $slot->getWidgetMaps();
-            }
-            //if the current view have some widget maps
-            if ($viewWidgetMaps !== null) {
-                //we parse the widget maps
-                foreach ($viewWidgetMaps as $viewWidgetMap) {
-                    $viewWidgetMap = clone $viewWidgetMap;
-                    //depending on the action
-                    $action = $viewWidgetMap->getAction();
-                    switch ($action) {
-                        case WidgetMap::ACTION_CREATE:
-                            $position = (int) $viewWidgetMap->getPosition();
-                            $reference = (int) $viewWidgetMap->getPositionReference();
-                            if ($reference != 0) {
-                                if (isset($widgetMap[$slot->getId()])) {
-                                    foreach ($widgetMap[$slot->getId()] as $key => $_widgetMap) {
-                                        if ($_widgetMap->getWidgetId() === $reference) {
-                                            $position += $_widgetMap->getPosition();
-                                        }
-                                    }
-                                }
-                            }
-
-                            array_splice($widgetMap[$slot->getId()], $position - 1, 0, [$viewWidgetMap]);
-                            array_map(
-                                function ($key, $_widgetMap) {
-                                    $_widgetMap->setPosition($key + 1);
-                                },
-                                array_keys($widgetMap[$slot->getId()]),
-                                $widgetMap[$slot->getId()]
-                            );
-
-                            break;
-                        case WidgetMap::ACTION_OVERWRITE:
-                            //parse the widget maps
-                            $position = null;
-                            foreach ($widgetMap[$slot->getId()] as $index => $wm) {
-                                if ($wm->getWidgetId() == $viewWidgetMap->getReplacedWidgetId()) {
-                                    if (null === $viewWidgetMap->isAsynchronous()) {
-                                        $viewWidgetMap->setAsynchronous($wm->isAsynchronous());
-                                    }
-                                    //replace the widget map from the list
-                                    unset($widgetMap[$slot->getId()][$index]);
-                                    break;
-                                }
-                            }
-                            array_splice($widgetMap[$slot->getId()], $viewWidgetMap->getPosition() - 1, 0, [$viewWidgetMap]);
-                            array_map(
-                                function ($key, $_widgetMap) {
-                                    $_widgetMap->setPosition($key + 1);
-                                },
-                                array_keys($widgetMap[$slot->getId()]),
-                                $widgetMap[$slot->getId()]
-                            );
-
-                            break;
-                        case WidgetMap::ACTION_DELETE:
-                            //parse the widget maps
-                            foreach ($widgetMap[$slot->getId()] as $index => $wm) {
-                                if ($wm->getWidgetId() === $viewWidgetMap->getWidgetId()) {
-                                    //remove the widget map from the list
-                                    unset($widgetMap[$slot->getId()][$index]);
-                                }
-                            }
-                            break;
-                        default:
-                            throw new \Exception('The action ['.$action.'] is not handled yet.');
-                            break;
-                    }
+            /** @var WidgetMap $_widgetMap */
+            foreach ($widgetMaps as $_widgetMap) {
+                if (!$_widgetMap->getParent()) {
+                    $mainWidgetMap = $_widgetMap;
+                    break;
                 }
-                ksort($widgetMap[$slot->getId()]);
+            }
+
+            if ($mainWidgetMap) {
+                $builtWidgetMap[$slot][] = $mainWidgetMap;
+                /**
+                 * @param WidgetMap $currentWidgetMap
+                 */
+                $orderizeWidgetMap = function ($currentWidgetMap, $builtWidgetMap) use ($slot, &$orderizeWidgetMap, $widgetMaps) {
+                    $children = $currentWidgetMap->getChildren();
+                    foreach ($children as $child) {
+                        if (in_array($child, $widgetMaps)) {
+                            $offset = array_search($currentWidgetMap, $builtWidgetMap[$slot]) + ($child->getPosition() == WidgetMap::POSITION_AFTER ? 1 : 0);
+                            array_splice($builtWidgetMap[$slot], $offset, 0, [$child]);
+                            $builtWidgetMap = $orderizeWidgetMap($child, $builtWidgetMap);
+                        }
+
+                    }
+
+                    return $builtWidgetMap;
+                };
+                $builtWidgetMap = $orderizeWidgetMap($mainWidgetMap, $builtWidgetMap);
             }
         }
 
         if ($updatePage) {
-            $view->setBuiltWidgetMap($widgetMap);
+            $view->setBuiltWidgetMap($builtWidgetMap);
         }
 
-        return $widgetMap;
+        return $builtWidgetMap;
     }
 }

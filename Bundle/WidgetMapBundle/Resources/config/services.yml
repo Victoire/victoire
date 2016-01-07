@@ -1,9 +1,6 @@
 services:
     victoire_widget_map.builder:
         class: Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder
-        arguments:
-            - "@victoire_widget_map.datatransformer.widgetmap_to_array"
-
     victoire_widget_map.position_builder:
         class: Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapPositionBuilder
 
