@@ -77,8 +77,11 @@ class UrlManager
         {
             // Remove the old url
             $refUrl = $this->tool->unredislize($this->redis->hget("reference:".$refId, "url"));
-            $this->removeUrl($refUrl, $locale);
-            $this->redis->hdel("reference:".$refId, "url");
+            if($refUrl != "")
+            {
+                $this->removeUrl($refUrl, $locale);
+                $this->redis->hdel("reference:".$refId, "url");
+            }
         }
         // Set the new url
         $this->redis->set($locale.":/".$url, $refId);
