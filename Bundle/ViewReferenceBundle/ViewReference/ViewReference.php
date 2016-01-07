@@ -15,6 +15,7 @@ class ViewReference
     protected $viewId;
     protected $viewNamespace;
     protected $children;
+    protected $parent;
 
     public function __construct($id = null)
     {
@@ -137,6 +138,22 @@ class ViewReference
     }
 
     /**
+     * @return integer
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * @param integer $parent
+     */
+    public function setParent($parent)
+    {
+        $this->parent = $parent;
+    }
+
+    /**
      * @return ViewReference[]
      */
     public function getChildren()
@@ -159,4 +176,5 @@ class ViewReference
     {
         $this->children[] = $child;
     }
+
 }
