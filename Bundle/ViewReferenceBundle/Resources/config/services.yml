@@ -93,6 +93,15 @@ services:
             - "@victoire_view_reference.redis.repository"
             - "@snc_redis.victoire"
 
+    victoire_view_reference.listener:
+        class: Victoire\Bundle\ViewReferenceBundle\Listener\ViewReferenceListener
+        arguments:
+            - @victoire_view_reference.builder
+            - @victoire_view_reference.redis.driver
+            - @doctrine.orm.entity_manager
+        tags:
+            - { name: kernel.event_subscriber }
+
     victoire_view_reference.transformer.xmlToViewReference:
         class: %victoire_view_reference.transformer.xmlToViewReference.class%
 
