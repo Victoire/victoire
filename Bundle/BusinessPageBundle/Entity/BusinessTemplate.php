@@ -27,7 +27,7 @@ class BusinessTemplate extends Template
     protected $seo;
 
     /**
-     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage", mappedBy="template")
+     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage", mappedBy="template", cascade={"remove", "persist"})
      */
     protected $inheritors;
 
