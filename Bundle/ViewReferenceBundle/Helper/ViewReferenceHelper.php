@@ -52,21 +52,6 @@ class ViewReferenceHelper
     }
 
     /**
-     * @param array $parameters
-     *
-     * @return string
-     */
-    public static function buildXpath(array $parameters)
-    {
-        $arguments = [];
-        foreach ($parameters as $key => $value) {
-            $arguments[$key] = '@'.$key.'="'.$value.'"';
-        }
-
-        return '//viewReference['.implode(' and ', $arguments).']';
-    }
-
-    /**
      * @param [] $tree
      */
     public function buildViewReferenceRecursively($tree, $entityManager)

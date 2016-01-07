@@ -1,7 +1,4 @@
 parameters:
-    victoire_view_reference.cache.driver.class: Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheDriver
-    victoire_view_reference.cache.manager.class: Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheManager
-    victoire_view_reference.cache.repository.class: Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheRepository
     victoire_view_reference.transformer.xmlToViewReference.class: Victoire\Bundle\ViewReferenceBundle\Transformer\XmlToViewReferenceTransformer
     victoire_view_reference.cache_warmer.class: Victoire\Bundle\ViewReferenceBundle\Cache\ViewCacheWarmer
     victoire_view_reference.array_transformer.base_page.class: Victoire\Bundle\ViewReferenceBundle\Transformer\ArrayToViewReferenceTransformer
@@ -46,23 +43,6 @@ services:
 
     victoire_view_reference.transformer_chain:
         class: Victoire\Bundle\ViewReferenceBundle\Builder\Chain\ViewReferenceTransformerChain
-
-    victoire_view_reference.cache.driver:
-        class: %victoire_view_reference.cache.driver.class%
-        arguments:
-            - "%victoire_view_reference.cache.path%"
-
-    victoire_view_reference.cache.manager:
-        class: %victoire_view_reference.cache.manager.class%
-        arguments:
-            - "@victoire_view_reference.cache.driver"
-            - "@victoire_view_reference.transformer_chain"
-
-    victoire_view_reference.cache.repository:
-        class: %victoire_view_reference.cache.repository.class%
-        arguments:
-            - "@victoire_view_reference.cache.driver"
-            - "@victoire_view_reference.transformer_chain"
 
     victoire_view_reference.redis.repository:
         class: %victoire_view_reference.redis.repository.class%
