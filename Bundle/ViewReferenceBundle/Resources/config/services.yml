@@ -37,12 +37,7 @@ services:
     victoire_view_reference.event_subscriber:
         class: Victoire\Bundle\ViewReferenceBundle\EventSubscriber\ViewReferenceSubscriber
         arguments:
-            - @victoire_view_reference.cache.manager
-            - @victoire_view_reference.cache.driver
-            - @victoire_business_page.business_page_builder
-            - @victoire_view_reference.provider
-            - @victoire_view_reference.helper
-            - @victoire_core.helper.business_entity_helper
+            - @event_dispatcher
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
@@ -109,8 +104,7 @@ services:
         class: %victoire_view_reference.cache_warmer.class%
         arguments:
             - @victoire_core.view_helper
-            - @victoire_view_reference.cache.driver
-            - @victoire_view_reference.cache.manager
+            - @victoire_view_reference.redis.driver
             - @doctrine.orm.entity_manager
         tags:
         - { name: kernel.event_listener, event: kernel.request, method: warmUp }
