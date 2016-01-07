@@ -80,11 +80,11 @@ class WidgetDataWarmer
      */
     private function populateWidgets(View $view, array $viewWidgets)
     {
-        foreach ($view->getWidgetMap() as $slotId => $widgetMapArray) {
+        foreach ($view->getBuiltWidgetMap() as $slotId => $widgetMapArray) {
             /* @var WidgetMap[] $widgetMapArray */
             foreach ($widgetMapArray as $widgetMap) {
                 foreach ($viewWidgets as $viewWidget) {
-                    if ($widgetMap->getWidgetId() == $viewWidget->getId()) {
+                    if ($widgetMap->getWidget() == $viewWidget) {
                         $widgetMap->setWidget($viewWidget);
                         break;
                     }

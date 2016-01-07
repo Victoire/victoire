@@ -229,4 +229,21 @@ class VictoireContext extends RawMinkContext
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
     }
+
+    /**
+     * @Then /^I move the widget "(.+)" under the widget "(.*)"$/
+     */
+    public function iMoveWidgetUnder($widgetMoved,$widgetMovedTo)
+    {
+        $widgetRepo =$this->getContainer()->get('doctrine.orm.entity_manager')
+            ->getRepository('Victoire\Widget\TextBundle\Entity\WidgetText');
+        $widgetMovedId = $widgetRepo->findOneBy(['content' => $widgetMoved])->getId();
+        $widgetMovedToId = 0;
+        if ($widgetMovedTo) {
+            $widgetMovedToId = $widgetRepo->findOneBy(['content' => $widgetMovedTo])->getId();
+        }
+
+        $js = 'updateWidgetPosition({"parentWidget": '.$widgetMovedToId.', "slot": "content", "widget": '.$widgetMovedId.'})';
+        $this->getSession()->executeScript($js);
+    }
 }
