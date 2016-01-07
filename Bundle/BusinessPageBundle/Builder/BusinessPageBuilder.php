@@ -51,7 +51,9 @@ class BusinessPageBuilder
      * Generate update the page parameters with the entity.
      *
      * @param BusinessTemplate $businessTemplate
-     * @param BusinessEntity   $entity
+     * @param entity   $entity
+     *
+     * @return VirtualBusinessPage
      */
     public function generateEntityPageFromTemplate(BusinessTemplate $businessTemplate, $entity, EntityManager $em)
     {
@@ -72,6 +74,7 @@ class BusinessPageBuilder
         }
 
         //find Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity object according to the given $entity
+
         $businessEntity = $this->businessEntityHelper->findByEntityInstance($entity);
 
         if ($businessEntity !== null) {
