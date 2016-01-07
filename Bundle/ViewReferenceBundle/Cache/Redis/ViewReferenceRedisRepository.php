@@ -9,6 +9,7 @@ use Predis\ClientInterface;
  * @package Victoire\Bundle\ViewReferenceBundle\Cache\Redis
  *
  * This class is used to make operations "select" on redis for view References
+ * ref : victoire_view_reference.redis.repository
  */
 class ViewReferenceRedisRepository
 {

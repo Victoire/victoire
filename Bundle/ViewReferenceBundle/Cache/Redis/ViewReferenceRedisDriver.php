@@ -11,9 +11,11 @@ use Victoire\Bundle\ViewReferenceBundle\Transformer\ArrayToViewReferenceTransfor
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 /**
- * This class make the relation between ViewReference/View with redis
  * Class ViewReferenceRedisDriver
  * @package Victoire\Bundle\ViewReferenceBundle\Cache\Redis
+ *
+ * This class make the relation between ViewReference/View with redis
+ * ref : victoire_view_reference.redis.driver
  */
 class ViewReferenceRedisDriver
 {

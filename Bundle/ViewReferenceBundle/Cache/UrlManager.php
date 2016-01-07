@@ -11,7 +11,9 @@ use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 /**
  * Class UrlManager
  * @package Victoire\Bundle\ViewReferenceBundle\Cache
+ *
  * This class manage url vor ViewReferences
+ * ref : victoire_view_reference.url.manager
  */
 class UrlManager
 {

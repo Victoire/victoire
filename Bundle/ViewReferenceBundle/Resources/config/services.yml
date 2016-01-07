@@ -8,6 +8,10 @@ parameters:
     victoire_view_reference.array_transformer.business_page.class: Victoire\Bundle\ViewReferenceBundle\Transformer\ArrayToBusinessPageReferenceTransformer
     victoire_view_reference.xml_transformer.base_page.class: Victoire\Bundle\ViewReferenceBundle\Transformer\XmlToViewReferenceTransformer
     victoire_view_reference.xml_transformer.business_page.class: Victoire\Bundle\ViewReferenceBundle\Transformer\XmlToBusinessPageReferenceTransformer
+    victoire_view_reference.redis.repository.class: Victoire\Bundle\ViewReferenceBundle\Cache\Redis\ViewReferenceRedisRepository
+    victoire_view_reference.redis.manager.class: Victoire\Bundle\ViewReferenceBundle\Cache\Redis\ViewReferenceRedisManager
+    victoire_view_reference.redis.driver.class: Victoire\Bundle\ViewReferenceBundle\Cache\Redis\ViewReferenceRedisDriver
+    victoire_view_reference.url.manager.class: Victoire\Bundle\ViewReferenceBundle\Cache\UrlManager
 
 services:
     victoire_view_reference.builder:
@@ -64,6 +68,30 @@ services:
         arguments:
             - "@victoire_view_reference.cache.driver"
             - "@victoire_view_reference.transformer_chain"
+
+    victoire_view_reference.redis.repository:
+        class: %victoire_view_reference.redis.repository.class%
+        arguments:
+            - "@snc_redis.victoire"
+
+    victoire_view_reference.redis.manager:
+        class: %victoire_view_reference.redis.manager.class%
+        arguments:
+            - "@snc_redis.victoire"
+
+    victoire_view_reference.redis.driver:
+        class: %victoire_view_reference.redis.driver.class%
+        arguments:
+            - "@victoire_view_reference.redis.manager"
+            - "@victoire_view_reference.redis.repository"
+            - "@victoire_view_reference.transformer_chain"
+            - "@victoire_view_reference.url.manager"
+
+    victoire_view_reference.url.manager:
+        class: %victoire_view_reference.url.manager.class%
+        arguments:
+            - "@victoire_view_reference.redis.repository"
+            - "@snc_redis.victoire"
 
     victoire_view_reference.transformer.xmlToViewReference:
         class: %victoire_view_reference.transformer.xmlToViewReference.class%
