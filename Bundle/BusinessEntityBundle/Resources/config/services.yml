@@ -18,6 +18,7 @@ services:
             - @victoire_business_page.business_page_builder
             - @victoire_core.helper.business_entity_helper
             - @victoire_business_page.business_page_helper
+            - @event_dispatcher
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
