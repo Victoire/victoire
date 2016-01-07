@@ -1,0 +1,1 @@
+# Redis to manage View References

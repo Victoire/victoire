@@ -40,7 +40,7 @@ It's the ViewReference object
 Every ViewReference is built by a ViewReferenceBuilder in 2 times:
 
 - when running the victoire:viewReference:generate
-- on doctrine ORM `persist` / `update` / `flush` events catched by `BusinessEntitySubscriber` and `ViewReferenceSubscriber`
+- on doctrine ORM `persist` / `update` / `remove` events catched by `BusinessEntitySubscriber` and `ViewReferenceSubscriber`
 
 ##Who's in charge ?
 
@@ -51,14 +51,23 @@ To deal with the viewsReferences, your best friends will be:
     - buildViewReferenceRecursively
 - ViewReferenceHelper
     - ::generateViewReferenceId
-    - removeViewReference
-    - convertXmlCacheToArray
+    - buildViewReferenceRecursively
 - ViewReferenceProvider
     - getReferencableViews
-- ViewReferenceXmlCacheRepository
-    - generateXml + writeFile
-    - update
-    - readCache
+- ViewReferenceRedisDriver
+    - findReferenceByView
+    - saveReferences
+    - saveReference
+    - removeReference
+    - getReferenceByUrl
+    - getReferencesByParameters
     - getOneReferenceByParameters
-    - removeViewsReferencesByParameters
-    - getAllViewsReferences
+    - hasReference
+    - getChoices
+- ViewReferenceListener
+    - updateViewReference
+    - removeViewReference
+
+##How they are peristed ?
+
+Check the Redis documentation [here](Resources/doc/redis.md)
