@@ -47,39 +47,47 @@ function trackChange(elem)
 function enableSortableSlots(){
     $vic(".vic-slot").each(function(){
         $vic(this).sortable({
-            revert: true,
             handle: '.vic-hover-widget',
             items: "> .vic-widget-container:not(.vic-undraggable)",
             placeholder: "vic-ui-state-highlight",
-
             forcePlaceholderSize: true,
             revert: true,
             stop: function( event, ui ) {
-                var ajaxCall = updateWidgetPosition(ui);
-                ajaxCall.fail(function(){
-                    $vic(".vic-slot").each(function(){
-                        $vic(this).sortable('cancel');
-                    });
-                    return false;
-                });
+                console.log(ui.item);
+                if (ui.item.prev().data('widget-map-reference')) {
+                    var widgetMapReference = ui.item.prev().data('widget-map-reference');
+                    var position = ui.item.prev().data('position');
+                } else {
+                    var widgetMapReference = ui.item.next().data('widget-map-reference');
+                    var position = ui.item.next().data('position');
+                }
+                var sorted = {
+                    'widgetMapReference': widgetMapReference,
+                    'position': position,
+                    'slot': ui.item.parents('.vic-slot').first().data('name'),
+                    'widgetMap': ui.item.data('widget-map-id')
+                };
+                updateWidgetPosition(sorted);
+
                 var $scope = angular.element($vic(this)).scope();
                 $scope.rebuildActions();
+
             }
         });
     });
 }
 
-function updateWidgetPosition(ui){
-    var sorted = {
-        'parentWidget': ui.item.prev('.vic-widget-container').data('id'),
-        'slot': ui.item.parents('.vic-slot').first().data('name'),
-        'widget': ui.item.data('id')
-    };
-
-    return $vic.post(
+function updateWidgetPosition(sorted) {
+    var ajaxCall = $vic.post(
         Routing.generate('victoire_core_widget_update_position', {'viewReference': viewReferenceId}),
         { 'sorted': sorted, '_locale': locale }
     );
+    ajaxCall.fail(function(){
+        $vic(".vic-slot").each(function(){
+            $vic(this).sortable('cancel');
+        });
+        return false;
+    });
 }
 
 function loading(value) {
