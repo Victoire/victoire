@@ -33,9 +33,7 @@ class VictoireContext extends RawMinkContext
     public function resetViewsReference(BeforeScenarioScope $scope)
     {
         $viewsReferences = $this->getContainer()->get('victoire_core.view_helper')->buildViewsReferences();
-        $this->getContainer()->get('victoire_view_reference.cache.driver')->writeFile(
-            $this->getContainer()->get('victoire_view_reference.cache.manager')->generateXml($viewsReferences)
-        );
+        $this->getContainer()->get('victoire_view_reference.redis.driver')->saveReferences($viewsReferences);
     }
 
     /**

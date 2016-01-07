@@ -35,6 +35,7 @@ class AppKernel extends Kernel
             new Liip\ImagineBundle\LiipImagineBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle(),
+            new Snc\RedisBundle\SncRedisBundle(),
 
             //Victoire bundles
             new Victoire\Bundle\AnalyticsBundle\VictoireAnalyticsBundle(),

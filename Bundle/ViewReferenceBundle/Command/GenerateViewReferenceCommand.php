@@ -5,6 +5,8 @@ namespace Victoire\Bundle\ViewReferenceBundle\Command;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
+use Victoire\Bundle\CoreBundle\Entity\View;
 
 class GenerateViewReferenceCommand extends ContainerAwareCommand
 {
@@ -32,8 +34,6 @@ class GenerateViewReferenceCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $viewsReferences = $this->getContainer()->get('victoire_core.view_helper')->buildViewsReferences();
-        $this->getContainer()->get('victoire_view_reference.cache.driver')->writeFile(
-            $this->getContainer()->get('victoire_view_reference.cache.manager')->generateXml($viewsReferences)
-        );
+        $this->getContainer()->get('victoire_view_reference.redis.driver')->saveReferences($viewsReferences);
     }
 }

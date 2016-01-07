@@ -116,7 +116,7 @@ class BasePageController extends Controller
             }
 
             $this->congrat($this->get('translator')->trans('victoire_page.create.success', [], 'victoire'));
-            $viewReference = $this->get('victoire_view_reference.cache.repository')->getOneReferenceByParameters([
+            $viewReference = $this->get('victoire_view_reference.redis.driver')->getOneReferenceByParameters([
                 'viewId' => $page->getId(),
             ]);
 
@@ -176,7 +176,7 @@ class BasePageController extends Controller
             $entityManager->persist($page);
             $entityManager->flush();
             /** @var ViewReference $viewReference */
-            $viewReference = $this->container->get('victoire_view_reference.cache.repository')
+            $viewReference = $this->container->get('victoire_view_reference.redis.driver')
                 ->getOneReferenceByParameters(['viewId' => $page->getId()]);
 
             $page->setReference($viewReference);

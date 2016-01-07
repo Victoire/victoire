@@ -11,7 +11,7 @@ use Victoire\Bundle\CoreBundle\Handler\WidgetExceptionHandler;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
-use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheRepository;
+use Victoire\Bundle\ViewReferenceBundle\Cache\Redis\ViewReferenceRedisDriver;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer;
@@ -39,7 +39,7 @@ class CmsExtension extends \Twig_Extension_Core
      * @param SecurityContext                 $securityContext
      * @param WidgetExceptionHandler          $widgetExceptionHandler
      * @param CurrentViewHelper               $currentViewHelper
-     * @param ViewReferenceXmlCacheRepository $viewCacheRepository
+     * @param ViewReferenceRedisDriver        $viewRedisDriver
      * @param \Twig_Environment               $twig
      */
     public function __construct(
@@ -48,7 +48,7 @@ class CmsExtension extends \Twig_Extension_Core
         SecurityContext $securityContext,
         WidgetExceptionHandler $widgetExceptionHandler,
         CurrentViewHelper $currentViewHelper,
-        ViewReferenceXmlCacheRepository $viewCacheRepository,
+        ViewReferenceRedisDriver $viewRedisDriver,
         \Twig_Environment $twig
     ) {
         $this->widgetRenderer = $widgetRenderer;
@@ -56,7 +56,7 @@ class CmsExtension extends \Twig_Extension_Core
         $this->securityContext = $securityContext;
         $this->widgetExceptionHandler = $widgetExceptionHandler;
         $this->currentViewHelper = $currentViewHelper;
-        $this->viewCacheRepository = $viewCacheRepository;
+        $this->viewRedisDriver= $viewRedisDriver;
         $this->twig = $twig;
     }
 
@@ -110,7 +110,7 @@ class CmsExtension extends \Twig_Extension_Core
      */
     public function cmsWidgetUnlinkAction($widgetId, $view)
     {
-        $viewReference = $this->viewCacheRepository->getOneReferenceByParameters(
+        $viewReference = $this->viewRedisDriver->getOneReferenceByParameters(
             ['viewId' => $view->getId()]
         );
         if (!$viewReference && $view->getId() != '') {

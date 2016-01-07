@@ -134,7 +134,7 @@
 
         <service id="victoire_form.form.type.vic_link" class="%victoire_form.form.type.vic_link.class%">
             <argument>%victoire_seo.analytics%</argument>
-            <argument type="service" id="victoire_view_reference.cache.repository"></argument>
+            <argument type="service" id="victoire_view_reference.redis.driver"></argument>
             <tag name="form.type" alias="victoire_link" />
         </service>
 

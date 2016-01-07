@@ -11,7 +11,7 @@ services:
             - @victoire_page.user_callable
             - %victoire_core.user_class%
             - @victoire_view_reference.builder
-            - @victoire_view_reference.cache.repository
+            - @victoire_view_reference.redis.driver
         tags:
             - { name: doctrine.event_subscriber, connection: default, priority: -1 }
 
@@ -32,7 +32,7 @@ services:
             - "@victoire_business_page.business_page_builder"
             - "@victoire_business_page.business_page_helper"
             - "@victoire_widget_map.widget_data_warmer"
-            - "@victoire_view_reference.cache.repository"
+            - "@victoire_view_reference.redis.driver"
 
     victoire_page.matcher.url_matcher:
         class: Victoire\Bundle\PageBundle\Matcher\UrlMatcher

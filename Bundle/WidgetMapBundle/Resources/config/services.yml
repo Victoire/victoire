@@ -11,7 +11,7 @@ services:
         class: Victoire\Bundle\WidgetMapBundle\Warmer\WidgetDataWarmer
         arguments:
             - "@annotation_reader"
-            - "@victoire_view_reference.cache.repository"
+            - "@victoire_view_reference.redis.driver"
             - ["\Victoire\Bundle\MediaBundle\Entity\Media"]
 
     victoire_widget_map.manager:

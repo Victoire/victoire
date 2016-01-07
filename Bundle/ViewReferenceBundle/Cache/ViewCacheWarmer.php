@@ -4,8 +4,7 @@ namespace Victoire\Bundle\ViewReferenceBundle\Cache;
 
 use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\CoreBundle\Helper\ViewHelper;
-use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheDriver;
-use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheManager;
+use Victoire\Bundle\ViewReferenceBundle\Cache\Redis\ViewReferenceRedisDriver;
 
 /**
  * Called (for example on kernel request) to create the viewsReference cache file
@@ -14,23 +13,21 @@ use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheManager;
 class ViewCacheWarmer
 {
     private $viewHelper;
-    private $viewCacheDriver;
-    private $viewCacheManager;
+    private $viewRedisDriver;
+    private $entityManager;
 
     /**
      * @param ViewHelper                   $viewHelper       @victoire_page.page_helper
-     * @param ViewReferenceXmlCacheDriver  $viewCacheDriver  @victoire_view_reference.cache.driver
-     * @param ViewReferenceXmlCacheManager $viewCacheManager @victoire_view_reference.cache.manager
+     * @param ViewReferenceRedisDriver     $viewRedisDriver  @victoire_view_reference.redis.driver
+     * @param EntityManager                $entityManager
      */
     public function __construct(
         ViewHelper $viewHelper,
-        ViewReferenceXmlCacheDriver $viewCacheDriver,
-        ViewReferenceXmlCacheManager $viewCacheManager,
+        ViewReferenceRedisDriver $viewRedisDriver,
         EntityManager $entityManager
     ) {
         $this->viewHelper = $viewHelper;
-        $this->viewCacheDriver = $viewCacheDriver;
-        $this->viewCacheManager = $viewCacheManager;
+        $this->viewRedisDriver = $viewRedisDriver;
         $this->entityManager = $entityManager;
     }
 
@@ -41,11 +38,10 @@ class ViewCacheWarmer
      */
     public function warmUp($cacheDir)
     {
-        if (!$this->viewCacheDriver->fileExists()) {
-            $this->viewCacheDriver->writeFile(
-                $this->viewCacheManager->generateXml(
-                    $this->viewHelper->buildViewsReferences()
-                )
+        if(!$this->viewRedisDriver->hasReference())
+        {
+            $this->viewRedisDriver->saveReferences(
+                $this->viewHelper->buildViewsReferences()
             );
         }
     }
