@@ -164,7 +164,6 @@ class PageHelper
             }
 
             $page->setReference($viewReference);
-            $this->widgetMapBuilder->build($page);
             $this->checkPageValidity($page, $entity, ['url' => $url, 'locale' => $locale]);
 
             return $this->renderPage($page, $isAjax);
@@ -185,7 +184,7 @@ class PageHelper
         $event = new \Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent($view);
 
         //Build WidgetMap
-        $this->widgetMapBuilder->build($view, true);
+        $this->widgetMapBuilder->build($view, $this->entityManager, true);
 
         //Populate widgets with their data
         $this->widgetDataWarmer->warm($this->entityManager, $view);
