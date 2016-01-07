@@ -120,7 +120,7 @@ abstract class View
     protected $root;
 
     /**
-     * @ORM\OneToMany(targetEntity="View", mappedBy="parent", cascade={"remove", "persist"})
+     * @ORM\OneToMany(targetEntity="View", mappedBy="parent", cascade={"remove"})
      * @ORM\OrderBy({"lft" = "ASC"})
      */
     protected $children = [];
