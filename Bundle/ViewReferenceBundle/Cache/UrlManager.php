@@ -96,6 +96,10 @@ class UrlManager
      */
     public function findRefIdByUrl($url ="", $locale = "fr")
     {
+        if($url == "" || $url[0] != "/")
+        {
+            $url = "/" . $url;
+        }
         $refId = $this->tool->unredislize($this->redis->get($locale.":".$url));
         return $refId;
     }
