@@ -242,7 +242,7 @@ class WidgetManager
         //if the form is posted
         if ($requestMethod === 'POST') {
             //the widget view
-            $widgetView = $widget->getView();
+            $widgetView = $currentView->getWidgetMapByWidget($widget)->getView();
 
             //we only copy the widget if the view of the widget is not the current view
             if ($widgetView !== $currentView) {
