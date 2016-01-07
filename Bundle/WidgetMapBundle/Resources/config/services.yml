@@ -1,8 +1,6 @@
 services:
     victoire_widget_map.builder:
         class: Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder
-    victoire_widget_map.position_builder:
-        class: Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapPositionBuilder
 
     victoire_widget_map.widget_data_warmer:
         class: Victoire\Bundle\WidgetMapBundle\Warmer\WidgetDataWarmer
