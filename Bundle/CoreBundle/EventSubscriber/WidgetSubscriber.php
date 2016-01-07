@@ -70,9 +70,13 @@ class WidgetSubscriber implements EventSubscriber
                 continue;
             }
 
-            $view = $entity->getView();
-            $this->updateViewCss($view);
-            $this->updateTemplateInheritorsCss($view);
+            /** @var Widget $entity */
+            foreach ($entity->getWidgetMaps() as $widgetMap) {
+                $view = $widgetMap->getView();
+                $this->updateViewCss($view);
+                $this->updateTemplateInheritorsCss($view);
+            }
+
         }
 
         //Remove CSS of deleted View and update its inheritors
@@ -106,7 +110,7 @@ class WidgetSubscriber implements EventSubscriber
         $view->changeCssHash();
 
         //Update css file
-        $this->widgetMapBuilder->build($view, true);
+        $this->widgetMapBuilder->build($view, $this->em, true);
         $widgets = $this->widgetRepo->findAllWidgetsForView($view);
         $this->viewCssBuilder->updateViewCss($oldHash, $view, $widgets);
 
