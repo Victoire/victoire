@@ -34,6 +34,7 @@ framework:
     fragments:       ~
     http_method_override: true
     test: ~
+    profiler: { only_exceptions: false }
 
 # Twig Configuration
 twig:
@@ -146,3 +147,6 @@ snc_redis:
            type: predis
            alias: victoire
            dsn: redis://localhost
+
+web_profiler:
+    toolbar: false
