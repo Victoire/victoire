@@ -10,7 +10,7 @@ use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 /**
  * View Reference builder
- * ref: victoire_view_reference.builder.
+ * ref: victoire_view_reference.builder
  */
 class ViewReferenceBuilder
 {
