@@ -182,21 +182,27 @@ $vic(document).on('click', '.vic-widget-modal a.vic-confirmed, .vic-hover-widget
 function generateNewWidgetUrl(select){
     var slotId = $vic(select).parents('.vic-slot').first().data('name');
     var container = $vic(select).parents('.vic-new-widget');
-    var positionReference = 0;
 
-    if (!$vic(container).is(':first-child')) {
-        positionReference = parseInt($vic(container).prev().data('id'));
+    var position = $vic(container).data('position');
+    var widgetMapReference = $vic(container).data('widgetMapReference');
+
+    var params = {
+        'viewReference'    : viewReferenceId,
+        'type'             : $vic(select).val(),
+        'slot'             : slotId,
+        '_locale'          : locale
+    };
+
+    if (position) {
+        params['position'] = position;
     }
+    if (widgetMapReference) {
+        params['widgetMapReference'] = widgetMapReference;
 
+    }
     return Routing.generate(
         'victoire_core_widget_new',
-        {
-            'viewReference'    : viewReferenceId,
-            'type'             : $vic(select).val(),
-            'slot'             : slotId,
-            'positionReference': positionReference,
-            '_locale'          : locale
-        }
+        params
     );
 }
 
