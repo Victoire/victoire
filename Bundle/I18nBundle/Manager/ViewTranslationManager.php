@@ -82,7 +82,7 @@ class ViewTranslationManager
         $clonedView = clone $view;
         $this->em->refresh($view);
         $clonedView->setSlug(null);
-        $widgetMapClone = $clonedView->getWidgetMap(false);
+        $widgetMapClone = $clonedView->getWidgetMaps();
         $arrayMapOfWidgetMap = [];
         if (null !== $templateName) {
             $clonedView->setName($templateName);
