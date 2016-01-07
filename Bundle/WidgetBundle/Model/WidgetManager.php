@@ -14,15 +14,13 @@ use Victoire\Bundle\BusinessPageBundle\Transformer\VirtualToBusinessPageTransfor
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 use Victoire\Bundle\FormBundle\Helper\FormErrorHelper;
-use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
 use Victoire\Bundle\WidgetBundle\Builder\WidgetFormBuilder;
 use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
 use Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer;
 use Victoire\Bundle\WidgetBundle\Resolver\WidgetContentResolver;
 use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
-use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapPositionBuilder;
-use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
+use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 use Victoire\Bundle\WidgetMapBundle\Manager\WidgetMapManager;
 
 /**
@@ -37,7 +35,6 @@ class WidgetManager
     protected $formErrorHelper; // @victoire_form.error_helper
     protected $request; // @request
     protected $widgetMapManager;
-    protected $widgetMapPositionBuilder;
     protected $cacheReader; // @victoire_business_entity.cache_reader
     protected $victoireTemplating;
     protected $pageHelper;
@@ -55,9 +52,7 @@ class WidgetManager
      * @param FormErrorHelper           $formErrorHelper
      * @param Request                   $request
      * @param WidgetMapManager          $widgetMapManager
-     * @param WidgetMapHelper           $widgetMapHelper
      * @param WidgetMapBuilder          $widgetMapBuilder
-     * @param WidgetMapPositionBuilder  $widgetMapPositionBuilder
      * @param BusinessEntityCacheReader $cacheReader
      * @param TemplateMapper            $victoireTemplating
      * @param PageHelper                $pageHelper
@@ -72,9 +67,7 @@ class WidgetManager
         FormErrorHelper $formErrorHelper,
         Request $request,
         WidgetMapManager $widgetMapManager,
-        WidgetMapHelper $widgetMapHelper,
         WidgetMapBuilder $widgetMapBuilder,
-        WidgetMapPositionBuilder $widgetMapPositionBuilder,
         BusinessEntityCacheReader $cacheReader,
         TemplateMapper $victoireTemplating,
         PageHelper $pageHelper,
@@ -89,45 +82,12 @@ class WidgetManager
         $this->formErrorHelper = $formErrorHelper;
         $this->request = $request;
         $this->widgetMapManager = $widgetMapManager;
-        $this->widgetMapHelper = $widgetMapHelper;
         $this->widgetMapBuilder = $widgetMapBuilder;
-        $this->widgetMapPositionBuilder = $widgetMapPositionBuilder;
         $this->cacheReader = $cacheReader;
         $this->victoireTemplating = $victoireTemplating;
         $this->pageHelper = $pageHelper;
         $this->slots = $slots;
         $this->virtualToBpTransformer = $virtualToBpTransformer;
-    }
-
-    /**
-     * new widget.
-     *
-     * @param string $type
-     * @param string $slot
-     * @param View   $view
-     * @param int    $position
-     *
-     * @return template
-     */
-    public function newWidget($mode, $type, $slot, $view, $position)
-    {
-        $widget = $this->widgetHelper->newWidgetInstance($type, $view, $slot, $mode);
-
-        /** @var BusinessEntity[] $classes */
-        $classes = $this->cacheReader->getBusinessClassesForWidget($widget);
-        $forms = $this->widgetFormBuilder->renderNewWidgetForms($slot, $view, $widget, $classes, $position);
-
-        return [
-            'html' => $this->victoireTemplating->render(
-                'VictoireCoreBundle:Widget:Form/new.html.twig',
-                [
-                    'view'    => $view,
-                    'classes' => $classes,
-                    'widget'  => $widget,
-                    'forms'   => $forms,
-                ]
-            ),
-        ];
     }
 
     /**
@@ -145,7 +105,7 @@ class WidgetManager
      *
      * @return Template
      */
-    public function createWidget($mode, $type, $slotId, View $view, $entity, $positionReference)
+    public function createWidget($mode, $type, $slotId, View $view, $entity, $position, $widgetReference)
     {
         //services
         $formErrorHelper = $this->formErrorHelper;
@@ -157,7 +117,7 @@ class WidgetManager
         //create a new widget
         $widget = $this->widgetHelper->newWidgetInstance($type, $view, $slotId, $mode);
 
-        $form = $this->widgetFormBuilder->callBuildFormSwitchParameters($widget, $view, $entity, $positionReference);
+        $form = $this->widgetFormBuilder->callBuildFormSwitchParameters($widget, $view, $entity, $position, $widgetReference, $slotId);
 
         $noValidate = $request->query->get('novalidate', false);
 
@@ -174,21 +134,11 @@ class WidgetManager
             //update fields of the widget
             $widget->setBusinessEntityId($entity);
 
-            $widget->positionReference = $positionReference;
-            $widget->slotId = $slotId;
             //persist the widget
             $this->entityManager->persist($widget);
             $this->entityManager->flush();
 
-            //create the new widget map
-            $widgetMapEntry = new WidgetMap();
-            $widgetMapEntry->setAction(WidgetMap::ACTION_CREATE);
-            $widgetMapEntry->setWidgetId($widget->getId());
-
-            $widgetMap = $this->widgetMapBuilder->build($view, false);
-
-            $widgetMapEntry = $this->widgetMapPositionBuilder->generateWidgetPosition($this->entityManager, $widgetMapEntry, $widget, $widgetMap, $positionReference);
-            $this->widgetMapHelper->insertWidgetMapInSlot($slotId, $widgetMapEntry, $view);
+            $this->widgetMapManager->insert($widget, $view, $slotId, $position, $widgetReference);
 
             $this->entityManager->persist($view);
             $this->entityManager->flush();
@@ -261,8 +211,6 @@ class WidgetManager
 
                 $this->entityManager->persist($widget);
 
-                //update the widget map by the slots
-                $currentView->updateWidgetMapBySlots();
                 $this->entityManager->persist($currentView);
                 $this->entityManager->flush();
 
@@ -312,10 +260,10 @@ class WidgetManager
     public function deleteWidget(Widget $widget, View $view)
     {
         //update the view deleting the widget
-        $this->widgetMapManager->deleteWidgetFromView($view, $widget);
+        $this->widgetMapManager->delete($view, $widget);
 
         //we update the widget map of the view
-        $view->updateWidgetMapBySlots();
+        $this->widgetMapBuilder->build($view);
         //Used to update view in callback (we do it before delete it else it'll not exists anymore)
         $widgetId = $widget->getId();
         //the widget is removed only if the current view is the view of the widget
@@ -354,8 +302,22 @@ class WidgetManager
         $this->entityManager->persist($view);
         $this->entityManager->flush();
 
-        $this->widgetMapManager->overwriteWidgetMap($widgetCopy, $widget, $view);
 
+        $originalWidgetMap = $view->getWidgetMapByWidget($widget);
+
+        //the widget is owned by another view (a parent)
+        //so we add a new widget map that indicates we delete this widget
+        $widgetMap = new WidgetMap();
+        $widgetMap->setAction(WidgetMap::ACTION_OVERWRITE);
+        $widgetMap->setReplacedWidget($widget);
+        $widgetMap->setWidget($widgetCopy);
+        $widgetMap->setSlot($originalWidgetMap->getSlot());
+        $widgetMap->setPosition($originalWidgetMap->getPosition());
+        $widgetMap->setAsynchronous($widgetCopy->isAsynchronous());
+        $widgetMap->setPositionReference($originalWidgetMap->getPositionReference());
+
+        $view->addWidgetMap($widgetMap);
+        $this->widgetMapBuilder->build($view);
         return $widgetCopy;
     }
 
@@ -388,6 +350,7 @@ class WidgetManager
         }
 
         $this->entityManager->persist($entityCopy);
+
 
         return $entityCopy;
     }
