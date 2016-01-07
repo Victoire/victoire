@@ -1,6 +1,6 @@
 <?php
 
-namespace Victoire\Bundle\PageBundle\Entity;
+namespace Victoire\Bundle\WidgetMapBundle\Entity;
 
 /**
  *
