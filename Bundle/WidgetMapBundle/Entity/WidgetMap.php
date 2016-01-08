@@ -239,11 +239,13 @@ class WidgetMap
         $children = [];
         $widgetMap = $this;
         foreach ($positions as $position) {
-            if ($replaced = $this->getReplaced()) {
-                $widgetMap = $replaced;
-            }
             if ($child = $widgetMap->getChild($position)) {
                 $children[$position] = $child;
+            }
+            if (!$child
+                && ($replaced = $this->getReplaced())
+                && $this->getReplaced()->getChild($position) && !$this->getReplaced()->getChild($position)->getSubstituteForView($widgetMap->getView())) {
+                $children[$position] = $replaced->getChild($position);
             }
         }
 

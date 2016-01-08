@@ -168,15 +168,14 @@ class CmsExtension extends \Twig_Extension_Core
                         $after = $this->widgetRenderer->renderActions($slotId, $slotOptions, WidgetMap::POSITION_AFTER, $widgetMap);
                         $before = $this->widgetRenderer->renderActions($slotId, $slotOptions, WidgetMap::POSITION_BEFORE, $widgetMap);
                     }
-                    if ($substitute = $widgetMap->getSubstituteForView($currentView)) {
-                        $widgetMap = $substitute;
-                    }
 
-                    if ($widgetMap->getChild(WidgetMap::POSITION_AFTER)) {
-                        $after = '';
-                    }
-                    if ($widgetMap->getChild(WidgetMap::POSITION_BEFORE)) {
+                    $children = $widgetMap->getChildren();
+
+                    if (!empty($children[WidgetMap::POSITION_BEFORE])) {
                         $before = '';
+                    }
+                    if (!empty($children[WidgetMap::POSITION_AFTER])) {
+                        $after = '';
                     }
 
                     $result .= $before.$widgetContent.$after;
