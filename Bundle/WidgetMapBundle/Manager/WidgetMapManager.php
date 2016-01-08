@@ -57,11 +57,15 @@ class WidgetMapManager
         $originalParent = $widgetMap->getParent();
         $originalPosition = $widgetMap->getPosition();
 
+        $children = $widgetMap->getChildren();
+        $beforeChild = !empty($children[WidgetMap::POSITION_BEFORE]) ? $children[WidgetMap::POSITION_BEFORE] : null;
+        $afterChild = !empty($children[WidgetMap::POSITION_AFTER]) ? $children[WidgetMap::POSITION_AFTER] : null;
+
         $this->moveWidgetMap($view, $widgetMap, $widgetMapReference, $position, $slot);
 
-        $beforeChild = $widgetMap->getChild(WidgetMap::POSITION_BEFORE);
-        $afterChild = $widgetMap->getChild(WidgetMap::POSITION_AFTER);
-        if ($beforeChild) {
+        // If the moved widgetMap has someone at both his before and after, arbitrary move UP the before side
+        // and find the first place after the before widgetMap hierarchy to place the after widgetMap.
+        if ($beforeChild && $afterChild) {
             $this->moveWidgetMap($view, $beforeChild, $originalParent, $originalPosition);
 
             $child = $beforeChild;
@@ -69,49 +73,11 @@ class WidgetMapManager
                 $child = $child->getChild(WidgetMap::POSITION_AFTER);
             }
             $this->moveWidgetMap($view, $afterChild, $child);
+        } else if ($beforeChild) {
+            $this->moveWidgetMap($view, $beforeChild, $originalParent, $originalPosition);
         } else if ($afterChild) {
-            $this->moveWidgetMap($view, $afterChild, $originalParent);
+            $this->moveWidgetMap($view, $afterChild, $originalParent, $originalPosition);
         }
-
-
-//        $widgetMapReference = null;
-//        if ($sortedWidget['widgetMapReference']) {
-//            $widgetMapReference = $this->em->getRepository('VictoireWidgetMapBundle:WidgetMap')->findOneById((int) $sortedWidget['widgetMapReference']);
-//        }
-//        $widget = $this->em->getRepository('VictoireWidgetBundle:Widget')->findOneById((int) $sortedWidget['widget']);
-//        $slot = $sortedWidget['slot']; //content
-//        $originalWidgetMap = $view->getWidgetMapByWidget($widget);
-//        $widgetMap = $this->builder->build($view);
-//
-//
-//        $widgetMapEntry = new WidgetMap();
-//        $widgetMapEntry->setAsynchronous($originalWidgetMap->isAsynchronous());
-//        $widgetMapEntry->setSlot($slot);
-//        $widgetMapEntry->setWidget($widget);
-//        $widgetMapEntry->setAction($originalWidgetMap->getAction());
-//        $widgetMapEntry = $this->generateWidgetPosition($widgetMapEntry, $widgetMap, $parentWidget->getId(), $view);
-//
-//        if ($widgetMapReference) {
-//
-//
-//
-//            // If the parent of the sorted widget is not from the current page
-//        } else {
-//            $widgetMapEntry->setPosition(1);
-//            $widgetMapEntry->setAction($originalWidgetMap->getAction());
-//            $widgetMapEntry->setPositionReference($parentWidget);
-//        }
-//        // If this WidgetMapEntry already in the page, remove it
-//        if ($originalWidgetMap->getView() == $view) {
-//            $view->removeWidgetMap($originalWidgetMap);
-//            // Else, the new widgetMap is an overwrite
-//        } elseif ($originalWidgetMap->getAction() !== WidgetMap::ACTION_OVERWRITE) {
-//            $widgetMapEntry->setAction(WidgetMap::ACTION_OVERWRITE);
-//            $widgetMapEntry->setReplacedWidget($widget);
-//        }
-//        // Insert the new one in page slot
-//
-//        $view->addWidgetMap($widgetMapEntry);
 
     }
 
