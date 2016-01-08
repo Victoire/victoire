@@ -11,6 +11,7 @@ class ViewReferenceEvent extends Event
 
     /**
      * ViewReferenceEvent constructor.
+     *
      * @param WebViewInterface $view
      */
     public function __construct(WebViewInterface $view)
@@ -32,6 +33,7 @@ class ViewReferenceEvent extends Event
     public function setView(WebViewInterface $view)
     {
         $this->view = $view;
+
         return $this;
     }
 }

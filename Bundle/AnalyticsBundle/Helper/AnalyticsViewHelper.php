@@ -19,9 +19,10 @@ class AnalyticsViewHelper
 
     /**
      * AnalyticsViewHelper constructor.
+     *
      * @param ViewReferenceRedisDriver $viewRedisDriver
-     * @param EntityManager $entityManager
-     * @param PageHelper $pageHelper
+     * @param EntityManager            $entityManager
+     * @param PageHelper               $pageHelper
      */
     public function __construct(ViewReferenceRedisDriver $viewRedisDriver, EntityManager $entityManager, PageHelper $pageHelper)
     {
@@ -69,7 +70,7 @@ class AnalyticsViewHelper
                 break;
 
             default:
-                # code...
+                // code...
                 break;
         }
 

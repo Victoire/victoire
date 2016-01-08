@@ -4,17 +4,13 @@ namespace Victoire\Bundle\ViewReferenceBundle\Listener;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\ViewReferenceBundle\Builder\ViewReferenceBuilder;
 use Victoire\Bundle\ViewReferenceBundle\Cache\Redis\ViewReferenceRedisDriver;
 use Victoire\Bundle\ViewReferenceBundle\Event\ViewReferenceEvent;
 use Victoire\Bundle\ViewReferenceBundle\ViewReferenceEvents;
 
 /**
- * Class ViewReferenceListener
- * @package Victoire\Bundle\ViewReferenceBundle\Listener
- *
- * This listener is used to update or remove a reference in redis
+ * Class ViewReferenceListener.
  */
 class ViewReferenceListener implements EventSubscriberInterface
 {
@@ -24,9 +20,10 @@ class ViewReferenceListener implements EventSubscriberInterface
 
     /**
      * ViewReferenceListener constructor.
-     * @param ViewReferenceBuilder $viewReferenceBuilder
+     *
+     * @param ViewReferenceBuilder     $viewReferenceBuilder
      * @param ViewReferenceRedisDriver $viewReferenceDriver
-     * @param EntityManagerInterface $em
+     * @param EntityManagerInterface   $em
      */
     public function __construct(ViewReferenceBuilder $viewReferenceBuilder, ViewReferenceRedisDriver $viewReferenceDriver, EntityManagerInterface $em)
     {
@@ -36,18 +33,19 @@ class ViewReferenceListener implements EventSubscriberInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function getSubscribedEvents()
     {
-        return array(
-            ViewReferenceEvents::UPDATE_VIEW_REFERENCE => "updateViewReference",
-            ViewReferenceEvents::REMOVE_VIEW_REFERENCE => "removeViewReference",
-        );
+        return [
+            ViewReferenceEvents::UPDATE_VIEW_REFERENCE => 'updateViewReference',
+            ViewReferenceEvents::REMOVE_VIEW_REFERENCE => 'removeViewReference',
+        ];
     }
 
     /**
-     * This method is call when a viewReference need to be update
+     * This method is call when a viewReference need to be update.
+     *
      * @param ViewReferenceEvent $event
      */
     public function updateViewReference(ViewReferenceEvent $event)
@@ -55,10 +53,11 @@ class ViewReferenceListener implements EventSubscriberInterface
         $view = $event->getView();
         $viewReference = $this->viewReferenceBuilder->buildViewReference($view, $this->em);
         $this->viewReferenceDriver->saveReference($viewReference);
-
     }
+
     /**
-     * This method is call when a viewReference need to be remove
+     * This method is call when a viewReference need to be remove.
+     *
      * @param ViewReferenceEvent $event
      */
     public function removeViewReference(ViewReferenceEvent $event)

@@ -21,22 +21,22 @@ use Victoire\Bundle\ViewReferenceBundle\ViewReference\BusinessPageReference;
 class BusinessPageHelper
 {
     protected $queryHelper = null;
-    protected $viewRedisDriver= null;
+    protected $viewRedisDriver = null;
     protected $businessEntityHelper = null;
     protected $parameterConverter = null;
     protected $urlBuilder = null;
 
     /**
-     * @param QueryHelper                     $queryHelper
-     * @param ViewReferenceRedisDriver        $viewRedisDriver
-     * @param BusinessEntityHelper            $businessEntityHelper
-     * @param ParameterConverter              $parameterConverter
-     * @param UrlBuilder                      $urlBuilder
+     * @param QueryHelper              $queryHelper
+     * @param ViewReferenceRedisDriver $viewRedisDriver
+     * @param BusinessEntityHelper     $businessEntityHelper
+     * @param ParameterConverter       $parameterConverter
+     * @param UrlBuilder               $urlBuilder
      */
     public function __construct(QueryHelper $queryHelper, ViewReferenceRedisDriver $viewRedisDriver, BusinessEntityHelper $businessEntityHelper, ParameterConverter $parameterConverter, UrlBuilder $urlBuilder)
     {
         $this->queryHelper = $queryHelper;
-        $this->viewRedisDriver= $viewRedisDriver;
+        $this->viewRedisDriver = $viewRedisDriver;
         $this->businessEntityHelper = $businessEntityHelper;
         $this->parameterConverter = $parameterConverter;
         $this->urlBuilder = $urlBuilder;

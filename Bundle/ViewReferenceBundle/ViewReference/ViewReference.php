@@ -138,7 +138,7 @@ class ViewReference
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getParent()
     {
@@ -146,7 +146,7 @@ class ViewReference
     }
 
     /**
-     * @param integer $parent
+     * @param int $parent
      */
     public function setParent($parent)
     {
@@ -176,5 +176,4 @@ class ViewReference
     {
         $this->children[] = $child;
     }
-
 }

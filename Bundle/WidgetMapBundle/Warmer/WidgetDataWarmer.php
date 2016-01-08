@@ -47,7 +47,7 @@ class WidgetDataWarmer
     public function __construct(Reader $reader, ViewReferenceRedisDriver $viewReferenceRedisDriver, array $manyToOneAssociations)
     {
         $this->reader = $reader;
-        $this->viewReferenceRedisDriver= $viewReferenceRedisDriver;
+        $this->viewReferenceRedisDriver = $viewReferenceRedisDriver;
         $this->accessor = PropertyAccess::createPropertyAccessor();
         $this->manyToOneAssociations = $manyToOneAssociations;
     }

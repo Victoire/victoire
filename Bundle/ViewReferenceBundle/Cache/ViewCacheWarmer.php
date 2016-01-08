@@ -17,9 +17,9 @@ class ViewCacheWarmer
     private $entityManager;
 
     /**
-     * @param ViewHelper                   $viewHelper       @victoire_page.page_helper
-     * @param ViewReferenceRedisDriver     $viewRedisDriver  @victoire_view_reference.redis.driver
-     * @param EntityManager                $entityManager
+     * @param ViewHelper               $viewHelper      @victoire_page.page_helper
+     * @param ViewReferenceRedisDriver $viewRedisDriver @victoire_view_reference.redis.driver
+     * @param EntityManager            $entityManager
      */
     public function __construct(
         ViewHelper $viewHelper,
@@ -38,8 +38,7 @@ class ViewCacheWarmer
      */
     public function warmUp($cacheDir)
     {
-        if(!$this->viewRedisDriver->hasReference())
-        {
+        if (!$this->viewRedisDriver->hasReference()) {
             $this->viewRedisDriver->saveReferences(
                 $this->viewHelper->buildViewsReferences()
             );

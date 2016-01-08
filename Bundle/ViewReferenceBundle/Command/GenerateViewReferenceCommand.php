@@ -5,7 +5,6 @@ namespace Victoire\Bundle\ViewReferenceBundle\Command;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Entity\View;
 
 class GenerateViewReferenceCommand extends ContainerAwareCommand

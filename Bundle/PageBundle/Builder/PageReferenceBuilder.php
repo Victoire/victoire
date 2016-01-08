@@ -27,11 +27,9 @@ class PageReferenceBuilder extends BaseReferenceBuilder
         $viewReference->setViewId($view->getId());
         $viewReference->setSlug($view->isHomepage() ? '' : $view->getSlug());
         $viewReference->setViewNamespace(get_class($view));
-        if($parent = $view->getParent())
-        {
+        if ($parent = $view->getParent()) {
             $viewReference->setParent(ViewReferenceHelper::generateViewReferenceId($parent));
         }
-
 
         return $viewReference;
     }

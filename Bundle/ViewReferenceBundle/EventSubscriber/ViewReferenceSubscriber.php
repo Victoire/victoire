@@ -2,12 +2,8 @@
 
 namespace Victoire\Bundle\ViewReferenceBundle\EventSubscriber;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use Doctrine\ORM\Event\OnFlushEventArgs;
-use Doctrine\ORM\Event\PostFlushEventArgs;
 use Doctrine\ORM\Events;
-use Doctrine\ORM\UnitOfWork;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\ViewReferenceBundle\Event\ViewReferenceEvent;
@@ -26,11 +22,12 @@ class ViewReferenceSubscriber implements \Doctrine\Common\EventSubscriber
 
     /**
      * ViewReferenceSubscriber constructor.
+     *
      * @param EventDispatcherInterface $dispatcher
      */
-    public function __construct(EventDispatcherInterface $dispatcher) {
+    public function __construct(EventDispatcherInterface $dispatcher)
+    {
         $this->dispatcher = $dispatcher;
-
     }
 
     /**
@@ -41,7 +38,7 @@ class ViewReferenceSubscriber implements \Doctrine\Common\EventSubscriber
         return [
             Events::postUpdate,
             Events::postPersist,
-            Events::preRemove
+            Events::preRemove,
         ];
     }
 
@@ -68,27 +65,24 @@ class ViewReferenceSubscriber implements \Doctrine\Common\EventSubscriber
     {
         $entity = $eventArgs->getEntity();
         // if a page is remove we remove his viewRef
-        if($entity instanceof WebViewInterface)
-        {
+        if ($entity instanceof WebViewInterface) {
             $event = new ViewReferenceEvent($entity);
             $this->dispatcher->dispatch(ViewReferenceEvents::REMOVE_VIEW_REFERENCE, $event);
         }
-
     }
 
     /**
-     * This method dispatch the event that the view must be build/rebuild
+     * This method dispatch the event that the view must be build/rebuild.
+     *
      * @param LifecycleEventArgs $eventArgs
      */
     private function updateViewReference(LifecycleEventArgs $eventArgs)
     {
         $entity = $eventArgs->getEntity();
         // if a page is persisted we rebuild his viewRef
-        if($entity instanceof WebViewInterface)
-        {
+        if ($entity instanceof WebViewInterface) {
             $event = new ViewReferenceEvent($entity);
             $this->dispatcher->dispatch(ViewReferenceEvents::UPDATE_VIEW_REFERENCE, $event);
         }
-
     }
 }

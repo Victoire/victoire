@@ -30,11 +30,11 @@ class PageSubscriber implements EventSubscriber
     /**
      * Constructor.
      *
-     * @param Router                          $router                          @router
-     * @param UserCallableHelper              $userCallableHelper              @victoire_page.user_callable
-     * @param string                          $userClass                       %victoire_core.user_class%
-     * @param ViewReferenceBuilder            $viewReferenceBuilder
-     * @param ViewReferenceRedisDriver        $viewReferenceDriver
+     * @param Router                   $router               @router
+     * @param UserCallableHelper       $userCallableHelper   @victoire_page.user_callable
+     * @param string                   $userClass            %victoire_core.user_class%
+     * @param ViewReferenceBuilder     $viewReferenceBuilder
+     * @param ViewReferenceRedisDriver $viewReferenceDriver
      *
      * @internal param ViewReferenceBuilder $urlBuilder @victoire_view_reference.builder
      */

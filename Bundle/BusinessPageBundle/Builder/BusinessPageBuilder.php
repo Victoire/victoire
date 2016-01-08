@@ -51,7 +51,7 @@ class BusinessPageBuilder
      * Generate update the page parameters with the entity.
      *
      * @param BusinessTemplate $businessTemplate
-     * @param entity   $entity
+     * @param entity           $entity
      *
      * @return VirtualBusinessPage
      */

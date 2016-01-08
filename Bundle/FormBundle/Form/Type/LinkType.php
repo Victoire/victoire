@@ -20,6 +20,7 @@ class LinkType extends AbstractType
 
     /**
      * LinkType constructor.
+     *
      * @param $analytics
      * @param ViewReferenceRedisDriver $viewReferenceRedisDriver
      */

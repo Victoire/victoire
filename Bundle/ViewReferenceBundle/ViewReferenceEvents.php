@@ -2,10 +2,8 @@
 
 namespace Victoire\Bundle\ViewReferenceBundle;
 
-
 final class ViewReferenceEvents
 {
-
     /**
      * The UPDATE_VIEW_REFERENCE event occurs when a redis reference need to be updated.
      */

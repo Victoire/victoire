@@ -25,10 +25,10 @@ class BusinessEntitySubscriber implements EventSubscriber
     protected $dispatcher;
 
     /**
-     * @param BusinessPageBuilder           $businessPageBuilder
-     * @param BusinessEntityHelper          $businessEntityHelper
-     * @param BusinessPageHelper            $businessPageHelper
-     * @param EventDispatcherInterface      $dispatcher
+     * @param BusinessPageBuilder      $businessPageBuilder
+     * @param BusinessEntityHelper     $businessEntityHelper
+     * @param BusinessPageHelper       $businessPageHelper
+     * @param EventDispatcherInterface $dispatcher
      */
     public function __construct(BusinessPageBuilder          $businessPageBuilder,
                                 BusinessEntityHelper         $businessEntityHelper,
@@ -51,7 +51,7 @@ class BusinessEntitySubscriber implements EventSubscriber
         return [
             'postUpdate',
             'postPersist',
-            'preRemove'
+            'preRemove',
         ];
     }
 
@@ -88,7 +88,6 @@ class BusinessEntitySubscriber implements EventSubscriber
     }
 
     /**
-     *
      * get BusinessTemplate concerned by this entity (if so)
      * then get BusinessPages
      * for each BusinessPage, update its slug according to the new slug (if so).
@@ -152,27 +151,25 @@ class BusinessEntitySubscriber implements EventSubscriber
     }
 
     /**
-     * This method throw an event if needed for a view related to a businessEntity
+     * This method throw an event if needed for a view related to a businessEntity.
+     *
      * @param LifecycleEventArgs $eventArgs
+     *
      * @throws \Exception
      */
     private function updateViewReference(LifecycleEventArgs $eventArgs)
     {
         $entity = $eventArgs->getEntity();
         //if it's a businessEntity we need to rebuild virtuals (BPs are rebuild in businessEntitySubscriber)
-        if($businessEntity = $this->businessEntityHelper->findByEntityInstance($entity))
-        {
-            $em =  $eventArgs->getEntityManager();
+        if ($businessEntity = $this->businessEntityHelper->findByEntityInstance($entity)) {
+            $em = $eventArgs->getEntityManager();
             //find all BT that can represent the businessEntity
             $businessTemplates = $em->getRepository('VictoireBusinessPageBundle:BusinessTemplate')->findPagePatternByBusinessEntity($businessEntity);
-            foreach($businessTemplates as $businessTemplate)
-            {
-                if($page = $em->getRepository('Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage')->findPageByBusinessEntityAndPattern($businessTemplate, $entity,$businessEntity))
-                {
+            foreach ($businessTemplates as $businessTemplate) {
+                if ($page = $em->getRepository('Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage')->findPageByBusinessEntityAndPattern($businessTemplate, $entity, $businessEntity)) {
                     //if it's a BP we update the BP
                     $this->businessPageBuilder->updatePageParametersByEntity($page, $entity);
-                }else{
-
+                } else {
                     $page = $this->businessPageBuilder->generateEntityPageFromTemplate(
                         $businessTemplate,
                         $entity,
@@ -182,24 +179,20 @@ class BusinessEntitySubscriber implements EventSubscriber
                 //update the reference
                 $event = new ViewReferenceEvent($page);
                 $this->dispatcher->dispatch(ViewReferenceEvents::UPDATE_VIEW_REFERENCE, $event);
-
             }
         }
         //if it a businessTemplate we have to rebuild virtuals or update BP
-        if($entity instanceof BusinessTemplate)
-        {
-            $em =  $eventArgs->getEntityManager();
+        if ($entity instanceof BusinessTemplate) {
+            $em = $eventArgs->getEntityManager();
             $businessEntityId = $entity->getBusinessEntityId();
             $businessEntity = $this->businessEntityHelper->findById($businessEntityId);
             //find all entities
             $entities = $this->businessPageHelper->getEntitiesAllowed($entity, $em);
-            foreach($entities as $be)
-            {
-                if($page = $em->getRepository('Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage')->findPageByBusinessEntityAndPattern($entity, $be,$businessEntity))
-                {
+            foreach ($entities as $be) {
+                if ($page = $em->getRepository('Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage')->findPageByBusinessEntityAndPattern($entity, $be, $businessEntity)) {
                     //rebuild page if its a BP
                     $this->businessPageBuilder->updatePageParametersByEntity($page, $be);
-                }else{
+                } else {
                     $page = $this->businessPageBuilder->generateEntityPageFromTemplate(
                         $entity,
                         $be,
@@ -209,14 +202,13 @@ class BusinessEntitySubscriber implements EventSubscriber
                 // update reference
                 $event = new ViewReferenceEvent($page);
                 $this->dispatcher->dispatch(ViewReferenceEvents::UPDATE_VIEW_REFERENCE, $event);
-
             }
         }
-
     }
 
     /**
      * @param LifecycleEventArgs $eventArgs
+     *
      * @throws \Exception
      */
     public function preRemove(LifecycleEventArgs $eventArgs)
@@ -224,8 +216,7 @@ class BusinessEntitySubscriber implements EventSubscriber
         $entity = $eventArgs->getEntity();
 
         //if we remove a BP we need to remplace by a VBP ref
-        if($entity instanceof BusinessPage)
-        {
+        if ($entity instanceof BusinessPage) {
             //remove BP ref
             $event = new ViewReferenceEvent($entity);
             $this->dispatcher->dispatch(ViewReferenceEvents::REMOVE_VIEW_REFERENCE, $event);
@@ -240,22 +231,17 @@ class BusinessEntitySubscriber implements EventSubscriber
             //TODO :: dont rebuild if businessEntity or businessTemplate doesn't exist
             $event = new ViewReferenceEvent($page);
             $this->dispatcher->dispatch(ViewReferenceEvents::UPDATE_VIEW_REFERENCE, $event);
-
         }
 
         //if it's a businessEntity, we need to remove all BP and VBP ref
-        if($businessEntity = $this->businessEntityHelper->findByEntityInstance($entity))
-        {
-            $em =  $eventArgs->getEntityManager();
+        if ($businessEntity = $this->businessEntityHelper->findByEntityInstance($entity)) {
+            $em = $eventArgs->getEntityManager();
             $businessTemplates = $em->getRepository('VictoireBusinessPageBundle:BusinessTemplate')->findPagePatternByBusinessEntity($businessEntity);
-            foreach($businessTemplates as $businessTemplate)
-            {
-                if($page = $em->getRepository('Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage')->findPageByBusinessEntityAndPattern($businessTemplate, $entity,$businessEntity))
-                {
+            foreach ($businessTemplates as $businessTemplate) {
+                if ($page = $em->getRepository('Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage')->findPageByBusinessEntityAndPattern($businessTemplate, $entity, $businessEntity)) {
                     $event = new ViewReferenceEvent($page);
                     $this->dispatcher->dispatch(ViewReferenceEvents::REMOVE_VIEW_REFERENCE, $event);
-
-                }else{
+                } else {
                     $page = $this->businessPageBuilder->generateEntityPageFromTemplate(
                         $businessTemplate,
                         $entity,
@@ -264,17 +250,13 @@ class BusinessEntitySubscriber implements EventSubscriber
                     $event = new ViewReferenceEvent($page);
                     $this->dispatcher->dispatch(ViewReferenceEvents::REMOVE_VIEW_REFERENCE, $event);
                 }
-
-
             }
         }
         //if we remove a businessTemplate remove all VBT ref (BP cascade remove)
-        if($entity instanceof BusinessTemplate)
-        {
-            $em =  $eventArgs->getEntityManager();
+        if ($entity instanceof BusinessTemplate) {
+            $em = $eventArgs->getEntityManager();
             $entities = $this->businessPageHelper->getEntitiesAllowed($entity, $em);
-            foreach($entities as $be)
-            {
+            foreach ($entities as $be) {
                 $page = $this->businessPageBuilder->generateEntityPageFromTemplate(
                     $entity,
                     $be,
@@ -282,7 +264,6 @@ class BusinessEntitySubscriber implements EventSubscriber
                 );
                 $event = new ViewReferenceEvent($page);
                 $this->dispatcher->dispatch(ViewReferenceEvents::REMOVE_VIEW_REFERENCE, $event);
-
             }
         }
     }

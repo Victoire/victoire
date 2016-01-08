@@ -11,11 +11,7 @@ use Victoire\Bundle\ViewReferenceBundle\Transformer\ArrayToViewReferenceTransfor
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 /**
- * Class ViewReferenceRedisDriver
- * @package Victoire\Bundle\ViewReferenceBundle\Cache\Redis
- *
- * This class make the relation between ViewReference/View with redis
- * ref : victoire_view_reference.redis.driver
+ * Class ViewReferenceRedisDriver.
  */
 class ViewReferenceRedisDriver
 {
@@ -27,12 +23,13 @@ class ViewReferenceRedisDriver
 
     /**
      * ViewReferenceRedisDriver constructor.
-     * @param ViewReferenceRedisManager $manager
-     * @param ViewReferenceRedisRepository $repository
+     *
+     * @param ViewReferenceRedisManager     $manager
+     * @param ViewReferenceRedisRepository  $repository
      * @param ViewReferenceTransformerChain $transformer
-     * @param UrlManager $urlManager
+     * @param UrlManager                    $urlManager
      */
-    public function __construct(ViewReferenceRedisManager $manager,ViewReferenceRedisRepository $repository, ViewReferenceTransformerChain $transformer, UrlManager $urlManager)
+    public function __construct(ViewReferenceRedisManager $manager, ViewReferenceRedisRepository $repository, ViewReferenceTransformerChain $transformer, UrlManager $urlManager)
     {
         $this->manager = $manager;
         $this->transformer = $transformer;
@@ -42,48 +39,53 @@ class ViewReferenceRedisDriver
     }
 
     /**
-     * This method return a ViewReference for a View
+     * This method return a ViewReference for a View.
+     *
      * @param View $view
-     * @return ViewReference
+     *
      * @throws \Exception
+     *
+     * @return ViewReference
      */
     public function findReferenceByView(View $view)
     {
         $referenceId = ViewReferenceHelper::generateViewReferenceId($view);
         $reference = $this->getOneReferenceByParameters($referenceId, false);
+
         return $reference;
     }
 
     /**
-     * This method save a tree of viewReferences
-     * @param array $viewReferences
-     * @param null $parentId
+     * This method save a tree of viewReferences.
+     *
+     * @param array     $viewReferences
+     * @param null      $parentId
      * @param bool|true $reset
      */
     public function saveReferences(array $viewReferences, $parentId = null, $reset = true)
     {
         // Reset redis if wanted
-        if($reset)
-        {
+        if ($reset) {
             $this->manager->reset();
         }
         // Parse the viewReferences
-        foreach($viewReferences as $viewReference)
-        {
+        foreach ($viewReferences as $viewReference) {
             $reference = $viewReference['view']->getReference();
             // save the viewReference
             $id = $this->saveReference($reference, $parentId);
             // if children save them
-            if(array_key_exists('children', $viewReference) && !empty($children = $viewReference['children'])){
-                $this->saveReferences($children, $id, false, "");
+            if (array_key_exists('children', $viewReference) && !empty($children = $viewReference['children'])) {
+                $this->saveReferences($children, $id, false, '');
             }
         }
     }
 
     /**
-     * This method save a Reference
+     * This method save a Reference.
+     *
      * @param ViewReference $viewReference
-     * @param null $parentId
+     * @param null          $parentId
+     *
      * @return mixed
      */
     public function saveReference(ViewReference $viewReference, $parentId = null)
@@ -100,16 +102,16 @@ class ViewReferenceRedisDriver
         // Build the url for reference
         $this->urlManager->buildUrl($viewReference);
         // Set parent if exist
-        if($parentId)
-        {
-
+        if ($parentId) {
             $this->manager->addChild($parentId, $referenceArray['id']);
         }
+
         return $referenceArray['id'];
     }
 
     /**
-     * This method remove reference for a ViewReference
+     * This method remove reference for a ViewReference.
+     *
      * @param ViewReference $viewReference
      */
     public function removeReference(ViewReference $viewReference)
@@ -123,18 +125,19 @@ class ViewReferenceRedisDriver
     }
 
     /**
-     * This method return a ViewReference fo an url/locale
+     * This method return a ViewReference fo an url/locale.
+     *
      * @param $url
      * @param $locale
+     *
      * @return mixed|null
      */
     public function getReferenceByUrl($url, $locale)
     {
         // Find the ref id for an url/locale
         $refId = $this->urlManager->findRefIdByUrl($url, $locale);
-        if(!$refId)
-        {
-            return null;
+        if (!$refId) {
+            return;
         }
         // Get the reference
         $ref = $this->tools->unredislizeArray($this->repository->findById($refId));
@@ -146,14 +149,15 @@ class ViewReferenceRedisDriver
         $viewReference = $transformer->transform($ref);
 
         return $viewReference;
-
     }
 
     /**
-     * Get references matching with parameters
+     * Get references matching with parameters.
+     *
      * @param $parameters
-     * @param bool|true $transform
+     * @param bool|true  $transform
      * @param bool|false $keepChildren
+     *
      * @return array
      */
     public function getReferencesByParameters($parameters, $transform = true, $keepChildren = false)
@@ -181,43 +185,47 @@ class ViewReferenceRedisDriver
             }
             $viewsReferences[] = $reference;
         }
+
         return $viewsReferences;
     }
 
     /**
-     * Get first reference matching with parameters
+     * Get first reference matching with parameters.
+     *
      * @param $parameters
-     * @param bool|true $transform
+     * @param bool|true  $transform
      * @param bool|false $keepChildren
+     *
      * @return mixed
      */
     public function getOneReferenceByParameters($parameters, $transform = true, $keepChildren = false)
     {
         $result = $this->getReferencesByParameters($parameters, $transform, $keepChildren);
-        if (count($result))
-        {
+        if (count($result)) {
             return $result[0];
         }
-
     }
 
     /**
-     * Check if redis has a reference
+     * Check if redis has a reference.
+     *
      * @return bool
      */
     public function hasReference()
     {
-        if(count($this->repository->getAll()))
-        {
+        if (count($this->repository->getAll())) {
             return true;
         }
+
         return false;
     }
 
     /**
-     * get ViewsReferences ordered byhierarchy with some prefix
+     * get ViewsReferences ordered byhierarchy with some prefix.
+     *
      * @param null $refId
-     * @param int $depth
+     * @param int  $depth
+     *
      * @return array
      */
     public function getChoices($refId = null, $depth = 0)
@@ -234,13 +242,13 @@ class ViewReferenceRedisDriver
         };
 
         if (null === $refId) {
-            $refsId = $this->repository->getAllBy(array(
-                'slug' => ""
-            ));
-        }else{
-            $refsId = $this->repository->getAllBy(array(
-                'parent' => $refId
-            ));
+            $refsId = $this->repository->getAllBy([
+                'slug' => '',
+            ]);
+        } else {
+            $refsId = $this->repository->getAllBy([
+                'parent' => $refId,
+            ]);
         }
         $refs = $this->repository->getResults($refsId);
 
@@ -263,8 +271,10 @@ class ViewReferenceRedisDriver
     }
 
     /**
-     * Find the transformer for an element
+     * Find the transformer for an element.
+     *
      * @param $element
+     *
      * @return ArrayToBusinessPageReferenceTransformer|ArrayToViewReferenceTransformer
      */
     public static function findTransformerFromElement($element)

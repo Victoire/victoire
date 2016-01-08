@@ -42,7 +42,7 @@ class LocaleResolver
     {
         //locale
         switch ($this->localePattern) {
-            case self::PATTERN_DOMAIN :
+            case self::PATTERN_DOMAIN:
                 $locale = $this->resolveFromDomain($request);
                 $request->setLocale($locale);
                 break;

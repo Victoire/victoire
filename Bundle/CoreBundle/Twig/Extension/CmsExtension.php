@@ -34,13 +34,13 @@ class CmsExtension extends \Twig_Extension_Core
     /**
      * Constructor.
      *
-     * @param WidgetRenderer                  $widgetRenderer
-     * @param TemplateMapper                  $templating
-     * @param SecurityContext                 $securityContext
-     * @param WidgetExceptionHandler          $widgetExceptionHandler
-     * @param CurrentViewHelper               $currentViewHelper
-     * @param ViewReferenceRedisDriver        $viewRedisDriver
-     * @param \Twig_Environment               $twig
+     * @param WidgetRenderer           $widgetRenderer
+     * @param TemplateMapper           $templating
+     * @param SecurityContext          $securityContext
+     * @param WidgetExceptionHandler   $widgetExceptionHandler
+     * @param CurrentViewHelper        $currentViewHelper
+     * @param ViewReferenceRedisDriver $viewRedisDriver
+     * @param \Twig_Environment        $twig
      */
     public function __construct(
         WidgetRenderer $widgetRenderer,
@@ -56,7 +56,7 @@ class CmsExtension extends \Twig_Extension_Core
         $this->securityContext = $securityContext;
         $this->widgetExceptionHandler = $widgetExceptionHandler;
         $this->currentViewHelper = $currentViewHelper;
-        $this->viewRedisDriver= $viewRedisDriver;
+        $this->viewRedisDriver = $viewRedisDriver;
         $this->twig = $twig;
     }
 

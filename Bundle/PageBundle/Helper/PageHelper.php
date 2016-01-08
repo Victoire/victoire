@@ -53,21 +53,21 @@ class PageHelper
     protected $widgetDataWarmer;
 
     /**
-     * @param BusinessEntityHelper            $businessEntityHelper
-     * @param EntityManager                   $entityManager
-     * @param ViewReferenceHelper             $viewReferenceHelper
-     * @param CurrentViewHelper               $currentViewHelper
-     * @param EventDispatcherInterface        $eventDispatcher
-     * @param TemplateMapper                  $victoireTemplating
-     * @param PageSeoHelper                   $pageSeoHelper
-     * @param Session                         $session
-     * @param TokenStorage                    $tokenStorage
-     * @param AuthorizationChecker            $authorizationChecker
-     * @param WidgetMapBuilder                $widgetMapBuilder
-     * @param BusinessPageBuilder             $businessPageBuilder
-     * @param BusinessPageHelper              $businessPageHelper
-     * @param WidgetDataWarmer                $widgetDataWarmer
-     * @param ViewReferenceRedisDriver        $viewRedisDriver
+     * @param BusinessEntityHelper     $businessEntityHelper
+     * @param EntityManager            $entityManager
+     * @param ViewReferenceHelper      $viewReferenceHelper
+     * @param CurrentViewHelper        $currentViewHelper
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param TemplateMapper           $victoireTemplating
+     * @param PageSeoHelper            $pageSeoHelper
+     * @param Session                  $session
+     * @param TokenStorage             $tokenStorage
+     * @param AuthorizationChecker     $authorizationChecker
+     * @param WidgetMapBuilder         $widgetMapBuilder
+     * @param BusinessPageBuilder      $businessPageBuilder
+     * @param BusinessPageHelper       $businessPageHelper
+     * @param WidgetDataWarmer         $widgetDataWarmer
+     * @param ViewReferenceRedisDriver $viewRedisDriver
      */
     public function __construct(
         BusinessEntityHelper $businessEntityHelper,

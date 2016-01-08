@@ -23,8 +23,7 @@ class BlogReferenceBuilder extends BaseReferenceBuilder
         $viewReference->setViewId($view->getId());
         $viewReference->setSlug($view->getSlug());
         $viewReference->setViewNamespace($em->getClassMetadata(get_class($view))->name);
-        if($parent = $view->getParent())
-        {
+        if ($parent = $view->getParent()) {
             $viewReference->setParent(ViewReferenceHelper::generateViewReferenceId($parent));
         }
 
