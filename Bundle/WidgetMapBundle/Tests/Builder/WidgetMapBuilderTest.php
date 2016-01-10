@@ -54,9 +54,6 @@ class WidgetMapBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(4, $builtWidgetMap['content'][3]->getWidget()->getId());
     }
 
-    /**
-     * @group failing
-     */
     public function testBuildPageWithTemplateTemplate()
     {
         $builder = new WidgetMapBuilder();
