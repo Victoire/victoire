@@ -252,18 +252,31 @@ class WidgetMap
         return $children;
     }
 
+    public function hasChild($position)
+    {
+        foreach ($this->getChildren() as $child) {
+            if ($child->getPosition() === $position) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /**
      * @return WidgetMap|null
      */
     public function getChild($position)
     {
-        foreach ($this->children as $child) {
-            if ($child->getPosition() == $position) {
-                return $child;
+        $child = null;
+        foreach ($this->children as $_child) {
+            if ($_child->getPosition() == $position) {
+                $child = $_child;
             }
         }
 
-        return null;
+
+        return $child;
     }
 
 
@@ -274,12 +287,30 @@ class WidgetMap
     {
         $this->children = $children;
     }
+
     /**
-     * @param mixed $children
+     * @return void
+     */
+    public function removeChildren()
+    {
+        foreach ($this->children as $child) {
+            $child->setParent(null);
+            $this->removeChild($child);
+        }
+    }
+    /**
+     * @param WidgetMap $child
      */
     public function addChild($child)
     {
         $this->children->add($child);
+    }
+    /**
+     * @param WidgetMap $child
+     */
+    public function removeChild($child)
+    {
+        $this->children->removeElement($child);
     }
 
     /**

@@ -23,7 +23,7 @@ class WidgetMapManager
     public function insert(Widget $widget, View $view, $slotId, $position, $widgetReference)
     {
 
-        $parent = $this->em->getRepository('VictoireWidgetMapBundle:WidgetMap')->findOneBy(['id' => $widgetReference]);
+        $parent = $this->em->getRepository('VictoireWidgetMapBundle:WidgetMap')->find($widgetReference);
         //create the new widget map
         $widgetMapEntry = new WidgetMap();
         $widgetMapEntry->setAction(WidgetMap::ACTION_CREATE);
@@ -47,12 +47,11 @@ class WidgetMapManager
     {
 
         /** @var WidgetMap $widgetMapReference */
-        $widgetMapReference = $this->em->getRepository('VictoireWidgetMapBundle:WidgetMap')->findOneById((int) $sortedWidget['widgetMapReference']);
+        $widgetMapReference = $this->em->getRepository('VictoireWidgetMapBundle:WidgetMap')->find((int) $sortedWidget['widgetMapReference']);
         $position = $sortedWidget['position'];
         $slot = $sortedWidget['slot'];
         /** @var WidgetMap $widgetMap */
-        $widgetMap = $this->em->getRepository('VictoireWidgetMapBundle:WidgetMap')->findOneById((int) $sortedWidget['widgetMap']);
-
+        $widgetMap = $this->em->getRepository('VictoireWidgetMapBundle:WidgetMap')->find((int) $sortedWidget['widgetMap']);
 
         $originalParent = $widgetMap->getParent();
         $originalPosition = $widgetMap->getPosition();
@@ -61,7 +60,9 @@ class WidgetMapManager
         $beforeChild = !empty($children[WidgetMap::POSITION_BEFORE]) ? $children[WidgetMap::POSITION_BEFORE] : null;
         $afterChild = !empty($children[WidgetMap::POSITION_AFTER]) ? $children[WidgetMap::POSITION_AFTER] : null;
 
-        $this->moveWidgetMap($view, $widgetMap, $widgetMapReference, $position, $slot);
+        $widgetMap = $this->moveWidgetMap($view, $widgetMap, $widgetMapReference, $position, $slot);
+
+        $widgetMap->removeChildren();
 
         // If the moved widgetMap has someone at both his before and after, arbitrary move UP the before side
         // and find the first place after the before widgetMap hierarchy to place the after widgetMap.
@@ -72,7 +73,9 @@ class WidgetMapManager
             while ($child->getChild(WidgetMap::POSITION_AFTER)) {
                 $child = $child->getChild(WidgetMap::POSITION_AFTER);
             }
-            $this->moveWidgetMap($view, $afterChild, $child);
+            if ($afterChild->getId() !== $child->getId()) {
+                $this->moveWidgetMap($view, $afterChild, $child);
+            }
         } else if ($beforeChild) {
             $this->moveWidgetMap($view, $beforeChild, $originalParent, $originalPosition);
         } else if ($afterChild) {
@@ -88,11 +91,15 @@ class WidgetMapManager
             $widgetMap = clone $widgetMap;
             $widgetMap->setAction(WidgetMap::ACTION_OVERWRITE);
             $widgetMap->setReplaced($originalWidgetMap);
-            $widgetMap->setView($view);
+            $view->addWidgetMap($widgetMap);
             $this->em->persist($widgetMap);
         }
 
+
         if ($parent !== false) {
+            if ($originalParent = $widgetMap->getParent()) {
+                $originalParent->removeChild($widgetMap);
+            }
             $widgetMap->setParent($parent);
         }
         if ($position !== false) {
@@ -101,6 +108,7 @@ class WidgetMapManager
         if ($slot !== false) {
             $widgetMap->setSlot($slot);
         }
+
 
         return $widgetMap;
     }
