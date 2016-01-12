@@ -50,6 +50,7 @@ Component | Description
 [**TemplateBundle**][11] | Contains the pages templates logic (nearly close to [PageBundle][22])
 [**TwigBundle**][13] | Brings ErrorPage (404, 500, 503 etc) and responsive support
 [**UserBundle**][14] | Extends [FosUserBundle][12], this bundle brings a ready to use system you can override
+[**ViewReferenceBundle**][25] | Contains the view Reference logic
 [**WidgetBundle**][15] | Contains all the base widget logic to be able to use Widgets
 [**WidgetMapBundle**][16] | Each view has a widget map, this bundle contains all the widget maps logic
 
@@ -92,3 +93,4 @@ License can be found [here](http://github.com/victoire/victoire/blob/master/lice
 [22]: http://github.com/victoire/victoire/blob/master/Bundle/PageBundle
 [23]: http://github.com/victoire/victoire/blob/master/Bundle/FilterBundle/README.md
 [24]: http://github.com/victoire/victoire/blob/master/Bundle/RessourcesBundle/README.md
+[25]: http://github.com/victoire/victoire/blob/master/Bundle/ViewReferenceBundle/README.md
