@@ -20,10 +20,10 @@ class ViewReferenceRedisRepository implements ViewReferenceConnectorRepositoryIn
      * @param ClientInterface $redis
      */
     public function __construct(ClientInterface $redis)
-{
-    $this->redis = $redis;
-    $this->tools = new ViewReferenceRedisTool();
-}
+    {
+        $this->redis = $redis;
+        $this->tools = new ViewReferenceRedisTool();
+    }
 
     /**
      * This method return all references.
@@ -86,7 +86,7 @@ class ViewReferenceRedisRepository implements ViewReferenceConnectorRepositoryIn
      */
     public function findById($id)
     {
-        return $this->tools->unredislizeArray($this->redis->hgetall($this->alias.':'.$id));;
+        return $this->tools->unredislizeArray($this->redis->hgetall($this->alias.':'.$id));
     }
 
     /**

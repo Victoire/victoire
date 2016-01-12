@@ -39,14 +39,14 @@ class WidgetDataWarmer
     /**
      * Constructor.
      *
-     * @param Reader                          $reader
+     * @param Reader                  $reader
      * @param ViewReferenceRepository $viewReferenceRepository
-     * @param array                           $manyToOneAssociations
+     * @param array                   $manyToOneAssociations
      */
     public function __construct(Reader $reader, ViewReferenceRepository $viewReferenceRepository, array $manyToOneAssociations)
     {
         $this->reader = $reader;
-        $this->viewReferenceRepository= $viewReferenceRepository;
+        $this->viewReferenceRepository = $viewReferenceRepository;
         $this->accessor = PropertyAccess::createPropertyAccessor();
         $this->manyToOneAssociations = $manyToOneAssociations;
     }

@@ -27,11 +27,11 @@ class BusinessPageHelper
     protected $urlBuilder = null;
 
     /**
-     * @param QueryHelper              $queryHelper
+     * @param QueryHelper             $queryHelper
      * @param ViewReferenceRepository $viewReferenceRepository
-     * @param BusinessEntityHelper     $businessEntityHelper
-     * @param ParameterConverter       $parameterConverter
-     * @param UrlBuilder               $urlBuilder
+     * @param BusinessEntityHelper    $businessEntityHelper
+     * @param ParameterConverter      $parameterConverter
+     * @param UrlBuilder              $urlBuilder
      */
     public function __construct(QueryHelper $queryHelper, ViewReferenceRepository $viewReferenceRepository, BusinessEntityHelper $businessEntityHelper, ParameterConverter $parameterConverter, UrlBuilder $urlBuilder)
     {

@@ -19,9 +19,9 @@ class ViewReferenceManager
     /**
      * ViewReferenceManager constructor.
      *
-     * @param ViewReferenceConnectorManagerInterface     $manager
-     * @param ViewReferenceConnectorRepositoryInterface  $repository
-     * @param ViewReferenceTransformerChain $transformer
+     * @param ViewReferenceConnectorManagerInterface    $manager
+     * @param ViewReferenceConnectorRepositoryInterface $repository
+     * @param ViewReferenceTransformerChain             $transformer
      */
     public function __construct(ViewReferenceConnectorManagerInterface $manager, ViewReferenceConnectorRepositoryInterface $repository, ViewReferenceTransformerChain $transformer)
     {
@@ -98,7 +98,6 @@ class ViewReferenceManager
         // Remove reference
         $this->manager->remove($referenceId);
     }
-
 
     /**
      * Find the transformer for an element.

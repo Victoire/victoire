@@ -20,10 +20,11 @@ class ViewCacheWarmer
 
     /**
      * ViewCacheWarmer constructor.
-     * @param ViewHelper $viewHelper
+     *
+     * @param ViewHelper              $viewHelper
      * @param ViewReferenceRepository $viewReferenceRepository
-     * @param ViewReferenceManager $viewReferenceManager
-     * @param EntityManager $entityManager
+     * @param ViewReferenceManager    $viewReferenceManager
+     * @param EntityManager           $entityManager
      */
     public function __construct(
         ViewHelper $viewHelper,
@@ -32,8 +33,8 @@ class ViewCacheWarmer
         EntityManager $entityManager
     ) {
         $this->viewHelper = $viewHelper;
-        $this->viewReferenceRepository= $viewReferenceRepository;
-        $this->viewReferenceManager= $viewReferenceManager;
+        $this->viewReferenceRepository = $viewReferenceRepository;
+        $this->viewReferenceManager = $viewReferenceManager;
         $this->entityManager = $entityManager;
     }
 

@@ -21,14 +21,14 @@ class ViewReferenceListener implements EventSubscriberInterface
     /**
      * ViewReferenceListener constructor.
      *
-     * @param ViewReferenceBuilder     $viewReferenceBuilder
-     * @param ViewReferenceManager $viewReferenceManager
-     * @param EntityManagerInterface   $em
+     * @param ViewReferenceBuilder   $viewReferenceBuilder
+     * @param ViewReferenceManager   $viewReferenceManager
+     * @param EntityManagerInterface $em
      */
     public function __construct(ViewReferenceBuilder $viewReferenceBuilder, ViewReferenceManager $viewReferenceManager, EntityManagerInterface $em)
     {
         $this->viewReferenceBuilder = $viewReferenceBuilder;
-        $this->viewReferenceManager= $viewReferenceManager;
+        $this->viewReferenceManager = $viewReferenceManager;
         $this->em = $em;
     }
 

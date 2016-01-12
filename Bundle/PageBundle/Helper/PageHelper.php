@@ -67,7 +67,7 @@ class PageHelper
      * @param BusinessPageBuilder      $businessPageBuilder
      * @param BusinessPageHelper       $businessPageHelper
      * @param WidgetDataWarmer         $widgetDataWarmer
-     * @param ViewReferenceRepository $viewReferenceRepository
+     * @param ViewReferenceRepository  $viewReferenceRepository
      */
     public function __construct(
         BusinessEntityHelper $businessEntityHelper,

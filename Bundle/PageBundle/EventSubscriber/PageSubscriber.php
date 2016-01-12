@@ -30,10 +30,10 @@ class PageSubscriber implements EventSubscriber
     /**
      * Constructor.
      *
-     * @param Router                   $router               @router
-     * @param UserCallableHelper       $userCallableHelper   @victoire_page.user_callable
-     * @param string                   $userClass            %victoire_core.user_class%
-     * @param ViewReferenceBuilder     $viewReferenceBuilder
+     * @param Router                  $router                  @router
+     * @param UserCallableHelper      $userCallableHelper      @victoire_page.user_callable
+     * @param string                  $userClass               %victoire_core.user_class%
+     * @param ViewReferenceBuilder    $viewReferenceBuilder
      * @param ViewReferenceRepository $viewReferenceRepository
      *
      * @internal param ViewReferenceBuilder $urlBuilder @victoire_view_reference.builder
@@ -49,7 +49,7 @@ class PageSubscriber implements EventSubscriber
         $this->userClass = $userClass;
         $this->userCallableHelper = $userCallableHelper;
         $this->viewReferenceBuilder = $viewReferenceBuilder;
-        $this->viewReferenceRepository= $viewReferenceRepository;
+        $this->viewReferenceRepository = $viewReferenceRepository;
     }
 
     /**

@@ -21,13 +21,13 @@ class AnalyticsViewHelper
      * AnalyticsViewHelper constructor.
      *
      * @param ViewReferenceRepository $viewReferenceRepository
-     * @param EntityManager            $entityManager
-     * @param PageHelper               $pageHelper
+     * @param EntityManager           $entityManager
+     * @param PageHelper              $pageHelper
      */
     public function __construct(ViewReferenceRepository $viewReferenceRepository, EntityManager $entityManager, PageHelper $pageHelper)
     {
         $this->entityManager = $entityManager;
-        $this->viewReferenceRepository= $viewReferenceRepository;
+        $this->viewReferenceRepository = $viewReferenceRepository;
         $this->pageHelper = $pageHelper;
     }
 

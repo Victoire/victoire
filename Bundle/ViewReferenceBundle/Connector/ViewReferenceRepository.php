@@ -5,8 +5,6 @@ namespace Victoire\Bundle\ViewReferenceBundle\Connector;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\ViewReferenceBundle\Builder\Chain\ViewReferenceTransformerChain;
 use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
-use Victoire\Bundle\ViewReferenceBundle\Transformer\ArrayToBusinessPageReferenceTransformer;
-use Victoire\Bundle\ViewReferenceBundle\Transformer\ArrayToViewReferenceTransformer;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 /**
@@ -20,8 +18,8 @@ class ViewReferenceRepository
     /**
      * ViewReferenceManager constructor.
      *
-     * @param ViewReferenceConnectorRepositoryInterface  $repository
-     * @param ViewReferenceTransformerChain $transformer
+     * @param ViewReferenceConnectorRepositoryInterface $repository
+     * @param ViewReferenceTransformerChain             $transformer
      */
     public function __construct(ViewReferenceConnectorRepositoryInterface $repository, ViewReferenceTransformerChain $transformer)
     {
