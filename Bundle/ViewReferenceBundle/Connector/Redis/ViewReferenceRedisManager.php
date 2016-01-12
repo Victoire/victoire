@@ -28,7 +28,7 @@ class ViewReferenceRedisManager implements ViewReferenceConnectorManagerInterfac
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function create(array $data)
     {
@@ -53,7 +53,7 @@ class ViewReferenceRedisManager implements ViewReferenceConnectorManagerInterfac
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function update($id, array $data)
     {
@@ -73,7 +73,7 @@ class ViewReferenceRedisManager implements ViewReferenceConnectorManagerInterfac
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function remove($id)
     {
@@ -104,7 +104,7 @@ class ViewReferenceRedisManager implements ViewReferenceConnectorManagerInterfac
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function addChild($parentId, $childId)
     {
@@ -119,7 +119,7 @@ class ViewReferenceRedisManager implements ViewReferenceConnectorManagerInterfac
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function buildUrl($id)
     {
@@ -145,7 +145,7 @@ class ViewReferenceRedisManager implements ViewReferenceConnectorManagerInterfac
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setUrl($refId, $url, $locale = 'fr')
     {
@@ -164,7 +164,7 @@ class ViewReferenceRedisManager implements ViewReferenceConnectorManagerInterfac
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function removeUrl($url, $locale)
     {
@@ -175,7 +175,7 @@ class ViewReferenceRedisManager implements ViewReferenceConnectorManagerInterfac
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function reset()
     {

@@ -59,7 +59,6 @@ interface ViewReferenceConnectorRepositoryInterface
      */
     public function getChildren($id);
 
-
     /**
      * Find a ref id for an url.
      *

@@ -4,7 +4,6 @@ namespace Victoire\Bundle\ViewReferenceBundle\Connector;
 
 interface ViewReferenceConnectorManagerInterface
 {
-
     /**
      * This method create a viewReference in redis with an array of data.
      *

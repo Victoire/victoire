@@ -26,7 +26,7 @@ class ViewReferenceRedisRepository implements ViewReferenceConnectorRepositoryIn
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getAll()
     {
@@ -34,7 +34,7 @@ class ViewReferenceRedisRepository implements ViewReferenceConnectorRepositoryIn
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getAllBy(array $criteria, $type = 'AND')
     {
@@ -53,7 +53,7 @@ class ViewReferenceRedisRepository implements ViewReferenceConnectorRepositoryIn
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getResults(array $data)
     {
@@ -64,13 +64,14 @@ class ViewReferenceRedisRepository implements ViewReferenceConnectorRepositoryIn
 
         return $results;
     }
+
     public function findById($id)
     {
         return $this->tools->unredislizeArray($this->redis->hgetall($this->alias.':'.$id));
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function findValueForId($value, $id)
     {
@@ -83,7 +84,7 @@ class ViewReferenceRedisRepository implements ViewReferenceConnectorRepositoryIn
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getChildren($id)
     {
@@ -103,7 +104,7 @@ class ViewReferenceRedisRepository implements ViewReferenceConnectorRepositoryIn
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function findRefIdByUrl($url = '', $locale = 'fr')
     {
