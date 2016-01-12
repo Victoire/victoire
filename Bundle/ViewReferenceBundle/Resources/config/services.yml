@@ -5,10 +5,10 @@ parameters:
     victoire_view_reference.array_transformer.business_page.class: Victoire\Bundle\ViewReferenceBundle\Transformer\ArrayToBusinessPageReferenceTransformer
     victoire_view_reference.xml_transformer.base_page.class: Victoire\Bundle\ViewReferenceBundle\Transformer\XmlToViewReferenceTransformer
     victoire_view_reference.xml_transformer.business_page.class: Victoire\Bundle\ViewReferenceBundle\Transformer\XmlToBusinessPageReferenceTransformer
-    victoire_view_reference.redis.repository.class: Victoire\Bundle\ViewReferenceBundle\Cache\Redis\ViewReferenceRedisRepository
-    victoire_view_reference.redis.manager.class: Victoire\Bundle\ViewReferenceBundle\Cache\Redis\ViewReferenceRedisManager
-    victoire_view_reference.redis.driver.class: Victoire\Bundle\ViewReferenceBundle\Cache\Redis\ViewReferenceRedisDriver
-    victoire_view_reference.url.manager.class: Victoire\Bundle\ViewReferenceBundle\Cache\UrlManager
+    victoire_view_reference.repository.class: Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository
+    victoire_view_reference.manager.class: Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceManager
+    victoire_view_reference.redis.repository.class: Victoire\Bundle\ViewReferenceBundle\Connector\Redis\ViewReferenceRedisRepository
+    victoire_view_reference.redis.manager.class: Victoire\Bundle\ViewReferenceBundle\Connector\Redis\ViewReferenceRedisManager
 
 services:
     victoire_view_reference.builder:
@@ -44,35 +44,35 @@ services:
     victoire_view_reference.transformer_chain:
         class: Victoire\Bundle\ViewReferenceBundle\Builder\Chain\ViewReferenceTransformerChain
 
-    victoire_view_reference.redis.repository:
-        class: %victoire_view_reference.redis.repository.class%
-        arguments:
-            - "@snc_redis.victoire"
+    #victoire_view_reference.redis.repository:
+    #    class: %victoire_view_reference.redis.repository.class%
+    #    arguments:
+    #        - "@snc_redis.victoire"
 
-    victoire_view_reference.redis.manager:
-        class: %victoire_view_reference.redis.manager.class%
-        arguments:
-            - "@snc_redis.victoire"
-
-    victoire_view_reference.redis.driver:
-        class: %victoire_view_reference.redis.driver.class%
-        arguments:
-            - "@victoire_view_reference.redis.manager"
-            - "@victoire_view_reference.redis.repository"
-            - "@victoire_view_reference.transformer_chain"
-            - "@victoire_view_reference.url.manager"
-
-    victoire_view_reference.url.manager:
-        class: %victoire_view_reference.url.manager.class%
-        arguments:
-            - "@victoire_view_reference.redis.repository"
-            - "@snc_redis.victoire"
+#    victoire_view_reference.redis.manager:
+#        class: %victoire_view_reference.redis.manager.class%
+#        arguments:
+#            - "@snc_redis.victoire"
+#
+#    victoire_view_reference.redis.driver:
+#        class: %victoire_view_reference.redis.driver.class%
+#        arguments:
+#            - "@victoire_view_reference.manager"
+#            - "@victoire_view_reference.repository"
+#            - "@victoire_view_reference.transformer_chain"
+#            - "@victoire_view_reference.url.manager"
+#
+#    victoire_view_reference.url.manager:
+#        class: %victoire_view_reference.url.manager.class%
+#        arguments:
+#            - "@victoire_view_reference.redis.repository"
+#            - "@snc_redis.victoire"
 
     victoire_view_reference.listener:
         class: Victoire\Bundle\ViewReferenceBundle\Listener\ViewReferenceListener
         arguments:
             - @victoire_view_reference.builder
-            - @victoire_view_reference.redis.driver
+            - @victoire_view_reference.manager
             - @doctrine.orm.entity_manager
         tags:
             - { name: kernel.event_subscriber }
@@ -84,7 +84,8 @@ services:
         class: %victoire_view_reference.cache_warmer.class%
         arguments:
             - @victoire_core.view_helper
-            - @victoire_view_reference.redis.driver
+            - @victoire_view_reference.repository
+            - @victoire_view_reference.manager
             - @doctrine.orm.entity_manager
         tags:
         - { name: kernel.event_listener, event: kernel.request, method: warmUp }
@@ -118,3 +119,33 @@ services:
         class: %victoire_view_reference.xml_transformer.business_page.class%
         tags:
         - { name: victoire_view_reference.transformer, viewNamespace: Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage, outputFormat: xml }
+
+
+    victoire_view_reference.redis.manager:
+        class: %victoire_view_reference.redis.manager.class%
+        arguments:
+            - "@snc_redis.victoire"
+            - "@victoire_view_reference.redis.repository"
+        tags:
+            - { name: view_reference.manager, connector: redis}
+
+    victoire_view_reference.redis.repository:
+        class: %victoire_view_reference.redis.repository.class%
+        arguments:
+            - "@snc_redis.victoire"
+        tags:
+            - { name: view_reference.repository, connector: redis}
+
+    victoire_view_reference.manager:
+        class: %victoire_view_reference.manager.class%
+        arguments:
+            - "@victoire_view_reference.connector.manager"
+            - "@victoire_view_reference.connector.repository"
+            - "@victoire_view_reference.transformer_chain"
+
+    victoire_view_reference.repository:
+        class: %victoire_view_reference.repository.class%
+        arguments:
+            - "@victoire_view_reference.connector.repository"
+            - "@victoire_view_reference.transformer_chain"
+

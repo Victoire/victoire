@@ -1,6 +1,6 @@
 <?php
 
-namespace Victoire\Bundle\ViewReferenceBundle\Cache\Redis;
+namespace Victoire\Bundle\ViewReferenceBundle\Connector\Redis;
 
 /**
  * Class ViewReferenceRedisTool.

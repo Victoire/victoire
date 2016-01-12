@@ -1,27 +1,30 @@
 <?php
 
-namespace Victoire\Bundle\ViewReferenceBundle\Cache\Redis;
+namespace Victoire\Bundle\ViewReferenceBundle\Connector\Redis;
 
 use Predis\ClientInterface;
+use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceConnectorManagerInterface;
 
 /**
  * Class ViewReferenceRedisManager.
  */
-class ViewReferenceRedisManager
+class ViewReferenceRedisManager implements ViewReferenceConnectorManagerInterface
 {
     protected $redis;
     protected $tools;
     protected $alias = 'reference';
+    protected $repository;
 
     /**
      * ViewReferenceRedisManager constructor.
      *
      * @param ClientInterface $redis
      */
-    public function __construct(ClientInterface $redis)
+    public function __construct(ClientInterface $redis, ViewReferenceRedisRepository $repository)
     {
         $this->redis = $redis;
         $this->tools = new ViewReferenceRedisTool();
+        $this->repository = $repository;
     }
 
     /**
@@ -127,6 +130,71 @@ class ViewReferenceRedisManager
         // Index and add the value of parent for the child
         $this->redis->hset($childHash, 'parent', $parentId);
         $this->redis->sadd('parent_'.$parentHash, $childId);
+    }
+
+    /**
+     * This method build an url for a viewReference with parent in redis.
+     *
+     * @param ViewReference $viewReference
+     */
+    public function buildUrl($id)
+    {
+        $reference = $this->repository->findById($id);
+        $url = '';
+        // while the reference has a slug
+        while (isset($reference['slug']) && $reference['slug'] != '') {
+            // Build url
+            if ($url != '') {
+                $url = $reference['slug'].'/'.$url;
+            } else {
+                $url = $reference['slug'];
+            }
+            // Set reference with the parent
+            if ($parentId = $reference['parent']) {
+                $reference = $this->repository->findById($parentId);
+            } else {
+                $reference = [];
+            }
+        }
+        // set the new url
+        $this->setUrl($id, $url, $reference['locale']);
+    }
+
+    /**
+     * This method set an url for a redis reference.
+     *
+     * @param $refId
+     * @param $url
+     * @param string $locale
+     */
+    public function setUrl($refId, $url, $locale = 'fr')
+    {
+        //if an url exist for the current reference
+        if ($this->redis->hexists('reference:'.$refId, 'url')) {
+            // Remove the old url
+            $refUrl = $this->tools->unredislize($this->redis->hget('reference:'.$refId, 'url'));
+            if ($refUrl != '') {
+                $this->removeUrl($refUrl, $locale);
+                $this->redis->hdel('reference:'.$refId, 'url');
+            }
+        }
+        // Set the new url
+        $this->redis->set($locale.':/'.$url, $refId);
+        $this->redis->hset('reference:'.$refId, 'url', $url);
+    }
+
+    /**
+     * Remove an url.
+     *
+     * @param $url
+     * @param $locale
+     */
+    public function removeUrl($url, $locale)
+    {
+        if ($url == '' || $url[0] != '/') {
+            $url = '/'.$url;
+        }
+        $this->redis->del($locale.':'.$url);
     }
 
     /**

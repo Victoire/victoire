@@ -1,13 +1,14 @@
 <?php
 
-namespace Victoire\Bundle\ViewReferenceBundle\Cache\Redis;
+namespace Victoire\Bundle\ViewReferenceBundle\Connector\Redis;
 
 use Predis\ClientInterface;
+use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceConnectorRepositoryInterface;
 
 /**
  * Class ViewReferenceRedisRepository.
  */
-class ViewReferenceRedisRepository
+class ViewReferenceRedisRepository implements ViewReferenceConnectorRepositoryInterface
 {
     protected $redis;
     private $alias = 'reference';
@@ -19,10 +20,10 @@ class ViewReferenceRedisRepository
      * @param ClientInterface $redis
      */
     public function __construct(ClientInterface $redis)
-    {
-        $this->redis = $redis;
-        $this->tools = new ViewReferenceRedisTool();
-    }
+{
+    $this->redis = $redis;
+    $this->tools = new ViewReferenceRedisTool();
+}
 
     /**
      * This method return all references.
@@ -85,7 +86,7 @@ class ViewReferenceRedisRepository
      */
     public function findById($id)
     {
-        return $this->redis->hgetall($this->alias.':'.$id);
+        return $this->tools->unredislizeArray($this->redis->hgetall($this->alias.':'.$id));;
     }
 
     /**
@@ -128,5 +129,23 @@ class ViewReferenceRedisRepository
         $this->alias = $alias;
 
         return $this;
+    }
+
+    /**
+     * Find a ref id for an url.
+     *
+     * @param string $url
+     * @param string $locale
+     *
+     * @return mixed|string
+     */
+    public function findRefIdByUrl($url = '', $locale = 'fr')
+    {
+        if ($url == '' || $url[0] != '/') {
+            $url = '/'.$url;
+        }
+        $refId = $this->tools->unredislize($this->redis->get($locale.':'.$url));
+
+        return $refId;
     }
 }
