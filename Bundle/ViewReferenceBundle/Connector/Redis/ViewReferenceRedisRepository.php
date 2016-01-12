@@ -26,9 +26,7 @@ class ViewReferenceRedisRepository implements ViewReferenceConnectorRepositoryIn
     }
 
     /**
-     * This method return all references.
-     *
-     * @return array
+     * @inheritdoc
      */
     public function getAll()
     {
@@ -36,13 +34,7 @@ class ViewReferenceRedisRepository implements ViewReferenceConnectorRepositoryIn
     }
 
     /**
-     * This method return all references matching with criteria
-     * Support "AND" and "OR".
-     *
-     * @param array  $criteria
-     * @param string $type
-     *
-     * @return array
+     * @inheritdoc
      */
     public function getAllBy(array $criteria, $type = 'AND')
     {
@@ -61,11 +53,7 @@ class ViewReferenceRedisRepository implements ViewReferenceConnectorRepositoryIn
     }
 
     /**
-     * This method return an array of references matching with an array of id.
-     *
-     * @param array $data
-     *
-     * @return array
+     * @inheritdoc
      */
     public function getResults(array $data)
     {
@@ -76,26 +64,13 @@ class ViewReferenceRedisRepository implements ViewReferenceConnectorRepositoryIn
 
         return $results;
     }
-
-    /**
-     * This method return a reference matching with a ref id.
-     *
-     * @param $id
-     *
-     * @return array
-     */
     public function findById($id)
     {
         return $this->tools->unredislizeArray($this->redis->hgetall($this->alias.':'.$id));
     }
 
     /**
-     * This method return a specific value for an id or null if not exist.
-     *
-     * @param $value
-     * @param $id
-     *
-     * @return mixed|null|string
+     * @inheritdoc
      */
     public function findValueForId($value, $id)
     {
@@ -108,11 +83,7 @@ class ViewReferenceRedisRepository implements ViewReferenceConnectorRepositoryIn
     }
 
     /**
-     * getChildren ids for a ref id.
-     *
-     * @param $id
-     *
-     * @return array
+     * @inheritdoc
      */
     public function getChildren($id)
     {
@@ -132,12 +103,7 @@ class ViewReferenceRedisRepository implements ViewReferenceConnectorRepositoryIn
     }
 
     /**
-     * Find a ref id for an url.
-     *
-     * @param string $url
-     * @param string $locale
-     *
-     * @return mixed|string
+     * @inheritdoc
      */
     public function findRefIdByUrl($url = '', $locale = 'fr')
     {

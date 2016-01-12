@@ -28,11 +28,7 @@ class ViewReferenceRedisManager implements ViewReferenceConnectorManagerInterfac
     }
 
     /**
-     * This method create a viewReference in redis with an array of data.
-     *
-     * @param array $data
-     *
-     * @throws \Exception
+     * @inheritdoc
      */
     public function create(array $data)
     {
@@ -57,12 +53,7 @@ class ViewReferenceRedisManager implements ViewReferenceConnectorManagerInterfac
     }
 
     /**
-     * This method update a viewReference with data.
-     *
-     * @param $id
-     * @param array $data
-     *
-     * @throws \Exception
+     * @inheritdoc
      */
     public function update($id, array $data)
     {
@@ -82,9 +73,7 @@ class ViewReferenceRedisManager implements ViewReferenceConnectorManagerInterfac
     }
 
     /**
-     * This method remove a reference.
-     *
-     * @param $id
+     * @inheritdoc
      */
     public function remove($id)
     {
@@ -115,10 +104,7 @@ class ViewReferenceRedisManager implements ViewReferenceConnectorManagerInterfac
     }
 
     /**
-     * This method add a child to a reference.
-     *
-     * @param $parentId
-     * @param $childId
+     * @inheritdoc
      */
     public function addChild($parentId, $childId)
     {
@@ -133,9 +119,7 @@ class ViewReferenceRedisManager implements ViewReferenceConnectorManagerInterfac
     }
 
     /**
-     * This method build an url for a viewReference with parent in redis.
-     *
-     * @param ViewReference $viewReference
+     * @inheritdoc
      */
     public function buildUrl($id)
     {
@@ -161,11 +145,7 @@ class ViewReferenceRedisManager implements ViewReferenceConnectorManagerInterfac
     }
 
     /**
-     * This method set an url for a redis reference.
-     *
-     * @param $refId
-     * @param $url
-     * @param string $locale
+     * @inheritdoc
      */
     public function setUrl($refId, $url, $locale = 'fr')
     {
@@ -184,10 +164,7 @@ class ViewReferenceRedisManager implements ViewReferenceConnectorManagerInterfac
     }
 
     /**
-     * Remove an url.
-     *
-     * @param $url
-     * @param $locale
+     * @inheritdoc
      */
     public function removeUrl($url, $locale)
     {
@@ -198,7 +175,7 @@ class ViewReferenceRedisManager implements ViewReferenceConnectorManagerInterfac
     }
 
     /**
-     * This method clear redis.
+     * @inheritdoc
      */
     public function reset()
     {
