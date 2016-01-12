@@ -79,7 +79,7 @@ services:
             - "@security.context"
             - "@victoire_core.widget_exception_handler"
             - "@victoire_core.current_view"
-            - "@victoire_view_reference.redis.driver"
+            - "@victoire_view_reference.repository"
             - "@twig"
         tags:
             - { name: twig.extension }

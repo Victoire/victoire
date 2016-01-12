@@ -5,6 +5,7 @@ namespace Victoire\Bundle\ViewReferenceBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Victoire\Bundle\ViewReferenceBundle\DependencyInjection\Compiler\ViewReferenceBuilderCompilerPass;
+use Victoire\Bundle\ViewReferenceBundle\DependencyInjection\Compiler\ViewReferenceConnectorCompilerPass;
 use Victoire\Bundle\ViewReferenceBundle\DependencyInjection\Compiler\ViewReferenceTransformerCompilerPass;
 
 class ViewReferenceBundle extends Bundle
@@ -20,5 +21,6 @@ class ViewReferenceBundle extends Bundle
 
         $container->addCompilerPass(new ViewReferenceBuilderCompilerPass());
         $container->addCompilerPass(new ViewReferenceTransformerCompilerPass());
+        $container->addCompilerPass(new ViewReferenceConnectorCompilerPass());
     }
 }

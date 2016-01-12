@@ -11,7 +11,7 @@ use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
 use Victoire\Bundle\QueryBundle\Helper\QueryHelper;
-use Victoire\Bundle\ViewReferenceBundle\Cache\Redis\ViewReferenceRedisDriver;
+use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\BusinessPageReference;
 
 /**
@@ -21,22 +21,22 @@ use Victoire\Bundle\ViewReferenceBundle\ViewReference\BusinessPageReference;
 class BusinessPageHelper
 {
     protected $queryHelper = null;
-    protected $viewRedisDriver = null;
+    protected $viewReferenceRepository = null;
     protected $businessEntityHelper = null;
     protected $parameterConverter = null;
     protected $urlBuilder = null;
 
     /**
      * @param QueryHelper              $queryHelper
-     * @param ViewReferenceRedisDriver $viewRedisDriver
+     * @param ViewReferenceRepository $viewReferenceRepository
      * @param BusinessEntityHelper     $businessEntityHelper
      * @param ParameterConverter       $parameterConverter
      * @param UrlBuilder               $urlBuilder
      */
-    public function __construct(QueryHelper $queryHelper, ViewReferenceRedisDriver $viewRedisDriver, BusinessEntityHelper $businessEntityHelper, ParameterConverter $parameterConverter, UrlBuilder $urlBuilder)
+    public function __construct(QueryHelper $queryHelper, ViewReferenceRepository $viewReferenceRepository, BusinessEntityHelper $businessEntityHelper, ParameterConverter $parameterConverter, UrlBuilder $urlBuilder)
     {
         $this->queryHelper = $queryHelper;
-        $this->viewRedisDriver = $viewRedisDriver;
+        $this->viewReferenceRepository = $viewReferenceRepository;
         $this->businessEntityHelper = $businessEntityHelper;
         $this->parameterConverter = $parameterConverter;
         $this->urlBuilder = $urlBuilder;
@@ -208,7 +208,7 @@ class BusinessPageHelper
                 'entityId'        => $entityId,
                 'entityNamespace' => $originalRefClassName,
             ];
-            $viewReference = $this->viewRedisDriver->getOneReferenceByParameters($parameters);
+            $viewReference = $this->viewReferenceRepository->getOneReferenceByParameters($parameters);
         }
 
         if (!$viewReference) {

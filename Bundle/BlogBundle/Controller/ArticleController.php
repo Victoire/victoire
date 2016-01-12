@@ -213,7 +213,7 @@ class ArticleController extends Controller
             ]
         );
 
-        $blogViewReference = $this->container->get('victoire_view_reference.redis.driver')->getOneReferenceByParameters(
+        $blogViewReference = $this->container->get('victoire_view_reference.repository')->getOneReferenceByParameters(
             [
                 'viewId' => $article->getBlog()->getId(),
             ]

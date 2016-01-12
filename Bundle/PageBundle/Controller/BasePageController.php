@@ -21,7 +21,7 @@ class BasePageController extends Controller
 
     public function showAction(Request $request, $url = '')
     {
-        $response = $this->container->get('victoire_page.page_helper')->renderPageByUrl(
+        $response = $this->get('victoire_page.page_helper')->renderPageByUrl(
             $url,
             $request->getLocale(),
             $request->isXmlHttpRequest()
@@ -37,7 +37,7 @@ class BasePageController extends Controller
         if ($entityId) {
             $parameters['entityId'] = $entityId;
         }
-        $page = $this->container->get('victoire_page.page_helper')->findPageByParameters($parameters);
+        $page = $this->get('victoire_page.page_helper')->findPageByParameters($parameters);
 
         return $this->redirect($this->generateUrl('victoire_core_page_show', array_merge(
                 ['url' => $page->getReference()->getUrl()],
@@ -48,16 +48,16 @@ class BasePageController extends Controller
 
     public function showBusinessPageByIdAction($entityId, $type)
     {
-        $businessEntityHelper = $this->container->get('victoire_core.helper.queriable_business_entity_helper');
+        $businessEntityHelper = $this->get('victoire_core.helper.queriable_business_entity_helper');
         $businessEntity = $businessEntityHelper->findById($type);
         $entity = $businessEntityHelper->getByBusinessEntityAndId($businessEntity, $entityId);
 
         $refClass = new \ReflectionClass($entity);
 
-        $templateId = $this->container->get('victoire_business_page.business_page_helper')
+        $templateId = $this->get('victoire_business_page.business_page_helper')
             ->guessBestPatternIdForEntity($refClass, $entityId, $this->container->get('doctrine.orm.entity_manager'));
 
-        $page = $this->container->get('victoire_page.page_helper')->findPageByParameters([
+        $page = $this->get('victoire_page.page_helper')->findPageByParameters([
             'viewId'   => $templateId,
             'entityId' => $entityId,
         ]);
@@ -92,7 +92,7 @@ class BasePageController extends Controller
             $page->setHomepage($isHomepage ? $isHomepage : 0);
         }
 
-        $form = $this->container->get('form.factory')->create($this->getNewPageType(), $page);
+        $form = $this->get('form.factory')->create($this->getNewPageType(), $page);
 
         $form->handleRequest($this->get('request'));
         if ($form->isValid()) {
@@ -109,14 +109,14 @@ class BasePageController extends Controller
             $entityManager->flush();
 
             // If the $page is a BusinessEntity (eg. an Article), compute it's url
-            if (null !== $this->container->get('victoire_core.helper.business_entity_helper')->findByEntityInstance($page)) {
-                $page = $this->container
+            if (null !== $this->get('victoire_core.helper.business_entity_helper')->findByEntityInstance($page)) {
+                $page = $this
                         ->get('victoire_business_page.business_page_builder')
                         ->generateEntityPageFromTemplate($page->getTemplate(), $page, $entityManager);
             }
 
             $this->congrat($this->get('translator')->trans('victoire_page.create.success', [], 'victoire'));
-            $viewReference = $this->get('victoire_view_reference.redis.driver')->getOneReferenceByParameters([
+            $viewReference = $this->get('victoire_view_reference.repository')->getOneReferenceByParameters([
                 'viewId' => $page->getId(),
             ]);
 
@@ -131,12 +131,12 @@ class BasePageController extends Controller
                 ),
             ];
         } else {
-            $formErrorHelper = $this->container->get('victoire_form.error_helper');
+            $formErrorHelper = $this->get('victoire_form.error_helper');
 
             return [
                 'success' => false,
                 'message' => $formErrorHelper->getRecursiveReadableErrors($form),
-                'html'    => $this->container->get('victoire_templating')->render(
+                'html'    => $this->get('victoire_templating')->render(
                     $this->getBaseTemplatePath().':new.html.twig',
                     ['form' => $form->createView()]
                 ),
@@ -176,7 +176,7 @@ class BasePageController extends Controller
             $entityManager->persist($page);
             $entityManager->flush();
             /** @var ViewReference $viewReference */
-            $viewReference = $this->container->get('victoire_view_reference.redis.driver')
+            $viewReference = $this->get('victoire_view_reference.repository')
                 ->getOneReferenceByParameters(['viewId' => $page->getId()]);
 
             $page->setReference($viewReference);
@@ -198,7 +198,7 @@ class BasePageController extends Controller
 
         return  [
             'success' => empty($errors),
-            'html'    => $this->container->get('victoire_templating')->render(
+            'html'    => $this->get('victoire_templating')->render(
                 $this->getBaseTemplatePath().':settings.html.twig',
                 [
                     'page'               => $page,
@@ -244,7 +244,7 @@ class BasePageController extends Controller
 
         return [
             'success' => empty($errors),
-            'html'    => $this->container->get('victoire_templating')->render(
+            'html'    => $this->get('victoire_templating')->render(
                 $this->getBaseTemplatePath().':translate.html.twig',
                 [
                     'page'               => $page,

@@ -8,7 +8,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Victoire\Bundle\CoreBundle\DataTransformer\JsonToArrayTransformer;
-use Victoire\Bundle\ViewReferenceBundle\Cache\Redis\ViewReferenceRedisDriver;
+use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
 
 /**
  * Type for Victoire Link.
@@ -16,18 +16,18 @@ use Victoire\Bundle\ViewReferenceBundle\Cache\Redis\ViewReferenceRedisDriver;
 class LinkType extends AbstractType
 {
     private $analytics;
-    private $viewReferenceRedisDriver;
+    private $viewReferenceRepository;
 
     /**
      * LinkType constructor.
      *
      * @param $analytics
-     * @param ViewReferenceRedisDriver $viewReferenceRedisDriver
+     * @param ViewReferenceRepository $viewReferenceRepository
      */
-    public function __construct($analytics, ViewReferenceRedisDriver $viewReferenceRedisDriver)
+    public function __construct($analytics, ViewReferenceRepository $viewReferenceRepository)
     {
         $this->analytics = $analytics;
-        $this->viewReferenceRedisDriver = $viewReferenceRedisDriver;
+        $this->viewReferenceRepository = $viewReferenceRepository;
     }
 
     /**
@@ -58,7 +58,7 @@ class LinkType extends AbstractType
             'required'                       => true,
             'attr'                           => ['novalidate' => 'novalidate'],
             'empty_value'                    => 'form.link_type.view_reference.blank',
-            'choices'                        => $this->viewReferenceRedisDriver->getChoices(),
+            'choices'                        => $this->viewReferenceRepository->getChoices(),
             'vic_vic_widget_form_group_attr' => ['class' => 'vic-form-group vic-hidden viewReference-type'],
         ])
         ->add('attachedWidget', 'entity', [

@@ -5,7 +5,7 @@ namespace Victoire\Bundle\AnalyticsBundle\Helper;
 use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\BlogBundle\Entity\Article;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
-use Victoire\Bundle\ViewReferenceBundle\Cache\Redis\ViewReferenceRedisDriver;
+use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
 
 /**
  * Analytics View helper
@@ -13,21 +13,21 @@ use Victoire\Bundle\ViewReferenceBundle\Cache\Redis\ViewReferenceRedisDriver;
  */
 class AnalyticsViewHelper
 {
-    protected $viewRedisDriver;
+    protected $viewReferenceRepository;
     protected $entityManager;
     protected $pageHelper;
 
     /**
      * AnalyticsViewHelper constructor.
      *
-     * @param ViewReferenceRedisDriver $viewRedisDriver
+     * @param ViewReferenceRepository $viewReferenceRepository
      * @param EntityManager            $entityManager
      * @param PageHelper               $pageHelper
      */
-    public function __construct(ViewReferenceRedisDriver $viewRedisDriver, EntityManager $entityManager, PageHelper $pageHelper)
+    public function __construct(ViewReferenceRepository $viewReferenceRepository, EntityManager $entityManager, PageHelper $pageHelper)
     {
         $this->entityManager = $entityManager;
-        $this->viewRedisDriver = $viewRedisDriver;
+        $this->viewReferenceRepository= $viewReferenceRepository;
         $this->pageHelper = $pageHelper;
     }
 
@@ -47,7 +47,7 @@ class AnalyticsViewHelper
                 $repo = $this->entityManager->getRepository($viewNamespace);
                 //get pages and viewReferenceIds
                 foreach ($repo->getAll()->run() as $key => $page) {
-                    $viewReference = $this->viewRedisDriver->getOneReferenceByParameters(
+                    $viewReference = $this->viewReferenceRepository->getOneReferenceByParameters(
                         [
                             'viewNamespace' => $viewNamespace,
                             'viewId'        => $page->getId(),
@@ -92,7 +92,7 @@ class AnalyticsViewHelper
                     ->run();
 
         foreach ($articles as $key => $article) {
-            if ($viewReference = $this->viewRedisDriver->getOneReferenceByParameters(
+            if ($viewReference = $this->viewReferenceRepository->getOneReferenceByParameters(
                 [
                     'entityNamespace' => 'Victoire\Bundle\BlogBundle\Entity\Article',
                     'entityId'        => $article->getId(),

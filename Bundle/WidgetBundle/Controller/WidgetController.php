@@ -95,7 +95,7 @@ class WidgetController extends Controller
         try {
             $view = $this->getViewByReferenceId($viewReference);
 
-            if (!$reference = $this->container->get('victoire_view_reference.redis.driver')
+            if (!$reference = $this->container->get('victoire_view_reference.repository')
                 ->getOneReferenceByParameters(['id' => $viewReference])) {
                 $reference = new ViewReference($viewReference);
             }
@@ -130,7 +130,7 @@ class WidgetController extends Controller
 
             $isNewPage = $view->getId() === null ? true : false;
 
-            if (!$reference = $this->container->get('victoire_view_reference.redis.driver')
+            if (!$reference = $this->container->get('victoire_view_reference.repository')
                 ->getOneReferenceByParameters(['id' => $viewReference])) {
                 $reference = new ViewReference($viewReference);
             }
@@ -180,7 +180,7 @@ class WidgetController extends Controller
         $this->get('victoire_widget_map.builder')->build($widgetView, true);
         $this->get('victoire_widget_map.widget_data_warmer')->warm($this->getDoctrine()->getManager(), $view);
 
-        if ($view instanceof BusinessTemplate && !$reference = $this->container->get('victoire_view_reference.redis.driver')
+        if ($view instanceof BusinessTemplate && !$reference = $this->container->get('victoire_view_reference.repository')
             ->getOneReferenceByParameters(['viewId' => $view->getId()])) {
             $reference = new ViewReference($viewReference);
             $widgetView->setReference($reference);
@@ -220,7 +220,7 @@ class WidgetController extends Controller
         $view = $this->getViewByReferenceId($viewReference);
         $widgetView = $widget->getView();
 
-        $widgetViewReference = $this->container->get('victoire_view_reference.redis.driver')
+        $widgetViewReference = $this->container->get('victoire_view_reference.repository')
             ->getOneReferenceByParameters(['viewId' => $view->getId()]);
 
         $widgetView->setReference($widgetViewReference);
@@ -327,7 +327,7 @@ class WidgetController extends Controller
             } elseif ($view instanceof BusinessTemplate) {
                 $redirect = $this->generateUrl('victoire_business_template_show', ['id' => $view->getId()]);
             } else {
-                $viewReference = $this->container->get('victoire_view_reference.redis.driver')
+                $viewReference = $this->container->get('victoire_view_reference.repository')
                     ->getOneReferenceByParameters(['viewId' => $view->getId()]);
 
                 $redirect = $this->generateUrl('victoire_core_page_show', [

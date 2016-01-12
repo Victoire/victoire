@@ -24,7 +24,7 @@ use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\SeoBundle\Helper\PageSeoHelper;
-use Victoire\Bundle\ViewReferenceBundle\Cache\Redis\ViewReferenceRedisDriver;
+use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
 use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\BusinessPageReference;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
@@ -49,7 +49,7 @@ class PageHelper
     protected $widgetMapBuilder;
     protected $businessPageBuilder;
     protected $businessPageHelper;
-    protected $viewRedisDriver;
+    protected $viewReferenceRepository;
     protected $widgetDataWarmer;
 
     /**
@@ -67,7 +67,7 @@ class PageHelper
      * @param BusinessPageBuilder      $businessPageBuilder
      * @param BusinessPageHelper       $businessPageHelper
      * @param WidgetDataWarmer         $widgetDataWarmer
-     * @param ViewReferenceRedisDriver $viewRedisDriver
+     * @param ViewReferenceRepository $viewReferenceRepository
      */
     public function __construct(
         BusinessEntityHelper $businessEntityHelper,
@@ -84,7 +84,7 @@ class PageHelper
         BusinessPageBuilder $businessPageBuilder,
         BusinessPageHelper $businessPageHelper,
         WidgetDataWarmer $widgetDataWarmer,
-        ViewReferenceRedisDriver $viewRedisDriver
+        ViewReferenceRepository $viewReferenceRepository
     ) {
         $this->businessEntityHelper = $businessEntityHelper;
         $this->entityManager = $entityManager;
@@ -100,7 +100,7 @@ class PageHelper
         $this->businessPageBuilder = $businessPageBuilder;
         $this->businessPageHelper = $businessPageHelper;
         $this->widgetDataWarmer = $widgetDataWarmer;
-        $this->viewRedisDriver = $viewRedisDriver;
+        $this->viewReferenceRepository = $viewReferenceRepository;
     }
 
     /**
@@ -119,11 +119,11 @@ class PageHelper
             }
             $this->checkPageValidity($page, $entity, $parameters);
         } else {
-            $viewReference = $this->viewRedisDriver->getOneReferenceByParameters($parameters);
+            $viewReference = $this->viewReferenceRepository->getOneReferenceByParameters($parameters);
             if ($viewReference === null && !empty($parameters['viewId'])) {
                 $parameters['templateId'] = $parameters['viewId'];
                 unset($parameters['viewId']);
-                $viewReference = $this->viewRedisDriver->getOneReferenceByParameters($parameters);
+                $viewReference = $this->viewReferenceRepository->getOneReferenceByParameters($parameters);
             }
 
             if ($viewReference instanceof ViewReference) {
@@ -153,7 +153,7 @@ class PageHelper
     public function renderPageByUrl($url, $locale, $isAjax = false)
     {
         $page = null;
-        if ($viewReference = $this->viewRedisDriver->getReferenceByUrl($url, $locale)) {
+        if ($viewReference = $this->viewReferenceRepository->getReferenceByUrl($url, $locale)) {
             $page = $this->findPageByReference($viewReference, $entity = $this->findEntityByReference($viewReference));
 
             if ($page instanceof BasePage

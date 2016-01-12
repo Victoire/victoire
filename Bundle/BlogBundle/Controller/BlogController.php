@@ -130,7 +130,7 @@ class BlogController extends BasePageController
             $entityManager->flush();
 
             /** @var ViewReference $reference */
-            $reference = $this->container->get('victoire_view_reference.redis.driver')
+            $reference = $this->get('victoire_view_reference.repository')
             ->getOneReferenceByParameters(['viewId' => $blog->getId()]);
 
             return new JsonResponse([

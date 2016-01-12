@@ -4,7 +4,8 @@ namespace Victoire\Bundle\ViewReferenceBundle\Cache;
 
 use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\CoreBundle\Helper\ViewHelper;
-use Victoire\Bundle\ViewReferenceBundle\Cache\Redis\ViewReferenceRedisDriver;
+use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceManager;
+use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
 
 /**
  * Called (for example on kernel request) to create the viewsReference cache file
@@ -13,21 +14,26 @@ use Victoire\Bundle\ViewReferenceBundle\Cache\Redis\ViewReferenceRedisDriver;
 class ViewCacheWarmer
 {
     private $viewHelper;
-    private $viewRedisDriver;
+    private $viewReferenceRepository;
+    private $viewReferenceManager;
     private $entityManager;
 
     /**
-     * @param ViewHelper               $viewHelper      @victoire_page.page_helper
-     * @param ViewReferenceRedisDriver $viewRedisDriver @victoire_view_reference.redis.driver
-     * @param EntityManager            $entityManager
+     * ViewCacheWarmer constructor.
+     * @param ViewHelper $viewHelper
+     * @param ViewReferenceRepository $viewReferenceRepository
+     * @param ViewReferenceManager $viewReferenceManager
+     * @param EntityManager $entityManager
      */
     public function __construct(
         ViewHelper $viewHelper,
-        ViewReferenceRedisDriver $viewRedisDriver,
+        ViewReferenceRepository $viewReferenceRepository,
+        ViewReferenceManager $viewReferenceManager,
         EntityManager $entityManager
     ) {
         $this->viewHelper = $viewHelper;
-        $this->viewRedisDriver = $viewRedisDriver;
+        $this->viewReferenceRepository= $viewReferenceRepository;
+        $this->viewReferenceManager= $viewReferenceManager;
         $this->entityManager = $entityManager;
     }
 
@@ -38,8 +44,8 @@ class ViewCacheWarmer
      */
     public function warmUp($cacheDir)
     {
-        if (!$this->viewRedisDriver->hasReference()) {
-            $this->viewRedisDriver->saveReferences(
+        if (!$this->viewReferenceRepository->hasReference()) {
+            $this->viewReferenceManager->saveReferences(
                 $this->viewHelper->buildViewsReferences()
             );
         }

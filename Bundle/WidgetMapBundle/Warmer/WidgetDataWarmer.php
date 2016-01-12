@@ -13,8 +13,7 @@ use Victoire\Bundle\CoreBundle\Entity\Link;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
-use Victoire\Bundle\ViewReferenceBundle\Cache\Redis\ViewReferenceRedisDriver;
-use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheRepository;
+use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\BusinessPageReference;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 use Victoire\Bundle\WidgetBundle\Entity\Traits\LinkTrait;
@@ -32,7 +31,7 @@ use Victoire\Widget\MenuBundle\Entity\WidgetMenu;
 class WidgetDataWarmer
 {
     protected $reader;
-    protected $viewReferenceRedisDriver;
+    protected $viewReferenceRepository;
     protected $em;
     protected $accessor;
     protected $manyToOneAssociations;
@@ -41,13 +40,13 @@ class WidgetDataWarmer
      * Constructor.
      *
      * @param Reader                          $reader
-     * @param ViewReferenceXmlCacheRepository $viewReferenceRedisDriver
+     * @param ViewReferenceRepository $viewReferenceRepository
      * @param array                           $manyToOneAssociations
      */
-    public function __construct(Reader $reader, ViewReferenceRedisDriver $viewReferenceRedisDriver, array $manyToOneAssociations)
+    public function __construct(Reader $reader, ViewReferenceRepository $viewReferenceRepository, array $manyToOneAssociations)
     {
         $this->reader = $reader;
-        $this->viewReferenceRedisDriver = $viewReferenceRedisDriver;
+        $this->viewReferenceRepository= $viewReferenceRepository;
         $this->accessor = PropertyAccess::createPropertyAccessor();
         $this->manyToOneAssociations = $manyToOneAssociations;
     }
@@ -183,7 +182,7 @@ class WidgetDataWarmer
 
         foreach ($links as $link) {
             if ($link->getParameters()['linkType'] == 'viewReference') {
-                $viewReference = $this->viewReferenceRedisDriver->getOneReferenceByParameters(['id' => $link->getParameters()['viewReference']]);
+                $viewReference = $this->viewReferenceRepository->getOneReferenceByParameters(['id' => $link->getParameters()['viewReference']]);
 
                 if ($viewReference instanceof ViewReference && $viewReference->getViewId()) {
                     $viewIdsForLinks[$link->getId()] = $viewReference->getViewId();

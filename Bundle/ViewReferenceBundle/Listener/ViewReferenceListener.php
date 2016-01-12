@@ -5,7 +5,7 @@ namespace Victoire\Bundle\ViewReferenceBundle\Listener;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Victoire\Bundle\ViewReferenceBundle\Builder\ViewReferenceBuilder;
-use Victoire\Bundle\ViewReferenceBundle\Cache\Redis\ViewReferenceRedisDriver;
+use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceManager;
 use Victoire\Bundle\ViewReferenceBundle\Event\ViewReferenceEvent;
 use Victoire\Bundle\ViewReferenceBundle\ViewReferenceEvents;
 
@@ -15,20 +15,20 @@ use Victoire\Bundle\ViewReferenceBundle\ViewReferenceEvents;
 class ViewReferenceListener implements EventSubscriberInterface
 {
     private $viewReferenceBuilder;
-    private $viewReferenceDriver;
+    private $viewReferenceManager;
     private $em;
 
     /**
      * ViewReferenceListener constructor.
      *
      * @param ViewReferenceBuilder     $viewReferenceBuilder
-     * @param ViewReferenceRedisDriver $viewReferenceDriver
+     * @param ViewReferenceManager $viewReferenceManager
      * @param EntityManagerInterface   $em
      */
-    public function __construct(ViewReferenceBuilder $viewReferenceBuilder, ViewReferenceRedisDriver $viewReferenceDriver, EntityManagerInterface $em)
+    public function __construct(ViewReferenceBuilder $viewReferenceBuilder, ViewReferenceManager $viewReferenceManager, EntityManagerInterface $em)
     {
         $this->viewReferenceBuilder = $viewReferenceBuilder;
-        $this->viewReferenceDriver = $viewReferenceDriver;
+        $this->viewReferenceManager= $viewReferenceManager;
         $this->em = $em;
     }
 
@@ -52,7 +52,7 @@ class ViewReferenceListener implements EventSubscriberInterface
     {
         $view = $event->getView();
         $viewReference = $this->viewReferenceBuilder->buildViewReference($view, $this->em);
-        $this->viewReferenceDriver->saveReference($viewReference);
+        $this->viewReferenceManager->saveReference($viewReference);
     }
 
     /**
@@ -64,6 +64,6 @@ class ViewReferenceListener implements EventSubscriberInterface
     {
         $view = $event->getView();
         $viewReference = $this->viewReferenceBuilder->buildViewReference($view, $this->em);
-        $this->viewReferenceDriver->removeReference($viewReference);
+        $this->viewReferenceManager->removeReference($viewReference);
     }
 }

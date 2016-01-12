@@ -14,7 +14,7 @@ use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\PageBundle\Helper\UserCallableHelper;
 use Victoire\Bundle\ViewReferenceBundle\Builder\ViewReferenceBuilder;
-use Victoire\Bundle\ViewReferenceBundle\Cache\Redis\ViewReferenceRedisDriver;
+use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 /**
@@ -34,7 +34,7 @@ class PageSubscriber implements EventSubscriber
      * @param UserCallableHelper       $userCallableHelper   @victoire_page.user_callable
      * @param string                   $userClass            %victoire_core.user_class%
      * @param ViewReferenceBuilder     $viewReferenceBuilder
-     * @param ViewReferenceRedisDriver $viewReferenceDriver
+     * @param ViewReferenceRepository $viewReferenceRepository
      *
      * @internal param ViewReferenceBuilder $urlBuilder @victoire_view_reference.builder
      */
@@ -43,13 +43,13 @@ class PageSubscriber implements EventSubscriber
         UserCallableHelper $userCallableHelper,
         $userClass,
         ViewReferenceBuilder $viewReferenceBuilder,
-        ViewReferenceRedisDriver $viewReferenceDriver
+        ViewReferenceRepository $viewReferenceRepository
     ) {
         $this->router = $router;
         $this->userClass = $userClass;
         $this->userCallableHelper = $userCallableHelper;
         $this->viewReferenceBuilder = $viewReferenceBuilder;
-        $this->viewReferenceDriver = $viewReferenceDriver;
+        $this->viewReferenceRepository= $viewReferenceRepository;
     }
 
     /**
@@ -129,7 +129,7 @@ class PageSubscriber implements EventSubscriber
         $entity = $eventArgs->getEntity();
 
         if ($entity instanceof View) {
-            $viewReference = $this->viewReferenceDriver->getOneReferenceByParameters([
+            $viewReference = $this->viewReferenceRepository->getOneReferenceByParameters([
                 'viewId' => $entity->getId(),
             ]);
             if ($viewReference instanceof ViewReference && $entity instanceof WebViewInterface) {
