@@ -124,6 +124,7 @@ class ViewReferenceRedisManager implements ViewReferenceConnectorManagerInterfac
     public function buildUrl($id)
     {
         $reference = $this->repository->findById($id);
+        $locale = $this->repository->findValueForId('locale', $id);
         $url = '';
         // while the reference has a slug
         while (isset($reference['slug']) && $reference['slug'] != '') {
@@ -141,7 +142,7 @@ class ViewReferenceRedisManager implements ViewReferenceConnectorManagerInterfac
             }
         }
         // set the new url
-        $this->setUrl($id, $url, $reference['locale']);
+        $this->setUrl($id, $url, $locale);
     }
 
     /**
@@ -166,7 +167,7 @@ class ViewReferenceRedisManager implements ViewReferenceConnectorManagerInterfac
     /**
      * {@inheritdoc}
      */
-    public function removeUrl($url, $locale)
+    public function removeUrl($url, $locale = 'fr')
     {
         if ($url == '' || $url[0] != '/') {
             $url = '/'.$url;
