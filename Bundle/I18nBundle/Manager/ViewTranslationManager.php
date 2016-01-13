@@ -39,7 +39,7 @@ class ViewTranslationManager
      * this methods allow you to add a translation to any view
      * recursively to its subview
      */
-    public function addTranslation(View $view, $viewName = null, $locale)
+    public function addTranslation(View $view, $viewName, $locale)
     {
         $template = null;
         if ($view->getTemplate()) {

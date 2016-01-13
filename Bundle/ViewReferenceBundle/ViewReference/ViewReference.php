@@ -15,6 +15,7 @@ class ViewReference
     protected $viewId;
     protected $viewNamespace;
     protected $children;
+    protected $parent;
 
     public function __construct($id = null)
     {
@@ -134,6 +135,22 @@ class ViewReference
     public function setUrl($url)
     {
         $this->url = $url;
+    }
+
+    /**
+     * @return int
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * @param int $parent
+     */
+    public function setParent($parent)
+    {
+        $this->parent = $parent;
     }
 
     /**

@@ -24,7 +24,7 @@ use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\SeoBundle\Helper\PageSeoHelper;
-use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheRepository;
+use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
 use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\BusinessPageReference;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
@@ -49,25 +49,25 @@ class PageHelper
     protected $widgetMapBuilder;
     protected $businessPageBuilder;
     protected $businessPageHelper;
-    protected $viewCacheRepository;
+    protected $viewReferenceRepository;
     protected $widgetDataWarmer;
 
     /**
-     * @param BusinessEntityHelper            $businessEntityHelper
-     * @param EntityManager                   $entityManager
-     * @param ViewReferenceHelper             $viewReferenceHelper
-     * @param CurrentViewHelper               $currentViewHelper
-     * @param EventDispatcherInterface        $eventDispatcher
-     * @param TemplateMapper                  $victoireTemplating
-     * @param PageSeoHelper                   $pageSeoHelper
-     * @param Session                         $session
-     * @param TokenStorage                    $tokenStorage
-     * @param AuthorizationChecker            $authorizationChecker
-     * @param WidgetMapBuilder                $widgetMapBuilder
-     * @param BusinessPageBuilder             $businessPageBuilder
-     * @param BusinessPageHelper              $businessPageHelper
-     * @param WidgetDataWarmer                $widgetDataWarmer
-     * @param ViewReferenceXmlCacheRepository $viewCacheRepository
+     * @param BusinessEntityHelper     $businessEntityHelper
+     * @param EntityManager            $entityManager
+     * @param ViewReferenceHelper      $viewReferenceHelper
+     * @param CurrentViewHelper        $currentViewHelper
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param TemplateMapper           $victoireTemplating
+     * @param PageSeoHelper            $pageSeoHelper
+     * @param Session                  $session
+     * @param TokenStorage             $tokenStorage
+     * @param AuthorizationChecker     $authorizationChecker
+     * @param WidgetMapBuilder         $widgetMapBuilder
+     * @param BusinessPageBuilder      $businessPageBuilder
+     * @param BusinessPageHelper       $businessPageHelper
+     * @param WidgetDataWarmer         $widgetDataWarmer
+     * @param ViewReferenceRepository  $viewReferenceRepository
      */
     public function __construct(
         BusinessEntityHelper $businessEntityHelper,
@@ -84,7 +84,7 @@ class PageHelper
         BusinessPageBuilder $businessPageBuilder,
         BusinessPageHelper $businessPageHelper,
         WidgetDataWarmer $widgetDataWarmer,
-        ViewReferenceXmlCacheRepository $viewCacheRepository
+        ViewReferenceRepository $viewReferenceRepository
     ) {
         $this->businessEntityHelper = $businessEntityHelper;
         $this->entityManager = $entityManager;
@@ -100,7 +100,7 @@ class PageHelper
         $this->businessPageBuilder = $businessPageBuilder;
         $this->businessPageHelper = $businessPageHelper;
         $this->widgetDataWarmer = $widgetDataWarmer;
-        $this->viewCacheRepository = $viewCacheRepository;
+        $this->viewReferenceRepository = $viewReferenceRepository;
     }
 
     /**
@@ -119,11 +119,11 @@ class PageHelper
             }
             $this->checkPageValidity($page, $entity, $parameters);
         } else {
-            $viewReference = $this->viewCacheRepository->getOneReferenceByParameters($parameters);
+            $viewReference = $this->viewReferenceRepository->getOneReferenceByParameters($parameters);
             if ($viewReference === null && !empty($parameters['viewId'])) {
                 $parameters['templateId'] = $parameters['viewId'];
                 unset($parameters['viewId']);
-                $viewReference = $this->viewCacheRepository->getOneReferenceByParameters($parameters);
+                $viewReference = $this->viewReferenceRepository->getOneReferenceByParameters($parameters);
             }
 
             if ($viewReference instanceof ViewReference) {
@@ -153,7 +153,7 @@ class PageHelper
     public function renderPageByUrl($url, $locale, $isAjax = false)
     {
         $page = null;
-        if ($viewReference = $this->viewCacheRepository->getReferenceByUrl($url, $locale)) {
+        if ($viewReference = $this->viewReferenceRepository->getReferenceByUrl($url, $locale)) {
             $page = $this->findPageByReference($viewReference, $entity = $this->findEntityByReference($viewReference));
 
             if ($page instanceof BasePage

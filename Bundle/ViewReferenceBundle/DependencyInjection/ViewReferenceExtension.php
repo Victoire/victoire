@@ -28,5 +28,8 @@ class ViewReferenceExtension extends Extension
         $container->setParameter(
             'victoire_view_reference.cache.path', $config['cache_path']
         );
+        $container->setParameter(
+            'victoire_view_reference.connector.type', $config['connector_type']
+        );
     }
 }

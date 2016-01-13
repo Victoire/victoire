@@ -11,7 +11,7 @@ use Victoire\Bundle\CoreBundle\Handler\WidgetExceptionHandler;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 use Victoire\Bundle\PageBundle\Entity\WidgetMap;
-use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheRepository;
+use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer;
@@ -34,13 +34,13 @@ class CmsExtension extends \Twig_Extension_Core
     /**
      * Constructor.
      *
-     * @param WidgetRenderer                  $widgetRenderer
-     * @param TemplateMapper                  $templating
-     * @param SecurityContext                 $securityContext
-     * @param WidgetExceptionHandler          $widgetExceptionHandler
-     * @param CurrentViewHelper               $currentViewHelper
-     * @param ViewReferenceXmlCacheRepository $viewCacheRepository
-     * @param \Twig_Environment               $twig
+     * @param WidgetRenderer          $widgetRenderer
+     * @param TemplateMapper          $templating
+     * @param SecurityContext         $securityContext
+     * @param WidgetExceptionHandler  $widgetExceptionHandler
+     * @param CurrentViewHelper       $currentViewHelper
+     * @param ViewReferenceRepository $viewReferenceRepository
+     * @param \Twig_Environment       $twig
      */
     public function __construct(
         WidgetRenderer $widgetRenderer,
@@ -48,7 +48,7 @@ class CmsExtension extends \Twig_Extension_Core
         SecurityContext $securityContext,
         WidgetExceptionHandler $widgetExceptionHandler,
         CurrentViewHelper $currentViewHelper,
-        ViewReferenceXmlCacheRepository $viewCacheRepository,
+        ViewReferenceRepository $viewReferenceRepository,
         \Twig_Environment $twig
     ) {
         $this->widgetRenderer = $widgetRenderer;
@@ -56,7 +56,7 @@ class CmsExtension extends \Twig_Extension_Core
         $this->securityContext = $securityContext;
         $this->widgetExceptionHandler = $widgetExceptionHandler;
         $this->currentViewHelper = $currentViewHelper;
-        $this->viewCacheRepository = $viewCacheRepository;
+        $this->viewReferenceRepository = $viewReferenceRepository;
         $this->twig = $twig;
     }
 
@@ -110,7 +110,7 @@ class CmsExtension extends \Twig_Extension_Core
      */
     public function cmsWidgetUnlinkAction($widgetId, $view)
     {
-        $viewReference = $this->viewCacheRepository->getOneReferenceByParameters(
+        $viewReference = $this->viewReferenceRepository->getOneReferenceByParameters(
             ['viewId' => $view->getId()]
         );
         if (!$viewReference && $view->getId() != '') {

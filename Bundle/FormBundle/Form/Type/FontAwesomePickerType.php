@@ -58,7 +58,7 @@ class FontAwesomePickerType extends AbstractType
         $defaultOptions = $form->getConfig()->getType()->getOptionsResolver()->resolve();
         $fontAwesomePicker = $options['options'];
 
-        # There is a configuration in form type, merge with default options
+        // There is a configuration in form type, merge with default options
         if (!empty($fontAwesomePicker)) {
             $fontAwesomePicker = array_merge($defaultOptions['options'], $fontAwesomePicker);
         } else {

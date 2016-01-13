@@ -8,7 +8,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Victoire\Bundle\CoreBundle\DataTransformer\JsonToArrayTransformer;
-use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheRepository;
+use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
 
 /**
  * Type for Victoire Link.
@@ -16,12 +16,18 @@ use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheRepositor
 class LinkType extends AbstractType
 {
     private $analytics;
-    private $viewCacheRepository;
+    private $viewReferenceRepository;
 
-    public function __construct($analytics, ViewReferenceXmlCacheRepository $viewCacheRepository)
+    /**
+     * LinkType constructor.
+     *
+     * @param $analytics
+     * @param ViewReferenceRepository $viewReferenceRepository
+     */
+    public function __construct($analytics, ViewReferenceRepository $viewReferenceRepository)
     {
         $this->analytics = $analytics;
-        $this->viewCacheRepository = $viewCacheRepository;
+        $this->viewReferenceRepository = $viewReferenceRepository;
     }
 
     /**
@@ -52,7 +58,7 @@ class LinkType extends AbstractType
             'required'                       => true,
             'attr'                           => ['novalidate' => 'novalidate'],
             'empty_value'                    => 'form.link_type.view_reference.blank',
-            'choices'                        => $this->viewCacheRepository->getChoices(),
+            'choices'                        => $this->viewReferenceRepository->getChoices(),
             'vic_vic_widget_form_group_attr' => ['class' => 'vic-form-group vic-hidden viewReference-type'],
         ])
         ->add('attachedWidget', 'entity', [

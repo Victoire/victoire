@@ -23,6 +23,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('cache_path')->defaultValue('%kernel.cache_dir%/victoire/viewsReferences.xml')->end()
+                ->scalarNode('connector_type')->defaultValue('redis')->end()
             ->end();
 
         return $treeBuilder;

@@ -84,7 +84,7 @@ abstract class View
     /**
      * @Gedmo\TreeParent
      * @ORM\ManyToOne(targetEntity="View", inversedBy="children", cascade={"persist"})
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      */
     protected $parent;
 
@@ -120,7 +120,7 @@ abstract class View
     protected $root;
 
     /**
-     * @ORM\OneToMany(targetEntity="View", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="View", mappedBy="parent", cascade={"remove"})
      * @ORM\OrderBy({"lft" = "ASC"})
      */
     protected $children = [];

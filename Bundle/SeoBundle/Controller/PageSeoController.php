@@ -71,7 +71,7 @@ class PageSeoController extends Controller
             $em->persist($page);
             $em->flush();
             /** @var ViewReference $viewReference */
-            $viewReference = $this->container->get('victoire_view_reference.cache.repository')
+            $viewReference = $this->container->get('victoire_view_reference.repository')
                 ->getOneReferenceByParameters(['viewId' => $page->getId()]);
 
             $page->setReference($viewReference);

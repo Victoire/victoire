@@ -28,6 +28,7 @@ Follow the instructions on [victoire demo Readme](https://github.com/Victoire/de
     new Liip\ImagineBundle\LiipImagineBundle(),
     new Knp\Bundle\MenuBundle\KnpMenuBundle(),
     new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle(),
+    new Snc\RedisBundle\SncRedisBundle(),
     //Victoire bundles
     new Victoire\Bundle\AnalyticsBundle\VictoireAnalyticsBundle(),
     new Victoire\Bundle\BlogBundle\VictoireBlogBundle(),
@@ -166,6 +167,29 @@ Check victoire dependencies:
 imports:
         - { resource: @VictoireCoreBundle/Resources/config/config.yml }
 ```
+- install redis
+```
+wget http://download.redis.io/redis-stable.tar.gz
+tar xvzf redis-stable.tar.gz
+cd redis-stable
+make
+```
+
+- setup redis
+
+```yml
+snc_redis:
+   clients:
+       victoire:
+           type: predis
+           alias: victoire
+           dsn: redis://localhost
+```
+- start redis server
+```
+redis-server
+```
+
 Use the following information to login and start to create your website
 
 |Login|Password|

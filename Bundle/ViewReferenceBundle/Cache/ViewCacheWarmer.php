@@ -4,8 +4,8 @@ namespace Victoire\Bundle\ViewReferenceBundle\Cache;
 
 use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\CoreBundle\Helper\ViewHelper;
-use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheDriver;
-use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheManager;
+use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceManager;
+use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
 
 /**
  * Called (for example on kernel request) to create the viewsReference cache file
@@ -14,23 +14,27 @@ use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheManager;
 class ViewCacheWarmer
 {
     private $viewHelper;
-    private $viewCacheDriver;
-    private $viewCacheManager;
+    private $viewReferenceRepository;
+    private $viewReferenceManager;
+    private $entityManager;
 
     /**
-     * @param ViewHelper                   $viewHelper       @victoire_page.page_helper
-     * @param ViewReferenceXmlCacheDriver  $viewCacheDriver  @victoire_view_reference.cache.driver
-     * @param ViewReferenceXmlCacheManager $viewCacheManager @victoire_view_reference.cache.manager
+     * ViewCacheWarmer constructor.
+     *
+     * @param ViewHelper              $viewHelper
+     * @param ViewReferenceRepository $viewReferenceRepository
+     * @param ViewReferenceManager    $viewReferenceManager
+     * @param EntityManager           $entityManager
      */
     public function __construct(
         ViewHelper $viewHelper,
-        ViewReferenceXmlCacheDriver $viewCacheDriver,
-        ViewReferenceXmlCacheManager $viewCacheManager,
+        ViewReferenceRepository $viewReferenceRepository,
+        ViewReferenceManager $viewReferenceManager,
         EntityManager $entityManager
     ) {
         $this->viewHelper = $viewHelper;
-        $this->viewCacheDriver = $viewCacheDriver;
-        $this->viewCacheManager = $viewCacheManager;
+        $this->viewReferenceRepository = $viewReferenceRepository;
+        $this->viewReferenceManager = $viewReferenceManager;
         $this->entityManager = $entityManager;
     }
 
@@ -41,11 +45,9 @@ class ViewCacheWarmer
      */
     public function warmUp($cacheDir)
     {
-        if (!$this->viewCacheDriver->fileExists()) {
-            $this->viewCacheDriver->writeFile(
-                $this->viewCacheManager->generateXml(
-                    $this->viewHelper->buildViewsReferences()
-                )
+        if (!$this->viewReferenceRepository->hasReference()) {
+            $this->viewReferenceManager->saveReferences(
+                $this->viewHelper->buildViewsReferences()
             );
         }
     }

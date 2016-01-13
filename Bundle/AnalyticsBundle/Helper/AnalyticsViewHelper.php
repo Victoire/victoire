@@ -5,7 +5,7 @@ namespace Victoire\Bundle\AnalyticsBundle\Helper;
 use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\BlogBundle\Entity\Article;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
-use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheRepository;
+use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
 
 /**
  * Analytics View helper
@@ -13,14 +13,21 @@ use Victoire\Bundle\ViewReferenceBundle\Cache\Xml\ViewReferenceXmlCacheRepositor
  */
 class AnalyticsViewHelper
 {
-    protected $viewCacheRepository;
+    protected $viewReferenceRepository;
     protected $entityManager;
     protected $pageHelper;
 
-    public function __construct(ViewReferenceXmlCacheRepository $viewCacheRepository, EntityManager $entityManager, PageHelper $pageHelper)
+    /**
+     * AnalyticsViewHelper constructor.
+     *
+     * @param ViewReferenceRepository $viewReferenceRepository
+     * @param EntityManager           $entityManager
+     * @param PageHelper              $pageHelper
+     */
+    public function __construct(ViewReferenceRepository $viewReferenceRepository, EntityManager $entityManager, PageHelper $pageHelper)
     {
         $this->entityManager = $entityManager;
-        $this->viewCacheRepository = $viewCacheRepository;
+        $this->viewReferenceRepository = $viewReferenceRepository;
         $this->pageHelper = $pageHelper;
     }
 
@@ -40,7 +47,7 @@ class AnalyticsViewHelper
                 $repo = $this->entityManager->getRepository($viewNamespace);
                 //get pages and viewReferenceIds
                 foreach ($repo->getAll()->run() as $key => $page) {
-                    $viewReference = $this->viewCacheRepository->getOneReferenceByParameters(
+                    $viewReference = $this->viewReferenceRepository->getOneReferenceByParameters(
                         [
                             'viewNamespace' => $viewNamespace,
                             'viewId'        => $page->getId(),
@@ -63,7 +70,7 @@ class AnalyticsViewHelper
                 break;
 
             default:
-                # code...
+                // code...
                 break;
         }
 
@@ -85,7 +92,7 @@ class AnalyticsViewHelper
                     ->run();
 
         foreach ($articles as $key => $article) {
-            if ($viewReference = $this->viewCacheRepository->getOneReferenceByParameters(
+            if ($viewReference = $this->viewReferenceRepository->getOneReferenceByParameters(
                 [
                     'entityNamespace' => 'Victoire\Bundle\BlogBundle\Entity\Article',
                     'entityId'        => $article->getId(),
