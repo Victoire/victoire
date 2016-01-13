@@ -2,6 +2,27 @@
 
 ## [Unreleased](https://github.com/Victoire/victoire/tree/HEAD)
 
+## [1.3.7](https://github.com/victoire/victoire/tree/1.3.7) (2016-01-13)
+[Full Changelog](https://github.com/victoire/victoire/compare/1.3.6...1.3.7)
+
+**Merged pull requests:**
+
+- Feature/manage view references with redis [\#310](https://github.com/Victoire/victoire/pull/310) ([Charlie-Lucas](https://github.com/Charlie-Lucas))
+- update vendors for victoire [\#308](https://github.com/Victoire/victoire/pull/308) ([Charlie-Lucas](https://github.com/Charlie-Lucas))
+- fix BP inheritance bugs and addd some tests [\#307](https://github.com/Victoire/victoire/pull/307) ([Charlie-Lucas](https://github.com/Charlie-Lucas))
+- Change User layout to use ::base layout instead of frontLayout \(which… [\#306](https://github.com/Victoire/victoire/pull/306) ([lenybernard](https://github.com/lenybernard))
+- Update View's CSS of updated Views [\#305](https://github.com/Victoire/victoire/pull/305) ([gregumo](https://github.com/gregumo))
+- isAjax was not given in render page [\#304](https://github.com/Victoire/victoire/pull/304) ([vincent-chapron](https://github.com/vincent-chapron))
+- use the referenceType in parameters if defined to generate url [\#303](https://github.com/Victoire/victoire/pull/303) ([Charlie-Lucas](https://github.com/Charlie-Lucas))
+- move viewReference from array to object in AnalyticsViewHelper [\#302](https://github.com/Victoire/victoire/pull/302) ([lenybernard](https://github.com/lenybernard))
+- Add default case to handle url strategy and just return url \(was auto… [\#301](https://github.com/Victoire/victoire/pull/301) ([lenybernard](https://github.com/lenybernard))
+- Build widget in edit action [\#300](https://github.com/Victoire/victoire/pull/300) ([vincent-chapron](https://github.com/vincent-chapron))
+- Applied fixes from StyleCI [\#299](https://github.com/Victoire/victoire/pull/299) ([lenybernard](https://github.com/lenybernard))
+- do not add referencableView in $key key and prefer an auto key choice… [\#298](https://github.com/Victoire/victoire/pull/298) ([lenybernard](https://github.com/lenybernard))
+- Addition of Twitter Creator in SEO Modal [\#297](https://github.com/Victoire/victoire/pull/297) ([talbotseb](https://github.com/talbotseb))
+- Update of Setup file for better understanding [\#296](https://github.com/Victoire/victoire/pull/296) ([talbotseb](https://github.com/talbotseb))
+- Feature/get view reference with children [\#291](https://github.com/Victoire/victoire/pull/291) ([lenybernard](https://github.com/lenybernard))
+
 ## [1.3.6](https://github.com/Victoire/victoire/tree/1.3.6) (2015-12-01)
 [Full Changelog](https://github.com/Victoire/victoire/compare/1.3.5...1.3.6)
 
