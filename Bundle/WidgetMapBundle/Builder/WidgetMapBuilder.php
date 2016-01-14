@@ -81,4 +81,35 @@ class WidgetMapBuilder
 
         return $builtWidgetMap;
     }
+
+    public function getAvailablePosition(View $view)
+    {
+        $widgetMaps = $view->getBuiltWidgetMap();
+
+        $availablePositions = [];
+        foreach ($widgetMaps as $slot => $widgetMap) {
+            foreach ($widgetMap as $_widgetMap) {
+                $availablePositions[$slot][$_widgetMap->getId()]['id'] = $_widgetMap->getId();
+                $availablePositions[$slot][$_widgetMap->getId()][WidgetMap::POSITION_BEFORE] = true;
+                $availablePositions[$slot][$_widgetMap->getId()][WidgetMap::POSITION_AFTER] = true;
+                if ($_widgetMap->getReplaced()) {
+                    $availablePositions[$slot][$_widgetMap->getId()]['replaced'] = $_widgetMap->getReplaced()->getId();
+                }
+            }
+            /** @var WidgetMap $_widgetMap */
+            foreach ($widgetMap as $_widgetMap) {
+                if ($_widgetMap->getParent()) {
+                    if ($substitute = $_widgetMap->getParent()->getSubstituteForView($view)) {
+                        $availablePositions[$slot][$substitute->getId()][$_widgetMap->getPosition()] = false;
+                    } else {
+                        $availablePositions[$slot][$_widgetMap->getParent()->getId()][$_widgetMap->getPosition()] = false;
+                    }
+                }
+            }
+        }
+
+        return $availablePositions;
+
+
+    }
 }
