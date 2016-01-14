@@ -61,6 +61,7 @@ class WidgetMap
     protected $replaced;
 
     /**
+     * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="\Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap", mappedBy="replaced")
      */
     protected $substitutes;
@@ -314,7 +315,7 @@ class WidgetMap
     }
 
     /**
-     * @return mixed
+     * @return WidgetMap|null
      */
     public function getParent()
     {

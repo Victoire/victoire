@@ -15,6 +15,12 @@ use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 class WidgetMapBuilder
 {
 
+    /**
+     * @param View $view
+     * @param EntityManager $em
+     * @param bool $updatePage
+     * @return array
+     */
     public function build(View $view, EntityManager $em = null, $updatePage = true)
     {
         $widgetMaps = $view->getWidgetMaps()->toArray();
@@ -61,7 +67,6 @@ class WidgetMapBuilder
                             array_splice($builtWidgetMap[$slot], $offset, 0, [$child]);
                             $builtWidgetMap = $orderizeWidgetMap($child, $builtWidgetMap);
                         }
-
                     }
 
                     return $builtWidgetMap;
