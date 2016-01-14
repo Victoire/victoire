@@ -1,11 +1,12 @@
 ngApp.controller("PageController",
-    ["$scope", "$timeout", "widgetLocalStorageService", "widgetAPIService", "$sce",
-        function($scope, $timeout, $widgetLocalStorageService, $widgetAPI, $sce) {
+    ["$scope", "$timeout", "widgetLocalStorageService", "widgetAPIService", "$sce", "$rootScope", "$http",
+        function($scope, $timeout, $widgetLocalStorageService, $widgetAPI, $sce, $rootScope, $http) {
             $scope.init = function(viewCssHash) {
                 $timeout(function() {
                     $scope.loadAsynchronousWidgets();
                 });
                 $scope.viewCssHash = viewCssHash;
+                $scope.getWidgetMaps();
             };
 
             $scope.feedAsynchronousWidget = function(widget) {
@@ -61,6 +62,20 @@ ngApp.controller("PageController",
                             console.error(errorPayload);
                         });
                 }
+            };
+
+            $scope.getWidgetMaps = function() {
+                $http({
+                    method: 'GET',
+                    url: Routing.generate(
+                        'victoire_core_widget_get_available_positions', {
+                            viewReference: viewReferenceId
+                        }
+                    )
+                }).then(function(response) {
+                    $rootScope.widgetMaps = response.data;
+                });
+
             };
         }
     ]);
