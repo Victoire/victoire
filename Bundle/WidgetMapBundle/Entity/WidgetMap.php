@@ -212,6 +212,7 @@ class WidgetMap
      */
     public function setReplaced($replaced)
     {
+        $replaced->addSubstitute($this);
         $this->replaced = $replaced;
     }
 
@@ -371,7 +372,14 @@ class WidgetMap
     }
 
     /**
-     * @param mixed $substitutes
+     * @param WidgetMap $substitute
+     */
+    public function addSubstitute(WidgetMap $substitute)
+    {
+        $this->substitutes->add($substitute);
+    }
+    /**
+     * @param [WidgetMap] $substitutes
      */
     public function setSubstitutes($substitutes)
     {
