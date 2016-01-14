@@ -84,35 +84,6 @@ class WidgetMapManager
 
     }
 
-    protected function moveWidgetMap(View $view, WidgetMap $widgetMap, $parent = false, $position = false, $slot = false)
-    {
-        if ($widgetMap->getView() !== $view) {
-            $originalWidgetMap = $widgetMap;
-            $widgetMap = clone $widgetMap;
-            $widgetMap->setAction(WidgetMap::ACTION_OVERWRITE);
-            $widgetMap->setReplaced($originalWidgetMap);
-            $view->addWidgetMap($widgetMap);
-            $this->em->persist($widgetMap);
-        }
-
-
-        if ($parent !== false) {
-            if ($originalParent = $widgetMap->getParent()) {
-                $originalParent->removeChild($widgetMap);
-            }
-            $widgetMap->setParent($parent);
-        }
-        if ($position !== false) {
-            $widgetMap->setPosition($position);
-        }
-        if ($slot !== false) {
-            $widgetMap->setSlot($slot);
-        }
-
-
-        return $widgetMap;
-    }
-
     /**
      * Delete the widget from the view.
      *
@@ -145,4 +116,32 @@ class WidgetMapManager
         }
     }
 
+    protected function moveWidgetMap(View $view, WidgetMap $widgetMap, $parent = false, $position = false, $slot = false)
+    {
+        if ($widgetMap->getView() !== $view) {
+            $originalWidgetMap = $widgetMap;
+            $widgetMap = clone $widgetMap;
+            $widgetMap->setAction(WidgetMap::ACTION_OVERWRITE);
+            $widgetMap->setReplaced($originalWidgetMap);
+            $view->addWidgetMap($widgetMap);
+            $this->em->persist($widgetMap);
+        }
+
+
+        if ($parent !== false) {
+            if ($originalParent = $widgetMap->getParent()) {
+                $originalParent->removeChild($widgetMap);
+            }
+            $widgetMap->setParent($parent);
+        }
+        if ($position !== false) {
+            $widgetMap->setPosition($position);
+        }
+        if ($slot !== false) {
+            $widgetMap->setSlot($slot);
+        }
+
+
+        return $widgetMap;
+    }
 }

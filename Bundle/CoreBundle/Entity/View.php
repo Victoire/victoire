@@ -703,7 +703,7 @@ abstract class View
     /**
      * Get builtWidgetMap.
      *
-     * @return string
+     * @return array
      */
     public function getBuiltWidgetMap()
     {
