@@ -114,9 +114,9 @@ class CmsExtension extends \Twig_Extension_Core
             ['viewId' => $view->getId()]
         );
         if (!$viewReference && $view->getId() != '') {
-            $viewReference = $view->setReference(new ViewReference($view->getId()));
+            $viewReference = new ViewReference($view->getId());
         } elseif ($view instanceof VirtualBusinessPage) {
-            $viewReference = $view->setReference(new ViewReference($view->getTemplate()->getId()));
+            $viewReference = new ViewReference($view->getTemplate()->getId());
         }
 
         $view->setReference($viewReference);
