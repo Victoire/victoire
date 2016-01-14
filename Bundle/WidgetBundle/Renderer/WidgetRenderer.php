@@ -71,9 +71,15 @@ class WidgetRenderer
         $dispatcher->dispatch(VictoireCmsEvents::WIDGET_PRE_RENDER, new WidgetRenderEvent($widget));
 
         $widgetMap = $view->getWidgetMapByWidget($widget);
-        $html = sprintf('<div class="vic-widget-container" data-widget-map-id="%s" data-id="%s" id="vic-widget-%s-container">', $widgetMap->getId(), $widget->getId(), $widget->getId());
+
+        $tag = 'div';
+        if ($this->container->get('security.context')->isGranted('ROLE_VICTOIRE')) {
+            $tag = 'widget';
+        }
+
+        $html = sprintf('<%s widget-map="%s" class="vic-widget-container" data-id="%s">', $tag, $widgetMap->getId(), $widget->getId());
         $html .= $this->render($widget, $view);
-        $html .= '</div>';
+        $html .= sprintf('</%s>', $tag);
 
         $dispatcher->dispatch(VictoireCmsEvents::WIDGET_POST_RENDER, new WidgetRenderEvent($widget, $html));
 
@@ -91,7 +97,7 @@ class WidgetRenderer
     {
         $ngControllerName = 'widget'.$widgetId.'AsynchronousLoadCtrl';
         $ngDirectives = sprintf('ng-controller="WidgetAsynchronousLoadController as %s" class="vic-widget" ng-init="%s.init(%d)" ng-bind-html="html"', $ngControllerName, $ngControllerName, $widgetId);
-        $html = sprintf('<div class="vic-widget-container vic-widget-asynchronous" data-id="%d" id="vic-widget-%d-container" %s></div>', $widgetId, $widgetId, $ngDirectives);
+        $html = sprintf('<div class="vic-widget-container vic-widget-asynchronous" data-id="%d" %s></div>', $widgetId, $ngDirectives);
 
         return $html;
     }
