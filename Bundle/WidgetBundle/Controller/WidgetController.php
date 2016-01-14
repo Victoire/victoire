@@ -384,12 +384,35 @@ class WidgetController extends Controller
             $this->get('victoire_widget_map.manager')->move($view, $sortedWidget);
             $em->flush();
 
-            $response = new JsonResponse(['success' => true]);
+
+            $this->get('victoire_widget_map.builder')->build($view);
+            $availablePositions = $this->get('victoire_widget_map.builder')->getAvailablePosition($view);
+
+            $response = new JsonResponse(['success' => true, 'availablePositions' => $availablePositions]);
         } catch (Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
         }
 
         return $response;
+    }
+
+
+    /**
+     * Update widget positions accross the view. If moved widget is a Reference, ask to detach the view from template.
+     *
+     * @param int $viewReference The current viewReference
+     *
+     * @return JsonResponse
+     * @Route("/victoire-dcms/widget/get-available-positions/{viewReference}", name="victoire_core_widget_get_available_positions", options={"expose"=true})
+     */
+    public function getAvailablePositions(Request $request, $viewReference)
+    {
+        $view = $this->getViewByReferenceId($viewReference);
+
+        $this->get('victoire_widget_map.builder')->build($view);
+        $availablePositions = $this->get('victoire_widget_map.builder')->getAvailablePosition($view);
+
+        return new JsonResponse($availablePositions);
     }
 
     /**
