@@ -157,28 +157,10 @@ class CmsExtension extends \Twig_Extension_Core
                             throw new \Exception('The widget with the id:['.$widgetId.'] was not found.');
                         }
                         //render this widget
-                        $widgetContent = $this->cmsWidget($widget);
+                        $result .= $this->cmsWidget($widget);
                     } else {
-                        $widgetContent = $this->widgetRenderer->prepareAsynchronousRender($widgetId);
+                        $result .= $this->widgetRenderer->prepareAsynchronousRender($widgetId);
                     }
-                    $widgetMap = $currentView->getWidgetMapByWidget($widget);
-
-                    $after = $before = '';
-                    if ($this->isRoleVictoireGranted()) {
-                        $after = $this->widgetRenderer->renderActions($slotId, $slotOptions, WidgetMap::POSITION_AFTER, $widgetMap);
-                        $before = $this->widgetRenderer->renderActions($slotId, $slotOptions, WidgetMap::POSITION_BEFORE, $widgetMap);
-                    }
-
-                    $children = $widgetMap->getChildren();
-
-                    if (!empty($children[WidgetMap::POSITION_BEFORE])) {
-                        $before = '';
-                    }
-                    if (!empty($children[WidgetMap::POSITION_AFTER])) {
-                        $after = '';
-                    }
-
-                    $result .= $before.$widgetContent.$after;
 
                 } catch (\Exception $ex) {
                     $result .= $this->widgetExceptionHandler->handle($ex, $currentView, $widget, $widgetId);
