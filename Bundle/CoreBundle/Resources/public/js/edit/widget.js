@@ -181,10 +181,10 @@ $vic(document).on('click', '.vic-widget-modal a.vic-confirmed, .vic-hover-widget
 
 function generateNewWidgetUrl(select){
     var slotId = $vic(select).parents('.vic-slot').first().data('name');
-    var container = $vic(select).parents('.vic-new-widget');
+    var container = $vic(select).parents('new-widget-button');
 
-    var position = $vic(container).data('position');
-    var widgetMapReference = $vic(container).data('widgetMapReference');
+    var position = $vic(container).attr('position');
+    var widgetMapReference = $vic(container).attr('widget-map');
 
     var params = {
         'viewReference'    : viewReferenceId,

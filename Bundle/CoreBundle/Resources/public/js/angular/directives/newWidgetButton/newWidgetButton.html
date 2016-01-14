@@ -1,0 +1,10 @@
+<div class="vic-new-widget">
+    <label href="#" class="text-center">
+        <select role="menu" aria-labelledby="dLabel">
+            <option ng-repeat="(name, widget) in availableWidgets" value="{[{ name }]}">
+                {[{ 'widget' + name + 'new.action.label' }]}
+            </option>
+        </select>
+        <span>{[{ "widget.dropdown.action.label" }]}</span>
+    </label>
+</div>

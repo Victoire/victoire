@@ -4,15 +4,20 @@ ngApp.controller("SlotController", ["$scope",
             $scope.slotId = slotId;
             $scope.options = options;
             $scope.toggleEnableButtons();
+            $scope.newContentButton = "";
+
 
         };
         $scope.rebuildActions = function() {
-            var newContentButton = $('.vic-new-widget', '#vic-slot-' + $scope.slotId).first();
-            newContentButton.addClass('vic-new-widget-disabled');
-            $('.vic-new-widget', '#vic-slot-' + $scope.slotId).remove();
-            $('.vic-widget-container', '#vic-slot-' + $scope.slotId).after(newContentButton);
-            $('#vic-slot-' + $scope.slotId).prepend(newContentButton.clone());
-            $scope.toggleEnableButtons();
+
+
+
+            //var newContentButton = $('.vic-new-widget', '#vic-slot-' + $scope.slotId).first();
+            //newContentButton.addClass('vic-new-widget-disabled');
+            //$('.vic-new-widget', '#vic-slot-' + $scope.slotId).remove();
+            //$('.vic-widget-container', '#vic-slot-' + $scope.slotId).after(newContentButton);
+            //$('#vic-slot-' + $scope.slotId).prepend(newContentButton.clone());
+            //$scope.toggleEnableButtons();
         };
         $scope.toggleEnableButtons = function() {
             widgets = $('.vic-widget-container', '#vic-slot-' + $scope.slotId);
@@ -22,5 +27,9 @@ ngApp.controller("SlotController", ["$scope",
                 $('.vic-new-widget', '#vic-slot-' + $scope.slotId).addClass('vic-new-widget-disabled');
             }
         };
+
     }
 ]);
+
+
+

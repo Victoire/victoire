@@ -52,14 +52,13 @@ function enableSortableSlots(){
             placeholder: "vic-ui-state-highlight",
             forcePlaceholderSize: true,
             revert: true,
-            stop: function( event, ui ) {
-                console.log(ui.item);
-                if (ui.item.prev().data('widget-map-reference')) {
-                    var widgetMapReference = ui.item.prev().data('widget-map-reference');
-                    var position = ui.item.prev().data('position');
+            update: function( event, ui ) {
+                if (ui.item.prev().attr('widgetmapreferenceid')) {
+                    var widgetMapReference = ui.item.prev().attr('widgetmapreferenceid');
+                    var position = ui.item.prev().attr('position');
                 } else {
-                    var widgetMapReference = ui.item.next().data('widget-map-reference');
-                    var position = ui.item.next().data('position');
+                    var widgetMapReference = ui.item.next().attr('widgetmapreferenceid');
+                    var position = ui.item.next().attr('position');
                 }
                 var sorted = {
                     'widgetMapReference': widgetMapReference,
@@ -67,11 +66,7 @@ function enableSortableSlots(){
                     'slot': ui.item.parents('.vic-slot').first().data('name'),
                     'widgetMap': ui.item.data('widget-map-id')
                 };
-                updateWidgetPosition(sorted);
-
-                var $scope = angular.element($vic(this)).scope();
-                $scope.rebuildActions();
-
+                updateWidgetPosition(sorted, ui.item);
             }
         });
     });
@@ -82,12 +77,27 @@ function updateWidgetPosition(sorted) {
         Routing.generate('victoire_core_widget_update_position', {'viewReference': viewReferenceId}),
         { 'sorted': sorted, '_locale': locale }
     );
-    ajaxCall.fail(function(){
+    ajaxCall.fail(function() {
         $vic(".vic-slot").each(function(){
             $vic(this).sortable('cancel');
         });
         return false;
     });
+    ajaxCall.success(function(jsonResponse) {
+        $vic('[data-name="' + sorted.slot + '"]').children('new-widget-button').each(function (index, el) {
+            $(el).remove();
+        });
+
+        var $rootScope = angular.element($vic('body')).scope().$root;
+        $rootScope.widgetMaps = jsonResponse.availablePositions;
+        $rootScope.$apply();
+
+        var $scope = angular.element($vic('[data-name="'+sorted.slot+'"]')).scope();
+        $scope.rebuildActions(jsonResponse.availablePositions);
+
+    });
+
+    return ajaxCall;
 }
 
 function loading(value) {
