@@ -94,3 +94,7 @@ License can be found [here](http://github.com/victoire/victoire/blob/master/lice
 [23]: http://github.com/victoire/victoire/blob/master/Bundle/FilterBundle/README.md
 [24]: http://github.com/victoire/victoire/blob/master/Bundle/RessourcesBundle/README.md
 [25]: http://github.com/victoire/victoire/blob/master/Bundle/ViewReferenceBundle/README.md
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/Victoire/victoire/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
