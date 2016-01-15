@@ -3,12 +3,19 @@ angular.module('ngApp').directive('newWidgetButton', function ($compile) {
         restrict:'E',
         link: function(scope, element, attrs) {
             //todo: flatten availableWidgets
-            scope.availableWidgets = angular.element($vic(element).parents('.vic-slot').first()).scope().options.availableWidgets;
-            //scope.availableWidgets = scope.$parent.options.availableWidgets;
-            //scope.availableWidgets = scope.$parent.options.availableWidgets;
-            //var $parentScope = angular.element($vic(element).parent().parents('.vic-slot').first()).scope();
-            //console.log(scope.availableWidgets);
-            //scope.availableWidgets = $parentScope.options.availableWidgets;
+            var availableWidgets = angular.element($vic(element).parents('.vic-slot').first()).scope().options.availableWidgets;
+            var choices = [{value: '', label: ''}];
+
+            for (var name in availableWidgets) {
+                choices.push({
+                    value: name,
+                    label: 'widget.' + name.toLowerCase() + '.new.action.label'
+                });
+            }
+
+            scope.selectedChoices = choices[0];
+            scope.choices = choices;
+
         },
         templateUrl: '/bundles/victoirecore/js/angular/directives/newWidgetButton/newWidgetButton.html'
     };
