@@ -106,6 +106,7 @@ class WidgetMap
     public function __construct()
     {
         $this->children = new ArrayCollection();
+        $this->substitutes= new ArrayCollection();
     }
     /**
      * @return int
