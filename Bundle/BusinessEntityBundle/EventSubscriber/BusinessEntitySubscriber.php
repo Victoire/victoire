@@ -19,8 +19,6 @@ use Victoire\Bundle\ViewReferenceBundle\ViewReferenceEvents;
 
 class BusinessEntitySubscriber implements EventSubscriber
 {
-    protected $viewCacheManager;
-    protected $viewCacheDriver;
     protected $businessPageBuilder;
     protected $dispatcher;
 
