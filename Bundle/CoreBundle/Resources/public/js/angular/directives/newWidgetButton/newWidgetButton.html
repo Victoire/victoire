@@ -1,10 +1,8 @@
 <div class="vic-new-widget">
     <label href="#" class="text-center">
         <select role="menu" aria-labelledby="dLabel">
-            <option ng-repeat="(name, widget) in availableWidgets" value="{[{ name }]}">
-                {[{ 'widget' + name + 'new.action.label' }]}
-            </option>
+            <option value="{[{ choice.value }]}" ng-repeat="choice in choices" ng-selected="{[{ choice == selectedChoice }]}">{[{choice.label | translate }]}</option>
         </select>
-        <span>{[{ "widget.dropdown.action.label" }]}</span>
+        <span>{[{ 'widget.dropdown.action.label'|translate }]}</span>
     </label>
 </div>
