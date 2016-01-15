@@ -19,8 +19,6 @@ use Victoire\Bundle\ViewReferenceBundle\ViewReferenceEvents;
 
 class BusinessEntitySubscriber implements EventSubscriber
 {
-    protected $viewCacheManager;
-    protected $viewCacheDriver;
     protected $businessPageBuilder;
     protected $dispatcher;
 
@@ -166,7 +164,10 @@ class BusinessEntitySubscriber implements EventSubscriber
             //find all BT that can represent the businessEntity
             $businessTemplates = $em->getRepository('VictoireBusinessPageBundle:BusinessTemplate')->findPagePatternByBusinessEntity($businessEntity);
             foreach ($businessTemplates as $businessTemplate) {
-                if ($page = $em->getRepository('Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage')->findPageByBusinessEntityAndPattern($businessTemplate, $entity, $businessEntity)) {
+                if ($page = $em->getRepository(
+                    'Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage'
+                )->findPageByBusinessEntityAndPattern($businessTemplate, $entity, $businessEntity)
+                ) {
                     //if it's a BP we update the BP
                     $this->businessPageBuilder->updatePageParametersByEntity($page, $entity);
                 } else {
@@ -189,19 +190,24 @@ class BusinessEntitySubscriber implements EventSubscriber
             //find all entities
             $entities = $this->businessPageHelper->getEntitiesAllowed($entity, $em);
             foreach ($entities as $be) {
-                if ($page = $em->getRepository('Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage')->findPageByBusinessEntityAndPattern($entity, $be, $businessEntity)) {
-                    //rebuild page if its a BP
-                    $this->businessPageBuilder->updatePageParametersByEntity($page, $be);
-                } else {
-                    $page = $this->businessPageBuilder->generateEntityPageFromTemplate(
-                        $entity,
-                        $be,
-                        $em
-                    );
+                if ($this->businessPageHelper->isEntityAllowed($entity, $be, $em)) {
+                    if ($page = $em->getRepository(
+                        'Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage'
+                    )->findPageByBusinessEntityAndPattern($entity, $be, $businessEntity)
+                    ) {
+                        //rebuild page if its a BP
+                        $this->businessPageBuilder->updatePageParametersByEntity($page, $be);
+                    } else {
+                        $page = $this->businessPageBuilder->generateEntityPageFromTemplate(
+                            $entity,
+                            $be,
+                            $em
+                        );
+                    }
+                    // update reference
+                    $event = new ViewReferenceEvent($page);
+                    $this->dispatcher->dispatch(ViewReferenceEvents::UPDATE_VIEW_REFERENCE, $event);
                 }
-                // update reference
-                $event = new ViewReferenceEvent($page);
-                $this->dispatcher->dispatch(ViewReferenceEvents::UPDATE_VIEW_REFERENCE, $event);
             }
         }
     }

@@ -180,6 +180,6 @@ class ViewReferenceRedisManager implements ViewReferenceConnectorManagerInterfac
      */
     public function reset()
     {
-        $this->redis->flushall();
+        $this->redis->flushdb();
     }
 }
