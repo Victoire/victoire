@@ -1,4 +1,4 @@
-ngApp.service("slotLocalStorageService", [
+angular.module('ngApp').service("slotLocalStorageService", [
     function() {
         this.fetchStorage = function(slotId) {
             if(typeof(Storage) !== "undefined" && debug != undefined && debug === false) {
