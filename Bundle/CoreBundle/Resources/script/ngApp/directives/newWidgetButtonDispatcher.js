@@ -1,4 +1,4 @@
-ngApp.directive('widget', function ($compile, $rootScope) {
+angular.module('ngApp').directive('widget', function ($compile, $rootScope) {
     return {
         restrict:'E',
         scope: {

@@ -1,4 +1,4 @@
-ngApp.directive('newWidgetButton', function ($compile) {
+angular.module('ngApp').directive('newWidgetButton', function ($compile) {
     return {
         restrict:'E',
         link: function(scope, element, attrs) {

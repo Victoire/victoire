@@ -1,4 +1,4 @@
-ngApp.controller("SlotController", ["$scope",
+angular.module('ngApp').controller("SlotController", ["$scope",
     function($scope) {
         this.init = function(slotId, options) {
             $scope.slotId = slotId;
