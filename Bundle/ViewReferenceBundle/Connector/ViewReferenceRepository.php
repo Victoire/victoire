@@ -92,7 +92,7 @@ class ViewReferenceRepository
                     $transformer = ViewReferenceManager::findTransformerFromElement($parentViewReference);
                     $reference = $transformer->transform($parentViewReference);
                     if ($keepChildren) {
-                        foreach ($this->repository->getChildren($parentViewReference->getId()) as $child) {
+                        foreach ($this->repository->getChildren($parentViewReference['id']) as $child) {
                             $reference->addChild($transformViewReferenceFn($this->repository->findById($child)));
                         }
                     }
