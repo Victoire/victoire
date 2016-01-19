@@ -324,27 +324,30 @@ class WidgetManager
     public function cloneEntity($entity)
     {
         $entityCopy = clone $entity;
+
         //Look for on_to_many relations, if found, duplicate related entities.
         //It is necessary for 'list' widgets, this algo duplicates and persists list items.
-        $associations = $this->entityManager->getClassMetadata(get_class($entity))->getAssociationMappings();
+        $associations = $this->entityManager->getClassMetadata(get_class($widget))->getAssociationMappings();
         $accessor = PropertyAccess::createPropertyAccessor();
         foreach ($associations as $name => $values) {
-            if ($values['type'] === ClassMetadataInfo::ONE_TO_MANY) {
-                $relatedEntities = $accessor->getValue($entity, $values['fieldName']);
+            if ($values['type'] === ClassMetadataInfo::ONE_TO_MANY && $values['fieldName'] != 'widgetMaps') {
+                $relatedEntities = $accessor->getValue($widget, $values['fieldName']);
                 $relatedEntitiesCopies = [];
                 foreach ($relatedEntities as $relatedEntity) {
-                    $relatedEntityCopy = $this->cloneEntity($relatedEntity);
+                    $relatedEntityCopy = clone $relatedEntity;
+                    $this->entityManager->persist($relatedEntity);
                     $relatedEntitiesCopies[] = $relatedEntityCopy;
                 }
-                $accessor->setValue($entityCopy, $name, $relatedEntitiesCopies);
+                $accessor->setValue($widgetCopy, $name, $relatedEntitiesCopies);
             }
 
             //Clone OneToOne relation objects
             if ($values['type'] === ClassMetadataInfo::ONE_TO_ONE) {
-                $relatedEntity = $accessor->getValue($entity, $values['fieldName']);
+                $relatedEntity = $accessor->getValue($widget, $values['fieldName']);
                 if ($relatedEntity) {
-                    $relatedEntityCopy = $this->cloneEntity($relatedEntity);
-                    $accessor->setValue($entityCopy, $name, $relatedEntityCopy);
+                    $relatedEntityCopy = clone $relatedEntity;
+                    $this->entityManager->persist($relatedEntity);
+                    $accessor->setValue($widgetCopy, $name, $relatedEntityCopy);
                 }
             }
         }
