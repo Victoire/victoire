@@ -170,6 +170,9 @@ class WidgetMapManager
 
 
         if ($parent !== false) {
+            if ($widgetMap->getParent()) {
+                $widgetMap->getParent()->removeChild($widgetMap);
+            }
             $widgetMap->setParent($parent);
         }
         if ($position !== false) {
