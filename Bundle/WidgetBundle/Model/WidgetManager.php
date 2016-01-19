@@ -145,6 +145,8 @@ class WidgetManager
 
             $widget->setCurrentView($view);
 
+            $this->widgetMapBuilder->build($view);
+
             //get the html for the widget
             $htmlWidget = $this->widgetRenderer->renderContainer($widget, $view);
 
@@ -309,12 +311,13 @@ class WidgetManager
         //so we add a new widget map that indicates we delete this widget
         $widgetMap = new WidgetMap();
         $widgetMap->setAction(WidgetMap::ACTION_OVERWRITE);
-        $widgetMap->setReplacedWidget($widget);
+        $widgetMap->setReplaced($originalWidgetMap);
         $widgetMap->setWidget($widgetCopy);
+        $widgetMap->setView($view);
         $widgetMap->setSlot($originalWidgetMap->getSlot());
         $widgetMap->setPosition($originalWidgetMap->getPosition());
         $widgetMap->setAsynchronous($widgetCopy->isAsynchronous());
-        $widgetMap->setPositionReference($originalWidgetMap->getPositionReference());
+        $widgetMap->setParent($originalWidgetMap->getParent());
 
         $view->addWidgetMap($widgetMap);
         $this->widgetMapBuilder->build($view);
