@@ -213,7 +213,9 @@ class WidgetMap
      */
     public function setReplaced($replaced)
     {
-        $replaced->addSubstitute($this);
+        if ($replaced) {
+            $replaced->addSubstitute($this);
+        }
         $this->replaced = $replaced;
     }
 
