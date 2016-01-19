@@ -137,6 +137,7 @@ class PageHelper
 
                 throw new \Exception(sprintf('Oh no! Cannot find a viewReference for the given parameters %s', implode(',', $parametersAsString)));
             }
+            $page->setReference($viewReference);
         }
 
         return $page;
