@@ -95,11 +95,18 @@ class WidgetMapManager
     public function delete(View $view, Widget $widget)
     {
 
-        //the widget id
-        $widgetId = $widget->getId();
+        $this->builder->build($view);
 
         $widgetMap = $view->getWidgetMapByWidget($widget);
         $slot = $widgetMap->getSlot();
+
+        $originalParent = $widgetMap->getParent();
+        $originalPosition = $widgetMap->getPosition();
+
+        $children = $widgetMap->getChildren();
+        $beforeChild = !empty($children[WidgetMap::POSITION_BEFORE]) ? $children[WidgetMap::POSITION_BEFORE] : null;
+        $afterChild = !empty($children[WidgetMap::POSITION_AFTER]) ? $children[WidgetMap::POSITION_AFTER] : null;
+
         //we remove the widget from the current view
         if ($widgetMap->getView() === $view) {
             //remove the widget map from the slot
@@ -107,15 +114,49 @@ class WidgetMapManager
         } else {
             //the widget is owned by another view (a parent)
             //so we add a new widget map that indicates we delete this widget
-            $widgetMap = new WidgetMap();
-            $widgetMap->setAction(WidgetMap::ACTION_DELETE);
-            $widgetMap->setWidget($widget);
-            $widgetMap->setSlot($slot);
+            $replaceWidgetMap = new WidgetMap();
+            $replaceWidgetMap->setAction(WidgetMap::ACTION_DELETE);
+            $replaceWidgetMap->setWidget($widget);
+            $replaceWidgetMap->setSlot($slot);
+            $replaceWidgetMap->setReplaced($widgetMap);
 
-            $view->addWidgetMap($widgetMap);
+            $view->addWidgetMap($replaceWidgetMap);
+
+
+
         }
+
+        $this->moveChildren($view, $beforeChild, $afterChild, $originalParent, $originalPosition);
     }
 
+    /**
+     * If the moved widgetMap has someone at both his before and after, arbitrary move UP the before side
+     * and find the first place after the before widgetMap hierarchy to place the after widgetMap.
+     *
+     * @param View $view
+     * @param $beforeChild
+     * @param $afterChild
+     * @param $originalParent
+     * @param $originalPosition
+     */
+    protected function moveChildren(View $view, $beforeChild, $afterChild, $originalParent, $originalPosition)
+    {
+        if ($beforeChild && $afterChild) {
+            $this->moveWidgetMap($view, $beforeChild, $originalParent, $originalPosition);
+
+            $child = $beforeChild;
+            while ($child->getChild(WidgetMap::POSITION_AFTER)) {
+                $child = $child->getChild(WidgetMap::POSITION_AFTER);
+            }
+            if ($afterChild->getId() !== $child->getId()) {
+                $this->moveWidgetMap($view, $afterChild, $child);
+            }
+        } else if ($beforeChild) {
+            $this->moveWidgetMap($view, $beforeChild, $originalParent, $originalPosition);
+        } else if ($afterChild) {
+            $this->moveWidgetMap($view, $afterChild, $originalParent, $originalPosition);
+        }
+    }
     protected function moveWidgetMap(View $view, WidgetMap $widgetMap, $parent = false, $position = false, $slot = false)
     {
         if ($widgetMap->getView() !== $view) {
@@ -129,9 +170,6 @@ class WidgetMapManager
 
 
         if ($parent !== false) {
-            if ($originalParent = $widgetMap->getParent()) {
-                $originalParent->removeChild($widgetMap);
-            }
             $widgetMap->setParent($parent);
         }
         if ($position !== false) {
