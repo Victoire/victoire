@@ -180,8 +180,6 @@ class WidgetManager
         /** @var BusinessEntity[] $classes */
         $classes = $this->cacheReader->getBusinessClassesForWidget($widget);
 
-        $widget->setCurrentView($currentView);
-
         //the id of the edited widget
         //a new widget might be created in the case of a legacy
         $initialWidgetId = $widget->getId();
@@ -266,8 +264,11 @@ class WidgetManager
         $this->widgetMapBuilder->build($view);
         //Used to update view in callback (we do it before delete it else it'll not exists anymore)
         $widgetId = $widget->getId();
+        $widgetMap = $view->getWidgetMapByWidget($widget);
         //the widget is removed only if the current view is the view of the widget
-        if ($view === $widget->getView()) {
+        if (null !== $widgetMap
+        && $widgetMap->getView() == $view
+        && $widgetMap->getAction() != WidgetMap::ACTION_DELETE) {
             //we remove the widget
             $this->entityManager->remove($widget);
         }
@@ -296,7 +297,6 @@ class WidgetManager
     public function overwriteWidget(View $view, Widget $widget)
     {
         $widgetCopy = $this->cloneEntity($widget);
-        $widgetCopy->setView($view);
 
         //we have to persist the widget to get its id
         $this->entityManager->persist($view);
