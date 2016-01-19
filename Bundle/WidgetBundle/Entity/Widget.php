@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Victoire\Bundle\QueryBundle\Entity\Traits\QueryTrait;
 use Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTrait;
 use Victoire\Bundle\WidgetBundle\Model\Widget as BaseWidget;
+use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 
 /**
  * Widget.
