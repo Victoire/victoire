@@ -51,18 +51,7 @@ $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(
             if (response.hasOwnProperty("redirect")) {
                 window.location.replace(response.redirect);
             } else {
-                updateViewCssHash(response);
-                closeModal();
-                $vic('.vic-creating').after(response.html);
-                var slot = $vic('.vic-creating').parent('.vic-slot');
-                angular.element($vic(slot)).scope().rebuildActions();
-                angular.element($vic(slot)).scope().toggleEnableButtons();
-                slideTo($vic('> .vic-anchor', '#vic-widget-' + response.widgetId + '-container'));
-                if(typeof(Storage) !== "undefined") {
-                    var object = {data: response.html, timestamp: new Date().getTime()};
-                    localStorage.setItem('victoire__widget__html__' + response.widgetId, JSON.stringify(object));
-                }
-                congrat(response.message, 10000);
+                window.location.reload();
             }
 
             loading(false);
@@ -115,11 +104,11 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update"]', function(
             if (response.hasOwnProperty("redirect")) {
                 window.location.replace(response.redirect);
             } else {
-                updateViewCssHash(response);
-                closeModal();
-                $vic(".vic-widget", '#vic-widget-' + response.widgetId + '-container').replaceWith(response.html);
-                slideTo($vic('> .vic-anchor', '#vic-widget-' + response.widgetId + '-container'));
-                congrat(response.message, 10000);
+                if (response.hasOwnProperty("redirect")) {
+                    window.location.replace(response.redirect);
+                } else {
+                    window.location.reload();
+                }
             }
             if(typeof(Storage) !== "undefined") {
                 var object = {data: response.html, timestamp: new Date().getTime()};
@@ -147,36 +136,26 @@ $vic(document).on('click', '.vic-widget-modal a.vic-confirmed, .vic-hover-widget
     event.preventDefault();
     $vic(document).trigger("victoire_widget_delete_presubmit");
 
-    loading(true);
-    $vic.ajax({
-        type: "GET",
-        url : $vic(this).attr('href')
-    }).done(function(response) {
-        if (true === response.success) {
-            if (response.hasOwnProperty("redirect")) {
-                window.location.replace(response.redirect);
-            } else {
-                updateViewCssHash(response);
-                closeModal();
-                widget = $vic('#vic-widget-' + response.widgetId + '-container');
-                slot = widget.parents('.vic-slot');
-                widget.remove();
-                angular.element($vic(slot)).scope().rebuildActions();
-                angular.element($vic(slot)).scope().toggleEnableButtons();
-                if(typeof(Storage) !== "undefined") {
-                    localStorage.removeItem('victoire__widget__html__' + response.widgetId);
+        loading(true);
+        $vic.ajax({
+            type: "GET",
+            url : $vic(this).attr('href')
+        }).done(function(response) {
+            if (true === response.success) {
+                if (response.hasOwnProperty("redirect")) {
+                    window.location.replace(response.redirect);
+                } else {
+                    window.location.reload();
                 }
-
-                congrat(response.message, 10000);
+                loading(false);
+            } else {
+                //log the error
+                console.info('An error occured during the deletion of the widget.');
+                console.log(response.message);
             }
-            loading(false);
-        } else {
-            //log the error
-            console.info('An error occured during the deletion of the widget.');
-            console.log(response.message);
-        }
-    });
-    $vic(document).trigger("victoire_widget_delete_postsubmit");
+        });
+        $vic(document).trigger("victoire_widget_delete_postsubmit");
+    }
 });
 
 function generateNewWidgetUrl(select){
