@@ -148,14 +148,11 @@ class WidgetMapManagerTest extends \PHPUnit_Framework_TestCase
         $order = [2,1,3,4];
 
         $this->moveWidgetMap($builtWidgetMap, $order, $view, $manager, $builder);
-
-
     }
 
 
     protected function moveWidgetMap($builtWidgetMap, $order, $view, $manager, $builder)
     {
-
         $sortedWidget = [
             'widgetMapReference' => null,
             'position' => null,
@@ -185,7 +182,6 @@ class WidgetMapManagerTest extends \PHPUnit_Framework_TestCase
 
             $randomPosition = $availablePositions[array_rand($availablePositions)];
 
-
             $sortedWidget = array_merge($sortedWidget, $randomPosition);
 
             $order[array_search($sortedWidget['widgetMap']->getWidget()->getId(), $order)] = null;
@@ -203,7 +199,6 @@ class WidgetMapManagerTest extends \PHPUnit_Framework_TestCase
 
             $manager->move($view, $sortedWidget);
             $newBuiltWidgetMap = $builder->build($view);
-
 
             $newOrder = [];
             foreach ($newBuiltWidgetMap['content'] as $newWidgetMap) {
