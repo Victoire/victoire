@@ -61,7 +61,7 @@ class WidgetMapManagerTest extends \PHPUnit_Framework_TestCase
 
         $order = [2,1,3,4];
 
-        $this->withWidgetMap($builtWidgetMap, $order, $view, $manager, $builder);
+        $this->moveWidgetMap($builtWidgetMap, $order, $view, $manager, $builder);
 
     }
 
@@ -112,7 +112,7 @@ class WidgetMapManagerTest extends \PHPUnit_Framework_TestCase
 
         $order = [2,1,3,4];
 
-        $this->withWidgetMap($builtWidgetMap, $order, $view, $manager, $builder);
+        $this->moveWidgetMap($builtWidgetMap, $order, $view, $manager, $builder);
 
     }
 
@@ -147,13 +147,13 @@ class WidgetMapManagerTest extends \PHPUnit_Framework_TestCase
 
         $order = [2,1,3,4];
 
-        $this->withWidgetMap($builtWidgetMap, $order, $view, $manager, $builder);
+        $this->moveWidgetMap($builtWidgetMap, $order, $view, $manager, $builder);
 
 
     }
 
 
-    protected function withWidgetMap($builtWidgetMap, $order, $view, $manager, $builder)
+    protected function moveWidgetMap($builtWidgetMap, $order, $view, $manager, $builder)
     {
 
         $sortedWidget = [
