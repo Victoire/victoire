@@ -52,25 +52,41 @@ function enableSortableSlots(){
             placeholder: "vic-ui-state-highlight",
             forcePlaceholderSize: true,
             revert: true,
-            update: function( event, ui ) {
-                if (ui.item.prev().attr('widgetmapreferenceid')) {
-                    var widgetMapReference = ui.item.prev().attr('widgetmapreferenceid');
+            start: function(event, ui) {
+                if (ui.item.prev().is('new-widget-button')) {
+                    ui.item.prev().addClass('disabled');
+                }
+                if (ui.item.next().next().is('new-widget-button')) {
+                    ui.item.next().next().addClass('disabled');
+                }
+            },
+            update: function(event, ui) {
+                if (ui.item.prev().is('new-widget-button')) {
+                    var widgetMapReference = ui.item.prev().attr('widget-map');
                     var position = ui.item.prev().attr('position');
                 } else {
-                    var widgetMapReference = ui.item.next().attr('widgetmapreferenceid');
+                    var widgetMapReference = ui.item.next().attr('widget-map');
                     var position = ui.item.next().attr('position');
                 }
                 var sorted = {
                     'widgetMapReference': widgetMapReference,
                     'position': position,
                     'slot': ui.item.parents('.vic-slot').first().data('name'),
-                    'widgetMap': ui.item.data('widget-map-id')
+                    'widgetMap': ui.item.attr('widget-map')
                 };
+
+                if (ui.item.prev().is('new-widget-button')) {
+                    ui.item.prev().addClass('disabled');
+                }
+                if (ui.item.next().next().is('new-widget-button')) {
+                    ui.item.next().next().addClass('disabled');
+                }
                 updateWidgetPosition(sorted, ui.item);
             }
         });
     });
 }
+
 
 function updateWidgetPosition(sorted) {
     var ajaxCall = $vic.post(
@@ -80,14 +96,16 @@ function updateWidgetPosition(sorted) {
     ajaxCall.fail(function() {
         $vic(".vic-slot").each(function(){
             $vic(this).sortable('cancel');
+            $vic('new-widget-button.disabled').each(function(index, el) {
+                $vic(el).removeClass('disabled');
+            });
         });
         return false;
     });
     ajaxCall.success(function(jsonResponse) {
-        $vic('[data-name="' + sorted.slot + '"]').children('new-widget-button').each(function (index, el) {
-            $(el).remove();
+        $vic('new-widget-button.disabled').each(function(index, el) {
+            $vic(el).remove();
         });
-
         var $rootScope = angular.element($vic('body')).scope().$root;
         $rootScope.widgetMaps = jsonResponse.availablePositions;
         $rootScope.$apply();
