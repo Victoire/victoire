@@ -14,7 +14,6 @@ use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
  */
 class WidgetMapBuilder
 {
-
     /**
      * @param View $view
      * @param EntityManager $em
@@ -30,6 +29,7 @@ class WidgetMapBuilder
         while (null !== $template = $template->getTemplate()) {
             $widgetMaps = array_merge($widgetMaps, $template->getWidgetMaps()->toArray());
         }
+
         $slots = [];
         /** @var WidgetMap $widgetMapItem */
         foreach ($widgetMaps as $widgetMapItem) {
@@ -37,7 +37,9 @@ class WidgetMapBuilder
             if ($widgetMapItem->getReplaced()) {
                 $id = $widgetMapItem->getReplaced()->getId();
             }
-            if (empty($slots[$widgetMapItem->getSlot()][$id]) || !empty($slots[$widgetMapItem->getSlot()][$id]) && $slots[$widgetMapItem->getSlot()][$id]->getAction() !== WidgetMap::ACTION_OVERWRITE) {
+            if (empty($slots[$widgetMapItem->getSlot()][$id])
+                || !empty($slots[$widgetMapItem->getSlot()][$id])
+                && $slots[$widgetMapItem->getSlot()][$id]->getAction() !== WidgetMap::ACTION_OVERWRITE) {
                 $slots[$widgetMapItem->getSlot()][$id] = $widgetMapItem;
             }
         }
@@ -62,7 +64,8 @@ class WidgetMapBuilder
                 $orderizeWidgetMap = function ($currentWidgetMap, $builtWidgetMap) use ($slot, &$orderizeWidgetMap, $widgetMaps) {
                     $children = $currentWidgetMap->getChildren();
                     foreach ($children as $child) {
-                        if (in_array($child, $widgetMaps)) {
+                        if (in_array($child, $widgetMaps)
+                        ) {
                             $offset = array_search($currentWidgetMap, $builtWidgetMap[$slot]) + ($child->getPosition() == WidgetMap::POSITION_AFTER ? 1 : 0);
                             array_splice($builtWidgetMap[$slot], $offset, 0, [$child]);
                             $builtWidgetMap = $orderizeWidgetMap($child, $builtWidgetMap);
@@ -78,7 +81,6 @@ class WidgetMapBuilder
         if ($updatePage) {
             $view->setBuiltWidgetMap($builtWidgetMap);
         }
-
         return $builtWidgetMap;
     }
 
