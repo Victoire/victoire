@@ -72,14 +72,14 @@ class WidgetRenderer
 
         $widgetMap = $view->getWidgetMapByWidget($widget);
 
-        $tag = 'div';
+        $directive = '';
         if ($this->container->get('security.context')->isGranted('ROLE_VICTOIRE')) {
-            $tag = 'widget';
+            $directive = 'widget';
         }
 
-        $html = sprintf('<%s widget-map="%s" class="vic-widget-container" data-id="%s">', $tag, $widgetMap->getId(), $widget->getId());
+        $html = sprintf('<div %s widget-map="%s" class="vic-widget-container" data-id="%s">', $directive, $widgetMap->getId(), $widget->getId());
         $html .= $this->render($widget, $view);
-        $html .= sprintf('</%s>', $tag);
+        $html .= '</div>';
 
         $dispatcher->dispatch(VictoireCmsEvents::WIDGET_POST_RENDER, new WidgetRenderEvent($widget, $html));
 
