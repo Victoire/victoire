@@ -206,8 +206,8 @@ class WidgetMapManagerTest extends \PHPUnit_Framework_TestCase
             }
 
             $this->assertEquals($order, $newOrder,
-                sprintf("move widget %s %s widget %s didn't worked",
-                    $sortedWidget['widgetMap'], $sortedWidget['position'], $sortedWidget['widgetMapReference']));
+                sprintf("move widget %s %s widget %s didn't worked at iteration %s",
+                    $sortedWidget['widgetMap'], $sortedWidget['position'], $sortedWidget['widgetMapReference'], $i));
 
             $builtWidgetMap = $newBuiltWidgetMap;
         }
