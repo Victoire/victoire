@@ -47,18 +47,24 @@ function trackChange(elem)
 function enableSortableSlots(){
     $vic(".vic-slot").each(function(){
         $vic(this).sortable({
-            handle: '.vic-hover-widget',
+            handle: '.vic-hover-widget:not(.disabled)',
             items: "> .vic-widget-container:not(.vic-undraggable)",
             placeholder: "vic-ui-state-highlight",
             forcePlaceholderSize: true,
             revert: true,
             start: function(event, ui) {
+                $(this).attr('data-previndex', $vic(this).children().filter('div').index($vic(ui.item)));
+
                 if (ui.item.prev().is('new-widget-button')) {
                     ui.item.prev().addClass('disabled');
                 }
                 if (ui.item.next().next().is('new-widget-button')) {
                     ui.item.next().next().addClass('disabled');
                 }
+
+                $vic('.vic-hover-widget').each(function() {
+                    $vic(this).addClass('disabled');
+                })
             },
             update: function(event, ui) {
                 if (ui.item.prev().is('new-widget-button')) {
@@ -78,17 +84,27 @@ function enableSortableSlots(){
                 if (ui.item.prev().is('new-widget-button')) {
                     ui.item.prev().addClass('disabled');
                 }
-                if (ui.item.next().next().is('new-widget-button')) {
-                    ui.item.next().next().addClass('disabled');
+                if (ui.item.next().is('new-widget-button')) {
+                    ui.item.next().addClass('disabled');
                 }
-                updateWidgetPosition(sorted, ui.item);
+
+                if (parseInt($vic(this).children().filter('div').index($vic(ui.item))) != parseInt($(this).attr('data-previndex'))) {
+                    updateWidgetPosition(sorted, ui);
+                } else {
+                    $vic(this).sortable('cancel');
+                    $vic('new-widget-button.disabled').each(function(index, el) {
+                        $vic(el).removeClass('disabled');
+                    });
+                }
+                $(this).removeAttr('data-previndex');
+
             }
         });
     });
 }
 
 
-function updateWidgetPosition(sorted) {
+function updateWidgetPosition(sorted, ui) {
     var ajaxCall = $vic.post(
         Routing.generate('victoire_core_widget_update_position', {'viewReference': viewReferenceId}),
         { 'sorted': sorted, '_locale': locale }
@@ -96,7 +112,7 @@ function updateWidgetPosition(sorted) {
     ajaxCall.fail(function() {
         $vic(".vic-slot").each(function(){
             $vic(this).sortable('cancel');
-            $vic('new-widget-button.disabled').each(function(index, el) {
+            $vic('new-widget-button.disabled', '.vic-hover-widget.disabled').each(function(index, el) {
                 $vic(el).removeClass('disabled');
             });
         });
@@ -113,6 +129,9 @@ function updateWidgetPosition(sorted) {
         var $scope = angular.element($vic('[data-name="'+sorted.slot+'"]')).scope();
         $scope.rebuildActions(jsonResponse.availablePositions);
 
+        $vic('.vic-hover-widget.disabled').each(function() {
+            $vic(this).removeClass('disabled');
+        })
     });
 
     return ajaxCall;
