@@ -56,7 +56,7 @@ class WidgetMapManager
         $originalParent = $widgetMap->getParent();
         $originalPosition = $widgetMap->getPosition();
 
-        $children = $widgetMap->getChildren();
+        $children = $widgetMap->getChildren($view);
         $beforeChild = !empty($children[WidgetMap::POSITION_BEFORE]) ? $children[WidgetMap::POSITION_BEFORE] : null;
         $afterChild = !empty($children[WidgetMap::POSITION_AFTER]) ? $children[WidgetMap::POSITION_AFTER] : null;
 

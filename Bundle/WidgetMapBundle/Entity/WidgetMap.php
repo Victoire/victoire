@@ -238,13 +238,18 @@ class WidgetMap
     /**
      * @return mixed
      */
-    public function getChildren()
+    public function getChildren(View $view = null)
     {
         $positions = [WidgetMap::POSITION_BEFORE, WidgetMap::POSITION_AFTER];
         $children = [];
         $widgetMap = $this;
         foreach ($positions as $position) {
             if ($child = $widgetMap->getChild($position)) {
+                if ($view && $substitute = $child->getSubstituteForView($view)) {
+                    if ($substitute->getParent() != $this || $substitute->getPosition() != $position) {
+                        $child = null;
+                    }
+                }
                 $children[$position] = $child;
             }
             if (!$child
