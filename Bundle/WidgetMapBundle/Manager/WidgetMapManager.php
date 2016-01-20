@@ -162,6 +162,7 @@ class WidgetMapManager
         if ($widgetMap->getView() !== $view) {
             $originalWidgetMap = $widgetMap;
             $widgetMap = clone $widgetMap;
+            $widgetMap->setId(null);
             $widgetMap->setAction(WidgetMap::ACTION_OVERWRITE);
             $widgetMap->setReplaced($originalWidgetMap);
             $view->addWidgetMap($widgetMap);
