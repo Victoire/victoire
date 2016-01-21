@@ -29,6 +29,9 @@ class I18nRouteLoader extends BaseRouteLoader
         if ($this->localeResolver->localePattern == LocaleResolver::PATTERN_PARAMETER) {
             //Prefix every victoire route with the locale
             $collection->addPrefix('/{_locale}');
+            $collection->addRequirements([
+                '_locale' => implode('|', $this->localeResolver->getAvailableLocales()),
+            ]);
             $collection->addCollection($collection);
             //Add a redirection to the default locale homepage when empty url '/'
             $this->addHomepageRedirection($collection);

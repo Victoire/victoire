@@ -89,4 +89,12 @@ class LocaleResolver
 
         return $this->defaultLocale;
     }
+
+    /**
+     * @return string
+     */
+    public function getAvailableLocales()
+    {
+        return $this->availableLocales;
+    }
 }
