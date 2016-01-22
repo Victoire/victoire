@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @author Craig Blanchette (isometriks) <craig.blanchette@gmail.com>
  */
-class IconExtension extends \Twig_Extension
+class IconExtension extends \Twig_Extension implements \Twig_Extension_InitRuntimeInterface
 {
     /**
      * @var \Twig_Environment

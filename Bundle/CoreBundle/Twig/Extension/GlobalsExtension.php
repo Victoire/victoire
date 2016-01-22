@@ -7,7 +7,7 @@ use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 /**
  * Provides some gloval variabls to twig.
  */
-class GlobalsExtension extends \Twig_Extension
+class GlobalsExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
 {
     protected $templateMapper;
     protected $session;
