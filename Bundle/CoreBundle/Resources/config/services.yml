@@ -97,7 +97,7 @@ services:
     victoire_core.cache:
         class: Victoire\Bundle\CoreBundle\Cache\VictoireCache
         arguments:
-            - "%kernel.debug%"
+            - "%victoire_core.business_entity_debug%"
             - "%victoire_core.cache_dir%"
 
     victoire_core.cache_builder:
