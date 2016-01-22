@@ -131,8 +131,7 @@ class LinkExtension extends \Twig_Extension
     public function victoireLink($parameters, $label, $attr = [], $currentClass = 'active', $url = '#')
     {
         $referenceLink = UrlGeneratorInterface::ABSOLUTE_PATH;
-        $analyticsTrackCode = $parameters['analyticsTrackCode'];
-        $attachedWidget = $parameters['attachedWidget'];
+        $attachedWidget = isset($parameters['attachedWidget']) ? $parameters['attachedWidget'] : null;
 
         if ($parameters['linkType'] == 'attachedWidget' && $attachedWidget && method_exists($attachedWidget->getView(), 'getUrl')) {
             $viewUrl = $this->router->generate('victoire_core_page_show', ['_locale' => $attachedWidget->getView()->getLocale(), 'url' => $attachedWidget->getView()->getUrl()], $referenceLink);
@@ -156,8 +155,8 @@ class LinkExtension extends \Twig_Extension
         }
 
         //Add the analytics tracking code attribute
-        if (isset($analyticsTrackCode)) {
-            $this->addAttr('onclick', $analyticsTrackCode, $attr);
+        if (isset($parameters['analyticsTrackCode'])) {
+            $this->addAttr('onclick', $parameters['analyticsTrackCode'], $attr);
         }
 
         //Assemble and prepare attributes
