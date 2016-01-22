@@ -173,9 +173,9 @@ class LinkExtension extends \Twig_Extension
 
         $url = $this->victoireLinkUrl($parameters, true, $url);
         //Creates a new twig environment
-        $twigEnv = new \Twig_Environment(new \Twig_Loader_String());
+        $twig = new \Twig_Environment(new \Twig_Loader_Array(['linkTemplate' => '{{ link|raw }}']));
 
-        return $twigEnv->render('{{ link|raw }}', ['link' => '<a href="'.$url.'" '.implode($attributes, ' ').'>'.$label.'</a>']);
+        return $twig->render('linkTemplate', ['link' => '<a href="'.$url.'" '.implode($attributes, ' ').'>'.$label.'</a>']);
     }
 
     /**

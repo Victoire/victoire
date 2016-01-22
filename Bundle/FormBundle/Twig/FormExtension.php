@@ -29,8 +29,14 @@ class FormExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            'form_help' => new \Twig_Function_Node('Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode', ['is_safe' => ['html']]),
-            'form_tabs' => new \Twig_Function_Node('Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode', ['is_safe' => ['html']]),
+            new \Twig_SimpleFunction('form_help', null, [
+                'node_class' => 'Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode',
+                'is_safe'    => ['html'],
+            ]),
+            new \Twig_SimpleFunction('form_tabs', null, [
+                'node_class' => 'Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode',
+                'is_safe'    => ['html'],
+            ]),
         ];
     }
 
