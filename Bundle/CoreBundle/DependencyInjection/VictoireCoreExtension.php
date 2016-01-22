@@ -42,6 +42,9 @@ class VictoireCoreExtension extends Extension
             'victoire_core.cache_dir', $config['cache_dir']
         );
         $container->setParameter(
+            'victoire_core.business_entity_debug', $config['business_entity_debug']
+        );
+        $container->setParameter(
             'victoire_core.applicative_bundle', $config['applicative_bundle']
         );
         if (array_key_exists('templates', $config)) {
