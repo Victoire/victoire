@@ -32,7 +32,7 @@ class MenuTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            'admin_menu_get'  => new \Twig_Function_Method($this, 'getAdminMenu'),
+            new \Twig_SimpleFunction('admin_menu_get', [$this, 'getAdminMenu']),
         ];
     }
 

@@ -54,7 +54,7 @@ class PageExtension extends \Twig_Extension
     {
         return [
             new \Twig_SimpleFunction('vic_current_page_reference', [$this, 'victoireCurrentPageReference']),
-            'cms_page_css'                           => new \Twig_Function_Method($this, 'cmsPageCss', ['is_safe' => ['html']]),
+            new \Twig_SimpleFunction('cms_page_css', [$this, 'cmsPageCss'], ['is_safe' => ['html']]),
         ];
     }
 
