@@ -305,21 +305,11 @@ class WidgetManager
         $this->entityManager->flush();
 
 
+
         $originalWidgetMap = $view->getWidgetMapByWidget($widget);
 
-        //the widget is owned by another view (a parent)
-        //so we add a new widget map that indicates we delete this widget
-        $widgetMap = new WidgetMap();
-        $widgetMap->setAction(WidgetMap::ACTION_OVERWRITE);
-        $widgetMap->setReplaced($originalWidgetMap);
-        $widgetMap->setWidget($widgetCopy);
-        $widgetMap->setView($view);
-        $widgetMap->setSlot($originalWidgetMap->getSlot());
-        $widgetMap->setPosition($originalWidgetMap->getPosition());
-        $widgetMap->setAsynchronous($widgetCopy->isAsynchronous());
-        $widgetMap->setParent($originalWidgetMap->getParent());
+        $this->widgetMapManager->overwrite($view, $originalWidgetMap, $widgetCopy);
 
-        $view->addWidgetMap($widgetMap);
         $this->widgetMapBuilder->build($view);
         return $widgetCopy;
     }
