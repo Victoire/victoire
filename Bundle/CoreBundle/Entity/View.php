@@ -173,12 +173,26 @@ abstract class View
     protected $cssHash;
 
     /**
+     * @ORM\Column(name="widget_map", type="array")
+     */
+    protected $widgetMap = [];
+
+    /**
+     * @var string
+     *
+     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\WidgetBundle\Entity\Widget", mappedBy="view", cascade={"persist", "remove"})
+     * @ORM\OrderBy({"id" = "ASC"})
+     */
+    protected $widgets;
+
+    /**
      * Construct.
      **/
     public function __construct()
     {
         $this->children = new ArrayCollection();
         $this->widgetMaps = new ArrayCollection();
+        $this->widgetMap = [];
     }
 
     /**
@@ -685,7 +699,7 @@ abstract class View
      */
     public function getWidgetMapByWidget(Widget $widget)
     {
-        if (!$this->builtWidgetMap) {
+        if ($this->builtWidgetMap === null) {
             throw new \Exception("The WidgetMap for this view is not built at this moment");
         }
         foreach ($this->builtWidgetMap as $slot => $widgetMaps) {
@@ -812,4 +826,28 @@ abstract class View
     {
         $this->cssHash = sha1(uniqid());
     }
+
+    /**
+     * @deprecated
+     * Get widgetMap.
+     *
+     * @return widgetMap
+     */
+    public function getWidgetMap()
+    {
+        return $this->widgetMap;
+    }
+
+    /**
+     * @deprecated
+     * Get widgets.
+     *
+     * @return Widget[]
+     */
+    public function getWidgets()
+    {
+        return $this->widgets;
+    }
+
+
 }

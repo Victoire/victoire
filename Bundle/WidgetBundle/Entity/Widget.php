@@ -3,6 +3,7 @@
 namespace Victoire\Bundle\WidgetBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\QueryBundle\Entity\Traits\QueryTrait;
 use Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTrait;
 use Victoire\Bundle\WidgetBundle\Model\Widget as BaseWidget;
@@ -95,6 +96,15 @@ class Widget extends BaseWidget
     protected $entity;
 
     /**
+     * @deprecated
+     * @var string
+     *
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\CoreBundle\Entity\View", inversedBy="widgets", cascade={"persist"})
+     * @ORM\JoinColumn(name="view_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected $view;
+    /**
+     * @deprecated
      * @var [WidgetMap]
      *
      * @ORM\OneToMany(targetEntity="\Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap", mappedBy="widget", orphanRemoval=true, cascade={"persist", "remove"})
@@ -428,6 +438,18 @@ class Widget extends BaseWidget
                 The $widget property is reserved for Victoire.
                 You should chose a different property name.', get_called_class()));
         }
+    }
+
+
+    /**
+     * @deprecated
+     * Get view.
+     *
+     * @return View
+     */
+    public function getView()
+    {
+        return $this->view;
     }
 
 }
