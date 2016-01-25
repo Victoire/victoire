@@ -135,10 +135,8 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
                         }
                         $widgetMap = new WidgetMap();
                         $referencedWidgetMap = null;
-                        var_dump('widget id:');
-                        var_dump($_oldWidgetMap['widgetId']);
-                        if ($_oldWidgetMap['positionReference']) {
-                            var_dump($_oldWidgetMap['positionReference']);
+                        if ($_oldWidgetMap['positionReference'] != 0 && $_oldWidgetMap['positionReference'] != null) {
+                            var_dump('has positionReference');
                             $referencedWidget = $widgetRepo->find($_oldWidgetMap['positionReference']);
                             var_dump($referencedWidget->getId());
                             $referencedWidgetMap = $view->getWidgetMapByWidget($referencedWidget);
