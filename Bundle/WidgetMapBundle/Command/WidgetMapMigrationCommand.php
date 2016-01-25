@@ -78,7 +78,7 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
             $recursiveGetTemplates($rootTemplate);
         }
 
-        $viewRepo = $em->getRepository('VictoireCoreBundle:View');
+            $viewRepo = $em->getRepository('VictoirePageBundle:BasePage');
         $views = $viewRepo->findAll();
 
         $views = $templates + $views;
