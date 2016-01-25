@@ -81,7 +81,7 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
             $viewRepo = $em->getRepository('VictoirePageBundle:BasePage');
         $views = $viewRepo->findAll();
 
-        $views = $templates + $views;
+            $views = array_merge($templates, $views);
         }
 
         /** @var View $view */
