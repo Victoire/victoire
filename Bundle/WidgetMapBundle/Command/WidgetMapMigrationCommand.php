@@ -156,8 +156,10 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
                                 $widgetMap->setParent(null);
                             } else {
                                 $widgetMap->setPosition(WidgetMap::POSITION_BEFORE);
+                                if (!empty(array_slice($widgetMaps, -1))) {
                                 $widgetMap->setParent(array_slice($widgetMaps, -1)[0]);
                             }
+                        }
                         }
 
                         if (WidgetMap::ACTION_OVERWRITE == $_oldWidgetMap['action']) {
