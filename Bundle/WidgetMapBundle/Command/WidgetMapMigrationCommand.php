@@ -97,6 +97,7 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
 
                 foreach ($oldWidgetMaps as $slot => $oldWidgetMap) {
                     $widgetMaps = [];
+                    var_dump($oldWidgetMap);
                     usort($oldWidgetMap, function ($a, $b) {
                         if ($b['action'] != $a['action']) {
                             return 0;
@@ -104,6 +105,7 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
 
                         return $b['position'] - $a['position'];
                     });
+                    var_dump($oldWidgetMap);
 
                     usort($oldWidgetMap, function ($a, $b) {
 
@@ -122,7 +124,9 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
 
                     var_dump($oldWidgetMap);
                     foreach ($oldWidgetMap as $position => $_oldWidgetMap) {
-                        var_dump('replacedWidgetId = '.$_oldWidgetMap['replacedWidgetId']);
+                        var_dump("==========================");
+                        var_dump($slot);
+                        var_dump($_oldWidgetMap);
 
                         $widget = $widgetRepo->find($_oldWidgetMap['widgetId']);
                         if (!$widget) {
@@ -137,18 +141,18 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
                             var_dump($_oldWidgetMap['positionReference']);
                             $referencedWidget = $widgetRepo->find($_oldWidgetMap['positionReference']);
                             var_dump($referencedWidget->getId());
-                            foreach ($view->getBuiltWidgetMap()['content'] as $_wm) {
-                                var_dump(['id' => $_wm->getId(), 'widget' => $_wm->getWidget()->getId()]);;
-                            }
                             $referencedWidgetMap = $view->getWidgetMapByWidget($referencedWidget);
                             while ($referencedWidgetMap->getChild(WidgetMap::POSITION_AFTER)) {
                                 $referencedWidgetMap = $referencedWidgetMap->getChild(WidgetMap::POSITION_AFTER);
                             }
+                            var_dump('set parent'.$referencedWidgetMap->getWidget()->getId());
                                 $widgetMap->setParent($referencedWidgetMap);
                                 $widgetMap->setPosition(WidgetMap::POSITION_AFTER);
                         } else {
+                            var_dump('has no positionReference');
                             if ($position == 0) {
                                 $widgetMap->setPosition(null);
+                                var_dump('set parent'.null);
                                 $widgetMap->setParent(null);
                             } else {
                                 $widgetMap->setPosition(WidgetMap::POSITION_BEFORE);
@@ -157,9 +161,11 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
                         }
 
                         if (WidgetMap::ACTION_OVERWRITE == $_oldWidgetMap['action']) {
+                            var_dump('is overwrite');
 
                             /** @var Widget $replacedWidget */
                             if ($_oldWidgetMap['replacedWidgetId']) {
+                                var_dump('has replacedWidgetId');
                                 $replacedWidget = $widgetRepo->find($_oldWidgetMap['replacedWidgetId']);
                                 $supplicantWidget = $widgetRepo->find($_oldWidgetMap['widgetId']);
                                 $replacedWidgetView = $replacedWidget->getView();
@@ -167,8 +173,8 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
                                 $replacedWidgetMap = $replacedWidgetView->getWidgetMapByWidget($replacedWidget);
                                 // If replaced widgetMap does not exists, this is not an overwrite but a create
                                 if ($replacedWidgetMap) {
+                                    var_dump('has replacedWidgetMap');
                                 $widgetMap->setReplaced($replacedWidgetMap);
-
                                 var_dump('replace '.$replacedWidget->getId().' by '.$supplicantWidget->getId());
                                 $widgetMap->setWidget($supplicantWidget);
                                 $widgetMap->setPosition($replacedWidgetMap->getPosition());
@@ -178,6 +184,8 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
 
 
                             } else if ($referencedWidgetMap) {
+
+                                var_dump('move');
 
                                 $this->getContainer()->get('victoire_widget_map.manager')->move($view, [
                                     'position' => WidgetMap::POSITION_AFTER,
@@ -190,8 +198,10 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
                             }
 
                         } else if (WidgetMap::ACTION_DELETE == $_oldWidgetMap['action']) {
+                            var_dump('is delete');
                             $replacedWidget = $widgetRepo->find($_oldWidgetMap['widgetId']);
                             $widgetMap->setPosition(null);
+                            var_dump('set parent'.null);
                             $widgetMap->setParent(null);
                             $deletedWidgetMap = $view->getWidgetMapByWidget($replacedWidget);
                             if ($deletedWidgetMap) {
