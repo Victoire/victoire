@@ -336,6 +336,9 @@ class WidgetMap
      */
     public function setParent(WidgetMap $parent = null)
     {
+        if ($this->parent) {
+            $this->parent->removeChild($this);
+        }
         if ($parent) {
             $parent->addChild($this);
         }
