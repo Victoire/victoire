@@ -27,7 +27,7 @@ default:
                 path: Tests/Functionnal/app/AppKernel.php
                 debug: true
          Lakion\Behat\MinkDebugExtension:
-             directory: logs
+             directory: fails
              screenshot: true
          Behat\MinkExtension\ServiceContainer\MinkExtension:
              base_url:           'http://fr.victoire.io:8000'

@@ -16,6 +16,7 @@ hosts:
 before_script:
   - phpenv config-add travis.php.ini
   - npm install less
+  - mkdir fails
   - composer self-update
   - composer config --global github-oauth.github.com $gh_auth_token
   - COMPOSER_ROOT_VERSION=dev-master composer install --prefer-dist
@@ -41,8 +42,8 @@ after_script:
   - php Tests/Functionnal/bin/console --env=test doctrine:database:drop --force
 
 after_failure:
-  - vendor/lakion/mink-debug-extension/travis/tools/upload-textfiles "logs/*.log"
-  - vendor/lakion/mink-debug-extension/travis/tools/upload-screenshots "logs/*.png"
+  - vendor/lakion/mink-debug-extension/travis/tools/upload-textfiles "fails/*.log"
+  - vendor/lakion/mink-debug-extension/travis/tools/upload-screenshots "fails/*.png"
 
 script:
   - './vendor/bin/behat'
