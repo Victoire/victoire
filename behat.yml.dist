@@ -26,6 +26,9 @@ default:
             kernel:
                 path: Tests/Functionnal/app/AppKernel.php
                 debug: true
+         Lakion\Behat\MinkDebugExtension:
+             directory: logs
+             screenshot: true
          Behat\MinkExtension\ServiceContainer\MinkExtension:
              base_url:           'http://fr.victoire.io:8000'
              selenium2:          ~
