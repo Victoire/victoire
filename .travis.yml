@@ -9,9 +9,10 @@ services:
 env:
   - IMGUR_API_KEY=b3625162d3418ac51a9ee805b1840452
 
-hosts:
-  - fr.victoire.io
-  - en.victoire.io
+addons:
+  hosts:
+    - fr.victoire.io
+    - en.victoire.io
 
 before_script:
   - phpenv config-add travis.php.ini
