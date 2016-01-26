@@ -86,7 +86,8 @@
         "phpunit/php-code-coverage"   : "2.2.3",
         "phpunit/phpunit-mock-objects": "2.3.7",
         "phpunit/phpunit"             : "4.6.*",
-        "symfony/var-dumper"          : "~3.0@dev"
+        "symfony/var-dumper"          : "~3.0@dev",
+        "lakion/mink-debug-extension" : "^1.0"
     },
     "suggest"          : {
         "friendsofvictoire/alertbutton-widget"        : "alertbutton widget",

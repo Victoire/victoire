@@ -1,12 +1,13 @@
 sudo: false
-
 language: php
-
 php:
   - 5.6
 
 services:
   - redis-server
+
+env:
+  - IMGUR_API_KEY=b3625162d3418ac51a9ee805b1840452
 
 hosts:
   - fr.victoire.io
@@ -40,7 +41,8 @@ after_script:
   - php Tests/Functionnal/bin/console --env=test doctrine:database:drop --force
 
 after_failure:
-  - grep 'request.ERROR\|request.CRITICAL' $(php -r "echo sys_get_temp_dir();")/Victoire/logs/test.log
+  - vendor/lakion/mink-debug-extension/travis/tools/upload-textfiles "logs/*.log"
+  - vendor/lakion/mink-debug-extension/travis/tools/upload-screenshots "logs/*.png"
 
 script:
   - './vendor/bin/behat'
@@ -49,6 +51,3 @@ script:
 
 notifications:
     slack: appventus:Xy4yq4kXpBK9XHgfz8t9VBPl
-    hipchat:
-        rooms:
-            - 32c78704ec6fd7ad1445cf106d1107@Victoire
