@@ -2,15 +2,18 @@
 
 namespace Victoire\Bundle\PageBundle\Controller;
 
+use Doctrine\Common\Util\ClassUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
+use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\I18nBundle\Resolver\LocaleResolver;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
+use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 /**
@@ -244,14 +247,25 @@ class BasePageController extends Controller
                 }
             }
 
+            $route = 'victoire_core_page_show';
+            $params = [
+                '_locale' => $clone->getLocale(),
+                'domain'  => $domain
+            ];
+
+            if ($clone instanceof WebViewInterface) {
+                $params['url'] = $clone->getUrl(false);
+            } elseif ($clone instanceof BusinessTemplate) {
+                $route = 'victoire_business_template_show';
+                $params['id'] = $clone->getId();
+            } elseif ($clone instanceof Template) {
+                $route = 'victoire_template_show';
+                $params['slug'] = $clone->getSlug();
+            }
+
             return [
                 'success' => true,
-                'url' => $this->generateUrl('victoire_core_page_show', [
-                        '_locale' => $clone->getLocale(),
-                        'domain' => $domain,
-                        'url' => $clone->getUrl()
-                    ]
-                )
+                'url' => $this->generateUrl($route, $params)
             ];
         }
         $errors = $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form);

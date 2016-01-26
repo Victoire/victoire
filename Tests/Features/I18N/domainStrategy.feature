@@ -15,7 +15,7 @@ Scenario: I can create a page in two languages
     And I should see "Créer"
     And I fill in "Nom" with "Page francaise"
     Then I submit the modal
-    And I should see "Page crée avec succès"
+    And I should see "Page créée avec succès"
     And I should be on "http://fr.victoire.io:8000/app_domain.php/page-francaise"
     Given I select the option "Traduire" in the dropdown "Page"
     Then I should see "Nouvelle traduction de la page"
