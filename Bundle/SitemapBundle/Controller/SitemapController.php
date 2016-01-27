@@ -7,8 +7,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
+use Victoire\Bundle\PageBundle\Helper\PageHelper;
 use Victoire\Bundle\SeoBundle\Entity\PageSeo;
+use Victoire\Bundle\ViewReferenceBundle\ViewReference\BusinessPageReference;
+use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 /**
  * Victoire sitemap controller.
@@ -18,30 +23,73 @@ use Victoire\Bundle\SeoBundle\Entity\PageSeo;
 class SitemapController extends Controller
 {
     /**
-     * Change the sitemap priority for the given page.
+     * Get the whole list of published pages
+     * #1 get the _locale related homepage
+     * #2 parse recursively and extract every persisted pages ids
+     * #3 load these pages with seo (if exists)
+     * #4 parse recursively and extract every VirtualBusinessPages references
+     * #5 prepare VirtualBusinessPages.
      *
      * @Route(".{_format}", name="victoire_sitemap_xml", Requirements={"_format" = "xml"})
-     * @Template("VictoireSitemapBundle:Sitemap:sitemap.xml.twig")
      *
-     * @return template
+     * @return Response
      */
-    public function xmlAction()
+    public function xmlAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $homepage = $em->getRepository('VictoirePageBundle:BasePage')
+            ->findOneByHomepage($request->getLocale());
+
+        /** @var ViewReference $tree */
+        $tree = $this->get('victoire_view_reference.repository')->getOneReferenceByParameters(
+            ['viewId' => $homepage->getId()],
+            true,
+            true
+        );
+
+        $ids = [$tree->getViewId()];
+
+        $getChildrenIds = function (ViewReference $tree) use (&$getChildrenIds, $ids) {
+            foreach ($tree->getChildren() as $child) {
+                $ids[] = $child->getViewId();
+                $ids = array_merge($ids, $getChildrenIds($child));
+            }
+
+            return $ids;
+        };
+
         $pages = $em->getRepository('VictoirePageBundle:BasePage')
-            ->getAll()
+            ->getAll(true)
+            ->joinSeo()
+            ->filterByIds($getChildrenIds($tree))
             ->run();
 
-        $indexedPages = [];
-        foreach ($pages as $page) {
-            if (!$page->getSeo() || $page->getSeo()->isSitemapIndexed()) {
-                $indexedPages[] = $page;
-            }
-        }
+        /** @var PageHelper $pageHelper */
+        $pageHelper = $this->get('victoire_page.page_helper');
+        $entityManager = $this->getDoctrine()->getManager();
 
-        return [
-            'pages' => $indexedPages,
-        ];
+        $getBusinessPages = function (ViewReference $tree) use (&$getBusinessPages, $pageHelper, $entityManager) {
+            $businessPages = [];
+            foreach ($tree->getChildren() as $child) {
+                if ($child instanceof BusinessPageReference
+                    && $child->getViewNamespace() == 'Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage') {
+                    $entity = $entityManager->getRepository($child->getEntityNamespace())->find($child->getEntityId());
+                    /** @var WebViewInterface $businessPage */
+                    $businessPage = $pageHelper->findPageByReference($child, $entity);
+                    $businessPage->setReference($child);
+                    $businessPages[] = $businessPage;
+                }
+                $businessPages = array_merge($businessPages, $getBusinessPages($child));
+            }
+
+            return $businessPages;
+        };
+
+        $pages = array_merge($pages, $getBusinessPages($tree));
+
+        return $this->render('VictoireSitemapBundle:Sitemap:sitemap.xml.twig', [
+            'pages' => $pages,
+        ]);
     }
 
     /**

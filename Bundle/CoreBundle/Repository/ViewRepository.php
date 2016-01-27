@@ -115,4 +115,32 @@ class ViewRepository extends NestedTreeRepository
 
         return $view;
     }
+
+    /**
+     * Get PageSeo.
+     *
+     * @param string $method leftJoin|innerJoin
+     *
+     * @return ViewRepository
+     */
+    public function joinSeo($method = 'leftJoin')
+    {
+        $this->getInstance()->$method('page.seo', 'seo')->addSelect('seo');
+
+        return $this;
+    }
+
+    /**
+     * Filter the query by the sitemap index (=visibility).
+     *
+     * @param array $ids
+     *
+     * @return ViewRepository
+     */
+    public function filterByIds($ids)
+    {
+        $this->getInstance()->andWhere('page.id IN (:ids)')->setParameter('ids', $ids);
+
+        return $this;
+    }
 }
