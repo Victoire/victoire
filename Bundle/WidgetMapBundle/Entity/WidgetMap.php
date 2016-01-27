@@ -244,19 +244,32 @@ class WidgetMap
         $children = [];
         $widgetMap = $this;
         foreach ($positions as $position) {
-            if ($child = $widgetMap->getChild($position)) {
-                // if requested for $view, do not return if the found child's substitute for view has not myself as parent or it's position isn't same as mine
-                if ($view && $substitute = $child->getSubstituteForView($view)) {
-                    if ($substitute->getParent() != $this || $substitute->getPosition() != $position) {
-                        $child = null;
+            $children[$position] = null;
+            if (($childs = $widgetMap->getChilds($position)) && !empty($childs)) {
+                foreach ($childs as $_child) {
+                    // found child must belongs to the given view or one of it's templates
+                    if ($view) {
+                        if ($_child->getView() && ($view == $_child->getView() || $_child->getView()->isTemplateOf($view))) {
+                            $children[$position] = $_child;
+                        }
+                    } else {
+                        $children[$position] = $_child;
                     }
                 }
-                $children[$position] = $child;
             }
-            if (!$child
+            if (!$children[$position]
                 && ($replaced = $this->getReplaced())
-                && $this->getReplaced()->getChild($position) && !$this->getReplaced()->getChild($position)->getSubstituteForView($widgetMap->getView())) {
-                $children[$position] = $replaced->getChild($position);
+                && !empty($this->getReplaced()->getChilds($position))) {
+
+                foreach ($this->getReplaced()->getChilds($position) as $_child) {
+                    if ($view) {
+                        if ($_child->getView() && ($view == $_child->getView() || $_child->getView()->isTemplateOf($view))) {
+                            $children[$position] = $_child;
+                        }
+                    } else {
+                        $children[$position] = $_child;
+                    }
+                }
             }
         }
 
@@ -288,6 +301,21 @@ class WidgetMap
 
 
         return $child;
+    }
+    /**
+     * @return [WidgetMap]
+     */
+    public function getChilds($position)
+    {
+        $childs = [];
+        foreach ($this->children as $_child) {
+            if ($_child->getPosition() == $position) {
+                $childs[] = $_child;
+            }
+        }
+
+
+        return $childs;
     }
 
 
