@@ -106,7 +106,8 @@ class LocaleResolver
     }
 
     /**
-     * Return available locales
+     * Return available locales.
+     *
      * @return array
      */
     public function getAvailableLocales()
@@ -115,7 +116,8 @@ class LocaleResolver
     }
 
     /**
-     * return domain config
+     * return domain config.
+     *
      * @return array
      */
     public function getDomainConfig()

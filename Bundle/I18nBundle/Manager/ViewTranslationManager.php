@@ -32,7 +32,7 @@ class ViewTranslationManager
 
     /**
      * this methods allow you to add a translation to any view
-     * recursively to its subview
+     * recursively to its subview.
      *
      * @param View $view, the view to translatate
      * @param $templatename the new name of the view
@@ -43,8 +43,6 @@ class ViewTranslationManager
      */
     public function addTranslation(View $view, $viewName, $locale)
     {
-
-
         $template = null;
         if ($view->getTemplate()) {
             $template = $view->getTemplate();
@@ -72,12 +70,12 @@ class ViewTranslationManager
     }
 
     /**
-     * this methods allows you to clone a view and its widgets and also the widgetmap
+     * this methods allows you to clone a view and its widgets and also the widgetmap.
+     *
      * @param View $view
      * @param $templateName
      *
      * @return View
-     *
      */
     public function cloneView(View $view, $templateName = null)
     {

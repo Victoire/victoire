@@ -44,8 +44,7 @@ class ViewHelper
         EntityManager $entityManager,
         ViewReferenceProvider $viewReferenceProvider,
         ViewReferenceHelper $viewReferenceHelper
-    )
-    {
+    ) {
         $this->entityManager = $entityManager;
         $this->viewReferenceProvider = $viewReferenceProvider;
         $this->viewReferenceHelper = $viewReferenceHelper;

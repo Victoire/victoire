@@ -18,9 +18,9 @@ class RoutingExtention extends BaseRoutingExtension
     private $localeResolver;
 
     /**
-     * @param PageHelper $pageHelper
+     * @param PageHelper            $pageHelper
      * @param UrlGeneratorInterface $generator
-     * @param LocaleResolver $localeResolver
+     * @param LocaleResolver        $localeResolver
      */
     public function __construct(PageHelper $pageHelper, UrlGeneratorInterface $generator, LocaleResolver $localeResolver, RequestStack $requestStack)
     {
@@ -60,8 +60,10 @@ class RoutingExtention extends BaseRoutingExtension
     }
 
     /**
-     * If victoire_i18n.locale_pattern == domain, then we force the url rewrite with a valid host
+     * If victoire_i18n.locale_pattern == domain, then we force the url rewrite with a valid host.
+     *
      * @param $locale
+     *
      * @return null
      */
     protected function getPrefix($locale)
@@ -72,10 +74,11 @@ class RoutingExtention extends BaseRoutingExtension
                 if ($this->request->getPort()) {
                     $urlPrefix .= ':'.$this->request->getPort();
                 }
+
                 return $urlPrefix;
             }
         }
 
-        return null;
+        return;
     }
 }
