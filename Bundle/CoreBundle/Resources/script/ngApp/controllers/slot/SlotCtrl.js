@@ -8,17 +8,6 @@ angular.module('ngApp').controller("SlotController", ["$scope",
 
 
         };
-        $scope.rebuildActions = function() {
-
-
-
-            //var newContentButton = $('.vic-new-widget', '#vic-slot-' + $scope.slotId).first();
-            //newContentButton.addClass('vic-new-widget-disabled');
-            //$('.vic-new-widget', '#vic-slot-' + $scope.slotId).remove();
-            //$('.vic-widget-container', '#vic-slot-' + $scope.slotId).after(newContentButton);
-            //$('#vic-slot-' + $scope.slotId).prepend(newContentButton.clone());
-            //$scope.toggleEnableButtons();
-        };
         $scope.toggleEnableButtons = function() {
             widgets = $('.vic-widget-container', '#vic-slot-' + $scope.slotId);
             if (!("max" in $scope.options) || ("max" in $scope.options) && $scope.options.max > widgets.length) {

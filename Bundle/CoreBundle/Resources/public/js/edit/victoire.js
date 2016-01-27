@@ -126,9 +126,6 @@ function updateWidgetPosition(sorted, ui) {
         $rootScope.widgetMaps = jsonResponse.availablePositions;
         $rootScope.$apply();
 
-        var $scope = angular.element($vic('[data-name="'+sorted.slot+'"]')).scope();
-        $scope.rebuildActions(jsonResponse.availablePositions);
-
         $vic('.vic-hover-widget.disabled').each(function() {
             $vic(this).removeClass('disabled');
         })
