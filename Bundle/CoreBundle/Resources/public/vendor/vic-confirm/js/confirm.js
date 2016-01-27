@@ -19,21 +19,38 @@ function vicSmartConfirm(e,referer,type){
     e.preventDefault();
     $vic(referer).addClass('vic-confirm-waiting');
     loading(true);
-    $vic.post(
-        Routing.generate('victoire_core_ui_confirm'),
+
+    var params = {
+        title: $vic(referer).data('title'),
+        body: $vic(referer).data('body'),
+        type: type,
+        _locale: locale
+    };
+
+    if ($vic(referer).data('confirm-callback') != undefined) {
+        params.confirm_callback = $vic(referer).data('confirm-callback');
+    }
+
+    if ($vic(referer).data('cancel-button-class') != undefined) {
+        params.cancel_button_class = $vic(referer).data('cancel-button-class');
+    }
+
+    if ($vic(referer).data('id') != undefined) {
+        params.id = $vic(referer).data('id');
+    }
+
+    $vic.ajax(
         {
-            title                : $vic(referer).data('title'),
-            body                 : $vic(referer).data('body'),
-            confirm_callback     : $vic(referer).data('confirm-callback'),
-            cancel_button_class  : $vic(referer).data('cancel-button-class'),
-            confirm_button_class : $vic(referer).data('confirm-button-class'),
-            id                   : $vic(referer).attr('id'),
-            type                 : type,
-            _locale              : locale
-        },
-        function(data){
-          $vic("body").append(data);
-          loading(false);
+            url: Routing.generate('victoire_core_ui_confirm', params),
+            context: document.body,
+            type: "POST",
+            error: function(jsonResponse) {
+                error('Woups. La panne !');
+            },
+            success: function(data) {
+                $vic("body").append(data);
+                loading(false);
+            }
         }
     );
 }

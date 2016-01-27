@@ -44,6 +44,7 @@ $vic('#{{ id }} .{{ cancel_button_class }}').click(function(){
 $vic('#{{ id }} .{{ confirm_button_class }}').click(function(){
     elem = $vic('.vic-confirm-waiting');
     elem.removeAttr('data-toggle');
+    elem.data('toggle', null);
     elem.removeClass('vic-confirm-waiting');
     elem.addClass('vic-confirmed');
     $vic('#{{ id }}').vicmodal('hide');

@@ -61,24 +61,22 @@ $vic(document).on('click', '.vic-modal.vic-view-modal a[data-modal="update"]', f
 });
 
 // Create new page after submit
-$vic(document).on('click', '.vic-modal.vic-view-modal a[data-modal="delete"]', function(event) {
+$vic(document).on('click', '.vic-modal.vic-view-modal a.vic-confirmed', function(event) {
     //Check there isn't any data-toggle="vic-confirm" on it
-    if ($vic(event.target).data('toggle') != "vic-confirm" || $vic(event.target).hasClass('vic-confirmed')) {
-        event.preventDefault();
-        loading(true);
+    event.preventDefault();
+    loading(true);
 
-        $vic.ajax({
-            type: "GET",
-            url : $vic(this).attr('href')
-        }).done(function(response){
-            if (true === response.success) {
-                //redirect to the new page
-                window.location.replace(response.url);
-                congrat(response.message, 10000);
-            } else {
-                warn(response.message, 10000);
-                alert(response.message);
-            }
-        });
-    }
+    $vic.ajax({
+        type: "GET",
+        url : $vic(this).attr('href')
+    }).done(function(response){
+        if (true === response.success) {
+            //redirect to the new page
+            window.location.replace(response.url);
+            congrat(response.message, 10000);
+        } else {
+            warn(response.message, 10000);
+            alert(response.message);
+        }
+    });
 });
