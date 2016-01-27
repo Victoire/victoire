@@ -151,9 +151,27 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
                         } else {
                             var_dump('has no positionReference');
                             if ($position == 0) {
+                                if (!isset($view->getBuiltWidgetMap()[$slot])) {
                                 $widgetMap->setPosition(null);
                                 var_dump('set parent'.null);
                                 $widgetMap->setParent(null);
+                            } else {
+                                $widgetMap->setPosition(WidgetMap::POSITION_BEFORE);
+
+                                    $_rootBuilt = null;
+
+                                    foreach ($view->getBuiltWidgetMap()[$slot] as $_built) {
+                                        if (!$_built->getParent()) {
+                                            $_rootBuilt = $_built;
+                                            break;
+                                        }
+                                    }
+                                    while (null !== $child = $_rootBuilt->getChild(WidgetMap::POSITION_BEFORE)) {
+                                        $_rootBuilt = $_rootBuilt->getChild(WidgetMap::POSITION_BEFORE);
+                                    }
+                                    $widgetMap->setParent($_rootBuilt);
+                                }
+
                             } else {
                                 $widgetMap->setPosition(WidgetMap::POSITION_BEFORE);
                                 if (!empty(array_slice($widgetMaps, -1))) {
