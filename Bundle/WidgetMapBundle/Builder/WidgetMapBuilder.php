@@ -27,7 +27,9 @@ class WidgetMapBuilder
         $builtWidgetMap = [];
 
         while (null !== $template = $template->getTemplate()) {
-            $widgetMaps = array_merge($widgetMaps, $template->getWidgetMaps()->toArray());
+            foreach ($template->getWidgetMaps()->toArray() as $item) {
+                $widgetMaps[] = $item;
+            }
         }
 
         $slots = [];
