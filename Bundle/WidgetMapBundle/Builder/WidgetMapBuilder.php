@@ -39,8 +39,16 @@ class WidgetMapBuilder
             }
             if (empty($slots[$widgetMapItem->getSlot()][$id])
                 || !empty($slots[$widgetMapItem->getSlot()][$id])
-                && $slots[$widgetMapItem->getSlot()][$id]->getAction() !== WidgetMap::ACTION_OVERWRITE) {
+                && $widgetMapItem->getAction() !== WidgetMap::ACTION_CREATE) {
                 $slots[$widgetMapItem->getSlot()][$id] = $widgetMapItem;
+            }
+        }
+
+        foreach ($slots as $slot => $widgetMaps) {
+            foreach ($widgetMaps as $key => $widgetMap) {
+                if ($widgetMap->getAction() == WidgetMap::ACTION_DELETE) {
+                    unset($slots[$slot][$key]);
+                }
             }
         }
 
