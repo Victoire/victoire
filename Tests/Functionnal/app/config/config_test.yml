@@ -2,6 +2,9 @@ imports:
     - { resource: @VictoireCoreBundle/Resources/config/config.yml }
     - { resource: @VictoireTwigBundle/Resources/config/config.yml }
 
+parameters:
+    router.request_context.host: fr.quovadis.io
+
 monolog:
     handlers:
         main:

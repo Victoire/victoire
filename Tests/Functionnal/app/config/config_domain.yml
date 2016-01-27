@@ -10,3 +10,6 @@ victoire_i18n:
     locale_pattern_table:
         fr.victoire.io: fr
         en.victoire.io: en
+
+parameters:
+    router.request_context.base_url: ':8000/app_domain.php'
