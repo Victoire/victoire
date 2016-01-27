@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\PageBundle\Controller;
 
-use Doctrine\Common\Util\ClassUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,7 +9,6 @@ use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
-use Victoire\Bundle\I18nBundle\Resolver\LocaleResolver;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
@@ -224,7 +222,6 @@ class BasePageController extends Controller
      */
     protected function translateAction(Request $request, BasePage $page)
     {
-
         $form = $this->createForm($this->getPageTranslateType(), $page);
 
         $businessProperties = [];
@@ -250,7 +247,7 @@ class BasePageController extends Controller
             $route = 'victoire_core_page_show';
             $params = [
                 '_locale' => $clone->getLocale(),
-                'domain'  => $domain
+                'domain'  => $domain,
             ];
 
             if ($clone instanceof WebViewInterface) {
@@ -265,7 +262,7 @@ class BasePageController extends Controller
 
             return [
                 'success' => true,
-                'url' => $this->generateUrl($route, $params)
+                'url'     => $this->generateUrl($route, $params),
             ];
         }
         $errors = $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form);

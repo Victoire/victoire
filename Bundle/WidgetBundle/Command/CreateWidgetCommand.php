@@ -47,7 +47,7 @@ class CreateWidgetCommand extends GenerateBundleCommand
                 new InputOption('content-resolver', '', InputOption::VALUE_NONE, 'Whether to generate a blank ContentResolver to customize widget rendering logic'),
             ])
             ->setDescription('Generate a new widget')
-            ->setHelp(<<<EOT
+            ->setHelp(<<<'EOT'
 The <info>victoire:generate:widget</info> command helps you to generate new widgets.
 
 By default, the command interacts with the developer to tweak the generation.
