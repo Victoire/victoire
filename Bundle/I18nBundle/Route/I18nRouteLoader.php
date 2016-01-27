@@ -54,8 +54,8 @@ class I18nRouteLoader extends BaseRouteLoader
             $domainRegex = addslashes(implode('|', array_keys($this->localeResolver->getDomainConfig())));
             $defaultCollection->setHost(
                 '{domain}',
-                array('domain' => $this->localeResolver->defaultDomain),
-                array('domain' => $domainRegex ? $domainRegex : '[^\.]++')
+                ['domain' => $this->localeResolver->defaultDomain],
+                ['domain' => $domainRegex ? $domainRegex : '[^\.]++']
             );
         }
         $collection->addCollection($defaultCollection);

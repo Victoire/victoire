@@ -50,7 +50,7 @@ $vic(document).on('click', 'a.vic-hover-widget', function(event) {
         }
 
         var id = $vic(this).parents('.vic-widget-container').first().data('id');
-        var url = Routing.generate(route, {'id': id, 'viewReference': viewReferenceId});
+        var url = Routing.generate(route, {'id': id, 'viewReference': viewReferenceId, _locale: locale});
         openModal(url);
     } else {
         console.error('You only should click on this in edit or style mode !');
