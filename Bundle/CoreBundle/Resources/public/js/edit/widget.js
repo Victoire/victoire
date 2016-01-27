@@ -143,43 +143,40 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update"]', function(
 });
 
 // Delete a widget after submit
-$vic(document).on('click', '.vic-widget-modal a[data-modal="delete"], .vic-hover-widget-unlink', function(event) {
-    //Check that there isn't a data-toggle="vic-confirm" on it !
-    if ($vic(event.target).hasClass('vic-confirmed')) {
-        event.preventDefault();
-        $vic(document).trigger("victoire_widget_delete_presubmit");
+$vic(document).on('click', '.vic-widget-modal a.vic-confirmed, .vic-hover-widget-unlink', function(event) {
+    event.preventDefault();
+    $vic(document).trigger("victoire_widget_delete_presubmit");
 
-        loading(true);
-        $vic.ajax({
-            type: "GET",
-            url : $vic(this).attr('href')
-        }).done(function(response) {
-            if (true === response.success) {
-                if (response.hasOwnProperty("redirect")) {
-                    window.location.replace(response.redirect);
-                } else {
-                    updateViewCssHash(response);
-                    closeModal();
-                    widget = $vic('#vic-widget-' + response.widgetId + '-container');
-                    slot = widget.parents('.vic-slot');
-                    widget.remove();
-                    angular.element($vic(slot)).scope().rebuildActions();
-                    angular.element($vic(slot)).scope().toggleEnableButtons();
-                    if(typeof(Storage) !== "undefined") {
-                        localStorage.removeItem('victoire__widget__html__' + response.widgetId);
-                    }
-
-                    congrat(response.message, 10000);
-                }
-                loading(false);
+    loading(true);
+    $vic.ajax({
+        type: "GET",
+        url : $vic(this).attr('href')
+    }).done(function(response) {
+        if (true === response.success) {
+            if (response.hasOwnProperty("redirect")) {
+                window.location.replace(response.redirect);
             } else {
-                //log the error
-                console.info('An error occured during the deletion of the widget.');
-                console.log(response.message);
+                updateViewCssHash(response);
+                closeModal();
+                widget = $vic('#vic-widget-' + response.widgetId + '-container');
+                slot = widget.parents('.vic-slot');
+                widget.remove();
+                angular.element($vic(slot)).scope().rebuildActions();
+                angular.element($vic(slot)).scope().toggleEnableButtons();
+                if(typeof(Storage) !== "undefined") {
+                    localStorage.removeItem('victoire__widget__html__' + response.widgetId);
+                }
+
+                congrat(response.message, 10000);
             }
-        });
-        $vic(document).trigger("victoire_widget_delete_postsubmit");
-    }
+            loading(false);
+        } else {
+            //log the error
+            console.info('An error occured during the deletion of the widget.');
+            console.log(response.message);
+        }
+    });
+    $vic(document).trigger("victoire_widget_delete_postsubmit");
 });
 
 function generateNewWidgetUrl(select){
