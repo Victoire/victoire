@@ -849,5 +849,15 @@ abstract class View
         return $this->widgets;
     }
 
+    public function isTemplateOf(View $view) {
+        while ($_view = $view->getTemplate()) {
+            if ($this == $_view) {
+                return true;
+            }
+            $view = $_view;
+        }
+        return false;
+    }
+
 
 }
