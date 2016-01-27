@@ -110,6 +110,7 @@ class VictoireContext extends RawMinkContext
 
     /**
      * @Then /^I submit the widget$/
+     * @Then /^I submit the modal$/
      */
     public function iSubmitTheWidget()
     {

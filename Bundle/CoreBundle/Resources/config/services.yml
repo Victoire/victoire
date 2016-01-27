@@ -201,6 +201,8 @@ services:
         arguments:
             - '@victoire_page.page_helper'
             - '@router'
+            - '@victoire_i18n.locale_resolver'
+            - '@request_stack'
 
     victoire_core.routing_loader:
         class: Victoire\Bundle\CoreBundle\Route\RouteLoader

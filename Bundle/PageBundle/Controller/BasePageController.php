@@ -8,8 +8,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
+use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
+use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 /**
@@ -234,10 +236,33 @@ class BasePageController extends Controller
 
         if ($form->isValid()) {
             $clone = $this->get('victoire_i18n.view_translation_manager')->addTranslation($page, $page->getName(), $page->getLocale());
+            $domain = null;
+            foreach ($this->container->getParameter('victoire_i18n.locale_pattern_table') as $_domain => $_locale) {
+                if ($_locale === $clone->getLocale()) {
+                    $domain = $_domain;
+                    break;
+                }
+            }
+
+            $route = 'victoire_core_page_show';
+            $params = [
+                '_locale' => $clone->getLocale(),
+                'domain'  => $domain,
+            ];
+
+            if ($clone instanceof WebViewInterface) {
+                $params['url'] = $clone->getUrl(false);
+            } elseif ($clone instanceof BusinessTemplate) {
+                $route = 'victoire_business_template_show';
+                $params['id'] = $clone->getId();
+            } elseif ($clone instanceof Template) {
+                $route = 'victoire_template_show';
+                $params['slug'] = $clone->getSlug();
+            }
 
             return [
                 'success' => true,
-                'url'     => $this->generateUrl('victoire_core_page_show', ['_locale' => $clone->getLocale(), 'url' => $clone->getUrl()]),
+                'url'     => $this->generateUrl($route, $params),
             ];
         }
         $errors = $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form);

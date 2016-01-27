@@ -1,0 +1,15 @@
+imports:
+    - { resource: config_test.yml }
+
+victoire_i18n:
+    victoire_locale: fr
+    available_locales:
+        fr: fr
+        en: en
+    locale_pattern: domain
+    locale_pattern_table:
+        fr.victoire.io: fr
+        en.victoire.io: en
+
+parameters:
+    router.request_context.base_url: ':8000/app_domain.php'

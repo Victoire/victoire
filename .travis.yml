@@ -1,16 +1,23 @@
 sudo: false
-
 language: php
-
 php:
   - 5.6
 
 services:
   - redis-server
 
+env:
+  - IMGUR_API_KEY=b3625162d3418ac51a9ee805b1840452
+
+addons:
+  hosts:
+    - fr.victoire.io
+    - en.victoire.io
+
 before_script:
   - phpenv config-add travis.php.ini
   - npm install less
+  - mkdir fails
   - composer self-update
   - composer config --global github-oauth.github.com $gh_auth_token
   - COMPOSER_ROOT_VERSION=dev-master composer install --prefer-dist
@@ -20,13 +27,15 @@ before_script:
   - php Tests/Functionnal/bin/console --env=test cache:warmup
   - php Tests/Functionnal/bin/console --env=test victoire:generate:view
   - php Tests/Functionnal/bin/console --env=test assets:install Tests/Functionnal/web
+  - php Tests/Functionnal/bin/console --env=test fos:js:dump --target="Tests/Functionnal/web/js/fos_js_routes_test.js"
+  - php Tests/Functionnal/bin/console --env=domain fos:js:dump --target="Tests/Functionnal/web/js/fos_js_routes_domain.js"
   - php Tests/Functionnal/bin/console --env=test assetic:dump
   - nohup php Tests/Functionnal/bin/console --env=test server:run -r vendor/symfony/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/config/router_prod.php &
   # Run selenium server
   - "sh -e /etc/init.d/xvfb start"
   - "export DISPLAY=:99.0"
-  - "wget http://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar"
-  - "nohup java -jar selenium-server-standalone-2.45.0.jar > /dev/null &"
+  - "wget http://selenium-release.storage.googleapis.com/2.49/selenium-server-standalone-2.49.0.jar"
+  - "nohup java -jar selenium-server-standalone-2.49.0.jar > /dev/null &"
   - sleep 5
 
 
@@ -34,7 +43,8 @@ after_script:
   - php Tests/Functionnal/bin/console --env=test doctrine:database:drop --force
 
 after_failure:
-  - grep 'request.ERROR\|request.CRITICAL' $(php -r "echo sys_get_temp_dir();")/Victoire/logs/test.log
+  - vendor/lakion/mink-debug-extension/travis/tools/upload-textfiles "fails/*.log"
+  - vendor/lakion/mink-debug-extension/travis/tools/upload-screenshots "fails/*.png"
 
 script:
   - './vendor/bin/behat'
@@ -43,6 +53,3 @@ script:
 
 notifications:
     slack: appventus:Xy4yq4kXpBK9XHgfz8t9VBPl
-    hipchat:
-        rooms:
-            - 32c78704ec6fd7ad1445cf106d1107@Victoire

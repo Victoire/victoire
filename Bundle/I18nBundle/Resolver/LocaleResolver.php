@@ -17,21 +17,29 @@ class LocaleResolver
     protected $localeDomainConfig;
     protected $availableLocales;
     public $defaultLocale;
+    public $defaultDomain;
 
     /**
      * Constructor.
      *
      * @param string $localePattern      What is the strategy to resolve locale
-     * @param string $localeDomainConfig The locale domain config
+     * @param array  $localeDomainConfig The locale domain config
      * @param string $defaultLocale      The default local app
      * @param string $availableLocales   The list of available locales
      */
-    public function __construct($localePattern, $localeDomainConfig, $defaultLocale, $availableLocales)
+    public function __construct($localePattern, array $localeDomainConfig, $defaultLocale, $availableLocales)
     {
         $this->localePattern = $localePattern;
         $this->localeDomainConfig = $localeDomainConfig;
         $this->defaultLocale = $defaultLocale;
         $this->availableLocales = $availableLocales;
+
+        foreach ($this->localeDomainConfig as $_domain => $_locale) {
+            if ($_locale == $this->defaultLocale) {
+                $this->defaultDomain = $_domain;
+                break;
+            }
+        }
     }
 
     /**
@@ -71,6 +79,13 @@ class LocaleResolver
             return $this->localeDomainConfig[$httpHost];
         }
 
+        error_log(sprintf(
+            'Host "%s" is not defined in your locale_pattern_table in app/config/victoire_core.yml (%s available), using default locale (%s) instead',
+            $httpHost,
+            implode(',', $this->localeDomainConfig),
+            $this->defaultLocale
+        ));
+
         return $request->getLocale();
     }
 
@@ -91,10 +106,22 @@ class LocaleResolver
     }
 
     /**
-     * @return string
+     * Return available locales.
+     *
+     * @return array
      */
     public function getAvailableLocales()
     {
         return $this->availableLocales;
+    }
+
+    /**
+     * return domain config.
+     *
+     * @return array
+     */
+    public function getDomainConfig()
+    {
+        return $this->localeDomainConfig;
     }
 }

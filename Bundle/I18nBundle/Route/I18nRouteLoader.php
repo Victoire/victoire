@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\I18nBundle\Route;
 
+use Gedmo\Sluggable\Util\Urlizer;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 use Victoire\Bundle\CoreBundle\Route\RouteLoader as BaseRouteLoader;
@@ -13,11 +14,13 @@ use Victoire\Bundle\I18nBundle\Resolver\LocaleResolver;
 class I18nRouteLoader extends BaseRouteLoader
 {
     protected $localeResolver;
+    protected $urlizer;
 
     public function __construct($widgets, LocaleResolver $localeResolver)
     {
         parent::__construct($widgets);
         $this->localeResolver = $localeResolver;
+        $this->urlizer = new Urlizer();
     }
 
     /**
@@ -25,8 +28,38 @@ class I18nRouteLoader extends BaseRouteLoader
      */
     public function load($resource, $type = null)
     {
-        $collection = parent::load($resource, $type);
+        $collection = new RouteCollection();
+        foreach ($this->localeResolver->getDomainConfig() as $_domain => $_locale) {
+            $_collection = parent::load($resource, $type);
+            foreach ($_collection->all() as $_name => $_route) {
+                $_route->addDefaults(
+                    [
+                        '_locale' => $_locale,
+                    ]
+                );
+                $_route->setHost($_domain);
+                $collection->add($_locale.'__'.$this->urlizer->urlize($_domain, '_').'__'.$_name, $_route);
+            }
+        }
+
+        /*
+         * Add default(fallback) route for default locale/domain
+         * needs to be after the loop
+         * */
+        $defaultCollection = parent::load($resource, $type);
+        $defaultCollection->addDefaults(['_locale' => $this->localeResolver->defaultLocale]);
+        if ($this->localeResolver->localePattern == LocaleResolver::PATTERN_DOMAIN) {
+            $domainRegex = addslashes(implode('|', array_keys($this->localeResolver->getDomainConfig())));
+            $defaultCollection->setHost(
+                '{domain}',
+                ['domain' => $this->localeResolver->defaultDomain],
+                ['domain' => $domainRegex ? $domainRegex : '[^\.]++']
+            );
+        }
+        $collection->addCollection($defaultCollection);
+
         if ($this->localeResolver->localePattern == LocaleResolver::PATTERN_PARAMETER) {
+            $collection = parent::load($resource, $type);
             //Prefix every victoire route with the locale
             $collection->addPrefix('/{_locale}');
             $collection->addRequirements([
@@ -51,7 +84,7 @@ class I18nRouteLoader extends BaseRouteLoader
             '/',
             [
                 '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
-                'path'        => '/'.$this->localeResolver->defaultLocale, //@todo handle PATTERN_DOMAIN strategy
+                'path'        => '/'.$this->localeResolver->defaultLocale,
                 'permanent'   => true,
             ]
         );
