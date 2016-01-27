@@ -245,6 +245,7 @@ class WidgetMap
         $widgetMap = $this;
         foreach ($positions as $position) {
             if ($child = $widgetMap->getChild($position)) {
+                // if requested for $view, do not return if the found child's substitute for view has not myself as parent or it's position isn't same as mine
                 if ($view && $substitute = $child->getSubstituteForView($view)) {
                     if ($substitute->getParent() != $this || $substitute->getPosition() != $position) {
                         $child = null;

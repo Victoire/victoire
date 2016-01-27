@@ -63,34 +63,10 @@ class WidgetDataWarmer
 
         $widgetRepo = $this->em->getRepository('Victoire\Bundle\WidgetBundle\Entity\Widget');
         $viewWidgets = $widgetRepo->findAllWidgetsForView($view);
-
-        $this->populateWidgets($view, $viewWidgets);
-
         $linkIds = $associatedEntities = [];
         $this->extractAssociatedEntities($viewWidgets, $linkIds, $associatedEntities);
         $this->setAssociatedEntities($associatedEntities);
         $this->setPagesForLinks($linkIds);
-    }
-
-    /**
-     * Populate widgets in View's widgetMap.
-     *
-     * @param View     $view
-     * @param Widget[] $viewWidgets
-     */
-    private function populateWidgets(View $view, array $viewWidgets)
-    {
-        foreach ($view->getBuiltWidgetMap() as $slotId => $widgetMapArray) {
-            /* @var WidgetMap[] $widgetMapArray */
-            foreach ($widgetMapArray as $widgetMap) {
-                foreach ($viewWidgets as $viewWidget) {
-                    if ($widgetMap->getWidget() == $viewWidget) {
-                        $widgetMap->setWidget($viewWidget);
-                        break;
-                    }
-                }
-            }
-        }
     }
 
     /**
