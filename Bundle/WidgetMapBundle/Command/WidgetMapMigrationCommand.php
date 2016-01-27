@@ -78,10 +78,12 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
             $recursiveGetTemplates($rootTemplate);
         }
 
-            $viewRepo = $em->getRepository('VictoirePageBundle:BasePage');
-        $views = $viewRepo->findAll();
+            $pageRepo = $em->getRepository('VictoirePageBundle:BasePage');
+            $pages = $pageRepo->findAll();
+            $errorRepo = $em->getRepository('VictoireTwigBundle:ErrorPage');
+            $errorPages = $errorRepo->findAll();
 
-            $views = array_merge($templates, $views);
+            $views = array_merge($templates, array_merge($pages, $errorPages));
         }
 
         /** @var View $view */
