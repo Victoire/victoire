@@ -170,13 +170,7 @@ class WidgetRenderer
 
         foreach ($slotWidgets as $slotWidget) {
             $widgetParams = $availableWidgets[$slotWidget];
-            // if widget has a parent
-            if (!empty($widgetParams['parent'])) {
-                // place widget under its parent
-                $widgets[$widgetParams['parent']]['children'][$slotWidget]['params'] = $widgetParams;
-            } else {
-                $widgets[$slotWidget]['params'] = $widgetParams;
-            }
+            $widgets[$slotWidget]['params'] = $widgetParams;
         }
         $slots[$slotId]['availableWidgets'] = $widgets;
         if (isset($options['max'])) {
