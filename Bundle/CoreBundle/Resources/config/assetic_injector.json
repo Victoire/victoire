@@ -22,7 +22,7 @@
                 "@VictoireCoreBundle/Resources/script/ngApp/services/slotLocalStorageService.js",
                 "@VictoireCoreBundle/Resources/script/ngApp/services/widgetAPIService.js",
                 "@VictoireCoreBundle/Resources/script/ngApp/services/widgetLocalStorageService.js",
-                "@VictoireCoreBundle/Resources/script/ngApp/directives/newWidgetButtonDispatcher.js",
+                "@VictoireCoreBundle/Resources/script/ngApp/directives/widget.js",
                 "@VictoireCoreBundle/Resources/script/ngApp/directives/newWidgetButton/newWidgetButton.js"
             ],
             "victoire-head":
