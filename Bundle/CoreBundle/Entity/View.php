@@ -699,14 +699,9 @@ abstract class View
      */
     public function getWidgetMapByWidget(Widget $widget)
     {
-        if ($this->builtWidgetMap === null) {
-            throw new \Exception("The WidgetMap for this view is not built at this moment");
-        }
-        foreach ($this->builtWidgetMap as $slot => $widgetMaps) {
-            foreach ($widgetMaps as $widgetMap) {
-                if ($widgetMap->getWidget() == $widget) {
-                    return $widgetMap;
-                }
+        foreach ($this->getBuiltWidgetMap() as $builtWidgetMap) {
+            if (array_key_exists($widget->getId(), $builtWidgetMap)) {
+                return $builtWidgetMap[$widget->getId()];
             }
         }
 

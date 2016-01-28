@@ -87,6 +87,13 @@ class WidgetMapBuilder
                 $builtWidgetMap = $orderizeWidgetMap($mainWidgetMap, $builtWidgetMap);
             }
         }
+        $_builtWidgetMap = $builtWidgetMap;
+        $builtWidgetMap = [];
+        foreach ($_builtWidgetMap as $slot => $__builtWidgetMap) {
+            foreach ($__builtWidgetMap as $key => $item) {
+                $builtWidgetMap[$slot][$item->getWidget()->getId()] = $item;
+            }
+        }
 
         if ($updatePage) {
             $view->setBuiltWidgetMap($builtWidgetMap);
