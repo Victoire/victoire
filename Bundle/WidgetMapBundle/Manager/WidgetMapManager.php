@@ -22,7 +22,10 @@ class WidgetMapManager
 
     public function insert(Widget $widget, View $view, $slotId, $position, $widgetReference)
     {
-        $parent = $this->em->getRepository('VictoireWidgetMapBundle:WidgetMap')->find($widgetReference);
+        $parent = null;
+        if ($widgetReference) {
+            $parent = $this->em->getRepository('VictoireWidgetMapBundle:WidgetMap')->find($widgetReference);
+        }
         //create the new widget map
         $widgetMapEntry = new WidgetMap();
         $widgetMapEntry->setAction(WidgetMap::ACTION_CREATE);

@@ -166,8 +166,6 @@ class CmsExtension extends \Twig_Extension_Core
                     $result .= $this->widgetExceptionHandler->handle($ex, $currentView, $widget, $widgetId);
                 }
             }
-        } else {
-            $result = $this->widgetRenderer->renderActions($slotId, $slotOptions);
         }
         //the container for the slot
         $ngSlotControllerName = 'slot'.$slotId.'Controller';
