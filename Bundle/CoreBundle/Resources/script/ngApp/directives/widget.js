@@ -14,17 +14,20 @@ angular.module('ngApp').directive('widget', function ($compile, $rootScope) {
                     element.next().remove();
                 }
 
-                if (scope.positions.before == 1) {
-                    var buttonBefore = angular.element('<new-widget-button position="before" widget-map="' + scope.widgetMap + '"></new-widget-button>');
-                    var templateBefore = $compile(buttonBefore);
-                    element.before(buttonBefore);
-                    templateBefore(scope);
-                }
-                if (scope.positions.after == 1) {
-                    var buttonAfter = angular.element('<new-widget-button position="after" widget-map="' + scope.widgetMap + '"></new-widget-button>');
-                    var templateAfter = $compile(buttonAfter);
-                    element.after(buttonAfter);
-                    templateAfter(scope);
+                widgets = $vic('.vic-widget-container', '#vic-slot-' + scope.$parent.slotId);
+                if (!("max" in scope.$parent.options) || ("max" in scope.$parent.options) && scope.$parent.options.max > widgets.length) {
+                    if (scope.positions.before == 1) {
+                        var buttonBefore = angular.element('<new-widget-button position="before" widget-map="' + scope.widgetMap + '"></new-widget-button>');
+                        var templateBefore = $compile(buttonBefore);
+                        element.before(buttonBefore);
+                        templateBefore(scope);
+                    }
+                    if (scope.positions.after == 1) {
+                        var buttonAfter = angular.element('<new-widget-button position="after" widget-map="' + scope.widgetMap + '"></new-widget-button>');
+                        var templateAfter = $compile(buttonAfter);
+                        element.after(buttonAfter);
+                        templateAfter(scope);
+                    }
                 }
             };
 
