@@ -24,11 +24,12 @@ class WidgetMapBuilderTest extends \PHPUnit_Framework_TestCase
 
         $builtWidgetMap = $builder->build($view);
 
+        $order = [2, 1, 3, 4];
+        $i = 0;
+        foreach ($builtWidgetMap['content'] as $widgetMap) {
 
-        $this->assertEquals(2, $builtWidgetMap['content'][0]->getWidget()->getId());
-        $this->assertEquals(1, $builtWidgetMap['content'][1]->getWidget()->getId());
-        $this->assertEquals(3, $builtWidgetMap['content'][2]->getWidget()->getId());
-        $this->assertEquals(4, $builtWidgetMap['content'][3]->getWidget()->getId());
+            $this->assertEquals($order[$i++], $widgetMap->getWidget()->getId());
+        }
 
     }
 
@@ -48,10 +49,12 @@ class WidgetMapBuilderTest extends \PHPUnit_Framework_TestCase
 
         $builtWidgetMap = $builder->build($view);
 
-        $this->assertEquals(2, $builtWidgetMap['content'][0]->getWidget()->getId());
-        $this->assertEquals(1, $builtWidgetMap['content'][1]->getWidget()->getId());
-        $this->assertEquals(3, $builtWidgetMap['content'][2]->getWidget()->getId());
-        $this->assertEquals(4, $builtWidgetMap['content'][3]->getWidget()->getId());
+        $order = [2, 1, 3, 4];
+        $i = 0;
+        foreach ($builtWidgetMap['content'] as $widgetMap) {
+
+            $this->assertEquals($order[$i++], $widgetMap->getWidget()->getId());
+        }
     }
 
     public function testBuildPageWithTemplateTemplate()
@@ -71,10 +74,13 @@ class WidgetMapBuilderTest extends \PHPUnit_Framework_TestCase
 
 
         $builtWidgetMap = $builder->build($view);
-        $this->assertEquals(2, $builtWidgetMap['content'][0]->getWidget()->getId());
-        $this->assertEquals(1, $builtWidgetMap['content'][1]->getWidget()->getId());
-        $this->assertEquals(3, $builtWidgetMap['content'][2]->getWidget()->getId());
-        $this->assertEquals(4, $builtWidgetMap['content'][3]->getWidget()->getId());
+
+        $order = [2, 1, 3, 4];
+        $i = 0;
+        foreach ($builtWidgetMap['content'] as $widgetMap) {
+
+            $this->assertEquals($order[$i++], $widgetMap->getWidget()->getId());
+        }
 
     }
 
