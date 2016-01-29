@@ -279,7 +279,7 @@ class WidgetMap
     public function hasChild($position)
     {
         foreach ($this->getChildren() as $child) {
-            if ($child->getPosition() === $position) {
+            if ($child && $child->getPosition() === $position) {
                 return true;
             }
         }
@@ -294,7 +294,7 @@ class WidgetMap
     {
         $child = null;
         foreach ($this->children as $_child) {
-            if ($_child->getPosition() == $position) {
+            if ($_child && $_child->getPosition() == $position) {
                 $child = $_child;
             }
         }
@@ -309,7 +309,7 @@ class WidgetMap
     {
         $childs = [];
         foreach ($this->children as $_child) {
-            if ($_child->getPosition() == $position) {
+            if ($_child && $_child->getPosition() == $position) {
                 $childs[] = $_child;
             }
         }
