@@ -61,6 +61,8 @@ class WidgetMapManager
         $beforeChild = !empty($children[WidgetMap::POSITION_BEFORE]) ? $children[WidgetMap::POSITION_BEFORE] : null;
         $afterChild = !empty($children[WidgetMap::POSITION_AFTER]) ? $children[WidgetMap::POSITION_AFTER] : null;
 
+        $widgetMapReferenceChildren = $this->getChildrenByView($widgetMapReference);
+
         $widgetMap = $this->moveWidgetMap($view, $widgetMap, $widgetMapReference, $position, $slot);
 
         $widgetMap->removeChildren();
@@ -82,7 +84,15 @@ class WidgetMapManager
         } else if ($afterChild) {
             $this->moveWidgetMap($view, $afterChild, $originalParent, $originalPosition);
         }
-
+        
+        foreach ($widgetMapReferenceChildren['views'] as $_view) {
+            if (isset($widgetMapReferenceChildren['before'][$_view->getId()])) {
+                $widgetMapReferenceChildren['before'][$_view->getId()]->setParent($widgetMap);
+            }
+            if (isset($widgetMapReferenceChildren['after'][$_view->getId()])) {
+                $widgetMapReferenceChildren['after'][$_view->getId()]->setParent($widgetMap);
+            }
+        }
     }
 
     /**
@@ -208,5 +218,27 @@ class WidgetMapManager
 
 
         return $widgetMap;
+    }
+
+    public function getChildrenByView(WidgetMap $widgetMap)
+    {
+        $beforeChilds = $widgetMap->getChilds(WidgetMap::POSITION_BEFORE);
+        $afterChilds = $widgetMap->getChilds(WidgetMap::POSITION_AFTER);
+
+        $childrenByView['views'] = [];
+        $childrenByView['before'] = [];
+        $childrenByView['after'] = [];
+        foreach ($beforeChilds as $beforeChild) {
+            $view = $beforeChild->getView();
+            $childrenByView['views'][] = $view;
+            $childrenByView['before'][$view->getId()] = $beforeChild;
+        }
+        foreach ($afterChilds as $afterChild) {
+            $view = $afterChild->getView();
+            $childrenByView['views'][] = $view;
+            $childrenByView['after'][$view->getId()] = $afterChild;
+        }
+
+        return $childrenByView;
     }
 }
