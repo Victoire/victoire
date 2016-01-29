@@ -54,12 +54,11 @@ class WidgetMapManagerTest extends \PHPUnit_Framework_TestCase
 
         $builtWidgetMap = $builder->build($view);
 
-        $this->assertEquals(2, $builtWidgetMap['content'][0]->getWidget()->getId());
-        $this->assertEquals(1, $builtWidgetMap['content'][1]->getWidget()->getId());
-        $this->assertEquals(3, $builtWidgetMap['content'][2]->getWidget()->getId());
-        $this->assertEquals(4, $builtWidgetMap['content'][3]->getWidget()->getId());
-
-        $order = [2,1,3,4];
+        $order = [2, 1, 3, 4];
+        $i = 0;
+        foreach ($builtWidgetMap['content'] as $widgetMap) {
+            $this->assertEquals($order[$i++], $widgetMap->getWidget()->getId());
+        }
 
         $this->moveWidgetMap($builtWidgetMap, $order, $view, $manager, $builder);
 
@@ -101,16 +100,18 @@ class WidgetMapManagerTest extends \PHPUnit_Framework_TestCase
 
         $builtTemplateWidgetMap = $builder->build($template);
 
-        $this->assertEquals(3, $builtTemplateWidgetMap['content'][0]->getWidget()->getId());
-        $this->assertEquals(4, $builtTemplateWidgetMap['content'][1]->getWidget()->getId());
 
+        $order = [3, 4];
+        $i = 0;
+        foreach ($builtWidgetMap['content'] as $widgetMap) {
+            $this->assertEquals($order[$i++], $widgetMap->getWidget()->getId());
+        }
 
-        $this->assertEquals(2, $builtWidgetMap['content'][0]->getWidget()->getId());
-        $this->assertEquals(1, $builtWidgetMap['content'][1]->getWidget()->getId());
-        $this->assertEquals(3, $builtWidgetMap['content'][2]->getWidget()->getId());
-        $this->assertEquals(4, $builtWidgetMap['content'][3]->getWidget()->getId());
-
-        $order = [2,1,3,4];
+        $order = [2, 1, 3, 4];
+        $i = 0;
+        foreach ($builtWidgetMap['content'] as $widgetMap) {
+            $this->assertEquals($order[$i++], $widgetMap->getWidget()->getId());
+        }
 
         $this->moveWidgetMap($builtWidgetMap, $order, $view, $manager, $builder);
 
@@ -140,12 +141,12 @@ class WidgetMapManagerTest extends \PHPUnit_Framework_TestCase
 
         $builtWidgetMap = $builder->build($view);
 
-        $this->assertEquals(2, $builtWidgetMap['content'][0]->getWidget()->getId());
-        $this->assertEquals(1, $builtWidgetMap['content'][1]->getWidget()->getId());
-        $this->assertEquals(3, $builtWidgetMap['content'][2]->getWidget()->getId());
-        $this->assertEquals(4, $builtWidgetMap['content'][3]->getWidget()->getId());
+        $order = [2, 1, 3, 4];
+        $i = 0;
+        foreach ($builtWidgetMap['content'] as $widgetMap) {
 
-        $order = [2,1,3,4];
+            $this->assertEquals($order[$i++], $widgetMap->getWidget()->getId());
+        }
 
         $this->moveWidgetMap($builtWidgetMap, $order, $view, $manager, $builder);
     }
