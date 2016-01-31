@@ -4,7 +4,7 @@ namespace {{ namespace }}\Resolver;
 
 
 {% block use_statements %}
-use Victoire\Bundle\WidgetBundle\Model\Widget;
+use Victoire\Bundle\WidgetBundle\Entity\Widget;
 {% if parent and parentResolver %}
 use Victoire\Widget\{{parent}}Bundle\Resolver\Widget{{parent}}ContentResolver;
 {% else %}

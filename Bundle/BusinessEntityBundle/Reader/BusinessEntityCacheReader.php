@@ -6,7 +6,7 @@ use Victoire\Bundle\BusinessEntityBundle\Annotation\AnnotationDriver;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\CoreBundle\Cache\VictoireCache;
 use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
-use Victoire\Bundle\WidgetBundle\Model\Widget;
+use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
  * The BusinessEntity Cache Reader.
@@ -59,6 +59,7 @@ class BusinessEntityCacheReader
         if (isset($widgetMetadatas[$widgetName]) && array_key_exists('businessEntities', $widgetMetadatas[$widgetName])) {
             /* @var BusinessEntity[] $businessEntities */
             $businessEntities = $widgetMetadatas[$widgetName]['businessEntities'];
+
             foreach ($businessEntities as $businessEntity) {
                 $businessEntity->setDisableForReceiverProperties($widgetMetadatas[$widgetName]['receiverProperties']);
             }

@@ -3,7 +3,7 @@
 namespace Victoire\Bundle\WidgetBundle\Resolver\Chain;
 
 use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
-use Victoire\Bundle\WidgetBundle\Model\Widget;
+use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 class WidgetContentResolverChain
 {

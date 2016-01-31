@@ -5,7 +5,7 @@ namespace Victoire\Bundle\WidgetBundle\Resolver;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Victoire\Bundle\QueryBundle\Helper\QueryHelper;
-use Victoire\Bundle\WidgetBundle\Model\Widget;
+use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 class BaseWidgetContentResolver
 {

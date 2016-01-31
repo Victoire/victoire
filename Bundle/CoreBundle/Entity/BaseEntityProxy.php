@@ -3,7 +3,7 @@
 namespace Victoire\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Victoire\Bundle\WidgetBundle\Model\Widget;
+use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
  * The Entity proxy is the link between a view, a widget or any else with the BusinessEntity.
