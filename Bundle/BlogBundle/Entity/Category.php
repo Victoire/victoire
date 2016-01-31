@@ -100,7 +100,7 @@ class Category
     /**
      * undocumented function.
      *
-     * @return void
+     * @return string
      *
      * @author
      **/
