@@ -65,8 +65,6 @@ class WidgetMapManager
 
         $widgetMap = $this->moveWidgetMap($view, $widgetMap, $widgetMapReference, $position, $slot);
 
-        $widgetMap->removeChildren();
-
         // If the moved widgetMap has someone at both his before and after, arbitrary move UP the before side
         // and find the first place after the before widgetMap hierarchy to place the after widgetMap.
         if ($beforeChild && $afterChild) {
@@ -86,6 +84,7 @@ class WidgetMapManager
         }
         
         foreach ($widgetMapReferenceChildren['views'] as $_view) {
+            if ($_view->getId() !== $view->getId()) {
             if (isset($widgetMapReferenceChildren['before'][$_view->getId()])) {
                 $widgetMapReferenceChildren['before'][$_view->getId()]->setParent($widgetMap);
             }
@@ -93,6 +92,7 @@ class WidgetMapManager
                 $widgetMapReferenceChildren['after'][$_view->getId()]->setParent($widgetMap);
             }
         }
+    }
     }
 
     /**
