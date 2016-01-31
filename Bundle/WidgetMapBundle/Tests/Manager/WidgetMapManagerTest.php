@@ -17,106 +17,6 @@ class WidgetMapManagerTest extends \PHPUnit_Framework_TestCase
 
     private $prophet;
 
-    public function testMoveWithGrandTemplate()
-    {
-
-
-        $builder = new WidgetMapBuilder();
-        $grandtemplate = new Template();
-        $template = new Template();
-        $template->setTemplate($grandtemplate);
-        $view = new Page();
-        $view->setTemplate($template);
-
-
-        $widgetMap3 = $this->newWidgetMap(3, null, null, $grandtemplate, $this->newWidget(3));
-        $widgetMap2 = $this->newWidgetMap(2, $widgetMap3, WidgetMap::POSITION_BEFORE, $view, $this->newWidget(2));
-        $widgetMap1 = $this->newWidgetMap(1, $widgetMap2, WidgetMap::POSITION_AFTER, $view, $this->newWidget(1));
-        $widgetMap4 = $this->newWidgetMap(4, $widgetMap3, WidgetMap::POSITION_AFTER, $template, $this->newWidget(4));
-
-        $em = $this->prophet->prophesize('Doctrine\ORM\EntityManager');
-        $widgetMapRepo = $this->prophet->prophesize('Victoire\Bundle\WidgetMapBundle\Repository\WidgetMapRepository');
-
-        $em->getRepository('VictoireWidgetMapBundle:WidgetMap')->willReturn($widgetMapRepo);
-
-        $em->persist(Argument::type('object'))->will(function($args) use ($widgetMapRepo) {
-                $args[0]->setId(hexdec(uniqid()));
-
-                $widgetMapRepo->find($args[0]->getId())->willReturn($args[0]);
-            });
-
-        $widgetMapRepo->find(1)->willReturn($widgetMap1);
-        $widgetMapRepo->find(2)->willReturn($widgetMap2);
-        $widgetMapRepo->find(3)->willReturn($widgetMap3);
-        $widgetMapRepo->find(4)->willReturn($widgetMap4);
-
-        $manager = new WidgetMapManager($em->reveal(), $builder);
-
-        $builtWidgetMap = $builder->build($view);
-
-        $order = [2, 1, 3, 4];
-        $i = 0;
-        foreach ($builtWidgetMap['content'] as $widgetMap) {
-            $this->assertEquals($order[$i++], $widgetMap->getWidget()->getId());
-        }
-
-        $this->moveWidgetMap($builtWidgetMap, $order, $view, $manager, $builder);
-
-    }
-
-    public function testMoveWithTemplate()
-    {
-        $builder = new WidgetMapBuilder();
-        $template = new Template();
-        $view = new Page();
-        $view->setTemplate($template);
-
-
-        $widgetMap3 = $this->newWidgetMap(3, null, null, $template, $this->newWidget(3));
-        $widgetMap2 = $this->newWidgetMap(2, $widgetMap3, WidgetMap::POSITION_BEFORE, $view, $this->newWidget(2));
-        $widgetMap1 = $this->newWidgetMap(1, $widgetMap2, WidgetMap::POSITION_AFTER, $view, $this->newWidget(1));
-        $widgetMap4 = $this->newWidgetMap(4, $widgetMap3, WidgetMap::POSITION_AFTER, $template, $this->newWidget(4));
-
-        $em = $this->prophet->prophesize('Doctrine\ORM\EntityManager');
-        $widgetMapRepo = $this->prophet->prophesize('Victoire\Bundle\WidgetMapBundle\Repository\WidgetMapRepository');
-
-        $em->getRepository('VictoireWidgetMapBundle:WidgetMap')->willReturn($widgetMapRepo);
-
-        $em->persist(Argument::type('object'))->will(function($args) use ($widgetMapRepo) {
-                $args[0]->setId(hexdec(bin2hex(openssl_random_pseudo_bytes(4))));
-
-                $widgetMapRepo->find($args[0]->getId())->willReturn($args[0]);
-            });
-
-        $widgetMapRepo->find(1)->willReturn($widgetMap1);
-        $widgetMapRepo->find(2)->willReturn($widgetMap2);
-        $widgetMapRepo->find(3)->willReturn($widgetMap3);
-        $widgetMapRepo->find(4)->willReturn($widgetMap4);
-        $this->em = $em->reveal();
-
-        $manager = new WidgetMapManager($em->reveal(), $builder);
-
-        $builtWidgetMap = $builder->build($view);
-
-        $builtTemplateWidgetMap = $builder->build($template);
-
-
-        $order = [3, 4];
-        $i = 0;
-        foreach ($builtWidgetMap['content'] as $widgetMap) {
-            $this->assertEquals($order[$i++], $widgetMap->getWidget()->getId());
-        }
-
-        $order = [2, 1, 3, 4];
-        $i = 0;
-        foreach ($builtWidgetMap['content'] as $widgetMap) {
-            $this->assertEquals($order[$i++], $widgetMap->getWidget()->getId());
-        }
-
-        $this->moveWidgetMap($builtWidgetMap, $order, $view, $manager, $builder);
-
-    }
-
     public function testMove()
     {
 
@@ -164,39 +64,61 @@ class WidgetMapManagerTest extends \PHPUnit_Framework_TestCase
 
         for ($i = 1; $i <= 1000; $i++) {
 
-            $sortedWidget['widgetMap'] = $builtWidgetMap['content'][array_rand($builtWidgetMap['content'])];
 
-            $availablePositions = [];
-            $positions = [WidgetMap::POSITION_AFTER, WidgetMap::POSITION_BEFORE];
-            foreach ($builtWidgetMap['content'] as $widgetMap) {
-                if ($widgetMap->getId() !== $sortedWidget['widgetMap']->getId()) {
-                    foreach ($positions as $position) {
-                        if (!$widgetMap->hasChild($position)) {
-                            $availablePositions[] = [
-                                'widgetMapReference' => $widgetMap,
-                                'position' => $position,
-                            ];
+
+            $buildSortedWidget = function ($builtWidgetMap) use (&$order, &$buildSortedWidget, $view) {
+
+                $sortedWidget['widgetMap'] = $builtWidgetMap['content'][array_rand($builtWidgetMap['content'])];
+                $availablePositions = [];
+                $positions = [WidgetMap::POSITION_AFTER, WidgetMap::POSITION_BEFORE];
+                $shuffled = $builtWidgetMap['content'];
+                shuffle($shuffled);
+                foreach ($shuffled as $widgetMap) {
+                    if ($widgetMap->getId() !== $sortedWidget['widgetMap']->getId()) {
+                        foreach ($positions as $position) {
+                            if (!$widgetMap->hasChild($position, $view)) {
+                                $availablePositions[] = [
+                                    'widgetMapReference' => $widgetMap,
+                                    'position' => $position,
+                                ];
+                                if (array_rand([0, 1]) === 0) {
+                                    break;
+                                }
+                            }
                         }
                     }
                 }
-            }
 
-            $randomPosition = $availablePositions[array_rand($availablePositions)];
+                $randomPosition = $availablePositions[array_rand($availablePositions)];
+                $offset = array_search(
+                        $randomPosition['widgetMapReference']->getWidget()->getId(),
+                        $order
+                    ) + ($randomPosition['position'] == WidgetMap::POSITION_AFTER ? 1 : 0);
+                if (!empty($order[$offset]) && $order[$offset] == $sortedWidget['widgetMap']->getId()) {
+                    return $buildSortedWidget($builtWidgetMap);
+                }
 
-            $sortedWidget = array_merge($sortedWidget, $randomPosition);
+                $sortedWidget = array_merge($sortedWidget, $randomPosition);
 
-            $order[array_search($sortedWidget['widgetMap']->getWidget()->getId(), $order)] = null;
-            $offset = array_search(
-                    $sortedWidget['widgetMapReference']->getWidget()->getId(),
-                    $order
-                ) + ($sortedWidget['position'] == WidgetMap::POSITION_AFTER ? 1 : 0);
-            array_splice($order, $offset, 0, $sortedWidget['widgetMap']->getWidget()->getId());
+                $order[array_search($sortedWidget['widgetMap']->getWidget()->getId(), $order)] = null;
+                $offset = array_search(
+                        $sortedWidget['widgetMapReference']->getWidget()->getId(),
+                        $order
+                    ) + ($sortedWidget['position'] == WidgetMap::POSITION_AFTER ? 1 : 0);
+                array_splice($order, $offset, 0, $sortedWidget['widgetMap']->getWidget()->getId());
 
-            unset($order[array_search(null, $order)]);
+                unset($order[array_search(null, $order)]);
 
-            $order = array_values($order);
-            $sortedWidget['widgetMap'] = $sortedWidget['widgetMap']->getId();
-            $sortedWidget['widgetMapReference'] = $sortedWidget['widgetMapReference']->getId();
+                $order = array_values($order);
+                $sortedWidget['widgetMap'] = $sortedWidget['widgetMap']->getId();
+                $sortedWidget['widgetMapReference'] = $sortedWidget['widgetMapReference']->getId();
+
+
+                return $sortedWidget;
+
+            };
+
+            $sortedWidget = array_merge($sortedWidget, $buildSortedWidget($builtWidgetMap));
 
             $manager->move($view, $sortedWidget);
             $newBuiltWidgetMap = $builder->build($view);
@@ -225,6 +147,7 @@ class WidgetMapManagerTest extends \PHPUnit_Framework_TestCase
         $widgetMap->setPosition($position);
         $widgetMap->setWidget($widget);
         $widgetMap->setSlot('content');
+        $widgetMap->setAction(WidgetMap::ACTION_CREATE);
         $view->addWidgetMap($widgetMap);
 
         return $widgetMap;
