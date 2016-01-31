@@ -249,7 +249,17 @@ class WidgetMap
                 foreach ($childs as $_child) {
                     // found child must belongs to the given view or one of it's templates
                     if ($view) {
-                        if ($_child->getView() && ($view == $_child->getView() || $_child->getView()->isTemplateOf($view))) {
+                        // if child has a view
+                        // and child view is same as given view or the child view is a template of given view
+                        if ($_child->getView() && ($view == $_child->getView() || $_child->getView()->isTemplateOf($view))
+                        ) {
+                            // if child is a substitute in view
+                            if ($substitute = $_child->getSubstituteForView($view)) {
+                                // if i'm not the parent of the substitute or i does not have the same position, child is not valid
+                                if ($substitute->getParent() != $this || $substitute->getPosition() != $position) {
+                                    $_child = null;
+                                }
+                            }
                             $children[$position] = $_child;
                         }
                     } else {
@@ -257,6 +267,7 @@ class WidgetMap
                     }
                 }
             }
+
             if (!$children[$position]
                 && ($replaced = $this->getReplaced())
                 && !empty($this->getReplaced()->getChilds($position))) {
@@ -264,6 +275,14 @@ class WidgetMap
                 foreach ($this->getReplaced()->getChilds($position) as $_child) {
                     if ($view) {
                         if ($_child->getView() && ($view == $_child->getView() || $_child->getView()->isTemplateOf($view))) {
+
+                            // if child is a substitute in view
+                            if ($substitute = $_child->getSubstituteForView($view)) {
+                                // if i'm not the parent of the substitute or i does not have the same position, child is not valid
+                                if ($substitute->getParent() != $this || $substitute->getPosition() != $position) {
+                                    $_child = null;
+                                }
+                            }
                             $children[$position] = $_child;
                         }
                     } else {
@@ -276,9 +295,17 @@ class WidgetMap
         return $children;
     }
 
-    public function hasChild($position)
+    /**
+     * @return mixed
+     */
+    public function getChildrenRaw()
     {
-        foreach ($this->getChildren() as $child) {
+        return $this->children;
+    }
+
+    public function hasChild($position, View $view = null)
+    {
+        foreach ($this->getChildren($view) as $child) {
             if ($child && $child->getPosition() === $position) {
                 return true;
             }
@@ -314,7 +341,6 @@ class WidgetMap
             }
         }
 
-
         return $childs;
     }
 
@@ -333,7 +359,6 @@ class WidgetMap
     public function removeChildren()
     {
         foreach ($this->children as $child) {
-            $child->setParent(null);
             $this->removeChild($child);
         }
     }
