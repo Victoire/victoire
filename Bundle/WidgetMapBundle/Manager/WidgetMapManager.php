@@ -190,24 +190,33 @@ class WidgetMapManager
         }
     }
 
-    protected function moveWidgetMap(View $view, WidgetMap $widgetMap, $parent = false, $position = false, $slot = false)
+    protected function cloneWidgetMap(WidgetMap $widgetMap, View $view)
     {
-        if ($widgetMap->getView() !== $view) {
             $originalWidgetMap = $widgetMap;
             $widgetMap = clone $widgetMap;
             $widgetMap->setId(null);
             $widgetMap->setAction(WidgetMap::ACTION_OVERWRITE);
             $widgetMap->setReplaced($originalWidgetMap);
+        $originalWidgetMap->addSubstitute($widgetMap);
             $view->addWidgetMap($widgetMap);
             $this->em->persist($widgetMap);
+
+        return $widgetMap;
+    }
+    protected function moveWidgetMap(View $view, WidgetMap $widgetMap, $parent = false, $position = false, $slot = false)
+    {
+        if ($widgetMap->getView() !== $view) {
+            $widgetMap = $this->cloneWidgetMap($widgetMap, $view);
         }
 
-
         if ($parent !== false) {
-            if ($widgetMap->getParent()) {
-                $widgetMap->getParent()->removeChild($widgetMap);
+            if ($oldParent = $widgetMap->getParent()) {
+                $oldParent->removeChild($widgetMap);
             }
             $widgetMap->setParent($parent);
+            if ($parent) {
+                $parent->addChild($widgetMap);
+            }
         }
         if ($position !== false) {
             $widgetMap->setPosition($position);
