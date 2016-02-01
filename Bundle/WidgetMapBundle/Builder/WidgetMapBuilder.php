@@ -54,7 +54,7 @@ class WidgetMapBuilder
         $builtWidgetMap = [];
         foreach ($_builtWidgetMap as $slot => $__builtWidgetMap) {
             foreach ($__builtWidgetMap as $key => $item) {
-                // store each widgetmap in an array with the widget id as key to make the "View::getWidgetMapByWidget"
+                // store each widgetmap in an array with the widget id as key to make the "View::getWidgetMapByWidgetAndView"
                 // method more efficient
                 $builtWidgetMap[$slot][$item->getWidget()->getId()] = $item;
             }

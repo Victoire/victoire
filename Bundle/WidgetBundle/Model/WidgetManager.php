@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\WidgetBundle\Model;
 
+use Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -191,7 +192,7 @@ class WidgetManager
         //if the form is posted
         if ($requestMethod === 'POST') {
             //the widget view
-            $widgetView = $currentView->getWidgetMapByWidget($widget)->getView();
+            $widgetView = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $currentView)->getView();
 
             //we only copy the widget if the view of the widget is not the current view
             if ($widgetView !== $currentView) {
@@ -265,7 +266,7 @@ class WidgetManager
         $this->widgetMapBuilder->build($view);
         //Used to update view in callback (we do it before delete it else it'll not exists anymore)
         $widgetId = $widget->getId();
-        $widgetMap = $view->getWidgetMapByWidget($widget);
+        $widgetMap = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $view);
         //the widget is removed only if the current view is the view of the widget
         if (null !== $widgetMap
         && $widgetMap->getView() == $view
@@ -303,7 +304,7 @@ class WidgetManager
         $this->entityManager->persist($view);
         $this->entityManager->flush();
 
-        $originalWidgetMap = $view->getWidgetMapByWidget($widget);
+        $originalWidgetMap = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $view);
 
         $this->widgetMapManager->overwrite($view, $originalWidgetMap, $widgetCopy);
 

@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\WidgetMapBundle\Command;
 
+use Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -141,7 +142,7 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
                             $output->writeln('has positionReference');
                             $referencedWidget = $widgetRepo->find($_oldWidgetMap['positionReference']);
                             $output->writeln($referencedWidget->getId());
-                            $referencedWidgetMap = $view->getWidgetMapByWidget($referencedWidget);
+                            $referencedWidgetMap = WidgetMapHelper::getWidgetMapByWidgetAndView($referencedWidget, $view);
                             while ($referencedWidgetMap->getChild(WidgetMap::POSITION_AFTER)) {
                                 $referencedWidgetMap = $referencedWidgetMap->getChild(WidgetMap::POSITION_AFTER);
                             }
@@ -218,7 +219,7 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
                             $widgetMap->setPosition(null);
                             $output->writeln('set parent'.null);
                             $widgetMap->setParent(null);
-                            $deletedWidgetMap = $view->getWidgetMapByWidget($replacedWidget);
+                            $deletedWidgetMap = WidgetMapHelper::getWidgetMapByWidgetAndView($replacedWidget, $view);
                             if ($deletedWidgetMap) {
                                 $replacedWidgetView = $replacedWidget->getView();
                                 $this->getContainer()->get('victoire_widget_map.builder')->build($replacedWidgetView);

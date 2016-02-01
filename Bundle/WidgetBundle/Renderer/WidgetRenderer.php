@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\WidgetBundle\Renderer;
 
+use Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 use Symfony\Component\DependencyInjection\Container;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\CoreBundle\Entity\View;
@@ -70,7 +71,7 @@ class WidgetRenderer
 
         $dispatcher->dispatch(VictoireCmsEvents::WIDGET_PRE_RENDER, new WidgetRenderEvent($widget));
 
-        $widgetMap = $view->getWidgetMapByWidget($widget);
+        $widgetMap = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $view);
 
         $directive = '';
         if ($this->container->get('security.context')->isGranted('ROLE_VICTOIRE')) {
