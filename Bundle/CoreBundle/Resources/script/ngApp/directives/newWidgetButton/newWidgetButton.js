@@ -2,7 +2,6 @@ angular.module('ngApp').directive('newWidgetButton', function ($compile) {
     return {
         restrict:'E',
         link: function(scope, element, attrs) {
-            //todo: flatten availableWidgets
             var availableWidgets = angular.element($vic(element).parents('.vic-slot').first()).scope().options.availableWidgets;
             var choices = [{value: '', label: ''}];
 
