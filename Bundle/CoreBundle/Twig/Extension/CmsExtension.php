@@ -161,7 +161,6 @@ class CmsExtension extends \Twig_Extension_Core
                     } else {
                         $result .= $this->widgetRenderer->prepareAsynchronousRender($widgetId);
                     }
-
                 } catch (\Exception $ex) {
                     $result .= $this->widgetExceptionHandler->handle($ex, $currentView, $widget, $widgetId);
                 }

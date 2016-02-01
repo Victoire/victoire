@@ -12,7 +12,6 @@ use Victoire\Widget\TextBundle\Entity\WidgetText;
 
 class WidgetMapBuilderTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testBuildPage()
     {
         $builder = new WidgetMapBuilder();
@@ -27,10 +26,8 @@ class WidgetMapBuilderTest extends \PHPUnit_Framework_TestCase
         $order = [2, 1, 3, 4];
         $i = 0;
         foreach ($builtWidgetMap['content'] as $widgetMap) {
-
             $this->assertEquals($order[$i++], $widgetMap->getWidget()->getId());
         }
-
     }
 
     public function testBuildPageWithTemplate()
@@ -40,19 +37,16 @@ class WidgetMapBuilderTest extends \PHPUnit_Framework_TestCase
         $view = new Page();
         $view->setTemplate($template);
 
-
         $widget3 = $this->newWidgetMap(3, null, null, $template, $this->newWidget(3));
         $widget2 = $this->newWidgetMap(2, $widget3, WidgetMap::POSITION_BEFORE, $view, $this->newWidget(2));
         $widget1 = $this->newWidgetMap(1, $widget2, WidgetMap::POSITION_AFTER, $view, $this->newWidget(1));
         $widget4 = $this->newWidgetMap(4, $widget3, WidgetMap::POSITION_AFTER, $view, $this->newWidget(4));
-
 
         $builtWidgetMap = $builder->build($view);
 
         $order = [2, 1, 3, 4];
         $i = 0;
         foreach ($builtWidgetMap['content'] as $widgetMap) {
-
             $this->assertEquals($order[$i++], $widgetMap->getWidget()->getId());
         }
     }
@@ -66,28 +60,22 @@ class WidgetMapBuilderTest extends \PHPUnit_Framework_TestCase
         $view = new Page();
         $view->setTemplate($template);
 
-
         $widget3 = $this->newWidgetMap(3, null, null, $grandtemplate, $this->newWidget(3));
         $widget2 = $this->newWidgetMap(2, $widget3, WidgetMap::POSITION_BEFORE, $template, $this->newWidget(2));
         $widget1 = $this->newWidgetMap(1, $widget2, WidgetMap::POSITION_AFTER, $view, $this->newWidget(1));
         $widget4 = $this->newWidgetMap(4, $widget3, WidgetMap::POSITION_AFTER, $view, $this->newWidget(4));
-
 
         $builtWidgetMap = $builder->build($view);
 
         $order = [2, 1, 3, 4];
         $i = 0;
         foreach ($builtWidgetMap['content'] as $widgetMap) {
-
             $this->assertEquals($order[$i++], $widgetMap->getWidget()->getId());
         }
-
     }
-
 
     protected function newWidgetMap($id, $parent, $position, View $view, Widget $widget)
     {
-
         $widgetMap = new WidgetMap();
         $widgetMap->setId($id);
         if ($parent) {
@@ -101,6 +89,7 @@ class WidgetMapBuilderTest extends \PHPUnit_Framework_TestCase
 
         return $widgetMap;
     }
+
     protected function newWidget($id)
     {
         $widget = new WidgetText();

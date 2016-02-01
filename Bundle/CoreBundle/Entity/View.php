@@ -11,10 +11,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\I18nBundle\Entity\BaseI18n;
 use Victoire\Bundle\I18nBundle\Entity\I18n;
-use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
+use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 
 /**
  * Victoire View
@@ -136,10 +136,9 @@ abstract class View
      */
     protected $undeletable = false;
 
-
     /**
      * The reference is related to viewsReferences.xml file which list all app views.
-     * This is used to speed up the routing system and identify virtual pages (BusinessPage)
+     * This is used to speed up the routing system and identify virtual pages (BusinessPage).
      */
     protected $reference;
 
@@ -665,6 +664,7 @@ abstract class View
         $widgetMap->setView($this);
         $this->widgetMaps[] = $widgetMap;
     }
+
     /**
      * Remove a widgetMap.
      *
@@ -674,7 +674,6 @@ abstract class View
     {
         $this->widgetMaps->removeElement($widgetMap);
     }
-
 
     /**
      * Get widgets ids as array.
@@ -689,12 +688,12 @@ abstract class View
             $widgetIds[] = $widgetMap->getWidget()->getId();
         }
 
-
         return $widgetIds;
     }
 
     /**
      * @param Widget $widget
+     *
      * @return null|WidgetMap
      */
     public function getWidgetMapByWidget(Widget $widget)
@@ -705,8 +704,7 @@ abstract class View
             }
         }
 
-        return null;
-
+        return;
     }
 
     /**
@@ -732,7 +730,6 @@ abstract class View
 
         return $this;
     }
-
 
     /**
      * Get discriminator type.
@@ -844,15 +841,15 @@ abstract class View
         return $this->widgets;
     }
 
-    public function isTemplateOf(View $view) {
+    public function isTemplateOf(View $view)
+    {
         while ($_view = $view->getTemplate()) {
             if ($this == $_view) {
                 return true;
             }
             $view = $_view;
         }
+
         return false;
     }
-
-
 }

@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\WidgetBundle\Model;
 
-use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 use Victoire\Bundle\CoreBundle\Entity\View;
 
 /**
@@ -14,7 +13,6 @@ abstract class Widget
     const MODE_QUERY = 'query';
     const MODE_STATIC = 'static';
     const MODE_BUSINESS_ENTITY = 'businessEntity';
-
 
     /**
      * This property is not persisted, we use it to remember the view where the widget
@@ -67,5 +65,4 @@ abstract class Widget
     {
         return $this->currentView ? $this->currentView : $this->getView();
     }
-
 }

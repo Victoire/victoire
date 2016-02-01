@@ -27,8 +27,7 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
     }
 
     /**
-     *
-     * Takes each view widgetmap array and convert it to persisted WidgetMaps
+     * Takes each view widgetmap array and convert it to persisted WidgetMaps.
      *
      * sort widget in inversed order to generate a reversed tree like:
      *       4
@@ -58,7 +57,6 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
         if ($viewId = $input->getOption('view')) {
             $views = [$em->getRepository('VictoireCoreBundle:View')->find($viewId)];
         } else {
-
             $templateRepo = $em->getRepository('VictoireTemplateBundle:Template');
             $rootTemplates = $templateRepo->getInstance()
                 ->where('template.template IS NULL')
@@ -96,7 +94,6 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
 
             $oldWidgetMaps = $view->getWidgetMap();
             if (!empty($oldWidgetMaps)) {
-
                 foreach ($oldWidgetMaps as $slot => $oldWidgetMap) {
                     $widgetMaps = [];
                     var_dump($oldWidgetMap);
@@ -104,6 +101,7 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
                         if ($b['position'] - $a['position'] == 0) {
                             return 1;
                         }
+
                         return $b['position'] - $a['position'];
                     });
                     var_dump($oldWidgetMap);
@@ -126,10 +124,9 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
                         }
                     }
 
-
                     var_dump($oldWidgetMap);
                     foreach ($oldWidgetMap as $position => $_oldWidgetMap) {
-                        var_dump("==========================");
+                        var_dump('==========================');
                         var_dump($slot);
                         var_dump($_oldWidgetMap);
 
@@ -149,8 +146,8 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
                                 $referencedWidgetMap = $referencedWidgetMap->getChild(WidgetMap::POSITION_AFTER);
                             }
                             var_dump('set parent'.$referencedWidgetMap->getWidget()->getId());
-                                $widgetMap->setParent($referencedWidgetMap);
-                                $widgetMap->setPosition(WidgetMap::POSITION_AFTER);
+                            $widgetMap->setParent($referencedWidgetMap);
+                            $widgetMap->setPosition(WidgetMap::POSITION_AFTER);
                         } else {
                             var_dump('has no positionReference');
                             if ($position == 0) {
@@ -174,7 +171,6 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
                                     }
                                     $widgetMap->setParent($_rootBuilt);
                                 }
-
                             } else {
                                 $widgetMap->setPosition(WidgetMap::POSITION_BEFORE);
                                 if (!empty(array_slice($widgetMaps, -1))) {
@@ -186,7 +182,7 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
                         if (WidgetMap::ACTION_OVERWRITE == $_oldWidgetMap['action']) {
                             var_dump('is overwrite');
 
-                            /** @var Widget $replacedWidget */
+                            /* @var Widget $replacedWidget */
                             if ($_oldWidgetMap['replacedWidgetId']) {
                                 var_dump('has replacedWidgetId');
                                 $replacedWidget = $widgetRepo->find($_oldWidgetMap['replacedWidgetId']);
@@ -204,23 +200,19 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
                                     var_dump('set parent'.($replacedWidgetMap->getParent() ? $replacedWidgetMap->getParent()->getWidget()->getId() : null));
                                     $widgetMap->setParent($replacedWidgetMap->getParent());
                                 }
-
-
-                            } else if ($referencedWidgetMap) {
-
+                            } elseif ($referencedWidgetMap) {
                                 var_dump('move');
 
                                 $this->getContainer()->get('victoire_widget_map.manager')->move($view, [
-                                    'position' => WidgetMap::POSITION_AFTER,
-                                    'slot' => $slot,
+                                    'position'           => WidgetMap::POSITION_AFTER,
+                                    'slot'               => $slot,
                                     'widgetMapReference' => $referencedWidgetMap,
-                                    'widgetMap' => $_oldWidgetMap['widgetId']
+                                    'widgetMap'          => $_oldWidgetMap['widgetId'],
                                 ]);
                             } else {
                                 $_oldWidgetMap['action'] = WidgetMap::ACTION_CREATE;
                             }
-
-                        } else if (WidgetMap::ACTION_DELETE == $_oldWidgetMap['action']) {
+                        } elseif (WidgetMap::ACTION_DELETE == $_oldWidgetMap['action']) {
                             var_dump('is delete');
                             $replacedWidget = $widgetRepo->find($_oldWidgetMap['widgetId']);
                             $widgetMap->setPosition(null);
@@ -228,7 +220,6 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
                             $widgetMap->setParent(null);
                             $deletedWidgetMap = $view->getWidgetMapByWidget($replacedWidget);
                             if ($deletedWidgetMap) {
-
                                 $replacedWidgetView = $replacedWidget->getView();
                                 $this->getContainer()->get('victoire_widget_map.builder')->build($replacedWidgetView);
                                 $replacedWidgetMap = $replacedWidgetView->getWidgetMapByWidget($replacedWidget);
@@ -246,7 +237,6 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
                             }
                         }
 
-
                         $widgetMap->setAction($_oldWidgetMap['action']);
                         $widgetMap->setWidget($widget);
                         $widgetMap->setAsynchronous($_oldWidgetMap['asynchronous'] ? true : false);
@@ -257,7 +247,6 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
                         $widgetMaps[] = $widgetMap;
 
                         $this->getContainer()->get('victoire_widget_map.builder')->build($view);
-
                     }
                 }
             }

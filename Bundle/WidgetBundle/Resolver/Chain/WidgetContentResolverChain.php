@@ -2,8 +2,8 @@
 
 namespace Victoire\Bundle\WidgetBundle\Resolver\Chain;
 
-use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
+use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
 
 class WidgetContentResolverChain
 {

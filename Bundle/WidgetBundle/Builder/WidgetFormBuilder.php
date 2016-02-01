@@ -65,7 +65,7 @@ class WidgetFormBuilder
             $templateName,
             [
                 'widget' => $widget,
-                'view' => $this->container->get('victoire_core.current_view')->getCurrentView(),
+                'view'   => $this->container->get('victoire_core.current_view')->getCurrentView(),
                 'form'   => $form->createView(),
                 'id'     => $widget->getId(),
                 'entity' => $entity,
@@ -178,10 +178,10 @@ class WidgetFormBuilder
         if ($widget->getId() === null) {
             $viewReference = $view->getReference();
             $params = [
-                'viewReference'     => $viewReference->getId(),
-                'slot'              => $slotId,
-                'type'              => $widget->getType(), // @todo: use the config
-                'position' => $position,
+                'viewReference'      => $viewReference->getId(),
+                'slot'               => $slotId,
+                'type'               => $widget->getType(), // @todo: use the config
+                'position'           => $position,
                 'widgetMapReference' => $widgetReference,
             ];
             $action = 'victoire_core_widget_create';

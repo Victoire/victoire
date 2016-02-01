@@ -4,9 +4,9 @@ namespace Victoire\Bundle\WidgetMapBundle\Manager;
 
 use Doctrine\Orm\EntityManager;
 use Victoire\Bundle\CoreBundle\Entity\View;
-use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
+use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 
 class WidgetMapManager
 {
@@ -18,7 +18,6 @@ class WidgetMapManager
         $this->em = $em;
         $this->builder = $builder;
     }
-
 
     public function insert(Widget $widget, View $view, $slotId, $position, $widgetReference)
     {
@@ -77,22 +76,22 @@ class WidgetMapManager
             if ($afterChild->getId() !== $child->getId()) {
                 $this->moveWidgetMap($view, $afterChild, $child);
             }
-        } else if ($beforeChild) {
+        } elseif ($beforeChild) {
             $this->moveWidgetMap($view, $beforeChild, $originalParent, $originalPosition);
-        } else if ($afterChild) {
+        } elseif ($afterChild) {
             $this->moveWidgetMap($view, $afterChild, $originalParent, $originalPosition);
         }
 
         foreach ($widgetMapReferenceChildren['views'] as $_view) {
             if ($_view->getId() !== $view->getId()) {
-            if (isset($widgetMapReferenceChildren['before'][$_view->getId()])) {
-                $widgetMapReferenceChildren['before'][$_view->getId()]->setParent($widgetMap);
-            }
-            if (isset($widgetMapReferenceChildren['after'][$_view->getId()])) {
-                $widgetMapReferenceChildren['after'][$_view->getId()]->setParent($widgetMap);
+                if (isset($widgetMapReferenceChildren['before'][$_view->getId()])) {
+                    $widgetMapReferenceChildren['before'][$_view->getId()]->setParent($widgetMap);
+                }
+                if (isset($widgetMapReferenceChildren['after'][$_view->getId()])) {
+                    $widgetMapReferenceChildren['after'][$_view->getId()]->setParent($widgetMap);
+                }
             }
         }
-    }
     }
 
     /**
@@ -137,13 +136,13 @@ class WidgetMapManager
     }
 
     /**
-     *
      * the widget is owned by another view (a parent)
-     * so we add a new widget map that indicates we delete this widget
+     * so we add a new widget map that indicates we delete this widget.
      *
-     * @param View $view
+     * @param View      $view
      * @param WidgetMap $originalWidgetMap
-     * @param Widget $widgetCopy
+     * @param Widget    $widgetCopy
+     *
      * @throws \Exception
      */
     public function overwrite(View $view, WidgetMap $originalWidgetMap, Widget $widgetCopy)
@@ -183,26 +182,27 @@ class WidgetMapManager
             if ($afterChild->getId() !== $child->getId()) {
                 $this->moveWidgetMap($view, $afterChild, $child);
             }
-        } else if ($beforeChild) {
+        } elseif ($beforeChild) {
             $this->moveWidgetMap($view, $beforeChild, $originalParent, $originalPosition);
-        } else if ($afterChild) {
+        } elseif ($afterChild) {
             $this->moveWidgetMap($view, $afterChild, $originalParent, $originalPosition);
         }
     }
 
     protected function cloneWidgetMap(WidgetMap $widgetMap, View $view)
     {
-            $originalWidgetMap = $widgetMap;
-            $widgetMap = clone $widgetMap;
-            $widgetMap->setId(null);
-            $widgetMap->setAction(WidgetMap::ACTION_OVERWRITE);
-            $widgetMap->setReplaced($originalWidgetMap);
+        $originalWidgetMap = $widgetMap;
+        $widgetMap = clone $widgetMap;
+        $widgetMap->setId(null);
+        $widgetMap->setAction(WidgetMap::ACTION_OVERWRITE);
+        $widgetMap->setReplaced($originalWidgetMap);
         $originalWidgetMap->addSubstitute($widgetMap);
-            $view->addWidgetMap($widgetMap);
-            $this->em->persist($widgetMap);
+        $view->addWidgetMap($widgetMap);
+        $this->em->persist($widgetMap);
 
         return $widgetMap;
     }
+
     protected function moveWidgetMap(View $view, WidgetMap $widgetMap, $parent = false, $position = false, $slot = false)
     {
         if ($widgetMap->getView() !== $view) {
@@ -224,7 +224,6 @@ class WidgetMapManager
         if ($slot !== false) {
             $widgetMap->setSlot($slot);
         }
-
 
         return $widgetMap;
     }
