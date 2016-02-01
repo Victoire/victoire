@@ -13,6 +13,7 @@ use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetBundle\Repository\WidgetRepository;
 use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
+use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 
 class WidgetSubscriber implements EventSubscriber
 {
@@ -72,9 +73,11 @@ class WidgetSubscriber implements EventSubscriber
 
             /** @var Widget $entity */
             foreach ($entity->getWidgetMaps() as $widgetMap) {
-                $view = $widgetMap->getView();
-                $this->updateViewCss($view);
-                $this->updateTemplateInheritorsCss($view);
+                if ($widgetMap->getAction() !== WidgetMap::ACTION_DELETE) {
+                    $view = $widgetMap->getView();
+                    $this->updateViewCss($view);
+                    $this->updateTemplateInheritorsCss($view);
+                }
             }
         }
 
