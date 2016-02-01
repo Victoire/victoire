@@ -691,20 +691,6 @@ abstract class View
         return $widgetIds;
     }
 
-    /**
-     * @param Widget $widget
-     *
-     */
-    public function getWidgetMapByWidget(Widget $widget)
-    {
-        foreach ($this->getBuiltWidgetMap() as $builtWidgetMap) {
-            if (array_key_exists($widget->getId(), $builtWidgetMap)) {
-                return $builtWidgetMap[$widget->getId()];
-            }
-        }
-
-        return;
-    }
 
     /**
      * Get builtWidgetMap.

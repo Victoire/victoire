@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\WidgetBundle\Controller;
 
+use Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -190,7 +191,7 @@ class WidgetController extends Controller
     {
         $view = $this->getViewByReferenceId($viewReference);
         $this->get('victoire_widget_map.builder')->build($view, $this->get('doctrine.orm.entity_manager'));
-        $widgetView = $view->getWidgetMapByWidget($widget)->getView();
+        $widgetView = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $view)->getView();
         $this->get('victoire_widget_map.widget_data_warmer')->warm($this->getDoctrine()->getManager(), $view);
 
         if ($view instanceof BusinessTemplate && !$reference = $this->container->get('victoire_view_reference.repository')
