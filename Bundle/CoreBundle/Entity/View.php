@@ -694,7 +694,6 @@ abstract class View
     /**
      * @param Widget $widget
      *
-     * @return null|WidgetMap
      */
     public function getWidgetMapByWidget(Widget $widget)
     {
