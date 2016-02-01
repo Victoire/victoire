@@ -2,10 +2,8 @@
 
 namespace Bundle\WidgetMapBundle\Tests\Manager;
 
-use Prophecy\Argument;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
 use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
@@ -14,12 +12,10 @@ use Victoire\Widget\TextBundle\Entity\WidgetText;
 
 class WidgetMapManagerTest extends \PHPUnit_Framework_TestCase
 {
-
     private $prophet;
 
     public function testMove()
     {
-
         $builder = new WidgetMapBuilder();
         $view = new Page();
         $widgetMap3 = $this->newWidgetMap(3, null, null, $view, $this->newWidget(3));
@@ -44,28 +40,22 @@ class WidgetMapManagerTest extends \PHPUnit_Framework_TestCase
         $order = [2, 1, 3, 4];
         $i = 0;
         foreach ($builtWidgetMap['content'] as $widgetMap) {
-
             $this->assertEquals($order[$i++], $widgetMap->getWidget()->getId());
         }
 
         $this->moveWidgetMap($builtWidgetMap, $order, $view, $manager, $builder);
     }
 
-
     protected function moveWidgetMap($builtWidgetMap, $order, $view, $manager, $builder)
     {
         $sortedWidget = [
             'widgetMapReference' => null,
-            'position' => null,
-            'slot' => 'content',
-            'widgetMap' => null,
+            'position'           => null,
+            'slot'               => 'content',
+            'widgetMap'          => null,
         ];
 
-
         for ($i = 1; $i <= 1000; $i++) {
-
-
-
             $buildSortedWidget = function ($builtWidgetMap) use (&$order, &$buildSortedWidget, $view) {
 
                 $sortedWidget['widgetMap'] = $builtWidgetMap['content'][array_rand($builtWidgetMap['content'])];
@@ -79,7 +69,7 @@ class WidgetMapManagerTest extends \PHPUnit_Framework_TestCase
                             if (!$widgetMap->hasChild($position, $view)) {
                                 $availablePositions[] = [
                                     'widgetMapReference' => $widgetMap,
-                                    'position' => $position,
+                                    'position'           => $position,
                                 ];
                                 if (array_rand([0, 1]) === 0) {
                                     break;
@@ -113,7 +103,6 @@ class WidgetMapManagerTest extends \PHPUnit_Framework_TestCase
                 $sortedWidget['widgetMap'] = $sortedWidget['widgetMap']->getId();
                 $sortedWidget['widgetMapReference'] = $sortedWidget['widgetMapReference']->getId();
 
-
                 return $sortedWidget;
 
             };
@@ -138,7 +127,6 @@ class WidgetMapManagerTest extends \PHPUnit_Framework_TestCase
 
     protected function newWidgetMap($id, $parent, $position, View $view, Widget $widget)
     {
-
         $widgetMap = new WidgetMap();
         $widgetMap->setId($id);
         if ($parent) {
@@ -152,6 +140,7 @@ class WidgetMapManagerTest extends \PHPUnit_Framework_TestCase
 
         return $widgetMap;
     }
+
     protected function newWidget($id)
     {
         $widget = new WidgetText();
@@ -160,10 +149,9 @@ class WidgetMapManagerTest extends \PHPUnit_Framework_TestCase
         return $widget;
     }
 
-
     protected function setup()
     {
-        $this->prophet = new \Prophecy\Prophet;
+        $this->prophet = new \Prophecy\Prophet();
     }
 
     protected function tearDown()

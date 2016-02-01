@@ -304,13 +304,12 @@ class WidgetManager
         $this->entityManager->persist($view);
         $this->entityManager->flush();
 
-
-
         $originalWidgetMap = $view->getWidgetMapByWidget($widget);
 
         $this->widgetMapManager->overwrite($view, $originalWidgetMap, $widgetCopy);
 
         $this->widgetMapBuilder->build($view);
+
         return $widgetCopy;
     }
 
@@ -346,7 +345,6 @@ class WidgetManager
         }
 
         $this->entityManager->persist($entityCopy);
-
 
         return $entityCopy;
     }

@@ -4,12 +4,11 @@ namespace Victoire\Bundle\WidgetMapBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
-use Doctrine\ORM\Mapping as ORM;
 
 /**
- *
  * @ORM\Table("vic_widget_map")
  * @ORM\Entity(repositoryClass="Victoire\Bundle\WidgetMapBundle\Repository\WidgetMapRepository")
  */
@@ -86,14 +85,11 @@ class WidgetMap
      */
     protected $position;
 
-
     /**
      * @var Collection
      * @ORM\OneToMany(targetEntity="\Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap", mappedBy="parent")
      */
     protected $children;
-
-
 
     /**
      * @var string
@@ -102,12 +98,12 @@ class WidgetMap
      */
     protected $slot;
 
-
     public function __construct()
     {
         $this->children = new ArrayCollection();
-        $this->substitutes= new ArrayCollection();
+        $this->substitutes = new ArrayCollection();
     }
+
     /**
      * @return int
      */
@@ -240,7 +236,7 @@ class WidgetMap
      */
     public function getChildren(View $view = null)
     {
-        $positions = [WidgetMap::POSITION_BEFORE, WidgetMap::POSITION_AFTER];
+        $positions = [self::POSITION_BEFORE, self::POSITION_AFTER];
         $children = [];
         $widgetMap = $this;
         foreach ($positions as $position) {
@@ -271,7 +267,6 @@ class WidgetMap
             if (!$children[$position]
                 && ($replaced = $this->getReplaced())
                 && !empty($this->getReplaced()->getChilds($position))) {
-
                 foreach ($this->getReplaced()->getChilds($position) as $_child) {
                     if ($view) {
                         if ($_child->getView() && ($view == $_child->getView() || $_child->getView()->isTemplateOf($view))) {
@@ -326,9 +321,9 @@ class WidgetMap
             }
         }
 
-
         return $child;
     }
+
     /**
      * @return [WidgetMap]
      */
@@ -343,7 +338,6 @@ class WidgetMap
 
         return $childs;
     }
-
 
     /**
      * @param mixed $children
@@ -362,6 +356,7 @@ class WidgetMap
             $this->removeChild($child);
         }
     }
+
     /**
      * @param WidgetMap $child
      */
@@ -369,6 +364,7 @@ class WidgetMap
     {
         $this->children->add($child);
     }
+
     /**
      * @param WidgetMap $child
      */
@@ -422,6 +418,7 @@ class WidgetMap
     {
         return $this->substitutes;
     }
+
     /**
      * @return mixed
      */
@@ -433,7 +430,7 @@ class WidgetMap
             }
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -443,6 +440,7 @@ class WidgetMap
     {
         $this->substitutes->add($substitute);
     }
+
     /**
      * @param [WidgetMap] $substitutes
      */
@@ -450,6 +448,4 @@ class WidgetMap
     {
         $this->substitutes = $substitutes;
     }
-
-
 }

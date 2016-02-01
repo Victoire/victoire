@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\WidgetMapBundle\Builder;
 
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
@@ -15,9 +14,10 @@ use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 class WidgetMapBuilder
 {
     /**
-     * @param View $view
+     * @param View          $view
      * @param EntityManager $em
-     * @param bool $updatePage
+     * @param bool          $updatePage
+     *
      * @return array
      */
     public function build(View $view, EntityManager $em = null, $updatePage = true)
@@ -68,7 +68,7 @@ class WidgetMapBuilder
 
             if ($mainWidgetMap) {
                 $builtWidgetMap[$slot][] = $mainWidgetMap;
-                /**
+                /*
                  * @param WidgetMap $currentWidgetMap
                  */
                 $orderizeWidgetMap = function ($currentWidgetMap, $builtWidgetMap) use ($slot, &$orderizeWidgetMap, $widgetMaps, $view) {
@@ -98,6 +98,7 @@ class WidgetMapBuilder
         if ($updatePage) {
             $view->setBuiltWidgetMap($builtWidgetMap);
         }
+
         return $builtWidgetMap;
     }
 
@@ -128,7 +129,5 @@ class WidgetMapBuilder
         }
 
         return $availablePositions;
-
-
     }
 }

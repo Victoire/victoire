@@ -97,6 +97,7 @@ class Widget extends BaseWidget
 
     /**
      * @deprecated
+     *
      * @var string
      *
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\CoreBundle\Entity\View", inversedBy="widgets", cascade={"persist"})
@@ -105,6 +106,7 @@ class Widget extends BaseWidget
     protected $view;
     /**
      * @deprecated
+     *
      * @var [WidgetMap]
      *
      * @ORM\OneToMany(targetEntity="\Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap", mappedBy="widget", orphanRemoval=true, cascade={"persist", "remove"})
@@ -320,7 +322,6 @@ class Widget extends BaseWidget
         return $viewId;
     }
 
-
     /**
      * @return string
      */
@@ -386,8 +387,6 @@ class Widget extends BaseWidget
         $this->widgetMaps->removeElement($widgetMap);
     }
 
-
-
     /**
      * Set the entity.
      *
@@ -440,7 +439,6 @@ class Widget extends BaseWidget
         }
     }
 
-
     /**
      * @deprecated
      * Get view.
@@ -451,5 +449,4 @@ class Widget extends BaseWidget
     {
         return $this->view;
     }
-
 }

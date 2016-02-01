@@ -233,9 +233,9 @@ class VictoireContext extends RawMinkContext
     /**
      * @Then /^I move the widget "(.+)" under the widget "(.*)"$/
      */
-    public function iMoveWidgetUnder($widgetMoved,$widgetMovedTo)
+    public function iMoveWidgetUnder($widgetMoved, $widgetMovedTo)
     {
-        $widgetRepo =$this->getContainer()->get('doctrine.orm.entity_manager')
+        $widgetRepo = $this->getContainer()->get('doctrine.orm.entity_manager')
             ->getRepository('Victoire\Widget\TextBundle\Entity\WidgetText');
         $widgetMovedId = $widgetRepo->findOneBy(['content' => $widgetMoved])->getId();
         $widgetMovedToId = 0;

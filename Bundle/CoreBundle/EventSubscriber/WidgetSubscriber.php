@@ -76,7 +76,6 @@ class WidgetSubscriber implements EventSubscriber
                 $this->updateViewCss($view);
                 $this->updateTemplateInheritorsCss($view);
             }
-
         }
 
         //Remove CSS of deleted View and update its inheritors

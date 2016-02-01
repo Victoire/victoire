@@ -7,8 +7,8 @@ use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Event\WidgetRenderEvent;
 use Victoire\Bundle\CoreBundle\VictoireCmsEvents;
-use Victoire\Bundle\WidgetMapBundle\Entity\Slot;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
+use Victoire\Bundle\WidgetMapBundle\Entity\Slot;
 use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 
 class WidgetRenderer
@@ -134,9 +134,9 @@ class WidgetRenderer
         return $this->container->get('victoire_templating')->render(
             'VictoireCoreBundle:Widget:actions.html.twig',
             [
-                'slot'     => $slot,
-                'options'  => $options,
-                'position'  => $position,
+                'slot'                  => $slot,
+                'options'               => $options,
+                'position'              => $position,
                 'widgetMapReferenceId'  => $widgetMapReference ? $widgetMapReference->getId() : null,
             ]
         );
