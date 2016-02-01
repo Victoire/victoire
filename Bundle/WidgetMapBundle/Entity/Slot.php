@@ -74,7 +74,7 @@ class Slot
      *
      * @param WidgetMap $widgetMap
      *
-     * @return this
+     * @return Slot
      */
     public function updateWidgetMap($widgetMap)
     {

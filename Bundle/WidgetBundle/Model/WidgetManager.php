@@ -98,7 +98,6 @@ class WidgetManager
      * @param string $slotId
      * @param View   $view
      * @param string $entity
-     * @param int    $positionReference
      * @param string $type
      *
      * @throws \Exception
@@ -313,6 +312,9 @@ class WidgetManager
         return $widgetCopy;
     }
 
+    /**
+     * @param Widget $entity
+     */
     public function cloneEntity($entity)
     {
         $entityCopy = clone $entity;
