@@ -24,7 +24,7 @@ class WidgetMapManagerTest extends \PHPUnit_Framework_TestCase
         $widgetMap4 = $this->newWidgetMap(4, $widgetMap3, WidgetMap::POSITION_AFTER, $view, $this->newWidget(4));
 
         $em = $this->prophet->prophesize('Doctrine\ORM\EntityManager');
-        $widgetMapRepo = $this->prophet->prophesize('Victoire\Bundle\WidgetMapBundle\Repository\WidgetMapRepository');
+        $widgetMapRepo = $this->prophet->prophesize('Doctrine\ORM\EntityRepository');
 
         $em->getRepository('VictoireWidgetMapBundle:WidgetMap')->willReturn($widgetMapRepo);
 
