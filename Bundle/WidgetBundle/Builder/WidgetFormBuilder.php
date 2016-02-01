@@ -115,6 +115,8 @@ class WidgetFormBuilder
      * @param View   $view
      * @param string $businessEntityId
      * @param string $namespace
+     * @param integer $position
+     * @param string $slot
      *
      * @return array
      */
@@ -268,6 +270,7 @@ class WidgetFormBuilder
      * @param View   $view
      * @param string $businessEntityId
      * @param int    $position
+     * @param string $slotId
      *
      * @throws \Exception
      *

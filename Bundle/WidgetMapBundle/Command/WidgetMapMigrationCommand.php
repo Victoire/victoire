@@ -63,7 +63,7 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
                 ->getQuery()
                 ->getResult();
             $templates = [];
-            $recursiveGetTemplates = function ($template) use (&$recursiveGetTemplates, &$templates) {
+            $recursiveGetTemplates = function($template) use (&$recursiveGetTemplates, &$templates) {
                     array_push($templates, $template);
                     foreach ($template->getInheritors() as $template) {
                         if ($template instanceof Template) {
@@ -97,7 +97,7 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
                 foreach ($oldWidgetMaps as $slot => $oldWidgetMap) {
                     $widgetMaps = [];
                     var_dump($oldWidgetMap);
-                    usort($oldWidgetMap, function ($a, $b) {
+                    usort($oldWidgetMap, function($a, $b) {
                         if ($b['position'] - $a['position'] == 0) {
                             return 1;
                         }

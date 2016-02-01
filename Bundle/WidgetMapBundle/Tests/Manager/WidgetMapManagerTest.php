@@ -46,6 +46,12 @@ class WidgetMapManagerTest extends \PHPUnit_Framework_TestCase
         $this->moveWidgetMap($builtWidgetMap, $order, $view, $manager, $builder);
     }
 
+    /**
+     * @param integer[] $order
+     * @param Page $view
+     * @param WidgetMapManager $manager
+     * @param WidgetMapBuilder $builder
+     */
     protected function moveWidgetMap($builtWidgetMap, $order, $view, $manager, $builder)
     {
         $sortedWidget = [
@@ -125,6 +131,10 @@ class WidgetMapManagerTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * @param integer $id
+     * @param null|WidgetMap $parent
+     */
     protected function newWidgetMap($id, $parent, $position, View $view, Widget $widget)
     {
         $widgetMap = new WidgetMap();
@@ -141,6 +151,9 @@ class WidgetMapManagerTest extends \PHPUnit_Framework_TestCase
         return $widgetMap;
     }
 
+    /**
+     * @param integer $id
+     */
     protected function newWidget($id)
     {
         $widget = new WidgetText();

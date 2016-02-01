@@ -63,7 +63,7 @@ class CmsExtension extends \Twig_Extension_Core
     /**
      * register twig functions.
      *
-     * @return array The list of extensions
+     * @return \Twig_SimpleFunction[] The list of extensions
      */
     public function getFunctions()
     {
@@ -80,7 +80,7 @@ class CmsExtension extends \Twig_Extension_Core
     /**
      * register twig filters.
      *
-     * @return array The list of filters
+     * @return \Twig_SimpleFilter[] The list of filters
      */
     public function getFilters()
     {

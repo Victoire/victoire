@@ -83,7 +83,6 @@ class WidgetController extends Controller
      * @param string $type              The type of the widget we edit
      * @param int    $viewReference     The view reference where attach the widget
      * @param string $slot              The slot where attach the widget
-     * @param int    $positionReference The positionReference in the widgetMap
      *
      * @return JsonResponse
      *
@@ -129,7 +128,6 @@ class WidgetController extends Controller
      * @param string $type              The type of the widget we edit
      * @param int    $viewReference     The view reference where attach the widget
      * @param string $slot              The slot where attach the widget
-     * @param int    $positionReference Position of the widget
      * @param string $businessEntityId  The BusinessEntity::id (can be null if the submitted form is in static mode)
      *
      * @return JsonResponse

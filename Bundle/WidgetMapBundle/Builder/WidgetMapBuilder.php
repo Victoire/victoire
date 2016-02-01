@@ -71,7 +71,7 @@ class WidgetMapBuilder
                 /*
                  * @param WidgetMap $currentWidgetMap
                  */
-                $orderizeWidgetMap = function ($currentWidgetMap, $builtWidgetMap) use ($slot, &$orderizeWidgetMap, $widgetMaps, $view) {
+                $orderizeWidgetMap = function($currentWidgetMap, $builtWidgetMap) use ($slot, &$orderizeWidgetMap, $widgetMaps, $view) {
                     $children = $currentWidgetMap->getChildren($view);
                     foreach ($children as $child) {
                         if (in_array($child, $widgetMaps)

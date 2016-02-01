@@ -369,7 +369,7 @@ class Widget extends BaseWidget
     /**
      * Add widget.
      *
-     * @param Widget $widget
+     * @param Widget $widgetMap
      */
     public function addWidgetMap(WidgetMap $widgetMap)
     {
@@ -443,7 +443,7 @@ class Widget extends BaseWidget
      * @deprecated
      * Get view.
      *
-     * @return View
+     * @return string
      */
     public function getView()
     {

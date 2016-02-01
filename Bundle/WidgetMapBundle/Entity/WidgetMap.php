@@ -118,7 +118,7 @@ class WidgetMap
     }
 
     /**
-     * @return null
+     * @return string
      */
     public function isAsynchronous()
     {
@@ -126,7 +126,7 @@ class WidgetMap
     }
 
     /**
-     * @param null $asynchronous
+     * @param boolean|string $asynchronous
      */
     public function setAsynchronous($asynchronous)
     {
@@ -291,7 +291,7 @@ class WidgetMap
     }
 
     /**
-     * @return mixed
+     * @return Collection
      */
     public function getChildrenRaw()
     {
@@ -382,7 +382,7 @@ class WidgetMap
     }
 
     /**
-     * @param mixed $parent
+     * @param null|WidgetMap $parent
      */
     public function setParent(WidgetMap $parent = null)
     {
@@ -412,7 +412,7 @@ class WidgetMap
     }
 
     /**
-     * @return mixed
+     * @return ArrayCollection
      */
     public function getSubstitutes()
     {

@@ -309,7 +309,7 @@ abstract class View
     /**
      * Get template.
      *
-     * @return Template
+     * @return string
      */
     public function getTemplate()
     {
@@ -368,7 +368,7 @@ abstract class View
     /**
      * Has children.
      *
-     * @return bool
+     * @return integer
      */
     public function hasChildren()
     {
@@ -604,7 +604,7 @@ abstract class View
     /**
      * Get i18n.
      *
-     * @return BaseI18n
+     * @return string
      */
     public function getI18n()
     {
@@ -614,7 +614,7 @@ abstract class View
     /**
      * Set i18n.
      *
-     * @param string $i18n
+     * @param BaseI18n $i18n
      *
      * @return $this
      */
@@ -657,7 +657,7 @@ abstract class View
     /**
      * Add widget.
      *
-     * @param Widget $widget
+     * @param Widget $widgetMap
      */
     public function addWidgetMap(WidgetMap $widgetMap)
     {
@@ -834,7 +834,7 @@ abstract class View
      * @deprecated
      * Get widgets.
      *
-     * @return Widget[]
+     * @return string
      */
     public function getWidgets()
     {

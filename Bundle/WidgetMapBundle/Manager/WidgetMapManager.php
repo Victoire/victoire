@@ -19,6 +19,9 @@ class WidgetMapManager
         $this->builder = $builder;
     }
 
+    /**
+     * @param string $slotId
+     */
     public function insert(Widget $widget, View $view, $slotId, $position, $widgetReference)
     {
         $parent = null;
