@@ -10,7 +10,7 @@ use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
  * @ORM\Table("vic_widget_map")
- * @ORM\Entity(repositoryClass="Victoire\Bundle\WidgetMapBundle\Repository\WidgetMapRepository")
+ * @ORM\Entity()
  */
 class WidgetMap
 {
