@@ -321,11 +321,11 @@ class WidgetManager
 
         //Look for on_to_many relations, if found, duplicate related entities.
         //It is necessary for 'list' widgets, this algo duplicates and persists list items.
-        $associations = $this->entityManager->getClassMetadata(get_class($widget))->getAssociationMappings();
+        $associations = $this->entityManager->getClassMetadata(get_class($entityCopy))->getAssociationMappings();
         $accessor = PropertyAccess::createPropertyAccessor();
         foreach ($associations as $name => $values) {
             if ($values['type'] === ClassMetadataInfo::ONE_TO_MANY && $values['fieldName'] != 'widgetMaps') {
-                $relatedEntities = $accessor->getValue($widget, $values['fieldName']);
+                $relatedEntities = $accessor->getValue($entityCopy, $values['fieldName']);
                 $relatedEntitiesCopies = [];
                 foreach ($relatedEntities as $relatedEntity) {
                     $relatedEntityCopy = clone $relatedEntity;
@@ -337,7 +337,7 @@ class WidgetManager
 
             //Clone OneToOne relation objects
             if ($values['type'] === ClassMetadataInfo::ONE_TO_ONE) {
-                $relatedEntity = $accessor->getValue($widget, $values['fieldName']);
+                $relatedEntity = $accessor->getValue($entityCopy, $values['fieldName']);
                 if ($relatedEntity) {
                     $relatedEntityCopy = clone $relatedEntity;
                     $this->entityManager->persist($relatedEntity);
