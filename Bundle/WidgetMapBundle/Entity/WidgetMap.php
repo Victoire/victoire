@@ -263,12 +263,13 @@ class WidgetMap
                     }
                 }
             }
-
+            // If I am replaced and my replacement has children for the position
             if (!$children[$position]
                 && ($replaced = $this->getReplaced())
                 && !empty($this->getReplaced()->getChilds($position))) {
                 foreach ($this->getReplaced()->getChilds($position) as $_child) {
                     if ($view) {
+                        // if child view is same as given view or the child view is a template of given view
                         if ($_child->getView() && ($view == $_child->getView() || $_child->getView()->isTemplateOf($view))) {
 
                             // if child is a substitute in view
