@@ -92,6 +92,37 @@ class WidgetManager
     }
 
     /**
+     * new widget.
+     *
+     * @param string $type
+     * @param string $slot
+     * @param View   $view
+     * @param int    $position
+     *
+     * @return template
+     */
+    public function newWidget($mode, $type, $slot, $view, $position, $parentWidgetMap)
+    {
+        $widget = $this->widgetHelper->newWidgetInstance($type, $view, $slot, $mode);
+
+        /** @var BusinessEntity[] $classes */
+        $classes = $this->cacheReader->getBusinessClassesForWidget($widget);
+        $forms = $this->widgetFormBuilder->renderNewWidgetForms($slot, $view, $widget, $classes, $position, $parentWidgetMap);
+
+        return [
+            'html' => $this->victoireTemplating->render(
+                'VictoireCoreBundle:Widget:Form/new.html.twig',
+                [
+                    'view'    => $view,
+                    'classes' => $classes,
+                    'widget'  => $widget,
+                    'forms'   => $forms,
+                ]
+            ),
+        ];
+    }
+
+    /**
      * Create a widget.
      *
      * @param string $mode

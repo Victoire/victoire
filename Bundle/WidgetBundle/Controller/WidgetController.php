@@ -101,21 +101,10 @@ class WidgetController extends Controller
             }
             $view->setReference($reference);
 
-            $widget = $this->get('victoire_widget.widget_helper')->newWidgetInstance($type, $view, $slot, Widget::MODE_STATIC);
-            $classes = $this->get('victoire_business_entity.cache_reader')->getBusinessClassesForWidget($widget);
-            $forms = $this->get('victoire_widget.widget_form_builder')->renderNewWidgetForms($slot, $view, $widget, $classes, $position, $parentWidgetMap);
+            $response = new JsonResponse(
+                $this->get('victoire_widget.widget_manager')->newWidget(Widget::MODE_STATIC, $type, $slot, $view, $position, $parentWidgetMap)
+            );
 
-            $response = new JsonResponse([
-                    'html' => $this->get('victoire_templating')->render(
-                        'VictoireCoreBundle:Widget:Form/new.html.twig',
-                        [
-                            'view'    => $view,
-                            'classes' => $classes,
-                            'widget'  => $widget,
-                            'forms'   => $forms,
-                        ]
-                    ),
-                ]);
         } catch (Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
         }
@@ -125,6 +114,8 @@ class WidgetController extends Controller
 
     /**
      * Create a widget.
+     * This action needs 2 routes to handle the presence or not of "businessEntityId" and 'parentWidgetMap'
+     * that are both integers but "businessEntityId" present only in !static mode
      *
      * @param string $type              The type of the widget we edit
      * @param int    $viewReference     The view reference where attach the widget
