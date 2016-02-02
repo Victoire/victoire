@@ -21,6 +21,8 @@ class WidgetMapManager
     }
 
     /**
+     * Insert a WidgetMap in a view at given position
+     *
      * @param string $slotId
      */
     public function insert(Widget $widget, View $view, $slotId, $position, $widgetReference)
@@ -46,7 +48,7 @@ class WidgetMapManager
      * @param View  $view
      * @param array $sortedWidget
      *
-     * @returns void
+     * @return void
      */
     public function move(View $view, $sortedWidget)
     {
@@ -193,6 +195,14 @@ class WidgetMapManager
         }
     }
 
+    /**
+     * Create a copy of a WidgetMap in "overwrite" mode and insert it in the given view
+     *
+     * @param WidgetMap $widgetMap
+     * @param View $view
+     * @return WidgetMap
+     * @throws \Exception
+     */
     protected function cloneWidgetMap(WidgetMap $widgetMap, View $view)
     {
         $originalWidgetMap = $widgetMap;
@@ -207,6 +217,16 @@ class WidgetMapManager
         return $widgetMap;
     }
 
+    /**
+     * Move given WidgetMap as a child of given parent at given position and slot
+     *
+     * @param View $view
+     * @param WidgetMap $widgetMap
+     * @param bool $parent
+     * @param bool $position
+     * @param bool $slot
+     * @return WidgetMap
+     */
     protected function moveWidgetMap(View $view, WidgetMap $widgetMap, $parent = false, $position = false, $slot = false)
     {
         if ($widgetMap->getView() !== $view) {
@@ -232,7 +252,13 @@ class WidgetMapManager
         return $widgetMap;
     }
 
-    public function getChildrenByView(WidgetMap $widgetMap)
+    /**
+     * Find return all the given WidgetMap children for each view where it's related
+     *
+     * @param WidgetMap $widgetMap
+     * @return mixed
+     */
+    protected function getChildrenByView(WidgetMap $widgetMap)
     {
         $beforeChilds = $widgetMap->getChilds(WidgetMap::POSITION_BEFORE);
         $afterChilds = $widgetMap->getChilds(WidgetMap::POSITION_AFTER);
