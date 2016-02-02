@@ -92,7 +92,7 @@ function enableSortableSlots(){
                     updateWidgetPosition(sorted, ui);
                 } else {
                     $vic(this).sortable('cancel');
-                    $vic('new-widget-button.disabled').each(function(index, el) {
+                    $vic('new-widget-button.disabled, .vic-hover-widget.disabled').each(function(index, el) {
                         $vic(el).removeClass('disabled');
                     });
                 }
@@ -112,7 +112,7 @@ function updateWidgetPosition(sorted, ui) {
     ajaxCall.fail(function() {
         $vic(".vic-slot").each(function(){
             $vic(this).sortable('cancel');
-            $vic('new-widget-button.disabled', '.vic-hover-widget.disabled').each(function(index, el) {
+            $vic('new-widget-button.disabled, .vic-hover-widget.disabled').each(function(index, el) {
                 $vic(el).removeClass('disabled');
             });
         });
