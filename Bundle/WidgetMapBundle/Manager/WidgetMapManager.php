@@ -72,21 +72,7 @@ class WidgetMapManager
 
         // If the moved widgetMap has someone at both his before and after, arbitrary move UP the before side
         // and find the first place after the before widgetMap hierarchy to place the after widgetMap.
-        if ($beforeChild && $afterChild) {
-            $this->moveWidgetMap($view, $beforeChild, $originalParent, $originalPosition);
-
-            $child = $beforeChild;
-            while ($child->getChild(WidgetMap::POSITION_AFTER)) {
-                $child = $child->getChild(WidgetMap::POSITION_AFTER);
-            }
-            if ($afterChild->getId() !== $child->getId()) {
-                $this->moveWidgetMap($view, $afterChild, $child);
-            }
-        } elseif ($beforeChild) {
-            $this->moveWidgetMap($view, $beforeChild, $originalParent, $originalPosition);
-        } elseif ($afterChild) {
-            $this->moveWidgetMap($view, $afterChild, $originalParent, $originalPosition);
-        }
+        $this->moveChildren($view, $beforeChild, $afterChild, $originalParent, $originalPosition);
 
         foreach ($parentWidgetMapChildren['views'] as $_view) {
             if ($_view->getId() !== $view->getId()) {
@@ -193,13 +179,14 @@ class WidgetMapManager
         } elseif ($afterChild) {
             $this->moveWidgetMap($view, $afterChild, $originalParent, $originalPosition);
         }
+
     }
 
     /**
      * Create a copy of a WidgetMap in "overwrite" mode and insert it in the given view
      *
-     * @param WidgetMap $widgetMap
-     * @param View $view
+     * @param  WidgetMap  $widgetMap
+     * @param  View       $view
      * @return WidgetMap
      * @throws \Exception
      */
@@ -220,11 +207,11 @@ class WidgetMapManager
     /**
      * Move given WidgetMap as a child of given parent at given position and slot
      *
-     * @param View $view
-     * @param WidgetMap $widgetMap
-     * @param bool $parent
-     * @param bool $position
-     * @param bool $slot
+     * @param  View      $view
+     * @param  WidgetMap $widgetMap
+     * @param  bool      $parent
+     * @param  bool      $position
+     * @param  bool      $slot
      * @return WidgetMap
      */
     protected function moveWidgetMap(View $view, WidgetMap $widgetMap, $parent = false, $position = false, $slot = false)
@@ -255,7 +242,7 @@ class WidgetMapManager
     /**
      * Find return all the given WidgetMap children for each view where it's related
      *
-     * @param WidgetMap $widgetMap
+     * @param  WidgetMap $widgetMap
      * @return mixed
      */
     protected function getChildrenByView(WidgetMap $widgetMap)
