@@ -123,27 +123,6 @@ class WidgetRenderer
     }
 
     /**
-     * render slot actions.
-     *
-     * @param Slot   $slot
-     * @param string $options
-     *
-     * @return string
-     */
-    public function renderActions($slot, $options = [], $position = null, WidgetMap $parentWidgetMap = null)
-    {
-        return $this->container->get('victoire_templating')->render(
-            'VictoireCoreBundle:Widget:actions.html.twig',
-            [
-                'slot'                  => $slot,
-                'options'               => $options,
-                'position'              => $position,
-                'parentWidgetMapId'  => $parentWidgetMap ? $parentWidgetMap->getId() : null,
-            ]
-        );
-    }
-
-    /**
      * Compute slot options.
      *
      * @param Slot  $slotId

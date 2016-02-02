@@ -4,7 +4,6 @@ angular.module('ngApp').controller("SlotController", ["$scope", "$compile",
             $scope.slotId = slotId;
             $scope.options = options;
             $scope.toggleEnableButtons();
-            $scope.newContentButton = "";
         };
         $scope.toggleEnableButtons = function() {
             widgets = $vic('.vic-widget-container', '#vic-slot-' + $scope.slotId);
