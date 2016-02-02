@@ -55,7 +55,7 @@ class WidgetMapManagerTest extends \PHPUnit_Framework_TestCase
     protected function moveWidgetMap($builtWidgetMap, $order, $view, $manager, $builder)
     {
         $sortedWidget = [
-            'widgetMapReference' => null,
+            'parentWidgetMap' => null,
             'position'           => null,
             'slot'               => 'content',
             'widgetMap'          => null,
@@ -74,7 +74,7 @@ class WidgetMapManagerTest extends \PHPUnit_Framework_TestCase
                         foreach ($positions as $position) {
                             if (!$widgetMap->hasChild($position, $view)) {
                                 $availablePositions[] = [
-                                    'widgetMapReference' => $widgetMap,
+                                    'parentWidgetMap' => $widgetMap,
                                     'position'           => $position,
                                 ];
                                 if (array_rand([0, 1]) === 0) {
@@ -87,7 +87,7 @@ class WidgetMapManagerTest extends \PHPUnit_Framework_TestCase
 
                 $randomPosition = $availablePositions[array_rand($availablePositions)];
                 $offset = array_search(
-                        $randomPosition['widgetMapReference']->getWidget()->getId(),
+                        $randomPosition['parentWidgetMap']->getWidget()->getId(),
                         $order
                     ) + ($randomPosition['position'] == WidgetMap::POSITION_AFTER ? 1 : 0);
                 if (!empty($order[$offset]) && $order[$offset] == $sortedWidget['widgetMap']->getId()) {
@@ -98,7 +98,7 @@ class WidgetMapManagerTest extends \PHPUnit_Framework_TestCase
 
                 $order[array_search($sortedWidget['widgetMap']->getWidget()->getId(), $order)] = null;
                 $offset = array_search(
-                        $sortedWidget['widgetMapReference']->getWidget()->getId(),
+                        $sortedWidget['parentWidgetMap']->getWidget()->getId(),
                         $order
                     ) + ($sortedWidget['position'] == WidgetMap::POSITION_AFTER ? 1 : 0);
                 array_splice($order, $offset, 0, $sortedWidget['widgetMap']->getWidget()->getId());
@@ -107,7 +107,7 @@ class WidgetMapManagerTest extends \PHPUnit_Framework_TestCase
 
                 $order = array_values($order);
                 $sortedWidget['widgetMap'] = $sortedWidget['widgetMap']->getId();
-                $sortedWidget['widgetMapReference'] = $sortedWidget['widgetMapReference']->getId();
+                $sortedWidget['parentWidgetMap'] = $sortedWidget['parentWidgetMap']->getId();
 
                 return $sortedWidget;
 
@@ -125,7 +125,7 @@ class WidgetMapManagerTest extends \PHPUnit_Framework_TestCase
 
             $this->assertEquals($order, $newOrder,
                 sprintf("move widget %s %s widget %s didn't worked at iteration %s",
-                    $sortedWidget['widgetMap'], $sortedWidget['position'], $sortedWidget['widgetMapReference'], $i));
+                    $sortedWidget['widgetMap'], $sortedWidget['position'], $sortedWidget['parentWidgetMap'], $i));
 
             $builtWidgetMap = $newBuiltWidgetMap;
         }

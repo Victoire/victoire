@@ -1,6 +1,6 @@
 <?php
 
-namespace Bundle\WidgetMapBundle\Helper;
+namespace Victoire\Bundle\WidgetMapBundle\Helper;
 
 
 use Victoire\Bundle\CoreBundle\Entity\View;

@@ -2,7 +2,7 @@
 
 namespace Victoire\Bundle\WidgetBundle\Model;
 
-use Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
+use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;

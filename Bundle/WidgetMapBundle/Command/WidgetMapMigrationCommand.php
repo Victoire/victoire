@@ -2,7 +2,7 @@
 
 namespace Victoire\Bundle\WidgetMapBundle\Command;
 
-use Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
+use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -207,7 +207,7 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
                                 $this->getContainer()->get('victoire_widget_map.manager')->move($view, [
                                     'position'           => WidgetMap::POSITION_AFTER,
                                     'slot'               => $slot,
-                                    'widgetMapReference' => $referencedWidgetMap,
+                                    'parentWidgetMap' => $referencedWidgetMap,
                                     'widgetMap'          => $_oldWidgetMap['widgetId'],
                                 ]);
                             } else {

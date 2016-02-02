@@ -155,7 +155,6 @@ $vic(document).on('click', '.vic-widget-modal a.vic-confirmed, .vic-hover-widget
             }
         });
         $vic(document).trigger("victoire_widget_delete_postsubmit");
-    }
 });
 
 function generateNewWidgetUrl(select){
@@ -163,7 +162,7 @@ function generateNewWidgetUrl(select){
     var container = $vic(select).parents('new-widget-button');
 
     var position = $vic(container).attr('position');
-    var widgetMapReference = $vic(container).attr('widget-map');
+    var parentWidgetMap = $vic(container).attr('widget-map');
 
     var params = {
         'viewReference'    : viewReferenceId,
@@ -175,8 +174,8 @@ function generateNewWidgetUrl(select){
     if (position) {
         params['position'] = position;
     }
-    if (widgetMapReference) {
-        params['widgetMapReference'] = widgetMapReference;
+    if (parentWidgetMap) {
+        params['parentWidgetMap'] = parentWidgetMap;
 
     }
     return Routing.generate(
