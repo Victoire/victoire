@@ -2,7 +2,7 @@
 
 namespace Victoire\Bundle\WidgetMapBundle\Manager;
 
-use Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
+use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 use Doctrine\Orm\EntityManager;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
@@ -50,8 +50,8 @@ class WidgetMapManager
      */
     public function move(View $view, $sortedWidget)
     {
-        /** @var WidgetMap $widgetMapReference */
-        $widgetMapReference = $this->em->getRepository('VictoireWidgetMapBundle:WidgetMap')->find((int) $sortedWidget['widgetMapReference']);
+        /** @var WidgetMap $parentWidgetMap */
+        $parentWidgetMap = $this->em->getRepository('VictoireWidgetMapBundle:WidgetMap')->find((int) $sortedWidget['parentWidgetMap']);
         $position = $sortedWidget['position'];
         $slot = $sortedWidget['slot'];
         /** @var WidgetMap $widgetMap */
@@ -64,9 +64,9 @@ class WidgetMapManager
         $beforeChild = !empty($children[WidgetMap::POSITION_BEFORE]) ? $children[WidgetMap::POSITION_BEFORE] : null;
         $afterChild = !empty($children[WidgetMap::POSITION_AFTER]) ? $children[WidgetMap::POSITION_AFTER] : null;
 
-        $widgetMapReferenceChildren = $this->getChildrenByView($widgetMapReference);
+        $parentWidgetMapChildren = $this->getChildrenByView($parentWidgetMap);
 
-        $widgetMap = $this->moveWidgetMap($view, $widgetMap, $widgetMapReference, $position, $slot);
+        $widgetMap = $this->moveWidgetMap($view, $widgetMap, $parentWidgetMap, $position, $slot);
 
         // If the moved widgetMap has someone at both his before and after, arbitrary move UP the before side
         // and find the first place after the before widgetMap hierarchy to place the after widgetMap.
@@ -86,13 +86,13 @@ class WidgetMapManager
             $this->moveWidgetMap($view, $afterChild, $originalParent, $originalPosition);
         }
 
-        foreach ($widgetMapReferenceChildren['views'] as $_view) {
+        foreach ($parentWidgetMapChildren['views'] as $_view) {
             if ($_view->getId() !== $view->getId()) {
-                if (isset($widgetMapReferenceChildren['before'][$_view->getId()])) {
-                    $widgetMapReferenceChildren['before'][$_view->getId()]->setParent($widgetMap);
+                if (isset($parentWidgetMapChildren['before'][$_view->getId()])) {
+                    $parentWidgetMapChildren['before'][$_view->getId()]->setParent($widgetMap);
                 }
-                if (isset($widgetMapReferenceChildren['after'][$_view->getId()])) {
-                    $widgetMapReferenceChildren['after'][$_view->getId()]->setParent($widgetMap);
+                if (isset($parentWidgetMapChildren['after'][$_view->getId()])) {
+                    $parentWidgetMapChildren['after'][$_view->getId()]->setParent($widgetMap);
                 }
             }
         }

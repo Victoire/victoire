@@ -2,7 +2,7 @@
 
 namespace Victoire\Bundle\WidgetBundle\Renderer;
 
-use Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
+use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 use Symfony\Component\DependencyInjection\Container;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\CoreBundle\Entity\View;
@@ -130,7 +130,7 @@ class WidgetRenderer
      *
      * @return string
      */
-    public function renderActions($slot, $options = [], $position = null, WidgetMap $widgetMapReference = null)
+    public function renderActions($slot, $options = [], $position = null, WidgetMap $parentWidgetMap = null)
     {
         return $this->container->get('victoire_templating')->render(
             'VictoireCoreBundle:Widget:actions.html.twig',
@@ -138,7 +138,7 @@ class WidgetRenderer
                 'slot'                  => $slot,
                 'options'               => $options,
                 'position'              => $position,
-                'widgetMapReferenceId'  => $widgetMapReference ? $widgetMapReference->getId() : null,
+                'parentWidgetMapId'  => $parentWidgetMap ? $parentWidgetMap->getId() : null,
             ]
         );
     }

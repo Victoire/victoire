@@ -2,7 +2,7 @@
 
 namespace Victoire\Bundle\WidgetBundle\Controller;
 
-use Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
+use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -87,10 +87,10 @@ class WidgetController extends Controller
      *
      * @return JsonResponse
      *
-     * @Route("/victoire-dcms/widget/new/{type}/{viewReference}/{slot}/{position}/{widgetMapReference}", name="victoire_core_widget_new", defaults={"slot":null, "position":null, "widgetMapReference":null}, options={"expose"=true})
+     * @Route("/victoire-dcms/widget/new/{type}/{viewReference}/{slot}/{position}/{parentWidgetMap}", name="victoire_core_widget_new", defaults={"slot":null, "position":null, "parentWidgetMap":null}, options={"expose"=true})
      * @Template()
      */
-    public function newAction($type, $viewReference, $slot = null, $position = null, $widgetMapReference = null)
+    public function newAction($type, $viewReference, $slot = null, $position = null, $parentWidgetMap = null)
     {
         try {
             $view = $this->getViewByReferenceId($viewReference);
@@ -103,7 +103,7 @@ class WidgetController extends Controller
 
             $widget = $this->get('victoire_widget.widget_helper')->newWidgetInstance($type, $view, $slot, Widget::MODE_STATIC);
             $classes = $this->get('victoire_business_entity.cache_reader')->getBusinessClassesForWidget($widget);
-            $forms = $this->get('victoire_widget.widget_form_builder')->renderNewWidgetForms($slot, $view, $widget, $classes, $position, $widgetMapReference);
+            $forms = $this->get('victoire_widget.widget_form_builder')->renderNewWidgetForms($slot, $view, $widget, $classes, $position, $parentWidgetMap);
 
             $response = new JsonResponse([
                     'html' => $this->get('victoire_templating')->render(
@@ -132,11 +132,11 @@ class WidgetController extends Controller
      * @param string $businessEntityId  The BusinessEntity::id (can be null if the submitted form is in static mode)
      *
      * @return JsonResponse
-     * @Route("/victoire-dcms/widget/create/static/{type}/{viewReference}/{slot}/{position}/{widgetMapReference}", name="victoire_core_widget_create_static", defaults={"mode":"static", "slot":null, "businessEntityId":null, "position":null, "widgetMapReference":null, "_format": "json"})
-     * @Route("/victoire-dcms/widget/create/{mode}/{type}/{viewReference}/{slot}/{businessEntityId}/{position}/{widgetMapReference}", name="victoire_core_widget_create", defaults={"slot":null, "businessEntityId":null, "position":null, "widgetMapReference":null, "_format": "json"})
+     * @Route("/victoire-dcms/widget/create/static/{type}/{viewReference}/{slot}/{position}/{parentWidgetMap}", name="victoire_core_widget_create_static", defaults={"mode":"static", "slot":null, "businessEntityId":null, "position":null, "parentWidgetMap":null, "_format": "json"})
+     * @Route("/victoire-dcms/widget/create/{mode}/{type}/{viewReference}/{slot}/{businessEntityId}/{position}/{parentWidgetMap}", name="victoire_core_widget_create", defaults={"slot":null, "businessEntityId":null, "position":null, "parentWidgetMap":null, "_format": "json"})
      * @Template()
      */
-    public function createAction($mode, $type, $viewReference, $slot = null, $position = null, $widgetMapReference = null, $businessEntityId = null)
+    public function createAction($mode, $type, $viewReference, $slot = null, $position = null, $parentWidgetMap = null, $businessEntityId = null)
     {
         try {
             //services
@@ -152,7 +152,7 @@ class WidgetController extends Controller
             $view->setReference($reference);
             $this->get('victoire_core.current_view')->setCurrentView($view);
 
-            $response = $this->get('widget_manager')->createWidget($mode, $type, $slot, $view, $businessEntityId, $position, $widgetMapReference);
+            $response = $this->get('widget_manager')->createWidget($mode, $type, $slot, $view, $businessEntityId, $position, $parentWidgetMap);
 
             if ($isNewPage) {
                 $response = new JsonResponse([

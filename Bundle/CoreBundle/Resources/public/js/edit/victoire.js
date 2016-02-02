@@ -68,14 +68,14 @@ function enableSortableSlots(){
             },
             update: function(event, ui) {
                 if (ui.item.prev().is('new-widget-button')) {
-                    var widgetMapReference = ui.item.prev().attr('widget-map');
+                    var parentWidgetMap = ui.item.prev().attr('widget-map');
                     var position = ui.item.prev().attr('position');
                 } else {
-                    var widgetMapReference = ui.item.next().attr('widget-map');
+                    var parentWidgetMap = ui.item.next().attr('widget-map');
                     var position = ui.item.next().attr('position');
                 }
                 var sorted = {
-                    'widgetMapReference': widgetMapReference,
+                    'parentWidgetMap': parentWidgetMap,
                     'position': position,
                     'slot': ui.item.parents('.vic-slot').first().data('name'),
                     'widgetMap': ui.item.attr('widget-map')
