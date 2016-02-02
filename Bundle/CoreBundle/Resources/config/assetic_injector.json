@@ -18,7 +18,6 @@
                 "@VictoireCoreBundle/Resources/script/ngApp/controllers/page/PageCtrl.js",
                 "@VictoireCoreBundle/Resources/script/ngApp/controllers/slot/SlotCtrl.js",
                 "@VictoireCoreBundle/Resources/script/ngApp/controllers/widget/WidgetAsynchronousLoadCtrl.js",
-                "@VictoireCoreBundle/Resources/script/ngApp/services/slotAPIService.js",
                 "@VictoireCoreBundle/Resources/script/ngApp/services/slotLocalStorageService.js",
                 "@VictoireCoreBundle/Resources/script/ngApp/services/widgetAPIService.js",
                 "@VictoireCoreBundle/Resources/script/ngApp/services/widgetLocalStorageService.js",
