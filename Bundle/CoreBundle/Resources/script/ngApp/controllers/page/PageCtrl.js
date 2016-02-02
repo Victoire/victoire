@@ -69,7 +69,8 @@ angular.module('ngApp').controller("PageController",
                     method: 'GET',
                     url: Routing.generate(
                         'victoire_core_widget_get_available_positions', {
-                            viewReference: viewReferenceId
+                            viewReference: viewReferenceId,
+                            _locale: locale
                         }
                     )
                 }).then(function(response) {
