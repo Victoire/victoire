@@ -64,7 +64,7 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
                 ->getQuery()
                 ->getResult();
             $templates = [];
-            $recursiveGetTemplates = function($template) use (&$recursiveGetTemplates, &$templates) {
+            $recursiveGetTemplates = function ($template) use (&$recursiveGetTemplates, &$templates) {
                     array_push($templates, $template);
                     foreach ($template->getInheritors() as $template) {
                         if ($template instanceof Template) {
@@ -97,15 +97,13 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
             if (!empty($oldWidgetMaps)) {
                 foreach ($oldWidgetMaps as $slot => $oldWidgetMap) {
                     $widgetMaps = [];
-                    $output->writeln(var_export($oldWidgetMap));
-                    usort($oldWidgetMap, function($a, $b) {
+                    usort($oldWidgetMap, function ($a, $b) {
                         if ($b['position'] - $a['position'] == 0) {
                             return 1;
                         }
 
                         return $b['position'] - $a['position'];
                     });
-                    $output->writeln(var_export($oldWidgetMap));
 
                     foreach ($oldWidgetMap as $key => $item) {
                         if ($item['action'] !== 'create') {
@@ -125,11 +123,9 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
                         }
                     }
 
-                    $output->writeln(var_export($oldWidgetMap));
                     foreach ($oldWidgetMap as $position => $_oldWidgetMap) {
                         $output->writeln('==========================');
                         $output->writeln($slot);
-                        $output->writeln(var_export($_oldWidgetMap));
 
                         $widget = $widgetRepo->find($_oldWidgetMap['widgetId']);
                         if (!$widget) {
