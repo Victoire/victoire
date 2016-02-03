@@ -393,7 +393,7 @@ class WidgetController extends Controller
      * @return JsonResponse
      * @Route("/victoire-dcms/widget/get-available-positions/{viewReference}", name="victoire_core_widget_get_available_positions", options={"expose"=true})
      */
-    public function getAvailablePositions(Request $request, $viewReference)
+    public function getAvailablePositionsAction(Request $request, $viewReference)
     {
         $view = $this->getViewByReferenceId($viewReference);
 
