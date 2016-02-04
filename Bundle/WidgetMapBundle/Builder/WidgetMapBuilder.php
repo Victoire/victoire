@@ -24,15 +24,20 @@ class WidgetMapBuilder
      */
     public function build(View $view, EntityManager $em = null, $updatePage = true)
     {
+        $widgetMaps = [];
         // populate a $widgetmaps array with widgetmaps of given view + widgetmaps of it's templates
+        if ($view->getWidgetMaps()) {
         $widgetMaps = $view->getWidgetMaps()->toArray();
+        }
         $template = clone $view;
         $builtWidgetMap = [];
 
         while (null !== $template = $template->getTemplate()) {
+            if ($template->getWidgetMaps()) {
             foreach ($template->getWidgetMaps()->toArray() as $item) {
                 $widgetMaps[] = $item;
             }
+        }
         }
 
         $slots = $this->removeOverwritedWidgetMaps($widgetMaps);
@@ -106,7 +111,8 @@ class WidgetMapBuilder
      * depending of the children parents and positions
      * @param WidgetMap $currentWidgetMap
      */
-    protected function orderizeWidgetMap($currentWidgetMap, $builtWidgetMap, $slot, $widgetMaps, $view){
+    protected function orderizeWidgetMap($currentWidgetMap, $builtWidgetMap, $slot, $widgetMaps, $view)
+    {
         $children = $currentWidgetMap->getChildren($view);
         foreach ($children as $child) {
             // check if the founded child belongs to the view
@@ -168,7 +174,6 @@ class WidgetMapBuilder
             }
         }
     }
-
 
     /**
      * Find the "root" widgetmap (the one that has no parent)
