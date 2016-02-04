@@ -229,7 +229,8 @@ class WidgetController extends Controller
     public function stylizeAction(Request $request, Widget $widget, $viewReference)
     {
         $view = $this->getViewByReferenceId($viewReference);
-        $widgetView = $widget->getView();
+        $this->get('victoire_widget_map.builder')->build($view, $this->get('doctrine.orm.entity_manager'));
+        $widgetView = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $view)->getView();
 
         $widgetViewReference = $this->container->get('victoire_view_reference.repository')
             ->getOneReferenceByParameters(['viewId' => $view->getId()]);
