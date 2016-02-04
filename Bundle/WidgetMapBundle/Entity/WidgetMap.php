@@ -41,7 +41,7 @@ class WidgetMap
      * @var View
      *
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\CoreBundle\Entity\View", inversedBy="widgetMaps")
-     * @ORM\JoinColumn(name="view_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="view_id", referencedColumnName="id", onDelete="cascade")
      */
     protected $view;
 
@@ -49,7 +49,7 @@ class WidgetMap
      * @var Widget
      *
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\WidgetBundle\Entity\Widget", inversedBy="widgetMaps")
-     * @ORM\JoinColumn(name="widget_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="widget_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $widget;
 
