@@ -78,7 +78,7 @@ abstract class View
      *
      * @ORM\OneToMany(targetEntity="\Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap", mappedBy="view", orphanRemoval=true, cascade={"persist", "remove"})
      */
-    protected $widgetMaps;
+    protected $widgetMaps = [];
 
     /**
      * @Gedmo\TreeParent
@@ -172,6 +172,7 @@ abstract class View
     protected $cssHash;
 
     /**
+     * @deprecated
      * @ORM\Column(name="widget_map", type="array")
      */
     protected $widgetMap = [];
@@ -690,7 +691,6 @@ abstract class View
 
         return $widgetIds;
     }
-
 
     /**
      * Get builtWidgetMap.
