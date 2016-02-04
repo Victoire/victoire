@@ -65,6 +65,7 @@ angular.module('ngApp').controller("PageController",
             };
 
             $scope.getWidgetMaps = function() {
+                if (typeof(viewReferenceId) != 'undefined') {
                 $http({
                     method: 'GET',
                     url: Routing.generate(
@@ -76,6 +77,7 @@ angular.module('ngApp').controller("PageController",
                 }).then(function(response) {
                     $rootScope.widgetMaps = response.data;
                 });
+                }
 
             };
         }
