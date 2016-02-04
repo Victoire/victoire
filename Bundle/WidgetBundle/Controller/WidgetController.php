@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\WidgetBundle\Controller;
 
+use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
 use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -20,6 +21,8 @@ use Victoire\Bundle\WidgetBundle\Entity\Widget;
  */
 class WidgetController extends Controller
 {
+    use VictoireAlertifyControllerTrait;
+
     /**
      * Show a widget.
      *
@@ -81,9 +84,9 @@ class WidgetController extends Controller
     /**
      * New Widget.
      *
-     * @param string $type              The type of the widget we edit
-     * @param int    $viewReference     The view reference where attach the widget
-     * @param string $slot              The slot where attach the widget
+     * @param string $type          The type of the widget we edit
+     * @param int    $viewReference The view reference where attach the widget
+     * @param string $slot          The slot where attach the widget
      *
      * @return JsonResponse
      *
@@ -117,10 +120,10 @@ class WidgetController extends Controller
      * This action needs 2 routes to handle the presence or not of "businessEntityId" and 'parentWidgetMap'
      * that are both integers but "businessEntityId" present only in !static mode
      *
-     * @param string $type              The type of the widget we edit
-     * @param int    $viewReference     The view reference where attach the widget
-     * @param string $slot              The slot where attach the widget
-     * @param string $businessEntityId  The BusinessEntity::id (can be null if the submitted form is in static mode)
+     * @param string $type             The type of the widget we edit
+     * @param int    $viewReference    The view reference where attach the widget
+     * @param string $slot             The slot where attach the widget
+     * @param string $businessEntityId The BusinessEntity::id (can be null if the submitted form is in static mode)
      *
      * @return JsonResponse
      * @Route("/victoire-dcms/widget/create/static/{type}/{viewReference}/{slot}/{position}/{parentWidgetMap}", name="victoire_core_widget_create_static", defaults={"mode":"static", "slot":null, "businessEntityId":null, "position":null, "parentWidgetMap":null, "_format": "json"})
@@ -143,6 +146,7 @@ class WidgetController extends Controller
             $view->setReference($reference);
             $this->get('victoire_core.current_view')->setCurrentView($view);
 
+            $this->congrat($this->get('translator')->trans('victoire.success.message', [], 'victoire'));
             $response = $this->get('widget_manager')->createWidget($mode, $type, $slot, $view, $businessEntityId, $position, $parentWidgetMap);
 
             if ($isNewPage) {
@@ -202,6 +206,8 @@ class WidgetController extends Controller
                     $mode
                 )
             );
+
+            $this->congrat($this->get('translator')->trans('victoire.success.message', [], 'victoire'));
         } catch (Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
         }
