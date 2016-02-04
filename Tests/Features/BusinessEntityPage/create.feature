@@ -28,6 +28,7 @@ Feature: Create business entity pages
         Then I should be on "/fr/victoire-dcms/business-template/show/5"
         And I should see "La représentation métier a bien été créée"
         Then I switch to "layout" mode
+        And I should see "Nouveau contenu"
         When I select "Force" from the "1" select of "content" slot
         Then I should see "Créer"
         Then I follow the tab "Jedi"
@@ -59,6 +60,7 @@ Feature: Create business entity pages
         Then I should be on "/fr/victoire-dcms/business-template/show/5"
         And I should see "La représentation métier a bien été créée"
         Then I switch to "layout" mode
+        And I should see "Nouveau contenu"
         When I select "Force" from the "1" select of "content" slot
         Then I should see "Créer"
         When I fill in "Côté de la force" with "Static Widget - Fiche Jedi Dark"
@@ -81,6 +83,7 @@ Feature: Create business entity pages
         Then I should be on "/fr/victoire-dcms/business-template/show/6"
         And I should see "La représentation métier a bien été créée"
         Then I switch to "layout" mode
+        And I should see "Nouveau contenu"
         When I select "Force" from the "1" select of "content" slot
         Then I should see "Créer"
         When I fill in "Côté de la force" with "Static Widget - Fiche Jedi Bright"
@@ -114,6 +117,7 @@ Feature: Create business entity pages
         Then I should see "La représentation métier a bien été créée"
         Given I am on "/fr/fiche-jedi-yoda"
         And I switch to "layout" mode
+        And I should see "Nouveau contenu"
         When I select "Force" from the "1" select of "content" slot
         Then I should see "Créer"
         When I fill in "Côté de la force" with "Nouveau"
@@ -140,6 +144,7 @@ Feature: Create business entity pages
         Then I should be on "/fr/victoire-dcms/business-template/show/5"
         And I should see "La représentation métier a bien été créée"
         Then I switch to "layout" mode
+        And I should see "Nouveau contenu"
         When I select "Force" from the "1" select of "content" slot
         Then I should see "Créer"
         When I follow the tab "Jedi"
@@ -179,8 +184,8 @@ Feature: Create business entity pages
         And I fill in "URL" with "fiche-jedi-{{item.slug}}"
         And I fill in "victoire_business_template_type_query" with "WHERE LOWER(item.side) LIKE LOWER('bright') OR LOWER(item.side) LIKE LOWER('double')"
         And I follow "Créer"
-        And I wait 5 seconds
         And I switch to "layout" mode
+        And I should see "Nouveau contenu"
         When I select "Force" from the "1" select of "content" slot
         Then I should see "Créer"
         And I fill in "Côté de la force" with "Bright"

@@ -24,6 +24,7 @@ Feature: Mercenary is not a BusinessEntity itself but extends Character which is
             And I wait 10 seconds
             And I should be on "/fr/victoire-dcms/business-template/show/5"
             Then I switch to "layout" mode
+            And I should see "Nouveau contenu"
             When I select "Text" from the "1" select of "content" slot
             Then I should see "Créer"
             When I follow "Personnages"
@@ -37,6 +38,8 @@ Feature: Mercenary is not a BusinessEntity itself but extends Character which is
 
         # TEST the virtual BEP is available in LinkExtension
         Given I am on "/"
+            Then I switch to "layout" mode
+            And I should see "Nouveau contenu"
             When I select "Bouton" from the "1" select of "content" slot
             Then I should see "Créer"
             When I select "Page" from "_static_victoire_widget_form_button[link][linkType]"
