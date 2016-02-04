@@ -27,17 +27,17 @@ class WidgetMapBuilder
         $widgetMaps = [];
         // populate a $widgetmaps array with widgetmaps of given view + widgetmaps of it's templates
         if ($view->getWidgetMaps()) {
-        $widgetMaps = $view->getWidgetMaps()->toArray();
+            $widgetMaps = $view->getWidgetMaps()->toArray();
         }
         $template = clone $view;
         $builtWidgetMap = [];
 
         while (null !== $template = $template->getTemplate()) {
             if ($template->getWidgetMaps()) {
-            foreach ($template->getWidgetMaps()->toArray() as $item) {
-                $widgetMaps[] = $item;
+                foreach ($template->getWidgetMaps()->toArray() as $item) {
+                    $widgetMaps[] = $item;
+                }
             }
-        }
         }
 
         $slots = $this->removeOverwritedWidgetMaps($widgetMaps);
@@ -74,7 +74,7 @@ class WidgetMapBuilder
     /**
      * This method takes the builtWidgetMap for view and creates an array that indicate, for
      * each widgetmap, if the position "after" and "before" are available
-     * @param View $view
+     * @param  View  $view
      * @return array
      */
     public function getAvailablePosition(View $view)
