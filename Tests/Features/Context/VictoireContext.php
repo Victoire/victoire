@@ -148,7 +148,7 @@ class VictoireContext extends RawMinkContext
     {
         $element = $this->getSession()->getPage()->find(
             'xpath',
-            sprintf('//descendant-or-self::*[normalize-space(text()) = "%s"]/ancestor::div[@class="vic-widget-container"]/following-sibling::div[@class="vic-widget-container"]/descendant-or-self::*[normalize-space(text()) = "%s"]', $textBefore, $textAfter)
+            sprintf('//descendant-or-self::*[normalize-space(text()) = "%s"]/ancestor::div/descendant-or-self::*[normalize-space(text()) = "%s"]', $textBefore, $textAfter)
         );
 
         if (null === $element) {
