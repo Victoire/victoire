@@ -27,6 +27,7 @@ before_script:
   - php Tests/Functionnal/bin/console --env=test cache:warmup
   - php Tests/Functionnal/bin/console --env=test victoire:generate:view
   - php Tests/Functionnal/bin/console --env=test assets:install Tests/Functionnal/web
+  - php Tests/Functionnal/bin/console --env=test bazinga:js-translation:dump
   - php Tests/Functionnal/bin/console --env=test fos:js:dump --target="Tests/Functionnal/web/js/fos_js_routes_test.js"
   - php Tests/Functionnal/bin/console --env=domain fos:js:dump --target="Tests/Functionnal/web/js/fos_js_routes_domain.js"
   - php Tests/Functionnal/bin/console --env=test assetic:dump
