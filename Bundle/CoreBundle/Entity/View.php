@@ -638,10 +638,6 @@ abstract class View
     {
         $this->widgetMaps = $widgetMaps;
 
-        foreach ($widgetMaps as $widgetMap) {
-            $widgetMap->setView($this);
-        }
-
         return $this;
     }
 
@@ -662,7 +658,9 @@ abstract class View
      */
     public function addWidgetMap(WidgetMap $widgetMap)
     {
+        if (!$widgetMap->getView()) {
         $widgetMap->setView($this);
+        }
         $this->widgetMaps[] = $widgetMap;
     }
 
