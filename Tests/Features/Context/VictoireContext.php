@@ -231,19 +231,15 @@ class VictoireContext extends RawMinkContext
     }
 
     /**
-     * @Then /^I move the widget "(.+)" under the widget "(.*)"$/
+     * @Then /^I move the widgetMap "(.+)" "(.+)" the widgetMap "(.*)"$/
      */
-    public function iMoveWidgetUnder($widgetMoved, $widgetMovedTo)
+    public function iMoveWidgetUnder($widgetMapMoved, $position, $widgetMapMovedTo)
     {
-        $widgetRepo = $this->getContainer()->get('doctrine.orm.entity_manager')
-            ->getRepository('Victoire\Widget\TextBundle\Entity\WidgetText');
-        $widgetMovedId = $widgetRepo->findOneBy(['content' => $widgetMoved])->getId();
-        $widgetMovedToId = 0;
-        if ($widgetMovedTo) {
-            $widgetMovedToId = $widgetRepo->findOneBy(['content' => $widgetMovedTo])->getId();
+        if (!$widgetMapMovedTo) {
+            $widgetMapMovedTo = 'null';
         }
+        $js = 'updateWidgetPosition({"parentWidgetMap": '.$widgetMapMovedTo.', "slot": "content", "position": "'.$position.'", "widgetMap": '.$widgetMapMoved.'})';
 
-        $js = 'updateWidgetPosition({"parentWidget": '.$widgetMovedToId.', "slot": "content", "widget": '.$widgetMovedId.'})';
         $this->getSession()->executeScript($js);
     }
 }
