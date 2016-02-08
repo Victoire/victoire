@@ -106,8 +106,8 @@ function enableSortableSlots(){
 
 function updateWidgetPosition(sorted, ui) {
     var ajaxCall = $vic.post(
-        Routing.generate('victoire_core_widget_update_position', {'viewReference': viewReferenceId}),
-        { 'sorted': sorted, '_locale': locale }
+        Routing.generate('victoire_core_widget_update_position', {'viewReference': viewReferenceId, '_locale': locale}),
+        { 'sorted': sorted }
     );
     ajaxCall.fail(function() {
         $vic(".vic-slot").each(function(){
