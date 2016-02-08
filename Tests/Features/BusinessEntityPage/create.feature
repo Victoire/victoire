@@ -184,6 +184,7 @@ Feature: Create business entity pages
         And I fill in "URL" with "fiche-jedi-{{item.slug}}"
         And I fill in "victoire_business_template_type_query" with "WHERE LOWER(item.side) LIKE LOWER('bright') OR LOWER(item.side) LIKE LOWER('double')"
         And I follow "Créer"
+        And I wait 2 seconds
         And I switch to "layout" mode
         And I should see "Nouveau contenu"
         When I select "Force" from the "1" select of "content" slot

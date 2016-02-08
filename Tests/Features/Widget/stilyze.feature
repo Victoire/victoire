@@ -12,7 +12,7 @@ Feature: Stylize a widget
     Then I should see "Créer"
     When I fill in "Côté de la force" with "Obscure"
     And I submit the widget
-    Then I wait 1 second
+    Then I wait 2 seconds
     Then I switch to "style" mode
     When I edit the "Force" widget
     Then I should see "Style du widget"
