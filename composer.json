@@ -42,8 +42,8 @@
     },
     "require"          : {
         "php"                                 : ">=5.3.3",
-        "appventus/alertify-bundle"           : "dev-master",
-        "appventus/assetic-injector-bundle"   : "dev-master",
+        "appventus/alertify-bundle"           : "^1.0",
+        "appventus/assetic-injector-bundle"   : "^1.0",
         "doctrine/data-fixtures"              : "1.1.x-dev",
         "doctrine/doctrine-bundle"            : ">=1.2",
         "doctrine/doctrine-fixtures-bundle"   : "2.2.x-dev",
