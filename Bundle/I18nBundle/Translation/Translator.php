@@ -45,7 +45,7 @@ class Translator extends BaseTranslator
         }
         if (null === $domain) {
             $domain = 'messages';
-        } elseif ('victoire' === $domain) {
+        } elseif (in_array($domain, $this->container->getParameter('victoire_i18n.users_locale.domains'))) {
             $locale = $this->getVictoireLocale();
         }
         if (!isset($this->catalogues[$locale])) {
@@ -67,7 +67,7 @@ class Translator extends BaseTranslator
         }
         if (null === $domain) {
             $domain = 'messages';
-        } elseif ('victoire' === $domain) {
+        } elseif (in_array($domain, $this->container->getParameter('victoire_i18n.users_locale.domains'))) {
             $locale = $this->getVictoireLocale();
         }
         if (!isset($this->catalogues[$locale])) {

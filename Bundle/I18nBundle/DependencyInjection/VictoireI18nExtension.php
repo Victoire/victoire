@@ -35,6 +35,9 @@ class VictoireI18nExtension extends Extension
             'victoire_i18n.victoire_locale', $config['victoire_locale']
         );
         $container->setParameter(
+            'victoire_i18n.users_locale.domains', $config['users_locale_domains']
+        );
+        $container->setParameter(
             'victoire_i18n.locale_pattern', $config['locale_pattern']
         );
     }
