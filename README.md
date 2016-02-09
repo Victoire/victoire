@@ -21,9 +21,11 @@ The main goal is to give to the final customer the ability to **create**/**edit*
 
 Victoire is an open-source, community driven project.
 We are keen on getting your participation for the development of this product.
-To do so, please follow the steps [**here**](https://github.com/Victoire/victoire/blob/master/CONTRIBUTION.md)
+You can find [different open issues](https://github.com/Victoire/victoire/issues) where your help is more than welcome, regardless of your mastering level.
 
-You can see the list of [contributors](https://github.com/Victoire/Victoire/contributors)
+However, for any contribution, we kindly ask you to follow this [**specific workflow**](https://github.com/Victoire/victoire/blob/master/CONTRIBUTION.md) and to respect the [code of conduct](https://github.com/Victoire/victoire/blob/master/CODE_OF_CONDUCT.md)
+
+You can see the list of our lovely [contributors](https://github.com/Victoire/Victoire/contributors)
 
 ##Install Victoire
 
