@@ -1,4 +1,4 @@
-ngApp.service("widgetAPIService", ["$http",
+angular.module('ngApp').service("widgetAPIService", ["$http",
     function($http) {
         this.widget = function(widgetId) {
             var url = Routing.generate('victoire_core_widget_show', {

@@ -1,6 +1,10 @@
 imports:
     - { resource: config_test.yml }
 
+framework:
+    session:
+        cookie_domain: .victoire.io
+
 victoire_i18n:
     victoire_locale: fr
     available_locales:

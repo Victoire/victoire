@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Victoire\Bundle\WidgetBundle\Entity\Widget;
+use Victoire\Bundle\WidgetBundle\Model\Widget;
 
 /**
  * Base Widget form type.
@@ -73,7 +73,7 @@ class WidgetType extends AbstractType
         //we use the PRE_SUBMIT event to set the mode option
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) {
+            function(FormEvent $event) {
                 $options = $this->options;
 
                 //we get the raw data for the widget form

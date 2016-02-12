@@ -148,7 +148,7 @@ class VictoireContext extends RawMinkContext
     {
         $element = $this->getSession()->getPage()->find(
             'xpath',
-            sprintf('//descendant-or-self::*[normalize-space(text()) = "%s"]/ancestor::div[@class="vic-widget-container"]/following-sibling::div[@class="vic-widget-container"]/descendant-or-self::*[normalize-space(text()) = "%s"]', $textBefore, $textAfter)
+            sprintf('//descendant-or-self::*[normalize-space(text()) = "%s"]/ancestor::div/descendant-or-self::*[normalize-space(text()) = "%s"]', $textBefore, $textAfter)
         );
 
         if (null === $element) {
@@ -228,5 +228,18 @@ class VictoireContext extends RawMinkContext
             $message = sprintf('Element not found in the page after 10 seconds"');
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
+    }
+
+    /**
+     * @Then /^I move the widgetMap "(.+)" "(.+)" the widgetMap "(.*)"$/
+     */
+    public function iMoveWidgetUnder($widgetMapMoved, $position, $widgetMapMovedTo)
+    {
+        if (!$widgetMapMovedTo) {
+            $widgetMapMovedTo = 'null';
+        }
+        $js = 'updateWidgetPosition({"parentWidgetMap": '.$widgetMapMovedTo.', "slot": "content", "position": "'.$position.'", "widgetMap": '.$widgetMapMoved.'})';
+
+        $this->getSession()->executeScript($js);
     }
 }

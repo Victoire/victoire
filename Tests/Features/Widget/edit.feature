@@ -23,6 +23,7 @@ Feature: Edit a widget
         Then I should be on "/fr/victoire-dcms/business-template/show/5"
         And I should see "La représentation métier a bien été créée"
         Then I switch to "layout" mode
+        And I should see "Nouveau contenu"
 
     Scenario: I can create a new Business entity page pattern, create a widget and edit this widget
         When I select "Force" from the "1" select of "content" slot

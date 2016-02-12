@@ -2,6 +2,8 @@
 
 namespace Victoire\Bundle\WidgetBundle\Controller;
 
+use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
+use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -19,6 +21,8 @@ use Victoire\Bundle\WidgetBundle\Entity\Widget;
  */
 class WidgetController extends Controller
 {
+    use VictoireAlertifyControllerTrait;
+
     /**
      * Show a widget.
      *
@@ -80,17 +84,16 @@ class WidgetController extends Controller
     /**
      * New Widget.
      *
-     * @param string $type              The type of the widget we edit
-     * @param int    $viewReference     The view reference where attach the widget
-     * @param string $slot              The slot where attach the widget
-     * @param int    $positionReference The positionReference in the widgetMap
+     * @param string $type          The type of the widget we edit
+     * @param int    $viewReference The view reference where attach the widget
+     * @param string $slot          The slot where attach the widget
      *
      * @return JsonResponse
      *
-     * @Route("/victoire-dcms/widget/new/{type}/{viewReference}/{slot}/{positionReference}", name="victoire_core_widget_new", defaults={"slot":null}, options={"expose"=true})
+     * @Route("/victoire-dcms/widget/new/{type}/{viewReference}/{slot}/{position}/{parentWidgetMap}", name="victoire_core_widget_new", defaults={"slot":null, "position":null, "parentWidgetMap":null}, options={"expose"=true})
      * @Template()
      */
-    public function newAction($type, $viewReference, $slot = null, $positionReference = 0)
+    public function newAction($type, $viewReference, $slot = null, $position = null, $parentWidgetMap = null)
     {
         try {
             $view = $this->getViewByReferenceId($viewReference);
@@ -99,9 +102,12 @@ class WidgetController extends Controller
                 ->getOneReferenceByParameters(['id' => $viewReference])) {
                 $reference = new ViewReference($viewReference);
             }
-
             $view->setReference($reference);
-            $response = new JsonResponse($this->get('widget_manager')->newWidget(Widget::MODE_STATIC, $type, $slot, $view, $positionReference));
+
+            $response = new JsonResponse(
+                $this->get('victoire_widget.widget_manager')->newWidget(Widget::MODE_STATIC, $type, $slot, $view, $position, $parentWidgetMap)
+            );
+
         } catch (Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
         }
@@ -111,18 +117,20 @@ class WidgetController extends Controller
 
     /**
      * Create a widget.
+     * This action needs 2 routes to handle the presence or not of "businessEntityId" and 'parentWidgetMap'
+     * that are both integers but "businessEntityId" present only in !static mode
      *
-     * @param string $type              The type of the widget we edit
-     * @param int    $viewReference     The view reference where attach the widget
-     * @param string $slot              The slot where attach the widget
-     * @param int    $positionReference Position of the widget
-     * @param string $businessEntityId  The BusinessEntity::id (can be null if the submitted form is in static mode)
+     * @param string $type             The type of the widget we edit
+     * @param int    $viewReference    The view reference where attach the widget
+     * @param string $slot             The slot where attach the widget
+     * @param string $businessEntityId The BusinessEntity::id (can be null if the submitted form is in static mode)
      *
      * @return JsonResponse
-     * @Route("/victoire-dcms/widget/create/{mode}/{type}/{viewReference}/{slot}/{positionReference}/{businessEntityId}", name="victoire_core_widget_create", defaults={"slot":null, "businessEntityId":null, "positionReference": 0, "_format": "json"})
+     * @Route("/victoire-dcms/widget/create/static/{type}/{viewReference}/{slot}/{position}/{parentWidgetMap}", name="victoire_core_widget_create_static", defaults={"mode":"static", "slot":null, "businessEntityId":null, "position":null, "parentWidgetMap":null, "_format": "json"})
+     * @Route("/victoire-dcms/widget/create/{mode}/{type}/{viewReference}/{slot}/{businessEntityId}/{position}/{parentWidgetMap}", name="victoire_core_widget_create", defaults={"slot":null, "businessEntityId":null, "position":null, "parentWidgetMap":null, "_format": "json"})
      * @Template()
      */
-    public function createAction($mode, $type, $viewReference, $slot = null, $positionReference = 0, $businessEntityId = null)
+    public function createAction($mode, $type, $viewReference, $slot = null, $position = null, $parentWidgetMap = null, $businessEntityId = null)
     {
         try {
             //services
@@ -138,7 +146,8 @@ class WidgetController extends Controller
             $view->setReference($reference);
             $this->get('victoire_core.current_view')->setCurrentView($view);
 
-            $response = $this->get('widget_manager')->createWidget($mode, $type, $slot, $view, $businessEntityId, $positionReference);
+            $this->congrat($this->get('translator')->trans('victoire.success.message', [], 'victoire'));
+            $response = $this->get('widget_manager')->createWidget($mode, $type, $slot, $view, $businessEntityId, $position, $parentWidgetMap);
 
             if ($isNewPage) {
                 $response = new JsonResponse([
@@ -176,8 +185,8 @@ class WidgetController extends Controller
     public function editAction(Widget $widget, $viewReference, $mode = Widget::MODE_STATIC, $businessEntityId = null)
     {
         $view = $this->getViewByReferenceId($viewReference);
-        $widgetView = $widget->getView();
-        $this->get('victoire_widget_map.builder')->build($widgetView, true);
+        $this->get('victoire_widget_map.builder')->build($view, $this->get('doctrine.orm.entity_manager'));
+        $widgetView = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $view)->getView();
         $this->get('victoire_widget_map.widget_data_warmer')->warm($this->getDoctrine()->getManager(), $view);
 
         if ($view instanceof BusinessTemplate && !$reference = $this->container->get('victoire_view_reference.repository')
@@ -185,7 +194,7 @@ class WidgetController extends Controller
             $reference = new ViewReference($viewReference);
             $widgetView->setReference($reference);
         }
-
+        $widget->setCurrentView($widgetView);
         $this->get('victoire_core.current_view')->setCurrentView($view);
         try {
             $response = new JsonResponse(
@@ -197,6 +206,8 @@ class WidgetController extends Controller
                     $mode
                 )
             );
+
+            $this->congrat($this->get('translator')->trans('victoire.success.message', [], 'victoire'));
         } catch (Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
         }
@@ -218,7 +229,8 @@ class WidgetController extends Controller
     public function stylizeAction(Request $request, Widget $widget, $viewReference)
     {
         $view = $this->getViewByReferenceId($viewReference);
-        $widgetView = $widget->getView();
+        $this->get('victoire_widget_map.builder')->build($view, $this->get('doctrine.orm.entity_manager'));
+        $widgetView = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $view)->getView();
 
         $widgetViewReference = $this->container->get('victoire_view_reference.repository')
             ->getOneReferenceByParameters(['viewId' => $view->getId()]);
@@ -358,22 +370,44 @@ class WidgetController extends Controller
         try {
             //the sorted order for the widgets
             $sortedWidget = $request->get('sorted');
-
+            $em = $this->get('doctrine.orm.entity_manager');
             if (!$view->getId()) {
                 //This view does not have an id, so it's a non persisted BEP. To keep this new order, well have to persist it.
-                $this->get('doctrine.orm.entity_manager')->persist($view);
-                $this->get('doctrine.orm.entity_manager')->flush();
+                $em->persist($view);
+                $em->flush();
             }
-
+            $this->get('victoire_widget_map.builder')->build($view);
             //recompute the order for the widgets
-            $this->get('victoire_widget_map.manager')->updateWidgetMapOrder($view, $sortedWidget);
+            $this->get('victoire_widget_map.manager')->move($view, $sortedWidget);
+            $em->flush();
 
-            $response = new JsonResponse(['success' => true]);
+            $this->get('victoire_widget_map.builder')->build($view);
+            $availablePositions = $this->get('victoire_widget_map.builder')->getAvailablePosition($view);
+
+            $response = new JsonResponse(['success' => true, 'availablePositions' => $availablePositions]);
         } catch (Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
         }
 
         return $response;
+    }
+
+    /**
+     * Update widget positions accross the view. If moved widget is a Reference, ask to detach the view from template.
+     *
+     * @param int $viewReference The current viewReference
+     *
+     * @return JsonResponse
+     * @Route("/victoire-dcms/widget/get-available-positions/{viewReference}", name="victoire_core_widget_get_available_positions", options={"expose"=true})
+     */
+    public function getAvailablePositionsAction(Request $request, $viewReference)
+    {
+        $view = $this->getViewByReferenceId($viewReference);
+
+        $this->get('victoire_widget_map.builder')->build($view);
+        $availablePositions = $this->get('victoire_widget_map.builder')->getAvailablePosition($view);
+
+        return new JsonResponse($availablePositions);
     }
 
     /**

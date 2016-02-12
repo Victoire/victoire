@@ -10,11 +10,11 @@ use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Handler\WidgetExceptionHandler;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
-use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer;
+use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 
 /**
  * CmsExtension extends Twig with view capabilities.
@@ -63,7 +63,7 @@ class CmsExtension extends \Twig_Extension_Core
     /**
      * register twig functions.
      *
-     * @return array The list of extensions
+     * @return \Twig_SimpleFunction[] The list of extensions
      */
     public function getFunctions()
     {
@@ -80,7 +80,7 @@ class CmsExtension extends \Twig_Extension_Core
     /**
      * register twig filters.
      *
-     * @return array The list of filters
+     * @return \Twig_SimpleFilter[] The list of filters
      */
     public function getFilters()
     {
@@ -138,33 +138,29 @@ class CmsExtension extends \Twig_Extension_Core
 
         $result = '';
         $slotOptions = $this->widgetRenderer->computeOptions($slotId, $slotOptions);
-        $slotNewContentButton = $this->isRoleVictoireGranted() ? $this->widgetRenderer->renderActions($slotId, $slotOptions) : '';
 
-        if (!empty($currentView->getWidgetMap()[$slotId])) {
+        if (!empty($currentView->getBuiltWidgetMap()[$slotId])) {
             //parse the widget maps
+
             /* @var WidgetMap $widgetMap */
-            foreach ($currentView->getWidgetMap()[$slotId] as $widgetMap) {
+            foreach ($currentView->getBuiltWidgetMap()[$slotId] as $widgetMap) {
                 $widget = null;
+                $widgetContent = null;
+                //get the widget id
+                $widgetId = $widgetMap->getWidget()->getId();
                 try {
-                    //get the widget id
-                    $widgetId = $widgetMap->getWidgetId();
-
                     if (!$widgetMap->isAsynchronous()) {
-
                         //get the widget
                         $widget = $widgetMap->getWidget();
-
                         //test widget
                         if ($widget === null) {
                             throw new \Exception('The widget with the id:['.$widgetId.'] was not found.');
                         }
-
                         //render this widget
                         $result .= $this->cmsWidget($widget);
                     } else {
                         $result .= $this->widgetRenderer->prepareAsynchronousRender($widgetId);
                     }
-                    $result .= $slotNewContentButton;
                 } catch (\Exception $ex) {
                     $result .= $this->widgetExceptionHandler->handle($ex, $currentView, $widget, $widgetId);
                 }
@@ -174,12 +170,11 @@ class CmsExtension extends \Twig_Extension_Core
         $ngSlotControllerName = 'slot'.$slotId.'Controller';
         $ngInitLoadActions = $this->isRoleVictoireGranted() ? sprintf('ng-init=\'%s.init("%s", %s)\'', $ngSlotControllerName, $slotId, json_encode($slotOptions)) : '';
         $result = sprintf(
-            '<div class="vic-slot" data-name="%s" id="vic-slot-%s" ng-controller="SlotController as %s" %s>%s%s</div>',
+            '<div class="vic-slot" data-name="%s" id="vic-slot-%s" ng-controller="SlotController as %s" %s>%s</div>',
             $slotId,
             $slotId,
             $ngSlotControllerName,
             $ngInitLoadActions,
-            $slotNewContentButton,
             $result
         );
 

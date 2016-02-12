@@ -4,5 +4,5 @@ if (window.ngDependencies == undefined) {
 
 window.ngDependencies.push("ngSanitize");
 
-var ngApp = angular.module('ngApp', window.ngDependencies).
+angular.module('ngApp', window.ngDependencies).
     config(function($interpolateProvider){$interpolateProvider.startSymbol('{[{').endSymbol('}]}');});

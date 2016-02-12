@@ -16,15 +16,15 @@ Background:
         When I fill in "Nom" with "The Jedi network"
         And I follow "Créer"
         Then I should see "Page créée avec succès"
-        And I wait 5 seconds
         And I switch to "layout" mode
+        And I should see "Nouveau contenu"
         When I select "Force" from the "1" select of "content" slot
         Then I should see "Créer"
         When I fill in "Côté de la force" with "Obscure"
         And I submit the widget
         Then I should see "Victoire !"
 
-    @alice(Blog) @alice(BlogTemplate) @fail
+    @alice(Blog) @alice(BlogTemplate)
     Scenario: I create a new article
         Given I open the hamburger menu
         Then I should see "Blog"

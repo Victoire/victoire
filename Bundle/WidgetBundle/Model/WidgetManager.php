@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\WidgetBundle\Model;
 
+use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -14,15 +15,13 @@ use Victoire\Bundle\BusinessPageBundle\Transformer\VirtualToBusinessPageTransfor
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 use Victoire\Bundle\FormBundle\Helper\FormErrorHelper;
-use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
 use Victoire\Bundle\WidgetBundle\Builder\WidgetFormBuilder;
 use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
 use Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer;
 use Victoire\Bundle\WidgetBundle\Resolver\WidgetContentResolver;
 use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
-use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapPositionBuilder;
-use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
+use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 use Victoire\Bundle\WidgetMapBundle\Manager\WidgetMapManager;
 
 /**
@@ -37,7 +36,6 @@ class WidgetManager
     protected $formErrorHelper; // @victoire_form.error_helper
     protected $request; // @request
     protected $widgetMapManager;
-    protected $widgetMapPositionBuilder;
     protected $cacheReader; // @victoire_business_entity.cache_reader
     protected $victoireTemplating;
     protected $pageHelper;
@@ -55,9 +53,7 @@ class WidgetManager
      * @param FormErrorHelper           $formErrorHelper
      * @param Request                   $request
      * @param WidgetMapManager          $widgetMapManager
-     * @param WidgetMapHelper           $widgetMapHelper
      * @param WidgetMapBuilder          $widgetMapBuilder
-     * @param WidgetMapPositionBuilder  $widgetMapPositionBuilder
      * @param BusinessEntityCacheReader $cacheReader
      * @param TemplateMapper            $victoireTemplating
      * @param PageHelper                $pageHelper
@@ -72,9 +68,7 @@ class WidgetManager
         FormErrorHelper $formErrorHelper,
         Request $request,
         WidgetMapManager $widgetMapManager,
-        WidgetMapHelper $widgetMapHelper,
         WidgetMapBuilder $widgetMapBuilder,
-        WidgetMapPositionBuilder $widgetMapPositionBuilder,
         BusinessEntityCacheReader $cacheReader,
         TemplateMapper $victoireTemplating,
         PageHelper $pageHelper,
@@ -89,9 +83,7 @@ class WidgetManager
         $this->formErrorHelper = $formErrorHelper;
         $this->request = $request;
         $this->widgetMapManager = $widgetMapManager;
-        $this->widgetMapHelper = $widgetMapHelper;
         $this->widgetMapBuilder = $widgetMapBuilder;
-        $this->widgetMapPositionBuilder = $widgetMapPositionBuilder;
         $this->cacheReader = $cacheReader;
         $this->victoireTemplating = $victoireTemplating;
         $this->pageHelper = $pageHelper;
@@ -109,13 +101,13 @@ class WidgetManager
      *
      * @return template
      */
-    public function newWidget($mode, $type, $slot, $view, $position)
+    public function newWidget($mode, $type, $slot, $view, $position, $parentWidgetMap)
     {
         $widget = $this->widgetHelper->newWidgetInstance($type, $view, $slot, $mode);
 
         /** @var BusinessEntity[] $classes */
         $classes = $this->cacheReader->getBusinessClassesForWidget($widget);
-        $forms = $this->widgetFormBuilder->renderNewWidgetForms($slot, $view, $widget, $classes, $position);
+        $forms = $this->widgetFormBuilder->renderNewWidgetForms($slot, $view, $widget, $classes, $position, $parentWidgetMap);
 
         return [
             'html' => $this->victoireTemplating->render(
@@ -138,14 +130,13 @@ class WidgetManager
      * @param string $slotId
      * @param View   $view
      * @param string $entity
-     * @param int    $positionReference
      * @param string $type
      *
      * @throws \Exception
      *
      * @return Template
      */
-    public function createWidget($mode, $type, $slotId, View $view, $entity, $positionReference)
+    public function createWidget($mode, $type, $slotId, View $view, $entity, $position, $widgetReference)
     {
         //services
         $formErrorHelper = $this->formErrorHelper;
@@ -157,7 +148,7 @@ class WidgetManager
         //create a new widget
         $widget = $this->widgetHelper->newWidgetInstance($type, $view, $slotId, $mode);
 
-        $form = $this->widgetFormBuilder->callBuildFormSwitchParameters($widget, $view, $entity, $positionReference);
+        $form = $this->widgetFormBuilder->callBuildFormSwitchParameters($widget, $view, $entity, $position, $widgetReference, $slotId);
 
         $noValidate = $request->query->get('novalidate', false);
 
@@ -174,26 +165,18 @@ class WidgetManager
             //update fields of the widget
             $widget->setBusinessEntityId($entity);
 
-            $widget->positionReference = $positionReference;
-            $widget->slotId = $slotId;
             //persist the widget
             $this->entityManager->persist($widget);
             $this->entityManager->flush();
 
-            //create the new widget map
-            $widgetMapEntry = new WidgetMap();
-            $widgetMapEntry->setAction(WidgetMap::ACTION_CREATE);
-            $widgetMapEntry->setWidgetId($widget->getId());
-
-            $widgetMap = $this->widgetMapBuilder->build($view, false);
-
-            $widgetMapEntry = $this->widgetMapPositionBuilder->generateWidgetPosition($this->entityManager, $widgetMapEntry, $widget, $widgetMap, $positionReference);
-            $this->widgetMapHelper->insertWidgetMapInSlot($slotId, $widgetMapEntry, $view);
+            $this->widgetMapManager->insert($widget, $view, $slotId, $position, $widgetReference);
 
             $this->entityManager->persist($view);
             $this->entityManager->flush();
 
             $widget->setCurrentView($view);
+
+            $this->widgetMapBuilder->build($view);
 
             //get the html for the widget
             $htmlWidget = $this->widgetRenderer->renderContainer($widget, $view);
@@ -230,8 +213,6 @@ class WidgetManager
         /** @var BusinessEntity[] $classes */
         $classes = $this->cacheReader->getBusinessClassesForWidget($widget);
 
-        $widget->setCurrentView($currentView);
-
         //the id of the edited widget
         //a new widget might be created in the case of a legacy
         $initialWidgetId = $widget->getId();
@@ -242,7 +223,7 @@ class WidgetManager
         //if the form is posted
         if ($requestMethod === 'POST') {
             //the widget view
-            $widgetView = $widget->getView();
+            $widgetView = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $currentView)->getView();
 
             //we only copy the widget if the view of the widget is not the current view
             if ($widgetView !== $currentView) {
@@ -261,8 +242,6 @@ class WidgetManager
 
                 $this->entityManager->persist($widget);
 
-                //update the widget map by the slots
-                $currentView->updateWidgetMapBySlots();
                 $this->entityManager->persist($currentView);
                 $this->entityManager->flush();
 
@@ -312,14 +291,17 @@ class WidgetManager
     public function deleteWidget(Widget $widget, View $view)
     {
         //update the view deleting the widget
-        $this->widgetMapManager->deleteWidgetFromView($view, $widget);
+        $this->widgetMapManager->delete($view, $widget);
 
         //we update the widget map of the view
-        $view->updateWidgetMapBySlots();
+        $this->widgetMapBuilder->build($view);
         //Used to update view in callback (we do it before delete it else it'll not exists anymore)
         $widgetId = $widget->getId();
+        $widgetMap = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $view);
         //the widget is removed only if the current view is the view of the widget
-        if ($view === $widget->getView()) {
+        if (null !== $widgetMap
+        && $widgetMap->getView() == $view
+        && $widgetMap->getAction() != WidgetMap::ACTION_DELETE) {
             //we remove the widget
             $this->entityManager->remove($widget);
         }
@@ -348,41 +330,50 @@ class WidgetManager
     public function overwriteWidget(View $view, Widget $widget)
     {
         $widgetCopy = $this->cloneEntity($widget);
-        $widgetCopy->setView($view);
 
         //we have to persist the widget to get its id
         $this->entityManager->persist($view);
         $this->entityManager->flush();
 
-        $this->widgetMapManager->overwriteWidgetMap($widgetCopy, $widget, $view);
+        $originalWidgetMap = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $view);
+
+        $this->widgetMapManager->overwrite($view, $originalWidgetMap, $widgetCopy);
+
+        $this->widgetMapBuilder->build($view);
 
         return $widgetCopy;
     }
 
+    /**
+     * @param Widget $entity
+     */
     public function cloneEntity($entity)
     {
         $entityCopy = clone $entity;
+
         //Look for on_to_many relations, if found, duplicate related entities.
         //It is necessary for 'list' widgets, this algo duplicates and persists list items.
-        $associations = $this->entityManager->getClassMetadata(get_class($entity))->getAssociationMappings();
+        $associations = $this->entityManager->getClassMetadata(get_class($entityCopy))->getAssociationMappings();
         $accessor = PropertyAccess::createPropertyAccessor();
         foreach ($associations as $name => $values) {
-            if ($values['type'] === ClassMetadataInfo::ONE_TO_MANY) {
-                $relatedEntities = $accessor->getValue($entity, $values['fieldName']);
+            if ($values['type'] === ClassMetadataInfo::ONE_TO_MANY && $values['fieldName'] != 'widgetMaps') {
+                $relatedEntities = $accessor->getValue($entityCopy, $values['fieldName']);
                 $relatedEntitiesCopies = [];
                 foreach ($relatedEntities as $relatedEntity) {
-                    $relatedEntityCopy = $this->cloneEntity($relatedEntity);
+                    $relatedEntityCopy = clone $relatedEntity;
+                    $this->entityManager->persist($relatedEntity);
                     $relatedEntitiesCopies[] = $relatedEntityCopy;
                 }
-                $accessor->setValue($entityCopy, $name, $relatedEntitiesCopies);
+                $accessor->setValue($widgetCopy, $name, $relatedEntitiesCopies);
             }
 
             //Clone OneToOne relation objects
             if ($values['type'] === ClassMetadataInfo::ONE_TO_ONE) {
-                $relatedEntity = $accessor->getValue($entity, $values['fieldName']);
+                $relatedEntity = $accessor->getValue($entityCopy, $values['fieldName']);
                 if ($relatedEntity) {
-                    $relatedEntityCopy = $this->cloneEntity($relatedEntity);
-                    $accessor->setValue($entityCopy, $name, $relatedEntityCopy);
+                    $relatedEntityCopy = clone $relatedEntity;
+                    $this->entityManager->persist($relatedEntity);
+                    $accessor->setValue($widgetCopy, $name, $relatedEntityCopy);
                 }
             }
         }

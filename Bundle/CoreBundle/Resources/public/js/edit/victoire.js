@@ -47,39 +47,91 @@ function trackChange(elem)
 function enableSortableSlots(){
     $vic(".vic-slot").each(function(){
         $vic(this).sortable({
-            revert: true,
-            handle: '.vic-hover-widget',
+            handle: '.vic-hover-widget:not(.disabled)',
             items: "> .vic-widget-container:not(.vic-undraggable)",
             placeholder: "vic-ui-state-highlight",
-
             forcePlaceholderSize: true,
             revert: true,
-            stop: function( event, ui ) {
-                var ajaxCall = updateWidgetPosition(ui);
-                ajaxCall.fail(function(){
-                    $vic(".vic-slot").each(function(){
-                        $vic(this).sortable('cancel');
+            start: function(event, ui) {
+                $(this).attr('data-previndex', $vic(this).children().filter('div').index($vic(ui.item)));
+
+                if (ui.item.prev().is('new-widget-button')) {
+                    ui.item.prev().addClass('disabled');
+                }
+                if (ui.item.next().next().is('new-widget-button')) {
+                    ui.item.next().next().addClass('disabled');
+                }
+
+                $vic('.vic-hover-widget').each(function() {
+                    $vic(this).addClass('disabled');
+                })
+            },
+            update: function(event, ui) {
+                if (ui.item.prev().is('new-widget-button')) {
+                    var parentWidgetMap = ui.item.prev().attr('widget-map');
+                    var position = ui.item.prev().attr('position');
+                } else {
+                    var parentWidgetMap = ui.item.next().attr('widget-map');
+                    var position = ui.item.next().attr('position');
+                }
+                var sorted = {
+                    'parentWidgetMap': parentWidgetMap,
+                    'position': position,
+                    'slot': ui.item.parents('.vic-slot').first().data('name'),
+                    'widgetMap': ui.item.attr('widget-map')
+                };
+
+                if (ui.item.prev().is('new-widget-button')) {
+                    ui.item.prev().addClass('disabled');
+                }
+                if (ui.item.next().is('new-widget-button')) {
+                    ui.item.next().addClass('disabled');
+                }
+
+                if (parseInt($vic(this).children().filter('div').index($vic(ui.item))) != parseInt($(this).attr('data-previndex'))) {
+                    updateWidgetPosition(sorted, ui);
+                } else {
+                    $vic(this).sortable('cancel');
+                    $vic('new-widget-button.disabled, .vic-hover-widget.disabled').each(function(index, el) {
+                        $vic(el).removeClass('disabled');
                     });
-                    return false;
-                });
-                var $scope = angular.element($vic(this)).scope();
-                $scope.rebuildActions();
+                }
+                $(this).removeAttr('data-previndex');
+
             }
         });
     });
 }
 
-function updateWidgetPosition(ui){
-    var sorted = {
-        'parentWidget': ui.item.prev('.vic-widget-container').data('id'),
-        'slot': ui.item.parents('.vic-slot').first().data('name'),
-        'widget': ui.item.data('id')
-    };
 
-    return $vic.post(
-        Routing.generate('victoire_core_widget_update_position', {'viewReference': viewReferenceId}),
-        { 'sorted': sorted, '_locale': locale }
+function updateWidgetPosition(sorted, ui) {
+    var ajaxCall = $vic.post(
+        Routing.generate('victoire_core_widget_update_position', {'viewReference': viewReferenceId, '_locale': locale}),
+        { 'sorted': sorted }
     );
+    ajaxCall.fail(function() {
+        $vic(".vic-slot").each(function(){
+            $vic(this).sortable('cancel');
+            $vic('new-widget-button.disabled, .vic-hover-widget.disabled').each(function(index, el) {
+                $vic(el).removeClass('disabled');
+            });
+        });
+        return false;
+    });
+    ajaxCall.success(function(jsonResponse) {
+        $vic('new-widget-button.disabled').each(function(index, el) {
+            $vic(el).remove();
+        });
+        var $rootScope = angular.element($vic('body')).scope().$root;
+        $rootScope.widgetMaps = jsonResponse.availablePositions;
+        $rootScope.$apply();
+
+        $vic('.vic-hover-widget.disabled').each(function() {
+            $vic(this).removeClass('disabled');
+        })
+    });
+
+    return ajaxCall;
 }
 
 function loading(value) {

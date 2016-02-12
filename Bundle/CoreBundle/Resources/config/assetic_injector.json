@@ -14,13 +14,15 @@
             [
                 "http://code.angularjs.org/1.4.1/angular-sanitize.min.js",
                 "@VictoireCoreBundle/Resources/script/ngApp/app.js",
+                "@VictoireCoreBundle/Resources/script/ngApp/filters/translateFilter.js",
                 "@VictoireCoreBundle/Resources/script/ngApp/controllers/page/PageCtrl.js",
                 "@VictoireCoreBundle/Resources/script/ngApp/controllers/slot/SlotCtrl.js",
                 "@VictoireCoreBundle/Resources/script/ngApp/controllers/widget/WidgetAsynchronousLoadCtrl.js",
-                "@VictoireCoreBundle/Resources/script/ngApp/services/slotAPIService.js",
                 "@VictoireCoreBundle/Resources/script/ngApp/services/slotLocalStorageService.js",
                 "@VictoireCoreBundle/Resources/script/ngApp/services/widgetAPIService.js",
-                "@VictoireCoreBundle/Resources/script/ngApp/services/widgetLocalStorageService.js"
+                "@VictoireCoreBundle/Resources/script/ngApp/services/widgetLocalStorageService.js",
+                "@VictoireCoreBundle/Resources/script/ngApp/directives/widget.js",
+                "@VictoireCoreBundle/Resources/script/ngApp/directives/newWidgetButton/newWidgetButton.js"
             ],
             "victoire-head":
             [
@@ -45,7 +47,11 @@
                 "@VictoireCoreBundle/Resources/public/js/edit/widget.js",
                 "@VictoireCoreBundle/Resources/public/vendor/vic-confirm/js/confirm.js",
                 "@VictoireCoreBundle/Resources/public/vendor/vic-bootstrap/3.0.3/js/bootstrap.min.js",
-                "@VictoireCoreBundle/Resources/public/js/jquery.mjs.nestedSortable.js"
+                "@VictoireCoreBundle/Resources/public/js/jquery.mjs.nestedSortable.js",
+                "@BazingaJsTranslationBundle/Resources/public/js/translator.min.js",
+                "js/translations/config.js",
+                "js/translations/victoire/*.js"
+
             ]
         },
         "stylesheets":

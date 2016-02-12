@@ -2,13 +2,15 @@
 
 namespace Victoire\Bundle\WidgetBundle\Renderer;
 
+use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 use Symfony\Component\DependencyInjection\Container;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Event\WidgetRenderEvent;
 use Victoire\Bundle\CoreBundle\VictoireCmsEvents;
-use Victoire\Bundle\PageBundle\Entity\Slot;
-use Victoire\Bundle\WidgetBundle\Model\Widget;
+use Victoire\Bundle\WidgetBundle\Entity\Widget;
+use Victoire\Bundle\WidgetMapBundle\Entity\Slot;
+use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 
 class WidgetRenderer
 {
@@ -69,7 +71,14 @@ class WidgetRenderer
 
         $dispatcher->dispatch(VictoireCmsEvents::WIDGET_PRE_RENDER, new WidgetRenderEvent($widget));
 
-        $html = '<div class="vic-widget-container" data-id="'.$widget->getId().'" id="vic-widget-'.$widget->getId().'-container">';
+        $widgetMap = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $view);
+
+        $directive = '';
+        if ($this->container->get('security.context')->isGranted('ROLE_VICTOIRE')) {
+            $directive = 'widget';
+        }
+
+        $html = sprintf('<div %s widget-map="%s" class="vic-widget-container" data-id="%s">', $directive, $widgetMap->getId(), $widget->getId());
         $html .= $this->render($widget, $view);
         $html .= '</div>';
 
@@ -89,7 +98,7 @@ class WidgetRenderer
     {
         $ngControllerName = 'widget'.$widgetId.'AsynchronousLoadCtrl';
         $ngDirectives = sprintf('ng-controller="WidgetAsynchronousLoadController as %s" class="vic-widget" ng-init="%s.init(%d)" ng-bind-html="html"', $ngControllerName, $ngControllerName, $widgetId);
-        $html = sprintf('<div class="vic-widget-container vic-widget-asynchronous" data-id="%d" id="vic-widget-%d-container" %s></div>', $widgetId, $widgetId, $ngDirectives);
+        $html = sprintf('<div class="vic-widget-container vic-widget-asynchronous" data-id="%d" %s></div>', $widgetId, $ngDirectives);
 
         return $html;
     }
@@ -109,25 +118,6 @@ class WidgetRenderer
             [
                 'widgetId' => $widgetId,
                 'view'     => $view,
-            ]
-        );
-    }
-
-    /**
-     * render slot actions.
-     *
-     * @param Slot   $slot
-     * @param string $options
-     *
-     * @return string
-     */
-    public function renderActions($slot, $options = [])
-    {
-        return $this->container->get('victoire_templating')->render(
-            'VictoireCoreBundle:Widget:actions.html.twig',
-            [
-                'slot'     => $slot,
-                'options'  => $options,
             ]
         );
     }
@@ -160,13 +150,7 @@ class WidgetRenderer
 
         foreach ($slotWidgets as $slotWidget) {
             $widgetParams = $availableWidgets[$slotWidget];
-            // if widget has a parent
-            if (!empty($widgetParams['parent'])) {
-                // place widget under its parent
-                $widgets[$widgetParams['parent']]['children'][$slotWidget]['params'] = $widgetParams;
-            } else {
-                $widgets[$slotWidget]['params'] = $widgetParams;
-            }
+            $widgets[$slotWidget]['params'] = $widgetParams;
         }
         $slots[$slotId]['availableWidgets'] = $widgets;
         if (isset($options['max'])) {

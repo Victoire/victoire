@@ -5704,6 +5704,65 @@
                 "dump"
             ],
             "time": "2016-01-14 09:13:44"
+        },
+        {
+            "name": "willdurand/js-translation-bundle",
+            "version": "dev-master",
+            "target-dir": "Bazinga/Bundle/JsTranslationBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/willdurand/BazingaJsTranslationBundle.git",
+                "reference": "b8767497d31d7bbd81aeb8ee80d0c6ef4e569dd1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/willdurand/BazingaJsTranslationBundle/zipball/b8767497d31d7bbd81aeb8ee80d0c6ef4e569dd1",
+                "reference": "b8767497d31d7bbd81aeb8ee80d0c6ef4e569dd1",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/console": "~2.3|~3.0",
+                "symfony/finder": "~2.3|~3.0",
+                "symfony/framework-bundle": "~2.3|~3.0",
+                "symfony/intl": "~2.3|~3.0"
+            },
+            "replace": {
+                "willdurand/expose-translation-bundle": "2.5.*"
+            },
+            "require-dev": {
+                "symfony/browser-kit": "~2.3|~3.0",
+                "symfony/phpunit-bridge": "~2.7|~3.0",
+                "symfony/twig-bundle": "~2.3|~3.0",
+                "symfony/yaml": "~2.3|~3.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.6-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Bazinga\\Bundle\\JsTranslationBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "William Durand",
+                    "email": "will+git@drnd.me"
+                }
+            ],
+            "description": "A pretty nice way to expose your translation messages to your JavaScript.",
+            "keywords": [
+                "javascript",
+                "symfony",
+                "translation"
+            ],
+            "time": "2015-11-10 13:36:09"
         }
     ],
     "aliases": [],

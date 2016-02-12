@@ -1,26 +1,24 @@
 # WidgetMap
 
-##What is a WidgetMap
+##What is WidgetMaps
 
-A WidgetMap list and organize the widgets within a view. It's a slot table in which we find a items list and define their positions.
+A WidgetMap lists and organizes the widgets within a view. It's a slot table in which we find a items list and define their positions.
 
-##Slot
 
-A slot is widget container.
-It's a non-persisted object dynamically created by WidgetMapBuilder.
 
-##WidgetMapItem
+##WidgetMap
 
-The WidgetMapItem is used to positionnate a widget in a slot.
+The WidgetMap is used to positionnate a widget in a slot.
 Properties :
 
-Property         | Description
----------------- | -------------
-widgetId         | ref to Widget object
-position         | the order to display widgets
-action           | could be create or overwrite
-positionReferece | contains the id of the overwriten widget in order to order the child widget according to it's old position
-replacedWidgetId | In *overwrite* mode, it is used to recover the overwriten widget and display the new one instead
+Property           | Description
+----------------   | -------------
+widget             | ref to Widget object
+view               | ref to View object
+position           | is the widget before or after it's parent
+action             | could be create, overwrite or delete
+parent             | contains the WidgetMap under which the WidgetMap will be placed before or after
+replaced           | In *overwrite* mode, it is used to recover the overwriten WidgetMap and display the new one instead
 
 #WidgetMapBuilder
 

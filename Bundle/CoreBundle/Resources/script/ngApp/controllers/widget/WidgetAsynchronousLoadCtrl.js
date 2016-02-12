@@ -1,4 +1,4 @@
-ngApp.controller("WidgetAsynchronousLoadController",
+angular.module('ngApp').controller("WidgetAsynchronousLoadController",
     ["$scope", "widgetLocalStorageService", "widgetAPIService", "slotLocalStorageService", "$sce",
     function($scope, $widgetLocalStorageService, $widgetAPI, $slotLocalStorageService, $sce) {
         $scope.init = function(widgetId) {
