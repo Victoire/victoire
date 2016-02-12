@@ -3,6 +3,7 @@
 namespace Victoire\Bundle\WidgetBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Victoire\Bundle\CoreBundle\Entity\BaseEntityProxy;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\QueryBundle\Entity\Traits\QueryTrait;
 use Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTrait;
@@ -132,9 +133,9 @@ class Widget extends BaseWidget
     /**
      * Set the entity proxy.
      *
-     * @param EntityProxy $entityProxy
+     * @param BaseEntityProxy $entityProxy
      */
-    public function setEntityProxy(EntityProxy $entityProxy)
+    public function setEntityProxy(BaseEntityProxy $entityProxy)
     {
         $this->entityProxy = $entityProxy;
     }
