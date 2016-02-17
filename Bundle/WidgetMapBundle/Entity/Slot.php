@@ -1,6 +1,6 @@
 <?php
 
-namespace Victoire\Bundle\PageBundle\Entity;
+namespace Victoire\Bundle\WidgetMapBundle\Entity;
 
 /**
  *
@@ -74,7 +74,7 @@ class Slot
      *
      * @param WidgetMap $widgetMap
      *
-     * @return this
+     * @return Slot
      */
     public function updateWidgetMap($widgetMap)
     {

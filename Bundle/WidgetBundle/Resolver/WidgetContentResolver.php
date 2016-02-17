@@ -2,7 +2,7 @@
 
 namespace Victoire\Bundle\WidgetBundle\Resolver;
 
-use Victoire\Bundle\WidgetBundle\Model\Widget;
+use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetBundle\Resolver\Chain\WidgetContentResolverChain;
 
 class WidgetContentResolver

@@ -4,41 +4,86 @@ namespace Victoire\Bundle\WidgetMapBundle\Manager;
 
 use Doctrine\Orm\EntityManager;
 use Victoire\Bundle\CoreBundle\Entity\View;
-use Victoire\Bundle\PageBundle\Entity\Slot;
-use Victoire\Bundle\PageBundle\Entity\WidgetMap;
-use Victoire\Bundle\WidgetBundle\Model\Widget;
+use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
+use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 
 class WidgetMapManager
 {
     private $em;
     private $builder;
-    private $helper;
 
-    public function __construct(EntityManager $em, WidgetMapBuilder $builder, WidgetMapHelper $helper)
+    public function __construct(EntityManager $em, WidgetMapBuilder $builder)
     {
         $this->em = $em;
         $this->builder = $builder;
-        $this->helper = $helper;
     }
 
     /**
-     * compute the widget map for view.
+     * Insert a WidgetMap in a view at given position.
+     *
+     * @param string $slotId
+     */
+    public function insert(Widget $widget, View $view, $slotId, $position, $widgetReference)
+    {
+        $parent = null;
+        if ($widgetReference) {
+            $parent = $this->em->getRepository('VictoireWidgetMapBundle:WidgetMap')->find($widgetReference);
+        }
+        //create the new widget map
+        $widgetMapEntry = new WidgetMap();
+        $widgetMapEntry->setAction(WidgetMap::ACTION_CREATE);
+        $widgetMapEntry->setWidget($widget);
+        $widgetMapEntry->setSlot($slotId);
+        $widgetMapEntry->setPosition($position);
+        $widgetMapEntry->setParent($parent);
+
+        $view->addWidgetMap($widgetMapEntry);
+    }
+
+    /**
+     * moves a widget in a view.
      *
      * @param View  $view
      * @param array $sortedWidget
      *
-     * @throws Exception
+     * @return void
      */
-    public function updateWidgetMapOrder(View $view, $sortedWidget)
+    public function move(View $view, $sortedWidget)
     {
-        $this->updateWidgetMapsFromView($view, $sortedWidget);
-        $view->updateWidgetMapBySlots();
+        /** @var WidgetMap $parentWidgetMap */
+        $parentWidgetMap = $this->em->getRepository('VictoireWidgetMapBundle:WidgetMap')->find((int) $sortedWidget['parentWidgetMap']);
+        $position = $sortedWidget['position'];
+        $slot = $sortedWidget['slot'];
+        /** @var WidgetMap $widgetMap */
+        $widgetMap = $this->em->getRepository('VictoireWidgetMapBundle:WidgetMap')->find((int) $sortedWidget['widgetMap']);
 
-        //update the view with the new widget map
-        $this->em->persist($view);
-        $this->em->flush();
+        $originalParent = $widgetMap->getParent();
+        $originalPosition = $widgetMap->getPosition();
+
+        $children = $widgetMap->getChildren($view);
+        $beforeChild = !empty($children[WidgetMap::POSITION_BEFORE]) ? $children[WidgetMap::POSITION_BEFORE] : null;
+        $afterChild = !empty($children[WidgetMap::POSITION_AFTER]) ? $children[WidgetMap::POSITION_AFTER] : null;
+
+        $parentWidgetMapChildren = $this->getChildrenByView($parentWidgetMap);
+
+        $widgetMap = $this->moveWidgetMap($view, $widgetMap, $parentWidgetMap, $position, $slot);
+
+        // If the moved widgetMap has someone at both his before and after, arbitrary move UP the before side
+        // and find the first place after the before widgetMap hierarchy to place the after widgetMap.
+        $this->moveChildren($view, $beforeChild, $afterChild, $originalParent, $originalPosition);
+
+        foreach ($parentWidgetMapChildren['views'] as $_view) {
+            if ($_view->getId() !== $view->getId()) {
+                if (isset($parentWidgetMapChildren['before'][$_view->getId()])) {
+                    $parentWidgetMapChildren['before'][$_view->getId()]->setParent($widgetMap);
+                }
+                if (isset($parentWidgetMapChildren['after'][$_view->getId()])) {
+                    $parentWidgetMapChildren['after'][$_view->getId()]->setParent($widgetMap);
+                }
+            }
+        }
     }
 
     /**
@@ -47,185 +92,181 @@ class WidgetMapManager
      * @param View   $view
      * @param Widget $widget
      *
-     * @throws \Exception The slot does not exists
+     * @throws \Exception Widget map does not exists
      */
-    public function deleteWidgetFromView(View $view, Widget $widget)
+    public function delete(View $view, Widget $widget)
     {
-        //the widget view
-        $widgetView = $widget->getView();
+        $this->builder->build($view);
 
-        //the widget slot
-        $widgetSlotId = $widget->getSlot();
+        $widgetMap = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $view);
+        $slot = $widgetMap->getSlot();
 
-        //the widget id
-        $widgetId = $widget->getId();
+        $originalParent = $widgetMap->getParent();
+        $originalPosition = $widgetMap->getPosition();
 
-        //get the slot
-        $slot = $view->getSlotById($widgetSlotId);
+        $children = $widgetMap->getChildren($view);
+        $beforeChild = !empty($children[WidgetMap::POSITION_BEFORE]) ? $children[WidgetMap::POSITION_BEFORE] : null;
+        $afterChild = !empty($children[WidgetMap::POSITION_AFTER]) ? $children[WidgetMap::POSITION_AFTER] : null;
 
         //we remove the widget from the current view
-        if ($widgetView === $view) {
-            //test that the slot for the widget exists
-            if ($slot === null) {
-                throw new \Exception('The slot['.$widgetSlotId.'] for the widget ['.$widgetId.'] of the view ['.$view->getId().'] was not found.');
-            }
-
-            //get the widget map
-            $widgetMap = $slot->getWidgetMapByWidgetId($widgetId);
-
-            //check that the widget map exists
-            if ($widgetMap === null) {
-                throw new \Exception('The widgetMap for the widget ['.$widgetId.'] and the view ['.$view->getId().'] does not exists.');
-            }
-
+        if ($widgetMap->getView() === $view) {
             //remove the widget map from the slot
-            $slot->removeWidgetMap($widgetMap);
+            $view->removeWidgetMap($widgetMap);
         } else {
-            //there might be no slot yet for the child view
-            if ($slot === null) {
-                //create a new slot
-                $slot = new Slot();
-                $slot->setId($widgetSlotId);
-
-                //add the new slot to the view
-                $view->addSlot($slot);
-            }
-
             //the widget is owned by another view (a parent)
             //so we add a new widget map that indicates we delete this widget
-            $widgetMap = new WidgetMap();
-            $widgetMap->setAction(WidgetMap::ACTION_DELETE);
-            $widgetMap->setWidgetId($widgetId);
+            $replaceWidgetMap = new WidgetMap();
+            $replaceWidgetMap->setAction(WidgetMap::ACTION_DELETE);
+            $replaceWidgetMap->setWidget($widget);
+            $replaceWidgetMap->setSlot($slot);
+            $replaceWidgetMap->setReplaced($widgetMap);
 
-            $slot->addWidgetMap($widgetMap);
+            $view->addWidgetMap($replaceWidgetMap);
         }
+
+        $this->moveChildren($view, $beforeChild, $afterChild, $originalParent, $originalPosition);
     }
 
     /**
-     * Get the slots for the view by the sorted slots given by the sortable js script when ordering widgets.
+     * the widget is owned by another view (a parent)
+     * so we add a new widget map that indicates we delete this widget.
      *
-     * @param View $view
+     * @param View      $view
+     * @param WidgetMap $originalWidgetMap
+     * @param Widget    $widgetCopy
+     *
+     * @throws \Exception
      */
-    protected function updateWidgetMapsFromView(View $view, $sortedWidget)
+    public function overwrite(View $view, WidgetMap $originalWidgetMap, Widget $widgetCopy)
     {
-        $parentWidgetId = (int) $sortedWidget['parentWidget']; //2
-        $slotId = $sortedWidget['slot']; //content
-        $widgetId = (int) $sortedWidget['widget']; //1
-        $slot = $view->getSlotById($slotId);
-        $originalWidgetMap = $slot->getWidgetMapByWidgetId($widgetId);
-
-        // Get the moved widget in the current page or in template
-        $watchdog = 100;
-        $_view = $view;
-        while (!$originalWidgetMap) {
-            $watchdog--;
-            $_view = $_view->getTemplate();
-            $parentSlot = $_view->getSlotById($slotId);
-            $originalWidgetMap = $parentSlot->getWidgetMapByWidgetId($widgetId);
-            if (0 === $watchdog) {
-                throw new \Exception(sprintf("The slot or the widget %s doesn't appears to be in any WidgetMap. You should check this manually.", $slotId, $widgetId));
-            }
-        }
-
-        // If parentWidgetId is null, the widget was placed on first position
-        if (null === $parentWidgetId) {
-            $widgetMapEntry = new WidgetMap();
-            $widgetMapEntry->setPosition(1);
-            $widgetMapEntry->setAction($originalWidgetMap->getAction());
-            $widgetMapEntry->setWidgetId($widgetId);
-            $widgetMapEntry->setPositionReference(0);
-
-        // If the parent of the sorted widget is from the current page
-        } elseif ($parentWidgetMapEntry = $slot->getWidgetMapByWidgetId($parentWidgetId)) {
-            // Place the widget just under the parent widget
-            $widgetMapEntry = new WidgetMap();
-            $widgetMapEntry->setPosition($parentWidgetMapEntry->getPosition() + 1);
-            $widgetMapEntry->setAction($originalWidgetMap->getAction());
-            $widgetMapEntry->setWidgetId($widgetId);
-            $widgetMapEntry->setPositionReference($parentWidgetMapEntry->getPositionReference());
-
-        // If the parent of the sorted widget is not from the current page
-        } else {
-            $widgetMapEntry = new WidgetMap();
-            $widgetMapEntry->setPosition(1);
-            $widgetMapEntry->setAction($originalWidgetMap->getAction());
-            $widgetMapEntry->setPositionReference($parentWidgetId);
-            $widgetMapEntry->setWidgetId($widgetId);
-        }
-
-        // If this WidgetMapEntry already in the page, remove it
-        if ($oldWidgetMapEntry = $slot->getWidgetMapByWidgetId($widgetId)) {
-            $widgetMapEntry->setAsynchronous($oldWidgetMapEntry->isAsynchronous());
-            $slot->removeWidgetMap($oldWidgetMapEntry);
-        // Else, the new widgetMap is an overwrite
-        } elseif ($originalWidgetMap->getAction() !== WidgetMap::ACTION_OVERWRITE) {
-            $widgetMapEntry->setAction(WidgetMap::ACTION_OVERWRITE);
-            $widgetMapEntry->setReplacedWidgetId($widgetId);
-        }
-        // Insert the new one in page slot
-        $this->helper->insertWidgetMapInSlot($slotId, $widgetMapEntry, $view);
-
-        return;
-    }
-
-    /**
-     * create a widgetMap for the new Widget cloned.
-     *
-     * @return void
-     **/
-    public function overwriteWidgetMap(Widget $widgetCopy, Widget $widget, View $view)
-    {
-        //the id of the new widget
-        $widgetId = $widgetCopy->getId();
-
-        //the widget slot
-        $widgetSlotId = $widget->getSlot();
-
-        //the widget id
-        $replacedWidgetId = $widget->getId();
-
-        //get the slot
-        $slot = $view->getSlotById($widgetSlotId);
-
-        //there might be no slot yet for the child view
-        if ($slot === null) {
-            //create a new slot
-            $slot = new Slot();
-            $slot->setId($widgetSlotId);
-
-            //add the new slot to the view
-            $view->addSlot($slot);
-        }
-
-        $originalWidgetMap = $slot->getWidgetMapByWidgetId($replacedWidgetId);
-        //If widgetmap was not found current view, we dig
-        if (!$originalWidgetMap) {
-            $watchDog = 100;
-            $_view = $view;
-            while (!$originalWidgetMap && $watchDog) {
-                $_view = $_view->getTemplate();
-                $parentSlot = $_view->getSlotById($widgetSlotId);
-                if ($parentSlot) {
-                    $originalWidgetMap = $parentSlot->getWidgetMapByWidgetId($replacedWidgetId);
-                }
-                $watchDog--;
-            }
-
-            if (0 == $watchDog) {
-                throw new \Exception(sprintf("The slot %s doesn't appears to be in any templates WidgetMaps. You should check this manually.", $widgetSlotId));
-            }
-        }
-
-        //the widget is owned by another view (a parent)
-        //so we add a new widget map that indicates we delete this widget
         $widgetMap = new WidgetMap();
         $widgetMap->setAction(WidgetMap::ACTION_OVERWRITE);
-        $widgetMap->setReplacedWidgetId($replacedWidgetId);
-        $widgetMap->setWidgetId($widgetId);
+        $widgetMap->setReplaced($originalWidgetMap);
+        $widgetMap->setWidget($widgetCopy);
+        $widgetMap->setView($view);
+        $widgetMap->setSlot($originalWidgetMap->getSlot());
         $widgetMap->setPosition($originalWidgetMap->getPosition());
         $widgetMap->setAsynchronous($widgetCopy->isAsynchronous());
-        $widgetMap->setPositionReference($originalWidgetMap->getPositionReference());
+        $widgetMap->setParent($originalWidgetMap->getParent());
 
-        $slot->addWidgetMap($widgetMap);
+        $view->addWidgetMap($widgetMap);
+    }
+
+    /**
+     * If the moved widgetMap has someone at both his before and after, arbitrary move UP the before side
+     * and find the first place after the before widgetMap hierarchy to place the after widgetMap.
+     *
+     * @param View $view
+     * @param $beforeChild
+     * @param $afterChild
+     * @param $originalParent
+     * @param $originalPosition
+     */
+    public function moveChildren(View $view, $beforeChild, $afterChild, $originalParent, $originalPosition)
+    {
+        if ($beforeChild && $afterChild) {
+            $this->moveWidgetMap($view, $beforeChild, $originalParent, $originalPosition);
+
+            $child = $beforeChild;
+            while ($child->getChild(WidgetMap::POSITION_AFTER)) {
+                $child = $child->getChild(WidgetMap::POSITION_AFTER);
+            }
+            if ($afterChild->getId() !== $child->getId()) {
+                $this->moveWidgetMap($view, $afterChild, $child);
+            }
+        } elseif ($beforeChild) {
+            $this->moveWidgetMap($view, $beforeChild, $originalParent, $originalPosition);
+        } elseif ($afterChild) {
+            $this->moveWidgetMap($view, $afterChild, $originalParent, $originalPosition);
+        }
+    }
+
+    /**
+     * Create a copy of a WidgetMap in "overwrite" mode and insert it in the given view.
+     *
+     * @param WidgetMap $widgetMap
+     * @param View      $view
+     *
+     * @throws \Exception
+     *
+     * @return WidgetMap
+     */
+    protected function cloneWidgetMap(WidgetMap $widgetMap, View $view)
+    {
+        $originalWidgetMap = $widgetMap;
+        $widgetMap = clone $widgetMap;
+        $widgetMap->setId(null);
+        $widgetMap->setAction(WidgetMap::ACTION_OVERWRITE);
+        $widgetMap->setReplaced($originalWidgetMap);
+        $originalWidgetMap->addSubstitute($widgetMap);
+        $view->addWidgetMap($widgetMap);
+        $this->em->persist($widgetMap);
+
+        return $widgetMap;
+    }
+
+    /**
+     * Move given WidgetMap as a child of given parent at given position and slot.
+     *
+     * @param View      $view
+     * @param WidgetMap $widgetMap
+     * @param bool      $parent
+     * @param bool      $position
+     * @param bool      $slot
+     *
+     * @return WidgetMap
+     */
+    protected function moveWidgetMap(View $view, WidgetMap $widgetMap, $parent = false, $position = false, $slot = false)
+    {
+        if ($widgetMap->getView() !== $view) {
+            $widgetMap = $this->cloneWidgetMap($widgetMap, $view);
+        }
+
+        if ($parent !== false) {
+            if ($oldParent = $widgetMap->getParent()) {
+                $oldParent->removeChild($widgetMap);
+            }
+            $widgetMap->setParent($parent);
+            if ($parent) {
+                $parent->addChild($widgetMap);
+            }
+        }
+        if ($position !== false) {
+            $widgetMap->setPosition($position);
+        }
+        if ($slot !== false) {
+            $widgetMap->setSlot($slot);
+        }
+
+        return $widgetMap;
+    }
+
+    /**
+     * Find return all the given WidgetMap children for each view where it's related.
+     *
+     * @param WidgetMap $widgetMap
+     *
+     * @return mixed
+     */
+    protected function getChildrenByView(WidgetMap $widgetMap)
+    {
+        $beforeChilds = $widgetMap->getChilds(WidgetMap::POSITION_BEFORE);
+        $afterChilds = $widgetMap->getChilds(WidgetMap::POSITION_AFTER);
+
+        $childrenByView['views'] = [];
+        $childrenByView['before'] = [];
+        $childrenByView['after'] = [];
+        foreach ($beforeChilds as $beforeChild) {
+            $view = $beforeChild->getView();
+            $childrenByView['views'][] = $view;
+            $childrenByView['before'][$view->getId()] = $beforeChild;
+        }
+        foreach ($afterChilds as $afterChild) {
+            $view = $afterChild->getView();
+            $childrenByView['views'][] = $view;
+            $childrenByView['after'][$view->getId()] = $afterChild;
+        }
+
+        return $childrenByView;
     }
 }

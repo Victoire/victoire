@@ -1,6 +1,6 @@
 {% trans_default_domain "victoire" %}
 <!DOCTYPE html>
-<html ng-app="ngApp">
+<html ng-app="ngApp" lang="{{ app.request.locale|split('_')[0] }}">
     <head>
         {% block meta %}
             {% include 'VictoireSeoBundle::_meta.html.twig' %}

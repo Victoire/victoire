@@ -6,6 +6,7 @@ Background:
 
 Scenario: Abort Delete
     Then I switch to "layout" mode
+    And I should see "Nouveau contenu"
     When I select "Force" from the "1" select of "content" slot
     Then I should see "Créer"
     When I fill in "Côté de la force" with "Obscure"
@@ -25,6 +26,7 @@ Scenario: Abort Delete
 
 Scenario: Create and delete a widget
     Then I switch to "layout" mode
+    And I should see "Nouveau contenu"
     When I select "Force" from the "1" select of "content" slot
     Then I should see "Créer"
     When I fill in "Côté de la force" with "Obscure"

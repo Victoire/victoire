@@ -13,6 +13,7 @@ use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetBundle\Repository\WidgetRepository;
 use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
+use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 
 class WidgetSubscriber implements EventSubscriber
 {
@@ -70,9 +71,14 @@ class WidgetSubscriber implements EventSubscriber
                 continue;
             }
 
-            $view = $entity->getView();
-            $this->updateViewCss($view);
-            $this->updateTemplateInheritorsCss($view);
+            /** @var Widget $entity */
+            foreach ($entity->getWidgetMaps() as $widgetMap) {
+                if ($widgetMap->getAction() !== WidgetMap::ACTION_DELETE) {
+                    $view = $widgetMap->getView();
+                    $this->updateViewCss($view);
+                    $this->updateTemplateInheritorsCss($view);
+                }
+            }
         }
 
         //Remove CSS of deleted View and update its inheritors
@@ -106,7 +112,7 @@ class WidgetSubscriber implements EventSubscriber
         $view->changeCssHash();
 
         //Update css file
-        $this->widgetMapBuilder->build($view, true);
+        $this->widgetMapBuilder->build($view, $this->em, true);
         $widgets = $this->widgetRepo->findAllWidgetsForView($view);
         $this->viewCssBuilder->updateViewCss($oldHash, $view, $widgets);
 

@@ -1,4 +1,4 @@
-ngApp.service("widgetLocalStorageService", [
+angular.module('ngApp').service("widgetLocalStorageService", [
     function() {
         this.fetchStorage = function(widgetId) {
             if(typeof(Storage) !== "undefined") {

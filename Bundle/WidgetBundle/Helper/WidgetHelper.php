@@ -3,7 +3,7 @@
 namespace Victoire\Bundle\WidgetBundle\Helper;
 
 use Symfony\Component\DependencyInjection\Container;
-use Victoire\Bundle\WidgetBundle\Model\Widget;
+use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 class WidgetHelper
 {
@@ -53,7 +53,7 @@ class WidgetHelper
      * @param string                                  $type
      * @param \Victoire\Bundle\CoreBundle\Entity\View $view
      * @param string                                  $slot
-     * @param $mode
+     * @param string                                  $mode
      *
      * @return Widget $widget
      */
@@ -62,8 +62,6 @@ class WidgetHelper
         $widgetAlias = 'victoire.widget.'.strtolower($type);
         $widget = $this->container->get($widgetAlias);
 
-        $widget->setView($view);
-        $widget->setSlot($slot);
         $widget->setMode($mode);
 
         return $widget;

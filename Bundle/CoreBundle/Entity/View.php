@@ -3,6 +3,7 @@
 namespace Victoire\Bundle\CoreBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation as Serializer;
@@ -10,11 +11,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\I18nBundle\Entity\BaseI18n;
 use Victoire\Bundle\I18nBundle\Entity\I18n;
-use Victoire\Bundle\PageBundle\Entity\Slot;
-use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
+use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 
 /**
  * Victoire View
@@ -74,12 +74,11 @@ abstract class View
     protected $slug;
 
     /**
-     * @var string
+     * @var [WidgetMap]
      *
-     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\WidgetBundle\Entity\Widget", mappedBy="view", cascade={"persist", "remove"})
-     * @ORM\OrderBy({"id" = "ASC"})
+     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap", mappedBy="view", orphanRemoval=true, cascade={"persist", "remove"})
      */
-    protected $widgets;
+    protected $widgetMaps = [];
 
     /**
      * @Gedmo\TreeParent
@@ -138,17 +137,9 @@ abstract class View
     protected $undeletable = false;
 
     /**
-     * @ORM\Column(name="widget_map", type="array")
+     * The reference is related to viewsReferences.xml file which list all app views.
+     * This is used to speed up the routing system and identify virtual pages (BusinessPage).
      */
-    protected $widgetMap = [];
-
-    protected $builtWidgetMap = [];
-
-    //the slot contains the widget maps entities
-    protected $slots = [];
-
-    //The reference is related to viewsReferences.xml file which list all app views.
-    //This is used to speed up the routing system and identify virtual pages (BusinessPage)
     protected $reference;
 
     /**
@@ -181,12 +172,26 @@ abstract class View
     protected $cssHash;
 
     /**
+     * @deprecated
+     * @ORM\Column(name="widget_map", type="array")
+     */
+    protected $widgetMap = [];
+
+    /**
+     * @var string
+     *
+     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\WidgetBundle\Entity\Widget", mappedBy="view", cascade={"persist", "remove"})
+     * @ORM\OrderBy({"id" = "ASC"})
+     */
+    protected $widgets;
+
+    /**
      * Construct.
      **/
     public function __construct()
     {
         $this->children = new ArrayCollection();
-        $this->widgets = new ArrayCollection();
+        $this->widgetMaps = new ArrayCollection();
         $this->widgetMap = [];
     }
 
@@ -305,7 +310,7 @@ abstract class View
     /**
      * Get template.
      *
-     * @return Template
+     * @return string
      */
     public function getTemplate()
     {
@@ -364,7 +369,7 @@ abstract class View
     /**
      * Has children.
      *
-     * @return bool
+     * @return int
      */
     public function hasChildren()
     {
@@ -405,7 +410,7 @@ abstract class View
      */
     public function removeChild(View $child)
     {
-        $this->children->remove($child);
+        $this->children->removeElement($child);
     }
 
     /**
@@ -600,7 +605,7 @@ abstract class View
     /**
      * Get i18n.
      *
-     * @return BaseI18n
+     * @return string
      */
     public function getI18n()
     {
@@ -610,7 +615,7 @@ abstract class View
     /**
      * Set i18n.
      *
-     * @param string $i18n
+     * @param BaseI18n $i18n
      *
      * @return $this
      */
@@ -625,17 +630,13 @@ abstract class View
     /**
      * Set widgets.
      *
-     * @param string $widgets
+     * @param [WidgetMap] $widgetMaps
      *
      * @return View
      */
-    public function setWidgets($widgets)
+    public function setWidgetMaps($widgetMaps)
     {
-        $this->widgets = $widgets;
-
-        foreach ($widgets as $widget) {
-            $widget->setView($this);
-        }
+        $this->widgetMaps = $widgetMaps;
 
         return $this;
     }
@@ -643,11 +644,34 @@ abstract class View
     /**
      * Get widgets.
      *
-     * @return Widget[]
+     * @return Collection[WidgetMap]
      */
-    public function getWidgets()
+    public function getWidgetMaps()
     {
-        return $this->widgets;
+        return $this->widgetMaps;
+    }
+
+    /**
+     * Add widget.
+     *
+     * @param Widget $widgetMap
+     */
+    public function addWidgetMap(WidgetMap $widgetMap)
+    {
+        if (!$widgetMap->getView()) {
+            $widgetMap->setView($this);
+        }
+        $this->widgetMaps[] = $widgetMap;
+    }
+
+    /**
+     * Remove a widgetMap.
+     *
+     * @param WidgetMap $widgetMap
+     */
+    public function removeWidgetMap(WidgetMap $widgetMap)
+    {
+        $this->widgetMaps->removeElement($widgetMap);
     }
 
     /**
@@ -659,274 +683,35 @@ abstract class View
     {
         $widgetIds = [];
 
-        $extractWidgetIds = function ($widgetMap) {
-            /* @var $widgetMap WidgetMap */
-            return $widgetMap->getWidgetId();
-        };
-
-        foreach ($this->getWidgetMap() as $widgetMapArray) {
-            $widgetIds = array_merge(array_map($extractWidgetIds, $widgetMapArray), $widgetIds);
+        foreach ($this->getWidgetMaps() as $widgetMap) {
+            $widgetIds[] = $widgetMap->getWidget()->getId();
         }
 
         return $widgetIds;
     }
 
     /**
-     * Get widgets.
+     * Get builtWidgetMap.
      *
-     * @param string $slot
-     *
-     * @return string
+     * @return array
      */
-    public function getWidgetsForSlot($slot)
+    public function getBuiltWidgetMap()
     {
-        $widgets = [];
-        foreach ($this->getWidgets() as $widget) {
-            if ($widget->getSlot() === $slot) {
-                $widgets[] = $widget;
-            }
-        }
-
-        return $widgets;
+        return $this->builtWidgetMap;
     }
 
     /**
-     * Add widget.
+     * Set builtWidgetMap.
      *
-     * @param Widget $widget
+     * @param string $builtWidgetMap
+     *
+     * @return $this
      */
-    public function addWidget(Widget $widget)
+    public function setBuiltWidgetMap($builtWidgetMap)
     {
-        $this->widgets[] = $widget;
-    }
-
-    /**
-     * Remove widget.
-     *
-     * @param Widget $widget
-     */
-    public function removeWidget(Widget $widget)
-    {
-        $this->widgets->remove($widget);
-    }
-
-    /**
-     * has widget.
-     *
-     * @param Widget $widget
-     *
-     * @return bool
-     */
-    public function hasWidget(Widget $widget)
-    {
-        return $this->widgets->contains($widget);
-    }
-
-    /**
-     * Set widgetMap.
-     *
-     * @param widgetMap $widgetMap
-     */
-    public function setWidgetMap($widgetMap)
-    {
-        $this->widgetMap = $widgetMap;
-    }
-
-    /**
-     * Get widgetMap.
-     *
-     * @return widgetMap
-     */
-    public function getWidgetMap($built = true)
-    {
-        if ($built) {
-            return $this->builtWidgetMap;
-        }
-
-        return $this->widgetMap;
-    }
-
-    /**
-     * Method called once the entity is loaded.
-     *
-     * @ORM\PostLoad
-     */
-    public function postLoad()
-    {
-        $widgetMap = $this->widgetMap;
-
-        //the slots of the page
-        $slots = [];
-
-        //convert the widget map array as objects
-        foreach ($widgetMap as $slotId => $_widgetMapEntries) {
-            $slot = new Slot();
-            $slot->setId($slotId);
-
-            foreach ($_widgetMapEntries as $_widgetMapEntry) {
-                $_widgetMap = new WidgetMap();
-                $_widgetMap->setAction(@$_widgetMapEntry['action']);
-                $_widgetMap->setPosition(@$_widgetMapEntry['position']);
-                $_widgetMap->setPositionReference(@$_widgetMapEntry['positionReference']);
-                $_widgetMap->setAsynchronous(isset($_widgetMapEntry['asynchronous']) ? $_widgetMapEntry['asynchronous'] : null);
-                $_widgetMap->setReplacedWidgetId(@$_widgetMapEntry['replacedWidgetId']);
-                $_widgetMap->setWidgetId(intval($_widgetMapEntry['widgetId']));
-
-                $slot->addWidgetMap($_widgetMap);
-            }
-
-            $slots[] = $slot;
-        }
-
-        //set the slots to the page
-        $this->slots = $slots;
-    }
-
-    /**
-     * Method before updating a page.
-     *
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
-     */
-    public function preUpdate()
-    {
-        //we update the widget map by the slots
-        if (!empty($this->slots)) {
-            $this->updateWidgetMapBySlots();
-        }
-    }
-
-    /**
-     * Set the slots.
-     *
-     * @param unknown $slots
-     */
-    public function setSlots($slots)
-    {
-        $this->slots = $slots;
-
-        //convert the slots object in a widget map array
-        $this->updateWidgetMapBySlots();
-    }
-
-    /**
-     * Convert slots to a widget map.
-     *
-     * @return array The widget map
-     */
-    protected function convertSlotsToWidgetMap()
-    {
-        $slots = $this->getSlots();
-
-        $widgetMap = [];
-
-        //parse the slots
-        foreach ($slots as $slot) {
-            $slotId = $slot->getId();
-            $widgetMap[$slotId] = [];
-
-            $widgetMaps = $slot->getWidgetMaps();
-
-            //parse the widget map objects
-            foreach ($widgetMaps as $_widgetMap) {
-                $widgetMapEntry = [];
-                $widgetMapEntry['action'] = $_widgetMap->getAction();
-                $widgetMapEntry['position'] = $_widgetMap->getPosition();
-                $widgetMapEntry['asynchronous'] = $_widgetMap->isAsynchronous();
-                $widgetMapEntry['positionReference'] = $_widgetMap->getPositionReference();
-                $widgetMapEntry['replacedWidgetId'] = $_widgetMap->getReplacedWidgetId();
-                $widgetMapEntry['widgetId'] = $_widgetMap->getWidgetId();
-
-                //add the temp slot to the widget map
-                $widgetMap[$slotId][] = $widgetMapEntry;
-            }
-        }
-
-        return $widgetMap;
-    }
-
-    /**
-     * This function update the widgetMap array using the slots entities array.
-     */
-    public function updateWidgetMapBySlots()
-    {
-        //generate widget map by the slots
-        $widgetMap = $this->convertSlotsToWidgetMap();
-
-        //update widget map
-        $this->setWidgetMap($widgetMap);
-    }
-
-    /**
-     * Get the slot by the slotId.
-     *
-     * @param string $slotId
-     *
-     * @return Slot
-     */
-    public function getSlotById($slotId)
-    {
-        foreach ($this->slots as $slot) {
-            if ($slot->getId() === $slotId) {
-                return $slot;
-            }
-        }
-    }
-
-    /**
-     * Update the given slot.
-     *
-     * @param Slot $slot
-     *
-     * @return View
-     */
-    public function updateSlot($slot)
-    {
-        $slot = null;
-
-        $slots = $this->slots;
-
-        //parse all slots
-        foreach ($slots as $key => $_slot) {
-            //if this the slot we are looking for
-            if ($_slot->getId() === $slot->getId()) {
-                $this->slots[$key] = $slot;
-                //there no need to continue, we found the slot
-                break;
-            }
-        }
+        $this->builtWidgetMap = $builtWidgetMap;
 
         return $this;
-    }
-
-    /**
-     * Add a slot to the slots array.
-     *
-     * @param Slot $slot The slot to add
-     */
-    public function addSlot(Slot $slot)
-    {
-        $this->slots[] = $slot;
-    }
-
-    /**
-     * Remove slots.
-     *
-     * @param Slot $slots
-     */
-    public function removeSlot(Slot $slots)
-    {
-        $this->slots->remove($slots);
-    }
-
-    /**
-     * Get the slots.
-     *
-     * @return Slot[] The slots
-     */
-    public function getSlots()
-    {
-        return $this->slots;
     }
 
     /**
@@ -986,30 +771,6 @@ abstract class View
     }
 
     /**
-     * Get builtWidgetMap.
-     *
-     * @return string
-     */
-    public function getBuiltWidgetMap()
-    {
-        return $this->builtWidgetMap;
-    }
-
-    /**
-     * Set builtWidgetMap.
-     *
-     * @param string $builtWidgetMap
-     *
-     * @return $this
-     */
-    public function setBuiltWidgetMap($builtWidgetMap)
-    {
-        $this->builtWidgetMap = $builtWidgetMap;
-
-        return $this;
-    }
-
-    /**
      * Get CSS hash.
      *
      * @return string
@@ -1039,5 +800,39 @@ abstract class View
     public function changeCssHash()
     {
         $this->cssHash = sha1(uniqid());
+    }
+
+    /**
+     * @deprecated
+     * Get widgetMap.
+     *
+     * @return widgetMap
+     */
+    public function getWidgetMap()
+    {
+        return $this->widgetMap;
+    }
+
+    /**
+     * @deprecated
+     * Get widgets.
+     *
+     * @return string
+     */
+    public function getWidgets()
+    {
+        return $this->widgets;
+    }
+
+    public function isTemplateOf(View $view)
+    {
+        while ($_view = $view->getTemplate()) {
+            if ($this == $_view) {
+                return true;
+            }
+            $view = $_view;
+        }
+
+        return false;
     }
 }

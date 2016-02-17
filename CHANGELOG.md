@@ -2,11 +2,34 @@
 
 ## [Unreleased](https://github.com/Victoire/victoire/tree/HEAD)
 
-## [1.3.7](https://github.com/victoire/victoire/tree/1.3.7) (2016-01-13)
+## [1.4.0](https://github.com/victoire/victoire/tree/1.4.0) (2016-02-17)
+[Full Changelog](https://github.com/victoire/victoire/compare/1.3.7...1.4.0)
+
+**Merged pull requests:**
+
+- refactor widgetMaps [\#338](https://github.com/Victoire/victoire/pull/338) ([paulandrieux](https://github.com/paulandrieux))
+- remove buggy i18n translate actions [\#336](https://github.com/Victoire/victoire/pull/336) ([lenybernard](https://github.com/lenybernard))
+- update alertify and assetic injector versions [\#335](https://github.com/Victoire/victoire/pull/335) ([lenybernard](https://github.com/lenybernard))
+- Allow to set custom translation domain for victoire admin's locale [\#327](https://github.com/Victoire/victoire/pull/327) ([lenybernard](https://github.com/lenybernard))
+- remove useless bitli badge [\#324](https://github.com/Victoire/victoire/pull/324) ([lenybernard](https://github.com/lenybernard))
+- Include VirtualBusinessPages into sitemap.xml [\#323](https://github.com/Victoire/victoire/pull/323) ([lenybernard](https://github.com/lenybernard))
+- add ROLE\_VICTOIRE\_DEVELOPER to PageOwnerVoter granted rule [\#322](https://github.com/Victoire/victoire/pull/322) ([lenybernard](https://github.com/lenybernard))
+- Fix/vic 699 i18 n domain strategy [\#321](https://github.com/Victoire/victoire/pull/321) ([lenybernard](https://github.com/lenybernard))
+- Use container to get request locale [\#320](https://github.com/Victoire/victoire/pull/320) ([lenybernard](https://github.com/lenybernard))
+- protect attachedWidget  and analyticsTrackCode keys from $parameters … [\#318](https://github.com/Victoire/victoire/pull/318) ([lenybernard](https://github.com/lenybernard))
+- Upgrade/2.7 deprecations [\#317](https://github.com/Victoire/victoire/pull/317) ([lenybernard](https://github.com/lenybernard))
+- \[DX\] Introduce a new business\_entity\_debug parameter [\#316](https://github.com/Victoire/victoire/pull/316) ([lenybernard](https://github.com/lenybernard))
+- Add \_locale requirements for i18n Route loader [\#315](https://github.com/Victoire/victoire/pull/315) ([lenybernard](https://github.com/lenybernard))
+- remove template's parent type because we use template property for this [\#314](https://github.com/Victoire/victoire/pull/314) ([lenybernard](https://github.com/lenybernard))
+- adapt viewReference repository getReferencesByParameters method with … [\#313](https://github.com/Victoire/victoire/pull/313) ([lenybernard](https://github.com/lenybernard))
+
+## [1.3.7](https://github.com/victoire/victoire/tree/1.3.7) (2016-01-15)
 [Full Changelog](https://github.com/victoire/victoire/compare/1.3.6...1.3.7)
 
 **Merged pull requests:**
 
+- Add a Bitdeli Badge to README [\#312](https://github.com/Victoire/victoire/pull/312) ([bitdeli-chef](https://github.com/bitdeli-chef))
+- fix update view reference and unlink action [\#311](https://github.com/Victoire/victoire/pull/311) ([Charlie-Lucas](https://github.com/Charlie-Lucas))
 - Feature/manage view references with redis [\#310](https://github.com/Victoire/victoire/pull/310) ([Charlie-Lucas](https://github.com/Charlie-Lucas))
 - update vendors for victoire [\#308](https://github.com/Victoire/victoire/pull/308) ([Charlie-Lucas](https://github.com/Charlie-Lucas))
 - fix BP inheritance bugs and addd some tests [\#307](https://github.com/Victoire/victoire/pull/307) ([Charlie-Lucas](https://github.com/Charlie-Lucas))
@@ -23,8 +46,8 @@
 - Update of Setup file for better understanding [\#296](https://github.com/Victoire/victoire/pull/296) ([talbotseb](https://github.com/talbotseb))
 - Feature/get view reference with children [\#291](https://github.com/Victoire/victoire/pull/291) ([lenybernard](https://github.com/lenybernard))
 
-## [1.3.6](https://github.com/Victoire/victoire/tree/1.3.6) (2015-12-01)
-[Full Changelog](https://github.com/Victoire/victoire/compare/1.3.5...1.3.6)
+## [1.3.6](https://github.com/victoire/victoire/tree/1.3.6) (2015-12-01)
+[Full Changelog](https://github.com/victoire/victoire/compare/1.3.5...1.3.6)
 
 **Merged pull requests:**
 
@@ -33,8 +56,8 @@
 - Call get method to use really default value [\#285](https://github.com/Victoire/victoire/pull/285) ([leblanc-simon](https://github.com/leblanc-simon))
 - Handle single tag for TagFilter query parameters [\#283](https://github.com/Victoire/victoire/pull/283) ([gregumo](https://github.com/gregumo))
 
-## [1.3.5](https://github.com/Victoire/victoire/tree/1.3.5) (2015-11-25)
-[Full Changelog](https://github.com/Victoire/victoire/compare/1.3.4...1.3.5)
+## [1.3.5](https://github.com/victoire/victoire/tree/1.3.5) (2015-11-25)
+[Full Changelog](https://github.com/victoire/victoire/compare/1.3.4...1.3.5)
 
 **Closed issues:**
 
@@ -54,8 +77,8 @@
 - Add Slider Nav in the list of the widgets that can display article [\#274](https://github.com/Victoire/victoire/pull/274) ([Charlie-Lucas](https://github.com/Charlie-Lucas))
 - Restore good version for incenteev/composer-parameter-handler [\#273](https://github.com/Victoire/victoire/pull/273) ([gregumo](https://github.com/gregumo))
 
-## [1.3.4](https://github.com/Victoire/victoire/tree/1.3.4) (2015-11-13)
-[Full Changelog](https://github.com/Victoire/victoire/compare/1.3.3...1.3.4)
+## [1.3.4](https://github.com/victoire/victoire/tree/1.3.4) (2015-11-13)
+[Full Changelog](https://github.com/victoire/victoire/compare/1.3.3...1.3.4)
 
 **Merged pull requests:**
 
@@ -64,29 +87,29 @@
 - use a choice\_tree form type for category-filter [\#270](https://github.com/Victoire/victoire/pull/270) ([Charlie-Lucas](https://github.com/Charlie-Lucas))
 - Widget Rendering Refactor [\#268](https://github.com/Victoire/victoire/pull/268) ([gregumo](https://github.com/gregumo))
 
-## [1.3.3](https://github.com/Victoire/victoire/tree/1.3.3) (2015-11-04)
-[Full Changelog](https://github.com/Victoire/victoire/compare/1.3.2...1.3.3)
+## [1.3.3](https://github.com/victoire/victoire/tree/1.3.3) (2015-11-04)
+[Full Changelog](https://github.com/victoire/victoire/compare/1.3.2...1.3.3)
 
 **Merged pull requests:**
 
 - Bugfix/duplicata of settings [\#267](https://github.com/Victoire/victoire/pull/267) ([vincent-chapron](https://github.com/vincent-chapron))
 
-## [1.3.2](https://github.com/Victoire/victoire/tree/1.3.2) (2015-11-04)
-[Full Changelog](https://github.com/Victoire/victoire/compare/1.3.1...1.3.2)
+## [1.3.2](https://github.com/victoire/victoire/tree/1.3.2) (2015-11-04)
+[Full Changelog](https://github.com/victoire/victoire/compare/1.3.1...1.3.2)
 
 **Merged pull requests:**
 
 - do not throw an exception when domain name is not configured but fall… [\#266](https://github.com/Victoire/victoire/pull/266) ([paulandrieux](https://github.com/paulandrieux))
 
-## [1.3.1](https://github.com/Victoire/victoire/tree/1.3.1) (2015-11-04)
-[Full Changelog](https://github.com/Victoire/victoire/compare/1.3.0...1.3.1)
+## [1.3.1](https://github.com/victoire/victoire/tree/1.3.1) (2015-11-04)
+[Full Changelog](https://github.com/victoire/victoire/compare/1.3.0...1.3.1)
 
 **Merged pull requests:**
 
 - Feature/update 2.7 [\#265](https://github.com/Victoire/victoire/pull/265) ([paulandrieux](https://github.com/paulandrieux))
 
-## [1.3.0](https://github.com/Victoire/victoire/tree/1.3.0) (2015-11-04)
-[Full Changelog](https://github.com/Victoire/victoire/compare/1.2.2...1.3.0)
+## [1.3.0](https://github.com/victoire/victoire/tree/1.3.0) (2015-11-04)
+[Full Changelog](https://github.com/victoire/victoire/compare/1.2.2...1.3.0)
 
 **Merged pull requests:**
 
@@ -96,8 +119,8 @@
 - Change temporarily umask for 777 chmod and allow www-data user manipu… [\#257](https://github.com/Victoire/victoire/pull/257) ([gregumo](https://github.com/gregumo))
 - add a method to get Template inheritors [\#256](https://github.com/Victoire/victoire/pull/256) ([paulandrieux](https://github.com/paulandrieux))
 
-## [1.2.2](https://github.com/Victoire/victoire/tree/1.2.2) (2015-10-27)
-[Full Changelog](https://github.com/Victoire/victoire/compare/1.2.1...1.2.2)
+## [1.2.2](https://github.com/victoire/victoire/tree/1.2.2) (2015-10-27)
+[Full Changelog](https://github.com/victoire/victoire/compare/1.2.1...1.2.2)
 
 **Merged pull requests:**
 
@@ -113,8 +136,8 @@
 - Generate CSS file for each View instead of adding style markup for each Widget [\#238](https://github.com/Victoire/victoire/pull/238) ([gregumo](https://github.com/gregumo))
 - SEOBundle modification [\#235](https://github.com/Victoire/victoire/pull/235) ([talbotseb](https://github.com/talbotseb))
 
-## [1.2.1](https://github.com/Victoire/victoire/tree/1.2.1) (2015-10-20)
-[Full Changelog](https://github.com/Victoire/victoire/compare/1.2.0...1.2.1)
+## [1.2.1](https://github.com/victoire/victoire/tree/1.2.1) (2015-10-20)
+[Full Changelog](https://github.com/victoire/victoire/compare/1.2.0...1.2.1)
 
 **Merged pull requests:**
 
@@ -167,8 +190,8 @@
 - Fix/clean virtualviews [\#188](https://github.com/Victoire/victoire/pull/188) ([lenybernard](https://github.com/lenybernard))
 - if a BE is deleted, exclude it from allowed entities [\#187](https://github.com/Victoire/victoire/pull/187) ([paulandrieux](https://github.com/paulandrieux))
 
-## [1.2.0](https://github.com/Victoire/victoire/tree/1.2.0) (2015-09-16)
-[Full Changelog](https://github.com/Victoire/victoire/compare/1.1.0...1.2.0)
+## [1.2.0](https://github.com/victoire/victoire/tree/1.2.0) (2015-09-16)
+[Full Changelog](https://github.com/victoire/victoire/compare/1.1.0...1.2.0)
 
 **Merged pull requests:**
 
@@ -186,8 +209,8 @@
 - Fix/widget form active tab [\#173](https://github.com/Victoire/victoire/pull/173) ([lenybernard](https://github.com/lenybernard))
 - use BusinessEntity::id instead name and rename variable from entityName to businessEntityId [\#172](https://github.com/Victoire/victoire/pull/172) ([lenybernard](https://github.com/lenybernard))
 
-## [1.1.0](https://github.com/Victoire/victoire/tree/1.1.0) (2015-08-12)
-[Full Changelog](https://github.com/Victoire/victoire/compare/1.0.1...1.1.0)
+## [1.1.0](https://github.com/victoire/victoire/tree/1.1.0) (2015-08-12)
+[Full Changelog](https://github.com/victoire/victoire/compare/1.0.1...1.1.0)
 
 **Closed issues:**
 
@@ -252,8 +275,8 @@
 - Fix trash icon position [\#110](https://github.com/Victoire/victoire/pull/110) ([paulandrieux](https://github.com/paulandrieux))
 - Text modifications / Bundle Translation [\#107](https://github.com/Victoire/victoire/pull/107) ([talbotseb](https://github.com/talbotseb))
 
-## [1.0.1](https://github.com/Victoire/victoire/tree/1.0.1) (2015-05-29)
-[Full Changelog](https://github.com/Victoire/victoire/compare/1.0.0...1.0.1)
+## [1.0.1](https://github.com/victoire/victoire/tree/1.0.1) (2015-05-29)
+[Full Changelog](https://github.com/victoire/victoire/compare/1.0.0...1.0.1)
 
 **Merged pull requests:**
 
@@ -292,7 +315,7 @@
 - Fix/blog form settings locale [\#68](https://github.com/Victoire/victoire/pull/68) ([LoicGoyet](https://github.com/LoicGoyet))
 - Fix/printed widget style [\#67](https://github.com/Victoire/victoire/pull/67) ([LoicGoyet](https://github.com/LoicGoyet))
 
-## [1.0.0](https://github.com/Victoire/victoire/tree/1.0.0) (2015-04-22)
+## [1.0.0](https://github.com/victoire/victoire/tree/1.0.0) (2015-04-22)
 **Closed issues:**
 
 - \[Insight\] Absolute path constants \_\_DIR\_\_ and \_\_FILE\_\_ should not be used - in Bundle/CoreBundle/Cache/ApcCache.php, line 22 [\#28](https://github.com/Victoire/victoire/issues/28)

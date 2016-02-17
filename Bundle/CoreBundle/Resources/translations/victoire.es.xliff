@@ -214,6 +214,10 @@
         <source>form.widget.tab.manual.label</source>
         <target>Manual</target>
       </trans-unit>
+      <trans-unit id="32" resname="victoire.success.message">
+        <source>victoire.success.message</source>
+        <target>Victoire !</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

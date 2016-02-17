@@ -1,3 +1,11 @@
+_wdt:
+    resource: "@WebProfilerBundle/Resources/config/routing/wdt.xml"
+    prefix:   /_wdt
+
+_profiler:
+    resource: "@WebProfilerBundle/Resources/config/routing/profiler.xml"
+    prefix:   /_profiler
+
 acme_app:
     resource: "@AcmeAppBundle/Controller/"
     type:     annotation
@@ -12,6 +20,9 @@ fos_user_resetting:
 
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+_bazinga_jstranslation:
+    resource: "@BazingaJsTranslationBundle/Resources/config/routing/routing.yml"
 
 VictoireCoreBundle:
     resource: .

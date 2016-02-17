@@ -12,7 +12,6 @@ use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Entity\Link;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\PageBundle\Entity\WidgetMap;
 use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\BusinessPageReference;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
@@ -63,34 +62,10 @@ class WidgetDataWarmer
 
         $widgetRepo = $this->em->getRepository('Victoire\Bundle\WidgetBundle\Entity\Widget');
         $viewWidgets = $widgetRepo->findAllWidgetsForView($view);
-
-        $this->populateWidgets($view, $viewWidgets);
-
         $linkIds = $associatedEntities = [];
         $this->extractAssociatedEntities($viewWidgets, $linkIds, $associatedEntities);
         $this->setAssociatedEntities($associatedEntities);
         $this->setPagesForLinks($linkIds);
-    }
-
-    /**
-     * Populate widgets in View's widgetMap.
-     *
-     * @param View     $view
-     * @param Widget[] $viewWidgets
-     */
-    private function populateWidgets(View $view, array $viewWidgets)
-    {
-        foreach ($view->getWidgetMap() as $slotId => $widgetMapArray) {
-            /* @var WidgetMap[] $widgetMapArray */
-            foreach ($widgetMapArray as $widgetMap) {
-                foreach ($viewWidgets as $viewWidget) {
-                    if ($widgetMap->getWidgetId() == $viewWidget->getId()) {
-                        $widgetMap->setWidget($viewWidget);
-                        break;
-                    }
-                }
-            }
-        }
     }
 
     /**
