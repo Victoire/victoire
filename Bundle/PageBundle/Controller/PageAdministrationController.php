@@ -28,7 +28,6 @@ class PageAdministrationController extends PageController
             'new'       => 'victoire_core_page_new',
             'show'      => 'victoire_core_page_show',
             'settings'  => 'victoire_core_page_settings',
-            'translate' => 'victoire_core_page_translate',
             'detach'    => 'victoire_core_page_detach',
         ];
     }
@@ -64,23 +63,6 @@ class PageAdministrationController extends PageController
     public function settingsAction(Request $request, BasePage $page)
     {
         return new JsonResponse(parent::settingsAction($request, $page));
-    }
-
-    /**
-     * Page translation.
-     *
-     * @param Request  $request
-     * @param BasePage $page
-     *
-     * @Route("/{id}/translate", name="victoire_core_page_translate")
-     * @Template()
-     * @ParamConverter("page", class="VictoirePageBundle:BasePage")
-     *
-     * @return JsonResponse The settings
-     */
-    public function translateAction(Request $request, BasePage $page)
-    {
-        return new JsonResponse(parent::translateAction($request, $page));
     }
 
     /**
@@ -126,16 +108,6 @@ class PageAdministrationController extends PageController
     protected function getBusinessPageType()
     {
         return 'victoire_business_page_type';
-    }
-
-    /**
-     * getPageTranslateType.
-     *
-     * @return string
-     */
-    protected function getPageTranslateType()
-    {
-        return 'victoire_view_translate_type';
     }
 
     /**

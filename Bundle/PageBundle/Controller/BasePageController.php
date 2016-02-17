@@ -8,10 +8,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
-use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 /**
@@ -202,75 +200,6 @@ class BasePageController extends Controller
             'success' => empty($errors),
             'html'    => $this->get('victoire_templating')->render(
                 $this->getBaseTemplatePath().':settings.html.twig',
-                [
-                    'page'               => $page,
-                    'form'               => $form->createView(),
-                    'businessProperties' => $businessProperties,
-                ]
-            ),
-            'message' => $errors,
-        ];
-    }
-
-    /**
-     * Page translation.
-     *
-     * @param Request  $request
-     * @param BasePage $page
-     *
-     * @return array
-     */
-    protected function translateAction(Request $request, BasePage $page)
-    {
-        $form = $this->createForm($this->getPageTranslateType(), $page);
-
-        $businessProperties = [];
-
-        if ($page instanceof BusinessTemplate) {
-            $businessEntityId = $page->getBusinessEntityId();
-            $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($businessEntityId);
-            $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
-        }
-
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $clone = $this->get('victoire_i18n.view_translation_manager')->addTranslation($page, $page->getName(), $page->getLocale());
-            $domain = null;
-            foreach ($this->container->getParameter('victoire_i18n.locale_pattern_table') as $_domain => $_locale) {
-                if ($_locale === $clone->getLocale()) {
-                    $domain = $_domain;
-                    break;
-                }
-            }
-
-            $route = 'victoire_core_page_show';
-            $params = [
-                '_locale' => $clone->getLocale(),
-                'domain'  => $domain,
-            ];
-
-            if ($clone instanceof WebViewInterface) {
-                $params['url'] = $clone->getUrl(false);
-            } elseif ($clone instanceof BusinessTemplate) {
-                $route = 'victoire_business_template_show';
-                $params['id'] = $clone->getId();
-            } elseif ($clone instanceof Template) {
-                $route = 'victoire_template_show';
-                $params['slug'] = $clone->getSlug();
-            }
-
-            return [
-                'success' => true,
-                'url'     => $this->generateUrl($route, $params),
-            ];
-        }
-        $errors = $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form);
-
-        return [
-            'success' => empty($errors),
-            'html'    => $this->get('victoire_templating')->render(
-                $this->getBaseTemplatePath().':translate.html.twig',
                 [
                     'page'               => $page,
                     'form'               => $form->createView(),
