@@ -126,7 +126,7 @@ class WidgetMap
     }
 
     /**
-     * @param boolean|string $asynchronous
+     * @param bool|string $asynchronous
      */
     public function setAsynchronous($asynchronous)
     {

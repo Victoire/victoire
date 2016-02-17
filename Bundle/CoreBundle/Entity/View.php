@@ -369,7 +369,7 @@ abstract class View
     /**
      * Has children.
      *
-     * @return integer
+     * @return int
      */
     public function hasChildren()
     {
@@ -659,7 +659,7 @@ abstract class View
     public function addWidgetMap(WidgetMap $widgetMap)
     {
         if (!$widgetMap->getView()) {
-        $widgetMap->setView($this);
+            $widgetMap->setView($this);
         }
         $this->widgetMaps[] = $widgetMap;
     }

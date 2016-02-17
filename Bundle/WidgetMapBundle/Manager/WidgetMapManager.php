@@ -2,12 +2,12 @@
 
 namespace Victoire\Bundle\WidgetMapBundle\Manager;
 
-use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 use Doctrine\Orm\EntityManager;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
 use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
+use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 
 class WidgetMapManager
 {
@@ -21,7 +21,7 @@ class WidgetMapManager
     }
 
     /**
-     * Insert a WidgetMap in a view at given position
+     * Insert a WidgetMap in a view at given position.
      *
      * @param string $slotId
      */
@@ -179,16 +179,17 @@ class WidgetMapManager
         } elseif ($afterChild) {
             $this->moveWidgetMap($view, $afterChild, $originalParent, $originalPosition);
         }
-
     }
 
     /**
-     * Create a copy of a WidgetMap in "overwrite" mode and insert it in the given view
+     * Create a copy of a WidgetMap in "overwrite" mode and insert it in the given view.
      *
-     * @param  WidgetMap  $widgetMap
-     * @param  View       $view
-     * @return WidgetMap
+     * @param WidgetMap $widgetMap
+     * @param View      $view
+     *
      * @throws \Exception
+     *
+     * @return WidgetMap
      */
     protected function cloneWidgetMap(WidgetMap $widgetMap, View $view)
     {
@@ -205,13 +206,14 @@ class WidgetMapManager
     }
 
     /**
-     * Move given WidgetMap as a child of given parent at given position and slot
+     * Move given WidgetMap as a child of given parent at given position and slot.
      *
-     * @param  View      $view
-     * @param  WidgetMap $widgetMap
-     * @param  bool      $parent
-     * @param  bool      $position
-     * @param  bool      $slot
+     * @param View      $view
+     * @param WidgetMap $widgetMap
+     * @param bool      $parent
+     * @param bool      $position
+     * @param bool      $slot
+     *
      * @return WidgetMap
      */
     protected function moveWidgetMap(View $view, WidgetMap $widgetMap, $parent = false, $position = false, $slot = false)
@@ -240,9 +242,10 @@ class WidgetMapManager
     }
 
     /**
-     * Find return all the given WidgetMap children for each view where it's related
+     * Find return all the given WidgetMap children for each view where it's related.
      *
-     * @param  WidgetMap $widgetMap
+     * @param WidgetMap $widgetMap
+     *
      * @return mixed
      */
     protected function getChildrenByView(WidgetMap $widgetMap)
