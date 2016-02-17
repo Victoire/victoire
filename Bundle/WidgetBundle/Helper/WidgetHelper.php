@@ -53,7 +53,7 @@ class WidgetHelper
      * @param string                                  $type
      * @param \Victoire\Bundle\CoreBundle\Entity\View $view
      * @param string                                  $slot
-     * @param string $mode
+     * @param string                                  $mode
      *
      * @return Widget $widget
      */

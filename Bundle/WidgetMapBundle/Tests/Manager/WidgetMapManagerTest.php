@@ -47,15 +47,15 @@ class WidgetMapManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param integer[] $order
-     * @param Page $view
+     * @param int[]            $order
+     * @param Page             $view
      * @param WidgetMapManager $manager
      * @param WidgetMapBuilder $builder
      */
     protected function moveWidgetMap($builtWidgetMap, $order, $view, $manager, $builder)
     {
         $sortedWidget = [
-            'parentWidgetMap' => null,
+            'parentWidgetMap'    => null,
             'position'           => null,
             'slot'               => 'content',
             'widgetMap'          => null,
@@ -74,7 +74,7 @@ class WidgetMapManagerTest extends \PHPUnit_Framework_TestCase
                         foreach ($positions as $position) {
                             if (!$widgetMap->hasChild($position, $view)) {
                                 $availablePositions[] = [
-                                    'parentWidgetMap' => $widgetMap,
+                                    'parentWidgetMap'    => $widgetMap,
                                     'position'           => $position,
                                 ];
                                 if (array_rand([0, 1]) === 0) {
@@ -132,7 +132,7 @@ class WidgetMapManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param integer $id
+     * @param int            $id
      * @param null|WidgetMap $parent
      */
     protected function newWidgetMap($id, $parent, $position, View $view, Widget $widget)
@@ -152,7 +152,7 @@ class WidgetMapManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      */
     protected function newWidget($id)
     {

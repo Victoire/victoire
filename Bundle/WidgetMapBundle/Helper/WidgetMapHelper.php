@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\WidgetMapBundle\Helper;
 
-
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
@@ -10,7 +9,7 @@ class WidgetMapHelper
 {
     /**
      * @param Widget $widget
-     * @param View $view
+     * @param View   $view
      */
     public static function getWidgetMapByWidgetAndView(Widget $widget, View $view)
     {
@@ -20,6 +19,6 @@ class WidgetMapHelper
             }
         }
 
-        return null;
+        return;
     }
 }

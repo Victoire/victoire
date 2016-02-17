@@ -2,8 +2,6 @@
 
 namespace Victoire\Bundle\WidgetBundle\Controller;
 
-use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
-use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -13,8 +11,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
+use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
+use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 
 /**
  * Widget Controller.
@@ -107,7 +107,6 @@ class WidgetController extends Controller
             $response = new JsonResponse(
                 $this->get('victoire_widget.widget_manager')->newWidget(Widget::MODE_STATIC, $type, $slot, $view, $position, $parentWidgetMap)
             );
-
         } catch (Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
         }
@@ -118,7 +117,7 @@ class WidgetController extends Controller
     /**
      * Create a widget.
      * This action needs 2 routes to handle the presence or not of "businessEntityId" and 'parentWidgetMap'
-     * that are both integers but "businessEntityId" present only in !static mode
+     * that are both integers but "businessEntityId" present only in !static mode.
      *
      * @param string $type             The type of the widget we edit
      * @param int    $viewReference    The view reference where attach the widget

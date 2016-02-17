@@ -115,7 +115,7 @@ class WidgetFormBuilder
      * @param View   $view
      * @param string $businessEntityId
      * @param string $namespace
-     * @param integer $position
+     * @param int    $position
      * @param string $slot
      *
      * @return array
@@ -184,7 +184,7 @@ class WidgetFormBuilder
                 'slot'               => $slotId,
                 'type'               => $widget->getType(), // @todo: use the config
                 'position'           => $position,
-                'parentWidgetMap' => $parentWidgetMap,
+                'parentWidgetMap'    => $parentWidgetMap,
             ];
             $action = 'victoire_core_widget_create';
             if ($businessEntityId) {

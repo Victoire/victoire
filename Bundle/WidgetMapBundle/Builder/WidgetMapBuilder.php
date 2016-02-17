@@ -14,7 +14,7 @@ use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 class WidgetMapBuilder
 {
     /**
-     * This method build widgetmaps relativly to given view and it's templates
+     * This method build widgetmaps relativly to given view and it's templates.
      *
      * @param View          $view
      * @param EntityManager $em
@@ -73,8 +73,10 @@ class WidgetMapBuilder
 
     /**
      * This method takes the builtWidgetMap for view and creates an array that indicate, for
-     * each widgetmap, if the position "after" and "before" are available
-     * @param  View  $view
+     * each widgetmap, if the position "after" and "before" are available.
+     *
+     * @param View $view
+     *
      * @return array
      */
     public function getAvailablePosition(View $view)
@@ -133,9 +135,10 @@ class WidgetMapBuilder
 
     /**
      * Create a $slot array that'll contain, for each slot, a widgetmap id as key and a widgetmap as value
-     * Do not keeps widgetMaps that are overwrited
+     * Do not keeps widgetMaps that are overwrited.
      *
      * @param $widgetMaps
+     *
      * @return array
      */
     protected function removeOverwritedWidgetMaps($widgetMaps)
@@ -161,7 +164,8 @@ class WidgetMapBuilder
     }
 
     /**
-     * If "delete" widgetmaps are found, remove it because they're not rendered
+     * If "delete" widgetmaps are found, remove it because they're not rendered.
+     *
      * @param $slots
      */
     protected function removeDeletedWidgetMaps(&$slots)
@@ -176,7 +180,8 @@ class WidgetMapBuilder
     }
 
     /**
-     * Find the "root" widgetmap (the one that has no parent)
+     * Find the "root" widgetmap (the one that has no parent).
+     *
      * @param WidgetMap[] $widgetMaps
      */
     private function findRootWidgetMap($widgetMaps)
@@ -191,5 +196,4 @@ class WidgetMapBuilder
 
         return $rootWidgetMap;
     }
-
 }

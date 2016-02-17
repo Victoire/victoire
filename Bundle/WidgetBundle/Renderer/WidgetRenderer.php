@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\WidgetBundle\Renderer;
 
-use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 use Symfony\Component\DependencyInjection\Container;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\CoreBundle\Entity\View;
@@ -10,7 +9,7 @@ use Victoire\Bundle\CoreBundle\Event\WidgetRenderEvent;
 use Victoire\Bundle\CoreBundle\VictoireCmsEvents;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetMapBundle\Entity\Slot;
-use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
+use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 
 class WidgetRenderer
 {

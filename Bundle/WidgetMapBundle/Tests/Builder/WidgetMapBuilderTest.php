@@ -75,7 +75,7 @@ class WidgetMapBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param integer $id
+     * @param int            $id
      * @param null|WidgetMap $parent
      */
     protected function newWidgetMap($id, $parent, $position, View $view, Widget $widget)
@@ -95,7 +95,7 @@ class WidgetMapBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      */
     protected function newWidget($id)
     {
