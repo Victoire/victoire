@@ -37,7 +37,6 @@ class BlogController extends BasePageController
             'settings'  => 'victoire_blog_settings',
             'articles'  => 'victoire_blog_articles',
             'category'  => 'victoire_blog_category',
-            'translate' => 'victoire_blog_translate',
             'delete'    => 'victoire_blog_delete',
         ];
     }
@@ -250,22 +249,6 @@ class BlogController extends BasePageController
     }
 
     /**
-     * Blog translation.
-     *
-     * @param Request  $request
-     * @param BasePage $blog
-     *
-     * @return JsonResponse
-     * @Route("/{id}/translate", name="victoire_blog_translate")
-     * @Template()
-     * @ParamConverter("blog", class="VictoirePageBundle:BasePage")
-     */
-    public function translateAction(Request $request, BasePage $blog)
-    {
-        return new JsonResponse(parent::translateAction($request, $blog));
-    }
-
-    /**
      * Page delete.
      *
      * @param Blog $blog
@@ -308,14 +291,6 @@ class BlogController extends BasePageController
     protected function getPageCategoryType()
     {
         return 'victoire_blog_category_type';
-    }
-
-    /**
-     * @return string
-     */
-    protected function getPageTranslateType()
-    {
-        return 'victoire_view_translate_type';
     }
 
     /**

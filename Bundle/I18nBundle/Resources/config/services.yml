@@ -8,13 +8,6 @@ services:
             - '%kernel.default_locale%'
             - '%victoire_i18n.available_locales%'
 
-    victoire_i18n.menu_listener:
-        class: Victoire\Bundle\I18nBundle\Listener\I18nPageMenuListener
-        arguments:
-            - "@victoire_core.admin_menu_builder"
-        tags:
-            - { name: kernel.event_listener, event: victoire_core.page_menu.contextual, method: addContextual, priority: 100 }
-
     victoire_i18n.cache_warmer.i18n_warmer:
         class: Victoire\Bundle\I18nBundle\CacheWarmer\I18nWarmer
         arguments:
@@ -48,12 +41,6 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default, priority: -1 }
 
-    victoire_i18n.template_menu.contextual:
-        class: Victoire\Bundle\I18nBundle\Listener\I18nTemplateMenuListener
-        arguments: ["@victoire_core.admin_menu_builder"]
-        tags:
-            - { name: kernel.event_listener, event: victoire_core.template_menu.contextual, method: addContextual }
-
     victoire_i18n.routing_loader:
         class: Victoire\Bundle\I18nBundle\Route\I18nRouteLoader
         arguments:
@@ -61,18 +48,3 @@ services:
             - '@victoire_i18n.locale_resolver'
         tags:
             - { name: routing.loader }
-
-
-    victoire_i18n.page_translate.form.type:
-        class: Victoire\Bundle\I18nBundle\Form\PageTranslateType
-        arguments:
-            - "%victoire_i18n.available_locales%"
-            - "@request_stack"
-            - "@translator"
-        tags:
-            - { name: form.type, alias: victoire_view_translate_type }
-
-    victoire_i18n.view_translation_manager:
-        class: Victoire\Bundle\I18nBundle\Manager\ViewTranslationManager
-        arguments:
-            - "@doctrine.orm.entity_manager"

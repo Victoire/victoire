@@ -165,43 +165,6 @@ class TemplateController extends Controller
     }
 
     /**
-     * translate a template.
-     *
-     * @param Template $template
-     *
-     * @return JsonResponse
-     * @Route("/{slug}/translate ", name="victoire_template_translate")
-     * @ParamConverter("template", class="VictoireTemplateBundle:Template", options={"mapping": {"slug": "slug"}})
-     */
-    public function translateAction(Request $request, $template)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm($this->getTranslateType(), $template);
-
-        $form->handleRequest($request);
-        if ($form->isValid()) {
-            $clone = $this->get('victoire_i18n.view_translation_manager')->addTranslation($template, $template->getName(), $template->getLocale());
-
-            return new JsonResponse(
-                [
-                    'success' => true,
-                    'url'     => $this->generateUrl('victoire_template_show', ['_locale', $clone->getLocale(), 'slug' => $clone->getSlug()]),
-                ]
-            );
-        }
-
-        return new JsonResponse(
-            [
-                'success' => true,
-                'html'    => $this->container->get('victoire_templating')->render(
-                    'VictoireTemplateBundle:Template:translate.html.twig',
-                    ['template' => $template, 'form' => $form->createView()]
-                ),
-            ]
-        );
-    }
-
-    /**
      * edit a Template.
      *
      * @param Template $template The Template to edit
@@ -235,15 +198,5 @@ class TemplateController extends Controller
     protected function getNewTemplateType()
     {
         return 'victoire_template_type';
-    }
-
-    /**
-     * get "new" Template Type.
-     *
-     * @return string
-     */
-    protected function getTranslateType()
-    {
-        return 'victoire_view_translate_type';
     }
 }

@@ -6,14 +6,6 @@
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
     </header>
     <body>
-      <trans-unit id="ec620ad0b357d5751d8445071bd8d33f77a47caa" resname="menu.page.i18n.addTranslation">
-        <source>menu.page.i18n.addTranslation</source>
-        <target><![CDATA[<i class="vic-menuImg vic-menuImg-lang"></i> Traduire]]></target>
-      </trans-unit>
-      <trans-unit id="2b4bc58f7a180eda6e7a9dbd9fcd4b683464b611" resname="menu.template.i18n.addTranslation">
-        <source>menu.template.i18n.addTranslation</source>
-        <target><![CDATA[<i class="vic-menuImg vic-menuImg-lang"></i> Traduire]]></target>
-      </trans-unit>
       <trans-unit id="49rcgyxQhptjDvkJZfJ2hUr5CyuFD9SF8DSFDS9F" resname="victoire.i18n.viewType.locale.fr">
         <source>victoire.i18n.viewType.locale.fr</source>
         <target>Français</target>
