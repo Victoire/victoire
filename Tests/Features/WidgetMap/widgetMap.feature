@@ -16,9 +16,10 @@ Scenario: I move up a widget
     | 1  | Widget 1 | create |          |        | content |   home  |
     | 2  | Widget 2 | create |  after   |   1    | content |   home  |
     | 3  | Widget 3 | create |  before  |   2    | content |   home  |
-    And I should see "Widget 1"
-    Then I move the widgetMap "1" "before" the widgetMap "3"
-    Then I wait 2 seconds
+    And I am on the homepage
+    Then I should see "Widget 1"
+    When I move the widgetMap "1" "before" the widgetMap "3"
+    And I wait 2 seconds
     And I reload the page
     And "Widget 1" should precede "Widget 3"
 
@@ -34,9 +35,10 @@ Scenario: I move first a widget
     | 1  | Widget 1 | create |          |        | content |   home  |
     | 2  | Widget 2 | create |  after   |   1    | content |   home  |
     | 3  | Widget 3 | create |  before  |   2    | content |   home  |
-    And I should see "Widget 1"
-    Then I move the widgetMap "3" "after" the widgetMap ""
-    Then I wait 2 seconds
+    And I am on the homepage
+    Then I should see "Widget 1"
+    When I move the widgetMap "3" "after" the widgetMap ""
+    And I wait 2 seconds
     And I reload the page
     And "Widget 3" should precede "Widget 1"
 
@@ -52,11 +54,12 @@ Scenario: I move down a widget
     | 1  | Widget 1 | create |          |        | content |   home  |
     | 2  | Widget 2 | create |  after   |   1    | content |   home  |
     | 3  | Widget 3 | create |  before  |   2    | content |   home  |
-    And I should see "Widget 1"
-    Then I move the widgetMap "1" "after" the widgetMap "2"
-    Then I wait 2 seconds
+    And I am on the homepage
+    Then I should see "Widget 1"
+    When I move the widgetMap "1" "after" the widgetMap "2"
+    And I wait 2 seconds
     And I reload the page
-    And "Widget 2" should precede "Widget 1"
+    Then "Widget 2" should precede "Widget 1"
 
 @reset-schema
 Scenario: I move a widget under a templates one
@@ -71,8 +74,9 @@ Scenario: I move a widget under a templates one
     | 1  | Widget 1 | create |          |        | content |   home  |
     | 2  | Widget 2 | create |  after   |   1    | content |   home  |
     | 3  | Widget 3 | create |  before  |   2    | content |   home  |
-    And I should see "Widget 1"
-    Then I switch to "layout" mode
+    And I am on the homepage
+    Then I should see "Widget 1"
+    When I switch to "layout" mode
     Then I should see "Nouveau Contenu"
     When I select "Texte brut" from the "3" select of "content" slot
     Then I should see "Créer"
@@ -80,15 +84,13 @@ Scenario: I move a widget under a templates one
     And I submit the widget
     Then I should see "Victoire !"
     And I reload the page
-    Then I wait 5 seconds
     And "Widget 2" should precede "Widget 4"
     And "Widget 4" should precede "Widget 3"
     Then I move the widgetMap "1" "after" the widgetMap "4"
-    Then I wait 2 seconds
+    And I wait 2 seconds
     And I reload the page
-    Then I wait 5 seconds
-    And "Widget 4" should precede "Widget 1"
-    And "Widget 1" should precede "Widget 3"
+    Then "Widget 4" should precede "Widget 1"
+    Then "Widget 1" should precede "Widget 3"
 
 @reset-schema
 Scenario: I create widget in a position
@@ -98,7 +100,7 @@ Scenario: I create widget in a position
     Then I should see "Créer"
     When I fill in "Côté de la force" with "Obscure"
     And I submit the widget
-    Then I wait 2 seconds
+    And I wait 2 seconds
     Then I should see "Victoire !"
     And I should see "Le côté Obscure de la force"
 
