@@ -5,6 +5,7 @@ namespace Victoire\Bundle\CoreBundle\EventSubscriber;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\OnFlushEventArgs;
+use Doctrine\ORM\Event\PreFlushEventArgs;
 use Doctrine\ORM\UnitOfWork;
 use Victoire\Bundle\CoreBundle\Builder\ViewCssBuilder;
 use Victoire\Bundle\CoreBundle\Entity\View;
@@ -65,8 +66,9 @@ class WidgetSubscriber implements EventSubscriber
 
         $updatedEntities = $this->uow->getScheduledEntityUpdates();
         $deletedEntities = $this->uow->getScheduledEntityDeletions();
+
         //Update View's CSS and inheritors of updated and deleted widgets
-        foreach (array_merge($updatedEntities) as $entity) {
+        foreach (array_merge($updatedEntities, $deletedEntities) as $entity) {
             if (!($entity instanceof Widget)) {
                 continue;
             }
@@ -76,7 +78,7 @@ class WidgetSubscriber implements EventSubscriber
                 if ($widgetMap->getAction() !== WidgetMap::ACTION_DELETE) {
                     $view = $widgetMap->getView();
                     $this->updateViewCss($view);
-                    $this->updateTemplateInheritorsCss($view);
+                    $this->setTemplateInheritorsCssToUpdate($view);
                 }
             }
         }
@@ -88,8 +90,9 @@ class WidgetSubscriber implements EventSubscriber
             }
 
             $this->viewCssBuilder->removeCssFile($entity->getCssHash());
-            $this->updateTemplateInheritorsCss($entity);
+            $this->setTemplateInheritorsCssToUpdate($entity);
         }
+
         //Update CSS of updated View and its inheritors
         foreach ($updatedEntities as $entity) {
             if (!($entity instanceof View)) {
@@ -97,8 +100,10 @@ class WidgetSubscriber implements EventSubscriber
             }
 
             $this->updateViewCss($entity);
-            $this->updateTemplateInheritorsCss($entity);
+            $this->setTemplateInheritorsCssToUpdate($entity);
         }
+
+        $this->uow->computeChangeSets();
     }
 
     /**
@@ -108,32 +113,37 @@ class WidgetSubscriber implements EventSubscriber
      */
     public function updateViewCss(View $view)
     {
-        $oldHash = $view->getCssHash();
         $view->changeCssHash();
 
         //Update css file
         $this->widgetMapBuilder->build($view, $this->em, true);
         $widgets = $this->widgetRepo->findAllWidgetsForView($view);
-        $this->viewCssBuilder->updateViewCss($oldHash, $view, $widgets);
 
-        //Update hash in database
+        //Generate CSS file and set View's CSS as up to date
+        $oldHash = $view->getCssHash();
+        $view->changeCssHash();
+        $this->viewCssBuilder->updateViewCss($oldHash, $view, $widgets);
+        $view->setCssUpToDate(true);
+
+        //Persist new hash and upToDate bool
         $metadata = $this->em->getClassMetadata(get_class($view));
         $this->uow->recomputeSingleEntityChangeSet($metadata, $view);
     }
 
     /**
-     * Update a Template inheritors (View) if necessary.
+     * Set a Template inheritors (View) as not up to date.
      *
      * @param View $view
      */
-    public function updateTemplateInheritorsCss(View $view)
+    public function setTemplateInheritorsCssToUpdate(View $view)
     {
         if (!($view instanceof Template)) {
             return;
         }
         foreach ($view->getInheritors() as $inheritor) {
-            $this->updateViewCss($inheritor);
-            $this->updateTemplateInheritorsCss($inheritor);
+            $inheritor->setCssUpToDate(false);
+            $this->uow->persist($inheritor);
+            $this->setTemplateInheritorsCssToUpdate($inheritor);
         }
     }
 }
