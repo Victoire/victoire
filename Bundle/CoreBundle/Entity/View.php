@@ -184,6 +184,12 @@ abstract class View
      * @ORM\OrderBy({"id" = "ASC"})
      */
     protected $widgets;
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="cssUpToDate", type="boolean", nullable=true options={"default"=0})
+     */
+    protected $cssUpToDate;
 
     /**
      * Construct.
@@ -834,5 +840,29 @@ abstract class View
         }
 
         return false;
+    }
+
+    /**
+     * Get cssUpToDate.
+     *
+     * @return bool
+     */
+    public function isCssUpToDate()
+    {
+        return $this->cssUpToDate;
+    }
+
+    /**
+     * Set CssUpToDate.
+     *
+     * @param bool $cssUpToDate
+     *
+     * @return $this
+     */
+    public function setCssUpToDate($cssUpToDate)
+    {
+        $this->cssUpToDate = $cssUpToDate;
+
+        return $this;
     }
 }
