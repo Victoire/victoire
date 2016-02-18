@@ -96,6 +96,22 @@ class BlogController extends BasePageController
     /**
      * New page.
      *
+     * @Route("/feed/{slug}.rss", name="victoire_blog_rss", defaults={"_format" = "rss"})
+     *
+     * @param Request $request
+     * @Template("VictoireBlogBundle:Blog:feed.rss.twig")
+     * @return JsonResponse
+     */
+    public function feedAction(Request $request, Blog $blog)
+    {
+        return [
+                'blog' => $blog,
+            ];
+    }
+
+    /**
+     * New page.
+     *
      * @Route("/new", name="victoire_blog_new")
      * @Template()
      *

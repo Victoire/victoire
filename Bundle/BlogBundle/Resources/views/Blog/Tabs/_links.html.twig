@@ -1,0 +1,14 @@
+{% trans_default_domain "victoire" %}
+
+<div class="vic-tab-content vic-modal-tab-content">
+    <div class="vic-tab-pane vic-active" id="links">
+        <ul>
+            <li>
+                <a href="{{ path('victoire_core_page_show', {'url': blog.url}) }}">URL</a>
+            </li>
+            <li>
+                <a href="{{ path('victoire_blog_rss', {'slug': blog.slug}) }}">Flux RSS</a>
+            </li>
+        </ul>
+    </div>
+</div>
