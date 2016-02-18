@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\PageBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -86,6 +87,7 @@ class BasePageController extends Controller
      */
     protected function newAction($isHomepage = false)
     {
+        /** @var EntityManager $entityManager */
         $entityManager = $this->get('doctrine.orm.entity_manager');
         $page = $this->getNewPage();
         if ($page instanceof Page) {
@@ -134,7 +136,7 @@ class BasePageController extends Controller
             $formErrorHelper = $this->get('victoire_form.error_helper');
 
             return [
-                'success' => false,
+                'success' => !$form->isSubmitted(),
                 'message' => $formErrorHelper->getRecursiveReadableErrors($form),
                 'html'    => $this->get('victoire_templating')->render(
                     $this->getBaseTemplatePath().':new.html.twig',

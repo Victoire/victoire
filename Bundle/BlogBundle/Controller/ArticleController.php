@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\BlogBundle\Controller;
 
+use Doctrine\ORM\NoResultException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -104,7 +105,11 @@ class ArticleController extends Controller
     {
         $article = new Article();
         $article->setBlog($blog);
-        $form = $this->createForm('victoire_article_type', $article);
+        try {
+            $form = $this->createForm('victoire_article_type', $article);
+        } catch (NoResultException $e) {
+            return new JsonResponse(['success' => false, 'message' => $e->getMessage()]);
+        }
 
         return new JsonResponse(
             [
@@ -178,7 +183,7 @@ class ArticleController extends Controller
             ]);
 
             $response = [
-                'success' => false,
+                'success' => !$form->isSubmitted(),
                 'html'    => $this->get('victoire_templating')->render($template, [
                     'action'             => $this->generateUrl('victoire_blog_article_settings', [
                         'id' => $article->getId(),

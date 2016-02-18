@@ -50,13 +50,13 @@ class PageSeoController extends Controller
         $pageSeo = $page->getSeo() ? $page->getSeo() : new PageSeo($page);
 
         //url for the form
-        $formUrl = $this->container->get('router')->generate('victoire_seo_pageSeo_settings',
+        $formUrl = $this->get('router')->generate('victoire_seo_pageSeo_settings',
             [
                 'id' => $page->getId(),
             ]
         );
         //create the form
-        $form = $this->container->get('form.factory')->create('seo_page', $pageSeo,
+        $form = $this->get('form.factory')->create('seo_page', $pageSeo,
             [
                 'action'  => $formUrl,
                 'method'  => 'POST',
@@ -92,7 +92,7 @@ class PageSeoController extends Controller
         }
 
         return new JsonResponse([
-            'success' => false,
+            'success' => !$form->isSubmitted(),
             'html'    => $this->container->get('victoire_templating')->render(
                 'VictoireSeoBundle:PageSeo:settings.html.twig',
                 [
