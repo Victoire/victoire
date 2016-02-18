@@ -12,3 +12,4 @@ Victoire\Bundle\BlogBundle\Entity\Blog:
         publishedAt: <dateTime('now')>
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
+        cssUpToDate: false

@@ -10,3 +10,4 @@ Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage:
         publishedAt: <dateTime('now')>
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
+        cssUpToDate: false

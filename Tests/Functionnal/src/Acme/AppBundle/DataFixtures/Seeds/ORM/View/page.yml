@@ -11,6 +11,7 @@ Victoire\Bundle\PageBundle\Entity\Page:
         publishedAt: <dateTime('now')>
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
+        cssUpToDate: false
 
     test:
         template: @template_two_cols
@@ -25,3 +26,4 @@ Victoire\Bundle\PageBundle\Entity\Page:
         publishedAt: <dateTime('now')>
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
+        cssUpToDate: false
