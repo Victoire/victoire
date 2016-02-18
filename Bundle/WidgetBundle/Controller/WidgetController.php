@@ -237,7 +237,7 @@ class WidgetController extends Controller
         $widgetView->setReference($widgetViewReference);
         $this->get('victoire_core.current_view')->setCurrentView($view);
         try {
-            $form = $this->container->get('form.factory')->create('victoire_widget_style_type', $widget, [
+            $form = $this->get('form.factory')->create('victoire_widget_style_type', $widget, [
                     'method' => 'POST',
                     'action' => $this->generateUrl(
                         'victoire_core_widget_stylize',
@@ -268,7 +268,7 @@ class WidgetController extends Controller
             } else {
                 $template = ($request->query->get('novalidate', false) !== false) ? 'VictoireCoreBundle:Widget/Form/stylize:form.html.twig' : 'VictoireCoreBundle:Widget/Form:stylize.html.twig';
                 $params = [
-                    'success'  => false,
+                    'success'  => !$form->isSubmitted(),
                     'html'     => $this->get('victoire_core.template_mapper')->render(
                         $template,
                         [

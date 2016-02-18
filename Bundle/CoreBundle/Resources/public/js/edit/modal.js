@@ -11,15 +11,19 @@ function openModal(url) {
         type: "GET",
         url: url
     }).done(function(response){
-        //remove the previous instance of the modal
-        $vic('#vic-modal').remove();
-        //add the html of the modal
-        $vic('body').append(response.html);
-        //display the modal
-        $vic('#vic-modal').vicmodal({
-            keyboard: true,
-            backdrop: false
-        });
+        if (false === response.success) {
+            warn(response.message, 10000);
+        } else {
+            //remove the previous instance of the modal
+            $vic('#vic-modal').remove();
+            //add the html of the modal
+            $vic('body').append(response.html);
+            //display the modal
+            $vic('#vic-modal').vicmodal({
+                keyboard: true,
+                backdrop: false
+            });
+        }
         loading(false);
         $vic(document).trigger('victoire_modal_open_after');
     });
