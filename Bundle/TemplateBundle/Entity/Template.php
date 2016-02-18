@@ -149,7 +149,7 @@ class Template extends View
     /**
      * Get inheritors (all Views having this object as Template).
      *
-     * @return [Template]
+     * @return [View]
      */
     public function getInheritors()
     {
