@@ -27,7 +27,7 @@ class ViewCssListener
     }
 
     /**
-     * Generate cssHash and css file for current View if cssHash has not been set yet.
+     * Generate cssHash and css file for current View if cssHash has not been set yet or is not up to date.
      *
      * @param PageRenderEvent $event
      *
@@ -39,16 +39,20 @@ class ViewCssListener
 
         if ($currentView instanceof VirtualBusinessPage) {
             $currentView->setCssHash($currentView->getTemplate()->getCssHash());
-        } elseif (!$viewHash = $currentView->getCssHash()) {
-            $currentView->changeCssHash();
-            $this->entityManager->persist($currentView);
-            $this->entityManager->flush($currentView);
+        } elseif (!$currentView->getCssHash() || !$currentView->isCssUpToDate()) {
 
+            //Get View's widgets
             $widgetRepo = $this->entityManager->getRepository('Victoire\Bundle\WidgetBundle\Entity\Widget');
-
             $this->widgetMapBuilder->build($currentView);
             $widgets = $widgetRepo->findAllWidgetsForView($currentView);
-            $this->viewCssBuilder->generateViewCss($currentView, $widgets);
+
+            //Generate CSS file and set View's CSS as up to date
+            $oldHash = $currentView->getCssHash();
+            $currentView->changeCssHash();
+            $this->viewCssBuilder->updateViewCss($oldHash, $currentView, $widgets);
+            $currentView->setCssUpToDate(true);
+            $this->entityManager->persist($currentView);
+            $this->entityManager->flush($currentView);
         }
     }
 }
