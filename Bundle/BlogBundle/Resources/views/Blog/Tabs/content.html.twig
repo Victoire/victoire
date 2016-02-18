@@ -4,4 +4,7 @@
             {{ render(controller('VictoireBlogBundle:Blog:' ~ tab, {'id' : blog.id})) }}
         </div>
     {% endfor %}
+    <div class="vic-tab-pane" id="victoire-blog-links">
+        {% include 'VictoireBlogBundle:Blog:Tabs/_links.html.twig' with {'id' : blog.id} %}
+    </div>
 </div>

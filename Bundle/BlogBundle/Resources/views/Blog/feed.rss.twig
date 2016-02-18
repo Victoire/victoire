@@ -1,10 +1,23 @@
-{% extends 'VictoireCoreBundle::_modal.html.twig' %}
+<?xml version="1.0" ?>
+<rss version="2.0">
+    <channel>
+        <title>{{ blog.name }}</title>
+        <link>{{ url('victoire_core_page_show', {'url': blog.url}) }}</link>
+        <description>{{ blog.seo|default({'description' : ''}).description }}</description>
 
-{% block modal_header_title %}
+        {% if blog.seo and blog.seo.ogImage %}
+        <image>
+            <url>{{ blog.seo.ogImage.url }}</url>
+            <link>{{ url('victoire_core_page_show', {'url': blog.url}) }}</link>
+        </image>
+        {% endif %}
 
-{% endblock %}
+        {% for article in blog.articles %}<item>
+            <title>{{ article.name }}</title>
+            <link>{{ vic_business_link(article, null, constant('\\Symfony\\Component\\Routing\\Generator\\UrlGeneratorInterface::ABSOLUTE_URL')) }}</link>
+            <description>{{ article.description }}</description>
+        </item>
+        {% endfor %}
 
-{% block modal_body_content %}
-
-{% endblock %}
-
+    </channel>
+</rss>
