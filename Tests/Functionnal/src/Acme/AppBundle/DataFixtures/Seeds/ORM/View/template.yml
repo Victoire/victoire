@@ -8,6 +8,7 @@ Victoire\Bundle\TemplateBundle\Entity\Template:
         undeletable: true
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
+        cssUpToDate: false
     template_two_cols:
         layout: two_cols
         template: @template_base
@@ -18,3 +19,4 @@ Victoire\Bundle\TemplateBundle\Entity\Template:
         undeletable: true
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
+        cssUpToDate: false
