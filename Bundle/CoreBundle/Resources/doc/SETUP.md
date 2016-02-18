@@ -88,7 +88,6 @@ Follow the instructions on [victoire demo Readme](https://github.com/Victoire/de
 
 Get the whole Victoire Widget list [**here**](http://packagist.org/search/?tags=victoire)
 
-
 Check victoire dependencies:
 
 ```json
@@ -122,7 +121,6 @@ Check victoire dependencies:
             type: victoire
 ```
 
-
 - Enable StofDoctrineExtensions in AppKernel
 
 - add this config in doctrine.yml:
@@ -149,6 +147,7 @@ Check victoire dependencies:
 ```
 
 - install FOSJSRouting
+
 ```
     composer require friendsofsymfony/jsrouting-bundle
 ```
@@ -161,13 +160,16 @@ Check victoire dependencies:
             tags:
                 - { name: twig.extension }
 ```
+
 - import the victoire config file
 
 ```yml
 imports:
         - { resource: @VictoireCoreBundle/Resources/config/config.yml }
 ```
+
 - install redis
+
 ```
 wget http://download.redis.io/redis-stable.tar.gz
 tar xvzf redis-stable.tar.gz
@@ -185,10 +187,22 @@ snc_redis:
            alias: victoire
            dsn: redis://localhost
 ```
+
 - start redis server
+
 ```
 redis-server
 ```
+
+- set a CRON
+
+```
+* * * * * bin/console victoire:widget-css:generate --limit 20 --outofdate
+```
+
+This command allow you to regenerate View's CSS
+
+- log in
 
 Use the following information to login and start to create your website
 
