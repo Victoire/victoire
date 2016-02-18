@@ -12,6 +12,7 @@ Victoire\Bundle\BlogBundle\Entity\ArticleTemplate:
         publishedAt: <dateTime('now')>
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
+        cssUpToDate: false
     template_article_2:
         name: "{{item.name}}"
         backendName: "Second blog template"
@@ -25,3 +26,4 @@ Victoire\Bundle\BlogBundle\Entity\ArticleTemplate:
         publishedAt: <dateTime('now')>
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
+        cssUpToDate: false
