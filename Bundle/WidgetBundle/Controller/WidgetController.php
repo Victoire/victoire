@@ -220,10 +220,12 @@ class WidgetController extends Controller
         $view = $this->getViewByReferenceId($viewReference);
         $widgetView = $widget->getView();
 
-        $widgetViewReference = $this->container->get('victoire_view_reference.repository')
-            ->getOneReferenceByParameters(['viewId' => $view->getId()]);
+        if(!$view instanceof \Victoire\Bundle\TemplateBundle\Entity\Template) {
+            $widgetViewReference = $this->container->get('victoire_view_reference.repository')
+                ->getOneReferenceByParameters(['viewId' => $view->getId()]);
+            $widgetView->setReference($widgetViewReference);
+        }
 
-        $widgetView->setReference($widgetViewReference);
         $this->get('victoire_core.current_view')->setCurrentView($view);
         try {
             $form = $this->container->get('form.factory')->create('victoire_widget_style_type', $widget, [
