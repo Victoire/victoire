@@ -231,10 +231,12 @@ class WidgetController extends Controller
         $this->get('victoire_widget_map.builder')->build($view, $this->get('doctrine.orm.entity_manager'));
         $widgetView = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $view)->getView();
 
-        $widgetViewReference = $this->container->get('victoire_view_reference.repository')
-            ->getOneReferenceByParameters(['viewId' => $view->getId()]);
+        if(!$view instanceof \Victoire\Bundle\TemplateBundle\Entity\Template) {
+            $widgetViewReference = $this->container->get('victoire_view_reference.repository')
+                ->getOneReferenceByParameters(['viewId' => $view->getId()]);
+            $widgetView->setReference($widgetViewReference);
+        }
 
-        $widgetView->setReference($widgetViewReference);
         $this->get('victoire_core.current_view')->setCurrentView($view);
         try {
             $form = $this->get('form.factory')->create('victoire_widget_style_type', $widget, [
