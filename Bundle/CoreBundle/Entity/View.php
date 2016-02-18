@@ -181,6 +181,13 @@ abstract class View
     protected $cssHash;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="cssUpToDate", type="boolean", options={"default"=0})
+     */
+    protected $cssUpToDate;
+
+    /**
      * Construct.
      **/
     public function __construct()
@@ -1039,5 +1046,29 @@ abstract class View
     public function changeCssHash()
     {
         $this->cssHash = sha1(uniqid());
+    }
+
+    /**
+     * Get cssUpToDate.
+     *
+     * @return bool
+     */
+    public function isCssUpToDate()
+    {
+        return $this->cssUpToDate;
+    }
+
+    /**
+     * Set CssUpToDate.
+     *
+     * @param bool $cssUpToDate
+     *
+     * @return $this
+     */
+    public function setCssUpToDate($cssUpToDate)
+    {
+        $this->cssUpToDate = $cssUpToDate;
+
+        return $this;
     }
 }
