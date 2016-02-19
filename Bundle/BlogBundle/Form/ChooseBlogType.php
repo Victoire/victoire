@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\BlogBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,7 +20,7 @@ class ChooseBlogType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('blog', 'entity', [
+        $builder->add('blog', EntityType::class, [
                 'label'             => 'victoire.blog.choose.blog.label',
                 'class'             => 'Victoire\Bundle\BlogBundle\Entity\Blog',
                 'property'          => 'name',
@@ -42,15 +43,5 @@ class ChooseBlogType extends AbstractType
                 'blog'               => null,
             ]
         );
-    }
-
-    /**
-     * get form name.
-     *
-     * @return string The name of the form
-     */
-    public function getName()
-    {
-        return 'victoire_blog_choose_type';
     }
 }

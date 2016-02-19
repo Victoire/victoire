@@ -2,10 +2,10 @@
 
 namespace Victoire\Bundle\MediaBundle\EventListener;
 
+use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Victoire\Bundle\MediaBundle\Entity\Media;
-use Victoire\Bundle\MediaBundle\Helper\ClassLookup;
 use Victoire\Bundle\MediaBundle\Helper\MediaManager;
 
 /**
@@ -46,7 +46,7 @@ class DoctrineMediaListener
             $em = $eventArgs->getEntityManager();
             $uow = $em->getUnitOfWork();
             $uow->recomputeSingleEntityChangeSet(
-                $em->getClassMetadata(ClassLookup::getClass($entity)),
+                $em->getClassMetadata(ClassUtils::getClass($entity)),
                 $eventArgs->getEntity()
             );
         }

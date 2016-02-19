@@ -36,14 +36,4 @@ class BusinessPageType extends PageSettingsType
             ]
         );
     }
-
-    /**
-     * The name of the form.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'victoire_business_page_type';
-    }
 }

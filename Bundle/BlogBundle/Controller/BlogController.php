@@ -10,6 +10,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Victoire\Bundle\BlogBundle\Entity\Blog;
+use Victoire\Bundle\BlogBundle\Form\BlogCategoryType;
+use Victoire\Bundle\BlogBundle\Form\BlogSettingsType;
+use Victoire\Bundle\BlogBundle\Form\BlogType;
 use Victoire\Bundle\BlogBundle\Form\ChooseBlogType;
 use Victoire\Bundle\BlogBundle\Repository\BlogRepository;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
@@ -61,13 +64,13 @@ class BlogController extends BasePageController
         }
         $options['blog'] = $blog;
         $template = $this->getBaseTemplatePath().':index.html.twig';
-        $chooseBlogForm = $this->createForm(new ChooseBlogType(), null, $options);
+        $chooseBlogForm = $this->createForm(ChooseBlogType::class, null, $options);
 
         $chooseBlogForm->handleRequest($request);
         if ($chooseBlogForm->isValid()) {
             $blog = $chooseBlogForm->getData()['blog'];
             $template = $this->getBaseTemplatePath().':_blogItem.html.twig';
-            $chooseBlogForm = $this->createForm(new ChooseBlogType(), null, ['blog' => $blog]);
+            $chooseBlogForm = $this->createForm(ChooseBlogType::class, null, ['blog' => $blog]);
         }
         $businessProperties = [];
 
@@ -299,7 +302,7 @@ class BlogController extends BasePageController
      */
     protected function getPageSettingsType()
     {
-        return 'victoire_blog_settings_type';
+        return BlogSettingsType::class;
     }
 
     /**
@@ -307,7 +310,7 @@ class BlogController extends BasePageController
      */
     protected function getPageCategoryType()
     {
-        return 'victoire_blog_category_type';
+        return BlogCategoryType::class;
     }
 
     /**
@@ -315,7 +318,7 @@ class BlogController extends BasePageController
      */
     protected function getNewPageType()
     {
-        return 'victoire_blog_type';
+        return BlogType::class;
     }
 
     /**

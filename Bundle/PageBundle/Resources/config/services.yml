@@ -58,7 +58,7 @@ services:
             - "%victoire_i18n.available_locales%"
             - "@request_stack"
         tags:
-            - { name: form.type, alias: victoire_page_type }
+            - { name: form.type }
 
     victoire_page.page_settings.form.type:
         class: Victoire\Bundle\PageBundle\Form\PageSettingsType
@@ -66,7 +66,7 @@ services:
             - "%victoire_i18n.available_locales%"
             - "@request_stack"
         tags:
-            - { name: form.type, alias: victoire_page_settings_type }
+            - { name: form.type }
 
 
     ####################################################################################################################

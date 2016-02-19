@@ -46,7 +46,7 @@ A field for media references. It has a "choose" button which opens a popup where
 ### Example Usage:
 
 ```php
-$builder->add('ogImage', 'media', array(
+$builder->add('ogImage', MediaType::class, array(
     'mediatype' => 'image',
     'label' => 'OG image'
 ));

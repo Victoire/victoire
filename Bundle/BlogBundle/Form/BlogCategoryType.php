@@ -47,12 +47,4 @@ class BlogCategoryType extends AbstractType
             ]
         );
     }
-
-    /**
-     * get form name.
-     */
-    public function getName()
-    {
-        return 'victoire_blog_category_type';
-    }
 }

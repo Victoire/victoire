@@ -11,7 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class BaseFilter extends AbstractType implements BaseFilterInterface
 {
-    protected $em;
+    protected $entityManager;
     protected $request;
 
     /**
@@ -20,17 +20,11 @@ abstract class BaseFilter extends AbstractType implements BaseFilterInterface
      */
     public function __construct(EntityManager $em, Request $request)
     {
-        $this->em = $em;
+        $this->entityManager = $em;
         $this->request = $request;
     }
 
-    public function buildQuery(QueryBuilder $qb, array $parameters)
-    {
-    }
-
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-    }
+    abstract public function buildQuery(QueryBuilder $qb, array $parameters);
 
     /**
      * {@inheritdoc}
@@ -46,7 +40,19 @@ abstract class BaseFilter extends AbstractType implements BaseFilterInterface
         ]);
     }
 
-    public function getName()
+    /**
+     * @return EntityManager
+     */
+    public function getEntityManager()
     {
+        return $this->entityManager;
+    }
+
+    /**
+     * @return Request
+     */
+    public function getRequest()
+    {
+        return $this->request;
     }
 }

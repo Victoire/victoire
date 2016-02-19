@@ -3,6 +3,8 @@
 namespace Victoire\Bundle\BusinessEntityBundle\Form\Extension;
 
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 
@@ -20,10 +22,7 @@ class BusinessEntityTypeExtension extends AbstractTypeExtension
         if (!empty($options['data_class'])
             && $this->businessEntityHelper->findByEntityClassname($options['data_class'])) {
             $builder
-            ->add(
-                'visibleOnFront',
-                'choice',
-                [
+            ->add('visibleOnFront', ChoiceType::class, [
                     'choices' => [
                         1 => 'businessEntity.form.visibleOnFront.yes',
                         0 => 'businessEntity.form.visibleOnFront.no',
@@ -37,6 +36,6 @@ class BusinessEntityTypeExtension extends AbstractTypeExtension
 
     public function getExtendedType()
     {
-        return 'form';
+        return FormType::class;
     }
 }

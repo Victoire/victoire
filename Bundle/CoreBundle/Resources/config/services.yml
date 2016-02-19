@@ -17,7 +17,7 @@ services:
 #  ==================  MENU ================== #
     victoire_core.admin_menu_builder:
         class: Victoire\Bundle\CoreBundle\Menu\MenuBuilder
-        arguments: [ '@knp_menu.factory', '@security.context' ]
+        arguments: [ '@knp_menu.factory', '@security.authorization_checker' ]
 
     victoire_core.admin_menu:
         class: Knp\Menu\MenuItem

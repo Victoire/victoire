@@ -12,6 +12,7 @@ use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
 use Victoire\Bundle\SeoBundle\Entity\PageSeo;
+use Victoire\Bundle\SitemapBundle\Form\SitemapPriorityPageSeoType;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\BusinessPageReference;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
@@ -195,11 +196,8 @@ class SitemapController extends Controller
      **/
     protected function createSitemapPriorityType(BasePage $page)
     {
-        $form = $this->createForm(
-            'victoire_sitemap_priority_pageseo_type',
-            $page->getSeo(),
-            [
-                'action'     => $this->generateUrl('victoire_sitemap_changePriority', [
+        $form = $this->createForm(SitemapPriorityPageSeoType::class, $page->getSeo(), [
+                'action' => $this->generateUrl('victoire_sitemap_changePriority', [
                         'id' => $page->getId(),
                     ]
                 ),

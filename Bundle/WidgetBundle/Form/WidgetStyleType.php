@@ -5,12 +5,14 @@ namespace Victoire\Bundle\WidgetBundle\Form;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Victoire\Bundle\MediaBundle\Form\Type\MediaType;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
@@ -42,7 +44,7 @@ class WidgetStyleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('containerTag', 'choice', [
+            ->add('containerTag', ChoiceType::class, [
                 'label' => 'widget_layout.form.containerTag.label',
                 'vic_help_block' => 'widget_layout.form.containerTag.help_block',
                 'choices' => array_combine(Widget::$tags, Widget::$tags),
@@ -96,7 +98,7 @@ class WidgetStyleType extends AbstractType
                     'label' => 'widget_layout.form.containerHeight'.$key.'.label',
                     'attr' => ['placeholder' => 'widget_layout.form.containerWidth.placeholder'],
                 ])
-                ->add('textAlign'.$key, 'choice', [
+                ->add('textAlign'.$key, ChoiceType::class, [
                     'label' => 'widget_layout.form.textAlign'.$key.'.label',
                     'required' => false,
                     'empty_value' => true,
@@ -108,7 +110,7 @@ class WidgetStyleType extends AbstractType
                         'justify' => 'widget_layout.form.textAlign.choices.justify.label',
                     ],
                 ])
-                ->add('containerBackgroundType'.$key, 'choice', [
+                ->add('containerBackgroundType'.$key, ChoiceType::class, [
                     'label' => 'widget_layout.form.containerBackgroundType'.$key.'.label',
                     'choices' => [
                         'color' => 'widget_layout.form.containerBackgroundType.choices.color.label',
@@ -147,7 +149,7 @@ class WidgetStyleType extends AbstractType
             }
             //We add the theme type only if there is a choice
             if (count($choices) > 1) {
-                $form->add('theme', 'choice', [
+                $form->add('theme', ChoiceType::class, [
                     'label' => 'widget.form.theme.label',
                     'choices' => $choices,
                 ]);
@@ -167,10 +169,10 @@ class WidgetStyleType extends AbstractType
         if ($type == 'image') {
             $form->
                 remove('containerBackgroundColor'.$responsiveKey)
-                ->add('containerBackgroundImage'.$responsiveKey, 'media', [
+                ->add('containerBackgroundImage'.$responsiveKey, MediaType::class, [
                     'label' => 'widget_layout.form.containerBackgroundImage'.$responsiveKey.'.label',
                 ])
-                ->add('containerBackgroundRepeat'.$responsiveKey, 'choice', [
+                ->add('containerBackgroundRepeat'.$responsiveKey, ChoiceType::class, [
                     'label' => 'widget_layout.form.containerBackgroundRepeat'.$responsiveKey.'.label',
                     'choices' => [
                         'no-repeat' => 'widget_layout.form.containerBackgroundRepeat.choices.noRepeat.label',
@@ -179,7 +181,7 @@ class WidgetStyleType extends AbstractType
                         'repeat-y' => 'widget_layout.form.containerBackgroundRepeat.choices.repeatY.label',
                     ],
                 ])
-                ->add('containerBackgroundPosition'.$responsiveKey, 'choice', [
+                ->add('containerBackgroundPosition'.$responsiveKey, ChoiceType::class, [
                     'label' => 'widget_layout.form.containerBackgroundPosition'.$responsiveKey.'.label',
                     'choices' => [
                         'center center' => 'widget_layout.form.containerBackgroundRepeat.choices.center.center.label',
@@ -226,16 +228,6 @@ class WidgetStyleType extends AbstractType
             'data_class' => 'Victoire\Bundle\WidgetBundle\Entity\Widget',
             'translation_domain' => 'victoire',
         ]);
-    }
-
-    /**
-     * get form name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'victoire_widget_style_type';
     }
 
     /**

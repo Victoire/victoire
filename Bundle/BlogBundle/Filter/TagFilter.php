@@ -4,6 +4,7 @@ namespace Victoire\Bundle\BlogBundle\Filter;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Victoire\Bundle\FilterBundle\Filter\BaseFilter;
 
@@ -12,21 +13,6 @@ use Victoire\Bundle\FilterBundle\Filter\BaseFilter;
  */
 class TagFilter extends BaseFilter
 {
-    protected $em;
-    protected $request;
-
-    /**
-     * Constructor.
-     *
-     * @param EntityManager $em
-     * @param unknown       $request
-     */
-    public function __construct(EntityManager $em, $request)
-    {
-        $this->em = $em;
-        $this->request = $request;
-    }
-
     /**
      * Build the query.
      *
@@ -53,7 +39,7 @@ class TagFilter extends BaseFilter
 
         if (count($parameters['tags']) > 0) {
             if (array_key_exists('strict', $parameters)) {
-                $repository = $this->em->getRepository('VictoireBlogBundle:Article');
+                $repository = $this->getEntityManager()->getRepository('VictoireBlogBundle:Article');
                 foreach ($parameters['tags'] as $index => $tag) {
                     $parameter = ':tag'.$index;
                     $subquery = $repository->createQueryBuilder('article_'.$index)
@@ -84,9 +70,9 @@ class TagFilter extends BaseFilter
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         //getAll tags
-        $tagQb = $this->em->getRepository('VictoireBlogBundle:Tag')->getAll();
+        $tagQb = $this->getEntityManager()->getRepository('VictoireBlogBundle:Tag')->getAll();
         //getAll published articles
-        $articleQb = $this->em->getRepository('VictoireBlogBundle:Article')->getAll(true);
+        $articleQb = $this->getEntityManager()->getRepository('VictoireBlogBundle:Article')->getAll(true);
 
         //get Listing
         $listing = $options['widget']->getListing();
@@ -108,20 +94,20 @@ class TagFilter extends BaseFilter
         }
 
         $data = null;
-        if ($this->request->query->has('filter') && array_key_exists('tag_filter', $this->request->query->get('filter'))) {
+        if ($this->getRequest()->query->has('filter') && array_key_exists('tag_filter', $this->getRequest()->query->get('filter'))) {
             if ($options['multiple']) {
                 $data = [];
-                foreach ($this->request->query->get('filter')['tag_filter']['tags'] as $id => $selectedTag) {
+                foreach ($this->getRequest()->query->get('filter')['tag_filter']['tags'] as $id => $selectedTag) {
                     $data[$id] = $selectedTag;
                 }
             } else {
-                $data = $this->request->query->get('filter')['tag_filter']['tags'];
+                $data = $this->getRequest()->query->get('filter')['tag_filter']['tags'];
             }
         }
 
         $builder
             ->add(
-                'tags', 'choice', [
+                'tags', ChoiceType::class, [
                     'label'       => false,
                     'choices'     => $tagsChoices,
                     'empty_value' => 'blog.tag_filter.empty_value',
@@ -142,16 +128,6 @@ class TagFilter extends BaseFilter
      */
     public function getFilters($filters)
     {
-        return $this->em->getRepository('VictoireBlogBundle:Tag')->findById($filters['tags']);
-    }
-
-    /**
-     * get form name.
-     *
-     * @return string name
-     */
-    public function getName()
-    {
-        return 'tag_filter';
+        return $this->getEntityManager()->getRepository('VictoireBlogBundle:Tag')->findById($filters['tags']);
     }
 }

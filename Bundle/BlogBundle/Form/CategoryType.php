@@ -112,14 +112,4 @@ class CategoryType extends AbstractType
 
         ]);
     }
-
-    /**
-     * get form name.
-     *
-     * @return string The name of the form
-     */
-    public function getName()
-    {
-        return 'victoire_form_blog_category';
-    }
 }

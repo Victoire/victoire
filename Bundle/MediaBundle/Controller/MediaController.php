@@ -107,7 +107,7 @@ class MediaController extends Controller
 
         $helper = new BulkUploadHelper();
 
-        $form = $this->createForm(new BulkUploadType('*/*'), $helper);
+        $form = $this->createForm(BulkUploadType::class, $helper, ['accept' => '*/*']);
 
         if ('POST' == $request->getMethod()) {
             $form->handleRequest($request);
@@ -128,7 +128,7 @@ class MediaController extends Controller
         $formView = $form->createView();
         $filesfield = $formView->children['files'];
         $filesfield->vars = array_replace($filesfield->vars, [
-            'full_name' => 'victoire_mediabundle_bulkupload[files][]',
+            'full_name' => 'mediabundle_bulkupload[files][]',
         ]);
 
         return [

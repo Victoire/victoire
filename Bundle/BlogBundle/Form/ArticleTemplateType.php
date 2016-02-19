@@ -49,16 +49,6 @@ class ArticleTemplateType extends HiddenType
 
     public function getParent()
     {
-        return 'hidden';
-    }
-
-    /**
-     * get form name.
-     *
-     * @return string The name of the form
-     */
-    public function getName()
-    {
-        return 'victoire_article_template_type';
+        return HiddenType::class;
     }
 }

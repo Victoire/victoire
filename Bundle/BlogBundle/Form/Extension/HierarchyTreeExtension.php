@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\BlogBundle\Form\Extension;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
@@ -27,12 +28,7 @@ class HierarchyTreeExtension extends AbstractType
      */
     public function getParent()
     {
-        return 'entity';
-    }
-
-    public function getName()
-    {
-        return 'hierarchy_tree';
+        return EntityType::class;
     }
 
     /**

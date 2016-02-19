@@ -74,14 +74,4 @@ class BusinessTemplateType extends ViewType
                 'translation_domain' => 'victoire',
         ]);
     }
-
-    /**
-     * The name of the form.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'victoire_business_template_type';
-    }
 }

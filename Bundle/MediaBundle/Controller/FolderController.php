@@ -37,8 +37,8 @@ class FolderController extends Controller
 
         $sub = new Folder();
         $sub->setParent($folder);
-        $subForm = $this->createForm(new FolderType($sub), $sub);
-        $editForm = $this->createForm(new FolderType($folder), $folder);
+        $subForm = $this->createForm(FolderType::class, $sub, ['folder' => $sub]);
+        $editForm = $this->createForm(FolderType::class, $folder, ['folder' => $folder]);
 
         return [
             'mediamanager'  => $this->get('victoire_media.media_manager'),
@@ -97,7 +97,7 @@ class FolderController extends Controller
         $parent = $em->getRepository('VictoireMediaBundle:Folder')->getFolder($folderId);
         $folder = new Folder();
         $folder->setParent($parent);
-        $form = $this->createForm(new FolderType(), $folder);
+        $form = $this->createForm(FolderType::class, $folder, ['folder' => $folder]);
         if ('POST' == $request->getMethod()) {
             $form->handleRequest($request);
             if ($form->isValid()) {

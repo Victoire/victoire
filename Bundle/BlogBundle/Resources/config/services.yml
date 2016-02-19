@@ -46,12 +46,12 @@ services:
         class: Victoire\Bundle\BlogBundle\Form\Extension\HierarchyTreeExtension
         arguments: [ "@property_accessor" ]
         tags:
-            - { name: form.type, alias: hierarchy_tree }
+            - { name: form.type }
     #CATEGORY
     victoire.form.blog.category:
         class: Victoire\Bundle\BlogBundle\Form\CategoryType
         tags:
-            - { name: form.type , alias: victoire_form_blog_category}
+            - { name: form.type }
     #ARTICLE
     victoire_blog.article.form.type:
         class: Victoire\Bundle\BlogBundle\Form\ArticleType
@@ -60,13 +60,13 @@ services:
             - "%victoire_i18n.available_locales%"
             - "@request_stack"
         tags:
-            - { name: form.type, alias: victoire_article_type }
+            - { name: form.type }
     victoire_blog.article.container.form.type:
         class: Victoire\Bundle\BlogBundle\Form\ArticleTemplateType
         arguments:
             - "@doctrine.orm.entity_manager"
         tags:
-            - { name: form.type, alias: victoire_article_template_type }
+            - { name: form.type }
 
     victoire_blog.article_settings.form.type:
         class: Victoire\Bundle\BlogBundle\Form\ArticleSettingsType
@@ -75,14 +75,14 @@ services:
             - "%victoire_i18n.available_locales%"
             - "@request_stack"
         tags:
-            - { name: form.type, alias: victoire_article_settings_type }
+            - { name: form.type }
 
     victoire_blog.type.tags:
         class: Victoire\Bundle\BlogBundle\Form\TagsType
         arguments:
             - "@doctrine.orm.entity_manager"
         tags:
-            - { name: form.type, alias: tags }
+            - { name: form.type }
 
     #BLOG
     victoire_blog.blog.form.type:
@@ -91,7 +91,12 @@ services:
             - "%victoire_i18n.available_locales%"
             - "@request_stack"
         tags:
-            - { name: form.type, alias: victoire_blog_type }
+            - { name: form.type }
+
+    victoire_blog.blog_choose.form.type:
+        class: Victoire\Bundle\BlogBundle\Form\ChooseBlogType
+        tags:
+            - { name: form.type }
 
     victoire_blog.blog_settings.form.type:
         class: Victoire\Bundle\BlogBundle\Form\BlogSettingsType
@@ -99,12 +104,12 @@ services:
             - "%victoire_i18n.available_locales%"
             - "@request_stack"
         tags:
-            - { name: form.type, alias: victoire_blog_settings_type }
+            - { name: form.type }
 
     victoire_blog.blog_category.form.type:
         class: Victoire\Bundle\BlogBundle\Form\BlogCategoryType
         tags:
-            - { name: form.type, alias: victoire_blog_category_type }
+            - { name: form.type }
 
     #CATEGORY FILTER
     victoire_blog.category_filters.form.type:
@@ -114,7 +119,7 @@ services:
             - "@request="
             - "@translator"
         tags:
-            - { name: form.type, alias: category_filter }
+            - { name: form.type }
             - { name: victoire_core.filter }
 
     #TAG FILTER
@@ -124,7 +129,7 @@ services:
             - "@doctrine.orm.entity_manager"
             - "@request="
         tags:
-            - { name: form.type, alias: tag_filter }
+            - { name: form.type }
             - { name: victoire_core.filter }
 
     #DATE FILTER
@@ -134,7 +139,7 @@ services:
             - "@doctrine.orm.entity_manager"
             - "@request="
         tags:
-            - { name: form.type, alias: date_filter }
+            - { name: form.type }
             - { name: victoire_core.filter }
 
     victoire_blog.manager.article:

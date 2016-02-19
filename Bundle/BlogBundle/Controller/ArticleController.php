@@ -13,6 +13,8 @@ use Victoire\Bundle\BlogBundle\Entity\Article;
 use Victoire\Bundle\BlogBundle\Entity\Blog;
 use Victoire\Bundle\BlogBundle\Entity\Tag;
 use Victoire\Bundle\BlogBundle\Event\ArticleEvent;
+use Victoire\Bundle\BlogBundle\Form\ArticleSettingsType;
+use Victoire\Bundle\BlogBundle\Form\ArticleType;
 use Victoire\Bundle\BlogBundle\VictoireBlogEvents;
 
 /**
@@ -35,7 +37,7 @@ class ArticleController extends Controller
         $entityManager = $this->get('doctrine.orm.entity_manager');
         $article = new Article();
         $article->setBlog($blog);
-        $form = $this->createForm('victoire_article_type', $article);
+        $form = $this->createForm(ArticleType::class, $article);
 
         $form->handleRequest($this->get('request'));
         if ($form->isValid()) {
@@ -106,7 +108,7 @@ class ArticleController extends Controller
         $article = new Article();
         $article->setBlog($blog);
         try {
-            $form = $this->createForm('victoire_article_type', $article);
+            $form = $this->createForm(ArticleType::class, $article);
         } catch (NoResultException $e) {
             return new JsonResponse(['success' => false, 'message' => $e->getMessage()]);
         }
@@ -135,7 +137,7 @@ class ArticleController extends Controller
      */
     public function settingsAction(Request $request, Article $article)
     {
-        $form = $this->createForm('victoire_article_settings_type', $article);
+        $form = $this->createForm(ArticleSettingsType::class, $article);
         $pageHelper = $this->get('victoire_page.page_helper');
         $businessProperties = [];
 

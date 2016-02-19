@@ -45,12 +45,4 @@ class TabType extends AbstractType
 
         $view->parent->vars['vic_tabbed'] = true;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'tab';
-    }
 }

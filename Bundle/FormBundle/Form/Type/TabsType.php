@@ -40,12 +40,4 @@ class TabsType extends AbstractType
             'tabs' => [],
         ]);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'tabs';
-    }
 }

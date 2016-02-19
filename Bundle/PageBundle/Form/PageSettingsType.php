@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\PageBundle\Form;
 
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Victoire\Bundle\PageBundle\Entity\PageStatus;
@@ -32,7 +33,7 @@ class PageSettingsType extends PageType
             ->add('slug', null, [
                 'label' => 'form.page.type.slug.label',
             ])
-            ->add('status', 'choice', [
+            ->add('status', ChoiceType::class, [
                 'label'   => 'form.page.type.status.label',
                 'choices' => [
                     PageStatus::DRAFT       => 'form.page.type.status.choice.label.draft',
@@ -45,13 +46,5 @@ class PageSettingsType extends PageType
                 'widget'             => 'single_text',
                 'vic_datetimepicker' => true,
             ]);
-    }
-
-    /**
-     * get form name.
-     */
-    public function getName()
-    {
-        return 'victoire_page_settings_type';
     }
 }

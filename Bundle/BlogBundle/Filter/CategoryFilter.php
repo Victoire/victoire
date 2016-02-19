@@ -5,6 +5,7 @@ namespace Victoire\Bundle\BlogBundle\Filter;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Translation\TranslatorInterface;
 use Victoire\Bundle\BlogBundle\Entity\Category;
 use Victoire\Bundle\FilterBundle\Filter\BaseFilter;
@@ -14,19 +15,16 @@ use Victoire\Bundle\FilterBundle\Filter\BaseFilter;
  */
 class CategoryFilter extends BaseFilter
 {
-    protected $em;
-    protected $request;
     protected $translator;
 
     /**
-     * @param EntityManager                                $em
-     * @param \Victoire\Bundle\FilterBundle\Filter\Request $request
-     * @param TranslatorInterface                          $translator
+     * @param EntityManager       $entityManager
+     * @param Request             $request
+     * @param TranslatorInterface $translator
      */
-    public function __construct(EntityManager $em, $request, TranslatorInterface $translator)
+    public function __construct(EntityManager $entityManager, Request $request, TranslatorInterface $translator)
     {
-        $this->em = $em;
-        $this->request = $request;
+        parent::__construct($entityManager, $request);
         $this->translator = $translator;
     }
 
@@ -50,14 +48,14 @@ class CategoryFilter extends BaseFilter
             if ($parameter === '') {
                 unset($parameters['category'][$index]);
             } else {
-                $parentCategory = $this->em->getRepository('VictoireBlogBundle:Category')->findOneById($parameter);
+                $parentCategory = $this->getEntityManager()->getRepository('VictoireBlogBundle:Category')->findOneById($parameter);
                 $childrenArray = array_merge($childrenArray, $this->getCategoryChildrens($parentCategory, []));
             }
         }
 
         if (count($childrenArray) > 0) {
             if (array_key_exists('strict', $parameters)) {
-                $repository = $this->em->getRepository('VictoireBlogBundle:Article');
+                $repository = $this->getEntityManager()->getRepository('VictoireBlogBundle:Article');
                 foreach ($childrenArray as $index => $category) {
                     $parameter = ':category'.$index;
                     $subquery = $repository->createQueryBuilder('article_'.$index)
@@ -101,9 +99,9 @@ class CategoryFilter extends BaseFilter
     {
 
         //getAll categories
-        $categoryQb = $this->em->getRepository('VictoireBlogBundle:Category')->getAll();
+        $categoryQb = $this->getEntityManager()->getRepository('VictoireBlogBundle:Category')->getAll();
         //getAll published articles
-        $articleQb = $this->em->getRepository('VictoireBlogBundle:Article')->getAll(true);
+        $articleQb = $this->getEntityManager()->getRepository('VictoireBlogBundle:Article')->getAll(true);
 
         //get Listing
         $listing = $options['widget']->getListing();
@@ -128,14 +126,14 @@ class CategoryFilter extends BaseFilter
         $categoryQb->clearInstance();
         $articleQb->clearInstance();
         $data = null;
-        if ($this->request->query->has('filter') && array_key_exists('category_filter', $this->request->query->get('filter'))) {
+        if ($this->getRequest()->query->has('filter') && array_key_exists('category_filter', $this->getRequest()->query->get('filter'))) {
             if ($options['multiple']) {
                 $data = [];
-                foreach ($this->request->query->get('filter')['category_filter']['category'] as $id => $selectedCategory) {
+                foreach ($this->getRequest()->query->get('filter')['category_filter']['category'] as $id => $selectedCategory) {
                     $data[$id] = $selectedCategory;
                 }
             } else {
-                $data = $this->request->query->get('filter')['category_filter']['tags'];
+                $data = $this->getRequest()->query->get('filter')['category_filter']['tags'];
             }
         }
         $builder
@@ -199,16 +197,6 @@ class CategoryFilter extends BaseFilter
      */
     public function getFilters($filters)
     {
-        return $this->em->getRepository('VictoireBlogBundle:Category')->findById($filters['category']);
-    }
-
-    /**
-     * get form name.
-     *
-     * @return string name
-     */
-    public function getName()
-    {
-        return 'category_filter';
+        return $this->getEntityManager()->getRepository('VictoireBlogBundle:Category')->findById($filters['category']);
     }
 }

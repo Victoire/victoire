@@ -54,14 +54,6 @@ class MediaType extends AbstractType
     }
 
     /**
-     * @return string
-     */
-    public function getParent()
-    {
-        return 'form';
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
@@ -73,16 +65,6 @@ class MediaType extends AbstractType
             'mediatype'               => null,
             'current_value_container' => new CurrentValueContainer(),
         ]);
-    }
-
-    /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
-     */
-    public function getName()
-    {
-        return 'media';
     }
 
     /**

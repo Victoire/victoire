@@ -177,14 +177,4 @@ class WidgetType extends AbstractType
             'businessEntityId'
         ]);
     }
-
-    /**
-     * get form name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'appventus_victoirecorebundle_widgettype';
-    }
 }

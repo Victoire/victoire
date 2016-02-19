@@ -46,14 +46,4 @@ class BlogType extends BasePageType
             ]
         );
     }
-
-    /**
-     * get form name.
-     *
-     * @return string The name of the form
-     */
-    public function getName()
-    {
-        return 'victoire_blog_type';
-    }
 }

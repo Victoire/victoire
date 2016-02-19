@@ -52,14 +52,4 @@ class WidgetFieldsFormType extends AbstractType
             ]
         );
     }
-
-    /**
-     * get form name.
-     *
-     * @return string The form name
-     */
-    public function getName()
-    {
-        return 'widget_fields';
-    }
 }

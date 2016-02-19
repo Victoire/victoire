@@ -41,7 +41,7 @@ services:
             - "@victoire_media.media_manager"
             - "@doctrine.orm.entity_manager"
         tags:
-            - { name: form.type, alias: media }
+            - { name: form.type }
 
     victoire_media.media_creator_service:
         class: "%victoire_media.media_creator_service.class%"

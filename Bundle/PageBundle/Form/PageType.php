@@ -43,14 +43,4 @@ class PageType extends BasePageType
             'translation_domain' => 'victoire',
         ]);
     }
-
-    /**
-     * get form name.
-     *
-     * @return string name
-     */
-    public function getName()
-    {
-        return 'victoire_page_type';
-    }
 }
