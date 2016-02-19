@@ -4,7 +4,7 @@ namespace Victoire\Bundle\BlogBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Victoire\Bundle\PageBundle\Entity\PageStatus;
 
 /**
@@ -48,11 +48,11 @@ class BlogSettingsType extends BlogType
     /**
      * bind to Page entity.
      *
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        parent::setDefaultOptions($resolver);
+        parent::configureOptions($resolver);
         $resolver->setDefaults(
             [
                 'cascade_validation' => 'true',

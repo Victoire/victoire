@@ -4,7 +4,7 @@ namespace Victoire\Bundle\BusinessPageBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Victoire\Bundle\CoreBundle\Form\ViewType;
 
 /**
@@ -61,9 +61,10 @@ class BusinessTemplateType extends ViewType
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     *
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         parent::setDefaultOptions($resolver);
 

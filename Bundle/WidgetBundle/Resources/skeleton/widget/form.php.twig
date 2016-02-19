@@ -3,7 +3,7 @@
 namespace {{ namespace }}\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 {% if parent %}
 use Victoire\Widget\{{parent}}Bundle\Form\Widget{{parent}}Type;
 {% else %}
@@ -39,12 +39,11 @@ class Widget{{widget}}Type extends {% if parent %}Widget{{parent}}Type{% else %}
 
 
     /**
-     * bind form to Widget{{widget}} entity
-     * @param OptionsResolverInterface $resolver
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    * {@inheritdoc}
+    */
+    public function configureOptions(OptionsResolver $resolver)
     {
-        parent::setDefaultOptions($resolver);
+        parent::configureOptions($resolver);
 
         $resolver->setDefaults(array(
             'data_class'         => '{{ namespace }}\Entity\Widget{{ widget }}',

@@ -5,7 +5,7 @@ namespace Victoire\Bundle\BlogBundle\Form;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Victoire\Bundle\CoreBundle\DataTransformer\ViewToIdTransformer;
 
 /**
@@ -37,9 +37,9 @@ class ArticleTemplateType extends HiddenType
     /**
      * bind to Page entity.
      *
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class'         => 'Victoire\Bundle\BlogBundle\Entity\ArticleTemplate',

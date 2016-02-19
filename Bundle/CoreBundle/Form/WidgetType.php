@@ -3,10 +3,11 @@
 namespace Victoire\Bundle\CoreBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Victoire\Bundle\WidgetBundle\Model\Widget;
 
 /**
@@ -20,7 +21,7 @@ class WidgetType extends AbstractType
      * @param FormBuilderInterface $builder The builder
      * @param array                $options The options
      *
-     * @throws Exception
+     * @throws \Exception
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -141,7 +142,7 @@ class WidgetType extends AbstractType
     /**
      * Add the fields to the form for the query mode.
      *
-     * @param unknown $form
+     * @param Form $form
      */
     protected function addQueryFields($form)
     {
@@ -158,9 +159,9 @@ class WidgetType extends AbstractType
     /**
      * bind form to WidgetRedactor entity.
      *
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class'         => 'Victoire\Bundle\WidgetBundle\Entity\Widget',

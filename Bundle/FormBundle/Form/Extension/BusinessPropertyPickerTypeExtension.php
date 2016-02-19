@@ -5,7 +5,7 @@ namespace Victoire\Bundle\FormBundle\Form\Extension;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BusinessPropertyPickerTypeExtension extends AbstractTypeExtension
 {
@@ -26,7 +26,7 @@ class BusinessPropertyPickerTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'vic_business_property_picker'             => null,
