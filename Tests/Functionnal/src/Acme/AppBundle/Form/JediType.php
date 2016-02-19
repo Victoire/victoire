@@ -3,8 +3,9 @@
 namespace Acme\AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class JediType extends AbstractType
 {
@@ -21,7 +22,7 @@ class JediType extends AbstractType
             ->add('midiChlorians', null, [
                     'label' => 'acme.app.jedi.form.midiChlorians.label',
                 ])
-            ->add('side', 'choice', [
+            ->add('side', ChoiceType::class, [
                     'label'   => 'acme.app.jedi.form.side.label',
                     'choices' => [
                         'both'   => 'acme.app.jedi.form.side.choice.both',
@@ -43,26 +44,16 @@ class JediType extends AbstractType
     }
 
     /**
-     * bind form to WidgetForce entity.
-     *
-     * @param OptionsResolverInterface $resolver
+     * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        parent::setDefaultOptions($resolver);
+        parent::configureOptions($resolver);
 
         $resolver->setDefaults([
                 'data_class'         => 'Acme\AppBundle\Entity\Jedi',
                 'widget'             => 'Force',
                 'translation_domain' => 'victoire',
             ]);
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'acme_appbundle_jedi';
     }
 }
