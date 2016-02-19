@@ -24,7 +24,7 @@ class BlogCategoryType extends AbstractType
                 'rootCategories',
                 'collection',
                 [
-                    'type'          => self::class,
+                    'type'          => CategoryType::class,
                     'required'      => false,
                     'allow_add'     => true,
                     'allow_delete'  => true,

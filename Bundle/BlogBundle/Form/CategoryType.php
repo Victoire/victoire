@@ -3,6 +3,7 @@
 namespace Victoire\Bundle\BlogBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
@@ -87,9 +88,9 @@ class CategoryType extends AbstractType
      */
     protected function addChildrenField($form)
     {
-        $form->add('children', 'collection',
+        $form->add('children', CollectionType::class,
             [
-                'type'          => BlogCategoryType::class,
+                'type'          => self::class,
                 'required'      => false,
                 'allow_add'     => true,
                 'allow_delete'  => true,
@@ -108,7 +109,6 @@ class CategoryType extends AbstractType
 
         $resolver->setDefaults([
             'data_class'         => 'Victoire\Bundle\BlogBundle\Entity\Category',
-            'cascade_validation' => true,
             'translation_domain' => 'victoire',
 
         ]);
