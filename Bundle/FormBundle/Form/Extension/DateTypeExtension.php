@@ -12,6 +12,7 @@ namespace Victoire\Bundle\FormBundle\Form\Extension;
  */
 
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -48,6 +49,6 @@ class DateTypeExtension extends AbstractTypeExtension
      */
     public function getExtendedType()
     {
-        return 'Symfony\Component\Form\Extension\Core\Type\DateType';
+        return DateType::class;
     }
 }
