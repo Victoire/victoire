@@ -19,7 +19,7 @@ services:
         class: Victoire\Bundle\PageBundle\Helper\PageHelper
         arguments:
             - "@victoire_core.helper.business_entity_helper"
-            - "@fos_user.entity_manager"
+            - "@doctrine.orm.entity_manager"
             - "@victoire_view_reference.helper"
             - "@victoire_core.current_view"
             - "@event_dispatcher"

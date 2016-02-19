@@ -44,12 +44,12 @@
         "php"                                 : ">=5.3.3",
         "appventus/alertify-bundle"           : "^1.0",
         "appventus/assetic-injector-bundle"   : "^1.0",
+        "doctrine/doctrine-bundle"            : "~1.4",
         "doctrine/data-fixtures"              : "1.1.x-dev",
-        "doctrine/doctrine-bundle"            : ">=1.2",
         "doctrine/doctrine-fixtures-bundle"   : "2.2.x-dev",
-        "doctrine/orm"                        : "~2.2,>=2.2.3",
+        "doctrine/orm"                        : "v2.5.2",
         "friendsofsymfony/jsrouting-bundle"   : "2.0.*@dev",
-        "friendsofsymfony/user-bundle"        : "2.0.*@dev",
+        "friendsofsymfony/user-bundle"        : "~2.0@dev",
         "friendsofvictoire/text-widget"       : "dev-master",
         "friendsofvictoire/button-widget"     : "dev-master",
         "incenteev/composer-parameter-handler": "~2.0",
@@ -61,21 +61,20 @@
         "knplabs/knp-menu"                    : "2.1.*@dev",
         "knplabs/knp-menu-bundle"             : "2.1.*@dev",
         "liip/imagine-bundle"                 : "1.0.*@dev",
-        "nelmio/alice"                        : "1.*@dev",
+        "nelmio/alice"                        : "2.*@dev",
+        "predis/predis"                       : "^1.1@dev",
         "sensio/distribution-bundle"          : ">=2.3.x-dev",
         "sensio/framework-extra-bundle"       : "~3.0",
         "sensio/generator-bundle"             : "~2.3",
+        "snc/redis-bundle"                    : "1.1.x-dev",
         "stof/doctrine-extensions-bundle"     : "1.2.*@dev",
         "symfony/assetic-bundle"              : "~2.3",
         "symfony/monolog-bundle"              : "~2.4",
-        "symfony/symfony"                     : ">=2.4.2, <=2.7.x-dev",
+        "symfony/symfony"                     : ">=2.4.2, <=2.8.x-dev",
         "symfony/swiftmailer-bundle"          : "~2.3",
         "twig/extensions"                     : "~1.0",
         "twig/twig"                           : "~1.0",
-        "willdurand/js-translation-bundle"    : "^2.5",
-        "twig/twig"                           : "~1.0",
-        "snc/redis-bundle"                    : "1.1.x-dev",
-        "predis/predis"                       : "^1.1@dev"
+        "willdurand/js-translation-bundle"    : "^2.5"
     },
     "require-dev"      : {
         "behat/behat"                 : "~3.0",
@@ -84,17 +83,14 @@
         "behat/mink-goutte-driver"    : "~1.1",
         "behat/mink-selenium2-driver" : "~1.1",
         "behat/symfony2-extension"    : "~2.0",
-        "knplabs/friendly-contexts"   : "dev-master",
+        "knplabs/friendly-contexts"   : "~0.7",
         "phpunit/php-code-coverage"   : "2.2.3",
         "phpunit/phpunit-mock-objects": "2.3.7",
         "phpunit/phpunit"             : "4.6.*",
-        "symfony/var-dumper"          : "~3.0@dev",
+        "symfony/var-dumper"          : "~2.7@dev",
         "lakion/mink-debug-extension" : "^1.0"
     },
     "suggest"          : {
-        "friendsofvictoire/alertbutton-widget"        : "alertbutton widget",
-        "friendsofvictoire/archive-widget"            : "archive widget",
-        "friendsofvictoire/articlelist-widget"        : "articlelist widget",
         "friendsofvictoire/breadcrumb-widget"         : "breadcrumb widget",
         "friendsofvictoire/button-widget"             : "button widget",
         "friendsofvictoire/calculator-widget"         : "calculator widget",
@@ -161,7 +157,7 @@
     ],
     "extra"            : {
         "branch-alias": {
-            "dev-master": "1.3.x-dev"
+            "dev-master": "1.4.x-dev"
         }
     }
 }

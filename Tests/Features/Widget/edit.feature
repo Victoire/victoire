@@ -7,7 +7,7 @@ Feature: Edit a widget
             | name   | side   | midiChlorians | slug   |
             | Anakin | dark   | 20000         | anakin |
             | Yoda   | bright | 17500         | yoda   |
-        And I resize the window to 1024x720
+        And I maximize the window
         Given I open the hamburger menu
         Then I should see "Représentation métier"
         When I follow "Représentation métier"

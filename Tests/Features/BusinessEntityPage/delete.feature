@@ -7,7 +7,7 @@ Feature: Create business entity pages
             | name   | side   | midiChlorians | slug   |
             | Anakin | dark   | 20000         | anakin |
             | Yoda   | bright | 17500         | yoda   |
-        And I resize the window to 1024x720
+        And I maximize the window
 
     Scenario: I can delete an BE and his BEP
         Given I open the hamburger menu

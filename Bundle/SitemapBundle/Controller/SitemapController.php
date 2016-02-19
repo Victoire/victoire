@@ -100,15 +100,15 @@ class SitemapController extends Controller
      *
      * @return JsonResponse
      */
-    public function reorganizeAction()
+    public function reorganizeAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $pageRepo = $em->getRepository('VictoirePageBundle:BasePage');
         $response = [
             'success' => false,
         ];
-        if ($this->get('request')->getMethod() === 'POST') {
-            $sorted = $this->getRequest()->request->get('sorted');
+        if ($request->getMethod() === 'POST') {
+            $sorted = $request->request->get('sorted');
             $depths = [];
             //reorder pages positions
             foreach ($sorted as $item) {

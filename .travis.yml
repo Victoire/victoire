@@ -4,6 +4,7 @@ php:
   - 5.6
 
 services:
+  - mysql
   - redis-server
 
 env:
@@ -39,6 +40,9 @@ before_script:
   - "nohup java -jar selenium-server-standalone-2.49.0.jar > /dev/null &"
   - sleep 5
 
+script:
+  - './vendor/bin/behat'
+  - 'phpunit --coverage-text'
 
 after_script:
   - php Tests/Functionnal/bin/console --env=test doctrine:database:drop --force
@@ -47,10 +51,9 @@ after_failure:
   - vendor/lakion/mink-debug-extension/travis/tools/upload-textfiles "fails/*.log"
   - vendor/lakion/mink-debug-extension/travis/tools/upload-screenshots "fails/*.png"
 
-script:
-  - './vendor/bin/behat'
-  - 'phpunit --coverage-text'
-
+cache:
+  directories:
+    - $HOME/.composer/cache
 
 notifications:
     slack: appventus:Xy4yq4kXpBK9XHgfz8t9VBPl

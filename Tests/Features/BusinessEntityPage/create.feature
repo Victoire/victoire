@@ -7,7 +7,7 @@ Feature: Create business entity pages
             | name   | side   | midiChlorians | slug   |
             | Anakin | dark   | 20000         | anakin |
             | Yoda   | bright | 17500         | yoda   |
-        And I resize the window to 1024x720
+        And I maximize the window
 
     @smartStep
     Scenario: I can create a new Business entity page pattern and create some content in the pattern
@@ -35,6 +35,7 @@ Feature: Create business entity pages
         And I follow "Objet courant"
         And I select "side" from "jedi_businessEntity_victoire_widget_form_force[fields][side]"
         And I submit the widget
+        And I wait 5 seconds
         Then I should see "Victoire !"
         Then I should see "Le Côté jedi -> side de la force"
         Given I am on "/fr/fiche-jedi-anakin"
@@ -65,9 +66,11 @@ Feature: Create business entity pages
         Then I should see "Créer"
         When I fill in "Côté de la force" with "Static Widget - Fiche Jedi Dark"
         And I submit the widget
+        And I wait 5 seconds
         Then I should see "Victoire !"
 
         When I open the hamburger menu
+        Then I should see "Représentation métier"
         And I follow "Représentation métier"
         And I close the hamburger menu
         Then I should see "Ajouter une représentation métier"
@@ -88,6 +91,7 @@ Feature: Create business entity pages
         Then I should see "Créer"
         When I fill in "Côté de la force" with "Static Widget - Fiche Jedi Bright"
         And I submit the widget
+        And I wait 5 seconds
         Then I should see "Victoire !"
 
         Given I am on "/fr/fiche-jedi-dark-anakin"
@@ -138,9 +142,10 @@ Feature: Create business entity pages
         And I follow "Ajouter une représentation métier"
         Then I should see "Créer une représentation métier"
         When I fill in "Nom" with "Fiche Jedi - {{item.name}}"
+        When I fill in "Libellé" with "Fiche Jedi"
         And I fill in "URL" with "fiche-jedi-{{item.slug}}"
         And I follow "Créer"
-        And I wait 5 seconds
+        And I wait 10 seconds
         Then I should be on "/fr/victoire-dcms/business-template/show/5"
         And I should see "La représentation métier a bien été créée"
         Then I switch to "layout" mode
@@ -151,6 +156,7 @@ Feature: Create business entity pages
         And I follow the tab "Objet courant"
         And I select "side" from "jedi_businessEntity_victoire_widget_form_force[fields][side]"
         And I submit the widget
+        And I wait 5 seconds
         Then I should see "Victoire !"
         Then I should see "Le Côté jedi -> side de la force"
         Given I am on "/victoire-dcms/backend/jedi/"
@@ -181,6 +187,7 @@ Feature: Create business entity pages
         And I follow "Ajouter une représentation métier"
         Then I should see "Créer une représentation métier"
         When I fill in "Nom" with "Fiche Jedi - {{item.name}}"
+        And I fill in "Libellé" with "Fiche Jedi"
         And I fill in "URL" with "fiche-jedi-{{item.slug}}"
         And I fill in "victoire_business_template_type_query" with "WHERE LOWER(item.side) LIKE LOWER('bright') OR LOWER(item.side) LIKE LOWER('double')"
         And I follow "Créer"
@@ -203,6 +210,7 @@ Feature: Create business entity pages
         And I follow "Ajouter une représentation métier"
         Then I should see "Créer une représentation métier"
         When I fill in "Nom" with "Fiche Sith - {{item.name}}"
+        And I fill in "Libellé" with "Fiche Sith"
         And I fill in "URL" with "fiche-sith-{{item.slug}}"
         And I fill in "victoire_business_template_type_query" with "WHERE LOWER(item.side) LIKE LOWER('dark') OR LOWER(item.side) LIKE LOWER('double')"
         And I follow "Créer"
