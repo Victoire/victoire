@@ -9,7 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Victoire\Bundle\BlogBundle\Form\Extension\HierarchyTreeExtension;
+use Victoire\Bundle\BlogBundle\Form\HierarchyTreeType;
 use Victoire\Bundle\BlogBundle\Repository\ArticleTemplateRepository;
 use Victoire\Bundle\BlogBundle\Repository\TagRepository;
 use Victoire\Bundle\CoreBundle\DataTransformer\ViewToIdTransformer;
@@ -119,12 +119,12 @@ class ArticleType extends AbstractType
             $categoryRepo->clearInstance();
         }
 
-        $form->add('category', HierarchyTreeExtension::class, [
+        $form->add('category', HierarchyTreeType::class, [
             'required'      => false,
             'label'         => 'form.article.category.label',
             'class'         => 'Victoire\\Bundle\\BlogBundle\\Entity\\Category',
             'query_builder' => $queryBuilder,
-            'empty_value'   => 'Pas de catégorie',
+            'empty_value'   => 'Pas de catégorie', //@todo translate this #easypick
             'empty_data'    => null,
         ]);
     }
