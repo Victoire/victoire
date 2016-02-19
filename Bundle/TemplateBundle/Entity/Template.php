@@ -175,6 +175,7 @@ class Template extends View
 
     /**
      * @Assert\Callback(groups={"victoire"})
+     *
      * @param ExecutionContextInterface $context
      */
     public function validate(ExecutionContextInterface $context)

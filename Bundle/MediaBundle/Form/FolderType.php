@@ -42,7 +42,7 @@ class FolderType extends AbstractType
                 'choices'   => ['media' => 'media', 'image' => 'image', 'slideshow' => 'slideshow', 'video' => 'video'],
                 ])
             ->add('parent', EntityType::class, ['class' => 'Victoire\Bundle\MediaBundle\Entity\Folder', 'required' => false,
-                'query_builder'                => function (\Doctrine\ORM\EntityRepository $er) use ($folder, $type) {
+                'query_builder'                         => function (\Doctrine\ORM\EntityRepository $er) use ($folder, $type) {
                     $qb = $er->createQueryBuilder('folder');
 
                     if ($folder != null && $folder->getId() != null) {
@@ -82,7 +82,7 @@ class FolderType extends AbstractType
             'data_class' => 'Victoire\Bundle\MediaBundle\Entity\Folder',
         ]);
         $resolver->setDefined([
-            'folder'
+            'folder',
         ]);
     }
 }

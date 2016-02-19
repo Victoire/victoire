@@ -61,7 +61,6 @@ class BusinessTemplateType extends ViewType
     }
 
     /**
-     *
      * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)

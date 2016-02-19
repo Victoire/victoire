@@ -23,8 +23,8 @@ class WidgetExceptionHandler
      *
      * @param SecurityContext $authorizationChecker
      * @param TwigEngine      $twig
-     * @param bool            $debug      The debug variable environment
-     * @param TemplateMapper  $templating The victoire templating
+     * @param bool            $debug                The debug variable environment
+     * @param TemplateMapper  $templating           The victoire templating
      */
     public function __construct(AuthorizationChecker $authorizationChecker, $twig, $debug, TemplateMapper $templating)
     {

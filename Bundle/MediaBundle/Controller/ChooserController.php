@@ -22,8 +22,10 @@ class ChooserController extends Controller
      * @Route("/", name="VictoireMediaBundle_chooser", options={"expose"=true})
      *
      * @param Request $request
-     * @return RedirectResponse
+     *
      * @throws \Doctrine\ORM\EntityNotFoundException
+     *
+     * @return RedirectResponse
      */
     public function chooserIndexAction(Request $request)
     {
@@ -40,12 +42,13 @@ class ChooserController extends Controller
 
     /**
      * @param Request $request
-     * @param int $folderId The filder id
-     * @return array
+     * @param int     $folderId The filder id
+     *
      * @throws \Doctrine\ORM\EntityNotFoundException
+     *
+     * @return array
      * @Route("/{folderId}", requirements={"folderId" = "\d+"}, name="VictoireMediaBundle_chooser_show_folder")
      * @Template()
-     *
      */
     public function chooserShowFolderAction(Request $request, $folderId)
     {

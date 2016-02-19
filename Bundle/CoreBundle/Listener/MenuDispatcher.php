@@ -24,8 +24,7 @@ class MenuDispatcher
         EventDispatcherInterface $eventDispatcher,
         TokenStorageInterface $tokenStorage,
         AuthorizationChecker $authorizationChecker
-    )
-    {
+    ) {
         $this->eventDispatcher = $eventDispatcher;
         $this->tokenStorage = $tokenStorage;
         $this->authorizationChecker = $authorizationChecker;

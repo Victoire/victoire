@@ -37,7 +37,7 @@ class TemplateType extends ViewType
         parent::buildForm($builder, $options);
 
         $builder->add('layout', ChoiceType::class, [
-                'label' => 'form.template.type.layout.label',
+                'label'   => 'form.template.type.layout.label',
                 'choices' => $options['layouts'],
             ]
         );

@@ -174,7 +174,7 @@ class WidgetType extends AbstractType
             'slot',
             'mode',
             'namespace',
-            'businessEntityId'
+            'businessEntityId',
         ]);
     }
 }

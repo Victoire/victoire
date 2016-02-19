@@ -3,8 +3,8 @@
 namespace Victoire\Bundle\PageBundle\Security\Voter;
 
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Victoire\Bundle\PageBundle\Entity\Page;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+use Victoire\Bundle\PageBundle\Entity\Page;
 
 /**
  * This class decides yes or no if the user is granted to do some action on a given page.
@@ -15,6 +15,7 @@ class PageOwnerVoter extends Voter
 
     /**
      * PageOwnerVoter constructor.
+     *
      * @param $userClass
      */
     public function __construct($userClass)

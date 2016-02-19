@@ -45,22 +45,22 @@ class WidgetStyleType extends AbstractType
     {
         $builder
             ->add('containerTag', ChoiceType::class, [
-                'label' => 'widget_layout.form.containerTag.label',
+                'label'          => 'widget_layout.form.containerTag.label',
                 'vic_help_block' => 'widget_layout.form.containerTag.help_block',
-                'choices' => array_combine(Widget::$tags, Widget::$tags),
+                'choices'        => array_combine(Widget::$tags, Widget::$tags),
             ])
             ->add('containerClass', null, [
-                'label' => 'widget_layout.form.containerClass.label',
+                'label'    => 'widget_layout.form.containerClass.label',
                 'required' => false,
             ])
             ->add('containerBackground', null, [
-                'label' => 'widget_layout.form.containerBackground.label',
+                'label'          => 'widget_layout.form.containerBackground.label',
                 'vic_help_block' => 'widget_layout.form.containerBackground.help_block',
-                'required' => false,
+                'required'       => false,
             ])
             ->add('vicActiveTab', 'hidden', [
                 'required' => false,
-                'mapped' => false,
+                'mapped'   => false,
             ])
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
                 /*
@@ -79,39 +79,39 @@ class WidgetStyleType extends AbstractType
              */
             $builder
                 ->add('containerMargin'.$key, null, [
-                    'label' => 'widget_layout.form.containerMargin'.$key.'.label',
-                    'attr' => ['placeholder' => 'widget_layout.form.containerMargin.placeholder'],
+                    'label'          => 'widget_layout.form.containerMargin'.$key.'.label',
+                    'attr'           => ['placeholder' => 'widget_layout.form.containerMargin.placeholder'],
                     'vic_help_block' => 'widget_layout.form.containerMargin.help_block',
-                    'required' => false,
+                    'required'       => false,
                 ])
                 ->add('containerPadding'.$key, null, [
-                    'label' => 'widget_layout.form.containerPadding'.$key.'.label',
-                    'attr' => ['placeholder' => 'widget_layout.form.containerPadding.placeholder'],
+                    'label'          => 'widget_layout.form.containerPadding'.$key.'.label',
+                    'attr'           => ['placeholder' => 'widget_layout.form.containerPadding.placeholder'],
                     'vic_help_block' => 'widget_layout.form.containerPadding.help_block',
-                    'required' => false,
+                    'required'       => false,
                 ])
                 ->add('containerWidth'.$key, null, [
                     'label' => 'widget_layout.form.containerWidth'.$key.'.label',
-                    'attr' => ['placeholder' => 'widget_layout.form.containerWidth.placeholder'],
+                    'attr'  => ['placeholder' => 'widget_layout.form.containerWidth.placeholder'],
                 ])
                 ->add('containerHeight'.$key, null, [
                     'label' => 'widget_layout.form.containerHeight'.$key.'.label',
-                    'attr' => ['placeholder' => 'widget_layout.form.containerWidth.placeholder'],
+                    'attr'  => ['placeholder' => 'widget_layout.form.containerWidth.placeholder'],
                 ])
                 ->add('textAlign'.$key, ChoiceType::class, [
-                    'label' => 'widget_layout.form.textAlign'.$key.'.label',
-                    'required' => false,
+                    'label'       => 'widget_layout.form.textAlign'.$key.'.label',
+                    'required'    => false,
                     'empty_value' => true,
-                    'choices' => [
-                        '' => '',
-                        'left' => 'widget_layout.form.textAlign.choices.left.label',
-                        'center' => 'widget_layout.form.textAlign.choices.center.label',
-                        'right' => 'widget_layout.form.textAlign.choices.right.label',
+                    'choices'     => [
+                        ''        => '',
+                        'left'    => 'widget_layout.form.textAlign.choices.left.label',
+                        'center'  => 'widget_layout.form.textAlign.choices.center.label',
+                        'right'   => 'widget_layout.form.textAlign.choices.right.label',
                         'justify' => 'widget_layout.form.textAlign.choices.justify.label',
                     ],
                 ])
                 ->add('containerBackgroundType'.$key, ChoiceType::class, [
-                    'label' => 'widget_layout.form.containerBackgroundType'.$key.'.label',
+                    'label'   => 'widget_layout.form.containerBackgroundType'.$key.'.label',
                     'choices' => [
                         'color' => 'widget_layout.form.containerBackgroundType.choices.color.label',
                         'image' => 'widget_layout.form.containerBackgroundType.choices.image.label',
@@ -150,7 +150,7 @@ class WidgetStyleType extends AbstractType
             //We add the theme type only if there is a choice
             if (count($choices) > 1) {
                 $form->add('theme', ChoiceType::class, [
-                    'label' => 'widget.form.theme.label',
+                    'label'   => 'widget.form.theme.label',
                     'choices' => $choices,
                 ]);
             }
@@ -173,35 +173,35 @@ class WidgetStyleType extends AbstractType
                     'label' => 'widget_layout.form.containerBackgroundImage'.$responsiveKey.'.label',
                 ])
                 ->add('containerBackgroundRepeat'.$responsiveKey, ChoiceType::class, [
-                    'label' => 'widget_layout.form.containerBackgroundRepeat'.$responsiveKey.'.label',
+                    'label'   => 'widget_layout.form.containerBackgroundRepeat'.$responsiveKey.'.label',
                     'choices' => [
                         'no-repeat' => 'widget_layout.form.containerBackgroundRepeat.choices.noRepeat.label',
-                        'repeat' => 'widget_layout.form.containerBackgroundRepeat.choices.repeat.label',
-                        'repeat-x' => 'widget_layout.form.containerBackgroundRepeat.choices.repeatX.label',
-                        'repeat-y' => 'widget_layout.form.containerBackgroundRepeat.choices.repeatY.label',
+                        'repeat'    => 'widget_layout.form.containerBackgroundRepeat.choices.repeat.label',
+                        'repeat-x'  => 'widget_layout.form.containerBackgroundRepeat.choices.repeatX.label',
+                        'repeat-y'  => 'widget_layout.form.containerBackgroundRepeat.choices.repeatY.label',
                     ],
                 ])
                 ->add('containerBackgroundPosition'.$responsiveKey, ChoiceType::class, [
-                    'label' => 'widget_layout.form.containerBackgroundPosition'.$responsiveKey.'.label',
+                    'label'   => 'widget_layout.form.containerBackgroundPosition'.$responsiveKey.'.label',
                     'choices' => [
                         'center center' => 'widget_layout.form.containerBackgroundRepeat.choices.center.center.label',
-                        'center right' => 'widget_layout.form.containerBackgroundRepeat.choices.center.right.label',
-                        'center left' => 'widget_layout.form.containerBackgroundRepeat.choices.center.left.label',
-                        'top center' => 'widget_layout.form.containerBackgroundRepeat.choices.top.center.label',
-                        'top right' => 'widget_layout.form.containerBackgroundRepeat.choices.top.right.label',
-                        'top left' => 'widget_layout.form.containerBackgroundRepeat.choices.top.left.label',
+                        'center right'  => 'widget_layout.form.containerBackgroundRepeat.choices.center.right.label',
+                        'center left'   => 'widget_layout.form.containerBackgroundRepeat.choices.center.left.label',
+                        'top center'    => 'widget_layout.form.containerBackgroundRepeat.choices.top.center.label',
+                        'top right'     => 'widget_layout.form.containerBackgroundRepeat.choices.top.right.label',
+                        'top left'      => 'widget_layout.form.containerBackgroundRepeat.choices.top.left.label',
                         'bottom center' => 'widget_layout.form.containerBackgroundRepeat.choices.bottom.center.label',
-                        'bottom right' => 'widget_layout.form.containerBackgroundRepeat.choices.bottom.right.label',
-                        'bottom left' => 'widget_layout.form.containerBackgroundRepeat.choices.bottom.left.label',
+                        'bottom right'  => 'widget_layout.form.containerBackgroundRepeat.choices.bottom.right.label',
+                        'bottom left'   => 'widget_layout.form.containerBackgroundRepeat.choices.bottom.left.label',
                     ],
                 ])
                 ->add('containerBackgroundSize'.$responsiveKey, null, [
                     'label' => 'widget_layout.form.containerBackgroundSize'.$responsiveKey.'.label',
-                    'attr' => ['placeholder' => 'widget_layout.form.containerWidth.placeholder'],
+                    'attr'  => ['placeholder' => 'widget_layout.form.containerWidth.placeholder'],
                 ])
                 ->add('containerBackgroundOverlay'.$responsiveKey, null, [
                     'label' => 'widget_layout.form.containerBackgroundOverlay'.$responsiveKey.'.label',
-                    'attr' => ['placeholder' => 'widget_layout.form.containerBackgroundOverlay.placeholder'],
+                    'attr'  => ['placeholder' => 'widget_layout.form.containerBackgroundOverlay.placeholder'],
                 ]);
         } else {
             $form
@@ -212,7 +212,7 @@ class WidgetStyleType extends AbstractType
                 ->remove('containerBackgroundOverlay'.$responsiveKey)
                 ->add('containerBackgroundColor'.$responsiveKey, null, [
                     'label' => 'widget_layout.form.containerBackgroundColor'.$responsiveKey.'.label',
-                    'attr' => ['placeholder' => 'widget_layout.form.containerBackgroundColor.placeholder'],
+                    'attr'  => ['placeholder' => 'widget_layout.form.containerBackgroundColor.placeholder'],
                 ]);
         }
     }
@@ -225,7 +225,7 @@ class WidgetStyleType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'Victoire\Bundle\WidgetBundle\Entity\Widget',
+            'data_class'         => 'Victoire\Bundle\WidgetBundle\Entity\Widget',
             'translation_domain' => 'victoire',
         ]);
     }

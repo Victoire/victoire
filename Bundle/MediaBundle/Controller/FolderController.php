@@ -51,11 +51,12 @@ class FolderController extends Controller
 
     /**
      * @param Request $request
-     * @param int $folderId
-     * @return RedirectResponse
-     * @throws \Doctrine\ORM\EntityNotFoundException
-     * @Route("/delete/{folderId}", requirements={"folderId" = "\d+"}, name="VictoireMediaBundle_folder_delete")
+     * @param int     $folderId
      *
+     * @throws \Doctrine\ORM\EntityNotFoundException
+     *
+     * @return RedirectResponse
+     * @Route("/delete/{folderId}", requirements={"folderId" = "\d+"}, name="VictoireMediaBundle_folder_delete")
      */
     public function deleteAction(Request $request, $folderId)
     {
@@ -81,13 +82,14 @@ class FolderController extends Controller
 
     /**
      * @param Request $request
-     * @param int $folderId
-     * @return Response
+     * @param int     $folderId
+     *
      * @throws \Doctrine\ORM\EntityNotFoundException
+     *
+     * @return Response
      * @Route("/subcreate/{folderId}", requirements={"folderId" = "\d+"}, name="VictoireMediaBundle_folder_sub_create")
      * @Method({"GET", "POST"})
      * @Template()
-     *
      */
     public function subCreateAction(Request $request, $folderId)
     {

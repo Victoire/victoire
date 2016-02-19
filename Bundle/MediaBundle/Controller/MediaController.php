@@ -24,11 +24,12 @@ class MediaController extends Controller
 {
     /**
      * @param Request $request
-     * @param int $mediaId
-     * @return Response
-     * @throws \Doctrine\ORM\EntityNotFoundException
-     * @Route("/{mediaId}", requirements={"mediaId" = "\d+"}, name="VictoireMediaBundle_media_show", options={"expose"=true})
+     * @param int     $mediaId
      *
+     * @throws \Doctrine\ORM\EntityNotFoundException
+     *
+     * @return Response
+     * @Route("/{mediaId}", requirements={"mediaId" = "\d+"}, name="VictoireMediaBundle_media_show", options={"expose"=true})
      */
     public function showAction(Request $request, $mediaId)
     {
@@ -90,13 +91,14 @@ class MediaController extends Controller
 
     /**
      * @param Request $request
-     * @param int $folderId
-     * @return array|RedirectResponse
+     * @param int     $folderId
+     *
      * @throws \Doctrine\ORM\EntityNotFoundException
+     *
+     * @return array|RedirectResponse
      * @Route("bulkupload/{folderId}", requirements={"folderId" = "\d+"}, name="VictoireMediaBundle_media_bulk_upload")
      * @Method({"GET", "POST"})
      * @Template()
-     *
      */
     public function bulkUploadAction(Request $request, $folderId)
     {
@@ -139,12 +141,13 @@ class MediaController extends Controller
 
     /**
      * @param Request $request
-     * @param int $folderId
-     * @return Response
+     * @param int     $folderId
+     *
      * @throws \Doctrine\ORM\EntityNotFoundException
+     *
+     * @return Response
      * @Route("drop/{folderId}", requirements={"folderId" = "\d+"}, name="VictoireMediaBundle_media_drop_upload")
      * @Method({"GET", "POST"})
-     *
      */
     public function dropAction(Request $request, $folderId)
     {
@@ -174,13 +177,13 @@ class MediaController extends Controller
 
     /**
      * @param Request $request
-     * @param int $folderId The folder id
-     * @param string $type The type
+     * @param int     $folderId The folder id
+     * @param string  $type     The type
+     *
      * @return array|RedirectResponse
      * @Route("create/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="VictoireMediaBundle_media_create")
      * @Method({"GET", "POST"})
      * @Template()
-     *
      */
     public function createAction(Request $request, $folderId, $type)
     {
@@ -189,13 +192,13 @@ class MediaController extends Controller
 
     /**
      * @param Request $request
-     * @param int $folderId The folder id
-     * @param string $type The type
+     * @param int     $folderId The folder id
+     * @param string  $type     The type
+     *
      * @return array|RedirectResponse
      * @Route("create/modal/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="VictoireMediaBundle_media_modal_create")
      * @Method({"GET", "POST"})
      * @Template()
-     *
      */
     public function createModalAction(Request $request, $folderId, $type)
     {

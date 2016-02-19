@@ -334,6 +334,7 @@ class Link
      * undocumented function.
      *
      * @param ExecutionContextInterface $context
+     *
      * @author
      */
     public function checkLink(ExecutionContextInterface $context)

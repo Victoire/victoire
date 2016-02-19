@@ -35,13 +35,14 @@ class CmsExtension extends \Twig_Extension_Core
     /**
      * Constructor.
      *
-     * @param WidgetRenderer $widgetRenderer
-     * @param TemplateMapper $templating
-     * @param AuthorizationChecker $authorizationChecker
-     * @param WidgetExceptionHandler $widgetExceptionHandler
-     * @param CurrentViewHelper $currentViewHelper
+     * @param WidgetRenderer          $widgetRenderer
+     * @param TemplateMapper          $templating
+     * @param AuthorizationChecker    $authorizationChecker
+     * @param WidgetExceptionHandler  $widgetExceptionHandler
+     * @param CurrentViewHelper       $currentViewHelper
      * @param ViewReferenceRepository $viewReferenceRepository
-     * @param \Twig_Environment $twig
+     * @param \Twig_Environment       $twig
+     *
      * @internal param SecurityContext $securityContext
      */
     public function __construct(

@@ -5,7 +5,6 @@ namespace Victoire\Bundle\FilterBundle\Filter;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -28,7 +27,7 @@ abstract class BaseFilter extends AbstractType implements BaseFilterInterface
 
     /**
      * {@inheritdoc}
-    */
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\SeoBundle\Form;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
