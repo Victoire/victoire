@@ -47,7 +47,8 @@ services:
         class: Victoire\Bundle\CoreBundle\Listener\MenuDispatcher
         arguments:
             - "@event_dispatcher"
-            - "@security.context"
+            - "@security.token_storage"
+            - "@security.authorization_checker"
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
@@ -76,7 +77,7 @@ services:
         arguments:
             - "@Victoire_widget.widget_renderer"
             - "@victoire_templating"
-            - "@security.context"
+            - "@security.authorization_checker"
             - "@victoire_core.widget_exception_handler"
             - "@victoire_core.current_view"
             - "@victoire_view_reference.repository"
@@ -161,7 +162,7 @@ services:
     victoire_core.widget_exception_handler:
         class: Victoire\Bundle\CoreBundle\Handler\WidgetExceptionHandler
         arguments:
-            - "@security.context"
+            - "@security.authorization_checker"
             - "@twig"
             - "%kernel.debug%"
             - "@victoire_templating"

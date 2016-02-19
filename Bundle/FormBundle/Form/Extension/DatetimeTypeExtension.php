@@ -38,7 +38,7 @@ class DatetimeTypeExtension extends AbstractTypeExtension
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setOptional([
+        $resolver->setDefined([
             'vic_datetimepicker',
         ]);
     }
@@ -48,6 +48,6 @@ class DatetimeTypeExtension extends AbstractTypeExtension
      */
     public function getExtendedType()
     {
-        return 'datetime';
+        return 'Symfony\Component\Form\Extension\Core\Type\DateTimeType';
     }
 }

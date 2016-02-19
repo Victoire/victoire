@@ -168,12 +168,14 @@ class WidgetType extends AbstractType
             'translation_domain' => 'victoire',
         ]);
 
-        $resolver->setOptional(['widget']);
-        $resolver->setOptional(['filters']);
-        $resolver->setOptional(['slot']);
-        $resolver->setOptional(['mode']);
-        $resolver->setOptional(['namespace']);
-        $resolver->setOptional(['businessEntityId']);
+        $resolver->setDefined([
+            'widget',
+            'filters',
+            'slot',
+            'mode',
+            'namespace',
+            'businessEntityId'
+        ]);
     }
 
     /**

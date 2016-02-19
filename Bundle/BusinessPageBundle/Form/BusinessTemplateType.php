@@ -66,9 +66,8 @@ class BusinessTemplateType extends ViewType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        parent::setDefaultOptions($resolver);
-
-        $resolver->setOptional(['businessProperty']);
+        parent::configureOptions($resolver);
+        $resolver->setDefined(['businessProperty']);
 
         $resolver->setDefaults([
                 'data_class'         => 'Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate',

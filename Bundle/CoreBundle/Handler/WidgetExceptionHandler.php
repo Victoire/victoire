@@ -5,7 +5,7 @@ namespace Victoire\Bundle\CoreBundle\Handler;
 use Symfony\Bundle\FrameworkBundle\Templating\TemplateReference;
 use Symfony\Bundle\TwigBundle\TwigEngine;
 use Symfony\Component\Debug\Exception\FlattenException;
-use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 
 /**
@@ -13,7 +13,7 @@ use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
  */
 class WidgetExceptionHandler
 {
-    protected $security;
+    protected $authorizationChecker;
     protected $debug;
     protected $twig;
     protected $templating;
@@ -21,14 +21,14 @@ class WidgetExceptionHandler
     /**
      * Constructor.
      *
-     * @param SecurityContext $security
+     * @param SecurityContext $authorizationChecker
      * @param TwigEngine      $twig
      * @param bool            $debug      The debug variable environment
      * @param TemplateMapper  $templating The victoire templating
      */
-    public function __construct(SecurityContext $security, $twig, $debug, TemplateMapper $templating)
+    public function __construct(AuthorizationChecker $authorizationChecker, $twig, $debug, TemplateMapper $templating)
     {
-        $this->security = $security;
+        $this->authorizationChecker = $authorizationChecker;
         $this->twig = $twig;
         $this->debug = $debug;
         $this->templating = $templating;
@@ -79,7 +79,7 @@ class WidgetExceptionHandler
         } else {
             //environnement not debug
             //only a user victoire can see that there is an error
-            if ($this->security->isGranted('ROLE_VICTOIRE')) {
+            if ($this->authorizationChecker->isGranted('ROLE_VICTOIRE')) {
                 $result = $this->templating->render(
                     'VictoireCoreBundle:Widget:showError.html.twig',
                     [

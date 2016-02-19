@@ -4,7 +4,8 @@ namespace Victoire\Bundle\CoreBundle\Listener;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
 /**
  * This class add items in admin menu.
@@ -17,24 +18,27 @@ class MenuDispatcher
      * Construct function to include eventDispatcher.
      *
      * @param EventDispatcherInterface $eventDispatcher
-     * @param SecurityContext          $securityContext
+     * @param TokenStorageInterface    $tokenStorage
      */
-    public function __construct(EventDispatcherInterface $eventDispatcher, SecurityContext $securityContext)
+    public function __construct(
+        EventDispatcherInterface $eventDispatcher,
+        TokenStorageInterface $tokenStorage,
+        AuthorizationChecker $authorizationChecker
+    )
     {
         $this->eventDispatcher = $eventDispatcher;
-        $this->securityContext = $securityContext;
+        $this->tokenStorage = $tokenStorage;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
      * Dispatch event to build the Victoire's global menu items.
      *
      * @param GetResponseEvent $event
-     *
-     * @SuppressWarnings checkUnusedFunctionParameters
      */
     public function onKernelRequest(GetResponseEvent $event)
     {
-        if ($this->securityContext->getToken() && $this->securityContext->isGranted('ROLE_VICTOIRE')) {
+        if ($this->tokenStorage->getToken() && $this->authorizationChecker->isGranted('ROLE_VICTOIRE')) {
             $this->eventDispatcher->dispatch('victoire_core.build_menu', $event);
         }
     }

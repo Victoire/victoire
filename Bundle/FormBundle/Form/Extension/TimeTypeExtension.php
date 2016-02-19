@@ -38,7 +38,7 @@ class TimeTypeExtension extends AbstractTypeExtension
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setOptional([
+        $resolver->setDefined([
             'timepicker',
         ]);
     }
@@ -48,6 +48,6 @@ class TimeTypeExtension extends AbstractTypeExtension
      */
     public function getExtendedType()
     {
-        return 'time';
+        return 'Symfony\Component\Form\Extension\Core\Type\TimeType';
     }
 }
