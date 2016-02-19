@@ -36,6 +36,6 @@ class BusinessEntityTypeExtension extends AbstractTypeExtension
 
     public function getExtendedType()
     {
-        return FormType::class;
+        return 'form';
     }
 }
