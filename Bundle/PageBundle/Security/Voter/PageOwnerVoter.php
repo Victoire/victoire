@@ -3,16 +3,20 @@
 namespace Victoire\Bundle\PageBundle\Security\Voter;
 
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Victoire\Bundle\PageBundle\Entity\Page;
+use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 /**
  * This class decides yes or no if the user is granted to do some action on a given page.
  */
-class PageOwnerVoter implements VoterInterface
+class PageOwnerVoter extends Voter
 {
     private $userClass;
 
+    /**
+     * PageOwnerVoter constructor.
+     * @param $userClass
+     */
     public function __construct($userClass)
     {
         $this->userClass = $userClass;
@@ -21,36 +25,21 @@ class PageOwnerVoter implements VoterInterface
     /**
      * {@inheritdoc}
      */
-    public function supportsAttribute($attribute)
+    protected function supports($attribute, $subject)
     {
-        return 'PAGE_OWNER' === $attribute;
+        return $subject instanceof Page && 'PAGE_OWNER' === $attribute;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function supportsClass($page)
+    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
-        return $page instanceof Page;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function vote(TokenInterface $token, $page, array $attributes)
-    {
-        foreach ($attributes as $attribute) {
-            if ($this->supportsAttribute($attribute) && $this->supportsClass($page)) {
-                $userClass = $this->userClass;
-                if ($token->getUser() instanceof $userClass && (
-                        $token->getUser()->hasRole('ROLE_VICTOIRE') || $token->getUser()->hasRole('ROLE_VICTOIRE_DEVELOPER')
-                    ) || $page->getAuthor() === $token->getUser()
-                    ) {
-                    return VoterInterface::ACCESS_GRANTED;
-                }
-            }
-        }
-
-        return VoterInterface::ACCESS_DENIED;
+        return $token->getUser() instanceof $this->userClass
+            && (
+                $token->getUser()->hasRole('ROLE_VICTOIRE')
+             || $token->getUser()->hasRole('ROLE_VICTOIRE_DEVELOPER')
+             || $subject->getAuthor() === $token->getUser()
+            );
     }
 }
