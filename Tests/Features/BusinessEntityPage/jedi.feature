@@ -103,9 +103,9 @@ Feature: Manage jedis
         Then I should not see an ".slug-is-correct.vic-hidden" element
         And I should see an ".slug-is-not-correct.vic-hidden" element
         When I submit the widget
+        And I wait 5 seconds
         Then I should see "Page modifiée avec succès"
         Given I am on "/fr/fiche-jedi-anakin"
-        And I wait 5 seconds
         Then I should see "Le Côté Nouveau de la force"
 
 

@@ -12,7 +12,7 @@ class JavascriptContext extends RawMinkContext
     public function iMaximizeTheBroswer()
     {
         //the window got with maximizeWindow native function is too small
-        $this->getSession()->resizeWindow(1600, 900, 'current');
+        $this->getSession()->resizeWindow(1600, 1200, 'current');
     }
 
     /**
