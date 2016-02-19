@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Victoire\Bundle\MediaBundle\Entity\Folder;
 use Victoire\Bundle\MediaBundle\Entity\Media;
 use Victoire\Bundle\MediaBundle\Helper\MediaManager;
@@ -20,12 +21,14 @@ class ChooserController extends Controller
     /**
      * @Route("/", name="VictoireMediaBundle_chooser", options={"expose"=true})
      *
+     * @param Request $request
      * @return RedirectResponse
+     * @throws \Doctrine\ORM\EntityNotFoundException
      */
-    public function chooserIndexAction()
+    public function chooserIndexAction(Request $request)
     {
-        $type = $this->getRequest()->get('type');
-        $cKEditorFuncNum = $this->getRequest()->get('CKEditorFuncNum');
+        $type = $request->get('type');
+        $cKEditorFuncNum = $request->get('CKEditorFuncNum');
 
         $em = $this->getDoctrine()->getManager();
 
@@ -36,17 +39,18 @@ class ChooserController extends Controller
     }
 
     /**
+     * @param Request $request
      * @param int $folderId The filder id
-     *
+     * @return array
+     * @throws \Doctrine\ORM\EntityNotFoundException
      * @Route("/{folderId}", requirements={"folderId" = "\d+"}, name="VictoireMediaBundle_chooser_show_folder")
      * @Template()
      *
-     * @return array
      */
-    public function chooserShowFolderAction($folderId)
+    public function chooserShowFolderAction(Request $request, $folderId)
     {
-        $type = $this->getRequest()->get('type');
-        $cKEditorFuncNum = $this->getRequest()->get('CKEditorFuncNum');
+        $type = $request->get('type');
+        $cKEditorFuncNum = $request->get('CKEditorFuncNum');
 
         $em = $this->getDoctrine()->getManager();
         /* @var MediaManager $mediaHandler */

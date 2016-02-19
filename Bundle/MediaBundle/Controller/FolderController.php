@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Victoire\Bundle\MediaBundle\Entity\Folder;
 use Victoire\Bundle\MediaBundle\Form\FolderType;
@@ -49,13 +50,14 @@ class FolderController extends Controller
     }
 
     /**
+     * @param Request $request
      * @param int $folderId
-     *
+     * @return RedirectResponse
+     * @throws \Doctrine\ORM\EntityNotFoundException
      * @Route("/delete/{folderId}", requirements={"folderId" = "\d+"}, name="VictoireMediaBundle_folder_delete")
      *
-     * @return RedirectResponse
      */
-    public function deleteAction($folderId)
+    public function deleteAction(Request $request, $folderId)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -78,18 +80,18 @@ class FolderController extends Controller
     }
 
     /**
+     * @param Request $request
      * @param int $folderId
-     *
+     * @return Response
+     * @throws \Doctrine\ORM\EntityNotFoundException
      * @Route("/subcreate/{folderId}", requirements={"folderId" = "\d+"}, name="VictoireMediaBundle_folder_sub_create")
      * @Method({"GET", "POST"})
      * @Template()
      *
-     * @return Response
      */
-    public function subCreateAction($folderId)
+    public function subCreateAction(Request $request, $folderId)
     {
         $em = $this->getDoctrine()->getManager();
-        $request = $this->getRequest();
 
         /* @var Folder $parent */
         $parent = $em->getRepository('VictoireMediaBundle:Folder')->getFolder($folderId);
@@ -97,7 +99,7 @@ class FolderController extends Controller
         $folder->setParent($parent);
         $form = $this->createForm(new FolderType(), $folder);
         if ('POST' == $request->getMethod()) {
-            $form->bind($request);
+            $form->handleRequest($request);
             if ($form->isValid()) {
                 $em->getRepository('VictoireMediaBundle:Folder')->save($folder);
 
