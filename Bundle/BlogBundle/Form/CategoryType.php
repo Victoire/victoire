@@ -3,6 +3,7 @@
 namespace Victoire\Bundle\BlogBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,7 +22,7 @@ class CategoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', 'text', [
+            ->add('title', TextType::class, [
                 'label'       => 'blog.form.title.label',
                 'required'    => true,
                 'constraints' => [
@@ -88,7 +89,7 @@ class CategoryType extends AbstractType
     {
         $form->add('children', 'collection',
             [
-                'type'          => 'victoire_form_blog_category',
+                'type'          => BlogCategoryType::class,
                 'required'      => false,
                 'allow_add'     => true,
                 'allow_delete'  => true,

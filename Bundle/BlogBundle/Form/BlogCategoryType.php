@@ -24,7 +24,7 @@ class BlogCategoryType extends AbstractType
                 'rootCategories',
                 'collection',
                 [
-                    'type'          => 'victoire_form_blog_category',
+                    'type'          => self::class,
                     'required'      => false,
                     'allow_add'     => true,
                     'allow_delete'  => true,
