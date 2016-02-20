@@ -33,7 +33,7 @@ Feature: Create business entity pages
         Then I should see "Créer"
         Then I follow the tab "Jedi"
         And I follow "Objet courant"
-        And I select "side" from "jedi_businessEntity_victoire_widget_form_force[fields][side]"
+        And I select "side" from "jedi_businessEntity_widget_force[fields][side]"
         And I submit the widget
         And I wait 5 seconds
         Then I should see "Victoire !"
@@ -55,7 +55,7 @@ Feature: Create business entity pages
         Then I should see "Créer une représentation métier"
         When I fill in "Nom" with "Fiche Jedi Dark - {{item.name}}"
         And I fill in "URL" with "fiche-jedi-dark-{{item.slug}}"
-        And I fill in "victoire_business_template_type[query]" with "WHERE item.side='dark'"
+        And I fill in "business_template[query]" with "WHERE item.side='dark'"
         And I follow "Créer"
         And I wait 5 seconds
         Then I should be on "/fr/victoire-dcms/business-template/show/5"
@@ -80,7 +80,7 @@ Feature: Create business entity pages
         Then I should see "Créer une représentation métier"
         When I fill in "Nom" with "Fiche Jedi Bright - {{item.name}}"
         And I fill in "URL" with "fiche-jedi-bright-{{item.slug}}"
-        And I fill in "victoire_business_template_type[query]" with "WHERE item.side='bright'"
+        And I fill in "business_template[query]" with "WHERE item.side='bright'"
         And I follow "Créer"
         And I wait 5 seconds
         Then I should be on "/fr/victoire-dcms/business-template/show/6"
@@ -154,7 +154,7 @@ Feature: Create business entity pages
         Then I should see "Créer"
         When I follow the tab "Jedi"
         And I follow the tab "Objet courant"
-        And I select "side" from "jedi_businessEntity_victoire_widget_form_force[fields][side]"
+        And I select "side" from "jedi_businessEntity_widget_force[fields][side]"
         And I submit the widget
         And I wait 5 seconds
         Then I should see "Victoire !"
@@ -189,9 +189,10 @@ Feature: Create business entity pages
         When I fill in "Nom" with "Fiche Jedi - {{item.name}}"
         And I fill in "Libellé" with "Fiche Jedi"
         And I fill in "URL" with "fiche-jedi-{{item.slug}}"
-        And I fill in "victoire_business_template_type_query" with "WHERE LOWER(item.side) LIKE LOWER('bright') OR LOWER(item.side) LIKE LOWER('double')"
+        And I fill in "business_template_query" with "WHERE LOWER(item.side) LIKE LOWER('bright') OR LOWER(item.side) LIKE LOWER('double')"
         And I follow "Créer"
-        And I wait 2 seconds
+        And I wait 6 seconds
+        Then I should be on "/fr/victoire-dcms/business-template/show/5"
         And I switch to "layout" mode
         And I should see "Nouveau contenu"
         When I select "Force" from the "1" select of "content" slot
@@ -212,10 +213,13 @@ Feature: Create business entity pages
         When I fill in "Nom" with "Fiche Sith - {{item.name}}"
         And I fill in "Libellé" with "Fiche Sith"
         And I fill in "URL" with "fiche-sith-{{item.slug}}"
-        And I fill in "victoire_business_template_type_query" with "WHERE LOWER(item.side) LIKE LOWER('dark') OR LOWER(item.side) LIKE LOWER('double')"
+        And I fill in "business_template_query" with "WHERE LOWER(item.side) LIKE LOWER('dark') OR LOWER(item.side) LIKE LOWER('double')"
         And I follow "Créer"
         And I wait 5 seconds
-        When I select "Force" from the "1" select of "content" slot
+        Then I should be on "/fr/victoire-dcms/business-template/show/6"
+        When I switch to "layout" mode
+        And I should see "Nouveau contenu"
+        And I select "Force" from the "1" select of "content" slot
         Then I should see "Créer"
         And I fill in "Côté de la force" with "Dark"
         And I submit the widget

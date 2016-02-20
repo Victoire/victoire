@@ -14,6 +14,7 @@ use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
+use Victoire\Bundle\WidgetMapBundle\Exception\WidgetMapNotFoundException;
 use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 
 /**
@@ -229,7 +230,15 @@ class WidgetController extends Controller
     {
         $view = $this->getViewByReferenceId($viewReference);
         $this->get('victoire_widget_map.builder')->build($view, $this->get('doctrine.orm.entity_manager'));
-        $widgetView = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $view)->getView();
+
+        try {
+            $widgetView = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $view)->getView();
+        } catch (WidgetMapNotFoundException $e) {
+            return new JsonResponse([
+                'success' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
 
         $widgetViewReference = $this->container->get('victoire_view_reference.repository')
             ->getOneReferenceByParameters(['viewId' => $view->getId()]);
