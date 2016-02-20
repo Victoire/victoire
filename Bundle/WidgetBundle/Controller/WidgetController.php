@@ -14,6 +14,7 @@ use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
+use Victoire\Bundle\WidgetBundle\Form\WidgetStyleType;
 use Victoire\Bundle\WidgetMapBundle\Exception\WidgetMapNotFoundException;
 use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 
@@ -246,7 +247,7 @@ class WidgetController extends Controller
         $widgetView->setReference($widgetViewReference);
         $this->get('victoire_core.current_view')->setCurrentView($view);
         try {
-            $form = $this->get('form.factory')->create('victoire_widget_style_type', $widget, [
+            $form = $this->get('form.factory')->create(WidgetStyleType::class, $widget, [
                     'method' => 'POST',
                     'action' => $this->generateUrl(
                         'victoire_core_widget_stylize',
