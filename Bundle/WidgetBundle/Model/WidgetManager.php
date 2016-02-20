@@ -21,6 +21,7 @@ use Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer;
 use Victoire\Bundle\WidgetBundle\Resolver\WidgetContentResolver;
 use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
 use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
+use Victoire\Bundle\WidgetMapBundle\Exception\WidgetMapNotFoundException;
 use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 use Victoire\Bundle\WidgetMapBundle\Manager\WidgetMapManager;
 
@@ -290,24 +291,22 @@ class WidgetManager
      */
     public function deleteWidget(Widget $widget, View $view)
     {
-        //update the view deleting the widget
-        $this->widgetMapManager->delete($view, $widget);
-
-        //we update the widget map of the view
-        $this->widgetMapBuilder->build($view);
         //Used to update view in callback (we do it before delete it else it'll not exists anymore)
         $widgetId = $widget->getId();
+        //we update the widget map of the view
+        $this->widgetMapBuilder->build($view);
         $widgetMap = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $view);
         //the widget is removed only if the current view is the view of the widget
-        if (null !== $widgetMap
-        && $widgetMap->getView() == $view
-        && $widgetMap->getAction() != WidgetMap::ACTION_DELETE) {
+        if ($widgetMap->getView() == $view && $widgetMap->getAction() != WidgetMap::ACTION_DELETE) {
             //we remove the widget
             $this->entityManager->remove($widget);
         }
 
         //we update the view
         $this->entityManager->persist($view);
+        //update the view deleting the widget
+        $this->widgetMapManager->delete($view, $widget);
+
         $this->entityManager->flush();
 
         return [

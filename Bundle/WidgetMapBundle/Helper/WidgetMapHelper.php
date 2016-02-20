@@ -23,7 +23,7 @@ class WidgetMapHelper
             }
         }
 
-        return new WidgetMapNotFoundException(sprintf(
+        throw new WidgetMapNotFoundException(sprintf(
             'Cannot find the widget #%s in the view#%s widget map', $widget->getId(), $view->getId()
         ));
     }
