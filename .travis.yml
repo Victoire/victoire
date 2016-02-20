@@ -21,7 +21,7 @@ before_script:
   - mkdir fails
   - composer self-update
   - composer config --global github-oauth.github.com $gh_auth_token
-  - COMPOSER_ROOT_VERSION=dev-master composer install --prefer-dist
+  - COMPOSER_ROOT_VERSION=1.5 composer install --prefer-dist
   # Prepare database
   - php Tests/Functionnal/bin/console --env=test doctrine:database:create
   - php Tests/Functionnal/bin/console --env=test doctrine:schema:create

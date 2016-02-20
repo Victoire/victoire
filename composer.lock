@@ -1169,18 +1169,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfVictoire/WidgetButtonBundle.git",
-                "reference": "975288ff822fb591e6792a9695da3d2e95b14ac8"
+                "reference": "1070332c33fda9ec62bf6e569b2686d52b360ab6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfVictoire/WidgetButtonBundle/zipball/975288ff822fb591e6792a9695da3d2e95b14ac8",
-                "reference": "975288ff822fb591e6792a9695da3d2e95b14ac8",
+                "url": "https://api.github.com/repos/FriendsOfVictoire/WidgetButtonBundle/zipball/1070332c33fda9ec62bf6e569b2686d52b360ab6",
+                "reference": "1070332c33fda9ec62bf6e569b2686d52b360ab6",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3",
                 "symfony/framework-bundle": "~2.3",
-                "victoire/victoire": "~1.3"
+                "victoire/victoire": "~1.5"
             },
             "type": "symfony-bundle",
             "extra": {
@@ -1204,18 +1204,14 @@
                 }
             ],
             "description": "Victoire DCMS Button widget",
-            "homepage": "http://victoire.io",
             "keywords": [
                 "DCMS",
-                "FoV",
                 "FriendsofVictoire",
                 "button",
-                "cms",
-                "dynamic",
                 "victoire",
                 "widget"
             ],
-            "time": "2016-02-18 18:35:25"
+            "time": "2016-02-20 23:49:40"
         },
         {
             "name": "friendsofvictoire/text-widget",
@@ -1224,18 +1220,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfVictoire/WidgetTextBundle.git",
-                "reference": "0905744eb890d9b54bfe19203728d94f53a432bd"
+                "reference": "af9da010ca68b7f1d0f7214629bb1eccf3d9cca9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfVictoire/WidgetTextBundle/zipball/0905744eb890d9b54bfe19203728d94f53a432bd",
-                "reference": "0905744eb890d9b54bfe19203728d94f53a432bd",
+                "url": "https://api.github.com/repos/FriendsOfVictoire/WidgetTextBundle/zipball/af9da010ca68b7f1d0f7214629bb1eccf3d9cca9",
+                "reference": "af9da010ca68b7f1d0f7214629bb1eccf3d9cca9",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3",
                 "symfony/framework-bundle": "~2.3",
-                "victoire/victoire": "~1.3"
+                "victoire/victoire": "~1.5"
             },
             "type": "symfony-bundle",
             "extra": {
@@ -1263,18 +1259,14 @@
                 }
             ],
             "description": "Victoire DCMS Text widget",
-            "homepage": "http://victoire.io",
             "keywords": [
                 "DCMS",
                 "FriendsofVictoire",
-                "Plain",
-                "cms",
-                "dynamic",
                 "text",
                 "victoire",
                 "widget"
             ],
-            "time": "2016-02-18 18:29:19"
+            "time": "2016-02-20 23:28:12"
         },
         {
             "name": "fzaninotto/faker",
@@ -1286,7 +1278,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/772feacf6849bf0114873e2b869bb500fccfd438",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/d8c0bebc230284edc91b5e7091013e7a0c55bf34",
                 "reference": "772feacf6849bf0114873e2b869bb500fccfd438",
                 "shasum": ""
             },
@@ -4006,7 +3998,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/cd232ecd55a796d2ee7af61b4fc810ee8c621fc6",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/095ebbed832e25f795349e5d6fdfe6831cea22bd",
                 "reference": "cd232ecd55a796d2ee7af61b4fc810ee8c621fc6",
                 "shasum": ""
             },
