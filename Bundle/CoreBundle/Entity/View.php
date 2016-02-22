@@ -187,9 +187,9 @@ abstract class View
     /**
      * @var bool
      *
-     * @ORM\Column(name="cssUpToDate", type="boolean", nullable=true, options={"default"=0})
+     * @ORM\Column(name="cssUpToDate", type="boolean")
      */
-    protected $cssUpToDate;
+    protected $cssUpToDate = false;
 
     /**
      * Construct.
