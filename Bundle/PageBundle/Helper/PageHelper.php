@@ -228,7 +228,6 @@ class PageHelper
      *
      * @param View           $page
      * @param BusinessEntity $entity
-     *
      */
     public function updatePageWithEntity(BusinessTemplate $page, $entity)
     {
@@ -242,11 +241,10 @@ class PageHelper
     }
 
     /**
-     * @return BusinessPage
-     * read the cache to find entity according tu given url.
-     *
      * @param BusinessPageReference $viewReference
      *
+     * @return BusinessPage
+     *                      read the cache to find entity according tu given url.
      * @return object|null
      */
     protected function findEntityByReference(ViewReference $viewReference)

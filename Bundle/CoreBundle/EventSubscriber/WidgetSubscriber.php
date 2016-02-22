@@ -5,7 +5,6 @@ namespace Victoire\Bundle\CoreBundle\EventSubscriber;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\OnFlushEventArgs;
-use Doctrine\ORM\Event\PreFlushEventArgs;
 use Doctrine\ORM\UnitOfWork;
 use Victoire\Bundle\CoreBundle\Builder\ViewCssBuilder;
 use Victoire\Bundle\CoreBundle\Entity\View;

@@ -231,7 +231,7 @@ class WidgetController extends Controller
         $this->get('victoire_widget_map.builder')->build($view, $this->get('doctrine.orm.entity_manager'));
         $widgetView = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $view)->getView();
 
-        if(!$view instanceof \Victoire\Bundle\TemplateBundle\Entity\Template) {
+        if (!$view instanceof \Victoire\Bundle\TemplateBundle\Entity\Template) {
             $widgetViewReference = $this->container->get('victoire_view_reference.repository')
                 ->getOneReferenceByParameters(['viewId' => $view->getId()]);
             $widgetView->setReference($widgetViewReference);

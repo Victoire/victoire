@@ -32,7 +32,7 @@ class WidgetCssGenerateCommand extends ContainerAwareCommand
      *
      * @throws \Exception
      *
-     * @return boolean
+     * @return bool
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
