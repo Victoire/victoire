@@ -1,8 +1,8 @@
 {
-    "name"             : "victoire/victoire",
-    "type"             : "symfony-bundle",
-    "description"      : "Victoire is a Dynamic-CMS based on Symfony framework",
-    "keywords"         : [
+    "name": "victoire/victoire",
+    "type": "symfony-bundle",
+    "description": "Victoire is a Dynamic-CMS based on Symfony framework",
+    "keywords": [
         "DCMS",
         "Victoire",
         "FriendsofVictoire",
@@ -13,151 +13,109 @@
         "Symfony",
         "Overlay"
     ],
-    "license"          : "MIT",
-    "homepage"         : "http://victoire.io",
-    "authors"          : [
+    "license": "MIT",
+    "homepage": "http://victoire.io",
+    "authors": [
         {
-            "name"    : "Paul Andrieux",
-            "email"   : "paul@victoire.io",
+            "name": "Paul Andrieux",
+            "email": "paul@victoire.io",
             "homepage": "http://github.com/paulandrieux",
-            "role"    : "developer"
+            "role": "developer"
         },
         {
-            "name"    : "Leny Bernard",
-            "email"   : "leny@victoire.io",
+            "name": "Leny Bernard",
+            "email": "leny@victoire.io",
             "homepage": "http://github.com/lenybernard",
-            "role"    : "developer"
+            "role": "developer"
         },
         {
-            "name"    : "AppVentus",
+            "name": "AppVentus",
             "homepage": "http://appventus.com"
         },
         {
-            "name"    : "Community Contributors",
+            "name": "Community Contributors",
             "homepage": "http://github.com/Victoire/Victoire/graphs/contributors"
         }
     ],
-    "support"          : {
+    "support": {
         "email": "contact@victoire.io"
     },
-    "require"          : {
-        "php"                                 : ">=5.3.3",
-        "appventus/alertify-bundle"           : "^1.0",
-        "appventus/assetic-injector-bundle"   : "^1.0",
-        "doctrine/doctrine-bundle"            : "~1.4",
-        "doctrine/data-fixtures"              : "1.1.x-dev",
-        "doctrine/doctrine-fixtures-bundle"   : "2.2.x-dev",
-        "doctrine/orm"                        : "v2.5.2",
-        "friendsofsymfony/jsrouting-bundle"   : "2.0.*@dev",
-        "friendsofsymfony/user-bundle"        : "~2.0@dev",
-        "friendsofvictoire/text-widget"       : "dev-master",
-        "friendsofvictoire/button-widget"     : "dev-master",
+    "require": {
+        "php": ">=5.3.3",
+        "appventus/alertify-bundle": "^1.0",
+        "appventus/assetic-injector-bundle": "^1.0",
+        "doctrine/doctrine-bundle": "~1.4",
+        "doctrine/data-fixtures": "1.1.x-dev",
+        "doctrine/doctrine-fixtures-bundle": "2.2.x-dev",
+        "doctrine/orm": "v2.5.2",
+        "friendsofsymfony/jsrouting-bundle": "2.0.*@dev",
+        "friendsofsymfony/user-bundle": "~2.0@dev",
+        "friendsofvictoire/text-widget": "~1.5",
+        "friendsofvictoire/button-widget": "~1.5",
         "incenteev/composer-parameter-handler": "~2.0",
-        "infinite-networks/form-bundle"       : "dev-master",
-        "jms/di-extra-bundle"                 : "1.4.*@dev",
-        "jms/serializer-bundle"               : "^1.0",
-        "jms/translation-bundle"              : "1.1.*@dev",
-        "knplabs/gaufrette"                   : "v0.1.7",
-        "knplabs/knp-menu"                    : "2.1.*@dev",
-        "knplabs/knp-menu-bundle"             : "2.1.*@dev",
-        "liip/imagine-bundle"                 : "1.0.*@dev",
-        "nelmio/alice"                        : "2.*@dev",
-        "predis/predis"                       : "^1.1@dev",
-        "sensio/distribution-bundle"          : ">=2.3.x-dev",
-        "sensio/framework-extra-bundle"       : "~3.0",
-        "sensio/generator-bundle"             : "~2.3",
-        "snc/redis-bundle"                    : "1.1.x-dev",
-        "stof/doctrine-extensions-bundle"     : "1.2.*@dev",
-        "symfony/assetic-bundle"              : "~2.3",
-        "symfony/monolog-bundle"              : "~2.4",
-        "symfony/symfony"                     : ">=2.4.2, <=2.8.x-dev",
-        "symfony/swiftmailer-bundle"          : "~2.3",
-        "twig/extensions"                     : "~1.0",
-        "twig/twig"                           : "~1.0",
-        "willdurand/js-translation-bundle"    : "^2.5"
+        "infinite-networks/form-bundle": "dev-master",
+        "jms/di-extra-bundle": "~1.7",
+        "jms/serializer-bundle": "^1.0",
+        "jms/translation-bundle": "1.1.*@dev",
+        "knplabs/gaufrette": "v0.1.7",
+        "knplabs/knp-menu": "2.1.*@dev",
+        "knplabs/knp-menu-bundle": "2.1.*@dev",
+        "liip/imagine-bundle": "1.0.*@dev",
+        "nelmio/alice": "2.*@dev",
+        "predis/predis": "^1.1@dev",
+        "sensio/distribution-bundle": ">=2.3.x-dev",
+        "sensio/framework-extra-bundle": "~3.0",
+        "sensio/generator-bundle": "~2.3",
+        "snc/redis-bundle": "2.x-dev",
+        "stof/doctrine-extensions-bundle": "1.2.*@dev",
+        "symfony/assetic-bundle": "~2.3",
+        "symfony/monolog-bundle": "~2.4",
+        "symfony/symfony": "~2.8|~3.0",
+        "symfony/swiftmailer-bundle": "~2.3",
+        "twig/extensions": "~1.0",
+        "twig/twig": "~1.0",
+        "willdurand/js-translation-bundle": "^2.5"
     },
-    "require-dev"      : {
-        "behat/behat"                 : "~3.0",
+    "require-dev": {
+        "behat/behat": "~3.0",
         "behat/mink-browserkit-driver": "*",
-        "behat/mink-extension"        : "~2.0",
-        "behat/mink-goutte-driver"    : "~1.1",
-        "behat/mink-selenium2-driver" : "~1.1",
-        "behat/symfony2-extension"    : "~2.0",
-        "knplabs/friendly-contexts"   : "~0.7",
-        "phpunit/php-code-coverage"   : "2.2.3",
+        "behat/mink-extension": "~2.0",
+        "behat/mink-goutte-driver": "~1.1",
+        "behat/mink-selenium2-driver": "~1.1",
+        "behat/symfony2-extension": "~2.0",
+        "knplabs/friendly-contexts": "~0.7",
+        "phpunit/php-code-coverage": "2.2.3",
         "phpunit/phpunit-mock-objects": "2.3.7",
-        "phpunit/phpunit"             : "4.6.*",
-        "symfony/var-dumper"          : "~2.7@dev",
-        "lakion/mink-debug-extension" : "^1.0"
+        "phpunit/phpunit": "4.6.*",
+        "symfony/var-dumper": "~2.8|~3.1",
+        "lakion/mink-debug-extension": "^1.0"
     },
-    "suggest"          : {
-        "friendsofvictoire/breadcrumb-widget"         : "breadcrumb widget",
-        "friendsofvictoire/button-widget"             : "button widget",
-        "friendsofvictoire/calculator-widget"         : "calculator widget",
-        "friendsofvictoire/card-widget"               : "card widget",
-        "friendsofvictoire/ckeditor-widget"           : "ckeditor widget",
-        "friendsofvictoire/cookielaw-widget"          : "cookielaw widget",
-        "friendsofvictoire/cover-widget"              : "cover widget",
-        "friendsofvictoire/date-widget"               : "date widget",
-        "friendsofvictoire/disqus-widget"             : "disqus widget",
-        "friendsofvictoire/faq-widget"                : "faq widget",
-        "friendsofvictoire/file-widget"               : "file widget",
-        "friendsofvictoire/filter-widget"             : "filter widget",
-        "friendsofvictoire/form-widget"               : "form widget",
-        "friendsofvictoire/gmap-widget"               : "gmap widget",
-        "friendsofvictoire/html-widget"               : "html widget",
-        "friendsofvictoire/image-widget"              : "image widget",
-        "friendsofvictoire/layout-widget"             : "layout widget",
-        "friendsofvictoire/listing-widget"            : "listing widget",
-        "friendsofvictoire/localeswitcher-widget"     : "localeswitcher widget",
-        "friendsofvictoire/login-widget"              : "login widget",
-        "friendsofvictoire/mailchimpnewsletter-widget": "mailchimpnewsletter widget",
-        "friendsofvictoire/markdown-widget"           : "markdown widget",
-        "friendsofvictoire/menu-widget"               : "menu widget",
-        "friendsofvictoire/progress-widget"           : "progress widget",
-        "friendsofvictoire/render-widget"             : "render widget",
-        "friendsofvictoire/richlist-widget"           : "richlist widget",
-        "friendsofvictoire/search-widget"             : "elastic search widget",
-        "friendsofvictoire/sharethis-widget"          : "sharethis widget",
-        "friendsofvictoire/siblingsmenu-widget"       : "siblingsmenu widget",
-        "friendsofvictoire/simplecontactform-widget"  : "simplecontactform widget",
-        "friendsofvictoire/sitemap-widget"            : "sitemap widget",
-        "friendsofvictoire/slider-widget"             : "slider widget",
-        "friendsofvictoire/slidernav-widget"          : "slidernav widget",
-        "friendsofvictoire/socialbuttons-widget"      : "socialbuttons widget",
-        "friendsofvictoire/socialpage-widget"         : "socialpage widget",
-        "friendsofvictoire/statistic-widget"          : "statistic widget",
-        "friendsofvictoire/tab-widget"                : "tab widget",
-        "friendsofvictoire/table-widget"              : "table widget",
-        "friendsofvictoire/text-widget"               : "text widget",
-        "friendsofvictoire/title-widget"              : "title widget"
-    },
-    "autoload"         : {
+    "autoload": {
         "psr-4": {
-            "Acme\\AppBundle\\"          : "Tests/Functionnal/src/Acme/AppBundle",
-            "Victoire\\Bundle\\"         : "Bundle",
+            "Acme\\AppBundle\\": "Tests/Functionnal/src/Acme/AppBundle",
+            "Victoire\\Bundle\\": "Bundle",
             "Victoire\\Tests\\Features\\": "Tests/Features",
-            "Victoire\\Widget\\"         : "Tests/Functionnal/src/Victoire/Widget"
+            "Victoire\\Widget\\": "Tests/Functionnal/src/Victoire/Widget"
         }
     },
     "minimum-stability": "dev",
-    "repositories"     : [
+    "repositories": [
         {
             "type": "vcs",
-            "url" : "https://github.com/lenybernard/FriendlyContexts.git"
+            "url": "https://github.com/lenybernard/FriendlyContexts.git"
         },
         {
             "type": "vcs",
-            "url" : "https://github.com/lenybernard/mink"
+            "url": "https://github.com/lenybernard/mink"
         },
         {
             "type": "vcs",
-            "url" : "https://github.com/Charlie-Lucas/InfiniteFormBundle"
+            "url": "https://github.com/Charlie-Lucas/InfiniteFormBundle"
         }
     ],
-    "extra"            : {
+    "extra": {
         "branch-alias": {
-            "dev-master": "1.4.x-dev"
+            "dev-master": "1.5.x-dev"
         }
     }
 }
