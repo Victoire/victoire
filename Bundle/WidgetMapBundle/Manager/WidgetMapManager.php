@@ -199,6 +199,7 @@ class WidgetMapManager
         $widgetMap->setAction(WidgetMap::ACTION_OVERWRITE);
         $widgetMap->setReplaced($originalWidgetMap);
         $originalWidgetMap->addSubstitute($widgetMap);
+        $widgetMap->setView($view);
         $view->addWidgetMap($widgetMap);
         $this->em->persist($widgetMap);
 
