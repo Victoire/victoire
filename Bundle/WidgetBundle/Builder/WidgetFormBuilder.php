@@ -163,8 +163,8 @@ class WidgetFormBuilder
             if ($namespace === null) {
                 throw new \Exception('The namespace is mandatory if the businessEntityId is given');
             }
-            if ($formMode === null) {
-                throw new \Exception('The formMode is mandatory if the businessEntityId is given');
+            if (in_array($formMode, [Widget::MODE_STATIC, null])) {
+                throw new \Exception('The formMode cannot be null or static if the businessEntityId is given');
             }
         }
 

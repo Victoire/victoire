@@ -3,6 +3,7 @@
 namespace Victoire\Bundle\CoreBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -35,9 +36,6 @@ class WidgetType extends AbstractType
             }
         }
 
-        //if no mode is specified, the static is used by default
-        $mode = Widget::MODE_STATIC;
-
         if ($options['mode'] === Widget::MODE_ENTITY) {
             $this->addEntityFields($builder, $options);
         }
@@ -51,17 +49,17 @@ class WidgetType extends AbstractType
         }
 
         //add the mode to the form
-        $builder->add('mode', 'hidden', [
-            'data' => $mode,
+        $builder->add('mode', HiddenType::class, [
+            'data' => $options['mode'],
         ]);
         $builder->add('asynchronous', null, [
                 'label'    => 'victoire.widget.type.asynchronous.label',
                 'required' => false,
             ]);
-        $builder->add('theme', 'hidden');
+        $builder->add('theme', HiddenType::class);
 
         //add the slot to the form
-        $builder->add('slot', 'hidden', []);
+        $builder->add('slot', HiddenType::class, []);
 
         //we use the PRE_SUBMIT event to set the mode option
         $builder->addEventListener(
@@ -153,13 +151,13 @@ class WidgetType extends AbstractType
         $resolver->setDefaults([
             'data_class'         => 'Victoire\Bundle\WidgetBundle\Entity\Widget',
             'translation_domain' => 'victoire',
+            'mode'               => Widget::MODE_STATIC
         ]);
 
         $resolver->setDefined([
             'widget',
             'filters',
             'slot',
-            'mode',
             'namespace',
             'businessEntityId',
         ]);

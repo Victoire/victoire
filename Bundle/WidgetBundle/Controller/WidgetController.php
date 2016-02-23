@@ -190,7 +190,7 @@ class WidgetController extends Controller
         $widgetView = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $view)->getView();
         $this->get('victoire_widget_map.widget_data_warmer')->warm($this->getDoctrine()->getManager(), $view);
 
-        if ($view instanceof BusinessTemplate && !$reference = $this->container->get('victoire_view_reference.repository')
+        if ($view instanceof BusinessTemplate && !$reference = $this->get('victoire_view_reference.repository')
             ->getOneReferenceByParameters(['viewId' => $view->getId()])) {
             $reference = new ViewReference($viewReference);
             $widgetView->setReference($reference);
