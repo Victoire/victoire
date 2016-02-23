@@ -41,7 +41,7 @@
         "email": "contact@victoire.io"
     },
     "require": {
-        "php": ">=5.3.3",
+        "php": ">=5.5.9",
         "appventus/alertify-bundle": "^1.0",
         "appventus/assetic-injector-bundle": "^1.0",
         "doctrine/doctrine-bundle": "~1.4",

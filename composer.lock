@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ea0612a9d75277ead085b60c4eb5d78e",
-    "content-hash": "1e09ba21619910433097737b2163214e",
+    "hash": "451ceb4a8264264176dfd85750eaf7f4",
+    "content-hash": "3c3c9053053a8d56a87f5d93b3f07ed6",
     "packages": [
         {
             "name": "appventus/alertify-bundle",
@@ -1328,7 +1328,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/4ba04c48f639befd42c06fc2f87f70be6749ba42",
+                "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/c99bc9f654a22ddf9bfa21e88339ce33bbf28a37",
                 "reference": "4ba04c48f639befd42c06fc2f87f70be6749ba42",
                 "shasum": ""
             },
@@ -4000,12 +4000,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "f3e6a82bcbea4db3b56df08e491e20a1faae82b5"
+                "reference": "7cab4f24aecd01d394ddbbd0cfaf94e327ab20d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/f3e6a82bcbea4db3b56df08e491e20a1faae82b5",
-                "reference": "f3e6a82bcbea4db3b56df08e491e20a1faae82b5",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/7cab4f24aecd01d394ddbbd0cfaf94e327ab20d5",
+                "reference": "7cab4f24aecd01d394ddbbd0cfaf94e327ab20d5",
                 "shasum": ""
             },
             "require": {
@@ -4126,7 +4126,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2016-02-22 16:50:46"
+            "time": "2016-02-23 07:42:06"
         },
         {
             "name": "twig/extensions",
