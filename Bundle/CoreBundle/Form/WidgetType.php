@@ -7,6 +7,7 @@ use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Victoire\Bundle\WidgetBundle\Model\Widget;
 
@@ -25,37 +26,28 @@ class WidgetType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        //memorize options for the pre submit
-        $this->options = $options;
-
-        $namespace = $options['namespace'];
-        $businessEntityId = $options['businessEntityId'];
-        $mode = $options['mode'];
-
-        if ($businessEntityId !== null) {
-            if ($namespace === null) {
+        if ($options['businessEntityId'] !== null) {
+            if ($options['namespace'] === null) {
                 throw new \Exception('The namespace is mandatory if the business_entity_id is given.');
             }
-            if ($mode === null) {
+            if ($options['mode'] === null) {
                 throw new \Exception('The mode is mandatory if the business_entity_id is given.');
             }
         }
 
         //if no mode is specified, the static is used by default
-        if ($mode === null) {
-            $mode = Widget::MODE_STATIC;
+        $mode = Widget::MODE_STATIC;
+
+        if ($options['mode'] === Widget::MODE_ENTITY) {
+            $this->addEntityFields($builder, $options);
         }
 
-        if ($mode === Widget::MODE_ENTITY) {
-            $this->addEntityFields($builder);
+        if ($options['mode'] === Widget::MODE_QUERY) {
+            $this->addQueryFields($builder, $options);
         }
 
-        if ($mode === Widget::MODE_QUERY) {
-            $this->addQueryFields($builder);
-        }
-
-        if ($mode === Widget::MODE_BUSINESS_ENTITY) {
-            $this->addBusinessEntityFields($builder);
+        if ($options['mode'] === Widget::MODE_BUSINESS_ENTITY) {
+            $this->addBusinessEntityFields($builder, $options);
         }
 
         //add the mode to the form
@@ -74,9 +66,7 @@ class WidgetType extends AbstractType
         //we use the PRE_SUBMIT event to set the mode option
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) {
-                $options = $this->options;
-
+            function (FormEvent $event) use ($options) {
                 //we get the raw data for the widget form
                 $rawData = $event->getData();
 
@@ -88,14 +78,14 @@ class WidgetType extends AbstractType
 
                 //the controller does not use the mode to construct the form, so we update it automatically
                 if ($mode === Widget::MODE_ENTITY) {
-                    $this->addEntityFields($form);
+                    $this->addEntityFields($form, $options);
                 }
 
                 if ($mode === Widget::MODE_QUERY) {
-                    $this->addQueryFields($form);
+                    $this->addQueryFields($form, $options);
                 }
                 if ($mode === Widget::MODE_BUSINESS_ENTITY) {
-                    $this->addBusinessEntityFields($form);
+                    $this->addBusinessEntityFields($form, $options);
                 }
             }
         );
@@ -104,12 +94,11 @@ class WidgetType extends AbstractType
     /**
      * Add the fields for the business entity mode.
      *
-     * @param unknown $form
+     * @param FormBuilderInterface|FormInterface $form
+     * @param array                              $options
      */
-    protected function addBusinessEntityFields($form)
+    protected function addBusinessEntityFields($form, $options)
     {
-        $options = $this->options;
-
         $form->add('fields', WidgetFieldsFormType::class, [
             'label'     => 'widget.form.entity.fields.label',
             'namespace' => $options['namespace'],
@@ -120,12 +109,11 @@ class WidgetType extends AbstractType
     /**
      * Add the fields for the form and the entity mode.
      *
-     * @param unknown $form
+     * @param FormBuilderInterface|FormInterface $form
+     * @param array                              $options
      */
-    protected function addEntityFields($form)
+    protected function addEntityFields($form, $options)
     {
-        $options = $this->options;
-
         $form
         ->add('fields', WidgetFieldsFormType::class, [
             'label'     => 'widget.form.entity.fields.label',
@@ -142,12 +130,11 @@ class WidgetType extends AbstractType
     /**
      * Add the fields to the form for the query mode.
      *
-     * @param Form $form
+     * @param FormBuilderInterface|FormInterface $form
+     * @param array                              $options
      */
-    protected function addQueryFields($form)
+    protected function addQueryFields($form, $options)
     {
-        $options = $this->options;
-
         $form->add('query');
         $form->add('fields', WidgetFieldsFormType::class, [
             'label'     => 'widget.form.entity.fields.label',
