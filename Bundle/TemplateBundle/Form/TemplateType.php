@@ -18,7 +18,9 @@ class TemplateType extends ViewType
     /**
      * constructor.
      *
-     * @param EntityManager $layouts
+     * @param $layouts
+     * @param RequestStack $availableLocales
+     * @param RequestStack $requestStack
      */
     public function __construct($layouts, $availableLocales, RequestStack $requestStack)
     {
@@ -37,10 +39,10 @@ class TemplateType extends ViewType
         parent::buildForm($builder, $options);
 
         $builder->add('layout', ChoiceType::class, [
-                'label'   => 'form.template.type.layout.label',
-                'choices' => $options['layouts'],
-            ]
-        );
+            'label' => 'form.template.type.layout.label',
+            'choices' => $options['layouts'],
+            'choices_as_values' => true,
+        ]);
     }
 
     /**
@@ -50,9 +52,9 @@ class TemplateType extends ViewType
     {
         $resolver->setDefaults(
             [
-                'data_class'         => 'Victoire\Bundle\TemplateBundle\Entity\Template',
+                'data_class' => 'Victoire\Bundle\TemplateBundle\Entity\Template',
                 'translation_domain' => 'victoire',
-                'layouts'            => $this->layouts,
+                'layouts' => $this->layouts,
             ]
         );
     }

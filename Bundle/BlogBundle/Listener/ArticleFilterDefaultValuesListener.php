@@ -36,7 +36,7 @@ class ArticleFilterDefaultValuesListener
             $options = $form->getConfig()->getOptions()['data'];
             $years = $months = $days = [];
             foreach ($articles as $key => $_article) {
-                $years[$_article->getPublishedAt()->format('Y')] = $_article->getPublishedAt()->format('Y');
+                $years[] = $_article->getPublishedAt()->format('Y');
 
                 if ($options->getFormat() != 'year') {
                     //init $months array
@@ -55,11 +55,10 @@ class ArticleFilterDefaultValuesListener
                 }
             }
             $form->add('defaultValue', ChoiceType::class, [
-                'label'       => 'widget_filter.form.date.default.label',
-                'choices'     => $years,
-                'empty_value' => 'widget_filter.form.date.default.empty_value.label',
-                ]
-            );
+                'label' => 'widget_filter.form.date.default.label',
+                'choices' => $years,
+                'placeholder' => 'widget_filter.form.date.default.empty_value.label',
+            ]);
         }
     }
 }

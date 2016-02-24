@@ -105,17 +105,16 @@ class TagFilter extends BaseFilter
         }
 
         $builder
-            ->add(
-                'tags', ChoiceType::class, [
-                    'label'       => false,
-                    'choices'     => $tagsChoices,
-                    'empty_value' => 'blog.tag_filter.empty_value',
-                    'required'    => false,
-                    'expanded'    => true,
-                    'multiple'    => $options['multiple'],
-                    'data'        => $data,
-                ]
-            );
+            ->add('tags', ChoiceType::class, [
+                'choices_as_values' => true,
+                'label' => false,
+                'choices' => $tagsChoices,
+                'empty_value' => 'blog.tag_filter.empty_value',
+                'required' => false,
+                'expanded' => true,
+                'multiple' => $options['multiple'],
+                'data' => $data,
+            ]);
     }
 
     /**

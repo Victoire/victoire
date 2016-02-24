@@ -29,8 +29,6 @@ class FolderType extends AbstractType
      * @param array                $options The options
      *
      * @see FormTypeExtensionInterface::buildForm()
-     *
-     * @return void
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -38,11 +36,9 @@ class FolderType extends AbstractType
         $type = $this;
         $builder
             ->add('name')
-            ->add('rel', ChoiceType::class, [
-                'choices'   => ['media' => 'media', 'image' => 'image', 'slideshow' => 'slideshow', 'video' => 'video'],
-                ])
+            ->add('rel', ChoiceType::class, ['choices' => ['media', 'image', 'slideshow', 'video']])
             ->add('parent', EntityType::class, ['class' => 'Victoire\Bundle\MediaBundle\Entity\Folder', 'required' => false,
-                'query_builder'                         => function (\Doctrine\ORM\EntityRepository $er) use ($folder, $type) {
+                'query_builder' => function (\Doctrine\ORM\EntityRepository $er) use ($folder, $type) {
                     $qb = $er->createQueryBuilder('folder');
 
                     if ($folder != null && $folder->getId() != null) {

@@ -2,24 +2,13 @@
 
 namespace Victoire\Bundle\PageBundle\Form;
 
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * Page Type.
- */
 class PageType extends BasePageType
 {
-    /*
-    * Constructor
-    */
-
-    public function __construct($availableLocales, RequestStack $requestStack)
-    {
-        parent::__construct($availableLocales, $requestStack);
-    }
-
     /**
      * define form fields.
      *
@@ -29,8 +18,7 @@ class PageType extends BasePageType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-        $builder
-            ->add('homepage', 'hidden');
+        $builder->add('homepage', HiddenType::class);
     }
 
     /**

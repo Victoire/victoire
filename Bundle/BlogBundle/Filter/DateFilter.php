@@ -99,13 +99,13 @@ class DateFilter extends BaseFilter
             $builder
                 ->add(
                     'year', ChoiceType::class, [
-                        'label'       => false,
-                        'choices'     => $years,
-                        'required'    => false,
-                        'expanded'    => true,
-                        'multiple'    => false,
+                        'label' => false,
+                        'choices' => $years,
+                        'required' => false,
+                        'expanded' => true,
+                        'multiple' => false,
                         'empty_value' => false,
-                        'data'        => $data['year'],
+                        'data' => $data['year'],
                     ]
                 );
         }
