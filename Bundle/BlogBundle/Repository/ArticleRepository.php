@@ -4,9 +4,9 @@ namespace Victoire\Bundle\BlogBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
-use Victoire\Bundle\BlogBundle\Entity\Article;
 use Victoire\Bundle\BlogBundle\Entity\Blog;
 use Victoire\Bundle\CoreBundle\Repository\StateFullRepositoryTrait;
+use Victoire\Bundle\PageBundle\Entity\PageStatus;
 
 /**
  * The Article repository.
@@ -32,8 +32,8 @@ class ArticleRepository extends EntityRepository
             $this->qb
                 ->andWhere('article.status = :status')
                 ->orWhere('article.status = :scheduled_status AND article.publishedAt > :publicationDate')
-                ->setParameter('status', Article::PUBLISHED)
-                ->setParameter('scheduled_status', Article::SCHEDULED)
+                ->setParameter('status', PageStatus::PUBLISHED)
+                ->setParameter('scheduled_status', PageStatus::SCHEDULED)
                 ->setParameter('publicationDate', new \DateTime());
         }
 

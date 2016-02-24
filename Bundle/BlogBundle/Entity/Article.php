@@ -10,6 +10,7 @@ use Victoire\Bundle\BusinessEntityBundle\Entity\Traits\BusinessEntityTrait;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Annotations as VIC;
 use Victoire\Bundle\MediaBundle\Entity\Media;
+use Victoire\Bundle\PageBundle\Entity\PageStatus;
 
 /**
  * @ORM\Entity(repositoryClass="Victoire\Bundle\BlogBundle\Repository\ArticleRepository"))
@@ -21,11 +22,6 @@ class Article
 {
     use BusinessEntityTrait;
     use TimestampableEntity;
-
-    const DRAFT = 'draft';
-    const PUBLISHED = 'published';
-    const UNPUBLISHED = 'unpublished';
-    const SCHEDULED = 'scheduled';
 
     /**
      * @VIC\BusinessProperty("businessParameter")
@@ -161,7 +157,7 @@ class Article
      */
     public function __construct()
     {
-        $this->status = self::DRAFT;
+        $this->status = PageStatus::DRAFT;
     }
 
     /**
@@ -263,7 +259,7 @@ class Article
      */
     public function getPublishedAt()
     {
-        if ($this->status == self::PUBLISHED && $this->publishedAt === null) {
+        if ($this->status == PageStatus::PUBLISHED && $this->publishedAt === null) {
             $this->setPublishedAt($this->getCreatedAt());
         }
 
@@ -445,7 +441,7 @@ class Article
      */
     public function setStatus($status)
     {
-        if ($status == self::PUBLISHED && $this->publishedAt === null) {
+        if ($status == PageStatus::PUBLISHED && $this->publishedAt === null) {
             $this->setPublishedAt(new \DateTime());
         }
         $this->status = $status;

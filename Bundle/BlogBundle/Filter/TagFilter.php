@@ -89,7 +89,7 @@ class TagFilter extends BaseFilter
         $tagsChoices = [];
 
         foreach ($tags as $tag) {
-            $tagsChoices[$tag->getId()] = $tag->getTitle();
+            $tagsChoices[$tag->getTitle()] = $tag->getId();
         }
 
         $data = null;

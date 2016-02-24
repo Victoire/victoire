@@ -6,13 +6,10 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Victoire\Bundle\BlogBundle\Entity\Article;
 use Victoire\Bundle\FormBundle\Form\Type\SlugType;
 use Victoire\Bundle\MediaBundle\Form\Type\MediaType;
+use Victoire\Bundle\PageBundle\Entity\PageStatus;
 
-/**
- * Edit Article Type.
- */
 class ArticleSettingsType extends ArticleType
 {
     /**
@@ -31,10 +28,10 @@ class ArticleSettingsType extends ArticleType
             ->add('status', ChoiceType::class, [
                 'label'   => 'form.page.type.status.label',
                 'choices' => [
-                    Article::DRAFT       => 'form.page.type.status.choice.label.draft',
-                    Article::PUBLISHED   => 'form.page.type.status.choice.label.published',
-                    Article::UNPUBLISHED => 'form.page.type.status.choice.label.unpublished',
-                    Article::SCHEDULED   => 'form.page.type.status.choice.label.scheduled',
+                    'form.page.type.status.choice.label.draft'       => PageStatus::DRAFT,
+                    'form.page.type.status.choice.label.published'   => PageStatus::PUBLISHED,
+                    'form.page.type.status.choice.label.unpublished' => PageStatus::UNPUBLISHED,
+                    'form.page.type.status.choice.label.scheduled'   => PageStatus::SCHEDULED,
                 ],
                 'attr' => [
                     'data-refreshOnChange' => 'true',
@@ -63,17 +60,15 @@ class ArticleSettingsType extends ArticleType
     public static function manageRelatedStatus($status, $form)
     {
         switch ($status) {
-            case Article::SCHEDULED:
-                $form
-                    ->add('publishedAt', null, [
+            case PageStatus::SCHEDULED:
+                $form->add('publishedAt', null, [
                         'widget'             => 'single_text',
                         'vic_datetimepicker' => true,
                         'label'              => 'form.article.settings.type.publish.label',
                     ]);
                 break;
             default:
-                $form
-                    ->remove('publishedAt');
+                $form->remove('publishedAt');
 
                 break;
         }
