@@ -55,8 +55,8 @@ class ArticleFilterDefaultValuesListener
                 }
             }
             $form->add('defaultValue', ChoiceType::class, [
-                'label' => 'widget_filter.form.date.default.label',
-                'choices' => $years,
+                'label'       => 'widget_filter.form.date.default.label',
+                'choices'     => $years,
                 'placeholder' => 'widget_filter.form.date.default.empty_value.label',
             ]);
         }

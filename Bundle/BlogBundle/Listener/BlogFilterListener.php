@@ -46,14 +46,14 @@ class BlogFilterListener
             case DateFilter::class:
                 $form->remove('multiple');
                 $form->add('format', ChoiceType::class, [
-                    'label' => 'widget_filter.form.date.format.label',
+                    'label'   => 'widget_filter.form.date.format.label',
                     'choices' => [
-                        'widget_filter.form.date.format.choices.year.label' => 'year',
+                        'widget_filter.form.date.format.choices.year.label'  => 'year',
                         'widget_filter.form.date.format.choices.month.label' => 'month',
-                        'widget_filter.form.date.format.choices.day.label' => 'day',
+                        'widget_filter.form.date.format.choices.day.label'   => 'day',
                     ],
                     'choices_as_values' => true,
-                    'attr' => [
+                    'attr'              => [
                         'data-refreshOnChange' => 'true',
                     ],
                 ]);

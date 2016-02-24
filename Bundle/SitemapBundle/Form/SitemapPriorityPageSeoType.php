@@ -21,8 +21,8 @@ class SitemapPriorityPageSeoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('sitemapPriority', ChoiceType::class, [
-                'label' => 'sitemap.form.priority.label',
-                'choices' => range(0, 1, 0.1), //array from 0 to 1 with a 0.1 step
+                'label'             => 'sitemap.form.priority.label',
+                'choices'           => range(0, 1, 0.1), //array from 0 to 1 with a 0.1 step
                 'choices_as_values' => true,
             ]
         );
@@ -34,7 +34,7 @@ class SitemapPriorityPageSeoType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'Victoire\Bundle\SeoBundle\Entity\PageSeo',
+            'data_class'         => 'Victoire\Bundle\SeoBundle\Entity\PageSeo',
             'translation_domain' => 'victoire',
         ]);
     }

@@ -25,10 +25,10 @@ class BusinessEntityTypeExtension extends AbstractTypeExtension
             ->add('visibleOnFront', ChoiceType::class, [
                 'choices' => [
                     'businessEntity.form.visibleOnFront.yes' => 1,
-                    'businessEntity.form.visibleOnFront.no' => 0,
+                    'businessEntity.form.visibleOnFront.no'  => 0,
                 ],
-                'choices_as_values' => true,
-                'label' => 'businessEntity.form.visibleOnFront.label',
+                'choices_as_values'  => true,
+                'label'              => 'businessEntity.form.visibleOnFront.label',
                 'translation_domain' => 'victoire',
             ]);
         }

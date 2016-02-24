@@ -123,7 +123,7 @@ class ArticleType extends AbstractType
             'label'         => 'form.article.category.label',
             'class'         => 'Victoire\\Bundle\\BlogBundle\\Entity\\Category',
             'query_builder' => $queryBuilder,
-            'placeholder'   => 'form.article.category.placeholder'
+            'placeholder'   => 'form.article.category.placeholder',
         ]);
     }
 

@@ -58,21 +58,21 @@ abstract class ViewType extends AbstractType
             }
             if (!$form->has('template')) {
                 $form->add('template', null, [
-                    'label' => 'form.view.type.template.label',
-                    'property' => 'name',
-                    'required' => !$view instanceof Template || $view instanceof BusinessTemplate,
+                    'label'         => 'form.view.type.template.label',
+                    'property'      => 'name',
+                    'required'      => !$view instanceof Template || $view instanceof BusinessTemplate,
                     'query_builder' => $getAllTemplateWithoutMe,
                 ]);
             }
             if (!$form->has('locale') && count($choices = $this->getAvailableLocales()) > 1) {
                 $data = $view->getLocale() ?: $this->currentLocale;
                 $form->add('locale', ChoiceType::class, [
-                    'expanded' => false,
-                    'multiple' => false,
-                    'choices' => $choices,
+                    'expanded'          => false,
+                    'multiple'          => false,
+                    'choices'           => $choices,
                     'choices_as_values' => true,
-                    'label' => 'form.view.type.locale.label',
-                    'data' => $data,
+                    'label'             => 'form.view.type.locale.label',
+                    'data'              => $data,
                 ]);
             }
 
@@ -92,10 +92,10 @@ abstract class ViewType extends AbstractType
                 }
 
                 $form->add('parent', null, [
-                        'class' => 'Victoire\Bundle\PageBundle\Entity\BasePage',
-                        'label' => 'form.view.type.parent.label',
+                        'class'         => 'Victoire\Bundle\PageBundle\Entity\BasePage',
+                        'label'         => 'form.view.type.parent.label',
                         'query_builder' => $getAllPageWithoutMe,
-                        'required' => true,
+                        'required'      => true,
                     ]
                 );
             }
