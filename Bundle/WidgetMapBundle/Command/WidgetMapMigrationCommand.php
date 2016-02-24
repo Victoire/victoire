@@ -88,6 +88,7 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
         /** @var View $view */
         foreach ($views as $view) {
             $this->getContainer()->get('victoire_widget_map.builder')->build($view);
+
             $widgets = [];
             foreach ($view->getWidgets() as $widget) {
                 $widgets[$widget->getId()] = $widget;
@@ -186,7 +187,7 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
                                 $supplicantWidget = $widgetRepo->find($_oldWidgetMap['widgetId']);
                                 $replacedWidgetView = $replacedWidget->getView();
                                 $this->getContainer()->get('victoire_widget_map.builder')->build($replacedWidgetView);
-                                $replacedWidgetMap = $replacedWidgetView->getWidgetMapByWidget($replacedWidget);
+                                $replacedWidgetMap = WidgetMapHelper::getWidgetMapByWidgetAndView($replacedWidget, $replacedWidgetView);
                                 // If replaced widgetMap does not exists, this is not an overwrite but a create
                                 if ($replacedWidgetMap) {
                                     $output->writeln('has replacedWidgetMap');
@@ -219,7 +220,7 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
                             if ($deletedWidgetMap) {
                                 $replacedWidgetView = $replacedWidget->getView();
                                 $this->getContainer()->get('victoire_widget_map.builder')->build($replacedWidgetView);
-                                $replacedWidgetMap = $replacedWidgetView->getWidgetMapByWidget($replacedWidget);
+                                $replacedWidgetMap = WidgetMapHelper::getWidgetMapByWidgetAndView($replacedWidget, $replacedWidgetView);
                                 $widgetMap->setReplaced($replacedWidgetMap);
 
                                 $this->getContainer()->get('victoire_widget_map.manager')->moveChildren(
