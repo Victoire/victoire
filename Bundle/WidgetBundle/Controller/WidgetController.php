@@ -237,7 +237,7 @@ class WidgetController extends Controller
         } catch (WidgetMapNotFoundException $e) {
             return new JsonResponse([
                 'success' => false,
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ]);
         }
 

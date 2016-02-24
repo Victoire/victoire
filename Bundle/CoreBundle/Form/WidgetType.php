@@ -151,7 +151,7 @@ class WidgetType extends AbstractType
         $resolver->setDefaults([
             'data_class'         => 'Victoire\Bundle\WidgetBundle\Entity\Widget',
             'translation_domain' => 'victoire',
-            'mode'               => Widget::MODE_STATIC
+            'mode'               => Widget::MODE_STATIC,
         ]);
 
         $resolver->setDefined([

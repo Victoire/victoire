@@ -9,7 +9,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Victoire\Bundle\BlogBundle\Form\HierarchyTreeType;
 use Victoire\Bundle\BlogBundle\Repository\ArticleTemplateRepository;
 use Victoire\Bundle\BlogBundle\Repository\TagRepository;
 use Victoire\Bundle\CoreBundle\DataTransformer\ViewToIdTransformer;

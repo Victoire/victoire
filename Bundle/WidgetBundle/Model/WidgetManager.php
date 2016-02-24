@@ -21,7 +21,6 @@ use Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer;
 use Victoire\Bundle\WidgetBundle\Resolver\WidgetContentResolver;
 use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
 use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
-use Victoire\Bundle\WidgetMapBundle\Exception\WidgetMapNotFoundException;
 use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 use Victoire\Bundle\WidgetMapBundle\Manager\WidgetMapManager;
 
