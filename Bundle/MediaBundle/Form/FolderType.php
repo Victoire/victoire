@@ -2,9 +2,11 @@
 
 namespace Victoire\Bundle\MediaBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Victoire\Bundle\MediaBundle\Entity\Folder;
 
 /**
@@ -16,14 +18,6 @@ class FolderType extends AbstractType
      * @var Folder
      */
     public $folder;
-
-    /**
-     * @param Folder $folder The folder
-     */
-    public function __construct(Folder $folder = null)
-    {
-        $this->folder = $folder;
-    }
 
     /**
      * Builds the form.
@@ -40,15 +34,15 @@ class FolderType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $folder = $this->folder;
+        $folder = $options['folder'];
         $type = $this;
         $builder
             ->add('name')
-            ->add('rel', 'choice', [
+            ->add('rel', ChoiceType::class, [
                 'choices'   => ['media' => 'media', 'image' => 'image', 'slideshow' => 'slideshow', 'video' => 'video'],
                 ])
-            ->add('parent', 'entity', ['class' => 'Victoire\Bundle\MediaBundle\Entity\Folder', 'required' => false,
-                'query_builder'                => function (\Doctrine\ORM\EntityRepository $er) use ($folder, $type) {
+            ->add('parent', EntityType::class, ['class' => 'Victoire\Bundle\MediaBundle\Entity\Folder', 'required' => false,
+                'query_builder'                         => function (\Doctrine\ORM\EntityRepository $er) use ($folder, $type) {
                     $qb = $er->createQueryBuilder('folder');
 
                     if ($folder != null && $folder->getId() != null) {
@@ -61,16 +55,6 @@ class FolderType extends AbstractType
                     return $qb;
                 },
         ]);
-    }
-
-    /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
-     */
-    public function getName()
-    {
-        return 'victoire_mediabundle_FolderType';
     }
 
     /**
@@ -90,14 +74,15 @@ class FolderType extends AbstractType
     }
 
     /**
-     * Sets the default options for this type.
-     *
-     * @param OptionsResolverInterface $resolver The resolver for the options.
+     * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-                'data_class' => 'Victoire\Bundle\MediaBundle\Entity\Folder',
+            'data_class' => 'Victoire\Bundle\MediaBundle\Entity\Folder',
+        ]);
+        $resolver->setDefined([
+            'folder',
         ]);
     }
 }

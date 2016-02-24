@@ -3,8 +3,9 @@
 namespace Victoire\Bundle\SitemapBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Sitemap Priority PageSeo Type.
@@ -21,7 +22,7 @@ class SitemapPriorityPageSeoType extends AbstractType
     {
         //Generate an array from 0 to 1 with a 0.1 step
         $choices = range(0, 1, 0.1);
-        $builder->add('sitemapPriority', 'choice',
+        $builder->add('sitemapPriority', ChoiceType::class,
             [
                 'label'   => 'sitemap.form.priority.label',
                 'choices' => array_combine($choices, $choices),
@@ -30,25 +31,13 @@ class SitemapPriorityPageSeoType extends AbstractType
     }
 
     /**
-     * bind to PageSeo entity.
-     *
-     * @param OptionsResolverInterface $resolver
+     * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class'         => 'Victoire\Bundle\SeoBundle\Entity\PageSeo',
             'translation_domain' => 'victoire',
         ]);
-    }
-
-    /**
-     * get form name.
-     *
-     * @return string name
-     */
-    public function getName()
-    {
-        return 'victoire_sitemap_priority_pageseo_type';
     }
 }

@@ -28,15 +28,15 @@
 
     <services>
         <service id="victoire_form.form.type_extension.vic_static_text" class="%victoire_form.form.type_extension.vic_static_text.class%">
-            <tag name="form.type_extension" alias="form" />
+            <tag name="form.type_extension" extended-type="Symfony\Component\Form\Extension\Core\Type\FormType" />
         </service>
 
         <service id="victoire_form.form.type_extension.vic_offset_button" class="%victoire_form.form.type_extension.vic_offset_button.class%">
-            <tag name="form.type_extension" alias="button" />
+            <tag name="form.type_extension" extended-type="Symfony\Component\Form\Extension\Core\Type\ButtonType" />
         </service>
 
         <service id="victoire_form.form.type_extension.vic_button" class="%victoire_form.form.type_extension.vic_button.class%">
-            <tag name="form.type_extension" alias="button" />
+            <tag name="form.type_extension" extended-type="Symfony\Component\Form\Extension\Core\Type\ButtonType" />
         </service>
 
         <service id="victoire_form.form.type_extension.vic_help" class="%victoire_form.form.type_extension.vic_help.class%">
@@ -46,11 +46,11 @@
                 <argument key="vic_help_widget_popover">%victoire_form.form.vic_help_widget.popover%</argument>
             </argument>
 
-            <tag name="form.type_extension" alias="form" />
+            <tag name="form.type_extension" extended-type="Symfony\Component\Form\Extension\Core\Type\FormType" />
         </service>
 
         <service id="victoire_form.form.type_extension.vic_business_property_picker" class="%victoire_form.form.type_extension.vic_business_property_picker.class%">
-            <tag name="form.type_extension" alias="form" />
+            <tag name="form.type_extension" extended-type="Symfony\Component\Form\Extension\Core\Type\FormType" />
         </service>
 
         <service id="victoire_form.form.type_extension.vic_legend" class="%victoire_form.form.type_extension.vic_legend.class%">
@@ -63,7 +63,7 @@
                 <argument key="vic_render_optional_text">%victoire_form.form.vic_render_optional_text%</argument>
             </argument>
 
-            <tag name="form.type_extension" alias="form" />
+            <tag name="form.type_extension" extended-type="Symfony\Component\Form\Extension\Core\Type\FormType" />
         </service>
 
         <service id="victoire_form.form.type_extension.vic_error" class="%victoire_form.form.type_extension.vic_error.class%">
@@ -71,7 +71,7 @@
                 <argument key="vic_error_type">%victoire_form.form.vic_error_type%</argument>
             </argument>
 
-            <tag name="form.type_extension" alias="form" />
+            <tag name="form.type_extension" extended-type="Symfony\Component\Form\Extension\Core\Type\FormType" />
         </service>
 
         <service id="victoire_form.form.type_extension.vic_widget" class="%victoire_form.form.type_extension.vic_widget.class%">
@@ -79,7 +79,7 @@
                 <argument key="vic_checkbox_label">%victoire_form.form.vic_checkbox_label%</argument>
             </argument>
 
-            <tag name="form.type_extension" alias="form" />
+            <tag name="form.type_extension" extended-type="Symfony\Component\Form\Extension\Core\Type\FormType" />
         </service>
 
         <service id="victoire_form.form.type_extension.vic_horizontal" class="%victoire_form.form.type_extension.vic_horizontal.class%">
@@ -90,7 +90,7 @@
                 <argument key="vic_horizontal_input_wrapper_class">%victoire_form.form.vic_horizontal_input_wrapper_class%</argument>
             </argument>
 
-            <tag name="form.type_extension" alias="form" />
+            <tag name="form.type_extension" extended-type="Symfony\Component\Form\Extension\Core\Type\FormType" />
         </service>
 
         <service id="victoire_form.form.type_extension.vic_widget_collection" class="%victoire_form.form.type_extension.vic_widget_collection.class%">
@@ -100,19 +100,19 @@
                 <argument key="vic_widget_remove_btn">%victoire_form.form.collection.vic_widget_remove_btn%</argument>
             </argument>
 
-            <tag name="form.type_extension" alias="form" />
+            <tag name="form.type_extension" extended-type="Symfony\Component\Form\Extension\Core\Type\FormType"/>
         </service>
 
         <service id="victoire_form.form.type_extension.vic_date" class="%victoire_form.form.type_extension.vic_date.class%">
-            <tag name="form.type_extension" alias="date" />
+            <tag name="form.type_extension" extended-type="Symfony\Component\Form\Extension\Core\Type\DateType"/>
         </service>
 
         <service id="victoire_form.form.type_extension.vic_datetime" class="%victoire_form.form.type_extension.vic_datetime.class%">
-            <tag name="form.type_extension" alias="datetime" />
+            <tag name="form.type_extension" extended-type="Symfony\Component\Form\Extension\Core\Type\DateTimeType" />
         </service>
 
         <service id="victoire_form.form.type_extension.vic_time" class="%victoire_form.form.type_extension.vic_time.class%">
-            <tag name="form.type_extension" alias="time" />
+            <tag name="form.type_extension" extended-type="Symfony\Component\Form\Extension\Core\Type\TimeType" />
         </service>
 
         <service id="victoire_form.form.type_extension.vic_tabbed" class="%victoire_form.form.type_extension.vic_tabbed.class%">
@@ -121,29 +121,29 @@
                 <argument key="class">%victoire_form.form.tabs.class%</argument>
             </argument>
 
-            <tag name="form.type_extension" alias="form" />
+            <tag name="form.type_extension" extended-type="Symfony\Component\Form\Extension\Core\Type\FormType" />
         </service>
 
         <service id="victoire_form.form.type.vic_tab" class="%victoire_form.form.type.vic_tab.class%">
-            <tag name="form.type" alias="tab" />
+            <tag name="form.type" />
         </service>
 
         <service id="victoire_form.form.type.vic_form_actions" class="%victoire_form.form.type.vic_form_actions.class%">
-            <tag name="form.type" alias="form_actions" />
+            <tag name="form.type" />
         </service>
 
         <service id="victoire_form.form.type.vic_link" class="%victoire_form.form.type.vic_link.class%">
             <argument>%victoire_seo.analytics%</argument>
             <argument type="service" id="victoire_view_reference.repository"></argument>
-            <tag name="form.type" alias="victoire_link" />
+            <tag name="form.type" />
         </service>
 
         <service id="victoire_form.form.type.font_awesome_picker" class="%victoire_form.form.type.font_awesome_picker.class%">
-            <tag name="form.type" alias="font_awesome_picker" />
+            <tag name="form.type" />
         </service>
 
         <service id="victoire_form.form.type.slug" class="%victoire_form.form.type.slug.class%">
-            <tag name="form.type" alias="slug" />
+            <tag name="form.type"/>
         </service>
     </services>
 </container>

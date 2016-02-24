@@ -4,7 +4,7 @@ namespace Victoire\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\ExecutionContextInterface;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Victoire\Bundle\PageBundle\Entity\Page;
 
@@ -333,10 +333,10 @@ class Link
     /**
      * undocumented function.
      *
-     * @return void
+     * @param ExecutionContextInterface $context
      *
      * @author
-     **/
+     */
     public function checkLink(ExecutionContextInterface $context)
     {
         $violation = false;
@@ -359,12 +359,7 @@ class Link
         }
 
         if ($violation) {
-            $context->addViolationAt(
-                'firstName',
-                'validator.link.error.message.'.$this->getLinkType().'Missing',
-                [],
-                null
-            );
+            $context->buildViolation('validator.link.error.message.'.$this->getLinkType().'Missing')->addViolation();
         }
     }
 

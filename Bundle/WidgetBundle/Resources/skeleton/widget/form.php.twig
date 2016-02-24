@@ -3,24 +3,18 @@
 namespace {{ namespace }}\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 {% if parent %}
 use Victoire\Widget\{{parent}}Bundle\Form\Widget{{parent}}Type;
 {% else %}
 use Victoire\Bundle\CoreBundle\Form\WidgetType;
 {% endif %}
 
-
-/**
- * Widget{{widget}} form type
- */
 class Widget{{widget}}Type extends {% if parent %}Widget{{parent}}Type{% else %}WidgetType{% endif %}
 
 {
     /**
-     * define form fields
-     * @param FormBuilderInterface $builder
-     * @param array $options
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -28,9 +22,9 @@ class Widget{{widget}}Type extends {% if parent %}Widget{{parent}}Type{% else %}
         $builder
 {% endif %}
 {% for field in fields %}
-            ->add('{{field.fieldName}}', null, array(
+            ->add('{{field.fieldName}}', null, [
                     'label' => 'widget_{{widget|lower}}.form.{{field.fieldName}}.label'
-            )){% if loop.last %};{% endif %}
+            ]){% if loop.last %};{% endif %}
 {% endfor %}
 
         parent::buildForm($builder, $options);
@@ -39,27 +33,16 @@ class Widget{{widget}}Type extends {% if parent %}Widget{{parent}}Type{% else %}
 
 
     /**
-     * bind form to Widget{{widget}} entity
-     * @param OptionsResolverInterface $resolver
+     * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        parent::setDefaultOptions($resolver);
+        parent::configureOptions($resolver);
 
         $resolver->setDefaults(array(
             'data_class'         => '{{ namespace }}\Entity\Widget{{ widget }}',
             'widget'             => '{{ widget }}',
             'translation_domain' => 'victoire'
         ));
-    }
-
-    /**
-     * get form name
-     *
-     * @return string The form name
-     */
-    public function getName()
-    {
-        return 'victoire_widget_form_{{widget|lower}}';
     }
 }

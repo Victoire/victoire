@@ -72,7 +72,7 @@ class JediController extends BackendController
      */
     private function createCreateForm(Jedi $entity)
     {
-        $form = $this->createForm(new JediType(), $entity, [
+        $form = $this->createForm(JediType::class, $entity, [
             'action' => $this->generateUrl('acme_app_jedi_create'),
             'method' => 'POST',
         ]);
@@ -161,7 +161,7 @@ class JediController extends BackendController
      */
     private function createEditForm(Jedi $entity)
     {
-        $form = $this->createForm(new JediType(), $entity, [
+        $form = $this->createForm(JediType::class, $entity, [
             'action' => $this->generateUrl('acme_app_jedi_update', ['id' => $entity->getId()]),
             'method' => 'PUT',
         ]);

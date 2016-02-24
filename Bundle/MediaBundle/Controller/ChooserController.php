@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Victoire\Bundle\MediaBundle\Entity\Folder;
 use Victoire\Bundle\MediaBundle\Entity\Media;
 use Victoire\Bundle\MediaBundle\Helper\MediaManager;
@@ -20,12 +21,16 @@ class ChooserController extends Controller
     /**
      * @Route("/", name="VictoireMediaBundle_chooser", options={"expose"=true})
      *
+     * @param Request $request
+     *
+     * @throws \Doctrine\ORM\EntityNotFoundException
+     *
      * @return RedirectResponse
      */
-    public function chooserIndexAction()
+    public function chooserIndexAction(Request $request)
     {
-        $type = $this->getRequest()->get('type');
-        $cKEditorFuncNum = $this->getRequest()->get('CKEditorFuncNum');
+        $type = $request->get('type');
+        $cKEditorFuncNum = $request->get('CKEditorFuncNum');
 
         $em = $this->getDoctrine()->getManager();
 
@@ -36,17 +41,19 @@ class ChooserController extends Controller
     }
 
     /**
-     * @param int $folderId The filder id
+     * @param Request $request
+     * @param int     $folderId The filder id
      *
-     * @Route("/{folderId}", requirements={"folderId" = "\d+"}, name="VictoireMediaBundle_chooser_show_folder")
-     * @Template()
+     * @throws \Doctrine\ORM\EntityNotFoundException
      *
      * @return array
+     * @Route("/{folderId}", requirements={"folderId" = "\d+"}, name="VictoireMediaBundle_chooser_show_folder")
+     * @Template()
      */
-    public function chooserShowFolderAction($folderId)
+    public function chooserShowFolderAction(Request $request, $folderId)
     {
-        $type = $this->getRequest()->get('type');
-        $cKEditorFuncNum = $this->getRequest()->get('CKEditorFuncNum');
+        $type = $request->get('type');
+        $cKEditorFuncNum = $request->get('CKEditorFuncNum');
 
         $em = $this->getDoctrine()->getManager();
         /* @var MediaManager $mediaHandler */

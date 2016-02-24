@@ -12,9 +12,10 @@ namespace Victoire\Bundle\FormBundle\Form\Extension;
  */
 
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Extension for creating static text (form-control-static).
@@ -28,13 +29,13 @@ class StaticTextExtension extends AbstractTypeExtension
      */
     public function getExtendedType()
     {
-        return 'text';
+        return FormType::class;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             [

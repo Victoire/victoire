@@ -4,7 +4,7 @@ namespace Victoire\Bundle\BusinessPageBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Victoire\Bundle\CoreBundle\Form\ViewType;
 
 /**
@@ -61,27 +61,16 @@ class BusinessTemplateType extends ViewType
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        parent::setDefaultOptions($resolver);
-
-        $resolver->setOptional(['businessProperty']);
+        parent::configureOptions($resolver);
+        $resolver->setDefined(['businessProperty']);
 
         $resolver->setDefaults([
                 'data_class'         => 'Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate',
                 'translation_domain' => 'victoire',
         ]);
-    }
-
-    /**
-     * The name of the form.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'victoire_business_template_type';
     }
 }

@@ -3,7 +3,7 @@ Feature: Create a page
 
 Background:
     Given I am logged in as "anakin@victoire.io"
-     And I resize the window to 1024x720
+    And I maximize the window
 
   @smartStep
 Scenario: I can create a new page
@@ -26,7 +26,7 @@ Scenario: I can change the name and the url of a given page
     And I select the option "Paramètres de la page" in the dropdown "Page"
     And I should see "Mettre à jour"
     Then I fill in "Nom" with "anoth"
-    Then I fill in "victoire_page_settings_type_slug" with "anoth"
+    Then I fill in "page_settings_slug" with "anoth"
     And I submit the widget
     And I wait 5 seconds
     Then I should be on "/fr/anoth"

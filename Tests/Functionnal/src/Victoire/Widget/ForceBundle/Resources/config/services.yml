@@ -12,4 +12,4 @@ services:
     victoire.widget.form.force:
         class: Victoire\Widget\ForceBundle\Form\WidgetForceType
         tags:
-            - { name: form.type , alias: victoire_widget_form_force }
+            - { name: form.type }

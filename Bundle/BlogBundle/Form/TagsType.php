@@ -3,11 +3,12 @@
 namespace Victoire\Bundle\BlogBundle\Form;
 
 use Doctrine\ORM\EntityManager;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Victoire\Bundle\BlogBundle\Form\DataTransformer\TagToStringTransformer;
 
 class TagsType extends AbstractType
@@ -57,20 +58,13 @@ class TagsType extends AbstractType
      */
     public function getParent()
     {
-        return 'entity';
+        return EntityType::class;
     }
 
     /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
+     * @param OptionsResolver $resolver
      */
-    public function getName()
-    {
-        return 'tags';
-    }
-
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'enable_creation' => true,

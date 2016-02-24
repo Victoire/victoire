@@ -3,7 +3,7 @@ Feature: Mercenary is not a BusinessEntity itself but extends Character which is
 
     Background:
         Given I am logged in as "anakin@victoire.io"
-        And I resize the window to 1024x720
+        And I maximize the window
 
     Scenario: I can view the mercenary show view
         Given the following Mercenaries:
@@ -29,7 +29,7 @@ Feature: Mercenary is not a BusinessEntity itself but extends Character which is
             Then I should see "Créer"
             When I follow "Personnages"
             And I follow "Objet courant"
-            And I select "name" from "character_businessEntity_victoire_widget_form_text[fields][content]"
+            And I select "name" from "character_businessEntity_widget_text[fields][content]"
             And I submit the widget
             Then I should see "Victoire !"
             Then I should see "-> name"
@@ -42,10 +42,10 @@ Feature: Mercenary is not a BusinessEntity itself but extends Character which is
             And I should see "Nouveau contenu"
             When I select "Bouton" from the "1" select of "content" slot
             Then I should see "Créer"
-            When I select "Page" from "_static_victoire_widget_form_button[link][linkType]"
+            When I select "Page" from "_static_widget_button[link][linkType]"
             And I wait 1 second
-            When I select "Fiche Personnage - Boba fet" from "_static_victoire_widget_form_button[link][viewReference]"
-            And I fill in "_static_victoire_widget_form_button[title]" with "Fiche de Boba fet"
+            When I select "Fiche Personnage - Boba fet" from "_static_widget_button[link][viewReference]"
+            And I fill in "_static_widget_button[title]" with "Fiche de Boba fet"
             And I submit the widget
             Then I should see "Victoire"
             Given I reload the page
@@ -56,7 +56,7 @@ Feature: Mercenary is not a BusinessEntity itself but extends Character which is
         # TEST a concrete BEP is available in LinkExtension
         #When I select "Text" from the "1" select of "content" slot
         #Then I should see "Créer"
-        #And I fill in "_static_victoire_widget_form_text[content]" with "My name is"
+        #And I fill in "_static_widget_text[content]" with "My name is"
         #And I submit the widget
         #And I wait 3 seconds
         #Given I am on "/"

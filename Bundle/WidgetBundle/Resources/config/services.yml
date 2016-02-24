@@ -74,7 +74,7 @@ services:
             - @kernel
             - @file_locator
         tags:
-            - { name: form.type, alias: victoire_widget_style_type }
+            - { name: form.type }
 
     victoire_widget.widget.subscriber:
         class: Victoire\Bundle\WidgetBundle\Listener\WidgetSubscriber

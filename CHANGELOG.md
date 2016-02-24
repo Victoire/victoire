@@ -2,12 +2,22 @@
 
 ## [Unreleased](https://github.com/Victoire/victoire/tree/HEAD)
 
-## [1.4.0](https://github.com/victoire/victoire/tree/1.4.0) (2016-02-17)
+## [1.5.0](https://github.com/victoire/victoire/tree/1.5.0) (2016-02-24)
+[Full Changelog](https://github.com/victoire/victoire/compare/1.4.0...1.5.0)
+
+## [1.4.0](https://github.com/victoire/victoire/tree/1.4.0) (2016-02-24)
 [Full Changelog](https://github.com/victoire/victoire/compare/1.3.7...1.4.0)
+
+**Implemented enhancements:**
+
+- Need blog RSS feed [\#339](https://github.com/Victoire/victoire/issues/339)
 
 **Merged pull requests:**
 
-- refactor widgetMaps [\#338](https://github.com/Victoire/victoire/pull/338) ([paulandrieux](https://github.com/paulandrieux))
+- Hotfix/widgetmap migration issue [\#347](https://github.com/Victoire/victoire/pull/347) ([paulandrieux](https://github.com/paulandrieux))
+- add Blog RSS feed [\#344](https://github.com/Victoire/victoire/pull/344) ([lenybernard](https://github.com/lenybernard))
+- warn message after modal fail \(as widget's way\) [\#341](https://github.com/Victoire/victoire/pull/341) ([lenybernard](https://github.com/lenybernard))
+- Refactor WidgetMap [\#338](https://github.com/Victoire/victoire/pull/338) ([lenybernard](https://github.com/lenybernard))
 - remove buggy i18n translate actions [\#336](https://github.com/Victoire/victoire/pull/336) ([lenybernard](https://github.com/lenybernard))
 - update alertify and assetic injector versions [\#335](https://github.com/Victoire/victoire/pull/335) ([lenybernard](https://github.com/lenybernard))
 - Allow to set custom translation domain for victoire admin's locale [\#327](https://github.com/Victoire/victoire/pull/327) ([lenybernard](https://github.com/lenybernard))

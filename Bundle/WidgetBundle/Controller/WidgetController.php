@@ -14,6 +14,8 @@ use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
+use Victoire\Bundle\WidgetBundle\Form\WidgetStyleType;
+use Victoire\Bundle\WidgetMapBundle\Exception\WidgetMapNotFoundException;
 use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 
 /**
@@ -188,7 +190,7 @@ class WidgetController extends Controller
         $widgetView = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $view)->getView();
         $this->get('victoire_widget_map.widget_data_warmer')->warm($this->getDoctrine()->getManager(), $view);
 
-        if ($view instanceof BusinessTemplate && !$reference = $this->container->get('victoire_view_reference.repository')
+        if ($view instanceof BusinessTemplate && !$reference = $this->get('victoire_view_reference.repository')
             ->getOneReferenceByParameters(['viewId' => $view->getId()])) {
             $reference = new ViewReference($viewReference);
             $widgetView->setReference($reference);
@@ -229,7 +231,15 @@ class WidgetController extends Controller
     {
         $view = $this->getViewByReferenceId($viewReference);
         $this->get('victoire_widget_map.builder')->build($view, $this->get('doctrine.orm.entity_manager'));
-        $widgetView = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $view)->getView();
+
+        try {
+            $widgetView = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $view)->getView();
+        } catch (WidgetMapNotFoundException $e) {
+            return new JsonResponse([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ]);
+        }
 
         $widgetViewReference = $this->container->get('victoire_view_reference.repository')
             ->getOneReferenceByParameters(['viewId' => $view->getId()]);
@@ -237,7 +247,7 @@ class WidgetController extends Controller
         $widgetView->setReference($widgetViewReference);
         $this->get('victoire_core.current_view')->setCurrentView($view);
         try {
-            $form = $this->get('form.factory')->create('victoire_widget_style_type', $widget, [
+            $form = $this->get('form.factory')->create(WidgetStyleType::class, $widget, [
                     'method' => 'POST',
                     'action' => $this->generateUrl(
                         'victoire_core_widget_stylize',

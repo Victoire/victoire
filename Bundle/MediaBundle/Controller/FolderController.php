@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Victoire\Bundle\MediaBundle\Entity\Folder;
 use Victoire\Bundle\MediaBundle\Form\FolderType;
@@ -36,8 +37,8 @@ class FolderController extends Controller
 
         $sub = new Folder();
         $sub->setParent($folder);
-        $subForm = $this->createForm(new FolderType($sub), $sub);
-        $editForm = $this->createForm(new FolderType($folder), $folder);
+        $subForm = $this->createForm(FolderType::class, $sub, ['folder' => $sub]);
+        $editForm = $this->createForm(FolderType::class, $folder, ['folder' => $folder]);
 
         return [
             'mediamanager'  => $this->get('victoire_media.media_manager'),
@@ -49,13 +50,15 @@ class FolderController extends Controller
     }
 
     /**
-     * @param int $folderId
+     * @param Request $request
+     * @param int     $folderId
      *
-     * @Route("/delete/{folderId}", requirements={"folderId" = "\d+"}, name="VictoireMediaBundle_folder_delete")
+     * @throws \Doctrine\ORM\EntityNotFoundException
      *
      * @return RedirectResponse
+     * @Route("/delete/{folderId}", requirements={"folderId" = "\d+"}, name="VictoireMediaBundle_folder_delete")
      */
-    public function deleteAction($folderId)
+    public function deleteAction(Request $request, $folderId)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -78,26 +81,27 @@ class FolderController extends Controller
     }
 
     /**
-     * @param int $folderId
+     * @param Request $request
+     * @param int     $folderId
      *
+     * @throws \Doctrine\ORM\EntityNotFoundException
+     *
+     * @return Response
      * @Route("/subcreate/{folderId}", requirements={"folderId" = "\d+"}, name="VictoireMediaBundle_folder_sub_create")
      * @Method({"GET", "POST"})
      * @Template()
-     *
-     * @return Response
      */
-    public function subCreateAction($folderId)
+    public function subCreateAction(Request $request, $folderId)
     {
         $em = $this->getDoctrine()->getManager();
-        $request = $this->getRequest();
 
         /* @var Folder $parent */
         $parent = $em->getRepository('VictoireMediaBundle:Folder')->getFolder($folderId);
         $folder = new Folder();
         $folder->setParent($parent);
-        $form = $this->createForm(new FolderType(), $folder);
+        $form = $this->createForm(FolderType::class, $folder, ['folder' => $folder]);
         if ('POST' == $request->getMethod()) {
-            $form->bind($request);
+            $form->handleRequest($request);
             if ($form->isValid()) {
                 $em->getRepository('VictoireMediaBundle:Folder')->save($folder);
 

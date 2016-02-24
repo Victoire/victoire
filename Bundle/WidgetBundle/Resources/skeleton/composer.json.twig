@@ -2,14 +2,19 @@
     "name": "{{ orgname }}/{{ widget|lower }}-widget",
     "type": "symfony-bundle",
     "description": "Victoire {{ widget }} widget",
-    "keywords": ["victoire", "{{ widget }}", "widget"],
-    "homepage": "http://victoire.io",
+    "keywords": [
+        "DCMS",
+        "Victoire",
+        "widget",
+        "FriendsofVictoire",
+        "{{ widget }}"
+    ],
     "license": "MIT",
     "require": {
-        "php"                      : ">=5.3.3",
-        "symfony/framework-bundle" : "~2.3",
-        "victoire/victoire"        : "dev-master"{% if parent %},
-        "{{packagistParentName}}": "dev-master"
+        "php": ">=5.5.9",
+        "symfony/framework-bundle": "~2.8|~3.0",
+        "victoire/victoire": "~1.5"{% if parent %},
+        "{{packagistParentName}}": "~1.0"
 {% endif %}
     },
     "autoload": {

@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\WidgetBundle\Builder;
 
+use Doctrine\Common\Util\ClassUtils;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\Form;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
@@ -162,15 +163,14 @@ class WidgetFormBuilder
             if ($namespace === null) {
                 throw new \Exception('The namespace is mandatory if the businessEntityId is given');
             }
-            if ($formMode === null) {
-                throw new \Exception('The formMode is mandatory if the businessEntityId is given');
+            if (in_array($formMode, [Widget::MODE_STATIC, null])) {
+                throw new \Exception('The formMode cannot be null or static if the businessEntityId is given');
             }
         }
 
         $container = $this->container;
         $formFactory = $container->get('form.factory');
 
-        $formAlias = 'victoire_widget_form_'.strtolower($this->container->get('victoire_widget.widget_helper')->getWidgetName($widget));
         $filters = [];
         if ($this->container->has('victoire_core.filter_chain')) {
             $filters = $this->container->get('victoire_core.filter_chain')->getFilters();
@@ -214,12 +214,20 @@ class WidgetFormBuilder
             'filters'          => $filters,
         ];
 
+        $widgetFormTypeClass = ClassUtils::getClass(
+            $this->container->get(
+                sprintf(
+                    'victoire.widget.form.%s',
+                    strtolower($this->container->get('victoire_widget.widget_helper')->getWidgetName($widget))
+                )
+            )
+        );
         /** @var Form $mockForm Get the base form to get the name */
-        $mockForm = $formFactory->create($formAlias, $widget, $params);
+        $mockForm = $formFactory->create($widgetFormTypeClass, $widget, $params);
         //Prefix base name with form mode to avoid to have unique form fields ids
         $form = $formFactory->createNamed(
             sprintf('%s_%s_%s', $businessEntityId, $formMode, $mockForm->getName()),
-            $formAlias,
+            $widgetFormTypeClass,
             $widget,
             $params
         );

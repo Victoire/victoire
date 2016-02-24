@@ -3,8 +3,10 @@
 namespace Victoire\Bundle\MediaBundle\Form\RemoteSlide;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * RemoteSlideType.
@@ -25,28 +27,16 @@ class RemoteSlideType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text')
-            ->add('code', 'text')
-            ->add('type', 'choice', [
-                'choices'   => ['slideshare' => 'slideshare'], ]);
+            ->add('name', TextType::class)
+            ->add('code', TextType::class)
+            ->add('type', ChoiceType::class, [
+                'choices' => ['slideshare' => 'slideshare'], ]);
     }
 
     /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
+     * {@inheritdoc}
      */
-    public function getName()
-    {
-        return 'victoire_mediabundle_slidetype';
-    }
-
-    /**
-     * Sets the default options for this type.
-     *
-     * @param OptionsResolverInterface $resolver The resolver for the options.
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
                 'data_class' => 'Victoire\Bundle\MediaBundle\Helper\RemoteSlide\RemoteSlideHelper',

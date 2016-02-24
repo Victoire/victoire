@@ -3,9 +3,11 @@
 namespace Victoire\Bundle\BlogBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Category form type.
@@ -21,7 +23,7 @@ class CategoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', 'text', [
+            ->add('title', TextType::class, [
                 'label'       => 'blog.form.title.label',
                 'required'    => true,
                 'constraints' => [
@@ -86,9 +88,9 @@ class CategoryType extends AbstractType
      */
     protected function addChildrenField($form)
     {
-        $form->add('children', 'collection',
+        $form->add('children', CollectionType::class,
             [
-                'type'          => 'victoire_form_blog_category',
+                'type'          => self::class,
                 'required'      => false,
                 'allow_add'     => true,
                 'allow_delete'  => true,
@@ -99,29 +101,16 @@ class CategoryType extends AbstractType
     }
 
     /**
-     * bind form to WidgetRedactor entity.
-     *
-     * @param OptionsResolverInterface $resolver
+     * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        parent::setDefaultOptions($resolver);
+        parent::configureOptions($resolver);
 
         $resolver->setDefaults([
             'data_class'         => 'Victoire\Bundle\BlogBundle\Entity\Category',
-            'cascade_validation' => true,
             'translation_domain' => 'victoire',
 
         ]);
-    }
-
-    /**
-     * get form name.
-     *
-     * @return string The name of the form
-     */
-    public function getName()
-    {
-        return 'victoire_form_blog_category';
     }
 }

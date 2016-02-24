@@ -26,14 +26,4 @@ class MediaType extends AbstractType
         $builder->add('name', 'text', ['required' => false]);
         $builder->add('file', 'file');
     }
-
-    /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
-     */
-    public function getName()
-    {
-        return 'victoire_mediabundle_mediatype';
-    }
 }

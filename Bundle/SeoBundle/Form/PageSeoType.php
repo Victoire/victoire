@@ -2,31 +2,22 @@
 
 namespace Victoire\Bundle\SeoBundle\Form;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Victoire\Bundle\MediaBundle\Form\Type\MediaType;
 
 /**
  */
 class PageSeoType extends AbstractType
 {
     /**
-     * @param ObjectManager $em
-     */
-    public function __construct(ObjectManager $em)
-    {
-        $this->em = $em;
-    }
-
-    /**
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $entityManager = $this->em;
-
         $builder
             ->add('metaTitle', null, [
                 'label' => 'form.pageSeo.metaTitle.label',
@@ -52,7 +43,7 @@ class PageSeoType extends AbstractType
                 'label' => 'form.pageSeo.ogType.label',
                 'attr'  => ['placeholder' => 'form.pageSeo.ogType.placeholder'],
             ])
-            ->add('ogImage', 'media', [
+            ->add('ogImage', MediaType::class, [
                 'label' => 'form.pageSeo.ogImage.label',
             ])
             ->add('ogUrl', null, [
@@ -66,7 +57,7 @@ class PageSeoType extends AbstractType
                 'label' => 'form.pageSeo.fbAdmins.label',
                 'attr'  => ['placeholder' => 'form.pageSeo.fbAdmins.placeholder'],
             ])
-            ->add('twitterCard', 'choice',
+            ->add('twitterCard', ChoiceType::class,
                 [
                     'label'   => 'form.pageSeo.twitterCard.label',
                     'choices' => [
@@ -96,7 +87,7 @@ class PageSeoType extends AbstractType
                 'label' => 'form.pageSeo.twitterCreator.label',
                 'attr'  => ['placeholder' => 'form.pageSeo.twitterCreator.placeholder'],
             ])
-            ->add('twitterImage', 'media', [
+            ->add('twitterImage', MediaType::class, [
                 'label' => 'form.pageSeo.twitterImage.label',
             ])
             ->add('schemaPageType', null, [
@@ -109,17 +100,17 @@ class PageSeoType extends AbstractType
             ->add('schemaDescription', null, [
                 'label' => 'form.pageSeo.schemaDescription.label',
             ])
-            ->add('schemaImage', 'media', [
+            ->add('schemaImage', MediaType::class, [
                 'label' => 'form.pageSeo.schemaImage.label',
             ])
-            ->add('metaRobotsIndex', 'choice', [
+            ->add('metaRobotsIndex', ChoiceType::class, [
                 'label'   => 'form.pageSeo.metaRobotsIndex.label',
                 'choices' => [
                     'index'   => 'form.pageSeo.metaRobotsIndex.values.index',
                     'noindex' => 'form.pageSeo.metaRobotsIndex.values.noindex',
                 ],
             ])
-            ->add('metaRobotsFollow', 'choice', [
+            ->add('metaRobotsFollow', ChoiceType::class, [
                 'label'   => 'form.pageSeo.metaRobotsFollow.label',
                 'choices' => [
                     'follow'   => 'form.pageSeo.metaRobotsFollow.values.follow',
@@ -132,7 +123,7 @@ class PageSeoType extends AbstractType
             ->add('sitemapIndexed', null, [
                 'label' => 'form.pageSeo.sitemapIndexed.label',
             ])
-            ->add('sitemapChangeFreq', 'choice',
+            ->add('sitemapChangeFreq', ChoiceType::class,
                 [
                     'label'   => 'form.pageSeo.sitemapChangeFreq.label',
                     'choices' => [
@@ -149,7 +140,7 @@ class PageSeoType extends AbstractType
             ->add('sitemapPriority', null, [
                 'label' => 'form.pageSeo.sitemapPriority.label',
             ])
-            ->add('sitemapPriority', 'choice', [
+            ->add('sitemapPriority', ChoiceType::class, [
                     'label'   => 'form.pageSeo.sitemapPriority.label',
                     'choices' => array_combine(range(0, 1, 0.1), range(0, 1, 0.1)),
             ])
@@ -167,23 +158,13 @@ class PageSeoType extends AbstractType
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class'         => 'Victoire\Bundle\SeoBundle\Entity\PageSeo',
             'translation_domain' => 'victoire',
         ]);
-    }
-
-    /**
-     * The name of the form.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'seo_page';
     }
 }

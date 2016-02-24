@@ -19,7 +19,7 @@ services:
         class: Victoire\Bundle\PageBundle\Helper\PageHelper
         arguments:
             - "@victoire_core.helper.business_entity_helper"
-            - "@fos_user.entity_manager"
+            - "@doctrine.orm.entity_manager"
             - "@victoire_view_reference.helper"
             - "@victoire_core.current_view"
             - "@event_dispatcher"
@@ -42,6 +42,7 @@ services:
         arguments: ['%victoire_core.user_class%']
         tags:
             - { name: security.voter }
+
     page.security.voter.page_debug:
         class: Victoire\Bundle\PageBundle\Security\Voter\PageDebugVoter
         arguments: ['%victoire_core.user_class%']
@@ -57,7 +58,7 @@ services:
             - "%victoire_i18n.available_locales%"
             - "@request_stack"
         tags:
-            - { name: form.type, alias: victoire_page_type }
+            - { name: form.type }
 
     victoire_page.page_settings.form.type:
         class: Victoire\Bundle\PageBundle\Form\PageSettingsType
@@ -65,7 +66,7 @@ services:
             - "%victoire_i18n.available_locales%"
             - "@request_stack"
         tags:
-            - { name: form.type, alias: victoire_page_settings_type }
+            - { name: form.type }
 
 
     ####################################################################################################################

@@ -14,7 +14,7 @@ namespace Victoire\Bundle\FormBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Type for FormTab handling.
@@ -26,7 +26,7 @@ class TabType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'icon'       => null,
@@ -44,13 +44,5 @@ class TabType extends AbstractType
         $view->vars['tab_active'] = false;
 
         $view->parent->vars['vic_tabbed'] = true;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'tab';
     }
 }

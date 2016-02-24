@@ -2,9 +2,10 @@
 
 namespace Victoire\Bundle\TemplateBundle\Form;
 
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Victoire\Bundle\CoreBundle\Form\ViewType;
 
 /**
@@ -35,7 +36,7 @@ class TemplateType extends ViewType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('layout', 'choice', [
+        $builder->add('layout', ChoiceType::class, [
                 'label'   => 'form.template.type.layout.label',
                 'choices' => $options['layouts'],
             ]
@@ -43,11 +44,9 @@ class TemplateType extends ViewType
     }
 
     /**
-     * bind to Template entity.
-     *
-     * @param OptionsResolverInterface $resolver
+     * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             [
@@ -56,13 +55,5 @@ class TemplateType extends ViewType
                 'layouts'            => $this->layouts,
             ]
         );
-    }
-
-    /**
-     * get form name.
-     */
-    public function getName()
-    {
-        return 'victoire_template_type';
     }
 }

@@ -3,6 +3,7 @@
 namespace Victoire\Bundle\BlogBundle\Listener;
 
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormEvent;
 use Victoire\Widget\FilterBundle\Event\WidgetFilterSetDefaultValueEvent;
 
@@ -11,16 +12,16 @@ use Victoire\Widget\FilterBundle\Event\WidgetFilterSetDefaultValueEvent;
  */
 class ArticleFilterDefaultValuesListener
 {
-    protected $em;
+    protected $entityManager;
 
     /**
      * Constructor.
      *
-     * @param EntityManager $em
+     * @param EntityManager $entityManager
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $entityManager)
     {
-        $this->em = $em;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -31,7 +32,7 @@ class ArticleFilterDefaultValuesListener
         $form = $event->getForm();
         $businessEntityId = $event->getBusinessEntityId();
         if ($businessEntityId == 'article') {
-            $articles = $this->em->getRepository('VictoireBlogBundle:Article')->getAll(true)->run();
+            $articles = $this->entityManager->getRepository('VictoireBlogBundle:Article')->getAll(true)->run();
             $options = $form->getConfig()->getOptions()['data'];
             $years = $months = $days = [];
             foreach ($articles as $key => $_article) {
@@ -53,7 +54,7 @@ class ArticleFilterDefaultValuesListener
                     }
                 }
             }
-            $form->add('defaultValue', 'choice', [
+            $form->add('defaultValue', ChoiceType::class, [
                 'label'       => 'widget_filter.form.date.default.label',
                 'choices'     => $years,
                 'empty_value' => 'widget_filter.form.date.default.empty_value.label',

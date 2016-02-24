@@ -7,8 +7,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Victoire\Bundle\BusinessPageBundle\Form\BusinessPageType;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
+use Victoire\Bundle\PageBundle\Form\PageSettingsType;
+use Victoire\Bundle\PageBundle\Form\PageType;
 
 /**
  * Page Administration Controller.
@@ -87,7 +90,7 @@ class PageAdministrationController extends PageController
      */
     protected function getNewPageType()
     {
-        return 'victoire_page_type';
+        return PageType::class;
     }
 
     /**
@@ -97,7 +100,7 @@ class PageAdministrationController extends PageController
      */
     protected function getPageSettingsType()
     {
-        return 'victoire_page_settings_type';
+        return PageSettingsType::class;
     }
 
     /**
@@ -107,7 +110,7 @@ class PageAdministrationController extends PageController
      */
     protected function getBusinessPageType()
     {
-        return 'victoire_business_page_type';
+        return BusinessPageType::class;
     }
 
     /**

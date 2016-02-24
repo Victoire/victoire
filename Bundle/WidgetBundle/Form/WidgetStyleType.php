@@ -5,12 +5,14 @@ namespace Victoire\Bundle\WidgetBundle\Form;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpKernel\Kernel;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Victoire\Bundle\MediaBundle\Form\Type\MediaType;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
@@ -42,7 +44,7 @@ class WidgetStyleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('containerTag', 'choice', [
+            ->add('containerTag', ChoiceType::class, [
                 'label'          => 'widget_layout.form.containerTag.label',
                 'vic_help_block' => 'widget_layout.form.containerTag.help_block',
                 'choices'        => array_combine(Widget::$tags, Widget::$tags),
@@ -89,14 +91,14 @@ class WidgetStyleType extends AbstractType
                     'required'       => false,
                 ])
                 ->add('containerWidth'.$key, null, [
-                    'label'          => 'widget_layout.form.containerWidth'.$key.'.label',
-                    'attr'           => ['placeholder' => 'widget_layout.form.containerWidth.placeholder'],
+                    'label' => 'widget_layout.form.containerWidth'.$key.'.label',
+                    'attr'  => ['placeholder' => 'widget_layout.form.containerWidth.placeholder'],
                 ])
                 ->add('containerHeight'.$key, null, [
-                    'label'          => 'widget_layout.form.containerHeight'.$key.'.label',
-                    'attr'           => ['placeholder' => 'widget_layout.form.containerWidth.placeholder'],
+                    'label' => 'widget_layout.form.containerHeight'.$key.'.label',
+                    'attr'  => ['placeholder' => 'widget_layout.form.containerWidth.placeholder'],
                 ])
-                ->add('textAlign'.$key, 'choice', [
+                ->add('textAlign'.$key, ChoiceType::class, [
                     'label'       => 'widget_layout.form.textAlign'.$key.'.label',
                     'required'    => false,
                     'empty_value' => true,
@@ -108,11 +110,11 @@ class WidgetStyleType extends AbstractType
                         'justify' => 'widget_layout.form.textAlign.choices.justify.label',
                     ],
                 ])
-                ->add('containerBackgroundType'.$key, 'choice', [
-                    'label'       => 'widget_layout.form.containerBackgroundType'.$key.'.label',
-                    'choices'     => [
-                        'color'   => 'widget_layout.form.containerBackgroundType.choices.color.label',
-                        'image'   => 'widget_layout.form.containerBackgroundType.choices.image.label',
+                ->add('containerBackgroundType'.$key, ChoiceType::class, [
+                    'label'   => 'widget_layout.form.containerBackgroundType'.$key.'.label',
+                    'choices' => [
+                        'color' => 'widget_layout.form.containerBackgroundType.choices.color.label',
+                        'image' => 'widget_layout.form.containerBackgroundType.choices.image.label',
                     ],
                     'attr' => [
                         'data-refreshOnChange' => 'true',
@@ -147,7 +149,7 @@ class WidgetStyleType extends AbstractType
             }
             //We add the theme type only if there is a choice
             if (count($choices) > 1) {
-                $form->add('theme', 'choice', [
+                $form->add('theme', ChoiceType::class, [
                     'label'   => 'widget.form.theme.label',
                     'choices' => $choices,
                 ]);
@@ -167,21 +169,21 @@ class WidgetStyleType extends AbstractType
         if ($type == 'image') {
             $form->
                 remove('containerBackgroundColor'.$responsiveKey)
-                ->add('containerBackgroundImage'.$responsiveKey, 'media', [
+                ->add('containerBackgroundImage'.$responsiveKey, MediaType::class, [
                     'label' => 'widget_layout.form.containerBackgroundImage'.$responsiveKey.'.label',
                 ])
-                ->add('containerBackgroundRepeat'.$responsiveKey, 'choice', [
-                    'label'          => 'widget_layout.form.containerBackgroundRepeat'.$responsiveKey.'.label',
-                    'choices'        => [
+                ->add('containerBackgroundRepeat'.$responsiveKey, ChoiceType::class, [
+                    'label'   => 'widget_layout.form.containerBackgroundRepeat'.$responsiveKey.'.label',
+                    'choices' => [
                         'no-repeat' => 'widget_layout.form.containerBackgroundRepeat.choices.noRepeat.label',
                         'repeat'    => 'widget_layout.form.containerBackgroundRepeat.choices.repeat.label',
                         'repeat-x'  => 'widget_layout.form.containerBackgroundRepeat.choices.repeatX.label',
                         'repeat-y'  => 'widget_layout.form.containerBackgroundRepeat.choices.repeatY.label',
                     ],
                 ])
-                ->add('containerBackgroundPosition'.$responsiveKey, 'choice', [
-                    'label'          => 'widget_layout.form.containerBackgroundPosition'.$responsiveKey.'.label',
-                    'choices'        => [
+                ->add('containerBackgroundPosition'.$responsiveKey, ChoiceType::class, [
+                    'label'   => 'widget_layout.form.containerBackgroundPosition'.$responsiveKey.'.label',
+                    'choices' => [
                         'center center' => 'widget_layout.form.containerBackgroundRepeat.choices.center.center.label',
                         'center right'  => 'widget_layout.form.containerBackgroundRepeat.choices.center.right.label',
                         'center left'   => 'widget_layout.form.containerBackgroundRepeat.choices.center.left.label',
@@ -194,12 +196,12 @@ class WidgetStyleType extends AbstractType
                     ],
                 ])
                 ->add('containerBackgroundSize'.$responsiveKey, null, [
-                    'label'          => 'widget_layout.form.containerBackgroundSize'.$responsiveKey.'.label',
-                    'attr'           => ['placeholder' => 'widget_layout.form.containerWidth.placeholder'],
+                    'label' => 'widget_layout.form.containerBackgroundSize'.$responsiveKey.'.label',
+                    'attr'  => ['placeholder' => 'widget_layout.form.containerWidth.placeholder'],
                 ])
                 ->add('containerBackgroundOverlay'.$responsiveKey, null, [
-                    'label'          => 'widget_layout.form.containerBackgroundOverlay'.$responsiveKey.'.label',
-                    'attr'           => ['placeholder' => 'widget_layout.form.containerBackgroundOverlay.placeholder'],
+                    'label' => 'widget_layout.form.containerBackgroundOverlay'.$responsiveKey.'.label',
+                    'attr'  => ['placeholder' => 'widget_layout.form.containerBackgroundOverlay.placeholder'],
                 ]);
         } else {
             $form
@@ -209,8 +211,8 @@ class WidgetStyleType extends AbstractType
                 ->remove('containerBackgroundSize'.$responsiveKey)
                 ->remove('containerBackgroundOverlay'.$responsiveKey)
                 ->add('containerBackgroundColor'.$responsiveKey, null, [
-                    'label'          => 'widget_layout.form.containerBackgroundColor'.$responsiveKey.'.label',
-                    'attr'           => ['placeholder' => 'widget_layout.form.containerBackgroundColor.placeholder'],
+                    'label' => 'widget_layout.form.containerBackgroundColor'.$responsiveKey.'.label',
+                    'attr'  => ['placeholder' => 'widget_layout.form.containerBackgroundColor.placeholder'],
                 ]);
         }
     }
@@ -218,24 +220,14 @@ class WidgetStyleType extends AbstractType
     /**
      * bind form to WidgetRedactor entity.
      *
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class'         => 'Victoire\Bundle\WidgetBundle\Entity\Widget',
             'translation_domain' => 'victoire',
         ]);
-    }
-
-    /**
-     * get form name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'victoire_widget_style_type';
     }
 
     /**

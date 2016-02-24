@@ -4,7 +4,7 @@ namespace Victoire\Bundle\BlogBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Edit Blog categories Type.
@@ -24,7 +24,7 @@ class BlogCategoryType extends AbstractType
                 'rootCategories',
                 'collection',
                 [
-                    'type'          => 'victoire_form_blog_category',
+                    'type'          => CategoryType::class,
                     'required'      => false,
                     'allow_add'     => true,
                     'allow_delete'  => true,
@@ -36,23 +36,15 @@ class BlogCategoryType extends AbstractType
     /**
      * bind to Page entity.
      *
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        parent::setDefaultOptions($resolver);
+        parent::configureOptions($resolver);
         $resolver->setDefaults(
             [
                 'cascade_validation' => 'true',
             ]
         );
-    }
-
-    /**
-     * get form name.
-     */
-    public function getName()
-    {
-        return 'victoire_blog_category_type';
     }
 }

@@ -3,7 +3,7 @@ Feature: Create a blog
 
 Background:
     Given I am logged in as "anakin@victoire.io"
-    And I resize the window to 1024x720
+    And I maximize the window
     And I am on homepage
 
     Scenario: I create a new blog

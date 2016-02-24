@@ -12,6 +12,7 @@ use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\SeoBundle\Entity\PageSeo;
+use Victoire\Bundle\SeoBundle\Form\PageSeoType;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 /**
@@ -56,7 +57,7 @@ class PageSeoController extends Controller
             ]
         );
         //create the form
-        $form = $this->get('form.factory')->create('seo_page', $pageSeo,
+        $form = $this->get('form.factory')->create(PageSeoType::class, $pageSeo,
             [
                 'action'  => $formUrl,
                 'method'  => 'POST',

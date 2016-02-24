@@ -2,12 +2,13 @@
 
 namespace Victoire\Bundle\CoreBundle\Twig\Extension;
 
+use Twig_Extension_GlobalsInterface;
 use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 
 /**
  * Provides some gloval variabls to twig.
  */
-class GlobalsExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
+class GlobalsExtension extends \Twig_Extension implements Twig_Extension_GlobalsInterface
 {
     protected $templateMapper;
     protected $session;

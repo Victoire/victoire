@@ -3,19 +3,19 @@
 namespace Victoire\Bundle\PageBundle\Security\Voter;
 
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 /**
  * This class decides yes or no if the user is granted to see the debug.
  */
-class PageDebugVoter implements VoterInterface
+class PageDebugVoter extends Voter
 {
     protected $userClass;
 
     /**
      * Constructor.
      *
-     * @param unknown $userClass
+     * @param string $userClass
      */
     public function __construct($userClass)
     {
@@ -25,37 +25,16 @@ class PageDebugVoter implements VoterInterface
     /**
      * {@inheritdoc}
      */
-    public function supportsAttribute($attribute)
+    protected function supports($attribute, $subject)
     {
-        return 'PAGE_DEBUG' === $attribute;
+        return null != $subject && 'PAGE_DEBUG' === $attribute;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function supportsClass($class)
+    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
-        return null != $class;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function vote(TokenInterface $token, $view, array $attributes)
-    {
-        foreach ($attributes as $attribute) {
-            if ($this->supportsAttribute($attribute) && $this->supportsClass($view)) {
-                $userClass = $this->userClass;
-
-                if ($token->getUser() instanceof $userClass
-                    &&
-                    $token->getUser()->hasRole('ROLE_VICTOIRE')
-                    ) {
-                    return VoterInterface::ACCESS_GRANTED;
-                }
-            }
-        }
-
-        return VoterInterface::ACCESS_DENIED;
+        return $token->getUser() instanceof $this->userClass && $token->getUser()->hasRole('ROLE_VICTOIRE');
     }
 }

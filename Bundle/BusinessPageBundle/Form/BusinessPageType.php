@@ -2,8 +2,10 @@
 
 namespace Victoire\Bundle\BusinessPageBundle\Form;
 
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Victoire\Bundle\FormBundle\Form\Type\SlugType;
 use Victoire\Bundle\PageBundle\Form\PageSettingsType;
 
 /**
@@ -30,20 +32,10 @@ class BusinessPageType extends PageSettingsType
     {
         parent::buildForm($builder, $options);
         $builder->remove('slug');
-        $builder->add('slug', 'hidden');
-        $builder->add('staticUrl', 'slug', [
+        $builder->add('slug', HiddenType::class);
+        $builder->add('staticUrl', SlugType::class, [
                 'label' => 'form.page.type.slug.label',
             ]
         );
-    }
-
-    /**
-     * The name of the form.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'victoire_business_page_type';
     }
 }

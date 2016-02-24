@@ -4,13 +4,15 @@ namespace Victoire\Bundle\BlogBundle\Form;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Victoire\Bundle\BlogBundle\Repository\ArticleTemplateRepository;
 use Victoire\Bundle\BlogBundle\Repository\TagRepository;
 use Victoire\Bundle\CoreBundle\DataTransformer\ViewToIdTransformer;
+use Victoire\Bundle\MediaBundle\Form\Type\MediaType;
 
 /**
  *
@@ -45,15 +47,15 @@ class ArticleType extends AbstractType
                 'label'    => 'form.article.description.label',
                 'required' => false,
             ])
-            ->add('image', 'media', [
+            ->add('image', MediaType::class, [
                 'required' => false,
                 'label'    => 'form.article.image.label',
             ])
             ->add($builder
-                ->create('blog', 'hidden', ['label' => 'form.article.blog.label'])
+                ->create('blog', HiddenType::class, ['label' => 'form.article.blog.label'])
                 ->addModelTransformer($viewToIdTransformer))
             ->add('template')
-            ->add('tags', 'tags', [
+            ->add('tags', TagsType::class, [
                 'required' => false,
                 'multiple' => true,
             ])
@@ -89,7 +91,7 @@ class ArticleType extends AbstractType
      */
     protected function manageTags($data, $form)
     {
-        $form->add('tags', 'tags', [
+        $form->add('tags', TagsType::class, [
             'required'      => false,
             'multiple'      => true,
             'query_builder' => function (TagRepository $er) use ($data) {
@@ -116,12 +118,12 @@ class ArticleType extends AbstractType
             $categoryRepo->clearInstance();
         }
 
-        $form->add('category', 'hierarchy_tree', [
+        $form->add('category', HierarchyTreeType::class, [
             'required'      => false,
             'label'         => 'form.article.category.label',
             'class'         => 'Victoire\\Bundle\\BlogBundle\\Entity\\Category',
             'query_builder' => $queryBuilder,
-            'empty_value'   => 'Pas de catégorie',
+            'empty_value'   => 'Pas de catégorie', //@todo translate this #easypick
             'empty_data'    => null,
         ]);
     }
@@ -145,7 +147,7 @@ class ArticleType extends AbstractType
                     'query_builder' => $articleTemplates,
                 ]);
             } else {
-                $form->add('template', 'victoire_article_template_type', [
+                $form->add('template', ArticleTemplateType::class, [
                     'data_class' => null,
                     'data'       => $articleTemplateRepo->filterByBlog($blog_id)->run('getSingleResult'),
                 ]);
@@ -158,23 +160,13 @@ class ArticleType extends AbstractType
     /**
      * bind to Page entity.
      *
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
                 'data_class'         => 'Victoire\Bundle\BlogBundle\Entity\Article',
                 'translation_domain' => 'victoire',
             ]);
-    }
-
-    /**
-     * get form name.
-     *
-     * @return string The name of the form
-     */
-    public function getName()
-    {
-        return 'victoire_article_type';
     }
 }

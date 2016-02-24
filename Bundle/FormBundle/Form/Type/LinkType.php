@@ -2,11 +2,14 @@
 
 namespace Victoire\Bundle\FormBundle\Form\Type;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Victoire\Bundle\CoreBundle\DataTransformer\JsonToArrayTransformer;
 use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
 
@@ -37,7 +40,7 @@ class LinkType extends AbstractType
     {
         $transformer = new JsonToArrayTransformer();
         $builder
-            ->add('linkType', 'choice', [
+            ->add('linkType', ChoiceType::class, [
                 'label'       => 'form.link_type.linkType.label',
                 'required'    => true,
                 'choices'     => $options['linkTypeChoices'],
@@ -53,7 +56,7 @@ class LinkType extends AbstractType
                 'attr'                           => ['novalidate' => 'novalidate', 'placeholder' => 'form.link_type.url.placeholder'],
             ]);
 
-        $builder->add('viewReference', 'choice', [
+        $builder->add('viewReference', ChoiceType::class, [
             'label'                          => 'form.link_type.view_reference.label',
             'required'                       => true,
             'attr'                           => ['novalidate' => 'novalidate'],
@@ -61,7 +64,7 @@ class LinkType extends AbstractType
             'choices'                        => $this->viewReferenceRepository->getChoices(),
             'vic_vic_widget_form_group_attr' => ['class' => 'vic-form-group vic-hidden viewReference-type'],
         ])
-        ->add('attachedWidget', 'entity', [
+        ->add('attachedWidget', EntityType::class, [
             'label'                          => 'form.link_type.attachedWidget.label',
             'empty_value'                    => 'form.link_type.attachedWidget.blank',
             'class'                          => 'VictoireWidgetBundle:Widget',
@@ -75,7 +78,7 @@ class LinkType extends AbstractType
             'required'                       => true,
             'attr'                           => ['novalidate' => 'novalidate', 'placeholder' => 'form.link_type.route.placeholder'],
         ])
-        ->add($builder->create('route_parameters', 'text', [
+        ->add($builder->create('route_parameters', TextType::class, [
                 'label'                          => 'form.link_type.route_parameters.label',
                 'vic_vic_widget_form_group_attr' => ['class' => 'vic-form-group vic-hidden route-type'],
                 'required'                       => true,
@@ -83,7 +86,7 @@ class LinkType extends AbstractType
             ])->addModelTransformer($transformer)
         )
 
-        ->add('target', 'choice', [
+        ->add('target', ChoiceType::class, [
             'label'     => 'form.link_type.target.label',
             'required'  => true,
             'choices'   => [
@@ -106,7 +109,10 @@ class LinkType extends AbstractType
         }
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class'          => 'Victoire\Bundle\CoreBundle\Entity\Link',
@@ -136,13 +142,5 @@ class LinkType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['horizontal'] = $options['horizontal'];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'victoire_link';
     }
 }

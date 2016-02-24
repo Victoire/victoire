@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
+use Victoire\Bundle\BusinessPageBundle\Form\BusinessTemplateType;
 use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
@@ -152,7 +153,7 @@ class BusinessTemplateController extends Controller
         $businessProperty = $this->getBusinessProperties($view);
 
         $form = $this->createForm(
-            'victoire_business_template_type',
+            BusinessTemplateType::class,
             $view,
             [
                 'action'           => $this->generateUrl('victoire_business_template_create', ['id' => $id]),
@@ -258,7 +259,7 @@ class BusinessTemplateController extends Controller
     {
         $businessProperty = $this->getBusinessProperties($view);
 
-        $form = $this->createForm('victoire_business_template_type', $view, [
+        $form = $this->createForm(BusinessTemplateType::class, $view, [
             'action'           => $this->generateUrl('victoire_business_template_update', ['id' => $view->getId()]),
             'method'           => 'PUT',
             'businessProperty' => $businessProperty,

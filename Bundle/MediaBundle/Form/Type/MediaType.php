@@ -7,7 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Victoire\Bundle\MediaBundle\Helper\MediaManager;
 
 /**
@@ -54,37 +54,17 @@ class MediaType extends AbstractType
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
-    public function getParent()
+    public function configureOptions(OptionsResolver $resolver)
     {
-        return 'form';
-    }
-
-    /**
-     * Sets the default options for this type.
-     *
-     * @param OptionsResolverInterface $resolver The resolver for the options.
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        parent::setDefaultOptions($resolver);
+        parent::configureOptions($resolver);
         $resolver->setDefaults([
             'compound'                => false,
             'chooser'                 => 'VictoireMediaBundle_chooser',
             'mediatype'               => null,
             'current_value_container' => new CurrentValueContainer(),
         ]);
-    }
-
-    /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
-     */
-    public function getName()
-    {
-        return 'media';
     }
 
     /**

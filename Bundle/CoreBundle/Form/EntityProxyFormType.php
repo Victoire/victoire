@@ -2,9 +2,10 @@
 
 namespace Victoire\Bundle\CoreBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Create an entity proxy for the widget.
@@ -24,7 +25,7 @@ class EntityProxyFormType extends AbstractType
         //add the link to the business entity instance
         //it depends of the form
         $builder
-            ->add($options['business_entity_id'], 'entity', [
+            ->add($options['business_entity_id'], EntityType::class, [
                 'label'       => false,
                 'required'    => false,
                 'empty_value' => 'entity_proxy.form.empty_value',
@@ -38,9 +39,9 @@ class EntityProxyFormType extends AbstractType
     /**
      * bind to Menu entity.
      *
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class'         => 'Victoire\Bundle\CoreBundle\Entity\EntityProxy',
@@ -49,15 +50,5 @@ class EntityProxyFormType extends AbstractType
             'widget'             => null,
             'translation_domain' => 'victoire',
         ]);
-    }
-
-    /**
-     * get form name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'entity_proxy';
     }
 }

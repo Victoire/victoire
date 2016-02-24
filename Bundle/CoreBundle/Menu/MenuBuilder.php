@@ -4,7 +4,7 @@ namespace Victoire\Bundle\CoreBundle\Menu;
 
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
 /**
  * Build a KnpMenu.
@@ -13,20 +13,20 @@ class MenuBuilder
 {
     protected $menu;
     protected $factory;
-    protected $securityContext;
+    protected $authorizationChecker;
     protected $topNavbar;
     protected $leftNavbar;
 
     /**
      * build a KnpMenu.
      *
-     * @param FactoryInterface         $factory
-     * @param SecurityContextInterface $securityContext
+     * @param FactoryInterface     $factory
+     * @param AuthorizationChecker $authorizationChecker
      */
-    public function __construct(FactoryInterface $factory, $securityContext)
+    public function __construct(FactoryInterface $factory, AuthorizationChecker $authorizationChecker)
     {
         $this->factory = $factory;
-        $this->securityContext = $securityContext;
+        $this->authorizationChecker = $authorizationChecker;
         $this->menu = $this->factory->createItem('root');
         $this->menu->setChildrenAttribute('class', 'nav');
 
@@ -146,6 +146,6 @@ class MenuBuilder
      */
     public function isgranted($role)
     {
-        return $this->securityContext->isGranted($role);
+        return $this->authorizationChecker->isGranted($role);
     }
 }

@@ -745,7 +745,7 @@
     {% endspaceless %}
 {% endblock font_awesome_picker_widget %}
 
-{% block victoire_link_widget %}
+{% block link_widget %}
     {% set disposition = form.vars.horizontal ? "-horizontal" : "-vertical" %}
     <div data-link class="vic-link-container {{ disposition }}">
         {{ form_row(form.linkType) }}

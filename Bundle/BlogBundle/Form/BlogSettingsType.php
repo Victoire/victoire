@@ -2,9 +2,10 @@
 
 namespace Victoire\Bundle\BlogBundle\Form;
 
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Victoire\Bundle\PageBundle\Entity\PageStatus;
 
 /**
@@ -30,7 +31,7 @@ class BlogSettingsType extends BlogType
             ->add('slug', null, [
                 'label' => 'form.page.type.slug.label',
             ])
-            ->add('status', 'choice', [
+            ->add('status', ChoiceType::class, [
                 'label'   => 'form.page.type.status.label',
                 'choices' => [
                     PageStatus::DRAFT       => 'form.page.type.status.choice.label.draft',
@@ -48,23 +49,15 @@ class BlogSettingsType extends BlogType
     /**
      * bind to Page entity.
      *
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        parent::setDefaultOptions($resolver);
+        parent::configureOptions($resolver);
         $resolver->setDefaults(
             [
                 'cascade_validation' => 'true',
             ]
         );
-    }
-
-    /**
-     * get form name.
-     */
-    public function getName()
-    {
-        return 'victoire_blog_settings_type';
     }
 }

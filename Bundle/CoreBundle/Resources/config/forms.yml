@@ -3,18 +3,18 @@ services:
     victoire_core.widget.form.type:
         class: Victoire\Bundle\CoreBundle\Form\WidgetType
         tags:
-            - { name: form.type, alias: widget }
+            - { name: form.type }
 
     victoire_core.entity_proxy.form.type:
         class: Victoire\Bundle\CoreBundle\Form\EntityProxyFormType
         arguments:
             - "@victoire_core.helper.business_entity_helper"
         tags:
-            - { name: form.type, alias: entity_proxy }
+            - { name: form.type }
 
     victoire_core.widget_fields.form.type:
         class: Victoire\Bundle\CoreBundle\Form\WidgetFieldsFormType
         arguments:
             - "@victoire_core.entity_proxy.fields_builder"
         tags:
-            - { name: form.type, alias: widget_fields }
+            - { name: form.type }

@@ -12,4 +12,4 @@ services:
     victoire.widget.form.lightsaber:
         class: Victoire\Widget\LightSaberBundle\Form\WidgetLightSaberType
         tags:
-            - { name: form.type , alias: victoire_widget_form_lightsaber }
+            - { name: form.type}

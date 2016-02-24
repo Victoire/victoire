@@ -12,6 +12,7 @@ use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
 use Victoire\Bundle\SeoBundle\Entity\PageSeo;
+use Victoire\Bundle\SitemapBundle\Form\SitemapPriorityPageSeoType;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\BusinessPageReference;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
@@ -100,15 +101,15 @@ class SitemapController extends Controller
      *
      * @return JsonResponse
      */
-    public function reorganizeAction()
+    public function reorganizeAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $pageRepo = $em->getRepository('VictoirePageBundle:BasePage');
         $response = [
             'success' => false,
         ];
-        if ($this->get('request')->getMethod() === 'POST') {
-            $sorted = $this->getRequest()->request->get('sorted');
+        if ($request->getMethod() === 'POST') {
+            $sorted = $request->request->get('sorted');
             $depths = [];
             //reorder pages positions
             foreach ($sorted as $item) {
@@ -195,11 +196,8 @@ class SitemapController extends Controller
      **/
     protected function createSitemapPriorityType(BasePage $page)
     {
-        $form = $this->createForm(
-            'victoire_sitemap_priority_pageseo_type',
-            $page->getSeo(),
-            [
-                'action'     => $this->generateUrl('victoire_sitemap_changePriority', [
+        $form = $this->createForm(SitemapPriorityPageSeoType::class, $page->getSeo(), [
+                'action' => $this->generateUrl('victoire_sitemap_changePriority', [
                         'id' => $page->getId(),
                     ]
                 ),

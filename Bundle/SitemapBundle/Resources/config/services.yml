@@ -7,7 +7,7 @@ services:
     victoire_sitemap.priority.pageseo_type:
         class: %victoire_sitemap_priority_pageseo_type_class%
         tags:
-            - { name: form.type, alias: victoire_sitemap_priority_pageseo_type }
+            - { name: form.type }
 
     #  ==================  MENU ================== #
     victoire_sitemap.sitemap_menu_listener:

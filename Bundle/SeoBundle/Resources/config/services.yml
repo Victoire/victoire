@@ -1,15 +1,10 @@
-parameters:
-    victoire_seo.pageSeoType.class: Victoire\Bundle\SeoBundle\Form\PageSeoType
-    victoire_seo.pageSeoHelper.class: Victoire\Bundle\SeoBundle\Helper\PageSeoHelper
 services:
     form.type.seo.page:
-        class: "%victoire_seo.pageSeoType.class%"
-        arguments:
-            -  "@doctrine.orm.entity_manager"
+        class: "Victoire\Bundle\SeoBundle\Form\PageSeoType"
         tags:
-            - { name: form.type , alias: seo_page }
+            - { name: form.type }
     victoire_seo.helper.pageseo_helper:
-        class: "%victoire_seo.pageSeoHelper.class%"
+        class: Victoire\Bundle\SeoBundle\Helper\PageSeoHelper
         arguments:
             - "@victoire_core.helper.business_entity_helper"
             - "@victoire_business_entity.converter.parameter_converter"

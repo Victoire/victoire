@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\CoreBundle\Twig\Extension;
 
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\SecurityContext;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
@@ -25,7 +26,7 @@ class CmsExtension extends \Twig_Extension_Core
 {
     protected $widgetRenderer;
     protected $templating;
-    protected $securityContext;
+    protected $authorizationChecker;
     protected $widgetMapBuilder;
     protected $widgetExceptionHandler;
     protected $currentViewHelper;
@@ -36,16 +37,18 @@ class CmsExtension extends \Twig_Extension_Core
      *
      * @param WidgetRenderer          $widgetRenderer
      * @param TemplateMapper          $templating
-     * @param SecurityContext         $securityContext
+     * @param AuthorizationChecker    $authorizationChecker
      * @param WidgetExceptionHandler  $widgetExceptionHandler
      * @param CurrentViewHelper       $currentViewHelper
      * @param ViewReferenceRepository $viewReferenceRepository
      * @param \Twig_Environment       $twig
+     *
+     * @internal param SecurityContext $securityContext
      */
     public function __construct(
         WidgetRenderer $widgetRenderer,
         TemplateMapper $templating,
-        SecurityContext $securityContext,
+        AuthorizationChecker $authorizationChecker,
         WidgetExceptionHandler $widgetExceptionHandler,
         CurrentViewHelper $currentViewHelper,
         ViewReferenceRepository $viewReferenceRepository,
@@ -53,7 +56,7 @@ class CmsExtension extends \Twig_Extension_Core
     ) {
         $this->widgetRenderer = $widgetRenderer;
         $this->templating = $templating;
-        $this->securityContext = $securityContext;
+        $this->authorizationChecker = $authorizationChecker;
         $this->widgetExceptionHandler = $widgetExceptionHandler;
         $this->currentViewHelper = $currentViewHelper;
         $this->viewReferenceRepository = $viewReferenceRepository;
@@ -289,7 +292,7 @@ class CmsExtension extends \Twig_Extension_Core
     {
         $isGranted = false;
 
-        if ($this->securityContext->isGranted('ROLE_VICTOIRE')) {
+        if ($this->authorizationChecker->isGranted('ROLE_VICTOIRE')) {
             $isGranted = true;
         }
 

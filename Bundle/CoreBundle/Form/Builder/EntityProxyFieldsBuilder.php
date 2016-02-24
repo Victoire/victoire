@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\CoreBundle\Form\Builder;
 
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Translation\TranslatorInterface;
 use Victoire\Bundle\BusinessEntityBundle\Entity\ReceiverProperty;
 use Victoire\Bundle\BusinessEntityBundle\Reader\BusinessEntityCacheReader;
@@ -51,8 +52,7 @@ class EntityProxyFieldsBuilder
                         //Create form types with field as key and values as choices
                         //TODO Add some formatter Class or a buildField method responsible to create this type
                         $label = $this->translator->trans(
-                            'widget_'.strtolower($widgetName).'.form.'.$receiverProperty->getFieldName(
-                            ).'.label',
+                            'widget_'.strtolower($widgetName).'.form.'.$receiverProperty->getFieldName().'.label',
                             [],
                             'victoire'
                         );
@@ -73,7 +73,7 @@ class EntityProxyFieldsBuilder
                             $options = array_merge(['required' => false], $options);
                         }
 
-                        $builder->add($receiverProperty->getFieldName(), 'choice', $options);
+                        $builder->add($receiverProperty->getFieldName(), ChoiceType::class, $options);
                     }
                 }
             }

@@ -8,6 +8,7 @@ monolog:
             type:   stream
             path:   "%kernel.logs_dir%/%kernel.environment%.log"
             level:  debug
+            channels: [!event]
         console:
             type:   console
             bubble: false
@@ -61,6 +62,7 @@ doctrine:
         user:     "travis"
         password: ~
         charset:  UTF8
+        server_version: 5.6
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
@@ -109,7 +111,7 @@ security:
         - { path: ^/admin/, role: ROLE_ADMIN }
 
 victoire_core:
-    user_class: "Victoire\Bundle\UserBundle\Entity\User"
+    user_class: "\\Victoire\\Bundle\\UserBundle\\Entity\\User"
     templates:
         layout: "::layout.html.twig"
     layouts:
@@ -122,6 +124,8 @@ victoire_core:
         - "%kernel.root_dir%/../src"
 
 services:
+    fos_user.doctrine_registry:
+        alias: doctrine #https://github.com/FriendsOfSymfony/FOSUserBundle/issues/2048#issuecomment-175471690
     twig.extension.text:
        class: Twig_Extensions_Extension_Text
        tags:

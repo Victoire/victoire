@@ -4,6 +4,7 @@ namespace Victoire\Bundle\MediaBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * BulkUploadType.
@@ -14,16 +15,6 @@ class BulkUploadType extends AbstractType
      * @var string
      */
     protected $accept;
-
-    /**
-     * contructor.
-     *
-     * @param string $accept
-     */
-    public function __construct($accept = null)
-    {
-        $this->accept = $accept;
-    }
 
     /**
      * Builds the form.
@@ -51,12 +42,14 @@ class BulkUploadType extends AbstractType
     }
 
     /**
-     * Returns the name of this type.
+     * Configures the options for this type.
      *
-     * @return string The name of this type
+     * @param OptionsResolver $resolver The resolver for the options.
      */
-    public function getName()
+    public function configureOptions(OptionsResolver $resolver)
     {
-        return 'victoire_mediabundle_bulkupload';
+        $resolver->setDefaults([
+            'accept' => '*/*',
+        ]);
     }
 }

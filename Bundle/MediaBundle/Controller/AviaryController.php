@@ -5,6 +5,7 @@ namespace Victoire\Bundle\MediaBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Victoire\Bundle\MediaBundle\Entity\Folder;
 use Victoire\Bundle\MediaBundle\Entity\Media;
 use Victoire\Bundle\MediaBundle\Helper\MediaManager;
@@ -22,7 +23,7 @@ class AviaryController extends Controller
      *
      * @return RedirectResponse
      */
-    public function indexAction($folderId, $mediaId)
+    public function indexAction(Request $request, $folderId, $mediaId)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -35,7 +36,7 @@ class AviaryController extends Controller
 
         $handler = $mediaManager->getHandler($media);
         $fileHelper = $handler->getFormHelper($media);
-        $fileHelper->getMediaFromUrl($this->getRequest()->get('url'));
+        $fileHelper->getMediaFromUrl($request->get('url'));
         $media = $fileHelper->getMedia();
 
         $em->persist($media);

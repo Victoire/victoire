@@ -2,10 +2,13 @@
 
 namespace Victoire\Bundle\BlogBundle\Form;
 
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Victoire\Bundle\BlogBundle\Entity\Article;
+use Victoire\Bundle\FormBundle\Form\Type\SlugType;
+use Victoire\Bundle\MediaBundle\Form\Type\MediaType;
 
 /**
  * Edit Article Type.
@@ -22,10 +25,10 @@ class ArticleSettingsType extends ArticleType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('slug', 'slug', [
+            ->add('slug', SlugType::class, [
                 'label' => 'form.page.type.slug.label',
             ])
-            ->add('status', 'choice', [
+            ->add('status', ChoiceType::class, [
                 'label'   => 'form.page.type.status.label',
                 'choices' => [
                     Article::DRAFT       => 'form.page.type.status.choice.label.draft',
@@ -37,7 +40,7 @@ class ArticleSettingsType extends ArticleType
                     'data-refreshOnChange' => 'true',
                 ],
             ])
-            ->add('image', 'media');
+            ->add('image', MediaType::class);
 
             // manage conditional related status in preset data
             $builder->get('status')->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -74,13 +77,5 @@ class ArticleSettingsType extends ArticleType
 
                 break;
         }
-    }
-
-    /**
-     * get form name.
-     */
-    public function getName()
-    {
-        return 'victoire_article_settings_type';
     }
 }

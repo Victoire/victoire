@@ -23,16 +23,17 @@ use Victoire\Bundle\MediaBundle\Helper\MediaManager;
 class MediaController extends Controller
 {
     /**
-     * @param int $mediaId
+     * @param Request $request
+     * @param int     $mediaId
      *
-     * @Route("/{mediaId}", requirements={"mediaId" = "\d+"}, name="VictoireMediaBundle_media_show", options={"expose"=true})
+     * @throws \Doctrine\ORM\EntityNotFoundException
      *
      * @return Response
+     * @Route("/{mediaId}", requirements={"mediaId" = "\d+"}, name="VictoireMediaBundle_media_show", options={"expose"=true})
      */
-    public function showAction($mediaId)
+    public function showAction(Request $request, $mediaId)
     {
         $em = $this->getDoctrine()->getManager();
-        $request = $this->getRequest();
 
         /* @var Media $media */
         $media = $em->getRepository('VictoireMediaBundle:Media')->getMedia($mediaId);
@@ -46,7 +47,7 @@ class MediaController extends Controller
         $form = $this->createForm($handler->getFormType(), $helper);
 
         if ('POST' == $request->getMethod()) {
-            $form->bind($request);
+            $form->handleRequest($request);
             if ($form->isValid()) {
                 $media = $helper->getMedia();
                 $em->getRepository('VictoireMediaBundle:Media')->save($media);
@@ -89,13 +90,15 @@ class MediaController extends Controller
     }
 
     /**
-     * @param int $folderId
+     * @param Request $request
+     * @param int     $folderId
      *
+     * @throws \Doctrine\ORM\EntityNotFoundException
+     *
+     * @return array|RedirectResponse
      * @Route("bulkupload/{folderId}", requirements={"folderId" = "\d+"}, name="VictoireMediaBundle_media_bulk_upload")
      * @Method({"GET", "POST"})
      * @Template()
-     *
-     * @return array|RedirectResponse
      */
     public function bulkUploadAction(Request $request, $folderId)
     {
@@ -106,10 +109,10 @@ class MediaController extends Controller
 
         $helper = new BulkUploadHelper();
 
-        $form = $this->createForm(new BulkUploadType('*/*'), $helper);
+        $form = $this->createForm(BulkUploadType::class, $helper, ['accept' => '*/*']);
 
         if ('POST' == $request->getMethod()) {
-            $form->bind($request);
+            $form->handleRequest($request);
             if ($form->isValid()) {
                 foreach ($helper->getFiles() as $file) {
                     /* @var Media $media */
@@ -127,7 +130,7 @@ class MediaController extends Controller
         $formView = $form->createView();
         $filesfield = $formView->children['files'];
         $filesfield->vars = array_replace($filesfield->vars, [
-            'full_name' => 'victoire_mediabundle_bulkupload[files][]',
+            'full_name' => 'mediabundle_bulkupload[files][]',
         ]);
 
         return [
@@ -137,14 +140,16 @@ class MediaController extends Controller
     }
 
     /**
-     * @param int $folderId
+     * @param Request $request
+     * @param int     $folderId
      *
-     * @Route("drop/{folderId}", requirements={"folderId" = "\d+"}, name="VictoireMediaBundle_media_drop_upload")
-     * @Method({"GET", "POST"})
+     * @throws \Doctrine\ORM\EntityNotFoundException
      *
      * @return Response
+     * @Route("drop/{folderId}", requirements={"folderId" = "\d+"}, name="VictoireMediaBundle_media_drop_upload")
+     * @Method({"GET", "POST"})
      */
-    public function dropAction($folderId)
+    public function dropAction(Request $request, $folderId)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -152,10 +157,10 @@ class MediaController extends Controller
         $folder = $em->getRepository('VictoireMediaBundle:Folder')->getFolder($folderId);
 
         $drop = null;
-        if (isset($this->getRequest()->files) && array_key_exists('files', $this->getRequest()->files)) {
-            $drop = $this->getRequest()->files->get('files');
+        if (isset($request->files) && array_key_exists('files', $request->files)) {
+            $drop = $request->files->get('files');
         } else {
-            $drop = $this->getRequest()->get('text');
+            $drop = $request->get('text');
         }
         $media = $this->get('victoire_media.media_manager')->createNew($drop);
         if ($media) {
@@ -165,52 +170,52 @@ class MediaController extends Controller
             return new Response(json_encode(['status' => 'File was uploaded successfuly!']));
         }
 
-        $this->getRequest()->getSession()->getFlashBag()->add('notice', 'Could not recognize what you dropped!');
+        $request->getSession()->getFlashBag()->add('notice', 'Could not recognize what you dropped!');
 
         return new Response(json_encode(['status' => 'Could not recognize anything!']));
     }
 
     /**
-     * @param int    $folderId The folder id
-     * @param string $type     The type
+     * @param Request $request
+     * @param int     $folderId The folder id
+     * @param string  $type     The type
      *
+     * @return array|RedirectResponse
      * @Route("create/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="VictoireMediaBundle_media_create")
      * @Method({"GET", "POST"})
      * @Template()
-     *
-     * @return array|RedirectResponse
      */
-    public function createAction($folderId, $type)
+    public function createAction(Request $request, $folderId, $type)
     {
-        return $this->createAndRedirect($folderId, $type, 'VictoireMediaBundle_folder_show');
+        return $this->createAndRedirect($request, $folderId, $type, 'VictoireMediaBundle_folder_show');
     }
 
     /**
-     * @param int    $folderId The folder id
-     * @param string $type     The type
+     * @param Request $request
+     * @param int     $folderId The folder id
+     * @param string  $type     The type
      *
+     * @return array|RedirectResponse
      * @Route("create/modal/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="VictoireMediaBundle_media_modal_create")
      * @Method({"GET", "POST"})
      * @Template()
-     *
-     * @return array|RedirectResponse
      */
-    public function createModalAction($folderId, $type)
+    public function createModalAction(Request $request, $folderId, $type)
     {
-        return $this->createAndRedirect($folderId, $type, 'VictoireMediaBundle_chooser_show_folder');
+        return $this->createAndRedirect($request, $folderId, $type, 'VictoireMediaBundle_chooser_show_folder');
     }
 
     /**
-     * @param int    $folderId    The folder Id
-     * @param string $type        The type
-     * @param string $redirectUrl The url where we want to redirect to on success
+     * @param Request $request
+     * @param int     $folderId    The folder Id
+     * @param string  $type        The type
+     * @param string  $redirectUrl The url where we want to redirect to on success
      *
      * @return array
      */
-    private function createAndRedirect($folderId, $type, $redirectUrl)
+    private function createAndRedirect(Request $request, $folderId, $type, $redirectUrl)
     {
         $em = $this->getDoctrine()->getManager();
-        $request = $this->getRequest();
 
         /* @var Folder $folder */
         $folder = $em->getRepository('VictoireMediaBundle:Folder')->getFolder($folderId);
@@ -224,7 +229,7 @@ class MediaController extends Controller
         $form = $this->createForm($handler->getFormType(), $helper);
 
         if ('POST' == $request->getMethod()) {
-            $form->bind($request);
+            $form->handleRequest($request);
             if ($form->isValid()) {
                 $media = $helper->getMedia();
                 $media->setFolder($folder);

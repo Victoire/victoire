@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\TemplateBundle\Event\Menu\TemplateMenuContextualEvent;
+use Victoire\Bundle\TemplateBundle\Form\TemplateType;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 /**
@@ -139,7 +140,7 @@ class TemplateController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $form = $this->createForm($this->getNewTemplateType(), $template);
+        $form = $this->createForm(TemplateType::class, $template);
         $form->handleRequest($request);
         if ($form->isValid()) {
             $em->persist($template);
@@ -188,15 +189,5 @@ class TemplateController extends Controller
         }
 
         return $this->redirect($this->generateUrl('victoire_template_settings', ['slug' => $template->getSlug()]));
-    }
-
-    /**
-     * get "new" Template Type.
-     *
-     * @return string
-     */
-    protected function getNewTemplateType()
-    {
-        return 'victoire_template_type';
     }
 }
