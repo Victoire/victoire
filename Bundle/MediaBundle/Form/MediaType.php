@@ -2,7 +2,9 @@
 
 namespace Victoire\Bundle\MediaBundle\Form;
 
+use Doctrine\DBAL\Types\TextType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -23,7 +25,7 @@ class MediaType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', 'text', ['required' => false]);
-        $builder->add('file', 'file');
+        $builder->add('name', TextType::class, ['required' => false]);
+        $builder->add('file', FileType::class);
     }
 }

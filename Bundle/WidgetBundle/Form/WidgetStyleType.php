@@ -6,6 +6,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -45,9 +46,10 @@ class WidgetStyleType extends AbstractType
     {
         $builder
             ->add('containerTag', ChoiceType::class, [
-                'label'          => 'widget_layout.form.containerTag.label',
-                'vic_help_block' => 'widget_layout.form.containerTag.help_block',
-                'choices'        => array_combine(Widget::$tags, Widget::$tags),
+                'label'             => 'widget_layout.form.containerTag.label',
+                'vic_help_block'    => 'widget_layout.form.containerTag.help_block',
+                'choices'           => Widget::$tags,
+                'choices_as_values' => true,
             ])
             ->add('containerClass', null, [
                 'label'    => 'widget_layout.form.containerClass.label',
@@ -58,7 +60,7 @@ class WidgetStyleType extends AbstractType
                 'vic_help_block' => 'widget_layout.form.containerBackground.help_block',
                 'required'       => false,
             ])
-            ->add('vicActiveTab', 'hidden', [
+            ->add('vicActiveTab', HiddenType::class, [
                 'required' => false,
                 'mapped'   => false,
             ])
@@ -99,24 +101,23 @@ class WidgetStyleType extends AbstractType
                     'attr'  => ['placeholder' => 'widget_layout.form.containerWidth.placeholder'],
                 ])
                 ->add('textAlign'.$key, ChoiceType::class, [
-                    'label'       => 'widget_layout.form.textAlign'.$key.'.label',
-                    'required'    => false,
-                    'empty_value' => true,
-                    'choices'     => [
-                        ''        => '',
-                        'left'    => 'widget_layout.form.textAlign.choices.left.label',
-                        'center'  => 'widget_layout.form.textAlign.choices.center.label',
-                        'right'   => 'widget_layout.form.textAlign.choices.right.label',
-                        'justify' => 'widget_layout.form.textAlign.choices.justify.label',
+                    'label'   => 'widget_layout.form.textAlign'.$key.'.label',
+                    'choices' => [
+                        'widget_layout.form.textAlign.choices.left.label'    => 'left',
+                        'widget_layout.form.textAlign.choices.center.label'  => 'center',
+                        'widget_layout.form.textAlign.choices.right.label'   => 'right',
+                        'widget_layout.form.textAlign.choices.justify.label' => 'justify',
                     ],
+                    'choices_as_values' => true,
                 ])
                 ->add('containerBackgroundType'.$key, ChoiceType::class, [
                     'label'   => 'widget_layout.form.containerBackgroundType'.$key.'.label',
                     'choices' => [
-                        'color' => 'widget_layout.form.containerBackgroundType.choices.color.label',
-                        'image' => 'widget_layout.form.containerBackgroundType.choices.image.label',
+                        'widget_layout.form.containerBackgroundType.choices.color.label' => 'color',
+                        'widget_layout.form.containerBackgroundType.choices.image.label' => 'image',
                     ],
-                    'attr' => [
+                    'choices_as_values' => true,
+                    'attr'              => [
                         'data-refreshOnChange' => 'true',
                     ],
                 ])
@@ -137,21 +138,21 @@ class WidgetStyleType extends AbstractType
                 ->name('/^show(.)+\.html\.twig$/')
                 ->in($this->fileLocator->locate('@'.$widgetBundle.'/Resources/views', null, false))
                 ->sortByName();
-            //add the default choice
-            $choices = [
-                '' => 'victoire.theme.default.label',
-            ];
+
+            $choices = [];
             //prepare choices by adding in each theme
             foreach ($finder as $key => $file) {
                 $theme = $file->getRelativePathname();
                 $theme = preg_replace('/show|\.html\.twig/', '', $theme);
-                $choices[$theme] = 'victoire.'.$widgetBundle.'.theme.'.$theme.'.label';
+                $choices['victoire.'.$widgetBundle.'.theme.'.$theme.'.label'] = $theme;
             }
             //We add the theme type only if there is a choice
-            if (count($choices) > 1) {
+            if (count($choices)) {
                 $form->add('theme', ChoiceType::class, [
-                    'label'   => 'widget.form.theme.label',
-                    'choices' => $choices,
+                    'label'             => 'widget.form.theme.label',
+                    'choices'           => $choices,
+                    'choices_as_values' => true,
+                    'placeholder'       => 'victoire.theme.default.label',
                 ]);
             }
         });
@@ -175,25 +176,27 @@ class WidgetStyleType extends AbstractType
                 ->add('containerBackgroundRepeat'.$responsiveKey, ChoiceType::class, [
                     'label'   => 'widget_layout.form.containerBackgroundRepeat'.$responsiveKey.'.label',
                     'choices' => [
-                        'no-repeat' => 'widget_layout.form.containerBackgroundRepeat.choices.noRepeat.label',
-                        'repeat'    => 'widget_layout.form.containerBackgroundRepeat.choices.repeat.label',
-                        'repeat-x'  => 'widget_layout.form.containerBackgroundRepeat.choices.repeatX.label',
-                        'repeat-y'  => 'widget_layout.form.containerBackgroundRepeat.choices.repeatY.label',
+                        'widget_layout.form.containerBackgroundRepeat.choices.noRepeat.label' => 'no-repeat',
+                        'widget_layout.form.containerBackgroundRepeat.choices.repeat.label'   => 'repeat',
+                        'widget_layout.form.containerBackgroundRepeat.choices.repeatX.label'  => 'repeat-x',
+                        'widget_layout.form.containerBackgroundRepeat.choices.repeatY.label'  => 'repeat-y',
                     ],
+                    'choices_as_values' => true,
                 ])
                 ->add('containerBackgroundPosition'.$responsiveKey, ChoiceType::class, [
                     'label'   => 'widget_layout.form.containerBackgroundPosition'.$responsiveKey.'.label',
                     'choices' => [
-                        'center center' => 'widget_layout.form.containerBackgroundRepeat.choices.center.center.label',
-                        'center right'  => 'widget_layout.form.containerBackgroundRepeat.choices.center.right.label',
-                        'center left'   => 'widget_layout.form.containerBackgroundRepeat.choices.center.left.label',
-                        'top center'    => 'widget_layout.form.containerBackgroundRepeat.choices.top.center.label',
-                        'top right'     => 'widget_layout.form.containerBackgroundRepeat.choices.top.right.label',
-                        'top left'      => 'widget_layout.form.containerBackgroundRepeat.choices.top.left.label',
-                        'bottom center' => 'widget_layout.form.containerBackgroundRepeat.choices.bottom.center.label',
-                        'bottom right'  => 'widget_layout.form.containerBackgroundRepeat.choices.bottom.right.label',
-                        'bottom left'   => 'widget_layout.form.containerBackgroundRepeat.choices.bottom.left.label',
+                        'widget_layout.form.containerBackgroundRepeat.choices.center.center.label' => 'center center',
+                        'widget_layout.form.containerBackgroundRepeat.choices.center.right.label'  => 'center right',
+                        'widget_layout.form.containerBackgroundRepeat.choices.center.left.label'   => 'center left',
+                        'widget_layout.form.containerBackgroundRepeat.choices.top.center.label'    => 'top center',
+                        'widget_layout.form.containerBackgroundRepeat.choices.top.right.label'     => 'top right',
+                        'widget_layout.form.containerBackgroundRepeat.choices.top.left.label'      => 'top left',
+                        'widget_layout.form.containerBackgroundRepeat.choices.bottom.center.label' => 'bottom center',
+                        'widget_layout.form.containerBackgroundRepeat.choices.bottom.right.label'  => 'bottom right',
+                        'widget_layout.form.containerBackgroundRepeat.choices.bottom.left.label'   => 'bottom left',
                     ],
+                    'choices_as_values' => true,
                 ])
                 ->add('containerBackgroundSize'.$responsiveKey, null, [
                     'label' => 'widget_layout.form.containerBackgroundSize'.$responsiveKey.'.label',

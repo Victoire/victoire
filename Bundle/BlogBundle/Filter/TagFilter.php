@@ -89,7 +89,7 @@ class TagFilter extends BaseFilter
         $tagsChoices = [];
 
         foreach ($tags as $tag) {
-            $tagsChoices[$tag->getId()] = $tag->getTitle();
+            $tagsChoices[$tag->getTitle()] = $tag->getId();
         }
 
         $data = null;
@@ -105,17 +105,16 @@ class TagFilter extends BaseFilter
         }
 
         $builder
-            ->add(
-                'tags', ChoiceType::class, [
-                    'label'       => false,
-                    'choices'     => $tagsChoices,
-                    'empty_value' => 'blog.tag_filter.empty_value',
-                    'required'    => false,
-                    'expanded'    => true,
-                    'multiple'    => $options['multiple'],
-                    'data'        => $data,
-                ]
-            );
+            ->add('tags', ChoiceType::class, [
+                'choices_as_values' => true,
+                'label'             => false,
+                'choices'           => $tagsChoices,
+                'empty_value'       => 'blog.tag_filter.empty_value',
+                'required'          => false,
+                'expanded'          => true,
+                'multiple'          => $options['multiple'],
+                'data'              => $data,
+            ]);
     }
 
     /**

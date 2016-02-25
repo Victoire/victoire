@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\BusinessPageBundle\Form;
 
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -57,7 +58,7 @@ class BusinessTemplateType extends ViewType
                     'description' => 'victoire.form.business_template.slug.vic_business_property_picker',
                 ],
             ])
-            ->add('businessEntityId', 'hidden');
+            ->add('businessEntityId', HiddenType::class);
     }
 
     /**
@@ -67,10 +68,9 @@ class BusinessTemplateType extends ViewType
     {
         parent::configureOptions($resolver);
         $resolver->setDefined(['businessProperty']);
-
         $resolver->setDefaults([
-                'data_class'         => 'Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate',
-                'translation_domain' => 'victoire',
+            'data_class'         => 'Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate',
+            'translation_domain' => 'victoire',
         ]);
     }
 }

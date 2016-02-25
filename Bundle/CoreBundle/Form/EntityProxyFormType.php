@@ -28,7 +28,7 @@ class EntityProxyFormType extends AbstractType
             ->add($options['business_entity_id'], EntityType::class, [
                 'label'       => false,
                 'required'    => false,
-                'empty_value' => 'entity_proxy.form.empty_value',
+                'placeholder' => 'entity_proxy.form.empty_value',
                 'class'       => $options['namespace'],
                 'attr'        => [
                     'class' => 'add_'.$options['business_entity_id'].'_link picker_entity_select',

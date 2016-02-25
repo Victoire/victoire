@@ -226,9 +226,9 @@
         <source>form.article.settings.type.article.title</source>
         <target>Article</target>
       </trans-unit>
-      <trans-unit id="50" resname="menu.blog.translate">
-        <source>menu.blog.translate</source>
-        <target>Traduire</target>
+      <trans-unit id="50" resname="form.article.category.placeholder">
+        <source>form.article.category.placeholder</source>
+        <target>Choisissez</target>
       </trans-unit>
     </body>
   </file>

@@ -179,7 +179,7 @@ class ViewReferenceRepository
                 if ($depth > 0) {
                     $prefix = $prefixFn($depth).' ';
                 }
-                $viewsReferences[$viewReference->getId()] = $prefix.$viewReference->getName();
+                $viewsReferences[$prefix.$viewReference->getName()] = $viewReference->getId();
             }
 
             $viewsReferences = array_merge($viewsReferences, $this->getChoices($viewReference->getId(), $depth + 1));

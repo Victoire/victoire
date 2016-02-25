@@ -48,11 +48,12 @@ class BlogFilterListener
                 $form->add('format', ChoiceType::class, [
                     'label'   => 'widget_filter.form.date.format.label',
                     'choices' => [
-                        'year'  => 'widget_filter.form.date.format.choices.year.label',
-                        'month' => 'widget_filter.form.date.format.choices.month.label',
-                        'day'   => 'widget_filter.form.date.format.choices.day.label',
+                        'widget_filter.form.date.format.choices.year.label'  => 'year',
+                        'widget_filter.form.date.format.choices.month.label' => 'month',
+                        'widget_filter.form.date.format.choices.day.label'   => 'day',
                     ],
-                    'attr' => [
+                    'choices_as_values' => true,
+                    'attr'              => [
                         'data-refreshOnChange' => 'true',
                     ],
                 ]);

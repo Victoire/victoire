@@ -35,8 +35,6 @@ abstract class ViewType extends AbstractType
      *
      * @param FormBuilderInterface $builder
      * @param array                $options
-     *
-     * @return null
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -66,16 +64,16 @@ abstract class ViewType extends AbstractType
                     'query_builder' => $getAllTemplateWithoutMe,
                 ]);
             }
-            if (!$form->has('locale') && count($choices = $this->getAvailableLocales($view)) > 1) {
+            if (!$form->has('locale') && count($choices = $this->getAvailableLocales()) > 1) {
                 $data = $view->getLocale() ?: $this->currentLocale;
                 $form->add('locale', ChoiceType::class, [
-                        'expanded' => false,
-                        'multiple' => false,
-                        'choices'  => $choices,
-                        'label'    => 'form.view.type.locale.label',
-                        'data'     => $data,
-                    ]
-                );
+                    'expanded'          => false,
+                    'multiple'          => false,
+                    'choices'           => $choices,
+                    'choices_as_values' => true,
+                    'label'             => 'form.view.type.locale.label',
+                    'data'              => $data,
+                ]);
             }
 
             //If view is an Article BEP, we do not allow to choose parent because it will be set automatically
@@ -109,13 +107,12 @@ abstract class ViewType extends AbstractType
             ]);
     }
 
-    protected function getAvailableLocales(View $view)
+    protected function getAvailableLocales()
     {
         $choices = [];
-        $i18n = $view->getI18n();
 
         foreach ($this->availableLocales as $localeVal) {
-            $choices[$localeVal] = 'victoire.i18n.viewType.locale.'.$localeVal;
+            $choices['victoire.i18n.viewType.locale.'.$localeVal] = $localeVal;
         }
 
         return $choices;

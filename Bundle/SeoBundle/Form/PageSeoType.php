@@ -61,13 +61,14 @@ class PageSeoType extends AbstractType
                 [
                     'label'   => 'form.pageSeo.twitterCard.label',
                     'choices' => [
-                        'summary'               => 'form.pageSeo.twitterCard.summary.label',
-                        'summary_large_image'   => 'form.pageSeo.twitterCard.summary_large_image.label',
-                        'photo'                 => 'form.pageSeo.twitterCard.photo.label',
-                        'app'                   => 'form.pageSeo.twitterCard.app.label',
-                        'player'                => 'form.pageSeo.twitterCard.player.label',
-                        'product'               => 'form.pageSeo.twitterCard.product.label',
+                        'form.pageSeo.twitterCard.summary.label'             => 'summary',
+                        'form.pageSeo.twitterCard.summary_large_image.label' => 'summary_large_image',
+                        'form.pageSeo.twitterCard.photo.label'               => 'photo',
+                        'form.pageSeo.twitterCard.app.label'                 => 'app',
+                        'form.pageSeo.twitterCard.player.label'              => 'player',
+                        'form.pageSeo.twitterCard.product.label'             => 'product',
                     ],
+                    'choices_as_values' => true,
                     'preferred_choices' => ['summary'],
                     'vic_help_block'    => 'form.pageSeo.twitterCard.vic_help_block',
             ])
@@ -104,17 +105,19 @@ class PageSeoType extends AbstractType
                 'label' => 'form.pageSeo.schemaImage.label',
             ])
             ->add('metaRobotsIndex', ChoiceType::class, [
-                'label'   => 'form.pageSeo.metaRobotsIndex.label',
-                'choices' => [
-                    'index'   => 'form.pageSeo.metaRobotsIndex.values.index',
-                    'noindex' => 'form.pageSeo.metaRobotsIndex.values.noindex',
+                'choices_as_values' => true,
+                'label'             => 'form.pageSeo.metaRobotsIndex.label',
+                'choices'           => [
+                    'form.pageSeo.metaRobotsIndex.values.index'   => 'index',
+                    'form.pageSeo.metaRobotsIndex.values.noindex' => 'noindex',
                 ],
             ])
             ->add('metaRobotsFollow', ChoiceType::class, [
-                'label'   => 'form.pageSeo.metaRobotsFollow.label',
-                'choices' => [
-                    'follow'   => 'form.pageSeo.metaRobotsFollow.values.follow',
-                    'nofollow' => 'form.pageSeo.metaRobotsFollow.values.nofollow',
+                'choices_as_values' => true,
+                'label'             => 'form.pageSeo.metaRobotsFollow.label',
+                'choices'           => [
+                    'form.pageSeo.metaRobotsFollow.values.follow'   => 'follow',
+                    'form.pageSeo.metaRobotsFollow.values.nofollow' => 'nofollow',
                 ],
             ])
             ->add('metaRobotsAdvanced', null, [
@@ -127,22 +130,24 @@ class PageSeoType extends AbstractType
                 [
                     'label'   => 'form.pageSeo.sitemapChangeFreq.label',
                     'choices' => [
-                        'always'  => 'form.pageSeo.sitemapChangeFreq.format.choices.always.label',
-                        'hourly'  => 'form.pageSeo.sitemapChangeFreq.format.choices.hourly.label',
-                        'daily'   => 'form.pageSeo.sitemapChangeFreq.format.choices.daily.label',
-                        'weekly'  => 'form.pageSeo.sitemapChangeFreq.format.choices.weekly.label',
-                        'monthly' => 'form.pageSeo.sitemapChangeFreq.format.choices.monthly.label',
-                        'yearly'  => 'form.pageSeo.sitemapChangeFreq.format.choices.yearly.label',
-                        'never'   => 'form.pageSeo.sitemapChangeFreq.format.choices.never.label',
+                        'form.pageSeo.sitemapChangeFreq.format.choices.always.label'  => 'always',
+                        'form.pageSeo.sitemapChangeFreq.format.choices.hourly.label'  => 'hourly',
+                        'form.pageSeo.sitemapChangeFreq.format.choices.daily.label'   => 'daily',
+                        'form.pageSeo.sitemapChangeFreq.format.choices.weekly.label'  => 'weekly',
+                        'form.pageSeo.sitemapChangeFreq.format.choices.monthly.label' => 'monthly',
+                        'form.pageSeo.sitemapChangeFreq.format.choices.yearly.label'  => 'yearly',
+                        'form.pageSeo.sitemapChangeFreq.format.choices.never.label'   => 'never',
                     ],
+                    'choices_as_values' => true,
                     'preferred_choices' => ['monthly'],
             ])
             ->add('sitemapPriority', null, [
                 'label' => 'form.pageSeo.sitemapPriority.label',
             ])
             ->add('sitemapPriority', ChoiceType::class, [
-                    'label'   => 'form.pageSeo.sitemapPriority.label',
-                    'choices' => array_combine(range(0, 1, 0.1), range(0, 1, 0.1)),
+                'label'             => 'form.pageSeo.sitemapPriority.label',
+                'choices'           => array_combine(range(0, 1, 0.1), range(0, 1, 0.1)),
+                'choices_as_values' => true,
             ])
             ->add('relCanonical', null, [
                 'label' => 'form.pageSeo.relCanonical.label',

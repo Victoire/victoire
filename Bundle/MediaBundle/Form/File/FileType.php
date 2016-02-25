@@ -3,6 +3,8 @@
 namespace Victoire\Bundle\MediaBundle\Form\File;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType as BaseFileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -24,8 +26,8 @@ class FileType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', 'text', ['required' => false]);
-        $builder->add('file', 'file');
+        $builder->add('name', TextType::class, ['required' => false]);
+        $builder->add('file', BaseFileType::class);
     }
 
     /**
@@ -34,7 +36,7 @@ class FileType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-                'data_class' => 'Victoire\Bundle\MediaBundle\Helper\File\FileHelper',
+            'data_class' => 'Victoire\Bundle\MediaBundle\Helper\File\FileHelper',
         ]);
     }
 }

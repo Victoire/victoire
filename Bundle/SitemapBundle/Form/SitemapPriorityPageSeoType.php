@@ -20,12 +20,10 @@ class SitemapPriorityPageSeoType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        //Generate an array from 0 to 1 with a 0.1 step
-        $choices = range(0, 1, 0.1);
-        $builder->add('sitemapPriority', ChoiceType::class,
-            [
-                'label'   => 'sitemap.form.priority.label',
-                'choices' => array_combine($choices, $choices),
+        $builder->add('sitemapPriority', ChoiceType::class, [
+                'label'             => 'sitemap.form.priority.label',
+                'choices'           => range(0, 1, 0.1), //array from 0 to 1 with a 0.1 step
+                'choices_as_values' => true,
             ]
         );
     }
