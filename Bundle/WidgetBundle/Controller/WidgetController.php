@@ -241,10 +241,12 @@ class WidgetController extends Controller
             ]);
         }
 
-        $widgetViewReference = $this->container->get('victoire_view_reference.repository')
-            ->getOneReferenceByParameters(['viewId' => $view->getId()]);
+        if (!$view instanceof \Victoire\Bundle\TemplateBundle\Entity\Template) {
+            $widgetViewReference = $this->container->get('victoire_view_reference.repository')
+                ->getOneReferenceByParameters(['viewId' => $view->getId()]);
+            $widgetView->setReference($widgetViewReference);
+        }
 
-        $widgetView->setReference($widgetViewReference);
         $this->get('victoire_core.current_view')->setCurrentView($view);
         try {
             $form = $this->get('form.factory')->create(WidgetStyleType::class, $widget, [

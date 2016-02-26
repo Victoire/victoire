@@ -184,6 +184,11 @@ class PageHelper
     {
         $event = new \Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent($view);
 
+        //Set currentView and dispatch victoire.on_render_page event with this currentView
+        $this->currentViewHelper->setCurrentView($view);
+        $pageRenderEvent = new PageRenderEvent($view);
+        $this->eventDispatcher->dispatch('victoire.on_render_page', $pageRenderEvent);
+
         //Build WidgetMap
         $this->widgetMapBuilder->build($view, $this->entityManager, true);
 
@@ -210,11 +215,6 @@ class PageHelper
         //Determine which layout to use
         $layout = $this->guessBestLayoutForView($view, $isAjax);
 
-        //Set currentView and dispatch victoire.on_render_page event with this currentView
-        $this->currentViewHelper->setCurrentView($view);
-        $event = new PageRenderEvent($view);
-        $this->eventDispatcher->dispatch('victoire.on_render_page', $event);
-
         //Create the response
         $response = $this->victoireTemplating->renderResponse($layout, [
             'view' => $view,
@@ -228,8 +228,6 @@ class PageHelper
      *
      * @param View           $page
      * @param BusinessEntity $entity
-     *
-     * @return BusinessPage
      */
     public function updatePageWithEntity(BusinessTemplate $page, $entity)
     {
@@ -243,10 +241,10 @@ class PageHelper
     }
 
     /**
-     * read the cache to find entity according tu given url.
-     *
      * @param BusinessPageReference $viewReference
      *
+     * @return BusinessPage
+     *                      read the cache to find entity according tu given url.
      * @return object|null
      */
     protected function findEntityByReference(ViewReference $viewReference)
