@@ -10,6 +10,7 @@ use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
+use Victoire\Bundle\WidgetMapBundle\Exception\WidgetMapNotFoundException;
 use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 
 class WidgetMapMigrationCommand extends ContainerAwareCommand
@@ -187,9 +188,8 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
                                 $supplicantWidget = $widgetRepo->find($_oldWidgetMap['widgetId']);
                                 $replacedWidgetView = $replacedWidget->getView();
                                 $this->getContainer()->get('victoire_widget_map.builder')->build($replacedWidgetView);
-                                $replacedWidgetMap = WidgetMapHelper::getWidgetMapByWidgetAndView($replacedWidget, $replacedWidgetView);
-                                // If replaced widgetMap does not exists, this is not an overwrite but a create
-                                if ($replacedWidgetMap) {
+                                try {
+                                    $replacedWidgetMap = WidgetMapHelper::getWidgetMapByWidgetAndView($replacedWidget, $replacedWidgetView);
                                     $output->writeln('has replacedWidgetMap');
                                     $widgetMap->setReplaced($replacedWidgetMap);
                                     $output->writeln('replace '.$replacedWidget->getId().' by '.$supplicantWidget->getId());
@@ -197,6 +197,8 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
                                     $widgetMap->setPosition($replacedWidgetMap->getPosition());
                                     $output->writeln('set parent'.($replacedWidgetMap->getParent() ? $replacedWidgetMap->getParent()->getWidget()->getId() : null));
                                     $widgetMap->setParent($replacedWidgetMap->getParent());
+                                } catch (WidgetMapNotFoundException $e) {
+                                    // If replaced widgetMap does not exists, this is not an overwrite but a create
                                 }
                             } elseif ($referencedWidgetMap) {
                                 $output->writeln('move');
@@ -216,8 +218,8 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
                             $widgetMap->setPosition(null);
                             $output->writeln('set parent'.null);
                             $widgetMap->setParent(null);
-                            $deletedWidgetMap = WidgetMapHelper::getWidgetMapByWidgetAndView($replacedWidget, $view);
-                            if ($deletedWidgetMap) {
+                            try {
+                                $deletedWidgetMap = WidgetMapHelper::getWidgetMapByWidgetAndView($replacedWidget, $view);
                                 $replacedWidgetView = $replacedWidget->getView();
                                 $this->getContainer()->get('victoire_widget_map.builder')->build($replacedWidgetView);
                                 $replacedWidgetMap = WidgetMapHelper::getWidgetMapByWidgetAndView($replacedWidget, $replacedWidgetView);
@@ -230,7 +232,7 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
                                     $deletedWidgetMap->getParent(),
                                     $deletedWidgetMap->getPosition()
                                 );
-                            } else {
+                            } catch (WidgetMapNotFoundException $e) {
                                 continue;
                             }
                         }
