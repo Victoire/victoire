@@ -88,7 +88,9 @@ class WidgetRenderer
             $directive = 'widget';
         }
 
-        $html = sprintf('<div %s widget-map="%s" class="vic-widget-container" data-id="%s">', $directive, $widgetMap->getId(), $widget->getId());
+        $id = "vic-widget-".$widget->getId()."-container";
+
+        $html = sprintf('<div %s widget-map="%s" id="%s" class="vic-widget-container" data-id="%s">', $directive, $widgetMap->getId(), $id, $widget->getId());
 
         $content = $this->widgetCache->fetch($widget);
         if (null === $content) {
@@ -96,7 +98,7 @@ class WidgetRenderer
             $this->widgetCache->save($widget, $content);
         }
         $html .= $content;
-        $html .= '</div>';
+        $html .= '</div>'; //close container
 
         $dispatcher->dispatch(VictoireCmsEvents::WIDGET_POST_RENDER, new WidgetRenderEvent($widget, $html));
 

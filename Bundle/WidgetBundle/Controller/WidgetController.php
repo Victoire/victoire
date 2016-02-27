@@ -49,7 +49,7 @@ class WidgetController extends Controller
             $response = new JsonResponse([
                     'html'    => $this->get('victoire_widget.widget_renderer')->render($widget, $view),
                     'update'  => 'vic-widget-'.$widget->getId().'-container',
-                    'success' => false,
+                    'success' => true,
                 ]
             );
         } catch (Exception $ex) {
