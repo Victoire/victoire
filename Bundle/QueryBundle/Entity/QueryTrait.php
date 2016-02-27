@@ -1,6 +1,6 @@
 <?php
 
-namespace Victoire\Bundle\QueryBundle\Entity\Traits;
+namespace Victoire\Bundle\QueryBundle\Entity;
 
 /**
  * Query trait adds the query fields.

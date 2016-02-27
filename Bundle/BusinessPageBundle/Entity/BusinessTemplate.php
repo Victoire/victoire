@@ -4,6 +4,8 @@ namespace Victoire\Bundle\BusinessPageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Victoire\Bundle\PageBundle\Entity\PageStatus;
+use Victoire\Bundle\QueryBundle\Entity\QueryTrait;
+use Victoire\Bundle\QueryBundle\Entity\VictoireQueryInterface;
 use Victoire\Bundle\SeoBundle\Entity\PageSeo;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 
@@ -13,10 +15,10 @@ use Victoire\Bundle\TemplateBundle\Entity\Template;
  * @ORM\Entity(repositoryClass="Victoire\Bundle\BusinessPageBundle\Repository\BusinessTemplateRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class BusinessTemplate extends Template
+class BusinessTemplate extends Template implements VictoireQueryInterface
 {
     //This trait add the query and business_entity_id columns
-    use \Victoire\Bundle\QueryBundle\Entity\Traits\QueryTrait;
+    use QueryTrait;
 
     const TYPE = 'business_template';
 

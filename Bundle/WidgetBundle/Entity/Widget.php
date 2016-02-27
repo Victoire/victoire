@@ -5,7 +5,8 @@ namespace Victoire\Bundle\WidgetBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Victoire\Bundle\CoreBundle\Entity\BaseEntityProxy;
-use Victoire\Bundle\QueryBundle\Entity\Traits\QueryTrait;
+use Victoire\Bundle\QueryBundle\Entity\QueryTrait;
+use Victoire\Bundle\QueryBundle\Entity\VictoireQueryInterface;
 use Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTrait;
 use Victoire\Bundle\WidgetBundle\Model\Widget as BaseWidget;
 use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
@@ -18,7 +19,7 @@ use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
  */
-class Widget extends BaseWidget
+class Widget extends BaseWidget implements VictoireQueryInterface
 {
     use StyleTrait;
     use QueryTrait;
