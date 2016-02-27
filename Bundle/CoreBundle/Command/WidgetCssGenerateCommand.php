@@ -76,7 +76,7 @@ class WidgetCssGenerateCommand extends ContainerAwareCommand
             }
 
             //Generate CSS file with its widgets style
-            $widgetMapBuilder->build($view, true);
+            $widgetMapBuilder->build($view, $entityManager);
             $widgets = $widgetRepo->findAllWidgetsForView($view);
             $viewCssBuilder->generateViewCss($view, $widgets);
 
