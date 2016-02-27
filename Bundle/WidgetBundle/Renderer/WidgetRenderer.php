@@ -64,10 +64,7 @@ class WidgetRenderer
         $showView = 'show'.ucfirst($widget->getTheme());
         $templateName = $this->container->get('victoire_widget.widget_helper')->getTemplateName($showView, $widget);
 
-        return $templating->render(
-            $templateName,
-            $parameters
-        );
+        return $templating->render($templateName, $parameters);
     }
 
     /**
