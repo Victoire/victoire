@@ -5,11 +5,15 @@ namespace Victoire\Bundle\WidgetBundle\Builder;
 use Doctrine\Common\Util\ClassUtils;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\Form;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Event\WidgetBuildFormEvent;
 use Victoire\Bundle\CoreBundle\VictoireCmsEvents;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
+use Victoire\Bundle\WidgetBundle\Event\WidgetFormCreateEvent;
+use Victoire\Bundle\WidgetBundle\Event\WidgetFormEvents;
+use Victoire\Bundle\WidgetBundle\Form\WidgetOptionsContainer;
 
 class WidgetFormBuilder
 {
@@ -171,15 +175,10 @@ class WidgetFormBuilder
         $container = $this->container;
         $formFactory = $container->get('form.factory');
 
-        $filters = [];
-        if ($this->container->has('victoire_core.filter_chain')) {
-            $filters = $this->container->get('victoire_core.filter_chain')->getFilters();
-        }
-
         //are we updating or creating the widget?
         if ($widget->getId() === null) {
             $viewReference = $view->getReference();
-            $params = [
+            $actionParams = [
                 'viewReference'      => $viewReference->getId(),
                 'slot'               => $slotId,
                 'type'               => $widget->getType(), // @todo: use the config
@@ -188,12 +187,12 @@ class WidgetFormBuilder
             ];
             $action = 'victoire_core_widget_create';
             if ($businessEntityId) {
-                $params['businessEntityId'] = $businessEntityId;
-                $params['mode'] = $formMode;
+                $actionParams['businessEntityId'] = $businessEntityId;
+                $actionParams['mode'] = $formMode;
             } else {
                 $action = 'victoire_core_widget_create_static';
             }
-            $formUrl = $router->generate($action, $params);
+            $formUrl = $router->generate($action, $actionParams);
         } else {
             $viewReference = $widget->getCurrentView()->getReference();
             $formUrl = $router->generate('victoire_core_widget_update',
@@ -205,14 +204,6 @@ class WidgetFormBuilder
                 ]
             );
         }
-        $params = [
-            'businessEntityId' => $businessEntityId,
-            'namespace'        => $namespace,
-            'mode'             => $formMode,
-            'action'           => $formUrl,
-            'method'           => 'POST',
-            'filters'          => $filters,
-        ];
 
         $widgetFormTypeClass = ClassUtils::getClass(
             $this->container->get(
@@ -222,8 +213,20 @@ class WidgetFormBuilder
                 )
             )
         );
+
+        $optionsContainer = new WidgetOptionsContainer([
+            'businessEntityId' => $businessEntityId,
+            'namespace'        => $namespace,
+            'mode'             => $formMode,
+            'action'           => $formUrl,
+            'method'           => 'POST',
+        ]);
+
+        $event = new WidgetFormCreateEvent($optionsContainer, $widgetFormTypeClass);
+        $this->container->get('event_dispatcher')->dispatch(WidgetFormEvents::PRE_CREATE, $event);
+
         /** @var Form $mockForm Get the base form to get the name */
-        $mockForm = $formFactory->create($widgetFormTypeClass, $widget, $params);
+        $mockForm = $formFactory->create($widgetFormTypeClass, $widget, $optionsContainer->getOptions());
         //Prefix base name with form mode to avoid to have unique form fields ids
         $form = $formFactory->createNamed(
             sprintf('%s_%s_%s', $businessEntityId, $formMode, $mockForm->getName()),

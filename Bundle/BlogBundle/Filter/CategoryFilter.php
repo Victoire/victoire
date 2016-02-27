@@ -199,4 +199,14 @@ class CategoryFilter extends BaseFilter
     {
         return $this->getEntityManager()->getRepository('VictoireBlogBundle:Category')->findById($filters['category']);
     }
+
+    /**
+     * get name.
+     *
+     * @return string name
+     */
+    public function getName()
+    {
+        return 'category_filter';
+    }
 }

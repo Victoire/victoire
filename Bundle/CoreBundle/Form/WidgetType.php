@@ -156,7 +156,6 @@ class WidgetType extends AbstractType
 
         $resolver->setDefined([
             'widget',
-            'filters',
             'slot',
             'namespace',
             'businessEntityId',

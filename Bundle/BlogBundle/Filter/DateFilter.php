@@ -110,4 +110,14 @@ class DateFilter extends BaseFilter
                 );
         }
     }
+
+    /**
+     * get name.
+     *
+     * @return string name
+     */
+    public function getName()
+    {
+        return 'date_filter';
+    }
 }

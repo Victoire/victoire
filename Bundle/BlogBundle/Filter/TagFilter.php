@@ -106,9 +106,9 @@ class TagFilter extends BaseFilter
 
         $builder
             ->add('tags', ChoiceType::class, [
-                'choices_as_values' => true,
                 'label'             => false,
                 'choices'           => $tagsChoices,
+                'choices_as_values' => true,
                 'empty_value'       => 'blog.tag_filter.empty_value',
                 'required'          => false,
                 'expanded'          => true,
@@ -127,5 +127,15 @@ class TagFilter extends BaseFilter
     public function getFilters($filters)
     {
         return $this->getEntityManager()->getRepository('VictoireBlogBundle:Tag')->findById($filters['tags']);
+    }
+
+    /**
+     * get name.
+     *
+     * @return string name
+     */
+    public function getName()
+    {
+        return 'tag_filter';
     }
 }
