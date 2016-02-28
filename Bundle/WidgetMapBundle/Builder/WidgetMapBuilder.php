@@ -118,7 +118,7 @@ class WidgetMapBuilder
         $children = $currentWidgetMap->getChildren($view);
         foreach ($children as $child) {
             // check if the founded child belongs to the view
-            if (in_array($child, $widgetMaps)
+            if (in_array($child, $widgetMaps, true)
             ) {
                 // Find the position of the "currentWidgetMap" inside the builtWidgetMap,
                 // add "1" to this position if wanted position is "after", 0 is it's before.
