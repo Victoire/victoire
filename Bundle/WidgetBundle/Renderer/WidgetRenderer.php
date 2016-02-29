@@ -24,9 +24,9 @@ class WidgetRenderer
     /**
      * WidgetRenderer constructor.
      *
-     * @param Container         $container
-     * @param                   $victoireTwigResponsive
-     * @param Client            $redis
+     * @param Container   $container
+     * @param             $victoireTwigResponsive
+     * @param Client      $redis
      * @param WidgetCache $widgetCache
      */
     public function __construct(Container $container, $victoireTwigResponsive, WidgetCache $widgetCache)

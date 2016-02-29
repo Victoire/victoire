@@ -41,7 +41,7 @@ class WidgetCache
         $hash = $this->getHash($widget);
 
         $this->redis->set($hash, $content);
-        $this->redis->expire($hash, 7*24*60*1000); // cache for a week
+        $this->redis->expire($hash, 7 * 24 * 60 * 1000); // cache for a week
     }
 
     /**
@@ -56,8 +56,8 @@ class WidgetCache
         if ($widget->getMode() == Widget::MODE_BUSINESS_ENTITY
             && ($entity = $widget->getEntity())
             && method_exists($widget->getEntity(), 'getUpdatedAt')) {
-                $hash .= sprintf('-%s', $entity->getUpdatedAt()->getTimestamp());
-            }
+            $hash .= sprintf('-%s', $entity->getUpdatedAt()->getTimestamp());
+        }
 
         return $hash;
     }
