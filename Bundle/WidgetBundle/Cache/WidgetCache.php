@@ -39,9 +39,10 @@ class WidgetCache
     public function save(Widget $widget, $content)
     {
         $hash = $this->getHash($widget);
-
-        $this->redis->set($hash, $content);
-        $this->redis->expire($hash, 7 * 24 * 60 * 1000); // cache for a week
+        if ($hash) {
+            $this->redis->set($hash, $content);
+            $this->redis->expire($hash, 7 * 24 * 60 * 1000); // cache for a week
+        }
     }
 
     /**
@@ -51,12 +52,18 @@ class WidgetCache
      */
     protected function getHash(Widget $widget)
     {
-        $hash = sprintf('%s-%s', $widget->getId(), $widget->getUpdatedAt()->getTimestamp());
-
+        $hash = null;
         if ($widget->getMode() == Widget::MODE_BUSINESS_ENTITY
             && ($entity = $widget->getEntity())
             && method_exists($widget->getEntity(), 'getUpdatedAt')) {
-            $hash .= sprintf('-%s', $entity->getUpdatedAt()->getTimestamp());
+            $hash = sprintf('%s-%s--%s-%s',
+                $widget->getId(),
+                $widget->getUpdatedAt()->getTimestamp(),
+                $entity->getId(),
+                $entity->getUpdatedAt()->getTimestamp()
+            );
+        } elseif ($widget->getMode() == Widget::MODE_STATIC) {
+            $hash = sprintf('%s-%s', $widget->getId(), $widget->getUpdatedAt()->getTimestamp());
         }
 
         return $hash;
