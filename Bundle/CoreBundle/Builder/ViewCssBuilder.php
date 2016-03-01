@@ -68,7 +68,7 @@ class ViewCssBuilder
                 'victoire_twig_responsive' => $this->victoireTwigResponsive,
             ]
         );
-            $css .= trim($this->widgetRenderer->renderStyle($widget));
+            $css .= trim($style);
         }
 
         if ($css !== '') {
