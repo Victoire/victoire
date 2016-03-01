@@ -22,13 +22,13 @@ services:
         class: Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer
         arguments:
             - @service_container
-            - %victoire_twig.responsive%
             - @victoire_widget.widget_cache
 
     victoire_widget.widget_cache:
         class: Victoire\Bundle\WidgetBundle\Cache\WidgetCache
         arguments:
             - @snc_redis.victoire_client
+            - @security.authorization_checker
 
     victoire_widget.widget_manager:
         class: Victoire\Bundle\WidgetBundle\Model\WidgetManager

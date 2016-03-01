@@ -3,14 +3,19 @@
 namespace Victoire\Bundle\CoreBundle\Builder;
 
 use Victoire\Bundle\CoreBundle\Entity\View;
+use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 use Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer;
 
 /**
  * View CSS Builder
  * ref: victoire_core.view_css_builder.
- */
+ *
+ * @property  templating
+*/
 class ViewCssBuilder
 {
+    protected $templating;
+    protected $victoireTwigResponsive;
     private $widgetRenderer;
     private $webDir;
     private $viewCssDir;
@@ -18,14 +23,18 @@ class ViewCssBuilder
     /**
      * Construct.
      *
-     * @param WidgetRenderer $widgetRenderer
-     * @param $kernelRootDir
+     * @param TemplateMapper $templating
+     * @param                $victoireTwigResponsive
+     * @param                $kernelRootDir
+     *
+     * @internal param WidgetRenderer $widgetRenderer
      */
-    public function __construct(WidgetRenderer $widgetRenderer, $kernelRootDir)
+    public function __construct(TemplateMapper $templating, $victoireTwigResponsive, $kernelRootDir)
     {
-        $this->widgetRenderer = $widgetRenderer;
         $this->webDir = '/view-css';
         $this->viewCssDir = $kernelRootDir.'/../web'.$this->webDir;
+        $this->templating = $templating;
+        $this->victoireTwigResponsive = $victoireTwigResponsive;
     }
 
     /**
@@ -52,7 +61,14 @@ class ViewCssBuilder
         $css = '';
 
         foreach ($widgets as $widget) {
-            $css .= trim($this->widgetRenderer->renderStyle($widget));
+            $style = $this->templating->render(
+            'VictoireCoreBundle:Widget:style/style.html.twig',
+            [
+                'widget'                   => $widget,
+                'victoire_twig_responsive' => $this->victoireTwigResponsive,
+            ]
+        );
+            $css .= trim($style);
         }
 
         if ($css !== '') {

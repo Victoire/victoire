@@ -3,7 +3,10 @@
 namespace Victoire\Bundle\WidgetBundle\Cache;
 
 use Predis\Client;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
+use Symfony\Component\Security\Core\SecurityContext;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
+use Victoire\Bundle\WidgetBundle\Entity\WidgetSlotInterface;
 
 /**
  * This class handle the saving of Widgets.
@@ -16,10 +19,15 @@ class WidgetCache
      * @var Client
      */
     private $redis;
+    /**
+     * @var AuthorizationChecker
+     */
+    private $authorizationChecker;
 
-    public function __construct(Client $redis)
+    public function __construct(Client $redis, AuthorizationChecker $authorizationChecker)
     {
         $this->redis = $redis;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
@@ -53,20 +61,39 @@ class WidgetCache
     protected function getHash(Widget $widget)
     {
         $hash = null;
-        if ($widget->getMode() == Widget::MODE_BUSINESS_ENTITY
-            && ($entity = $widget->getEntity())
-            && method_exists($widget->getEntity(), 'getUpdatedAt')) {
-            $hash = sprintf('%s-%s--%s-%s',
-                $widget->getId(),
-                $widget->getUpdatedAt()->getTimestamp(),
-                $entity->getId(),
-                $entity->getUpdatedAt()->getTimestamp()
-            );
-        } elseif ($widget->getMode() == Widget::MODE_STATIC) {
-            $hash = sprintf('%s-%s', $widget->getId(), $widget->getUpdatedAt()->getTimestamp());
+        if (!$widget instanceof WidgetSlotInterface) {
+            if ($widget->getMode() == Widget::MODE_BUSINESS_ENTITY
+                && ($entity = $widget->getEntity())
+                && method_exists($widget->getEntity(), 'getUpdatedAt')) {
+                $hash = $this->generateBusinessEntityHash($widget);
+            } elseif ($widget->getMode() == Widget::MODE_STATIC) {
+                $hash = $this->generateHash($widget);
+            }
         }
 
         return $hash;
+    }
+
+    protected function generateBusinessEntityHash(Widget $widget)
+    {
+        return sprintf('%s-%s-%s--%s-%s-%s',
+            $widget->getId(),
+            $widget->getUpdatedAt()->getTimestamp(),
+            $widget->getCurrentView()->getReference()->getId(),
+            $widget->getEntity()->getId(),
+            $widget->getEntity()->getUpdatedAt()->getTimestamp(),
+            (string) $this->authorizationChecker->isGranted('ROLE_VICTOIRE')
+        );
+    }
+
+    private function generateHash($widget)
+    {
+        return sprintf('%s-%s-%s-%s',
+            $widget->getId(),
+            $widget->getUpdatedAt()->getTimestamp(),
+            $widget->getCurrentView()->getReference()->getId(),
+            (string) $this->authorizationChecker->isGranted('ROLE_VICTOIRE')
+        );
     }
 
 
