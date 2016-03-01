@@ -21,9 +21,9 @@ The main goal is to give to the final customer the ability to **create**/**edit*
 
 Victoire is an open-source, community driven project.
 We are keen on getting your participation for the development of this product.
-To do so, please follow the steps [**here**](https://github.com/Victoire/victoire/blob/master/CONTRIBUTE.md)
+You can find [different open issues](https://github.com/Victoire/victoire/issues) where your help is more than welcome, regardless of your mastering level.
 
-You can see the list of [contributors](https://github.com/Victoire/Victoire/contributors)
+You can see the list of our lovely [contributors](https://github.com/Victoire/Victoire/contributors)
 
 ##Install Victoire
 
@@ -44,7 +44,7 @@ Component | Description
 [**MediaBundle**][7] | Based on [KunstmaanMediaBundle][21], it offers a file management interface and a bridge to the widgets
 [**PageBundle**][8] | One of the most important bundles, it contains all the base page logic
 [**QueryBundle**][9] | Give the possibility to non technical user to build a query
-[**RessourcesBundle**][24] | Contains JS libraries
+[**ResourcesBundle**][24] | Contains JS libraries
 [**SeoBundle**][10] | This bundle brings to user about than 50 SEO points
 [**SitemapBundle**][20] | Sitemap related logic
 [**TemplateBundle**][11] | Contains the pages templates logic (nearly close to [PageBundle][22])
@@ -92,5 +92,5 @@ License can be found [here](http://github.com/victoire/victoire/blob/master/lice
 [21]: http://github.com/Kunstmaan/KunstmaanMediaBundle
 [22]: http://github.com/victoire/victoire/blob/master/Bundle/PageBundle
 [23]: http://github.com/victoire/victoire/blob/master/Bundle/FilterBundle/README.md
-[24]: http://github.com/victoire/victoire/blob/master/Bundle/RessourcesBundle/README.md
+[24]: http://github.com/victoire/victoire/blob/master/Bundle/ResourcesBundle/README.md
 [25]: http://github.com/victoire/victoire/blob/master/Bundle/ViewReferenceBundle/README.md
