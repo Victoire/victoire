@@ -6,9 +6,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Victoire\Bundle\FilterBundle\DependencyInjection\Compiler\FilterCompilerPass;
 
-/**
- *
- */
 class VictoireFilterBundle extends Bundle
 {
     /**

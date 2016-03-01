@@ -6,6 +6,7 @@ php Tests/Functionnal/bin/console --env=test doctrine:database:create
 php Tests/Functionnal/bin/console --env=test cache:warmup
 php Tests/Functionnal/bin/console --env=test doctrine:schema:create
 php Tests/Functionnal/bin/console --env=test victoire:generate:view
+php Tests/Functionnal/bin/console --env=test bazinga:js-translation:dump
 php Tests/Functionnal/bin/console --env=test assets:install Tests/Functionnal/web
 php Tests/Functionnal/bin/console --env=test assetic:dump
 #nohup php Tests/Functionnal/bin/console --env=test server:run -r vendor/symfony/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/config/router_prod.php &

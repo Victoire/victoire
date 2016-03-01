@@ -28,7 +28,6 @@ class BackendMenuListener implements MenuListenerInterface
      */
     public function addContextual($event)
     {
-        return;
     }
 
     /**

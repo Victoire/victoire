@@ -192,8 +192,6 @@ class FileHandler extends AbstractMediaHandler
 
             return $media;
         }
-
-        return;
     }
 
     /**

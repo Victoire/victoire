@@ -12,6 +12,7 @@ use Doctrine\ORM\QueryBuilder;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
+use Victoire\Bundle\QueryBundle\Entity\VictoireQueryInterface;
 
 /**
  * The QueryHelper helps to build query in Victoire's components
@@ -47,14 +48,11 @@ class QueryHelper
      *
      * @return QueryBuilder
      */
-    public function getQueryBuilder($containerEntity, EntityManager $em)
+    public function getQueryBuilder(VictoireQueryInterface $containerEntity, EntityManager $em)
     {
         if ($containerEntity === null) {
             throw new \Exception('The container entity parameter must not be null.');
         }
-
-        //verify that the object has the query trait
-        $this->checkObjectHasQueryTrait($containerEntity);
 
         //the business name of the container entity
         $businessEntityId = $containerEntity->getBusinessEntityId();
@@ -89,45 +87,17 @@ class QueryHelper
     }
 
     /**
-     * Check that the object is not null and has the query trait.
-     *
-     * @param \Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate $containerEntity
-     *
-     * @throws \Exception
-     */
-    protected function checkObjectHasQueryTrait($containerEntity)
-    {
-        if ($containerEntity === null) {
-            throw new \Exception('The container entity parameter must not be null.');
-        }
-
-        //test that the containerEntity has the trait
-        if (!method_exists($containerEntity, 'getQuery') || !method_exists($containerEntity, 'getBusinessEntityId')) {
-            throw new \Exception('The object '.get_class($containerEntity).' does not have the QueryTrait.');
-        }
-    }
-
-    /**
      * Get the results from the sql after adding the.
      *
-     * @param mixed        $containerEntity
-     * @param QueryBuilder $itemsQueryBuilder
+     * @param VictoireQueryInterface $containerEntity
+     * @param QueryBuilder           $itemsQueryBuilder
      *
      * @throws \Exception
      *
      * @return QueryBuilder The QB to list of objects
      */
-    public function buildWithSubQuery($containerEntity, QueryBuilder $itemsQueryBuilder, EntityManager $em)
+    public function buildWithSubQuery(VictoireQueryInterface $containerEntity, QueryBuilder $itemsQueryBuilder, EntityManager $em)
     {
-        //test the container entity
-        if ($containerEntity === null) {
-            throw new \Exception('The container entity parameter must not be null.');
-        }
-
-        //verify that the object has the query trait
-        //@todo please use an interface and cast with it in the method signature
-        $this->checkObjectHasQueryTrait($containerEntity);
-
         //get the query of the container entity
         $query = $containerEntity->getQuery();
         if (method_exists($containerEntity, 'additionnalQueryPart')) {
@@ -139,25 +109,23 @@ class QueryHelper
                                 ->select('item.id')
                                 ->from($itemsQueryBuilder->getRootEntities()[0], 'item');
 
-            $itemsQueryBuilder
-                ->andWhere('main_item.id IN ('.$subQuery->getQuery()->getDql().' '.$query.')');
+            $itemsQueryBuilder->andWhere(
+                sprintf('main_item.id IN (%s %s)', $subQuery->getQuery()->getDql(), $query)
+            );
         }
 
         //Add ORDER BY if set
-        if (method_exists($containerEntity, 'getOrderBy')) {
-            $orderBy = json_decode($containerEntity->getOrderBy(), true);
-            if ($orderBy) {
-                foreach ($orderBy as $addOrderBy) {
-                    $reflectionClass = new \ReflectionClass($itemsQueryBuilder->getRootEntities()[0]);
-                    $reflectionProperty = $reflectionClass->getProperty($addOrderBy['by']);
+        if ($orderBy = json_decode($containerEntity->getOrderBy(), true)) {
+            foreach ($orderBy as $addOrderBy) {
+                $reflectionClass = new \ReflectionClass($itemsQueryBuilder->getRootEntities()[0]);
+                $reflectionProperty = $reflectionClass->getProperty($addOrderBy['by']);
 
-                    //If ordering field is an association, treat it as a boolean
-                    if ($this->isAssociationField($reflectionProperty)) {
-                        $itemsQueryBuilder->addSelect('CASE WHEN main_item.'.$addOrderBy['by'].' IS NULL THEN 0 ELSE 1 END AS HIDDEN caseOrder');
-                        $itemsQueryBuilder->addOrderBy('caseOrder', $addOrderBy['order']);
-                    } else {
-                        $itemsQueryBuilder->addOrderBy('main_item.'.$addOrderBy['by'], $addOrderBy['order']);
-                    }
+                //If ordering field is an association, treat it as a boolean
+                if ($this->isAssociationField($reflectionProperty)) {
+                    $itemsQueryBuilder->addSelect('CASE WHEN main_item.'.$addOrderBy['by'].' IS NULL THEN 0 ELSE 1 END AS HIDDEN caseOrder');
+                    $itemsQueryBuilder->addOrderBy('caseOrder', $addOrderBy['order']);
+                } else {
+                    $itemsQueryBuilder->addOrderBy('main_item.'.$addOrderBy['by'], $addOrderBy['order']);
                 }
             }
         }

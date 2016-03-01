@@ -44,12 +44,12 @@ class WidgetController extends Controller
     {
         //the response is for the ajax.js from the AppVentus Ajax Bundle
         try {
-            $view = $this->container->get('victoire_page.page_helper')->findPageByParameters(['id' => $viewReferenceId]);
-            $this->container->get('victoire_core.current_view')->setCurrentView($view);
+            $view = $this->get('victoire_page.page_helper')->findPageByParameters(['id' => $viewReferenceId]);
+            $this->get('victoire_core.current_view')->setCurrentView($view);
             $response = new JsonResponse([
                     'html'    => $this->get('victoire_widget.widget_renderer')->render($widget, $view),
                     'update'  => 'vic-widget-'.$widget->getId().'-container',
-                    'success' => false,
+                    'success' => true,
                 ]
             );
         } catch (Exception $ex) {
@@ -71,7 +71,7 @@ class WidgetController extends Controller
      */
     public function apiWidgetsAction($widgetIds, $viewReferenceId)
     {
-        $view = $this->container->get('victoire_page.page_helper')->findPageByParameters(['id' => $viewReferenceId]);
+        $view = $this->get('victoire_page.page_helper')->findPageByParameters(['id' => $viewReferenceId]);
         $response = [];
         $widgets = $this->get('doctrine.orm.entity_manager')->getRepository('VictoireWidgetBundle:Widget')
             ->findBy(['id' => json_decode($widgetIds)]);
@@ -100,7 +100,7 @@ class WidgetController extends Controller
         try {
             $view = $this->getViewByReferenceId($viewReference);
 
-            if (!$reference = $this->container->get('victoire_view_reference.repository')
+            if (!$reference = $this->get('victoire_view_reference.repository')
                 ->getOneReferenceByParameters(['id' => $viewReference])) {
                 $reference = new ViewReference($viewReference);
             }
@@ -139,7 +139,7 @@ class WidgetController extends Controller
 
             $isNewPage = $view->getId() === null ? true : false;
 
-            if (!$reference = $this->container->get('victoire_view_reference.repository')
+            if (!$reference = $this->get('victoire_view_reference.repository')
                 ->getOneReferenceByParameters(['id' => $viewReference])) {
                 $reference = new ViewReference($viewReference);
             }
@@ -242,7 +242,7 @@ class WidgetController extends Controller
         }
 
         if (!$view instanceof \Victoire\Bundle\TemplateBundle\Entity\Template) {
-            $widgetViewReference = $this->container->get('victoire_view_reference.repository')
+            $widgetViewReference = $this->get('victoire_view_reference.repository')
                 ->getOneReferenceByParameters(['viewId' => $view->getId()]);
             $widgetView->setReference($widgetViewReference);
         }
@@ -350,7 +350,7 @@ class WidgetController extends Controller
             } elseif ($view instanceof BusinessTemplate) {
                 $redirect = $this->generateUrl('victoire_business_template_show', ['id' => $view->getId()]);
             } else {
-                $viewReference = $this->container->get('victoire_view_reference.repository')
+                $viewReference = $this->get('victoire_view_reference.repository')
                     ->getOneReferenceByParameters(['viewId' => $view->getId()]);
 
                 $redirect = $this->generateUrl('victoire_core_page_show', [

@@ -37,7 +37,5 @@ class UserCallableHelper
                 return $token->getUser();
             }
         }
-
-        return;
     }
 }

@@ -81,7 +81,6 @@ abstract class AbstractMediaHandler
      */
     public function getImageUrl(Media $media, $basepath)
     {
-        return;
     }
 
     /**

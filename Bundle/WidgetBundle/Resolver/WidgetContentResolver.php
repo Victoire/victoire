@@ -21,7 +21,7 @@ class WidgetContentResolver
      *
      * @throws \Exception
      *
-     * @return Ambigous <string, unknown, \Victoire\Bundle\CoreBundle\Widget\Managers\mixed, mixed>
+     * @return array
      */
     public function getWidgetContent(Widget $widget)
     {
