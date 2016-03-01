@@ -231,7 +231,7 @@ class WidgetFormBuilder
             sprintf('%s_%s_%s', $businessEntityId, $formMode, $mockForm->getName()),
             $widgetFormTypeClass,
             $widget,
-            $params
+            $optionsContainer->getOptions()
         );
 
         return $form;

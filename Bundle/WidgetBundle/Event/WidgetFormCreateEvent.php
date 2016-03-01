@@ -2,9 +2,10 @@
 
 namespace Victoire\Bundle\WidgetBundle\Event;
 
+use Symfony\Component\EventDispatcher\Event;
 use Victoire\Bundle\WidgetBundle\Form\WidgetOptionsContainer;
 
-class WidgetFormCreateEvent
+class WidgetFormCreateEvent extends Event
 {
     /**
      * @var array
