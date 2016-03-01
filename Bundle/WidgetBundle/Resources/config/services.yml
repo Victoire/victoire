@@ -28,6 +28,7 @@ services:
         class: Victoire\Bundle\WidgetBundle\Cache\WidgetCache
         arguments:
             - @snc_redis.victoire_client
+            - @security.authorization_checker
 
     victoire_widget.widget_manager:
         class: Victoire\Bundle\WidgetBundle\Model\WidgetManager
