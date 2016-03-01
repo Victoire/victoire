@@ -180,7 +180,8 @@ services:
     victoire_core.view_css_builder:
         class: Victoire\Bundle\CoreBundle\Builder\ViewCssBuilder
         arguments:
-            - @victoire_widget.widget_renderer
+            - @victoire_templating
+            - %victoire_twig.responsive%
             - '%kernel.root_dir%'
 
     victoire_core.view_css_listener:

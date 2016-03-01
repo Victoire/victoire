@@ -15,7 +15,6 @@ use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 class WidgetRenderer
 {
     private $container;
-    private $victoireTwigResponsive;
     /**
      * @var WidgetCache
      */
@@ -25,14 +24,12 @@ class WidgetRenderer
      * WidgetRenderer constructor.
      *
      * @param Container   $container
-     * @param             $victoireTwigResponsive
      * @param Client      $redis
      * @param WidgetCache $widgetCache
      */
-    public function __construct(Container $container, $victoireTwigResponsive, WidgetCache $widgetCache)
+    public function __construct(Container $container, WidgetCache $widgetCache)
     {
         $this->container = $container;
-        $this->victoireTwigResponsive = $victoireTwigResponsive;
         $this->widgetCache = $widgetCache;
     }
 
@@ -191,21 +188,4 @@ class WidgetRenderer
         return $cssClass;
     }
 
-    /**
-     * Render the CSS style for a Widget.
-     *
-     * @param Widget $widget
-     *
-     * @return mixed
-     */
-    public function renderStyle(Widget $widget)
-    {
-        return $this->container->get('victoire_templating')->render(
-            'VictoireCoreBundle:Widget:style/style.html.twig',
-            [
-                'widget'                   => $widget,
-                'victoire_twig_responsive' => $this->victoireTwigResponsive,
-            ]
-        );
-    }
 }
