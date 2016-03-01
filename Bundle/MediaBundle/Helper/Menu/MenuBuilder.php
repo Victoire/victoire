@@ -120,8 +120,6 @@ class MenuBuilder
             }
             $current = $current->getParent();
         }
-
-        return;
     }
 
     /**

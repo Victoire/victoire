@@ -6,9 +6,6 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
-/**
- *
- */
 class FilterCompilerPass implements CompilerPassInterface
 {
     /**
@@ -29,7 +26,7 @@ class FilterCompilerPass implements CompilerPassInterface
 
             foreach ($taggedServices as $id => $attributes) {
                 $definition->addMethodCall('addFilter', [
-                        new Reference($id)
+                        new Reference($id),
                     ]
                 );
             }

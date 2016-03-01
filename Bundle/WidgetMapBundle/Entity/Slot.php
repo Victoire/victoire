@@ -2,9 +2,6 @@
 
 namespace Victoire\Bundle\WidgetMapBundle\Entity;
 
-/**
- *
- */
 class Slot
 {
     //the id

@@ -8,9 +8,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Victoire\Bundle\CoreBundle\DataTransformer\ViewToIdTransformer;
 
-/**
- *
- */
 class ArticleTemplateType extends HiddenType
 {
     private $entityManager;

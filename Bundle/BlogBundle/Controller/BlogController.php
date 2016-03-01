@@ -103,7 +103,7 @@ class BlogController extends BasePageController
      *
      * @param Request $request
      * @Template("VictoireBlogBundle:Blog:feed.rss.twig")
-     * 
+     *
      * @return JsonResponse
      */
     public function feedAction(Request $request, Blog $blog)

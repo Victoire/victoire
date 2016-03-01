@@ -2,9 +2,6 @@
 
 namespace Victoire\Bundle\BusinessEntityBundle\Entity;
 
-/**
- *
- */
 class BusinessProperty
 {
     protected $type = null;

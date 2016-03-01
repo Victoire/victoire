@@ -430,8 +430,6 @@ class WidgetMap
                 return $substitute;
             }
         }
-
-        return;
     }
 
     /**

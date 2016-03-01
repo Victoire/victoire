@@ -236,7 +236,7 @@ class BusinessEntityHelper
      *
      * @param BusinessEntity $businessEntity
      * @param $id
-     * 
+     *
      * @throws \Exception
      *
      * @return mixed

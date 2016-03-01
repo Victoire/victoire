@@ -14,9 +14,6 @@ use Victoire\Bundle\BlogBundle\Repository\TagRepository;
 use Victoire\Bundle\CoreBundle\DataTransformer\ViewToIdTransformer;
 use Victoire\Bundle\MediaBundle\Form\Type\MediaType;
 
-/**
- *
- */
 class ArticleType extends AbstractType
 {
     private $entityManager;

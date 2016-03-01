@@ -8,9 +8,6 @@ use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
 use Victoire\Bundle\TemplateBundle\Event\Menu\TemplateMenuContextualEvent;
 
 /**
- */
-
-/**
  * When dispatched, this listener add items to a KnpMenu.
  */
 class TemplateMenuListener implements MenuListenerInterface

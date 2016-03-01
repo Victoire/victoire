@@ -8,8 +8,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Victoire\Bundle\MediaBundle\Form\Type\MediaType;
 
-/**
- */
 class PageSeoType extends AbstractType
 {
     /**

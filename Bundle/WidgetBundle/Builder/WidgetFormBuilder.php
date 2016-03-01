@@ -5,7 +5,6 @@ namespace Victoire\Bundle\WidgetBundle\Builder;
 use Doctrine\Common\Util\ClassUtils;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\Form;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Event\WidgetBuildFormEvent;

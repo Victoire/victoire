@@ -5,9 +5,6 @@ namespace Victoire\Bundle\BusinessEntityBundle\Event;
 use Symfony\Component\EventDispatcher\Event;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 
-/**
- *
- */
 class BusinessEntityAnnotationEvent extends Event
 {
     private $businessEntity;

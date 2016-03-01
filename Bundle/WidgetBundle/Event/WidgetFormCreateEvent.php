@@ -2,8 +2,6 @@
 
 namespace Victoire\Bundle\WidgetBundle\Event;
 
-
-
 use Victoire\Bundle\WidgetBundle\Form\WidgetOptionsContainer;
 
 class WidgetFormCreateEvent
@@ -21,11 +19,10 @@ class WidgetFormCreateEvent
      * WidgetFormBuildEvent constructor.
      *
      * @param WidgetOptionsContainer $optionsContainer
-     * @param string          $widgetFormTypeClass
+     * @param string                 $widgetFormTypeClass
      */
     public function __construct(WidgetOptionsContainer $optionsContainer, $widgetFormTypeClass)
     {
-
         $this->optionsContainer = $optionsContainer;
         $this->widgetFormTypeClass = $widgetFormTypeClass;
     }

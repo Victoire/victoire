@@ -78,7 +78,5 @@ class RoutingExtention extends BaseRoutingExtension
                 return $urlPrefix;
             }
         }
-
-        return;
     }
 }

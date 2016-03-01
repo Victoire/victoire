@@ -33,9 +33,6 @@ class CacheSubscriber implements EventSubscriberInterface
         }
     }
 
-    /**
-     *
-     */
     public function addWidgetInfo(WidgetAnnotationEvent $event)
     {
         //save widget receiver properties in cache

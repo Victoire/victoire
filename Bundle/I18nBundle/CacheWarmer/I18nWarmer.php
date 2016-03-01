@@ -6,9 +6,6 @@ use Behat\Behat\Exception\Exception;
 use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmer;
 use Symfony\Component\HttpKernel\Config\FileLocator;
 
-/**
- *
- */
 class I18nWarmer extends CacheWarmer
 {
     protected $availableLocales;

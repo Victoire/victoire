@@ -88,7 +88,7 @@ class WidgetRenderer
             $directive = 'widget';
         }
 
-        $id = "vic-widget-".$widget->getId()."-container";
+        $id = 'vic-widget-'.$widget->getId().'-container';
 
         $html = sprintf('<div %s widget-map="%s" id="%s" class="vic-widget-container" data-id="%s">', $directive, $widgetMap->getId(), $id, $widget->getId());
 

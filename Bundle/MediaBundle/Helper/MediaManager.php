@@ -116,8 +116,6 @@ class MediaManager
                 return $result;
             }
         }
-
-        return;
     }
 
     /**

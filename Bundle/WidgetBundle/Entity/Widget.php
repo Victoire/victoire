@@ -262,7 +262,6 @@ class Widget extends BaseWidget implements VictoireQueryInterface
     public function getValue()
     {
         //return $this->getContent();
-        return;
     }
 
     /**

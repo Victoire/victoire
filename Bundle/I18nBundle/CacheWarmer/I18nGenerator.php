@@ -5,8 +5,6 @@ namespace Victoire\Bundle\I18nBundle\CacheWarmer;
 use Sensio\Bundle\GeneratorBundle\Generator\Generator;
 use Symfony\Component\Config\FileLocator;
 
-/**
- */
 class I18nGenerator extends Generator
 {
     protected $availableLocales;

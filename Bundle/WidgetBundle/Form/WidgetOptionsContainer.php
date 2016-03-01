@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\WidgetBundle\Form;
 
-
 class WidgetOptionsContainer
 {
     /**
