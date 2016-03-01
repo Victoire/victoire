@@ -7,6 +7,7 @@ use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Event\WidgetRenderEvent;
 use Victoire\Bundle\CoreBundle\VictoireCmsEvents;
+use Victoire\Bundle\WidgetBundle\Cache\WidgetCache;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetMapBundle\Entity\Slot;
 use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
@@ -15,11 +16,24 @@ class WidgetRenderer
 {
     private $container;
     private $victoireTwigResponsive;
+    /**
+     * @var WidgetCache
+     */
+    private $widgetCache;
 
-    public function __construct(Container $container, $victoireTwigResponsive)
+    /**
+     * WidgetRenderer constructor.
+     *
+     * @param Container   $container
+     * @param             $victoireTwigResponsive
+     * @param Client      $redis
+     * @param WidgetCache $widgetCache
+     */
+    public function __construct(Container $container, $victoireTwigResponsive, WidgetCache $widgetCache)
     {
         $this->container = $container;
         $this->victoireTwigResponsive = $victoireTwigResponsive;
+        $this->widgetCache = $widgetCache;
     }
 
     /**
@@ -78,7 +92,13 @@ class WidgetRenderer
         }
 
         $html = sprintf('<div %s widget-map="%s" class="vic-widget-container" data-id="%s">', $directive, $widgetMap->getId(), $widget->getId());
-        $html .= $this->render($widget, $view);
+
+        $content = $this->widgetCache->fetch($widget);
+        if (null === $content) {
+            $content = $this->render($widget, $view);
+            $this->widgetCache->save($widget, $content);
+        }
+        $html .= $content;
         $html .= '</div>';
 
         $dispatcher->dispatch(VictoireCmsEvents::WIDGET_POST_RENDER, new WidgetRenderEvent($widget, $html));
