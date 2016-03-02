@@ -22,7 +22,20 @@ class LinkExtension extends \Twig_Extension
     protected $BusinessPageHelper; // @victoire_business_page.business_page_helper
     protected $pageHelper;
     protected $em; // @doctrine.orm.entity_manager
+    protected $abstractBusinessTemplates;
 
+    /**
+     * LinkExtension constructor.
+     *
+     * @param Router       $router
+     * @param RequestStack $requestStack
+     * @param $analytics
+     * @param BusinessEntityHelper $businessEntityHelper
+     * @param BusinessPageHelper   $BusinessPageHelper
+     * @param PageHelper           $pageHelper
+     * @param EntityManager        $em
+     * @param array                $abstractBusinessTemplates
+     */
     public function __construct(
         Router $router,
         RequestStack $requestStack,
@@ -30,7 +43,8 @@ class LinkExtension extends \Twig_Extension
         BusinessEntityHelper $businessEntityHelper,
         BusinessPageHelper $BusinessPageHelper,
         PageHelper $pageHelper,
-        EntityManager $em
+        EntityManager $em,
+        $abstractBusinessTemplates = []
     ) {
         $this->router = $router;
         $this->request = $requestStack->getCurrentRequest();
@@ -39,6 +53,7 @@ class LinkExtension extends \Twig_Extension
         $this->BusinessPageHelper = $BusinessPageHelper;
         $this->pageHelper = $pageHelper;
         $this->em = $em;
+        $this->abstractBusinessTemplates = $abstractBusinessTemplates;
     }
 
     /**
@@ -212,6 +227,9 @@ class LinkExtension extends \Twig_Extension
 
     public function victoireBusinessLink($businessEntityInstance, $templateId = null, $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
+        if (isset($this->abstractBusinessTemplates[$templateId])) {
+            $templateId = $this->abstractBusinessTemplates[$templateId];
+        }
         if (!$templateId) {
             $templateId = $this->BusinessPageHelper
                 ->guessBestPatternIdForEntity(new \ReflectionClass($businessEntityInstance), $businessEntityInstance->getId(), $this->em);
