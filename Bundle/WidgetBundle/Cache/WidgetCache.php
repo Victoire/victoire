@@ -7,6 +7,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\SecurityContext;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetBundle\Entity\WidgetSlotInterface;
+use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
 
 /**
  * This class handle the saving of Widgets.
@@ -23,11 +24,23 @@ class WidgetCache
      * @var AuthorizationChecker
      */
     private $authorizationChecker;
+    /**
+     * @var WidgetHelper
+     */
+    private $widgetHelper;
 
-    public function __construct(Client $redis, AuthorizationChecker $authorizationChecker)
+    /**
+     * WidgetCache constructor.
+     *
+     * @param Client               $redis
+     * @param AuthorizationChecker $authorizationChecker
+     * @param WidgetHelper         $widgetHelper
+     */
+    public function __construct(Client $redis, AuthorizationChecker $authorizationChecker, WidgetHelper $widgetHelper)
     {
         $this->redis = $redis;
         $this->authorizationChecker = $authorizationChecker;
+        $this->widgetHelper = $widgetHelper;
     }
 
     /**
@@ -49,7 +62,7 @@ class WidgetCache
         $hash = $this->getHash($widget);
         if ($hash) {
             $this->redis->set($hash, $content);
-            $this->redis->expire($hash, 7 * 24 * 60 * 1000); // cache for a week
+            $this->redis->expire($hash, $this->widgetHelper->getCacheTimeout($widget)); // cache for a week
         }
     }
 

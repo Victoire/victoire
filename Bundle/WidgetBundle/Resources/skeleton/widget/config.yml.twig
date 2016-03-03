@@ -3,7 +3,8 @@ victoire_core:
         {{ widget }}:
             class: "Victoire\\Widget\\{{ widget }}Bundle\\Entity\\Widget{{ widget }}"
             name: {{ widget }}
-            {% if parent %}parent: {{parent}}{% endif %}
+{% if parent %}            parent: {{parent}}{% endif %}
+{% if cache %}            cache: true{% endif %}
 
 jms_translation:
     configs:
