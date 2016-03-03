@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\WidgetBundle\Helper;
 
+use Doctrine\Common\Util\ClassUtils;
 use Symfony\Component\DependencyInjection\Container;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
@@ -23,7 +24,7 @@ class WidgetHelper
     {
         $widgets = $this->container->getParameter('victoire_core.widgets');
         foreach ($widgets as $widgetParams) {
-            if ($widgetParams['class'] === get_class($widget)) {
+            if ($widgetParams['class'] === ClassUtils::getClass($widget)) {
                 return $widgetParams['name'];
             }
         }
@@ -112,11 +113,56 @@ class WidgetHelper
     {
         $widgets = $this->container->getParameter('victoire_core.widgets');
         foreach ($widgets as $widgetParams) {
-            if ($widgetParams['class'] === get_class($widget)) {
+            if ($widgetParams['class'] === ClassUtils::getClass($widget)) {
                 return true;
             }
         }
 
         return false;
+    }
+    /**
+     * Check in the driver chain if the given widget is enabled.
+     *
+     * @param Widget $widget
+     *
+     * @return bool
+     */
+    public function isCacheEnabled(Widget $widget)
+    {
+        $widgets = $this->container->getParameter('victoire_core.widgets');
+        foreach ($widgets as $widgetParams) {
+            if ($widgetParams['class'] === ClassUtils::getClass($widget)) {
+                if (array_key_exists('cache', $widgetParams)) {
+                    return $widgetParams['cache'];
+                } else {
+                    return true;
+                }
+            }
+        }
+
+        throw new \Exception('Widget config not found for widget '.ClassUtils::getClass($widget).'. Is this widget right declared in AppKernel ?');
+    }
+
+    /**
+     * Check in the driver chain if the given widget is enabled.
+     *
+     * @param Widget $widget
+     *
+     * @return bool
+     */
+    public function getCacheTimeout(Widget $widget)
+    {
+        $widgets = $this->container->getParameter('victoire_core.widgets');
+        foreach ($widgets as $widgetParams) {
+            if ($widgetParams['class'] === ClassUtils::getClass($widget)) {
+                if (array_key_exists('cache_timout', $widgetParams)) {
+                    return $widgetParams['cache_timout'];
+                } else {
+                    return 7 * 24 * 60 * 1000; // one week by default
+                }
+            }
+        }
+
+        throw new \Exception('Widget config not found for widget '.ClassUtils::getClass($widget).'. Is this widget right declared in AppKernel ?');
     }
 }
