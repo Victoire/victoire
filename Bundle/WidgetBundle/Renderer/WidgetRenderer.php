@@ -9,6 +9,7 @@ use Victoire\Bundle\CoreBundle\Event\WidgetRenderEvent;
 use Victoire\Bundle\CoreBundle\VictoireCmsEvents;
 use Victoire\Bundle\WidgetBundle\Cache\WidgetCache;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
+use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
 use Victoire\Bundle\WidgetMapBundle\Entity\Slot;
 use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 
@@ -19,18 +20,25 @@ class WidgetRenderer
      * @var WidgetCache
      */
     private $widgetCache;
+    /**
+     * @var WidgetHelper
+     */
+    private $widgetHelper;
 
     /**
      * WidgetRenderer constructor.
      *
-     * @param Container   $container
-     * @param Client      $redis
-     * @param WidgetCache $widgetCache
+     * @param Container    $container
+     * @param WidgetCache  $widgetCache
+     * @param WidgetHelper $widgetHelper
+     *
+     * @internal param Client $redis
      */
-    public function __construct(Container $container, WidgetCache $widgetCache)
+    public function __construct(Container $container, WidgetCache $widgetCache, WidgetHelper $widgetHelper)
     {
         $this->container = $container;
         $this->widgetCache = $widgetCache;
+        $this->widgetHelper = $widgetHelper;
     }
 
     /**
@@ -89,10 +97,14 @@ class WidgetRenderer
 
         $html = sprintf('<div %s widget-map="%s" id="%s" class="vic-widget-container" data-id="%s">', $directive, $widgetMap->getId(), $id, $widget->getId());
 
-        $content = $this->widgetCache->fetch($widget);
-        if (null === $content) {
+        if ($this->widgetHelper->isCacheEnabled($widget)) {
+            $content = $this->widgetCache->fetch($widget);
+            if (null === $content) {
+                $content = $this->render($widget, $view);
+                $this->widgetCache->save($widget, $content);
+            }
+        } else {
             $content = $this->render($widget, $view);
-            $this->widgetCache->save($widget, $content);
         }
         $html .= $content;
         $html .= '</div>'; //close container
