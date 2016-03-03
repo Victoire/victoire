@@ -64,7 +64,7 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('class')->end()
                             ->scalarNode('name')->end()
                             ->scalarNode('cache')->defaultTrue()->end()
-                            ->scalarNode('cache_timeout')->default(7 * 24 * 60 * 1000)->end() //one week
+                            ->scalarNode('cache_timeout')->defaultValue(7 * 24 * 60 * 1000)->end() //one week
                         ->end()
                     ->end()
                 ->defaultValue([])
