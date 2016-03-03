@@ -45,6 +45,7 @@ class CreateWidgetCommand extends GenerateBundleCommand
                 new InputOption('parent', '', InputOption::VALUE_REQUIRED, 'The widget this widget will extends'),
                 new InputOption('packagist-parent-name', '', InputOption::VALUE_REQUIRED, 'The packagist name of the widget you want to extends'),
                 new InputOption('content-resolver', '', InputOption::VALUE_NONE, 'Whether to generate a blank ContentResolver to customize widget rendering logic'),
+                new InputOption('cache', '', InputOption::VALUE_NONE, 'Use redis cache to store widgets until next modification'),
             ])
             ->setDescription('Generate a new widget')
             ->setHelp(<<<'EOT'
@@ -131,6 +132,7 @@ EOT
         $structure = $input->getOption('structure');
 
         $contentResolver = $input->getOption('content-resolver');
+        $cache = $input->getOption('cache');
 
         $questionHelper->writeSection($output, 'Bundle generation');
 
@@ -143,7 +145,7 @@ EOT
         $parentContentResolver = $this->getContainer()->has('victoire_core.widget_'.strtolower($parent).'_content_resolver');
 
         $generator = $this->getGenerator();
-        $generator->generate($namespace, $bundle, $dir, $format, $structure, $fields, $parent, $packagistParentName, $contentResolver, $parentContentResolver, $orgname);
+        $generator->generate($namespace, $bundle, $dir, $format, $structure, $fields, $parent, $packagistParentName, $contentResolver, $parentContentResolver, $orgname, $cache);
 
         $output->writeln('Generating the bundle code: <info>OK</info>');
 
@@ -356,6 +358,14 @@ EOT
         $input->setOption('fields', $this->addFields($input, $output, $questionHelper));
         $entity = 'Widget'.$name;
         $input->setOption('entity', $bundle.':'.$entity);
+
+
+        $cache = $input->getOption('cache');
+        $question = new ConfirmationQuestion($questionHelper->getQuestion('Do you want use cache for this widget ?', 'yes', '?'));
+        if (null !== $cache) {
+            $cache = $questionHelper->ask($input, $output, $question);
+        }
+        $input->setOption('cache', $cache);
 
         // summary
         $output->writeln([

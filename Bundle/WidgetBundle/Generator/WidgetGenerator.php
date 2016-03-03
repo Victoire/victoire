@@ -41,7 +41,7 @@ class WidgetGenerator extends Generator
      * @param string $namespace
      * @param string $format
      */
-    public function generate($namespace, $bundle, $dir, $format, $structure, $fields = null, $parent = null, $packagistParentName = null, $contentResolver = false, $parentContentResolver = false, $orgname = null)
+    public function generate($namespace, $bundle, $dir, $format, $structure, $fields = null, $parent = null, $packagistParentName = null, $contentResolver = false, $parentContentResolver = false, $orgname = null, $cache = true)
     {
         $dir .= '/'.strtr($namespace, '\\', '/');
         if (file_exists($dir)) {
@@ -87,6 +87,7 @@ class WidgetGenerator extends Generator
             'toStringProperty'        => $toStringProperty,
             'bundle_basename'         => $basename,
             'content_resolver'        => $contentResolver,
+            'cache'                   => $cache,
             'parent_content_resolver' => $parentContentResolver,
             'extension_alias'         => Container::underscore($basename),
         ];
