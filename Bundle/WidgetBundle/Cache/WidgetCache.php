@@ -4,7 +4,6 @@ namespace Victoire\Bundle\WidgetBundle\Cache;
 
 use Predis\Client;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
-use Symfony\Component\Security\Core\SecurityContext;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetBundle\Entity\WidgetSlotInterface;
 use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
@@ -108,6 +107,4 @@ class WidgetCache
             (string) $this->authorizationChecker->isGranted('ROLE_VICTOIRE')
         );
     }
-
-
 }

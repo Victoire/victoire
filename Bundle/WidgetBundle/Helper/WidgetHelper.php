@@ -120,6 +120,7 @@ class WidgetHelper
 
         return false;
     }
+
     /**
      * Check in the driver chain if the given widget is enabled.
      *

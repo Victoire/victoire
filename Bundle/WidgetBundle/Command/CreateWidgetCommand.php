@@ -359,7 +359,6 @@ EOT
         $entity = 'Widget'.$name;
         $input->setOption('entity', $bundle.':'.$entity);
 
-
         $cache = $input->getOption('cache');
         $question = new ConfirmationQuestion($questionHelper->getQuestion('Do you want use cache for this widget ?', 'yes', '?'));
         if (null !== $cache) {

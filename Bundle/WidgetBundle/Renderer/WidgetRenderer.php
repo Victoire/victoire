@@ -198,5 +198,4 @@ class WidgetRenderer
 
         return $cssClass;
     }
-
 }
