@@ -11,7 +11,7 @@ use Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer;
  * ref: victoire_core.view_css_builder.
  *
  * @property  templating
-*/
+ */
 class ViewCssBuilder
 {
     protected $templating;

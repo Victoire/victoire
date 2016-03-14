@@ -39,7 +39,7 @@ class FlashExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('mopa_bootstrap_flash_mapping', [$this, 'getMapping'], ['is_safe' => ['html']]),
+            new \Twig_SimpleFunction('vic_mopa_bootstrap_flash_mapping', [$this, 'getMapping'], ['is_safe' => ['html']]),
         ];
     }
 
@@ -58,6 +58,6 @@ class FlashExtension extends \Twig_Extension
      */
     public function getName()
     {
-        return 'mopa_bootstrap_flash';
+        return 'vic_mopa_bootstrap_flash';
     }
 }

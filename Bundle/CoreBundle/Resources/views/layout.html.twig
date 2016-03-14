@@ -51,7 +51,12 @@
             <script type="text/javascript">
                 var viewReferenceId = '{{ vic_current_page_reference() }}';
             </script>
+            {% if not app.debug %}
             {{ render_hinclude(controller('VictoireAnalyticsBundle:BrowseEvent:track', {'viewReferenceId': vic_current_page_reference(), 'referer': app.request.headers.get('referer')})) }}
+            {% endif %}
+            {% if app.user %}
+                {{ render_hinclude(controller('VictoireAnalyticsBundle:BrowseEvent:heartbeat', {'id': app.user.id })) }}
+            {% endif %}
         {% endif %}
         {% if is_granted('ROLE_VICTOIRE') %}
         {% javascripts injector='victoire-edit, victoire-leftnavbar' %}

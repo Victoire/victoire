@@ -40,6 +40,13 @@ class User extends BaseUser implements VictoireUserInterface
      */
     protected $locale;
 
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="heartbeat", type="datetime", nullable=true)
+     */
+    protected $heartbeat;
+
     protected $pages;
 
     /**
@@ -122,5 +129,21 @@ class User extends BaseUser implements VictoireUserInterface
         $this->locale = $locale;
 
         return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getHeartbeat()
+    {
+        return $this->heartbeat;
+    }
+
+    /**
+     * @param \DateTime $heartbeat
+     */
+    public function setHeartbeat($heartbeat)
+    {
+        $this->heartbeat = $heartbeat;
     }
 }
