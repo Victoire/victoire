@@ -66,6 +66,14 @@ class WidgetCache
     }
 
     /**
+     * clear all redis cache
+     */
+    public function clear()
+    {
+        $this->redis->executeCommand($this->redis->createCommand('FLUSHALL'));
+    }
+
+    /**
      * @param Widget $widget
      *
      * @return string
