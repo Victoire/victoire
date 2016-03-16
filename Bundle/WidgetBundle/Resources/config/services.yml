@@ -24,6 +24,7 @@ services:
             - @service_container
             - @victoire_widget.widget_cache
             - @victoire_widget.widget_helper
+            - @victoire_core.victoire_collector
 
     victoire_widget.widget_cache:
         class: Victoire\Bundle\WidgetBundle\Cache\WidgetCache
@@ -88,3 +89,10 @@ services:
         class: Victoire\Bundle\WidgetBundle\Listener\WidgetSubscriber
         tags:
             - { name: kernel.event_subscriber }
+
+    victoire_widget.cache.widget_cache_clearer:
+        class: Victoire\Bundle\WidgetBundle\Cache\WidgetCacheClearer
+        arguments:
+            - @victoire_widget.widget_cache
+        tags:
+            - { name: kernel.cache_clearer }
