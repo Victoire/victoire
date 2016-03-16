@@ -410,6 +410,15 @@
         <source>widget_layout.form.containerBackground.help_block</source>
         <target>Ce champs est déprécié, et sera supprimé prochainement. Merci de ne plus l'utiliser.</target>
       </trans-unit>
+      <trans-unit id="101" resname="widget_layout.form.containerBackgroundType.choices.placeholder">
+        <source>widget_layout.form.containerBackgroundType.choices.placeholder</source>
+        <target>Aucun</target>
+      </trans-unit>
+      <trans-unit id="102" resname="widget_layout.form.textAlign.choices.placeholder">
+        <source>widget_layout.form.textAlign.choices.placeholder</source>
+        <target>Par défaut</target>
+      </trans-unit>
+
     </body>
   </file>
 </xliff>
