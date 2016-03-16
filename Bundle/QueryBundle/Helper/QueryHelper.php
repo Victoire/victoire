@@ -9,6 +9,9 @@ use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
 use Doctrine\ORM\QueryBuilder;
+use FOS\UserBundle\Model\UserInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
@@ -23,6 +26,7 @@ class QueryHelper
     protected $businessEntityHelper = null;
     protected $currentView;
     protected $reader;
+    protected $tokenStorage;
 
     /**
      * Constructor.
@@ -31,11 +35,12 @@ class QueryHelper
      * @param CurrentViewHelper    $currentView
      * @param Reader               $reader
      */
-    public function __construct(BusinessEntityHelper $businessEntityHelper, CurrentViewHelper $currentView, Reader $reader)
+    public function __construct(BusinessEntityHelper $businessEntityHelper, CurrentViewHelper $currentView, Reader $reader, TokenStorage $tokenStorage)
     {
         $this->businessEntityHelper = $businessEntityHelper;
         $this->currentView = $currentView;
         $this->reader = $reader;
+        $this->tokenStorage = $tokenStorage;
     }
 
     /**
@@ -44,7 +49,7 @@ class QueryHelper
      *
      * @param \Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate $containerEntity
      *
-     * @throws Exception
+     * @throws \Exception
      *
      * @return QueryBuilder
      */
@@ -153,6 +158,14 @@ class QueryHelper
             }
         }
 
+        if (strpos($query, ':currentUser') !== false && is_object($this->getCurrentUser())) {
+            if (is_object($this->getCurrentUser())) {
+                $itemsQueryBuilder->setParameter('currentUser', $this->getCurrentUser()->getId());
+            } else {
+                throw new AccessDeniedException();
+            }
+        }
+
         return $itemsQueryBuilder;
     }
 
@@ -173,5 +186,13 @@ class QueryHelper
         }
 
         return false;
+    }
+
+    /**
+     * @return UserInterface|string
+     */
+    public function getCurrentUser()
+    {
+        return $this->tokenStorage->getToken()->getUser();
     }
 }
