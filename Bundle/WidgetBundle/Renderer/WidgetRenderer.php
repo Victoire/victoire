@@ -4,6 +4,7 @@ namespace Victoire\Bundle\WidgetBundle\Renderer;
 
 use Symfony\Component\DependencyInjection\Container;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
+use Victoire\Bundle\CoreBundle\DataCollector\VictoireCollector;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Event\WidgetRenderEvent;
 use Victoire\Bundle\CoreBundle\VictoireCmsEvents;
@@ -24,6 +25,10 @@ class WidgetRenderer
      * @var WidgetHelper
      */
     private $widgetHelper;
+    /**
+     * @var VictoireCollector
+     */
+    private $victoireCollector;
 
     /**
      * WidgetRenderer constructor.
@@ -34,11 +39,12 @@ class WidgetRenderer
      *
      * @internal param Client $redis
      */
-    public function __construct(Container $container, WidgetCache $widgetCache, WidgetHelper $widgetHelper)
+    public function __construct(Container $container, WidgetCache $widgetCache, WidgetHelper $widgetHelper, VictoireCollector $victoireCollector)
     {
         $this->container = $container;
         $this->widgetCache = $widgetCache;
         $this->widgetHelper = $widgetHelper;
+        $this->victoireCollector = $victoireCollector;
     }
 
     /**
@@ -102,6 +108,8 @@ class WidgetRenderer
             if (null === $content) {
                 $content = $this->render($widget, $view);
                 $this->widgetCache->save($widget, $content);
+            } else {
+                $this->victoireCollector->addCachedWidget($widget);
             }
         } else {
             $content = $this->render($widget, $view);

@@ -1,0 +1,24 @@
+{% extends 'WebProfilerBundle:Profiler:layout.html.twig' %}
+
+{% block toolbar %}
+    {% set icon %}
+        {{ include('@VictoireCore/Profiler/assets/victoire_icon_24.svg') }}
+    {% endset %}
+
+    {% set text %}
+        <div class="sf-toolbar-info-piece">
+            <b>Cached widgets</b>
+            <span class="sf-toolbar-status sf-toolbar-status-green">{{ collector.cachedWidgetcount }}</span>
+            <a href="{{ path('victoire_core_widget_cache_clear') }}" style="text-decoration: none;">
+                {{  include('@VictoireCore/Profiler/assets/reload_icon_24.svg') }}
+            </a>
+        </div>
+    {% endset %}
+
+    <style>
+        .sf-toolbar-block.sf-toolbar-status-victoire {
+            background-color: #04BF96;
+        }
+    </style>
+    {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { link: false, status: 'victoire' }) }}
+{% endblock %}

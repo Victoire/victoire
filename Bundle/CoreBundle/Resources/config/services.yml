@@ -215,3 +215,8 @@ services:
 
     victoire_core.url_builder:
         class: Victoire\Bundle\CoreBundle\Helper\UrlBuilder
+
+    victoire_core.victoire_collector:
+        class: Victoire\Bundle\CoreBundle\DataCollector\VictoireCollector
+        tags:
+            - { name: data_collector, template: 'VictoireCoreBundle:Profiler:widget_cache', id: 'victoire_core.victoire_collector', priority: 200 }
