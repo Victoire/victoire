@@ -48,8 +48,7 @@ class WidgetStyleType extends AbstractType
             ->add('containerTag', ChoiceType::class, [
                 'label'             => 'widget_layout.form.containerTag.label',
                 'vic_help_block'    => 'widget_layout.form.containerTag.help_block',
-                'choices'           => Widget::$tags,
-                'choices_as_values' => true,
+                'choices'           => array_combine(Widget::$tags, Widget::$tags),
             ])
             ->add('containerClass', null, [
                 'label'    => 'widget_layout.form.containerClass.label',
@@ -101,21 +100,25 @@ class WidgetStyleType extends AbstractType
                     'attr'  => ['placeholder' => 'widget_layout.form.containerWidth.placeholder'],
                 ])
                 ->add('textAlign'.$key, ChoiceType::class, [
-                    'label'   => 'widget_layout.form.textAlign'.$key.'.label',
-                    'choices' => [
+                    'label'    => 'widget_layout.form.textAlign'.$key.'.label',
+                    'required' => false,
+                    'choices'  => [
                         'widget_layout.form.textAlign.choices.left.label'    => 'left',
                         'widget_layout.form.textAlign.choices.center.label'  => 'center',
                         'widget_layout.form.textAlign.choices.right.label'   => 'right',
                         'widget_layout.form.textAlign.choices.justify.label' => 'justify',
                     ],
+                    'placeholder'       => 'widget_layout.form.textAlign.choices.placeholder',
                     'choices_as_values' => true,
                 ])
                 ->add('containerBackgroundType'.$key, ChoiceType::class, [
-                    'label'   => 'widget_layout.form.containerBackgroundType'.$key.'.label',
-                    'choices' => [
+                    'label'    => 'widget_layout.form.containerBackgroundType'.$key.'.label',
+                    'required' => false,
+                    'choices'  => [
                         'widget_layout.form.containerBackgroundType.choices.color.label' => 'color',
                         'widget_layout.form.containerBackgroundType.choices.image.label' => 'image',
                     ],
+                    'placeholder'       => 'widget_layout.form.containerBackgroundType.choices.placeholder',
                     'choices_as_values' => true,
                     'attr'              => [
                         'data-refreshOnChange' => 'true',
