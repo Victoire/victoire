@@ -204,11 +204,13 @@ class WidgetFormBuilder
             );
         }
 
+        $widgetName = $this->container->get('victoire_widget.widget_helper')->getWidgetName($widget);
+
         $widgetFormTypeClass = ClassUtils::getClass(
             $this->container->get(
                 sprintf(
                     'victoire.widget.form.%s',
-                    strtolower($this->container->get('victoire_widget.widget_helper')->getWidgetName($widget))
+                    strtolower($widgetName)
                 )
             )
         );
@@ -223,6 +225,7 @@ class WidgetFormBuilder
 
         $event = new WidgetFormCreateEvent($optionsContainer, $widgetFormTypeClass);
         $this->container->get('event_dispatcher')->dispatch(WidgetFormEvents::PRE_CREATE, $event);
+        $this->container->get('event_dispatcher')->dispatch(WidgetFormEvents::PRE_CREATE.'_'.strtoupper($widgetName), $event);
 
         /** @var Form $mockForm Get the base form to get the name */
         $mockForm = $formFactory->create($widgetFormTypeClass, $widget, $optionsContainer->getOptions());
