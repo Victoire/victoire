@@ -737,7 +737,7 @@
 {% block font_awesome_picker_widget %}
     {% spaceless %}
     <div class="vic-form-group">
-        <input type="text" {{ block('widget_attributes') }} class="vic-form-control"/>
+        <input type="search" {{ block('widget_attributes') }} class="vic-form-control" {% if value is not empty %}value="{{ value }}" {% endif %}/>
     </div>
     <script type="text/javascript">
         $vic('#{{ id }}').iconpicker({{ form.vars.font_awesome_picker_settings|json_encode|raw }});
