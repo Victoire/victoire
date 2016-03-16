@@ -6,6 +6,11 @@ angular.module('ngApp').directive('widget', function ($compile, $rootScope) {
         },
         link: function(scope, element, attrs) {
             scope.positions = [];
+            var hover = angular.element('<a href="#" class="vic-hover-widget"><i></i></a>');
+            var template = $compile(hover);
+            element.children('.vic-widget').first().prepend(hover);
+            template(scope);
+
 
             // When a change is done in the rootScope's widgetMaps
             $rootScope.$watch('widgetMaps', function(widgetMaps) {
