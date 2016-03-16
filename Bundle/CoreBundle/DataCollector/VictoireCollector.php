@@ -1,6 +1,6 @@
 <?php
-namespace Victoire\Bundle\CoreBundle\DataCollector;
 
+namespace Victoire\Bundle\CoreBundle\DataCollector;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -8,11 +8,11 @@ use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
- * This collector displays a victoire element in toolbar
+ * This collector displays a victoire element in toolbar.
  */
 class VictoireCollector extends DataCollector
 {
-    protected $cachedWidgets = array();
+    protected $cachedWidgets = [];
 
     /**
      * @param Request         $request
@@ -21,13 +21,14 @@ class VictoireCollector extends DataCollector
      */
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
-        $this->data = array(
+        $this->data = [
             'cachedWidgetCount' => count($this->cachedWidgets),
-        );
+        ];
     }
 
     /**
-     * Add a widget to the stack of cached widgets
+     * Add a widget to the stack of cached widgets.
+     *
      * @param Widget $widget
      */
     public function addCachedWidget(Widget $widget)
@@ -47,5 +48,4 @@ class VictoireCollector extends DataCollector
     {
         return 'victoire_core.victoire_collector';
     }
-
 }

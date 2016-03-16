@@ -66,7 +66,7 @@ class WidgetCache
     }
 
     /**
-     * clear all redis cache
+     * clear all redis cache.
      */
     public function clear()
     {

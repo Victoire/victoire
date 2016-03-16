@@ -4,11 +4,7 @@ namespace Victoire\Bundle\WidgetBundle\Cache;
 
 use Predis\Client;
 use Symfony\Component\HttpKernel\CacheClearer\CacheClearerInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
-use Victoire\Bundle\CoreBundle\Cache\VictoireCache;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
-use Victoire\Bundle\WidgetBundle\Entity\WidgetSlotInterface;
-use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
 
 /**
  * This class handle the saving of Widgets.
@@ -21,10 +17,11 @@ class WidgetCacheClearer implements CacheClearerInterface
      * @var Client
      */
     private $cache;
+
     /**
      * WidgetCache constructor.
      *
-     * @param Client               $cache
+     * @param Client $cache
      */
     public function __construct(WidgetCache $cache)
     {
