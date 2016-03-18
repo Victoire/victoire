@@ -8,4 +8,15 @@ use Victoire\Bundle\CriteriaBundle\DependencyInjection\Compiler\CriteriaCompiler
 
 class VictoireCriteriaBundle extends Bundle
 {
+    /**
+     * Build bundle.
+     *
+     * @param ContainerBuilder $container
+     */
+    public function build(ContainerBuilder $container)
+    {
+        parent::build($container);
+
+        $container->addCompilerPass(new CriteriaCompilerPass());
+    }
 }
