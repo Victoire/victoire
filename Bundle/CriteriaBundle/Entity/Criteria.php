@@ -32,9 +32,9 @@ class Criteria
     /**
      * @var string
      *
-     * @ORM\Column(name="operand", type="string", length=25)
+     * @ORM\Column(name="operator", type="string", length=25)
      */
-    private $operand;
+    private $operator;
 
     /**
      * @var string
@@ -50,7 +50,6 @@ class Criteria
      * @ORM\JoinColumn(name="widget_id", referencedColumnName="id", onDelete="SET NULL"))
      */
     protected $widget;
-
 
     /**
      * Get id
@@ -82,13 +81,13 @@ class Criteria
     /**
      * Set operand
      *
-     * @param string $operand
+     * @param string $operator
      *
      * @return Criteria
      */
-    public function setOperand($operand)
+    public function setOperator($operator)
     {
-        $this->operand = $operand;
+        $this->operator = $operator;
 
         return $this;
     }
@@ -98,9 +97,9 @@ class Criteria
      *
      * @return string
      */
-    public function getOperand()
+    public function getOperator()
     {
-        return $this->operand;
+        return $this->operator;
     }
 
     /**

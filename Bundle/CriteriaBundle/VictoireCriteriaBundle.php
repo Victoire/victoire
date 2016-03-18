@@ -4,7 +4,7 @@ namespace Victoire\Bundle\CriteriaBundle;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-use Victoire\Bundle\CriteriaBundle\DependencyInjection\Compiler\CriteriaCompilerPass;
+use Victoire\Bundle\CriteriaBundle\DependencyInjection\Compiler\DataSourceCompilerPass;
 
 class VictoireCriteriaBundle extends Bundle
 {
@@ -17,6 +17,6 @@ class VictoireCriteriaBundle extends Bundle
     {
         parent::build($container);
 
-        $container->addCompilerPass(new CriteriaCompilerPass());
+        $container->addCompilerPass(new DataSourceCompilerPass());
     }
 }

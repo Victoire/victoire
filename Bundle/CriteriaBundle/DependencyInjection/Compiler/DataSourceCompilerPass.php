@@ -7,7 +7,7 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
-class CriteriaCompilerPass implements CompilerPassInterface
+class DataSourceCompilerPass implements CompilerPassInterface
 {
     /**
      * @param ContainerBuilder $container
@@ -15,11 +15,11 @@ class CriteriaCompilerPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
 
-        if (!$container->hasDefinition('victoire_criteria.chain.criteria_chain')) {
+        if (!$container->hasDefinition('victoire_criteria.chain.data_source_chain')) {
             return;
         }
         $chainDefinition = $container->getDefinition(
-            'victoire_criteria.chain.criteria_chain'
+            'victoire_criteria.chain.data_source_chain'
         );
         $taggedServices = $container->findTaggedServiceIds(
             'victoire_criteria'
@@ -27,8 +27,8 @@ class CriteriaCompilerPass implements CompilerPassInterface
         foreach ($taggedServices as $id => $tagAttributes) {
             foreach ($tagAttributes as $attributes) {
                 $chainDefinition->addMethodCall(
-                    'addCriteria',
-                    [new Reference($id), $attributes['alias']]
+                    'addDataSource',
+                    [new Reference($id), $attributes]
                 );
             }
         }

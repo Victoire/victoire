@@ -11,6 +11,7 @@ namespace Victoire\Bundle\WidgetBundle\Resolver;
 
 use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Victoire\Bundle\CriteriaBundle\Chain\CriteriaChain;
+use Victoire\Bundle\CriteriaBundle\Chain\DataSourceChain;
 use Victoire\Bundle\CriteriaBundle\Entity\Criteria;
 use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
@@ -21,14 +22,14 @@ class WidgetResolver
     const OPERAND_IN = "in";
 
     /**
-     * @var CriteriaChain
+     * @var array
      */
-    private $criteriaChain;
+    private $dataSources;
 
-    public function __construct(CriteriaChain $criteriaChain)
+    public function __construct($dataSource)
     {
 
-        $this->criteriaChain = $criteriaChain;
+        $this->dataSources = $dataSource;
     }
 
     public function resolve(WidgetMap $widgetMap)
@@ -36,16 +37,16 @@ class WidgetResolver
 
         $widget = null;
         $accessor = new PropertyAccessor();
+        //TODO: orderiaze it
         /** @var Widget $widget */
         foreach ($widgetMap->getWidgets() as $widget) {
             /** @var Criteria $criteria */
             foreach ($widget->getCriterias() as $criteria) {
-                $_criteria = $this->criteriaChain->getCriteria($criteria->getName());
-                $value = $accessor->getValue($_criteria, $criteria->getName());
-                if ($this->assert($value, $criteria->getOperand(), $criteria->getValue())) {
+                $value = $this->dataSources[$criteria->getName()];
+                if ($this->assert($value(), $criteria->getOperator(), $criteria->getValue())) {
                     continue;
                 } else {
-                    continue 2;
+                    continue 2; //try with break
                 }
             }
             return $widget;
