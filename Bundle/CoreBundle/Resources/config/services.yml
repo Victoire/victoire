@@ -73,6 +73,7 @@ services:
             - "@victoire_core.current_view"
             - "@victoire_view_reference.repository"
             - "@twig"
+            - "@victoire_widget.resolver.widget_resolver"
         tags:
             - { name: twig.extension }
 

@@ -14,6 +14,7 @@ use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer;
+use Victoire\Bundle\WidgetBundle\Resolver\WidgetResolver;
 use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 
 /**
@@ -29,6 +30,10 @@ class CmsExtension extends \Twig_Extension_Core
     protected $widgetExceptionHandler;
     protected $currentViewHelper;
     protected $twig;
+    /**
+     * @var WidgetResolver
+     */
+    private $widgetResolver;
 
     /**
      * Constructor.
@@ -40,6 +45,8 @@ class CmsExtension extends \Twig_Extension_Core
      * @param ViewReferenceRepository $viewReferenceRepository
      * @param \Twig_Environment       $twig
      *
+     * @param WidgetResolver          $widgetResolver
+     *
      * @internal param SecurityContext $securityContext
      */
     public function __construct(
@@ -48,7 +55,8 @@ class CmsExtension extends \Twig_Extension_Core
         WidgetExceptionHandler $widgetExceptionHandler,
         CurrentViewHelper $currentViewHelper,
         ViewReferenceRepository $viewReferenceRepository,
-        \Twig_Environment $twig
+        \Twig_Environment $twig,
+        WidgetResolver $widgetResolver
     ) {
         $this->widgetRenderer = $widgetRenderer;
         $this->authorizationChecker = $authorizationChecker;
@@ -56,6 +64,7 @@ class CmsExtension extends \Twig_Extension_Core
         $this->currentViewHelper = $currentViewHelper;
         $this->viewReferenceRepository = $viewReferenceRepository;
         $this->twig = $twig;
+        $this->widgetResolver = $widgetResolver;
     }
 
     /**
@@ -143,24 +152,19 @@ class CmsExtension extends \Twig_Extension_Core
             /* @var WidgetMap $widgetMap */
             foreach ($currentView->getBuiltWidgetMap()[$slotId] as $widgetMap) {
                 $widget = null;
-                $widgetContent = null;
-                //get the widget id
-                $widgetId = $widgetMap->getWidget()->getId();
                 try {
-                    if (!$widgetMap->isAsynchronous()) {
-                        //get the widget
-                        $widget = $widgetMap->getWidget();
-                        //test widget
-                        if ($widget === null) {
-                            throw new \Exception('The widget with the id:['.$widgetId.'] was not found.');
+                    //get the widget
+                    $widget = $this->widgetResolver->resolve($widgetMap);
+                    if ($widget) {
+                        if (!$widgetMap->isAsynchronous()) {
+                            //render this widget
+                            $result .= $this->cmsWidget($widget);
+                        } else {
+                            $result .= $this->widgetRenderer->prepareAsynchronousRender($widget);
                         }
-                        //render this widget
-                        $result .= $this->cmsWidget($widget);
-                    } else {
-                        $result .= $this->widgetRenderer->prepareAsynchronousRender($widgetId);
                     }
                 } catch (\Exception $ex) {
-                    $result .= $this->widgetExceptionHandler->handle($ex, $currentView, $widget, $widgetId);
+                    $result .= $this->widgetExceptionHandler->handle($ex, $currentView, $widget);
                 }
             }
         }
