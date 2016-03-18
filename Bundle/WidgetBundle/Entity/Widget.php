@@ -108,9 +108,12 @@ class Widget extends BaseWidget implements VictoireQueryInterface
      */
     protected $view;
     /**
-     * @deprecated
+     * @var WidgetMap
      *
-     * @var [WidgetMap]
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap", inversedBy="widgets")
+     * @ORM\JoinColumn(name="widget_map_id", referencedColumnName="id", onDelete="SET NULL"))
+     */
+    protected $widgetMap;
      *
      * @ORM\OneToMany(targetEntity="\Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap", mappedBy="widget", orphanRemoval=true, cascade={"persist", "remove"})
      */
@@ -347,13 +350,10 @@ class Widget extends BaseWidget implements VictoireQueryInterface
      *
      * @return Widget
      */
-    public function setWidgetMaps($widgetMaps)
+    public function setWidgetMap(WidgetMap $widgetMap)
     {
-        $this->widgetMaps = $widgetMaps;
-
-        foreach ($widgetMaps as $widgetMap) {
-            $widgetMap->setWidget($this);
-        }
+        $this->widgetMap = $widgetMap;
+        $widgetMap->addWidget($this);
 
         return $this;
     }
@@ -363,30 +363,9 @@ class Widget extends BaseWidget implements VictoireQueryInterface
      *
      * @return [WidgetMap]
      */
-    public function getWidgetMaps()
+    public function getWidgetMap()
     {
-        return $this->widgetMaps;
-    }
-
-    /**
-     * Add widget.
-     *
-     * @param Widget $widgetMap
-     */
-    public function addWidgetMap(WidgetMap $widgetMap)
-    {
-        $widgetMap->setWidget($this);
-        $this->widgetMaps[] = $widgetMap;
-    }
-
-    /**
-     * Remove a widgetMap.
-     *
-     * @param WidgetMap $widgetMap
-     */
-    public function removeWidgetMap(WidgetMap $widgetMap)
-    {
-        $this->widgetMaps->removeElement($widgetMap);
+        return $this->widgetMap;
     }
 
     /**

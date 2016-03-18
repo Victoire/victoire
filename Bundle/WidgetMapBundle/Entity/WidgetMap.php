@@ -48,7 +48,15 @@ class WidgetMap
     /**
      * @var Widget
      *
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\WidgetBundle\Entity\Widget", inversedBy="widgetMaps")
+     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\WidgetBundle\Entity\Widget", mappedBy="widgetMap", orphanRemoval=true, cascade={"persist", "remove"})
+     */
+    protected $widgets;
+
+    /**
+     * @deprecated
+     * @var Widget
+     *
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\WidgetBundle\Entity\Widget")
      * @ORM\JoinColumn(name="widget_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $widget;
@@ -161,11 +169,11 @@ class WidgetMap
     }
 
     /**
-     * @return Widget
+     * @return [Widget]
      */
-    public function getWidget()
+    public function getWidgets()
     {
-        return $this->widget;
+        return $this->widgets;
     }
 
     /**
@@ -173,9 +181,20 @@ class WidgetMap
      *
      * @return $this
      */
-    public function setWidget(Widget $widget)
+    public function addWidget(Widget $widget)
     {
-        $this->widget = $widget;
+        $this->widgets[] = $widget;
+
+        return $this;
+    }
+    /**
+     * @param [Widget] $widgets
+     *
+     * @return $this
+     */
+    public function setWidgets($widgets)
+    {
+        $this->widgets = $widgets;
 
         return $this;
     }
@@ -446,5 +465,29 @@ class WidgetMap
     public function setSubstitutes($substitutes)
     {
         $this->substitutes = $substitutes;
+    }
+
+    /**
+     * @deprecated
+     *
+     * @return Widget
+     */
+    public function getWidget()
+    {
+        return $this->widget;
+    }
+
+    /**
+     * @deprecated
+     *
+     * @param Widget $widget
+     *
+     * @return WidgetMap
+     */
+    public function setWidget(Widget $widget = null)
+    {
+        $this->widget = $widget;
+
+        return $this;
     }
 }
