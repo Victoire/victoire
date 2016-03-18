@@ -1,16 +1,10 @@
 services:
-    victoire_criteria.chain.criteria_chain:
-        class: Victoire\Bundle\CriteriaBundle\Chain\CriteriaChain
+    victoire_criteria.chain.data_source_chain:
+        class: Victoire\Bundle\CriteriaBundle\Chain\DataSourceChain
 
-
-    victoire_criteria.criteria.base_criteria:
-        class: Victoire\Bundle\CriteriaBundle\Criteria\BaseCriteria
-        tags:
-            - { name: victoire_criteria, alias: default }
-
-    victoire_criteria.criteria.request_criteria:
-        class: Victoire\Bundle\CriteriaBundle\Criteria\RequestCriteria
+    victoire_criteria.criteria.request_data_source:
+        class: Victoire\Bundle\CriteriaBundle\DataSource\RequestDataSource
         arguments: [ @request_stack ]
         tags:
-            - { name: victoire_criteria, alias: locale }
-            - { name: victoire_criteria, alias: scheme }
+            - { name: victoire_criteria, group: request, method: getLocale, alias: request_locale }
+            - { name: victoire_criteria, group: request, method: getScheme, alias: request_scheme }

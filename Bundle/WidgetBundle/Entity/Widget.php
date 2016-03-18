@@ -10,7 +10,6 @@ use Victoire\Bundle\QueryBundle\Entity\VictoireQueryInterface;
 use Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTrait;
 use Victoire\Bundle\WidgetBundle\Model\Widget as BaseWidget;
 use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
-use Victoire\Bundle\CriteriaBundle\Entity\Criteria;
 
 /**
  * Widget.
@@ -117,7 +116,7 @@ class Widget extends BaseWidget implements VictoireQueryInterface
     protected $widgetMap;
 
     /**
-     * @var string
+     * @var [Criteria]
      *
      * @ORM\OneToMany(targetEntity="\Victoire\Bundle\CriteriaBundle\Entity\Criteria", mappedBy="widget")
      */
@@ -445,7 +444,7 @@ class Widget extends BaseWidget implements VictoireQueryInterface
     }
 
     /**
-     * @param string $criterias
+     * @param [Criteria] $criterias
      */
     public function setCriterias($criterias)
     {

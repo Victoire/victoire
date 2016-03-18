@@ -100,4 +100,4 @@ services:
     victoire_widget.resolver.widget_resolver:
         class: Victoire\Bundle\WidgetBundle\Resolver\WidgetResolver
         arguments:
-            - @victoire_criteria.chain.criteria_chain
+            - "@=service('victoire_criteria.chain.data_source_chain').getDataSources()"

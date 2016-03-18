@@ -1,11 +1,11 @@
 <?php
 
-namespace Victoire\Bundle\CriteriaBundle\Criteria;
+namespace Victoire\Bundle\CriteriaBundle\DataSource;
 
 
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class RequestCriteria
+class RequestDataSource
 {
     /**
      * @var RequestStack
@@ -19,7 +19,6 @@ class RequestCriteria
      */
     public function __construct(RequestStack $requestStack)
     {
-
         $this->requestStack = $requestStack;
     }
 
@@ -28,9 +27,8 @@ class RequestCriteria
         return $this->requestStack->getCurrentRequest()->getLocale();
     }
 
-    public function isHttps()
+    public function getScheme()
     {
         return $this->requestStack->getCurrentRequest()->getScheme();
     }
-
 }
