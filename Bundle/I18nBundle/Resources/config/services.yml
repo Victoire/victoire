@@ -8,20 +8,6 @@ services:
             - '%kernel.default_locale%'
             - '%victoire_i18n.available_locales%'
 
-    victoire_i18n.cache_warmer.i18n_warmer:
-        class: Victoire\Bundle\I18nBundle\CacheWarmer\I18nWarmer
-        arguments:
-            - "%victoire_i18n.available_locales%"
-            - "@file_locator"
-        tags:
-            - { name: kernel.cache_warmer, priority: 1}
-
-    victoire_i18n.i18n.cache_driver:
-        class: Victoire\Bundle\I18nBundle\CacheWarmer\I18nCacheDriver
-        arguments:
-            - "@annotation_reader"
-            - "%kernel.cache_dir%"
-
     victoire_i18n.translator:
         class: Victoire\Bundle\I18nBundle\Translation\Translator
         arguments: ["@service_container", "@translator.selector",{}, {cache_dir:"%kernel.cache_dir%/translations%", debug: "%kernel.debug%"}]
@@ -33,13 +19,6 @@ services:
             - "@victoire_i18n.locale_resolver"
         tags:
             - { name: kernel.event_subscriber }
-
-    victoire_i18n.view_subscriber:
-        class: Victoire\Bundle\I18nBundle\Subscriber\ViewSubscriber
-        arguments:
-            - "%kernel.default_locale%"
-        tags:
-            - { name: doctrine.event_subscriber, connection: default, priority: -1 }
 
     victoire_i18n.routing_loader:
         class: Victoire\Bundle\I18nBundle\Route\I18nRouteLoader
