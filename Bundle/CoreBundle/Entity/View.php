@@ -9,8 +9,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
-use Victoire\Bundle\I18nBundle\Entity\BaseI18n;
-use Victoire\Bundle\I18nBundle\Entity\I18n;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
@@ -143,20 +141,6 @@ abstract class View
     protected $reference;
 
     /**
-     * @ORM\Column(name="locale", type="string")
-     * @Serializer\Groups({"search"})
-     */
-    protected $locale;
-
-    /**
-     * @var string
-     *
-     * @ORM\OneToOne(targetEntity="\Victoire\Bundle\I18nBundle\Entity\I18n", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="i18n_id", referencedColumnName="id", onDelete="SET NULL")
-     */
-    protected $i18n;
-
-    /**
      * @var string
      *
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\TemplateBundle\Entity\Template", inversedBy="inheritors", cascade={"persist"})
@@ -229,26 +213,6 @@ abstract class View
     public function setId($id)
     {
         $this->id = $id;
-    }
-
-    /**
-     * Get locale.
-     *
-     * @return string
-     */
-    public function getLocale()
-    {
-        return $this->locale;
-    }
-
-    /**
-     * Set locale.
-     *
-     * @param $locale
-     */
-    public function setLocale($locale)
-    {
-        $this->locale = $locale;
     }
 
     /**
@@ -591,44 +555,6 @@ abstract class View
     public function setBodyClass($bodyClass)
     {
         $this->bodyClass = $bodyClass;
-
-        return $this;
-    }
-
-    /**
-     * Initialize I18n table.
-     *
-     * @ORM\PrePersist
-     */
-    public function initI18n()
-    {
-        if (!$this->i18n) {
-            $this->i18n = new I18n();
-            $this->i18n->setTranslation($this->getLocale(), $this);
-        }
-    }
-
-    /**
-     * Get i18n.
-     *
-     * @return string
-     */
-    public function getI18n()
-    {
-        return $this->i18n;
-    }
-
-    /**
-     * Set i18n.
-     *
-     * @param BaseI18n $i18n
-     *
-     * @return $this
-     */
-    public function setI18n(BaseI18n $i18n)
-    {
-        $this->i18n = $i18n;
-        $this->i18n->setTranslation($this->getLocale(), $this);
 
         return $this;
     }
