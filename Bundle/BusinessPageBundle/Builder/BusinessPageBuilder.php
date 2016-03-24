@@ -12,6 +12,7 @@ use Victoire\Bundle\BusinessEntityBundle\Provider\EntityProxyProvider;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
+use Victoire\Bundle\CoreBundle\Exception\IdentifierNotDefinedException;
 use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
 
 /**
@@ -98,12 +99,7 @@ class BusinessPageBuilder
             preg_match_all('/\{\%\s*([^\%\}]*)\s*\%\}|\{\{\s*([^\}\}]*)\s*\}\}/i', $pageUrl, $matches);
 
             if (count($matches[2])) {
-                throw new \Exception(sprintf(
-                        'The following identifiers are not defined as well, (%s)
-                    you need to add the following lines on your businessEntity properties:
-                    <br> <pre>@VIC\BusinessProperty("businessParameter")</pre>',
-                        implode($matches[2], ', ')
-                    ));
+                throw new IdentifierNotDefinedException($matches[2]);
             }
 
             $entityProxy = $this->entityProxyProvider->getEntityProxy($entity, $businessEntity, $em);
