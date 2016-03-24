@@ -44,6 +44,7 @@ abstract class View
      * @Assert\NotBlank()
      * @ORM\Column(name="name", type="string", length=255)
      * @Serializer\Groups({"search"})
+     * @Gedmo\Translatable
      */
     protected $name;
 
@@ -135,10 +136,11 @@ abstract class View
     protected $undeletable = false;
 
     /**
+     * @var ViewReference[]
      * The reference is related to viewsReferences.xml file which list all app views.
      * This is used to speed up the routing system and identify virtual pages (BusinessPage).
      */
-    protected $reference;
+    protected $references;
 
     /**
      * @var string
@@ -176,13 +178,22 @@ abstract class View
     protected $cssUpToDate = false;
 
     /**
+     * @Gedmo\Locale
+     * Used locale to override Translation listener`s locale
+     * this is not a mapped field of entity metadata, just a simple property
+     * and it is not necessary because globally locale can be set in listener
+     */
+    protected $locale;
+
+    /**
      * Construct.
      **/
     public function __construct()
     {
         $this->children = new ArrayCollection();
         $this->widgetMaps = new ArrayCollection();
-        $this->widgetMap = [];
+        $this->translations = new ArrayCollection();
+        $this->references = [];
     }
 
     /**
@@ -680,13 +691,41 @@ abstract class View
     }
 
     /**
-     * Get reference.
+     * Get reference according to the current locale.
      *
-     * @return ViewReference
+     * @return null|ViewReference
      */
     public function getReference()
     {
-        return $this->reference;
+        if (is_array($this->references) && isset($this->references[$this->getLocale()])) {
+            return $this->references[$this->getLocale()];
+        }
+
+        return null;
+    }
+
+    /**
+     * Get references.
+     *
+     * @return ViewReference[]
+     */
+    public function getReferences()
+    {
+        return $this->references;
+    }
+
+    /**
+     * Set references.
+     *
+     * @param ViewReference[] $references
+     *
+     * @return $this
+     */
+    public function setReferences($references)
+    {
+        $this->references = $references;
+
+        return $this;
     }
 
     /**
@@ -696,9 +735,10 @@ abstract class View
      *
      * @return $this
      */
-    public function setReference($reference)
+    public function setReference(ViewReference $reference, $locale = null)
     {
-        $this->reference = $reference;
+        $locale = $locale ?: $this->getLocale();
+        $this->references[$locale] = $reference;
 
         return $this;
     }
@@ -792,4 +832,18 @@ abstract class View
 
         return $this;
     }
+
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
 }

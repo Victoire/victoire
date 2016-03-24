@@ -33,11 +33,20 @@ interface WebViewInterface
     public function hasChildren();
 
     public function setReference($reference);
+    /**
+     * @param ViewReference[]
+     */
+    public function setReferences($references);
 
     /**
      * @return ViewReference
      */
     public function getReference();
+
+    /**
+     * @return ViewReference[]
+     */
+    public function getReferences();
 
     public function setPublishedAt($publishedAt);
 

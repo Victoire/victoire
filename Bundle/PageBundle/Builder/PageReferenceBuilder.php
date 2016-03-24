@@ -2,8 +2,10 @@
 
 namespace Victoire\Bundle\PageBundle\Builder;
 
+use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\CoreBundle\Entity\View;
+use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\ViewReferenceBundle\Builder\BaseReferenceBuilder;
 use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
@@ -18,6 +20,7 @@ class PageReferenceBuilder extends BaseReferenceBuilder
      */
     public function buildReference(View $view, EntityManager $em)
     {
+        /** @var Page $view */
         $referenceId = ViewReferenceHelper::generateViewReferenceId($view);
 
         $viewReference = new ViewReference();
@@ -26,7 +29,7 @@ class PageReferenceBuilder extends BaseReferenceBuilder
         $viewReference->setName($view->getName());
         $viewReference->setViewId($view->getId());
         $viewReference->setSlug($view->isHomepage() ? '' : $view->getSlug());
-        $viewReference->setViewNamespace(get_class($view));
+        $viewReference->setViewNamespace(ClassUtils::getClass($view));
         if ($parent = $view->getParent()) {
             $viewReference->setParent(ViewReferenceHelper::generateViewReferenceId($parent));
         }
