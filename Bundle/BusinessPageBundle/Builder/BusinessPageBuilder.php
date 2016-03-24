@@ -14,6 +14,7 @@ use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
 use Victoire\Bundle\CoreBundle\Exception\IdentifierNotDefinedException;
 use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
+use Victoire\Bundle\ViewReferenceBundle\Builder\ViewReferenceBuilder;
 
 /**
  * @property mixed entityProxyProvider
@@ -24,6 +25,7 @@ class BusinessPageBuilder
     protected $urlBuilder;
     protected $parameterConverter;
     protected $entityProxyProvider;
+    protected $viewReferenceBuilder;
 
     //@todo Make it dynamic please
     protected $pageParameters = [
@@ -40,12 +42,17 @@ class BusinessPageBuilder
      * @param ParameterConverter   $parameterConverter
      * @param EntityProxyProvider  $entityProxyProvider
      */
-    public function __construct(BusinessEntityHelper $businessEntityHelper, UrlBuilder $urlBuilder, ParameterConverter $parameterConverter, EntityProxyProvider $entityProxyProvider)
+    public function __construct(BusinessEntityHelper $businessEntityHelper,
+                                UrlBuilder $urlBuilder,
+                                ParameterConverter $parameterConverter,
+                                EntityProxyProvider $entityProxyProvider,
+                                ViewReferenceBuilder $viewReferenceBuilder)
     {
         $this->businessEntityHelper = $businessEntityHelper;
         $this->urlBuilder = $urlBuilder;
         $this->parameterConverter = $parameterConverter;
         $this->entityProxyProvider = $entityProxyProvider;
+        $this->viewReferenceBuilder = $viewReferenceBuilder;
     }
 
     /**
@@ -108,6 +115,7 @@ class BusinessPageBuilder
             $page->setSlug($pageSlug);
             $page->setName($pageName);
             $page->setEntityProxy($entityProxy);
+            $page->setReferences([$page->getLocale() => $this->viewReferenceBuilder->buildViewReference($page, $em)]);
 
             $page->setTemplate($businessTemplate);
             if ($seo = $businessTemplate->getSeo()) {
