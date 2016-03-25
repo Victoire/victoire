@@ -16,51 +16,51 @@
         <div class="vic-tab-quantum vic-tab-pane{% if forms[key].active is defined and forms[key].active == true %} vic-active{% endif %}" id="widget-{{ widget.id }}-tab-pane">
 
             {% if widget.id and widget.widgetMap.view != view %}
-    <div class="vic-alert vic-alert-warning vic-alert-dismissible">
+            <div class="vic-alert vic-alert-warning vic-alert-dismissible">
                 {{ 'victoire.widget.inherited.notice'|trans({'%templateName%': widget.widgetMap.view.name, '%templateEditLink%': path('victoire_core_widget_edit', {'id': widget.id, 'viewReference': view.reference.id })}, 'victoire')|raw }}
-    </div>
-    {% endif %}
+            </div>
+            {% endif %}
 
-    {% if classes|length %}
-        <ul class="vic-nav vic-nav-tabs vic-modal-nav-tabs">
-            <li class="{% if constant('MODE_STATIC', widget) == widget.mode %}vic-active {% endif %}vic-seperate"><a href="#picker-static" data-toggle="vic-tab">{{ ('form.widget.tab.manual.label')|trans({}, 'victoire') }}</a></li>
-            {% for class, namespace in classes %}
-                {% if namespace.disable %}
-                    <li class="vic-disable"><span title="{{ ('form.widget.tab.entity.disable.label')|trans({}, 'victoire') }}">{{ ('form.widget.tab.' ~ class|lower ~ '.label')|trans({}, 'victoire') }}</span></li>
-                {% else %}
-                    <li class="{% if not loop.last %}vic-seperate{% endif %}{% if widget.businessEntityId == class|lower %} vic-active{% endif %}"><a href="#picker-{{ class|lower }}" data-toggle="vic-tab">{{ ('form.widget.tab.' ~ class|lower ~ '.label')|trans({}, 'victoire') }}</a></li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-    {% endif %}
+            {% if classes|length %}
+                <ul class="vic-nav vic-nav-tabs vic-modal-nav-tabs">
+                    <li class="{% if constant('MODE_STATIC', widget) == widget.mode %}vic-active {% endif %}vic-seperate"><a href="#picker-static" data-toggle="vic-tab">{{ ('form.widget.tab.manual.label')|trans({}, 'victoire') }}</a></li>
+                    {% for class, namespace in classes %}
+                        {% if namespace.disable %}
+                            <li class="vic-disable"><span title="{{ ('form.widget.tab.entity.disable.label')|trans({}, 'victoire') }}">{{ ('form.widget.tab.' ~ class|lower ~ '.label')|trans({}, 'victoire') }}</span></li>
+                        {% else %}
+                            <li class="{% if not loop.last %}vic-seperate{% endif %}{% if widget.businessEntityId == class|lower %} vic-active{% endif %}"><a href="#picker-{{ class|lower }}" data-toggle="vic-tab">{{ ('form.widget.tab.' ~ class|lower ~ '.label')|trans({}, 'victoire') }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
 
-    <div class="vic-tab-content vic-modal-tab-content">
+            <div class="vic-tab-content vic-modal-tab-content">
               {% for class, form in forms[key] %}
-        {% set isActive = class == widget.mode or widget.businessEntityId == class|lower and widget.mode == constant('MODE_BUSINESS_ENTITY', widget) %}
+                {% set isActive = class == widget.mode or widget.businessEntityId == class|lower and widget.mode == constant('MODE_BUSINESS_ENTITY', widget) %}
                     <div class="vic-tab-mode vic-tab-pane{% if isActive %} vic-active{% endif %}" id="picker-{{ class|lower }}">
 
-            {% if class != constant('MODE_STATIC', widget) and is_granted('ROLE_VICTOIRE_DEVELOPER') %}
-                <ul class="vic-nav vic-nav-tabs vic-modal-nav-tabs">
-                    <li class="{% if widget.mode == constant('MODE_ENTITY', widget) %}vic-active {% endif %}vic-seperate"><a href="#picker-{{ class|lower }}-entity" data-toggle="vic-tab">{{ ('form.widget.tab.picker.label')|trans({}, 'victoire') }}</a></li>
-                    <li{% if widget.mode == constant('MODE_QUERY', widget) %} class="vic-active"{% endif %}><a href="#picker-{{ class|lower }}-query" data-toggle="vic-tab">{{ ('form.widget.tab.query.label')|trans({}, 'victoire') }}</a></li>
+                    {% if class != constant('MODE_STATIC', widget) and is_granted('ROLE_VICTOIRE_DEVELOPER') %}
+                        <ul class="vic-nav vic-nav-tabs vic-modal-nav-tabs">
+                            <li class="{% if widget.mode == constant('MODE_ENTITY', widget) %}vic-active {% endif %}vic-seperate"><a href="#picker-{{ class|lower }}-entity" data-toggle="vic-tab">{{ ('form.widget.tab.picker.label')|trans({}, 'victoire') }}</a></li>
+                            <li{% if widget.mode == constant('MODE_QUERY', widget) %} class="vic-active"{% endif %}><a href="#picker-{{ class|lower }}-query" data-toggle="vic-tab">{{ ('form.widget.tab.query.label')|trans({}, 'victoire') }}</a></li>
 
-                    {% if is_business_entity_allowed(class|lower, view) %}
-                        <li{% if widget.mode == constant('MODE_BUSINESS_ENTITY', widget) %} class="vic-active"{% endif %}><a href="#picker-{{ class|lower }}-businessEntity" data-toggle="vic-tab">{{ ('form.widget.tab.entity_instance.label')|trans({}, 'victoire') }}</a></li>
-                    {% endif %}
-                </ul>
-                <div class="vic-tab-content vic-modal-tab-content">
-                    {% for subForm in form %}
-                        {{ subForm|raw }}
-                    {% endfor %}
-                </div>
-            {% else %}
+                            {% if is_business_entity_allowed(class|lower, view) %}
+                                <li{% if widget.mode == constant('MODE_BUSINESS_ENTITY', widget) %} class="vic-active"{% endif %}><a href="#picker-{{ class|lower }}-businessEntity" data-toggle="vic-tab">{{ ('form.widget.tab.entity_instance.label')|trans({}, 'victoire') }}</a></li>
+                            {% endif %}
+                        </ul>
+                        <div class="vic-tab-content vic-modal-tab-content">
+                            {% for subForm in form %}
+                                {{ subForm|raw }}
+                            {% endfor %}
+                        </div>
+                    {% else %}
                         {% for el, subForm in form %}
-                    {{ subForm|raw }}
-                {% endfor %}
-            {% endif %}
+                            {{ subForm|raw }}
+                        {% endfor %}
+                    {% endif %}
+                    </div>
+              {% endfor %}
             </div>
-      {% endfor %}
-    </div>
         </div>
     {% endfor %}
     </div>

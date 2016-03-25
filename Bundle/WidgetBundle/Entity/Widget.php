@@ -121,10 +121,16 @@ class Widget extends BaseWidget implements VictoireQueryInterface
     /**
      * @var [Criteria]
      *
-     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\CriteriaBundle\Entity\Criteria", mappedBy="widget")
+     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\CriteriaBundle\Entity\Criteria", mappedBy="widget", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     protected $criterias;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="quantum", type="string", length=255, nullable=true)
+     */
+    protected $quantum;
 
     /**
      * @return string
@@ -492,6 +498,23 @@ class Widget extends BaseWidget implements VictoireQueryInterface
             return $criteriaAlias === $element->getName();
         });
     }
+
+    /**
+     * @return string
+     */
+    public function getQuantum()
+    {
+        return $this->quantum;
+    }
+
+    /**
+     * @param string $quantum
+     */
+    public function setQuantum($quantum)
+    {
+        $this->quantum = $quantum;
+    }
+
 
     /**
      * Generate the CacheId, insert params that can invalid the cache

@@ -263,8 +263,8 @@ class WidgetManager
                 ];
             }
         } else {
-            $forms = $this->widgetFormBuilder->renderNewWidgetForms($widget->getSlot(), $currentView, $widget, $classes);
             $widgets = $widget->getWidgetMap()->getWidgets();
+            $forms = $this->widgetFormBuilder->renderNewQuantumForms($widget->getSlot(), $currentView, $widgets, $widget, $classes);
 
             $response = [
                 'success'  => true,
