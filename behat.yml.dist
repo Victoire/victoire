@@ -64,7 +64,7 @@ default:
                  dependencies:
                      Template:           [User]
                      ErrorPage:          [Template, User]
-                     Page:               [Template, User]
+                     Page:               [Template, User, I18n]
                      Blog:               [Template, BlogTemplate, User]
                      Article:            [Template, Blog, BlogTemplate, BlogBP, User]
                      CharacterTemplates: [Template, User]

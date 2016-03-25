@@ -1,14 +1,13 @@
-Victoire\Bundle\PageBundle\Entity\Page:
+Gedmo\Translatable\Entity\Translation:
     home_en:
-        template: @template_base
-        author: @anakin
-        name: Homepage
+        content: Homepage
         locale: en
-        slug: home
-        homepage: true
-        undeletable: true
-        status: published
-        publishedAt: <dateTime('now')>
-        createdAt: <dateTime('now')>
-        updatedAt: <dateTime('now')>
-        cssUpToDate: false
+        objectClass: Victoire\Bundle\CoreBundle\Entity\View
+        field: name
+        foreignKey: '@home->id'
+    test_en:
+        content: English test
+        locale: en
+        objectClass: Victoire\Bundle\CoreBundle\Entity\View
+        field: name
+        foreignKey: '@test->id'
