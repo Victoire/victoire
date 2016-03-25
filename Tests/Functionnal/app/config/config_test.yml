@@ -74,6 +74,13 @@ doctrine:
                 dir: "%kernel.root_dir%/../../../vendor/gedmo/doctrine-extensions/lib/Gedmo/Tree/Entity"
                 is_bundle: false
 
+            gedmo_translatable:
+                type: annotation
+                prefix: Gedmo\Translatable\Entity
+                dir: "%kernel.root_dir%/../../../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translatable/Entity"
+                alias: GedmoTranslatable
+                is_bundle: false
+
 stof_doctrine_extensions:
     default_locale: fr_FR
     orm:
