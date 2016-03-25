@@ -187,15 +187,13 @@ class WidgetController extends Controller
     {
         $view = $this->getViewByReferenceId($viewReference);
         $this->get('victoire_widget_map.builder')->build($view, $this->get('doctrine.orm.entity_manager'));
-        $widgetView = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $view)->getView();
         $this->get('victoire_widget_map.widget_data_warmer')->warm($this->getDoctrine()->getManager(), $view);
 
         if ($view instanceof BusinessTemplate && !$reference = $this->get('victoire_view_reference.repository')
             ->getOneReferenceByParameters(['viewId' => $view->getId()])) {
             $reference = new ViewReference($viewReference);
-            $widgetView->setReference($reference);
+            $view->setReference($reference);
         }
-        $widget->setCurrentView($widgetView);
         $this->get('victoire_core.current_view')->setCurrentView($view);
         try {
             $response = new JsonResponse(

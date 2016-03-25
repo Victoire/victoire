@@ -1,0 +1,10 @@
+<div class="panel col-md-6">
+    {% for name, criteria in form.criterias %}
+        <div class="row">{{ name }}</div>
+        <div class="row">
+            <div class="col-md-4">{{ form_row(criteria.operator) }}</div>
+            <div class="col-md-4">{{ form_row(criteria.value) }}</div>
+            {{ form_row(criteria.name) }}
+        </div>
+    {% endfor %}
+</div>

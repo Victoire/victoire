@@ -2,9 +2,11 @@
 
 namespace Victoire\Bundle\WidgetBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Victoire\Bundle\CoreBundle\Entity\BaseEntityProxy;
+use Victoire\Bundle\CriteriaBundle\Entity\Criteria;
 use Victoire\Bundle\QueryBundle\Entity\QueryTrait;
 use Victoire\Bundle\QueryBundle\Entity\VictoireQueryInterface;
 use Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTrait;
@@ -28,6 +30,7 @@ class Widget extends BaseWidget implements VictoireQueryInterface
     public function __construct()
     {
         $this->childrenSlot = uniqid();
+        $this->criterias = new ArrayCollection();
     }
 
     /**
@@ -395,7 +398,7 @@ class Widget extends BaseWidget implements VictoireQueryInterface
             $entityProxy = $this->getEntityProxy();
 
             //if there is a proxy
-            if ($entityProxy !== null) {
+            if ($entityProxy !== null && $this->getBusinessEntityId()) {
                 $entity = $entityProxy->getEntity($this->getBusinessEntityId());
                 $this->entity = $entity;
             }
@@ -449,6 +452,45 @@ class Widget extends BaseWidget implements VictoireQueryInterface
     public function setCriterias($criterias)
     {
         $this->criterias = $criterias;
+    }
+    /**
+     * @param Criteria $criteria
+     */
+    public function addCriteria($criteria)
+    {
+        $criteria->setWidget($this);
+        $this->criterias[] = $criteria;
+    }
+
+    /**
+     * @param Criteria $criteria
+     */
+    public function removeCriteria(Criteria $criteria)
+    {
+        $criteria->setWidget(null);
+        $this->criterias->removeElement($criteria);
+    }
+
+    /**
+     * @param Criteria $criteria
+     *
+     * @return bool
+     */
+    public function hasCriteria(Criteria $criteria)
+    {
+        return $this->criterias->contains($criteria);
+    }
+
+    /**
+     * @param $criteriaAlias
+     *
+     * @return bool
+     */
+    public function hasCriteriaNamed($criteriaAlias)
+    {
+        return $this->criterias->exists(function($key, $element) use ($criteriaAlias) {
+            return $criteriaAlias === $element->getName();
+        });
     }
 
     /**

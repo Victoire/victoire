@@ -22,14 +22,19 @@ class WidgetResolver
     const OPERAND_IN = "in";
 
     /**
-     * @var array
+     * @var DataSourceChain
      */
-    private $dataSources;
+    private $dataSourceChain;
 
-    public function __construct($dataSource)
+    /**
+     * WidgetResolver constructor.
+     *
+     * @param DataSourceChain $dataSourceChain
+     */
+    public function __construct(DataSourceChain $dataSourceChain)
     {
 
-        $this->dataSources = $dataSource;
+        $this->dataSourceChain = $dataSourceChain;
     }
 
     public function resolve(WidgetMap $widgetMap)
@@ -42,7 +47,7 @@ class WidgetResolver
         foreach ($widgetMap->getWidgets() as $widget) {
             /** @var Criteria $criteria */
             foreach ($widget->getCriterias() as $criteria) {
-                $value = $this->dataSources[$criteria->getName()];
+                $value = $this->dataSourceChain->getData($criteria->getName());
                 if ($this->assert($value(), $criteria->getOperator(), $criteria->getValue())) {
                     continue;
                 } else {

@@ -193,7 +193,7 @@ class WidgetFormBuilder
             }
             $formUrl = $router->generate($action, $actionParams);
         } else {
-            $viewReference = $widget->getCurrentView()->getReference();
+            $viewReference = $this->container->get('victoire_core.current_view')->getCurrentView()->getReference();
             $formUrl = $router->generate('victoire_core_widget_update',
                 [
                     'id'               => $widget->getId(),
@@ -221,6 +221,7 @@ class WidgetFormBuilder
             'mode'             => $formMode,
             'action'           => $formUrl,
             'method'           => 'POST',
+            'dataSources'           => $this->container->get('victoire_criteria.chain.data_source_chain'),
         ]);
 
         $event = new WidgetFormCreateEvent($optionsContainer, $widgetFormTypeClass);

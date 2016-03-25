@@ -1,7 +1,7 @@
 {% form_theme form 'VictoireFormBundle:Form:fields.html.twig' %}
 
 {% trans_default_domain "victoire" %}
-
+{% block action %}create{% endblock action %}
 {% block form_container %}
     {% block body %}
         {% block form %}
@@ -9,7 +9,12 @@
                 {% block form_entity %}
                 <div id="picker-{{ entity|lower }}-{{ form.mode.vars.data }}" class="vic-tab-pane vic-mode-{{ widget.mode }} {% if form.mode.vars.data == widget.mode %}vic-active{% endif %}">
                     {{ form_start(form) }}
+                        {% do form.criterias.setRendered %}
                         {{form_rest(form)}}
+                        {% include "@VictoireCore/Widget/criterias.html.twig" %}
+                        <a href="#" class="vic-btn vic-btn-success" data-modal="{{ block('action') }}" title="{{ ('modal.button.'~ block('action') ~'.title')|trans({}, 'victoire') }}">
+                            <i class="fa fa-check-circle"></i> {{ ('modal.button.'~ block('action') ~'.title')|trans({}, 'victoire') }}
+                        </a>
                     {{ form_end(form) }}
                 </div>
                 {% endblock form_entity %}
@@ -17,7 +22,12 @@
                 {% block form_static %}
                     <div id="picker-{{ form.mode.vars.data }}" class="vic-tab-pane {% if form.mode.vars.data == widget.mode %}vic-active{% endif %}">
                         {{ form_start(form) }}
+                        {% do form.criterias.setRendered %}
                             {{form_rest(form)}}
+                        {% include "@VictoireCore/Widget/criterias.html.twig" %}
+                        <a href="#" class="vic-btn vic-btn-success" data-modal="{{ block('action') }}" title="{{ ('modal.button.'~ block('action') ~'.title')|trans({}, 'victoire') }}">
+                            <i class="fa fa-check-circle"></i> {{ ('modal.button.'~ block('action') ~'.title')|trans({}, 'victoire') }}
+                        </a>
                         {{ form_end(form) }}
                     </div>
                 {% endblock form_static %}
