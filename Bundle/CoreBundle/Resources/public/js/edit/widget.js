@@ -71,7 +71,64 @@ $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(
 });
 
 
-// Create new widget after submit
+$vic(document).on('click', '.vic-widget-modal a[data-modal="update-bulk"]', function(event) {
+
+    event.preventDefault();
+
+    // we remove the prototype picker to avoid persist it
+    if ($vic("select.picker_entity_select").length != 0 && $vic("select.picker_entity_select").attr('name').indexOf('appventus_victoirecorebundle_widgetlistingtype[items][__name__][entity]') !== -1) {
+        $vic("select.picker_entity_select").remove();
+    }
+
+    var forms = $vic(this).parents('.vic-modal-content').find('.vic-tab-quantum .vic-tab-mode.vic-active form');
+
+
+    loading(true);
+    var calls = [];
+    $vic(forms).each(function (key, form) {
+        $vic(form).trigger("victoire_widget_form_update_presubmit");
+        formData = $vic(form).serialize();
+        var contentType = 'application/x-www-form-urlencoded; charset=UTF-8';
+        if ($vic(form).attr('enctype') == 'multipart/form-data') {
+            var formData = new FormData($vic(form)[0]);
+            var contentType = false;
+        }
+        calls.push($vic.ajax({
+            type: $vic(form).attr('method'),
+            url : $vic(form).attr('action'),
+            data        : formData,
+            processData : false,
+            contentType : contentType
+        }).done(function(response) {
+            $vic(form).trigger("victoire_widget_form_update_postsubmit");
+        })
+        );
+    });
+
+    $vic.when.apply($vic, calls).then(function() {
+        var errors = false;
+        //arguments is a magic var that contains all callback arguments
+        $vic(arguments).each(function(index, response) {
+            if (false === response[0].success) {
+                $vic('ul.vic-modal-nav-tabs a[href="#widget-'+response[0].widgetId+'-tab-pane"]').css('color', 'red');
+                errors = true;
+                //inform user there have been an error
+                warn(response[0].message, 10000);
+
+                if (response[0].html) {
+                    $vic('#widget-'+response[0].widgetId+'-tab-pane div.vic-tab-mode.vic-tab-pane.vic-active div.vic-tab-pane.vic-active').html(response[0].html)
+
+                }
+            } else {
+                $vic('ul.vic-modal-nav-tabs a[href="#widget-'+response[0].widgetId+'-tab-pane"]').css('color', '');
+            }
+        });
+        if (errors === false) {
+            window.location.reload();
+        }
+        loading(false);
+    });
+});
 $vic(document).on('click', '.vic-widget-modal a[data-modal="update"]', function(event) {
     event.preventDefault();
 
@@ -156,7 +213,25 @@ $vic(document).on('click', '.vic-widget-modal a.vic-confirmed, .vic-hover-widget
         });
         $vic(document).trigger("victoire_widget_delete_postsubmit");
 });
+//<a id="widget-845-tab" class="quantum-tab-name" href="#widget-845-tab-pane" data-toggle="vic-tab">WIDGET 845</a>
 
+
+$vic(document).on('click', '.quantum-tab-name i.edit', function(event) {
+    event.preventDefault();
+    var value = $vic('#'+$vic(this).parents('a').first().prop('id')+"-pane").find('#static_widget_text_quantum').val();
+    var input = '<input class="quantum-edit-field" type="text" value="'+value+'"></input>';
+    $vic(this).parent().children('span').first().html(input);
+    $vic(input).focus();
+
+});
+$vic(document).on('focusout', '.quantum-edit-field', function(event) {
+    event.preventDefault();
+    var value = $vic(this).val();
+    $vic('#'+$vic(this).parents('a').first().prop('id')+"-pane").find('#static_widget_text_quantum').val(value);
+    $vic(this).parent().prepend('<span>'+value+'</span>');
+    $vic(this).remove();
+
+});
 function generateNewWidgetUrl(select){
     var slotId = $vic(select).parents('.vic-slot').first().data('name');
     var container = $vic(select).parents('new-widget-button');

@@ -113,6 +113,31 @@ class WidgetFormBuilder
 
         return $forms;
     }
+    /**
+     * Generates new forms for each available business entities.
+     *
+     * @param string           $slot
+     * @param View             $view
+     * @param Widget           $widget
+     * @param BusinessEntity[] $classes
+     * @param int              $position
+     *
+     * @throws \Exception
+     *
+     * @return Form[]
+     */
+    public function renderNewQuantumForms($slot, View $view, $widgets, $activeWidget, $classes, $position = null, $parentWidgetMap = null)
+    {
+        $forms = [];
+        foreach ($widgets as $key => $widget) {
+            $forms[$key] = $this->renderNewWidgetForms($slot, $view, $widget, $classes, $position, $parentWidgetMap);
+            if ($widget === $activeWidget) {
+                $forms[$key]['active'] = true;
+            }
+        }
+
+        return $forms;
+    }
 
     /**
      * @param Widget $widget

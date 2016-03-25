@@ -61,6 +61,7 @@ class WidgetType extends AbstractType
                 'required' => false,
             ]);
         $builder->add('theme', HiddenType::class);
+        $builder->add('quantum', HiddenType::class);
 
         //add the slot to the form
         $builder->add('slot', HiddenType::class, []);
