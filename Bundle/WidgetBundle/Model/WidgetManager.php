@@ -223,7 +223,7 @@ class WidgetManager
         //if the form is posted
         if ($requestMethod === 'POST') {
             //the widget view
-            $widgetView = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $currentView)->getView();
+            $widgetView = $widget->getWidgetMap()->getView();
 
             //we only copy the widget if the view of the widget is not the current view
             if ($widgetView !== $currentView) {
@@ -257,12 +257,14 @@ class WidgetManager
                 //Return a message for developer in console and form view in order to refresh view and show form errors
                 $response = [
                     'success' => false,
+                    'widgetId'    => $initialWidgetId,
                     'message' => $noValidate === false ? $formErrorHelper->getRecursiveReadableErrors($form) : null,
                     'html'    => $this->widgetFormBuilder->renderForm($form, $widget, $businessEntityId),
                 ];
             }
         } else {
             $forms = $this->widgetFormBuilder->renderNewWidgetForms($widget->getSlot(), $currentView, $widget, $classes);
+            $widgets = $widget->getWidgetMap()->getWidgets();
 
             $response = [
                 'success'  => true,
@@ -272,7 +274,7 @@ class WidgetManager
                         'view'    => $currentView,
                         'classes' => $classes,
                         'forms'   => $forms,
-                        'widget'  => $widget,
+                        'widgets'  => $widgets,
                     ]
                 ),
             ];

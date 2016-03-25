@@ -47,7 +47,7 @@ class Criteria
      * @var Widget
      *
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\WidgetBundle\Entity\Widget", inversedBy="criterias")
-     * @ORM\JoinColumn(name="widget_id", referencedColumnName="id", onDelete="SET NULL"))
+     * @ORM\JoinColumn(name="widget_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $widget;
 
