@@ -693,12 +693,15 @@ abstract class View
     /**
      * Get reference according to the current locale.
      *
+     * @param string $locale
+     *
      * @return null|ViewReference
      */
-    public function getReference()
+    public function getReference($locale = null)
     {
-        if (is_array($this->references) && isset($this->references[$this->getLocale()])) {
-            return $this->references[$this->getLocale()];
+        $locale = $locale ?: $this->getLocale();
+        if (is_array($this->references) && isset($this->references[$locale])) {
+            return $this->references[$locale];
         }
 
         return null;
@@ -732,6 +735,7 @@ abstract class View
      * Set reference.
      *
      * @param ViewReference $reference
+     * @param string        $locale
      *
      * @return $this
      */

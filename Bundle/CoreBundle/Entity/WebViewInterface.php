@@ -32,7 +32,7 @@ interface WebViewInterface
 
     public function hasChildren();
 
-    public function setReference($reference);
+    public function setReference(ViewReference $reference, $locale = null);
     /**
      * @param ViewReference[]
      */
@@ -41,7 +41,7 @@ interface WebViewInterface
     /**
      * @return ViewReference
      */
-    public function getReference();
+    public function getReference($locale = null);
 
     /**
      * @return ViewReference[]
