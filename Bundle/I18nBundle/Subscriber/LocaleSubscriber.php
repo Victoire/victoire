@@ -38,14 +38,12 @@ class LocaleSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $locale = $this->localeResolver->resolve($request);
-
-        // on essaie de voir si la locale a été fixée dans le paramètre de routing _locale
+        //see if the _locale routing parameter is set
         if ($locale = $request->getLocale()) {
             $request->getSession()->set('_locale', $locale);
             $request->setLocale($locale);
         } else {
-            // si aucune locale n'a été fixée explicitement dans la requête, on utilise celle de la session
+            // use the session's one
             $request->setLocale($request->getSession()->get('_locale', $this->defaultLocale));
         }
     }

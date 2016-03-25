@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\ViewReferenceBundle\Connector;
 
+use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\ViewReferenceBundle\Builder\Chain\ViewReferenceTransformerChain;
 use Victoire\Bundle\ViewReferenceBundle\Transformer\ArrayToBusinessPageReferenceTransformer;
 use Victoire\Bundle\ViewReferenceBundle\Transformer\ArrayToViewReferenceTransformer;
@@ -43,14 +44,18 @@ class ViewReferenceManager
         if ($reset) {
             $this->manager->reset();
         }
+
         // Parse the viewReferences
         foreach ($viewReferences as $viewReference) {
-            $reference = $viewReference['view']->getReference();
-            // save the viewReference
-            $id = $this->saveReference($reference, $parentId);
-            // if children save them
-            if (array_key_exists('children', $viewReference) && !empty($children = $viewReference['children'])) {
-                $this->saveReferences($children, $id, false);
+            /** @var View $view */
+            $view = $viewReference['view'];
+            foreach ($view->getReferences() as $reference) {
+                // save the viewReference
+                $id = $this->saveReference($reference, $parentId);
+                // if children save them
+                if (array_key_exists('children', $viewReference) && !empty($children = $viewReference['children'])) {
+                    $this->saveReferences($children, $id, false);
+                }
             }
         }
     }
