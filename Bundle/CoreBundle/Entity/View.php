@@ -688,9 +688,10 @@ abstract class View
     public function getWidgetsIds()
     {
         $widgetIds = [];
-
-        foreach ($this->getWidgetMaps() as $widgetMap) {
-            $widgetIds[] = $widgetMap->getWidget()->getId();
+        foreach($this->getBuiltWidgetMap() as $slot => $_widgetMaps) {
+            foreach ($_widgetMaps as $widgetMap) {
+                $widgetIds[] = $widgetMap->getWidget()->getId();
+            }
         }
 
         return $widgetIds;
