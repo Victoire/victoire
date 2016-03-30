@@ -1,13 +1,25 @@
 Gedmo\Translatable\Entity\Translation:
-    home_en:
+    home_en_name:
         content: Homepage
         locale: en
         objectClass: Victoire\Bundle\CoreBundle\Entity\View
         field: name
         foreignKey: '@home->id'
-    test_en:
+    test_en_name:
         content: English test
         locale: en
         objectClass: Victoire\Bundle\CoreBundle\Entity\View
         field: name
+        foreignKey: '@test->id'
+    home_en_slug:
+        content: home
+        locale: en
+        objectClass: Victoire\Bundle\CoreBundle\Entity\View
+        field: slug
+        foreignKey: '@home->id'
+    test_en_slug:
+        content: english-test
+        locale: en
+        objectClass: Victoire\Bundle\CoreBundle\Entity\View
+        field: slug
         foreignKey: '@test->id'

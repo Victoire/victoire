@@ -82,12 +82,14 @@ doctrine:
                 is_bundle: false
 
 stof_doctrine_extensions:
-    default_locale: fr_FR
+    default_locale: fr
+    persist_default_translation: true
     orm:
         default:
             tree: true
             sluggable: true
             timestampable: true
+            translatable: true
 
 fos_user:
     db_driver: orm
@@ -155,5 +157,3 @@ snc_redis:
            alias: victoire
            dsn: redis://localhost
 
-web_profiler:
-    toolbar: false
