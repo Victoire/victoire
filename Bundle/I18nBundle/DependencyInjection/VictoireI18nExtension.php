@@ -69,6 +69,7 @@ class VictoireI18nExtension extends Extension implements PrependExtensionInterfa
                 break;
                 case 'stof_doctrine_extensions':
                     $container->prependExtensionConfig($name, [
+                        'persist_default_translation' => true,
                         'orm' => [
                             'default' => [
                                 'translatable' => true,
