@@ -16,6 +16,12 @@ use Victoire\Bundle\PageBundle\Entity\Page;
  */
 class Link
 {
+    const TYPE_NONE = 'none';
+    const TYPE_VIEW_REFERENCE = 'viewReference';
+    const TYPE_ROUTE = 'route';
+    const TYPE_URL = 'url';
+    const TYPE_WIDGET = 'attachedWidget';
+
     use \Gedmo\Timestampable\Traits\TimestampableEntity;
 
     /**
@@ -37,17 +43,14 @@ class Link
     /**
      * @var string
      *
+     */
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="target", type="string", length=10, nullable=true)
      */
     protected $target = '_parent';
-
-    /**
-     * @deprecated use $viewReference instead
-     *
-     * @ORM\ManyToOne(targetEntity="Victoire\Bundle\PageBundle\Entity\BasePage")
-     * @ORM\JoinColumn(name="attached_page_id", referencedColumnName="id", onDelete="cascade", nullable=true)
-     */
-    protected $page;
 
     /**
      * @ORM\Column(name="view_reference", type="string", length=255, nullable=true)
@@ -79,7 +82,7 @@ class Link
      *
      * @ORM\Column(name="link_type", type="string", length=255, nullable=true)
      */
-    protected $linkType = 'none';
+    protected $linkType = self::TYPE_NONE;
 
     /**
      * @var string
@@ -106,7 +109,7 @@ class Link
      *
      * @param string $id
      *
-     * @return $this
+     * @return Link
      */
     public function setId($id)
     {
@@ -118,16 +121,15 @@ class Link
     public function getParameters()
     {
         return $this->parameters = [
+            'analyticsTrackCode' => $this->analyticsTrackCode,
+            'attachedWidget'     => $this->attachedWidget,
             'linkType'           => $this->linkType,
-            'url'                => $this->url,
-            'page'               => $this->page,
-            'viewReference'      => $this->viewReference,
-            'viewReferencePage'  => $this->viewReferencePage,
             'route'              => $this->route,
             'routeParameters'    => $this->routeParameters,
-            'attachedWidget'     => $this->attachedWidget,
             'target'             => $this->target,
-            'analyticsTrackCode' => $this->analyticsTrackCode,
+            'url'                => $this->url,
+            'viewReference'      => $this->viewReference,
+            'viewReferencePage'  => $this->viewReferencePage,
         ];
     }
 
@@ -228,32 +230,6 @@ class Link
     }
 
     /**
-     * @deprecated use view_reference instead
-     * Set page
-     *
-     * @param \Victoire\Bundle\PageBundle\Entity\Page $page
-     *
-     * @return Link
-     */
-    public function setPage($page = null)
-    {
-        $this->page = $page;
-
-        return $this;
-    }
-
-    /**
-     * @deprecated use view_reference instead
-     * Get page
-     *
-     * @return Page|null
-     */
-    public function getPage()
-    {
-        return $this->page;
-    }
-
-    /**
      * Get viewReference.
      *
      * @return string
@@ -268,7 +244,7 @@ class Link
      *
      * @param string $viewReference
      *
-     * @return $this
+     * @return Link
      */
     public function setViewReference($viewReference)
     {
@@ -316,7 +292,7 @@ class Link
      *
      * @param string $attachedWidget
      *
-     * @return $this
+     * @return Link
      */
     public function setAttachedWidget($attachedWidget)
     {
@@ -342,16 +318,16 @@ class Link
         $violation = false;
         // check if the name is actually a fake name
         switch ($this->getLinkType()) {
-            case 'viewReference':
-            $violation = $this->getPage() == null;
+            case self::TYPE_VIEW_REFERENCE:
+            $violation = $this->getViewReference() == null;
                 break;
-            case 'route':
+            case self::TYPE_ROUTE:
             $violation = $this->getRoute() == null;
                 break;
-            case 'url':
+            case self::TYPE_URL:
             $violation = $this->getUrl() == null;
                 break;
-            case 'attachedWidget':
+            case self::TYPE_WIDGET:
             $violation = $this->getAttachedWidget() == null;
                 break;
             default:
@@ -378,7 +354,7 @@ class Link
      *
      * @param string $analyticsTrackCode
      *
-     * @return $this
+     * @return Link
      */
     public function setAnalyticsTrackCode($analyticsTrackCode)
     {
@@ -402,7 +378,7 @@ class Link
      *
      * @param mixed $viewReferencePage
      *
-     * @return $this
+     * @return Link
      */
     public function setViewReferencePage($viewReferencePage)
     {
