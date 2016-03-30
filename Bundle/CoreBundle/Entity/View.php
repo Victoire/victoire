@@ -68,6 +68,7 @@ abstract class View
      * @Gedmo\Slug(handlers={
      *     @Gedmo\SlugHandler(class="Victoire\Bundle\BusinessEntityBundle\Handler\TwigSlugHandler"
      * )},fields={"name"}, updatable=false, unique=false)
+     * @Gedmo\Translatable
      * @ORM\Column(name="slug", type="string", length=255)
      */
     protected $slug;
