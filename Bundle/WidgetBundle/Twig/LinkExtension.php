@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
+use Victoire\Bundle\CoreBundle\Entity\Link;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
@@ -91,10 +92,13 @@ class LinkExtension extends \Twig_Extension
                     $viewReference = $viewReference->getId();
                 }
 
-                if (isset($viewReferencePage) && $viewReferencePage) {
-                    $page = $viewReferencePage;
+                if (!empty($parameters['viewReferencePage'])) {
+                    $page = $parameters['viewReferencePage'];
                 } else {
-                    $page = $this->pageHelper->findPageByParameters(['id' => $viewReference]);
+                    $page = $this->pageHelper->findPageByParameters([
+                        'id' => $viewReference,
+                        'locale' => $parameters['locale']
+                    ]);
                 }
 
                 $linkUrl = $this->router->generate(
@@ -111,8 +115,8 @@ class LinkExtension extends \Twig_Extension
             case 'route':
                 $url = $this->router->generate($parameters['route'], $parameters['routeParameters'], $referenceType);
                 break;
-            case 'attachedWidget':
-                $attachedWidget = $parameters['attachedWidget'];
+            case Link::TYPE_WIDGET:
+                $attachedWidget = $parameters[Link::TYPE_WIDGET];
                 //fallback when a widget is deleted cascading the relation as null (widget_id = null)
                 if ($attachedWidget && method_exists($attachedWidget->getView(), 'getUrl')) {
 
@@ -146,9 +150,9 @@ class LinkExtension extends \Twig_Extension
     public function victoireLink($parameters, $label, $attr = [], $currentClass = 'active', $url = '#')
     {
         $referenceLink = UrlGeneratorInterface::ABSOLUTE_PATH;
-        $attachedWidget = isset($parameters['attachedWidget']) ? $parameters['attachedWidget'] : null;
+        $attachedWidget = isset($parameters[Link::TYPE_WIDGET]) ? $parameters[Link::TYPE_WIDGET] : null;
 
-        if ($parameters['linkType'] == 'attachedWidget' && $attachedWidget && method_exists($attachedWidget->getView(), 'getUrl')) {
+        if ($parameters['linkType'] == Link::TYPE_WIDGET && $attachedWidget && method_exists($attachedWidget->getView(), 'getUrl')) {
             $viewUrl = $this->router->generate('victoire_core_page_show', ['_locale' => $attachedWidget->getView()->getLocale(), 'url' => $attachedWidget->getView()->getUrl()], $referenceLink);
             if (rtrim($this->request->getRequestUri(), '/') == rtrim($viewUrl, '/')) {
                 $attr['data-scroll'] = 'smooth';
