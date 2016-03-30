@@ -135,6 +135,8 @@
         <service id="victoire_form.form.type.vic_link" class="%victoire_form.form.type.vic_link.class%">
             <argument>%victoire_seo.analytics%</argument>
             <argument type="service" id="victoire_view_reference.repository"></argument>
+            <argument>%victoire_i18n.available_locales%</argument>
+            <argument type="service" id="request_stack"></argument>
             <tag name="form.type" />
         </service>
 

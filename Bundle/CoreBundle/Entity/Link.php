@@ -43,7 +43,9 @@ class Link
     /**
      * @var string
      *
+     * @ORM\Column(name="locale", type="string", length=255, nullable=true)
      */
+    protected $locale = null;
 
     /**
      * @var string
@@ -124,6 +126,7 @@ class Link
             'analyticsTrackCode' => $this->analyticsTrackCode,
             'attachedWidget'     => $this->attachedWidget,
             'linkType'           => $this->linkType,
+            'locale'             => $this->locale,
             'route'              => $this->route,
             'routeParameters'    => $this->routeParameters,
             'target'             => $this->target,
@@ -383,6 +386,26 @@ class Link
     public function setViewReferencePage($viewReferencePage)
     {
         $this->viewReferencePage = $viewReferencePage;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    /**
+     * @param string $locale
+     *
+     * @return Link
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
 
         return $this;
     }
