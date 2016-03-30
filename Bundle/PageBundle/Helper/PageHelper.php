@@ -104,14 +104,16 @@ class PageHelper
     }
 
     /**
-     * generates a response from a page url.
+     * generates a response from parameters.
      *
      * @return View
      */
     public function findPageByParameters($parameters)
     {
         if (!empty($parameters['id']) && !preg_match('/^ref_/', $parameters['id'])) {
-            $page = $this->entityManager->getRepository('VictoireCoreBundle:View')->findOneById($parameters['id']);
+            $page = $this->entityManager->getRepository('VictoireCoreBundle:View')->findOneBy([
+                'id' => $parameters['id']
+            ]);
 
             $entity = null;
             if (method_exists($page, 'getBusinessEntity')) {
@@ -266,10 +268,16 @@ class PageHelper
         if ($viewReference instanceof BusinessPageReference) {
             if ($viewReference->getViewId()) { //BusinessPage
                 $page = $this->entityManager->getRepository('VictoireCoreBundle:View')
-                    ->findOneById($viewReference->getViewId());
+                    ->findOneBy([
+                        'id' => $viewReference->getViewId(),
+                        'locale' => $viewReference->getLocale()
+                    ]);
             } else { //VirtualBusinessPage
                 $page = $this->entityManager->getRepository('VictoireCoreBundle:View')
-                    ->findOneById($viewReference->getTemplateId());
+                    ->findOneBy([
+                        'id' => $viewReference->getTemplateId(),
+                        'locale' => $viewReference->getLocale()
+                    ]);
                 if ($entity) {
                     if ($page instanceof BusinessTemplate) {
                         $page = $this->updatePageWithEntity($page, $entity);
@@ -280,7 +288,10 @@ class PageHelper
             }
         } elseif ($viewReference instanceof ViewReference) {
             $page = $this->entityManager->getRepository('VictoireCoreBundle:View')
-                ->findOneById($viewReference->getViewId());
+                ->findOneBy([
+                    'id' => $viewReference->getViewId(),
+                    'locale' => $viewReference->getLocale()
+                ]);
         } else {
             throw new \Exception(sprintf('Oh no! Cannot find a page for this ViewReference (%s)', ClassUtils::getClass($viewReference)));
         }
