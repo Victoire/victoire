@@ -35,10 +35,11 @@ class ViewReferenceManager
      * This method save a tree of viewReferences.
      *
      * @param array     $viewReferences
-     * @param null      $parentId
-     * @param bool|true $reset
+     * @param string    $parentId
+     * @param string    $parentLocale
+     * @param bool      $reset
      */
-    public function saveReferences(array $viewReferences, $parentId = null, $reset = true)
+    public function saveReferences(array $viewReferences, $parentId = null, $parentLocale = null, $reset = true)
     {
         // Reset redis if wanted
         if ($reset) {
@@ -49,12 +50,12 @@ class ViewReferenceManager
         foreach ($viewReferences as $viewReference) {
             /** @var View $view */
             $view = $viewReference['view'];
-            foreach ($view->getReferences() as $reference) {
+            foreach ($view->getReferences() as $locale => $reference) {
                 // save the viewReference
-                $id = $this->saveReference($reference, $parentId);
-                // if children save them
+                $id = $this->saveReference($reference, $parentId, $parentLocale);
+                // if children, save them
                 if (array_key_exists('children', $viewReference) && !empty($children = $viewReference['children'])) {
-                    $this->saveReferences($children, $id, false);
+                    $this->saveReferences($children, $id, $reference->getLocale(), false);
                 }
             }
         }
@@ -64,11 +65,12 @@ class ViewReferenceManager
      * This method save a Reference.
      *
      * @param ViewReference $viewReference
-     * @param null          $parentId
+     * @param string        $parentId
+     * @param string        $parentLocale
      *
      * @return mixed
      */
-    public function saveReference(ViewReference $viewReference, $parentId = null)
+    public function saveReference(ViewReference $viewReference, $parentId = null, $parentLocale = null)
     {
         // Transform the viewReference in array
         $arrayTransformer = $this->transformer->getViewReferenceTransformer(
@@ -82,7 +84,7 @@ class ViewReferenceManager
         // Build the url for reference
         $this->manager->buildUrl($viewReference->getId());
         // Set parent if exist
-        if ($parentId) {
+        if ($parentId && $parentLocale === $viewReference->getLocale()) {
             $this->manager->addChild($parentId, $referenceArray['id']);
         }
 

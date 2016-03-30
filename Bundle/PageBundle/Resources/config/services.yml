@@ -12,8 +12,9 @@ services:
             - %victoire_core.user_class%
             - @victoire_view_reference.builder
             - @victoire_view_reference.repository
+            - @stof_doctrine_extensions.listener.translatable
         tags:
-            - { name: doctrine.event_subscriber, connection: default, priority: -1 }
+            - { name: doctrine.event_subscriber, connection: default, priority: -11 }
 
     victoire_page.page_helper:
         class: Victoire\Bundle\PageBundle\Helper\PageHelper
