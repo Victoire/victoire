@@ -140,32 +140,35 @@ class ViewReferenceRepository
     }
 
     /**
-     * get ViewsReferences ordered byhierarchy with some prefix.
+     * get ViewsReferences ordered by hierarchy with a decoractor.
      *
-     * @param null $refId
-     * @param int  $depth
+     * @param string $locale the locale to get views as choices
+     * @param string $refId  the parent to get views as choices
+     * @param int    $depth  how deep we go recursively to get choices tree
      *
      * @return array
      */
-    public function getChoices($refId = null, $depth = 0)
+    public function getChoices($locale, $refId = null, $depth = 0)
     {
         $viewsReferences = [];
 
-        $prefixFn = function ($depth, $char0 = '└', $char = '─') {
-            $prefix = $char0;
+        $decoratorFn = function ($depth, $char0 = '└', $char = '─') {
+            $decorator = $char0;
             for ($i = 0; $i <= $depth; $i++) {
-                $prefix .= $char;
+                $decorator .= $char;
             }
 
-            return $prefix;
+            return $decorator;
         };
 
         if (null === $refId) {
             $refsId = $this->repository->getAllBy([
+                'locale' => $locale,
                 'slug' => '',
             ]);
         } else {
             $refsId = $this->repository->getAllBy([
+                'locale' => $locale,
                 'parent' => $refId,
             ]);
         }
@@ -175,14 +178,14 @@ class ViewReferenceRepository
             $viewReferenceTransformer = ViewReferenceManager::findTransformerFromElement($reference);
             $viewReference = $viewReferenceTransformer->transform($reference);
             if ($viewReference->getName() != '') {
-                $prefix = '';
+                $decorator = '';
                 if ($depth > 0) {
-                    $prefix = $prefixFn($depth).' ';
+                    $decorator = $decoratorFn($depth).' ';
                 }
-                $viewsReferences[$prefix.$viewReference->getName()] = $viewReference->getId();
+                $viewsReferences[$decorator.$viewReference->getName()] = $viewReference->getId();
             }
 
-            $viewsReferences = array_merge($viewsReferences, $this->getChoices($viewReference->getId(), $depth + 1));
+            $viewsReferences = array_merge($viewsReferences, $this->getChoices($locale, $viewReference->getId(), $depth + 1));
         }
 
         return $viewsReferences;
