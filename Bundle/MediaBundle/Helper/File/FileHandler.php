@@ -64,7 +64,7 @@ class FileHandler extends AbstractMediaHandler
      */
     public function getFormType()
     {
-        return new FileType();
+        return FileType::class;
     }
 
     /**
