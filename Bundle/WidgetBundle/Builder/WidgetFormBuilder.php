@@ -39,7 +39,7 @@ class WidgetFormBuilder
         //the template displayed is in the widget bundle
         $templateName = $this->container->get('victoire_widget.widget_helper')->getTemplateName('new', $widget);
 
-        return $this->container->get('victoire_templating')->render(
+        return $this->container->get('templating')->render(
             $templateName,
             [
                 'widget' => $widget,
@@ -65,7 +65,7 @@ class WidgetFormBuilder
         //the template displayed is in the widget bundle
         $templateName = $this->container->get('victoire_widget.widget_helper')->getTemplateName('edit', $widget);
 
-        return $this->container->get('victoire_templating')->render(
+        return $this->container->get('templating')->render(
             $templateName,
             [
                 'widget' => $widget,

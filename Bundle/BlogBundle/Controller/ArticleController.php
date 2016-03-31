@@ -83,7 +83,7 @@ class ArticleController extends Controller
                 [
                     'success' => false,
                     'message' => $formErrorHelper->getRecursiveReadableErrors($form),
-                    'html'    => $this->container->get('victoire_templating')->render(
+                    'html'    => $this->container->get('templating')->render(
                         'VictoireBlogBundle:Article:new.html.twig',
                         [
                             'form'   => $form->createView(),
@@ -115,7 +115,7 @@ class ArticleController extends Controller
 
         return new JsonResponse(
             [
-                'html' => $this->container->get('victoire_templating')->render(
+                'html' => $this->container->get('templating')->render(
                     'VictoireBlogBundle:Article:new.html.twig',
                     ['form' => $form->createView(), 'blogId' => $blog->getId()]
                 ),
@@ -191,7 +191,7 @@ class ArticleController extends Controller
 
             $response = [
                 'success' => !$form->isSubmitted(),
-                'html'    => $this->get('victoire_templating')->render($template, [
+                'html'    => $this->get('templating')->render($template, [
                     'action'             => $this->generateUrl('victoire_blog_article_settings', [
                         'id' => $article->getId(),
                     ]),

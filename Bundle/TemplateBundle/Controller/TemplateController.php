@@ -35,7 +35,7 @@ class TemplateController extends Controller
         return new JsonResponse(
             [
                 'success' => true,
-                'html'    => $this->container->get('victoire_templating')->render(
+                'html'    => $this->container->get('templating')->render(
                     'VictoireTemplateBundle:Template:index.html.twig',
                     ['templates' => $templates]
                 ),
@@ -66,7 +66,7 @@ class TemplateController extends Controller
         $this->get('event_dispatcher')->dispatch($eventName, $event);
 
         //the victoire templating
-        $victoireTemplating = $this->container->get('victoire_templating');
+        $templating = $this->container->get('templating');
         $layout = 'AppBundle:Layout:'.$template->getLayout().'.html.twig';
 
         $parameters = [
@@ -84,8 +84,8 @@ class TemplateController extends Controller
         $this->container->get('victoire_core.current_view')->setCurrentView($template);
 
         //create the response
-        $response = $victoireTemplating->renderResponse(
-            $layout,
+        $response = $templating->renderResponse(
+            'VictoireCoreBundle:Layout:'.$layout,
             $parameters
         );
 
@@ -119,7 +119,7 @@ class TemplateController extends Controller
         return new JsonResponse(
             [
                 'success' => true,
-                'html'    => $this->container->get('victoire_templating')->render(
+                'html'    => $this->container->get('templating')->render(
                     'VictoireTemplateBundle:Template:new.html.twig',
                     ['form' => $form->createView()]
                 ),
@@ -157,7 +157,7 @@ class TemplateController extends Controller
         return new JsonResponse(
             [
                 'success' => true,
-                'html'    => $this->container->get('victoire_templating')->render(
+                'html'    => $this->container->get('templating')->render(
                     'VictoireTemplateBundle:Template:settings.html.twig',
                     ['template' => $template, 'form' => $form->createView()]
                 ),

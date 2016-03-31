@@ -82,7 +82,7 @@ class WidgetRenderer
         }
 
         //the templating service
-        $templating = $this->container->get('victoire_templating');
+        $templating = $this->container->get('templating');
 
         //the content of the widget
         $parameters = $this->container->get('victoire_widget.widget_content_resolver')->getWidgetContent($widget);
@@ -164,7 +164,7 @@ class WidgetRenderer
      */
     public function renderUnlinkActionByWidgetId($widgetId, $view)
     {
-        return $this->container->get('victoire_templating')->render(
+        return $this->container->get('templating')->render(
             'VictoireCoreBundle:Widget:widgetUnlinkAction.html.twig',
             [
                 'widgetId' => $widgetId,

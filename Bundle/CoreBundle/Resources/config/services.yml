@@ -63,20 +63,11 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: preExecuteAutorun }
 
-#  ==================  Template ================== #
-    victoire_core.template_mapper:
-        class: Victoire\Bundle\CoreBundle\Template\TemplateMapper
-        arguments: ["@service_container"]
-
-    victoire_templating:
-        alias: victoire_core.template_mapper
-
 #  ==================  Twig ================== #
     victoire_core.twig.cms_extension:
         class: Victoire\Bundle\CoreBundle\Twig\Extension\CmsExtension
         arguments:
             - "@Victoire_widget.widget_renderer"
-            - "@victoire_templating"
             - "@security.authorization_checker"
             - "@victoire_core.widget_exception_handler"
             - "@victoire_core.current_view"
@@ -88,7 +79,6 @@ services:
     victoire_core.twig.globals_extension:
         class: Victoire\Bundle\CoreBundle\Twig\Extension\GlobalsExtension
         arguments:
-            - "@victoire_templating"
             - "@session"
         tags:
             - { name: twig.extension }
@@ -165,7 +155,7 @@ services:
             - "@security.authorization_checker"
             - "@twig"
             - "%kernel.debug%"
-            - "@victoire_templating"
+            - "@templating"
 
 #  ==================  View ================== #
 
@@ -180,7 +170,7 @@ services:
     victoire_core.view_css_builder:
         class: Victoire\Bundle\CoreBundle\Builder\ViewCssBuilder
         arguments:
-            - @victoire_templating
+            - @service_container
             - %victoire_twig.responsive%
             - '%kernel.root_dir%'
 

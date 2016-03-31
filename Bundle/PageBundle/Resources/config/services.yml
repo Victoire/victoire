@@ -23,7 +23,7 @@ services:
             - "@victoire_view_reference.helper"
             - "@victoire_core.current_view"
             - "@event_dispatcher"
-            - "@victoire_core.template_mapper"
+            - "@service_container"
             - "@victoire_seo.helper.pageseo_helper"
             - "@session"
             - "@security.token_storage"

@@ -5,6 +5,7 @@ namespace Victoire\Bundle\WidgetBundle\Model;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
@@ -12,7 +13,6 @@ use Victoire\Bundle\BusinessEntityBundle\Reader\BusinessEntityCacheReader;
 use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Transformer\VirtualToBusinessPageTransformer;
 use Victoire\Bundle\CoreBundle\Entity\View;
-use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 use Victoire\Bundle\FormBundle\Helper\FormErrorHelper;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
 use Victoire\Bundle\WidgetBundle\Builder\WidgetFormBuilder;
@@ -37,7 +37,7 @@ class WidgetManager
     protected $request; // @request
     protected $widgetMapManager;
     protected $cacheReader; // @victoire_business_entity.cache_reader
-    protected $victoireTemplating;
+    protected $templating;
     protected $pageHelper;
     protected $slots; // %victoire_core.slots%
     protected $virtualToBpTransformer; // %victoire_core.slots%
@@ -55,7 +55,7 @@ class WidgetManager
      * @param WidgetMapManager          $widgetMapManager
      * @param WidgetMapBuilder          $widgetMapBuilder
      * @param BusinessEntityCacheReader $cacheReader
-     * @param TemplateMapper            $victoireTemplating
+     * @param EngineInterface           $templating
      * @param PageHelper                $pageHelper
      * @param array                     $slots
      */
@@ -70,7 +70,7 @@ class WidgetManager
         WidgetMapManager $widgetMapManager,
         WidgetMapBuilder $widgetMapBuilder,
         BusinessEntityCacheReader $cacheReader,
-        TemplateMapper $victoireTemplating,
+        EngineInterface $templating,
         PageHelper $pageHelper,
         $slots,
         VirtualToBusinessPageTransformer $virtualToBpTransformer
@@ -85,7 +85,7 @@ class WidgetManager
         $this->widgetMapManager = $widgetMapManager;
         $this->widgetMapBuilder = $widgetMapBuilder;
         $this->cacheReader = $cacheReader;
-        $this->victoireTemplating = $victoireTemplating;
+        $this->templating = $templating;
         $this->pageHelper = $pageHelper;
         $this->slots = $slots;
         $this->virtualToBpTransformer = $virtualToBpTransformer;
@@ -110,7 +110,7 @@ class WidgetManager
         $forms = $this->widgetFormBuilder->renderNewWidgetForms($slot, $view, $widget, $classes, $position, $parentWidgetMap);
 
         return [
-            'html' => $this->victoireTemplating->render(
+            'html' => $this->templating->render(
                 'VictoireCoreBundle:Widget:Form/new.html.twig',
                 [
                     'view'    => $view,
@@ -266,7 +266,7 @@ class WidgetManager
 
             $response = [
                 'success'  => true,
-                'html'     => $this->victoireTemplating->render(
+                'html'     => $this->templating->render(
                     'VictoireCoreBundle:Widget:Form/edit.html.twig',
                     [
                         'view'    => $currentView,

@@ -2,11 +2,11 @@
 
 namespace Victoire\Bundle\CoreBundle\Handler;
 
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\TemplateReference;
 use Symfony\Bundle\TwigBundle\TwigEngine;
 use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
-use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 
 /**
  * ref: victoire_core.widget_exception_handler.
@@ -21,12 +21,12 @@ class WidgetExceptionHandler
     /**
      * Constructor.
      *
-     * @param SecurityContext $authorizationChecker
-     * @param TwigEngine      $twig
-     * @param bool            $debug                The debug variable environment
-     * @param TemplateMapper  $templating           The victoire templating
+     * @param SecurityContext  $authorizationChecker
+     * @param TwigEngine       $twig
+     * @param bool             $debug                The debug variable environment
+     * @param EngineInterface  $templating
      */
-    public function __construct(AuthorizationChecker $authorizationChecker, $twig, $debug, TemplateMapper $templating)
+    public function __construct(AuthorizationChecker $authorizationChecker, $twig, $debug, EngineInterface $templating)
     {
         $this->authorizationChecker = $authorizationChecker;
         $this->twig = $twig;
