@@ -94,7 +94,7 @@ class PageSeoController extends Controller
 
         return new JsonResponse([
             'success' => !$form->isSubmitted(),
-            'html'    => $this->container->get('victoire_templating')->render(
+            'html'    => $this->container->get('templating')->render(
                 'VictoireSeoBundle:PageSeo:settings.html.twig',
                 [
                     'page'               => $page,

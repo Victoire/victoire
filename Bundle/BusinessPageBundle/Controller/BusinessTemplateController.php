@@ -56,7 +56,7 @@ class BusinessTemplateController extends Controller
         }
 
         return new JsonResponse([
-                'html'    => $this->container->get('victoire_templating')->render(
+                'html'    => $this->container->get('templating')->render(
                     'VictoireBusinessPageBundle:BusinessEntity:index.html.twig',
                     [
                         'businessEntities'           => $businessEntities,
@@ -197,7 +197,7 @@ class BusinessTemplateController extends Controller
         ];
 
         return new JsonResponse([
-            'html' => $this->container->get('victoire_templating')->render(
+            'html' => $this->container->get('templating')->render(
                 'VictoireBusinessPageBundle:BusinessTemplate:new.html.twig',
                 $parameters
             ),
@@ -240,7 +240,7 @@ class BusinessTemplateController extends Controller
         ];
 
         return new JsonResponse([
-            'html' => $this->container->get('victoire_templating')->render(
+            'html' => $this->container->get('templating')->render(
                 'VictoireBusinessPageBundle:BusinessTemplate:edit.html.twig',
                 $parameters
             ),

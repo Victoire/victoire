@@ -10,7 +10,6 @@ use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Handler\WidgetExceptionHandler;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
-use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
@@ -25,7 +24,6 @@ use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 class CmsExtension extends \Twig_Extension_Core
 {
     protected $widgetRenderer;
-    protected $templating;
     protected $authorizationChecker;
     protected $widgetMapBuilder;
     protected $widgetExceptionHandler;
@@ -36,7 +34,6 @@ class CmsExtension extends \Twig_Extension_Core
      * Constructor.
      *
      * @param WidgetRenderer          $widgetRenderer
-     * @param TemplateMapper          $templating
      * @param AuthorizationChecker    $authorizationChecker
      * @param WidgetExceptionHandler  $widgetExceptionHandler
      * @param CurrentViewHelper       $currentViewHelper
@@ -47,7 +44,6 @@ class CmsExtension extends \Twig_Extension_Core
      */
     public function __construct(
         WidgetRenderer $widgetRenderer,
-        TemplateMapper $templating,
         AuthorizationChecker $authorizationChecker,
         WidgetExceptionHandler $widgetExceptionHandler,
         CurrentViewHelper $currentViewHelper,
@@ -55,7 +51,6 @@ class CmsExtension extends \Twig_Extension_Core
         \Twig_Environment $twig
     ) {
         $this->widgetRenderer = $widgetRenderer;
-        $this->templating = $templating;
         $this->authorizationChecker = $authorizationChecker;
         $this->widgetExceptionHandler = $widgetExceptionHandler;
         $this->currentViewHelper = $currentViewHelper;

@@ -141,7 +141,7 @@ class SitemapController extends Controller
         }
 
         $pages = $em->getRepository('VictoirePageBundle:BasePage')->findByParent(null, ['position' => 'ASC']);
-        $response['html'] = $this->container->get('victoire_templating')->render(
+        $response['html'] = $this->container->get('templating')->render(
             'VictoireSitemapBundle:Sitemap:reorganize.html.twig',
             [
                 'pages' => $pages,
