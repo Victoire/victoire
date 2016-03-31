@@ -1,0 +1,34 @@
+{% extends 'VictoireCoreBundle:Layout:layout.html.twig' %}
+
+{% trans_default_domain "victoire" %}
+
+{% block head_script %}
+    <!-- HEAD_SCRIPT -->
+    {% if is_granted('ROLE_VICTOIRE') %}
+        {% javascripts injector="victoire-head, modernizr" %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% endif %}
+    <!-- END HEAD_SCRIPT -->
+
+    {{ parent() }}
+{% endblock head_script %}
+
+{% block body %}
+    {% if is_granted('ROLE_VICTOIRE') %}
+        {% include 'VictoireCoreBundle:Menu:admin_navbar.html.twig' %}
+    {% endif %}
+
+    {% block header %}
+    {% endblock %}
+
+    {% block content %}
+    {% endblock content %}
+
+    {% block footer %}
+    {% endblock %}
+
+{% endblock body %}
+
+{% block foot_script_additional %}
+{% endblock foot_script_additional %}

@@ -1,0 +1,18 @@
+{% trans_default_domain "victoire" %}
+<!DOCTYPE html>
+<html {% block html_attr %}{% endblock html_attr %}>
+    <head>
+        {% block head %}
+            {% block meta %}{% endblock meta %}
+            {% block head_script %}{% endblock head_script %}
+            {% block head_style %}{% endblock head_style %}
+            {% block head_icons %}{% endblock head_icons %}
+        {% endblock head %}
+    </head>
+    <body {% block container_attributes %}{% endblock container_attributes %} class="{% block container_class %}{% endblock container_class %}" {% block container_attr %}{% endblock container_attr %}>
+        {% block body %}{% endblock body %}
+        {% block foot_script %}{% endblock foot_script %}
+        {% block foot_script_additional %}{% endblock foot_script_additional %}
+        {% block javascript %}{% endblock javascript %}
+    </body>
+</html>
