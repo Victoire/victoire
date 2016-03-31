@@ -2,10 +2,9 @@
 
 namespace Victoire\Bundle\CoreBundle\Handler;
 
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\TemplateReference;
-use Symfony\Bundle\TwigBundle\TwigEngine;
 use Symfony\Component\Debug\Exception\FlattenException;
+use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
 /**
@@ -16,22 +15,22 @@ class WidgetExceptionHandler
     protected $authorizationChecker;
     protected $debug;
     protected $twig;
+    protected $container;
     protected $templating;
 
     /**
      * Constructor.
      *
      * @param SecurityContext $authorizationChecker
-     * @param TwigEngine      $twig
      * @param bool            $debug                The debug variable environment
-     * @param EngineInterface $templating
+     * @param Container       $container
      */
-    public function __construct(AuthorizationChecker $authorizationChecker, $twig, $debug, EngineInterface $templating)
+    public function __construct(AuthorizationChecker $authorizationChecker, $debug, Container $container)
     {
         $this->authorizationChecker = $authorizationChecker;
-        $this->twig = $twig;
         $this->debug = $debug;
-        $this->templating = $templating;
+        $this->container = $container;
+        $this->templating = $this->container->get('templating');
     }
 
     /**
@@ -53,7 +52,7 @@ class WidgetExceptionHandler
 
             $template = new TemplateReference('TwigBundle', 'Exception', 'exception', 'html', 'twig');
             $exception = FlattenException::create($ex);
-            $exceptionResult = $this->twig->render(
+            $exceptionResult = $this->templating->render(
                 $template,
                 [
                     'status_code'    => $ex->getCode(),

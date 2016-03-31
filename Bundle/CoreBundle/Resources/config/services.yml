@@ -153,9 +153,8 @@ services:
         class: Victoire\Bundle\CoreBundle\Handler\WidgetExceptionHandler
         arguments:
             - "@security.authorization_checker"
-            - "@twig"
             - "%kernel.debug%"
-            - "@templating"
+            - @service_container
 
 #  ==================  View ================== #
 
