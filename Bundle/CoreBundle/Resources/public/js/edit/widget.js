@@ -189,6 +189,26 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update"]', function(
 });
 
 // Delete a widget after submit
+$vic(document).on('click', 'a#widget-new-tab', function(event) {
+    event.preventDefault();
+    loading(true);
+    $vic.ajax({
+        type: "GET",
+        url : $vic(this).attr('href')
+    }).done(function(response) {
+        if (true === response.success) {
+            $vic('.vic-modal-tab-content-container .vic-tab-quantum').removeClass('vic-active');
+            $vic('.vic-modal-nav-tabs li').removeClass('vic-active');
+            var form = $vic(response.html).find('.vic-tab-quantum').first();
+            var tab = $vic(response.html).find('.vic-modal-nav-tabs li:not(.widget-new-tab)').last();
+            $vic('li.widget-new-tab').before(tab);
+            $vic('div.vic-modal-tab-content-container').append(form);
+            loading(false);
+        }
+    });
+    $vic(document).trigger("victoire_widget_delete_postsubmit");
+});
+// Delete a widget after submit
 $vic(document).on('click', '.vic-widget-modal a.vic-confirmed, .vic-hover-widget-unlink', function(event) {
     event.preventDefault();
     $vic(document).trigger("victoire_widget_delete_presubmit");
