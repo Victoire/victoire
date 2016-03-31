@@ -63,7 +63,6 @@ Follow the instructions on [victoire demo Readme](https://github.com/Victoire/de
 ```yml
     victoire_core:
         user_class: Victoire\Bundle\UserBundle\Entity\User
-        applicative_bundle: AppBundle #Optional
         templates:
             layout: "::layout.html.twig"
         layouts:
