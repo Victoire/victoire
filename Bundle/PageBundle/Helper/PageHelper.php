@@ -4,6 +4,7 @@ namespace Victoire\Bundle\PageBundle\Helper;
 
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\Orm\EntityManager;
+use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -11,6 +12,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Templating\EngineInterface;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessPageBundle\Builder\BusinessPageBuilder;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
@@ -20,7 +22,6 @@ use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Event\PageRenderEvent;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
-use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\SeoBundle\Helper\PageSeoHelper;
@@ -42,7 +43,7 @@ class PageHelper
     protected $viewReferenceHelper;
     protected $currentViewHelper;
     protected $eventDispatcher;
-    protected $victoireTemplating;
+    protected $container;
     protected $pageSeoHelper;
     protected $session;
     protected $tokenStorage;
@@ -58,7 +59,7 @@ class PageHelper
      * @param ViewReferenceHelper      $viewReferenceHelper
      * @param CurrentViewHelper        $currentViewHelper
      * @param EventDispatcherInterface $eventDispatcher
-     * @param TemplateMapper           $victoireTemplating
+     * @param Container                $container
      * @param PageSeoHelper            $pageSeoHelper
      * @param Session                  $session
      * @param TokenStorage             $tokenStorage
@@ -75,7 +76,7 @@ class PageHelper
         ViewReferenceHelper $viewReferenceHelper,
         CurrentViewHelper $currentViewHelper,
         EventDispatcherInterface $eventDispatcher,
-        TemplateMapper $victoireTemplating,
+        Container $container,
         PageSeoHelper $pageSeoHelper,
         Session $session,
         TokenStorage $tokenStorage,
@@ -91,7 +92,7 @@ class PageHelper
         $this->viewReferenceHelper = $viewReferenceHelper;
         $this->currentViewHelper = $currentViewHelper;
         $this->eventDispatcher = $eventDispatcher;
-        $this->victoireTemplating = $victoireTemplating;
+        $this->container = $container;
         $this->pageSeoHelper = $pageSeoHelper;
         $this->session = $session;
         $this->tokenStorage = $tokenStorage;
@@ -216,7 +217,7 @@ class PageHelper
         $layout = $this->guessBestLayoutForView($view, $isAjax);
 
         //Create the response
-        $response = $this->victoireTemplating->renderResponse($layout, [
+        $response = $this->container->get('templating')->renderResponse('VictoireCoreBundle:Layout:'.$layout, [
             'view' => $view,
         ]);
 
@@ -396,6 +397,6 @@ class PageHelper
             $viewLayout = $view->getTemplate()->getLayout();
         }
 
-        return 'AppBundle:Layout:'.$viewLayout.'.html.twig';
+        return $viewLayout.'.html.twig';
     }
 }
