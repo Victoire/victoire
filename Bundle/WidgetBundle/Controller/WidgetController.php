@@ -281,7 +281,7 @@ class WidgetController extends Controller
                 $template = ($request->query->get('novalidate', false) !== false) ? 'VictoireCoreBundle:Widget/Form/stylize:form.html.twig' : 'VictoireCoreBundle:Widget/Form:stylize.html.twig';
                 $params = [
                     'success'  => !$form->isSubmitted(),
-                    'html'     => $this->get('victoire_core.template_mapper')->render(
+                    'html'     => $this->get('templating')->render(
                         $template,
                         [
                             'view'   => $view,

@@ -82,7 +82,7 @@ class BlogController extends BasePageController
 
         return new JsonResponse(
             [
-                'html' => $this->container->get('victoire_templating')->render(
+                'html' => $this->container->get('templating')->render(
                     $template,
                     [
                         'blog'               => $blog,
@@ -163,7 +163,7 @@ class BlogController extends BasePageController
         //we display the form
         $errors = $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form);
         if ($errors != '') {
-            return new JsonResponse(['html' => $this->container->get('victoire_templating')->render(
+            return new JsonResponse(['html' => $this->container->get('templating')->render(
                         $this->getBaseTemplatePath().':Tabs/_settings.html.twig',
                             [
                                 'blog'               => $blog,
@@ -176,7 +176,7 @@ class BlogController extends BasePageController
                 );
         }
 
-        return new Response($this->container->get('victoire_templating')->render(
+        return new Response($this->container->get('templating')->render(
                     $this->getBaseTemplatePath().':Tabs/_settings.html.twig',
                     [
                         'blog'               => $blog,
@@ -223,7 +223,7 @@ class BlogController extends BasePageController
         //we display the form
         $errors = $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form);
         if ($errors != '') {
-            return new JsonResponse(['html' => $this->container->get('victoire_templating')->render(
+            return new JsonResponse(['html' => $this->container->get('templating')->render(
                         $this->getBaseTemplatePath().':Tabs/_category.html.twig',
                             [
                                 'blog'               => $blog,
@@ -236,7 +236,7 @@ class BlogController extends BasePageController
                 );
         }
 
-        return new Response($this->container->get('victoire_templating')->render(
+        return new Response($this->container->get('templating')->render(
                     $this->getBaseTemplatePath().':Tabs/_category.html.twig',
                     [
                         'blog'               => $blog,
@@ -259,7 +259,7 @@ class BlogController extends BasePageController
      */
     public function articlesAction(Request $request, BasePage $blog)
     {
-        return new Response($this->container->get('victoire_templating')->render(
+        return new Response($this->container->get('templating')->render(
                     $this->getBaseTemplatePath().':Tabs/_articles.html.twig',
                     [
                         'blog' => $blog,

@@ -2,19 +2,18 @@
 
 namespace Victoire\Bundle\CoreBundle\Builder;
 
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Component\DependencyInjection\Container;
 use Victoire\Bundle\CoreBundle\Entity\View;
-use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 use Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer;
 
 /**
  * View CSS Builder
  * ref: victoire_core.view_css_builder.
- *
- * @property  templating
  */
 class ViewCssBuilder
 {
-    protected $templating;
+    protected $container;
     protected $victoireTwigResponsive;
     private $widgetRenderer;
     private $webDir;
@@ -23,17 +22,17 @@ class ViewCssBuilder
     /**
      * Construct.
      *
-     * @param TemplateMapper $templating
-     * @param                $victoireTwigResponsive
-     * @param                $kernelRootDir
+     * @param EngineInterface $templating
+     * @param                 $victoireTwigResponsive
+     * @param                 $kernelRootDir
      *
      * @internal param WidgetRenderer $widgetRenderer
      */
-    public function __construct(TemplateMapper $templating, $victoireTwigResponsive, $kernelRootDir)
+    public function __construct(Container $container, $victoireTwigResponsive, $kernelRootDir)
     {
         $this->webDir = '/view-css';
         $this->viewCssDir = $kernelRootDir.'/../web'.$this->webDir;
-        $this->templating = $templating;
+        $this->container = $container;
         $this->victoireTwigResponsive = $victoireTwigResponsive;
     }
 
@@ -61,7 +60,7 @@ class ViewCssBuilder
         $css = '';
 
         foreach ($widgets as $widget) {
-            $style = $this->templating->render(
+            $style = $this->container->get('templating')->render(
             'VictoireCoreBundle:Widget:style/style.html.twig',
             [
                 'widget'                   => $widget,

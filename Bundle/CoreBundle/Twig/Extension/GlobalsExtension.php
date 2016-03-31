@@ -3,25 +3,21 @@
 namespace Victoire\Bundle\CoreBundle\Twig\Extension;
 
 use Twig_Extension_GlobalsInterface;
-use Victoire\Bundle\CoreBundle\Template\TemplateMapper;
 
 /**
  * Provides some gloval variabls to twig.
  */
 class GlobalsExtension extends \Twig_Extension implements Twig_Extension_GlobalsInterface
 {
-    protected $templateMapper;
     protected $session;
 
     /**
      * contructor.
      *
-     * @param TemplateMapper $templateMapper
-     * @param unknown        $session
+     * @param unknown $session
      */
-    public function __construct(TemplateMapper $templateMapper, $session)
+    public function __construct($session)
     {
-        $this->templateMapper = $templateMapper;
         $this->session = $session;
     }
 
@@ -33,8 +29,7 @@ class GlobalsExtension extends \Twig_Extension implements Twig_Extension_Globals
     public function getGlobals()
     {
         return [
-            'global_layout' => $this->templateMapper->getGlobalLayout(),
-            'edit_mode'     => $this->session->get('victoire.edit_mode', false),
+            'edit_mode' => $this->session->get('victoire.edit_mode', false),
         ];
     }
 

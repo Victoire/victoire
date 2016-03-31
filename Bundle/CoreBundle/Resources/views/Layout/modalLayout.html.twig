@@ -1,4 +1,4 @@
-{% extends app.request.isXmlHttpRequest ? 'VictoireCoreBundle::blankLayout.html.twig' : 'VictoireCoreBundle::ajaxModalLayout.html.twig' %}
+{% extends app.request.isXmlHttpRequest ? 'VictoireCoreBundle:Layout:blankLayout.html.twig' : 'VictoireCoreBundle:Layout:ajaxModalLayout.html.twig' %}
 
 {% trans_default_domain "victoire" %}
 

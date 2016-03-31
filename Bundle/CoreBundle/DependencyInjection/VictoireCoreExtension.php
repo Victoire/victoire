@@ -44,9 +44,6 @@ class VictoireCoreExtension extends Extension
         $container->setParameter(
             'victoire_core.business_entity_debug', $config['business_entity_debug']
         );
-        $container->setParameter(
-            'victoire_core.applicative_bundle', $config['applicative_bundle']
-        );
         if (array_key_exists('templates', $config)) {
             $container->setParameter(
                 'victoire_core.templates', $config['templates']

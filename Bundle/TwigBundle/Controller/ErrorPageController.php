@@ -34,10 +34,6 @@ class ErrorPageController extends Controller
         $this->container->get('twig')->addGlobal('view', $page);
         $page->setReference(new ViewReference($page->getId()));
 
-        //the victoire templating
-        $victoireTemplating = $this->container->get('victoire_templating');
-        $layout = 'AppBundle:Layout:'.$page->getTemplate()->getLayout().'.html.twig';
-
         $parameters = [
             'view'   => $page,
             'id'     => $page->getId(),
@@ -53,8 +49,8 @@ class ErrorPageController extends Controller
         $this->container->get('victoire_core.current_view')->setCurrentView($page);
 
         //create the response
-        $response = $victoireTemplating->renderResponse(
-            $layout,
+        $response = $this->container->get('templating')->renderResponse(
+            'VictoireCoreBundle:Layout:'.$page->getTemplate()->getLayout(),
             $parameters
         );
 
