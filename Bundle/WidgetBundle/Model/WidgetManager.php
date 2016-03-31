@@ -99,22 +99,29 @@ class WidgetManager
      * @param View   $view
      * @param int    $position
      *
-     * @return template
+     * @return array
      */
     public function newWidget($mode, $type, $slot, $view, $position, $parentWidgetMap)
     {
         $widget = $this->widgetHelper->newWidgetInstance($type, $view, $slot, $mode);
+        $widgets = ['static' => $widget];
 
         /** @var BusinessEntity[] $classes */
         $classes = $this->cacheReader->getBusinessClassesForWidget($widget);
-        $forms = $this->widgetFormBuilder->renderNewWidgetForms($slot, $view, $widget, $classes, $position, $parentWidgetMap);
+        $forms = $this->widgetFormBuilder->renderNewQuantumForms($slot, $view, $widgets, $widget, $classes, $position, $parentWidgetMap);
 
         return [
+            'widget' => $widget,
             'html' => $this->templating->render(
                 'VictoireCoreBundle:Widget:Form/new.html.twig',
                 [
+                    'id'    => time(),
                     'view'    => $view,
+                    'slot'    => $slot,
+                    'position'    => $position,
+                    'parentWidgetMap'    => $parentWidgetMap,
                     'classes' => $classes,
+                    'widgets'  => $widgets,
                     'widget'  => $widget,
                     'forms'   => $forms,
                 ]
@@ -272,9 +279,13 @@ class WidgetManager
                     'VictoireCoreBundle:Widget:Form/edit.html.twig',
                     [
                         'view'    => $currentView,
+                        'slot'    => $widget->getWidgetMap()->getSlot(),
+                        'position'    => $widget->getWidgetMap()->getPosition(),
+                        'parentWidgetMap'    => $widget->getWidgetMap()->getParent()->getId(),
                         'classes' => $classes,
                         'forms'   => $forms,
                         'widgets'  => $widgets,
+                        'widget'  => $widget,
                     ]
                 ),
             ];

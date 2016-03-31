@@ -92,8 +92,8 @@ class WidgetController extends Controller
      *
      * @return JsonResponse
      *
+     * @Route("/victoire-dcms/widget/new-quantum-item/{type}/{viewReference}/{slot}/{position}/{parentWidgetMap}", name="victoire_core_widget_new_quantum_item", defaults={"slot":null, "position":null, "parentWidgetMap":null}, options={"expose"=true})
      * @Route("/victoire-dcms/widget/new/{type}/{viewReference}/{slot}/{position}/{parentWidgetMap}", name="victoire_core_widget_new", defaults={"slot":null, "position":null, "parentWidgetMap":null}, options={"expose"=true})
-     * @Template()
      */
     public function newAction($type, $viewReference, $slot = null, $position = null, $parentWidgetMap = null)
     {
@@ -105,10 +105,19 @@ class WidgetController extends Controller
                 $reference = new ViewReference($viewReference);
             }
             $view->setReference($reference);
-
-            $response = new JsonResponse(
-                $this->get('victoire_widget.widget_manager')->newWidget(Widget::MODE_STATIC, $type, $slot, $view, $position, $parentWidgetMap)
+            $widgetData = $this->get('victoire_widget.widget_manager')->newWidget(
+                Widget::MODE_STATIC,
+                $type,
+                $slot,
+                $view,
+                $position,
+                $parentWidgetMap
             );
+
+            $response = new JsonResponse([
+                'success' => true,
+                'html' => $widgetData['html']
+            ]);
         } catch (Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
         }
@@ -364,6 +373,7 @@ class WidgetController extends Controller
             return $this->getJsonReponseFromException($ex);
         }
     }
+
 
     /**
      * Update widget positions accross the view. If moved widget is a Reference, ask to detach the view from template.
