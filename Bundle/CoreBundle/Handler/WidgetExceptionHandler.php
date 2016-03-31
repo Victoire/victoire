@@ -3,7 +3,6 @@
 namespace Victoire\Bundle\CoreBundle\Handler;
 
 use Symfony\Bundle\FrameworkBundle\Templating\TemplateReference;
-use Symfony\Bundle\TwigBundle\TwigEngine;
 use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
