@@ -21,10 +21,10 @@ class WidgetExceptionHandler
     /**
      * Constructor.
      *
-     * @param SecurityContext  $authorizationChecker
-     * @param TwigEngine       $twig
-     * @param bool             $debug                The debug variable environment
-     * @param EngineInterface  $templating
+     * @param SecurityContext $authorizationChecker
+     * @param TwigEngine      $twig
+     * @param bool            $debug                The debug variable environment
+     * @param EngineInterface $templating
      */
     public function __construct(AuthorizationChecker $authorizationChecker, $twig, $debug, EngineInterface $templating)
     {

@@ -14,7 +14,7 @@ class GlobalsExtension extends \Twig_Extension implements Twig_Extension_Globals
     /**
      * contructor.
      *
-     * @param unknown        $session
+     * @param unknown $session
      */
     public function __construct($session)
     {
