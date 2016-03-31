@@ -16,7 +16,6 @@ class WidgetExceptionHandler
     protected $debug;
     protected $twig;
     protected $container;
-    protected $templating;
 
     /**
      * Constructor.
@@ -30,7 +29,6 @@ class WidgetExceptionHandler
         $this->authorizationChecker = $authorizationChecker;
         $this->debug = $debug;
         $this->container = $container;
-        $this->templating = $this->container->get('templating');
     }
 
     /**
@@ -44,6 +42,8 @@ class WidgetExceptionHandler
      */
     public function handle(\Exception $ex, $currentView, $widget = null, $widgetId = null)
     {
+        $templating = $this->container->get('templating');
+
         $result = '';
 
         //
@@ -52,7 +52,7 @@ class WidgetExceptionHandler
 
             $template = new TemplateReference('TwigBundle', 'Exception', 'exception', 'html', 'twig');
             $exception = FlattenException::create($ex);
-            $exceptionResult = $this->templating->render(
+            $exceptionResult = $templating->render(
                 $template,
                 [
                     'status_code'    => $ex->getCode(),
@@ -66,7 +66,7 @@ class WidgetExceptionHandler
             $exceptionResult .= '</div>';
 
             //only a user victoire can see that there is an error
-            $result = $this->templating->render(
+            $result = $templating->render(
                 'VictoireCoreBundle:Widget:showError.html.twig',
                 [
                     'widget'      => $widget,
@@ -79,7 +79,7 @@ class WidgetExceptionHandler
             //environnement not debug
             //only a user victoire can see that there is an error
             if ($this->authorizationChecker->isGranted('ROLE_VICTOIRE')) {
-                $result = $this->templating->render(
+                $result = $templating->render(
                     'VictoireCoreBundle:Widget:showError.html.twig',
                     [
                         'widget'      => $widget,
