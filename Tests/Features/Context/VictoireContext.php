@@ -114,9 +114,15 @@ class VictoireContext extends RawMinkContext
      */
     public function iSubmitTheWidget()
     {
-        $element = $this->findOrRetry($this->getSession()->getPage(), 'xpath', 'descendant-or-self::*[@class="vic-modal-footer-content"]/a[@data-modal="create"]');
+        $element = $this->findOrRetry($this->getSession()->getPage(), 'xpath', 'descendant-or-self::a[@data-modal="create-bulk"]');
         if (!$element) {
-            $element = $this->getSession()->getPage()->find('xpath', 'descendant-or-self::*[@class="vic-modal-footer-content"]/a[@data-modal="update"]');
+            $element = $this->getSession()->getPage()->find('xpath', 'descendant-or-self::a[@data-modal="update-bulk"]');
+        }
+        if (!$element) {
+            $element = $this->getSession()->getPage()->find('xpath', 'descendant-or-self::a[@data-modal="create"]');
+        }
+        if (!$element) {
+            $element = $this->getSession()->getPage()->find('xpath', 'descendant-or-self::a[@data-modal="update"]');
         }
         $element->click();
     }
