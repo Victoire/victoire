@@ -58,4 +58,10 @@ interface WebViewInterface
     public function isHomepage();
 
     public function setHomepage($homepage);
+
+    public function getTranslations();
+
+    public function setTranslatableLocale($locale);
+
+    public function getLocale();
 }

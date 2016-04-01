@@ -9,6 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
+use Victoire\Bundle\I18nBundle\Entity\ViewTranslation;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
@@ -19,6 +20,7 @@ use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
  * A victoire view is a visual representation with a widget map.
  *
  * @Gedmo\Tree(type="nested")
+ * @Gedmo\TranslationEntity(class="Victoire\Bundle\I18nBundle\Entity\ViewTranslation")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\Entity(repositoryClass="Victoire\Bundle\CoreBundle\Repository\ViewRepository")
@@ -185,6 +187,15 @@ abstract class View
      * and it is not necessary because globally locale can be set in listener
      */
     protected $locale;
+
+    /**
+     * @ORM\OneToMany(
+     *   targetEntity="Victoire\Bundle\I18nBundle\Entity\ViewTranslation",
+     *   mappedBy="object",
+     *   cascade={"persist", "remove"}
+     * )
+     */
+    private $translations;
 
     /**
      * Construct.
@@ -847,5 +858,32 @@ abstract class View
     public function getLocale()
     {
         return $this->locale;
+    }
+
+    /**
+     * @return ViewTranslation[]
+     */
+    public function getTranslations()
+    {
+        return $this->translations;
+    }
+
+    /**
+     * @return ViewTranslation[]
+     */
+    public function getTranslationClass()
+    {
+        return 'Victoire\Bundle\I18nBundle\Entity\ViewTranslation';
+    }
+
+    /**
+     * @param ViewTranslation $t
+     */
+    public function addTranslation(ViewTranslation $t)
+    {
+        if (!$this->translations->contains($t)) {
+            $this->translations[] = $t;
+            $t->setObject($this);
+        }
     }
 }
