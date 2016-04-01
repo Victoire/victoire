@@ -13,3 +13,10 @@ Victoire\Bundle\BlogBundle\Entity\Blog:
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         cssUpToDate: false
+
+Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
+    home_en_name:
+        content: the-jedi-network
+        locale: en
+        field: slug
+        object: @blog-jedi-network

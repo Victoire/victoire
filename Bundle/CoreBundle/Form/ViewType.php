@@ -64,17 +64,6 @@ abstract class ViewType extends AbstractType
                     'query_builder' => $getAllTemplateWithoutMe,
                 ]);
             }
-            if (!$form->has('locale') && count($choices = $this->getAvailableLocales()) > 1) {
-                $data = $view->getLocale() ?: $this->currentLocale;
-                $form->add('locale', ChoiceType::class, [
-                    'expanded'          => false,
-                    'multiple'          => false,
-                    'choices'           => $choices,
-                    'choices_as_values' => true,
-                    'label'             => 'form.view.type.locale.label',
-                    'data'              => $data,
-                ]);
-            }
 
             //If view is an Article BEP, we do not allow to choose parent because it will be set automatically
             if (!$view instanceof ArticleTemplate && ClassUtils::getClass($view) != 'Victoire\Bundle\TemplateBundle\Entity\Template') {

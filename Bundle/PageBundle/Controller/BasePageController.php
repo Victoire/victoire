@@ -107,6 +107,7 @@ class BasePageController extends Controller
             $page->setPosition($pageNb + 1);
 
             $page->setAuthor($this->getUser());
+            $page->setTranslatableLocale($this->get('request')->getLocale());
             $entityManager->persist($page);
             $entityManager->flush();
 
