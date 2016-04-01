@@ -11,7 +11,7 @@
     </div>
     <ul class="vic-nav vic-nav-tabs vic-modal-nav-tabs">
         {% for key, form in forms %}
-            {% include "VictoireCoreBundle:Widget:Form/tab.html.twig" with {isLast: loop.last, widget: widgets[key], active: form.active , id: widgets[key].id ? widgets[key].id : id} %}
+            {% include "VictoireCoreBundle:Widget:Form/tab.html.twig" with {isLast: loop.last, widget: widgets[key], active: form.active is defined ? form.active : false, id: widgets[key].id ? widgets[key].id : id} %}
         {% endfor %}
 
         <li class="vic-seperate widget-new-tab">
