@@ -67,7 +67,7 @@ class TemplateController extends Controller
 
         //the victoire templating
         $templating = $this->container->get('templating');
-        $layout = 'AppBundle:Layout:'.$template->getLayout().'.html.twig';
+        $layout = $template->getLayout().'.html.twig';
 
         $parameters = [
             'view'   => $template,
