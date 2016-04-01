@@ -368,6 +368,35 @@ class WidgetController extends Controller
             return $this->getJsonReponseFromException($ex);
         }
     }
+    /**
+     * Delete a Widget quantum.
+     *
+     * @param Widget $widget        The widget to delete
+     * @param int    $viewReference The current view
+     *
+     * @return JsonResponse response
+     * @Route("/victoire-dcms/widget/delete/quantum/{id}/{viewReference}", name="victoire_core_widget_delete_bulk", defaults={"_format": "json"})
+     * @Template()
+     */
+    public function deleteBulkAction(Widget $widget, $viewReference)
+    {
+        $view = $this->getViewByReferenceId($viewReference);
+        try {
+            $widgets = $widget->getWidgetMap()->getWidgets();
+
+            foreach ($widgets as $widget) {
+                $this->get('widget_manager')->deleteWidget($widget, $view);
+            }
+
+            return new JsonResponse([
+                    'success'  => true,
+                    'message'  => $this->get('translator')->trans('victoire_widget.delete.success', [], 'victoire'),
+                ]
+            );
+        } catch (Exception $ex) {
+            return $this->getJsonReponseFromException($ex);
+        }
+    }
 
     /**
      * Unlink a Widget by id

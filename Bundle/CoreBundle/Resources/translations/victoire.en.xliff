@@ -222,11 +222,7 @@
         <source>widget_modal.quantum.tab.default</source>
         <target>Default</target>
       </trans-unit>
-      <trans-unit id="34" resname="modal.button.update-bulk.title">
-        <source>modal.button.update-bulk.title</source>
-        <target>Validate</target>
-      </trans-unit>
-      <trans-unit id="35" resname="victoire.widget.type.criterias.label">
+      <trans-unit id="34" resname="victoire.widget.type.criterias.label">
         <source>victoire.widget.type.criterias.label</source>
         <target>Criterias</target>
       </trans-unit>
