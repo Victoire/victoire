@@ -256,48 +256,83 @@ class WidgetController extends Controller
 
         $this->get('victoire_core.current_view')->setCurrentView($view);
         try {
-            $form = $this->get('form.factory')->create(WidgetStyleType::class, $widget, [
-                    'method' => 'POST',
-                    'action' => $this->generateUrl(
-                        'victoire_core_widget_stylize',
-                        [
-                            'id'            => $widget->getId(),
-                            'viewReference' => $viewReference,
-                        ]
-                    ),
-                ]
-            );
-            $form->handleRequest($this->get('request'));
 
-            if ($request->query->get('novalidate', false) === false && $form->isValid()) {
-                if ($form->has('deleteBackground') && $form->get('deleteBackground')->getData()) {
-                    // @todo: dynamic responsive key
-                    foreach (['', 'XS', 'SM', 'MD', 'LG'] as $key) {
-                        $widget->{'deleteBackground'.$key}();
+            if ($request->getMethod() === 'POST') {
+
+                $form = $this->get('form.factory')->create(WidgetStyleType::class, $widget, [
+                        'method' => 'POST',
+                        'action' => $this->generateUrl(
+                            'victoire_core_widget_stylize',
+                            [
+                                'id'            => $widget->getId(),
+                                'viewReference' => $viewReference,
+                            ]
+                        ),
+                    ]
+                );
+
+                $form->handleRequest($this->get('request'));
+                if ($request->query->get('novalidate', false) === false && $form->isValid()) {
+                    if ($form->has('deleteBackground') && $form->get('deleteBackground')->getData()) {
+                        // @todo: dynamic responsive key
+                        foreach (['', 'XS', 'SM', 'MD', 'LG'] as $key) {
+                            $widget->{'deleteBackground'.$key}();
+                        }
                     }
+                    $this->get('doctrine.orm.entity_manager')->flush();
+                    $params = [
+                        'view'        => $view,
+                        'success'     => true,
+                        'html'        => $this->get('victoire_widget.widget_renderer')->render($widget, $view),
+                        'widgetId'    => $widget->getId(),
+                        'viewCssHash' => $view->getCssHash(),
+                    ];
+
+                } else {
+                    $template = ($request->query->get('novalidate', false) !== false) ? 'VictoireCoreBundle:Widget/Form/stylize:form.html.twig' : 'VictoireCoreBundle:Widget/Form:stylize.html.twig';
+                    $params = [
+                        'success'  => !$form->isSubmitted(),
+                        'html'     => $this->get('templating')->render(
+                            $template,
+                            [
+                                'view'   => $view,
+                                'form'   => $form->createView(),
+                                'widget' => $widget,
+                            ]
+                        ),
+                    ];
                 }
-                $this->get('doctrine.orm.entity_manager')->flush();
-                $params = [
-                    'view'        => $view,
-                    'success'     => true,
-                    'html'        => $this->get('victoire_widget.widget_renderer')->render($widget, $view),
-                    'widgetId'    => $widget->getId(),
-                    'viewCssHash' => $view->getCssHash(),
-                ];
             } else {
-                $template = ($request->query->get('novalidate', false) !== false) ? 'VictoireCoreBundle:Widget/Form/stylize:form.html.twig' : 'VictoireCoreBundle:Widget/Form:stylize.html.twig';
+
+                $widgets = $widget->getWidgetMap()->getWidgets();
+                $forms = [];
+                foreach ($widgets as $widget) {
+                    $forms[] = $this->get('form.factory')->create(WidgetStyleType::class, $widget, [
+                            'method' => 'POST',
+                            'action' => $this->generateUrl(
+                                'victoire_core_widget_stylize',
+                                [
+                                    'id'            => $widget->getId(),
+                                    'viewReference' => $viewReference,
+                                ]
+                            ),
+                        ]
+                    )->createView();
+                };
                 $params = [
-                    'success'  => !$form->isSubmitted(),
-                    'html'     => $this->get('templating')->render(
-                        $template,
+                    'html' => $this->get('templating')->render(
+                        'VictoireCoreBundle:Widget/Form:stylize.html.twig',
                         [
                             'view'   => $view,
-                            'form'   => $form->createView(),
+                            'forms'   => $forms,
                             'widget' => $widget,
+                            'widgets' => $widgets,
                         ]
                     ),
                 ];
+
             }
+
             $response = new JsonResponse($params);
         } catch (Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);

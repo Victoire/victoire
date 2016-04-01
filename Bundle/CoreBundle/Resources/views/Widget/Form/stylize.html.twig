@@ -15,7 +15,22 @@
         </div>
     {% endif %}
 
-    {%  include 'VictoireCoreBundle:Widget/Form/stylize:form.html.twig' %}
+    <div class="vic-tab-content vic-modal-tab-content vic-modal-tab-content-container">
+        {% for index, form in forms %}
+        <div class="vic-tab-quantum vic-tab-pane{% if form.vars.data == widget  %} vic-active{% endif %}" id="widget-{{ widgets[index].id }}-tab-pane">
+            {% include 'VictoireCoreBundle:Widget/Form/stylize:form.html.twig' %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <ul class="vic-nav vic-nav-tabs vic-modal-nav-tabs">
+        {% for index, form in forms %}
+            <li class="{% if not loop.last %}vic-seperate{% endif %}{% if form.vars.data == widget %} vic-active{% endif %}">
+                <a id="widget-{{ widgets[index].id}}-tab" class="quantum-tab-name" href="#widget-{{ widgets[index].id}}-tab-pane" data-toggle="vic-tab"><span>{{ widgets[index].quantum ? widgets[index].quantum : "widget_modal.quantum.tab.default"|trans }}</span></a>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="#" class="vic-btn vic-btn-success" data-modal="update-bulk" title="{{ ('modal.button.update-bulk.title')|trans({}, 'victoire') }}"><i class="fa fa-check-circle"></i> {{ ('modal.button.update-bulk.title')|trans({}, 'victoire') }}</a>
 
     <script>
         <!--
