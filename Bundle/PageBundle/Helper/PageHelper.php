@@ -166,8 +166,8 @@ class PageHelper
                 $page = $page->getSeo()->getRedirectTo();
             }
 
-            $page->setReference($viewReference);
             $this->checkPageValidity($page, $entity, ['url' => $url, 'locale' => $locale]);
+            $page->setReference($viewReference);
 
             return $this->renderPage($page, $isAjax);
         } else {

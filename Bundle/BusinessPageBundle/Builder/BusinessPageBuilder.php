@@ -72,7 +72,7 @@ class BusinessPageBuilder
         $accessor = PropertyAccess::createPropertyAccessor();
 
         foreach ($templateProperties as $property) {
-            if (!in_array($property->getName(), ['id', 'widgetMap', 'slots', 'seo', 'i18n', 'widgets', 'template']) && !$property->isStatic()) {
+            if (!in_array($property->getName(), ['id', 'widgetMap', 'slots', 'seo', 'i18n', 'widgets']) && !$property->isStatic()) {
                 $value = $accessor->getValue($businessTemplate, $property->getName());
                 $setMethod = 'set'.ucfirst($property->getName());
                 if (method_exists($page, $setMethod)) {
@@ -82,7 +82,6 @@ class BusinessPageBuilder
         }
 
         //find Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity object according to the given $entity
-
         $businessEntity = $this->businessEntityHelper->findByEntityInstance($entity);
 
         if ($businessEntity !== null) {

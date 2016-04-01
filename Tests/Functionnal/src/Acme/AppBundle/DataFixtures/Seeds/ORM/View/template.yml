@@ -20,3 +20,25 @@ Victoire\Bundle\TemplateBundle\Entity\Template:
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         cssUpToDate: false
+
+Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
+    template_base_name:
+        content: Base
+        locale: en
+        field: name
+        object: @template_base
+    template_base_slug:
+        content: base
+        locale: en
+        field: slug
+        object: @template_base
+    template_two_cols_en_name:
+        content: Two columns
+        locale: en
+        field: name
+        object: @template_two_cols
+    template_two_cols_en_slug:
+        content: two-columns
+        locale: en
+        field: slug
+        object: @template_two_cols
