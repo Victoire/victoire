@@ -42,6 +42,7 @@ class ArticleController extends Controller
         $form->handleRequest($this->get('request'));
         if ($form->isValid()) {
             $article->setAuthor($this->getUser());
+
             $entityManager->persist($article);
             if (is_array($article->getTags())) {
                 /** @var Tag $tag */
@@ -60,6 +61,7 @@ class ArticleController extends Controller
             // Transform VBP into BP
             $this->container->get('victoire_business_page.transformer.virtual_to_business_page_transformer')->transform($page);
             $page->setParent($article->getBlog());
+            $page->setTranslatableLocale($this->get('request')->getLocale());
 
             $entityManager->persist($page);
             $entityManager->flush();

@@ -72,7 +72,7 @@ class BusinessPageBuilder
         $accessor = PropertyAccess::createPropertyAccessor();
 
         foreach ($templateProperties as $property) {
-            if (!in_array($property->getName(), ['id', 'widgetMap', 'slots', 'seo', 'i18n', 'widgets']) && !$property->isStatic()) {
+            if (!in_array($property->getName(), ['id', 'widgetMap', 'slots', 'seo', 'i18n', 'widgets', 'template']) && !$property->isStatic()) {
                 $value = $accessor->getValue($businessTemplate, $property->getName());
                 $setMethod = 'set'.ucfirst($property->getName());
                 if (method_exists($page, $setMethod)) {
@@ -111,6 +111,7 @@ class BusinessPageBuilder
 
             $entityProxy = $this->entityProxyProvider->getEntityProxy($entity, $businessEntity, $em);
             //we update the url of the page
+            $page->setTranslatableLocale($businessTemplate->getLocale());
             $page->setUrl($pageUrl);
             $page->setSlug($pageSlug);
             $page->setName($pageName);
