@@ -30,8 +30,6 @@
             </li>
         {% endfor %}
     </ul>
-    <a href="#" class="vic-btn vic-btn-success" data-modal="update-bulk" title="{{ ('modal.button.update-bulk.title')|trans({}, 'victoire') }}"><i class="fa fa-check-circle"></i> {{ ('modal.button.update-bulk.title')|trans({}, 'victoire') }}</a>
-
     <script>
         <!--
         /**
@@ -53,3 +51,7 @@
 {% endblock modal_body_content %}
 
 {% block action %}update{% endblock action %}
+{% block modal_footer_content %}
+    <a href="#" class="vic-btn vic-btn-default vic-pull-left" data-modal="close"><i class="fa fa-times-circle"></i> {{ 'modal.button.cancel.title'|trans({}, 'victoire') }}</a>
+    <a href="#" class="vic-btn vic-btn-success" data-modal="{{ block('action') }}" title="{{ ('modal.button.'~ block('action') ~'.title')|trans({}, 'victoire') }}"><i class="fa fa-check-circle"></i> {{ ('modal.button.'~ block('action') ~'.title')|trans({}, 'victoire') }}</a>
+{% endblock modal_footer_content %}

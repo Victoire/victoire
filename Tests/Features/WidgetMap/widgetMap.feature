@@ -6,16 +6,16 @@ Background:
 
 @reset-schema
 Scenario: I move up a widget
-  Given the following WidgetTexts:
-    | content  | mode   |
-    | Widget 1 | static |
-    | Widget 2 | static |
-    | Widget 3 | static |
   Given the following WidgetMaps:
-    | id |  widget  | action | position | parent |  slot   |   view  |
-    | 1  | Widget 1 | create |          |        | content |   home  |
-    | 2  | Widget 2 | create |  after   |   1    | content |   home  |
-    | 3  | Widget 3 | create |  before  |   2    | content |   home  |
+    | id | action | position | parent |  slot   |   view  |
+    | 1  | create |          |        | content |   home  |
+    | 2  | create |  after   |   1    | content |   home  |
+    | 3  | create |  before  |   2    | content |   home  |
+  Given the following WidgetTexts:
+    | content  | mode   | widgetMap |
+    | Widget 1 | static |    1       |
+    | Widget 2 | static |    2       |
+    | Widget 3 | static |    3       |
     And I am on the homepage
     Then I should see "Widget 1"
     When I move the widgetMap "1" "before" the widgetMap "3"
@@ -25,16 +25,16 @@ Scenario: I move up a widget
 
 @reset-schema
 Scenario: I move first a widget
-  Given the following WidgetTexts:
-    | content  | mode   |
-    | Widget 1 | static |
-    | Widget 2 | static |
-    | Widget 3 | static |
   Given the following WidgetMaps:
-    | id |  widget  | action | position | parent |  slot   |   view  |
-    | 1  | Widget 1 | create |          |        | content |   home  |
-    | 2  | Widget 2 | create |  after   |   1    | content |   home  |
-    | 3  | Widget 3 | create |  before  |   2    | content |   home  |
+    | id | action | position | parent |  slot   |   view  |
+    | 1  | create |          |        | content |   home  |
+    | 2  | create |  after   |   1    | content |   home  |
+    | 3  | create |  before  |   2    | content |   home  |
+  Given the following WidgetTexts:
+    | content  | mode   | widgetMap |
+    | Widget 1 | static |    1       |
+    | Widget 2 | static |    2       |
+    | Widget 3 | static |    3       |
     And I am on the homepage
     Then I should see "Widget 1"
     When I move the widgetMap "3" "after" the widgetMap ""
@@ -44,16 +44,16 @@ Scenario: I move first a widget
 
 @reset-schema
 Scenario: I move down a widget
-  Given the following WidgetTexts:
-    | content  | mode   |
-    | Widget 1 | static |
-    | Widget 2 | static |
-    | Widget 3 | static |
   Given the following WidgetMaps:
-    | id |  widget  | action | position | parent |  slot   |   view  |
-    | 1  | Widget 1 | create |          |        | content |   home  |
-    | 2  | Widget 2 | create |  after   |   1    | content |   home  |
-    | 3  | Widget 3 | create |  before  |   2    | content |   home  |
+    | id | action | position | parent |  slot   |   view  |
+    | 1  | create |          |        | content |   home  |
+    | 2  | create |  after   |   1    | content |   home  |
+    | 3  | create |  before  |   2    | content |   home  |
+  Given the following WidgetTexts:
+    | content  | mode   | widgetMap |
+    | Widget 1 | static |    1       |
+    | Widget 2 | static |    2       |
+    | Widget 3 | static |    3       |
     And I am on the homepage
     Then I should see "Widget 1"
     When I move the widgetMap "1" "after" the widgetMap "2"
@@ -64,16 +64,16 @@ Scenario: I move down a widget
 @reset-schema
 Scenario: I move a widget under a templates one
 
-  Given the following WidgetTexts:
-    | content  | mode   |
-    | Widget 1 | static |
-    | Widget 2 | static |
-    | Widget 3 | static |
   Given the following WidgetMaps:
-    | id |  widget  | action | position | parent |  slot   |   view  |
-    | 1  | Widget 1 | create |          |        | content |   home  |
-    | 2  | Widget 2 | create |  after   |   1    | content |   home  |
-    | 3  | Widget 3 | create |  before  |   2    | content |   home  |
+    | id | action | position | parent |  slot   |   view  |
+    | 1  | create |          |        | content |   home  |
+    | 2  | create |  after   |   1    | content |   home  |
+    | 3  | create |  before  |   2    | content |   home  |
+  Given the following WidgetTexts:
+    | content  | mode   | widgetMap |
+    | Widget 1 | static |    1       |
+    | Widget 2 | static |    2       |
+    | Widget 3 | static |    3       |
     And I am on the homepage
     Then I should see "Widget 1"
     When I switch to "layout" mode
@@ -114,7 +114,7 @@ Scenario: I create widget in a position
     And "Le côté Obscure de la force" should precede "Le côté Lumineux de la force"
 
     Given I reload the page
-    Then "Le côté Obscure de la force" should precede "Le côté Lumineux de la force"
+    Then "Le côté Obscure de la force" should precede "Le côté.js Lumineux de la force"
 
     Then I should see "Nouveau Contenu"
     Given I select "Force" from the "2" select of "content" slot

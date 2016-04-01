@@ -50,8 +50,8 @@ Feature: Edit a widget
         Then I should see "Victoire !"
         And I should see "Le Côté Obscure de la force"
         When I switch to "edit" mode
+        And I edit the "Force" widget
         Then I should see "Mettre à jour"
-        Then I should see "Widget #1 - Force"
         When I follow the tab "Jedi"
         And I follow "Requête"
         When I select "side" from "jedi_query_widget_force[fields][side]"
