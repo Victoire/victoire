@@ -852,6 +852,11 @@ abstract class View
         $this->locale = $locale;
     }
 
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+    }
+
     /**
      * @return string
      */

@@ -27,3 +27,25 @@ Victoire\Bundle\PageBundle\Entity\Page:
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         cssUpToDate: false
+
+Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
+    home_en_name:
+        content: Homepage
+        locale: en
+        field: name
+        object: @home
+    test_en_name:
+        content: English test
+        locale: en
+        field: name
+        object: @test
+    home_en_slug:
+        content: home
+        locale: en
+        field: slug
+        object: @home
+    test_en_slug:
+        content: english-test
+        locale: en
+        field: slug
+        object: @test

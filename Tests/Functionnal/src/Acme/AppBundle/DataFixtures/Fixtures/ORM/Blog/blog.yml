@@ -15,8 +15,13 @@ Victoire\Bundle\BlogBundle\Entity\Blog:
         cssUpToDate: false
 
 Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
-    home_en_name:
+    blog-jedi-network_en_slug:
         content: the-jedi-network
         locale: en
         field: slug
+        object: @blog-jedi-network
+    blog-jedi-network_en_name:
+        content: The Jedi Network
+        locale: en
+        field: name
         object: @blog-jedi-network

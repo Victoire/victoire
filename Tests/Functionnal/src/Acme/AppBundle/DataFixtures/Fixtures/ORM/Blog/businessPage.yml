@@ -11,3 +11,16 @@ Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage:
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         cssUpToDate: false
+
+
+Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
+    bep_article_i_m_your_father_en_name:
+        content: "I'm your father."
+        locale: en
+        field: name
+        object: @bep_article_i_m_your_father
+    bep_article_i_m_your_father_en_slug:
+        content: "I-m-your-father"
+        locale: en
+        field: slug
+        object: @bep_article_i_m_your_father

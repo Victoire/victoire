@@ -54,3 +54,55 @@ Victoire\Bundle\TwigBundle\Entity\ErrorPage:
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         cssUpToDate: false
+
+Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
+    400_en_name:
+        content: Error 400
+        locale: en
+        field: name
+        object: @400
+    400_en_slug:
+        content: error400
+        locale: en
+        field: slug
+        object: @400
+    403_en_name:
+        content: Error 403
+        locale: en
+        field: name
+        object: @403
+    403_en_slug:
+        content: error403
+        locale: en
+        field: slug
+        object: @403
+    404_en_name:
+        content: Error 404
+        locale: en
+        field: name
+        object: @404
+    404_en_slug:
+        content: error404
+        locale: en
+        field: slug
+        object: @404
+    500_en_name:
+        content: Error 500
+        locale: en
+        field: name
+        object: @500
+    500_en_slug:
+        content: error500
+        locale: en
+        field: slug
+        object: @500
+    503_en_name:
+        content: Error 503
+        locale: en
+        field: name
+        object: @503
+    503_en_slug:
+        content: error503
+        locale: en
+        field: slug
+        object: @503
