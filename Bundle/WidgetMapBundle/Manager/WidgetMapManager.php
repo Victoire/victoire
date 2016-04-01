@@ -27,19 +27,31 @@ class WidgetMapManager
      */
     public function insert(Widget $widget, View $view, $slotId, $position, $widgetReference)
     {
-        $parent = null;
-        if ($widgetReference) {
-            $parent = $this->em->getRepository('VictoireWidgetMapBundle:WidgetMap')->find($widgetReference);
-        }
-        //create the new widget map
-        $widgetMapEntry = new WidgetMap();
-        $widgetMapEntry->setAction(WidgetMap::ACTION_CREATE);
-        $widgetMapEntry->setWidget($widget);
-        $widgetMapEntry->setSlot($slotId);
-        $widgetMapEntry->setPosition($position);
-        $widgetMapEntry->setParent($parent);
+        $quantum = $this->em->getRepository('VictoireWidgetMapBundle:WidgetMap')->findOneBy([
+           'view' => $view,
+           'slot' => $slotId,
+           'position' => $position,
+           'parent' => $widgetReference,
+        ]);
+        if ($quantum) {
+            $widget->setWidgetMap($quantum);
+            $view->addWidgetMap($quantum);
+        } else {
 
-        $view->addWidgetMap($widgetMapEntry);
+            $parent = null;
+            if ($widgetReference) {
+                $parent = $this->em->getRepository('VictoireWidgetMapBundle:WidgetMap')->find($widgetReference);
+            }
+            //create the new widget map
+            $widgetMapEntry = new WidgetMap();
+            $widgetMapEntry->setAction(WidgetMap::ACTION_CREATE);
+            $widgetMapEntry->setSlot($slotId);
+            $widgetMapEntry->setPosition($position);
+            $widgetMapEntry->setParent($parent);
+            $widget->setWidgetMap($widgetMapEntry);
+
+            $view->addWidgetMap($widgetMapEntry);
+        }
     }
 
     /**
