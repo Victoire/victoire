@@ -65,7 +65,8 @@ class WidgetType extends AbstractType
 
         //add the slot to the form
         $builder->add('slot', HiddenType::class, []);
-        $builder->add('criterias', CollectionType::class, [
+        $builder->add('criterias', CriteriaCollectionType::class, [
+            'label'    => 'victoire.widget.type.criterias.label',
             'type' =>  CriteriaType::class,
             'entry_options' => [
                 'dataSources' => $options['dataSources'],
