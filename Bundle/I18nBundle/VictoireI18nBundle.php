@@ -8,7 +8,6 @@ use Victoire\Bundle\I18nBundle\DependencyInjection\Compiler\I18nCompilerPass;
 
 class VictoireI18nBundle extends Bundle
 {
-
     /**
      * Build bundle.
      *

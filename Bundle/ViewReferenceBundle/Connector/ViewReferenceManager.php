@@ -34,10 +34,10 @@ class ViewReferenceManager
     /**
      * This method save a tree of viewReferences.
      *
-     * @param array     $viewReferences
-     * @param string    $parentId
-     * @param string    $parentLocale
-     * @param bool      $reset
+     * @param array  $viewReferences
+     * @param string $parentId
+     * @param string $parentLocale
+     * @param bool   $reset
      */
     public function saveReferences(array $viewReferences, $parentId = null, $parentLocale = null, $reset = true)
     {

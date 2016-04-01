@@ -87,7 +87,6 @@ class LinkType extends AbstractType
                 self::manageLinkTypeRelatedFields($data['linkType'], $locale, $form, $builder);
             });
 
-
         if (!empty($this->analytics['google']) && $this->analytics['google']['enabled']) {
             $builder->add('analytics_track_code', null, [
                 'label'    => 'form.link_type.analytics_track_code.label',

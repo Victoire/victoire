@@ -138,8 +138,8 @@ abstract class View
 
     /**
      * @var ViewReference[]
-     * The reference is related to viewsReferences.xml file which list all app views.
-     * This is used to speed up the routing system and identify virtual pages (BusinessPage).
+     *                      The reference is related to viewsReferences.xml file which list all app views.
+     *                      This is used to speed up the routing system and identify virtual pages (BusinessPage).
      */
     protected $references;
 
@@ -704,8 +704,6 @@ abstract class View
         if (is_array($this->references) && isset($this->references[$locale])) {
             return $this->references[$locale];
         }
-
-        return null;
     }
 
     /**
@@ -850,5 +848,4 @@ abstract class View
     {
         return $this->locale;
     }
-
 }

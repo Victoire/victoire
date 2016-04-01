@@ -169,7 +169,7 @@ class ViewReferenceRepository
         if (null === $refId) {
             $refsId = $this->repository->getAllBy([
                 'locale' => $locale,
-                'slug' => '',
+                'slug'   => '',
             ]);
         } else {
             $refsId = $this->repository->getAllBy([

@@ -20,7 +20,7 @@ class PageReferenceBuilder extends BaseReferenceBuilder
      */
     public function buildReference(View $view, EntityManager $em)
     {
-        /** @var Page $view */
+        /* @var Page $view */
         $referenceId = ViewReferenceHelper::generateViewReferenceId($view);
 
         $viewReference = new ViewReference();

@@ -8,7 +8,6 @@ use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Symfony\Component\Yaml\Yaml;
 
 /**
  * This is the class that loads and manages your bundle configuration.
@@ -61,7 +60,7 @@ class VictoireI18nExtension extends Extension implements PrependExtensionInterfa
                                     'type'      => 'annotation',
                                     'prefix'    => 'Gedmo\Translatable\Entity',
                                     'dir'       => '%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translatable/Entity',
-                                    'is_bundle' => false
+                                    'is_bundle' => false,
                                 ],
                             ],
                         ],
@@ -70,7 +69,7 @@ class VictoireI18nExtension extends Extension implements PrependExtensionInterfa
                 case 'stof_doctrine_extensions':
                     $container->prependExtensionConfig($name, [
                         'persist_default_translation' => true,
-                        'orm' => [
+                        'orm'                         => [
                             'default' => [
                                 'translatable' => true,
                             ],
