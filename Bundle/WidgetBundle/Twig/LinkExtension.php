@@ -96,8 +96,8 @@ class LinkExtension extends \Twig_Extension
                     $page = $parameters['viewReferencePage'];
                 } else {
                     $page = $this->pageHelper->findPageByParameters([
-                        'id' => $viewReference,
-                        'locale' => $parameters['locale']
+                        'id'     => $viewReference,
+                        'locale' => $parameters['locale'],
                     ]);
                 }
 

@@ -3,7 +3,6 @@
 namespace Victoire\Bundle\PageBundle\EventSubscriber;
 
 use Doctrine\Common\EventSubscriber;
-use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
@@ -35,9 +34,9 @@ class PageSubscriber implements EventSubscriber
     /**
      * Constructor.
      *
-     * @param Router                  $router             @router
-     * @param UserCallableHelper      $userCallableHelper @victoire_page.user_callable
-     * @param string                  $userClass          %victoire_core.user_class%
+     * @param Router                  $router                  @router
+     * @param UserCallableHelper      $userCallableHelper      @victoire_page.user_callable
+     * @param string                  $userClass               %victoire_core.user_class%
      * @param ViewReferenceBuilder    $viewReferenceBuilder
      * @param ViewReferenceRepository $viewReferenceRepository
      * @param TranslatableListener    $translatableListener
@@ -142,7 +141,7 @@ class PageSubscriber implements EventSubscriber
             $entity->setTranslatableLocale($locale);
             $viewReference = $this->viewReferenceRepository->getOneReferenceByParameters([
                 'viewId' => $entity->getId(),
-                'locale' => $entity->getLocale()
+                'locale' => $entity->getLocale(),
             ]);
             if ($entity instanceof WebViewInterface && $viewReference instanceof ViewReference) {
                 $entity->setReference($viewReference);
@@ -151,7 +150,7 @@ class PageSubscriber implements EventSubscriber
                 $entity->setReferences([$entity->getLocale() => new ViewReference($entity->getId())]);
             } else {
                 $entity->setReferences([
-                    $entity->getLocale() => $this->viewReferenceBuilder->buildViewReference($entity, $eventArgs->getEntityManager())
+                    $entity->getLocale() => $this->viewReferenceBuilder->buildViewReference($entity, $eventArgs->getEntityManager()),
                 ]);
             }
         }

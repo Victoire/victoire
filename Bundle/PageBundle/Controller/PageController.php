@@ -1,6 +1,7 @@
 <?php
 
 namespace Victoire\Bundle\PageBundle\Controller;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;

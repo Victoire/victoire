@@ -112,7 +112,7 @@ class PageHelper
     {
         if (!empty($parameters['id']) && !preg_match('/^ref_/', $parameters['id'])) {
             $page = $this->entityManager->getRepository('VictoireCoreBundle:View')->findOneBy([
-                'id' => $parameters['id']
+                'id' => $parameters['id'],
             ]);
 
             $entity = null;
@@ -269,14 +269,14 @@ class PageHelper
             if ($viewReference->getViewId()) { //BusinessPage
                 $page = $this->entityManager->getRepository('VictoireCoreBundle:View')
                     ->findOneBy([
-                        'id' => $viewReference->getViewId(),
-                        'locale' => $viewReference->getLocale()
+                        'id'     => $viewReference->getViewId(),
+                        'locale' => $viewReference->getLocale(),
                     ]);
             } else { //VirtualBusinessPage
                 $page = $this->entityManager->getRepository('VictoireCoreBundle:View')
                     ->findOneBy([
-                        'id' => $viewReference->getTemplateId(),
-                        'locale' => $viewReference->getLocale()
+                        'id'     => $viewReference->getTemplateId(),
+                        'locale' => $viewReference->getLocale(),
                     ]);
                 if ($entity) {
                     if ($page instanceof BusinessTemplate) {
@@ -289,8 +289,8 @@ class PageHelper
         } elseif ($viewReference instanceof ViewReference) {
             $page = $this->entityManager->getRepository('VictoireCoreBundle:View')
                 ->findOneBy([
-                    'id' => $viewReference->getViewId(),
-                    'locale' => $viewReference->getLocale()
+                    'id'     => $viewReference->getViewId(),
+                    'locale' => $viewReference->getLocale(),
                 ]);
         } else {
             throw new \Exception(sprintf('Oh no! Cannot find a page for this ViewReference (%s)', ClassUtils::getClass($viewReference)));

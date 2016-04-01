@@ -114,7 +114,7 @@ class ViewRepository extends NestedTreeRepository
 
         foreach ($localizedViewReferences as $locale => $_viewReferences) {
             //the query builder
-            $queryBuilder = $this->createQueryBuilder('page');;
+            $queryBuilder = $this->createQueryBuilder('page');
 
             $pageIds = [];
             foreach ($_viewReferences as $viewReference) {
@@ -127,7 +127,6 @@ class ViewRepository extends NestedTreeRepository
 
             $queryBuilder->andWhere('page.id IN (:pageIds)')
                 ->setParameter('pageIds', $pageIds);
-
 
             // Use Translation Walker
             $query = $queryBuilder->getQuery();
@@ -142,7 +141,7 @@ class ViewRepository extends NestedTreeRepository
                 $locale
             );
 
-            /** @var View[] $query */
+            /* @var View[] $query */
             $_views = $query->getResult();
             //Parse views to set locale and reference
             $views = array_merge($views, $_views);
@@ -154,7 +153,7 @@ class ViewRepository extends NestedTreeRepository
     /**
      * Finds a single entity by a set of criteria.
      *
-     * @param array $criteria
+     * @param array      $criteria
      * @param array|null $orderBy
      *
      * @return object|null The entity instance or NULL if the entity can not be found.
@@ -166,8 +165,8 @@ class ViewRepository extends NestedTreeRepository
         $hints = [];
         if (isset($criteria['locale'])) {
             $hints = [
-                \Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER => 'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker',
-                \Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE => $criteria['locale']
+                \Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER                     => 'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker',
+                \Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE => $criteria['locale'],
             ];
             unset($criteria['locale']);
         }

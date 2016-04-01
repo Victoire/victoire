@@ -13,7 +13,6 @@ use Victoire\Bundle\CoreBundle\Entity\Link;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
-use Victoire\Bundle\ViewReferenceBundle\ViewReference\BusinessPageReference;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 use Victoire\Bundle\WidgetBundle\Entity\Traits\LinkTrait;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
@@ -159,7 +158,7 @@ class WidgetDataWarmer
             if ($link->getParameters()['linkType'] == 'viewReference') {
                 $viewReference = $this->viewReferenceRepository->getOneReferenceByParameters([
                     'id'     => $link->getParameters()['viewReference'],
-                    'locale' => $link->getParameters()['locale']
+                    'locale' => $link->getParameters()['locale'],
                 ]);
 
                 if ($viewReference instanceof ViewReference) {
