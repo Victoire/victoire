@@ -1,6 +1,17 @@
 {% trans_default_domain "victoire" %}
 {% use 'form_div_layout.html.twig' %}
 
+{% block criteria_row %}
+    <div class="vic-row">
+        <div class="vic-col-md-4">{{ ('victoire_criteria.'~form.vars.data.name~'.criteria.label')|trans }}</div>
+    </div>
+    <div class="vic-row">
+        <div class="vic-col-md-4">{{ form_widget(form.operator) }}</div>
+        <div class="vic-col-md-4">{{ form_widget(form.value) }}</div>
+        {{ form_row(form.name) }}
+    </div>
+{% endblock criteria_row %}
+
 {# Buttons #}
 {% block tags_widget %}
 <input type="hidden" id="{{id}}" name="{{ full_name }}" value="{{tag_values}}" tabindex="-1" class="select2-offscreen" />

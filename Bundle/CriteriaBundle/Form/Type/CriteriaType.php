@@ -23,9 +23,12 @@ class CriteriaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-        $builder->add('name', HiddenType::class);
+        $builder->add('name', HiddenType::class, [
+            'label' => 'victoire_criteria.criteria.name.label'
+        ]);
         $builder->add('operator', ChoiceType::class, [
-            'choices' => ['equal' => 'equal']
+            'choices' => ['victoire_criteria.criteria.operator.equal.label' => 'equal'],
+            'label' => 'victoire_criteria.criteria.operator.label'
         ]);
 
 
