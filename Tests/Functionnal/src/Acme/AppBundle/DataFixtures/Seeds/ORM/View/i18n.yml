@@ -1,25 +1,21 @@
-Gedmo\Translatable\Entity\Translation:
+Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
     home_en_name:
         content: Homepage
         locale: en
-        objectClass: Victoire\Bundle\CoreBundle\Entity\View
         field: name
-        foreignKey: '@home->id'
+        object: @home
     test_en_name:
         content: English test
         locale: en
-        objectClass: Victoire\Bundle\CoreBundle\Entity\View
         field: name
-        foreignKey: '@test->id'
+        object: @test
     home_en_slug:
         content: home
         locale: en
-        objectClass: Victoire\Bundle\CoreBundle\Entity\View
         field: slug
-        foreignKey: '@home->id'
+        object: @home
     test_en_slug:
         content: english-test
         locale: en
-        objectClass: Victoire\Bundle\CoreBundle\Entity\View
         field: slug
-        foreignKey: '@test->id'
+        object: @test

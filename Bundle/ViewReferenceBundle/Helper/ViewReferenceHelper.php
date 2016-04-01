@@ -3,11 +3,13 @@
 namespace Victoire\Bundle\ViewReferenceBundle\Helper;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use Gedmo\Translatable\Entity\Repository\TranslationRepository;
 use Gedmo\Translatable\Entity\Translation;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
+use Victoire\Bundle\I18nBundle\Entity\ViewTranslation;
 use Victoire\Bundle\ViewReferenceBundle\Builder\ViewReferenceBuilder;
 
 /**
@@ -66,12 +68,12 @@ class ViewReferenceHelper
             /** @var WebViewInterface $view */
             $view = $branch['view'];
             $viewReferences = [];
-            /** @var TranslationRepository $viewRepo */
-            $viewRepo = $entityManager->getRepository(Translation::class);
-            foreach ($viewRepo->findTranslations($view) as $_locale => $translation) {
-                $view->setTranslatableLocale($_locale);
+            /** @var EntityRepository $viewRepo */
+            $viewTranslationRepo = $entityManager->getRepository(ViewTranslation::class);
+            foreach ($viewTranslationRepo->findByObject($view) as $translation) {
+                $view->setTranslatableLocale($translation->getLocale());
                 $entityManager->refresh($view);
-                $viewReferences[$_locale] = $this->viewReferenceBuilder->buildViewReference($view, $entityManager);
+                $viewReferences[$translation->getLocale()] = $this->viewReferenceBuilder->buildViewReference($view, $entityManager);
             }
             $view->setReferences($viewReferences);
             if (!empty($branch['children'])) {
