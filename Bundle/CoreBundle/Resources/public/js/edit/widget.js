@@ -71,7 +71,7 @@ $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(
 });
 
 
-$vic(document).on('click', '.vic-widget-modal a[data-modal="update-bulk"]', function(event) {
+$vic(document).on('click', '.vic-widget-modal a[data-modal="update-bulk"]', '.vic-widget-modal a[data-modal="create-bulk"]', function(event) {
 
     event.preventDefault();
 

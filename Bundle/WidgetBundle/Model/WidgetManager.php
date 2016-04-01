@@ -281,7 +281,7 @@ class WidgetManager
                         'view'    => $currentView,
                         'slot'    => $widget->getWidgetMap()->getSlot(),
                         'position'    => $widget->getWidgetMap()->getPosition(),
-                        'parentWidgetMap'    => $widget->getWidgetMap()->getParent()->getId(),
+                        'parentWidgetMap'    => $widget->getWidgetMap()->getParent() ? $widget->getWidgetMap()->getParent()->getId() : null,
                         'classes' => $classes,
                         'forms'   => $forms,
                         'widgets'  => $widgets,

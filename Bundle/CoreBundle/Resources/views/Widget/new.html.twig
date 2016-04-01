@@ -22,9 +22,6 @@
                     </div>
                 {% endblock form_static %}
             {% endif %}
-            <a href="#" class="vic-btn vic-btn-success" data-modal="{% block action %}create{% endblock action %}" title="{{ ('modal.button.'~ block('action') ~'.title')|trans({}, 'victoire') }}">
-                <i class="fa fa-check-circle"></i> {{ ('modal.button.'~ block('action') ~'.title')|trans({}, 'victoire') }}
-            </a>
         {% endblock form %}
     {% endblock body %}
 {% endblock form_container %}
