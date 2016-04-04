@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\I18nBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -15,7 +16,7 @@ use Gedmo\Translatable\Entity\MappedSuperclass\AbstractPersonalTranslation;
 class ViewTranslation extends AbstractPersonalTranslation
 {
     /**
-     * Convenient constructor
+     * Convenient constructor.
      *
      * @param string $locale
      * @param string $field
