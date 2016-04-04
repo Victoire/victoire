@@ -113,6 +113,31 @@ class WidgetFormBuilder
 
         return $forms;
     }
+    /**
+     * Generates new forms for each available business entities.
+     *
+     * @param string           $slot
+     * @param View             $view
+     * @param Widget           $widget
+     * @param BusinessEntity[] $classes
+     * @param int              $position
+     *
+     * @throws \Exception
+     *
+     * @return Form[]
+     */
+    public function renderNewQuantumForms($slot, View $view, $widgets, $activeWidget, $classes, $position = null, $parentWidgetMap = null)
+    {
+        $forms = [];
+        foreach ($widgets as $key => $widget) {
+            $forms[$key] = $this->renderNewWidgetForms($slot, $view, $widget, $classes, $position, $parentWidgetMap);
+            if ($widget === $activeWidget) {
+                $forms[$key]['active'] = true;
+            }
+        }
+
+        return $forms;
+    }
 
     /**
      * @param Widget $widget
@@ -193,7 +218,7 @@ class WidgetFormBuilder
             }
             $formUrl = $router->generate($action, $actionParams);
         } else {
-            $viewReference = $widget->getCurrentView()->getReference();
+            $viewReference = $this->container->get('victoire_core.current_view')->getCurrentView()->getReference();
             $formUrl = $router->generate('victoire_core_widget_update',
                 [
                     'id'               => $widget->getId(),
@@ -221,6 +246,7 @@ class WidgetFormBuilder
             'mode'             => $formMode,
             'action'           => $formUrl,
             'method'           => 'POST',
+            'dataSources'           => $this->container->get('victoire_criteria.chain.data_source_chain'),
         ]);
 
         $event = new WidgetFormCreateEvent($optionsContainer, $widgetFormTypeClass);

@@ -1,0 +1,3 @@
+<li class="{% if not isLast %}vic-seperate{% endif %}{% if active is defined and active == true %} vic-active{% endif %}">
+    <a id="widget-{{ id }}-tab" class="quantum-tab-name" href="#widget-{{ id }}-tab-pane" data-toggle="vic-tab"><span>{{ widget.quantum ? widget.quantum : "widget_modal.quantum.tab.default"|trans({}, 'victoire') }}</span><i class="edit fa fa-pencil"></i></a>
+</li>

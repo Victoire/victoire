@@ -36,7 +36,7 @@ Feature: Edit a widget
         And I should see "Le Côté jedi -> side de la force"
         When I switch to "edit" mode
         And I edit the "Force" widget
-        Then I should see "Widget #1 - Force"
+        Then I should see "Mettre à jour"
         When I select "slug" from "jedi_businessEntity_widget_force[fields][side]"
         And I submit the widget
         Then I should see "Victoire !"
@@ -51,7 +51,7 @@ Feature: Edit a widget
         And I should see "Le Côté Obscure de la force"
         When I switch to "edit" mode
         And I edit the "Force" widget
-        Then I should see "Widget #1 - Force"
+        Then I should see "Mettre à jour"
         When I follow the tab "Jedi"
         And I follow "Requête"
         When I select "side" from "jedi_query_widget_force[fields][side]"

@@ -1,0 +1,12 @@
+services:
+    victoire_criteria.chain.data_source_chain:
+        class: Victoire\Bundle\CriteriaBundle\Chain\DataSourceChain
+
+    victoire_criteria.criteria.request_data_source:
+        class: Victoire\Bundle\CriteriaBundle\DataSource\RequestDataSource
+        arguments:
+            - @request_stack
+            - %victoire_i18n.available_locales%
+        tags:
+            - { name: victoire_criteria, group: request, method: getLocale, alias: request_locale }
+            - { name: victoire_criteria, group: request, method: getScheme, alias: request_scheme }

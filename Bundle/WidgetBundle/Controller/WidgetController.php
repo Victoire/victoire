@@ -92,8 +92,8 @@ class WidgetController extends Controller
      *
      * @return JsonResponse
      *
+     * @Route("/victoire-dcms/widget/new-quantum-item/{type}/{viewReference}/{slot}/{position}/{parentWidgetMap}", name="victoire_core_widget_new_quantum_item", defaults={"slot":null, "position":null, "parentWidgetMap":null}, options={"expose"=true})
      * @Route("/victoire-dcms/widget/new/{type}/{viewReference}/{slot}/{position}/{parentWidgetMap}", name="victoire_core_widget_new", defaults={"slot":null, "position":null, "parentWidgetMap":null}, options={"expose"=true})
-     * @Template()
      */
     public function newAction($type, $viewReference, $slot = null, $position = null, $parentWidgetMap = null)
     {
@@ -105,10 +105,19 @@ class WidgetController extends Controller
                 $reference = new ViewReference($viewReference);
             }
             $view->setReference($reference);
-
-            $response = new JsonResponse(
-                $this->get('victoire_widget.widget_manager')->newWidget(Widget::MODE_STATIC, $type, $slot, $view, $position, $parentWidgetMap)
+            $widgetData = $this->get('victoire_widget.widget_manager')->newWidget(
+                Widget::MODE_STATIC,
+                $type,
+                $slot,
+                $view,
+                $position,
+                $parentWidgetMap
             );
+
+            $response = new JsonResponse([
+                'success' => true,
+                'html' => $widgetData['html']
+            ]);
         } catch (Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
         }
@@ -187,15 +196,13 @@ class WidgetController extends Controller
     {
         $view = $this->getViewByReferenceId($viewReference);
         $this->get('victoire_widget_map.builder')->build($view, $this->get('doctrine.orm.entity_manager'));
-        $widgetView = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $view)->getView();
         $this->get('victoire_widget_map.widget_data_warmer')->warm($this->getDoctrine()->getManager(), $view);
 
         if ($view instanceof BusinessTemplate && !$reference = $this->get('victoire_view_reference.repository')
             ->getOneReferenceByParameters(['viewId' => $view->getId()])) {
             $reference = new ViewReference($viewReference);
-            $widgetView->setReference($reference);
+            $view->setReference($reference);
         }
-        $widget->setCurrentView($widgetView);
         $this->get('victoire_core.current_view')->setCurrentView($view);
         try {
             $response = new JsonResponse(
@@ -249,48 +256,83 @@ class WidgetController extends Controller
 
         $this->get('victoire_core.current_view')->setCurrentView($view);
         try {
-            $form = $this->get('form.factory')->create(WidgetStyleType::class, $widget, [
-                    'method' => 'POST',
-                    'action' => $this->generateUrl(
-                        'victoire_core_widget_stylize',
-                        [
-                            'id'            => $widget->getId(),
-                            'viewReference' => $viewReference,
-                        ]
-                    ),
-                ]
-            );
-            $form->handleRequest($this->get('request'));
 
-            if ($request->query->get('novalidate', false) === false && $form->isValid()) {
-                if ($form->has('deleteBackground') && $form->get('deleteBackground')->getData()) {
-                    // @todo: dynamic responsive key
-                    foreach (['', 'XS', 'SM', 'MD', 'LG'] as $key) {
-                        $widget->{'deleteBackground'.$key}();
+            if ($request->getMethod() === 'POST') {
+
+                $form = $this->get('form.factory')->create(WidgetStyleType::class, $widget, [
+                        'method' => 'POST',
+                        'action' => $this->generateUrl(
+                            'victoire_core_widget_stylize',
+                            [
+                                'id'            => $widget->getId(),
+                                'viewReference' => $viewReference,
+                            ]
+                        ),
+                    ]
+                );
+
+                $form->handleRequest($this->get('request'));
+                if ($request->query->get('novalidate', false) === false && $form->isValid()) {
+                    if ($form->has('deleteBackground') && $form->get('deleteBackground')->getData()) {
+                        // @todo: dynamic responsive key
+                        foreach (['', 'XS', 'SM', 'MD', 'LG'] as $key) {
+                            $widget->{'deleteBackground'.$key}();
+                        }
                     }
+                    $this->get('doctrine.orm.entity_manager')->flush();
+                    $params = [
+                        'view'        => $view,
+                        'success'     => true,
+                        'html'        => $this->get('victoire_widget.widget_renderer')->render($widget, $view),
+                        'widgetId'    => $widget->getId(),
+                        'viewCssHash' => $view->getCssHash(),
+                    ];
+
+                } else {
+                    $template = ($request->query->get('novalidate', false) !== false) ? 'VictoireCoreBundle:Widget/Form/stylize:form.html.twig' : 'VictoireCoreBundle:Widget/Form:stylize.html.twig';
+                    $params = [
+                        'success'  => !$form->isSubmitted(),
+                        'html'     => $this->get('templating')->render(
+                            $template,
+                            [
+                                'view'   => $view,
+                                'form'   => $form->createView(),
+                                'widget' => $widget,
+                            ]
+                        ),
+                    ];
                 }
-                $this->get('doctrine.orm.entity_manager')->flush();
-                $params = [
-                    'view'        => $view,
-                    'success'     => true,
-                    'html'        => $this->get('victoire_widget.widget_renderer')->render($widget, $view),
-                    'widgetId'    => $widget->getId(),
-                    'viewCssHash' => $view->getCssHash(),
-                ];
             } else {
-                $template = ($request->query->get('novalidate', false) !== false) ? 'VictoireCoreBundle:Widget/Form/stylize:form.html.twig' : 'VictoireCoreBundle:Widget/Form:stylize.html.twig';
+
+                $widgets = $widget->getWidgetMap()->getWidgets();
+                $forms = [];
+                foreach ($widgets as $widget) {
+                    $forms[] = $this->get('form.factory')->create(WidgetStyleType::class, $widget, [
+                            'method' => 'POST',
+                            'action' => $this->generateUrl(
+                                'victoire_core_widget_stylize',
+                                [
+                                    'id'            => $widget->getId(),
+                                    'viewReference' => $viewReference,
+                                ]
+                            ),
+                        ]
+                    )->createView();
+                };
                 $params = [
-                    'success'  => !$form->isSubmitted(),
-                    'html'     => $this->get('templating')->render(
-                        $template,
+                    'html' => $this->get('templating')->render(
+                        'VictoireCoreBundle:Widget/Form:stylize.html.twig',
                         [
                             'view'   => $view,
-                            'form'   => $form->createView(),
+                            'forms'   => $forms,
                             'widget' => $widget,
+                            'widgets' => $widgets,
                         ]
                     ),
                 ];
+
             }
+
             $response = new JsonResponse($params);
         } catch (Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
@@ -320,6 +362,35 @@ class WidgetController extends Controller
                     'success'  => true,
                     'message'  => $this->get('translator')->trans('victoire_widget.delete.success', [], 'victoire'),
                     'widgetId' => $widgetId,
+                ]
+            );
+        } catch (Exception $ex) {
+            return $this->getJsonReponseFromException($ex);
+        }
+    }
+    /**
+     * Delete a Widget quantum.
+     *
+     * @param Widget $widget        The widget to delete
+     * @param int    $viewReference The current view
+     *
+     * @return JsonResponse response
+     * @Route("/victoire-dcms/widget/delete/quantum/{id}/{viewReference}", name="victoire_core_widget_delete_bulk", defaults={"_format": "json"})
+     * @Template()
+     */
+    public function deleteBulkAction(Widget $widget, $viewReference)
+    {
+        $view = $this->getViewByReferenceId($viewReference);
+        try {
+            $widgets = $widget->getWidgetMap()->getWidgets();
+
+            foreach ($widgets as $widget) {
+                $this->get('widget_manager')->deleteWidget($widget, $view);
+            }
+
+            return new JsonResponse([
+                    'success'  => true,
+                    'message'  => $this->get('translator')->trans('victoire_widget.delete.success', [], 'victoire'),
                 ]
             );
         } catch (Exception $ex) {
@@ -366,6 +437,7 @@ class WidgetController extends Controller
             return $this->getJsonReponseFromException($ex);
         }
     }
+
 
     /**
      * Update widget positions accross the view. If moved widget is a Reference, ask to detach the view from template.

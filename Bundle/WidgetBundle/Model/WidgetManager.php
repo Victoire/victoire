@@ -99,22 +99,29 @@ class WidgetManager
      * @param View   $view
      * @param int    $position
      *
-     * @return template
+     * @return array
      */
     public function newWidget($mode, $type, $slot, $view, $position, $parentWidgetMap)
     {
         $widget = $this->widgetHelper->newWidgetInstance($type, $view, $slot, $mode);
+        $widgets = ['static' => $widget];
 
         /** @var BusinessEntity[] $classes */
         $classes = $this->cacheReader->getBusinessClassesForWidget($widget);
-        $forms = $this->widgetFormBuilder->renderNewWidgetForms($slot, $view, $widget, $classes, $position, $parentWidgetMap);
+        $forms = $this->widgetFormBuilder->renderNewQuantumForms($slot, $view, $widgets, $widget, $classes, $position, $parentWidgetMap);
 
         return [
+            'widget' => $widget,
             'html' => $this->templating->render(
                 'VictoireCoreBundle:Widget:Form/new.html.twig',
                 [
+                    'id'    => time(),
                     'view'    => $view,
+                    'slot'    => $slot,
+                    'position'    => $position,
+                    'parentWidgetMap'    => $parentWidgetMap,
                     'classes' => $classes,
+                    'widgets'  => $widgets,
                     'widget'  => $widget,
                     'forms'   => $forms,
                 ]
@@ -223,7 +230,7 @@ class WidgetManager
         //if the form is posted
         if ($requestMethod === 'POST') {
             //the widget view
-            $widgetView = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $currentView)->getView();
+            $widgetView = $widget->getWidgetMap()->getView();
 
             //we only copy the widget if the view of the widget is not the current view
             if ($widgetView !== $currentView) {
@@ -257,12 +264,14 @@ class WidgetManager
                 //Return a message for developer in console and form view in order to refresh view and show form errors
                 $response = [
                     'success' => false,
+                    'widgetId'    => $initialWidgetId,
                     'message' => $noValidate === false ? $formErrorHelper->getRecursiveReadableErrors($form) : null,
                     'html'    => $this->widgetFormBuilder->renderForm($form, $widget, $businessEntityId),
                 ];
             }
         } else {
-            $forms = $this->widgetFormBuilder->renderNewWidgetForms($widget->getSlot(), $currentView, $widget, $classes);
+            $widgets = $widget->getWidgetMap()->getWidgets();
+            $forms = $this->widgetFormBuilder->renderNewQuantumForms($widget->getSlot(), $currentView, $widgets, $widget, $classes);
 
             $response = [
                 'success'  => true,
@@ -270,8 +279,12 @@ class WidgetManager
                     'VictoireCoreBundle:Widget:Form/edit.html.twig',
                     [
                         'view'    => $currentView,
+                        'slot'    => $widget->getWidgetMap()->getSlot(),
+                        'position'    => $widget->getWidgetMap()->getPosition(),
+                        'parentWidgetMap'    => $widget->getWidgetMap()->getParent() ? $widget->getWidgetMap()->getParent()->getId() : null,
                         'classes' => $classes,
                         'forms'   => $forms,
+                        'widgets'  => $widgets,
                         'widget'  => $widget,
                     ]
                 ),

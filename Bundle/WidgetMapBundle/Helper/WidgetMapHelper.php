@@ -7,6 +7,12 @@ use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 use Victoire\Bundle\WidgetMapBundle\Exception\WidgetMapNotFoundException;
 
+/**
+ * @deprecated Just call $widget->getWidgetMap();
+ *
+ * Class WidgetMapHelper
+ *
+ */
 class WidgetMapHelper
 {
     /**
@@ -17,14 +23,6 @@ class WidgetMapHelper
      */
     public static function getWidgetMapByWidgetAndView(Widget $widget, View $view)
     {
-        foreach ($view->getBuiltWidgetMap() as $builtWidgetMap) {
-            if (array_key_exists($widget->getId(), $builtWidgetMap)) {
-                return $builtWidgetMap[$widget->getId()];
-            }
-        }
-
-        throw new WidgetMapNotFoundException(sprintf(
-            'Cannot find the widget #%s in the view#%s widget map', $widget->getId(), $view->getId()
-        ));
+        return $widget->getWidgetMap();
     }
 }

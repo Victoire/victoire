@@ -96,3 +96,8 @@ services:
             - @victoire_widget.widget_cache
         tags:
             - { name: kernel.cache_clearer }
+
+    victoire_widget.resolver.widget_resolver:
+        class: Victoire\Bundle\WidgetBundle\Resolver\WidgetResolver
+        arguments:
+            - "@=service('victoire_criteria.chain.data_source_chain')"

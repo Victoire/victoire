@@ -2,9 +2,11 @@
 
 namespace Victoire\Bundle\WidgetBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Victoire\Bundle\CoreBundle\Entity\BaseEntityProxy;
+use Victoire\Bundle\CriteriaBundle\Entity\Criteria;
 use Victoire\Bundle\QueryBundle\Entity\QueryTrait;
 use Victoire\Bundle\QueryBundle\Entity\VictoireQueryInterface;
 use Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTrait;
@@ -28,6 +30,7 @@ class Widget extends BaseWidget implements VictoireQueryInterface
     public function __construct()
     {
         $this->childrenSlot = uniqid();
+        $this->criterias = new ArrayCollection();
     }
 
     /**
@@ -108,13 +111,26 @@ class Widget extends BaseWidget implements VictoireQueryInterface
      */
     protected $view;
     /**
-     * @deprecated
+     * @var WidgetMap
      *
-     * @var [WidgetMap]
-     *
-     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap", mappedBy="widget", orphanRemoval=true, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap", inversedBy="widgets")
+     * @ORM\JoinColumn(name="widget_map_id", referencedColumnName="id", onDelete="SET NULL"))
      */
-    protected $widgetMaps;
+    protected $widgetMap;
+
+    /**
+     * @var [Criteria]
+     *
+     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\CriteriaBundle\Entity\Criteria", mappedBy="widget", cascade={"persist", "remove"}, orphanRemoval=true)
+     */
+    protected $criterias;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="quantum", type="string", length=255, nullable=true)
+     */
+    protected $quantum;
 
     /**
      * @return string
@@ -347,13 +363,10 @@ class Widget extends BaseWidget implements VictoireQueryInterface
      *
      * @return Widget
      */
-    public function setWidgetMaps($widgetMaps)
+    public function setWidgetMap(WidgetMap $widgetMap)
     {
-        $this->widgetMaps = $widgetMaps;
-
-        foreach ($widgetMaps as $widgetMap) {
-            $widgetMap->setWidget($this);
-        }
+        $this->widgetMap = $widgetMap;
+        $widgetMap->addWidget($this);
 
         return $this;
     }
@@ -363,30 +376,9 @@ class Widget extends BaseWidget implements VictoireQueryInterface
      *
      * @return [WidgetMap]
      */
-    public function getWidgetMaps()
+    public function getWidgetMap()
     {
-        return $this->widgetMaps;
-    }
-
-    /**
-     * Add widget.
-     *
-     * @param Widget $widgetMap
-     */
-    public function addWidgetMap(WidgetMap $widgetMap)
-    {
-        $widgetMap->setWidget($this);
-        $this->widgetMaps[] = $widgetMap;
-    }
-
-    /**
-     * Remove a widgetMap.
-     *
-     * @param WidgetMap $widgetMap
-     */
-    public function removeWidgetMap(WidgetMap $widgetMap)
-    {
-        $this->widgetMaps->removeElement($widgetMap);
+        return $this->widgetMap;
     }
 
     /**
@@ -412,7 +404,7 @@ class Widget extends BaseWidget implements VictoireQueryInterface
             $entityProxy = $this->getEntityProxy();
 
             //if there is a proxy
-            if ($entityProxy !== null) {
+            if ($entityProxy !== null && $this->getBusinessEntityId()) {
                 $entity = $entityProxy->getEntity($this->getBusinessEntityId());
                 $this->entity = $entity;
             }
@@ -451,4 +443,76 @@ class Widget extends BaseWidget implements VictoireQueryInterface
     {
         return $this->view;
     }
+
+    /**
+     * @return [Criteria]
+     */
+    public function getCriterias()
+    {
+        return $this->criterias;
+    }
+
+    /**
+     * @param [Criteria] $criterias
+     */
+    public function setCriterias($criterias)
+    {
+        $this->criterias = $criterias;
+    }
+    /**
+     * @param Criteria $criteria
+     */
+    public function addCriteria($criteria)
+    {
+        $criteria->setWidget($this);
+        $this->criterias[] = $criteria;
+    }
+
+    /**
+     * @param Criteria $criteria
+     */
+    public function removeCriteria(Criteria $criteria)
+    {
+        $criteria->setWidget(null);
+        $this->criterias->removeElement($criteria);
+    }
+
+    /**
+     * @param Criteria $criteria
+     *
+     * @return bool
+     */
+    public function hasCriteria(Criteria $criteria)
+    {
+        return $this->criterias->contains($criteria);
+    }
+
+    /**
+     * @param $criteriaAlias
+     *
+     * @return bool
+     */
+    public function hasCriteriaNamed($criteriaAlias)
+    {
+        return $this->criterias->exists(function($key, $element) use ($criteriaAlias) {
+            return $criteriaAlias === $element->getName();
+        });
+    }
+
+    /**
+     * @return string
+     */
+    public function getQuantum()
+    {
+        return $this->quantum;
+    }
+
+    /**
+     * @param string $quantum
+     */
+    public function setQuantum($quantum)
+    {
+        $this->quantum = $quantum;
+    }
+
 }

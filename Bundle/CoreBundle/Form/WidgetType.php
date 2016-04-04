@@ -3,13 +3,17 @@
 namespace Victoire\Bundle\CoreBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Form;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Victoire\Bundle\CriteriaBundle\Chain\DataSourceChain;
+use Victoire\Bundle\CriteriaBundle\Entity\Criteria;
+use Victoire\Bundle\CriteriaBundle\Form\Type\CriteriaType;
 use Victoire\Bundle\WidgetBundle\Model\Widget;
 
 /**
@@ -57,9 +61,17 @@ class WidgetType extends AbstractType
                 'required' => false,
             ]);
         $builder->add('theme', HiddenType::class);
+        $builder->add('quantum', HiddenType::class);
 
         //add the slot to the form
         $builder->add('slot', HiddenType::class, []);
+        $builder->add('criterias', CriteriaCollectionType::class, [
+            'label'    => 'victoire.widget.type.criterias.label',
+            'type' =>  CriteriaType::class,
+            'entry_options' => [
+                'dataSources' => $options['dataSources'],
+            ]
+        ]);
 
         //we use the PRE_SUBMIT event to set the mode option
         $builder->addEventListener(
@@ -85,6 +97,36 @@ class WidgetType extends AbstractType
                 if ($mode === Widget::MODE_BUSINESS_ENTITY) {
                     $this->addBusinessEntityFields($form, $options);
                 }
+
+            }
+        );
+
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function (FormEvent $event) use ($options) {
+                $dataSources = $options['dataSources']->getDataSources();
+                $widget = $event->getData();
+                foreach ($dataSources as $alias => $dataSource) {
+                    if (!$widget->hasCriteriaNamed($alias)) {
+                        $criteria = new Criteria();
+                        $criteria->setName($alias);
+                        $widget->addCriteria($criteria);
+                    }
+                }
+
+            }
+        );
+        $builder->addEventListener(
+            FormEvents::POST_SUBMIT,
+            function (FormEvent $event) use ($options) {
+                $widget = $event->getData();
+                /** @var Criteria $criteria */
+                foreach ($widget->getCriterias() as $criteria) {
+                    if ($criteria->getValue() === null) {
+                        $widget->removeCriteria($criteria);
+                    }
+                }
+
             }
         );
     }
@@ -159,6 +201,7 @@ class WidgetType extends AbstractType
             'slot',
             'namespace',
             'businessEntityId',
+            'dataSources',
         ]);
     }
 }
