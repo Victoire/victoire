@@ -15,6 +15,7 @@
 {% endblock head_script %}
 
 {% block body %}
+    {{ cms_page_css() }}
     {% if is_granted('ROLE_VICTOIRE') %}
         {% include 'VictoireCoreBundle:Menu:admin_navbar.html.twig' %}
     {% endif %}
