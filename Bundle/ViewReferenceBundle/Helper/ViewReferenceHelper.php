@@ -4,8 +4,6 @@ namespace Victoire\Bundle\ViewReferenceBundle\Helper;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
-use Gedmo\Translatable\Entity\Repository\TranslationRepository;
-use Gedmo\Translatable\Entity\Translation;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
@@ -68,7 +66,7 @@ class ViewReferenceHelper
             /** @var WebViewInterface $view */
             $view = $branch['view'];
             $viewReferences = [];
-            /** @var EntityRepository $viewRepo */
+            /* @var EntityRepository $viewRepo */
             $viewTranslationRepo = $entityManager->getRepository(ViewTranslation::class);
             foreach ($viewTranslationRepo->findByObject($view) as $translation) {
                 $view->setTranslatableLocale($translation->getLocale());
