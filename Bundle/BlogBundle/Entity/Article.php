@@ -37,6 +37,7 @@ class Article
      * @ORM\Column(name="name", type="string", length=255)
      * @Assert\NotBlank()
      * @VIC\BusinessProperty({"textable", "businessParameter", "seoable"})
+     * @Gedmo\Translatable
      */
     private $name;
 
@@ -44,6 +45,7 @@ class Article
      * @ORM\Column(name="slug", type="string", length=255)
      * @Gedmo\Slug(fields={"name"}, updatable=false, unique=true)
      * @VIC\BusinessProperty("businessParameter")
+     * @Gedmo\Translatable
      */
     private $slug;
 
@@ -52,6 +54,7 @@ class Article
      *
      * @ORM\Column(name="description", type="text", nullable=true)
      * @VIC\BusinessProperty({"textable", "seoable"})
+     * @Gedmo\Translatable
      */
     private $description;
 
@@ -141,6 +144,11 @@ class Article
      * @ORM\Column(name="deletedAt", type="datetime", nullable=true)
      */
     private $deletedAt;
+
+    /**
+     * @Gedmo\Locale
+     */
+    protected $locale;
 
     /**
      * to string method.
@@ -545,5 +553,23 @@ class Article
         $this->authorFullName = $this->author->getFullname();
 
         return $this->authorFullName;
+    }
+
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+    }
+
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->locale;
     }
 }

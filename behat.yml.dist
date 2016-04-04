@@ -51,11 +51,11 @@ default:
                      User:              Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/User/user.yml
                      Template:          Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/template.yml
                      Page:              Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/page.yml
-                     I18N:              Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/i18n.yml
                      ErrorPage:         Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/errorPage.yml
                      Blog:              Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/blog.yml
                      BlogTemplate:      Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/template.yml
                      Article:           Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/article.yml
+                     ArticleI18n:       Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/article_i18n.yml
                      BlogBP:            Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/businessPage.yml
                      Character:         Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/character.yml
                      Mercenary:         Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/mercenary.yml
@@ -66,7 +66,7 @@ default:
                      ErrorPage:          [Template, User]
                      Page:               [Template, User]
                      Blog:               [Template, BlogTemplate, User]
-                     Article:            [Template, Blog, BlogTemplate, BlogBP, User]
+                     Article:            [ArticleI18n, Template, Blog, BlogTemplate, BlogBP, User]
                      CharacterTemplates: [Template, User]
                      MediaFile:          [Media]
              symfony_kernel:

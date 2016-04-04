@@ -9,10 +9,13 @@ use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
 use Doctrine\ORM\UnitOfWork;
+use Gedmo\Translatable\TranslatableListener;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\PageBundle\Helper\UserCallableHelper;
+use Victoire\Bundle\TemplateBundle\Entity\Template;
+use Victoire\Bundle\TwigBundle\Entity\ErrorPage;
 use Victoire\Bundle\ViewReferenceBundle\Builder\ViewReferenceBuilder;
 use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
@@ -26,6 +29,7 @@ class PageSubscriber implements EventSubscriber
     protected $userClass;
     protected $userCallableHelper;
     protected $urlBuilder;
+    protected $viewReferenceRepository;
 
     /**
      * Constructor.
@@ -35,6 +39,7 @@ class PageSubscriber implements EventSubscriber
      * @param string                  $userClass               %victoire_core.user_class%
      * @param ViewReferenceBuilder    $viewReferenceBuilder
      * @param ViewReferenceRepository $viewReferenceRepository
+     * @param TranslatableListener    $translatableListener
      *
      * @internal param ViewReferenceBuilder $urlBuilder @victoire_view_reference.builder
      */
@@ -43,13 +48,15 @@ class PageSubscriber implements EventSubscriber
         UserCallableHelper $userCallableHelper,
         $userClass,
         ViewReferenceBuilder $viewReferenceBuilder,
-        ViewReferenceRepository $viewReferenceRepository
+        ViewReferenceRepository $viewReferenceRepository,
+        TranslatableListener $translatableListener
     ) {
         $this->router = $router;
         $this->userClass = $userClass;
         $this->userCallableHelper = $userCallableHelper;
         $this->viewReferenceBuilder = $viewReferenceBuilder;
         $this->viewReferenceRepository = $viewReferenceRepository;
+        $this->translatableListener = $translatableListener;
     }
 
     /**
@@ -129,14 +136,22 @@ class PageSubscriber implements EventSubscriber
         $entity = $eventArgs->getEntity();
 
         if ($entity instanceof View) {
+            $om = $eventArgs->getObjectManager();
+            $locale = $this->translatableListener->getTranslatableLocale($entity, $om->getClassMetadata(get_class($entity)), $om);
+            $entity->setTranslatableLocale($locale);
             $viewReference = $this->viewReferenceRepository->getOneReferenceByParameters([
                 'viewId' => $entity->getId(),
+                'locale' => $entity->getLocale(),
             ]);
-            if ($viewReference instanceof ViewReference && $entity instanceof WebViewInterface) {
+            if ($entity instanceof WebViewInterface && $viewReference instanceof ViewReference) {
                 $entity->setReference($viewReference);
                 $entity->setUrl($viewReference->getUrl());
+            } elseif ($entity instanceof Template || $entity instanceof ErrorPage) {
+                $entity->setReferences([$entity->getLocale() => new ViewReference($entity->getId())]);
             } else {
-                $entity->setReference(new ViewReference($entity->getId()));
+                $entity->setReferences([
+                    $entity->getLocale() => $this->viewReferenceBuilder->buildViewReference($entity, $eventArgs->getEntityManager()),
+                ]);
             }
         }
     }

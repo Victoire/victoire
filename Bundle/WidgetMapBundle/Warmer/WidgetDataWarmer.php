@@ -13,7 +13,6 @@ use Victoire\Bundle\CoreBundle\Entity\Link;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
-use Victoire\Bundle\ViewReferenceBundle\ViewReference\BusinessPageReference;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 use Victoire\Bundle\WidgetBundle\Entity\Traits\LinkTrait;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
@@ -150,36 +149,31 @@ class WidgetDataWarmer
      */
     private function setPagesForLinks(array $linkIds)
     {
-        $viewIdsForLinks = [];
+        $viewReferences = [];
 
         /* @var Link[] $links */
         $links = $this->em->getRepository('VictoireCoreBundle:Link')->findById($linkIds);
 
         foreach ($links as $link) {
             if ($link->getParameters()['linkType'] == 'viewReference') {
-                $viewReference = $this->viewReferenceRepository->getOneReferenceByParameters(['id' => $link->getParameters()['viewReference']]);
+                $viewReference = $this->viewReferenceRepository->getOneReferenceByParameters([
+                    'id'     => $link->getParameters()['viewReference'],
+                    'locale' => $link->getParameters()['locale'],
+                ]);
 
-                if ($viewReference instanceof ViewReference && $viewReference->getViewId()) {
-                    $viewIdsForLinks[$link->getId()] = $viewReference->getViewId();
-                } elseif ($viewReference instanceof BusinessPageReference && $viewReference->getTemplateId()) {
-                    $viewIdsForLinks[$link->getId()] = $viewReference->getTemplateId();
+                if ($viewReference instanceof ViewReference) {
+                    $viewReferences[$link->getId()] = $viewReference;
                 }
             }
         }
 
         /* @var Page[] $pages */
-        $pages = $this->em->getRepository('VictoireCoreBundle:View')->findById($viewIdsForLinks);
+        $pages = $this->em->getRepository('VictoireCoreBundle:View')->findByViewReferences($viewReferences);
 
         foreach ($links as $link) {
-            $searchedLinkId = $link->getId();
-            foreach ($viewIdsForLinks as $linkId => $pageId) {
-                foreach ($pages as $page) {
-                    if ($linkId == $searchedLinkId && $pageId == $page->getId()) {
-                        if (!($page instanceof BusinessTemplate)) {
-                            $link->setViewReferencePage($page);
-                        }
-                        break 2;
-                    }
+            foreach ($pages as $page) {
+                if ($link->getViewReference() == $page->getReference()->getId() && !($page instanceof BusinessTemplate)) {
+                    $link->setViewReferencePage($page);
                 }
             }
         }

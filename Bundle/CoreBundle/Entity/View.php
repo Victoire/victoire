@@ -9,8 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
-use Victoire\Bundle\I18nBundle\Entity\BaseI18n;
-use Victoire\Bundle\I18nBundle\Entity\I18n;
+use Victoire\Bundle\I18nBundle\Entity\ViewTranslation;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
@@ -21,6 +20,7 @@ use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
  * A victoire view is a visual representation with a widget map.
  *
  * @Gedmo\Tree(type="nested")
+ * @Gedmo\TranslationEntity(class="Victoire\Bundle\I18nBundle\Entity\ViewTranslation")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\Entity(repositoryClass="Victoire\Bundle\CoreBundle\Repository\ViewRepository")
@@ -46,6 +46,7 @@ abstract class View
      * @Assert\NotBlank()
      * @ORM\Column(name="name", type="string", length=255)
      * @Serializer\Groups({"search"})
+     * @Gedmo\Translatable
      */
     protected $name;
 
@@ -69,6 +70,7 @@ abstract class View
      * @Gedmo\Slug(handlers={
      *     @Gedmo\SlugHandler(class="Victoire\Bundle\BusinessEntityBundle\Handler\TwigSlugHandler"
      * )},fields={"name"}, updatable=false, unique=false)
+     * @Gedmo\Translatable
      * @ORM\Column(name="slug", type="string", length=255)
      */
     protected $slug;
@@ -137,24 +139,11 @@ abstract class View
     protected $undeletable = false;
 
     /**
-     * The reference is related to viewsReferences.xml file which list all app views.
-     * This is used to speed up the routing system and identify virtual pages (BusinessPage).
+     * @var ViewReference[]
+     *                      The reference is related to viewsReferences.xml file which list all app views.
+     *                      This is used to speed up the routing system and identify virtual pages (BusinessPage).
      */
-    protected $reference;
-
-    /**
-     * @ORM\Column(name="locale", type="string")
-     * @Serializer\Groups({"search"})
-     */
-    protected $locale;
-
-    /**
-     * @var string
-     *
-     * @ORM\OneToOne(targetEntity="\Victoire\Bundle\I18nBundle\Entity\I18n", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="i18n_id", referencedColumnName="id", onDelete="SET NULL")
-     */
-    protected $i18n;
+    protected $references;
 
     /**
      * @var string
@@ -192,13 +181,31 @@ abstract class View
     protected $cssUpToDate = false;
 
     /**
+     * @Gedmo\Locale
+     * Used locale to override Translation listener`s locale
+     * this is not a mapped field of entity metadata, just a simple property
+     * and it is not necessary because globally locale can be set in listener
+     */
+    protected $locale;
+
+    /**
+     * @ORM\OneToMany(
+     *   targetEntity="Victoire\Bundle\I18nBundle\Entity\ViewTranslation",
+     *   mappedBy="object",
+     *   cascade={"persist", "remove"}
+     * )
+     */
+    private $translations;
+
+    /**
      * Construct.
      **/
     public function __construct()
     {
         $this->children = new ArrayCollection();
         $this->widgetMaps = new ArrayCollection();
-        $this->widgetMap = [];
+        $this->translations = new ArrayCollection();
+        $this->references = [];
     }
 
     /**
@@ -229,26 +236,6 @@ abstract class View
     public function setId($id)
     {
         $this->id = $id;
-    }
-
-    /**
-     * Get locale.
-     *
-     * @return string
-     */
-    public function getLocale()
-    {
-        return $this->locale;
-    }
-
-    /**
-     * Set locale.
-     *
-     * @param $locale
-     */
-    public function setLocale($locale)
-    {
-        $this->locale = $locale;
     }
 
     /**
@@ -596,44 +583,6 @@ abstract class View
     }
 
     /**
-     * Initialize I18n table.
-     *
-     * @ORM\PrePersist
-     */
-    public function initI18n()
-    {
-        if (!$this->i18n) {
-            $this->i18n = new I18n();
-            $this->i18n->setTranslation($this->getLocale(), $this);
-        }
-    }
-
-    /**
-     * Get i18n.
-     *
-     * @return string
-     */
-    public function getI18n()
-    {
-        return $this->i18n;
-    }
-
-    /**
-     * Set i18n.
-     *
-     * @param BaseI18n $i18n
-     *
-     * @return $this
-     */
-    public function setI18n(BaseI18n $i18n)
-    {
-        $this->i18n = $i18n;
-        $this->i18n->setTranslation($this->getLocale(), $this);
-
-        return $this;
-    }
-
-    /**
      * Set widgets.
      *
      * @param [WidgetMap] $widgetMaps
@@ -754,25 +703,56 @@ abstract class View
     }
 
     /**
-     * Get reference.
+     * Get reference according to the current locale.
      *
-     * @return ViewReference
+     * @param string $locale
+     *
+     * @return null|ViewReference
      */
-    public function getReference()
+    public function getReference($locale = null)
     {
-        return $this->reference;
+        $locale = $locale ?: $this->getLocale();
+        if (is_array($this->references) && isset($this->references[$locale])) {
+            return $this->references[$locale];
+        }
+    }
+
+    /**
+     * Get references.
+     *
+     * @return ViewReference[]
+     */
+    public function getReferences()
+    {
+        return $this->references;
+    }
+
+    /**
+     * Set references.
+     *
+     * @param ViewReference[] $references
+     *
+     * @return $this
+     */
+    public function setReferences($references)
+    {
+        $this->references = $references;
+
+        return $this;
     }
 
     /**
      * Set reference.
      *
      * @param ViewReference $reference
+     * @param string        $locale
      *
      * @return $this
      */
-    public function setReference($reference)
+    public function setReference(ViewReference $reference, $locale = null)
     {
-        $this->reference = $reference;
+        $locale = $locale ?: $this->getLocale();
+        $this->references[$locale] = $reference;
 
         return $this;
     }
@@ -865,5 +845,50 @@ abstract class View
         $this->cssUpToDate = $cssUpToDate;
 
         return $this;
+    }
+
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
+    }
+
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    /**
+     * @return ViewTranslation[]
+     */
+    public function getTranslations()
+    {
+        return $this->translations;
+    }
+
+    /**
+     * @return ViewTranslation[]
+     */
+    public function getTranslationClass()
+    {
+        return 'Victoire\Bundle\I18nBundle\Entity\ViewTranslation';
+    }
+
+    /**
+     * @param ViewTranslation $t
+     */
+    public function addTranslation(ViewTranslation $t)
+    {
+        if (!$this->translations->contains($t)) {
+            $this->translations[] = $t;
+            $t->setObject($this);
+        }
     }
 }

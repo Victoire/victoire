@@ -12,7 +12,9 @@ use Victoire\Bundle\BusinessEntityBundle\Provider\EntityProxyProvider;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
+use Victoire\Bundle\CoreBundle\Exception\IdentifierNotDefinedException;
 use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
+use Victoire\Bundle\ViewReferenceBundle\Builder\ViewReferenceBuilder;
 
 /**
  * @property mixed entityProxyProvider
@@ -23,6 +25,7 @@ class BusinessPageBuilder
     protected $urlBuilder;
     protected $parameterConverter;
     protected $entityProxyProvider;
+    protected $viewReferenceBuilder;
 
     //@todo Make it dynamic please
     protected $pageParameters = [
@@ -39,12 +42,17 @@ class BusinessPageBuilder
      * @param ParameterConverter   $parameterConverter
      * @param EntityProxyProvider  $entityProxyProvider
      */
-    public function __construct(BusinessEntityHelper $businessEntityHelper, UrlBuilder $urlBuilder, ParameterConverter $parameterConverter, EntityProxyProvider $entityProxyProvider)
+    public function __construct(BusinessEntityHelper $businessEntityHelper,
+                                UrlBuilder $urlBuilder,
+                                ParameterConverter $parameterConverter,
+                                EntityProxyProvider $entityProxyProvider,
+                                ViewReferenceBuilder $viewReferenceBuilder)
     {
         $this->businessEntityHelper = $businessEntityHelper;
         $this->urlBuilder = $urlBuilder;
         $this->parameterConverter = $parameterConverter;
         $this->entityProxyProvider = $entityProxyProvider;
+        $this->viewReferenceBuilder = $viewReferenceBuilder;
     }
 
     /**
@@ -74,7 +82,6 @@ class BusinessPageBuilder
         }
 
         //find Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity object according to the given $entity
-
         $businessEntity = $this->businessEntityHelper->findByEntityInstance($entity);
 
         if ($businessEntity !== null) {
@@ -98,20 +105,17 @@ class BusinessPageBuilder
             preg_match_all('/\{\%\s*([^\%\}]*)\s*\%\}|\{\{\s*([^\}\}]*)\s*\}\}/i', $pageUrl, $matches);
 
             if (count($matches[2])) {
-                throw new \Exception(sprintf(
-                        'The following identifiers are not defined as well, (%s)
-                    you need to add the following lines on your businessEntity properties:
-                    <br> <pre>@VIC\BusinessProperty("businessParameter")</pre>',
-                        implode($matches[2], ', ')
-                    ));
+                throw new IdentifierNotDefinedException($matches[2]);
             }
 
             $entityProxy = $this->entityProxyProvider->getEntityProxy($entity, $businessEntity, $em);
             //we update the url of the page
+            $page->setTranslatableLocale($businessTemplate->getLocale());
             $page->setUrl($pageUrl);
             $page->setSlug($pageSlug);
             $page->setName($pageName);
             $page->setEntityProxy($entityProxy);
+            $page->setReferences([$page->getLocale() => $this->viewReferenceBuilder->buildViewReference($page, $em)]);
 
             $page->setTemplate($businessTemplate);
             if ($seo = $businessTemplate->getSeo()) {

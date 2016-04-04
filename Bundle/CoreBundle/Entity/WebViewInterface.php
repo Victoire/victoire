@@ -32,12 +32,22 @@ interface WebViewInterface
 
     public function hasChildren();
 
-    public function setReference($reference);
+    public function setReference(ViewReference $reference, $locale = null);
+
+    /**
+     * @param ViewReference[]
+     */
+    public function setReferences($references);
 
     /**
      * @return ViewReference
      */
-    public function getReference();
+    public function getReference($locale = null);
+
+    /**
+     * @return ViewReference[]
+     */
+    public function getReferences();
 
     public function setPublishedAt($publishedAt);
 
@@ -48,4 +58,10 @@ interface WebViewInterface
     public function isHomepage();
 
     public function setHomepage($homepage);
+
+    public function getTranslations();
+
+    public function setTranslatableLocale($locale);
+
+    public function getLocale();
 }

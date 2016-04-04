@@ -27,3 +27,25 @@ Victoire\Bundle\BlogBundle\Entity\ArticleTemplate:
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         cssUpToDate: false
+
+Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
+    template_article_en_name:
+        content: "{{item.name}}"
+        locale: en
+        field: name
+        object: @template_article
+    template_article_2_en_name:
+        content: "{{item.name}}"
+        locale: en
+        field: name
+        object: @template_article_2
+    template_article_en_slug:
+        content: "{{item.slug}}"
+        locale: en
+        field: slug
+        object: @template_article
+    template_article_2_en_slug:
+        content: "{{item.slug}}"
+        locale: en
+        field: slug
+        object: @template_article_2

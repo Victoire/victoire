@@ -5,7 +5,6 @@ namespace Victoire\Bundle\CoreBundle\Form;
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -62,17 +61,6 @@ abstract class ViewType extends AbstractType
                     'property'      => 'name',
                     'required'      => !$view instanceof Template || $view instanceof BusinessTemplate,
                     'query_builder' => $getAllTemplateWithoutMe,
-                ]);
-            }
-            if (!$form->has('locale') && count($choices = $this->getAvailableLocales()) > 1) {
-                $data = $view->getLocale() ?: $this->currentLocale;
-                $form->add('locale', ChoiceType::class, [
-                    'expanded'          => false,
-                    'multiple'          => false,
-                    'choices'           => $choices,
-                    'choices_as_values' => true,
-                    'label'             => 'form.view.type.locale.label',
-                    'data'              => $data,
                 ]);
             }
 
