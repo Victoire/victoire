@@ -13,7 +13,7 @@
 
     <form action="{{ path('VictoireMediaBundle_media_create', { 'folderId' : folder.id, 'type': type } ) }}" method="post" {{ form_enctype(form) }} class="form-horizontal properties">
         <div class="prop_wrp">
-            {{ form_widget(form) }}
+            {{ form_rest(form) }}
             <div class="input_prop">
                 <div class="btn_group">
                     <button class="btn" onclick="window.location = '{{ path('VictoireMediaBundle_folder_show', { 'folderId' : folder.id } ) }}'" type="reset">{{ 'form.cancel' |trans({}, 'victoire') }}</button>
