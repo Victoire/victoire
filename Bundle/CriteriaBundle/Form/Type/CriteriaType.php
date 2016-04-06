@@ -28,6 +28,7 @@ class CriteriaType extends AbstractType
         ]);
         $builder->add('operator', ChoiceType::class, [
             'choices' => ['victoire_criteria.criteria.operator.equal.label' => 'equal'],
+            'choices_as_values' => true,
             'label' => 'victoire_criteria.criteria.operator.label'
         ]);
 
