@@ -130,7 +130,6 @@ class PageHelper
 
             if ($viewReference instanceof ViewReference) {
                 $page = $this->findPageByReference($viewReference, $this->findEntityByReference($viewReference));
-                $page->setReference($viewReference);
             } else {
                 $parametersAsString = [];
                 foreach ($parameters as $key => $value) {
@@ -139,7 +138,7 @@ class PageHelper
 
                 throw new \Exception(sprintf('Oh no! Cannot find a viewReference for the given parameters %s', implode(',', $parametersAsString)));
             }
-            $page->setReference($viewReference);
+            $page->setReference($viewReference, $parameters['locale']);
         }
 
         return $page;

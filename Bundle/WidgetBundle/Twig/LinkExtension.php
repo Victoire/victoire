@@ -103,8 +103,8 @@ class LinkExtension extends \Twig_Extension
 
                 $linkUrl = $this->router->generate(
                     'victoire_core_page_show', [
-                        '_locale' => $page->getLocale(),
-                        'url'     => $page->getReference()->getUrl(),
+                        '_locale' => $page->getReference($parameters['locale'])->getLocale(),
+                        'url'     => $page->getReference($parameters['locale'])->getUrl(),
                     ],
                     $referenceType
                 );
