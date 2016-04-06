@@ -115,9 +115,9 @@ class BusinessPageBuilder
             $page->setSlug($pageSlug);
             $page->setName($pageName);
             $page->setEntityProxy($entityProxy);
+            $page->setTemplate($businessTemplate);
             $page->setReferences([$page->getLocale() => $this->viewReferenceBuilder->buildViewReference($page, $em)]);
 
-            $page->setTemplate($businessTemplate);
             if ($seo = $businessTemplate->getSeo()) {
                 $pageSeo = clone $seo;
                 $page->setSeo($pageSeo);
