@@ -138,7 +138,7 @@ class PageHelper
 
                 throw new \Exception(sprintf('Oh no! Cannot find a viewReference for the given parameters %s', implode(',', $parametersAsString)));
             }
-            $page->setReference($viewReference, $parameters['locale']);
+            $page->setReference($viewReference, $viewReference->getLocale());
         }
 
         return $page;
