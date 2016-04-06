@@ -39,7 +39,9 @@ class BusinessPageReferenceBuilder extends BaseReferenceBuilder
         $businessPageReference->setEntityNamespace($em->getClassMetadata(get_class($businessPage->getBusinessEntity()))->name);
         $businessPageReference->setViewNamespace($em->getClassMetadata(get_class($businessPage))->name);
         if ($parent = $businessPage->getParent()) {
-            $businessPageReference->setParent(ViewReferenceHelper::generateViewReferenceId($parent));
+            $businessPageReference->setParent(ViewReferenceHelper::generateViewReferenceId(
+                $parent->setTranslatableLocale($businessPage->getLocale()))
+            );
         }
 
         return $businessPageReference;
