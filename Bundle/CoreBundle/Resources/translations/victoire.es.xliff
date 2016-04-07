@@ -94,6 +94,10 @@
         <source>modal.button.update.title</source>
         <target>Guardar</target>
       </trans-unit>
+      <trans-unit resname="modal.button.update-bulk.title">
+        <source>modal.button.update-bulk.title</source>
+        <target>Guardar</target>
+      </trans-unit>
       <trans-unit id="9a84dc1132d73a2f0abce302a49337045c823482" resname="modal.mandatory_fields.label">
         <source>modal.mandatory_fields.label</source>
         <target>Campos obligatorios</target>
