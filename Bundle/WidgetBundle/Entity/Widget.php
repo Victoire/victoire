@@ -392,7 +392,7 @@ class Widget extends BaseWidget implements VictoireQueryInterface
     /**
      * Set the entity.
      *
-     * @param unknown $entity
+     * @param object $entity
      */
     public function setEntity($entity)
     {
