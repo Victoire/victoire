@@ -391,7 +391,7 @@ class Widget extends BaseWidget
     /**
      * Set the entity.
      *
-     * @param unknown $entity
+     * @param object $entity
      */
     public function setEntity($entity)
     {
