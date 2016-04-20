@@ -60,7 +60,7 @@ class WidgetFormBuilder
      *
      * @return form
      */
-    public function renderForm(Form $form, Widget $widget, $entity = null)
+    public function renderForm(Form $form, Widget $widget, $slot = null, View $view = null, $entity = null)
     {
         //the template displayed is in the widget bundle
         $templateName = $this->container->get('victoire_widget.widget_helper')->getTemplateName('edit', $widget);
@@ -78,43 +78,6 @@ class WidgetFormBuilder
     }
 
     /**
-     * Generates new forms for each available business entities.
-     *
-     * @param string           $slot
-     * @param View             $view
-     * @param Widget           $widget
-     * @param BusinessEntity[] $classes
-     * @param int              $position
-     *
-     * @throws \Exception
-     *
-     * @return Form[]
-     */
-    public function renderNewWidgetForms($slot, View $view, Widget $widget, $classes, $position = null, $parentWidgetMap = null)
-    {
-        //the static form
-        $forms['static'] = [];
-        $forms['static']['main'] = $this->renderNewForm($this->buildForm($widget, $view, null, null, Widget::MODE_STATIC, $slot, $position, $parentWidgetMap), $widget, $slot, $view, null);
-
-        // Build each form relative to business entities
-        foreach ($classes as $businessEntity) {
-            //get the forms for the business entity (entity/query/businessEntity)
-            $entityForms = $this->buildEntityForms($widget, $view, $businessEntity->getId(), $businessEntity->getClass(), $position, $parentWidgetMap, $slot);
-
-            //the list of forms
-            $forms[$businessEntity->getId()] = [];
-
-            //foreach of the entity form
-            foreach ($entityForms as $formMode => $entityForm) {
-                //we add the form
-                $forms[$businessEntity->getId()][$formMode] = $this->renderNewForm($entityForm, $widget, $slot, $view, $businessEntity->getId());
-            }
-        }
-
-        return $forms;
-    }
-
-    /**
      * @param Widget $widget
      * @param View   $view
      * @param string $businessEntityId
@@ -124,20 +87,29 @@ class WidgetFormBuilder
      *
      * @return array
      */
-    protected function buildEntityForms($widget, View $view, $businessEntityId = null, $namespace = null, $position = null, $parentWidgetMap = null, $slot = null)
+    public function buildEntityForms($widget, View $view, $businessEntityId = null, $namespace = null, $position = null, $parentWidgetMap = null, $slot = null, $new = true)
     {
         $forms = [];
-
         //get the entity form
-        $entityForm = $this->buildForm($widget, $view, $businessEntityId, $namespace, Widget::MODE_ENTITY, $slot, $position, $parentWidgetMap);
+        $renderMethod = $new ? "renderNewForm": 'renderForm';
+        $entityForm = $this->$renderMethod(
+            $this->buildForm($widget, $view, $businessEntityId, $namespace, Widget::MODE_ENTITY, $slot, $position, $parentWidgetMap)
+            , $widget, $slot, $view, $businessEntityId
+        );
         $forms[Widget::MODE_ENTITY] = $entityForm;
 
         //get the query form
-        $queryForm = $this->buildForm($widget, $view, $businessEntityId, $namespace, Widget::MODE_QUERY, $slot, $position, $parentWidgetMap);
+        $queryForm = $this->$renderMethod(
+            $this->buildForm($widget, $view, $businessEntityId, $namespace, Widget::MODE_QUERY, $slot, $position, $parentWidgetMap)
+            , $widget, $slot, $view,$businessEntityId
+        );
         $forms[Widget::MODE_QUERY] = $queryForm;
 
         //get the query form
-        $businessEntityForm = $this->buildForm($widget, $view, $businessEntityId, $namespace, Widget::MODE_BUSINESS_ENTITY, $slot, $position, $parentWidgetMap);
+        $businessEntityForm = $this->$renderMethod(
+            $this->buildForm($widget, $view, $businessEntityId, $namespace, Widget::MODE_BUSINESS_ENTITY, $slot, $position, $parentWidgetMap)
+            , $widget, $slot, $view, $businessEntityId
+        );
         $forms[Widget::MODE_BUSINESS_ENTITY] = $businessEntityForm;
 
         return $forms;
@@ -193,7 +165,8 @@ class WidgetFormBuilder
             }
             $formUrl = $router->generate($action, $actionParams);
         } else {
-            $viewReference = $widget->getCurrentView()->getReference();
+            $view = $widget->getCurrentView() ? $widget->getCurrentView() : $view;
+            $viewReference = $view->getReference();
             $formUrl = $router->generate('victoire_core_widget_update',
                 [
                     'id'               => $widget->getId(),
