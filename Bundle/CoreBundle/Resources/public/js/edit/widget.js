@@ -184,6 +184,21 @@ function generateNewWidgetUrl(select){
     );
 }
 
+
+$vic(document).on('click', '.load-business-form', function(e){
+    e.preventDefault();
+    var self = $vic(this);
+    var target = self.attr('href');
+    $vic.ajax({
+        url : self.data('business-entity-form-url'),
+        success: function(jsonResponse)
+        {
+            self.removeClass('load-business-form');
+            $(target).append(jsonResponse.html);
+        }
+    });
+
+});
 //Update View css file if hash is returned
 function updateViewCssHash(response) {
     if(response.viewCssHash) {
