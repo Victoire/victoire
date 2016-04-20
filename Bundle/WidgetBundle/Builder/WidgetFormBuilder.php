@@ -5,7 +5,6 @@ namespace Victoire\Bundle\WidgetBundle\Builder;
 use Doctrine\Common\Util\ClassUtils;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\Form;
-use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Event\WidgetBuildFormEvent;
 use Victoire\Bundle\CoreBundle\VictoireCmsEvents;
@@ -91,24 +90,21 @@ class WidgetFormBuilder
     {
         $forms = [];
         //get the entity form
-        $renderMethod = $new ? "renderNewForm": 'renderForm';
+        $renderMethod = $new ? 'renderNewForm' : 'renderForm';
         $entityForm = $this->$renderMethod(
-            $this->buildForm($widget, $view, $businessEntityId, $namespace, Widget::MODE_ENTITY, $slot, $position, $parentWidgetMap)
-            , $widget, $slot, $view, $businessEntityId
+            $this->buildForm($widget, $view, $businessEntityId, $namespace, Widget::MODE_ENTITY, $slot, $position, $parentWidgetMap), $widget, $slot, $view, $businessEntityId
         );
         $forms[Widget::MODE_ENTITY] = $entityForm;
 
         //get the query form
         $queryForm = $this->$renderMethod(
-            $this->buildForm($widget, $view, $businessEntityId, $namespace, Widget::MODE_QUERY, $slot, $position, $parentWidgetMap)
-            , $widget, $slot, $view,$businessEntityId
+            $this->buildForm($widget, $view, $businessEntityId, $namespace, Widget::MODE_QUERY, $slot, $position, $parentWidgetMap), $widget, $slot, $view, $businessEntityId
         );
         $forms[Widget::MODE_QUERY] = $queryForm;
 
         //get the query form
         $businessEntityForm = $this->$renderMethod(
-            $this->buildForm($widget, $view, $businessEntityId, $namespace, Widget::MODE_BUSINESS_ENTITY, $slot, $position, $parentWidgetMap)
-            , $widget, $slot, $view, $businessEntityId
+            $this->buildForm($widget, $view, $businessEntityId, $namespace, Widget::MODE_BUSINESS_ENTITY, $slot, $position, $parentWidgetMap), $widget, $slot, $view, $businessEntityId
         );
         $forms[Widget::MODE_BUSINESS_ENTITY] = $businessEntityForm;
 

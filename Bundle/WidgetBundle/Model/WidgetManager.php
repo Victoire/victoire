@@ -108,42 +108,43 @@ class WidgetManager
         /** @var BusinessEntity[] $classes */
         $classes = $this->cacheReader->getBusinessClassesForWidget($widget);
         $staticForm = $this->widgetFormBuilder->renderNewForm($this->widgetFormBuilder->buildForm($widget, $view, null, null, Widget::MODE_STATIC, $slot, $position, $parentWidgetMap), $widget, $slot, $view, null);
+
         return [
             'html' => $this->victoireTemplating->render(
                 'VictoireCoreBundle:Widget:Form/new.html.twig',
                 [
-                    'view'    => $view,
-                    'classes' => $classes,
-                    'widget'  => $widget,
-                    'staticForm' => $staticForm,
-                    'entityForm' => null,
-                    'slot' => $slot,
-                    'type' => $type,
-                    'position'=> $position,
-                    'parentWidgetMap' => $parentWidgetMap
+                    'view'            => $view,
+                    'classes'         => $classes,
+                    'widget'          => $widget,
+                    'staticForm'      => $staticForm,
+                    'entityForm'      => null,
+                    'slot'            => $slot,
+                    'type'            => $type,
+                    'position'        => $position,
+                    'parentWidgetMap' => $parentWidgetMap,
                 ]
             ),
         ];
     }
 
-    public function newEntityForms(Widget $widget = null, BusinessEntity $businessEntity = null, $type, $slot,View $view, $position = null, $parentWidgetMap = null, $new = true)
+    public function newEntityForms(Widget $widget = null, BusinessEntity $businessEntity = null, $type, $slot, View $view, $position = null, $parentWidgetMap = null, $new = true)
     {
-        if(!$widget)
-        {
+        if (!$widget) {
             $widget = $this->widgetHelper->newWidgetInstance($type, $view, $slot, Widget::MODE_STATIC);
         }
 
         $entityForms = $this->widgetFormBuilder->buildEntityForms(
-            $widget,  $view, $businessEntity->getId(), $businessEntity->getClass(), $position, $parentWidgetMap, $slot, $new
+            $widget, $view, $businessEntity->getId(), $businessEntity->getClass(), $position, $parentWidgetMap, $slot, $new
         );
+
         return [
             'html' => $this->victoireTemplating->render(
                 'VictoireCoreBundle:Widget:Form/_entity.html.twig',
                 [
-                    'view'    => $view,
-                    'widget'  => $widget,
+                    'view'        => $view,
+                    'widget'      => $widget,
                     'entityForms' => $entityForms,
-                    'class' => $businessEntity->getId()
+                    'class'       => $businessEntity->getId(),
                 ]
             ),
         ];
@@ -244,7 +245,7 @@ class WidgetManager
 
         //the type of method used
         $requestMethod = $request->getMethod();
-        $slot = $widget->getSlot() ? $widget->getSlot(): WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $currentView)->getSlot();
+        $slot = $widget->getSlot() ? $widget->getSlot() : WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $currentView)->getSlot();
 
         //if the form is posted
         if ($requestMethod === 'POST') {
@@ -291,21 +292,18 @@ class WidgetManager
             }
         } else {
             $staticForm = $this->widgetFormBuilder->renderForm(
-                $this->widgetFormBuilder->buildForm($widget, $currentView, null, null, Widget::MODE_STATIC, $slot)
-                , $widget, $currentView, null
+                $this->widgetFormBuilder->buildForm($widget, $currentView, null, null, Widget::MODE_STATIC, $slot), $widget, $currentView, null
             );
             $entityForms = null;
-            if($businessEntity)
-            {
+            if ($businessEntity) {
                 $entityForm = $this->widgetFormBuilder->renderForm(
-                    $this->widgetFormBuilder->buildForm($widget, $currentView, $businessEntity->getId(), $businessEntity->getClass(), $widget->getMode(), $slot)
-                    , $widget, $currentView, $businessEntity->getId());
+                    $this->widgetFormBuilder->buildForm($widget, $currentView, $businessEntity->getId(), $businessEntity->getClass(), $widget->getMode(), $slot), $widget, $currentView, $businessEntity->getId());
                 $entityForms = $this->widgetFormBuilder->buildEntityForms(
-                    $widget,  $currentView, $businessEntity->getId(), $businessEntity->getClass(), null, null, $slot, false
+                    $widget, $currentView, $businessEntity->getId(), $businessEntity->getClass(), null, null, $slot, false
                 );
-                $entityForms[$widget->getMode()]= $entityForm;
+                $entityForms[$widget->getMode()] = $entityForm;
             }
-    
+
             $classes = $this->cacheReader->getBusinessClassesForWidget($widget);
 
             $response = [
@@ -313,15 +311,15 @@ class WidgetManager
                 'html'     => $this->victoireTemplating->render(
                     'VictoireCoreBundle:Widget:Form/edit.html.twig',
                     [
-                        'view'    => $currentView,
-                        'entityForms' => $entityForms,
-                        'staticForm'   => $staticForm,
-                        'classes' => $classes,
-                        'widget'  => $widget,
-                        'slot' => $slot,
-                        'type' => $widget->getType(),
-                        'position'=> null,
-                        'parentWidgetMap' => null
+                        'view'            => $currentView,
+                        'entityForms'     => $entityForms,
+                        'staticForm'      => $staticForm,
+                        'classes'         => $classes,
+                        'widget'          => $widget,
+                        'slot'            => $slot,
+                        'type'            => $widget->getType(),
+                        'position'        => null,
+                        'parentWidgetMap' => null,
                     ]
                 ),
             ];
