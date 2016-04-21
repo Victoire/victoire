@@ -161,7 +161,7 @@ class WidgetFormBuilder
             }
             $formUrl = $router->generate($action, $actionParams);
         } else {
-            $view = $widget->getCurrentView() ? $widget->getCurrentView() : $view;
+            $view = $view ? $view : $widget->getCurrentView();
             $viewReference = $view->getReference();
             $formUrl = $router->generate('victoire_core_widget_update',
                 [

@@ -245,17 +245,18 @@ class WidgetManager
 
         //the type of method used
         $requestMethod = $request->getMethod();
-        $slot = $widget->getSlot() ? $widget->getSlot() : WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $currentView)->getSlot();
+        $slot = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $currentView)->getSlot();
 
         //if the form is posted
         if ($requestMethod === 'POST') {
             //the widget view
             $widgetView = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $currentView)->getView();
-
+            //var_dump($widgetView->getId());die();
             //we only copy the widget if the view of the widget is not the current view
             if ($widgetView !== $currentView) {
                 $widget = $this->overwriteWidget($currentView, $widget);
             }
+
             if ($businessEntity !== null) {
                 $form = $this->widgetFormBuilder->buildForm($widget, $currentView, $businessEntity->getId(), $businessEntity->getClass(), $widgetMode);
                 $businessEntityId = $businessEntity->getId();
@@ -292,12 +293,12 @@ class WidgetManager
             }
         } else {
             $staticForm = $this->widgetFormBuilder->renderForm(
-                $this->widgetFormBuilder->buildForm($widget, $currentView, null, null, Widget::MODE_STATIC, $slot), $widget, $currentView, null
+                $this->widgetFormBuilder->buildForm($widget, $currentView, null, null, Widget::MODE_STATIC, $slot), $widget, $slot, $currentView, null
             );
             $entityForms = null;
             if ($businessEntity) {
                 $entityForm = $this->widgetFormBuilder->renderForm(
-                    $this->widgetFormBuilder->buildForm($widget, $currentView, $businessEntity->getId(), $businessEntity->getClass(), $widget->getMode(), $slot), $widget, $currentView, $businessEntity->getId());
+                    $this->widgetFormBuilder->buildForm($widget, $currentView, $businessEntity->getId(), $businessEntity->getClass(), $widget->getMode(), $slot), $widget, $slot, $currentView, $businessEntity->getId());
                 $entityForms = $this->widgetFormBuilder->buildEntityForms(
                     $widget, $currentView, $businessEntity->getId(), $businessEntity->getClass(), null, null, $slot, false
                 );

@@ -240,10 +240,11 @@ class WidgetController extends Controller
         $widget->setCurrentView($widgetView);
         $this->get('victoire_core.current_view')->setCurrentView($view);
         $businessEntity = null;
-        $businessEntityId = $businessEntityId == null ? $widget->getBusinessEntityId() : $businessEntityId;
-        if ($businessEntityId && $mode != Widget::MODE_STATIC) {
+        $businessEntityId = $businessEntityId == null ? $widget->getBusinessEntityId() : $businessEntityId;;
+        if ($businessEntityId) {
             $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($businessEntityId);
         }
+
         try {
             $response = new JsonResponse(
                 $this->get('widget_manager')->editWidget(
