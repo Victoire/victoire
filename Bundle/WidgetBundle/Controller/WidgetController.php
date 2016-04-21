@@ -131,7 +131,7 @@ class WidgetController extends Controller
      * @Route("/victoire-dcms/widget/entity/update/{viewReference}/{businessEntityId}/{type}/{widget_id}/{slot}/{parentWidgetMap}", name="victoire_core_widget_entity_edit", defaults={"widget_id":null, "slot":null, "businessEntityId":null, "position":null, "parentWidgetMap":null, "_format": "json"})
      * @ParamConverter("widget", class="VictoireWidgetBundle:Widget", options={"id" = "widget_id"})
      */
-    public function entityAction($viewReference, $slot, $position = null, $parentWidgetMap = null, $businessEntityId, $type, Widget $widget = null)
+    public function entityAction($viewReference, $slot, $position, $parentWidgetMap, $businessEntityId, $type, Widget $widget = null)
     {
         try {
             $view = $this->getViewByReferenceId($viewReference);
@@ -240,7 +240,7 @@ class WidgetController extends Controller
         $widget->setCurrentView($widgetView);
         $this->get('victoire_core.current_view')->setCurrentView($view);
         $businessEntity = null;
-        $businessEntityId = $businessEntityId == null ? $widget->getBusinessEntityId() : $businessEntityId;;
+        $businessEntityId = $businessEntityId == null ? $widget->getBusinessEntityId() : $businessEntityId;
         if ($businessEntityId) {
             $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($businessEntityId);
         }
