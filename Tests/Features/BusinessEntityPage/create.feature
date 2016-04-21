@@ -32,12 +32,13 @@ Feature: Create business entity pages
         When I select "Force" from the "1" select of "content" slot
         Then I should see "Créer"
         Then I follow the tab "Jedi"
+        And I should see "Objet courant"
         And I follow "Objet courant"
         And I select "side" from "jedi_businessEntity_widget_force[fields][side]"
         And I submit the widget
         And I wait 5 seconds
         Then I should see "Victoire !"
-        Then I should see "Le Côté jedi -> side de la force"
+        Then I should see "Le Côté obscure de la force"
         Given I am on "/fr/fiche-jedi-anakin"
         Then I should see "Le Côté obscure de la force"
         Given I am on "/fr/fiche-jedi-yoda"
@@ -158,7 +159,7 @@ Feature: Create business entity pages
         And I submit the widget
         And I wait 5 seconds
         Then I should see "Victoire !"
-        Then I should see "Le Côté jedi -> side de la force"
+        Then I should see "Le Côté obscure de la force"
         Given I am on "/victoire-dcms/backend/jedi/"
         When I follow "Nouveau jedi"
         Then I should be on "/victoire-dcms/backend/jedi/new"
