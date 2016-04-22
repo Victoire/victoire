@@ -101,14 +101,14 @@ class WidgetManager
      *
      * @return array
      */
-    public function newWidget($mode, $type, $slot, $view, $position, $parentWidgetMap)
+    public function newWidget($mode, $type, $slot, $view, $position, $parentWidgetMap, $quantum)
     {
         $widget = $this->widgetHelper->newWidgetInstance($type, $view, $slot, $mode);
         $widgets = ['static' => $widget];
 
         /** @var BusinessEntity[] $classes */
         $classes = $this->cacheReader->getBusinessClassesForWidget($widget);
-        $forms = $this->widgetFormBuilder->renderNewQuantumForms($slot, $view, $widgets, $widget, $classes, $position, $parentWidgetMap);
+        $forms = $this->widgetFormBuilder->renderNewQuantumForms($slot, $view, $widgets, $widget, $classes, $position, $parentWidgetMap, $quantum);
 
         return [
             'widget' => $widget,
@@ -143,7 +143,7 @@ class WidgetManager
      *
      * @return Template
      */
-    public function createWidget($mode, $type, $slotId, View $view, $entity, $position, $widgetReference)
+    public function createWidget($mode, $type, $slotId, View $view, $entity, $position, $widgetReference, $quantum)
     {
         //services
         $formErrorHelper = $this->formErrorHelper;
@@ -155,7 +155,7 @@ class WidgetManager
         //create a new widget
         $widget = $this->widgetHelper->newWidgetInstance($type, $view, $slotId, $mode);
 
-        $form = $this->widgetFormBuilder->callBuildFormSwitchParameters($widget, $view, $entity, $position, $widgetReference, $slotId);
+        $form = $this->widgetFormBuilder->callBuildFormSwitchParameters($widget, $view, $entity, $position, $widgetReference, $slotId, $quantum);
 
         $noValidate = $request->query->get('novalidate', false);
 

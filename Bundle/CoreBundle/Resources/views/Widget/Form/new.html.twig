@@ -16,7 +16,14 @@
         {% endfor %}
 
         <li class="vic-seperate widget-new-tab">
-            <a id="widget-new-tab" class="quantum-tab-name" href="{{ path('victoire_core_widget_new_quantum_item', {type: widget.type, viewReference: view.reference.id, slot: slot, position: position, parentWidgetMap: parentWidgetMap}) }}"><i class="edit fa fa-plus"></i></a>
+            <a id="widget-new-tab" class="quantum-tab-name"
+               data-type="{{ widget.type }}"
+               data-slot="{{ slot }}"
+               data-position="{{ position }}"
+               data-parentWidgetMap="{{ parentWidgetMap }}"
+               href="#"
+               {#href="{{ path('victoire_core_widget_new_quantum_item', {type: widget.type, viewReference: view.reference.id, slot: slot, position: position, parentWidgetMap: parentWidgetMap}) }}"#}
+            ><i class="edit fa fa-plus"></i></a>
         </li>
     </ul>
 {% endblock modal_body_content %}
