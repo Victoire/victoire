@@ -201,7 +201,7 @@ $vic(document).on('click', 'a#widget-new-tab', function(event) {
         viewReference: viewReferenceId,
         slot: $vic(this).data('slot'),
         position: $vic(this).data('position'),
-        parentWidgetMap: $vic(this).data('parentWidgetMap'),
+        parentWidgetMap: $vic(this).data('parentwidgetmap'),
         quantum: $vic(this).parents('ul').children('li').length,
         _locale: locale
     });
