@@ -92,8 +92,8 @@ class WidgetController extends Controller
      *
      * @return JsonResponse
      *
-     * @Route("/victoire-dcms/widget/new-quantum-item/{type}/{viewReference}/{slot}/{quantum}/{position}/{parentWidgetMap}", name="victoire_core_widget_new_quantum_item", defaults={"slot":null, "position":null, "parentWidgetMap":null}, options={"expose"=true})
-     * @Route("/victoire-dcms/widget/new/{type}/{viewReference}/{slot}/{quantum}/{position}/{parentWidgetMap}", name="victoire_core_widget_new", defaults={"slot":null, "position":null, "parentWidgetMap":null}, options={"expose"=true})
+     * @Route("/victoire-dcms/widget/new-quantum-item/{type}/{viewReference}/{slot}/{quantum}/{position}/{parentWidgetMap}", name="victoire_core_widget_new_quantum_item", defaults={"slot":null, "position":null, "parentWidgetMap":null, "quantum":0}, options={"expose"=true})
+     * @Route("/victoire-dcms/widget/new/{type}/{viewReference}/{slot}/{quantum}/{position}/{parentWidgetMap}", name="victoire_core_widget_new", defaults={"slot":null, "position":null, "parentWidgetMap":null, "quantum":0}, options={"expose"=true})
      */
     public function newAction($type, $viewReference, $slot = null, $position = null, $parentWidgetMap = null, $quantum = null)
     {
@@ -137,8 +137,8 @@ class WidgetController extends Controller
      * @param string $businessEntityId The BusinessEntity::id (can be null if the submitted form is in static mode)
      *
      * @return JsonResponse
-     * @Route("/victoire-dcms/widget/create/static/{type}/{viewReference}/{slot}/{quantum}/{position}/{parentWidgetMap}", name="victoire_core_widget_create_static", defaults={"mode":"static", "slot":null, "businessEntityId":null, "position":null, "parentWidgetMap":null, "_format": "json"})
-     * @Route("/victoire-dcms/widget/create/{mode}/{type}/{viewReference}/{slot}/{quantum}/{businessEntityId}/{position}/{parentWidgetMap}", name="victoire_core_widget_create", defaults={"slot":null, "businessEntityId":null, "position":null, "parentWidgetMap":null, "_format": "json"})
+     * @Route("/victoire-dcms/widget/create/static/{type}/{viewReference}/{slot}/{quantum}/{position}/{parentWidgetMap}", name="victoire_core_widget_create_static", defaults={"mode":"static", "slot":null, "businessEntityId":null, "position":null, "parentWidgetMap":null, "_format": "json", "quantum":0})
+     * @Route("/victoire-dcms/widget/create/{mode}/{type}/{viewReference}/{slot}/{quantum}/{businessEntityId}/{position}/{parentWidgetMap}", name="victoire_core_widget_create", defaults={"slot":null, "businessEntityId":null, "position":null, "parentWidgetMap":null, "_format": "json", "quantum":0})
      * @Template()
      */
     public function createAction($mode, $type, $viewReference, $slot = null, $position = null, $parentWidgetMap = null, $businessEntityId = null, $quantum = null)

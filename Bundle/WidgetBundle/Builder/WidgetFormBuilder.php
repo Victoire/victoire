@@ -261,7 +261,7 @@ class WidgetFormBuilder
         //Prefix base name with form mode to avoid to have unique form fields ids
 
         $form = $formFactory->createNamed(
-            sprintf('%s_%s_%s_%s', $businessEntityId, $quantum, $formMode, $mockForm->getName()),
+            sprintf('%s_%s_%s_%s', $businessEntityId, $this->convertToString($quantum), $formMode, $mockForm->getName()),
             $widgetFormTypeClass,
             $widget,
             $optionsContainer->getOptions()
@@ -270,6 +270,23 @@ class WidgetFormBuilder
         return $form;
     }
 
+    /**
+     * This method converts a number to an alphabetic char.
+     * If the number is > 26, convert to aa...az...zz...
+     * @param        $number
+     * @param string $letter
+     *
+     * @return string
+     */
+    private function convertToString($number, $letter = 'a', $i = 0)
+    {
+        do {
+            $i++;
+            $letter++;
+        } while ($i < $number);
+
+        return $letter;
+    }
     /**
      * create a form with given widget.
      *
