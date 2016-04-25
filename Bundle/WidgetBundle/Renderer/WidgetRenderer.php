@@ -2,8 +2,13 @@
 
 namespace Victoire\Bundle\WidgetBundle\Renderer;
 
+use Doctrine\Common\Util\ClassUtils;
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\DependencyInjection\Container;
+use Victoire\Bundle\BusinessEntityBundle\Exception\MissingBusinessEntityInstanceException;
+use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
+use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\DataCollector\VictoireCollector;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Event\WidgetRenderEvent;
@@ -60,9 +65,21 @@ class WidgetRenderer
         //the mode of display of the widget
         $mode = $widget->getMode();
 
-        //if entty is given and it's not the object, retrive it and set the entity for the widget
+        //if entity is given and it's not the object, retrieve it and set the entity for the widget
         if ($mode == Widget::MODE_BUSINESS_ENTITY && $view instanceof BusinessPage) {
             $widget->setEntity($view->getBusinessEntity());
+        } elseif ($view instanceof BusinessTemplate) {
+            //We'll try to find a sample entity to mock the widget behavior
+            /** @var EntityManager $entityManager */
+            $entityManager = $this->container->get('doctrine.orm.entity_manager');
+            /** @var BusinessEntityHelper $businessEntityHelper */
+            $businessEntityHelper = $this->container->get('victoire_core.helper.business_entity_helper');
+            $businessEntity = $businessEntityHelper->findById($view->getBusinessEntityId());
+            $queryBuilder = $entityManager->getRepository($businessEntity->getClass())->createQueryBuilder('c');
+            if (null === $mock = $queryBuilder->setMaxResults(1)->getQuery()->getOneOrNullResult()) {
+                throw new MissingBusinessEntityInstanceException($businessEntity->getClass());
+            }
+            $widget->setEntity($mock);
         }
 
         //the templating service
