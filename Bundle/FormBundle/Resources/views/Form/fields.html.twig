@@ -49,7 +49,7 @@
         {% set label = name|humanize %}
     {% endif %}
     <button type="{{ type|default('button') }}" {{ block('button_attributes') }}>
-    {% if icon is not empty %}
+    {% if icon is defined and icon is not empty %}
             {{ victoire_icon(icon, icon_inverted|default(false)) }}
     {% endif %}
     {{ label|trans({}, translation_domain)|raw }}</button>
