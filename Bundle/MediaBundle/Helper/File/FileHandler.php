@@ -4,6 +4,7 @@ namespace Victoire\Bundle\MediaBundle\Helper\File;
 
 use Gaufrette\Adapter\Local;
 use Gaufrette\Filesystem;
+use Gedmo\Sluggable\Util\Urlizer;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
 use Symfony\Component\HttpFoundation\File\MimeType\FileBinaryMimeTypeGuesser;
@@ -32,6 +33,7 @@ class FileHandler extends AbstractMediaHandler
      * @var MimeTypeGuesserInterface
      */
     public $mimeTypeGuesser = null;
+    public $urlizer;
 
     /**
      * constructor.
@@ -41,6 +43,7 @@ class FileHandler extends AbstractMediaHandler
         $this->fileSystem = new Filesystem(new \Gaufrette\Adapter\Local('uploads/media/', true));
         //we use a specific symfony mimetypeguesser because de default (FileinfoMimeTypeGuesser) is unable to recognize MS documents
         $this->mimeTypeGuesser = new FileBinaryMimeTypeGuesser();
+        $this->urlizer = new Urlizer();
     }
 
     /**
@@ -56,7 +59,7 @@ class FileHandler extends AbstractMediaHandler
      */
     public function getType()
     {
-        return self::TYPE;
+        return FileHandler::TYPE;
     }
 
     /**
@@ -64,7 +67,7 @@ class FileHandler extends AbstractMediaHandler
      */
     public function getFormType()
     {
-        return new FileType();
+        return FileType::class;
     }
 
     /**
@@ -98,33 +101,30 @@ class FileHandler extends AbstractMediaHandler
      */
     public function prepareMedia(Media $media)
     {
-        if (null == $media->getUuid()) {
+        if (null === $media->getUuid()) {
             $uuid = uniqid();
             $media->setUuid($uuid);
         }
-
         $content = $media->getContent();
         if (empty($content)) {
             return;
         }
-
         if (!$content instanceof File) {
             if (!is_file($content)) {
                 throw new \RuntimeException('Invalid file');
             }
-
             $file = new File($content);
             $media->setContent($file);
         }
         if ($content instanceof UploadedFile) {
-            $media->setName($content->getClientOriginalName());
+            $pathInfo = pathinfo($content->getClientOriginalName());
+            $media->setOriginalFilename($this->urlizer->urlize($pathInfo['filename']).'.'.$pathInfo['extension']);
+            $name = $media->getName();
+            if (empty($name)) {
+                $media->setName($media->getOriginalFilename());
+            }
         }
-
-        $metadata = [];
-
         $media->setFileSize(filesize($media->getContent()));
-        $media->setMetadata($metadata);
-
         $contentType = $this->mimeTypeGuesser->guess($media->getContent()->getPathname());
         $media->setContentType($contentType);
         $relativePath = sprintf('/%s.%s', $media->getUuid(), ExtensionGuesser::getInstance()->guess($media->getContentType()));
