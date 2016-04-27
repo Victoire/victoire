@@ -36,7 +36,7 @@ class FileType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'Victoire\Bundle\MediaBundle\Helper\File\FileHelper',
+            'data_class' => 'Victoire\Bundle\MediaBundle\Helper\File\FileHelper'
         ]);
     }
 }
