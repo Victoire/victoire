@@ -41,7 +41,6 @@ class Transliterator extends BaseTransliterator
             $text = strtolower($text);
         }
         if (!$excludeTwig) {
-            ;
             $text = preg_replace('/\W/', ' ', $text);
         }
         $text = preg_replace('/::/', '/', $text);

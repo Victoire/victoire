@@ -11,7 +11,7 @@ use Victoire\Bundle\MediaBundle\Entity\Media;
 abstract class AbstractMediaHandler
 {
     /**
-     * Return the default form type options
+     * Return the default form type options.
      *
      * @return array
      */
