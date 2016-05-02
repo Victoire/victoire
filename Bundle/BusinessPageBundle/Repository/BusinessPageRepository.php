@@ -12,11 +12,12 @@ use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 class BusinessPageRepository extends EntityRepository
 {
     /**
-     * Find the pagePatterns of the business entity.
+     *  Find the pagePatterns of the business entity.
      *
+     * @param BusinessTemplate $pattern
+     * @param Object $entity | int $entityId
      * @param BusinessEntity $businessEntity
-     *
-     * @return array The list of pagePatterns
+     * @return mixed
      */
     public function findPageByBusinessEntityAndPattern(BusinessTemplate $pattern, $entity, BusinessEntity $businessEntity)
     {

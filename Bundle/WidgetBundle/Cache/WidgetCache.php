@@ -54,6 +54,15 @@ class WidgetCache
 
     /**
      * @param Widget $widget
+     * @return int
+     */
+    public function remove(Widget $widget)
+    {
+        return $this->redis->del($this->getHash($widget));
+    }
+
+    /**
+     * @param Widget $widget
      * @param        $content
      */
     public function save(Widget $widget, $content)
@@ -96,22 +105,18 @@ class WidgetCache
 
     protected function generateBusinessEntityHash(Widget $widget)
     {
-        return sprintf('%s-%s-%s--%s-%s-%s',
-            $widget->getId(),
-            $widget->getUpdatedAt()->getTimestamp(),
-            $widget->getCurrentView()->getReference()->getId(),
+        return sprintf('%s--%s-%s-%s',
+            $widget->generateHash(),
             $widget->getEntity()->getId(),
             $widget->getEntity()->getUpdatedAt()->getTimestamp(),
             (string) $this->authorizationChecker->isGranted('ROLE_VICTOIRE')
         );
     }
 
-    private function generateHash($widget)
+    private function generateHash(Widget $widget)
     {
-        return sprintf('%s-%s-%s-%s',
-            $widget->getId(),
-            $widget->getUpdatedAt()->getTimestamp(),
-            $widget->getCurrentView()->getReference()->getId(),
+        return sprintf('%s-%s',
+            $widget->generateHash(),
             (string) $this->authorizationChecker->isGranted('ROLE_VICTOIRE')
         );
     }

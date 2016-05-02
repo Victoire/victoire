@@ -451,4 +451,29 @@ class Widget extends BaseWidget implements VictoireQueryInterface
     {
         return $this->view;
     }
+
+    /**
+     * @return string
+     */
+    public function generateHash()
+    {
+        if(!$this->getCurrentView())
+        {
+            throw new \Exception(sprintf("Cannot generate an hash for widget %s if currentView is not defined.",
+                $this->getId()
+            ));
+            if(!$this->getCurrentView()->getReference())
+            {
+                throw new \Exception(sprintf("Cannot generate an hash for widget %s if currentView %s Reference is not defined.",
+                    $this->getId(),
+                    $widget->getCurrentView()->getId()
+                ));
+            }
+        }
+        return sprintf('%s-%s-%s',
+            $this->getId(),
+            $this->getUpdatedAt()->getTimestamp(),
+            $this->getCurrentView()->getReference()->getId()
+        );
+    }
 }
