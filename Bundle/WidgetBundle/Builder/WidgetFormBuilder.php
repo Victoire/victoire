@@ -69,6 +69,7 @@ class WidgetFormBuilder
             $templateName,
             [
                 'widget' => $widget,
+                'slot'   => $widget->getWidgetMap()->getSlot(),
                 'view'   => $this->container->get('victoire_core.current_view')->getCurrentView(),
                 'form'   => $form->createView(),
                 'id'     => $widget->getId(),
