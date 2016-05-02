@@ -20,6 +20,9 @@ class BusinessPageRepository extends EntityRepository
      */
     public function findPageByBusinessEntityAndPattern(BusinessTemplate $pattern, $entity, BusinessEntity $businessEntity)
     {
+        if(is_object($entity)){
+            $entity = $entity->getId();
+        }
         $qb = $this->createQueryBuilder('BusinessPage');
         $qb->join('BusinessPage.entityProxy', 'proxy');
         $qb->join('BusinessPage.template', 'template');
@@ -30,7 +33,7 @@ class BusinessPageRepository extends EntityRepository
         $qb->andWhere('entity.id = :entityId');
 
         $qb->setParameter(':templateId', $pattern);
-        $qb->setParameter(':entityId', $entity->getId());
+        $qb->setParameter(':entityId', $entity);
         $result = $qb->getQuery()->getOneOrNullResult();
 
         return $result;
