@@ -251,7 +251,6 @@ class WidgetManager
         if ($requestMethod === 'POST') {
             //the widget view
             $widgetView = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $currentView)->getView();
-            //var_dump($widgetView->getId());die();
             //we only copy the widget if the view of the widget is not the current view
             if ($widgetView !== $currentView) {
                 $widget = $this->overwriteWidget($currentView, $widget);

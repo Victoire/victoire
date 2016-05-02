@@ -127,11 +127,11 @@ class WidgetController extends Controller
      *
      * @return string
      *
-     * @Route("/victoire-dcms/widget/entity/create/{viewReference}/{businessEntityId}/{type}/{slot}/{parentWidgetMap}/{position}", name="victoire_core_widget_entity_create", defaults={"widget_id":null, "slot":null, "businessEntityId":null, "position":null, "parentWidgetMap":null, "_format": "json"})
+     * @Route("/victoire-dcms/widget/entity/create/{viewReference}/{businessEntityId}/{type}/{slot}/{parentWidgetMap}/{position}", name="victoire_core_widget_partial_form_create", defaults={"widget_id":null, "slot":null, "businessEntityId":null, "position":null, "parentWidgetMap":null, "_format": "json"})
      * @Route("/victoire-dcms/widget/entity/update/{viewReference}/{businessEntityId}/{type}/{widget_id}/{slot}/{parentWidgetMap}", name="victoire_core_widget_entity_edit", defaults={"widget_id":null, "slot":null, "businessEntityId":null, "position":null, "parentWidgetMap":null, "_format": "json"})
      * @ParamConverter("widget", class="VictoireWidgetBundle:Widget", options={"id" = "widget_id"})
      */
-    public function entityAction($viewReference, $slot, $position, $parentWidgetMap, $businessEntityId, $type, Widget $widget = null)
+    public function partialFormAction($viewReference, $slot, $position, $parentWidgetMap, $businessEntityId, $type, Widget $widget = null)
     {
         try {
             $view = $this->getViewByReferenceId($viewReference);
