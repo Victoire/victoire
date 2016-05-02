@@ -227,7 +227,7 @@ class MediaController extends Controller
         $helper = $handler->getFormHelper($media);
 
         $options = array_merge([
-            'action' => $this->generateUrl('VictoireMediaBundle_media_create', ['folderId' => $folderId, 'type' => $type])
+            'action' => $this->generateUrl('VictoireMediaBundle_media_create', ['folderId' => $folderId, 'type' => $type]),
         ], $handler->getFormTypeOptions());
         $form = $this->createForm($handler->getFormType(), $helper, $options);
 

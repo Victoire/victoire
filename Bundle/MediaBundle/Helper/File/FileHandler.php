@@ -59,7 +59,7 @@ class FileHandler extends AbstractMediaHandler
      */
     public function getType()
     {
-        return FileHandler::TYPE;
+        return self::TYPE;
     }
 
     /**
