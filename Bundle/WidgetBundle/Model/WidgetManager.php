@@ -215,7 +215,7 @@ class WidgetManager
      *
      * @return template
      */
-    public function editWidget(Request $request, Widget $widget, View $currentView, $businessEntityId = null, $widgetMode = Widget::MODE_STATIC)
+    public function editWidget(Request $request, Widget $widget, View $currentView, $quantum = null, $businessEntityId = null, $widgetMode = Widget::MODE_STATIC)
     {
         /** @var BusinessEntity[] $classes */
         $classes = $this->cacheReader->getBusinessClassesForWidget($widget);
@@ -237,9 +237,9 @@ class WidgetManager
                 $widget = $this->overwriteWidget($currentView, $widget);
             }
             if ($businessEntityId !== null) {
-                $form = $this->widgetFormBuilder->buildForm($widget, $currentView, $businessEntityId, $classes[$businessEntityId]->getClass(), $widgetMode);
+                $form = $this->widgetFormBuilder->buildForm($widget, $currentView, $businessEntityId, $classes[$businessEntityId]->getClass(), $widgetMode, null, null, null, $quantum);
             } else {
-                $form = $this->widgetFormBuilder->buildForm($widget, $currentView);
+                $form = $this->widgetFormBuilder->buildForm($widget, $currentView, null, null, $widgetMode, null, null, null, $quantum);
             }
 
             $noValidate = $request->query->get('novalidate', false);
@@ -257,6 +257,7 @@ class WidgetManager
                     'success'     => true,
                     'html'        => $this->widgetRenderer->render($widget, $currentView),
                     'widgetId'    => $initialWidgetId,
+                    'slot'        => $widget->getWidgetMap()->getSlot(),
                     'viewCssHash' => $currentView->getCssHash(),
                 ];
             } else {
@@ -265,6 +266,7 @@ class WidgetManager
                 $response = [
                     'success' => false,
                     'widgetId'    => $initialWidgetId,
+                    'slot'    => $widget->getWidgetMap()->getSlot(),
                     'message' => $noValidate === false ? $formErrorHelper->getRecursiveReadableErrors($form) : null,
                     'html'    => $this->widgetFormBuilder->renderForm($form, $widget, $businessEntityId),
                 ];
