@@ -281,10 +281,10 @@ class WidgetFormBuilder
      */
     private function convertToString($number, $letter = 'a', $i = 0)
     {
-        do {
+        while ($i < $number) {
             $i++;
             $letter++;
-        } while ($i < $number);
+        }
 
         return $letter;
     }
