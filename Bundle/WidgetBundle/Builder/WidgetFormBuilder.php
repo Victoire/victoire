@@ -131,7 +131,7 @@ class WidgetFormBuilder
     {
         $forms = [];
         foreach ($widgets as $key => $widget) {
-            $forms[$key] = $this->renderNewWidgetForms($slot, $view, $widget, $classes, $position, $parentWidgetMap, $quantum);
+            $forms[$key] = $this->renderNewWidgetForms($slot, $view, $widget, $classes, $position, $parentWidgetMap, $quantum ?: $key);
             if ($widget === $activeWidget) {
                 $forms[$key]['active'] = true;
             }
