@@ -15,13 +15,14 @@ class BusinessPageRepository extends EntityRepository
      *  Find the pagePatterns of the business entity.
      *
      * @param BusinessTemplate $pattern
-     * @param Object $entity | int $entityId
-     * @param BusinessEntity $businessEntity
+     * @param object           $entity         | int $entityId
+     * @param BusinessEntity   $businessEntity
+     *
      * @return mixed
      */
     public function findPageByBusinessEntityAndPattern(BusinessTemplate $pattern, $entity, BusinessEntity $businessEntity)
     {
-        if(is_object($entity)){
+        if (is_object($entity)) {
             $entity = $entity->getId();
         }
         $qb = $this->createQueryBuilder('BusinessPage');

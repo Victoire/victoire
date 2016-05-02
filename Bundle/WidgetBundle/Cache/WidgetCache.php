@@ -54,6 +54,7 @@ class WidgetCache
 
     /**
      * @param Widget $widget
+     *
      * @return int
      */
     public function remove(Widget $widget)
