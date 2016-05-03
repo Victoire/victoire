@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
- * Criteria
+ * Criteria.
  *
  * @ORM\Table("vic_criteria")
  * @ORM\Entity
@@ -14,7 +14,7 @@ use Victoire\Bundle\WidgetBundle\Entity\Widget;
 class Criteria
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -52,9 +52,9 @@ class Criteria
     protected $widget;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -77,9 +77,8 @@ class Criteria
         $this->name = $name;
     }
 
-
     /**
-     * Set operand
+     * Set operand.
      *
      * @param string $operator
      *
@@ -93,7 +92,7 @@ class Criteria
     }
 
     /**
-     * Get operand
+     * Get operand.
      *
      * @return string
      */
@@ -103,7 +102,7 @@ class Criteria
     }
 
     /**
-     * Set value
+     * Set value.
      *
      * @param string $value
      *
@@ -117,7 +116,7 @@ class Criteria
     }
 
     /**
-     * Get value
+     * Get value.
      *
      * @return string
      */
@@ -141,6 +140,4 @@ class Criteria
     {
         $this->widget = $widget;
     }
-
 }
-

@@ -459,6 +459,7 @@ class Widget extends BaseWidget implements VictoireQueryInterface
     {
         $this->criterias = $criterias;
     }
+
     /**
      * @param Criteria $criteria
      */
@@ -494,7 +495,7 @@ class Widget extends BaseWidget implements VictoireQueryInterface
      */
     public function hasCriteriaNamed($criteriaAlias)
     {
-        return $this->criterias->exists(function($key, $element) use ($criteriaAlias) {
+        return $this->criterias->exists(function ($key, $element) use ($criteriaAlias) {
             return $criteriaAlias === $element->getName();
         });
     }
@@ -514,7 +515,6 @@ class Widget extends BaseWidget implements VictoireQueryInterface
     {
         $this->quantum = $quantum;
     }
-
 
     /**
      * Generate the CacheId, insert params that can invalid the cache

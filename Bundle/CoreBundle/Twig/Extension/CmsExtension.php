@@ -44,7 +44,6 @@ class CmsExtension extends \Twig_Extension_Core
      * @param CurrentViewHelper       $currentViewHelper
      * @param ViewReferenceRepository $viewReferenceRepository
      * @param \Twig_Environment       $twig
-     *
      * @param WidgetResolver          $widgetResolver
      *
      * @internal param SecurityContext $securityContext

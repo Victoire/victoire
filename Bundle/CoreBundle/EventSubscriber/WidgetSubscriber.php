@@ -72,14 +72,13 @@ class WidgetSubscriber implements EventSubscriber
                 continue;
             }
 
-            /** @var Widget $entity */
+            /* @var Widget $entity */
             $widgetMap = $entity->getWidgetMap();
             if ($widgetMap->getAction() !== WidgetMap::ACTION_DELETE) {
                 $view = $widgetMap->getView();
                 $this->updateViewCss($view);
                 $this->setTemplateInheritorsCssToUpdate($view);
             }
-
         }
 
         //Remove CSS of deleted View and update its inheritors
