@@ -155,7 +155,7 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
                                     $output->writeln('set parent'.null);
                                     $widgetMap->setParent(null);
                                 } else {
-                                    $widgetMap->setPosition(WidgetMap::POSITION_BEFORE);
+                                    $widgetMap->setPosition(WidgetMap::POSITION_AFTER);
 
                                     $_rootBuilt = null;
 
@@ -165,8 +165,8 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
                                             break;
                                         }
                                     }
-                                    while (null !== $child = $_rootBuilt->getChild(WidgetMap::POSITION_BEFORE)) {
-                                        $_rootBuilt = $_rootBuilt->getChild(WidgetMap::POSITION_BEFORE);
+                                    while (null !== $child = $_rootBuilt->getChildren($view)[WidgetMap::POSITION_BEFORE]) {
+                                        $_rootBuilt = $_rootBuilt->getChildren($view)[WidgetMap::POSITION_BEFORE];
                                     }
                                     $widgetMap->setParent($_rootBuilt);
                                 }
