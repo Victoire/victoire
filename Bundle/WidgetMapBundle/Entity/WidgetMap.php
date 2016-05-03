@@ -46,7 +46,7 @@ class WidgetMap
     protected $view;
 
     /**
-     * @var Widget
+     * @var [Widget]
      *
      * @ORM\OneToMany(targetEntity="\Victoire\Bundle\WidgetBundle\Entity\Widget", mappedBy="widgetMap", orphanRemoval=true, cascade={"persist", "remove"})
      */
@@ -54,6 +54,7 @@ class WidgetMap
 
     /**
      * @deprecated
+     *
      * @var Widget
      *
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\WidgetBundle\Entity\Widget")
@@ -187,6 +188,7 @@ class WidgetMap
 
         return $this;
     }
+
     /**
      * @param [Widget] $widgets
      *

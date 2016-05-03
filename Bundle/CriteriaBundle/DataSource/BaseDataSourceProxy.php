@@ -2,8 +2,6 @@
 
 namespace Victoire\Bundle\CriteriaBundle\DataSource;
 
-
-
 abstract class BaseDataSourceProxy
 {
     protected $dataSource;

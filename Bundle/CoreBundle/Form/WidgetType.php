@@ -3,15 +3,12 @@
 namespace Victoire\Bundle\CoreBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Victoire\Bundle\CriteriaBundle\Chain\DataSourceChain;
 use Victoire\Bundle\CriteriaBundle\Entity\Criteria;
 use Victoire\Bundle\CriteriaBundle\Form\Type\CriteriaType;
 use Victoire\Bundle\WidgetBundle\Model\Widget;
@@ -66,11 +63,11 @@ class WidgetType extends AbstractType
         //add the slot to the form
         $builder->add('slot', HiddenType::class, []);
         $builder->add('criterias', CriteriaCollectionType::class, [
-            'label'    => 'victoire.widget.type.criterias.label',
-            'type' =>  CriteriaType::class,
+            'label'         => 'victoire.widget.type.criterias.label',
+            'type'          => CriteriaType::class,
             'entry_options' => [
                 'dataSources' => $options['dataSources'],
-            ]
+            ],
         ]);
 
         //we use the PRE_SUBMIT event to set the mode option

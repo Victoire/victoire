@@ -34,7 +34,7 @@ class WidgetFormBuilder
      *
      * @return string
      */
-    public function renderNewForm($form, $widget, $slot, View $view, $entity = null, $quantum = null)
+    public function renderNewForm($form, $widget, $slot, View $view, $entity = null)
     {
         //the template displayed is in the widget bundle
         $templateName = $this->container->get('victoire_widget.widget_helper')->getTemplateName('new', $widget);
@@ -81,18 +81,19 @@ class WidgetFormBuilder
     /**
      * Generates new forms for each available business entities.
      *
-     * @param string $slot
-     * @param View $view
-     * @param Widget $widget
+     * @param string           $slot
+     * @param View             $view
+     * @param Widget           $widget
      * @param BusinessEntity[] $classes
-     * @param int $position
-     * @param null $parentWidgetMap
-     * @param int $position
+     * @param int              $position
+     * @param null             $parentWidgetMap
+     * @param int              $position
+     *
+     * @throws \Exception
      *
      * @return \Symfony\Component\Form\Form[]
-     * @throws \Exception
      */
-    public function renderNewWidgetForms($slot, View $view, Widget $widget, $classes, $position = null, $parentWidgetMap = null, $quantum)
+    public function renderNewWidgetForms($slot, View $view, Widget $widget, $classes, $position, $parentWidgetMap, $quantum)
     {
         //the static form
         $forms['static'] = [];
@@ -115,6 +116,7 @@ class WidgetFormBuilder
 
         return $forms;
     }
+
     /**
      * Generates new forms for each available business entities.
      *
@@ -182,7 +184,7 @@ class WidgetFormBuilder
      *
      * @throws \Exception
      *
-     * @return $form
+     * @return Form
      */
     public function buildWidgetForm(Widget $widget, View $view, $businessEntityId = null, $namespace = null, $formMode = Widget::MODE_STATIC, $position = null, $parentWidgetMap = null, $slotId = null, $quantum = null)
     {
@@ -245,11 +247,11 @@ class WidgetFormBuilder
         );
 
         $optionsContainer = new WidgetOptionsContainer([
-            'businessEntityId' => $businessEntityId,
-            'namespace'        => $namespace,
-            'mode'             => $formMode,
-            'action'           => $formUrl,
-            'method'           => 'POST',
+            'businessEntityId'      => $businessEntityId,
+            'namespace'             => $namespace,
+            'mode'                  => $formMode,
+            'action'                => $formUrl,
+            'method'                => 'POST',
             'dataSources'           => $this->container->get('victoire_criteria.chain.data_source_chain'),
         ]);
 
@@ -274,6 +276,7 @@ class WidgetFormBuilder
     /**
      * This method converts a number to an alphabetic char.
      * If the number is > 26, convert to aa...az...zz...
+     *
      * @param        $number
      * @param string $letter
      *
@@ -288,6 +291,7 @@ class WidgetFormBuilder
 
         return $letter;
     }
+
     /**
      * create a form with given widget.
      *
@@ -300,7 +304,7 @@ class WidgetFormBuilder
      *
      * @throws \Exception
      *
-     * @return $form
+     * @return Form
      */
     public function buildForm($widget, View $view, $businessEntityId = null, $namespace = null, $formMode = Widget::MODE_STATIC, $slotId = null, $position = null, $parentWidgetMap = null, $quantum = null)
     {

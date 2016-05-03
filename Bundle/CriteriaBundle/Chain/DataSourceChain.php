@@ -2,8 +2,6 @@
 
 namespace Victoire\Bundle\CriteriaBundle\Chain;
 
-
-
 /**
  * DataSource chain.
  */
@@ -23,36 +21,34 @@ class DataSourceChain
     public function addDataSource($dataSource, $parameters)
     {
         $method = $parameters['method'];
-        $data = function() use ($dataSource, $method) {
+        $data = function () use ($dataSource, $method) {
             return $dataSource->{$method}();
         };
         $this->dataSource[$parameters['alias']] = [
-            'data' => $data,
+            'data'       => $data,
             'dataSource' => $dataSource,
             'parameters' => $parameters,
         ];
-
     }
 
     /**
      * @param string $alias
-     *
      */
     public function getData($alias)
     {
         return $this->dataSource[$alias]['data'];
     }
+
     /**
      * @param string $alias
-     *
      */
     public function getDataSource($alias)
     {
         return $this->dataSource[$alias]['dataSource'];
     }
+
     /**
      * @param string $alias
-     *
      */
     public function getDataSourceParameters($alias)
     {

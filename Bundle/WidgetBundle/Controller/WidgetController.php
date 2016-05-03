@@ -117,7 +117,7 @@ class WidgetController extends Controller
 
             $response = new JsonResponse([
                 'success' => true,
-                'html' => $widgetData['html']
+                'html'    => $widgetData['html'],
             ]);
         } catch (Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
@@ -258,9 +258,7 @@ class WidgetController extends Controller
 
         $this->get('victoire_core.current_view')->setCurrentView($view);
         try {
-
             if ($request->getMethod() === 'POST') {
-
                 $form = $this->get('form.factory')->create(WidgetStyleType::class, $widget, [
                         'method' => 'POST',
                         'action' => $this->generateUrl(
@@ -289,7 +287,6 @@ class WidgetController extends Controller
                         'widgetId'    => $widget->getId(),
                         'viewCssHash' => $view->getCssHash(),
                     ];
-
                 } else {
                     $template = ($request->query->get('novalidate', false) !== false) ? 'VictoireCoreBundle:Widget/Form/stylize:form.html.twig' : 'VictoireCoreBundle:Widget/Form:stylize.html.twig';
                     $params = [
@@ -305,7 +302,6 @@ class WidgetController extends Controller
                     ];
                 }
             } else {
-
                 $widgets = $widget->getWidgetMap()->getWidgets();
                 $forms = [];
                 foreach ($widgets as $widget) {
@@ -320,19 +316,18 @@ class WidgetController extends Controller
                             ),
                         ]
                     )->createView();
-                };
+                }
                 $params = [
                     'html' => $this->get('templating')->render(
                         'VictoireCoreBundle:Widget/Form:stylize.html.twig',
                         [
-                            'view'   => $view,
+                            'view'    => $view,
                             'forms'   => $forms,
-                            'widget' => $widget,
+                            'widget'  => $widget,
                             'widgets' => $widgets,
                         ]
                     ),
                 ];
-
             }
 
             $response = new JsonResponse($params);
@@ -370,6 +365,7 @@ class WidgetController extends Controller
             return $this->getJsonReponseFromException($ex);
         }
     }
+
     /**
      * Delete a Widget quantum.
      *
@@ -439,7 +435,6 @@ class WidgetController extends Controller
             return $this->getJsonReponseFromException($ex);
         }
     }
-
 
     /**
      * Update widget positions accross the view. If moved widget is a Reference, ask to detach the view from template.
