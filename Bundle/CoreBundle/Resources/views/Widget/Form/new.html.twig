@@ -19,9 +19,9 @@
                 {% else %}
 
                     <li class="{% if not loop.last %}vic-seperate{% endif %}{% if widget.businessEntityId == class|lower and entityForms %} vic-active{% endif %}">
-                        {% set keyToEntity = widget.id ? 'victoire_core_widget_entity_edit' : 'victoire_core_widget_entity_create' %}
+                        {% set keyToEntity = widget.id ? 'victoire_widget_partial_form_edit' : 'victoire_widget_partial_form_create' %}
                         {% set position = position == '' ? null : position %}
-                        {% set urlToload = path( keyToEntity, {'viewReference':view.reference.id, 'slot': slot, 'position': position, 'parentWidgetMap': parentWidgetMap, 'businessEntityId': class, 'type' : type, 'widget_id': widget.id }) %}
+                        {% set routeName = path( keyToEntity, {'viewReference':view.reference.id, 'slot': slot, 'position': position, 'parentWidgetMap': parentWidgetMap, 'businessEntityId': class, 'type' : type, 'widget_id': widget.id }) %}
                         <a href="#picker-{{ class|lower }}" {% if not widget.businessEntityId or (widget.businessEntityId != class|lower or not entityForms) %} class="load-business-form" data-business-entity-form-url="{{ urlToload }}" {% endif %} data-toggle="vic-tab">
                             {{ ('form.widget.tab.' ~ class|lower ~ '.label')|trans({}, 'victoire') }}
                         </a>
