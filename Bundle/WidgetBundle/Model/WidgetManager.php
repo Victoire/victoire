@@ -101,29 +101,29 @@ class WidgetManager
      *
      * @return array
      */
-    public function newWidget($mode, $type, $slot, $view, $position, $parentWidgetMap)
+    public function newWidget($mode, $type, $slot, $view, $position, $parentWidgetMap, $quantum)
     {
         $widget = $this->widgetHelper->newWidgetInstance($type, $view, $slot, $mode);
         $widgets = ['static' => $widget];
 
         /** @var BusinessEntity[] $classes */
         $classes = $this->cacheReader->getBusinessClassesForWidget($widget);
-        $forms = $this->widgetFormBuilder->renderNewQuantumForms($slot, $view, $widgets, $widget, $classes, $position, $parentWidgetMap);
+        $forms = $this->widgetFormBuilder->renderNewQuantumForms($slot, $view, $widgets, $widget, $classes, $position, $parentWidgetMap, $quantum);
 
         return [
             'widget' => $widget,
-            'html' => $this->templating->render(
+            'html'   => $this->templating->render(
                 'VictoireCoreBundle:Widget:Form/new.html.twig',
                 [
-                    'id'    => time(),
-                    'view'    => $view,
-                    'slot'    => $slot,
-                    'position'    => $position,
+                    'id'                 => time(),
+                    'view'               => $view,
+                    'slot'               => $slot,
+                    'position'           => $position,
                     'parentWidgetMap'    => $parentWidgetMap,
-                    'classes' => $classes,
-                    'widgets'  => $widgets,
-                    'widget'  => $widget,
-                    'forms'   => $forms,
+                    'classes'            => $classes,
+                    'widgets'            => $widgets,
+                    'widget'             => $widget,
+                    'forms'              => $forms,
                 ]
             ),
         ];
@@ -143,7 +143,7 @@ class WidgetManager
      *
      * @return Template
      */
-    public function createWidget($mode, $type, $slotId, View $view, $entity, $position, $widgetReference)
+    public function createWidget($mode, $type, $slotId, View $view, $entity, $position, $widgetReference, $quantum)
     {
         //services
         $formErrorHelper = $this->formErrorHelper;
@@ -155,7 +155,7 @@ class WidgetManager
         //create a new widget
         $widget = $this->widgetHelper->newWidgetInstance($type, $view, $slotId, $mode);
 
-        $form = $this->widgetFormBuilder->callBuildFormSwitchParameters($widget, $view, $entity, $position, $widgetReference, $slotId);
+        $form = $this->widgetFormBuilder->callBuildFormSwitchParameters($widget, $view, $entity, $position, $widgetReference, $slotId, $quantum);
 
         $noValidate = $request->query->get('novalidate', false);
 
@@ -215,7 +215,7 @@ class WidgetManager
      *
      * @return template
      */
-    public function editWidget(Request $request, Widget $widget, View $currentView, $businessEntityId = null, $widgetMode = Widget::MODE_STATIC)
+    public function editWidget(Request $request, Widget $widget, View $currentView, $quantum = null, $businessEntityId = null, $widgetMode = Widget::MODE_STATIC)
     {
         /** @var BusinessEntity[] $classes */
         $classes = $this->cacheReader->getBusinessClassesForWidget($widget);
@@ -237,9 +237,9 @@ class WidgetManager
                 $widget = $this->overwriteWidget($currentView, $widget);
             }
             if ($businessEntityId !== null) {
-                $form = $this->widgetFormBuilder->buildForm($widget, $currentView, $businessEntityId, $classes[$businessEntityId]->getClass(), $widgetMode);
+                $form = $this->widgetFormBuilder->buildForm($widget, $currentView, $businessEntityId, $classes[$businessEntityId]->getClass(), $widgetMode, null, null, null, $quantum);
             } else {
-                $form = $this->widgetFormBuilder->buildForm($widget, $currentView);
+                $form = $this->widgetFormBuilder->buildForm($widget, $currentView, null, null, $widgetMode, null, null, null, $quantum);
             }
 
             $noValidate = $request->query->get('novalidate', false);
@@ -257,16 +257,18 @@ class WidgetManager
                     'success'     => true,
                     'html'        => $this->widgetRenderer->render($widget, $currentView),
                     'widgetId'    => $initialWidgetId,
+                    'slot'        => $widget->getWidgetMap()->getSlot(),
                     'viewCssHash' => $currentView->getCssHash(),
                 ];
             } else {
                 $formErrorHelper = $this->formErrorHelper;
                 //Return a message for developer in console and form view in order to refresh view and show form errors
                 $response = [
-                    'success' => false,
+                    'success'     => false,
                     'widgetId'    => $initialWidgetId,
-                    'message' => $noValidate === false ? $formErrorHelper->getRecursiveReadableErrors($form) : null,
-                    'html'    => $this->widgetFormBuilder->renderForm($form, $widget, $businessEntityId),
+                    'slot'        => $widget->getWidgetMap()->getSlot(),
+                    'message'     => $noValidate === false ? $formErrorHelper->getRecursiveReadableErrors($form) : null,
+                    'html'        => $this->widgetFormBuilder->renderForm($form, $widget, $businessEntityId),
                 ];
             }
         } else {
@@ -278,14 +280,14 @@ class WidgetManager
                 'html'     => $this->templating->render(
                     'VictoireCoreBundle:Widget:Form/edit.html.twig',
                     [
-                        'view'    => $currentView,
-                        'slot'    => $widget->getWidgetMap()->getSlot(),
-                        'position'    => $widget->getWidgetMap()->getPosition(),
+                        'view'               => $currentView,
+                        'slot'               => $widget->getWidgetMap()->getSlot(),
+                        'position'           => $widget->getWidgetMap()->getPosition(),
                         'parentWidgetMap'    => $widget->getWidgetMap()->getParent() ? $widget->getWidgetMap()->getParent()->getId() : null,
-                        'classes' => $classes,
-                        'forms'   => $forms,
-                        'widgets'  => $widgets,
-                        'widget'  => $widget,
+                        'classes'            => $classes,
+                        'forms'              => $forms,
+                        'widgets'            => $widgets,
+                        'widget'             => $widget,
                     ]
                 ),
             ];

@@ -28,7 +28,7 @@ $vic(document).on('change', 'select[data-refreshOnChange="true"], input:checkbox
 
     $vic.ajax({
         type: form.attr('method'),
-        url : form.attr('action') + '?novalidate',
+        url : form.attr('action') + (form.attr('action').split('?')[1] ? '&' : '?') + 'novalidate',
         data: form.serialize(),
         async: true
     }).done(function(response){

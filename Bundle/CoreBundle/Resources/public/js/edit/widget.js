@@ -196,9 +196,18 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update"]', function(
 $vic(document).on('click', 'a#widget-new-tab', function(event) {
     event.preventDefault();
     loading(true);
+    var url = Routing.generate('victoire_core_widget_new_quantum_item', {
+        type: $vic(this).data('type'),
+        viewReference: viewReferenceId,
+        slot: $vic(this).data('slot'),
+        position: $vic(this).data('position'),
+        parentWidgetMap: $vic(this).data('parentwidgetmap'),
+        quantum: $vic(this).parents('ul').children('li').length,
+        _locale: locale
+    });
     $vic.ajax({
         type: "GET",
-        url : $vic(this).attr('href')
+        url : url
     }).done(function(response) {
         if (true === response.success) {
             $vic('.vic-modal-tab-content-container .vic-tab-quantum').removeClass('vic-active');

@@ -28,16 +28,15 @@ class WidgetMapManager
     public function insert(Widget $widget, View $view, $slotId, $position, $widgetReference)
     {
         $quantum = $this->em->getRepository('VictoireWidgetMapBundle:WidgetMap')->findOneBy([
-           'view' => $view,
-           'slot' => $slotId,
+           'view'     => $view,
+           'slot'     => $slotId,
            'position' => $position,
-           'parent' => $widgetReference,
+           'parent'   => $widgetReference,
         ]);
         if ($quantum) {
             $widget->setWidgetMap($quantum);
             $view->addWidgetMap($quantum);
         } else {
-
             $parent = null;
             if ($widgetReference) {
                 $parent = $this->em->getRepository('VictoireWidgetMapBundle:WidgetMap')->find($widgetReference);

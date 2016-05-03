@@ -11,7 +11,6 @@ use Victoire\Bundle\WidgetMapBundle\Exception\WidgetMapNotFoundException;
  * @deprecated Just call $widget->getWidgetMap();
  *
  * Class WidgetMapHelper
- *
  */
 class WidgetMapHelper
 {

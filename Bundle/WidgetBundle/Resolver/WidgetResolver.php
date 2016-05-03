@@ -3,23 +3,20 @@
  * Created by PhpStorm.
  * User: paulandrieux
  * Date: 17/03/2016
- * Time: 17:28
+ * Time: 17:28.
  */
-
 namespace Victoire\Bundle\WidgetBundle\Resolver;
 
-
 use Symfony\Component\PropertyAccess\PropertyAccessor;
-use Victoire\Bundle\CriteriaBundle\Chain\CriteriaChain;
 use Victoire\Bundle\CriteriaBundle\Chain\DataSourceChain;
 use Victoire\Bundle\CriteriaBundle\Entity\Criteria;
-use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
+use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 
 class WidgetResolver
 {
-    const OPERAND_EQUAL = "equal";
-    const OPERAND_IN = "in";
+    const OPERAND_EQUAL = 'equal';
+    const OPERAND_IN = 'in';
 
     /**
      * @var DataSourceChain
@@ -33,13 +30,11 @@ class WidgetResolver
      */
     public function __construct(DataSourceChain $dataSourceChain)
     {
-
         $this->dataSourceChain = $dataSourceChain;
     }
 
     public function resolve(WidgetMap $widgetMap)
     {
-
         $widget = null;
         $accessor = new PropertyAccessor();
         //TODO: orderiaze it
@@ -54,6 +49,7 @@ class WidgetResolver
                     continue 2; //try with break
                 }
             }
+
             return $widget;
         }
 

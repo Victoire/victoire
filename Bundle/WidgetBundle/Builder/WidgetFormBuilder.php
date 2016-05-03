@@ -69,6 +69,7 @@ class WidgetFormBuilder
             $templateName,
             [
                 'widget' => $widget,
+                'slot'   => $widget->getWidgetMap()->getSlot(),
                 'view'   => $this->container->get('victoire_core.current_view')->getCurrentView(),
                 'form'   => $form->createView(),
                 'id'     => $widget->getId(),
@@ -85,21 +86,23 @@ class WidgetFormBuilder
      * @param Widget           $widget
      * @param BusinessEntity[] $classes
      * @param int              $position
+     * @param null             $parentWidgetMap
+     * @param int              $position
      *
      * @throws \Exception
      *
-     * @return Form[]
+     * @return \Symfony\Component\Form\Form[]
      */
-    public function renderNewWidgetForms($slot, View $view, Widget $widget, $classes, $position = null, $parentWidgetMap = null)
+    public function renderNewWidgetForms($slot, View $view, Widget $widget, $classes, $position, $parentWidgetMap, $quantum)
     {
         //the static form
         $forms['static'] = [];
-        $forms['static']['main'] = $this->renderNewForm($this->buildForm($widget, $view, null, null, Widget::MODE_STATIC, $slot, $position, $parentWidgetMap), $widget, $slot, $view, null);
+        $forms['static']['main'] = $this->renderNewForm($this->buildForm($widget, $view, null, null, Widget::MODE_STATIC, $slot, $position, $parentWidgetMap, $quantum), $widget, $slot, $view, null);
 
         // Build each form relative to business entities
         foreach ($classes as $businessEntity) {
             //get the forms for the business entity (entity/query/businessEntity)
-            $entityForms = $this->buildEntityForms($widget, $view, $businessEntity->getId(), $businessEntity->getClass(), $position, $parentWidgetMap, $slot);
+            $entityForms = $this->buildEntityForms($widget, $view, $businessEntity->getId(), $businessEntity->getClass(), $position, $parentWidgetMap, $slot, $quantum);
 
             //the list of forms
             $forms[$businessEntity->getId()] = [];
@@ -113,6 +116,7 @@ class WidgetFormBuilder
 
         return $forms;
     }
+
     /**
      * Generates new forms for each available business entities.
      *
@@ -126,11 +130,11 @@ class WidgetFormBuilder
      *
      * @return Form[]
      */
-    public function renderNewQuantumForms($slot, View $view, $widgets, $activeWidget, $classes, $position = null, $parentWidgetMap = null)
+    public function renderNewQuantumForms($slot, View $view, $widgets, $activeWidget, $classes, $position = null, $parentWidgetMap = null, $quantum = null)
     {
         $forms = [];
         foreach ($widgets as $key => $widget) {
-            $forms[$key] = $this->renderNewWidgetForms($slot, $view, $widget, $classes, $position, $parentWidgetMap);
+            $forms[$key] = $this->renderNewWidgetForms($slot, $view, $widget, $classes, $position, $parentWidgetMap, $quantum ?: $key);
             if ($widget === $activeWidget) {
                 $forms[$key]['active'] = true;
             }
@@ -149,20 +153,20 @@ class WidgetFormBuilder
      *
      * @return array
      */
-    protected function buildEntityForms($widget, View $view, $businessEntityId = null, $namespace = null, $position = null, $parentWidgetMap = null, $slot = null)
+    protected function buildEntityForms($widget, View $view, $businessEntityId = null, $namespace = null, $position = null, $parentWidgetMap = null, $slot = null, $quantum = null)
     {
         $forms = [];
 
         //get the entity form
-        $entityForm = $this->buildForm($widget, $view, $businessEntityId, $namespace, Widget::MODE_ENTITY, $slot, $position, $parentWidgetMap);
+        $entityForm = $this->buildForm($widget, $view, $businessEntityId, $namespace, Widget::MODE_ENTITY, $slot, $position, $parentWidgetMap, $quantum);
         $forms[Widget::MODE_ENTITY] = $entityForm;
 
         //get the query form
-        $queryForm = $this->buildForm($widget, $view, $businessEntityId, $namespace, Widget::MODE_QUERY, $slot, $position, $parentWidgetMap);
+        $queryForm = $this->buildForm($widget, $view, $businessEntityId, $namespace, Widget::MODE_QUERY, $slot, $position, $parentWidgetMap, $quantum);
         $forms[Widget::MODE_QUERY] = $queryForm;
 
         //get the query form
-        $businessEntityForm = $this->buildForm($widget, $view, $businessEntityId, $namespace, Widget::MODE_BUSINESS_ENTITY, $slot, $position, $parentWidgetMap);
+        $businessEntityForm = $this->buildForm($widget, $view, $businessEntityId, $namespace, Widget::MODE_BUSINESS_ENTITY, $slot, $position, $parentWidgetMap, $quantum);
         $forms[Widget::MODE_BUSINESS_ENTITY] = $businessEntityForm;
 
         return $forms;
@@ -180,9 +184,9 @@ class WidgetFormBuilder
      *
      * @throws \Exception
      *
-     * @return $form
+     * @return Form
      */
-    public function buildWidgetForm(Widget $widget, View $view, $businessEntityId = null, $namespace = null, $formMode = Widget::MODE_STATIC, $position = null, $parentWidgetMap = null, $slotId = null)
+    public function buildWidgetForm(Widget $widget, View $view, $businessEntityId = null, $namespace = null, $formMode = Widget::MODE_STATIC, $position = null, $parentWidgetMap = null, $slotId = null, $quantum = null)
     {
         $router = $this->container->get('router');
 
@@ -208,6 +212,7 @@ class WidgetFormBuilder
                 'type'               => $widget->getType(), // @todo: use the config
                 'position'           => $position,
                 'parentWidgetMap'    => $parentWidgetMap,
+                'quantum'            => $quantum,
             ];
             $action = 'victoire_core_widget_create';
             if ($businessEntityId) {
@@ -225,6 +230,7 @@ class WidgetFormBuilder
                     'viewReference'    => $viewReference->getId(),
                     'businessEntityId' => $businessEntityId,
                     'mode'             => $formMode,
+                    'quantum'          => $quantum,
                 ]
             );
         }
@@ -241,11 +247,11 @@ class WidgetFormBuilder
         );
 
         $optionsContainer = new WidgetOptionsContainer([
-            'businessEntityId' => $businessEntityId,
-            'namespace'        => $namespace,
-            'mode'             => $formMode,
-            'action'           => $formUrl,
-            'method'           => 'POST',
+            'businessEntityId'      => $businessEntityId,
+            'namespace'             => $namespace,
+            'mode'                  => $formMode,
+            'action'                => $formUrl,
+            'method'                => 'POST',
             'dataSources'           => $this->container->get('victoire_criteria.chain.data_source_chain'),
         ]);
 
@@ -256,14 +262,34 @@ class WidgetFormBuilder
         /** @var Form $mockForm Get the base form to get the name */
         $mockForm = $formFactory->create($widgetFormTypeClass, $widget, $optionsContainer->getOptions());
         //Prefix base name with form mode to avoid to have unique form fields ids
+
         $form = $formFactory->createNamed(
-            sprintf('%s_%s_%s', $businessEntityId, $formMode, $mockForm->getName()),
+            sprintf('%s_%s_%s_%s', $businessEntityId, $this->convertToString($quantum), $formMode, $mockForm->getName()),
             $widgetFormTypeClass,
             $widget,
             $optionsContainer->getOptions()
         );
 
         return $form;
+    }
+
+    /**
+     * This method converts a number to an alphabetic char.
+     * If the number is > 26, convert to aa...az...zz...
+     *
+     * @param        $number
+     * @param string $letter
+     *
+     * @return string
+     */
+    private function convertToString($number, $letter = 'a', $i = 0)
+    {
+        while ($i < $number) {
+            $i++;
+            $letter++;
+        }
+
+        return $letter;
     }
 
     /**
@@ -278,9 +304,9 @@ class WidgetFormBuilder
      *
      * @throws \Exception
      *
-     * @return $form
+     * @return Form
      */
-    public function buildForm($widget, View $view, $businessEntityId = null, $namespace = null, $formMode = Widget::MODE_STATIC, $slotId = null, $position = null, $parentWidgetMap = null)
+    public function buildForm($widget, View $view, $businessEntityId = null, $namespace = null, $formMode = Widget::MODE_STATIC, $slotId = null, $position = null, $parentWidgetMap = null, $quantum = null)
     {
         //test parameters
         if ($businessEntityId !== null) {
@@ -292,7 +318,7 @@ class WidgetFormBuilder
             }
         }
 
-        $form = $this->buildWidgetForm($widget, $view, $businessEntityId, $namespace, $formMode, $position, $parentWidgetMap, $slotId);
+        $form = $this->buildWidgetForm($widget, $view, $businessEntityId, $namespace, $formMode, $position, $parentWidgetMap, $slotId, $quantum);
 
         //send event
         $dispatcher = $this->container->get('event_dispatcher');
@@ -315,7 +341,7 @@ class WidgetFormBuilder
      *
      * @return \Symfony\Component\Form\Form
      */
-    public function callBuildFormSwitchParameters(Widget $widget, $view, $businessEntityId, $position, $parentWidgetMap, $slotId)
+    public function callBuildFormSwitchParameters(Widget $widget, $view, $businessEntityId, $position, $parentWidgetMap, $slotId, $quantum)
     {
         $entityClass = null;
         //if there is an entity
@@ -331,7 +357,7 @@ class WidgetFormBuilder
             $entityClass = $classes[$businessEntityId]->getClass();
         }
 
-        $form = $this->buildForm($widget, $view, $businessEntityId, $entityClass, $widget->getMode(), $slotId, $position, $parentWidgetMap);
+        $form = $this->buildForm($widget, $view, $businessEntityId, $entityClass, $widget->getMode(), $slotId, $position, $parentWidgetMap, $quantum);
 
         return $form;
     }
