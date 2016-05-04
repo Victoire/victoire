@@ -116,7 +116,7 @@ class WidgetController extends Controller
         return $response;
     }
 
-    /**=
+    /**
      * @param $widget
      * @param View $view
      * @param null $businessEntityId
