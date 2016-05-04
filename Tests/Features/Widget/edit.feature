@@ -29,18 +29,19 @@ Feature: Edit a widget
         When I select "Force" from the "1" select of "content" slot
         Then I should see "Créer"
         When I follow the tab "Jedi"
+        And I should see "Objet courant"
         And I follow "Objet courant"
         And I select "side" from "jedi_businessEntity_widget_force[fields][side]"
         When I submit the widget
         Then I should see "Victoire !"
-        And I should see "Le Côté jedi -> side de la force"
+        And I should see "Le Côté obscure de la force"
         When I switch to "edit" mode
         And I edit the "Force" widget
         Then I should see "Widget #1 - Force"
         When I select "slug" from "jedi_businessEntity_widget_force[fields][side]"
         And I submit the widget
         Then I should see "Victoire !"
-        And I should see "Le Côté jedi -> slug de la force"
+        And I should see "Le Côté anakin de la force"
 
     Scenario: I can create a new Business entity page pattern, create a static widget and edit this widget in query mode
         When I select "Force" from the "1" select of "content" slot
@@ -53,6 +54,7 @@ Feature: Edit a widget
         And I edit the "Force" widget
         Then I should see "Widget #1 - Force"
         When I follow the tab "Jedi"
+        And I should see "Requête"
         And I follow "Requête"
         When I select "side" from "jedi_query_widget_force[fields][side]"
         And I submit the widget

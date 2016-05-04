@@ -1,0 +1,13 @@
+<ul class="vic-nav vic-nav-tabs vic-modal-nav-tabs">
+    <li class="{% if widget.mode == constant('MODE_ENTITY', widget) or widget.mode == constant('MODE_STATIC', widget) %}vic-active {% endif %}vic-seperate"><a href="#picker-{{ class|lower }}-entity" data-toggle="vic-tab">{{ ('form.widget.tab.picker.label')|trans({}, 'victoire') }}</a></li>
+    <li{% if widget.mode == constant('MODE_QUERY', widget) %} class="vic-active"{% endif %}><a href="#picker-{{ class|lower }}-query" data-toggle="vic-tab">{{ ('form.widget.tab.query.label')|trans({}, 'victoire') }}</a></li>
+
+    {% if is_business_entity_allowed(class|lower, view) %}
+        <li{% if widget.mode == constant('MODE_BUSINESS_ENTITY', widget) %} class="vic-active"{% endif %}><a href="#picker-{{ class|lower }}-businessEntity" data-toggle="vic-tab">{{ ('form.widget.tab.entity_instance.label')|trans({}, 'victoire') }}</a></li>
+    {% endif %}
+</ul>
+<div class="vic-tab-content vic-modal-tab-content">
+    {% for subForm in entityForms %}
+        {{ subForm|raw }}
+    {% endfor %}
+</div>

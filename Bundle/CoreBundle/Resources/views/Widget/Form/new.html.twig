@@ -11,45 +11,43 @@
 
     {% if classes|length %}
         <ul class="vic-nav vic-nav-tabs vic-modal-nav-tabs">
-            <li class="{% if constant('MODE_STATIC', widget) == widget.mode %}vic-active {% endif %}vic-seperate"><a href="#picker-static" data-toggle="vic-tab">{{ ('form.widget.tab.manual.label')|trans({}, 'victoire') }}</a></li>
-            {% for class, namespace in classes %}
-                {% if namespace.disable %}
+            <li class="{% if constant('MODE_STATIC', widget) == widget.mode or not entityForms %}vic-active {% endif %}vic-seperate"><a href="#picker-static" data-toggle="vic-tab">{{ ('form.widget.tab.manual.label')|trans({}, 'victoire') }}</a></li>
+            {% for businessEntity in classes %}
+                {% set class = businessEntity.id %}
+                {% if businessEntity.disable %}
                     <li class="vic-disable"><span title="{{ ('form.widget.tab.entity.disable.label')|trans({}, 'victoire') }}">{{ ('form.widget.tab.' ~ class|lower ~ '.label')|trans({}, 'victoire') }}</span></li>
                 {% else %}
-                    <li class="{% if not loop.last %}vic-seperate{% endif %}{% if widget.businessEntityId == class|lower %} vic-active{% endif %}"><a href="#picker-{{ class|lower }}" data-toggle="vic-tab">{{ ('form.widget.tab.' ~ class|lower ~ '.label')|trans({}, 'victoire') }}</a></li>
+
+                    <li class="{% if not loop.last %}vic-seperate{% endif %}{% if widget.businessEntityId == class|lower and entityForms %} vic-active{% endif %}">
+                        {% set keyToEntity = widget.id ? 'victoire_widget_partial_form_edit' : 'victoire_widget_partial_form_create' %}
+                        {% set position = position == '' ? null : position %}
+                        {% set routeName = path( keyToEntity, {'viewReference':view.reference.id, 'slot': slot, 'position': position, 'parentWidgetMap': parentWidgetMap, 'businessEntityId': class, 'type' : type, 'widget_id': widget.id }) %}
+                        <a href="#picker-{{ class|lower }}" {% if not widget.businessEntityId or (widget.businessEntityId != class|lower or not entityForms) %} class="load-business-form" data-business-entity-form-url="{{ urlToload }}" {% endif %} data-toggle="vic-tab">
+                            {{ ('form.widget.tab.' ~ class|lower ~ '.label')|trans({}, 'victoire') }}
+                        </a>
+                    </li>
                 {% endif %}
             {% endfor %}
         </ul>
     {% endif %}
 
     <div class="vic-tab-content vic-modal-tab-content">
-      {% for class, form in forms %}
-        {% set isActive = class == widget.mode or widget.businessEntityId == class|lower and widget.mode == constant('MODE_BUSINESS_ENTITY', widget) %}
-            <div class="vic-tab-pane{% if isActive %} vic-active{% endif %}" id="picker-{{ class|lower }}">
 
-            {% if class != constant('MODE_STATIC', widget) and is_granted('ROLE_VICTOIRE_DEVELOPER') %}
-                <ul class="vic-nav vic-nav-tabs vic-modal-nav-tabs">
-                    <li class="{% if widget.mode == constant('MODE_ENTITY', widget) %}vic-active {% endif %}vic-seperate"><a href="#picker-{{ class|lower }}-entity" data-toggle="vic-tab">{{ ('form.widget.tab.picker.label')|trans({}, 'victoire') }}</a></li>
-                    <li{% if widget.mode == constant('MODE_QUERY', widget) %} class="vic-active"{% endif %}><a href="#picker-{{ class|lower }}-query" data-toggle="vic-tab">{{ ('form.widget.tab.query.label')|trans({}, 'victoire') }}</a></li>
-
-                    {% if is_business_entity_allowed(class|lower, view) %}
-                        <li{% if widget.mode == constant('MODE_BUSINESS_ENTITY', widget) %} class="vic-active"{% endif %}><a href="#picker-{{ class|lower }}-businessEntity" data-toggle="vic-tab">{{ ('form.widget.tab.entity_instance.label')|trans({}, 'victoire') }}</a></li>
-                    {% endif %}
-                </ul>
-                <div class="vic-tab-content vic-modal-tab-content">
-                    {% for subForm in form %}
-                        {{ subForm|raw }}
-                    {% endfor %}
-                </div>
-            {% else %}
-                {% for subForm in form %}
-                    {{ subForm|raw }}
-                {% endfor %}
-            {% endif %}
+        {% if is_granted('ROLE_VICTOIRE_DEVELOPER') %}
+            <div class="vic-tab-pane{% if widget.mode == constant('MODE_STATIC', widget) or not entityForms %} vic-active{% endif %}" id="picker-{{ constant('MODE_STATIC', widget)|lower }}">
+                {{ staticForm|raw }}
             </div>
-      {% endfor %}
+        {% endif %}
+        {% for businessEntity in classes %}
+            {% set class = businessEntity.id %}
+            {% set isActive = class == widget.mode or widget.businessEntityId == class|lower and widget.mode == constant('MODE_BUSINESS_ENTITY', widget) %}
+            <div class="vic-tab-pane{% if widget.businessEntityId and widget.businessEntityId == class and entityForms %} vic-active{% endif %}" id="picker-{{ class|lower }}">
+                {% if widget.businessEntityId and widget.businessEntityId == class and entityForms %}
+                    {% include 'VictoireCoreBundle:Widget:Form/_entity.html.twig' %}
+                {% endif %}
+            </div>
+        {% endfor %}
     </div>
-
 {% endblock modal_body_content %}
 
 {% block action %}create{% endblock action %}

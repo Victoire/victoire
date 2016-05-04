@@ -116,6 +116,48 @@ class WidgetController extends Controller
         return $response;
     }
 
+    /**=
+     * @param $widget
+     * @param View $view
+     * @param null $businessEntityId
+     * @param null $namespace
+     * @param null $position
+     * @param null $parentWidgetMap
+     * @param null $slot
+     *
+     * @return string
+     *
+     * @Route("/victoire-dcms/widget/partialForm/create/{viewReference}/{businessEntityId}/{type}/{slot}/{parentWidgetMap}/{position}", name="victoire_widget_partial_form_create", defaults={"widget_id":null, "slot":null, "businessEntityId":null, "position":null, "parentWidgetMap":null, "_format": "json"})
+     * @Route("/victoire-dcms/widget/partialForm/update/{viewReference}/{businessEntityId}/{type}/{widget_id}/{slot}/{parentWidgetMap}", name="victoire_widget_partial_form_edit", defaults={"widget_id":null, "slot":null, "businessEntityId":null, "position":null, "parentWidgetMap":null, "_format": "json"})
+     * @ParamConverter("widget", class="VictoireWidgetBundle:Widget", options={"id" = "widget_id"})
+     */
+    public function partialFormAction($viewReference, $slot, $position, $parentWidgetMap, $businessEntityId, $type, Widget $widget = null)
+    {
+        try {
+            $view = $this->getViewByReferenceId($viewReference);
+
+            if (!$reference = $this->get('victoire_view_reference.repository')
+                ->getOneReferenceByParameters(['id' => $viewReference])) {
+                $reference = new ViewReference($viewReference);
+            }
+            $view->setReference($reference);
+            $businessEntity = null;
+            if ($businessEntityId) {
+                $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($businessEntityId);
+            }
+            $new = $widget ? false : true;
+            $response = new JsonResponse(
+                $this->get('victoire_widget.widget_manager')->newEntityForms(
+                    $widget, $businessEntity, $type, $slot, $view, $position, $parentWidgetMap, $new
+                )
+            );
+        } catch (Exception $ex) {
+            $response = $this->getJsonReponseFromException($ex);
+        }
+
+        return $response;
+    }
+
     /**
      * Create a widget.
      * This action needs 2 routes to handle the presence or not of "businessEntityId" and 'parentWidgetMap'
@@ -197,13 +239,19 @@ class WidgetController extends Controller
         }
         $widget->setCurrentView($widgetView);
         $this->get('victoire_core.current_view')->setCurrentView($view);
+        $businessEntity = null;
+        $businessEntityId = $businessEntityId == null ? $widget->getBusinessEntityId() : $businessEntityId;
+        if ($businessEntityId) {
+            $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($businessEntityId);
+        }
+
         try {
             $response = new JsonResponse(
                 $this->get('widget_manager')->editWidget(
                     $this->get('request'),
                     $widget,
                     $view,
-                    $businessEntityId,
+                    $businessEntity,
                     $mode
                 )
             );

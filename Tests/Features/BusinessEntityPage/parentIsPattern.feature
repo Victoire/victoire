@@ -28,11 +28,12 @@ Feature: Mercenary is not a BusinessEntity itself but extends Character which is
             When I select "Text" from the "1" select of "content" slot
             Then I should see "Créer"
             When I follow "Personnages"
+            And I should see "Objet courant"
             And I follow "Objet courant"
             And I select "name" from "character_businessEntity_widget_text[fields][content]"
             And I submit the widget
             Then I should see "Victoire !"
-            Then I should see "-> name"
+            Then I should see "Boba fet"
         Given I am on "/fr/fiche-personnage-boba-fet"
             Then I should see "Boba fet"
 
