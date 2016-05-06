@@ -34,7 +34,7 @@ Feature: Create business entity pages
         Then I follow the tab "Jedi"
         And I should see "Objet courant"
         And I follow "Objet courant"
-        And I select "side" from "jedi_businessEntity_widget_force[fields][side]"
+        And I select "side" from "jedi_a_businessEntity_widget_force[fields][side]"
         And I submit the widget
         And I wait 5 seconds
         Then I should see "Victoire !"
@@ -155,7 +155,7 @@ Feature: Create business entity pages
         Then I should see "Créer"
         When I follow the tab "Jedi"
         And I follow the tab "Objet courant"
-        And I select "side" from "jedi_businessEntity_widget_force[fields][side]"
+        And I select "side" from "jedi_a_businessEntity_widget_force[fields][side]"
         And I submit the widget
         And I wait 5 seconds
         Then I should see "Victoire !"

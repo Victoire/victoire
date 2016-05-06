@@ -31,14 +31,14 @@ Feature: Edit a widget
         When I follow the tab "Jedi"
         And I should see "Objet courant"
         And I follow "Objet courant"
-        And I select "side" from "jedi_businessEntity_widget_force[fields][side]"
+        And I select "side" from "jedi_a_businessEntity_widget_force[fields][side]"
         When I submit the widget
         Then I should see "Victoire !"
         And I should see "Le Côté obscure de la force"
         When I switch to "edit" mode
         And I edit the "Force" widget
         Then I should see "Mettre à jour"
-        When I select "slug" from "jedi_businessEntity_widget_force[fields][side]"
+        When I select "slug" from "jedi_a_businessEntity_widget_force[fields][side]"
         And I submit the widget
         Then I should see "Victoire !"
         And I should see "Le Côté anakin de la force"
