@@ -3,10 +3,11 @@
 namespace Victoire\Bundle\BusinessEntityBundle\Exception;
 
 /**
- * Triggered when at least one Business entity instance is needed.
+ * Triggered when at least one Business entity instance is needed
  */
 class MissingBusinessEntityInstanceException extends \Exception
 {
+
     /**
      * MissingBusinessEntityException constructor.
      *
