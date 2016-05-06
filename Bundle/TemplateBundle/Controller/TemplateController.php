@@ -103,7 +103,7 @@ class TemplateController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $template = new Template();
-        $form = $this->container->get('form.factory')->create($this->getNewTemplateType(), $template); //@todo utiliser un service
+        $form = $this->container->get('form.factory')->create(TemplateType::class, $template); //@todo utiliser un service
 
         $form->handleRequest($this->get('request'));
         if ($form->isValid()) {
@@ -178,7 +178,7 @@ class TemplateController extends Controller
     public function editAction(Template $template)
     {
         $em = $this->getDoctrine()->getManager();
-        $form = $this->container->get('form.factory')->create($this->getNewTemplateType(), $template);
+        $form = $this->container->get('form.factory')->create(TemplateType::class, $template);
 
         $form->handleRequest($this->get('request'));
         if ($form->isValid()) {
