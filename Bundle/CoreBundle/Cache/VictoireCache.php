@@ -38,21 +38,4 @@ class VictoireCache extends PhpFileCache
 
         return $defaultValue;
     }
-
-    /**
-     * Puts data into the cache.
-     *
-     * @param string $id   The cache id.
-     * @param mixed  $data The cache entry/data.
-     *
-     * @return bool TRUE if the entry was successfully stored in the cache, FALSE otherwise.
-     */
-    public function save($id, $data, $ttl = 20)
-    {
-        if ($this->debug) {
-            parent::save($id, $data, $ttl);
-        } else {
-            parent::save($id, $data);
-        }
-    }
 }
