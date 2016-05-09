@@ -48,7 +48,7 @@ Feature: Mercenary is not a BusinessEntity itself but extends Character which is
             When I select "Fiche Personnage - Boba fet" from "_a_static_widget_button[link][viewReference]"
             And I fill in "_a_static_widget_button[title]" with "Fiche de Boba fet"
             And I submit the widget
-            Then I should see "Victoire"
+            Then I should see "Victoire !"
             Given I reload the page
             Then I should see "Fiche de Boba fet"
             When I follow "Fiche de Boba fet"

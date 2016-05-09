@@ -114,7 +114,7 @@ Scenario: I create widget in a position
     And "Le côté Obscure de la force" should precede "Le côté Lumineux de la force"
 
     Given I reload the page
-    Then "Le côté Obscure de la force" should precede "Le côté.js Lumineux de la force"
+    Then "Le côté Obscure de la force" should precede "Le côté Lumineux de la force"
 
     Then I should see "Nouveau Contenu"
     Given I select "Force" from the "2" select of "content" slot

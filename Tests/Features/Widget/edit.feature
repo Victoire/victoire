@@ -56,7 +56,7 @@ Feature: Edit a widget
         When I follow the tab "Jedi"
         And I should see "Requête"
         And I follow "Requête"
-        When I select "side" from "jedi_query_widget_force[fields][side]"
+        When I select "side" from "jedi_a_query_widget_force[fields][side]"
         And I submit the widget
         Then I should see "Victoire !"
         And I should see "Le Côté obscure de la force"

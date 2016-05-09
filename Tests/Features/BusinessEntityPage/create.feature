@@ -24,7 +24,7 @@ Feature: Create business entity pages
         When I fill in "Nom" with "Fiche Jedi - {{item.name}}"
         And I fill in "URL" with "fiche-jedi-{{item.slug}}"
         And I follow "Créer"
-        And I wait 5 seconds
+        And I wait 2 seconds
         Then I should be on "/fr/victoire-dcms/business-template/show/5"
         And I should see "La représentation métier a bien été créée"
         Then I switch to "layout" mode
@@ -36,7 +36,6 @@ Feature: Create business entity pages
         And I follow "Objet courant"
         And I select "side" from "jedi_a_businessEntity_widget_force[fields][side]"
         And I submit the widget
-        And I wait 5 seconds
         Then I should see "Victoire !"
         Then I should see "Le Côté obscure de la force"
         Given I am on "/fr/fiche-jedi-anakin"
