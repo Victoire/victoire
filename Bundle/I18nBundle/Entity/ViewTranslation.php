@@ -12,6 +12,7 @@ use Knp\DoctrineBehaviors\Model\Translatable\Translation;
  * Victoire ViewTranslation
  *
  * @ORM\Entity()
+ * @ORM\Table(name="vic_view_translations")
  */
 class ViewTranslation
 {
