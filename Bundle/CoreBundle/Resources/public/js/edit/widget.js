@@ -79,10 +79,8 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update-bulk"], .vic-
         $vic("select.picker_entity_select").remove();
     }
 
-    var forms = $vic(this).parents('.vic-modal-content').find('.vic-tab-quantum .vic-tab-mode.vic-active .vic-tab-pane.vic-active form');
-    if (forms.length == 0) {
-        var forms = $vic(this).parents('.vic-modal-content').find('.vic-tab-quantum form');
-    }
+    var forms = $vic(this).parents('.vic-modal-content').find('.vic-tab-quantum .vic-tab-mode.vic-active > form');
+    forms = $vic.extend(forms, $vic(this).parents('.vic-modal-content').find('.vic-tab-quantum .vic-tab-mode.vic-active .vic-tab-pane.vic-active > form'));
 
     loading(true);
     var calls = [];
