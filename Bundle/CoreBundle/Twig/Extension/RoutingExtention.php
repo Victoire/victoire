@@ -40,7 +40,7 @@ class RoutingExtention extends BaseRoutingExtension
                 $params['entityId'] = $parameters['entityId'];
                 unset($parameters['entityId']);
             }
-		
+
             $params['locale'] = $this->request->getLocale();
             $page = $this->pageHelper->findPageByParameters($params);
             //get the url for the current locale

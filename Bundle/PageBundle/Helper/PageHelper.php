@@ -272,7 +272,6 @@ class PageHelper
                    //     'locale' => $viewReference->getLocale(),
                     ]);
                 $this->entityManager->refresh($page->setTranslatableLocale($viewReference->getLocale()));
-
             } else { //VirtualBusinessPage
                 $page = $this->entityManager->getRepository('VictoireCoreBundle:View')
                     ->findOneBy([

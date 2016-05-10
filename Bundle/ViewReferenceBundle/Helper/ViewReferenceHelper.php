@@ -66,8 +66,7 @@ class ViewReferenceHelper
         foreach ($tree as $branch) {
             /** @var WebViewInterface $view */
             $view = $branch['view'];
-            if(!$view instanceof VirtualBusinessPage)
-            {
+            if (!$view instanceof VirtualBusinessPage) {
                 $viewReferences = [];
                 /* @var EntityRepository $viewRepo */
                 $viewTranslationRepo = $entityManager->getRepository(ViewTranslation::class);

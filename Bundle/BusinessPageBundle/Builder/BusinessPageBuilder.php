@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\BusinessPageBundle\Builder;
 
 use Doctrine\ORM\EntityManager;
@@ -47,8 +48,7 @@ class BusinessPageBuilder
                                 ParameterConverter $parameterConverter,
                                 EntityProxyProvider $entityProxyProvider,
                                 ViewReferenceBuilder $viewReferenceBuilder
-    )
-    {
+    ) {
         $this->businessEntityHelper = $businessEntityHelper;
         $this->urlBuilder = $urlBuilder;
         $this->parameterConverter = $parameterConverter;
@@ -68,14 +68,13 @@ class BusinessPageBuilder
     {
         $viewTranslations = $em->getRepository(ViewTranslation::class)->getTranslationForView($businessTemplate);
         $translations = [];
-        if(count($viewTranslations == 0))
-        {
+        if (count($viewTranslations == 0)) {
             return $this->legacyGenerateEntityPageFromTemplate($businessTemplate, $entity, $em);
         }
         $page = new VirtualBusinessPage();
 
         $pageLocale = $businessTemplate->getLocale();
-        foreach(array_reverse($viewTranslations) as $viewTranslation) {
+        foreach (array_reverse($viewTranslations) as $viewTranslation) {
             $page = new VirtualBusinessPage();
             $em->refresh($viewTranslation->getObject()->setTranslatableLocale($viewTranslation->getLocale()));
             $reflect = new \ReflectionClass($businessTemplate);
@@ -100,16 +99,14 @@ class BusinessPageBuilder
         //find Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity object according to the given $entity
         $businessEntity = $this->businessEntityHelper->findByEntityInstance($entity);
 
-
         if ($businessEntity !== null) {
             //the business properties usable in a url
             $businessProperties = $this->getBusinessProperties($businessEntity);
 
-
             $entityProxy = $this->entityProxyProvider->getEntityProxy($entity, $businessEntity, $em);
 
             $references = [];
-            foreach($translations as $locale => $translation) {
+            foreach ($translations as $locale => $translation) {
                 /** @var VirtualBusinessPage $page */
                 $page = $translation['page'];
                 //the url of the page
@@ -151,10 +148,9 @@ class BusinessPageBuilder
                 }
                 $translation['page'] = $page;
                 $references[$locale] = $this->viewReferenceBuilder->buildViewReference($page, $em);
-		        $translations[$locale] = $translation;
-		
+                $translations[$locale] = $translation;
             }
-	    $firstTranslation = $translations[$pageLocale];
+            $firstTranslation = $translations[$pageLocale];
             $page = $firstTranslation['page'];
             $page->setReferences($references);
 
@@ -256,6 +252,7 @@ class BusinessPageBuilder
 
         call_user_func([$entity, $functionName], $value);
     }
+
     private function legacyGenerateEntityPageFromTemplate(BusinessTemplate $businessTemplate, $entity, EntityManager $em)
     {
         $page = new VirtualBusinessPage();
@@ -305,8 +302,7 @@ class BusinessPageBuilder
                 $page->setSeo($pageSeo);
             }
         }
+
         return $page;
     }
 }
-
-

@@ -517,7 +517,7 @@ class Widget extends BaseWidget implements VictoireQueryInterface
     }
 
     /**
-     * Generate the CacheId, insert params that can invalid the cache
+     * Generate the CacheId, insert params that can invalid the cache.
      *
      * @return string
      */
