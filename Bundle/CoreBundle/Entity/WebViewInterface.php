@@ -58,24 +58,4 @@ interface WebViewInterface
     public function isHomepage();
 
     public function setHomepage($homepage);
-
-    /**
-     * @deprecated
-     * @return mixed
-     */
-    public function getTranslations();
-
-    /**
-     * @deprecated
-     * @param $locale
-     *
-     * @return mixed
-     */
-    public function setTranslatableLocale($locale);
-
-    /**
-     * @deprecated
-     * @return mixed
-     */
-    public function getLocale();
 }
