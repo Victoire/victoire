@@ -158,3 +158,5 @@ snc_redis:
            alias: victoire
            dsn: redis://localhost
 
+parameters:
+    locale: fr
