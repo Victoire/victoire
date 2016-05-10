@@ -377,7 +377,7 @@ class WidgetManager
                     $this->entityManager->persist($relatedEntity);
                     $relatedEntitiesCopies[] = $relatedEntityCopy;
                 }
-                $accessor->setValue($widgetCopy, $name, $relatedEntitiesCopies);
+                $accessor->setValue($entityCopy, $name, $relatedEntitiesCopies);
             }
 
             //Clone OneToOne relation objects
@@ -386,7 +386,7 @@ class WidgetManager
                 if ($relatedEntity) {
                     $relatedEntityCopy = clone $relatedEntity;
                     $this->entityManager->persist($relatedEntity);
-                    $accessor->setValue($widgetCopy, $name, $relatedEntityCopy);
+                    $accessor->setValue($entityCopy, $name, $relatedEntityCopy);
                 }
             }
         }
