@@ -84,8 +84,8 @@ abstract class View
 
     /**
      * @Gedmo\TreeParent
-     * @ORM\ManyToOne(targetEntity="View", inversedBy="children", cascade={"persist"})
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="View", inversedBy="children", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $parent;
 
