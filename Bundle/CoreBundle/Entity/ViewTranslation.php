@@ -1,6 +1,6 @@
 <?php
 
-namespace Victoire\Bundle\I18nBundle\Entity;
+namespace Victoire\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -84,11 +84,4 @@ class ViewTranslation
         return $this->slug;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public static function getTranslatableEntityClass()
-    {
-        return '\\Victoire\\Bundle\\CoreBundle\\Entity\\View';
-    }
 }

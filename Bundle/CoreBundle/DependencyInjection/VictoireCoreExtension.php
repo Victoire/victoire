@@ -75,4 +75,12 @@ class VictoireCoreExtension extends Extension
             'victoire_core.businessTemplates', $config['businessTemplates']
         );
     }
+
+    public function prepend(ContainerBuilder $container)
+    {
+        $bundles = $container->getParameter('kernel.bundles');
+        if (isset($bundles['DoctrineBehaviorsBundle'])) {
+            $container->prependExtensionConfig('knp_doctrine_behaviors', ['translatable' => true]);
+        }
+    }
 }
