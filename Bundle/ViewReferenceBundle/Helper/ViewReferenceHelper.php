@@ -5,6 +5,7 @@ namespace Victoire\Bundle\ViewReferenceBundle\Helper;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
+use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\I18nBundle\Entity\ViewTranslation;
@@ -65,15 +66,18 @@ class ViewReferenceHelper
         foreach ($tree as $branch) {
             /** @var WebViewInterface $view */
             $view = $branch['view'];
-            $viewReferences = [];
-            /* @var EntityRepository $viewRepo */
-            $viewTranslationRepo = $entityManager->getRepository(ViewTranslation::class);
-            foreach ($viewTranslationRepo->findByObject($view) as $translation) {
-                $view->setTranslatableLocale($translation->getLocale());
-                $entityManager->refresh($view);
-                $viewReferences[$translation->getLocale()] = $this->viewReferenceBuilder->buildViewReference($view, $entityManager);
+            if(!$view instanceof VirtualBusinessPage)
+            {
+                $viewReferences = [];
+                /* @var EntityRepository $viewRepo */
+                $viewTranslationRepo = $entityManager->getRepository(ViewTranslation::class);
+                foreach ($viewTranslationRepo->findByObject($view) as $translation) {
+                    $view->setTranslatableLocale($translation->getLocale());
+                    $entityManager->refresh($view);
+                    $viewReferences[$translation->getLocale()] = $this->viewReferenceBuilder->buildViewReference($view, $entityManager);
+                }
+                $view->setReferences($viewReferences);
             }
-            $view->setReferences($viewReferences);
             if (!empty($branch['children'])) {
                 /** @var WebViewInterface $children */
                 $children = $branch['children'];
