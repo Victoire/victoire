@@ -269,14 +269,18 @@ class PageHelper
                 $page = $this->entityManager->getRepository('VictoireCoreBundle:View')
                     ->findOneBy([
                         'id'     => $viewReference->getViewId(),
-                        'locale' => $viewReference->getLocale(),
+                   //     'locale' => $viewReference->getLocale(),
                     ]);
+                $this->entityManager->refresh($page->setTranslatableLocale($viewReference->getLocale()));
+
             } else { //VirtualBusinessPage
                 $page = $this->entityManager->getRepository('VictoireCoreBundle:View')
                     ->findOneBy([
                         'id'     => $viewReference->getTemplateId(),
-                        'locale' => $viewReference->getLocale(),
+                    //    'locale' => $viewReference->getLocale(),
                     ]);
+                $this->entityManager->refresh($page->setTranslatableLocale($viewReference->getLocale()));
+
                 if ($entity) {
                     if ($page instanceof BusinessTemplate) {
                         $page = $this->updatePageWithEntity($page, $entity);
@@ -289,8 +293,9 @@ class PageHelper
             $page = $this->entityManager->getRepository('VictoireCoreBundle:View')
                 ->findOneBy([
                     'id'     => $viewReference->getViewId(),
-                    'locale' => $viewReference->getLocale(),
+                  //  'locale' => $viewReference->getLocale(),
                 ]);
+            $this->entityManager->refresh($page->setTranslatableLocale($viewReference->getLocale()));
         } else {
             throw new \Exception(sprintf('Oh no! Cannot find a page for this ViewReference (%s)', ClassUtils::getClass($viewReference)));
         }
