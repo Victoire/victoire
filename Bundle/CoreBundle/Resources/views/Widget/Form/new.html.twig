@@ -7,7 +7,7 @@
 
     <div class="vic-tab-content vic-modal-tab-content vic-modal-tab-content-container">
     {% for key, widget in widgets %}
-        {% include "VictoireCoreBundle:Widget:Form/new_partial.html.twig" with {forms: forms[key], widget: widget, classes: classes, id: widgets[key].id ? widgets[key].id : id}%}
+        {% include "VictoireCoreBundle:Widget:Form/new_partial.html.twig" with {forms: forms[key], widget: widget, classes: classes, id: widgets[key].id ? widgets[key].id : id, quantum: forms[key]['quantum'] }%}
     {% endfor %}
     </div>
     <ul class="vic-nav vic-nav-tabs vic-modal-nav-tabs">

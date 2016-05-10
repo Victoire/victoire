@@ -124,6 +124,7 @@ class WidgetManager
                     'widgets'            => $widgets,
                     'widget'             => $widget,
                     'forms'              => $forms,
+                    'quantum'            => $quantum,
                 ]
             ),
         ];
@@ -198,7 +199,7 @@ class WidgetManager
             $response = [
                 'success' => false,
                 'message' => $noValidate === false ? $formErrorHelper->getRecursiveReadableErrors($form) : null,
-                'html'    => $this->widgetFormBuilder->renderNewForm($form, $widget, $slotId, $view, $entity),
+                'html'    => $this->widgetFormBuilder->renderNewForm($form, $widget, $slotId, $view, $quantum, $entity),
             ];
         }
 
