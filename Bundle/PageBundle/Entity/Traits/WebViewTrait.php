@@ -183,8 +183,8 @@ trait WebViewTrait
     {
         if (
             $this->getStatus() === PageStatus::PUBLISHED ||
-            $this->getStatus() === PageStatus::SCHEDULED &&
-            $this->getPublishedAt() < new \DateTime()
+            ($this->getStatus() === PageStatus::SCHEDULED &&
+            $this->getPublishedAt() < new \DateTime())
             ) {
             return true;
         } else {
