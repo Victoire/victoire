@@ -34,7 +34,7 @@ class BusinessPageBuilder
         'bodyId',
         'bodyClass',
         'slug',
-        'locale',
+        'currentLocale',
     ];
 
     /**
@@ -112,47 +112,32 @@ class BusinessPageBuilder
                 //the url of the page
                 $pageUrl = $this->urlBuilder->buildUrl($page);
 
-                $pageName = $page->getName();
-                $pageSlug = $page->getSlug();
-                //parse the business properties
-                foreach ($businessProperties as $businessProperty) {
-                    $pageUrl = $this->parameterConverter->setBusinessPropertyInstance(
-                        $pageUrl,
-                        $businessProperty,
-                        $entity
-                    );
-                    $pageSlug = $this->parameterConverter->setBusinessPropertyInstance(
-                        $pageSlug,
-                        $businessProperty,
-                        $entity
-                    );
-                    $pageName = $this->parameterConverter->setBusinessPropertyInstance(
-                        $pageName,
-                        $businessProperty,
-                        $entity
-                    );
-                }
-                //we update the url of the page
-                $page->setTranslatableLocale($locale);
-                $page->setUrl($pageUrl);
-                $page->setSlug($pageSlug);
-                $page->setName($pageName);
-                $page->setEntityProxy($entityProxy);
-                $page->setTemplate($businessTemplate);
+            $pageName = $page->getName();
+            $pageSlug = $page->getSlug();
 
-                //Check that all twig variables in pattern url was removed for it's generated BusinessPage
-                preg_match_all('/\{\%\s*([^\%\}]*)\s*\%\}|\{\{\s*([^\}\}]*)\s*\}\}/i', $pageUrl, $matches);
-
-                if (count($matches[2])) {
-                    throw new IdentifierNotDefinedException($matches[2]);
-                }
-                $translation['page'] = $page;
-                $references[$locale] = $this->viewReferenceBuilder->buildViewReference($page, $em);
-                $translations[$locale] = $translation;
+            //parse the business properties
+            foreach ($businessProperties as $businessProperty) {
+                $pageUrl = $this->parameterConverter->setBusinessPropertyInstance($pageUrl, $businessProperty, $entity);
+                $pageSlug = $this->parameterConverter->setBusinessPropertyInstance($pageSlug, $businessProperty, $entity);
+                $pageName = $this->parameterConverter->setBusinessPropertyInstance($pageName, $businessProperty, $entity);
             }
-            $firstTranslation = $translations[$pageLocale];
-            $page = $firstTranslation['page'];
-            $page->setReferences($references);
+
+            //Check that all twig variables in pattern url was removed for it's generated BusinessPage
+            preg_match_all('/\{\%\s*([^\%\}]*)\s*\%\}|\{\{\s*([^\}\}]*)\s*\}\}/i', $pageUrl, $matches);
+
+            if (count($matches[2])) {
+                throw new IdentifierNotDefinedException($matches[2]);
+            }
+
+            $entityProxy = $this->entityProxyProvider->getEntityProxy($entity, $businessEntity, $em);
+            //we update the url of the page
+            $page->setCurrentLocale($businessTemplate->getCurrentLocale());
+            $page->setUrl($pageUrl);
+            $page->setSlug($pageSlug);
+            $page->setName($pageName);
+            $page->setEntityProxy($entityProxy);
+            $page->setTemplate($businessTemplate);
+            $page->setReferences([$page->getCurrentLocale() => $this->viewReferenceBuilder->buildViewReference($page, $em)]);
 
             if ($seo = $businessTemplate->getSeo()) {
                 $pageSeo = clone $seo;

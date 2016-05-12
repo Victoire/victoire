@@ -51,8 +51,8 @@ class ViewReferenceHelper
         if ($entity) {
             $refId .= '_'.$entity->getId();
         }
-        if ($view->getLocale() != '') {
-            $refId .= '_'.$view->getLocale();
+        if ($view->getCurrentLocale() != '') {
+            $refId .= '_'.$view->getCurrentLocale();
         }
 
         return $refId;
@@ -66,17 +66,12 @@ class ViewReferenceHelper
         foreach ($tree as $branch) {
             /** @var WebViewInterface $view */
             $view = $branch['view'];
-            if (!$view instanceof VirtualBusinessPage) {
-                $viewReferences = [];
-                /* @var EntityRepository $viewRepo */
-                $viewTranslationRepo = $entityManager->getRepository(ViewTranslation::class);
-                foreach ($viewTranslationRepo->findByObject($view) as $translation) {
-                    $view->setTranslatableLocale($translation->getLocale());
-                    $entityManager->refresh($view);
-                    $viewReferences[$translation->getLocale()] = $this->viewReferenceBuilder->buildViewReference($view, $entityManager);
-                }
-                $view->setReferences($viewReferences);
+            $viewReferences = [];
+            foreach ($view->getTranslations() as $translation) {
+                $view->setCurrentLocale($translation->getLocale());
+                $viewReferences[$translation->getLocale()] = $this->viewReferenceBuilder->buildViewReference($view, $entityManager);
             }
+            $view->setReferences($viewReferences);
             if (!empty($branch['children'])) {
                 /** @var WebViewInterface $children */
                 $children = $branch['children'];

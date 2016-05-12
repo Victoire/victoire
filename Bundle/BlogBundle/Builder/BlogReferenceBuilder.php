@@ -18,7 +18,7 @@ class BlogReferenceBuilder extends BaseReferenceBuilder
         $referenceId = ViewReferenceHelper::generateViewReferenceId($view);
         $viewReference = new ViewReference();
         $viewReference->setId($referenceId);
-        $viewReference->setLocale($view->getLocale());
+        $viewReference->setLocale($view->getCurrentLocale());
         $viewReference->setName($view->getName());
         $viewReference->setViewId($view->getId());
         $viewReference->setSlug($view->getSlug());
