@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\Validator\Constraints as Assert;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\I18nBundle\Entity\ViewTranslation;
@@ -629,7 +630,7 @@ abstract class View
      */
     public function getReference($locale = null)
     {
-        $locale = $locale ?: $this->getLocale();
+        $locale = $locale ?: $this->getCurrentLocale();
         if (is_array($this->references) && isset($this->references[$locale])) {
             return $this->references[$locale];
         }
@@ -669,7 +670,7 @@ abstract class View
      */
     public function setReference(ViewReference $reference, $locale = null)
     {
-        $locale = $locale ?: $this->getLocale();
+        $locale = $locale ?: $this->getCurrentLocale();
         $this->references[$locale] = $reference;
 
         return $this;
@@ -771,5 +772,26 @@ abstract class View
     public static function getTranslationEntityClass()
     {
         return '\\Victoire\\Bundle\\I18nBundle\\Entity\\ViewTranslation';
+    }
+
+    public function getName()
+    {
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(), 'getName');
+    }
+    public function getSlug()
+    {
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(), 'getSlug');
+    }
+
+    public function setSlug($slug, $locale = null)
+    {
+        $this->translate($locale)->setSlug($slug);
+        $this->mergeNewTranslations();
+    }
+
+    public function setName($name, $locale = null)
+    {
+        $this->translate($locale)->setName($name);
+        $this->mergeNewTranslations();
     }
 }
