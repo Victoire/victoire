@@ -44,7 +44,8 @@ class BrowseEventController extends Controller
         $user = $entityManager->getRepository($this->getParameter('victoire_core.user_class'))->find($id);
         $user->setHeartbeat(new \DateTime());
         $entityManager->flush();
+        $this->get('logger')->info('victoire.analytics.user_heartbeat');
 
-        return new JsonResponse(['Glad you\'re alive :beating-heart:']);
+        return new Response(null, 202);
     }
 }
