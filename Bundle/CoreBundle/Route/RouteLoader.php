@@ -115,7 +115,10 @@ class RouteLoader extends Loader
         $defaults = [
             '_controller' => 'VictoirePageBundle:Page:show',
         ];
-        $route = new Route($pattern, $defaults);
+        $options = [
+            'expose' => true,
+        ];
+        $route = new Route($pattern, $defaults, [], $options);
 
         // add the new route to the route collection:
         $collection->add('victoire_core_homepage_show', $route);
