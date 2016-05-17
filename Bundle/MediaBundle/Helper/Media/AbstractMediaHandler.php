@@ -11,6 +11,16 @@ use Victoire\Bundle\MediaBundle\Entity\Media;
 abstract class AbstractMediaHandler
 {
     /**
+     * Return the default form type options.
+     *
+     * @return array
+     */
+    public function getFormTypeOptions()
+    {
+        return [];
+    }
+
+    /**
      * @return string
      */
     abstract public function getName();

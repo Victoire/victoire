@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\WidgetBundle\Renderer;
 
-use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\DependencyInjection\Container;
 use Victoire\Bundle\BusinessEntityBundle\Exception\MissingBusinessEntityInstanceException;

@@ -1,4 +1,4 @@
-@mink:selenium2 @alice(Page) @reset-schema @alice(Blog) @alice(Article)
+@mink:selenium2 @alice(Page) @reset-schema @alice(Blog) @alice(BlogTemplate) @alice(Article)
 Feature: Delete a blog (and article)
 
 Background:
@@ -20,7 +20,8 @@ Background:
         Given I open the hamburger menu
         Then I should see "Blog"
         When I follow "Blog"
-        Then I should see "The Jedi network"
+	Then I should see "Gestion des blogs"
+        And I should see "The Jedi network"
         And I follow "Paramètres"
         And I should see "Supprimer"
         Given I follow "Supprimer"

@@ -3,6 +3,7 @@
 namespace Victoire\Bundle\MediaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * Media.
@@ -13,6 +14,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Media
 {
+    use TimestampableEntity;
+
     /**
      * @ORM\Id
      * @ORM\Column(type="bigint")
@@ -38,6 +41,13 @@ class Media
     /**
      * @var string
      *
+     * @ORM\Column(type="string", nullable=true, name="original_filename")
+     */
+    protected $originalFilename;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(type="string", name="location", nullable=true)
      */
     protected $location;
@@ -55,20 +65,6 @@ class Media
      * @ORM\Column(type="array")
      */
     protected $metadata = [];
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(type="datetime", name="created_at")
-     */
-    protected $createdAt;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(type="datetime", name="updated_at")
-     */
-    protected $updatedAt;
 
     /**
      * @var Folder
@@ -211,6 +207,26 @@ class Media
     }
 
     /**
+     * @param string $originalFilename
+     *
+     * @return Media
+     */
+    public function setOriginalFilename($originalFilename)
+    {
+        $this->originalFilename = $originalFilename;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOriginalFilename()
+    {
+        return $this->originalFilename;
+    }
+
+    /**
      * Set location.
      *
      * @param string $location
@@ -316,54 +332,6 @@ class Media
     }
 
     /**
-     * Set createdAt.
-     *
-     * @param \DateTime $createdAt
-     *
-     * @return Media
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * Get createdAt.
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * Set updatedAt.
-     *
-     * @param \DateTime $updatedAt
-     *
-     * @return Media
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get updatedAt.
-     *
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    /**
      * Set content.
      *
      * @param mixed $content
@@ -464,10 +432,12 @@ class Media
     }
 
     /**
-     * @ORM\PreUpdate
+     * @ORM\PrePersist
      */
-    public function preUpdate()
+    public function prePersist()
     {
-        $this->setUpdatedAt(new \DateTime());
+        if (empty($this->name)) {
+            $this->setName($this->getOriginalFilename());
+        }
     }
 }

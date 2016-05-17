@@ -166,9 +166,14 @@ class ArticleController extends Controller
                 'viewId'   => $template->getId(),
                 'entityId' => $article->getId(),
             ]);
+            $page->setName($article->getName());
+            $page->setSlug($article->getSlug());
             $page->setStatus($article->getStatus());
 
             $em->flush();
+            $page->setReference($this->get('victoire_view_reference.repository')->getOneReferenceByParameters(
+                ['viewId' => $page->getId()]
+            ));
 
             $response = [
                 'success' => true,

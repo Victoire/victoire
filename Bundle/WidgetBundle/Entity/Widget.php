@@ -515,4 +515,30 @@ class Widget extends BaseWidget implements VictoireQueryInterface
     {
         $this->quantum = $quantum;
     }
+
+    /**
+     * Generate the CacheId, insert params that can invalid the cache.
+     *
+     * @return string
+     */
+    public function generateCacheId()
+    {
+        if (!$this->getCurrentView()) {
+            throw new \Exception(sprintf('Cannot generate an hash for widget %s if currentView is not defined.',
+                $this->getId()
+            ));
+            if (!$this->getCurrentView()->getReference()) {
+                throw new \Exception(sprintf('Cannot generate an hash for widget %s if currentView %s Reference is not defined.',
+                    $this->getId(),
+                    $widget->getCurrentView()->getId()
+                ));
+            }
+        }
+
+        return sprintf('%s-%s-%s',
+            $this->getId(),
+            $this->getUpdatedAt()->getTimestamp(),
+            $this->getCurrentView()->getReference()->getId()
+        );
+    }
 }

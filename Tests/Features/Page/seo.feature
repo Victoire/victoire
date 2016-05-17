@@ -13,7 +13,6 @@ Scenario: I can add a seo
     When I fill in "Meta Balise \"Title\"" with "Tatooine, planète désertique"
     And I fill in "Meta Balise \"Description\"" with "2 étoiles, 3 satellites"
     And I follow "Mettre à jour"
-    And I wait 5 seconds
     Then I should see "Paramètres SEO modifiés avec succès"
     And the title should be "Tatooine, planète désertique"
 
@@ -30,7 +29,6 @@ Scenario: I can add use businessTemplate to manage vbp seo
     Then I should see "Paramètres SEO de la page "
     When I fill in "Meta Balise \"Title\"" with "Maître de la Force - {{item.name}}"
     And I follow "Mettre à jour"
-    And I wait 5 seconds
     Then I should see "Paramètres SEO modifiés avec succès"
     Given I am on "/fr/fiche-jedi-anakin"
     Then the title should be "Maître de la Force - Anakin"

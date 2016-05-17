@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Translatable\Entity\MappedSuperclass\AbstractPersonalTranslation;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Victoire\Bundle\I18nBundle\Repository\ViewTranslationRepository")
  * @ORM\Table(name="vic_view_translations",
  *     uniqueConstraints={@ORM\UniqueConstraint(name="lookup_unique_idx", columns={
  *         "locale", "object_id", "field"
