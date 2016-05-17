@@ -7,8 +7,7 @@
 [![Scrutinizer Quality Score](https://img.shields.io/scrutinizer/g/Victoire/Victoire.svg)](https://scrutinizer-ci.com/g/Victoire/victoire/)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/d5307bf2-eac4-43db-bd49-dd9e85e360a5/mini.png)](https://insight.sensiolabs.com/projects/d5307bf2-eac4-43db-bd49-dd9e85e360a5)
 [![Dependency Status](https://www.versioneye.com/php/victoire:victoire/badge.svg)](https://www.versioneye.com/php/victoire:victoire)
-[![Reference Status](https://www.versioneye.com/php/victoire:victoire/reference_badge.svg?style=flat)](https://www.versioneye.com/php/victoire:victoire/references)
-[![Documentation Status](https://readthedocs.org/projects/victoiredcms/badge/?version=latest)](https://readthedocs.org/projects/victoiredcms/)
+[![Features in Progress](https://badge.waffle.io/Victoire/victoire.svg?label=In%20Progress&title=In%20Progress)](http://waffle.io/Victoire/victoire)
 
 ##Overview
 
@@ -20,8 +19,11 @@ The main goal is to give to the final customer the ability to **create**/**edit*
 ##Contribution
 
 Victoire is an open-source, community driven project.
-We are keen on getting your participation for the development of this product.
-You can find [different open issues](https://github.com/Victoire/victoire/issues) where your help is more than welcome, regardless of your mastering level.
+We are keen on getting your participation for the development of this product and every help is more than welcome, regardless of your mastering level.
+
+To do so, please have a look at our [project management board](http://waffle.io/Victoire/victoire) where all the Victoire's ecosystem (Core & Widgets) is managed.
+
+You can follow the relative questions on [StackOverflow](http://stackoverflow.com/questions/tagged/victoire)
 
 You can see the list of our lovely [contributors](https://github.com/Victoire/Victoire/contributors)
 
