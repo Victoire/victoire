@@ -10,16 +10,16 @@ use Doctrine\Common\Cache\PhpFileCache;
 class VictoireCache extends PhpFileCache
 {
     const EXTENSION = '.victoire.cache.php';
-    protected $debug;
+    protected $businessEntityDebug;
 
     /**
      * Constructor.
      *
-     * @param bool $debug The debug environment
+     * @param bool $businessEntityDebug The businessEntityDebug environment
      */
-    public function __construct($debug, $directory, $extension = self::EXTENSION)
+    public function __construct($businessEntityDebug, $directory, $extension = self::EXTENSION)
     {
-        $this->debug = $debug;
+        $this->businessEntityDebug = $businessEntityDebug;
         parent::__construct($directory, $extension);
     }
 
@@ -37,5 +37,22 @@ class VictoireCache extends PhpFileCache
         }
 
         return $defaultValue;
+    }
+
+    /**
+     * Puts data into the cache.
+     *
+     * @param string $id   The cache id.
+     * @param mixed  $data The cache entry/data.
+     *
+     * @return bool TRUE if the entry was successfully stored in the cache, FALSE otherwise.
+     */
+    public function save($id, $data, $ttl = 20)
+    {
+        if ($this->businessEntityDebug) {
+            parent::save($id, $data, $ttl);
+        } else {
+            parent::save($id, $data);
+        }
     }
 }

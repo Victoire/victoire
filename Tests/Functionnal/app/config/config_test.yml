@@ -131,6 +131,7 @@ victoire_core:
         - "%kernel.root_dir%/../../../Bundle/BlogBundle"
         - "%kernel.root_dir%/../../../vendor/friendsofvictoire"
         - "%kernel.root_dir%/../src"
+    business_entity_debug: false
 
 services:
     fos_user.doctrine_registry:
