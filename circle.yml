@@ -1,0 +1,48 @@
+machine:
+  timezone:
+    Europe/Paris
+  hosts:
+    fr.victoire.io: 127.0.0.1
+    en.victoire.io: 127.0.0.1
+  services:
+    - redis
+  php:
+    version: 7.0.4
+
+dependencies:
+  pre:
+    - echo "memory_limit = 1024M" > ~/.phpenv/versions/5.6.5/etc/conf.d/memory.ini
+    - echo "always_populate_raw_post_data=-1" > ~/.phpenv/versions/5.6.5/etc/conf.d/post_data.ini
+  override:
+    - npm install less
+    - mkdir fails
+    - composer install --prefer-dist
+    - php Tests/Functionnal/bin/console --env=test doctrine:database:create
+    - php Tests/Functionnal/bin/console --env=test doctrine:schema:create
+    - php Tests/Functionnal/bin/console --env=test cache:warmup
+    - php Tests/Functionnal/bin/console --env=test victoire:generate:view
+    - php Tests/Functionnal/bin/console --env=test assets:install Tests/Functionnal/web
+    - php Tests/Functionnal/bin/console --env=test bazinga:js-translation:dump
+    - php Tests/Functionnal/bin/console --env=test fos:js:dump --target="Tests/Functionnal/web/js/fos_js_routes_test.js"
+    - php Tests/Functionnal/bin/console --env=domain fos:js:dump --target="Tests/Functionnal/web/js/fos_js_routes_domain.js"
+    - php Tests/Functionnal/bin/console --env=test assetic:dump
+    - wget http://selenium-release.storage.googleapis.com/2.49/selenium-server-standalone-2.49.0.jar
+    - 'java -jar selenium-server-standalone-2.49.0.jar > /dev/null 2>&1':
+          background: true
+    - 'php Tests/Functionnal/bin/console --env=test server:run -r vendor/symfony/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/config/router_prod.php > server.log 2>&1':
+          background: true
+    - "Xvfb :99 -ac 2>/dev/null":
+          background: true
+    - sleep 3 # give xvfb some time to start
+  cache_directories:
+    - ~/.composer/cache
+
+test:
+  override:
+    - bash circle-behat.sh Tests/Features:
+        parallel: true
+    - 'phpunit --coverage-text'
+
+general:
+  artifacts:
+    - "fails"

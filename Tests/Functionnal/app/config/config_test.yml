@@ -59,7 +59,7 @@ doctrine:
         host:     "127.0.0.1"
         port:     "3306"
         dbname:   "victoire"
-        user:     "travis"
+        user:     "ubuntu"
         password: ~
         charset:  UTF8
         server_version: 5.6
