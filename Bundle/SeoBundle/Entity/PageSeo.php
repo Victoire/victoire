@@ -987,7 +987,7 @@ class PageSeo
         return $this->keyword;
     }
 
-    public function setTranslatableLocale($locale)
+    public function setCurrentLocale($locale)
     {
         $this->locale = $locale;
     }

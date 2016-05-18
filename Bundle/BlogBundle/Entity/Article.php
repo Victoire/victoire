@@ -560,7 +560,7 @@ class Article
         $this->locale = $locale;
     }
 
-    public function setTranslatableLocale($locale)
+    public function setCurrentLocale($locale)
     {
         $this->locale = $locale;
     }

@@ -61,7 +61,7 @@ class ArticleController extends Controller
             // Transform VBP into BP
             $this->container->get('victoire_business_page.transformer.virtual_to_business_page_transformer')->transform($page);
             $page->setParent($article->getBlog());
-            $page->setTranslatableLocale($this->get('request')->getLocale());
+            $page->setCurrentLocale($this->get('request')->getLocale());
 
             $entityManager->persist($page);
             $entityManager->flush();

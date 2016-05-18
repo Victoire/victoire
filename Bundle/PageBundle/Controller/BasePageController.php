@@ -107,7 +107,6 @@ class BasePageController extends Controller
             $page->setPosition($pageNb + 1);
 
             $page->setAuthor($this->getUser());
-            $page->setTranslatableLocale($this->get('request')->getLocale());
             $entityManager->persist($page);
             $entityManager->flush();
 
@@ -128,7 +127,7 @@ class BasePageController extends Controller
                 'url'      => $this->generateUrl(
                     'victoire_core_page_show',
                     [
-                        '_locale' => $page->getLocale(),
+                        '_locale' => $page->getCurrentLocale(),
                         'url'     => $viewReference->getUrl(),
                     ]
                 ),
