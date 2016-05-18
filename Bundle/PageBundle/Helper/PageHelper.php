@@ -4,6 +4,7 @@ namespace Victoire\Bundle\PageBundle\Helper;
 
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\Orm\EntityManager;
+use Doctrine\ORM\ORMInvalidArgumentException;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -269,14 +270,15 @@ class PageHelper
                 $page = $this->entityManager->getRepository('VictoireCoreBundle:View')
                     ->findOneBy([
                         'id'     => $viewReference->getViewId(),
-                        'locale' => $viewReference->getLocale(),
                     ]);
+                $this->refreshPage($page, $viewReference->getLocale());
             } else { //VirtualBusinessPage
                 $page = $this->entityManager->getRepository('VictoireCoreBundle:View')
                     ->findOneBy([
                         'id'     => $viewReference->getTemplateId(),
-                        'locale' => $viewReference->getLocale(),
                     ]);
+                $this->refreshPage($page, $viewReference->getLocale());
+
                 if ($entity) {
                     if ($page instanceof BusinessTemplate) {
                         $page = $this->updatePageWithEntity($page, $entity);
@@ -289,13 +291,27 @@ class PageHelper
             $page = $this->entityManager->getRepository('VictoireCoreBundle:View')
                 ->findOneBy([
                     'id'     => $viewReference->getViewId(),
-                    'locale' => $viewReference->getLocale(),
                 ]);
+            $this->refreshPage($page, $viewReference->getLocale());
         } else {
             throw new \Exception(sprintf('Oh no! Cannot find a page for this ViewReference (%s)', ClassUtils::getClass($viewReference)));
         }
 
         return $page;
+    }
+
+    /**
+     * @param View $page
+     * @param $locale
+     */
+    private function refreshPage($page, $locale)
+    {
+        if ($page && $page instanceof View) {
+            try {
+                $this->entityManager->refresh($page->setTranslatableLocale($locale));
+            } catch (ORMInvalidArgumentException $e) {
+            }
+        }
     }
 
     /**

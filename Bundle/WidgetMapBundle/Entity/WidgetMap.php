@@ -268,12 +268,12 @@ class WidgetMap
                     if ($view) {
                         // if child has a view
                         // and child view is same as given view or the child view is a template of given view
-                        if ($_child->getView() && ($view == $_child->getView() || $_child->getView()->isTemplateOf($view))
+                        if ($_child->getView() && ($view === $_child->getView() || $_child->getView()->isTemplateOf($view))
                         ) {
                             // if child is a substitute in view
                             if ($substitute = $_child->getSubstituteForView($view)) {
                                 // if i'm not the parent of the substitute or i does not have the same position, child is not valid
-                                if ($substitute->getParent() != $this || $substitute->getPosition() != $position) {
+                                if ($substitute->getParent() !== $this || $substitute->getPosition() !== $position) {
                                     $_child = null;
                                 }
                             }
@@ -291,7 +291,7 @@ class WidgetMap
                 foreach ($this->getReplaced()->getChilds($position) as $_child) {
                     if ($view) {
                         // if child view is same as given view or the child view is a template of given view
-                        if ($_child->getView() && ($view == $_child->getView() || $_child->getView()->isTemplateOf($view))) {
+                        if ($_child->getView() && ($view === $_child->getView() || $_child->getView()->isTemplateOf($view))) {
 
                             // if child is a substitute in view
                             if ($substitute = $_child->getSubstituteForView($view)) {
@@ -447,7 +447,7 @@ class WidgetMap
     public function getSubstituteForView(View $view)
     {
         foreach ($this->substitutes as $substitute) {
-            if ($substitute->getView() == $view) {
+            if ($substitute->getView() === $view) {
                 return $substitute;
             }
         }

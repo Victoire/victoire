@@ -177,9 +177,11 @@ class BusinessEntitySubscriber implements EventSubscriber
                         $em
                     );
                 }
-                //update the reference
-                $event = new ViewReferenceEvent($page);
-                $this->dispatcher->dispatch(ViewReferenceEvents::UPDATE_VIEW_REFERENCE, $event);
+                if ($this->businessPageHelper->isEntityAllowed($businessTemplate, $entity, $em)) {
+                    //update the reference
+                    $event = new ViewReferenceEvent($page);
+                    $this->dispatcher->dispatch(ViewReferenceEvents::UPDATE_VIEW_REFERENCE, $event);
+                }
             }
         }
         //if it a businessTemplate we have to rebuild virtuals or update BP

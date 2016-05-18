@@ -39,9 +39,14 @@ class ViewReferenceRepository
     public function findReferenceByView(View $view)
     {
         $referenceId = ViewReferenceHelper::generateViewReferenceId($view);
-        $reference = $this->getOneReferenceByParameters($referenceId, false);
+        $reference = $this->repository->findById($referenceId);
+        $transformer = $this->transformer->getViewReferenceTransformer(
+            (string) $reference['viewNamespace'], 'array'
+        );
 
-        return $reference;
+        $viewReference = $transformer->transform($reference);
+
+        return $viewReference;
     }
 
     /**
