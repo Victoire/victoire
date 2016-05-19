@@ -87,10 +87,10 @@ Feature: Manage jedis
         Then I should see "Le Côté Nouveau de la force"
         Given I select the option "Paramètres de la page" in the dropdown "Page"
         And I should see "Mettre à jour"
-        When I fill in "business_page_staticUrl" with "Dark Vador"
+        When I fill in "business_page_slug" with "Dark Vador"
         Then I should see an ".slug-is-correct.vic-hidden" element
         And I should not see an ".slug-is-not-correct.vic-hidden" element
-        When I fill in "business_page_staticUrl" with "dark-vador"
+        When I fill in "business_page_slug" with "dark-vador"
         Then I should not see an ".slug-is-correct.vic-hidden" element
         And I should see an ".slug-is-not-correct.vic-hidden" element
         When I submit the widget
@@ -99,7 +99,7 @@ Feature: Manage jedis
         And I should be on "/fr/dark-vador"
         Given I select the option "Paramètres de la page" in the dropdown "Page"
         And I should see "Mettre à jour"
-        When I fill in "business_page_staticUrl" with ""
+        When I fill in "business_page_slug" with ""
         Then I should not see an ".slug-is-correct.vic-hidden" element
         And I should see an ".slug-is-not-correct.vic-hidden" element
         When I submit the widget

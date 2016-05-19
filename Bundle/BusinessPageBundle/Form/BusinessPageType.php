@@ -31,11 +31,5 @@ class BusinessPageType extends PageSettingsType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-        $builder->remove('slug');
-        $builder->add('slug', HiddenType::class);
-        $builder->add('staticUrl', SlugType::class, [
-                'label' => 'form.page.type.slug.label',
-            ]
-        );
     }
 }

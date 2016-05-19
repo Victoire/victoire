@@ -34,39 +34,6 @@ class BusinessPage extends Page
     protected $businessEntity;
 
     /**
-     * The entity static Url page.
-     *
-     * @var unknown
-     *
-     * @ORM\Column(name="staticUrl", type="text", length=255, nullable=true)
-     */
-    protected $staticUrl;
-
-    /**
-     * Get staticUrl.
-     *
-     * @return string
-     */
-    public function getStaticUrl()
-    {
-        return $this->staticUrl;
-    }
-
-    /**
-     * Set staticUrl.
-     *
-     * @param string $staticUrl
-     *
-     * @return $this
-     */
-    public function setStaticUrl($staticUrl)
-    {
-        $this->staticUrl = $staticUrl;
-
-        return $this;
-    }
-
-    /**
      * Set the entity proxy.
      *
      * @param BaseEntityProxy $entityProxy
