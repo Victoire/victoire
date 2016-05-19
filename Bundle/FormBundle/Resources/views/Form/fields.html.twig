@@ -1,6 +1,13 @@
 {% trans_default_domain "victoire" %}
 {% use 'form_div_layout.html.twig' %}
 
+{% block urlvalidated_widget %}
+    <div class="vic-form-url-slug">
+            {{ url('victoire_core_page_show', {'url' : form.parent.vars.data.translatable.url })|replace({(form.parent.vars.data.translatable.slug): ''}) }}
+            {{ form_widget(form, {'attr' : {'onLoad': "addSlugValidation($vic(this).attr('id');"}}) }}
+    </div>
+{% endblock urlvalidated_widget %}
+
 {% block criteria_row %}
     <div class="vic-row">
         <div class="vic-col-md-4">{{ ('victoire_criteria.'~form.vars.data.name~'.criteria.label')|trans }}</div>

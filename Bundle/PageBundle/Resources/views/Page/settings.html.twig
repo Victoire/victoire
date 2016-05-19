@@ -16,30 +16,28 @@
             <form method="POST" action="{{path('victoire_core_page_settings', {'id':page.id} )}}">
                 <div class="vic-form-group">
                     <div class="vic-col-lg-8">
-                        {{ form_row(form.name) }}
+                        {{ form_row(form.translations) }}
                         {{ form_row(form.parent) }}
                         {{ form_row(form.template) }}
 
-                        {% if form.slug is defined %}
                         <div class="vic-form-group">
 
-                             <label for="victoire_page_settings_type_bodyClass" class="vic-control-label control-label vic-optional">
-                                {{ 'form.page.type.slug.label'|trans({}, 'victoire') }}
-                             </label>
+                             {#<label for="victoire_page_settings_type_bodyClass" class="vic-control-label control-label vic-optional">#}
+                                {#{{ 'form.page.type.slug.label'|trans({}, 'victoire') }}#}
+                             {#</label>#}
 
-                             <div class="vic-form-url-slug">
-                                {% if form.staticUrl is defined %}
-                                    {% set baseUrl = url('victoire_core_page_show', {'url' : page.parent ? page.parent.url : '' }) %}
-                                    {{ baseUrl}}
-                                    {{ form_widget(form.staticUrl, {'attr' : {'placeholder' : page.slug, 'onLoad': "addSlugValidation(this);"}}) }}
-                                {% else %}
-                                    {{ url('victoire_core_page_show', {'url' : page.url })|replace({(page.slug): ''}) }}
-                                    {{ form_widget(form.slug) }}
-                                {% endif %}
-                             </div>
+                             {#<div class="vic-form-url-slug">#}
+                                {#{% if form.staticUrl is defined %}#}
+                                    {#{% set baseUrl = url('victoire_core_page_show', {'url' : page.parent ? page.parent.url : '' }) %}#}
+                                    {#{{ baseUrl}}#}
+                                    {#{{ form_widget(form.staticUrl, {'attr' : {'placeholder' : page.slug, 'onLoad': "addSlugValidation(this);"}}) }}#}
+                                {#{% else %}#}
+                                    {#{{ url('victoire_core_page_show', {'url' : page.url })|replace({(page.slug): ''}) }}#}
+                                    {#{{ form_widget(form.slug) }}#}
+                                {#{% endif %}#}
+                             {#</div>#}
 
                         </div>
-                        {% endif %}
                         {% if form.locale is defined %}
                         {{ form_row(form.locale) }}
                         {% endif %}

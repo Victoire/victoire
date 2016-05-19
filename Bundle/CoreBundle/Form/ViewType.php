@@ -89,10 +89,13 @@ abstract class ViewType extends AbstractType
             }
         });
 
-        $builder
-            ->add('name', null, [
-                'label' => 'form.view.type.name.label',
-            ]);
+        $builder->add('translations', 'a2lix_translations', array(
+            'fields' => array(
+                'name' => array(
+                    'label' => 'form.view.type.name.label',
+                )
+            )
+        ));
     }
 
     protected function getAvailableLocales()
