@@ -179,7 +179,7 @@ class BasePageController extends Controller
             $entityManager->flush();
             /** @var ViewReference $viewReference */
             $viewReference = $this->get('victoire_view_reference.repository')
-                ->getOneReferenceByParameters(['viewId' => $page->getId()]);
+                ->getOneReferenceByParameters(['viewId' => $page->getId(), 'locale' => $request->getLocale()]);
 
             $page->setReference($viewReference);
 
@@ -189,7 +189,7 @@ class BasePageController extends Controller
                 'success' => true,
                 'url'     => $this->generateUrl(
                     'victoire_core_page_show', [
-                        '_locale' => $page->getLocale(),
+                        '_locale' => $request->getLocale(),
                         'url'     => $viewReference->getUrl(),
                     ]
                 ),

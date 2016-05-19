@@ -21,6 +21,6 @@ class UrlvalidatedType extends AbstractType
 {
     public function getParent()
     {
-        return TextType::class;
+        return SlugType::class;
     }
 }
