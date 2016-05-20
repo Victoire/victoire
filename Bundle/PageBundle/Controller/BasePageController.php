@@ -85,7 +85,7 @@ class BasePageController extends Controller
      *
      * @return []
      */
-    protected function newAction($isHomepage = false)
+    protected function newAction(Request $request, $isHomepage = false)
     {
         /** @var EntityManager $entityManager */
         $entityManager = $this->get('doctrine.orm.entity_manager');
@@ -120,6 +120,7 @@ class BasePageController extends Controller
             $this->congrat($this->get('translator')->trans('victoire_page.create.success', [], 'victoire'));
             $viewReference = $this->get('victoire_view_reference.repository')->getOneReferenceByParameters([
                 'viewId' => $page->getId(),
+                'locale' => $request->getLocale()
             ]);
 
             return [
@@ -127,7 +128,7 @@ class BasePageController extends Controller
                 'url'      => $this->generateUrl(
                     'victoire_core_page_show',
                     [
-                        '_locale' => $page->getCurrentLocale(),
+                        '_locale' => $request->getLocale(),
                         'url'     => $viewReference->getUrl(),
                     ]
                 ),

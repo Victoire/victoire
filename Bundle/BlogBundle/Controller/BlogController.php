@@ -121,9 +121,9 @@ class BlogController extends BasePageController
      *
      * @return JsonResponse
      */
-    public function newAction($isHomepage = false)
+    public function newAction(Request $request, $isHomepage = false)
     {
-        return new JsonResponse(parent::newAction());
+        return new JsonResponse($request, parent::newAction());
     }
 
     /**

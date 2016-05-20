@@ -44,9 +44,9 @@ class PageController extends BasePageController
      *
      * @return JsonResponse
      */
-    public function newAction($isHomepage = false)
+    public function newAction(Request $request, $isHomepage = false)
     {
-        return new JsonResponse(parent::newAction($isHomepage));
+        return new JsonResponse(parent::newAction($request, $isHomepage));
     }
 
     /**
