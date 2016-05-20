@@ -43,40 +43,4 @@ class VictoireI18nExtension extends Extension implements PrependExtensionInterfa
             'victoire_i18n.locale_pattern', $config['locale_pattern']
         );
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function prepend(ContainerBuilder $container)
-    {
-        // automatically enable gedmo_translatable doctrine extension (BasePage I18n)
-        foreach ($container->getExtensions() as $name => $extension) {
-            switch ($name) {
-                case 'doctrine':
-                    $container->prependExtensionConfig($name, [
-                        'orm' => [
-                            'mappings' => [
-                                'gedmo_translatable' => [
-                                    'type'      => 'annotation',
-                                    'prefix'    => 'Gedmo\Translatable\Entity',
-                                    'dir'       => '%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translatable/Entity',
-                                    'is_bundle' => false,
-                                ],
-                            ],
-                        ],
-                    ]);
-                break;
-                case 'stof_doctrine_extensions':
-                    $container->prependExtensionConfig($name, [
-                        'persist_default_translation' => true,
-                        'orm'                         => [
-                            'default' => [
-                                'translatable' => true,
-                            ],
-                        ],
-                    ]);
-                break;
-            }
-        }
-    }
 }

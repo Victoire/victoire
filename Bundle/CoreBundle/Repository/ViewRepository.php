@@ -103,51 +103,36 @@ class ViewRepository extends NestedTreeRepository
      */
     public function findByViewReferences(array $viewReferences)
     {
-        $views = [];
-        $localizedViewReferences = [];
+
+        $pageIds = [];
         foreach ($viewReferences as $viewReference) {
-            if (array_key_exists($viewReference->getLocale(), $localizedViewReferences)) {
-                $localizedViewReferences[$viewReference->getLocale()] = [];
+            if ($viewReference instanceof BusinessPageReference) {
+                $pageIds[] = $viewReference->getTemplateId();
+            } else {
+                $pageIds[] = $viewReference->getViewId();
             }
-            $localizedViewReferences[$viewReference->getLocale()][] = $viewReference;
         }
 
-        foreach ($localizedViewReferences as $locale => $_viewReferences) {
-            //the query builder
-            $queryBuilder = $this->createQueryBuilder('page');
 
-            $pageIds = [];
-            foreach ($_viewReferences as $viewReference) {
-                if ($viewReference instanceof BusinessPageReference) {
-                    $pageIds[] = $viewReference->getTemplateId();
-                } else {
-                    $pageIds[] = $viewReference->getViewId();
-                }
+        $queryBuilder = $this->createQueryBuilder('page');
+        $queryBuilder->andWhere('page.id IN (:pageIds)')
+            ->setParameter('pageIds', $pageIds);
+
+        $pages = $queryBuilder->getQuery()->getResult();
+
+        foreach ($pages as $page) {
+            $pageId = $page->getId();
+            $viewReference = array_filter(
+                $viewReferences,
+                function ($e) use ($pageId) {
+                    return $e->getViewId() == $pageId;
+            });
+            if (!empty($viewReference[0])) {
+                $page->setCurrentLocale($viewReference[0]->getLocale());
             }
-
-            $queryBuilder->andWhere('page.id IN (:pageIds)')
-                ->setParameter('pageIds', $pageIds);
-
-            // Use Translation Walker
-            $query = $queryBuilder->getQuery();
-            $query->setHint(
-                \Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER,
-                'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker'
-            );
-
-            // Force the locale
-            $query->setHint(
-                \Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE,
-                $locale
-            );
-
-            /* @var View[] $query */
-            $_views = $query->getResult();
-            //Parse views to set locale and reference
-            $views = array_merge($views, $_views);
         }
 
-        return $views;
+        return $pages;
     }
 
     /**

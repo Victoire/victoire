@@ -137,19 +137,20 @@ class PageSubscriber implements EventSubscriber
 
         if ($entity instanceof View) {
             $om = $eventArgs->getObjectManager();
-            $viewReference = $this->viewReferenceRepository->getOneReferenceByParameters([
+            $viewReferences = $this->viewReferenceRepository->getReferencesByParameters([
                 'viewId' => $entity->getId(),
-                'locale' => $entity->getCurrentLocale(),
             ]);
-            if ($entity instanceof WebViewInterface && $viewReference instanceof ViewReference) {
-                $entity->setReference($viewReference);
-                $entity->setUrl($viewReference->getUrl());
-            } elseif ($entity instanceof Template || $entity instanceof ErrorPage) {
-                $entity->setReferences([$entity->getCurrentLocale() => new ViewReference($entity->getId())]);
-            } else {
-                $entity->setReferences([
-                    $entity->getCurrentLocale() => $this->viewReferenceBuilder->buildViewReference($entity, $eventArgs->getEntityManager()),
-                ]);
+            foreach ($viewReferences as $viewReference) {
+                if ($entity instanceof WebViewInterface && $viewReference instanceof ViewReference) {
+                    $entity->setReference($viewReference, $viewReference->getLocale());
+                    $entity->setUrl($viewReference->getUrl());
+                } elseif ($entity instanceof Template || $entity instanceof ErrorPage) {
+                    $entity->setReferences([$entity->getCurrentLocale() => new ViewReference($entity->getId())]);
+                } else {
+                    $entity->setReferences([
+                        $entity->getCurrentLocale() => $this->viewReferenceBuilder->buildViewReference($entity, $eventArgs->getEntityManager()),
+                    ]);
+                }
             }
         }
     }
