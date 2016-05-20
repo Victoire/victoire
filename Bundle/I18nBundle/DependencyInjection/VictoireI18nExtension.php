@@ -43,4 +43,19 @@ class VictoireI18nExtension extends Extension implements PrependExtensionInterfa
             'victoire_i18n.locale_pattern', $config['locale_pattern']
         );
     }
+
+    public function prepend(ContainerBuilder $container)
+    {
+        $config = $container->getExtensionConfig($this->getAlias());
+        $config = $container->getParameterBag()->resolveValue($config);
+
+        $config = $this->processConfiguration(new Configuration(), $config);
+
+        if (isset($config['available_locales'])) {
+            $container->prependExtensionConfig('a2lix_translation_form', [
+                'locales' => $config['available_locales'],
+                'required_locales' => $config['available_locales']
+            ]);
+        }
+    }
 }
