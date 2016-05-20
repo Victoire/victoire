@@ -264,7 +264,10 @@ class LinkExtension extends \Twig_Extension
     private function formatAttributes($attributes)
     {
         array_walk($attributes, function(&$item, $key) {
-            $item = $key . '="' .(is_array($item) ? implode($item, ' ') : $item).'"';
+            if (is_array($item)) {
+                $item = implode($item, ' ');
+            }
+            $item = $key . '="' .$item.'"';
         });
 
         return implode($attributes, ' ');

@@ -360,7 +360,7 @@ EOT
         $input->setOption('entity', $bundle.':'.$entity);
 
         $cache = $input->getOption('cache');
-        $question = new ConfirmationQuestion($questionHelper->getQuestion('Do you want use cache for this widget ?', 'yes', '?'));
+        $question = new ConfirmationQuestion($questionHelper->getQuestion('Do you want use cache for this widget ?', 'no', '?'), false);
         if (null !== $cache) {
             $cache = $questionHelper->ask($input, $output, $question);
         }
