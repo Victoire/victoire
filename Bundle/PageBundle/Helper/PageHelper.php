@@ -292,7 +292,7 @@ class PageHelper
                 ->findOneBy([
                     'id'     => $viewReference->getViewId(),
                 ]);
-            $this->refreshPage($page, $viewReference->getLocale());
+            $page->setCurrentLocale($viewReference->getLocale());
         } else {
             throw new \Exception(sprintf('Oh no! Cannot find a page for this ViewReference (%s)', ClassUtils::getClass($viewReference)));
         }

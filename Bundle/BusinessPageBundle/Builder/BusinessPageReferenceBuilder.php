@@ -30,11 +30,7 @@ class BusinessPageReferenceBuilder extends BaseReferenceBuilder
         $businessPageReference->setName($businessPage->getName());
         $businessPageReference->setViewId($businessPage->getId());
         $businessPageReference->setTemplateId($businessPage->getTemplate()->getId());
-        $businessPageReference->setSlug(
-            $businessPage->getStaticUrl() != '' ?
-                $businessPage->getStaticUrl() :
-                $businessPage->getSlug()
-        );
+        $businessPageReference->setSlug($businessPage->getSlug());
         $businessPageReference->setEntityId($businessPage->getBusinessEntity()->getId());
         $businessPageReference->setEntityNamespace($em->getClassMetadata(get_class($businessPage->getBusinessEntity()))->name);
         $businessPageReference->setViewNamespace($em->getClassMetadata(get_class($businessPage))->name);
