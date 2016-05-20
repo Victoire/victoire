@@ -6,6 +6,7 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
+use Victoire\Bundle\I18nBundle\Entity\ViewTranslation;
 use Victoire\Bundle\ViewReferenceBundle\Event\ViewReferenceEvent;
 use Victoire\Bundle\ViewReferenceBundle\ViewReferenceEvents;
 
@@ -86,6 +87,11 @@ class ViewReferenceSubscriber implements \Doctrine\Common\EventSubscriber
                 $event = new ViewReferenceEvent($entity);
                 $this->dispatcher->dispatch(ViewReferenceEvents::UPDATE_VIEW_REFERENCE, $event);
             }
+        } else if ($entity instanceof ViewTranslation) {
+            $view = $entity->getTranslatable();
+            $view->setCurrentLocale($entity->getLocale());
+            $event = new ViewReferenceEvent($view);
+            $this->dispatcher->dispatch(ViewReferenceEvents::UPDATE_VIEW_REFERENCE, $event);
         }
     }
 }
