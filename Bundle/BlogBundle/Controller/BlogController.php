@@ -123,7 +123,7 @@ class BlogController extends BasePageController
      */
     public function newAction(Request $request, $isHomepage = false)
     {
-        return new JsonResponse($request, parent::newAction());
+        return new JsonResponse(parent::newAction($request));
     }
 
     /**
