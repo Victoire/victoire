@@ -1,12 +1,14 @@
 angular.module('ngApp').controller("PageController",
     ["$scope", "$timeout", "widgetLocalStorageService", "widgetAPIService", "$sce", "$rootScope", "$http",
         function($scope, $timeout, $widgetLocalStorageService, $widgetAPI, $sce, $rootScope, $http) {
-            $scope.init = function(viewCssHash) {
+            $scope.init = function(viewCssHash, admin) {
                 $timeout(function() {
                     $scope.loadAsynchronousWidgets();
                 });
                 $scope.viewCssHash = viewCssHash;
-                $scope.getWidgetMaps();
+                if (true === admin || undefined !== admin) {
+                    $scope.getWidgetMaps();
+                }
             };
 
             $scope.feedAsynchronousWidget = function(widget) {
