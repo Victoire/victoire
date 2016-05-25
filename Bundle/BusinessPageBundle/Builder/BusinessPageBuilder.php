@@ -44,11 +44,11 @@ class BusinessPageBuilder
      * @param EntityProxyProvider  $entityProxyProvider
      */
     public function __construct(BusinessEntityHelper $businessEntityHelper,
-                                UrlBuilder $urlBuilder,
-                                ParameterConverter $parameterConverter,
-                                EntityProxyProvider $entityProxyProvider,
-                                ViewReferenceBuilder $viewReferenceBuilder
-    ) {
+        UrlBuilder $urlBuilder,
+        ParameterConverter $parameterConverter,
+        EntityProxyProvider $entityProxyProvider,
+        ViewReferenceBuilder $viewReferenceBuilder)
+    {
         $this->businessEntityHelper = $businessEntityHelper;
         $this->urlBuilder = $urlBuilder;
         $this->parameterConverter = $parameterConverter;
@@ -60,7 +60,8 @@ class BusinessPageBuilder
      * Generate update the page parameters with the entity.
      *
      * @param BusinessTemplate $businessTemplate
-     * @param entity           $entity
+     * @param mixed            $entity
+     * @param EntityManager    $em
      *
      * @return VirtualBusinessPage
      */
@@ -73,24 +74,16 @@ class BusinessPageBuilder
         }
         $page = new VirtualBusinessPage();
 
-        $pageLocale = $businessTemplate->getLocale();
-        foreach (array_reverse($viewTranslations) as $viewTranslation) {
-            $page = new VirtualBusinessPage();
-            $em->refresh($viewTranslation->getObject()->setTranslatableLocale($viewTranslation->getLocale()));
-            $reflect = new \ReflectionClass($businessTemplate);
-            $templateProperties = $reflect->getProperties();
-            $accessor = PropertyAccess::createPropertyAccessor();
-            foreach ($templateProperties as $property) {
-                if (!in_array(
-                        $property->getName(),
-                        ['id', 'widgetMap', 'slots', 'seo', 'i18n', 'widgets']
-                    ) && !$property->isStatic()
-                ) {
-                    $value = $accessor->getValue($viewTranslation->getObject(), $property->getName());
-                    $setMethod = 'set'.ucfirst($property->getName());
-                    if (method_exists($page, $setMethod)) {
-                        $accessor->setValue($page, $property->getName(), $value);
-                    }
+        $reflect = new \ReflectionClass($businessTemplate);
+        $templateProperties = $reflect->getProperties();
+        $accessor = PropertyAccess::createPropertyAccessor();
+
+        foreach ($templateProperties as $property) {
+            if (!in_array($property->getName(), ['id', 'widgetMap', 'slots', 'seo', 'i18n', 'widgets', 'translations']) && !$property->isStatic()) {
+                $value = $accessor->getValue($businessTemplate, $property->getName());
+                $setMethod = 'set'.ucfirst($property->getName());
+                if (method_exists($page, $setMethod)) {
+                    $accessor->setValue($page, $property->getName(), $value);
                 }
             }
             $translations[$viewTranslation->getLocale()]['page'] = $page;
@@ -105,39 +98,38 @@ class BusinessPageBuilder
 
             $entityProxy = $this->entityProxyProvider->getEntityProxy($entity, $businessEntity, $em);
 
-            $references = [];
-            foreach ($translations as $locale => $translation) {
-                /** @var VirtualBusinessPage $page */
-                $page = $translation['page'];
-                //the url of the page
-                $pageUrl = $this->urlBuilder->buildUrl($page);
-
-            $pageName = $page->getName();
-            $pageSlug = $page->getSlug();
-
-            //parse the business properties
-            foreach ($businessProperties as $businessProperty) {
-                $pageUrl = $this->parameterConverter->setBusinessPropertyInstance($pageUrl, $businessProperty, $entity);
-                $pageSlug = $this->parameterConverter->setBusinessPropertyInstance($pageSlug, $businessProperty, $entity);
-                $pageName = $this->parameterConverter->setBusinessPropertyInstance($pageName, $businessProperty, $entity);
-            }
-
-            //Check that all twig variables in pattern url was removed for it's generated BusinessPage
-            preg_match_all('/\{\%\s*([^\%\}]*)\s*\%\}|\{\{\s*([^\}\}]*)\s*\}\}/i', $pageUrl, $matches);
-
-            if (count($matches[2])) {
-                throw new IdentifierNotDefinedException($matches[2]);
-            }
-
-            $entityProxy = $this->entityProxyProvider->getEntityProxy($entity, $businessEntity, $em);
-            //we update the url of the page
-            $page->setCurrentLocale($businessTemplate->getCurrentLocale());
-            $page->setUrl($pageUrl);
-            $page->setSlug($pageSlug);
-            $page->setName($pageName);
             $page->setEntityProxy($entityProxy);
             $page->setTemplate($businessTemplate);
-            $page->setReferences([$page->getCurrentLocale() => $this->viewReferenceBuilder->buildViewReference($page, $em)]);
+            foreach ($entity->getTranslations() as $translation) {
+                $page->setCurrentLocale($translation->getLocale());
+                $entity->setCurrentLocale($translation->getLocale());
+                $businessTemplate->setCurrentLocale($translation->getLocale());
+
+                $pageName = $businessTemplate->getName();
+                $pageSlug = $businessTemplate->getSlug();
+                $page->setSlug($pageSlug);
+                $page->setName($pageName);
+                $pageUrl = $this->urlBuilder->buildUrl($page);
+                $page->setCurrentLocale($translation->getLocale());
+                //parse the business properties
+                foreach ($businessProperties as $businessProperty) {
+                    $pageUrl = $this->parameterConverter->setBusinessPropertyInstance($pageUrl, $businessProperty, $entity);
+                    $pageSlug = $this->parameterConverter->setBusinessPropertyInstance($pageSlug, $businessProperty, $entity);
+                    $pageName = $this->parameterConverter->setBusinessPropertyInstance($pageName, $businessProperty, $entity);
+                }
+                //Check that all twig variables in pattern url was removed for it's generated BusinessPage
+                preg_match_all('/\{\%\s*([^\%\}]*)\s*\%\}|\{\{\s*([^\}\}]*)\s*\}\}/i', $pageUrl, $matches);
+
+                if (count($matches[2])) {
+                    throw new IdentifierNotDefinedException($matches[2]);
+                }
+
+                $page->setUrl($pageUrl);
+                $page->setSlug($pageSlug);
+                $page->setName($pageName);
+                $page->setReference($this->viewReferenceBuilder->buildViewReference($page, $em));
+
+            }
 
             if ($seo = $businessTemplate->getSeo()) {
                 $pageSeo = clone $seo;

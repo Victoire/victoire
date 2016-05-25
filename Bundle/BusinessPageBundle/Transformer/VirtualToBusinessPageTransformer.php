@@ -24,6 +24,10 @@ class VirtualToBusinessPageTransformer
             }
         }
 
+        foreach ($sourceObject->getTranslations() as $translation) {
+            $bp->addTranslation($translation);
+        }
+
         $sourceObject = $bp;
     }
 }
