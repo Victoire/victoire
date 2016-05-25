@@ -5,6 +5,8 @@ namespace Victoire\Bundle\BlogBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\Validator\Constraints as Assert;
 use Victoire\Bundle\BusinessEntityBundle\Entity\Traits\BusinessEntityTrait;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
@@ -22,6 +24,7 @@ class Article
 {
     use BusinessEntityTrait;
     use TimestampableEntity;
+    use Translatable;
 
     /**
      * @VIC\BusinessProperty("businessParameter")
@@ -32,29 +35,24 @@ class Article
     private $id;
 
     /**
+     * @deprecated
      * Title is inherited from Page, just add the BusinessProperty annotation.
      *
      * @ORM\Column(name="name", type="string", length=255)
-     * @Assert\NotBlank()
-     * @VIC\BusinessProperty({"textable", "businessParameter", "seoable"})
-     * @Gedmo\Translatable
      */
     private $name;
 
     /**
+     * @deprecated
      * @ORM\Column(name="slug", type="string", length=255)
-     * @Gedmo\Slug(fields={"name"}, updatable=false, unique=true)
-     * @VIC\BusinessProperty("businessParameter")
-     * @Gedmo\Translatable
      */
     private $slug;
 
     /**
+     * @deprecated
      * Description is inherited from Page, just add the BusinessProperty annotation.
      *
      * @ORM\Column(name="description", type="text", nullable=true)
-     * @VIC\BusinessProperty({"textable", "seoable"})
-     * @Gedmo\Translatable
      */
     private $description;
 
@@ -186,68 +184,6 @@ class Article
     public function setId($id)
     {
         $this->id = $id;
-    }
-
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return $this
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Set description.
-     *
-     * @param string $description
-     *
-     * @return Article
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description.
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * Set category.
-     *
-     * @param string $category
-     *
-     * @return Article
-     */
-    public function setCategory($category)
-    {
-        $this->category = $category;
-
-        return $this;
     }
 
     /**
@@ -465,29 +401,6 @@ class Article
         return $this->status;
     }
 
-    /**
-     * Get slug.
-     *
-     * @return string
-     */
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-
-    /**
-     * Set slug.
-     *
-     * @param string $slug
-     *
-     * @return $this
-     */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
 
     /**
      * Get categoryTitle.
@@ -560,16 +473,43 @@ class Article
         $this->locale = $locale;
     }
 
-    public function setCurrentLocale($locale)
-    {
-        $this->locale = $locale;
-    }
-
     /**
      * @return string
      */
     public function getLocale()
     {
         return $this->locale;
+    }
+
+    public function getName()
+    {
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(), 'getName');
+    }
+
+    public function setName($name, $locale = null)
+    {
+        $this->translate($locale, false)->setName($name);
+        $this->mergeNewTranslations();
+    }
+    
+    public function getSlug()
+    {
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(), 'getSlug');
+    }
+
+    public function setSlug($slug, $locale = null)
+    {
+        $this->translate($locale, false)->setSlug($slug);
+        $this->mergeNewTranslations();
+    }
+
+    public function getDescription()
+    {
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(), 'getDescription');
+    }
+    public function setDescription($description, $locale = null)
+    {
+        $this->translate($locale, false)->setDescription($description);
+        $this->mergeNewTranslations();
     }
 }
