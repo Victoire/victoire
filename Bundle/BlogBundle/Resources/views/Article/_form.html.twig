@@ -8,23 +8,7 @@
     </div>
     <br>
     <div class="vic-row">
-        <div class="col-md-6">
-            {{ form_row(form.name) }}
-        </div>
-        {% if form.slug is defined %}
-        <div class="vic-col-md-6">
-            <div class="vic-form-group">
-                <label for="victoire_page_settings_type_bodyClass" class="vic-control-label control-label vic-optional">
-                    {{ 'form.page.type.slug.label'|trans({}, 'victoire') }}
-                </label>
-
-                <div class="vic-form-url-slug">
-                    {{ url('victoire_core_page_show', {'url' : page.url })|replace({(page.slug): ''}) }}
-                    {{ form_widget(form.slug) }}
-                </div>
-            </div>
-        </div>
-        {% endif %}
+        {{ form_widget(form.translations) }}
     </div>
 
     <div class="vic-row">
@@ -36,9 +20,6 @@
     <div class="vic-row">
         <div class="col-md-6">
             {{ form_row(form.image) }}
-        </div>
-        <div class="vic-col-md-6">
-            {{ form_row(form.description, {attr: {rows: 12}}) }}
         </div>
     </div>
     <br>

@@ -9,6 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Victoire\Bundle\BlogBundle\Entity\Blog;
 use Victoire\Bundle\BlogBundle\Repository\ArticleTemplateRepository;
 use Victoire\Bundle\BlogBundle\Repository\TagRepository;
 use Victoire\Bundle\CoreBundle\DataTransformer\ViewToIdTransformer;
@@ -37,13 +38,6 @@ class ArticleType extends AbstractType
         $viewToIdTransformer = new ViewToIdTransformer($this->entityManager);
 
         $builder
-            ->add('name', null, [
-                'label' => 'form.article.name.label',
-            ])
-            ->add('description', null, [
-                'label'    => 'form.article.description.label',
-                'required' => false,
-            ])
             ->add('image', MediaType::class, [
                 'required' => false,
                 'label'    => 'form.article.image.label',
@@ -63,12 +57,14 @@ class ArticleType extends AbstractType
             $parent = $event->getForm()->getParent();
             $this->manageCategories($data, $parent);
             $this->manageTemplate($data, $parent);
+            $this->manageLocales($data, $parent);
         });
 
         $builder->get('blog')->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
             $data = $event->getData();
             $parent = $event->getForm()->getParent();
             $this->manageCategories($data, $parent);
+            $this->manageLocales($data, $parent);
         });
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -98,6 +94,30 @@ class ArticleType extends AbstractType
                 return $qb;
             },
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface|null $form
+     */
+    protected function manageLocales($blog, $form)
+    {
+        if (!$blog instanceof Blog) {
+            $blog = $this->entityManager->getRepository('VictoireBlogBundle:Blog')->findOneById($blog);
+        }
+        $translations = $blog->getTranslations();
+        $availableLocales = [];
+        foreach ($translations as $translation) {
+            $availableLocales[] = $translation->getLocale();
+        }
+        $form->add('translations', 'a2lix_translations', array(
+            'required_locales' => $availableLocales,
+            'locales' => $availableLocales,
+            'fields' => array(
+                'name' => array(
+                    'label' => 'form.article.name.label',
+                ),
+            )
+        ));
     }
 
     /**
