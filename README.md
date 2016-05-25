@@ -16,6 +16,8 @@ It can be setup in any symfony2 project in just some few minutes.
 
 The main goal is to give to the final customer the ability to **create**/**edit**/**delete** each content on its website, even for a static content than a business entity based content and **whitout any development skill** and with the minimum of training.
 
+A french documentation has been started and is being completed _slowly_ [here](http://github.com/victoire/documentation-fr/)
+
 ##Contribution
 
 Victoire is an open-source, community driven project.
