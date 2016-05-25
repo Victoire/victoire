@@ -76,7 +76,8 @@
         "twig/twig": "~1.0",
         "willdurand/js-translation-bundle": "^2.5",
         "knplabs/doctrine-behaviors": "~1.1",
-        "doctrine/doctrine-migrations-bundle": "^1.0"
+        "doctrine/doctrine-migrations-bundle": "^1.0",
+        "a2lix/translation-form-bundle": "^2.1"
     },
     "require-dev": {
         "behat/behat": "~3.0",
