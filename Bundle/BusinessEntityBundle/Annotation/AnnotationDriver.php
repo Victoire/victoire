@@ -7,6 +7,7 @@ use Doctrine\Common\Annotations\Reader;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver as DoctrineAnnotationDriver;
 use Doctrine\ORM\Mapping\MappingException;
+use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -166,6 +167,15 @@ class AnnotationDriver extends DoctrineAnnotationDriver
     {
         $businessProperties = [];
         $properties = $class->getProperties();
+        $traits = $class->getTraits();
+        $className = $class->getName();
+        if (array_key_exists(Translatable::class, $traits)) {
+            $translation = new \ReflectionClass($className::getTranslationEntityClass());
+            $translationProperties = $translation->getProperties();
+            $properties = array_merge($properties, $translationProperties);
+
+        }
+
         foreach ($properties as $property) {
             $annotations = $this->reader->getPropertyAnnotations($property);
             foreach ($annotations as $key => $annotationObj) {
