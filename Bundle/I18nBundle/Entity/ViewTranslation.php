@@ -38,6 +38,12 @@ class ViewTranslation
     protected $slug;
 
     /**
+     * @var string
+     *             This property is computed by the method PageSubscriber::buildUrl
+     */
+    protected $url;
+
+    /**
      * Get name.
      *
      * @return string
@@ -83,6 +89,24 @@ class ViewTranslation
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * @param string $url
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+
+        return $this;
     }
 
     /**

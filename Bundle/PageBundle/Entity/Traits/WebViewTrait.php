@@ -3,6 +3,7 @@
 namespace Victoire\Bundle\PageBundle\Entity\Traits;
 
 use Doctrine\Common\Util\ClassUtils;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 use Victoire\Bundle\CoreBundle\Annotations as VIC;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
@@ -19,12 +20,6 @@ trait WebViewTrait
      * @ORM\JoinColumn(name="seo_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $seo;
-
-    /**
-     * @var string
-     *             This property is computed by the method PageSubscriber::buildUrl
-     */
-    protected $url;
 
     /**
      * @ORM\OneToMany(targetEntity="Victoire\Bundle\SeoBundle\Entity\PageSeo", mappedBy="redirectTo")
@@ -95,44 +90,6 @@ trait WebViewTrait
         $this->referers = $referers;
     }
 
-    /**
-     * Set url.
-     *
-     * @param string $url
-     */
-    public function setUrl($url)
-    {
-        $this->url = $url;
-    }
-
-    /**
-     * Get url.
-     * Be careful with this method, it's heavy. Prefer the use of the ViewReference->getUrl() as long as possible.
-     *
-     * @return string
-     */
-    public function getUrl($useViewReference = true)
-    {
-        if (true === $useViewReference) {
-            if (null !== $this->getReference()) {
-                return $this->getReference()->getUrl();
-            } else {
-                throw new \Exception(
-                    sprintf(
-                        'No reference is attached to this view for now [#%s, "%s","%s"]',
-                        $this->getId(),
-                        ClassUtils::getClass($this),
-                        $this->getName()
-                    )
-                );
-            }
-        } else {
-            $urlBuilder = new UrlBuilder();
-
-            /* @var WebViewInterface $this */
-            return $urlBuilder->buildUrl($this);
-        }
-    }
 
     /**
      * Set status.
@@ -214,5 +171,16 @@ trait WebViewTrait
         $this->homepage = $homepage;
 
         return $this;
+    }
+
+
+    public function getUrl()
+    {
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(), 'getUrl');
+    }
+
+    public function setUrl($name, $locale = null)
+    {
+        $this->translate($locale)->setUrl($name);
     }
 }
