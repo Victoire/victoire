@@ -271,7 +271,7 @@ class PageHelper
                     ->findOneBy([
                         'id'     => $viewReference->getViewId(),
                     ]);
-                $this->refreshPage($page, $viewReference->getLocale());
+                $page->setCurrentLocale($viewReference->getLocale());
             } else { //VirtualBusinessPage
                 $page = $this->entityManager->getRepository('VictoireCoreBundle:View')
                     ->findOneBy([
