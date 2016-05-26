@@ -48,6 +48,7 @@ class BusinessTemplateType extends ViewType
             ])
             ->add('query', null, [
                 'label'                        => 'victoire.form.business_template.query.label',
+                'vic_business_properties' => $options['vic_business_properties'],
                 'vic_business_property_picker' => [
                     'description' => false,
                 ],
@@ -67,7 +68,7 @@ class BusinessTemplateType extends ViewType
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
-        $resolver->setDefined(['businessProperty']);
+        $resolver->setDefined(['vic_business_properties']);
         $resolver->setDefaults([
             'data_class'         => 'Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate',
             'translation_domain' => 'victoire',

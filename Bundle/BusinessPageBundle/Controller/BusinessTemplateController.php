@@ -150,15 +150,15 @@ class BusinessTemplateController extends Controller
     private function createCreateForm(BusinessTemplate $view)
     {
         $id = $view->getBusinessEntityId();
-        $businessProperty = $this->getBusinessProperties($view);
 
+        $businessProperties = $this->getBusinessProperties($view);
         $form = $this->createForm(
             BusinessTemplateType::class,
             $view,
             [
                 'action'           => $this->generateUrl('victoire_business_template_create', ['id' => $id]),
                 'method'           => 'POST',
-                'businessProperty' => $businessProperty,
+                'vic_business_properties' => $businessProperties,
             ]
         );
 
@@ -187,13 +187,9 @@ class BusinessTemplateController extends Controller
 
         $form = $this->createCreateForm($view);
 
-        $businessEntityHelper = $this->get('victoire_business_page.business_page_helper');
-        $businessProperties = $businessEntityHelper->getBusinessProperties($businessEntity);
-
         $parameters = [
             'entity'             => $view,
             'form'               => $form->createView(),
-            'businessProperties' => $businessProperties,
         ];
 
         return new JsonResponse([
@@ -220,23 +216,15 @@ class BusinessTemplateController extends Controller
     public function editAction(View $view)
     {
         $em = $this->getDoctrine()->getManager();
-        $businessEntityHelper = $this->get('victoire_core.helper.business_entity_helper');
-        $BusinessTemplateHelper = $this->get('victoire_business_page.business_page_helper');
 
         $editForm = $this->createEditForm($view);
         $deleteForm = $this->createDeleteForm($view->getId());
 
-        //the business property link to the page
-        $businessEntityId = $view->getBusinessEntityId();
-        $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($businessEntityId);
-
-        $businessProperties = $BusinessTemplateHelper->getBusinessProperties($businessEntity);
 
         $parameters = [
             'entity'             => $view,
             'form'               => $editForm->createView(),
             'delete_form'        => $deleteForm->createView(),
-            'businessProperties' => $businessProperties,
         ];
 
         return new JsonResponse([
@@ -257,12 +245,12 @@ class BusinessTemplateController extends Controller
      */
     private function createEditForm(BusinessTemplate $view)
     {
-        $businessProperty = $this->getBusinessProperties($view);
+        $businessProperties = $this->getBusinessProperties($view);
 
         $form = $this->createForm(BusinessTemplateType::class, $view, [
             'action'           => $this->generateUrl('victoire_business_template_update', ['id' => $view->getId()]),
             'method'           => 'PUT',
-            'businessProperty' => $businessProperty,
+            'vic_business_properties' => $businessProperties,
         ]);
 
         return $form;
@@ -400,21 +388,14 @@ class BusinessTemplateController extends Controller
      */
     private function getBusinessProperties(BusinessTemplate $view)
     {
-        $businessEntityHelper = $this->get('victoire_core.helper.business_entity_helper');
-        //the name of the business entity link to the business entity page pattern
+        $businessTemplateHelper = $this->get('victoire_business_page.business_page_helper');
+        //the business property link to the page
         $businessEntityId = $view->getBusinessEntityId();
+        $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($businessEntityId);
 
-        $businessEntity = $businessEntityHelper->findById($businessEntityId);
-        $businessProperties = $businessEntity->getBusinessPropertiesByType('businessParameter');
+        $businessProperties = $businessTemplateHelper->getBusinessProperties($businessEntity);
 
-        $businessProperty = [];
-
-        foreach ($businessProperties as $bp) {
-            $entityProperty = $bp->getEntityProperty();
-            $businessProperty[$entityProperty] = $entityProperty;
-        }
-
-        return $businessProperty;
+        return $businessProperties;
     }
 
     /**

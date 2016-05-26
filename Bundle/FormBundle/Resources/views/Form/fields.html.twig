@@ -548,7 +548,7 @@
         {% if vic_business_property_picker %}
             {% include 'VictoireBusinessEntityBundle:BusinessProperty:list.html.twig' with {
                 'description': vic_business_property_picker_description|trans({}, translation_domain)|raw,
-                'businessProperties': businessProperties
+                'businessProperties': vic_business_properties
             } %}
         {% endif %}
     {% endspaceless %}
