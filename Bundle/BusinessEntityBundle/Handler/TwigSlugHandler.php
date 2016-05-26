@@ -6,6 +6,7 @@ use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Gedmo\Sluggable\Handler\SlugHandlerInterface;
 use Gedmo\Sluggable\Mapping\Event\SluggableAdapter;
 use Gedmo\Sluggable\SluggableListener;
+use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
 use Victoire\Bundle\BusinessEntityBundle\Transliterator\Transliterator;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 
@@ -25,7 +26,6 @@ class TwigSlugHandler implements SlugHandlerInterface
     public function __construct(SluggableListener $sluggable)
     {
         $this->sluggable = $sluggable;
-        $this->transliterator = new Transliterator();
     }
 
     /**
@@ -70,10 +70,12 @@ class TwigSlugHandler implements SlugHandlerInterface
      */
     public function transliterate($text, $separator, $object)
     {
-        if ($object instanceof BusinessTemplate) {
-            $slug = $this->transliterator->urlize($text, $separator, true);
+        if ($object instanceof BusinessTemplate
+            || (in_array(Translatable::class, class_uses($object))
+            && $object->getTranslatable() instanceof BusinessTemplate)) {
+            $slug = Transliterator::urlize($text, $separator, true);
         } else {
-            $slug = $this->transliterator->urlize($text, $separator);
+            $slug = Transliterator::urlize($text, $separator);
         }
 
         return $slug;
