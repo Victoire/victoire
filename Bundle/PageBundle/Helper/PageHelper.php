@@ -277,8 +277,7 @@ class PageHelper
                     ->findOneBy([
                         'id'     => $viewReference->getTemplateId(),
                     ]);
-                $this->refreshPage($page, $viewReference->getLocale());
-
+                $page->setCurrentLocale($viewReference->getLocale());
                 if ($entity) {
                     if ($page instanceof BusinessTemplate) {
                         $page = $this->updatePageWithEntity($page, $entity);

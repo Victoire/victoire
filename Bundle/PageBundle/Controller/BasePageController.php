@@ -38,6 +38,7 @@ class BasePageController extends Controller
         if ($entityId) {
             $parameters['entityId'] = $entityId;
         }
+        $parameters['locale'] = $request->getLocale();
         $page = $this->get('victoire_page.page_helper')->findPageByParameters($parameters);
 
         return $this->redirect($this->generateUrl('victoire_core_page_show', array_merge(
@@ -47,7 +48,7 @@ class BasePageController extends Controller
         ));
     }
 
-    public function showBusinessPageByIdAction($entityId, $type)
+    public function showBusinessPageByIdAction(Request $request, $entityId, $type)
     {
         $businessEntityHelper = $this->get('victoire_core.helper.queriable_business_entity_helper');
         $businessEntity = $businessEntityHelper->findById($type);
@@ -61,6 +62,7 @@ class BasePageController extends Controller
         $page = $this->get('victoire_page.page_helper')->findPageByParameters([
             'viewId'   => $templateId,
             'entityId' => $entityId,
+            'locale' => $request->getLocale(),
         ]);
         $this->get('victoire_widget_map.builder')->build($page);
         $this->get('victoire_widget_map.widget_data_warmer')->warm(
@@ -72,7 +74,7 @@ class BasePageController extends Controller
             $this->generateUrl(
                 'victoire_core_page_show',
                 [
-                    'url' => $page->getReference()->Url(),
+                    'url' => $page->getReference()->getUrl(),
                 ]
             )
         );

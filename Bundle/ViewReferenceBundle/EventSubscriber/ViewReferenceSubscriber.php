@@ -89,9 +89,11 @@ class ViewReferenceSubscriber implements \Doctrine\Common\EventSubscriber
             }
         } else if ($entity instanceof ViewTranslation) {
             $view = $entity->getTranslatable();
-            $view->setCurrentLocale($entity->getLocale());
-            $event = new ViewReferenceEvent($view);
-            $this->dispatcher->dispatch(ViewReferenceEvents::UPDATE_VIEW_REFERENCE, $event);
+            if ($view instanceof WebViewInterface) {
+                $view->setCurrentLocale($entity->getLocale());
+                $event = new ViewReferenceEvent($view);
+                $this->dispatcher->dispatch(ViewReferenceEvents::UPDATE_VIEW_REFERENCE, $event);
+            }
         }
     }
 }

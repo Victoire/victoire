@@ -4,6 +4,8 @@ namespace Victoire\Bundle\BusinessPageBundle\Form;
 
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Victoire\Bundle\CoreBundle\Form\ViewType;
@@ -32,13 +34,27 @@ class BusinessTemplateType extends ViewType
     {
         parent::buildForm($builder, $options);
 
+        $builder->remove('translations');
+        $builder->add('translations', 'a2lix_translations', array(
+            'required_locales' => [],
+            'fields' => array(
+                'name' => array(
+                    'label' => 'form.view.type.name.label',
+                    'vic_business_properties' => $options['vic_business_properties'],
+                    'vic_business_property_picker' => [
+                        'description' => 'victoire.form.business_template.name.vic_business_property_picker',
+                    ],
+                ),
+                'slug' => array(
+                    'label'                        => 'victoire.form.business_template.slug.label',
+                    'vic_business_properties' => $options['vic_business_properties'],
+                    'vic_business_property_picker' => [
+                        'description' => 'victoire.form.business_template.slug.vic_business_property_picker',
+                    ],
+                )
+            )
+        ));
         $builder
-            ->add('name', null, [
-                'label'                        => 'form.view.type.name.label',
-                'vic_business_property_picker' => [
-                    'description' => 'victoire.form.business_template.name.vic_business_property_picker',
-                ],
-            ])
             ->add('backendName', null, [
                 'label'          => 'victoire.form.business_template.backend_name.label',
                 'vic_help_block' => 'victoire.form.business_template.backend_name.help_block',
@@ -51,12 +67,6 @@ class BusinessTemplateType extends ViewType
                 'vic_business_properties' => $options['vic_business_properties'],
                 'vic_business_property_picker' => [
                     'description' => false,
-                ],
-            ])
-            ->add('slug', null, [
-                'label'                        => 'victoire.form.business_template.slug.label',
-                'vic_business_property_picker' => [
-                    'description' => 'victoire.form.business_template.slug.vic_business_property_picker',
                 ],
             ])
             ->add('businessEntityId', HiddenType::class);

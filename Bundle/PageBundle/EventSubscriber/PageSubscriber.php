@@ -139,7 +139,8 @@ class PageSubscriber implements EventSubscriber
             $om = $eventArgs->getObjectManager();
             $viewReferences = $this->viewReferenceRepository->getReferencesByParameters([
                 'viewId' => $entity->getId(),
-            ]);
+                'templateId' => $entity->getId(),
+            ], true, false, 'OR');
             foreach ($viewReferences as $viewReference) {
                 if ($entity instanceof WebViewInterface && $viewReference instanceof ViewReference) {
                     $entity->setReference($viewReference, $viewReference->getLocale());

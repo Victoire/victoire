@@ -8,8 +8,10 @@ use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use FOS\UserBundle\Model\UserInterface;
+use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
@@ -59,6 +61,7 @@ class QueryHelper
             throw new \Exception('The container entity parameter must not be null.');
         }
 
+
         //the business name of the container entity
         $businessEntityId = $containerEntity->getBusinessEntityId();
 
@@ -82,6 +85,16 @@ class QueryHelper
             ->createQueryBuilder()
             ->select('main_item')
             ->from($businessClass, 'main_item');
+
+
+        $containerEntityLocale = $containerEntity->getCurrentLocale();
+        if (in_array(Translatable::class, class_uses($businessClass))) {
+            $itemsQueryBuilder->join('main_item.translations', 'translation')
+                ->andWhere('translation.locale = :locale')
+                ->setParameter(':locale', $containerEntityLocale);
+        } else if ($containerEntityLocale !== $containerEntity->getDefaultLocale()) {
+            $itemsQueryBuilder->andWhere('1 = -1');
+        }
 
         $refClass = new $businessClass();
         if (method_exists($refClass, 'getDeletedAt')) {

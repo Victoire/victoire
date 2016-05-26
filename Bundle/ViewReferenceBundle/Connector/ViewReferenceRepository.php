@@ -85,10 +85,10 @@ class ViewReferenceRepository
      *
      * @return array
      */
-    public function getReferencesByParameters(array $parameters, $transform = true, $keepChildren = false)
+    public function getReferencesByParameters(array $parameters, $transform = true, $keepChildren = false, $type = null)
     {
         $viewsReferences = [];
-        $refsId = $this->repository->getAllBy($parameters);
+        $refsId = $this->repository->getAllBy($parameters, $type);
 
         $references = $this->repository->getResults($refsId);
         foreach ($references as $reference) {
