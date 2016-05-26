@@ -249,6 +249,7 @@ class LinkExtension extends \Twig_Extension
             'route'           => 'victoire_core_page_show',
             'routeParameters' => [
                 'url' => $page->getReference()->getUrl(),
+                '_locale' => $page->getLocale()
             ],
             'referenceType' => $referenceType,
         ];
