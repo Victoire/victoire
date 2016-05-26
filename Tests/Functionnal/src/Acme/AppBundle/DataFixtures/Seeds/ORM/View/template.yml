@@ -1,6 +1,6 @@
 Victoire\Bundle\TemplateBundle\Entity\Template:
     template_base:
-        currentlocale: fr
+        currentLocale: fr
         name: Base
         slug: base
         layout: fullWidth
@@ -10,7 +10,7 @@ Victoire\Bundle\TemplateBundle\Entity\Template:
         updatedAt: <dateTime('now')>
         cssUpToDate: false
     template_two_cols:
-        currentlocale: fr
+        currentLocale: fr
         name: Two columns
         slug: two_cols
         layout: two_cols

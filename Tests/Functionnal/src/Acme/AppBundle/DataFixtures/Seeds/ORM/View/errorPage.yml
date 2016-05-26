@@ -1,6 +1,6 @@
 Victoire\Bundle\TwigBundle\Entity\ErrorPage:
     400:
-        currentlocale: fr
+        currentLocale: fr
         code: 400
         template: @template_base
         author: @anakin
@@ -11,7 +11,7 @@ Victoire\Bundle\TwigBundle\Entity\ErrorPage:
         updatedAt: <dateTime('now')>
         cssUpToDate: false
     403:
-        currentlocale: fr
+        currentLocale: fr
         code: 403
         template: @template_base
         author: @anakin
@@ -22,7 +22,7 @@ Victoire\Bundle\TwigBundle\Entity\ErrorPage:
         updatedAt: <dateTime('now')>
         cssUpToDate: false
     404:
-        currentlocale: fr
+        currentLocale: fr
         code: 404
         template: @template_base
         author: @anakin
@@ -33,7 +33,7 @@ Victoire\Bundle\TwigBundle\Entity\ErrorPage:
         updatedAt: <dateTime('now')>
         cssUpToDate: false
     500:
-        currentlocale: fr
+        currentLocale: fr
         code: 500
         template: @template_base
         author: @anakin
@@ -44,7 +44,7 @@ Victoire\Bundle\TwigBundle\Entity\ErrorPage:
         updatedAt: <dateTime('now')>
         cssUpToDate: false
     503:
-        currentlocale: fr
+        currentLocale: fr
         code: 503
         template: @template_base
         author: @anakin

@@ -1,6 +1,6 @@
 Victoire\Bundle\PageBundle\Entity\Page:
     home:
-        currentlocale: fr
+        currentLocale: fr
         template: @template_base
         author: @anakin
         name: Page d'accueil
@@ -14,7 +14,7 @@ Victoire\Bundle\PageBundle\Entity\Page:
         cssUpToDate: false
 
     test:
-        currentlocale: fr
+        currentLocale: fr
         template: @template_two_cols
         author: @anakin
         name: Test

@@ -1,11 +1,11 @@
 Victoire\Bundle\BlogBundle\Entity\ArticleTemplate:
     template_article:
+        currentLocale: fr
         name: "{{item.name}}"
         backendName: "First blog template"
         slug: "{{item.slug}}"
         businessEntityId: article
         author: @anakin
-        locale: fr
         template: @template_base
         status: published
         parent: @blog-jedi-network
@@ -14,12 +14,12 @@ Victoire\Bundle\BlogBundle\Entity\ArticleTemplate:
         updatedAt: <dateTime('now')>
         cssUpToDate: false
     template_article_2:
+        currentLocale: fr
         name: "{{item.name}}"
         backendName: "Second blog template"
         slug: "{{item.slug}}"
         businessEntityId: article
         author: @anakin
-        locale: fr
         template: @template_base
         status: published
         parent: @blog-jedi-network
@@ -30,22 +30,12 @@ Victoire\Bundle\BlogBundle\Entity\ArticleTemplate:
 
 Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
     template_article_en_name:
-        content: "{{item.name}}"
+        name: "{{item.name}}"
+        slug: "{{item.slug}}"
         locale: en
-        field: name
-        object: @template_article
+        translatable: @template_article
     template_article_2_en_name:
-        content: "{{item.name}}"
+        name: "{{item.name}}"
+        slug: "{{item.slug}}"
         locale: en
-        field: name
-        object: @template_article_2
-    template_article_en_slug:
-        content: "{{item.slug}}"
-        locale: en
-        field: slug
-        object: @template_article
-    template_article_2_en_slug:
-        content: "{{item.slug}}"
-        locale: en
-        field: slug
-        object: @template_article_2
+        translatable: @template_article_2
