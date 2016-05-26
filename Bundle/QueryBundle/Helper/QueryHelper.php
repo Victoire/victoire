@@ -98,7 +98,7 @@ class QueryHelper
 
         $refClass = new $businessClass();
         if (method_exists($refClass, 'getDeletedAt')) {
-            $itemsQueryBuilder->where('main_item.deletedAt IS NULL');
+            $itemsQueryBuilder->andWhere('main_item.deletedAt IS NULL');
         }
 
         return $itemsQueryBuilder;
