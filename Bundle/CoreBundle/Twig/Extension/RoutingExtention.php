@@ -35,16 +35,15 @@ class RoutingExtention extends BaseRoutingExtension
     {
         if ($name == 'victoire_core_page_show_by_id') {
             $params = ['viewId' => $parameters['viewId']];
+            $params['locale'] = $this->request->getLocale();
             unset($parameters['viewId']);
             if (!empty($parameters['entityId'])) {
                 $params['entityId'] = $parameters['entityId'];
                 unset($parameters['entityId']);
             }
-
-            $params['locale'] = $this->request->getLocale();
             $page = $this->pageHelper->findPageByParameters($params);
-            //get the url for the current locale
             $parameters['url'] = $page->getReference($this->request->getLocale())->getUrl();
+
             $name = 'victoire_core_page_show';
         }
 
