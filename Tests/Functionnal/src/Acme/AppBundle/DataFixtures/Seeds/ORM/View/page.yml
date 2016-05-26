@@ -1,9 +1,9 @@
 Victoire\Bundle\PageBundle\Entity\Page:
     home:
+        currentlocale: fr
         template: @template_base
         author: @anakin
         name: Page d'accueil
-        locale: fr
         slug: home
         homepage: true
         undeletable: true
@@ -14,11 +14,11 @@ Victoire\Bundle\PageBundle\Entity\Page:
         cssUpToDate: false
 
     test:
+        currentlocale: fr
         template: @template_two_cols
         author: @anakin
         name: Test
         parent: @home
-        locale: fr
         slug: test
         homepage: false
         undeletable: false
@@ -29,23 +29,13 @@ Victoire\Bundle\PageBundle\Entity\Page:
         cssUpToDate: false
 
 Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
-    home_en_name:
-        content: Homepage
+    home_en:
+        name: Homepage
+        slug: home
         locale: en
-        field: name
-        object: @home
-    test_en_name:
-        content: English test
+        translatable: @home
+    test_en:
+        name: English test
+        slug: english-test
         locale: en
-        field: name
-        object: @test
-    home_en_slug:
-        content: home
-        locale: en
-        field: slug
-        object: @home
-    test_en_slug:
-        content: english-test
-        locale: en
-        field: slug
-        object: @test
+        translatable: @test

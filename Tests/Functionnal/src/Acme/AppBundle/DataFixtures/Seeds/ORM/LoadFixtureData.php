@@ -36,8 +36,8 @@ class LoadFixtureData extends AbstractFixture implements ContainerAwareInterface
 
         $files['user'] = $this->fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/User/user.yml');
         $files['folder'] = $this->fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/Media/folder.yml');
-        $files['template'] = $this->fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/View/template.yml');
         $files['page'] = $this->fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/View/page.yml');
+        $files['template'] = $this->fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/View/template.yml');
         $files['i18n'] = $this->fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/View/i18n.yml');
         $files['errorPage'] = $this->fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/View/errorPage.yml');
 

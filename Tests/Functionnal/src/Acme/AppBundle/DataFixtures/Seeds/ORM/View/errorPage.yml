@@ -1,54 +1,54 @@
 Victoire\Bundle\TwigBundle\Entity\ErrorPage:
     400:
+        currentlocale: fr
         code: 400
         template: @template_base
         author: @anakin
         name: Mauvaise Requete
-        locale: fr
         slug: mauvaise-requete
         undeletable: true
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         cssUpToDate: false
     403:
+        currentlocale: fr
         code: 403
         template: @template_base
         author: @anakin
         name: Interdit
-        locale: fr
         slug: erreur403
         undeletable: true
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         cssUpToDate: false
     404:
+        currentlocale: fr
         code: 404
         template: @template_base
         author: @anakin
         name: Page introuvable
-        locale: fr
         slug: erreur404
         undeletable: true
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         cssUpToDate: false
     500:
+        currentlocale: fr
         code: 500
         template: @template_base
         author: @anakin
         name: Erreur serveur
-        locale: fr
         slug: erreur500
         undeletable: true
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         cssUpToDate: false
     503:
+        currentlocale: fr
         code: 503
         template: @template_base
         author: @anakin
         name: Service indisponible
-        locale: fr
         slug: erreur503
         undeletable: true
         createdAt: <dateTime('now')>
@@ -56,53 +56,28 @@ Victoire\Bundle\TwigBundle\Entity\ErrorPage:
         cssUpToDate: false
 
 Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
-    400_en_name:
-        content: Error 400
+    400_trans:
+        name: Error 400
+        slug: error400
         locale: en
-        field: name
-        object: @400
-    400_en_slug:
-        content: error400
+        translatable: @400
+    403_trans:
+        name: Error 403
+        slug: error403
         locale: en
-        field: slug
-        object: @400
-    403_en_name:
-        content: Error 403
+        translatable: @403
+    404_trans:
+        name: Error 404
+        slug: error404
         locale: en
-        field: name
-        object: @403
-    403_en_slug:
-        content: error403
+        translatable: @404
+    500_trans:
+        name: Error 500
+        slug: error500
         locale: en
-        field: slug
-        object: @403
-    404_en_name:
-        content: Error 404
+        translatable: @500
+    503_trans:
+        name: Error 503
+        slug: error503
         locale: en
-        field: name
-        object: @404
-    404_en_slug:
-        content: error404
-        locale: en
-        field: slug
-        object: @404
-    500_en_name:
-        content: Error 500
-        locale: en
-        field: name
-        object: @500
-    500_en_slug:
-        content: error500
-        locale: en
-        field: slug
-        object: @500
-    503_en_name:
-        content: Error 503
-        locale: en
-        field: name
-        object: @503
-    503_en_slug:
-        content: error503
-        locale: en
-        field: slug
-        object: @503
+        translatable: @503
