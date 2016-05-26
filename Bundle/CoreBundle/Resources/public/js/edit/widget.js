@@ -73,16 +73,13 @@ $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(
 
 $vic(document).on('click', '.vic-widget-modal a[data-modal="update-bulk"], .vic-widget-modal a[data-modal="create-bulk"]', function(event) {
     event.preventDefault();
-
     // we remove the prototype picker to avoid persist it
     if ($vic("select.picker_entity_select").length != 0 && $vic("select.picker_entity_select").attr('name').indexOf('appventus_victoirecorebundle_widgetlistingtype[items][__name__][entity]') !== -1) {
         $vic("select.picker_entity_select").remove();
     }
 
-    var forms = $vic(this).parents('.vic-modal-content').find('.vic-tab-quantum .vic-tab-mode.vic-active .vic-tab-pane.vic-active form');
-    if (forms.length == 0) {
-        var forms = $vic(this).parents('.vic-modal-content').find('.vic-tab-quantum form');
-    }
+    var forms = $vic(this).parents('.vic-modal-content').find('.vic-tab-quantum .vic-tab-mode.vic-active > form');
+    forms = $vic.merge(forms, $vic(this).parents('.vic-modal-content').find('.vic-tab-quantum .vic-tab-mode.vic-active .vic-tab-pane.vic-active > form'));
 
     loading(true);
     var calls = [];

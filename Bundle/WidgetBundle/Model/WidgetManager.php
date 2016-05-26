@@ -124,6 +124,7 @@ class WidgetManager
                     'widgets'            => $widgets,
                     'widget'             => $widget,
                     'forms'              => $forms,
+                    'quantum'            => $quantum,
                 ]
             ),
         ];
@@ -198,7 +199,7 @@ class WidgetManager
             $response = [
                 'success' => false,
                 'message' => $noValidate === false ? $formErrorHelper->getRecursiveReadableErrors($form) : null,
-                'html'    => $this->widgetFormBuilder->renderNewForm($form, $widget, $slotId, $view, $entity),
+                'html'    => $this->widgetFormBuilder->renderNewForm($form, $widget, $slotId, $view, $quantum, $entity),
             ];
         }
 
@@ -377,7 +378,7 @@ class WidgetManager
                     $this->entityManager->persist($relatedEntity);
                     $relatedEntitiesCopies[] = $relatedEntityCopy;
                 }
-                $accessor->setValue($widgetCopy, $name, $relatedEntitiesCopies);
+                $accessor->setValue($entityCopy, $name, $relatedEntitiesCopies);
             }
 
             //Clone OneToOne relation objects
@@ -386,7 +387,7 @@ class WidgetManager
                 if ($relatedEntity) {
                     $relatedEntityCopy = clone $relatedEntity;
                     $this->entityManager->persist($relatedEntity);
-                    $accessor->setValue($widgetCopy, $name, $relatedEntityCopy);
+                    $accessor->setValue($entityCopy, $name, $relatedEntityCopy);
                 }
             }
         }

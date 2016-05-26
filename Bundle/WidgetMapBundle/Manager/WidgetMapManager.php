@@ -153,7 +153,7 @@ class WidgetMapManager
         $widgetMap = new WidgetMap();
         $widgetMap->setAction(WidgetMap::ACTION_OVERWRITE);
         $widgetMap->setReplaced($originalWidgetMap);
-        $widgetMap->setWidget($widgetCopy);
+        $widgetCopy->setWidgetMap($widgetMap);
         $widgetMap->setView($view);
         $widgetMap->setSlot($originalWidgetMap->getSlot());
         $widgetMap->setPosition($originalWidgetMap->getPosition());

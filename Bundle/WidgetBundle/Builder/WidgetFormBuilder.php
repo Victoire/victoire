@@ -34,7 +34,7 @@ class WidgetFormBuilder
      *
      * @return string
      */
-    public function renderNewForm($form, $widget, $slot, View $view, $entity = null)
+    public function renderNewForm($form, $widget, $slot, View $view, $quantum = null, $entity = null)
     {
         //the template displayed is in the widget bundle
         $templateName = $this->container->get('victoire_widget.widget_helper')->getTemplateName('new', $widget);
@@ -47,6 +47,7 @@ class WidgetFormBuilder
                 'slot'   => $slot,
                 'entity' => $entity,
                 'view'   => $view,
+                'quantum'   => $quantum,
             ]
         );
     }
@@ -97,7 +98,7 @@ class WidgetFormBuilder
     {
         //the static form
         $forms['static'] = [];
-        $forms['static']['main'] = $this->renderNewForm($this->buildForm($widget, $view, null, null, Widget::MODE_STATIC, $slot, $position, $parentWidgetMap, $quantum), $widget, $slot, $view, null);
+        $forms['static']['main'] = $this->renderNewForm($this->buildForm($widget, $view, null, null, Widget::MODE_STATIC, $slot, $position, $parentWidgetMap, $quantum), $widget, $slot, $view, $quantum, null);
 
         // Build each form relative to business entities
         foreach ($classes as $businessEntity) {
@@ -110,7 +111,7 @@ class WidgetFormBuilder
             //foreach of the entity form
             foreach ($entityForms as $formMode => $entityForm) {
                 //we add the form
-                $forms[$businessEntity->getId()][$formMode] = $this->renderNewForm($entityForm, $widget, $slot, $view, $businessEntity->getId());
+                $forms[$businessEntity->getId()][$formMode] = $this->renderNewForm($entityForm, $widget, $slot, $view, $quantum, $businessEntity->getId());
             }
         }
 
@@ -134,7 +135,9 @@ class WidgetFormBuilder
     {
         $forms = [];
         foreach ($widgets as $key => $widget) {
-            $forms[$key] = $this->renderNewWidgetForms($slot, $view, $widget, $classes, $position, $parentWidgetMap, $quantum ?: $key);
+            $quantum = $quantum ?: $key;
+            $forms[$key] = $this->renderNewWidgetForms($slot, $view, $widget, $classes, $position, $parentWidgetMap, $quantum);
+            $forms[$key]['quantum'] = $quantum;
             if ($widget === $activeWidget) {
                 $forms[$key]['active'] = true;
             }
