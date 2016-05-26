@@ -6,7 +6,7 @@ use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Gedmo\Sluggable\Handler\SlugHandlerInterface;
 use Gedmo\Sluggable\Mapping\Event\SluggableAdapter;
 use Gedmo\Sluggable\SluggableListener;
-use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
+use Knp\DoctrineBehaviors\Model\Translatable\Translation;
 use Victoire\Bundle\BusinessEntityBundle\Transliterator\Transliterator;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 
@@ -71,7 +71,7 @@ class TwigSlugHandler implements SlugHandlerInterface
     public function transliterate($text, $separator, $object)
     {
         if ($object instanceof BusinessTemplate
-            || (in_array(Translatable::class, class_uses($object))
+            || (in_array(Translation::class, class_uses($object))
             && $object->getTranslatable() instanceof BusinessTemplate)) {
             $slug = Transliterator::urlize($text, $separator, true);
         } else {
