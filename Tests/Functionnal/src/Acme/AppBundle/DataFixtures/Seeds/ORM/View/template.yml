@@ -1,3 +1,13 @@
+Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
+    template_base_trans:
+        name: Base
+        slug: base
+        locale: en
+    template_two_cols_trans:
+        name: Two columns
+        slug: two-columns
+        locale: en
+
 Victoire\Bundle\TemplateBundle\Entity\Template:
     template_base:
         currentLocale: fr
@@ -9,6 +19,7 @@ Victoire\Bundle\TemplateBundle\Entity\Template:
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         cssUpToDate: false
+        translations: [@template_base_trans]
     template_two_cols:
         currentLocale: fr
         name: Two columns
@@ -20,15 +31,4 @@ Victoire\Bundle\TemplateBundle\Entity\Template:
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         cssUpToDate: false
-
-Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
-    template_base_trans:
-        name: Base
-        slug: base
-        locale: en
-        translatable: @template_base
-    template_two_cols_trans:
-        name: Two columns
-        slug: two-columns
-        locale: en
-        translatable: @template_two_cols
+        translations: [@template_two_cols_trans]

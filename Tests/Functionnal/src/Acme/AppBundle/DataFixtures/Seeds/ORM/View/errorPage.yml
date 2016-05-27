@@ -1,3 +1,25 @@
+Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
+    400_trans:
+        name: Error 400
+        slug: error400
+        locale: en
+    403_trans:
+        name: Error 403
+        slug: error403
+        locale: en
+    404_trans:
+        name: Error 404
+        slug: error404
+        locale: en
+    500_trans:
+        name: Error 500
+        slug: error500
+        locale: en
+    503_trans:
+        name: Error 503
+        slug: error503
+        locale: en
+
 Victoire\Bundle\TwigBundle\Entity\ErrorPage:
     400:
         currentLocale: fr
@@ -10,6 +32,7 @@ Victoire\Bundle\TwigBundle\Entity\ErrorPage:
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         cssUpToDate: false
+        translations: [@400_trans]
     403:
         currentLocale: fr
         code: 403
@@ -21,6 +44,7 @@ Victoire\Bundle\TwigBundle\Entity\ErrorPage:
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         cssUpToDate: false
+        translations: [@403_trans]
     404:
         currentLocale: fr
         code: 404
@@ -32,6 +56,7 @@ Victoire\Bundle\TwigBundle\Entity\ErrorPage:
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         cssUpToDate: false
+        translations: [@404_trans]
     500:
         currentLocale: fr
         code: 500
@@ -43,6 +68,7 @@ Victoire\Bundle\TwigBundle\Entity\ErrorPage:
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         cssUpToDate: false
+        translations: [@500_trans]
     503:
         currentLocale: fr
         code: 503
@@ -54,30 +80,4 @@ Victoire\Bundle\TwigBundle\Entity\ErrorPage:
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         cssUpToDate: false
-
-Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
-    400_trans:
-        name: Error 400
-        slug: error400
-        locale: en
-        translatable: @400
-    403_trans:
-        name: Error 403
-        slug: error403
-        locale: en
-        translatable: @403
-    404_trans:
-        name: Error 404
-        slug: error404
-        locale: en
-        translatable: @404
-    500_trans:
-        name: Error 500
-        slug: error500
-        locale: en
-        translatable: @500
-    503_trans:
-        name: Error 503
-        slug: error503
-        locale: en
-        translatable: @503
+        translations: [@503_trans]

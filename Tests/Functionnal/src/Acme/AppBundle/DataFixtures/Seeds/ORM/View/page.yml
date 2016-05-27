@@ -1,3 +1,17 @@
+
+Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
+    home_en:
+        name: Homepage
+        slug: home
+        locale: en
+
+    test_en:
+        name: English test
+        slug: english-test
+        locale: en
+
+
+
 Victoire\Bundle\PageBundle\Entity\Page:
     home:
         currentLocale: fr
@@ -12,6 +26,7 @@ Victoire\Bundle\PageBundle\Entity\Page:
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         cssUpToDate: false
+        translations: [@home_en]
 
     test:
         currentLocale: fr
@@ -27,15 +42,4 @@ Victoire\Bundle\PageBundle\Entity\Page:
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         cssUpToDate: false
-
-Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
-    home_en:
-        name: Homepage
-        slug: home
-        locale: en
-        translatable: @home
-    test_en:
-        name: English test
-        slug: english-test
-        locale: en
-        translatable: @test
+        translations: [@test_en]
