@@ -4,6 +4,7 @@ namespace Acme\AppBundle\DataFixtures\Seeds\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
 use Nelmio\Alice\Fixtures;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -41,7 +42,7 @@ class LoadFixtureData extends AbstractFixture implements ContainerAwareInterface
         $files['i18n'] = $this->fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/View/i18n.yml');
         $files['errorPage'] = $this->fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/View/errorPage.yml');
 
-        Fixtures::load(
+        $objects = Fixtures::load(
         $files,
         $manager,
         [
@@ -50,6 +51,12 @@ class LoadFixtureData extends AbstractFixture implements ContainerAwareInterface
         'persist_once' => false,
         ]
     );
+
+        foreach ($objects as $object) {
+            if (in_array(Translatable::class, class_uses($object))) {
+                $object->mergeNewTranslations();
+            }
+        }
 
         $manager->flush();
     }
