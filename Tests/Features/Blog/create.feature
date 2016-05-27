@@ -33,8 +33,8 @@ Background:
         And I should see "Créer un article maintenant"
         When I follow "Créer un article maintenant"
         Then I should see "Créer un nouvel article"
-        When I fill in "Nom de l'article" with "I'm your father."
-        When I fill in "Description" with "This is a great description."
+        When I fill in "article_translations_fr_name" with "I'm your father."
+        When I fill in "article_translations_fr_description" with "This is a great description."
         When I select "First blog template" from "Modèle à utiliser"
         And I follow "Créer"
         And I wait 10 seconds

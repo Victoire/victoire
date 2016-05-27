@@ -3,10 +3,7 @@
 
 {% block urlvalidated_widget %}
     <div class="vic-form-url-slug">
-        {{ url('victoire_core_page_show', {
-                url : form.parent.vars.data.translatable.url ,
-                _locale: form.parent.vars.data.locale
-            })|replace({(form.parent.vars.data.translatable.slug): ''}) }}
+        {{ base_url }}
         {{ block('slug_widget') }}
     </div>
 {% endblock urlvalidated_widget %}
