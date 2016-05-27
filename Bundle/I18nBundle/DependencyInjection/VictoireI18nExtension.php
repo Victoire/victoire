@@ -54,7 +54,6 @@ class VictoireI18nExtension extends Extension implements PrependExtensionInterfa
         if (isset($config['available_locales'])) {
             $container->prependExtensionConfig('a2lix_translation_form', [
                 'locales' => $config['available_locales'],
-                'required_locales' => $config['available_locales'],
                 'templating' => "VictoireFormBundle:Form:localeTabs.html.twig"
             ]);
         }
