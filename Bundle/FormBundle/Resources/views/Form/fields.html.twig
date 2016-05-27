@@ -40,7 +40,7 @@
     <i id="{{id}}-not-correct" class="fa fa-remove slug-is-not-correct vic-hidden"></i>
     <script>
         <!--
-        addSlugValidation($vic('#{{id}}'));
+        addSlugValidation($vic('#{{id}}'),{% if allow_empty %}true{% else %}false{% endif %});
         -->
     </script>
 {% endblock %}

@@ -90,6 +90,9 @@ Feature: Manage jedis
         When I fill in "business_page_translations_fr_slug" with "Dark Vador"
         Then I should see an ".business_page_translations_fr_a2lix_translationsFields-fr .slug-is-correct.vic-hidden" element
         And I should not see an ".business_page_translations_fr_a2lix_translationsFields-fr .slug-is-not-correct.vic-hidden" element
+        When I fill in "business_page_translations_fr_slug" with ""
+        Then I should not see an ".business_page_translations_fr_a2lix_translationsFields-fr .slug-is-not-correct.vic-hidden" element
+        And I should see an ".business_page_translations_fr_a2lix_translationsFields-fr .slug-is-correct.vic-hidden" element
         When I fill in "business_page_translations_fr_slug" with "dark-vador"
         Then I should not see an ".business_page_translations_fr_a2lix_translationsFields-fr .slug-is-correct.vic-hidden" element
         And I should see an ".business_page_translations_fr_a2lix_translationsFields-fr .slug-is-not-correct.vic-hidden" element
@@ -97,15 +100,3 @@ Feature: Manage jedis
         And I wait 5 seconds
         Then I should see "Page modifiée avec succès"
         And I should be on "/fr/dark-vador"
-        Given I select the option "Paramètres de la page" in the dropdown "Page"
-        And I should see "Mettre à jour"
-        When I fill in "business_page_translations_fr_slug" with ""
-        Then I should not see an ".business_page_translations_fr_a2lix_translationsFields-fr .slug-is-correct.vic-hidden" element
-        And I should see an ".business_page_translations_fr_a2lix_translationsFields-fr .slug-is-not-correct.vic-hidden" element
-        When I submit the widget
-        And I wait 5 seconds
-        Then I should see "Page modifiée avec succès"
-        Given I am on "/fr/fiche-jedi-anakin"
-        Then I should see "Le Côté Nouveau de la force"
-
-
