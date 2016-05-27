@@ -21,7 +21,6 @@ class SpaceShipTranslation
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=55)
-     * @VIC\BusinessProperty({"textable", "seoable"})
      */
     protected $name;
 
@@ -32,7 +31,6 @@ class SpaceShipTranslation
      *     @Gedmo\SlugHandler(class="Victoire\Bundle\BusinessEntityBundle\Handler\TwigSlugHandler"
      * )},fields={"name"}, updatable=false, unique=false)
      * @ORM\Column(name="slug", type="string", length=255)
-     * @VIC\BusinessProperty("businessParameter")
      */
     protected $slug;
 
