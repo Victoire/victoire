@@ -776,7 +776,7 @@ abstract class View
 
     public function getName()
     {
-        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(), 'getName');
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getName');
     }
     
     public function setName($name, $locale = null)
@@ -787,7 +787,7 @@ abstract class View
     
     public function getSlug()
     {
-        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(), 'getSlug');
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getSlug');
     }
 
     public function setSlug($slug, $locale = null)
