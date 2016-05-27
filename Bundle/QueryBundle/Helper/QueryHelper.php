@@ -16,8 +16,10 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
+use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 use Victoire\Bundle\QueryBundle\Entity\VictoireQueryInterface;
+use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
  * The QueryHelper helps to build query in Victoire's components
@@ -86,13 +88,16 @@ class QueryHelper
             ->select('main_item')
             ->from($businessClass, 'main_item');
 
+        $view = $containerEntity;
+        if ($containerEntity instanceof Widget) {
+            $view = $containerEntity->getCurrentView();
+        }
 
-        $containerEntityLocale = $containerEntity->getCurrentLocale();
         if (in_array(Translatable::class, class_uses($businessClass))) {
             $itemsQueryBuilder->join('main_item.translations', 'translation')
                 ->andWhere('translation.locale = :locale')
-                ->setParameter(':locale', $containerEntityLocale);
-        } else if ($containerEntityLocale !== $containerEntity->getDefaultLocale()) {
+                ->setParameter(':locale', $view->getCurrentLocale());
+        } else if ($containerEntity instanceof View && $view->getCurrentLocale() !== $view->getDefaultLocale()) {
             $itemsQueryBuilder->andWhere('1 = -1');
         }
 
