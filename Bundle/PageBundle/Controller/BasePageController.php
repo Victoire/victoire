@@ -34,11 +34,13 @@ class BasePageController extends Controller
 
     public function showByIdAction(Request $request, $viewId, $entityId = null)
     {
-        $parameters = ['viewId' => $viewId];
+        $parameters = [
+            'viewId' => $viewId,
+            'locale' => $request->getLocale(),
+        ];
         if ($entityId) {
             $parameters['entityId'] = $entityId;
         }
-        $parameters['locale'] = $request->getLocale();
         $page = $this->get('victoire_page.page_helper')->findPageByParameters($parameters);
 
         return $this->redirect($this->generateUrl('victoire_core_page_show', array_merge(
