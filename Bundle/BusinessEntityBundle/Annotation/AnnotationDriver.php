@@ -169,6 +169,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
         $properties = $class->getProperties();
         $traits = $class->getTraits();
         $className = $class->getName();
+        // if the class is translatable, then parse annotations on it's translation class
         if (array_key_exists(Translatable::class, $traits)) {
             $translation = new \ReflectionClass($className::getTranslationEntityClass());
             $translationProperties = $translation->getProperties();
