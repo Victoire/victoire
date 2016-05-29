@@ -2,10 +2,8 @@
 
 namespace Victoire\Bundle\BusinessPageBundle\Form;
 
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Victoire\Bundle\FormBundle\Form\Type\SlugType;
 use Victoire\Bundle\PageBundle\Form\PageSettingsType;
 
 /**

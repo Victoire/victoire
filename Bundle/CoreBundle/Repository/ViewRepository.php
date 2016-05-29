@@ -103,7 +103,6 @@ class ViewRepository extends NestedTreeRepository
      */
     public function findByViewReferences(array $viewReferences)
     {
-
         $pageIds = [];
         foreach ($viewReferences as $viewReference) {
             if ($viewReference instanceof BusinessPageReference) {
@@ -126,7 +125,7 @@ class ViewRepository extends NestedTreeRepository
                 $viewReferences,
                 function ($e) use ($pageId) {
                     return $e->getViewId() == $pageId;
-            });
+                });
             if (!empty($viewReference[0])) {
                 $page->setCurrentLocale($viewReference[0]->getLocale());
             }

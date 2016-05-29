@@ -46,19 +46,21 @@ class SpaceShip
     {
         return PropertyAccess::createPropertyAccessor()->getValue($this->translate(), 'getName');
     }
+
     public function setName($name, $locale = null)
     {
         $this->translate($locale, false)->setDescription($name);
         $this->mergeNewTranslations();
     }
+
     public function getSlug()
     {
         return PropertyAccess::createPropertyAccessor()->getValue($this->translate(), 'getSlug');
     }
+
     public function setSlug($slug, $locale = null)
     {
         $this->translate($locale, false)->setDescription($slug);
         $this->mergeNewTranslations();
     }
-
 }

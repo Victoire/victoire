@@ -5,8 +5,6 @@ namespace Victoire\Bundle\BusinessPageBundle\Form;
 use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Victoire\Bundle\CoreBundle\Form\ViewType;
@@ -36,25 +34,25 @@ class BusinessTemplateType extends ViewType
         parent::buildForm($builder, $options);
 
         $builder->remove('translations');
-        $builder->add('translations', TranslationsType::class, array(
+        $builder->add('translations', TranslationsType::class, [
             'required_locales' => [],
-            'fields' => array(
-                'name' => array(
-                    'label' => 'form.view.type.name.label',
-                    'vic_business_properties' => $options['vic_business_properties'],
+            'fields'           => [
+                'name' => [
+                    'label'                        => 'form.view.type.name.label',
+                    'vic_business_properties'      => $options['vic_business_properties'],
                     'vic_business_property_picker' => [
                         'description' => 'victoire.form.business_template.name.vic_business_property_picker',
                     ],
-                ),
-                'slug' => array(
+                ],
+                'slug' => [
                     'label'                        => 'victoire.form.business_template.slug.label',
-                    'vic_business_properties' => $options['vic_business_properties'],
+                    'vic_business_properties'      => $options['vic_business_properties'],
                     'vic_business_property_picker' => [
                         'description' => 'victoire.form.business_template.slug.vic_business_property_picker',
                     ],
-                )
-            )
-        ));
+                ],
+            ],
+        ]);
         $builder
             ->add('backendName', null, [
                 'label'          => 'victoire.form.business_template.backend_name.label',
@@ -65,7 +63,7 @@ class BusinessTemplateType extends ViewType
             ])
             ->add('query', null, [
                 'label'                        => 'victoire.form.business_template.query.label',
-                'vic_business_properties' => $options['vic_business_properties'],
+                'vic_business_properties'      => $options['vic_business_properties'],
                 'vic_business_property_picker' => [
                     'description' => false,
                 ],

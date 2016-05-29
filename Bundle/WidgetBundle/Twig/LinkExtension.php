@@ -263,11 +263,11 @@ class LinkExtension extends \Twig_Extension
 
     private function formatAttributes($attributes)
     {
-        array_walk($attributes, function(&$item, $key) {
+        array_walk($attributes, function (&$item, $key) {
             if (is_array($item)) {
                 $item = implode($item, ' ');
             }
-            $item = $key . '="' .$item.'"';
+            $item = $key.'="'.$item.'"';
         });
 
         return implode($attributes, ' ');

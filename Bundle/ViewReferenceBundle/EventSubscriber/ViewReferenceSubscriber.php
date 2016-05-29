@@ -85,7 +85,7 @@ class ViewReferenceSubscriber implements \Doctrine\Common\EventSubscriber
         if ($entity instanceof WebViewInterface) {
             $translations = $entity->getTranslatable();
             $view = $entity;
-        } else if ($entity instanceof ViewTranslation) {
+        } elseif ($entity instanceof ViewTranslation) {
             $translations = [$entity];
             $view = $entity->getTranslatable();
         }

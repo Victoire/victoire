@@ -156,8 +156,8 @@ class BusinessTemplateController extends Controller
             BusinessTemplateType::class,
             $view,
             [
-                'action'           => $this->generateUrl('victoire_business_template_create', ['id' => $id]),
-                'method'           => 'POST',
+                'action'                  => $this->generateUrl('victoire_business_template_create', ['id' => $id]),
+                'method'                  => 'POST',
                 'vic_business_properties' => $businessProperties,
             ]
         );
@@ -248,8 +248,8 @@ class BusinessTemplateController extends Controller
         $businessProperties = $this->getBusinessProperties($view);
 
         $form = $this->createForm(BusinessTemplateType::class, $view, [
-            'action'           => $this->generateUrl('victoire_business_template_update', ['id' => $view->getId()]),
-            'method'           => 'PUT',
+            'action'                  => $this->generateUrl('victoire_business_template_update', ['id' => $view->getId()]),
+            'method'                  => 'PUT',
             'vic_business_properties' => $businessProperties,
         ]);
 

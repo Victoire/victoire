@@ -32,14 +32,14 @@ class BlogType extends BasePageType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('translations', TranslationsType::class, array(
+        $builder->add('translations', TranslationsType::class, [
             'required_locales' => [],
-            'fields' => array(
-                'name' => array(
+            'fields'           => [
+                'name' => [
                     'label' => 'form.view.type.name.label',
-                )
-            )
-        ));
+                ],
+            ],
+        ]);
     }
 
     /**

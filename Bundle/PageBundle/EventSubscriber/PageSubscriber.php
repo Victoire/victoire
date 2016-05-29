@@ -138,7 +138,7 @@ class PageSubscriber implements EventSubscriber
         if ($entity instanceof View) {
             $om = $eventArgs->getObjectManager();
             $viewReferences = $this->viewReferenceRepository->getReferencesByParameters([
-                'viewId' => $entity->getId(),
+                'viewId'     => $entity->getId(),
                 'templateId' => $entity->getId(),
             ], true, false, 'OR');
             foreach ($viewReferences as $viewReference) {

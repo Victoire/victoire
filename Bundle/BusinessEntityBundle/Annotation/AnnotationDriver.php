@@ -174,7 +174,6 @@ class AnnotationDriver extends DoctrineAnnotationDriver
             $translation = new \ReflectionClass($className::getTranslationEntityClass());
             $translationProperties = $translation->getProperties();
             $properties = array_merge($properties, $translationProperties);
-
         }
 
         foreach ($properties as $property) {

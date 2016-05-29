@@ -6,16 +6,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use JMS\Serializer\Annotation as Serializer;
+use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
 use Symfony\Component\PropertyAccess\PropertyAccess;
-use Symfony\Component\Validator\Constraints as Assert;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
-use Victoire\Bundle\I18nBundle\Entity\ViewTranslation;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
-use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
 
 /**
  * Victoire View
@@ -767,7 +764,7 @@ abstract class View
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function getTranslationEntityClass()
     {
@@ -778,13 +775,13 @@ abstract class View
     {
         return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getName');
     }
-    
+
     public function setName($name, $locale = null)
     {
         $this->translate($locale, false)->setName($name);
         $this->mergeNewTranslations();
     }
-    
+
     public function getSlug()
     {
         return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getSlug');
@@ -795,5 +792,4 @@ abstract class View
         $this->translate($locale, false)->setSlug($slug);
         $this->mergeNewTranslations();
     }
-
 }

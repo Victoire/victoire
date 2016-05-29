@@ -64,7 +64,7 @@ class BasePageController extends Controller
         $page = $this->get('victoire_page.page_helper')->findPageByParameters([
             'viewId'   => $templateId,
             'entityId' => $entityId,
-            'locale' => $request->getLocale(),
+            'locale'   => $request->getLocale(),
         ]);
         $this->get('victoire_widget_map.builder')->build($page);
         $this->get('victoire_widget_map.widget_data_warmer')->warm(
@@ -124,7 +124,7 @@ class BasePageController extends Controller
             $this->congrat($this->get('translator')->trans('victoire_page.create.success', [], 'victoire'));
             $viewReference = $this->get('victoire_view_reference.repository')->getOneReferenceByParameters([
                 'viewId' => $page->getId(),
-                'locale' => $request->getLocale()
+                'locale' => $request->getLocale(),
             ]);
 
             return [

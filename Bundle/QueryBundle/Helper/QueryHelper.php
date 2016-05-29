@@ -91,7 +91,7 @@ class QueryHelper
         $view = null;
         if ($containerEntity instanceof View) {
             $view = $containerEntity;
-        } else if ($containerEntity instanceof Widget) {
+        } elseif ($containerEntity instanceof Widget) {
             $view = $containerEntity->getCurrentView();
         }
 

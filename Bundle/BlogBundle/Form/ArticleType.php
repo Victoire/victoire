@@ -112,15 +112,15 @@ class ArticleType extends AbstractType
         foreach ($translations as $translation) {
             $availableLocales[] = $translation->getLocale();
         }
-        $form->add('translations', TranslationsType::class, array(
+        $form->add('translations', TranslationsType::class, [
             'required_locales' => $availableLocales,
-            'locales' => $availableLocales,
-            'fields' => array(
-                'name' => array(
+            'locales'          => $availableLocales,
+            'fields'           => [
+                'name' => [
                     'label' => 'form.article.name.label',
-                ),
-            )
-        ));
+                ],
+            ],
+        ]);
     }
 
     /**

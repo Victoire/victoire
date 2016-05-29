@@ -4,7 +4,6 @@ namespace Acme\AppBundle\DataFixtures\Seeds\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
-use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
 use Nelmio\Alice\Fixtures;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -154,16 +153,16 @@ class LoadFixtureData extends AbstractFixture implements ContainerAwareInterface
             if ($file != '.' && $file != '..') {
                 // Remove file
             $recursiveDelete = function ($str) use (&$recursiveDelete) {
-            if (is_file($str)) {
-                return @unlink($str);
-            } elseif (is_dir($str)) {
-                $scan = glob(rtrim($str, '/').'/*');
-                foreach ($scan as $path) {
-                    $recursiveDelete($path);
-                }
+                if (is_file($str)) {
+                    return @unlink($str);
+                } elseif (is_dir($str)) {
+                    $scan = glob(rtrim($str, '/').'/*');
+                    foreach ($scan as $path) {
+                        $recursiveDelete($path);
+                    }
 
-                return @rmdir($str);
-            }
+                    return @rmdir($str);
+                }
             };
                 $recursiveDelete($folder.$file);
             }

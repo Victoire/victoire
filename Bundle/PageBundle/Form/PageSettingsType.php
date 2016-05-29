@@ -32,17 +32,17 @@ class PageSettingsType extends PageType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('translations', TranslationsType::class, array(
-            'fields' => array(
-                'name' => array(
+        $builder->add('translations', TranslationsType::class, [
+            'fields' => [
+                'name' => [
                     'label' => 'form.view.type.name.label',
-                ),
-                'slug' => array(
-                    'label' => 'form.page.type.slug.label',
-                    'field_type' => UrlvalidatedType::Class,
-                )
-            )
-        ))
+                ],
+                'slug' => [
+                    'label'      => 'form.page.type.slug.label',
+                    'field_type' => UrlvalidatedType::class,
+                ],
+            ],
+        ])
         ->add('status', ChoiceType::class, [
             'label'   => 'form.page.type.status.label',
             'choices' => [

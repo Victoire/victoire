@@ -5,12 +5,12 @@ namespace Victoire\Bundle\BlogBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation as Serializer;
-use Victoire\Bundle\CoreBundle\Annotations as VIC;
-use Symfony\Component\Validator\Constraints as Assert;
 use Knp\DoctrineBehaviors\Model\Translatable\Translation;
+use Symfony\Component\Validator\Constraints as Assert;
+use Victoire\Bundle\CoreBundle\Annotations as VIC;
 
 /**
- * Victoire ViewTranslation
+ * Victoire ViewTranslation.
  *
  * @ORM\Entity()
  * @ORM\Table(name="vic_article_translations")
@@ -119,5 +119,4 @@ class ArticleTranslation
 
         return $this;
     }
-
 }

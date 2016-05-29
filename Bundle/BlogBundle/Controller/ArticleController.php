@@ -58,7 +58,7 @@ class ArticleController extends Controller
 
             $page = $this->container->get('victoire_business_page.business_page_builder')
                         ->generateEntityPageFromTemplate($article->getTemplate(), $article, $entityManager);
-            
+
             // Transform VBP into BP
             $this->container->get('victoire_business_page.transformer.virtual_to_business_page_transformer')->transform($page);
             $page->setParent($article->getBlog());

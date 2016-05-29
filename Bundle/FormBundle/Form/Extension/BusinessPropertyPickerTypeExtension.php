@@ -33,7 +33,7 @@ class BusinessPropertyPickerTypeExtension extends AbstractTypeExtension
         $resolver->setDefaults([
             'vic_business_property_picker'             => null,
             'vic_business_property_picker_description' => null,
-            'vic_business_properties' => [],
+            'vic_business_properties'                  => [],
         ]);
     }
 

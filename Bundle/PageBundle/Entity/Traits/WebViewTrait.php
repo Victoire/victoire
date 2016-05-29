@@ -2,11 +2,8 @@
 
 namespace Victoire\Bundle\PageBundle\Entity\Traits;
 
-use Doctrine\Common\Util\ClassUtils;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Victoire\Bundle\CoreBundle\Annotations as VIC;
-use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
-use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
 use Victoire\Bundle\PageBundle\Entity\PageStatus;
 use Victoire\Bundle\SeoBundle\Entity\PageSeo;
 
@@ -90,7 +87,6 @@ trait WebViewTrait
         $this->referers = $referers;
     }
 
-
     /**
      * Set status.
      *
@@ -172,7 +168,6 @@ trait WebViewTrait
 
         return $this;
     }
-
 
     public function getUrl()
     {

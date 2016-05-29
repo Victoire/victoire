@@ -15,7 +15,6 @@ use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
 use Victoire\Bundle\CoreBundle\Exception\IdentifierNotDefinedException;
 use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
-use Victoire\Bundle\I18nBundle\Entity\ViewTranslation;
 use Victoire\Bundle\ViewReferenceBundle\Builder\ViewReferenceBuilder;
 
 /**
@@ -98,7 +97,6 @@ class BusinessPageBuilder
             $page->setTemplate($businessTemplate);
 
             if (in_array(Translatable::class, class_uses($entity))) {
-
                 foreach ($entity->getTranslations() as $translation) {
                     $page->setCurrentLocale($translation->getLocale());
                     $entity->setCurrentLocale($translation->getLocale());
@@ -219,13 +217,13 @@ class BusinessPageBuilder
      * @param EntityManager       $em
      * @param                     $entity
      *
-     * @return VirtualBusinessPage
      * @throws IdentifierNotDefinedException
      * @throws \Exception
+     *
+     * @return VirtualBusinessPage
      */
     private function populatePage(VirtualBusinessPage $page, BusinessTemplate $businessTemplate, array $businessProperties, EntityManager $em, $entity)
     {
-
         $pageName = $businessTemplate->getName();
         $pageSlug = $businessTemplate->getSlug();
         $page->setSlug($pageSlug);

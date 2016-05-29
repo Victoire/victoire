@@ -5,11 +5,11 @@ namespace Victoire\Bundle\I18nBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation as Serializer;
-use Symfony\Component\Validator\Constraints as Assert;
 use Knp\DoctrineBehaviors\Model\Translatable\Translation;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Victoire ViewTranslation
+ * Victoire ViewTranslation.
  *
  * @ORM\Entity()
  * @ORM\Table(name="vic_view_translations")
@@ -110,7 +110,7 @@ class ViewTranslation
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function getTranslatableEntityClass()
     {

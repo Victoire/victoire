@@ -2,13 +2,10 @@
 
 namespace Victoire\Bundle\I18nBundle\Command;
 
-use Doctrine\ORM\Tools\DisconnectedClassMetadataFactory;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Victoire\Bundle\CoreBundle\Entity\Link;
-use Victoire\Bundle\I18nBundle\Entity\ViewTranslation;
 use Victoire\Bundle\I18nBundle\Entity\ViewTranslationLegacy;
 
 class LegacyViewTranslationMigrationCommand extends ContainerAwareCommand
@@ -27,7 +24,7 @@ class LegacyViewTranslationMigrationCommand extends ContainerAwareCommand
     }
 
     /**
-     * Transform Gedmo translations into Knp translations
+     * Transform Gedmo translations into Knp translations.
      *
      * @param InputInterface  $input
      * @param OutputInterface $output
@@ -36,7 +33,6 @@ class LegacyViewTranslationMigrationCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         $mode = $input->getOption('mode');
         $progress = $this->getHelperSet()->get('progress');
         $progress->setProgressCharacter('V');
@@ -75,7 +71,7 @@ class LegacyViewTranslationMigrationCommand extends ContainerAwareCommand
 
             $progress->advance();
         }
-        
+
         $entityManager->flush();
         $progress->finish();
 

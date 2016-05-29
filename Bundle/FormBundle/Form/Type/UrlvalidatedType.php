@@ -2,21 +2,15 @@
 
 namespace Victoire\Bundle\FormBundle\Form\Type;
 
-use A2lix\TranslationFormBundle\Form\Type\TranslationsFieldsType;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Victoire\Bundle\CoreBundle\Entity\View;
-use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
-use Victoire\Bundle\I18nBundle\Entity\ViewTranslation;
 
 /**
- * Form field with some slug validation and domain prefix
+ * Form field with some slug validation and domain prefix.
  */
 class UrlvalidatedType extends AbstractType
 {

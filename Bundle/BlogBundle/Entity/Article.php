@@ -401,7 +401,6 @@ class Article
         return $this->status;
     }
 
-
     /**
      * Get categoryTitle.
      *
@@ -491,7 +490,7 @@ class Article
         $this->translate($locale, false)->setName($name);
         $this->mergeNewTranslations();
     }
-    
+
     public function getSlug()
     {
         return PropertyAccess::createPropertyAccessor()->getValue($this->translate(), 'getSlug');
@@ -507,6 +506,7 @@ class Article
     {
         return PropertyAccess::createPropertyAccessor()->getValue($this->translate(), 'getDescription');
     }
+
     public function setDescription($description, $locale = null)
     {
         $this->translate($locale, false)->setDescription($description);

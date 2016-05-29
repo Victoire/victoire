@@ -3,9 +3,8 @@
 namespace Acme\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Knp\DoctrineBehaviors\Model\Translatable\Translation;
-use Victoire\Bundle\CoreBundle\Annotations as VIC;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Knp\DoctrineBehaviors\Model\Translatable\Translation;
 
 /**
  * SpaceShipTranslation.
