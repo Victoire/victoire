@@ -52,12 +52,6 @@ class LoadFixtureData extends AbstractFixture implements ContainerAwareInterface
         ]
     );
 
-//        foreach ($objects as $object) {
-//            if (in_array(Translatable::class, class_uses($object))) {
-//                $object->mergeNewTranslations();
-//            }
-//        }
-
         $manager->flush();
     }
 
