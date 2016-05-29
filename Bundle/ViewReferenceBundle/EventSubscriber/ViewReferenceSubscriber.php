@@ -80,20 +80,21 @@ class ViewReferenceSubscriber implements \Doctrine\Common\EventSubscriber
     private function updateViewReference(LifecycleEventArgs $eventArgs)
     {
         $entity = $eventArgs->getEntity();
-        // if a page is persisted we rebuild his viewRef
+        $view = null;
+        $translations = [];
         if ($entity instanceof WebViewInterface) {
-            foreach ($entity->getTranslations() as $translation) {
-                $entity->setCurrentLocale($translation->getLocale());
-                $event = new ViewReferenceEvent($entity);
-                $this->dispatcher->dispatch(ViewReferenceEvents::UPDATE_VIEW_REFERENCE, $event);
-            }
+            $translations = $entity->getTranslatable();
+            $view = $entity;
         } else if ($entity instanceof ViewTranslation) {
+            $translations = [$entity];
             $view = $entity->getTranslatable();
-            if ($view instanceof WebViewInterface) {
-                $view->setCurrentLocale($entity->getLocale());
-                $event = new ViewReferenceEvent($view);
-                $this->dispatcher->dispatch(ViewReferenceEvents::UPDATE_VIEW_REFERENCE, $event);
-            }
+        }
+
+        // if a page is persisted we rebuild his viewRef
+        foreach ($translations as $translation) {
+            $view->setCurrentLocale($translation->getLocale());
+            $event = new ViewReferenceEvent($view);
+            $this->dispatcher->dispatch(ViewReferenceEvents::UPDATE_VIEW_REFERENCE, $event);
         }
     }
 }
