@@ -88,17 +88,18 @@ class QueryHelper
             ->select('main_item')
             ->from($businessClass, 'main_item');
 
-        $view = $containerEntity;
-        if ($containerEntity instanceof Widget) {
+        $view = null;
+        if ($containerEntity instanceof View) {
+            $view = $containerEntity;
+        } else if ($containerEntity instanceof Widget) {
             $view = $containerEntity->getCurrentView();
         }
 
-        if (in_array(Translatable::class, class_uses($businessClass))) {
+        // when the businessClass is translatable, join translations for the current locale
+        if ($view && in_array(Translatable::class, class_uses($businessClass))) {
             $itemsQueryBuilder->join('main_item.translations', 'translation')
                 ->andWhere('translation.locale = :locale')
                 ->setParameter(':locale', $view->getCurrentLocale());
-        } else if ($containerEntity instanceof View && $view->getCurrentLocale() !== $view->getDefaultLocale()) {
-            $itemsQueryBuilder->andWhere('1 = -1');
         }
 
         $refClass = new $businessClass();
