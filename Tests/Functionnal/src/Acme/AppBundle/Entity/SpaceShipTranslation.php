@@ -8,7 +8,7 @@ use Victoire\Bundle\CoreBundle\Annotations as VIC;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Mercenary.
+ * SpaceShipTranslation.
  *
  * @ORM\Entity
  * @ORM\Table("space_ship_translation")
