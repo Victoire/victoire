@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\CoreBundle\Form;
 
+use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
@@ -89,7 +90,7 @@ abstract class ViewType extends AbstractType
             }
         });
 
-        $builder->add('translations', 'a2lix_translations', array(
+        $builder->add('translations', TranslationsType::class, array(
             'fields' => array(
                 'name' => array(
                     'label' => 'form.view.type.name.label',

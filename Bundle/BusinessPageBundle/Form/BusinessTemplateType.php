@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\BusinessPageBundle\Form;
 
+use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -35,7 +36,7 @@ class BusinessTemplateType extends ViewType
         parent::buildForm($builder, $options);
 
         $builder->remove('translations');
-        $builder->add('translations', 'a2lix_translations', array(
+        $builder->add('translations', TranslationsType::class, array(
             'required_locales' => [],
             'fields' => array(
                 'name' => array(

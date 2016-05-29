@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\BlogBundle\Form;
 
+use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -31,7 +32,7 @@ class BlogType extends BasePageType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('translations', 'a2lix_translations', array(
+        $builder->add('translations', TranslationsType::class, array(
             'required_locales' => [],
             'fields' => array(
                 'name' => array(

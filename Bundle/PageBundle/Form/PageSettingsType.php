@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\PageBundle\Form;
 
+use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -32,7 +33,7 @@ class PageSettingsType extends PageType
         parent::buildForm($builder, $options);
 
         $builder->remove('name');
-        $builder->add('translations', 'a2lix_translations', array(
+        $builder->add('translations', TranslationsType::class, array(
             'fields' => array(
                 'name' => array(
                     'label' => 'form.view.type.name.label',

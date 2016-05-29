@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\BlogBundle\Form;
 
+use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -98,6 +99,8 @@ class ArticleType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormInterface|null $form
+     *
+     * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
      */
     protected function manageLocales($blog, $form)
     {
@@ -109,7 +112,7 @@ class ArticleType extends AbstractType
         foreach ($translations as $translation) {
             $availableLocales[] = $translation->getLocale();
         }
-        $form->add('translations', 'a2lix_translations', array(
+        $form->add('translations', TranslationsType::class, array(
             'required_locales' => $availableLocales,
             'locales' => $availableLocales,
             'fields' => array(
