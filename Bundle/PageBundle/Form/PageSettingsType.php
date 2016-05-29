@@ -32,7 +32,6 @@ class PageSettingsType extends PageType
     {
         parent::buildForm($builder, $options);
 
-        $builder->remove('name');
         $builder->add('translations', TranslationsType::class, array(
             'fields' => array(
                 'name' => array(
