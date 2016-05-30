@@ -8,6 +8,7 @@ use JMS\Serializer\Annotation as Serializer;
 use Knp\DoctrineBehaviors\Model\Translatable\Translation;
 use Symfony\Component\Validator\Constraints as Assert;
 use Victoire\Bundle\CoreBundle\Annotations as VIC;
+use Victoire\Bundle\MediaBundle\Entity\Media;
 
 /**
  * Victoire ViewTranslation.
@@ -39,6 +40,15 @@ class ArticleTranslation
      * @VIC\BusinessProperty("businessParameter")
      */
     protected $slug;
+
+    /**
+     * @var string
+     *
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\MediaBundle\Entity\Media")
+     * @ORM\JoinColumn(name="image_id", referencedColumnName="id", onDelete="CASCADE")
+     * @VIC\BusinessProperty("imageable")
+     */
+    private $image;
 
     /**
      * @var string
@@ -118,5 +128,29 @@ class ArticleTranslation
         $this->description = $description;
 
         return $this;
+    }
+
+    /**
+     * Set image.
+     *
+     * @param Media $image
+     *
+     * @return ArticleTranslation
+     */
+    public function setImage(Media $image = null)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image.
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }

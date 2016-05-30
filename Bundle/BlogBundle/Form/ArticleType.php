@@ -39,10 +39,6 @@ class ArticleType extends AbstractType
         $viewToIdTransformer = new ViewToIdTransformer($this->entityManager);
 
         $builder
-            ->add('image', MediaType::class, [
-                'required' => false,
-                'label'    => 'form.article.image.label',
-            ])
             ->add($builder
                 ->create('blog', HiddenType::class, ['label' => 'form.article.blog.label'])
                 ->addModelTransformer($viewToIdTransformer))
@@ -119,6 +115,12 @@ class ArticleType extends AbstractType
                 'name' => [
                     'label' => 'form.article.name.label',
                 ],
+                'image' => [
+                    'label' => 'form.article.image.label',
+                    'field_type' => MediaType::class,
+                    'required' => false,
+                ]
+
             ],
         ]);
     }

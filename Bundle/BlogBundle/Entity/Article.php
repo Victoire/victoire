@@ -11,7 +11,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Victoire\Bundle\BusinessEntityBundle\Entity\Traits\BusinessEntityTrait;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Annotations as VIC;
-use Victoire\Bundle\MediaBundle\Entity\Media;
 use Victoire\Bundle\PageBundle\Entity\PageStatus;
 
 /**
@@ -108,15 +107,6 @@ class Article
      * @Assert\NotNull()
      */
     private $template;
-
-    /**
-     * @var string
-     *
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\MediaBundle\Entity\Media")
-     * @ORM\JoinColumn(name="image_id", referencedColumnName="id", onDelete="CASCADE")
-     * @VIC\BusinessProperty("imageable")
-     */
-    private $image;
 
     /**
      * @VIC\BusinessProperty("textable")
@@ -320,29 +310,6 @@ class Article
         return $this->tags;
     }
 
-    /**
-     * Set image.
-     *
-     * @param Media $image
-     *
-     * @return Article
-     */
-    public function setImage(Media $image = null)
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    /**
-     * Get image.
-     *
-     * @return string
-     */
-    public function getImage()
-    {
-        return $this->image;
-    }
 
     /**
      * Get businessEntity.
@@ -510,6 +477,16 @@ class Article
     public function setDescription($description, $locale = null)
     {
         $this->translate($locale, false)->setDescription($description);
+        $this->mergeNewTranslations();
+    }
+    public function getImage()
+    {
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(), 'getImage');
+    }
+
+    public function setImage($image, $locale = null)
+    {
+        $this->translate($locale, false)->setImage($image);
         $this->mergeNewTranslations();
     }
 }
