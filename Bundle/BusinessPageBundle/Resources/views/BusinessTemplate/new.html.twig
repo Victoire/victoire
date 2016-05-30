@@ -12,7 +12,7 @@
     {{ form_start(form) }}
     <div class="vic-row">
         <div class="vic-col-xs-12 vic-col-sm-6 vic-col-md-6">
-            {{ form_row(form.name, { 'businessProperties':businessProperties }) }}
+            {{ form_row(form.translations) }}
         </div>
         <div class="vic-col-xs-12 vic-col-sm-6 vic-col-md-6">
             {{ form_row(form.backendName) }}
@@ -22,11 +22,6 @@
         {% if form.parent is defined and form.parent %}
             <div class="vic-col-xs-12 vic-col-sm-6 vic-col-md-6">
                 {{ form_row(form.parent) }}
-            </div>
-        {% endif %}
-        {% if form.slug is defined %}
-            <div class="vic-col-xs-12 vic-col-sm-6 vic-col-md-6">
-                {{ form_row(form.slug, { 'businessProperties':businessProperties }) }}
             </div>
         {% endif %}
         <div class="vic-col-xs-12 vic-col-sm-6 vic-col-md-6">
@@ -41,7 +36,7 @@
     <div class="vic-row">
         <div class="vic-col-md-12">
             {{ 'victoire.form.business_template.query.vic_help_block'|trans|raw }}
-            {{ form_row(form.query, { 'businessProperties':businessProperties }) }}
+            {{ form_row(form.query) }}
             <div class="vic-form-group">
                 {{ form_row(form.authorRestricted) }}
             </div>

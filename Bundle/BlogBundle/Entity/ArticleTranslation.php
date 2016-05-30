@@ -1,20 +1,22 @@
 <?php
 
-namespace Victoire\Bundle\I18nBundle\Entity;
+namespace Victoire\Bundle\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation as Serializer;
 use Knp\DoctrineBehaviors\Model\Translatable\Translation;
 use Symfony\Component\Validator\Constraints as Assert;
+use Victoire\Bundle\CoreBundle\Annotations as VIC;
+use Victoire\Bundle\MediaBundle\Entity\Media;
 
 /**
  * Victoire ViewTranslation.
  *
  * @ORM\Entity()
- * @ORM\Table(name="vic_view_translations")
+ * @ORM\Table(name="vic_article_translations")
  */
-class ViewTranslation
+class ArticleTranslation
 {
     use Translation;
 
@@ -24,6 +26,7 @@ class ViewTranslation
      * @Assert\NotBlank()
      * @ORM\Column(name="name", type="string", length=255)
      * @Serializer\Groups({"search"})
+     * @VIC\BusinessProperty({"textable", "businessParameter", "seoable"})
      */
     protected $name;
 
@@ -34,14 +37,26 @@ class ViewTranslation
      *     @Gedmo\SlugHandler(class="Victoire\Bundle\BusinessEntityBundle\Handler\TwigSlugHandler"
      * )},fields={"name"}, updatable=false, unique=false)
      * @ORM\Column(name="slug", type="string", length=255)
+     * @VIC\BusinessProperty("businessParameter")
      */
     protected $slug;
 
     /**
      * @var string
-     *             This property is computed by the method PageSubscriber::buildUrl
+     *
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\MediaBundle\Entity\Media")
+     * @ORM\JoinColumn(name="image_id", referencedColumnName="id", onDelete="CASCADE")
+     * @VIC\BusinessProperty("imageable")
      */
-    protected $url;
+    private $image;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text", nullable=true)
+     * @VIC\BusinessProperty({"textable", "seoable"})
+     */
+    private $description;
 
     /**
      * Get name.
@@ -92,28 +107,50 @@ class ViewTranslation
     }
 
     /**
+     * Get description.
+     *
      * @return string
      */
-    public function getUrl()
+    public function getDescription()
     {
-        return $this->url;
+        return $this->description;
     }
 
     /**
-     * @param string $url
+     * Set category.
+     *
+     * @param string $category
+     *
+     * @return Article
      */
-    public function setUrl($url)
+    public function setDescription($description)
     {
-        $this->url = $url;
+        $this->description = $description;
 
         return $this;
     }
 
     /**
-     * {@inheritdoc}
+     * Set image.
+     *
+     * @param Media $image
+     *
+     * @return ArticleTranslation
      */
-    public static function getTranslatableEntityClass()
+    public function setImage(Media $image = null)
     {
-        return '\\Victoire\\Bundle\\CoreBundle\\Entity\\View';
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image.
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }

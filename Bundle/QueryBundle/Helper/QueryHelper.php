@@ -8,14 +8,18 @@ use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use FOS\UserBundle\Model\UserInterface;
+use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
+use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 use Victoire\Bundle\QueryBundle\Entity\VictoireQueryInterface;
+use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
  * The QueryHelper helps to build query in Victoire's components
@@ -59,6 +63,7 @@ class QueryHelper
             throw new \Exception('The container entity parameter must not be null.');
         }
 
+
         //the business name of the container entity
         $businessEntityId = $containerEntity->getBusinessEntityId();
 
@@ -83,9 +88,23 @@ class QueryHelper
             ->select('main_item')
             ->from($businessClass, 'main_item');
 
+        $view = null;
+        if ($containerEntity instanceof View) {
+            $view = $containerEntity;
+        } elseif ($containerEntity instanceof Widget) {
+            $view = $containerEntity->getCurrentView();
+        }
+
+        // when the businessClass is translatable, join translations for the current locale
+        if ($view && in_array(Translatable::class, class_uses($businessClass))) {
+            $itemsQueryBuilder->join('main_item.translations', 'translation')
+                ->andWhere('translation.locale = :locale')
+                ->setParameter(':locale', $view->getCurrentLocale());
+        }
+
         $refClass = new $businessClass();
         if (method_exists($refClass, 'getDeletedAt')) {
-            $itemsQueryBuilder->where('main_item.deletedAt IS NULL');
+            $itemsQueryBuilder->andWhere('main_item.deletedAt IS NULL');
         }
 
         return $itemsQueryBuilder;

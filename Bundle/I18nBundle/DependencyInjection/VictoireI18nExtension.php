@@ -44,39 +44,18 @@ class VictoireI18nExtension extends Extension implements PrependExtensionInterfa
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function prepend(ContainerBuilder $container)
     {
-        // automatically enable gedmo_translatable doctrine extension (BasePage I18n)
-        foreach ($container->getExtensions() as $name => $extension) {
-            switch ($name) {
-                case 'doctrine':
-                    $container->prependExtensionConfig($name, [
-                        'orm' => [
-                            'mappings' => [
-                                'gedmo_translatable' => [
-                                    'type'      => 'annotation',
-                                    'prefix'    => 'Gedmo\Translatable\Entity',
-                                    'dir'       => '%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translatable/Entity',
-                                    'is_bundle' => false,
-                                ],
-                            ],
-                        ],
-                    ]);
-                break;
-                case 'stof_doctrine_extensions':
-                    $container->prependExtensionConfig($name, [
-                        'persist_default_translation' => true,
-                        'orm'                         => [
-                            'default' => [
-                                'translatable' => true,
-                            ],
-                        ],
-                    ]);
-                break;
-            }
+        $config = $container->getExtensionConfig($this->getAlias());
+        $config = $container->getParameterBag()->resolveValue($config);
+
+        $config = $this->processConfiguration(new Configuration(), $config);
+
+        if (isset($config['available_locales'])) {
+            $container->prependExtensionConfig('a2lix_translation_form', [
+                'locales'    => $config['available_locales'],
+                'templating' => 'VictoireFormBundle:Form:localeTabs.html.twig',
+            ]);
         }
     }
 }

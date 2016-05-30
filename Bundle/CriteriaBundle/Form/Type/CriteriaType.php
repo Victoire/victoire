@@ -30,7 +30,6 @@ class CriteriaType extends AbstractType
                 $name = $event->getData()->getName();
                 $formParams = $options['dataSources']->getDataSource($name)->{$options['dataSources']->getDataSourceParameters($name)['method'].'FormParams'}();
                 $event->getForm()->add('value', $formParams['type'], array_merge($formParams['options'], ['required' => false]));
-
             }
         );
     }

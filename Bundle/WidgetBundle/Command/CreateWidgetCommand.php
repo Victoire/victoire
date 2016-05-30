@@ -311,7 +311,7 @@ EOT
 
         $question = new Question($questionHelper->getQuestion('Target directory', $dir), $dir);
         $question->setValidator(function ($dir) use ($bundle, $namespace) {
-                return Validators::validateTargetDir($dir, $bundle, $namespace);
+            return Validators::validateTargetDir($dir, $bundle, $namespace);
         });
         $dir = $questionHelper->ask($input, $output, $question);
         $input->setOption('dir', $dir);
@@ -360,7 +360,7 @@ EOT
         $input->setOption('entity', $bundle.':'.$entity);
 
         $cache = $input->getOption('cache');
-        $question = new ConfirmationQuestion($questionHelper->getQuestion('Do you want use cache for this widget ?', 'yes', '?'));
+        $question = new ConfirmationQuestion($questionHelper->getQuestion('Do you want use cache for this widget ?', 'no', '?'), false);
         if (null !== $cache) {
             $cache = $questionHelper->ask($input, $output, $question);
         }

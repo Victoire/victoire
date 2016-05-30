@@ -4,3 +4,9 @@ services:
         arguments:
             - "@translator"
             - "%kernel.debug%"
+
+    victoire_form.form_type.urlvalidated_type:
+        class: Victoire\Bundle\FormBundle\Form\Type\UrlvalidatedType
+        arguments: ['@router']
+        tags:
+            - { name: form.type }

@@ -178,22 +178,11 @@ class LinkExtension extends \Twig_Extension
             $this->addAttr('onclick', $parameters['analyticsTrackCode'], $attr);
         }
 
-        //Assemble and prepare attributes
-        $attributes = [];
-        foreach ($attr as $key => $_attr) {
-            if (is_array($_attr)) {
-                $attr = implode($_attr, ' ');
-            } else {
-                $attr = $_attr;
-            }
-            $attributes[] = $key.'="'.$attr.'"';
-        }
-
         $url = $this->victoireLinkUrl($parameters, true, $url);
         //Creates a new twig environment
         $twig = new \Twig_Environment(new \Twig_Loader_Array(['linkTemplate' => '{{ link|raw }}']));
 
-        return $twig->render('linkTemplate', ['link' => '<a href="'.$url.'" '.implode($attributes, ' ').'>'.$label.'</a>']);
+        return $twig->render('linkTemplate', ['link' => '<a href="'.$url.'" '.$this->formatAttributes($attr).'>'.$label.'</a>']);
     }
 
     /**
@@ -205,28 +194,13 @@ class LinkExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function victoireMenuLink($parameters, $label, $attr = [])
+    public function victoireMenuLink($parameters, $label, $linkAttr = [], $listAttr = [])
     {
-        $linkAttr = [];
-        //is the link is active
         if ($this->request->getRequestUri() == $this->victoireLinkUrl($parameters, false)) {
-            if (!isset($attr['class'])) {
-                $linkAttr['class'] = '';
-            }
-            $linkAttr['class'] .= 'active'; //avoid to refresh page when not needed
+            $this->addAttr('class', 'active', $listAttr);
         }
 
-        $linkAttributes = [];
-        foreach ($linkAttr as $key => $_attr) {
-            if (is_array($_attr)) {
-                $linkAttr = implode($_attr, ' ');
-            } else {
-                $linkAttr = $_attr;
-            }
-            $linkAttributes[] = $key.'="'.$linkAttr.'"';
-        }
-
-        return '<li '.implode($linkAttributes, ' ').'>'.$this->victoireLink($parameters, $label, $attr, false, '#top').'</li>';
+        return '<li '.$this->formatAttributes($listAttr).'>'.$this->victoireLink($parameters, $label, $linkAttr, false, '#top').'</li>';
     }
 
     public function victoireBusinessLink($businessEntityInstance, $templateId = null, $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
@@ -286,5 +260,17 @@ class LinkExtension extends \Twig_Extension
     public function getName()
     {
         return 'victoire_link_extension';
+    }
+
+    private function formatAttributes($attributes)
+    {
+        array_walk($attributes, function (&$item, $key) {
+            if (is_array($item)) {
+                $item = implode($item, ' ');
+            }
+            $item = $key.'="'.$item.'"';
+        });
+
+        return implode($attributes, ' ');
     }
 }

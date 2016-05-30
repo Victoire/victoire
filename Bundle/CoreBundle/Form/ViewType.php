@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\CoreBundle\Form;
 
+use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
@@ -89,10 +90,13 @@ abstract class ViewType extends AbstractType
             }
         });
 
-        $builder
-            ->add('name', null, [
-                'label' => 'form.view.type.name.label',
-            ]);
+        $builder->add('translations', TranslationsType::class, [
+            'fields' => [
+                'name' => [
+                    'label' => 'form.view.type.name.label',
+                ],
+            ],
+        ]);
     }
 
     protected function getAvailableLocales()

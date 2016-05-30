@@ -137,21 +137,21 @@ class PageSubscriber implements EventSubscriber
 
         if ($entity instanceof View) {
             $om = $eventArgs->getObjectManager();
-            $locale = $this->translatableListener->getTranslatableLocale($entity, $om->getClassMetadata(get_class($entity)), $om);
-            $entity->setTranslatableLocale($locale);
-            $viewReference = $this->viewReferenceRepository->getOneReferenceByParameters([
-                'viewId' => $entity->getId(),
-                'locale' => $entity->getLocale(),
-            ]);
-            if ($entity instanceof WebViewInterface && $viewReference instanceof ViewReference) {
-                $entity->setReference($viewReference);
-                $entity->setUrl($viewReference->getUrl());
-            } elseif ($entity instanceof Template || $entity instanceof ErrorPage) {
-                $entity->setReferences([$entity->getLocale() => new ViewReference($entity->getId())]);
-            } else {
-                $entity->setReferences([
-                    $entity->getLocale() => $this->viewReferenceBuilder->buildViewReference($entity, $eventArgs->getEntityManager()),
-                ]);
+            $viewReferences = $this->viewReferenceRepository->getReferencesByParameters([
+                'viewId'     => $entity->getId(),
+                'templateId' => $entity->getId(),
+            ], true, false, 'OR');
+            foreach ($viewReferences as $viewReference) {
+                if ($entity instanceof WebViewInterface && $viewReference instanceof ViewReference) {
+                    $entity->setReference($viewReference, $viewReference->getLocale());
+                    $entity->setUrl($viewReference->getUrl());
+                } elseif ($entity instanceof Template || $entity instanceof ErrorPage) {
+                    $entity->setReferences([$entity->getCurrentLocale() => new ViewReference($entity->getId())]);
+                } else {
+                    $entity->setReferences([
+                        $entity->getCurrentLocale() => $this->viewReferenceBuilder->buildViewReference($entity, $eventArgs->getEntityManager()),
+                    ]);
+                }
             }
         }
     }

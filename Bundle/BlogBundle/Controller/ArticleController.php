@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\BlogBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\NoResultException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -34,6 +35,7 @@ class ArticleController extends Controller
      */
     public function createAction(Blog $blog)
     {
+        /** @var EntityManager $entityManager */
         $entityManager = $this->get('doctrine.orm.entity_manager');
         $article = new Article();
         $article->setBlog($blog);
@@ -54,14 +56,12 @@ class ArticleController extends Controller
 
             $entityManager->flush();
 
-            //Auto creation of the BEP
             $page = $this->container->get('victoire_business_page.business_page_builder')
-                                ->generateEntityPageFromTemplate($article->getTemplate(), $article, $entityManager);
+                        ->generateEntityPageFromTemplate($article->getTemplate(), $article, $entityManager);
 
             // Transform VBP into BP
             $this->container->get('victoire_business_page.transformer.virtual_to_business_page_transformer')->transform($page);
             $page->setParent($article->getBlog());
-            $page->setTranslatableLocale($this->get('request')->getLocale());
 
             $entityManager->persist($page);
             $entityManager->flush();
@@ -69,11 +69,13 @@ class ArticleController extends Controller
             $dispatcher = $this->get('event_dispatcher');
             $event = new ArticleEvent($article);
             $dispatcher->dispatch(VictoireBlogEvents::CREATE_ARTICLE, $event);
+
+            $page->setCurrentLocale($this->get('request')->getLocale());
             $url = $this->container->get('victoire_core.url_builder')->buildUrl($page);
             if (null === $response = $event->getResponse()) {
                 $response = new JsonResponse([
                     'success'  => true,
-                    'url'      => $this->generateUrl('victoire_core_page_show', ['_locale' => $page->getLocale(), 'url' => $url]),
+                    'url'      => $this->generateUrl('victoire_core_page_show', ['_locale' => $page->getCurrentLocale(), 'url' => $url]),
                 ]);
             }
 

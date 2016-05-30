@@ -1,13 +1,5 @@
-Gedmo\Translatable\Entity\Translation:
-    article_en_name:
-        content: "I'm your father."
+Victoire\Bundle\BlogBundle\Entity\ArticleTranslation:
+    article_en:
+        name: "I'm your father."
+        slug: I-m-your-father
         locale: en
-        field: name
-        objectClass: Victoire\Bundle\BlogBundle\Entity\Article
-        foreignKey: '@article->id'
-    article_en_slug:
-        content: I-m-your-father
-        locale: en
-        field: slug
-        objectClass: Victoire\Bundle\BlogBundle\Entity\Article
-        foreignKey: '@article->id'

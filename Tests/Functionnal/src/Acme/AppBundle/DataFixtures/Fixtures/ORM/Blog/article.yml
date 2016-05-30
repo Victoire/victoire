@@ -1,5 +1,6 @@
 Victoire\Bundle\BlogBundle\Entity\Article:
     article:
+        currentLocale: fr
         author: @anakin
         name: "I'm your father."
         description: This is a great article description
@@ -10,6 +11,7 @@ Victoire\Bundle\BlogBundle\Entity\Article:
         publishedAt: <dateTime('now')>
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
+        translations: [@article_en]
 
 Victoire\Bundle\CoreBundle\Entity\EntityProxy:
     ep_article_i_m_your_father:

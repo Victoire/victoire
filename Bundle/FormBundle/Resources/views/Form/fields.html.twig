@@ -1,6 +1,13 @@
 {% trans_default_domain "victoire" %}
 {% use 'form_div_layout.html.twig' %}
 
+{% block urlvalidated_widget %}
+    <div class="vic-form-url-slug">
+        {{ base_url }}
+        {{ block('slug_widget') }}
+    </div>
+{% endblock urlvalidated_widget %}
+
 {% block criteria_row %}
     <div class="vic-row">
         <div class="vic-col-md-4">{{ ('victoire_criteria.'~form.vars.data.name~'.criteria.label')|trans }}</div>
@@ -33,7 +40,7 @@
     <i id="{{id}}-not-correct" class="fa fa-remove slug-is-not-correct vic-hidden"></i>
     <script>
         <!--
-        addSlugValidation('{{id}}');
+        addSlugValidation($vic('#{{id}}'),{% if allow_empty %}true{% else %}false{% endif %});
         -->
     </script>
 {% endblock %}
@@ -538,7 +545,7 @@
         {% if vic_business_property_picker %}
             {% include 'VictoireBusinessEntityBundle:BusinessProperty:list.html.twig' with {
                 'description': vic_business_property_picker_description|trans({}, translation_domain)|raw,
-                'businessProperties': businessProperties
+                'businessProperties': vic_business_properties
             } %}
         {% endif %}
     {% endspaceless %}

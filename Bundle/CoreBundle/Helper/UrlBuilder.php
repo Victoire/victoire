@@ -20,9 +20,7 @@ class UrlBuilder
     {
         $slug = [];
         // build url binded with parents url
-        if (method_exists($view, 'getStaticUrl') && $view->getStaticUrl() != null && $view->getStaticUrl() != '') {
-            $slug = [$view->getStaticUrl()];
-        } elseif (!(method_exists($view, 'isHomepage') && $view->isHomepage())) {
+        if (!(method_exists($view, 'isHomepage') && $view->isHomepage())) {
             $slug = [$view->getSlug()];
         }
 
@@ -50,9 +48,7 @@ class UrlBuilder
         $parent = $view->getParent();
 
         if ($parent !== null) {
-            if (method_exists($parent, 'getStaticUrl') && $parent->getStaticUrl() != null && $parent->getStaticUrl() != '') {
-                array_push($slugs, $parent->getStaticUrl());
-            } elseif (!(method_exists($parent, 'isHomepage') && $parent->isHomepage())) {
+            if (!(method_exists($parent, 'isHomepage') && $parent->isHomepage())) {
                 array_push($slugs, $parent->getSlug());
             }
 

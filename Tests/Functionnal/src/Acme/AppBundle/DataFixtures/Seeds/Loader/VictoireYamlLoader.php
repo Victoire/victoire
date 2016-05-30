@@ -20,8 +20,8 @@ class VictoireYamlLoader extends AliceBaseLoader
         ob_start();
         $loader = $this;
         $includeWrapper = function () use ($file, $loader) {
-        return include $file;
-    };
+            return include $file;
+        };
         $data = $includeWrapper();
         if (true !== $data) {
             $yaml = ob_get_clean();

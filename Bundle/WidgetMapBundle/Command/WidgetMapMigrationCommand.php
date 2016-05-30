@@ -66,12 +66,12 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
                 ->getResult();
             $templates = [];
             $recursiveGetTemplates = function ($template) use (&$recursiveGetTemplates, &$templates) {
-                    array_push($templates, $template);
-                    foreach ($template->getInheritors() as $template) {
-                        if ($template instanceof Template) {
-                            $recursiveGetTemplates($template);
-                        }
+                array_push($templates, $template);
+                foreach ($template->getInheritors() as $template) {
+                    if ($template instanceof Template) {
+                        $recursiveGetTemplates($template);
                     }
+                }
             };
 
             foreach ($rootTemplates as $rootTemplate) {

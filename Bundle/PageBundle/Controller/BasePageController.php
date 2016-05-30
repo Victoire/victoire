@@ -34,7 +34,10 @@ class BasePageController extends Controller
 
     public function showByIdAction(Request $request, $viewId, $entityId = null)
     {
-        $parameters = ['viewId' => $viewId];
+        $parameters = [
+            'viewId' => $viewId,
+            'locale' => $request->getLocale(),
+        ];
         if ($entityId) {
             $parameters['entityId'] = $entityId;
         }
@@ -47,7 +50,7 @@ class BasePageController extends Controller
         ));
     }
 
-    public function showBusinessPageByIdAction($entityId, $type)
+    public function showBusinessPageByIdAction(Request $request, $entityId, $type)
     {
         $businessEntityHelper = $this->get('victoire_core.helper.queriable_business_entity_helper');
         $businessEntity = $businessEntityHelper->findById($type);
@@ -61,6 +64,7 @@ class BasePageController extends Controller
         $page = $this->get('victoire_page.page_helper')->findPageByParameters([
             'viewId'   => $templateId,
             'entityId' => $entityId,
+            'locale'   => $request->getLocale(),
         ]);
         $this->get('victoire_widget_map.builder')->build($page);
         $this->get('victoire_widget_map.widget_data_warmer')->warm(
@@ -72,7 +76,7 @@ class BasePageController extends Controller
             $this->generateUrl(
                 'victoire_core_page_show',
                 [
-                    'url' => $page->getReference()->Url(),
+                    'url' => $page->getReference()->getUrl(),
                 ]
             )
         );
@@ -85,7 +89,7 @@ class BasePageController extends Controller
      *
      * @return []
      */
-    protected function newAction($isHomepage = false)
+    protected function newAction(Request $request, $isHomepage = false)
     {
         /** @var EntityManager $entityManager */
         $entityManager = $this->get('doctrine.orm.entity_manager');
@@ -107,7 +111,6 @@ class BasePageController extends Controller
             $page->setPosition($pageNb + 1);
 
             $page->setAuthor($this->getUser());
-            $page->setTranslatableLocale($this->get('request')->getLocale());
             $entityManager->persist($page);
             $entityManager->flush();
 
@@ -121,6 +124,7 @@ class BasePageController extends Controller
             $this->congrat($this->get('translator')->trans('victoire_page.create.success', [], 'victoire'));
             $viewReference = $this->get('victoire_view_reference.repository')->getOneReferenceByParameters([
                 'viewId' => $page->getId(),
+                'locale' => $request->getLocale(),
             ]);
 
             return [
@@ -128,7 +132,7 @@ class BasePageController extends Controller
                 'url'      => $this->generateUrl(
                     'victoire_core_page_show',
                     [
-                        '_locale' => $page->getLocale(),
+                        '_locale' => $request->getLocale(),
                         'url'     => $viewReference->getUrl(),
                     ]
                 ),
@@ -180,7 +184,7 @@ class BasePageController extends Controller
             $entityManager->flush();
             /** @var ViewReference $viewReference */
             $viewReference = $this->get('victoire_view_reference.repository')
-                ->getOneReferenceByParameters(['viewId' => $page->getId()]);
+                ->getOneReferenceByParameters(['viewId' => $page->getId(), 'locale' => $request->getLocale()]);
 
             $page->setReference($viewReference);
 
@@ -190,7 +194,7 @@ class BasePageController extends Controller
                 'success' => true,
                 'url'     => $this->generateUrl(
                     'victoire_core_page_show', [
-                        '_locale' => $page->getLocale(),
+                        '_locale' => $request->getLocale(),
                         'url'     => $viewReference->getUrl(),
                     ]
                 ),
