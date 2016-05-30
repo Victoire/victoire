@@ -27,7 +27,7 @@ class UrlvalidatedType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $locale = null;
-        while ($form->getParent() && !($page = $form->getData()) instanceof View) {
+        while ($form && !($page = $form->getData()) instanceof View) {
             $form = $form->getParent();
             // when the form is an a2lix_translationsFields, then it's name is the current locale,
             // we store it to generate the link in the good locale
