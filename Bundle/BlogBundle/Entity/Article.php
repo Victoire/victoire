@@ -57,6 +57,7 @@ class Article
 
     /**
      * @deprecated
+     *
      * @var string
      *
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\MediaBundle\Entity\Media")
@@ -320,7 +321,6 @@ class Article
         return $this->tags;
     }
 
-
     /**
      * Get businessEntity.
      *
@@ -489,6 +489,7 @@ class Article
         $this->translate($locale, false)->setDescription($description);
         $this->mergeNewTranslations();
     }
+
     public function getImage()
     {
         return PropertyAccess::createPropertyAccessor()->getValue($this->translate(), 'getImage');

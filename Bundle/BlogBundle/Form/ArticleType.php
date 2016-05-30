@@ -116,10 +116,10 @@ class ArticleType extends AbstractType
                     'label' => 'form.article.name.label',
                 ],
                 'image' => [
-                    'label' => 'form.article.image.label',
+                    'label'      => 'form.article.image.label',
                     'field_type' => MediaType::class,
-                    'required' => false,
-                ]
+                    'required'   => false,
+                ],
 
             ],
         ]);
