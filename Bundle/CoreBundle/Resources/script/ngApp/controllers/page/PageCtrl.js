@@ -6,7 +6,7 @@ angular.module('ngApp').controller("PageController",
                     $scope.loadAsynchronousWidgets();
                 });
                 $scope.viewCssHash = viewCssHash;
-                if (true === admin || undefined !== admin) {
+                if (true === admin || undefined === admin) {
                     $scope.getWidgetMaps();
                 }
             };
