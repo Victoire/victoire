@@ -56,6 +56,16 @@ class Article
     private $description;
 
     /**
+     * @deprecated
+     * @var string
+     *
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\MediaBundle\Entity\Media")
+     * @ORM\JoinColumn(name="image_id", referencedColumnName="id", onDelete="CASCADE")
+     * @VIC\BusinessProperty("imageable")
+     */
+    private $image;
+
+    /**
      * @ORM\Column(name="status", type="string", nullable=false)
      */
     protected $status;
