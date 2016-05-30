@@ -20,7 +20,8 @@ Background:
         Given I open the hamburger menu
         Then I should see "Blog"
         When I follow "Blog"
-	Then I should see "Gestion des blogs"
+        And I wait 2 seconds
+	    Then I should see "Gestion des blogs"
         And I should see "The Jedi network"
         And I follow "Paramètres"
         And I should see "Supprimer"

@@ -1,6 +1,74 @@
-# Change Log
 
 ## [Unreleased](https://github.com/Victoire/victoire/tree/HEAD)
+
+## [1.6.0](https://github.com/Victoire/victoire/tree/1.6.0) (2016-05-30)
+[Full Changelog](https://github.com/Victoire/victoire/compare/1.5.0...1.6.0)
+
+**Closed issues:**
+
+- The FontAwesomePicker icons aren't persited [\#418](https://github.com/Victoire/victoire/issues/418)
+- Links doesn't work on widget menu [\#411](https://github.com/Victoire/victoire/issues/411)
+- \[Widget Image\] Links are not active [\#410](https://github.com/Victoire/victoire/issues/410)
+- Link comportment do not show when adding a link to a picture [\#409](https://github.com/Victoire/victoire/issues/409)
+- \[1.6\] Impossible to add a Quantum for the first widget of any new slot [\#404](https://github.com/Victoire/victoire/issues/404)
+- Create a Widget Quantum modal [\#365](https://github.com/Victoire/victoire/issues/365)
+- Add a configuration to disable widget caching [\#356](https://github.com/Victoire/victoire/issues/356)
+- Allow and prepare victoire to be used with Symfony 2.8 [\#340](https://github.com/Victoire/victoire/issues/340)
+- \[Blog\] Fix the URL & title edition system [\#332](https://github.com/Victoire/victoire/issues/332)
+
+**Merged pull requests:**
+
+- Translatable views system [\#433](https://github.com/Victoire/victoire/pull/433) ([paulandrieux](https://github.com/paulandrieux))
+- Add \_locale on victoireBusinessLink\(\) route parameters [\#431](https://github.com/Victoire/victoire/pull/431) ([MadeWilson](https://github.com/MadeWilson))
+- add admin parameter to init ngApp function to avoid to call getWidget… [\#427](https://github.com/Victoire/victoire/pull/427) ([lenybernard](https://github.com/lenybernard))
+- Feature/circleci [\#423](https://github.com/Victoire/victoire/pull/423) ([paulandrieux](https://github.com/paulandrieux))
+- :lipstick: Update ReadMe [\#422](https://github.com/Victoire/victoire/pull/422) ([talbotseb](https://github.com/talbotseb))
+- Feature/1.5 to 1.6 [\#420](https://github.com/Victoire/victoire/pull/420) ([paulandrieux](https://github.com/paulandrieux))
+- log and return a null 202 response when an heart beat [\#419](https://github.com/Victoire/victoire/pull/419) ([lenybernard](https://github.com/lenybernard))
+- Bugfix/404 quantum on slot top [\#406](https://github.com/Victoire/victoire/pull/406) ([paulandrieux](https://github.com/paulandrieux))
+- allow to pass directly the entity id in find BP method in BusinessPag… [\#401](https://github.com/Victoire/victoire/pull/401) ([Charlie-Lucas](https://github.com/Charlie-Lucas))
+- directly find the reference withe the viewrefId [\#400](https://github.com/Victoire/victoire/pull/400) ([Charlie-Lucas](https://github.com/Charlie-Lucas))
+- update the name and slug page when an article is edited [\#398](https://github.com/Victoire/victoire/pull/398) ([Charlie-Lucas](https://github.com/Charlie-Lucas))
+- use a widget method to generate widget cacheId [\#397](https://github.com/Victoire/victoire/pull/397) ([Charlie-Lucas](https://github.com/Charlie-Lucas))
+- prefer use strict comparison between views and modify the set when it… [\#395](https://github.com/Victoire/victoire/pull/395) ([Charlie-Lucas](https://github.com/Charlie-Lucas))
+- Bugfix/1.5 blog chooser and generation of multiple view ref for same be when edit [\#393](https://github.com/Victoire/victoire/pull/393) ([Charlie-Lucas](https://github.com/Charlie-Lucas))
+- apply media fix in modal upload too [\#391](https://github.com/Victoire/victoire/pull/391) ([paulandrieux](https://github.com/paulandrieux))
+- refactor Media create.html.twig to correctly render FileHelperType \(t… [\#389](https://github.com/Victoire/victoire/pull/389) ([paulandrieux](https://github.com/paulandrieux))
+- fix template layout forms [\#388](https://github.com/Victoire/victoire/pull/388) ([LoicGoyet](https://github.com/LoicGoyet))
+- Feature/support multiple widget forms [\#387](https://github.com/Victoire/victoire/pull/387) ([paulandrieux](https://github.com/paulandrieux))
+- Feature/1.5 load widget entities form in ajax [\#385](https://github.com/Victoire/victoire/pull/385) ([Charlie-Lucas](https://github.com/Charlie-Lucas))
+- try to find a sample entity to mock the widget behavior or throw an e… [\#384](https://github.com/Victoire/victoire/pull/384) ([paulandrieux](https://github.com/paulandrieux))
+- try to find a sample entity to mock the widget behavior or throw an e… [\#383](https://github.com/Victoire/victoire/pull/383) ([lenybernard](https://github.com/lenybernard))
+- now update bulk when update widget style [\#382](https://github.com/Victoire/victoire/pull/382) ([Charlie-Lucas](https://github.com/Charlie-Lucas))
+- fix translatable for businessTemplates and businessPages [\#381](https://github.com/Victoire/victoire/pull/381) ([Charlie-Lucas](https://github.com/Charlie-Lucas))
+- locale parameter is not a required param so use view Reference locale [\#380](https://github.com/Victoire/victoire/pull/380) ([Charlie-Lucas](https://github.com/Charlie-Lucas))
+- Criteria operator choice as value and viewReference locale for Victoire links [\#379](https://github.com/Victoire/victoire/pull/379) ([gregumo](https://github.com/gregumo))
+- prefer use form\_rest due to a bug with form\_widget [\#376](https://github.com/Victoire/victoire/pull/376) ([Charlie-Lucas](https://github.com/Charlie-Lucas))
+- \[BC Break\] widget personnalization [\#375](https://github.com/Victoire/victoire/pull/375) ([paulandrieux](https://github.com/paulandrieux))
+- Feature/make page settings and seo i18n [\#374](https://github.com/Victoire/victoire/pull/374) ([lenybernard](https://github.com/lenybernard))
+- Change default Bundle for victoire layout views in TemplateController [\#373](https://github.com/Victoire/victoire/pull/373) ([gregumo](https://github.com/gregumo))
+- Move container call to templating out of WidgetExceptionHandler const… [\#371](https://github.com/Victoire/victoire/pull/371) ([gregumo](https://github.com/gregumo))
+- Inject container instead of templating service in WidgetExceptionHand… [\#370](https://github.com/Victoire/victoire/pull/370) ([gregumo](https://github.com/gregumo))
+- Remove Template Mapper and reorganize layouts paths [\#369](https://github.com/Victoire/victoire/pull/369) ([gregumo](https://github.com/gregumo))
+- :bug: fix form class [\#368](https://github.com/Victoire/victoire/pull/368) ([lenybernard](https://github.com/lenybernard))
+- fix the way we get all the widget's view ids [\#366](https://github.com/Victoire/victoire/pull/366) ([paulandrieux](https://github.com/paulandrieux))
+- Feature/widget cache dx [\#362](https://github.com/Victoire/victoire/pull/362) ([paulandrieux](https://github.com/paulandrieux))
+- :lipstick: improve widget style type [\#361](https://github.com/Victoire/victoire/pull/361) ([lenybernard](https://github.com/lenybernard))
+- dispatch widget related event to possibly inject options in widget form type [\#360](https://github.com/Victoire/victoire/pull/360) ([lenybernard](https://github.com/lenybernard))
+- use angular to inject the hover link [\#359](https://github.com/Victoire/victoire/pull/359) ([paulandrieux](https://github.com/paulandrieux))
+- Feature/user heartbeat [\#358](https://github.com/Victoire/victoire/pull/358) ([lenybernard](https://github.com/lenybernard))
+- Bugfix/configurable widget cache [\#357](https://github.com/Victoire/victoire/pull/357) ([paulandrieux](https://github.com/paulandrieux))
+- Feature/improve cache widgets [\#355](https://github.com/Victoire/victoire/pull/355) ([paulandrieux](https://github.com/paulandrieux))
+- Update Readme [\#354](https://github.com/Victoire/victoire/pull/354) ([talbotseb](https://github.com/talbotseb))
+- Feature/cache widgets [\#353](https://github.com/Victoire/victoire/pull/353) ([paulandrieux](https://github.com/paulandrieux))
+- get pages in separate queries instead of using the ViewRepository to … [\#352](https://github.com/Victoire/victoire/pull/352) ([paulandrieux](https://github.com/paulandrieux))
+- Upgrade/filters [\#351](https://github.com/Victoire/victoire/pull/351) ([lenybernard](https://github.com/lenybernard))
+- pass entity manager to widgetMapBuilder + catch WidgetMapNotFoundExce… [\#350](https://github.com/Victoire/victoire/pull/350) ([lenybernard](https://github.com/lenybernard))
+- Yet some others deprecations to cleanup [\#349](https://github.com/Victoire/victoire/pull/349) ([lenybernard](https://github.com/lenybernard))
+- Add the possibility to use businessTemplate constant to generate business links  [\#348](https://github.com/Victoire/victoire/pull/348) ([Charlie-Lucas](https://github.com/Charlie-Lucas))
+- Bugfix/view widget css generation from gregumo [\#346](https://github.com/Victoire/victoire/pull/346) ([Charlie-Lucas](https://github.com/Charlie-Lucas))
+- Upgrade/2.8 deprecations [\#343](https://github.com/Victoire/victoire/pull/343) ([lenybernard](https://github.com/lenybernard))
+- support current user in Query Trait [\#309](https://github.com/Victoire/victoire/pull/309) ([lenybernard](https://github.com/lenybernard))
 
 ## [1.5.0](https://github.com/victoire/victoire/tree/1.5.0) (2016-02-24)
 [Full Changelog](https://github.com/victoire/victoire/compare/1.4.0...1.5.0)
@@ -393,5 +461,7 @@
 - Fix/vicms 397 widgetmap positionreference [\#1](https://github.com/Victoire/victoire/pull/1) ([paulandrieux](https://github.com/paulandrieux))
 
 
+
+\* *This Change Log was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
 
 \* *This Change Log was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
