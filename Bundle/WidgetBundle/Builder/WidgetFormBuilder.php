@@ -42,11 +42,11 @@ class WidgetFormBuilder
         return $this->container->get('templating')->render(
             $templateName,
             [
-                'widget' => $widget,
-                'form'   => $form->createView(),
-                'slot'   => $slot,
-                'entity' => $entity,
-                'view'   => $view,
+                'widget'    => $widget,
+                'form'      => $form->createView(),
+                'slot'      => $slot,
+                'entity'    => $entity,
+                'view'      => $view,
                 'quantum'   => $quantum,
             ]
         );
