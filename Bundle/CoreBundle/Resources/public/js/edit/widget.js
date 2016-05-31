@@ -193,7 +193,7 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update"]', function(
 $vic(document).on('click', 'a#widget-new-tab', function(event) {
     event.preventDefault();
     loading(true);
-    var url = Routing.generate('victoire_core_widget_new_quantum_item', {
+    var url = Routing.generate('victoire_core_widget_new', {
         type: $vic(this).data('type'),
         viewReference: viewReferenceId,
         slot: $vic(this).data('slot'),
