@@ -92,7 +92,6 @@ class WidgetController extends Controller
      *
      * @return JsonResponse
      *
-     * @Route("/victoire-dcms/widget/new-quantum-item/{type}/{viewReference}/{slot}/{quantum}", name="victoire_core_widget_new_quantum_item", defaults={"slot":null, "position":null, "parentWidgetMap":null, "quantum":0}, options={"expose"=true})
      * @Route("/victoire-dcms/widget/new/{type}/{viewReference}/{slot}/{quantum}/{position}/{parentWidgetMap}", name="victoire_core_widget_new", defaults={"slot":null, "position":null, "parentWidgetMap":null, "quantum":0}, options={"expose"=true})
      */
     public function newAction($type, $viewReference, $slot = null, $position = null, $parentWidgetMap = null, $quantum = null)
