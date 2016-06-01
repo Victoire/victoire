@@ -86,15 +86,17 @@ class WidgetController extends Controller
     /**
      * New Widget.
      *
-     * @param string $type          The type of the widget we edit
-     * @param int    $viewReference The view reference where attach the widget
-     * @param string $slot          The slot where attach the widget
+     * @param Request $request
+     * @param string  $type          The type of the widget we edit
+     * @param int     $viewReference The view reference where attach the widget
+     * @param string  $slot          The slot where attach the widget
+     * @param null    $quantum       The quantum number used to avoid same form name
      *
      * @return JsonResponse
-     *
-     * @Route("/victoire-dcms/widget/new/{type}/{viewReference}/{slot}/{quantum}/{position}/{parentWidgetMap}", name="victoire_core_widget_new", defaults={"slot":null, "position":null, "parentWidgetMap":null, "quantum":0}, options={"expose"=true})
+     * @throws Exception
+     * @Route("/victoire-dcms/widget/new/{type}/{viewReference}/{slot}/{quantum}", name="victoire_core_widget_new", defaults={"slot":null, "quantum":0}, options={"expose"=true})
      */
-    public function newAction($type, $viewReference, $slot = null, $position = null, $parentWidgetMap = null, $quantum = null)
+    public function newAction(Request $request, $type, $viewReference, $slot = null, $quantum = null)
     {
         try {
             $view = $this->getViewByReferenceId($viewReference);
@@ -104,6 +106,9 @@ class WidgetController extends Controller
                 $reference = new ViewReference($viewReference);
             }
             $view->setReference($reference);
+
+            $position = $request->query->has('position') ? $request->query->get('position') : null;
+            $parentWidgetMap = $request->query->has('parentWidgetMap') ? $request->query->get('parentWidgetMap') : null;
             $widgetData = $this->get('victoire_widget.widget_manager')->newWidget(
                 Widget::MODE_STATIC,
                 $type,
