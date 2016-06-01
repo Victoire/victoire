@@ -92,8 +92,9 @@ class WidgetController extends Controller
      * @param string  $slot          The slot where attach the widget
      * @param null    $quantum       The quantum number used to avoid same form name
      *
-     * @return JsonResponse
      * @throws Exception
+     *
+     * @return JsonResponse
      * @Route("/victoire-dcms/widget/new/{type}/{viewReference}/{slot}/{quantum}", name="victoire_core_widget_new", defaults={"slot":null, "quantum":0}, options={"expose"=true})
      */
     public function newAction(Request $request, $type, $viewReference, $slot = null, $quantum = null)
