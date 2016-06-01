@@ -78,8 +78,9 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update-bulk"], .vic-
         $vic("select.picker_entity_select").remove();
     }
 
-    var forms = $vic(this).parents('.vic-modal-content').find('.vic-tab-quantum .vic-tab-mode.vic-active > form');
-    forms = $vic.merge(forms, $vic(this).parents('.vic-modal-content').find('.vic-tab-quantum .vic-tab-mode.vic-active .vic-tab-pane.vic-active > form'));
+    var forms = $vic(this).parents('.vic-modal-content').find('.vic-tab-quantum .vic-tab-pane.vic-active > form'); // matches widget edit form with only static mode available
+    forms = $vic.merge(forms, $vic(this).parents('.vic-modal-content').find('.vic-tab-quantum .vic-tab-mode.vic-active .vic-tab-pane.vic-active > form')); // matches widget edit form with more than one mode available
+    forms = $vic.merge(forms, $vic(this).parents('.vic-modal-content').find('.vic-tab-quantum.vic-tab-pane > form[name="widget_style"]')); // matches widget stylize form
 
     loading(true);
     var calls = [];
