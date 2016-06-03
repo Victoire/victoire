@@ -20,57 +20,6 @@ $vic(document).on('change', '.vic-new-widget select', function(event) {
     $vic(this).parents('.vic-new-widget').first().addClass('vic-creating');
 });
 
-
-// Create new widget after submit
-$vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(event) {
-    event.preventDefault();
-    // we remove the prototype picker to avoid persist it
-    if ($vic("select.picker_entity_select").length != 0 && $vic("select.picker_entity_select").attr('name').indexOf('[items][__name__][entity]') !== -1) {
-        $vic("select.picker_entity_select").remove();
-    }
-    //we look for the form currently active and visible
-    var form = $vic(this).parents('.vic-modal-content').find('.vic-tab-pane.vic-active form').filter(":visible");
-    $vic(form).trigger("victoire_widget_form_create_presubmit");
-
-    loading(true);
-
-    formData = form.serialize();
-    var contentType = 'application/x-www-form-urlencoded; charset=UTF-8';
-    if ($vic(form).attr('enctype') == 'multipart/form-data') {
-        var formData = new FormData($vic(form)[0]);
-        var contentType = false;
-    }
-    $vic.ajax({
-        type: form.attr('method'),
-        url : form.attr('action'),
-        data        : formData,
-        processData : false,
-        contentType : contentType
-    }).done(function(response){
-        if (true === response.success) {
-            if (response.hasOwnProperty("redirect")) {
-                window.location.replace(response.redirect);
-            } else {
-                window.location.reload();
-            }
-
-            loading(false);
-
-        } else {
-            warn(response.message, 10000);
-            //inform user there have been an error
-            if (response.html) {
-                $vic('.vic-modal-body .vic-container .vic-tab-pane.vic-active').html(response.html);
-            }
-        }
-    }).fail(function(response) {
-        console.log(response);
-        error('Oups, une erreur est apparue', 10000);
-    });
-    $vic(form).trigger("victoire_widget_form_create_postsubmit");
-});
-
-
 $vic(document).on('click', '.vic-widget-modal a[data-modal="update"], .vic-widget-modal a[data-modal="create"]', function(event) {
     event.preventDefault();
     // we remove the prototype picker to avoid persist it
