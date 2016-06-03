@@ -28,8 +28,8 @@ class LinkExtension extends \Twig_Extension
     /**
      * LinkExtension constructor.
      *
-     * @param Router               $router
-     * @param RequestStack         $requestStack
+     * @param Router       $router
+     * @param RequestStack $requestStack
      * @param $analytics
      * @param BusinessEntityHelper $businessEntityHelper
      * @param BusinessPageHelper   $BusinessPageHelper
