@@ -131,64 +131,6 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update-bulk"], .vic-
         loading(false);
     });
 });
-$vic(document).on('click', '.vic-widget-modal a[data-modal="update"]', function(event) {
-    event.preventDefault();
-
-    // we remove the prototype picker to avoid persist it
-    if ($vic("select.picker_entity_select").length != 0 && $vic("select.picker_entity_select").attr('name').indexOf('appventus_victoirecorebundle_widgetlistingtype[items][__name__][entity]') !== -1) {
-        $vic("select.picker_entity_select").remove();
-    }
-    var form = $vic(this).parents('.vic-modal-content').find('form.vic-form-active');
-    if ($vic(form).length == 0) {
-        form = $vic(this).parents('.vic-modal-content').find('.vic-tab-pane.vic-active form').filter(":visible");
-    }
-    $vic(form).trigger("victoire_widget_form_update_presubmit");
-
-    loading(true);
-
-    formData = form.serialize();
-    var contentType = 'application/x-www-form-urlencoded; charset=UTF-8';
-    if ($vic(form).attr('enctype') == 'multipart/form-data') {
-        var formData = new FormData($vic(form)[0]);
-        var contentType = false;
-    }
-    $vic.ajax({
-        type: form.attr('method'),
-        url : form.attr('action'),
-        data        : formData,
-        processData : false,
-        contentType : contentType
-    }).done(function(response){
-        if (true === response.success) {
-            if (response.hasOwnProperty("redirect")) {
-                window.location.replace(response.redirect);
-            } else {
-                if (response.hasOwnProperty("redirect")) {
-                    window.location.replace(response.redirect);
-                } else {
-                    window.location.reload();
-                }
-            }
-            if(typeof(Storage) !== "undefined") {
-                var object = {data: response.html, timestamp: new Date().getTime()};
-                localStorage.setItem('victoire__widget__html__' + response.widgetId, JSON.stringify(object));
-            }
-            loading(false);
-        } else {
-
-            //inform user there have been an error
-            warn(response.message, 10000);
-
-            if (response.html) {
-                $vic(form).parent('div').html(response.html);
-            }
-        }
-    }).fail(function(response) {
-        console.log(response);
-        error('Oups, une erreur est apparue', 10000);
-    });
-    $vic(form).trigger("victoire_widget_form_update_postsubmit");
-});
 
 // Delete a widget after submit
 $vic(document).on('click', 'a#widget-new-tab', function(event) {
