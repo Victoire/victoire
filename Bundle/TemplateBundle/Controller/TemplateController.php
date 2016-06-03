@@ -72,7 +72,7 @@ class TemplateController extends Controller
         $parameters = [
             'view'   => $template,
             'id'     => $template->getId(),
-            'locale' => $template->getLocale(),
+            'locale' => $template->getCurrentLocale(),
         ];
 
         $this->get('victoire_widget_map.builder')->build($template);

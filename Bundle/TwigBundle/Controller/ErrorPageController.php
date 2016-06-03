@@ -37,7 +37,7 @@ class ErrorPageController extends Controller
         $parameters = [
             'view'   => $page,
             'id'     => $page->getId(),
-            'locale' => $page->getLocale(),
+            'locale' => $page->getCurrentLocale(),
         ];
 
         $this->get('victoire_widget_map.builder')->build($page);
