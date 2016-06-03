@@ -71,16 +71,27 @@ $vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(
 });
 
 
-$vic(document).on('click', '.vic-widget-modal a[data-modal="update-bulk"], .vic-widget-modal a[data-modal="create-bulk"]', function(event) {
+$vic(document).on('click', '.vic-widget-modal a[data-modal="update"], .vic-widget-modal a[data-modal="create"]', function(event) {
     event.preventDefault();
     // we remove the prototype picker to avoid persist it
     if ($vic("select.picker_entity_select").length != 0 && $vic("select.picker_entity_select").attr('name').indexOf('appventus_victoirecorebundle_widgetlistingtype[items][__name__][entity]') !== -1) {
         $vic("select.picker_entity_select").remove();
     }
 
-    var forms = $vic(this).parents('.vic-modal-content').find('.vic-tab-quantum .vic-tab-pane.vic-active > form'); // matches widget edit form with only static mode available
-    forms = $vic.merge(forms, $vic(this).parents('.vic-modal-content').find('.vic-tab-quantum .vic-tab-mode.vic-active .vic-tab-pane.vic-active > form')); // matches widget edit form with more than one mode available
-    forms = $vic.merge(forms, $vic(this).parents('.vic-modal-content').find('.vic-tab-quantum.vic-tab-pane > form[name="widget_style"]')); // matches widget stylize form
+    var forms = [];
+    $vic('.vic-tab-quantum').each(function(index, quantum) {
+        // matches widget edit form with more than one mode available
+        var activeForm = $vic(quantum).find('.vic-tab-mode.vic-active .vic-tab-pane.vic-active > form');
+        // matches widget edit form with only static mode available
+        if (activeForm.length == 0) {
+            activeForm = $vic(quantum).find('#picker-static-static.vic-active form');
+        }
+        // matches widget stylize form
+        if (activeForm.length == 0 && $vic(quantum).hasClass('vic-active')) {
+            activeForm = $vic(quantum).find('form[name="widget_style"]');
+        }
+        forms = $vic.merge(forms, [activeForm]);
+    });
 
     loading(true);
     var calls = [];
