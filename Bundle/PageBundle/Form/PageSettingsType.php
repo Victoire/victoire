@@ -2,11 +2,9 @@
 
 namespace Victoire\Bundle\PageBundle\Form;
 
-use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Victoire\Bundle\FormBundle\Form\Type\UrlvalidatedType;
 use Victoire\Bundle\PageBundle\Entity\PageStatus;
 
 /**
