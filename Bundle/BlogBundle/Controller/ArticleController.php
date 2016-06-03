@@ -180,7 +180,7 @@ class ArticleController extends Controller
             $response = [
                 'success' => true,
                 'url'     => $this->generateUrl('victoire_core_page_show', [
-                    '_locale' => $page->getLocale(),
+                    '_locale' => $page->getCurrentLocale(),
                     'url'     => $page->getReference()->getUrl(),
                 ]),
             ];

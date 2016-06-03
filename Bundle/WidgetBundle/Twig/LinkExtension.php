@@ -28,8 +28,8 @@ class LinkExtension extends \Twig_Extension
     /**
      * LinkExtension constructor.
      *
-     * @param Router       $router
-     * @param RequestStack $requestStack
+     * @param Router               $router
+     * @param RequestStack         $requestStack
      * @param $analytics
      * @param BusinessEntityHelper $businessEntityHelper
      * @param BusinessPageHelper   $BusinessPageHelper
@@ -121,7 +121,7 @@ class LinkExtension extends \Twig_Extension
                 if ($attachedWidget && method_exists($attachedWidget->getView(), 'getUrl')) {
 
                     //create base url
-                    $url = $this->router->generate('victoire_core_page_show', ['_locale' => $attachedWidget->getView()->getLocale(), 'url' => $attachedWidget->getView()->getUrl()], $referenceType);
+                    $url = $this->router->generate('victoire_core_page_show', ['_locale' => $attachedWidget->getView()->getCurrentLocale(), 'url' => $attachedWidget->getView()->getUrl()], $referenceType);
 
                     //If widget in the same view
                     if (rtrim($this->request->getRequestUri(), '/') == rtrim($url, '/')) {
@@ -153,7 +153,7 @@ class LinkExtension extends \Twig_Extension
         $attachedWidget = isset($parameters[Link::TYPE_WIDGET]) ? $parameters[Link::TYPE_WIDGET] : null;
 
         if ($parameters['linkType'] == Link::TYPE_WIDGET && $attachedWidget && method_exists($attachedWidget->getView(), 'getUrl')) {
-            $viewUrl = $this->router->generate('victoire_core_page_show', ['_locale' => $attachedWidget->getView()->getLocale(), 'url' => $attachedWidget->getView()->getUrl()], $referenceLink);
+            $viewUrl = $this->router->generate('victoire_core_page_show', ['_locale' => $attachedWidget->getView()->getCurrentLocale(), 'url' => $attachedWidget->getView()->getUrl()], $referenceLink);
             if (rtrim($this->request->getRequestUri(), '/') == rtrim($viewUrl, '/')) {
                 $attr['data-scroll'] = 'smooth';
             }
@@ -223,7 +223,7 @@ class LinkExtension extends \Twig_Extension
             'route'           => 'victoire_core_page_show',
             'routeParameters' => [
                 'url'     => $page->getReference()->getUrl(),
-                '_locale' => $page->getLocale(),
+                '_locale' => $page->getCurrentLocale(),
             ],
             'referenceType' => $referenceType,
         ];
