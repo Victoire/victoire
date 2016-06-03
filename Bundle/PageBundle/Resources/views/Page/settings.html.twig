@@ -16,7 +16,7 @@
             <form method="POST" action="{{path('victoire_core_page_settings', {'id':page.id} )}}">
                 <div class="vic-form-group">
                     <div class="vic-col-lg-8">
-                        {{ form_row(form.translations) }}
+                        {{ form_widget(form.translations) }}
                         {{ form_row(form.parent) }}
                         {{ form_row(form.template) }}
 
