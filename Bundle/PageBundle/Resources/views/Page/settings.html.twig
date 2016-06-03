@@ -42,7 +42,7 @@
     </div>
 
     <script type="text/javascript">
-        $vic('#victoire_page_settings_type_status').on('change', function(){
+        $vic('#page_settings_status').on('change', function(){
             if ($vic(this).val() == '{{ constant('Victoire\\Bundle\\PageBundle\\Entity\\PageStatus::SCHEDULED') }}') {
                 $vic('.publication-date-container').removeClass('vic-hidden');
             } else {
