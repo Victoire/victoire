@@ -30,7 +30,7 @@ default:
              directory: fails
              screenshot: true
          Behat\MinkExtension\ServiceContainer\MinkExtension:
-             base_url:           'http://fr.victoire.io:8000'
+             base_url:           'http://anakin@victoire.io:test@fr.victoire.io:8000'
              selenium2:          ~
              goutte:             ~
              symfony2: ~

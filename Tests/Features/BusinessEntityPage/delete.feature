@@ -2,12 +2,12 @@
 Feature: Create business entity pages
 
     Background:
-        Given I am logged in as "anakin@victoire.io"
-        And the following Jedis:
+        Given the following Jedis:
             | name   | side   | midiChlorians | slug   |
             | Anakin | dark   | 20000         | anakin |
             | Yoda   | bright | 17500         | yoda   |
         And I maximize the window
+        And I am on homepage
 
     Scenario: I can delete an BE and his BEP
         Given I open the hamburger menu

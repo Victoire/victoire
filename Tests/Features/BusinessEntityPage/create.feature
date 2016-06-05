@@ -2,12 +2,12 @@
 Feature: Create business entity pages
 
     Background:
-        Given I am logged in as "anakin@victoire.io"
-        And the following Jedis:
+        Given the following Jedis:
             | name   | side   | midiChlorians | slug   |
             | Anakin | dark   | 20000         | anakin |
             | Yoda   | bright | 17500         | yoda   |
         And I maximize the window
+        And I am on homepage
 
     @smartStep
     Scenario: I can create a new Business entity page pattern and create some content in the pattern
