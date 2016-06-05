@@ -3,6 +3,7 @@ Feature: Stylize a widget
 
   Background:
     Given I maximize the window
+    And I am on homepage
 
   Scenario: Change color for small device
     When I switch to "layout" mode

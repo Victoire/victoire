@@ -3,6 +3,7 @@ Feature: Manage sitemap
 
   Background:
     Given I maximize the window
+    And I am on homepage
 
   @smartStep
   Scenario: I can create a child for a page

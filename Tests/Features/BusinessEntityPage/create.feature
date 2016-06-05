@@ -7,6 +7,7 @@ Feature: Create business entity pages
             | Anakin | dark   | 20000         | anakin |
             | Yoda   | bright | 17500         | yoda   |
         And I maximize the window
+        And I am on homepage
 
     @smartStep
     Scenario: I can create a new Business entity page pattern and create some content in the pattern

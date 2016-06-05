@@ -3,6 +3,7 @@ Feature: Create a seo
 
 Background:
     Given I maximize the window
+    And I am on homepage
 
 Scenario: I can add a seo
     Given I can create a new page

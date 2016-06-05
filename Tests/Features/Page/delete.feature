@@ -3,6 +3,7 @@ Feature: Delete a page
 
 Background:
     Given I maximize the window
+    And I am on homepage
 
 Scenario: I can delete a new page
     Given I am on "/fr/test"

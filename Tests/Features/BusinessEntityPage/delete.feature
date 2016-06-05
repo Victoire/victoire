@@ -7,6 +7,7 @@ Feature: Create business entity pages
             | Anakin | dark   | 20000         | anakin |
             | Yoda   | bright | 17500         | yoda   |
         And I maximize the window
+        And I am on homepage
 
     Scenario: I can delete an BE and his BEP
         Given I open the hamburger menu

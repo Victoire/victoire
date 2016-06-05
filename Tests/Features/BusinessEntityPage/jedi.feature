@@ -3,6 +3,7 @@ Feature: Manage jedis
 
     Background:
         Given I maximize the window
+        And I am on homepage
 
     Scenario: I can list jedis
         Given the following Jedis:

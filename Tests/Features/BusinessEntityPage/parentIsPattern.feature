@@ -3,6 +3,7 @@ Feature: Mercenary is not a BusinessEntity itself but extends Character which is
 
     Background:
         Given I maximize the window
+        And I am on homepage
 
     Scenario: I can view the mercenary show view
         Given the following Mercenaries:

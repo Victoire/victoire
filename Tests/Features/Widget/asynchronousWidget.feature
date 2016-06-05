@@ -1,6 +1,10 @@
 @mink:selenium2 @alice(Page) @reset-schema
 Feature: Test asynchronous widget
 
+  Background:
+    Given I maximize the window
+    And I am on homepage
+
   Scenario: I create an asynchronous widget
     When I switch to "layout" mode
     And I should see "Nouveau contenu"
