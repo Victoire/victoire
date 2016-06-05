@@ -1,9 +1,6 @@
 @mink:selenium2 @alice(Page) @reset-schema
 Feature: Test widgetMap
 
-Background:
-    Given I am logged in as "anakin@victoire.io"
-
 @reset-schema
 Scenario: I move up a widget
   Given the following WidgetMaps:

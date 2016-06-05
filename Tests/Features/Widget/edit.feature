@@ -2,8 +2,7 @@
 Feature: Edit a widget
 
     Background:
-        Given I am logged in as "anakin@victoire.io"
-        And the following Jedis:
+        Given the following Jedis:
             | name   | side   | midiChlorians | slug   |
             | Anakin | dark   | 20000         | anakin |
             | Yoda   | bright | 17500         | yoda   |

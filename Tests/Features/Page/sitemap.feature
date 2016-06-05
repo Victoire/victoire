@@ -2,8 +2,7 @@
 Feature: Manage sitemap
 
   Background:
-    Given I am logged in as "anakin@victoire.io"
-    And I maximize the window
+    Given I maximize the window
 
   @smartStep
   Scenario: I can create a child for a page

@@ -2,8 +2,7 @@
 Feature: Create a blog
 
 Background:
-    Given I am logged in as "anakin@victoire.io"
-    And I maximize the window
+    Given I maximize the window
     And I am on homepage
 
     Scenario: I create a new blog

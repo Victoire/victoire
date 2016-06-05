@@ -1,9 +1,6 @@
 @mink:selenium2 @alice(Page) @reset-schema
 Feature: Delete a widget
 
-Background:
-    Given I am logged in as "anakin@victoire.io"
-
 Scenario: Abort Delete
     Then I switch to "layout" mode
     And I should see "Nouveau contenu"

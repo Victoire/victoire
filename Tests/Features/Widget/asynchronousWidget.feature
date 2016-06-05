@@ -1,9 +1,6 @@
 @mink:selenium2 @alice(Page) @reset-schema
 Feature: Test asynchronous widget
 
-  Background:
-    Given I am logged in as "anakin@victoire.io"
-
   Scenario: I create an asynchronous widget
     When I switch to "layout" mode
     And I should see "Nouveau contenu"
