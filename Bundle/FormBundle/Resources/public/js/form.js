@@ -19,6 +19,10 @@ $vic(document).on('change', 'select[data-refreshOnChange="true"], input:checkbox
     if ($vic(this).data('target')) {
         targetClass = $vic(this).data('target');
     }
+    var updateStrategy = "html";
+    if ($vic(this).data('update-strategy')) {
+        updateStrategy = $vic(this).data('update-strategy');
+    }
 
     //Get last element of visible target class
     var $target = $vic(document).find(targetClass + ':visible');
@@ -30,7 +34,10 @@ $vic(document).on('change', 'select[data-refreshOnChange="true"], input:checkbox
         data: form.serialize(),
         async: true
     }).done(function(response){
-        $target.html(response.html);
+
+        //By default, the updateStrategy is html (a simple replace) but you can set your own function
+        //for example, append, after etc or even a custom one.
+        eval('$target.' + updateStrategy + '(response.html)');
         var scripts = $target.find("script");
         loading(false);
     }).fail(function(response) {
