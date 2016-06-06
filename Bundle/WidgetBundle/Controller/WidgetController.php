@@ -45,6 +45,7 @@ class WidgetController extends Controller
         //the response is for the ajax.js from the AppVentus Ajax Bundle
         try {
             $view = $this->get('victoire_page.page_helper')->findPageByParameters(['id' => $viewReferenceId]);
+            $this->get('victoire_widget_map.builder')->build($view);
             $this->get('victoire_core.current_view')->setCurrentView($view);
             $response = new JsonResponse([
                     'html'    => $this->get('victoire_widget.widget_renderer')->render($widget, $view),
