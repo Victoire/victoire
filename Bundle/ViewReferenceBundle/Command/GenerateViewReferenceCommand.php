@@ -37,5 +37,6 @@ class GenerateViewReferenceCommand extends ContainerAwareCommand
         $viewHelper = $this->getContainer()->get('victoire_core.view_helper');
         $viewsReferences = $viewHelper->buildViewsReferences();
         $this->getContainer()->get('victoire_view_reference.manager')->saveReferences($viewsReferences);
+        $output->writeln('<info>The ViewReference has been generated.</info>');
     }
 }
