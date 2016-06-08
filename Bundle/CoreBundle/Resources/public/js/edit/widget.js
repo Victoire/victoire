@@ -20,66 +20,27 @@ $vic(document).on('change', '.vic-new-widget select', function(event) {
     $vic(this).parents('.vic-new-widget').first().addClass('vic-creating');
 });
 
-
-// Create new widget after submit
-$vic(document).on('click', '.vic-widget-modal *[data-modal="create"]', function(event) {
-    event.preventDefault();
-    // we remove the prototype picker to avoid persist it
-    if ($vic("select.picker_entity_select").length != 0 && $vic("select.picker_entity_select").attr('name').indexOf('[items][__name__][entity]') !== -1) {
-        $vic("select.picker_entity_select").remove();
-    }
-    //we look for the form currently active and visible
-    var form = $vic(this).parents('.vic-modal-content').find('.vic-tab-pane.vic-active form').filter(":visible");
-    $vic(form).trigger("victoire_widget_form_create_presubmit");
-
-    loading(true);
-
-    formData = form.serialize();
-    var contentType = 'application/x-www-form-urlencoded; charset=UTF-8';
-    if ($vic(form).attr('enctype') == 'multipart/form-data') {
-        var formData = new FormData($vic(form)[0]);
-        var contentType = false;
-    }
-    $vic.ajax({
-        type: form.attr('method'),
-        url : form.attr('action'),
-        data        : formData,
-        processData : false,
-        contentType : contentType
-    }).done(function(response){
-        if (true === response.success) {
-            if (response.hasOwnProperty("redirect")) {
-                window.location.replace(response.redirect);
-            } else {
-                window.location.reload();
-            }
-
-            loading(false);
-
-        } else {
-            warn(response.message, 10000);
-            //inform user there have been an error
-            if (response.html) {
-                $vic('.vic-modal-body .vic-container .vic-tab-pane.vic-active').html(response.html);
-            }
-        }
-    }).fail(function(response) {
-        console.log(response);
-        error('Oups, une erreur est apparue', 10000);
-    });
-    $vic(form).trigger("victoire_widget_form_create_postsubmit");
-});
-
-
-$vic(document).on('click', '.vic-widget-modal a[data-modal="update-bulk"], .vic-widget-modal a[data-modal="create-bulk"]', function(event) {
+$vic(document).on('click', '.vic-widget-modal a[data-modal="update"], .vic-widget-modal a[data-modal="create"]', function(event) {
     event.preventDefault();
     // we remove the prototype picker to avoid persist it
     if ($vic("select.picker_entity_select").length != 0 && $vic("select.picker_entity_select").attr('name').indexOf('appventus_victoirecorebundle_widgetlistingtype[items][__name__][entity]') !== -1) {
         $vic("select.picker_entity_select").remove();
     }
 
-    var forms = $vic(this).parents('.vic-modal-content').find('.vic-tab-quantum .vic-tab-mode.vic-active > form');
-    forms = $vic.merge(forms, $vic(this).parents('.vic-modal-content').find('.vic-tab-quantum .vic-tab-mode.vic-active .vic-tab-pane.vic-active > form'));
+    var forms = [];
+    $vic('.vic-tab-quantum').each(function(index, quantum) {
+        // matches widget edit form with more than one mode available
+        var activeForm = $vic(quantum).find('.vic-tab-mode.vic-active .vic-tab-pane.vic-active > form');
+        // matches widget edit form with only static mode available
+        if (activeForm.length == 0) {
+            activeForm = $vic(quantum).find('.vic-tab-pane.vic-active form, #picker-static-static.vic-active form');
+        }
+        // matches widget stylize form
+        if (activeForm.length == 0 && $vic(quantum).hasClass('vic-active')) {
+            activeForm = $vic(quantum).find('form[name="widget_style"]');
+        }
+        forms = $vic.merge(forms, [activeForm]);
+    });
 
     loading(true);
     var calls = [];
@@ -130,70 +91,12 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update-bulk"], .vic-
         loading(false);
     });
 });
-$vic(document).on('click', '.vic-widget-modal a[data-modal="update"]', function(event) {
-    event.preventDefault();
-
-    // we remove the prototype picker to avoid persist it
-    if ($vic("select.picker_entity_select").length != 0 && $vic("select.picker_entity_select").attr('name').indexOf('appventus_victoirecorebundle_widgetlistingtype[items][__name__][entity]') !== -1) {
-        $vic("select.picker_entity_select").remove();
-    }
-    var form = $vic(this).parents('.vic-modal-content').find('form.vic-form-active');
-    if ($vic(form).length == 0) {
-        form = $vic(this).parents('.vic-modal-content').find('.vic-tab-pane.vic-active form').filter(":visible");
-    }
-    $vic(form).trigger("victoire_widget_form_update_presubmit");
-
-    loading(true);
-
-    formData = form.serialize();
-    var contentType = 'application/x-www-form-urlencoded; charset=UTF-8';
-    if ($vic(form).attr('enctype') == 'multipart/form-data') {
-        var formData = new FormData($vic(form)[0]);
-        var contentType = false;
-    }
-    $vic.ajax({
-        type: form.attr('method'),
-        url : form.attr('action'),
-        data        : formData,
-        processData : false,
-        contentType : contentType
-    }).done(function(response){
-        if (true === response.success) {
-            if (response.hasOwnProperty("redirect")) {
-                window.location.replace(response.redirect);
-            } else {
-                if (response.hasOwnProperty("redirect")) {
-                    window.location.replace(response.redirect);
-                } else {
-                    window.location.reload();
-                }
-            }
-            if(typeof(Storage) !== "undefined") {
-                var object = {data: response.html, timestamp: new Date().getTime()};
-                localStorage.setItem('victoire__widget__html__' + response.widgetId, JSON.stringify(object));
-            }
-            loading(false);
-        } else {
-
-            //inform user there have been an error
-            warn(response.message, 10000);
-
-            if (response.html) {
-                $vic(form).parent('div').html(response.html);
-            }
-        }
-    }).fail(function(response) {
-        console.log(response);
-        error('Oups, une erreur est apparue', 10000);
-    });
-    $vic(form).trigger("victoire_widget_form_update_postsubmit");
-});
 
 // Delete a widget after submit
 $vic(document).on('click', 'a#widget-new-tab', function(event) {
     event.preventDefault();
     loading(true);
-    var url = Routing.generate('victoire_core_widget_new_quantum_item', {
+    var url = Routing.generate('victoire_core_widget_new', {
         type: $vic(this).data('type'),
         viewReference: viewReferenceId,
         slot: $vic(this).data('slot'),

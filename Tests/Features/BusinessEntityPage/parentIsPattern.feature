@@ -2,8 +2,8 @@
 Feature: Mercenary is not a BusinessEntity itself but extends Character which is one
 
     Background:
-        Given I am logged in as "anakin@victoire.io"
-        And I maximize the window
+        Given I maximize the window
+        And I am on homepage
 
     Scenario: I can view the mercenary show view
         Given the following Mercenaries:

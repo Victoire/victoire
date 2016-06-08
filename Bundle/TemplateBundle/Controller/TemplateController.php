@@ -48,8 +48,8 @@ class TemplateController extends Controller
      *
      * @param Template $template The template
      *
-     * @Route("/show/{slug}", name="victoire_template_show")
-     * @ParamConverter("template", class="VictoireTemplateBundle:Template", options={"mapping": {"slug": "slug"}})
+     * @Route("/show/{id}", name="victoire_template_show")
+     * @ParamConverter("template", class="VictoireTemplateBundle:Template")
      *
      * @return Response
      */
@@ -72,7 +72,7 @@ class TemplateController extends Controller
         $parameters = [
             'view'   => $template,
             'id'     => $template->getId(),
-            'locale' => $template->getLocale(),
+            'locale' => $template->getCurrentLocale(),
         ];
 
         $this->get('victoire_widget_map.builder')->build($template);
@@ -103,7 +103,7 @@ class TemplateController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $template = new Template();
-        $form = $this->container->get('form.factory')->create($this->getNewTemplateType(), $template); //@todo utiliser un service
+        $form = $this->container->get('form.factory')->create(TemplateType::class, $template); //@todo utiliser un service
 
         $form->handleRequest($this->get('request'));
         if ($form->isValid()) {
@@ -112,7 +112,7 @@ class TemplateController extends Controller
 
             return new JsonResponse([
                 'success'  => true,
-                'url'      => $this->generateUrl('victoire_template_show', ['slug' => $template->getSlug()]),
+                'url'      => $this->generateUrl('victoire_template_show', ['id' => $template->getId()]),
             ]);
         }
 
@@ -149,7 +149,7 @@ class TemplateController extends Controller
             return new JsonResponse(
                     [
                         'success' => true,
-                        'url'     => $this->generateUrl('victoire_template_show', ['slug' => $template->getSlug()]),
+                        'url'     => $this->generateUrl('victoire_template_show', ['id' => $template->getId()]),
                     ]
                 );
         }
@@ -178,14 +178,14 @@ class TemplateController extends Controller
     public function editAction(Template $template)
     {
         $em = $this->getDoctrine()->getManager();
-        $form = $this->container->get('form.factory')->create($this->getNewTemplateType(), $template);
+        $form = $this->container->get('form.factory')->create(TemplateType::class, $template);
 
         $form->handleRequest($this->get('request'));
         if ($form->isValid()) {
             $em->persist($template);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('victoire_template_show', ['slug' => $template->getSlug()]));
+            return $this->redirect($this->generateUrl('victoire_template_show', ['id' => $template->getId()]));
         }
 
         return $this->redirect($this->generateUrl('victoire_template_settings', ['slug' => $template->getSlug()]));

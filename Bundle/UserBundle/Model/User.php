@@ -4,6 +4,7 @@ namespace Victoire\Bundle\UserBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Victoire User model.
@@ -23,6 +24,7 @@ class User extends BaseUser implements VictoireUserInterface
      * @var string
      *
      * @ORM\Column(name="firstname", type="string", length=255, nullable=true)
+     * @Groups({"profile"})
      */
     protected $firstname;
 
@@ -30,6 +32,7 @@ class User extends BaseUser implements VictoireUserInterface
      * @var string
      *
      * @ORM\Column(name="lastname", type="string", length=255, nullable=true)
+     * @Groups({"profile"})
      */
     protected $lastname;
 
@@ -37,6 +40,7 @@ class User extends BaseUser implements VictoireUserInterface
      * @var string
      *
      * @ORM\Column(name="locale", type="string", length=255, nullable=true)
+     * @Groups({"profile"})
      */
     protected $locale;
 

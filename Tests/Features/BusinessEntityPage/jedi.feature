@@ -2,8 +2,8 @@
 Feature: Manage jedis
 
     Background:
-        Given I am logged in as "anakin@victoire.io"
-        And I maximize the window
+        Given I maximize the window
+        And I am on homepage
 
     Scenario: I can list jedis
         Given the following Jedis:

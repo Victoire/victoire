@@ -1,8 +1,9 @@
 @mink:selenium2 @alice(Page) @reset-schema
 Feature: Delete a widget
 
-Background:
-    Given I am logged in as "anakin@victoire.io"
+    Background:
+        Given I maximize the window
+        And I am on homepage
 
 Scenario: Abort Delete
     Then I switch to "layout" mode

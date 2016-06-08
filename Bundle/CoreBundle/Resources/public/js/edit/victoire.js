@@ -19,8 +19,9 @@ $vic(document).on("keydown", function (e){
             $vic('button[data-mode="admin-style"]').click();
         } else if ($vic('body').attr('role') == 'admin-style') {
             $vic('button[data-mode="admin-readonly"]').click();
+        } else if ($vic('button[data-mode="admin-readonly"]') != undefined) {
+            $vic('button[data-mode="admin-readonly"]').click();
         }
-
     }
 });
 

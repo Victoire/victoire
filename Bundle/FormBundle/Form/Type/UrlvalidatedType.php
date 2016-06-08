@@ -40,7 +40,8 @@ class UrlvalidatedType extends AbstractType
             $locale = $page->getCurrentLocale();
         }
 
-        $url = $this->router->generate('victoire_core_page_show', ['url' => $page->getParent()->getUrl(), '_locale' => $locale], Router::ABSOLUTE_URL);
+        $parentUrl = $page->getParent() ? $page->getParent()->getUrl() : '';
+        $url = $this->router->generate('victoire_core_page_show', ['url' => $parentUrl, '_locale' => $locale], Router::ABSOLUTE_URL);
         $view->vars['base_url'] = $url;
 
         parent::buildView($view, $form, $options);

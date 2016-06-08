@@ -16,7 +16,7 @@
             <form method="POST" action="{{path('victoire_core_page_settings', {'id':page.id} )}}">
                 <div class="vic-form-group">
                     <div class="vic-col-lg-8">
-                        {{ form_row(form.translations) }}
+                        {{ form_widget(form.translations) }}
                         {{ form_row(form.parent) }}
                         {{ form_row(form.template) }}
 
@@ -42,7 +42,7 @@
     </div>
 
     <script type="text/javascript">
-        $vic('#victoire_page_settings_type_status').on('change', function(){
+        $vic('#page_settings_status').on('change', function(){
             if ($vic(this).val() == '{{ constant('Victoire\\Bundle\\PageBundle\\Entity\\PageStatus::SCHEDULED') }}') {
                 $vic('.publication-date-container').removeClass('vic-hidden');
             } else {

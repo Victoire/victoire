@@ -1,9 +1,9 @@
 @mink:selenium2 @alice(Page) @reset-schema
 Feature: Test widgetMap
 
-Background:
-    Given I am logged in as "anakin@victoire.io"
-
+  Background:
+    Given I maximize the window
+    And I am on homepage
 @reset-schema
 Scenario: I move up a widget
   Given the following WidgetMaps:
