@@ -48,8 +48,8 @@ class TemplateController extends Controller
      *
      * @param Template $template The template
      *
-     * @Route("/show/{slug}", name="victoire_template_show")
-     * @ParamConverter("template", class="VictoireTemplateBundle:Template", options={"mapping": {"slug": "slug"}})
+     * @Route("/show/{id}", name="victoire_template_show")
+     * @ParamConverter("template", class="VictoireTemplateBundle:Template")
      *
      * @return Response
      */
@@ -112,7 +112,7 @@ class TemplateController extends Controller
 
             return new JsonResponse([
                 'success'  => true,
-                'url'      => $this->generateUrl('victoire_template_show', ['slug' => $template->getSlug()]),
+                'url'      => $this->generateUrl('victoire_template_show', ['id' => $template->getId()]),
             ]);
         }
 
@@ -149,7 +149,7 @@ class TemplateController extends Controller
             return new JsonResponse(
                     [
                         'success' => true,
-                        'url'     => $this->generateUrl('victoire_template_show', ['slug' => $template->getSlug()]),
+                        'url'     => $this->generateUrl('victoire_template_show', ['id' => $template->getId()]),
                     ]
                 );
         }
@@ -185,7 +185,7 @@ class TemplateController extends Controller
             $em->persist($template);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('victoire_template_show', ['slug' => $template->getSlug()]));
+            return $this->redirect($this->generateUrl('victoire_template_show', ['id' => $template->getId()]));
         }
 
         return $this->redirect($this->generateUrl('victoire_template_settings', ['slug' => $template->getSlug()]));

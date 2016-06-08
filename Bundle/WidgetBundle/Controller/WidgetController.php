@@ -421,7 +421,7 @@ class WidgetController extends Controller
             $this->get('doctrine.orm.entity_manager')->flush();
 
             if ($view instanceof Template) {
-                $redirect = $this->generateUrl('victoire_template_show', ['slug' => $view->getSlug()]);
+                $redirect = $this->generateUrl('victoire_template_show', ['id' => $view->getId()]);
             } elseif ($view instanceof BusinessTemplate) {
                 $redirect = $this->generateUrl('victoire_business_template_show', ['id' => $view->getId()]);
             } else {
