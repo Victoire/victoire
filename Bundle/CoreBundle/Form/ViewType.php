@@ -91,20 +91,22 @@ abstract class ViewType extends AbstractType
                 );
             }
 
-            $translationOptions = [
-                'fields' => [
-                    'name' => [
-                        'label' => 'form.view.type.name.label',
+            if ($view instanceof BasePage) {
+                $translationOptions = [
+                    'fields' => [
+                        'name' => [
+                            'label' => 'form.view.type.name.label',
+                        ],
                     ],
-                ],
-            ];
-            if ($view instanceof BasePage && $view->getId() && !$view->isHomepage()) {
-                $translationOptions['fields']['slug'] = [
-                    'label'      => 'form.page.type.slug.label',
-                    'field_type' => UrlvalidatedType::class,
                 ];
+                if ($view->getId() && !$view->isHomepage()) {
+                    $translationOptions['fields']['slug'] = [
+                        'label'      => 'form.page.type.slug.label',
+                        'field_type' => UrlvalidatedType::class,
+                    ];
+                }
+                $form->add('translations', TranslationsType::class, $translationOptions);
             }
-            $form->add('translations', TranslationsType::class, $translationOptions);
         });
     }
 
