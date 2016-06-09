@@ -22,10 +22,10 @@ Feature: Mercenary is not a BusinessEntity itself but extends Character which is
             And I fill in "URL" with "fiche-personnage-{{item.slug}}"
             And I follow "Créer"
             And I wait 10 seconds
-            And I should be on "/fr/victoire-dcms/business-template/show/5"
+            And I should be on "/fr/victoire-dcms/business-template/show/4"
             Then I switch to "layout" mode
             And I should see "Nouveau contenu"
-            When I select "Text" from the "1" select of "content" slot
+            When I select "Text" from the "1" select of "main_content" slot
             Then I should see "Créer"
             When I follow "Personnages"
             And I should see "Objet courant"
@@ -41,7 +41,7 @@ Feature: Mercenary is not a BusinessEntity itself but extends Character which is
         Given I am on "/"
             Then I switch to "layout" mode
             And I should see "Nouveau contenu"
-            When I select "Bouton" from the "1" select of "content" slot
+            When I select "Bouton" from the "1" select of "main_content" slot
             Then I should see "Créer"
             When I select "Page" from "_a_static_widget_button[link][linkType]"
             And I wait 1 second
@@ -54,7 +54,7 @@ Feature: Mercenary is not a BusinessEntity itself but extends Character which is
             Then I should be on "/fr/fiche-personnage-boba-fet"
 
         # TEST a concrete BEP is available in LinkExtension
-        #When I select "Text" from the "1" select of "content" slot
+        #When I select "Text" from the "1" select of "main_content" slot
         #Then I should see "Créer"
         #And I fill in "_a_static_widget_text[content]" with "My name is"
         #And I submit the widget

@@ -8,7 +8,7 @@ Feature: Test asynchronous widget
   Scenario: I create an asynchronous widget
     When I switch to "layout" mode
     And I should see "Nouveau contenu"
-    And I select "Force" from the "1" select of "content" slot
+    And I select "Force" from the "1" select of "main_content" slot
     Then I should see "Créer"
     When I fill in "Côté de la force" with "Obscure"
     And I check the "Chargement asynchrone ?" checkbox
