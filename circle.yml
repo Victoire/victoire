@@ -26,8 +26,8 @@ dependencies:
     - php Tests/Functionnal/bin/console --env=test fos:js:dump --target="Tests/Functionnal/web/js/fos_js_routes_test.js"
     - php Tests/Functionnal/bin/console --env=domain fos:js:dump --target="Tests/Functionnal/web/js/fos_js_routes_domain.js"
     - php Tests/Functionnal/bin/console --env=test assetic:dump
-    - wget http://selenium-release.storage.googleapis.com/2.49/selenium-server-standalone-2.49.0.jar
-    - 'java -jar selenium-server-standalone-2.49.0.jar > /dev/null 2>&1':
+    - wget http://selenium-release.storage.googleapis.com/2.53/selenium-server-standalone-2.53.0.jar
+    - 'java -jar selenium-server-standalone-2.53.0.jar > /dev/null 2>&1':
           background: true
     - 'php Tests/Functionnal/bin/console --env=test server:run -r vendor/symfony/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/config/router_prod.php > server.log 2>&1':
           background: true
