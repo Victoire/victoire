@@ -3,32 +3,16 @@ Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
         name: Base
         slug: base
         locale: en
-    template_two_cols_trans:
-        name: Two columns
-        slug: two-columns
-        locale: en
 
 Victoire\Bundle\TemplateBundle\Entity\Template:
     template_base:
         currentLocale: fr
         name: Base
         slug: base
-        layout: fullWidth
+        layout: defaultLayout
         author: @anakin
         undeletable: true
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         cssUpToDate: false
         translations: [@template_base_trans]
-    template_two_cols:
-        currentLocale: fr
-        name: Two columns
-        slug: two_cols
-        layout: two_cols
-        template: @template_base
-        author: @anakin
-        undeletable: true
-        createdAt: <dateTime('now')>
-        updatedAt: <dateTime('now')>
-        cssUpToDate: false
-        translations: [@template_two_cols_trans]
