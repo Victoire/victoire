@@ -136,7 +136,7 @@ class PageSubscriber implements EventSubscriber
         $entity = $eventArgs->getEntity();
 
         if ($entity instanceof View) {
-            $om = $eventArgs->getObjectManager();
+            $entity->setReferences([$entity->getCurrentLocale() => new ViewReference($entity->getId())]);
             $viewReferences = $this->viewReferenceRepository->getReferencesByParameters([
                 'viewId'     => $entity->getId(),
                 'templateId' => $entity->getId(),
@@ -145,9 +145,7 @@ class PageSubscriber implements EventSubscriber
                 if ($entity instanceof WebViewInterface && $viewReference instanceof ViewReference) {
                     $entity->setReference($viewReference, $viewReference->getLocale());
                     $entity->setUrl($viewReference->getUrl());
-                } elseif ($entity instanceof Template || $entity instanceof ErrorPage) {
-                    $entity->setReferences([$entity->getCurrentLocale() => new ViewReference($entity->getId())]);
-                } else {
+                } elseif ($entity instanceof BusinessTemplate) {
                     $entity->setReferences([
                         $entity->getCurrentLocale() => $this->viewReferenceBuilder->buildViewReference($entity, $eventArgs->getEntityManager()),
                     ]);
