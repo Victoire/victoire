@@ -2,11 +2,9 @@
 
 namespace Victoire\Bundle\PageBundle\Form;
 
-use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Victoire\Bundle\FormBundle\Form\Type\UrlvalidatedType;
 use Victoire\Bundle\PageBundle\Entity\PageStatus;
 
 /**
@@ -31,19 +29,7 @@ class PageSettingsType extends PageType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-
-        $builder->add('translations', TranslationsType::class, [
-            'fields' => [
-                'name' => [
-                    'label' => 'form.view.type.name.label',
-                ],
-                'slug' => [
-                    'label'      => 'form.page.type.slug.label',
-                    'field_type' => UrlvalidatedType::class,
-                ],
-            ],
-        ])
-        ->add('status', ChoiceType::class, [
+        $builder->add('status', ChoiceType::class, [
             'label'   => 'form.page.type.status.label',
             'choices' => [
                 'form.page.type.status.choice.label.draft'       => PageStatus::DRAFT,

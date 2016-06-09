@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Victoire\Bundle\BlogBundle\Entity\ArticleTemplate;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Entity\View;
+use Victoire\Bundle\FormBundle\Form\Type\UrlvalidatedType;
+use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 
 /**
@@ -88,15 +90,24 @@ abstract class ViewType extends AbstractType
                     ]
                 );
             }
-        });
 
-        $builder->add('translations', TranslationsType::class, [
-            'fields' => [
-                'name' => [
-                    'label' => 'form.view.type.name.label',
-                ],
-            ],
-        ]);
+            if ($view instanceof BasePage) {
+                $translationOptions = [
+                    'fields' => [
+                        'name' => [
+                            'label' => 'form.view.type.name.label',
+                        ],
+                    ],
+                ];
+                if ($view->getId() && !$view->isHomepage()) {
+                    $translationOptions['fields']['slug'] = [
+                        'label'      => 'form.page.type.slug.label',
+                        'field_type' => UrlvalidatedType::class,
+                    ];
+                }
+                $form->add('translations', TranslationsType::class, $translationOptions);
+            }
+        });
     }
 
     protected function getAvailableLocales()

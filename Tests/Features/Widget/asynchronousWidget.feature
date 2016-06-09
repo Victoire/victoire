@@ -2,7 +2,8 @@
 Feature: Test asynchronous widget
 
   Background:
-    Given I am logged in as "anakin@victoire.io"
+    Given I maximize the window
+    And I am on homepage
 
   Scenario: I create an asynchronous widget
     When I switch to "layout" mode

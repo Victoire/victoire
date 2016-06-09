@@ -152,7 +152,7 @@ trait WebViewTrait
      */
     public function isHomepage()
     {
-        return $this->homepage;
+        return (bool) $this->homepage;
     }
 
     /**

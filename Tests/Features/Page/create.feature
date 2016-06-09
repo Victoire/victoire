@@ -2,8 +2,8 @@
 Feature: Create a page
 
 Background:
-    Given I am logged in as "anakin@victoire.io"
-    And I maximize the window
+    Given I maximize the window
+    And I am on homepage
 
   @smartStep
 Scenario: I can create a new page

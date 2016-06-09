@@ -2,8 +2,8 @@
 Feature: Delete a blog (and article)
 
 Background:
-    Given I am logged in as "anakin@victoire.io"
-    And I maximize the window
+    Given I maximize the window
+    And I am on homepage
 
     Scenario: I can delete a blog article
         Given I am on "/fr/the-jedi-network/i-m-your-father"

@@ -14,8 +14,6 @@ use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\PageBundle\Helper\UserCallableHelper;
-use Victoire\Bundle\TemplateBundle\Entity\Template;
-use Victoire\Bundle\TwigBundle\Entity\ErrorPage;
 use Victoire\Bundle\ViewReferenceBundle\Builder\ViewReferenceBuilder;
 use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
@@ -136,7 +134,7 @@ class PageSubscriber implements EventSubscriber
         $entity = $eventArgs->getEntity();
 
         if ($entity instanceof View) {
-            $om = $eventArgs->getObjectManager();
+            $entity->setReferences([$entity->getCurrentLocale() => new ViewReference($entity->getId())]);
             $viewReferences = $this->viewReferenceRepository->getReferencesByParameters([
                 'viewId'     => $entity->getId(),
                 'templateId' => $entity->getId(),
@@ -145,9 +143,7 @@ class PageSubscriber implements EventSubscriber
                 if ($entity instanceof WebViewInterface && $viewReference instanceof ViewReference) {
                     $entity->setReference($viewReference, $viewReference->getLocale());
                     $entity->setUrl($viewReference->getUrl());
-                } elseif ($entity instanceof Template || $entity instanceof ErrorPage) {
-                    $entity->setReferences([$entity->getCurrentLocale() => new ViewReference($entity->getId())]);
-                } else {
+                } elseif ($entity instanceof BusinessTemplate) {
                     $entity->setReferences([
                         $entity->getCurrentLocale() => $this->viewReferenceBuilder->buildViewReference($entity, $eventArgs->getEntityManager()),
                     ]);

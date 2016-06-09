@@ -1,9 +1,6 @@
 @javascript
 Feature: Widget
 
-Background:
-    Given I am logged in as "anakin@victoire.io"
-
 Scenario: Create widgets
 
     Given the following pages:
