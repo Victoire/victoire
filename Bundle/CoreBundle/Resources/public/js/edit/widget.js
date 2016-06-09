@@ -190,12 +190,3 @@ function generateNewWidgetUrl(select){
         params
     );
 }
-
-//Update View css file if hash is returned
-function updateViewCssHash(response) {
-    if(response.viewCssHash) {
-        $pageScope = angular.element($("body")).scope();
-        $pageScope.viewCssHash = response.viewCssHash;
-        $pageScope.$apply();
-    }
-}
