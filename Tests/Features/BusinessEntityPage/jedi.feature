@@ -79,7 +79,7 @@ Feature: Manage jedis
         Given I am on "/fr/fiche-jedi-anakin"
         And I switch to "layout" mode
         And I should see "Nouveau contenu"
-        When I select "Force" from the "1" select of "content" slot
+        When I select "Force" from the "1" select of "main_content" slot
         Then I should see "Créer"
         When I fill in "Côté de la force" with "Nouveau"
         And I submit the widget

@@ -1,4 +1,3 @@
-
 Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
     home_en:
         name: Homepage
@@ -9,8 +8,6 @@ Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
         name: English test
         slug: english-test
         locale: en
-
-
 
 Victoire\Bundle\PageBundle\Entity\Page:
     home:
@@ -30,7 +27,7 @@ Victoire\Bundle\PageBundle\Entity\Page:
 
     test:
         currentLocale: fr
-        template: @template_two_cols
+        template: @template_base
         author: @anakin
         name: Test
         parent: @home

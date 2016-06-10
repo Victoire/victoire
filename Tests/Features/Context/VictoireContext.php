@@ -239,7 +239,7 @@ class VictoireContext extends RawMinkContext
         if (!$widgetMapMovedTo) {
             $widgetMapMovedTo = 'null';
         }
-        $js = 'updateWidgetPosition({"parentWidgetMap": '.$widgetMapMovedTo.', "slot": "content", "position": "'.$position.'", "widgetMap": '.$widgetMapMoved.'})';
+        $js = 'updateWidgetPosition({"parentWidgetMap": '.$widgetMapMovedTo.', "slot": "main_content", "position": "'.$position.'", "widgetMap": '.$widgetMapMoved.'})';
 
         $this->getSession()->executeScript($js);
     }
