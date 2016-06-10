@@ -1,11 +1,13 @@
 <?php
 
-namespace Victoire\Bundle\I18nBundle\Command;
+namespace victoire\Bundle\I18nBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Victoire\Bundle\BlogBundle\Entity\Article;
+use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\I18nBundle\Entity\ViewTranslationLegacy;
 
 class LegacyViewTranslationMigrationCommand extends ContainerAwareCommand
@@ -28,8 +30,6 @@ class LegacyViewTranslationMigrationCommand extends ContainerAwareCommand
      *
      * @param InputInterface  $input
      * @param OutputInterface $output
-     *
-     * @return void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -57,24 +57,30 @@ class LegacyViewTranslationMigrationCommand extends ContainerAwareCommand
             $trans = $view->translate($legacyTranslation->getLocale(), false)->{'set'.$legacyTranslation->getField()}($legacyTranslation->getContent());
             $entityManager->persist($view);
             $view->mergeNewTranslations();
-
             $progress->advance();
         }
-
+        /** @var Article $legacyArticle */
         foreach ($legacyArticles as $legacyArticle) {
+            $ref = new \ReflectionClass($legacyArticle);
+            $name = $ref->getProperty('name');
+            $name->setAccessible(true);
+            $slug = $ref->getProperty('slug');
+            $slug->setAccessible(true);
+            $description = $ref->getProperty('description');
+            $description->setAccessible(true);
+
             $legacyArticleTranslation = $legacyArticle->translate('fr', false);
-            $legacyArticleTranslation->setName($legacyArticle->getName());
-            $legacyArticleTranslation->setSlug($legacyArticle->getSlug());
-            $legacyArticleTranslation->setDescription($legacyArticle->getDescription());
+            $legacyArticleTranslation->setName($name->getValue($legacyArticle));
+            $legacyArticleTranslation->setSlug($slug->getValue($legacyArticle));
+            $legacyArticleTranslation->setDescription($description->getValue($legacyArticle));
             $entityManager->persist($legacyArticleTranslation);
             $legacyArticle->mergeNewTranslations();
-
             $progress->advance();
         }
 
         $entityManager->flush();
         $progress->finish();
 
-        $output->writeln(sprintf('<comment>Ok, %s translations migrated !</comment>', count($total)));
+        $output->writeln(sprintf('<comment>Ok, %s translations migrated !</comment>', $total));
     }
 }
