@@ -58,6 +58,12 @@ services:
         tags:
             -  { name: 'twig.extension' }
 
+    victoire_media.twig_extension.svg:
+        class: Victoire\Bundle\MediaBundle\Twig\SvgTwigExtension
+        arguments: ["%kernel.root_dir%"]
+        tags:
+            - { name: twig.extension }
+
     victoire_core.media_menu_listener:
         class: Victoire\Bundle\MediaBundle\EventListener\MediaMenuListener
         arguments:
