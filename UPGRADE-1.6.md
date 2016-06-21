@@ -30,6 +30,7 @@ CREATE TABLE `vic_view_translations` (
   CONSTRAINT `FK_A8FED5872C2AC5D3` FOREIGN KEY (`translatable_id`) REFERENCES `vic_view` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 INSERT INTO `vic_view_translations` (`translatable_id`, `name`, `slug`, `locale`) SELECT id, name, slug, locale FROM `vic_view`;
+INSERT INTO `vic_article_translations` (`translatable_id`, `image_id`, `name`, `description`, `slug`, `locale`) SELECT id, image_id, name, description, slug, 'fr' FROM `vic_article`;
 ```
 
 Then update the schema and run the migration command:
