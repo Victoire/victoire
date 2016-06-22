@@ -102,8 +102,8 @@ class QueryHelper
                 ->setParameter(':locale', $view->getCurrentLocale());
         }
 
-        $refClass = new $businessClass();
-        if (method_exists($refClass, 'getDeletedAt')) {
+        $refClass = new \ReflectionClass($businessClass);
+        if ($refClass->hasMethod('getDeletedAt')) {
             $itemsQueryBuilder->andWhere('main_item.deletedAt IS NULL');
         }
 
