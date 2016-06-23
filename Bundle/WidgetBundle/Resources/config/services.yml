@@ -101,3 +101,4 @@ services:
         class: Victoire\Bundle\WidgetBundle\Resolver\WidgetResolver
         arguments:
             - "@=service('victoire_criteria.chain.data_source_chain')"
+            - "@security.authorization_checker"

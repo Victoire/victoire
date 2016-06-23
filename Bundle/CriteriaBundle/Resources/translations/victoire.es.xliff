@@ -18,6 +18,14 @@
                 <source>victoire_criteria.criteria.operator.equal.label</source>
                 <target>Egual</target>
             </trans-unit>
+            <trans-unit id="4" resname="victoire_criteria.criteria.operator.is_granted.label">
+                <source>victoire_criteria.criteria.operator.is_granted.label</source>
+                <target>Autorisado</target>
+            </trans-unit>
+            <trans-unit id="5" resname="victoire_criteria.request_roles.criteria.label">
+                <source>victoire_criteria.request_roles.criteria.label</source>
+                <target>Papel</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
