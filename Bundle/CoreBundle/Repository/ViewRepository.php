@@ -134,6 +134,30 @@ class ViewRepository extends NestedTreeRepository
     }
 
     /**
+     * Get the the view that is a homepage and a published one.
+     *
+     * @param string $locale
+     *
+     * @return Page
+     */
+    public function findOneByHomepage($locale = 'fr')
+    {
+        //the query builder
+        $queryBuilder = $this->createQueryBuilder('page');
+        $queryBuilder
+            ->where('page.homepage = true')
+            ->andWhere('page.status = :status')
+            ->setMaxResults(1)
+            ->setParameter('status', PageStatus::PUBLISHED);
+        // Use Translation Walker
+        $query = $queryBuilder->getQuery();
+        $view = $query->getOneOrNullResult();
+        $view->translate($locale);
+
+        return $view;
+    }
+
+    /**
      * Get PageSeo.
      *
      * @param string $method leftJoin|innerJoin
