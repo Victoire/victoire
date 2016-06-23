@@ -10,13 +10,25 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
 class IsLoggedDataSource
 {
+    /**
+     * @var AuthorizationChecker
+     */
     private $authorizationChecker;
-    
+
+    /**
+     * IsLoggedDataSource constructor.
+     * @param AuthorizationChecker $authorizationChecker
+     */
     public function __construct(AuthorizationChecker $authorizationChecker)
     {
         $this->authorizationChecker = $authorizationChecker;
     }
-    
+
+    /**
+     * Check actual status of current user return true if logged false if not.
+     *
+     * @return bool
+     */
     public function getLoggedStatus(){
 
         if($this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')){
@@ -28,6 +40,9 @@ class IsLoggedDataSource
         return false;
     }
 
+    /**
+     * @return array
+     */
     public function getLoggedStatusFormParams(){
 
         return [
