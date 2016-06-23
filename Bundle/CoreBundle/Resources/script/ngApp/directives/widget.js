@@ -54,7 +54,7 @@ angular.module('ngApp').directive('widget', function ($compile, $rootScope) {
                             for (var position in scope.positions) {
                                 // If position is available
                                 if (scope.positions.hasOwnProperty(position) && ['before', 'after'].indexOf(position) != -1 && scope.positions[position] == true) {
-                                    var button = angular.element('<new-widget-button position="' + position + '" widget-map="' + scope.widgetMap + '"></new-widget-button>');
+                                    var button = angular.element('<new-widget-button  title="' + scope.$parent.slotId + '" position="' + position + '" widget-map="' + scope.widgetMap + '"></new-widget-button>');
                                     var template = $compile(button);
                                     // call "before|after" on element to append or prepend button
                                     element[position](button);
