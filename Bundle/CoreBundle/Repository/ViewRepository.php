@@ -95,7 +95,7 @@ class ViewRepository extends NestedTreeRepository
     }
 
     /**
-     * Find a large amount of views by ViewReferences and optimizing queries with translation walker.
+     * Find a large amount of views by ViewReferences
      *
      * @param ViewReference[] $viewReferences
      *
@@ -111,7 +111,6 @@ class ViewRepository extends NestedTreeRepository
                 $pageIds[] = $viewReference->getViewId();
             }
         }
-
 
         $queryBuilder = $this->createQueryBuilder('page');
         $queryBuilder->andWhere('page.id IN (:pageIds)')
@@ -132,65 +131,6 @@ class ViewRepository extends NestedTreeRepository
         }
 
         return $pages;
-    }
-
-    /**
-     * Finds a single entity by a set of criteria.
-     *
-     * @param array      $criteria
-     * @param array|null $orderBy
-     *
-     * @return object|null The entity instance or NULL if the entity can not be found.
-     */
-    public function findOneBy(array $criteria, array $orderBy = null)
-    {
-        $persister = $this->_em->getUnitOfWork()->getEntityPersister($this->_entityName);
-
-        $hints = [];
-        if (isset($criteria['locale'])) {
-            $hints = [
-                \Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER                     => 'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker',
-                \Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE => $criteria['locale'],
-            ];
-            unset($criteria['locale']);
-        }
-
-        return $persister->load($criteria, null, null, $hints, null, 1, $orderBy);
-    }
-
-    /**
-     * Get the the view that is a homepage and a published one.
-     *
-     * @param string $locale
-     *
-     * @return Page
-     */
-    public function findOneByHomepage($locale = 'fr')
-    {
-        //the query builder
-        $queryBuilder = $this->createQueryBuilder('page');
-
-        $queryBuilder
-            ->where('page.homepage = true')
-            ->andWhere('page.status = :status')
-            ->setMaxResults(1)
-            ->setParameter('status', PageStatus::PUBLISHED);
-
-        // Use Translation Walker
-        $query = $queryBuilder->getQuery();
-        $query->setHint(
-            \Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER,
-            'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker'
-        );
-        // Force the locale
-        $query->setHint(
-            \Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE,
-            $locale
-        );
-
-        $view = $query->getOneOrNullResult();
-
-        return $view;
     }
 
     /**
