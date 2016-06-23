@@ -12,6 +12,7 @@ class CriteriaCollectionType extends CollectionType
 {
     /**
      * {@inheritdoc}
+     *
      * @return string
      */
     public function getBlockPrefix()
