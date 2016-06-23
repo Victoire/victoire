@@ -9,6 +9,14 @@
                 {% block form_entity %}
                     <div id="picker{% if entity %}-{{ entity }}{% endif %}-{{ quantum }}-{{ form.mode.vars.data }}" class="entity vic-tab-pane {% if form.mode.vars.data == widget.mode %}vic-active{% endif %}">
                         {{ form_start(form) }}
+                        <div class="vic-criterias-container">
+                            <a class="vic-pull-right" href="#" onclick="$vic('#picker{% if entity %}-{{ entity }}{% endif %}-{{ quantum }}-{{ form.mode.vars.data }}-criterias').slideToggle();">
+                                {{ form_label(form.criterias) }} <i class="fa fa-crosshairs"></i>
+                            </a>
+                            <div style="display: none" id="picker{% if entity %}-{{ entity }}{% endif %}-{{ quantum }}-{{ form.mode.vars.data }}-criterias">
+                                {{ form_widget(form.criterias) }}
+                            </div>
+                        </div>
                         {{ form_rest(form) }}
                         {{ form_end(form) }}
                     </div>
@@ -16,6 +24,14 @@
             {% else %}
                 {% block form_static %}
                     {{ form_start(form) }}
+                    <div class="vic-criterias-container">
+                        <a class="vic-pull-right" href="#" onclick="$vic('#picker{% if entity %}-{{ entity }}{% endif %}-{{ quantum }}-{{ form.mode.vars.data }}-criterias').slideToggle();">
+                            {{ form_label(form.criterias) }} <i class="fa fa-crosshairs"></i>
+                        </a>
+                        <div style="display: none" id="picker{% if entity %}-{{ entity }}{% endif %}-{{ quantum }}-{{ form.mode.vars.data }}-criterias">
+                            {{ form_widget(form.criterias) }}
+                        </div>
+                    </div>
                     {{ form_rest(form) }}
                     {{ form_end(form) }}
                 {% endblock form_static %}
