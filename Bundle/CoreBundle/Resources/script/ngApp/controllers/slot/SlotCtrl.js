@@ -8,7 +8,7 @@ angular.module('ngApp').controller("SlotController", ["$scope", "$compile",
         $scope.toggleEnableButtons = function() {
             widgets = $vic('.vic-widget-container', '#vic-slot-' + $scope.slotId);
             if (widgets.length == 0) {
-                var buttonBefore = angular.element('<new-widget-button position="" widget-map=""></new-widget-button>');
+                var buttonBefore = angular.element('<new-widget-button title="' + $scope.slotId + '" position="" widget-map=""></new-widget-button>');
                 var templateBefore = $compile(buttonBefore);
                 $vic('#vic-slot-' + $scope.slotId).append(buttonBefore);
                 templateBefore($scope);
