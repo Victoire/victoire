@@ -84,7 +84,9 @@ class LinkExtension extends \Twig_Extension
     public function victoireLinkUrl($parameters, $avoidRefresh = true, $url = '#')
     {
         $referenceType = isset($parameters['referenceType']) ? $parameters['referenceType'] : UrlGeneratorInterface::ABSOLUTE_PATH;
-
+        if (!isset($parameters['locale'])) {
+            $parameters['locale'] = $this->request->getLocale();
+        }
         $viewReference = isset($parameters['viewReference']) ? $parameters['viewReference'] : null;
         switch ($parameters['linkType']) {
             case 'viewReference':
