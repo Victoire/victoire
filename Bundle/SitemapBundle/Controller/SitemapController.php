@@ -106,7 +106,7 @@ class SitemapController extends Controller
         $em = $this->getDoctrine()->getManager();
         $pageRepo = $em->getRepository('VictoirePageBundle:BasePage');
         $response = [
-            'success' => false,
+            'success' => true,
         ];
         if ($request->getMethod() === 'POST') {
             $sorted = $request->request->get('sorted');
