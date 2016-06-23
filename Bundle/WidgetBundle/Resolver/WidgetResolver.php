@@ -17,6 +17,8 @@ use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 class WidgetResolver
 {
     const OPERAND_EQUAL = 'equal';
+    const OPERAND_TRUE = 'true';
+    const OPERAND_FALSE = 'false';
     const OPERAND_IN = 'in';
     const IS_GRANTED = 'is_granted';
 
@@ -66,6 +68,12 @@ class WidgetResolver
         switch ($operator) {
             case self::OPERAND_EQUAL:
                 $result = $value === $expected;
+                break;
+            case self::OPERAND_TRUE:
+                $result = $value == true;
+                break;
+            case self::OPERAND_FALSE:
+                $result = $value == false;
                 break;
             case self::OPERAND_IN:
                 $result = in_array($value, unserialize($expected));
