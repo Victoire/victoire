@@ -64,7 +64,7 @@ class WidgetType extends AbstractType
         $builder->add('slot', HiddenType::class, []);
         $builder->add('criterias', CriteriaCollectionType::class, [
             'label'         => 'victoire.widget.type.criterias.label',
-            'type'          => CriteriaType::class,
+            'entry_type'    => CriteriaType::class,
             'entry_options' => [
                 'dataSources' => $options['dataSources'],
             ],
