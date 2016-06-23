@@ -8,15 +8,30 @@ use Symfony\Component\Security\Core\Role\RoleHierarchy;
 
 class RolesDataSource
 {
+    /**
+     * @var TokenStorage
+     */
     private $tokenStorage;
+
+    /**
+     * @var RoleHierarchy
+     */
     private $roleHierarchy;
 
+    /**
+     * RolesDataSource constructor.
+     * @param TokenStorage $tokenStorage
+     * @param RoleHierarchy $roleHierarchy
+     */
     public function __construct(TokenStorage $tokenStorage, RoleHierarchy $roleHierarchy)
     {
         $this->tokenStorage = $tokenStorage;
         $this->roleHierarchy = $roleHierarchy;
     }
 
+    /**
+     * @return mixed
+     */
     public function getRoles()
     {
         $user = $this->tokenStorage->getToken()->getUser();
@@ -24,6 +39,9 @@ class RolesDataSource
         return $user;
     }
 
+    /**
+     * @return array
+     */
     public function getRolesFormParams()
     {
         return [
@@ -38,6 +56,9 @@ class RolesDataSource
         ];
     }
 
+    /**
+     * @return mixed
+     */
     public function getAllAvailableRoles(){
 
         $roles = array();
