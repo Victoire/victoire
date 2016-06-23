@@ -77,6 +77,7 @@ class PageExtension extends \Twig_Extension
     {
         return 'cms_page';
     }
+
     /**
      * Construct CSS link markup for the style of all the Widgets contained in the current View.
      *
@@ -88,6 +89,7 @@ class PageExtension extends \Twig_Extension
         if (!$currentView || !$this->viewCssBuilder->cssFileExists($currentView)) {
             return '<!-- CSS File not found -->';
         }
+
         return sprintf(
             '<link href="%s" rel="stylesheet" type="text/css" rel="stylesheet"/>',
             $this->viewCssBuilder->getHref($currentView)
