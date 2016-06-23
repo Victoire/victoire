@@ -10,4 +10,12 @@ use Victoire\Bundle\WidgetBundle\Model\Widget;
  */
 class CriteriaCollectionType extends CollectionType
 {
+    /**
+     * {@inheritdoc}
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'criteria_collection';
+    }
 }
