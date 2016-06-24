@@ -20,7 +20,7 @@
             </trans-unit>
             <trans-unit id="4" resname="victoire_criteria.criteria.operator.is_granted.label">
                 <source>victoire_criteria.criteria.operator.is_granted.label</source>
-                <target>Autorisado</target>
+                <target>Tiene el papel</target>
             </trans-unit>
             <trans-unit id="5" resname="victoire_criteria.request_roles.criteria.label">
                 <source>victoire_criteria.request_roles.criteria.label</source>
@@ -45,6 +45,10 @@
             <trans-unit id="10" resname="victoire_criteria.criteria.operator.false.label">
                 <source>victoire_criteria.criteria.operator.false.label</source>
                 <target>Falso</target>
+            </trans-unit>
+            <trans-unit id="11" resname="victoire_criteria.criteria.operator.is_not_granted.label">
+                <source>victoire_criteria.criteria.operator.is_not_granted.label</source>
+                <target>No tiene el papel</target>
             </trans-unit>
         </body>
     </file>

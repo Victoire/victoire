@@ -21,6 +21,7 @@ class WidgetResolver
     const OPERAND_FALSE = 'false';
     const OPERAND_IN = 'in';
     const IS_GRANTED = 'is_granted';
+    const IS_NOT_GRANTED = 'is_not_granted';
 
     /**
      * @var DataSourceChain
@@ -77,6 +78,9 @@ class WidgetResolver
                 break;
             case self::IS_GRANTED:
                 $result = $this->authorizationChecker->isGranted($expected);
+                break;
+            case self::IS_NOT_GRANTED:
+                $result = false == $this->authorizationChecker->isGranted($expected);
                 break;
         }
 
