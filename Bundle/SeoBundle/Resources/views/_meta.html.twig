@@ -8,8 +8,8 @@
 
 {% if view is defined and view.seo is defined and view.seo %}
     <!-- Basics -->
-    {% if view.seo.metaTitle %}<title>{{ view.seo.metaTitle }}</title>{% endif %}
-    {% if view.seo.metaDescription %}<meta name="description" content="{{ view.seo.metaDescription }}"/>{% endif %}
+    {% if view.seo.metaTitle %}<title>{{ view.seo.metaTitle|truncate(60, false) }}</title>{% endif %}
+    {% if view.seo.metaDescription %}<meta name="description" content="{{ view.seo.metaDescription|truncate(155, false) }}"/>{% endif %}
 
     <!-- Google Authorship -->
     {% if view.seo.relAuthor %}<link rel="author" href="{{ view.seo.relAuthor }}"/>{% endif %}
