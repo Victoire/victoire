@@ -133,8 +133,8 @@ class TemplateController extends Controller
      * @param Template $template
      *
      * @return JsonResponse
-     * @Route("/{slug}/parametres", name="victoire_template_settings")
-     * @ParamConverter("template", class="VictoireTemplateBundle:Template", options={"mapping": {"slug": "slug"}})
+     * @Route("/{id}/parametres", name="victoire_template_settings")
+     * @ParamConverter("template", class="VictoireTemplateBundle:Template")
      */
     public function settingsAction(Request $request, $template)
     {
@@ -188,6 +188,6 @@ class TemplateController extends Controller
             return $this->redirect($this->generateUrl('victoire_template_show', ['id' => $template->getId()]));
         }
 
-        return $this->redirect($this->generateUrl('victoire_template_settings', ['slug' => $template->getSlug()]));
+        return $this->redirect($this->generateUrl('victoire_template_settings', ['id' => $template->getId()]));
     }
 }

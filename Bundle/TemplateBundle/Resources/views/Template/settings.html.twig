@@ -11,8 +11,8 @@
 {% endblock modal_header_title %}
 
 {% block modal_body_content %}
-    <form method="POST" action="{{path('victoire_template_settings', {'slug':template.slug} )}}">
-        {{form_row(form.name)}}
+    <form method="POST" action="{{path('victoire_template_settings', {'id':template.id} )}}">
+        {{form_row(form.translations)}}
         {{form_row(form.template)}}
         {{form_row(form.layout)}}
         {{form_errors(form)}}
