@@ -11,6 +11,7 @@ use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
 use Victoire\Bundle\CoreBundle\Entity\Link;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
+use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
  * Twig extension for rendering a link.
@@ -120,10 +121,10 @@ class LinkExtension extends \Twig_Extension
             case Link::TYPE_WIDGET:
                 $attachedWidget = $parameters[Link::TYPE_WIDGET];
                 //fallback when a widget is deleted cascading the relation as null (widget_id = null)
-                if ($attachedWidget && method_exists($attachedWidget->getView(), 'getUrl')) {
+                if ($attachedWidget && method_exists($attachedWidget->getWidgetMap()->getView(), 'getUrl')) {
 
                     //create base url
-                    $url = $this->router->generate('victoire_core_page_show', ['_locale' => $attachedWidget->getView()->getCurrentLocale(), 'url' => $attachedWidget->getView()->getUrl()], $referenceType);
+                    $url = $this->router->generate('victoire_core_page_show', ['_locale' => $attachedWidget->getWidgetMap()->getView()->getCurrentLocale(), 'url' => $attachedWidget->getWidgetMap()->getView()->getUrl()], $referenceType);
 
                     //If widget in the same view
                     if (rtrim($this->request->getRequestUri(), '/') == rtrim($url, '/')) {
@@ -152,10 +153,11 @@ class LinkExtension extends \Twig_Extension
     public function victoireLink($parameters, $label, $attr = [], $currentClass = 'active', $url = '#')
     {
         $referenceLink = UrlGeneratorInterface::ABSOLUTE_PATH;
+        /** @var Widget $attachedWidget */
         $attachedWidget = isset($parameters[Link::TYPE_WIDGET]) ? $parameters[Link::TYPE_WIDGET] : null;
 
-        if ($parameters['linkType'] == Link::TYPE_WIDGET && $attachedWidget && method_exists($attachedWidget->getView(), 'getUrl')) {
-            $viewUrl = $this->router->generate('victoire_core_page_show', ['_locale' => $attachedWidget->getView()->getCurrentLocale(), 'url' => $attachedWidget->getView()->getUrl()], $referenceLink);
+        if ($parameters['linkType'] == Link::TYPE_WIDGET && $attachedWidget && method_exists($attachedWidget->getWidgetMap()->getView(), 'getUrl')) {
+            $viewUrl = $this->router->generate('victoire_core_page_show', ['_locale' => $attachedWidget->getWidgetMap()->getView()->getCurrentLocale(), 'url' => $attachedWidget->getWidgetMap()->getView()->getUrl()], $referenceLink);
             if (rtrim($this->request->getRequestUri(), '/') == rtrim($viewUrl, '/')) {
                 $attr['data-scroll'] = 'smooth';
             }
