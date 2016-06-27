@@ -38,7 +38,7 @@ class TemplateMenuListener implements MenuListenerInterface
         $mainItem->addChild('menu.template.settings',
             [
                 'route'           => 'victoire_template_settings',
-                'routeParameters' => ['slug' => $template->getSlug()],
+                'routeParameters' => ['id' => $template->getId()],
                 ]
         )->setLinkAttribute('data-toggle', 'vic-modal');
 
