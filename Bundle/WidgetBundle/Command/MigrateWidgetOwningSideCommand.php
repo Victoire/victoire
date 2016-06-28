@@ -64,6 +64,7 @@ class MigrateWidgetOwningSideCommand extends ContainerAwareCommand
 
         $progress->finish();
     }
+
     private function getWidgetMaps($firstResult, EntityManager $entityManager, $action)
     {
         /** @var EntityRepository $repo */

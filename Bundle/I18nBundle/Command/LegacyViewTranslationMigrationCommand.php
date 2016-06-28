@@ -1,6 +1,6 @@
 <?php
 
-namespace victoire\Bundle\I18nBundle\Command;
+namespace Victoire\Bundle\I18nBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
