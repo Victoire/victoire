@@ -8,6 +8,8 @@
             <h3>{{ 'media.file.modal.title' |trans({}, 'victoire') }}</h3>
         </div>
         <div class="modal-body--upload">
+            {{ form_row(fileform.name) }}
+            {{ form_widget(fileform.file) }}
             {{ form_rest(fileform) }}
         </div>
         <div class="modal-footer">

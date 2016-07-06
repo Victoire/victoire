@@ -11,15 +11,17 @@
 {% block content %}
     {% form_theme form 'VictoireMediaBundle:Form:fields.html.twig' %}
 
-    <form action="{{ path('VictoireMediaBundle_media_create', { 'folderId' : folder.id, 'type': type } ) }}" method="post" {{ form_enctype(form) }} class="form-horizontal properties">
+    {{ form_start(form) }}
+        {{ form_row(form.name) }}
+        {{ form_widget(form.file) }}
+        {{ form_rest(form) }}
         <div class="prop_wrp">
-            {{ form_rest(form) }}
             <div class="input_prop">
                 <div class="btn_group">
                     <button class="btn" onclick="window.location = '{{ path('VictoireMediaBundle_folder_show', { 'folderId' : folder.id } ) }}'" type="reset">{{ 'form.cancel' |trans({}, 'victoire') }}</button>
                     <button class="btn btn-primary" type="submit">{{ 'media.file.add' |trans({}, 'victoire') }}</button>
                 </div>
             </div>
-         </div>
-    </form>
+        </div>
+    {{ form_end(form) }}
 {% endblock %}
