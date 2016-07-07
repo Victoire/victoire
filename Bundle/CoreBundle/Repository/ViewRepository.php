@@ -95,7 +95,7 @@ class ViewRepository extends NestedTreeRepository
     }
 
     /**
-     * Find a large amount of views by ViewReferences
+     * Find a large amount of views by ViewReferences.
      *
      * @param ViewReference[] $viewReferences
      *
