@@ -541,4 +541,17 @@ class Widget extends BaseWidget implements VictoireQueryInterface
             $this->getCurrentView()->getReference()->getId()
         );
     }
+
+    public function getLocale($defaultLocale)
+    {
+        if ($this->hasCriteriaNamed('locale')) {
+            foreach ($this->getCriterias() as $criteria) {
+                if ($criteria->getName() === 'locale' &&  $criteria->getValue() === $defaultLocale) {
+                    return $criteria->getValue();
+                }
+            }
+        }
+
+        return $defaultLocale;
+    }
 }

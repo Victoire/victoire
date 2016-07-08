@@ -122,9 +122,13 @@ class LinkExtension extends \Twig_Extension
                 $attachedWidget = $parameters[Link::TYPE_WIDGET];
                 //fallback when a widget is deleted cascading the relation as null (widget_id = null)
                 if ($attachedWidget && method_exists($attachedWidget->getWidgetMap()->getView(), 'getUrl')) {
+                    $view = $attachedWidget->getWidgetMap()->getView();
+                    /* @var Widget $attachedWidget */
+                    $locale = $attachedWidget->getLocale($this->request->getLocale());
+                    $view->translate($locale);
 
                     //create base url
-                    $url = $this->router->generate('victoire_core_page_show', ['_locale' => $attachedWidget->getWidgetMap()->getView()->getCurrentLocale(), 'url' => $attachedWidget->getWidgetMap()->getView()->getUrl()], $referenceType);
+                    $url = $this->router->generate('victoire_core_page_show', ['_locale' => $locale, 'url' => $view->getUrl()], $referenceType);
 
                     //If widget in the same view
                     if (rtrim($this->request->getRequestUri(), '/') == rtrim($url, '/')) {
