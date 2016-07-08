@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
 use Victoire\Bundle\CoreBundle\Entity\Link;
+use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
@@ -126,11 +127,16 @@ class LinkExtension extends \Twig_Extension
                 if ($attachedWidget && method_exists($attachedWidget->getWidgetMap()->getView(), 'getUrl')
                     && rtrim($this->request->getRequestUri(), '/') != rtrim($url, '/')
                 ) {
-                    $url .= $this->router->generate('victoire_core_page_show', ['_locale' => $attachedWidget->getWidgetMap()->getView()->getCurrentLocale(),'url' => $attachedWidget->getWidgetMap()->getView()->getUrl()], $referenceType);
+                    /** @var View $view */
+                    $view = $attachedWidget->getWidgetMap()->getView();
+                    /* @var Widget $attachedWidget */
+                    $locale = $attachedWidget->getLocale($this->request->getLocale());
+                    $view->translate($locale);
+                    $url .= $this->router->generate('victoire_core_page_show', ['_locale' => $locale, 'url' => $view->getUrl()], $referenceType);
                 }
 
                 //Add anchor part
-                $url .= '#vic-widget-' . $attachedWidget->getId() . '-container-anchor';
+                $url .= '#vic-widget-'.$attachedWidget->getId().'-container-anchor';
                 break;
             default:
                 $url = $parameters['url'];

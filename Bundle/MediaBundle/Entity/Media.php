@@ -205,6 +205,7 @@ class Media
     {
         return $this->name;
     }
+
     /**
      * @param string $originalFilename
      *
@@ -213,8 +214,10 @@ class Media
     public function setOriginalFilename($originalFilename)
     {
         $this->originalFilename = $originalFilename;
+
         return $this;
     }
+
     /**
      * @return string
      */
