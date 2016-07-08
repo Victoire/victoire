@@ -122,6 +122,12 @@ class PageHelper
             }
             $this->checkPageValidity($page, $entity, $parameters);
         } else {
+            if (isset($parameters['id']) && isset($parameters['locale'])) {
+                //if locale is missing, we add append locale
+                if (preg_match('/^ref_[0-9]*$/', $parameters['id'])) {
+                    $parameters['id'] .= '_'.$parameters['locale'];
+                }
+            }
             $viewReference = $this->viewReferenceRepository->getOneReferenceByParameters($parameters);
             if ($viewReference === null && !empty($parameters['viewId'])) {
                 $parameters['templateId'] = $parameters['viewId'];

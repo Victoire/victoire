@@ -50,7 +50,7 @@ class ErrorPageController extends Controller
 
         //create the response
         $response = $this->container->get('templating')->renderResponse(
-            'VictoireCoreBundle:Layout:'.$page->getTemplate()->getLayout(),
+            'VictoireCoreBundle:Layout:'.$page->getTemplate()->getLayout().'.html.twig',
             $parameters
         );
 

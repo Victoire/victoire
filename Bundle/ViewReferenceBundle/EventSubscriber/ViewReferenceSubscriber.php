@@ -93,6 +93,10 @@ class ViewReferenceSubscriber implements \Doctrine\Common\EventSubscriber
         // if a page is persisted we rebuild his viewRef
         foreach ($translations as $translation) {
             $view->setCurrentLocale($translation->getLocale());
+            if ($view->getParent() && $view->getParent()->getCurrentLocale() != $translation->getLocale()) {
+                $view->getParent()->translate($translation->getLocale());
+                $view->getParent()->setCurrentLocale($translation->getLocale());
+            }
             $event = new ViewReferenceEvent($view);
             $this->dispatcher->dispatch(ViewReferenceEvents::UPDATE_VIEW_REFERENCE, $event);
         }

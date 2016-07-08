@@ -85,7 +85,9 @@ class LinkExtension extends \Twig_Extension
     public function victoireLinkUrl($parameters, $avoidRefresh = true, $url = '#')
     {
         $referenceType = isset($parameters['referenceType']) ? $parameters['referenceType'] : UrlGeneratorInterface::ABSOLUTE_PATH;
-
+        if (!isset($parameters['locale'])) {
+            $parameters['locale'] = $this->request->getLocale();
+        }
         $viewReference = isset($parameters['viewReference']) ? $parameters['viewReference'] : null;
         switch ($parameters['linkType']) {
             case 'viewReference':
@@ -118,19 +120,17 @@ class LinkExtension extends \Twig_Extension
                 break;
             case Link::TYPE_WIDGET:
                 $attachedWidget = $parameters[Link::TYPE_WIDGET];
-                //fallback when a widget is deleted cascading the relation as null (widget_id = null)
-                if ($attachedWidget && method_exists($attachedWidget->getWidgetMap()->getView(), 'getUrl')) {
+                $url = '';
 
-                    //create base url
-                    $url = $this->router->generate('victoire_core_page_show', ['_locale' => $attachedWidget->getWidgetMap()->getView()->getCurrentLocale(), 'url' => $attachedWidget->getWidgetMap()->getView()->getUrl()], $referenceType);
-
-                    //If widget in the same view
-                    if (rtrim($this->request->getRequestUri(), '/') == rtrim($url, '/')) {
-                        $url = '';
-                    }
-                    //Add anchor part
-                    $url .= '#vic-widget-'.$attachedWidget->getId().'-container-anchor';
+                //If Widget's View has an url and Widget is not in the current View, add this url in the link
+                if ($attachedWidget && method_exists($attachedWidget->getWidgetMap()->getView(), 'getUrl')
+                    && rtrim($this->request->getRequestUri(), '/') != rtrim($url, '/')
+                ) {
+                    $url .= $this->router->generate('victoire_core_page_show', ['_locale' => $attachedWidget->getWidgetMap()->getView()->getCurrentLocale(),'url' => $attachedWidget->getWidgetMap()->getView()->getUrl()], $referenceType);
                 }
+
+                //Add anchor part
+                $url .= '#vic-widget-' . $attachedWidget->getId() . '-container-anchor';
                 break;
             default:
                 $url = $parameters['url'];
