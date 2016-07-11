@@ -32,7 +32,8 @@ class WidgetResolver
 
     /**
      * WidgetResolver constructor.
-     * @param DataSourceChain $dataSourceChain
+     *
+     * @param DataSourceChain      $dataSourceChain
      * @param AuthorizationChecker $authorizationChecker
      */
     public function __construct(DataSourceChain $dataSourceChain, AuthorizationChecker $authorizationChecker)
