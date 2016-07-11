@@ -20,7 +20,8 @@ class RolesDataSource
 
     /**
      * RolesDataSource constructor.
-     * @param TokenStorage $tokenStorage
+     *
+     * @param TokenStorage  $tokenStorage
      * @param RoleHierarchy $roleHierarchy
      */
     public function __construct(TokenStorage $tokenStorage, RoleHierarchy $roleHierarchy)
@@ -45,13 +46,13 @@ class RolesDataSource
     public function getRolesFormParams()
     {
         return [
-            'type' => ChoiceType::class,
+            'type'    => ChoiceType::class,
             'options' => [
-                'choices' => $this->getAllAvailableRoles(),
+                'choices'           => $this->getAllAvailableRoles(),
                 'choices_as_values' => true,
-                'choice_label' => function($value){
+                'choice_label'      => function ($value) {
                     return $value;
-                }
+                },
             ],
         ];
     }
@@ -59,15 +60,14 @@ class RolesDataSource
     /**
      * @return mixed
      */
-    public function getAllAvailableRoles(){
+    public function getAllAvailableRoles()
+    {
+        $roles = [];
 
-        $roles = array();
-
-        array_walk_recursive($this->roleHierarchy, function($val) use (&$roles) {
+        array_walk_recursive($this->roleHierarchy, function ($val) use (&$roles) {
             $roles[] = $val;
         });
 
         return array_unique($roles);
-
     }
 }

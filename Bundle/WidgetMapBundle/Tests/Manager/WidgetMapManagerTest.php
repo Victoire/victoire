@@ -63,7 +63,6 @@ class WidgetMapManagerTest extends \PHPUnit_Framework_TestCase
 
         for ($i = 1; $i <= 1000; $i++) {
             $buildSortedWidget = function ($builtWidgetMap) use (&$order, &$buildSortedWidget, $view) {
-
                 $sortedWidget['widgetMap'] = $builtWidgetMap['content'][array_rand($builtWidgetMap['content'])];
                 $availablePositions = [];
                 $positions = [WidgetMap::POSITION_AFTER, WidgetMap::POSITION_BEFORE];
@@ -110,7 +109,6 @@ class WidgetMapManagerTest extends \PHPUnit_Framework_TestCase
                 $sortedWidget['parentWidgetMap'] = $sortedWidget['parentWidgetMap']->getId();
 
                 return $sortedWidget;
-
             };
 
             $sortedWidget = array_merge($sortedWidget, $buildSortedWidget($builtWidgetMap));

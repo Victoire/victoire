@@ -94,7 +94,6 @@ class WidgetType extends AbstractType
                 if ($mode === Widget::MODE_BUSINESS_ENTITY) {
                     $this->addBusinessEntityFields($form, $options);
                 }
-
             }
         );
 
@@ -110,7 +109,6 @@ class WidgetType extends AbstractType
                         $widget->addCriteria($criteria);
                     }
                 }
-
             }
         );
         $builder->addEventListener(
@@ -123,7 +121,6 @@ class WidgetType extends AbstractType
                         $widget->removeCriteria($criteria);
                     }
                 }
-
             }
         );
     }

@@ -19,10 +19,10 @@ class CriteriaType extends AbstractType
         ]);
         $builder->add('operator', ChoiceType::class, [
             'choices'           => [
-                'victoire_criteria.criteria.operator.equal.label' => 'equal',
-                'victoire_criteria.criteria.operator.true.label' => 'true',
-                'victoire_criteria.criteria.operator.false.label' => 'false',
-                'victoire_criteria.criteria.operator.is_granted.label' => 'is_granted',
+                'victoire_criteria.criteria.operator.equal.label'          => 'equal',
+                'victoire_criteria.criteria.operator.true.label'           => 'true',
+                'victoire_criteria.criteria.operator.false.label'          => 'false',
+                'victoire_criteria.criteria.operator.is_granted.label'     => 'is_granted',
                 'victoire_criteria.criteria.operator.is_not_granted.label' => 'is_not_granted',
             ],
             'choices_as_values' => true,
@@ -36,7 +36,6 @@ class CriteriaType extends AbstractType
                 $name = $event->getData()->getName();
                 $formParams = $options['dataSources']->getDataSource($name)->{$options['dataSources']->getDataSourceParameters($name)['method'].'FormParams'}();
                 $event->getForm()->add('value', $formParams['type'], array_merge($formParams['options'], ['required' => false]));
-
             }
         );
     }
