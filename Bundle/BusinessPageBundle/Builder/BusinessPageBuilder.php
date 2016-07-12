@@ -95,8 +95,27 @@ class BusinessPageBuilder
 
             $page->setEntityProxy($entityProxy);
             $page->setTemplate($businessTemplate);
+            /**
+             * Returns class and parent's uses
+             *
+             * @param $class
+             * @param bool $autoload
+             * @return array
+             */
+            $class_uses_deep = function($class, $autoload = true) {
+                $traits = [];
+                do {
+                    $traits = array_merge(class_uses($class, $autoload), $traits);
+                } while($class = get_parent_class($class));
+                foreach ($traits as $trait => $same) {
+                    $traits = array_merge(class_uses($trait, $autoload), $traits);
+                }
 
-            if (in_array(Translatable::class, class_uses($entity))) {
+                return array_unique($traits);
+            };
+
+
+            if (in_array(Translatable::class, $class_uses_deep($entity))) {
                 foreach ($entity->getTranslations() as $translation) {
                     $page->setCurrentLocale($translation->getLocale());
                     $entity->setCurrentLocale($translation->getLocale());
