@@ -66,8 +66,7 @@ class ViewReferenceHelper
             $view = $branch['view'];
             /** @var ViewTranslation $translation */
             foreach ($view->getTranslations() as $translation) {
-                if (true === $isRoot || $translation->getLocale() == $view->getParent()->getCurrentLocale())
-                {
+                if (true === $isRoot || $translation->getLocale() == $view->getParent()->getCurrentLocale()) {
                     $view->setCurrentLocale($translation->getLocale());
                     $viewReference = $this->viewReferenceBuilder->buildViewReference($view, $entityManager);
                     if (!empty($branch['children'])) {

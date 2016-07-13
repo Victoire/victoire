@@ -3,6 +3,7 @@
 namespace Victoire\Bundle\WidgetBundle\Twig;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -25,24 +26,26 @@ class LinkExtension extends \Twig_Extension
 {
     protected $router;
     protected $analytics;
-    protected $businessEntityHelper; // @victoire_business_page.business_entity_helper
-    protected $BusinessPageHelper; // @victoire_business_page.business_page_helper
+    protected $businessEntityHelper;
+    protected $BusinessPageHelper;
     protected $pageHelper;
-    protected $em; // @doctrine.orm.entity_manager
+    protected $em;
+    protected $errorPageRepository;
     protected $abstractBusinessTemplates;
 
     /**
      * LinkExtension constructor.
      *
-     * @param Router $router
-     * @param RequestStack $requestStack
-     * @param $analytics
+     * @param Router               $router
+     * @param RequestStack         $requestStack
+     * @param string               $analytics
      * @param BusinessEntityHelper $businessEntityHelper
-     * @param BusinessPageHelper $BusinessPageHelper
-     * @param PageHelper $pageHelper
-     * @param EntityManager $em
-     * @param LoggerInterface $logger
-     * @param array $abstractBusinessTemplates
+     * @param BusinessPageHelper   $BusinessPageHelper
+     * @param PageHelper           $pageHelper
+     * @param EntityManager        $em
+     * @param LoggerInterface      $logger
+     * @param EntityRepository     $errorPageRepository
+     * @param array                $abstractBusinessTemplates
      */
     public function __construct(
         Router $router,
@@ -53,6 +56,7 @@ class LinkExtension extends \Twig_Extension
         PageHelper $pageHelper,
         EntityManager $em,
         LoggerInterface $logger,
+        EntityRepository $errorPageRepository,
         $abstractBusinessTemplates = []
     ) {
         $this->router = $router;
@@ -62,6 +66,7 @@ class LinkExtension extends \Twig_Extension
         $this->BusinessPageHelper = $BusinessPageHelper;
         $this->pageHelper = $pageHelper;
         $this->em = $em;
+        $this->errorPageRepository = $errorPageRepository;
         $this->logger = $logger;
         $this->abstractBusinessTemplates = $abstractBusinessTemplates;
     }
@@ -106,7 +111,6 @@ class LinkExtension extends \Twig_Extension
                 if (!empty($parameters['viewReferencePage'])) {
                     $page = $parameters['viewReferencePage'];
                 } else {
-
                     $params = [
                         'id'     => $viewReference,
                         'locale' => $parameters['locale'],
@@ -116,14 +120,12 @@ class LinkExtension extends \Twig_Extension
                     } catch (ViewReferenceNotFoundException $e) {
                         $this->logger->error($e->getMessage(), $params);
                         /** @var ErrorPage $page */
-                        $page = $this->em->getRepository('VictoireTwigBundle:ErrorPage')
-                            ->findOneByCode(404);
+                        $page = $this->errorPageRepository->findOneByCode(404);
                         $linkUrl = $this->router->generate(
                             'victoire_core_page_show', array_merge([
                             '_locale' => $parameters['locale'],
-                            'url' => $page->getSlug()
+                            'url'     => $page->getSlug(),
                         ], $params));
-
                     }
                 }
 
@@ -131,7 +133,7 @@ class LinkExtension extends \Twig_Extension
                     $linkUrl = $this->router->generate(
                         'victoire_core_page_show', [
                             '_locale' => $parameters['locale'],
-                            'url' => $page->getReference($parameters['locale'])->getUrl(),
+                            'url'     => $page->getReference($parameters['locale'])->getUrl(),
                         ],
                         $referenceType
                     );
