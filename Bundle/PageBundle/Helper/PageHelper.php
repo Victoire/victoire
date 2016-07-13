@@ -200,7 +200,7 @@ class PageHelper
         $this->widgetDataWarmer->warm($this->entityManager, $view);
 
         //Dispatch contextual event regarding page type
-        if ($view->getType() == 'business_page') {
+        if (in_array($view->getType(), ['business_page', 'virtual_business_page'])) {
             //Dispatch also an event with the Business entity name
             $eventName = 'victoire_core.page_menu.contextual';
             if (!$view->getId()) {
@@ -279,7 +279,6 @@ class PageHelper
                     ->findOneBy([
                         'id'     => $viewReference->getTemplateId(),
                     ]);
-                $page->setCurrentLocale($viewReference->getLocale());
                 if ($entity) {
                     if ($page instanceof BusinessTemplate) {
                         $page = $this->updatePageWithEntity($page, $entity);
