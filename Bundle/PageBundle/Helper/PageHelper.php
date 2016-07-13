@@ -26,6 +26,7 @@ use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\SeoBundle\Helper\PageSeoHelper;
 use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
+use Victoire\Bundle\ViewReferenceBundle\Exception\ViewReferenceNotFoundException;
 use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\BusinessPageReference;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
@@ -138,12 +139,7 @@ class PageHelper
             if ($viewReference instanceof ViewReference) {
                 $page = $this->findPageByReference($viewReference, $this->findEntityByReference($viewReference));
             } else {
-                $parametersAsString = [];
-                foreach ($parameters as $key => $value) {
-                    $parametersAsString[] = $key.': '.$value;
-                }
-
-                throw new \Exception(sprintf('Oh no! Cannot find a viewReference for the given parameters %s', implode(',', $parametersAsString)));
+                throw new ViewReferenceNotFoundException($parameters);
             }
             $page->setReference($viewReference, $viewReference->getLocale());
         }
@@ -204,7 +200,7 @@ class PageHelper
         $this->widgetDataWarmer->warm($this->entityManager, $view);
 
         //Dispatch contextual event regarding page type
-        if ($view->getType() == 'business_page') {
+        if (in_array($view->getType(), ['business_page', 'virtual_business_page'])) {
             //Dispatch also an event with the Business entity name
             $eventName = 'victoire_core.page_menu.contextual';
             if (!$view->getId()) {
@@ -283,7 +279,6 @@ class PageHelper
                     ->findOneBy([
                         'id'     => $viewReference->getTemplateId(),
                     ]);
-                $page->setCurrentLocale($viewReference->getLocale());
                 if ($entity) {
                     if ($page instanceof BusinessTemplate) {
                         $page = $this->updatePageWithEntity($page, $entity);

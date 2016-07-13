@@ -95,21 +95,40 @@ class BusinessPageBuilder
 
             $page->setEntityProxy($entityProxy);
             $page->setTemplate($businessTemplate);
-
-            if (in_array(Translatable::class, class_uses($entity))) {
-                foreach ($entity->getTranslations() as $translation) {
-                    $page->setCurrentLocale($translation->getLocale());
-                    $entity->setCurrentLocale($translation->getLocale());
-                    $businessTemplate->setCurrentLocale($translation->getLocale());
-                    $page = $this->populatePage($page, $businessTemplate, $businessProperties, $em, $entity);
+            /*
+             * Returns class and parent's uses
+             *
+             * @param $class
+             * @param bool $autoload
+             * @return array
+             */
+            $class_uses_deep = function ($class, $autoload = true) {
+                $traits = [];
+                do {
+                    $traits = array_merge(class_uses($class, $autoload), $traits);
+                } while ($class = get_parent_class($class));
+                foreach ($traits as $trait => $same) {
+                    $traits = array_merge(class_uses($trait, $autoload), $traits);
                 }
-                $page->setCurrentLocale($currentLocale);
-                $entity->setCurrentLocale($currentLocale);
-                $businessTemplate->setCurrentLocale($currentLocale);
-            } else {
+
+                return array_unique($traits);
+            };
+
+            $isTranslatableEntity = in_array(Translatable::class, $class_uses_deep($entity));
+            foreach ($businessTemplate->getTranslations() as $translation) {
+                if ($isTranslatableEntity) {
+                    $entity->setCurrentLocale($translation->getLocale());
+                }
+                $page->setCurrentLocale($translation->getLocale());
+                $businessTemplate->setCurrentLocale($translation->getLocale());
                 $page = $this->populatePage($page, $businessTemplate, $businessProperties, $em, $entity);
             }
 
+            if ($isTranslatableEntity) {
+                $entity->setCurrentLocale($currentLocale);
+            }
+            $page->setCurrentLocale($currentLocale);
+            $businessTemplate->setCurrentLocale($currentLocale);
 
             if ($seo = $businessTemplate->getSeo()) {
                 $pageSeo = clone $seo;
