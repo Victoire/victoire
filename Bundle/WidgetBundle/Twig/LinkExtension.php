@@ -3,6 +3,7 @@
 namespace Victoire\Bundle\WidgetBundle\Twig;
 
 use Doctrine\ORM\EntityManager;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -10,7 +11,10 @@ use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
 use Victoire\Bundle\CoreBundle\Entity\Link;
 use Victoire\Bundle\CoreBundle\Entity\View;
+use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
+use Victoire\Bundle\TwigBundle\Entity\ErrorPage;
+use Victoire\Bundle\ViewReferenceBundle\Exception\ViewReferenceNotFoundException;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
@@ -30,14 +34,15 @@ class LinkExtension extends \Twig_Extension
     /**
      * LinkExtension constructor.
      *
-     * @param Router       $router
+     * @param Router $router
      * @param RequestStack $requestStack
      * @param $analytics
      * @param BusinessEntityHelper $businessEntityHelper
-     * @param BusinessPageHelper   $BusinessPageHelper
-     * @param PageHelper           $pageHelper
-     * @param EntityManager        $em
-     * @param array                $abstractBusinessTemplates
+     * @param BusinessPageHelper $BusinessPageHelper
+     * @param PageHelper $pageHelper
+     * @param EntityManager $em
+     * @param LoggerInterface $logger
+     * @param array $abstractBusinessTemplates
      */
     public function __construct(
         Router $router,
@@ -47,6 +52,7 @@ class LinkExtension extends \Twig_Extension
         BusinessPageHelper $BusinessPageHelper,
         PageHelper $pageHelper,
         EntityManager $em,
+        LoggerInterface $logger,
         $abstractBusinessTemplates = []
     ) {
         $this->router = $router;
@@ -56,6 +62,7 @@ class LinkExtension extends \Twig_Extension
         $this->BusinessPageHelper = $BusinessPageHelper;
         $this->pageHelper = $pageHelper;
         $this->em = $em;
+        $this->logger = $logger;
         $this->abstractBusinessTemplates = $abstractBusinessTemplates;
     }
 
@@ -95,23 +102,41 @@ class LinkExtension extends \Twig_Extension
                 if ($viewReference instanceof ViewReference) {
                     $viewReference = $viewReference->getId();
                 }
-
+                $linkUrl = '';
                 if (!empty($parameters['viewReferencePage'])) {
                     $page = $parameters['viewReferencePage'];
                 } else {
-                    $page = $this->pageHelper->findPageByParameters([
+
+                    $params = [
                         'id'     => $viewReference,
                         'locale' => $parameters['locale'],
-                    ]);
+                    ];
+                    try {
+                        $page = $this->pageHelper->findPageByParameters($params);
+                    } catch (ViewReferenceNotFoundException $e) {
+                        $this->logger->error($e->getMessage(), $params);
+                        /** @var ErrorPage $page */
+                        $page = $this->em->getRepository('VictoireTwigBundle:ErrorPage')
+                            ->findOneByCode(404);
+                        $linkUrl = $this->router->generate(
+                            'victoire_core_page_show', array_merge([
+                            '_locale' => $parameters['locale'],
+                            'url' => $page->getSlug()
+                        ], $params));
+
+                    }
                 }
 
-                $linkUrl = $this->router->generate(
-                    'victoire_core_page_show', [
-                        '_locale' => $page->getReference($parameters['locale'])->getLocale(),
-                        'url'     => $page->getReference($parameters['locale'])->getUrl(),
-                    ],
-                    $referenceType
-                );
+                if ($page instanceof WebViewInterface) {
+                    $linkUrl = $this->router->generate(
+                        'victoire_core_page_show', [
+                            '_locale' => $parameters['locale'],
+                            'url' => $page->getReference($parameters['locale'])->getUrl(),
+                        ],
+                        $referenceType
+                    );
+                }
+
                 if ($this->request->getRequestUri() != $linkUrl || !$avoidRefresh) {
                     $url = $linkUrl;
                 }
