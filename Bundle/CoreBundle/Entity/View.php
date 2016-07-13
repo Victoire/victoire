@@ -177,7 +177,7 @@ abstract class View
      **/
     public function __toString()
     {
-        return $this->getName();
+        return '#'.$this->getId().' '.$this->getName();
     }
 
     /**
