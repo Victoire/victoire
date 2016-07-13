@@ -43,8 +43,15 @@ class RoutingExtention extends BaseRoutingExtension
                 $params['entityId'] = $parameters['entityId'];
                 unset($parameters['entityId']);
             }
-            $page = $this->pageHelper->findPageByParameters($params);
-            $parameters['url'] = $page->getReference($this->request->getLocale())->getUrl();
+
+            try {
+                $page = $this->pageHelper->findPageByParameters($params);
+                $parameters['url'] = $page->getReference($this->request->getLocale())->getUrl();
+            } catch (\Exception $e) {
+                error_log($e->getMessage());
+                $parameters['url'] = '410';
+                $parameters = array_merge($parameters, $params);
+            }
 
             $name = 'victoire_core_page_show';
         }
