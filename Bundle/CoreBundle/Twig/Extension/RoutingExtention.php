@@ -23,12 +23,12 @@ class RoutingExtention extends BaseRoutingExtension
     private $errorPageRepository;
 
     /**
-     * @param PageHelper $pageHelper
+     * @param PageHelper            $pageHelper
      * @param UrlGeneratorInterface $generator
-     * @param LocaleResolver $localeResolver
-     * @param RequestStack $requestStack
-     * @param LoggerInterface $logger
-     * @param EntityRepository $errorPageRepository
+     * @param LocaleResolver        $localeResolver
+     * @param RequestStack          $requestStack
+     * @param LoggerInterface       $logger
+     * @param EntityRepository      $errorPageRepository
      */
     public function __construct(
         PageHelper $pageHelper,
@@ -37,8 +37,7 @@ class RoutingExtention extends BaseRoutingExtension
         RequestStack $requestStack,
         LoggerInterface $logger,
         EntityRepository $errorPageRepository
-    )
-    {
+    ) {
         $this->pageHelper = $pageHelper;
         $this->generator = $generator;
         $this->localeResolver = $localeResolver;
@@ -46,8 +45,8 @@ class RoutingExtention extends BaseRoutingExtension
         $this->logger = $logger;
         $this->errorPageRepository = $errorPageRepository;
         parent::__construct($generator);
-
     }
+
     public function getPath($name, $parameters = [], $relative = false)
     {
         if ($name == 'victoire_core_page_show_by_id') {
@@ -67,13 +66,13 @@ class RoutingExtention extends BaseRoutingExtension
                 )->getUrl();
             } catch (ViewReferenceNotFoundException $e) {
                 $this->logger->error($e->getMessage(), [
-                    'params' => $params
+                    'params' => $params,
                 ]);
                 $errorPage = $this->errorPageRepository->findOneByCode(404);
                 $parameters['url'] = $this->generator->generate(
                     'victoire_core_page_show', array_merge([
                         '_locale' => $this->request->getLocale(),
-                        'url' => $errorPage->getSlug()
+                        'url'     => $errorPage->getSlug(),
                     ], $params
                 ));
             }

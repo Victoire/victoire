@@ -42,5 +42,5 @@
         {% if view.seo.metaRobotsIndex and view.seo.metaRobotsFollow %}<meta name="robots" content="{{ view.seo.metaRobotsIndex }}, {{ view.seo.metaRobotsFollow }}"/>{% endif %}
     {% endif %}
 {% else %}
-<title>{{ view|default('Victoire DCMS') }}</title>
+<title>{{ view.name|default('Victoire DCMS') }}</title>
 {% endif %}

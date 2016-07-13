@@ -6,6 +6,7 @@ class ViewReferenceNotFoundException extends \Exception
 {
     /**
      * ViewReferenceNotFoundException constructor.
+     *
      * @param array $parameters
      */
     public function __construct(array $parameters)
