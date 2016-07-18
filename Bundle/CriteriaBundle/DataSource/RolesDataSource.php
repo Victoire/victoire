@@ -68,6 +68,8 @@ class RolesDataSource
             $roles[] = $val;
         });
 
+        array_push($roles, 'ROLE_PREVIOUS_ADMIN');
+
         return array_unique($roles);
     }
 }
