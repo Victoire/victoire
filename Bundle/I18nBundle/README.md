@@ -40,14 +40,20 @@ You have to add the locale pattern table to the locale domain which sets the cor
 
 #Commands
 
-I18nBundle has a migration commande towards i18n :
+Run the ImportViewTranslationsCommand to import (or update) the views translations.
 
-    php bin/console victoire:migrate:i18n
+    php bin/console victoire:i18n:import_view_translations --src traductions.tsv
 
-This command allows, among other actions, to migrate your achitecture towards a translatable one.
-By default, the website is considered as French, so as all its pages.
+Prepare your file like this:
 
-There is an option to change the locale default settings to implemente the default language as desired.
-i.e : if your website is set to be in english, you shall execute :
+#myTranslationFile.tsv
+```
+id	FR	EN	DE	ES	IT	NL
+9	A propos	About	Über Uns	Sobre nosotros	A proposito	over
+...
+```
+`tsv stands for Tab separated values and you can easily generate one with google spreadsheet`
 
-    php bin/console victoire:migrate:i18n --default-locale=en
+You can specify the delimiter (a tab `\t` by default) by passing the `--delimiter ***` option
+
+> [Free translation prototype document](https://docs.google.com/spreadsheets/d/1qoirIucMy_3aK3zz962vb2k8BrcBNC8GySKV-aOSsj4/edit?usp=sharing)
