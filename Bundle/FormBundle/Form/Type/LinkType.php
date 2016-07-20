@@ -54,6 +54,7 @@ class LinkType extends AbstractType
                 'choices_as_values' => true,
                 'attr'              => [
                     'data-refreshOnChange' => 'true',
+                    'data-target' => $options['refresh-target'],
                 ],
             ])
             ->add('target', ChoiceType::class, [
@@ -175,6 +176,7 @@ class LinkType extends AbstractType
             'translation_domain' => 'victoire',
             'horizontal'         => false,
             'linkTypeChoices'    => $this->getDefaultLinkTypeChoices(),
+            'refresh-target'    => null,
         ]);
     }
 
