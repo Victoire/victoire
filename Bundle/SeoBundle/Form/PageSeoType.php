@@ -207,11 +207,4 @@ class PageSeoType extends AbstractType
             'translation_domain' => 'victoire',
         ]);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix() {
-        return 'victoire_page_seo';
-    }
 }
