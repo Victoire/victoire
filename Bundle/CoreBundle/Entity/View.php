@@ -19,10 +19,11 @@ use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
  * A victoire view is a visual representation with a widget map.
  *
  * @Gedmo\Tree(type="nested")
- * @Gedmo\TranslationEntity(class="Victoire\Bundle\I18nBundle\Entity\ViewTranslation")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\Entity(repositoryClass="Victoire\Bundle\CoreBundle\Repository\ViewRepository")
+ * @ORM\Entity(
+ *     repositoryClass="Victoire\Bundle\CoreBundle\Repository\ViewRepository"
+ * )
  * @ORM\Table("vic_view")
  * @ORM\HasLifecycleCallbacks
  */

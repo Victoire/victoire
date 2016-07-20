@@ -4,6 +4,8 @@ namespace Victoire\Bundle\SeoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\Validator\Constraints as Assert;
 use Victoire\Bundle\CoreBundle\Entity\View;
 
@@ -16,6 +18,7 @@ use Victoire\Bundle\CoreBundle\Entity\View;
 class PageSeo
 {
     use \Gedmo\Timestampable\Traits\TimestampableEntity;
+    use Translatable;
 
     /**
      * @var int
@@ -259,624 +262,626 @@ class PageSeo
     /**
      * @var string
      *
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\PageBundle\Entity\Page", inversedBy="referers", cascade={"persist"})
+     * @ORM\ManyToOne(
+     *     targetEntity="\Victoire\Bundle\PageBundle\Entity\Page",
+     *     inversedBy="referers",
+     *     cascade={"persist"}
+     * )
      * @ORM\JoinColumn(name="redirect_to", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $redirectTo;
 
     /**
-     * @Gedmo\Locale
-     * Used locale to override Translation listener`s locale
-     * this is not a mapped field of entity metadata, just a simple property
-     * and it is not necessary because globally locale can be set in listener
-     */
-    protected $locale;
-
-    /**
-     * contructor.
-     **/
-    public function __construct()
-    {
-        $this->createdAt = $this->createdAt ? $this->createdAt : new \DateTime();
-        $this->updatedAt = new \DateTime();
-    }
-
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set redirectTo.
+     * Set redirectTo w/ proxy.
      *
      * @param View $redirectTo
      *
      * @return PageSeo
      */
-    public function setRedirectTo(View $redirectTo)
+    public function setRedirectTo(View $redirectTo, $locale = null)
     {
-        $this->redirectTo = $redirectTo;
+        $this->translate($locale, false)->setRedirectTo($redirectTo);
+        $this->mergeNewTranslations();
 
         return $this;
     }
 
     /**
-     * Get redirectTo.
+     * Get redirectTo w/ proxy.
      *
      * @return string
      */
     public function getRedirectTo()
     {
-        return $this->redirectTo;
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getRedirectTo');
     }
 
     /**
-     * Set metaTitle.
+     * Set metaTitle w/ proxy.
      *
      * @param string $metaTitle
      *
      * @return PageSeo
      */
-    public function setMetaTitle($metaTitle)
+    public function setMetaTitle($metaTitle, $locale = null)
     {
-        $this->metaTitle = $metaTitle;
+        $this->translate($locale, false)->setMetaTitle($metaTitle);
+        $this->mergeNewTranslations();
 
         return $this;
     }
 
     /**
-     * Get metaTitle.
+     * Get metaTitle w/ proxy.
      *
      * @return string
      */
     public function getMetaTitle()
     {
-        return $this->metaTitle;
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getMetaTitle');
     }
 
     /**
-     * Set metaDescription.
+     * Set metaDescription w/ proxy.
      *
      * @param string $metaDescription
      *
      * @return PageSeo
      */
-    public function setMetaDescription($metaDescription)
+    public function setMetaDescription($metaDescription, $locale = null)
     {
-        $this->metaDescription = $metaDescription;
+        $this->translate($locale, false)->setMetaDescription($metaDescription);
+        $this->mergeNewTranslations();
 
         return $this;
     }
 
     /**
-     * Get metaDescription.
+     * Get metaDescription w/ proxy.
      *
      * @return string
      */
     public function getMetaDescription()
     {
-        return $this->metaDescription;
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getMetaDescription');
     }
 
     /**
-     * Set relAuthor.
+     * Set relAuthor w/ proxy.
      *
      * @param string $relAuthor
      *
      * @return PageSeo
      */
-    public function setRelAuthor($relAuthor)
+    public function setRelAuthor($relAuthor, $locale = null)
     {
-        $this->relAuthor = $relAuthor;
+        $this->translate($locale, false)->setRelAuthor($relAuthor);
+        $this->mergeNewTranslations();
 
         return $this;
     }
 
     /**
-     * Get relAuthor.
+     * Get relAuthor w/ proxy.
      *
      * @return string
      */
     public function getRelAuthor()
     {
-        return $this->relAuthor;
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getRelAuthor');
     }
 
     /**
-     * Set relPublisher.
+     * Set relPublisher w/ proxy.
      *
      * @param string $relPublisher
      *
      * @return PageSeo
      */
-    public function setRelPublisher($relPublisher)
+    public function setRelPublisher($relPublisher, $locale = null)
     {
-        $this->relPublisher = $relPublisher;
+        $this->translate($locale, false)->setRelPublisher($relPublisher);
+        $this->mergeNewTranslations();
 
         return $this;
     }
 
     /**
-     * Get relPublisher.
+     * Get relPublisher w/ proxy.
      *
      * @return string
      */
     public function getRelPublisher()
     {
-        return $this->relPublisher;
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getRelPublisher');
     }
 
     /**
-     * Set ogTitle.
+     * Set ogTitle w/ proxy.
      *
      * @param string $ogTitle
      *
      * @return PageSeo
      */
-    public function setOgTitle($ogTitle)
+    public function setOgTitle($ogTitle, $locale = null)
     {
-        $this->ogTitle = $ogTitle;
+        $this->translate($locale, false)->setOgTitle($ogTitle);
+        $this->mergeNewTranslations();
 
         return $this;
     }
 
     /**
-     * Get ogTitle.
+     * Get ogTitle w/ proxy.
      *
      * @return string
      */
     public function getOgTitle()
     {
-        return $this->ogTitle;
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getOgTitle');
     }
 
     /**
-     * Set ogType.
+     * Set ogType w/ proxy.
      *
      * @param string $ogType
      *
      * @return PageSeo
      */
-    public function setOgType($ogType)
+    public function setOgType($ogType, $locale = null)
     {
-        $this->ogType = $ogType;
+        $this->translate($locale, false)->setOgType($ogType);
+        $this->mergeNewTranslations();
 
         return $this;
     }
 
     /**
-     * Get ogType.
+     * Get ogType w/ proxy.
      *
      * @return string
      */
     public function getOgType()
     {
-        return $this->ogType;
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getOgType');
     }
 
     /**
-     * Set ogImage.
+     * Set ogImage w/ proxy.
      *
      * @param Image $ogImage
      *
      * @return PageSeo
      */
-    public function setOgImage($ogImage)
+    public function setOgImage($ogImage, $locale = null)
     {
-        $this->ogImage = $ogImage;
+        $this->translate($locale, false)->setOgImage($ogImage);
+        $this->mergeNewTranslations();
 
         return $this;
     }
 
     /**
-     * Get ogImage.
+     * Get ogImage w/ proxy.
      *
      * @return string
      */
     public function getOgImage()
     {
-        return $this->ogImage;
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getOgImage');
     }
 
     /**
-     * Set ogUrl.
+     * Set ogUrl w/ proxy.
      *
      * @param string $ogUrl
      *
      * @return PageSeo
      */
-    public function setOgUrl($ogUrl)
+    public function setOgUrl($ogUrl, $locale = null)
     {
-        $this->ogUrl = $ogUrl;
+        $this->translate($locale, false)->setOgUrl($ogUrl);
+        $this->mergeNewTranslations();
 
         return $this;
     }
 
     /**
-     * Get ogUrl.
+     * Get ogUrl w/ proxy.
      *
      * @return string
      */
     public function getOgUrl()
     {
-        return $this->ogUrl;
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getOgUrl');
     }
 
     /**
-     * Set ogDescription.
+     * Set ogDescription w/ proxy.
      *
      * @param string $ogDescription
      *
      * @return PageSeo
      */
-    public function setOgDescription($ogDescription)
+    public function setOgDescription($ogDescription, $locale = null)
     {
-        $this->ogDescription = $ogDescription;
+        $this->translate($locale, false)->setOgDescription($ogDescription);
+        $this->mergeNewTranslations();
 
         return $this;
     }
 
     /**
-     * Get ogDescription.
+     * Get ogDescription w/ proxy.
      *
      * @return string
      */
     public function getOgDescription()
     {
-        return $this->ogDescription;
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getOgDescription');
     }
 
     /**
-     * Set fbAdmins.
+     * Set fbAdmins w/ proxy.
      *
      * @param string $fbAdmins
      *
      * @return PageSeo
      */
-    public function setFbAdmins($fbAdmins)
+    public function setFbAdmins($fbAdmins, $locale = null)
     {
-        $this->fbAdmins = $fbAdmins;
+        $this->translate($locale, false)->setFbAdmins($fbAdmins);
+        $this->mergeNewTranslations();
 
         return $this;
     }
 
     /**
-     * Get fbAdmins.
+     * Get fbAdmins w/ proxy.
      *
      * @return string
      */
     public function getFbAdmins()
     {
-        return $this->fbAdmins;
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getFbAdmins');
     }
 
     /**
-     * Set twitterCard.
+     * Set twitterCard w/ proxy.
      *
      * @param string $twitterCard
      *
      * @return PageSeo
      */
-    public function setTwitterCard($twitterCard)
+    public function setTwitterCard($twitterCard, $locale = null)
     {
-        $this->twitterCard = $twitterCard;
+        $this->translate($locale, false)->setTwitterCard($twitterCard);
+        $this->mergeNewTranslations();
 
         return $this;
     }
 
     /**
-     * Get twitterCard.
+     * Get twitterCard w/ proxy.
      *
      * @return string
      */
     public function getTwitterCard()
     {
-        return $this->twitterCard;
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getTwitterCard');
     }
 
     /**
-     * Set twitterUrl.
+     * Set twitterUrl w/ proxy.
      *
      * @param string $twitterUrl
      *
      * @return PageSeo
      */
-    public function setTwitterUrl($twitterUrl)
+    public function setTwitterUrl($twitterUrl, $locale = null)
     {
-        $this->twitterUrl = $twitterUrl;
+        $this->translate($locale, false)->setTwitterUrl($twitterUrl);
+        $this->mergeNewTranslations();
 
         return $this;
     }
 
     /**
-     * Get twitterUrl.
+     * Get twitterUrl w/ proxy.
      *
      * @return string
      */
     public function getTwitterUrl()
     {
-        return $this->twitterUrl;
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getTwitterUrl');
     }
 
     /**
-     * Set twitterCreator.
+     * Set twitterCreator w/ proxy.
      *
      * @param string $twitterCreator
      *
      * @return PageSeo
      */
-    public function setTwitterCreator($twitterCreator)
+    public function setTwitterCreator($twitterCreator, $locale = null)
     {
-        $this->twitterCreator = $twitterCreator;
+        $this->translate($locale, false)->setTwitterCreator($twitterCreator);
+        $this->mergeNewTranslations();
 
         return $this;
     }
 
     /**
-     * Get twitterCreator.
+     * Get twitterCreator w/ proxy.
      *
      * @return string
      */
     public function getTwitterCreator()
     {
-        return $this->twitterCreator;
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getTwitterCreator');
     }
 
     /**
-     * Set twitterTitle.
+     * Set twitterTitle w/ proxy.
      *
      * @param string $twitterTitle
      *
      * @return PageSeo
      */
-    public function setTwitterTitle($twitterTitle)
+    public function setTwitterTitle($twitterTitle, $locale = null)
     {
-        $this->twitterTitle = $twitterTitle;
+        $this->translate($locale, false)->setTwitterTitle($twitterTitle);
+        $this->mergeNewTranslations();
 
         return $this;
     }
 
     /**
-     * Get twitterTitle.
+     * Get twitterTitle w/ proxy.
      *
      * @return string
      */
     public function getTwitterTitle()
     {
-        return $this->twitterTitle;
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getTwitterTitle');
     }
 
     /**
-     * Set twitterDescription.
+     * Set twitterDescription w/ proxy.
      *
      * @param string $twitterDescription
      *
      * @return PageSeo
      */
-    public function setTwitterDescription($twitterDescription)
+    public function setTwitterDescription($twitterDescription, $locale = null)
     {
-        $this->twitterDescription = $twitterDescription;
+        $this->translate($locale, false)->setTwitterDescription($twitterDescription);
+        $this->mergeNewTranslations();
 
         return $this;
     }
 
     /**
-     * Get twitterDescription.
+     * Get twitterDescription w/ proxy.
      *
      * @return string
      */
     public function getTwitterDescription()
     {
-        return $this->twitterDescription;
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getTwitterDescription');
     }
 
     /**
-     * Set twitterImage.
+     * Set twitterImage w/ proxy.
      *
      * @param Image $twitterImage
      *
      * @return PageSeo
      */
-    public function setTwitterImage($twitterImage)
+    public function setTwitterImage($twitterImage, $locale = null)
     {
-        $this->twitterImage = $twitterImage;
+        $this->translate($locale, false)->setTwitterImage($twitterImage);
+        $this->mergeNewTranslations();
 
         return $this;
     }
 
     /**
-     * Get twitterImage.
+     * Get twitterImage w/ proxy.
      *
      * @return string
      */
     public function getTwitterImage()
     {
-        return $this->twitterImage;
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getTwitterImage');
     }
 
     /**
-     * Set schemaPageType.
+     * Set schemaPageType w/ proxy.
      *
      * @param string $schemaPageType
      *
      * @return PageSeo
      */
-    public function setSchemaPageType($schemaPageType)
+    public function setSchemaPageType($schemaPageType, $locale = null)
     {
-        $this->schemaPageType = $schemaPageType;
+        $this->translate($locale, false)->setSchemaPageType($schemaPageType);
+        $this->mergeNewTranslations();
 
         return $this;
     }
 
     /**
-     * Get schemaPageType.
+     * Get schemaPageType w/ proxy.
      *
      * @return string
      */
     public function getSchemaPageType()
     {
-        return $this->schemaPageType;
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getSchemaPageType');
     }
 
     /**
-     * Set schemaName.
+     * Set schemaName w/ proxy.
      *
      * @param string $schemaName
      *
      * @return PageSeo
      */
-    public function setSchemaName($schemaName)
+    public function setSchemaName($schemaName, $locale = null)
     {
-        $this->schemaName = $schemaName;
+        $this->translate($locale, false)->setSchemaName($schemaName);
+        $this->mergeNewTranslations();
 
         return $this;
     }
 
     /**
-     * Get schemaName.
+     * Get schemaName w/ proxy.
      *
      * @return string
      */
     public function getSchemaName()
     {
-        return $this->schemaName;
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getSchemaName');
     }
 
     /**
-     * Set schemaDescription.
+     * Set schemaDescription w/ proxy.
      *
      * @param string $schemaDescription
      *
      * @return PageSeo
      */
-    public function setSchemaDescription($schemaDescription)
+    public function setSchemaDescription($schemaDescription, $locale = null)
     {
-        $this->schemaDescription = $schemaDescription;
+        $this->translate($locale, false)->setSchemaDescription($schemaDescription);
+        $this->mergeNewTranslations();
 
         return $this;
     }
 
     /**
-     * Get schemaDescription.
+     * Get schemaDescription w/ proxy.
      *
      * @return string
      */
     public function getSchemaDescription()
     {
-        return $this->schemaDescription;
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getSchemaDescription');
     }
 
     /**
-     * Set schemaImage.
+     * Set schemaImage w/ proxy.
      *
      * @param Image $schemaImage
      *
      * @return PageSeo
      */
-    public function setSchemaImage($schemaImage)
+    public function setSchemaImage($schemaImage, $locale = null)
     {
-        $this->schemaImage = $schemaImage;
+        $this->translate($locale, false)->setSchemaImage($schemaImage);
+        $this->mergeNewTranslations();
 
         return $this;
     }
 
     /**
-     * Get schemaImage.
+     * Get schemaImage w/ proxy.
      *
      * @return string
      */
     public function getSchemaImage()
     {
-        return $this->schemaImage;
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getSchemaImage');
     }
 
     /**
-     * Set metaRobotsIndex.
+     * Set metaRobotsIndex w/ proxy.
      *
      * @param string $metaRobotsIndex
      *
      * @return PageSeo
      */
-    public function setMetaRobotsIndex($metaRobotsIndex)
+    public function setMetaRobotsIndex($metaRobotsIndex, $locale = null)
     {
-        $this->metaRobotsIndex = $metaRobotsIndex;
+        $this->translate($locale, false)->setMetaRobotsIndex($metaRobotsIndex);
+        $this->mergeNewTranslations();
 
         return $this;
     }
 
     /**
-     * Get metaRobotsIndex.
+     * Get metaRobotsIndex w/ proxy.
      *
      * @return string
      */
     public function getMetaRobotsIndex()
     {
-        return $this->metaRobotsIndex;
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getMetaRobotsIndex');
     }
 
     /**
-     * Set metaRobotsFollow.
+     * Set metaRobotsFollow w/ proxy.
      *
      * @param string $metaRobotsFollow
      *
      * @return PageSeo
      */
-    public function setMetaRobotsFollow($metaRobotsFollow)
+    public function setMetaRobotsFollow($metaRobotsFollow, $locale = null)
     {
-        $this->metaRobotsFollow = $metaRobotsFollow;
+        $this->translate($locale, false)->setMetaRobotsFollow($metaRobotsFollow);
+        $this->mergeNewTranslations();
 
         return $this;
     }
 
     /**
-     * Get metaRobotsFollow.
+     * Get metaRobotsFollow w/ proxy.
      *
      * @return string
      */
     public function getMetaRobotsFollow()
     {
-        return $this->metaRobotsFollow;
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getMetaRobotsFollow');
     }
 
     /**
-     * Set metaRobotsAdvanced.
+     * Set metaRobotsAdvanced w/ proxy.
      *
      * @param string $metaRobotsAdvanced
      *
      * @return PageSeo
      */
-    public function setMetaRobotsAdvanced($metaRobotsAdvanced)
+    public function setMetaRobotsAdvanced($metaRobotsAdvanced, $locale = null)
     {
-        $this->metaRobotsAdvanced = $metaRobotsAdvanced;
+        $this->translate($locale, false)->setMetaRobotsAdvanced($metaRobotsAdvanced);
+        $this->mergeNewTranslations();
 
         return $this;
     }
 
     /**
-     * Get metaRobotsAdvanced.
+     * Get metaRobotsAdvanced w/ proxy.
      *
      * @return string
      */
     public function getMetaRobotsAdvanced()
     {
-        return $this->metaRobotsAdvanced;
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getMetaRobotsAdvanced');
     }
 
     /**
-     * Set sitemapIndexed.
+     * Set sitemapIndexed w/ proxy.
      *
      * @param bool $sitemapIndexed
      *
      * @return PageSeo
      */
-    public function setSitemapIndexed($sitemapIndexed)
+    public function setSitemapIndexed($sitemapIndexed, $locale = null)
     {
-        $this->sitemapIndexed = $sitemapIndexed;
+        $this->translate($locale, false)->setSitemapIndexed($sitemapIndexed);
+        $this->mergeNewTranslations();
 
         return $this;
     }
@@ -892,106 +897,103 @@ class PageSeo
     }
 
     /**
-     * Set sitemapPriority.
+     * Set sitemapPriority w/ proxy.
      *
      * @param float $sitemapPriority
      *
      * @return PageSeo
      */
-    public function setSitemapPriority($sitemapPriority)
+    public function setSitemapPriority($sitemapPriority, $locale = null)
     {
-        $this->sitemapPriority = $sitemapPriority;
+        $this->translate($locale, false)->setSitemapPriority($sitemapPriority);
+        $this->mergeNewTranslations();
 
         return $this;
     }
 
     /**
-     * Get sitemapPriority.
+     * Get sitemapPriority w/ proxy.
      *
      * @return float
      */
     public function getSitemapPriority()
     {
-        return $this->sitemapPriority;
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getSitemapPriority');
     }
 
     /**
-     * Set sitemapChangeFreq.
+     * Set sitemapChangeFreq w/ proxy.
      *
      * @param float $sitemapChangeFreq
      *
      * @return PageSeo
      */
-    public function setSitemapChangeFreq($sitemapChangeFreq)
+    public function setSitemapChangeFreq($sitemapChangeFreq, $locale = null)
     {
-        $this->sitemapChangeFreq = $sitemapChangeFreq;
+        $this->translate($locale, false)->setSitemapChangeFreq($sitemapChangeFreq);
+        $this->mergeNewTranslations();
 
         return $this;
     }
 
     /**
-     * Get sitemapChangeFreq.
+     * Get sitemapChangeFreq w/ proxy.
      *
      * @return float
      */
     public function getSitemapChangeFreq()
     {
-        return $this->sitemapChangeFreq;
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getSitemapChangeFreq');
     }
 
     /**
-     * Set relCanonical.
+     * Set relCanonical w/ proxy.
      *
      * @param string $relCanonical
      *
      * @return PageSeo
      */
-    public function setRelCanonical($relCanonical)
+    public function setRelCanonical($relCanonical, $locale = null)
     {
-        $this->relCanonical = $relCanonical;
+        $this->translate($locale, false)->setRelCanonical($relCanonical);
+        $this->mergeNewTranslations();
 
         return $this;
     }
 
     /**
-     * Get relCanonical.
+     * Get relCanonical w/ proxy.
      *
      * @return string
      */
     public function getRelCanonical()
     {
-        return $this->relCanonical;
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getRelCanonical');
     }
 
     /**
-     * Set keyword.
+     * Set keyword w/ proxy.
      *
      * @param string $keyword
      *
+     * @param null $locale
      * @return PageSeo
      */
-    public function setKeyword($keyword)
+    public function setKeyword($keyword, $locale = null)
     {
-        $this->keyword = $keyword;
+        $this->translate($locale, false)->setKeyword($keyword);
+        $this->mergeNewTranslations();
 
         return $this;
     }
 
     /**
-     * Get keyword.
+     * Get keyword w/ proxy.
      *
      * @return string
      */
     public function getKeyword()
     {
-        return $this->keyword;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLocale()
-    {
-        return $this->locale;
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getKeyword');
     }
 }
