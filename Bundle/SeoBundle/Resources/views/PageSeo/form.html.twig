@@ -1,0 +1,10 @@
+{% trans_default_domain "victoire" %}
+
+{% form_theme form 'VictoireFormBundle:Form:fields.html.twig' 'VictoireSeoBundle:Form:localeTabs.html.twig' %}
+
+{% if businessProperties is defined %}
+    {% include 'VictoireBusinessEntityBundle:BusinessProperty:list.html.twig' with { 'businessProperties':businessProperties } %}
+{% endif %}
+{{form_start(form)}}
+
+{{form_end(form)}}
