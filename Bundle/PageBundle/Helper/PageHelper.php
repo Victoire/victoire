@@ -7,6 +7,7 @@ use Doctrine\Orm\EntityManager;
 use Doctrine\ORM\ORMInvalidArgumentException;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -160,16 +161,18 @@ class PageHelper
         $page = null;
         if ($viewReference = $this->viewReferenceRepository->getReferenceByUrl($url, $locale)) {
             $page = $this->findPageByReference($viewReference, $entity = $this->findEntityByReference($viewReference));
+            $this->checkPageValidity($page, $entity, ['url' => $url, 'locale' => $locale]);
+            $page->setReference($viewReference);
 
             if ($page instanceof BasePage
                 && $page->getSeo()
                 && $page->getSeo()->getRedirectTo()
                 && !$this->session->get('victoire.edit_mode', false)) {
-                $page = $page->getSeo()->getRedirectTo();
+                $link = $page->getSeo()->getRedirectTo();
+                
+                return new RedirectResponse($this->container->get('victoire_widget.twig.link_extension')->victoireLinkUrl($link->getParameters()));
             }
 
-            $this->checkPageValidity($page, $entity, ['url' => $url, 'locale' => $locale]);
-            $page->setReference($viewReference);
 
             return $this->renderPage($page, $isAjax);
         } else {
