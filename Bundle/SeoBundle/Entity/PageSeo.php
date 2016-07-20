@@ -975,8 +975,8 @@ class PageSeo
      * Set keyword w/ proxy.
      *
      * @param string $keyword
+     * @param null   $locale
      *
-     * @param null $locale
      * @return PageSeo
      */
     public function setKeyword($keyword, $locale = null)

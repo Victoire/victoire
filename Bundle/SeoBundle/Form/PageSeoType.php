@@ -25,25 +25,25 @@ class PageSeoType extends AbstractType
                     'metaTitle' => [
                         'label' => 'form.pageSeo.metaTitle.label',
                         'attr'  => [
-                            'placeholder' => 'form.pageSeo.metaTitle.placeholder'
+                            'placeholder' => 'form.pageSeo.metaTitle.placeholder',
                         ],
                     ],
                     'metaDescription' => [
                         'label' => 'form.pageSeo.metaDescription.label',
                         'attr'  => [
-                            'placeholder' => 'form.pageSeo.metaDescription.placeholder'
+                            'placeholder' => 'form.pageSeo.metaDescription.placeholder',
                         ],
                     ],
                     'relAuthor' => [
                         'label' => 'form.pageSeo.relAuthor.label',
                         'attr'  => [
-                            'placeholder' => 'form.pageSeo.relAuthor.placeholder'
+                            'placeholder' => 'form.pageSeo.relAuthor.placeholder',
                         ],
                     ],
                     'relPublisher' => [
                         'label' => 'form.pageSeo.relPublisher.label',
                         'attr'  => [
-                            'placeholder' => 'form.pageSeo.relPublisher.placeholder'
+                            'placeholder' => 'form.pageSeo.relPublisher.placeholder',
                         ],
                     ],
                     'ogTitle' => [
@@ -53,17 +53,17 @@ class PageSeoType extends AbstractType
                     'ogType' => [
                         'label' => 'form.pageSeo.ogType.label',
                         'attr'  => [
-                            'placeholder' => 'form.pageSeo.ogType.placeholder'
+                            'placeholder' => 'form.pageSeo.ogType.placeholder',
                         ],
                     ],
                     'ogImage' => [
                         'field_type' => MediaType::class,
-                        'label' => 'form.pageSeo.ogImage.label',
+                        'label'      => 'form.pageSeo.ogImage.label',
                     ],
                     'ogUrl' => [
                         'label' => 'form.pageSeo.ogUrl.label',
                         'attr'  => [
-                            'placeholder' => 'form.pageSeo.ogUrl.placeholder'
+                            'placeholder' => 'form.pageSeo.ogUrl.placeholder',
                         ],
                     ],
                     'ogDescription' => [
@@ -72,14 +72,13 @@ class PageSeoType extends AbstractType
                     'fbAdmins' => [
                         'label' => 'form.pageSeo.fbAdmins.label',
                         'attr'  => [
-                            'placeholder' => 'form.pageSeo.fbAdmins.placeholder'
+                            'placeholder' => 'form.pageSeo.fbAdmins.placeholder',
                         ],
                     ],
-                    'twitterCard' =>
-                        [
+                    'twitterCard' => [
                             'field_type' => ChoiceType::class,
-                            'label'   => 'form.pageSeo.twitterCard.label',
-                            'choices' => [
+                            'label'      => 'form.pageSeo.twitterCard.label',
+                            'choices'    => [
                                 'form.pageSeo.twitterCard.summary.label'             => 'summary',
                                 'form.pageSeo.twitterCard.summary_large_image.label' => 'summary_large_image',
                                 'form.pageSeo.twitterCard.photo.label'               => 'photo',
@@ -94,30 +93,30 @@ class PageSeoType extends AbstractType
                     'twitterUrl' => [
                         'label' => 'form.pageSeo.twitterUrl.label',
                         'attr'  => [
-                            'placeholder' => 'form.pageSeo.twitterUrl.placeholder'
+                            'placeholder' => 'form.pageSeo.twitterUrl.placeholder',
                         ],
                     ],
                     'twitterTitle' => [
                         'label' => 'form.pageSeo.twitterTitle.label',
                         'attr'  => [
-                            'placeholder' => 'form.pageSeo.twitterTitle.placeholder'
+                            'placeholder' => 'form.pageSeo.twitterTitle.placeholder',
                         ],
                     ],
                     'twitterDescription' => [
                         'label' => 'form.pageSeo.twitterDescription.label',
                         'attr'  => [
-                            'placeholder' => 'form.pageSeo.twitterDescription.placeholder'
+                            'placeholder' => 'form.pageSeo.twitterDescription.placeholder',
                         ],
                     ],
                     'twitterCreator' => [
                         'label' => 'form.pageSeo.twitterCreator.label',
                         'attr'  => [
-                            'placeholder' => 'form.pageSeo.twitterCreator.placeholder'
+                            'placeholder' => 'form.pageSeo.twitterCreator.placeholder',
                         ],
                     ],
                     'twitterImage' => [
                         'field_type' => MediaType::class,
-                        'label' => 'form.pageSeo.twitterImage.label',
+                        'label'      => 'form.pageSeo.twitterImage.label',
                     ],
                     'schemaPageType' => [
                         'label'          => 'form.pageSeo.schemaPageType.label',
@@ -131,10 +130,10 @@ class PageSeoType extends AbstractType
                     ],
                     'schemaImage' => [
                         'field_type' => MediaType::class,
-                        'label' => 'form.pageSeo.schemaImage.label',
+                        'label'      => 'form.pageSeo.schemaImage.label',
                     ],
                     'metaRobotsIndex' => [
-                        'field_type' => ChoiceType::class,
+                        'field_type'        => ChoiceType::class,
                         'choices_as_values' => true,
                         'label'             => 'form.pageSeo.metaRobotsIndex.label',
                         'choices'           => [
@@ -143,7 +142,7 @@ class PageSeoType extends AbstractType
                         ],
                     ],
                     'metaRobotsFollow' => [
-                        'field_type' => ChoiceType::class,
+                        'field_type'        => ChoiceType::class,
                         'choices_as_values' => true,
                         'label'             => 'form.pageSeo.metaRobotsFollow.label',
                         'choices'           => [
@@ -159,8 +158,8 @@ class PageSeoType extends AbstractType
                     ],
                     'sitemapChangeFreq' => [
                         'field_type' => ChoiceType::class,
-                        'label'   => 'form.pageSeo.sitemapChangeFreq.label',
-                        'choices' => [
+                        'label'      => 'form.pageSeo.sitemapChangeFreq.label',
+                        'choices'    => [
                             'form.pageSeo.sitemapChangeFreq.format.choices.always.label'  => 'always',
                             'form.pageSeo.sitemapChangeFreq.format.choices.hourly.label'  => 'hourly',
                             'form.pageSeo.sitemapChangeFreq.format.choices.daily.label'   => 'daily',
@@ -173,7 +172,7 @@ class PageSeoType extends AbstractType
                         'preferred_choices' => ['monthly'],
                     ],
                     'sitemapPriority' => [
-                        'field_type' => ChoiceType::class,
+                        'field_type'        => ChoiceType::class,
                         'label'             => 'form.pageSeo.sitemapPriority.label',
                         'choices'           => array_combine(range(0, 1, 0.1), range(0, 1, 0.1)),
                         'choices_as_values' => true,
@@ -184,16 +183,16 @@ class PageSeoType extends AbstractType
                     'keyword' => [
                         'label' => 'form.pageSeo.keyword.label',
                         'attr'  => [
-                            'placeholder' => 'form.pageSeo.keyword.placeholder'
+                            'placeholder' => 'form.pageSeo.keyword.placeholder',
                         ],
                     ],
                     'redirectTo' => [
-                        'field_type' => LinkType::class,
+                        'field_type'     => LinkType::class,
                         'refresh-target' => '#basics',
                         'label'          => 'form.pageSeo.redirectTo.label',
                         'vic_help_block' => 'form.pageSeo.redirectTo.vic_help_block',
-                    ]
-                ]
+                    ],
+                ],
             ]);
     }
 
