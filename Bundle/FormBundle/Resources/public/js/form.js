@@ -12,6 +12,7 @@
  **/
 
 $vic(document).on('change', 'select[data-refreshOnChange="true"], input:checkbox[data-refreshOnChange="true"]', function(event) {
+    var input = $vic(this);
     var form = $vic(this).parents('form');
     loading(true);
 
@@ -34,11 +35,19 @@ $vic(document).on('change', 'select[data-refreshOnChange="true"], input:checkbox
         data: form.serialize(),
         async: true
     }).done(function(response){
-
+        var actives = [];
+        $vic(input).parents('.vic-active').each(function() {
+            if ($vic(this).attr('id')) {
+                actives.push($vic(this).attr('id'));
+            }
+        });
         //By default, the updateStrategy is html (a simple replace) but you can set your own function
         //for example, append, after etc or even a custom one.
         eval('$target.' + updateStrategy + '(response.html)');
-        var scripts = $target.find("script");
+
+        $vic(actives).each(function() {
+            $vic('a[href="#'+this+'"]').victab('show');
+        });
         loading(false);
     }).fail(function(response) {
         console.log(response);
