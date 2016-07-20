@@ -286,7 +286,11 @@ class PageHelper
                 if ($entity) {
                     if ($page instanceof BusinessTemplate) {
                         $page = $this->updatePageWithEntity($page, $entity);
-                    } elseif ($page instanceof BusinessPage) {
+                    }
+                    if ($page instanceof BusinessPage) {
+                        if ($page->getSeo()) {
+                            $page->getSeo()->setCurrentLocale($viewReference->getLocale());
+                        }
                         $this->pageSeoHelper->updateSeoByEntity($page, $entity);
                     }
                 }
