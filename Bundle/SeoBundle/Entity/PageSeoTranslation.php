@@ -7,7 +7,6 @@ use Knp\DoctrineBehaviors\Model\Translatable\Translation;
 use Symfony\Component\Validator\Constraints as Assert;
 use Victoire\Bundle\CoreBundle\Entity\Link;
 use Victoire\Bundle\CoreBundle\Entity\View;
-use Victoire\Bundle\PageBundle\Entity\BasePage;
 
 /**
  * PageSeo Translation.
