@@ -7,6 +7,7 @@ use Doctrine\Orm\EntityManager;
 use Doctrine\ORM\ORMInvalidArgumentException;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -19,6 +20,7 @@ use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
 use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
+use Victoire\Bundle\CoreBundle\Entity\Link;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Event\PageRenderEvent;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
@@ -160,16 +162,19 @@ class PageHelper
         $page = null;
         if ($viewReference = $this->viewReferenceRepository->getReferenceByUrl($url, $locale)) {
             $page = $this->findPageByReference($viewReference, $entity = $this->findEntityByReference($viewReference));
+            $this->checkPageValidity($page, $entity, ['url' => $url, 'locale' => $locale]);
+            $page->setReference($viewReference);
 
             if ($page instanceof BasePage
                 && $page->getSeo()
                 && $page->getSeo()->getRedirectTo()
+                && $page->getSeo()->getRedirectTo()->getLinkType() != Link::TYPE_NONE
                 && !$this->session->get('victoire.edit_mode', false)) {
-                $page = $page->getSeo()->getRedirectTo();
+                $link = $page->getSeo()->getRedirectTo();
+
+                return new RedirectResponse($this->container->get('victoire_widget.twig.link_extension')->victoireLinkUrl($link->getParameters()));
             }
 
-            $this->checkPageValidity($page, $entity, ['url' => $url, 'locale' => $locale]);
-            $page->setReference($viewReference);
 
             return $this->renderPage($page, $isAjax);
         } else {
@@ -282,7 +287,11 @@ class PageHelper
                 if ($entity) {
                     if ($page instanceof BusinessTemplate) {
                         $page = $this->updatePageWithEntity($page, $entity);
-                    } elseif ($page instanceof BusinessPage) {
+                    }
+                    if ($page instanceof BusinessPage) {
+                        if ($page->getSeo()) {
+                            $page->getSeo()->setCurrentLocale($viewReference->getLocale());
+                        }
                         $this->pageSeoHelper->updateSeoByEntity($page, $entity);
                     }
                 }
