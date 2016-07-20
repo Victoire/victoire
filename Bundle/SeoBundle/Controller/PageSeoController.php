@@ -65,8 +65,13 @@ class PageSeoController extends Controller
         );
 
         $form->handleRequest($this->get('request'));
+        $novalidate = $this->get('request')->query->get('novalidate', false);
 
-        if ($form->isValid()) {
+        $template = 'VictoireSeoBundle:PageSeo:form.html.twig';
+        if ($novalidate === false) {
+            $template = 'VictoireSeoBundle:PageSeo:settings.html.twig';
+        }
+        if (false === $novalidate && $form->isValid()) {
             $em->persist($pageSeo);
             $page->setSeo($pageSeo);
             $em->persist($page);
@@ -95,7 +100,7 @@ class PageSeoController extends Controller
         return new JsonResponse([
             'success' => !$form->isSubmitted(),
             'html'    => $this->container->get('templating')->render(
-                'VictoireSeoBundle:PageSeo:settings.html.twig',
+                $template,
                 [
                     'page'               => $page,
                     'form'               => $form->createView(),
