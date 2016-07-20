@@ -20,6 +20,7 @@ use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
 use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
+use Victoire\Bundle\CoreBundle\Entity\Link;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Event\PageRenderEvent;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
@@ -167,9 +168,10 @@ class PageHelper
             if ($page instanceof BasePage
                 && $page->getSeo()
                 && $page->getSeo()->getRedirectTo()
+                && $page->getSeo()->getRedirectTo()->getLinkType() != Link::TYPE_NONE
                 && !$this->session->get('victoire.edit_mode', false)) {
                 $link = $page->getSeo()->getRedirectTo();
-                
+
                 return new RedirectResponse($this->container->get('victoire_widget.twig.link_extension')->victoireLinkUrl($link->getParameters()));
             }
 
