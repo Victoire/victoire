@@ -332,7 +332,7 @@ class PageHelper
      *
      * @throws \Exception
      */
-    protected function checkPageValidity($page, $entity = null, $parameters = null)
+    public function checkPageValidity($page, $entity = null, $parameters = null)
     {
         $errorMessage = 'The page was not found';
         if ($parameters) {
