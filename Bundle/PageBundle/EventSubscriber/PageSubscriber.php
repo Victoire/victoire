@@ -140,13 +140,15 @@ class PageSubscriber implements EventSubscriber
                 'templateId' => $entity->getId(),
             ], true, false, 'OR');
             foreach ($viewReferences as $viewReference) {
-                if ($entity instanceof WebViewInterface && $viewReference instanceof ViewReference) {
-                    $entity->setReference($viewReference, $viewReference->getLocale());
-                    $entity->setUrl($viewReference->getUrl());
-                } elseif ($entity instanceof BusinessTemplate) {
-                    $entity->setReferences([
-                        $entity->getCurrentLocale() => $this->viewReferenceBuilder->buildViewReference($entity, $eventArgs->getEntityManager()),
-                    ]);
+                if ($viewReference->getLocale() === $entity->getCurrentLocale()) {
+                    if ($entity instanceof WebViewInterface && $viewReference instanceof ViewReference) {
+                        $entity->setReference($viewReference, $viewReference->getLocale());
+                        $entity->setUrl($viewReference->getUrl());
+                    } elseif ($entity instanceof BusinessTemplate) {
+                        $entity->setReferences([
+                            $entity->getCurrentLocale() => $this->viewReferenceBuilder->buildViewReference($entity, $eventArgs->getEntityManager()),
+                        ]);
+                    }
                 }
             }
         }
