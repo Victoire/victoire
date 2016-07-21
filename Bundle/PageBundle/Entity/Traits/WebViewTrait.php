@@ -171,7 +171,7 @@ trait WebViewTrait
 
     public function getUrl()
     {
-        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(), 'getUrl');
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getUrl');
     }
 
     public function setUrl($name, $locale = null)
