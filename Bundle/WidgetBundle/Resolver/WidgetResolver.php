@@ -35,25 +35,21 @@ class WidgetResolver
 
     public function resolve(WidgetMap $widgetMap)
     {
-        $widget = null;
-        $accessor = new PropertyAccessor();
         //TODO: orderiaze it
         /** @var Widget $widget */
-        foreach ($widgetMap->getWidgets() as $widget) {
+        foreach ($widgetMap->getWidgets() as $_widget) {
             /** @var Criteria $criteria */
-            foreach ($widget->getCriterias() as $criteria) {
+            foreach ($_widget->getCriterias() as $criteria) {
                 $value = $this->dataSourceChain->getData($criteria->getName());
-                if ($this->assert($value(), $criteria->getOperator(), $criteria->getValue())) {
-                    continue;
-                } else {
+                if (!$this->assert($value(), $criteria->getOperator(), $criteria->getValue())) {
                     continue 2; //try with break
                 }
             }
 
-            return $widget;
+            return $_widget;
         }
 
-        return $widget;
+        return null;
     }
 
     protected function assert($value, $operator, $expected)
