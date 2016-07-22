@@ -88,16 +88,6 @@ class ViewCssBuilder
     }
 
     /**
-     * Get Angular href for link markup.
-     *
-     * @return string
-     */
-    public function getAngularHref()
-    {
-        return $this->webDir.'/{[{viewCssHash}]}.css';
-    }
-
-    /**
      * Get href for link markup for a View.
      *
      * @param View $view

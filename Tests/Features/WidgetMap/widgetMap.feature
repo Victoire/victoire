@@ -1,16 +1,16 @@
 @mink:selenium2 @alice(Page) @reset-schema
 Feature: Test widgetMap
 
-Background:
-    Given I am logged in as "anakin@victoire.io"
-
+  Background:
+    Given I maximize the window
+    And I am on homepage
 @reset-schema
 Scenario: I move up a widget
   Given the following WidgetMaps:
-    | id | action | position | parent |  slot   |   view  |
-    | 1  | create |          |        | content |   home  |
-    | 2  | create |  after   |   1    | content |   home  |
-    | 3  | create |  before  |   2    | content |   home  |
+    | id | action | position | parent |  slot        |   view  |
+    | 1  | create |          |        | main_content |   home  |
+    | 2  | create |  after   |   1    | main_content |   home  |
+    | 3  | create |  before  |   2    | main_content |   home  |
   Given the following WidgetTexts:
     | content  | mode   | widgetMap |
     | Widget 1 | static |    1       |
@@ -26,10 +26,10 @@ Scenario: I move up a widget
 @reset-schema
 Scenario: I move first a widget
   Given the following WidgetMaps:
-    | id | action | position | parent |  slot   |   view  |
-    | 1  | create |          |        | content |   home  |
-    | 2  | create |  after   |   1    | content |   home  |
-    | 3  | create |  before  |   2    | content |   home  |
+    | id | action | position | parent |  slot        |   view  |
+    | 1  | create |          |        | main_content |   home  |
+    | 2  | create |  after   |   1    | main_content |   home  |
+    | 3  | create |  before  |   2    | main_content |   home  |
   Given the following WidgetTexts:
     | content  | mode   | widgetMap |
     | Widget 1 | static |    1       |
@@ -45,10 +45,10 @@ Scenario: I move first a widget
 @reset-schema
 Scenario: I move down a widget
   Given the following WidgetMaps:
-    | id | action | position | parent |  slot   |   view  |
-    | 1  | create |          |        | content |   home  |
-    | 2  | create |  after   |   1    | content |   home  |
-    | 3  | create |  before  |   2    | content |   home  |
+    | id | action | position | parent | slot         |   view  |
+    | 1  | create |          |        | main_content |   home  |
+    | 2  | create |  after   |   1    | main_content |   home  |
+    | 3  | create |  before  |   2    | main_content |   home  |
   Given the following WidgetTexts:
     | content  | mode   | widgetMap |
     | Widget 1 | static |    1       |
@@ -65,10 +65,10 @@ Scenario: I move down a widget
 Scenario: I move a widget under a templates one
 
   Given the following WidgetMaps:
-    | id | action | position | parent |  slot   |   view  |
-    | 1  | create |          |        | content |   home  |
-    | 2  | create |  after   |   1    | content |   home  |
-    | 3  | create |  before  |   2    | content |   home  |
+    | id | action | position | parent | slot         |   view  |
+    | 1  | create |          |        | main_content |   home  |
+    | 2  | create |  after   |   1    | main_content |   home  |
+    | 3  | create |  before  |   2    | main_content |   home  |
   Given the following WidgetTexts:
     | content  | mode   | widgetMap |
     | Widget 1 | static |    1       |
@@ -78,7 +78,7 @@ Scenario: I move a widget under a templates one
     Then I should see "Widget 1"
     When I switch to "layout" mode
     Then I should see "Nouveau Contenu"
-    When I select "Texte brut" from the "3" select of "content" slot
+    When I select "Texte brut" from the "3" select of "main_content" slot
     Then I should see "Créer"
     When I fill in "Texte *" with "Widget 4"
     And I submit the widget
@@ -96,7 +96,7 @@ Scenario: I move a widget under a templates one
 Scenario: I create widget in a position
     Then I switch to "layout" mode
     Then I should see "Nouveau Contenu"
-    When I select "Force" from the "1" select of "content" slot
+    When I select "Force" from the "1" select of "main_content" slot
     Then I should see "Créer"
     When I fill in "Côté de la force" with "Obscure"
     And I submit the widget
@@ -105,7 +105,7 @@ Scenario: I create widget in a position
     And I should see "Le côté Obscure de la force"
 
     Then I should see "Nouveau Contenu"
-    When I select "Force" from the "2" select of "content" slot
+    When I select "Force" from the "2" select of "main_content" slot
     Then I should see "Créer"
     When I fill in "Côté de la force" with "Lumineux"
     And I submit the widget
@@ -117,7 +117,7 @@ Scenario: I create widget in a position
     Then "Le côté Obscure de la force" should precede "Le côté Lumineux de la force"
 
     Then I should see "Nouveau Contenu"
-    Given I select "Force" from the "2" select of "content" slot
+    Given I select "Force" from the "2" select of "main_content" slot
     Then I should see "Créer"
     When I fill in "Côté de la force" with "Double"
     And I submit the widget

@@ -14,8 +14,6 @@ use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\PageBundle\Helper\UserCallableHelper;
-use Victoire\Bundle\TemplateBundle\Entity\Template;
-use Victoire\Bundle\TwigBundle\Entity\ErrorPage;
 use Victoire\Bundle\ViewReferenceBundle\Builder\ViewReferenceBuilder;
 use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
@@ -136,22 +134,20 @@ class PageSubscriber implements EventSubscriber
         $entity = $eventArgs->getEntity();
 
         if ($entity instanceof View) {
-            $om = $eventArgs->getObjectManager();
-            $locale = $this->translatableListener->getTranslatableLocale($entity, $om->getClassMetadata(get_class($entity)), $om);
-            $entity->setTranslatableLocale($locale);
-            $viewReference = $this->viewReferenceRepository->getOneReferenceByParameters([
-                'viewId' => $entity->getId(),
-                'locale' => $entity->getLocale(),
-            ]);
-            if ($entity instanceof WebViewInterface && $viewReference instanceof ViewReference) {
-                $entity->setReference($viewReference);
-                $entity->setUrl($viewReference->getUrl());
-            } elseif ($entity instanceof Template || $entity instanceof ErrorPage) {
-                $entity->setReferences([$entity->getLocale() => new ViewReference($entity->getId())]);
-            } else {
-                $entity->setReferences([
-                    $entity->getLocale() => $this->viewReferenceBuilder->buildViewReference($entity, $eventArgs->getEntityManager()),
-                ]);
+            $entity->setReferences([$entity->getCurrentLocale() => new ViewReference($entity->getId())]);
+            $viewReferences = $this->viewReferenceRepository->getReferencesByParameters([
+                'viewId'     => $entity->getId(),
+                'templateId' => $entity->getId(),
+            ], true, false, 'OR');
+            foreach ($viewReferences as $viewReference) {
+                if ($entity instanceof WebViewInterface && $viewReference instanceof ViewReference) {
+                    $entity->setReference($viewReference, $viewReference->getLocale());
+                    $entity->setUrl($viewReference->getUrl());
+                } elseif ($entity instanceof BusinessTemplate) {
+                    $entity->setReferences([
+                        $entity->getCurrentLocale() => $this->viewReferenceBuilder->buildViewReference($entity, $eventArgs->getEntityManager()),
+                    ]);
+                }
             }
         }
     }

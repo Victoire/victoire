@@ -8,7 +8,7 @@
         <body>
             <trans-unit id="1" resname="victoire_criteria.request_locale.criteria.label">
                 <source>victoire_criteria.request_locale.criteria.label</source>
-                <target>Lengua</target>
+                <target>Idìoma</target>
             </trans-unit>
             <trans-unit id="2" resname="victoire_criteria.request_scheme.criteria.label">
                 <source>victoire_criteria.request_scheme.criteria.label</source>

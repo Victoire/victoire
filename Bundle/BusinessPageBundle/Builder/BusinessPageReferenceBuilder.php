@@ -26,22 +26,17 @@ class BusinessPageReferenceBuilder extends BaseReferenceBuilder
         $referenceId = ViewReferenceHelper::generateViewReferenceId($businessPage);
         $businessPageReference = new BusinessPageReference();
         $businessPageReference->setId($referenceId);
-        $businessPageReference->setLocale($businessPage->getLocale());
+        $businessPageReference->setLocale($businessPage->getCurrentLocale());
         $businessPageReference->setName($businessPage->getName());
         $businessPageReference->setViewId($businessPage->getId());
         $businessPageReference->setTemplateId($businessPage->getTemplate()->getId());
-        $businessPageReference->setSlug(
-            $businessPage->getStaticUrl() != '' ?
-                $businessPage->getStaticUrl() :
-                $businessPage->getSlug()
-        );
+        $businessPageReference->setSlug($businessPage->getSlug());
         $businessPageReference->setEntityId($businessPage->getBusinessEntity()->getId());
         $businessPageReference->setEntityNamespace($em->getClassMetadata(get_class($businessPage->getBusinessEntity()))->name);
         $businessPageReference->setViewNamespace($em->getClassMetadata(get_class($businessPage))->name);
         if ($parent = $businessPage->getParent()) {
-            $businessPageReference->setParent(ViewReferenceHelper::generateViewReferenceId(
-                $parent->setTranslatableLocale($businessPage->getLocale()))
-            );
+            $parent->setCurrentLocale($businessPage->getCurrentLocale());
+            $businessPageReference->setParent(ViewReferenceHelper::generateViewReferenceId($parent));
         }
 
         return $businessPageReference;

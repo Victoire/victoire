@@ -1,44 +1,18 @@
-Victoire\Bundle\TemplateBundle\Entity\Template:
-    template_base:
+Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
+    template_base_trans:
         name: Base
         slug: base
-        layout: fullWidth
-        author: @anakin
-        locale: fr
-        undeletable: true
-        createdAt: <dateTime('now')>
-        updatedAt: <dateTime('now')>
-        cssUpToDate: false
-    template_two_cols:
-        layout: two_cols
-        template: @template_base
-        author: @anakin
-        name: Two columns
-        locale: fr
-        slug: two_cols
-        undeletable: true
-        createdAt: <dateTime('now')>
-        updatedAt: <dateTime('now')>
-        cssUpToDate: false
+        locale: en
 
-Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
-    template_base_name:
-        content: Base
-        locale: en
-        field: name
-        object: @template_base
-    template_base_slug:
-        content: base
-        locale: en
-        field: slug
-        object: @template_base
-    template_two_cols_en_name:
-        content: Two columns
-        locale: en
-        field: name
-        object: @template_two_cols
-    template_two_cols_en_slug:
-        content: two-columns
-        locale: en
-        field: slug
-        object: @template_two_cols
+Victoire\Bundle\TemplateBundle\Entity\Template:
+    template_base:
+        currentLocale: fr
+        name: Base
+        slug: base
+        layout: defaultLayout
+        author: @anakin
+        undeletable: true
+        createdAt: <dateTime('now')>
+        updatedAt: <dateTime('now')>
+        cssUpToDate: false
+        translations: [@template_base_trans]

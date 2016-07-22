@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\CoreBundle\Form;
 
+use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
@@ -12,6 +13,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Victoire\Bundle\BlogBundle\Entity\ArticleTemplate;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Entity\View;
+use Victoire\Bundle\FormBundle\Form\Type\UrlvalidatedType;
+use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 
 /**
@@ -87,12 +90,24 @@ abstract class ViewType extends AbstractType
                     ]
                 );
             }
-        });
 
-        $builder
-            ->add('name', null, [
-                'label' => 'form.view.type.name.label',
-            ]);
+            if ($view instanceof BasePage) {
+                $translationOptions = [
+                    'fields' => [
+                        'name' => [
+                            'label' => 'form.view.type.name.label',
+                        ],
+                    ],
+                ];
+                if ($view->getId() && !$view->isHomepage()) {
+                    $translationOptions['fields']['slug'] = [
+                        'label'      => 'form.page.type.slug.label',
+                        'field_type' => UrlvalidatedType::class,
+                    ];
+                }
+                $form->add('translations', TranslationsType::class, $translationOptions);
+            }
+        });
     }
 
     protected function getAvailableLocales()

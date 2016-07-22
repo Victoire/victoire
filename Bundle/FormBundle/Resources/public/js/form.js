@@ -15,11 +15,13 @@ $vic(document).on('change', 'select[data-refreshOnChange="true"], input:checkbox
     var form = $vic(this).parents('form');
     loading(true);
 
-    var targetClass = ".vic-modal-body .vic-container-fluid .vic-tab-pane.vic-active";
+    var targetClass = ".vic-modal-body .vic-container-fluid .vic-tab-quantum.vic-tab-pane.vic-active";
     if ($vic(this).data('target')) {
         targetClass = $vic(this).data('target');
-    } else if ($vic(this).parents('.vic-modal').hasClass('-stylize')) {
-        targetClass = ".vic-modal-body .vic-container-fluid";
+    }
+    var updateStrategy = "html";
+    if ($vic(this).data('update-strategy')) {
+        updateStrategy = $vic(this).data('update-strategy');
     }
 
     //Get last element of visible target class
@@ -32,7 +34,10 @@ $vic(document).on('change', 'select[data-refreshOnChange="true"], input:checkbox
         data: form.serialize(),
         async: true
     }).done(function(response){
-        $target.html(response.html);
+
+        //By default, the updateStrategy is html (a simple replace) but you can set your own function
+        //for example, append, after etc or even a custom one.
+        eval('$target.' + updateStrategy + '(response.html)');
         var scripts = $target.find("script");
         loading(false);
     }).fail(function(response) {

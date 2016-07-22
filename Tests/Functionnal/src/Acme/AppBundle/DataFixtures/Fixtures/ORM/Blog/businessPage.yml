@@ -1,8 +1,8 @@
 Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage:
     bep_article_i_m_your_father:
+        currentLocale: fr
         name: "I'm your father."
         author: @anakin
-        locale: fr
         template: @template_article
         status: published
         parent: @blog-jedi-network
@@ -15,12 +15,7 @@ Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage:
 
 Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
     bep_article_i_m_your_father_en_name:
-        content: "I'm your father."
+        name: "I'm your father."
+        slug: "I-m-your-father"
         locale: en
-        field: name
-        object: @bep_article_i_m_your_father
-    bep_article_i_m_your_father_en_slug:
-        content: "I-m-your-father"
-        locale: en
-        field: slug
-        object: @bep_article_i_m_your_father
+        translatable: @bep_article_i_m_your_father

@@ -6,10 +6,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use JMS\Serializer\Annotation as Serializer;
-use Symfony\Component\Validator\Constraints as Assert;
+use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
-use Victoire\Bundle\I18nBundle\Entity\ViewTranslation;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
@@ -30,6 +29,7 @@ use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 abstract class View
 {
     use \Gedmo\Timestampable\Traits\TimestampableEntity;
+    use Translatable;
 
     /**
      * @var int
@@ -39,16 +39,6 @@ abstract class View
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
-    /**
-     * @var string
-     *
-     * @Assert\NotBlank()
-     * @ORM\Column(name="name", type="string", length=255)
-     * @Serializer\Groups({"search"})
-     * @Gedmo\Translatable
-     */
-    protected $name;
 
     /**
      * @var string
@@ -63,17 +53,6 @@ abstract class View
      * @ORM\Column(name="bodyClass", type="string", length=255, nullable=true)
      */
     protected $bodyClass;
-
-    /**
-     * @var string
-     *
-     * @Gedmo\Slug(handlers={
-     *     @Gedmo\SlugHandler(class="Victoire\Bundle\BusinessEntityBundle\Handler\TwigSlugHandler"
-     * )},fields={"name"}, updatable=false, unique=false)
-     * @Gedmo\Translatable
-     * @ORM\Column(name="slug", type="string", length=255)
-     */
-    protected $slug;
 
     /**
      * @var [WidgetMap]
@@ -181,23 +160,6 @@ abstract class View
     protected $cssUpToDate = false;
 
     /**
-     * @Gedmo\Locale
-     * Used locale to override Translation listener`s locale
-     * this is not a mapped field of entity metadata, just a simple property
-     * and it is not necessary because globally locale can be set in listener
-     */
-    protected $locale;
-
-    /**
-     * @ORM\OneToMany(
-     *   targetEntity="Victoire\Bundle\I18nBundle\Entity\ViewTranslation",
-     *   mappedBy="object",
-     *   cascade={"persist", "remove"}
-     * )
-     */
-    private $translations;
-
-    /**
      * Construct.
      **/
     public function __construct()
@@ -236,54 +198,6 @@ abstract class View
     public function setId($id)
     {
         $this->id = $id;
-    }
-
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return View
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Set slug.
-     *
-     * @param string $slug
-     *
-     * @return View
-     */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
-    /**
-     * Get slug.
-     *
-     * @return string
-     */
-    public function getSlug()
-    {
-        return $this->slug;
     }
 
     /**
@@ -713,7 +627,7 @@ abstract class View
      */
     public function getReference($locale = null)
     {
-        $locale = $locale ?: $this->getLocale();
+        $locale = $locale ?: $this->getCurrentLocale();
         if (is_array($this->references) && isset($this->references[$locale])) {
             return $this->references[$locale];
         }
@@ -753,7 +667,7 @@ abstract class View
      */
     public function setReference(ViewReference $reference, $locale = null)
     {
-        $locale = $locale ?: $this->getLocale();
+        $locale = $locale ?: $this->getCurrentLocale();
         $this->references[$locale] = $reference;
 
         return $this;
@@ -849,52 +763,33 @@ abstract class View
         return $this;
     }
 
-    public function setTranslatableLocale($locale)
-    {
-        $this->locale = $locale;
-
-        return $this;
-    }
-
-    public function setLocale($locale)
-    {
-        $this->locale = $locale;
-
-        return $this;
-    }
-
     /**
-     * @return string
+     * {@inheritdoc}
      */
-    public function getLocale()
+    public static function getTranslationEntityClass()
     {
-        return $this->locale;
+        return '\\Victoire\\Bundle\\I18nBundle\\Entity\\ViewTranslation';
     }
 
-    /**
-     * @return ViewTranslation[]
-     */
-    public function getTranslations()
+    public function getName()
     {
-        return $this->translations;
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getName');
     }
 
-    /**
-     * @return ViewTranslation[]
-     */
-    public function getTranslationClass()
+    public function setName($name, $locale = null)
     {
-        return 'Victoire\Bundle\I18nBundle\Entity\ViewTranslation';
+        $this->translate($locale, false)->setName($name);
+        $this->mergeNewTranslations();
     }
 
-    /**
-     * @param ViewTranslation $t
-     */
-    public function addTranslation(ViewTranslation $t)
+    public function getSlug()
     {
-        if (!$this->translations->contains($t)) {
-            $this->translations[] = $t;
-            $t->setObject($this);
-        }
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getSlug');
+    }
+
+    public function setSlug($slug, $locale = null)
+    {
+        $this->translate($locale, false)->setSlug($slug);
+        $this->mergeNewTranslations();
     }
 }

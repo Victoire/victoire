@@ -1,9 +1,20 @@
+Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
+    home_en:
+        name: Homepage
+        slug: home
+        locale: en
+
+    test_en:
+        name: English test
+        slug: english-test
+        locale: en
+
 Victoire\Bundle\PageBundle\Entity\Page:
     home:
+        currentLocale: fr
         template: @template_base
         author: @anakin
         name: Page d'accueil
-        locale: fr
         slug: home
         homepage: true
         undeletable: true
@@ -12,13 +23,14 @@ Victoire\Bundle\PageBundle\Entity\Page:
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         cssUpToDate: false
+        translations: [@home_en]
 
     test:
-        template: @template_two_cols
+        currentLocale: fr
+        template: @template_base
         author: @anakin
         name: Test
         parent: @home
-        locale: fr
         slug: test
         homepage: false
         undeletable: false
@@ -27,25 +39,4 @@ Victoire\Bundle\PageBundle\Entity\Page:
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         cssUpToDate: false
-
-Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
-    home_en_name:
-        content: Homepage
-        locale: en
-        field: name
-        object: @home
-    test_en_name:
-        content: English test
-        locale: en
-        field: name
-        object: @test
-    home_en_slug:
-        content: home
-        locale: en
-        field: slug
-        object: @home
-    test_en_slug:
-        content: english-test
-        locale: en
-        field: slug
-        object: @test
+        translations: [@test_en]

@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\BlogBundle\Form;
 
+use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -9,6 +10,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Victoire\Bundle\BlogBundle\Entity\Blog;
 use Victoire\Bundle\BlogBundle\Repository\ArticleTemplateRepository;
 use Victoire\Bundle\BlogBundle\Repository\TagRepository;
 use Victoire\Bundle\CoreBundle\DataTransformer\ViewToIdTransformer;
@@ -37,17 +39,6 @@ class ArticleType extends AbstractType
         $viewToIdTransformer = new ViewToIdTransformer($this->entityManager);
 
         $builder
-            ->add('name', null, [
-                'label' => 'form.article.name.label',
-            ])
-            ->add('description', null, [
-                'label'    => 'form.article.description.label',
-                'required' => false,
-            ])
-            ->add('image', MediaType::class, [
-                'required' => false,
-                'label'    => 'form.article.image.label',
-            ])
             ->add($builder
                 ->create('blog', HiddenType::class, ['label' => 'form.article.blog.label'])
                 ->addModelTransformer($viewToIdTransformer))
@@ -63,12 +54,14 @@ class ArticleType extends AbstractType
             $parent = $event->getForm()->getParent();
             $this->manageCategories($data, $parent);
             $this->manageTemplate($data, $parent);
+            $this->manageLocales($data, $parent);
         });
 
         $builder->get('blog')->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
             $data = $event->getData();
             $parent = $event->getForm()->getParent();
             $this->manageCategories($data, $parent);
+            $this->manageLocales($data, $parent);
         });
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -97,6 +90,38 @@ class ArticleType extends AbstractType
 
                 return $qb;
             },
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface|null $form
+     *
+     * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
+     */
+    protected function manageLocales($blog, $form)
+    {
+        if (!$blog instanceof Blog) {
+            $blog = $this->entityManager->getRepository('VictoireBlogBundle:Blog')->findOneById($blog);
+        }
+        $translations = $blog->getTranslations();
+        $availableLocales = [];
+        foreach ($translations as $translation) {
+            $availableLocales[] = $translation->getLocale();
+        }
+        $form->add('translations', TranslationsType::class, [
+            'required_locales' => $availableLocales,
+            'locales'          => $availableLocales,
+            'fields'           => [
+                'name' => [
+                    'label' => 'form.article.name.label',
+                ],
+                'image' => [
+                    'label'      => 'form.article.image.label',
+                    'field_type' => MediaType::class,
+                    'required'   => false,
+                ],
+
+            ],
         ]);
     }
 

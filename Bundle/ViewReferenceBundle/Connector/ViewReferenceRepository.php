@@ -39,14 +39,12 @@ class ViewReferenceRepository
     public function findReferenceByView(View $view)
     {
         $referenceId = ViewReferenceHelper::generateViewReferenceId($view);
-        $reference = $this->repository->findById($referenceId);
+        $reference = $this->getOneReferenceByParameters(['id' => $referenceId], false);
         $transformer = $this->transformer->getViewReferenceTransformer(
             (string) $reference['viewNamespace'], 'array'
         );
 
-        $viewReference = $transformer->transform($reference);
-
-        return $viewReference;
+        return  $transformer->transform($reference);
     }
 
     /**
@@ -71,9 +69,7 @@ class ViewReferenceRepository
             (string) $ref['viewNamespace'], 'array'
         );
 
-        $viewReference = $transformer->transform($ref);
-
-        return $viewReference;
+        return $transformer->transform($ref);
     }
 
     /**
@@ -85,10 +81,10 @@ class ViewReferenceRepository
      *
      * @return array
      */
-    public function getReferencesByParameters($parameters, $transform = true, $keepChildren = false)
+    public function getReferencesByParameters(array $parameters, $transform = true, $keepChildren = false, $type = null)
     {
         $viewsReferences = [];
-        $refsId = $this->repository->getAllBy($parameters);
+        $refsId = $this->repository->getAllBy($parameters, $type);
 
         $references = $this->repository->getResults($refsId);
         foreach ($references as $reference) {
@@ -122,7 +118,7 @@ class ViewReferenceRepository
      *
      * @return mixed
      */
-    public function getOneReferenceByParameters($parameters, $transform = true, $keepChildren = false)
+    public function getOneReferenceByParameters(array $parameters, $transform = true, $keepChildren = false)
     {
         $result = $this->getReferencesByParameters($parameters, $transform, $keepChildren);
         if (count($result)) {

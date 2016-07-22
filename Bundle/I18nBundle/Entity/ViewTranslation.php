@@ -3,35 +3,117 @@
 namespace Victoire\Bundle\I18nBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Translatable\Entity\MappedSuperclass\AbstractPersonalTranslation;
+use Gedmo\Mapping\Annotation as Gedmo;
+use JMS\Serializer\Annotation as Serializer;
+use Knp\DoctrineBehaviors\Model\Translatable\Translation;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="Victoire\Bundle\I18nBundle\Repository\ViewTranslationRepository")
- * @ORM\Table(name="vic_view_translations",
- *     uniqueConstraints={@ORM\UniqueConstraint(name="lookup_unique_idx", columns={
- *         "locale", "object_id", "field"
- *     })}
- * )
+ * Victoire ViewTranslation.
+ *
+ * @ORM\Entity()
+ * @ORM\Table(name="vic_view_translations")
  */
-class ViewTranslation extends AbstractPersonalTranslation
+class ViewTranslation
 {
+    use Translation;
+
     /**
-     * Convenient constructor.
+     * @var string
      *
-     * @param string $locale
-     * @param string $field
-     * @param string $value
+     * @Assert\NotBlank()
+     * @ORM\Column(name="name", type="string", length=255)
+     * @Serializer\Groups({"search"})
      */
-    public function __construct($locale = null, $field = null, $value = null)
+    protected $name;
+
+    /**
+     * @var string
+     *
+     * @Gedmo\Slug(handlers={
+     *     @Gedmo\SlugHandler(class="Victoire\Bundle\BusinessEntityBundle\Handler\TwigSlugHandler"
+     * )},fields={"name"}, updatable=false, unique=false)
+     * @ORM\Column(name="slug", type="string", length=255)
+     */
+    protected $slug;
+
+    /**
+     * @var string
+     *             This property is computed by the method PageSubscriber::buildUrl
+     */
+    protected $url;
+
+    /**
+     * Get name.
+     *
+     * @return string
+     */
+    public function getName()
     {
-        $this->setLocale($locale);
-        $this->setField($field);
-        $this->setContent($value);
+        return $this->name;
     }
 
     /**
-     * @ORM\ManyToOne(targetEntity="Victoire\Bundle\CoreBundle\Entity\View", inversedBy="translations")
-     * @ORM\JoinColumn(name="object_id", referencedColumnName="id", onDelete="CASCADE")
+     * Set name.
+     *
+     * @param string $name
+     *
+     * @return View
      */
-    protected $object;
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Set slug.
+     *
+     * @param string $slug
+     *
+     * @return View
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug.
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * @param string $url
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getTranslatableEntityClass()
+    {
+        return '\\Victoire\\Bundle\\CoreBundle\\Entity\\View';
+    }
 }

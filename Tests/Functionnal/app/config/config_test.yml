@@ -105,8 +105,8 @@ security:
             id: fos_user.user_provider.username
 
     firewalls:
-        main:
-            pattern: ^/
+        login:
+            pattern: ^/login*
             form_login:
                 provider:        fos_userbundle
                 csrf_provider:   form.csrf_provider
@@ -116,6 +116,9 @@ security:
             logout: true
             anonymous: true
             switch_user: ~
+        main:
+            pattern: ^/
+            http_basic: ~
     access_control:
         - { path: ^/admin/, role: ROLE_ADMIN }
 
@@ -158,3 +161,5 @@ snc_redis:
            alias: victoire
            dsn: redis://localhost
 
+parameters:
+    locale: fr

@@ -2,12 +2,12 @@
 Feature: Create business entity pages
 
     Background:
-        Given I am logged in as "anakin@victoire.io"
-        And the following Jedis:
+        Given the following Jedis:
             | name   | side   | midiChlorians | slug   |
             | Anakin | dark   | 20000         | anakin |
             | Yoda   | bright | 17500         | yoda   |
         And I maximize the window
+        And I am on homepage
 
     Scenario: I can delete an BE and his BEP
         Given I open the hamburger menu
@@ -22,12 +22,12 @@ Feature: Create business entity pages
         And I fill in "URL" with "fiche-jedi-{{item.slug}}"
         And I follow "Créer"
         And I wait 5 seconds
-        Then I should be on "/fr/victoire-dcms/business-template/show/5"
+        Then I should be on "/fr/victoire-dcms/business-template/show/4"
         And I should see "La représentation métier a bien été créée"
         Given I am on "/fr/fiche-jedi-anakin"
         And I switch to "layout" mode
         And I should see "Nouveau contenu"
-        When I select "Force" from the "1" select of "content" slot
+        When I select "Force" from the "1" select of "main_content" slot
         Then I should see "Créer"
         When I fill in "Côté de la force" with "Nouveau"
         And I submit the widget

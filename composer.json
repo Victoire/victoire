@@ -45,7 +45,7 @@
         "appventus/alertify-bundle": "^1.0",
         "appventus/assetic-injector-bundle": "^1.0",
         "doctrine/doctrine-bundle": "~1.4",
-        "doctrine/data-fixtures": "1.1.x-dev",
+        "doctrine/data-fixtures": "~1.2",
         "doctrine/doctrine-fixtures-bundle": "2.2.x-dev",
         "doctrine/orm": "v2.5.2",
         "friendsofsymfony/jsrouting-bundle": "2.0.*@dev",
@@ -56,7 +56,7 @@
         "infinite-networks/form-bundle": "dev-master",
         "jms/di-extra-bundle": "~1.7",
         "jms/serializer-bundle": "^1.0",
-        "jms/translation-bundle": "1.1.*@dev",
+        "jms/translation-bundle": "^1.2",
         "knplabs/gaufrette": "v0.1.7",
         "knplabs/knp-menu": "2.1.*@dev",
         "knplabs/knp-menu-bundle": "2.1.*@dev",
@@ -74,7 +74,10 @@
         "symfony/swiftmailer-bundle": "~2.3",
         "twig/extensions": "~1.0",
         "twig/twig": "~1.0",
-        "willdurand/js-translation-bundle": "^2.5"
+        "willdurand/js-translation-bundle": "^2.5",
+        "knplabs/doctrine-behaviors": "~1.1",
+        "doctrine/doctrine-migrations-bundle": "^1.0",
+        "a2lix/translation-form-bundle": "^2.1"
     },
     "require-dev": {
         "behat/behat": "~3.0",
@@ -115,7 +118,7 @@
     ],
     "extra": {
         "branch-alias": {
-            "dev-master": "1.6.x-dev"
+            "dev-master": "1.8.x-dev"
         }
     }
 }

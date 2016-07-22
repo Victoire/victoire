@@ -1,13 +1,14 @@
 @mink:selenium2 @alice(Page) @reset-schema
 Feature: Delete a widget
 
-Background:
-    Given I am logged in as "anakin@victoire.io"
+    Background:
+        Given I maximize the window
+        And I am on homepage
 
 Scenario: Abort Delete
     Then I switch to "layout" mode
     And I should see "Nouveau contenu"
-    When I select "Force" from the "1" select of "content" slot
+    When I select "Force" from the "1" select of "main_content" slot
     Then I should see "Créer"
     When I fill in "Côté de la force" with "Obscure"
     And I submit the widget
@@ -27,7 +28,7 @@ Scenario: Abort Delete
 Scenario: Create and delete a widget
     Then I switch to "layout" mode
     And I should see "Nouveau contenu"
-    When I select "Force" from the "1" select of "content" slot
+    When I select "Force" from the "1" select of "main_content" slot
     Then I should see "Créer"
     When I fill in "Côté de la force" with "Obscure"
     And I submit the widget

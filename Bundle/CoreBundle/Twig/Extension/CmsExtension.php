@@ -145,7 +145,7 @@ class CmsExtension extends \Twig_Extension_Core
         $result = '';
         $slotOptions = $this->widgetRenderer->computeOptions($slotId, $slotOptions);
 
-        if (!empty($currentView->getBuiltWidgetMap()[$slotId])) {
+        if ($currentView && !empty($currentView->getBuiltWidgetMap()[$slotId])) {
             //parse the widget maps
 
             /* @var WidgetMap $widgetMap */

@@ -2,7 +2,7 @@
 
 {% block modal_body_content %}
     <form method="POST" action="{{path('victoire_template_new')}}">
-        {{form_row(form.name)}}
+        {{form_row(form.translations)}}
         {{form_row(form.template)}}
         {{form_row(form.layout)}}
         {{form_rest(form)}}

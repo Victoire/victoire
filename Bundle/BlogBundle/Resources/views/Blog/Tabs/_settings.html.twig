@@ -16,29 +16,14 @@
             </div>
 
             <div class="vic-row">
-                <div class="vic-col-md-6">
-                    {{ form_row(form.name) }}
+                <div class="vic-col-md-12">
+                    {{ form_row(form.translations) }}
                 </div>
 
                 <div class="vic-col-md-6">
                     {{ form_row(form.template) }}
                 </div>
 
-                <div class="vic-col-md-6">
-                    <div class="vic-form-group">
-                        <label for="victoire_blog_settings_type_bodyClass">
-                            {{ 'form.blog.type.slug.label'|trans({}, 'victoire') }}
-                        </label>
-
-                        <div class="vic-form-url">
-                            <div class="vic-url">
-                                {{ url('victoire_core_page_show', {'url' : blog.url })|replace({(blog.slug): ''}) }}
-                            </div>
-
-                            {{ form_widget(form.slug) }}
-                        </div>
-                    </div>
-                </div>
 
                 <div class="vic-col-md-6">
                     {% if form.locale is defined %}

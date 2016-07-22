@@ -2,8 +2,8 @@
 Feature: Create a seo
 
 Background:
-    Given I am logged in as "anakin@victoire.io"
-    And I maximize the window
+    Given I maximize the window
+    And I am on homepage
 
 Scenario: I can add a seo
     Given I can create a new page
@@ -24,7 +24,7 @@ Scenario: I can add use businessTemplate to manage vbp seo
     And I can create a new Business entity page pattern and create some content in the pattern
     And I am on "/fr/fiche-jedi-anakin"
     Then the title should be "Fiche Jedi - Anakin"
-    Given I am on "/fr/victoire-dcms/business-template/show/5"
+    Given I am on "/fr/victoire-dcms/business-template/show/4"
     And I select the option "SEO" in the dropdown "Page"
     Then I should see "Paramètres SEO de la page "
     When I fill in "Meta Balise \"Title\"" with "Maître de la Force - {{item.name}}"

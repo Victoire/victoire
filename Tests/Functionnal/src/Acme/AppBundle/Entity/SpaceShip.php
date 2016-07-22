@@ -3,6 +3,9 @@
 namespace Acme\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
+use Symfony\Component\PropertyAccess\PropertyAccess;
+use Victoire\Bundle\BusinessEntityBundle\Entity\Traits\BusinessEntityTrait;
 use Victoire\Bundle\CoreBundle\Annotations as VIC;
 
 /**
@@ -14,6 +17,9 @@ use Victoire\Bundle\CoreBundle\Annotations as VIC;
  */
 class SpaceShip
 {
+    use BusinessEntityTrait;
+    use Translatable;
+
     /**
      * @var int
      *
@@ -29,5 +35,32 @@ class SpaceShip
     public function getId()
     {
         return $this->id;
+    }
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
+    public function getName()
+    {
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(), 'getName');
+    }
+
+    public function setName($name, $locale = null)
+    {
+        $this->translate($locale, false)->setDescription($name);
+        $this->mergeNewTranslations();
+    }
+
+    public function getSlug()
+    {
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(), 'getSlug');
+    }
+
+    public function setSlug($slug, $locale = null)
+    {
+        $this->translate($locale, false)->setDescription($slug);
+        $this->mergeNewTranslations();
     }
 }

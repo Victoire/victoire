@@ -121,9 +121,9 @@ class BlogController extends BasePageController
      *
      * @return JsonResponse
      */
-    public function newAction($isHomepage = false)
+    public function newAction(Request $request, $isHomepage = false)
     {
-        return new JsonResponse(parent::newAction());
+        return new JsonResponse(parent::newAction($request));
     }
 
     /**
@@ -156,7 +156,7 @@ class BlogController extends BasePageController
                 'success' => true,
                 'url'     => $this->generateUrl(
                     'victoire_core_page_show', [
-                        '_locale' => $blog->getLocale(), 'url' => $reference->getUrl(),
+                        '_locale' => $blog->getCurrentLocale(), 'url' => $reference->getUrl(),
                 ]),
             ]);
         }
@@ -218,7 +218,7 @@ class BlogController extends BasePageController
 
             return new JsonResponse([
                 'success' => true,
-                'url'     => $this->generateUrl('victoire_core_page_show', ['_locale' => $blog->getLocale(), 'url' => $blog->getUrl()]), ]);
+                'url'     => $this->generateUrl('victoire_core_page_show', ['_locale' => $blog->getCurrentLocale(), 'url' => $blog->getUrl()]), ]);
         }
         //we display the form
         $errors = $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form);

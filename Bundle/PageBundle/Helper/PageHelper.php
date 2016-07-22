@@ -271,14 +271,13 @@ class PageHelper
                     ->findOneBy([
                         'id'     => $viewReference->getViewId(),
                     ]);
-                $this->refreshPage($page, $viewReference->getLocale());
+                $page->setCurrentLocale($viewReference->getLocale());
             } else { //VirtualBusinessPage
                 $page = $this->entityManager->getRepository('VictoireCoreBundle:View')
                     ->findOneBy([
                         'id'     => $viewReference->getTemplateId(),
                     ]);
-                $this->refreshPage($page, $viewReference->getLocale());
-
+                $page->setCurrentLocale($viewReference->getLocale());
                 if ($entity) {
                     if ($page instanceof BusinessTemplate) {
                         $page = $this->updatePageWithEntity($page, $entity);
@@ -292,7 +291,7 @@ class PageHelper
                 ->findOneBy([
                     'id'     => $viewReference->getViewId(),
                 ]);
-            $this->refreshPage($page, $viewReference->getLocale());
+            $page->setCurrentLocale($viewReference->getLocale());
         } else {
             throw new \Exception(sprintf('Oh no! Cannot find a page for this ViewReference (%s)', ClassUtils::getClass($viewReference)));
         }

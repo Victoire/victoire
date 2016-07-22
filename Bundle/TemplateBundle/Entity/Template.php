@@ -50,7 +50,7 @@ class Template extends View
      **/
     public function __toString()
     {
-        return 'Modèle > '.$this->name;
+        return 'Modèle > '.$this->getName();
     }
 
     /**

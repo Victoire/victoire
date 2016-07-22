@@ -3,12 +3,12 @@ Feature: Stylize a widget
 
   Background:
     Given I maximize the window
-    And I am logged in as "anakin@victoire.io"
+    And I am on homepage
 
   Scenario: Change color for small device
     When I switch to "layout" mode
     And I should see "Nouveau contenu"
-    And I select "Force" from the "1" select of "content" slot
+    And I select "Force" from the "1" select of "main_content" slot
     Then I should see "Créer"
     When I fill in "Côté de la force" with "Obscure"
     And I submit the widget
@@ -29,7 +29,7 @@ Feature: Stylize a widget
   Scenario: Change image for small device
     When I switch to "layout" mode
     And I should see "Nouveau contenu"
-    And I select "Force" from the "1" select of "content" slot
+    And I select "Force" from the "1" select of "main_content" slot
     Then I should see "Créer"
     When I fill in "Côté de la force" with "Obscure"
     And I submit the widget

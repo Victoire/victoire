@@ -2,12 +2,12 @@
 Feature: Create business entity pages
 
     Background:
-        Given I am logged in as "anakin@victoire.io"
-        And the following Jedis:
+        Given the following Jedis:
             | name   | side   | midiChlorians | slug   |
             | Anakin | dark   | 20000         | anakin |
             | Yoda   | bright | 17500         | yoda   |
         And I maximize the window
+        And I am on homepage
 
     @smartStep
     Scenario: I can create a new Business entity page pattern and create some content in the pattern
@@ -25,11 +25,11 @@ Feature: Create business entity pages
         And I fill in "URL" with "fiche-jedi-{{item.slug}}"
         And I follow "Créer"
         And I wait 2 seconds
-        Then I should be on "/fr/victoire-dcms/business-template/show/5"
+        Then I should be on "/fr/victoire-dcms/business-template/show/4"
         And I should see "La représentation métier a bien été créée"
         Then I switch to "layout" mode
         And I should see "Nouveau contenu"
-        When I select "Force" from the "1" select of "content" slot
+        When I select "Force" from the "1" select of "main_content" slot
         Then I should see "Créer"
         Then I follow the tab "Jedi"
         And I should see "Objet courant"
@@ -58,11 +58,11 @@ Feature: Create business entity pages
         And I fill in "business_template[query]" with "WHERE item.side='dark'"
         And I follow "Créer"
         And I wait 5 seconds
-        Then I should be on "/fr/victoire-dcms/business-template/show/5"
+        Then I should be on "/fr/victoire-dcms/business-template/show/4"
         And I should see "La représentation métier a bien été créée"
         Then I switch to "layout" mode
         And I should see "Nouveau contenu"
-        When I select "Force" from the "1" select of "content" slot
+        When I select "Force" from the "1" select of "main_content" slot
         Then I should see "Créer"
         When I fill in "Côté de la force" with "Static Widget - Fiche Jedi Dark"
         And I submit the widget
@@ -83,11 +83,11 @@ Feature: Create business entity pages
         And I fill in "business_template[query]" with "WHERE item.side='bright'"
         And I follow "Créer"
         And I wait 5 seconds
-        Then I should be on "/fr/victoire-dcms/business-template/show/6"
+        Then I should be on "/fr/victoire-dcms/business-template/show/5"
         And I should see "La représentation métier a bien été créée"
         Then I switch to "layout" mode
         And I should see "Nouveau contenu"
-        When I select "Force" from the "1" select of "content" slot
+        When I select "Force" from the "1" select of "main_content" slot
         Then I should see "Créer"
         When I fill in "Côté de la force" with "Static Widget - Fiche Jedi Bright"
         And I submit the widget
@@ -122,13 +122,13 @@ Feature: Create business entity pages
         Given I am on "/fr/fiche-jedi-yoda"
         And I switch to "layout" mode
         And I should see "Nouveau contenu"
-        When I select "Force" from the "1" select of "content" slot
+        When I select "Force" from the "1" select of "main_content" slot
         Then I should see "Créer"
         When I fill in "Côté de la force" with "Nouveau"
         And I submit the widget
         And I wait 5 seconds
         Then I should see "Le Côté Nouveau de la force"
-        Given I am on "/fr/victoire-dcms/business-template/show/5"
+        Given I am on "/fr/victoire-dcms/business-template/show/4"
         Then I should not see "Le Côté Nouveau de la force"
 
     Scenario: I add a BusinessEntity and check if its representation is accessible
@@ -146,11 +146,11 @@ Feature: Create business entity pages
         And I fill in "URL" with "fiche-jedi-{{item.slug}}"
         And I follow "Créer"
         And I wait 10 seconds
-        Then I should be on "/fr/victoire-dcms/business-template/show/5"
+        Then I should be on "/fr/victoire-dcms/business-template/show/4"
         And I should see "La représentation métier a bien été créée"
         Then I switch to "layout" mode
         And I should see "Nouveau contenu"
-        When I select "Force" from the "1" select of "content" slot
+        When I select "Force" from the "1" select of "main_content" slot
         Then I should see "Créer"
         When I follow the tab "Jedi"
         And I follow the tab "Objet courant"
@@ -192,10 +192,10 @@ Feature: Create business entity pages
         And I fill in "business_template_query" with "WHERE LOWER(item.side) LIKE LOWER('bright') OR LOWER(item.side) LIKE LOWER('double')"
         And I follow "Créer"
         And I wait 6 seconds
-        Then I should be on "/fr/victoire-dcms/business-template/show/5"
+        Then I should be on "/fr/victoire-dcms/business-template/show/4"
         And I switch to "layout" mode
         And I should see "Nouveau contenu"
-        When I select "Force" from the "1" select of "content" slot
+        When I select "Force" from the "1" select of "main_content" slot
         Then I should see "Créer"
         And I fill in "Côté de la force" with "Bright"
         And I submit the widget
@@ -216,10 +216,10 @@ Feature: Create business entity pages
         And I fill in "business_template_query" with "WHERE LOWER(item.side) LIKE LOWER('dark') OR LOWER(item.side) LIKE LOWER('double')"
         And I follow "Créer"
         And I wait 5 seconds
-        Then I should be on "/fr/victoire-dcms/business-template/show/6"
+        Then I should be on "/fr/victoire-dcms/business-template/show/5"
         When I switch to "layout" mode
         And I should see "Nouveau contenu"
-        And I select "Force" from the "1" select of "content" slot
+        And I select "Force" from the "1" select of "main_content" slot
         Then I should see "Créer"
         And I fill in "Côté de la force" with "Dark"
         And I submit the widget

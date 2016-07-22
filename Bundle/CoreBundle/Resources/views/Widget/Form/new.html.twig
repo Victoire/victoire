@@ -7,10 +7,10 @@
 
     <div class="vic-tab-content vic-modal-tab-content vic-modal-tab-content-container">
     {% for key, widget in widgets %}
-        {% include "VictoireCoreBundle:Widget:Form/new_partial.html.twig" with {forms: forms[key], widget: widget, classes: classes, id: widgets[key].id ? widgets[key].id : id}%}
+        {% include "VictoireCoreBundle:Widget:Form/new_partial.html.twig" with {forms: forms[key], widget: widget, classes: classes, id: widgets[key].id ? widgets[key].id : id, quantum: forms[key]['quantum'] }%}
     {% endfor %}
     </div>
-    <ul class="vic-nav vic-nav-tabs vic-modal-nav-tabs">
+    <ul class="vic-nav vic-nav-tabs vic-modal-nav-tabs vic-quantum-nav">
         {% for key, form in forms %}
             {% include "VictoireCoreBundle:Widget:Form/tab.html.twig" with {isLast: loop.last, widget: widgets[key], active: form.active is defined ? form.active : false, id: widgets[key].id ? widgets[key].id : id} %}
         {% endfor %}

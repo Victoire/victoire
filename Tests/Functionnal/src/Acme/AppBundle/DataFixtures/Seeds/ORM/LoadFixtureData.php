@@ -36,12 +36,12 @@ class LoadFixtureData extends AbstractFixture implements ContainerAwareInterface
 
         $files['user'] = $this->fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/User/user.yml');
         $files['folder'] = $this->fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/Media/folder.yml');
-        $files['template'] = $this->fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/View/template.yml');
         $files['page'] = $this->fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/View/page.yml');
+        $files['template'] = $this->fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/View/template.yml');
         $files['i18n'] = $this->fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/View/i18n.yml');
         $files['errorPage'] = $this->fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/View/errorPage.yml');
 
-        Fixtures::load(
+        $objects = Fixtures::load(
         $files,
         $manager,
         [
@@ -152,18 +152,18 @@ class LoadFixtureData extends AbstractFixture implements ContainerAwareInterface
         while ($file = readdir($openFolder)) {
             if ($file != '.' && $file != '..') {
                 // Remove file
-                $recursiveDelete = function ($str) use (&$recursiveDelete) {
-                    if (is_file($str)) {
-                        return @unlink($str);
-                    } elseif (is_dir($str)) {
-                        $scan = glob(rtrim($str, '/').'/*');
-                        foreach ($scan as $path) {
-                            $recursiveDelete($path);
-                        }
-
-                        return @rmdir($str);
+            $recursiveDelete = function ($str) use (&$recursiveDelete) {
+                if (is_file($str)) {
+                    return @unlink($str);
+                } elseif (is_dir($str)) {
+                    $scan = glob(rtrim($str, '/').'/*');
+                    foreach ($scan as $path) {
+                        $recursiveDelete($path);
                     }
-                };
+
+                    return @rmdir($str);
+                }
+            };
                 $recursiveDelete($folder.$file);
             }
         }

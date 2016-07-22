@@ -6,6 +6,7 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
+use Victoire\Bundle\I18nBundle\Entity\ViewTranslation;
 use Victoire\Bundle\ViewReferenceBundle\Event\ViewReferenceEvent;
 use Victoire\Bundle\ViewReferenceBundle\ViewReferenceEvents;
 
@@ -79,9 +80,20 @@ class ViewReferenceSubscriber implements \Doctrine\Common\EventSubscriber
     private function updateViewReference(LifecycleEventArgs $eventArgs)
     {
         $entity = $eventArgs->getEntity();
-        // if a page is persisted we rebuild his viewRef
+        $view = null;
+        $translations = [];
         if ($entity instanceof WebViewInterface) {
-            $event = new ViewReferenceEvent($entity);
+            $translations = $entity->getTranslations();
+            $view = $entity;
+        } elseif ($entity instanceof ViewTranslation && $entity->getTranslatable() instanceof WebViewInterface) {
+            $translations = [$entity];
+            $view = $entity->getTranslatable();
+        }
+
+        // if a page is persisted we rebuild his viewRef
+        foreach ($translations as $translation) {
+            $view->setCurrentLocale($translation->getLocale());
+            $event = new ViewReferenceEvent($view);
             $this->dispatcher->dispatch(ViewReferenceEvents::UPDATE_VIEW_REFERENCE, $event);
         }
     }
