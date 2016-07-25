@@ -11,7 +11,7 @@ use Victoire\Bundle\CoreBundle\Entity\View;
 class CurrentViewHelper
 {
     protected $currentView;
-    protected $mainCurrentView;
+    protected $updatedCurrentView;
 
     /**
      * Get currentView.
@@ -24,13 +24,13 @@ class CurrentViewHelper
     }
 
     /**
-     * Get mainCurrentView.
+     * Get updatedCurrentView.
      *
      * @return View
      */
-    public function getMainCurrentView()
+    public function getUpdatedCurrentView()
     {
-        return $this->mainCurrentView;
+        return $this->updatedCurrentView;
     }
 
     /**
@@ -43,9 +43,9 @@ class CurrentViewHelper
     public function setCurrentView(View $currentView)
     {
         if ($this->currentView == null) {
-            $this->mainCurrentView = clone $currentView;
+            $this->currentView = clone $currentView;
         }
-        $this->currentView = $currentView;
+        $this->updatedCurrentView = $currentView;
 
         return $this;
     }
