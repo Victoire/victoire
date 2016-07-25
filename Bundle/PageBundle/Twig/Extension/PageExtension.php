@@ -129,6 +129,6 @@ class PageExtension extends \Twig_Extension
     {
         $currentView = $this->currentViewHelper;
 
-        return $currentView->getMainCurrentView()->getReference()->getId();
+        return $currentView->getCurrentView()->getReference()->getId();
     }
 }
