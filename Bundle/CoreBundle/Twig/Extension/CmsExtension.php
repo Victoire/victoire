@@ -140,7 +140,7 @@ class CmsExtension extends \Twig_Extension_Core
      */
     public function cmsSlotWidgets($slotId, $slotOptions = [])
     {
-        $currentView = $this->currentViewHelper->getCurrentView();
+        $currentView = $this->currentViewHelper->getUpdatedCurrentView();
 
         $result = '';
         $slotOptions = $this->widgetRenderer->computeOptions($slotId, $slotOptions);
