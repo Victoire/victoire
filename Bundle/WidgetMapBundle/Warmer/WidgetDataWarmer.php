@@ -172,7 +172,7 @@ class WidgetDataWarmer
 
         foreach ($links as $link) {
             foreach ($pages as $page) {
-                if (!($page instanceof BusinessTemplate) && $link->getViewReference() == $page->getReference()->getId()) {
+                if (!($page instanceof BusinessTemplate) && $page->getReference() && $link->getViewReference() == $page->getReference()->getId()) {
                     $link->setViewReferencePage($page);
                 }
             }
