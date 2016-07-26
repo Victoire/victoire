@@ -730,7 +730,7 @@ abstract class View
     public function isTemplateOf(View $view)
     {
         while ($_view = $view->getTemplate()) {
-            if ($this == $_view) {
+            if ($this === $_view) {
                 return true;
             }
             $view = $_view;
