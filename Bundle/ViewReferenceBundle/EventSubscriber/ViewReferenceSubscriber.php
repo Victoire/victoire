@@ -81,13 +81,16 @@ class ViewReferenceSubscriber implements \Doctrine\Common\EventSubscriber
     {
         $entity = $eventArgs->getEntity();
         $view = null;
+        $currentLocale = null;
         $translations = [];
         if ($entity instanceof WebViewInterface) {
             $translations = $entity->getTranslations();
             $view = $entity;
+            $currentLocale = $view->getCurrentLocale();
         } elseif ($entity instanceof ViewTranslation && $entity->getTranslatable() instanceof WebViewInterface) {
             $translations = [$entity];
             $view = $entity->getTranslatable();
+            $currentLocale = $view->getCurrentLocale();
         }
 
         // if a page is persisted we rebuild his viewRef
@@ -99,6 +102,9 @@ class ViewReferenceSubscriber implements \Doctrine\Common\EventSubscriber
             }
             $event = new ViewReferenceEvent($view);
             $this->dispatcher->dispatch(ViewReferenceEvents::UPDATE_VIEW_REFERENCE, $event);
+        }
+        if ($view) {
+            $view->setCurrentLocale($currentLocale);
         }
     }
 }
