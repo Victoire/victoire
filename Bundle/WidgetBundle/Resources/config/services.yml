@@ -75,6 +75,7 @@ services:
             - @doctrine.orm.entity_manager
             - @logger
             - @victoire.repository.error_page
+            - %locale%
             - %victoire_core.businessTemplates%
         tags:
             - { name: twig.extension }
