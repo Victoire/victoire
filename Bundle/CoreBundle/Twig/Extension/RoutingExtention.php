@@ -21,7 +21,7 @@ class RoutingExtention extends BaseRoutingExtension
     private $localeResolver;
     private $logger;
     private $errorPageRepository;
-    private $requestLocale;
+    private $locale;
 
     /**
      * @param PageHelper            $pageHelper
@@ -30,6 +30,7 @@ class RoutingExtention extends BaseRoutingExtension
      * @param RequestStack          $requestStack
      * @param LoggerInterface       $logger
      * @param EntityRepository      $errorPageRepository
+     * @param                       $locale
      */
     public function __construct(
         PageHelper $pageHelper,
@@ -37,7 +38,8 @@ class RoutingExtention extends BaseRoutingExtension
         LocaleResolver $localeResolver,
         RequestStack $requestStack,
         LoggerInterface $logger,
-        EntityRepository $errorPageRepository
+        EntityRepository $errorPageRepository,
+        $locale
     ) {
         $this->pageHelper = $pageHelper;
         $this->generator = $generator;
@@ -45,16 +47,17 @@ class RoutingExtention extends BaseRoutingExtension
         $this->request = $requestStack->getCurrentRequest();
         $this->logger = $logger;
         $this->errorPageRepository = $errorPageRepository;
-        $this->requestLocale = $this->request ? $this->request->getLocale() : null;
         parent::__construct($generator);
+        $this->locale = $locale;
     }
 
     public function getPath($name, $parameters = [], $relative = false)
     {
+        $requestLocale = $this->request ? $this->request->getLocale() : $this->defaultLocale;
         if ($name == 'victoire_core_page_show_by_id') {
             $params = [
                 'viewId' => $parameters['viewId'],
-                'locale' => $this->requestLocale,
+                'locale' => $requestLocale,
             ];
             unset($parameters['viewId']);
             if (!empty($parameters['entityId'])) {
@@ -63,7 +66,7 @@ class RoutingExtention extends BaseRoutingExtension
             }
             try {
                 $page = $this->pageHelper->findPageByParameters($params);
-                $parameters['url'] = $page->getReference($this->requestLocale)->getUrl();
+                $parameters['url'] = $page->getReference($requestLocale)->getUrl();
             } catch (ViewReferenceNotFoundException $e) {
                 $this->logger->error($e->getMessage(), [
                     'params' => $params,
@@ -71,9 +74,9 @@ class RoutingExtention extends BaseRoutingExtension
                 $errorPage = $this->errorPageRepository->findOneByCode(404);
                 $parameters['url'] = $this->generator->generate(
                     'victoire_core_page_show', array_merge([
-                        '_locale' => $this->requestLocale,
-                        'url'     => $errorPage->getSlug(),
-                    ], $params
+                        '_locale' => $requestLocale,
+                        'url'     => $errorPage ? $errorPage->getSlug() : '',
+                    ], $parameters
                 ));
             }
 
@@ -83,7 +86,7 @@ class RoutingExtention extends BaseRoutingExtension
         $prefix = '';
         //if locale is passed (and different) and i18n strategy is "domain"
         if (!empty($parameters['_locale'])
-            && $parameters['_locale'] != $this->requestLocale
+            && $parameters['_locale'] != $requestLocale
             && $this->localeResolver->localePattern === LocaleResolver::PATTERN_DOMAIN
         ) {
             $prefix = $this->getPrefix($parameters['_locale']);
