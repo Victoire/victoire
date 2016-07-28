@@ -16,6 +16,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
+use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 use Victoire\Bundle\QueryBundle\Entity\VictoireQueryInterface;
@@ -175,6 +176,8 @@ class QueryHelper
             if (strpos($query, ':currentEntity') !== false) {
                 $itemsQueryBuilder->setParameter('currentEntity', $currentEntity->getId());
             }
+        } elseif ($currentView() instanceof BusinessTemplate && strpos($query, ':currentEntity') !== false) {
+            $itemsQueryBuilder->setParameter('currentEntity', $containerEntity->getEntity()->getId());
         }
 
         if (strpos($query, ':currentUser') !== false && is_object($this->getCurrentUser())) {
