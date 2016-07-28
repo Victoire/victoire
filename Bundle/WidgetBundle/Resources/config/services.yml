@@ -87,11 +87,6 @@ services:
         tags:
             - { name: form.type }
 
-    victoire_widget.widget.subscriber:
-        class: Victoire\Bundle\WidgetBundle\Listener\WidgetSubscriber
-        tags:
-            - { name: kernel.event_subscriber }
-
     victoire_widget.cache.widget_cache_clearer:
         class: Victoire\Bundle\WidgetBundle\Cache\WidgetCacheClearer
         arguments:
