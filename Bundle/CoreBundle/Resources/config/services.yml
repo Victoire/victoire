@@ -197,6 +197,7 @@ services:
             - '@request_stack'
             - '@logger'
             - '@victoire.repository.error_page'
+            - '%locale%'
 
     victoire_core.routing_loader:
         class: Victoire\Bundle\CoreBundle\Route\RouteLoader
