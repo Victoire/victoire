@@ -53,7 +53,7 @@ class RoutingExtention extends BaseRoutingExtension
 
     public function getPath($name, $parameters = [], $relative = false)
     {
-        $requestLocale = $this->request ? $this->request->getLocale() : $this->defaultLocale;
+        $requestLocale = $this->request ? $this->request->getLocale() : $this->locale;
         if ($name == 'victoire_core_page_show_by_id') {
             $params = [
                 'viewId' => $parameters['viewId'],
