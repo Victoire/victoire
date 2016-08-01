@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\TemplateBundle\Form;
 
+use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -42,6 +43,14 @@ class TemplateType extends ViewType
             'label'             => 'form.template.type.layout.label',
             'choices'           => array_flip($options['layouts']),
             'choices_as_values' => true,
+        ]);
+
+        $builder->add('translations', TranslationsType::class, [
+            'fields' => [
+                'name' => [
+                    'label' => 'form.view.type.name.label',
+                ],
+            ],
         ]);
     }
 

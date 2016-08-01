@@ -195,6 +195,9 @@ services:
             - '@router'
             - '@victoire_i18n.locale_resolver'
             - '@request_stack'
+            - '@logger'
+            - '@victoire.repository.error_page'
+            - '%locale%'
 
     victoire_core.routing_loader:
         class: Victoire\Bundle\CoreBundle\Route\RouteLoader
@@ -210,3 +213,10 @@ services:
         class: Victoire\Bundle\CoreBundle\DataCollector\VictoireCollector
         tags:
             - { name: data_collector, template: 'VictoireCoreBundle:Profiler:widget_cache', id: 'victoire_core.victoire_collector', priority: 200 }
+
+    #  ==================  Repositories ================== #
+    victoire.repository.error_page:
+        class: Doctrine\ORM\EntityRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - Victoire\Bundle\TwigBundle\Entity\ErrorPage

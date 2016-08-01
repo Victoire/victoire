@@ -19,10 +19,11 @@ use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
  * A victoire view is a visual representation with a widget map.
  *
  * @Gedmo\Tree(type="nested")
- * @Gedmo\TranslationEntity(class="Victoire\Bundle\I18nBundle\Entity\ViewTranslation")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\Entity(repositoryClass="Victoire\Bundle\CoreBundle\Repository\ViewRepository")
+ * @ORM\Entity(
+ *     repositoryClass="Victoire\Bundle\CoreBundle\Repository\ViewRepository"
+ * )
  * @ORM\Table("vic_view")
  * @ORM\HasLifecycleCallbacks
  */
@@ -177,7 +178,7 @@ abstract class View
      **/
     public function __toString()
     {
-        return $this->getName();
+        return '#'.$this->getId().' '.$this->getName();
     }
 
     /**
@@ -730,7 +731,7 @@ abstract class View
     public function isTemplateOf(View $view)
     {
         while ($_view = $view->getTemplate()) {
-            if ($this == $_view) {
+            if ($this === $_view) {
                 return true;
             }
             $view = $_view;

@@ -111,7 +111,7 @@ class WidgetRenderer
         $widgetMap = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $view);
 
         $directive = '';
-        if ($this->container->get('security.context')->isGranted('ROLE_VICTOIRE')) {
+        if ($this->container->get('security.authorization_checker')->isGranted('ROLE_VICTOIRE')) {
             $directive = 'widget';
         }
 

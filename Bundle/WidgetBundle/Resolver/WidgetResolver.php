@@ -7,8 +7,6 @@
  */
 namespace Victoire\Bundle\WidgetBundle\Resolver;
 
-use Symfony\Component\PropertyAccess\PropertyAccessor;
-use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Victoire\Bundle\CriteriaBundle\Chain\DataSourceChain;
 use Victoire\Bundle\CriteriaBundle\Entity\Criteria;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
@@ -44,21 +42,18 @@ class WidgetResolver
 
     public function resolve(WidgetMap $widgetMap)
     {
-        $accessor = new PropertyAccessor();
         //TODO: orderiaze it
-        /** @var Widget $widget */
-        foreach ($widgetMap->getWidgets() as $widget) {
+        /* @var Widget $widget */
+        foreach ($widgetMap->getWidgets() as $_widget) {
             /** @var Criteria $criteria */
-            foreach ($widget->getCriterias() as $criteria) {
+            foreach ($_widget->getCriterias() as $criteria) {
                 $value = $this->dataSourceChain->getData($criteria->getName());
-                if ($this->assert($value(), $criteria->getOperator(), $criteria->getValue())) {
-                    continue;
-                } else {
+                if (!$this->assert($value(), $criteria->getOperator(), $criteria->getValue())) {
                     continue 2; //try with break
                 }
             }
 
-            return $widget;
+            return $_widget;
         }
     }
 
