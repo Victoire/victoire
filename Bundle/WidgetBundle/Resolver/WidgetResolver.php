@@ -7,7 +7,6 @@
  */
 namespace Victoire\Bundle\WidgetBundle\Resolver;
 
-use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Victoire\Bundle\CriteriaBundle\Chain\DataSourceChain;
 use Victoire\Bundle\CriteriaBundle\Entity\Criteria;
