@@ -45,11 +45,11 @@ class VictoirePageExtension extends Extension implements PrependExtensionInterfa
                             ],
                             'mappings'    => [
                                 'translations' => [
-                                    'type' => 'nested',
+                                    'type'       => 'nested',
                                     'properties' => [
                                         'name' => null,
                                     ],
-                                ]
+                                ],
                             ],
                             'persistence' => [
                                 'driver'   => 'orm',

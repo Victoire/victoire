@@ -7,7 +7,6 @@
  */
 namespace Victoire\Bundle\WidgetBundle\Resolver;
 
-use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Victoire\Bundle\CriteriaBundle\Chain\DataSourceChain;
 use Victoire\Bundle\CriteriaBundle\Entity\Criteria;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
@@ -36,7 +35,7 @@ class WidgetResolver
     public function resolve(WidgetMap $widgetMap)
     {
         //TODO: orderiaze it
-        /** @var Widget $widget */
+        /* @var Widget $widget */
         foreach ($widgetMap->getWidgets() as $_widget) {
             /** @var Criteria $criteria */
             foreach ($_widget->getCriterias() as $criteria) {
@@ -48,8 +47,6 @@ class WidgetResolver
 
             return $_widget;
         }
-
-        return null;
     }
 
     protected function assert($value, $operator, $expected)
