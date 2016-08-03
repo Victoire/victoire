@@ -261,6 +261,7 @@ class LinkExtension extends \Twig_Extension
         $page = $this->pageHelper->findPageByParameters([
             'templateId' => $templateId,
             'entityId'   => $businessEntityInstance->getId(),
+            'locale'     => $this->request ? $this->request->getLocale() : $this->defaultLocale,
         ]);
 
         $parameters = [
