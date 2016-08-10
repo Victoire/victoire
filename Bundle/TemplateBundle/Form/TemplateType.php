@@ -40,6 +40,8 @@ class TemplateType extends ViewType
                 ],
             ],
         ]);
+
+        $builder->remove('roles');
     }
 
     /**

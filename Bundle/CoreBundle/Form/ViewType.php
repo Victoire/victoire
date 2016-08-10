@@ -122,6 +122,13 @@ abstract class ViewType extends AbstractType
                 $form->add('translations', TranslationsType::class, $translationOptions);
             }
         });
+
+        if ($this->authorizationChecker->isGranted('ROLE_VICTOIRE_DEVELOPER')) {
+            $builder->add('roles', TextType::class, [
+                'label'      => 'form.page.type.roles.label',
+                'vic_help_block'    => 'form.page.type.roles.help_block',
+            ]);
+        }
     }
 
     protected function getAvailableLocales()

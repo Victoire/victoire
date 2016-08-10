@@ -70,9 +70,13 @@
         <source>victoire.form.business_template.query.label</source>
         <target><![CDATA[<i class="fa fa-database"></i> Query <strong>BETA</strong>]]></target>
       </trans-unit>
-      <trans-unit id="4c359543d88eb230619ccbd8b26a5b1110501613" resname="victoire.form.business_template.author_restricted.label">
-        <source>victoire.form.business_template.author_restricted.label</source>
-        <target>Restrict to the entity's author</target>
+      <trans-unit id="4c359543d88eb230619ccbd8b26a5b1110501613" resname="form.page.type.roles.label">
+        <source>form.page.type.roles.label</source>
+        <target>Permissions needed to display the page</target>
+      </trans-unit>
+      <trans-unit id="4c359543d88eb230619ccbd8b26a5b1110501614" resname="form.page.type.roles.help_block">
+        <source>form.page.type.roles.help_block</source>
+        <target>Format: BUSINESS_ENTITY_OWNER,PERMISSION_1,PERMISSION_2,...</target>
       </trans-unit>
       <trans-unit id="230619ccbd8b26a54c359543d88ebb1110501612" resname="victoire.form.business_template.query.vic_help_block">
         <source>victoire.form.business_template.query.vic_help_block</source>
