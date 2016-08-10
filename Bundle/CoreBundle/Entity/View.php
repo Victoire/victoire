@@ -175,7 +175,6 @@ abstract class View
         $this->widgetMaps = new ArrayCollection();
         $this->translations = new ArrayCollection();
         $this->references = [];
-        $this->roles = [];
     }
 
     /**
