@@ -29,8 +29,9 @@ class BusinessEntityOwnerVoter extends Voter
      */
     protected function supports($attribute, $subject)
     {
-        return method_exists($subject, 'getAuthor')
-            && $this->businessEntityHelper->findByEntityInstance($subject)
+        return method_exists($subject, 'getBusinessEntity')
+            && method_exists($subject, 'getAuthor')
+            && $this->businessEntityHelper->findByEntityInstance($subject->getBusinessEntity())
             && 'BUSINESS_ENTITY_OWNER' === $attribute;
     }
 
@@ -42,7 +43,7 @@ class BusinessEntityOwnerVoter extends Voter
         return $token->getUser() instanceof $this->userClass
             && ($token->getUser()->hasRole('ROLE_VICTOIRE')
                 || $token->getUser()->hasRole('ROLE_VICTOIRE_DEVELOPER')
-                || $subject->getAuthor() === $token->getUser()
+                || $subject->getBusinessEntity()->getAuthor() === $token->getUser()
             );
     }
 }
