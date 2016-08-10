@@ -13,10 +13,6 @@ use Victoire\Bundle\PageBundle\Entity\PageStatus;
  */
 class BlogSettingsType extends BlogType
 {
-    public function __construct($available_locales, RequestStack $requestStack)
-    {
-        parent::__construct($available_locales, $requestStack);
-    }
 
     /**
      * define form fields.

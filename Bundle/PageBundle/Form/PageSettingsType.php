@@ -12,13 +12,6 @@ use Victoire\Bundle\PageBundle\Entity\PageStatus;
  */
 class PageSettingsType extends PageType
 {
-    /**
-     * Constructor.
-     */
-    public function __construct($availableLocales, RequestStack $requestStack)
-    {
-        parent::__construct($availableLocales, $requestStack);
-    }
 
     /**
      * define form fields.

@@ -6,10 +6,12 @@ use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Victoire\Bundle\BlogBundle\Entity\ArticleTemplate;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Entity\View;
@@ -25,11 +27,23 @@ abstract class ViewType extends AbstractType
     protected $availableLocales;
     protected $currentLocale;
     protected $isNew;
+    /**
+     * @var AuthorizationChecker
+     */
+    private $authorizationChecker;
 
-    public function __construct($availableLocales, RequestStack $requestStack)
+    /**
+     * ViewType constructor.
+     *
+     * @param                      $availableLocales
+     * @param RequestStack         $requestStack
+     * @param AuthorizationChecker $authorizationChecker
+     */
+    public function __construct($availableLocales, RequestStack $requestStack, AuthorizationChecker $authorizationChecker)
     {
         $this->availableLocales = $availableLocales;
         $this->currentLocale = $requestStack->getCurrentRequest()->getLocale();
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
