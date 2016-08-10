@@ -35,6 +35,7 @@ class BusinessTemplate extends Template implements VictoireQueryInterface
 
     /**
      * @var bool
+     * @deprecated author restriction is handled by the "BUSINESS_ENTITY_OWNER" role since 1.7.7 and will be removed in the 1.8
      *
      * @ORM\Column(name="author_restricted", type="boolean")
      */
