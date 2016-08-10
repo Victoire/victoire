@@ -49,9 +49,6 @@ class BusinessTemplateType extends ViewType
                 'label'          => 'victoire.form.business_template.backend_name.label',
                 'vic_help_block' => 'victoire.form.business_template.backend_name.help_block',
             ])
-            ->add('authorRestricted', null, [
-                'label' => 'victoire.form.business_template.author_restricted.label',
-            ])
             ->add('query', null, [
                 'label'                        => 'victoire.form.business_template.query.label',
                 'vic_business_properties'      => $options['vic_business_properties'],
