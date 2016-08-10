@@ -4,13 +4,12 @@ services:
     ####################################################################################################################
 
     victoire_template.template.form.type:
+        parent: "victoire_core.view.form.type"
         class: Victoire\Bundle\TemplateBundle\Form\TemplateType
-        arguments:
-            - "%victoire_core.layouts%"
-            - "%victoire_i18n.available_locales%"
-            - "@request_stack"
         tags:
             - { name: form.type }
+        calls:
+            - [ setLayouts, ["%victoire_core.layouts%"] ]
 
     ####################################################################################################################
     # Menu

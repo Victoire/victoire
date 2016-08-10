@@ -13,14 +13,6 @@ use Victoire\Bundle\PageBundle\Form\BasePageType;
  */
 class BlogType extends BasePageType
 {
-    /*
-    * Constructor
-    */
-
-    public function __construct($availableLocales, RequestStack $requestStack)
-    {
-        parent::__construct($availableLocales, $requestStack);
-    }
 
     /**
      * define form fields.

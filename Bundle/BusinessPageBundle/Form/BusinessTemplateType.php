@@ -14,15 +14,6 @@ use Victoire\Bundle\CoreBundle\Form\ViewType;
  */
 class BusinessTemplateType extends ViewType
 {
-    /*
-    * Constructor
-    */
-
-    public function __construct($availableLocales, RequestStack $requestStack)
-    {
-        parent::__construct($availableLocales, $requestStack);
-    }
-
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
