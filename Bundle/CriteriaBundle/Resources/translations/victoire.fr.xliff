@@ -28,11 +28,11 @@
             </trans-unit>
             <trans-unit id="6" resname="victoire_criteria.request_user.is.connected.criteria.label">
                 <source>victoire_criteria.request_user.is.connected.criteria.label</source>
-                <target>connecté</target>
+                <target>Connecté</target>
             </trans-unit>
-            <trans-unit id="7" resname="victoire_criteria.request_user.is..not.connected.criteria.label">
-                <source>victoire_criteria.request_user.is..not.connected.criteria.label</source>
-                <target>non connecté</target>
+            <trans-unit id="7" resname="victoire_criteria.request_user.is.not.connected.criteria.label">
+                <source>victoire_criteria.request_user.is.not.connected.criteria.label</source>
+                <target>Non connecté</target>
             </trans-unit>
             <trans-unit id="8" resname="victoire_criteria.criteria.operator.true.label">
                 <source>victoire_criteria.criteria.operator.true.label</source>

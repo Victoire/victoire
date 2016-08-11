@@ -30,8 +30,8 @@
                 <source>victoire_criteria.request_user.is.connected.criteria.label</source>
                 <target>Iniciar sesión</target>
             </trans-unit>
-            <trans-unit id="7" resname="victoire_criteria.request_user.is..not.connected.criteria.label">
-                <source>victoire_criteria.request_user.is..not.connected.criteria.label</source>
+            <trans-unit id="7" resname="victoire_criteria.request_user.is.not.connected.criteria.label">
+                <source>victoire_criteria.request_user.is.not.connected.criteria.label</source>
                 <target>Desloguearse</target>
             </trans-unit>
             <trans-unit id="8" resname="victoire_criteria.criteria.operator.true.label">
