@@ -100,3 +100,4 @@ services:
         arguments:
             - "@=service('victoire_criteria.chain.data_source_chain')"
             - "@security.authorization_checker"
+            - "@victoire_core.current_view"
