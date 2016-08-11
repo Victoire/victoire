@@ -56,6 +56,7 @@ class VictoireContext extends RawMinkContext
         $url = 'http://z6po@victoire.io:test@fr.victoire.io:8000';
         $this->minkContext->setMinkParameter('base_url', $url);
     }
+
     /**
      * @Then /^I fill in wysiwyg with "([^"]*)"$/
      */

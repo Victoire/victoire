@@ -3,7 +3,6 @@
 namespace Victoire\Bundle\PageBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Victoire\Bundle\CoreBundle\Form\ViewType;
 
 /**

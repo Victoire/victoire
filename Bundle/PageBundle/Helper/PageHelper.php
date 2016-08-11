@@ -14,7 +14,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Security\Core\Exception\AuthenticationCredentialsNotFoundException;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessPageBundle\Builder\BusinessPageBuilder;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
@@ -436,24 +435,25 @@ class PageHelper
     }
 
     /**
-     * Find page's ancestors (templates and parents) and flatted all their roles
+     * Find page's ancestors (templates and parents) and flatted all their roles.
+     *
      * @param View $view
      *
      * @return array
      */
     private function getPageRoles(View $view)
     {
-        $insertAncestorRole = function(View $view = null) use (&$insertAncestorRole){
+        $insertAncestorRole = function (View $view = null) use (&$insertAncestorRole) {
             if ($view === null) {
                 return;
             }
             $roles = $view->getRoles();
 
             if ($templateRoles = $insertAncestorRole($view->getTemplate(), $roles)) {
-                $roles .= ($roles ? ',' : '') . $templateRoles;
+                $roles .= ($roles ? ',' : '').$templateRoles;
             }
             if ($parentRoles = $insertAncestorRole($view->getParent(), $roles)) {
-                $roles .= ($roles ? ',' : '') . $parentRoles;
+                $roles .= ($roles ? ',' : '').$parentRoles;
             }
 
             return $roles;
@@ -464,7 +464,5 @@ class PageHelper
         if ($roles) {
             return array_unique(explode(',', $roles));
         }
-
-        return null;
     }
 }
