@@ -8,6 +8,7 @@
 namespace Victoire\Bundle\WidgetBundle\Resolver;
 
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
+use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 use Victoire\Bundle\CriteriaBundle\Chain\DataSourceChain;
 use Victoire\Bundle\CriteriaBundle\Entity\Criteria;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
@@ -28,17 +29,23 @@ class WidgetResolver
     private $dataSourceChain;
 
     private $authorizationChecker;
+    /**
+     * @var CurrentViewHelper
+     */
+    private $currentViewHelper;
 
     /**
      * WidgetResolver constructor.
      *
      * @param DataSourceChain      $dataSourceChain
      * @param AuthorizationChecker $authorizationChecker
+     * @param CurrentViewHelper    $currentViewHelper
      */
-    public function __construct(DataSourceChain $dataSourceChain, AuthorizationChecker $authorizationChecker)
+    public function __construct(DataSourceChain $dataSourceChain, AuthorizationChecker $authorizationChecker, CurrentViewHelper $currentViewHelper)
     {
         $this->dataSourceChain = $dataSourceChain;
         $this->authorizationChecker = $authorizationChecker;
+        $this->currentViewHelper = $currentViewHelper;
     }
 
     public function resolve(WidgetMap $widgetMap)
@@ -75,10 +82,10 @@ class WidgetResolver
                 $result = in_array($value, unserialize($expected));
                 break;
             case self::IS_GRANTED:
-                $result = $this->authorizationChecker->isGranted($expected);
+                $result = $this->authorizationChecker->isGranted($expected, $this->currentViewHelper->getCurrentView());
                 break;
             case self::IS_NOT_GRANTED:
-                $result = false == $this->authorizationChecker->isGranted($expected);
+                $result = false == $this->authorizationChecker->isGranted($expected, $this->currentViewHelper->getCurrentView());
                 break;
         }
 

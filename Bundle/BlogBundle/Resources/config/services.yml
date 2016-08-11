@@ -86,10 +86,8 @@ services:
 
     #BLOG
     victoire_blog.blog.form.type:
+        parent: "victoire_core.view.form.type"
         class: Victoire\Bundle\BlogBundle\Form\BlogType
-        arguments:
-            - "%victoire_i18n.available_locales%"
-            - "@request_stack"
         tags:
             - { name: form.type }
 
@@ -99,10 +97,8 @@ services:
             - { name: form.type }
 
     victoire_blog.blog_settings.form.type:
+        parent: "victoire_core.view.form.type"
         class: Victoire\Bundle\BlogBundle\Form\BlogSettingsType
-        arguments:
-            - "%victoire_i18n.available_locales%"
-            - "@request_stack"
         tags:
             - { name: form.type }
 

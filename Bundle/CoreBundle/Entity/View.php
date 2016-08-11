@@ -159,6 +159,12 @@ abstract class View
      * @ORM\Column(name="cssUpToDate", type="boolean")
      */
     protected $cssUpToDate = false;
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="roles", type="text", nullable=true)
+     */
+    protected $roles;
 
     /**
      * Construct.
@@ -792,5 +798,21 @@ abstract class View
     {
         $this->translate($locale, false)->setSlug($slug);
         $this->mergeNewTranslations();
+    }
+
+    /**
+     * @return array
+     */
+    public function getRoles()
+    {
+        return $this->roles;
+    }
+
+    /**
+     * @param array $roles
+     */
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
     }
 }

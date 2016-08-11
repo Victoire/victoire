@@ -354,6 +354,10 @@ class PageHelper
             throw new NotFoundHttpException($errorMessage);
         }
 
+        $roles = $this->getPageRoles($page);
+        if ($roles && !$this->authorizationChecker->isGranted($roles, $page)) {
+            throw new AccessDeniedException('You are not allowed to see this page, see the access roles defined in the view or it\'s parents and templates');
+        }
         //if the page is a BusinessTemplate and the entity is not allowed for this page pattern
         if ($page instanceof BusinessTemplate) {
             //only victoire users are able to access a business page
@@ -361,10 +365,6 @@ class PageHelper
                 throw new AccessDeniedException('You are not allowed to see this page');
             }
         } elseif ($page instanceof BusinessPage) {
-            if ($page->getTemplate()->isAuthorRestricted() && !$this->authorizationChecker->isGranted('BUSINESS_ENTITY_OWNER', $page->getBusinessEntity())) {
-                throw new AccessDeniedException('You are not allowed to see this page');
-            }
-
             if (!$entity->isVisibleOnFront() && !$this->authorizationChecker->isGranted('ROLE_VICTOIRE')) {
                 throw new NotFoundHttpException('The BusinessPage for '.get_class($entity).'#'.$entity->getId().' is not visible on front.');
             }
@@ -432,5 +432,37 @@ class PageHelper
         }
 
         return $viewLayout.'.html.twig';
+    }
+
+    /**
+     * Find page's ancestors (templates and parents) and flatted all their roles.
+     *
+     * @param View $view
+     *
+     * @return array
+     */
+    private function getPageRoles(View $view)
+    {
+        $insertAncestorRole = function (View $view = null) use (&$insertAncestorRole) {
+            if ($view === null) {
+                return;
+            }
+            $roles = $view->getRoles();
+
+            if ($templateRoles = $insertAncestorRole($view->getTemplate(), $roles)) {
+                $roles .= ($roles ? ',' : '').$templateRoles;
+            }
+            if ($parentRoles = $insertAncestorRole($view->getParent(), $roles)) {
+                $roles .= ($roles ? ',' : '').$parentRoles;
+            }
+
+            return $roles;
+        };
+
+        $roles = $insertAncestorRole($view);
+
+        if ($roles) {
+            return array_unique(explode(',', $roles));
+        }
     }
 }

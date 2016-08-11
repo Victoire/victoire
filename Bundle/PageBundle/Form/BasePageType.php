@@ -3,7 +3,6 @@
 namespace Victoire\Bundle\PageBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Victoire\Bundle\CoreBundle\Form\ViewType;
 
 /**
@@ -11,15 +10,6 @@ use Victoire\Bundle\CoreBundle\Form\ViewType;
  */
 abstract class BasePageType extends ViewType
 {
-    /*
-    * Constructor
-    */
-
-    public function __construct($availableLocales, RequestStack $requestStack)
-    {
-        parent::__construct($availableLocales, $requestStack);
-    }
-
     /**
      * define form fields.
      *

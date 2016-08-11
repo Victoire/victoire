@@ -48,6 +48,16 @@ class VictoireContext extends RawMinkContext
     }
 
     /**
+     * @Given I login as visitor
+     */
+    public function iLoginAsVisitor()
+    {
+        $this->getSession()->getDriver()->stop();
+        $url = 'http://z6po@victoire.io:test@fr.victoire.io:8000';
+        $this->minkContext->setMinkParameter('base_url', $url);
+    }
+
+    /**
      * @Then /^I fill in wysiwyg with "([^"]*)"$/
      */
     public function iFillInWysiwygOnFieldWith($arg)
