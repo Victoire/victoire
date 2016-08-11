@@ -5,6 +5,7 @@ namespace Acme\AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Victoire\Bundle\CoreBundle\Annotations as VIC;
+use Victoire\Bundle\UserBundle\Model\User;
 
 /**
  * Character.
@@ -62,6 +63,12 @@ class Character
      * @VIC\BusinessProperty({"textable", "businessParameter"})
      */
     protected $slug;
+
+    /**
+     * @var User
+     * @ORM\ManyToOne(targetEntity="Victoire\Bundle\UserBundle\Entity\User")
+     */
+    protected $author;
 
     /**
      * Get id.
@@ -143,5 +150,21 @@ class Character
         $this->slug = $slug;
 
         return $this;
+    }
+
+    /**
+     * @return User
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * @param User $author
+     */
+    public function setAuthor($author)
+    {
+        $this->author = $author;
     }
 }
