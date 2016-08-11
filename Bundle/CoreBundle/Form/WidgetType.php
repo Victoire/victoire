@@ -65,6 +65,7 @@ class WidgetType extends AbstractType
         $builder->add('criterias', CriteriaCollectionType::class, [
             'label'         => 'victoire.widget.type.criterias.label',
             'entry_type'    => CriteriaType::class,
+            'required'      => false,
             'entry_options' => [
                 'dataSources' => $options['dataSources'],
             ],
