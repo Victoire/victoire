@@ -3,9 +3,9 @@ Feature: Create business entity pages
 
     Background:
         Given the following Jedis:
-            | name   | side   | midiChlorians | slug   |
-            | Anakin | dark   | 20000         | anakin |
-            | Yoda   | bright | 17500         | yoda   |
+            | name   | side   | midiChlorians | slug   |       author       |
+            | Anakin | dark   | 20000         | anakin | anakin@victoire.io |
+            | Yoda   | bright | 17500         | yoda   |  z6po@victoire.io  |
         And I maximize the window
         And I am on homepage
 
@@ -228,5 +228,46 @@ Feature: Create business entity pages
         Then I should see "Le côté Bright de la force"
         Given I am on "/fr/fiche-sith-kylo-ren"
         Then I should see "Le côté Dark de la force"
+
+    Scenario: I can use the business author criteria
+        Given I open the hamburger menu
+        Then I should see "Représentation métier"
+        When I follow "Représentation métier"
+        And I close the hamburger menu
+        Then I should see "Jedi"
+        Then I should see "Ajouter une représentation métier"
+        When I follow the tab "Jedi"
+        And I should see "Ajouter une représentation métier"
+        And I follow "Ajouter une représentation métier"
+        Then I should see "Créer une représentation métier"
+        When I fill in "Nom" with "Fiche Jedi - {{item.name}}"
+        And I fill in "Libellé" with "Fiche Jedi"
+        And I fill in "URL" with "fiche-jedi-{{item.slug}}"
+        And I follow "Créer"
+        And I wait 6 seconds
+        Then I should be on "/fr/victoire-dcms/business-template/show/4"
+        And I switch to "layout" mode
+        And I should see "Nouveau contenu"
+        When I select "Force" from the "1" select of "main_content" slot
+        Then I should see "Créer"
+        Then I follow the tab "Jedi"
+        And I should see "Objet courant"
+        And I follow "Objet courant"
+        And I select "side" from "jedi_a_businessEntity_widget_force[fields][side]"
+        And should see "Critères"
+        And I follow "Critères"
+        And I select "Possède le rôle" from "jedi_a_businessEntity_widget_force[criterias][2][operator]"
+        And I select "BUSINESS_ENTITY_OWNER" from "jedi_a_businessEntity_widget_force[criterias][2][value]"
+        And I submit the widget
+        Then I wait 2 seconds
+        Given I am on "/fr/fiche-jedi-yoda"
+        Then I should see "Le Côté lumineux de la force"
+        And I am on "/fr/fiche-jedi-anakin"
+        Then I should see "Le Côté obscure de la force"
+        Given I login as visitor
+        Given I am on "/fr/fiche-jedi-yoda"
+        Then I should see "Le Côté lumineux de la force"
+        And I am on "/fr/fiche-jedi-anakin"
+        Then I should not see "Le Côté obscure de la force"
 
 
