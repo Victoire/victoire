@@ -8,7 +8,6 @@
 namespace Victoire\Bundle\WidgetBundle\Resolver;
 
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
-use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 use Victoire\Bundle\CriteriaBundle\Chain\DataSourceChain;
 use Victoire\Bundle\CriteriaBundle\Entity\Criteria;

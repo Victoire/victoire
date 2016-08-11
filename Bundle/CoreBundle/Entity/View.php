@@ -815,5 +815,4 @@ abstract class View
     {
         $this->roles = $roles;
     }
-
 }
