@@ -24,7 +24,10 @@ Feature: Manage sitemap
     And I should be on "/fr/anakin-skywalker/luke-skywalker"
 
   Scenario: I can delete a page and his child
-    Given I can create a child for a page
+    Given the following Page:
+      | currentLocale |name     | slug     | parent  | template      |
+      | fr            |anakin skywalker | anakin-skywalker | home    | base          |
+      | fr            |luke skywalker | luke-skywalker | anakin-skywalker    | base          |
     And I am on "/fr/anakin-skywalker"
     Given I select the option "Paramètres de la page" in the dropdown "Page"
     Then I should see "Supprimer"

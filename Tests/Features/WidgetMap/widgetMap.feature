@@ -98,11 +98,11 @@ Scenario: I create widget in a position
     Then I should see "Nouveau Contenu"
     When I select "Force" from the "1" select of "main_content" slot
     Then I should see "Créer"
-    When I fill in "Côté de la force" with "Obscure"
+    When I fill in "Côté de la force" with "obscur"
     And I submit the widget
     And I wait 2 seconds
     Then I should see "Victoire !"
-    And I should see "Le côté Obscure de la force"
+    And I should see "Le côté obscur de la force"
 
     Then I should see "Nouveau Contenu"
     When I select "Force" from the "2" select of "main_content" slot
@@ -111,10 +111,10 @@ Scenario: I create widget in a position
     And I submit the widget
     Then I should see "Victoire !"
     Then I should see "Le côté Lumineux de la force"
-    And "Le côté Obscure de la force" should precede "Le côté Lumineux de la force"
+    And "Le côté obscur de la force" should precede "Le côté Lumineux de la force"
 
     Given I reload the page
-    Then "Le côté Obscure de la force" should precede "Le côté Lumineux de la force"
+    Then "Le côté obscur de la force" should precede "Le côté Lumineux de la force"
 
     Then I should see "Nouveau Contenu"
     Given I select "Force" from the "2" select of "main_content" slot
@@ -124,8 +124,8 @@ Scenario: I create widget in a position
     Then I should see "Victoire !"
     Then I should see "Le côté Double de la force"
     And "Le côté Double de la force" should precede "Le côté Lumineux de la force"
-    And "Le côté Obscure de la force" should precede "Le côté Double de la force"
+    And "Le côté obscur de la force" should precede "Le côté Double de la force"
 
     Given I reload the page
     And "Le côté Double de la force" should precede "Le côté Lumineux de la force"
-    And "Le côté Obscure de la force" should precede "Le côté Double de la force"
+    And "Le côté obscur de la force" should precede "Le côté Double de la force"
