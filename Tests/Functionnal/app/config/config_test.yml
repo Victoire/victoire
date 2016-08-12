@@ -81,9 +81,6 @@ doctrine:
                 alias: GedmoTranslatable
                 is_bundle: false
 
-        metadata_cache_driver: redis
-        query_cache_driver: redis
-
 stof_doctrine_extensions:
     default_locale: fr
     persist_default_translation: true
@@ -163,21 +160,6 @@ snc_redis:
             type: predis
             alias: victoire
             dsn: redis://localhost
-        doctrine:
-            type: predis
-            alias: doctrine
-            dsn: redis://localhost
-    doctrine:
-        metadata_cache:
-            client: doctrine
-            entity_manager: default
-            document_manager: default
-        result_cache:
-            client: doctrine
-            entity_manager: [default]
-        query_cache:
-            client: doctrine
-            entity_manager: default
 
 parameters:
     locale: fr

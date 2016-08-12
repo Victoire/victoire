@@ -1,0 +1,26 @@
+imports:
+    - { resource: config_test.yml }
+
+# Doctrine Configuration
+doctrine:
+    orm:
+        metadata_cache_driver: redis
+        query_cache_driver: redis
+
+snc_redis:
+    clients:
+        doctrine:
+            type: predis
+            alias: doctrine
+            dsn: redis://localhost
+    doctrine:
+        metadata_cache:
+            client: doctrine
+            entity_manager: default
+            document_manager: default
+        result_cache:
+            client: doctrine
+            entity_manager: [default]
+        query_cache:
+            client: doctrine
+            entity_manager: default
