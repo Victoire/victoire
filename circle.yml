@@ -29,7 +29,7 @@ dependencies:
     - wget http://selenium-release.storage.googleapis.com/2.53/selenium-server-standalone-2.53.0.jar
     - 'java -jar selenium-server-standalone-2.53.0.jar > /dev/null 2>&1':
           background: true
-    - 'php Tests/Functionnal/bin/console --env=test server:run -r vendor/symfony/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/config/router_prod.php > server.log 2>&1':
+    - 'php Tests/Functionnal/bin/console --env=test server:run -r Tests/Functionnal/app/config/router_test_cached.php > server.log 2>&1':
           background: true
     - "Xvfb :99 -ac 2>/dev/null":
           background: true
