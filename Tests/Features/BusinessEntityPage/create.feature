@@ -146,7 +146,7 @@ Feature: Create business entity pages
         And I select "side" from "jedi_a_businessEntity_widget_force[fields][side]"
         And should see "Critères"
         And I follow "Critères"
-        And I select "Possède le rôle" from "jedi_a_businessEntity_widget_force[criterias][2][operator]"
+        And I fill in "jedi_a_businessEntity_widget_force[criterias][2][operator]" with "is_granted"
         And I select "BUSINESS_ENTITY_OWNER" from "jedi_a_businessEntity_widget_force[criterias][2][value]"
         And I submit the widget
         Then I wait 2 seconds
