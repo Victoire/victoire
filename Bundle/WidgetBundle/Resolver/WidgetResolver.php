@@ -87,10 +87,17 @@ class WidgetResolver
                 $result = in_array($value, unserialize($expected));
                 break;
             case self::IS_GRANTED:
-                $result = $this->authorizationChecker->isGranted($expected, $businessEntity);
-                break;
             case self::IS_NOT_GRANTED:
-                $result = false == $this->authorizationChecker->isGranted($expected, $businessEntity);
+                if (!$this->authorizationChecker->isGranted('ROLE_VICTOIRE')) {
+                    $granted = $this->authorizationChecker->isGranted($expected, $businessEntity);
+                        if ($operator == self::IS_GRANTED) {
+                            $result = $granted;
+                        } else {
+                         $result = (false == $granted);
+                        };
+                } else {
+                    $result = true;
+                }
                 break;
         }
 
