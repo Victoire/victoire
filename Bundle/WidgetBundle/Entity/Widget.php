@@ -73,9 +73,9 @@ class Widget extends BaseWidget implements VictoireQueryInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="fields", type="array")
+     * @ORM\Column(name="fields", type="text")
      */
-    protected $fields = [];
+    protected $fields = 'a:0:{}';
 
     /**
      * @var string
@@ -197,7 +197,12 @@ class Widget extends BaseWidget implements VictoireQueryInterface
      */
     public function setFields($fields)
     {
-        $this->fields = $fields;
+        $data = @unserialize($fields);
+        if ($fields === 'b:0;' || $data !== false) {
+            $this->fields = $fields;
+        } else {
+            $this->fields = serialize($fields);
+        }
 
         return $this;
     }
@@ -209,7 +214,7 @@ class Widget extends BaseWidget implements VictoireQueryInterface
      */
     public function getFields()
     {
-        return $this->fields;
+        return unserialize($this->fields);
     }
 
     /**

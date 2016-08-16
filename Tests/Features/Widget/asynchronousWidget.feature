@@ -10,9 +10,7 @@ Feature: Test asynchronous widget
     And I should see "Nouveau contenu"
     And I select "Force" from the "1" select of "main_content" slot
     Then I should see "Créer"
-    When I fill in "Côté de la force" with "Obscure"
+    When I fill in "Côté de la force" with "obscur"
     And I check the "Chargement asynchrone ?" checkbox
     And I submit the widget
-    Then I should see "Victoire !"
-    Given I reload the page
-    Then I should see "Le côté Obscure de la force"
+    Then I should see "Le côté obscur de la force"

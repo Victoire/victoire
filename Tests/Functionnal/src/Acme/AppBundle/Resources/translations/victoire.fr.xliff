@@ -64,7 +64,7 @@
       </trans-unit>
       <trans-unit id="15" resname="acme.app.jedi.form.side.choice.dark">
         <source>acme.app.jedi.form.side.choice.dark</source>
-        <target>Obscure</target>
+        <target>obscur</target>
       </trans-unit>
       <trans-unit id="16" resname="acme.app.jedi.form.side.choice.bright">
         <source>acme.app.jedi.form.side.choice.bright</source>
