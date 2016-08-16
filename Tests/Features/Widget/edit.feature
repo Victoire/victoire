@@ -25,7 +25,6 @@ Feature: Edit a widget
         Then I should see "Mettre à jour"
         When I select "slug" from "jedi_a_businessEntity_widget_force[fields][side]"
         And I submit the widget
-        Then I should see "Victoire !"
         And I should see "Le Côté anakin de la force"
 
     Scenario: I can create a new Business entity page pattern, create a static widget and edit this widget in query mode
@@ -45,7 +44,6 @@ Feature: Edit a widget
         And I follow "Requête"
         When I select "side" from "jedi_a_query_widget_force[fields][side]"
         And I submit the widget
-        Then I should see "Victoire !"
         And I should see "Le Côté Obscur de la force"
 
     Scenario: I cannot edit widget for an entity with missing business parameter
@@ -78,7 +76,6 @@ Feature: Edit a widget
         Then I should not see "Attention ! Ce contenu appartient à un modèle parent"
         When I fill in "Côté de la force" with "Dark"
         And I submit the widget
-        Then I should see "Victoire"
         Given I am on "/fr/victoire-dcms/business-template/show/4"
         Then I should see "Le Côté Dark de la force"
 
