@@ -130,6 +130,7 @@ class VictoireContext extends RawMinkContext
             $element = $this->getSession()->getPage()->find('xpath', 'descendant-or-self::a[@data-modal="update"]');
         }
         $element->click();
+        $this->getSession()->wait(2000);
     }
 
     /**
