@@ -29,7 +29,6 @@ class BusinessEntityOwnerVoter extends Voter
      */
     protected function supports($attribute, $subject)
     {
-
         return method_exists($subject, 'getAuthor')
             && 'BUSINESS_ENTITY_OWNER' === $attribute;
     }
