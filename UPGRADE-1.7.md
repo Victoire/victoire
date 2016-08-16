@@ -1,6 +1,6 @@
 #UPGRADE 1.7
 
-## v1.7.0
+## 1.7.0
 
 Layouts architecture were a piece of shit... this version cleans up but also breaks things and you need to follow these steps to fix your project:
 
@@ -20,4 +20,6 @@ Layouts architecture were a piece of shit... this version cleans up but also bre
     - wrap the `body_content_main` in a main#content tag
     - declare the **main_content** `cms_slot_widgets` (in the `body_content_main` block)
 - the `fos_js_routes.js` is now generated with the `prod` suffix in `prod` environment
+
+## 1.7.7
 - The "getMainCurrentView" method disapeard from CurrentViewHelper, you have to use "getCurrentView" instead, which have the exact same behavior.
