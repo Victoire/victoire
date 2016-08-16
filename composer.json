@@ -45,7 +45,7 @@
         "appventus/alertify-bundle": "^1.0",
         "appventus/assetic-injector-bundle": "^1.0",
         "doctrine/doctrine-bundle": "~1.4",
-        "doctrine/data-fixtures": "~1.2",
+        "doctrine/data-fixtures": "~1.1.1",
         "doctrine/doctrine-fixtures-bundle": "2.2.x-dev",
         "doctrine/orm": "v2.5.2",
         "friendsofsymfony/jsrouting-bundle": "2.0.*@dev",
