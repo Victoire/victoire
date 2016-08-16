@@ -13,6 +13,4 @@ Feature: Test asynchronous widget
     When I fill in "Côté de la force" with "obscur"
     And I check the "Chargement asynchrone ?" checkbox
     And I submit the widget
-    Then I should see "Victoire !"
-    Given I reload the page
     Then I should see "Le côté obscur de la force"

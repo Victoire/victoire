@@ -42,7 +42,6 @@ Feature: Create business entity pages
         And I follow "Objet courant"
         And I select "side" from "jedi_a_businessEntity_widget_force[fields][side]"
         And I submit the widget
-        Then I should see "Victoire !"
         Then I should see "Le Côté obscur de la force"
         Given I am on "/fr/fiche-jedi-anakin"
         Then I should see "Le Côté obscur de la force"

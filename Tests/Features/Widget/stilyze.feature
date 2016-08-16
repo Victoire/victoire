@@ -11,8 +11,8 @@ Feature: Stylize a widget
     And I select "Force" from the "1" select of "main_content" slot
     Then I should see "Créer"
     When I fill in "Côté de la force" with "obscur"
-    And I submit the widget
-    Then I wait 2 seconds
+    Then I submit the widget
+    And I should see "Le côté obscur de la force"
     Then I switch to "style" mode
     When I edit the "Force" widget
     Then I should see "Style du widget"
@@ -32,8 +32,8 @@ Feature: Stylize a widget
     And I select "Force" from the "1" select of "main_content" slot
     Then I should see "Créer"
     When I fill in "Côté de la force" with "obscur"
-    And I submit the widget
-    Then I should see "Victoire !"
+    Then I submit the widget
+    And I should see "Le côté obscur de la force"
     Then I switch to "style" mode
     When I edit the "Force" widget
     Then I should see "Style du widget"

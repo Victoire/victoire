@@ -82,7 +82,6 @@ Scenario: I move a widget under a templates one
     Then I should see "Créer"
     When I fill in "Texte *" with "Widget 4"
     And I submit the widget
-    Then I should see "Victoire !"
     And I reload the page
     And "Widget 2" should precede "Widget 4"
     And "Widget 4" should precede "Widget 3"
@@ -101,7 +100,6 @@ Scenario: I create widget in a position
     When I fill in "Côté de la force" with "obscur"
     And I submit the widget
     And I wait 2 seconds
-    Then I should see "Victoire !"
     And I should see "Le côté obscur de la force"
 
     Then I should see "Nouveau Contenu"
@@ -109,7 +107,6 @@ Scenario: I create widget in a position
     Then I should see "Créer"
     When I fill in "Côté de la force" with "Lumineux"
     And I submit the widget
-    Then I should see "Victoire !"
     Then I should see "Le côté Lumineux de la force"
     And "Le côté obscur de la force" should precede "Le côté Lumineux de la force"
 
@@ -121,7 +118,6 @@ Scenario: I create widget in a position
     Then I should see "Créer"
     When I fill in "Côté de la force" with "Double"
     And I submit the widget
-    Then I should see "Victoire !"
     Then I should see "Le côté Double de la force"
     And "Le côté Double de la force" should precede "Le côté Lumineux de la force"
     And "Le côté obscur de la force" should precede "Le côté Double de la force"

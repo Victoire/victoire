@@ -28,6 +28,4 @@ Background:
         Given I follow "Supprimer"
         Then I should see "Cette action va supprimer définitivement cette page. Cette action est irréversible. Êtes-vous sûr ?"
         Given I press "J'ai bien compris, je confirme la suppression"
-        #TODO Then I should see "Victoire !"
-        And I wait 10 seconds
         And I should be on "/fr/"

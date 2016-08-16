@@ -21,7 +21,6 @@ Background:
         Then I should see "Créer"
         When I fill in "Côté de la force" with "obscur"
         And I submit the widget
-        Then I should see "Victoire !"
 
     @alice(Blog) @alice(BlogTemplate)
     Scenario: I create a new article
