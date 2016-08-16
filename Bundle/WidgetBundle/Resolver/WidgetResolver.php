@@ -8,6 +8,7 @@
 namespace Victoire\Bundle\WidgetBundle\Resolver;
 
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
+use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 use Victoire\Bundle\CriteriaBundle\Chain\DataSourceChain;
 use Victoire\Bundle\CriteriaBundle\Entity\Criteria;
@@ -67,6 +68,10 @@ class WidgetResolver
 
     protected function assert($value, $operator, $expected)
     {
+        $businessEntity = null;
+        if ($this->currentViewHelper->getCurrentView() instanceof BusinessPage) {
+            $businessEntity = $this->currentViewHelper->getCurrentView()->getBusinessEntity();
+        }
         $result = false;
         switch ($operator) {
             case self::OPERAND_EQUAL:
@@ -82,10 +87,10 @@ class WidgetResolver
                 $result = in_array($value, unserialize($expected));
                 break;
             case self::IS_GRANTED:
-                $result = $this->authorizationChecker->isGranted($expected, $this->currentViewHelper->getCurrentView());
+                $result = $this->authorizationChecker->isGranted($expected, $businessEntity);
                 break;
             case self::IS_NOT_GRANTED:
-                $result = false == $this->authorizationChecker->isGranted($expected, $this->currentViewHelper->getCurrentView());
+                $result = false == $this->authorizationChecker->isGranted($expected, $businessEntity);
                 break;
         }
 
