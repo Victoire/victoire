@@ -90,11 +90,11 @@ class WidgetResolver
             case self::IS_NOT_GRANTED:
                 if (!$this->authorizationChecker->isGranted('ROLE_VICTOIRE')) {
                     $granted = $this->authorizationChecker->isGranted($expected, $businessEntity);
-                        if ($operator == self::IS_GRANTED) {
-                            $result = $granted;
-                        } else {
-                         $result = (false == $granted);
-                        };
+                    if ($operator === self::IS_GRANTED) {
+                        $result = $granted;
+                    } else {
+                        $result = (false === $granted);
+                    }
                 } else {
                     $result = true;
                 }
