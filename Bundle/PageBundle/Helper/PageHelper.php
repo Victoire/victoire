@@ -119,11 +119,7 @@ class PageHelper
                 'id' => $parameters['id'],
             ]);
 
-            $entity = null;
-            if (method_exists($page, 'getBusinessEntity')) {
-                $entity = $page->getBusinessEntity();
-            }
-            $this->checkPageValidity($page, $entity, $parameters);
+            $this->checkPageValidity($page, $parameters);
         } else {
             if (isset($parameters['id']) && isset($parameters['locale'])) {
                 //if locale is missing, we add append locale
@@ -139,7 +135,7 @@ class PageHelper
             }
 
             if ($viewReference instanceof ViewReference) {
-                $page = $this->findPageByReference($viewReference, $this->findEntityByReference($viewReference));
+                $page = $this->findPageByReference($viewReference);
             } else {
                 throw new ViewReferenceNotFoundException($parameters);
             }
@@ -161,8 +157,8 @@ class PageHelper
     {
         $page = null;
         if ($viewReference = $this->viewReferenceRepository->getReferenceByUrl($url, $locale)) {
-            $page = $this->findPageByReference($viewReference, $entity = $this->findEntityByReference($viewReference));
-            $this->checkPageValidity($page, $entity, ['url' => $url, 'locale' => $locale]);
+            $page = $this->findPageByReference($viewReference);
+            $this->checkPageValidity($page, ['url' => $url, 'locale' => $locale]);
             $page->setReference($viewReference);
 
             if ($page instanceof BasePage
@@ -269,7 +265,7 @@ class PageHelper
      *
      * @return View
      */
-    public function findPageByReference($viewReference, $entity = null)
+    public function findPageByReference($viewReference)
     {
         $page = null;
         if ($viewReference instanceof BusinessPageReference) {
@@ -284,7 +280,7 @@ class PageHelper
                     ->findOneBy([
                         'id'     => $viewReference->getTemplateId(),
                     ]);
-                if ($entity) {
+                if ($entity = $this->findEntityByReference($viewReference)) {
                     if ($page instanceof BusinessTemplate) {
                         $page = $this->updatePageWithEntity($page, $entity);
                     }
@@ -327,13 +323,13 @@ class PageHelper
      * If the page is not valid, an exception is thrown.
      *
      * @param mixed $page
-     * @param mixed $entity
      * @param mixed $parameters
      *
      * @throws \Exception
      */
-    public function checkPageValidity($page, $entity = null, $parameters = null)
+    public function checkPageValidity($page, $parameters = null)
     {
+        $entity = null;
         $errorMessage = 'The page was not found';
         if ($parameters) {
             $errorMessage .= ' for parameters "'.implode('", "', $parameters).'"';
@@ -365,6 +361,7 @@ class PageHelper
                 throw new AccessDeniedException('You are not allowed to see this page');
             }
         } elseif ($page instanceof BusinessPage) {
+            $entity = $page->getBusinessEntity();
             if (!$entity->isVisibleOnFront() && !$this->authorizationChecker->isGranted('ROLE_VICTOIRE')) {
                 throw new NotFoundHttpException('The BusinessPage for '.get_class($entity).'#'.$entity->getId().' is not visible on front.');
             }
