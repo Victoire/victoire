@@ -119,7 +119,7 @@ class PageHelper
                 'id' => $parameters['id'],
             ]);
 
-            $this->checkPageValidity($page, $entity, $parameters);
+            $this->checkPageValidity($page, $parameters);
         } else {
             if (isset($parameters['id']) && isset($parameters['locale'])) {
                 //if locale is missing, we add append locale
@@ -135,7 +135,7 @@ class PageHelper
             }
 
             if ($viewReference instanceof ViewReference) {
-                $page = $this->findPageByReference($viewReference, $this->findEntityByReference($viewReference));
+                $page = $this->findPageByReference($viewReference);
             } else {
                 throw new ViewReferenceNotFoundException($parameters);
             }
@@ -157,7 +157,7 @@ class PageHelper
     {
         $page = null;
         if ($viewReference = $this->viewReferenceRepository->getReferenceByUrl($url, $locale)) {
-            $page = $this->findPageByReference($viewReference, $entity = $this->findEntityByReference($viewReference));
+            $page = $this->findPageByReference($viewReference);
             $this->checkPageValidity($page, ['url' => $url, 'locale' => $locale]);
             $page->setReference($viewReference);
 
@@ -265,7 +265,7 @@ class PageHelper
      *
      * @return View
      */
-    public function findPageByReference($viewReference, $entity = null)
+    public function findPageByReference($viewReference)
     {
         $page = null;
         if ($viewReference instanceof BusinessPageReference) {
@@ -280,7 +280,7 @@ class PageHelper
                     ->findOneBy([
                         'id'     => $viewReference->getTemplateId(),
                     ]);
-                if ($entity) {
+                if ($entity = $this->findEntityByReference($viewReference)) {
                     if ($page instanceof BusinessTemplate) {
                         $page = $this->updatePageWithEntity($page, $entity);
                     }
