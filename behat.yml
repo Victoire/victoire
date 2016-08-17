@@ -32,13 +32,13 @@ default:
              directory: fails
              screenshot: true
          Behat\MinkExtension\ServiceContainer\MinkExtension:
-             base_url:           'http://anakin@victoire.io:test@fr.victoire.io:8000/app_ci.php'
+             base_url:           'http://anakin@victoire.io:test@fr.victoire.io:8000'
              selenium2:          ~
              goutte:             ~
              symfony2: ~
              default_session:    symfony2
              javascript_session: selenium2
-             browser_name: firefox
+             browser_name: chrome
              files_path:         Tests/Features/
          Knp\FriendlyContexts\Extension:
              entities:
