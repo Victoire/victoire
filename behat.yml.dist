@@ -16,6 +16,7 @@ default:
                  - Victoire\Tests\Features\Context\FeatureContext
                  - Victoire\Tests\Features\Context\JavascriptContext
                  - Victoire\Tests\Features\Context\VictoireContext
+                 - Victoire\Tests\Features\Context\CoverageContext
                  - Knp\FriendlyContexts\Context\MinkContext
                  - Knp\FriendlyContexts\Context\AliceContext
                  - Knp\FriendlyContexts\Context\EntityContext
