@@ -350,10 +350,6 @@ class PageHelper
             throw new NotFoundHttpException($errorMessage);
         }
 
-        $roles = $this->getPageRoles($page);
-        if ($roles && !$this->authorizationChecker->isGranted($roles, $page)) {
-            throw new AccessDeniedException('You are not allowed to see this page, see the access roles defined in the view or it\'s parents and templates');
-        }
         //if the page is a BusinessTemplate and the entity is not allowed for this page pattern
         if ($page instanceof BusinessTemplate) {
             //only victoire users are able to access a business page
