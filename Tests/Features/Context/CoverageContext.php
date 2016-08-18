@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Tests\Features\Context;
 
 use Behat\Behat\Context\Context;
@@ -16,8 +17,8 @@ class CoverageContext implements Context
     {
         if (!self::$coverage) {
             $filter = new \PHP_CodeCoverage_Filter();
-            $filter->addDirectoryToBlacklist(__DIR__ . "/../../../vendor");
-            $filter->addDirectoryToWhitelist(__DIR__ . "/../../../Bundle");
+            $filter->addDirectoryToBlacklist(__DIR__.'/../../../vendor');
+            $filter->addDirectoryToWhitelist(__DIR__.'/../../../Bundle');
             self::$coverage = new \PHP_CodeCoverage(null, $filter);
         }
     }
@@ -31,7 +32,8 @@ class CoverageContext implements Context
 
     private function getCoverageKeyFromScope(BeforeScenarioScope $scope)
     {
-        $name = $scope->getFeature()->getTitle() . '::' . $scope->getScenario()->getTitle();
+        $name = $scope->getFeature()->getTitle().'::'.$scope->getScenario()->getTitle();
+
         return $name;
     }
 
