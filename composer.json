@@ -51,7 +51,7 @@
         "friendsofsymfony/jsrouting-bundle": "2.0.*@dev",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "friendsofvictoire/text-widget": "~1.5",
-        "friendsofvictoire/button-widget": "~1.5",
+        "friendsofvictoire/button-widget": "~2.0",
         "incenteev/composer-parameter-handler": "~2.0",
         "infinite-networks/form-bundle": "dev-master",
         "jms/di-extra-bundle": "~1.7",
