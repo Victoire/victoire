@@ -98,7 +98,7 @@ class WidgetController extends Controller
      * @return JsonResponse
      * @Route("/victoire-dcms/widget/new/{type}/{viewReference}/{slot}/{quantum}", name="victoire_core_widget_new", defaults={"slot":null, "quantum":0}, options={"expose"=true})
      */
-    public function newAction(Request $request, $type, $viewReference, $slot = null, $quantum = null)
+    public function newAction(Request $request, $type, $viewReference, $slot = null, $quantum = 0)
     {
         try {
             $view = $this->getViewByReferenceId($viewReference);
