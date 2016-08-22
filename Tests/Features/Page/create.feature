@@ -17,11 +17,9 @@ Scenario: I can create a new page
 
   @alice(Template)
 Scenario: I can change the name and the url of a given page
-    Given I can create a new page
-# TODO: Use EntityContext to avoid to recreate first scenario to test name change
-#    Given the following page:
-#        | name      | slug     | locale | template |
-#        | tatooine  | tatooine | fr     | base     |
+      Given the following Page:
+          | currentLocale |name     | slug     | parent  | template      |
+          | fr            |tatooine | tatooine | home    | base          |
     And I am on "/fr/tatooine"
     And I select the option "Paramètres de la page" in the dropdown "Page"
     And I should see "Mettre à jour"

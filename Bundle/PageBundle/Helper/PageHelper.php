@@ -7,6 +7,7 @@ use Doctrine\Orm\EntityManager;
 use Doctrine\ORM\ORMInvalidArgumentException;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -19,6 +20,7 @@ use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
 use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
+use Victoire\Bundle\CoreBundle\Entity\Link;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Event\PageRenderEvent;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
@@ -26,6 +28,7 @@ use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\SeoBundle\Helper\PageSeoHelper;
 use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
+use Victoire\Bundle\ViewReferenceBundle\Exception\ViewReferenceNotFoundException;
 use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\BusinessPageReference;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
@@ -116,12 +119,14 @@ class PageHelper
                 'id' => $parameters['id'],
             ]);
 
-            $entity = null;
-            if (method_exists($page, 'getBusinessEntity')) {
-                $entity = $page->getBusinessEntity();
-            }
-            $this->checkPageValidity($page, $entity, $parameters);
+            $this->checkPageValidity($page, $parameters);
         } else {
+            if (isset($parameters['id']) && isset($parameters['locale'])) {
+                //if locale is missing, we add append locale
+                if (preg_match('/^ref_[0-9]*$/', $parameters['id'])) {
+                    $parameters['id'] .= '_'.$parameters['locale'];
+                }
+            }
             $viewReference = $this->viewReferenceRepository->getOneReferenceByParameters($parameters);
             if ($viewReference === null && !empty($parameters['viewId'])) {
                 $parameters['templateId'] = $parameters['viewId'];
@@ -130,14 +135,9 @@ class PageHelper
             }
 
             if ($viewReference instanceof ViewReference) {
-                $page = $this->findPageByReference($viewReference, $this->findEntityByReference($viewReference));
+                $page = $this->findPageByReference($viewReference);
             } else {
-                $parametersAsString = [];
-                foreach ($parameters as $key => $value) {
-                    $parametersAsString[] = $key.': '.$value;
-                }
-
-                throw new \Exception(sprintf('Oh no! Cannot find a viewReference for the given parameters %s', implode(',', $parametersAsString)));
+                throw new ViewReferenceNotFoundException($parameters);
             }
             $page->setReference($viewReference, $viewReference->getLocale());
         }
@@ -157,17 +157,20 @@ class PageHelper
     {
         $page = null;
         if ($viewReference = $this->viewReferenceRepository->getReferenceByUrl($url, $locale)) {
-            $page = $this->findPageByReference($viewReference, $entity = $this->findEntityByReference($viewReference));
+            $page = $this->findPageByReference($viewReference);
+            $this->checkPageValidity($page, ['url' => $url, 'locale' => $locale]);
+            $page->setReference($viewReference);
 
             if ($page instanceof BasePage
                 && $page->getSeo()
                 && $page->getSeo()->getRedirectTo()
+                && $page->getSeo()->getRedirectTo()->getLinkType() != Link::TYPE_NONE
                 && !$this->session->get('victoire.edit_mode', false)) {
-                $page = $page->getSeo()->getRedirectTo();
+                $link = $page->getSeo()->getRedirectTo();
+
+                return new RedirectResponse($this->container->get('victoire_widget.twig.link_extension')->victoireLinkUrl($link->getParameters()));
             }
 
-            $this->checkPageValidity($page, $entity, ['url' => $url, 'locale' => $locale]);
-            $page->setReference($viewReference);
 
             return $this->renderPage($page, $isAjax);
         } else {
@@ -198,7 +201,7 @@ class PageHelper
         $this->widgetDataWarmer->warm($this->entityManager, $view);
 
         //Dispatch contextual event regarding page type
-        if ($view->getType() == 'business_page') {
+        if (in_array($view->getType(), ['business_page', 'virtual_business_page'])) {
             //Dispatch also an event with the Business entity name
             $eventName = 'victoire_core.page_menu.contextual';
             if (!$view->getId()) {
@@ -262,7 +265,7 @@ class PageHelper
      *
      * @return View
      */
-    public function findPageByReference($viewReference, $entity = null)
+    public function findPageByReference($viewReference)
     {
         $page = null;
         if ($viewReference instanceof BusinessPageReference) {
@@ -277,11 +280,14 @@ class PageHelper
                     ->findOneBy([
                         'id'     => $viewReference->getTemplateId(),
                     ]);
-                $page->setCurrentLocale($viewReference->getLocale());
-                if ($entity) {
+                if ($entity = $this->findEntityByReference($viewReference)) {
                     if ($page instanceof BusinessTemplate) {
                         $page = $this->updatePageWithEntity($page, $entity);
-                    } elseif ($page instanceof BusinessPage) {
+                    }
+                    if ($page instanceof BusinessPage) {
+                        if ($page->getSeo()) {
+                            $page->getSeo()->setCurrentLocale($viewReference->getLocale());
+                        }
                         $this->pageSeoHelper->updateSeoByEntity($page, $entity);
                     }
                 }
@@ -317,13 +323,13 @@ class PageHelper
      * If the page is not valid, an exception is thrown.
      *
      * @param mixed $page
-     * @param mixed $entity
      * @param mixed $parameters
      *
      * @throws \Exception
      */
-    protected function checkPageValidity($page, $entity = null, $parameters = null)
+    public function checkPageValidity($page, $parameters = null)
     {
+        $entity = null;
         $errorMessage = 'The page was not found';
         if ($parameters) {
             $errorMessage .= ' for parameters "'.implode('", "', $parameters).'"';
@@ -351,10 +357,7 @@ class PageHelper
                 throw new AccessDeniedException('You are not allowed to see this page');
             }
         } elseif ($page instanceof BusinessPage) {
-            if ($page->getTemplate()->isAuthorRestricted() && !$this->authorizationChecker->isGranted('BUSINESS_ENTITY_OWNER', $page->getBusinessEntity())) {
-                throw new AccessDeniedException('You are not allowed to see this page');
-            }
-
+            $entity = $page->getBusinessEntity();
             if (!$entity->isVisibleOnFront() && !$this->authorizationChecker->isGranted('ROLE_VICTOIRE')) {
                 throw new NotFoundHttpException('The BusinessPage for '.get_class($entity).'#'.$entity->getId().' is not visible on front.');
             }
@@ -364,6 +367,13 @@ class PageHelper
                 if ($entityAllowed === false) {
                     throw new NotFoundHttpException('The entity ['.$entity->getId().'] is not allowed for the page pattern ['.$page->getTemplate()->getId().']');
                 }
+            }
+        }
+
+        if (!$this->authorizationChecker->isGranted('ROLE_VICTOIRE')) {
+            $roles = $this->getPageRoles($page);
+            if ($roles && !$this->authorizationChecker->isGranted($roles, $entity)) {
+                throw new AccessDeniedException('You are not allowed to see this page, see the access roles defined in the view or it\'s parents and templates');
             }
         }
     }
@@ -422,5 +432,37 @@ class PageHelper
         }
 
         return $viewLayout.'.html.twig';
+    }
+
+    /**
+     * Find page's ancestors (templates and parents) and flatted all their roles.
+     *
+     * @param View $view
+     *
+     * @return array
+     */
+    private function getPageRoles(View $view)
+    {
+        $insertAncestorRole = function (View $view = null) use (&$insertAncestorRole) {
+            if ($view === null) {
+                return;
+            }
+            $roles = $view->getRoles();
+
+            if ($templateRoles = $insertAncestorRole($view->getTemplate(), $roles)) {
+                $roles .= ($roles ? ',' : '').$templateRoles;
+            }
+            if ($parentRoles = $insertAncestorRole($view->getParent(), $roles)) {
+                $roles .= ($roles ? ',' : '').$parentRoles;
+            }
+
+            return $roles;
+        };
+
+        $roles = $insertAncestorRole($view);
+
+        if ($roles) {
+            return array_unique(explode(',', $roles));
+        }
     }
 }

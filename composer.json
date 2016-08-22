@@ -45,13 +45,13 @@
         "appventus/alertify-bundle": "^1.0",
         "appventus/assetic-injector-bundle": "^1.0",
         "doctrine/doctrine-bundle": "~1.4",
-        "doctrine/data-fixtures": "~1.2",
+        "doctrine/data-fixtures": "~1.1.1",
         "doctrine/doctrine-fixtures-bundle": "2.2.x-dev",
         "doctrine/orm": "v2.5.2",
         "friendsofsymfony/jsrouting-bundle": "2.0.*@dev",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "friendsofvictoire/text-widget": "~1.5",
-        "friendsofvictoire/button-widget": "~1.5",
+        "friendsofvictoire/button-widget": "~2.0",
         "incenteev/composer-parameter-handler": "~2.0",
         "infinite-networks/form-bundle": "dev-master",
         "jms/di-extra-bundle": "~1.7",
@@ -115,10 +115,5 @@
             "type": "vcs",
             "url": "https://github.com/Charlie-Lucas/InfiniteFormBundle"
         }
-    ],
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.8.x-dev"
-        }
-    }
+    ]
 }

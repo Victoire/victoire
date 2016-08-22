@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\TwigBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,7 +15,7 @@ use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
  * @param Request $request The request
  * @param string  $code    The error page code
  *
- * @Route("/error", name="victoire_error_show")
+ * @Route("/victoire-dcms/error")
  */
 class ErrorPageController extends Controller
 {
@@ -24,7 +23,6 @@ class ErrorPageController extends Controller
      * Show an error page.
      *
      * @Route("/{code}", name="victoire_errorPage_show")
-     * @ParamConverter("page", class="VictoireTwigBundle:ErrorPage")
      *
      * @return Response
      */
@@ -33,7 +31,6 @@ class ErrorPageController extends Controller
         //add the view to twig
         $this->container->get('twig')->addGlobal('view', $page);
         $page->setReference(new ViewReference($page->getId()));
-
         $parameters = [
             'view'   => $page,
             'id'     => $page->getId(),
@@ -50,7 +47,7 @@ class ErrorPageController extends Controller
 
         //create the response
         $response = $this->container->get('templating')->renderResponse(
-            'VictoireCoreBundle:Layout:'.$page->getTemplate()->getLayout(),
+            'VictoireCoreBundle:Layout:'.$page->getTemplate()->getLayout().'.html.twig',
             $parameters
         );
 

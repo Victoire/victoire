@@ -1,0 +1,98 @@
+{% block a2lix_translations_widget %}
+    {{ form_errors(form) }}
+    <div class="a2lix_translations tabbable">
+        <ul class="a2lix_translationsLocales vic-nav vic-nav-tabs">
+            {% for translationsFields in form %}
+                {% set locale = translationsFields.vars.name %}
+
+                <li {% if app.request.locale == locale %}class="vic-active"{% endif %}>
+                    <a href="#" data-toggle="vic-tab" data-target=".{{ translationsFields.vars.id }}_a2lix_translationsFields-{{ locale }}">
+                        {{ translationsFields.vars.label|default(locale|humanize)|trans }}
+                        {% if form.vars.default_locale == locale %}{{ form.vars.default_label|default('[Default]')|trans }}{% endif %}
+                        {% if translationsFields.vars.required %}*{% endif %}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <div class="a2lix_translationsFields vic-tab-content">
+            {% for translationsFields in form %}
+                {% set locale = translationsFields.vars.name %}
+
+                <div class="{{ translationsFields.vars.id }}_a2lix_translationsFields-{{ locale }} vic-tab-pane {% if app.request.locale == locale %}vic-active{% endif %} {% if not form.vars.valid %}sonata-ba-field-error{% endif %}">
+
+                    <ul class="vic-nav vic-nav-tabs vic-modal-nav-tabs">
+                        <li class="vic-active vic-seperate"><a href="#seo-global-{{ locale }}" data-toggle="vic-tab">{{ 'modal.form.pageSeo.general.title'|trans({}, 'victoire') }}</a></li>
+                        <li><a href="#seo-social-{{ locale }}" data-toggle="vic-tab">{{ 'modal.form.pageSeo.socialmedia.title'|trans({}, 'victoire') }}</a></li>
+                        <li><a href="#seo-advanced-{{ locale }}" data-toggle="vic-tab">{{ 'modal.form.pageSeo.advanced.title'|trans({}, 'victoire') }}</a></li>
+                    </ul>
+
+                    <div class="vic-tab-content vic-modal-tab-content">
+                        <div class="vic-tab-pane vic-active" id="seo-global-{{ locale }}">
+                            <div class="vic-tab-content vic-modal-tab-content">
+                                {{ form_row(translationsFields.metaTitle)}}
+                                {{ form_row(translationsFields.metaDescription) }}
+                                {{ form_row(translationsFields.relAuthor) }}
+                                {{ form_row(translationsFields.relPublisher) }}
+                                {{ form_row(translationsFields.keyword) }}
+                            </div>
+                        </div>
+                        <div class="vic-tab-pane" id="seo-social-{{ locale }}">
+                            <div class="vic-tab-content vic-modal-tab-content">
+                                <div class="col-md-6">
+                                    <h3 class="vic-h3">{{ 'modal.form.pageSeo.OpenGraph.title'|trans({}, 'victoire') }}</h3>
+                                    {{ form_row(translationsFields.ogTitle) }}
+                                    {{ form_row(translationsFields.ogDescription) }}
+                                    {{ form_row(translationsFields.ogType) }}
+                                    {{ form_row(translationsFields.ogUrl) }}
+                                    {{ form_row(translationsFields.fbAdmins) }}
+                                    {{ form_row(translationsFields.ogImage) }}
+                                </div>
+                                <div class="col-md-6">
+                                    <h3 class="vic-h3">{{ 'modal.form.pageSeo.twitter.title'|trans({}, 'victoire') }}</h3>
+                                    {{ form_row(translationsFields.twitterCard) }}
+                                    {{ form_row(translationsFields.twitterTitle) }}
+                                    {{ form_row(translationsFields.twitterDescription) }}
+                                    {{ form_row(translationsFields.twitterCreator) }}
+                                    {{ form_row(translationsFields.twitterUrl) }}
+                                    {{ form_row(translationsFields.twitterImage) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="vic-tab-pane" id="seo-advanced-{{ locale }}">
+                            <div class="vic-tab-content vic-modal-tab-content">
+                                <div class="col-md-4">
+                                    <h3 class="vic-h3">{{ 'modal.form.pageSeo.schema.title'|trans({}, 'victoire') }}</h3>
+                                    {{ form_row(translationsFields.schemaPageType) }}
+                                    {{ form_row(translationsFields.schemaName) }}
+                                    {{ form_row(translationsFields.schemaDescription) }}
+                                    {{ form_row(translationsFields.schemaImage) }}
+                                </div>
+                                <div class="col-md-4">
+                                    <h3 class="vic-h3">{{ 'modal.form.pageSeo.robots.title'|trans({}, 'victoire') }}</h3>
+                                    {{ form_row(translationsFields.metaRobotsIndex) }}
+                                    {{ form_row(translationsFields.metaRobotsFollow) }}
+                                    {{ form_row(translationsFields.metaRobotsAdvanced) }}
+                                </div>
+                                <div class="col-md-4">
+                                    <h3 class="vic-h3">{{ 'modal.form.pageSeo.sitemap.title'|trans({}, 'victoire') }}</h3>
+                                    {{ form_row(translationsFields.sitemapIndexed) }}
+                                    {{ form_row(translationsFields.sitemapPriority) }}
+                                    {{ form_row(translationsFields.sitemapChangeFreq) }}
+                                    {{ form_row(translationsFields.relCanonical) }}
+                                    {{ form_row(translationsFields.redirectTo) }}
+                                </div>
+
+                                {{form_rest(translationsFields)}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block a2lix_translationsForms_widget %}
+    {{ block('a2lix_translations_widget') }}
+{% endblock %}

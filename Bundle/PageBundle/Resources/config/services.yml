@@ -54,18 +54,14 @@ services:
     ####################################################################################################################
 
     victoire_page.page.form.type:
+        parent: victoire_core.view.form.type
         class: Victoire\Bundle\PageBundle\Form\PageType
-        arguments:
-            - "%victoire_i18n.available_locales%"
-            - "@request_stack"
         tags:
             - { name: form.type }
 
     victoire_page.page_settings.form.type:
+        parent: "victoire_core.view.form.type"
         class: Victoire\Bundle\PageBundle\Form\PageSettingsType
-        arguments:
-            - "%victoire_i18n.available_locales%"
-            - "@request_stack"
         tags:
             - { name: form.type }
 

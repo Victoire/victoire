@@ -43,7 +43,14 @@ class VictoirePageExtension extends Extension implements PrependExtensionInterfa
                             'serializer'  => [
                                 'groups' => ['search'],
                             ],
-                            'mappings'    => [],
+                            'mappings'    => [
+                                'translations' => [
+                                    'type'       => 'nested',
+                                    'properties' => [
+                                        'name' => null,
+                                    ],
+                                ],
+                            ],
                             'persistence' => [
                                 'driver'   => 'orm',
                                 'model'    => 'Victoire\\Bundle\\PageBundle\\Entity\\BasePage',

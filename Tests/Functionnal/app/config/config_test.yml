@@ -155,11 +155,11 @@ victoire_i18n:
         en: en
     locale_pattern: parameter
 snc_redis:
-   clients:
-       victoire:
-           type: predis
-           alias: victoire
-           dsn: redis://localhost
+    clients:
+        victoire:
+            type: predis
+            alias: victoire
+            dsn: redis://localhost
 
 parameters:
     locale: fr

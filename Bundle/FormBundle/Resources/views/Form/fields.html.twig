@@ -9,6 +9,20 @@
     </div>
 {% endblock urlvalidated_widget %}
 
+
+{% block criteria_collection_row %}
+
+    <div class="vic-criterias-container">
+        <a class="vic-pull-right" href="#" onclick="$vic(this).parent().find('.vic-criterias-form-container').slideToggle();">
+            {{ form_label(form) }} <i class="fa fa-crosshairs"></i>
+        </a>
+        <div style="display: none" class="vic-criterias-form-container">
+            {{ form_widget(form) }}
+        </div>
+    </div>
+
+{% endblock %}
+
 {% block criteria_row %}
     <div class="vic-row">
         <div class="vic-col-md-4">{{ ('victoire_criteria.'~form.vars.data.name~'.criteria.label')|trans }}</div>

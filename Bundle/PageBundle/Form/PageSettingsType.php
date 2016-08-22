@@ -4,7 +4,6 @@ namespace Victoire\Bundle\PageBundle\Form;
 
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Victoire\Bundle\PageBundle\Entity\PageStatus;
 
 /**
@@ -12,14 +11,6 @@ use Victoire\Bundle\PageBundle\Entity\PageStatus;
  */
 class PageSettingsType extends PageType
 {
-    /**
-     * Constructor.
-     */
-    public function __construct($availableLocales, RequestStack $requestStack)
-    {
-        parent::__construct($availableLocales, $requestStack);
-    }
-
     /**
      * define form fields.
      *

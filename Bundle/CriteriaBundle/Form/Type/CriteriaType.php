@@ -3,8 +3,8 @@
 namespace Victoire\Bundle\CriteriaBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -17,9 +17,8 @@ class CriteriaType extends AbstractType
         $builder->add('name', HiddenType::class, [
             'label' => 'victoire_criteria.criteria.name.label',
         ]);
-        $builder->add('operator', ChoiceType::class, [
-            'choices'           => ['victoire_criteria.criteria.operator.equal.label' => 'equal'],
-            'choices_as_values' => true,
+        $builder->add('operator', TextType::class, [
+            'vic_help_block'    => 'victoire_criteria.criteria.operator.help_block',
             'label'             => 'victoire_criteria.criteria.operator.label',
         ]);
 

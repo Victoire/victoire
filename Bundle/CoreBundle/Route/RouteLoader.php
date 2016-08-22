@@ -34,6 +34,7 @@ class RouteLoader extends Loader
         $resources = [
             '@VictoireAnalyticsBundle/Controller/',
             '@VictoireTemplateBundle/Controller/',
+            '@VictoireTwigBundle/Controller/',
             '@VictoireBlogBundle/Controller/',
             '@VictoireBusinessPageBundle/Controller/',
             '@VictoireSeoBundle/Controller/',

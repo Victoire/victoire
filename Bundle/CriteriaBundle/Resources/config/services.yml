@@ -10,3 +10,18 @@ services:
         tags:
             - { name: victoire_criteria, group: request, method: getLocale, alias: request_locale }
             - { name: victoire_criteria, group: request, method: getScheme, alias: request_scheme }
+
+    victoire_criteria.criteria.roles_data_source:
+            class: Victoire\Bundle\CriteriaBundle\DataSource\RolesDataSource
+            arguments:
+                - @security.token_storage
+                - %security.role_hierarchy.roles%
+            tags:
+                - { name: victoire_criteria, group: request, method: getRoles, alias: request_roles }
+
+    victoire_criteria.criteria.user_data_source:
+            class: Victoire\Bundle\CriteriaBundle\DataSource\IsLoggedDataSource
+            arguments:
+                - @security.authorization_checker
+            tags:
+                - { name: victoire_criteria, group: request, method: getLoggedStatus, alias: request_user }

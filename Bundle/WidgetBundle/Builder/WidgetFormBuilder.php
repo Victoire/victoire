@@ -135,7 +135,7 @@ class WidgetFormBuilder
     {
         $forms = [];
         foreach ($widgets as $key => $widget) {
-            $quantum = $quantum ?: $key;
+            $quantum = null !== $quantum ? $quantum : $key;
             $forms[$key] = $this->renderNewWidgetForms($slot, $view, $widget, $classes, $position, $parentWidgetMap, $quantum);
             $forms[$key]['quantum'] = $quantum;
             if ($widget === $activeWidget) {

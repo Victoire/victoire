@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
+use Victoire\Bundle\I18nBundle\Entity\ViewTranslation;
 use Victoire\Bundle\ViewReferenceBundle\Builder\ViewReferenceBuilder;
 
 /**
@@ -58,21 +59,23 @@ class ViewReferenceHelper
     /**
      * @param [] $tree
      */
-    public function buildViewReferenceRecursively($tree, EntityManager $entityManager)
+    public function buildViewReferenceRecursively($tree, EntityManager $entityManager, $isRoot = true)
     {
         foreach ($tree as $branch) {
-            /** @var WebViewInterface $view */
+            /** @var View $view */
             $view = $branch['view'];
-            $viewReferences = [];
+            /** @var ViewTranslation $translation */
             foreach ($view->getTranslations() as $translation) {
-                $view->setCurrentLocale($translation->getLocale());
-                $viewReferences[$translation->getLocale()] = $this->viewReferenceBuilder->buildViewReference($view, $entityManager);
-            }
-            $view->setReferences($viewReferences);
-            if (!empty($branch['children'])) {
-                /** @var WebViewInterface $children */
-                $children = $branch['children'];
-                $this->buildViewReferenceRecursively($children, $entityManager);
+                if (true === $isRoot || $translation->getLocale() == $view->getParent()->getCurrentLocale()) {
+                    $view->setCurrentLocale($translation->getLocale());
+                    $viewReference = $this->viewReferenceBuilder->buildViewReference($view, $entityManager);
+                    if (!empty($branch['children'])) {
+                        /** @var WebViewInterface $children */
+                        $children = $branch['children'];
+                        $this->buildViewReferenceRecursively($children, $entityManager, false);
+                    }
+                    $view->setReference($viewReference, $translation->getLocale());
+                }
             }
         }
     }

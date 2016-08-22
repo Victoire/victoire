@@ -7,7 +7,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Victoire\Bundle\BusinessPageBundle\Form\BusinessPageType;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\PageBundle\Form\PageSettingsType;
@@ -108,7 +107,7 @@ class PageController extends BasePageController
      */
     protected function getBusinessPageType()
     {
-        return BusinessPageType::class;
+        return PageSettingsType::class;
     }
 
     /**

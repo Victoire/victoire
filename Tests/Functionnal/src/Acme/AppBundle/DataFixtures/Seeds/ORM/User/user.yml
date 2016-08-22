@@ -14,3 +14,15 @@ Victoire\Bundle\UserBundle\Entity\User:
         roles:
             ROLE_ADMIN: ROLE_ADMIN
             ROLE_VICTOIRE_DEVELOPER: ROLE_VICTOIRE_DEVELOPER
+    z6po:
+        username: z6po@victoire.io
+        email: z6po@victoire.io
+        plainPassword: test
+        firstname: Z
+        lastname: 6PO
+        enabled: true
+        locale: fr
+        locked: false
+        expired: false
+        createdAt: <dateTime('now')>
+        updatedAt: <dateTime('now')>

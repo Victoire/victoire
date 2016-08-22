@@ -74,9 +74,8 @@ class SitemapController extends Controller
             foreach ($tree->getChildren() as $child) {
                 if ($child instanceof BusinessPageReference
                     && $child->getViewNamespace() == 'Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage') {
-                    $entity = $entityManager->getRepository($child->getEntityNamespace())->find($child->getEntityId());
                     /** @var WebViewInterface $businessPage */
-                    $businessPage = $pageHelper->findPageByReference($child, $entity);
+                    $businessPage = $pageHelper->findPageByReference($child);
                     $businessPage->setReference($child);
                     $businessPages[] = $businessPage;
                 }
@@ -106,7 +105,7 @@ class SitemapController extends Controller
         $em = $this->getDoctrine()->getManager();
         $pageRepo = $em->getRepository('VictoirePageBundle:BasePage');
         $response = [
-            'success' => false,
+            'success' => true,
         ];
         if ($request->getMethod() === 'POST') {
             $sorted = $request->request->get('sorted');
