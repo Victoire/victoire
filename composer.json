@@ -115,10 +115,5 @@
             "type": "vcs",
             "url": "https://github.com/Charlie-Lucas/InfiniteFormBundle"
         }
-    ],
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.8.x-dev"
-        }
-    }
+    ]
 }
