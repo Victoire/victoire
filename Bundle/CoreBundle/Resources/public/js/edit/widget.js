@@ -33,7 +33,7 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update"], .vic-widge
         var activeForm = $vic(quantum).find('.vic-tab-mode.vic-active .vic-tab-pane.vic-active > form');
         // matches widget edit form with only static mode available
         if (activeForm.length == 0) {
-            activeForm = $vic(quantum).find('.vic-tab-pane.vic-active form, #picker-static-static.vic-active form');
+            activeForm = $vic(quantum).find('.vic-tab-pane.vic-active form, form');
         }
         // matches widget stylize form
         if (activeForm.length == 0 && $vic(quantum).hasClass('vic-active')) {
