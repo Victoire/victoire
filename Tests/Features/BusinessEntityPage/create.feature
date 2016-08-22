@@ -126,6 +126,7 @@ Feature: Create business entity pages
             | widgetMap                |  side   |
             | fiche-jedi-{{item.slug}} |  Bright |
             | fiche-sith-{{item.slug}} |  Dark   |
+        Given I wait 2 seconds
         Given I am on "/fr/fiche-jedi-kylo-ren"
         Then I should see "Le côté Bright de la force"
         Given I am on "/fr/fiche-sith-kylo-ren"
