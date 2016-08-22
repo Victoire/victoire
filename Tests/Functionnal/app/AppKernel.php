@@ -96,7 +96,6 @@ class AppKernel extends Kernel
         return sys_get_temp_dir().'/Victoire/logs';
     }
 
-
     /**
      * {@inheritdoc}
      */
@@ -114,8 +113,9 @@ class AppKernel extends Kernel
             parent::shutdown();
         }
     }
+
     /**
-     * Remove all container references from all loaded services
+     * Remove all container references from all loaded services.
      */
     protected function cleanupContainer($container)
     {
@@ -138,5 +138,4 @@ class AppKernel extends Kernel
         }
         $property->setValue($container, null);
     }
-
 }
