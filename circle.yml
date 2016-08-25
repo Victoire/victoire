@@ -21,6 +21,7 @@ dependencies:
     - >
       if [ -z "${RUN_NIGHTLY_BUILD}" ]; then
         sed -i '/CoverageContext/d' behat.yml
+        sed -i '/CoverageContext/d' behat.yml.dist
         echo "CoverageContext disabled"
       fi
 
@@ -55,7 +56,7 @@ test:
         ./vendor/bin/behat --format=pretty --out=std --format=junit --out=$CIRCLE_TEST_REPORTS/$i/junit
       fi
     - bash circle-behat.sh Tests/Features:
-    - 'phpunit --coverage-text'
+        parallel: true
     - wget http://psvcg.coreteks.org/php-semver-checker-git.phar
     - >
       php php-semver-checker-git.phar suggest --allow-detached -vvv --details --include-before=src --include-after=src | awk '/Suggested semantic version: / {print $4}' | awk '{ print "{\"Suggested semantic version\":\"" $1 "\"}" }' > $CIRCLE_TEST_REPORTS/semver.json
