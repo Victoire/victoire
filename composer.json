@@ -50,7 +50,7 @@
         "doctrine/orm": "v2.5.2",
         "friendsofsymfony/jsrouting-bundle": "2.0.*@dev",
         "friendsofsymfony/user-bundle": "~2.0@dev",
-        "friendsofvictoire/text-widget": "~2.0",
+        "friendsofvictoire/text-widget": "~1.5",
         "friendsofvictoire/button-widget": "~2.0",
         "incenteev/composer-parameter-handler": "~2.0",
         "infinite-networks/form-bundle": "dev-master",
@@ -115,10 +115,5 @@
             "type": "vcs",
             "url": "https://github.com/Charlie-Lucas/InfiniteFormBundle"
         }
-    ],
-    "extra": {
-        "branch-alias": {
-            "dev-master": "2.0.x-dev"
-        }
-    }
+    ]
 }

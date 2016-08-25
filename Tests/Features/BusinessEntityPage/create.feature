@@ -3,13 +3,13 @@ Feature: Create business entity pages
 
     Background:
         Given the following Jedis:
-            | name   | side   | midiChlorians | slug     |       author       |
-            | Anakin | dark   | 20000         | anakin   | anakin@victoire.io |
-            | Yoda   | bright | 17500         | yoda     |  z6po@victoire.io  |
-            | Kylo Ren | Double | 20000       | kylo-ren | anakin@victoire.io |
+            | name   | side   | midiChlorians | slug   |       author       |
+            | Anakin | dark   | 20000         | anakin | anakin@victoire.io |
+            | Yoda   | bright | 17500         | yoda   |  z6po@victoire.io  |
         And I maximize the window
         And I am on homepage
 
+    @smartStep
     Scenario: I can create a new Business entity page pattern
         Given I open the hamburger menu
         Then I should see "Représentation métier"
@@ -111,6 +111,9 @@ Feature: Create business entity pages
         Then I should see "Le Côté obscur de la force"
 
     Scenario: I can create businessPage of the same entity on different businessTemplates
+        Given the following Jedis:
+            | name     | side   | midiChlorians | slug     |
+            | Kylo Ren | Double | 20000         | kylo-ren |
         Given the following BusinessTemplate:
             | currentLocale |name                       | backendName  | slug                     |  businessEntityId | parent  | template      | query |
             | fr            |Fiche Jedi - {{item.name}} | Fiche Jedi   | fiche-jedi-{{item.slug}} |  jedi             | home    | base | WHERE LOWER(item.side) LIKE LOWER('bright') OR LOWER(item.side) LIKE LOWER('double') |
@@ -123,7 +126,6 @@ Feature: Create business entity pages
             | widgetMap                |  side   |
             | fiche-jedi-{{item.slug}} |  Bright |
             | fiche-sith-{{item.slug}} |  Dark   |
-        Given I wait 2 seconds
         Given I am on "/fr/fiche-jedi-kylo-ren"
         Then I should see "Le côté Bright de la force"
         Given I am on "/fr/fiche-sith-kylo-ren"
