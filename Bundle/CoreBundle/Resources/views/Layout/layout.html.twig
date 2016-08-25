@@ -76,6 +76,7 @@
             {% javascripts injector='victoire-edit, victoire-leftnavbar' %}
                 <script type="text/javascript" src="{{ asset_url }}"></script>
             {% endjavascripts %}
+                <script src="{{ url('bazinga_jstranslation_js', {'domain': 'victoire'}) }}"></script>
             {% endif %}
             {% if is_granted('ROLE_VICTOIRE') %}
             <script type="text/javascript">
@@ -87,7 +88,6 @@
                 });
             </script>
             {% endif %}
-            <script src="{{ asset('bundles/bazingajstranslation/js/translator.min.js') }}"></script>
             <script src="{{ url('bazinga_jstranslation_js') }}"></script>
             <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
             <script type="text/javascript">
