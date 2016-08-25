@@ -49,9 +49,7 @@
                 "@VictoireCoreBundle/Resources/public/vendor/vic-bootstrap/3.0.3/js/bootstrap.min.js",
                 "@VictoireCoreBundle/Resources/public/js/jquery.mjs.nestedSortable.js",
                 "@BazingaJsTranslationBundle/Resources/public/js/translator.min.js",
-                "js/translations/config.js",
-                "js/translations/victoire/*.js"
-
+                "js/translations/config.js"
             ]
         },
         "stylesheets":
