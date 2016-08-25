@@ -11,8 +11,20 @@ machine:
 
 dependencies:
   pre:
-    - echo "memory_limit = 1024M" > ~/.phpenv/versions/5.6.5/etc/conf.d/memory.ini
-    - echo "always_populate_raw_post_data=-1" > ~/.phpenv/versions/5.6.5/etc/conf.d/post_data.ini
+    - echo "memory_limit = 1024M" > ~/.phpenv/versions/$(phpenv global)/etc/conf.d/memory.ini
+    - echo "always_populate_raw_post_data=-1" > ~/.phpenv/versions/$(phpenv global)/etc/conf.d/post_data.ini
+    - >
+      if [ -n "${RUN_NIGHTLY_BUILD}" ]; then
+        sed -i 's/^;//' ~/.phpenv/versions/$(phpenv global)/etc/conf.d/xdebug.ini
+        echo "xdebug enabled"
+      fi
+    - >
+      if [ -z "${RUN_NIGHTLY_BUILD}" ]; then
+        sed -i '/CoverageContext/d' behat.yml
+        sed -i '/CoverageContext/d' behat.yml.dist
+        echo "CoverageContext disabled"
+      fi
+
   override:
     - npm install less
     - mkdir fails
@@ -39,12 +51,19 @@ dependencies:
 
 test:
   override:
+    - >
+      if [ -n "${RUN_NIGHTLY_BUILD}" ]; then
+        ./vendor/bin/behat --format=pretty --out=std --format=junit --out=$CIRCLE_TEST_REPORTS/$i/junit
+      fi
     - bash circle-behat.sh Tests/Features:
         parallel: true
-    - 'phpunit --coverage-text'
     - wget http://psvcg.coreteks.org/php-semver-checker-git.phar
     - >
       php php-semver-checker-git.phar suggest --allow-detached -vvv --details --include-before=src --include-after=src | awk '/Suggested semantic version: / {print $4}' | awk '{ print "{\"Suggested semantic version\":\"" $1 "\"}" }' > $CIRCLE_TEST_REPORTS/semver.json
+    - >
+      if [ -n "${RUN_NIGHTLY_BUILD}" ]; then
+        mkdir -p cp $CIRCLE_TEST_REPORTS/coverage && cp -R $(php -r "echo sys_get_temp_dir();")/Victoire/logs/coverage $CIRCLE_TEST_REPORTS
+      fi
 
 general:
   artifacts:
