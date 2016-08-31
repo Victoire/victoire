@@ -7,7 +7,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Victoire\Bundle\FormBundle\Form\Type\SlugType;
 use Victoire\Bundle\MediaBundle\Form\Type\MediaType;
 use Victoire\Bundle\PageBundle\Entity\PageStatus;
 
@@ -73,12 +72,11 @@ class ArticleSettingsType extends ArticleType
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
         $resolver->setDefault('validation_groups', ['edition', 'Default']);
     }
-
 }
