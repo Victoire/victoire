@@ -22,9 +22,6 @@ class ArticleSettingsType extends ArticleType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('slug', SlugType::class, [
-                'label' => 'form.page.type.slug.label',
-            ])
             ->add('status', ChoiceType::class, [
                 'label'   => 'form.page.type.status.label',
                 'choices' => [
