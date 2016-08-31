@@ -128,9 +128,8 @@ class ArticleType extends AbstractType
 
         if ($form->getData() instanceof Article && null === $form->getData()->getId()) {
             $options['exclude_fields'] = ['slug'];
-        } else {
-            $options['validation_groups'] = ['edition', 'Default'];
         }
+
         $form->add('translations', TranslationsType::class, $options);
     }
 
