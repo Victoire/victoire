@@ -86,6 +86,12 @@ class WidgetRenderer
 
         //the content of the widget
         $parameters = $this->container->get('victoire_widget.widget_content_resolver')->getWidgetContent($widget);
+        /*
+         * In some cases, for example, WidgetRender in BusinessEntity mode with magic variables {{entity.id}} transformed
+         * into the real business entity id, then if in the rendered action, we need to flush, it would persist the
+         * modified widget which really uncomfortable ;)
+         */
+        $this->container->get('doctrine.orm.entity_manager')->refresh($widget);
 
         //the template displayed is in the widget bundle (with the potential theme)
         $showView = 'show'.ucfirst($widget->getTheme());
