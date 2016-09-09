@@ -86,8 +86,8 @@ class WidgetMapManager
         $this->moveChildren($view, $beforeChild, $afterChild, $originalParent, $originalPosition);
 
         foreach ($parentWidgetMapChildren['views'] as $_view) {
-            if ($_view->getId() !== $view->getId()) {
                 if (isset($parentWidgetMapChildren['before'][$_view->getId()])) {
+            if ($_view !== $view) {
                     $parentWidgetMapChildren['before'][$_view->getId()]->setParent($widgetMap);
                 }
                 if (isset($parentWidgetMapChildren['after'][$_view->getId()])) {

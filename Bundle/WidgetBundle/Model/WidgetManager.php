@@ -345,9 +345,6 @@ class WidgetManager
     {
         $widgetCopy = $this->cloneEntity($widget);
 
-        //we have to persist the widget to get its id
-        $this->entityManager->persist($view);
-        $this->entityManager->flush();
         $originalWidgetMap = $widget->getWidgetMap();
 
 
