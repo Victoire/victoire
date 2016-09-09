@@ -121,6 +121,17 @@ class WidgetMapManager
 
         //we remove the widget from the current view
         if ($widgetMap->getView() === $view) {
+            // If the widgetMap has substitutes, delete them or transform them in create mode
+            if (count($widgetMap->getSubstitutes()) > 0) {
+                foreach ($widgetMap->getSubstitutes() as $substitute) {
+                    if ($substitute->getAction() === WidgetMap::ACTION_OVERWRITE) {
+                        $substitute->setAction(WidgetMap::ACTION_CREATE);
+                        $substitute->setReplaced(null);
+                    } else {
+                        $view->removeWidgetMap($widgetMap);
+                    }
+                }
+            }
             //remove the widget map from the slot
             $view->removeWidgetMap($widgetMap);
         } else {
