@@ -350,7 +350,6 @@ class WidgetManager
 
         $this->widgetMapManager->overwrite($view, $originalWidgetMap, $widgetCopy);
 
-        $this->widgetMapBuilder->build($view);
 
         return $widgetCopy;
     }
