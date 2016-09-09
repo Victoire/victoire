@@ -86,11 +86,11 @@ class WidgetMapManager
         $this->moveChildren($view, $beforeChild, $afterChild, $originalParent, $originalPosition);
 
         foreach ($parentWidgetMapChildren['views'] as $_view) {
-            if ($_view->getId() !== $view->getId()) {
-                if (isset($parentWidgetMapChildren['before'][$_view->getId()])) {
+            if ($_view !== $view) {
+                if (isset($parentWidgetMapChildren['before'][$_view->getId()]) && $parentWidgetMapChildren['before'][$_view->getId()]->getPosition() == $widgetMap->getPosition()) {
                     $parentWidgetMapChildren['before'][$_view->getId()]->setParent($widgetMap);
                 }
-                if (isset($parentWidgetMapChildren['after'][$_view->getId()])) {
+                if (isset($parentWidgetMapChildren['after'][$_view->getId()]) && $parentWidgetMapChildren['after'][$_view->getId()]->getPosition() == $widgetMap->getPosition()) {
                     $parentWidgetMapChildren['after'][$_view->getId()]->setParent($widgetMap);
                 }
             }
@@ -121,6 +121,17 @@ class WidgetMapManager
 
         //we remove the widget from the current view
         if ($widgetMap->getView() === $view) {
+            // If the widgetMap has substitutes, delete them or transform them in create mode
+            if (count($widgetMap->getSubstitutes()) > 0) {
+                foreach ($widgetMap->getSubstitutes() as $substitute) {
+                    if ($substitute->getAction() === WidgetMap::ACTION_OVERWRITE) {
+                        $substitute->setAction(WidgetMap::ACTION_CREATE);
+                        $substitute->setReplaced(null);
+                    } else {
+                        $view->removeWidgetMap($widgetMap);
+                    }
+                }
+            }
             //remove the widget map from the slot
             $view->removeWidgetMap($widgetMap);
         } else {
@@ -154,10 +165,8 @@ class WidgetMapManager
         $widgetMap->setAction(WidgetMap::ACTION_OVERWRITE);
         $widgetMap->setReplaced($originalWidgetMap);
         $widgetCopy->setWidgetMap($widgetMap);
-        $widgetMap->setView($view);
         $widgetMap->setSlot($originalWidgetMap->getSlot());
         $widgetMap->setPosition($originalWidgetMap->getPosition());
-        $widgetMap->setAsynchronous($widgetCopy->isAsynchronous());
         $widgetMap->setParent($originalWidgetMap->getParent());
 
         $view->addWidgetMap($widgetMap);
@@ -209,7 +218,6 @@ class WidgetMapManager
         $widgetMap->setId(null);
         $widgetMap->setAction(WidgetMap::ACTION_OVERWRITE);
         $widgetMap->setReplaced($originalWidgetMap);
-        $originalWidgetMap->addSubstitute($widgetMap);
         $widgetMap->setView($view);
         $view->addWidgetMap($widgetMap);
         $this->em->persist($widgetMap);
