@@ -165,10 +165,8 @@ class WidgetMapManager
         $widgetMap->setAction(WidgetMap::ACTION_OVERWRITE);
         $widgetMap->setReplaced($originalWidgetMap);
         $widgetCopy->setWidgetMap($widgetMap);
-        $widgetMap->setView($view);
         $widgetMap->setSlot($originalWidgetMap->getSlot());
         $widgetMap->setPosition($originalWidgetMap->getPosition());
-        $widgetMap->setAsynchronous($widgetCopy->isAsynchronous());
         $widgetMap->setParent($originalWidgetMap->getParent());
 
         $view->addWidgetMap($widgetMap);
@@ -220,7 +218,6 @@ class WidgetMapManager
         $widgetMap->setId(null);
         $widgetMap->setAction(WidgetMap::ACTION_OVERWRITE);
         $widgetMap->setReplaced($originalWidgetMap);
-        $originalWidgetMap->addSubstitute($widgetMap);
         $widgetMap->setView($view);
         $view->addWidgetMap($widgetMap);
         $this->em->persist($widgetMap);
