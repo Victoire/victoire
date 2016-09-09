@@ -344,12 +344,8 @@ class WidgetManager
     public function overwriteWidget(View $view, Widget $widget)
     {
         $widgetCopy = $this->cloneEntity($widget);
-
         $originalWidgetMap = $widget->getWidgetMap();
-
-
         $this->widgetMapManager->overwrite($view, $originalWidgetMap, $widgetCopy);
-
 
         return $widgetCopy;
     }
