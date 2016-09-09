@@ -368,10 +368,12 @@ class Widget extends BaseWidget implements VictoireQueryInterface
      *
      * @return Widget
      */
-    public function setWidgetMap(WidgetMap $widgetMap)
+    public function setWidgetMap(WidgetMap $widgetMap = null)
     {
+        if ($widgetMap) {
+            $widgetMap->addWidget($this);
+        }
         $this->widgetMap = $widgetMap;
-        $widgetMap->addWidget($this);
 
         return $this;
     }
