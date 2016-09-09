@@ -348,8 +348,8 @@ class WidgetManager
         //we have to persist the widget to get its id
         $this->entityManager->persist($view);
         $this->entityManager->flush();
+        $originalWidgetMap = $widget->getWidgetMap();
 
-        $originalWidgetMap = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $view);
 
         $this->widgetMapManager->overwrite($view, $originalWidgetMap, $widgetCopy);
 
