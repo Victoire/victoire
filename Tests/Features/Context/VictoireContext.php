@@ -160,7 +160,7 @@ class VictoireContext extends RawMinkContext
     {
         $element = $this->getSession()->getPage()->find(
             'xpath',
-            sprintf("//*[normalize-space(text()) = \"%s\"][preceding::*[normalize-space(text()) = \"%s\"]]",
+            sprintf('//*[normalize-space(text()) = "%s"][preceding::*[normalize-space(text()) = "%s"]]',
                 $textAfter,
                 $textBefore
             )
