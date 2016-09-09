@@ -160,9 +160,11 @@ class VictoireContext extends RawMinkContext
     {
         $element = $this->getSession()->getPage()->find(
             'xpath',
-            sprintf('//descendant-or-self::*[normalize-space(text()) = "%s"]/ancestor::div/descendant-or-self::*[normalize-space(text()) = "%s"]', $textBefore, $textAfter)
+            sprintf("//*[normalize-space(text()) = \"%s\"][preceding::*[normalize-space(text()) = \"%s\"]]",
+                $textAfter,
+                $textBefore
+            )
         );
-
         if (null === $element) {
             $message = sprintf('"%s" does not preceed "%s"', $textBefore, $textAfter);
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
