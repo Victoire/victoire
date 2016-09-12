@@ -43,7 +43,7 @@ if [ -z "${RUN_NIGHTLY_BUILD}" ]; then
 
     for i in "${!files[@]}"; do
         if [ $(($i % $CIRCLE_NODE_TOTAL)) -eq $CIRCLE_NODE_INDEX ]; then
-          echo "Running ./vendor/bin/behat --format=pretty --out=std --format=junit --out=$CIRCLE_TEST_REPORTS/$i/junit ${params} `pwd`/${files[$i]}"
+          echo "Running ./vendor/bin/behat --format=pretty --out=std --format=junit --out=$CIRCLE_TEST_REPORTS/$i/junit --rerun="return.log" ${params} `pwd`/${files[$i]}"
           time ./vendor/bin/behat --format=pretty --out=std --format=junit --out=$CIRCLE_TEST_REPORTS/$i/junit ${params} `pwd`/${files[$i]}
         fi
         # Mark the entire script as a failure if any of the iterations fail.
