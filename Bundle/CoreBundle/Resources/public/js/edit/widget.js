@@ -116,6 +116,7 @@ $vic(document).on('click', 'a#widget-new-tab', function(event) {
             var tab = $vic(response.html).find('.vic-modal-nav-tabs li:not(.widget-new-tab)').last();
             $vic('li.widget-new-tab').before(tab);
             $vic('div.vic-modal-tab-content-container').append(form);
+            $vic('#victoire-modal-label').html($vic(response.html).find('li:not(.widget-new-tab) .quantum-tab-name').last().data('tabName'));
             loading(false);
         }
     });
@@ -148,6 +149,10 @@ $vic(document).on('click', '.vic-widget-modal a.vic-confirmed, .vic-hover-widget
 });
 
 
+$vic(document).on('click', '.quantum-tab-name', function(event) {
+    $vic('#victoire-modal-label').html($vic(this).data('tabName'));
+
+});
 $vic(document).on('click', '.quantum-tab-name i.edit', function(event) {
     event.preventDefault();
     var value = $vic('#'+$vic(this).parents('a').first().prop('id')+"-pane").find('input[name$="[quantum]"]').val();
