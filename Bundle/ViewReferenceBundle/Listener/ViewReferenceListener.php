@@ -51,8 +51,10 @@ class ViewReferenceListener implements EventSubscriberInterface
     public function updateViewReference(ViewReferenceEvent $event)
     {
         $view = $event->getView();
-        $viewReference = $this->viewReferenceBuilder->buildViewReference($view, $this->em);
-        $this->viewReferenceManager->saveReference($viewReference);
+        if ($viewReference = $this->viewReferenceBuilder->buildViewReference($view, $this->em)) {
+            $this->viewReferenceManager->saveReference($viewReference);
+        }
+
     }
 
     /**
@@ -63,7 +65,8 @@ class ViewReferenceListener implements EventSubscriberInterface
     public function removeViewReference(ViewReferenceEvent $event)
     {
         $view = $event->getView();
-        $viewReference = $this->viewReferenceBuilder->buildViewReference($view, $this->em);
-        $this->viewReferenceManager->removeReference($viewReference);
+        if ($viewReference = $this->viewReferenceBuilder->buildViewReference($view, $this->em)) {
+            $this->viewReferenceManager->removeReference($viewReference);
+        }
     }
 }

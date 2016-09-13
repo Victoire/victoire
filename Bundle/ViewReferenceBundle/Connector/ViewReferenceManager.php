@@ -51,11 +51,13 @@ class ViewReferenceManager
             /** @var View $view */
             $view = $viewReference['view'];
             foreach ($view->getReferences() as $locale => $reference) {
-                // save the viewReference
-                $id = $this->saveReference($reference, $parentId, $parentLocale);
-                // if children, save them
-                if (array_key_exists('children', $viewReference) && !empty($children = $viewReference['children'])) {
-                    $this->saveReferences($children, $id, $reference->getLocale(), false);
+                if ($reference !== null) {
+                    // save the viewReference
+                    $id = $this->saveReference($reference, $parentId, $parentLocale);
+                    // if children, save them
+                    if (array_key_exists('children', $viewReference) && !empty($children = $viewReference['children'])) {
+                        $this->saveReferences($children, $id, $reference->getLocale(), false);
+                    }
                 }
             }
         }
@@ -99,9 +101,10 @@ class ViewReferenceManager
     public function removeReference(ViewReference $viewReference)
     {
         $referenceId = $viewReference->getId();
-        $url = $this->repository->findValueForId('url', $referenceId);
-        // Remove url
-        $this->manager->removeUrl($url, $viewReference->getLocale());
+        if ($url = $this->repository->findValueForId('url', $referenceId)) {
+            // Remove url
+            $this->manager->removeUrl($url, $viewReference->getLocale());
+        }
         // Remove reference
         $this->manager->remove($referenceId);
     }
