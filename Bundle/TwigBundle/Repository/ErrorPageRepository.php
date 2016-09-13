@@ -20,7 +20,7 @@ class ErrorPageRepository extends BasePageRepository
     {
         //the query builder
         $page = $this->createQueryBuilder('page')
-            ->where('page.code = :code')
+            ->where($this->mainAlias.'.code = :code')
             ->setParameter('code', $code)
             ->setMaxResults(1)
             ->getQuery()
