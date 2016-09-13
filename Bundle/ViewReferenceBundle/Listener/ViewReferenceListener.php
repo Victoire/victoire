@@ -54,7 +54,6 @@ class ViewReferenceListener implements EventSubscriberInterface
         if ($viewReference = $this->viewReferenceBuilder->buildViewReference($view, $this->em)) {
             $this->viewReferenceManager->saveReference($viewReference);
         }
-
     }
 
     /**
