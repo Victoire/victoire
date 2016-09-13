@@ -2,10 +2,12 @@
 
 namespace Victoire\Bundle\BlogBundle\Form;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Doctrine\ORM\Query\Expr;
 
 /**
  * Choose Blog form type.
@@ -25,6 +27,9 @@ class ChooseBlogType extends AbstractType
                 'class'             => 'Victoire\Bundle\BlogBundle\Entity\Blog',
                 'property'          => 'name',
                 'preferred_choices' => $options['blog'] ? [$options['blog']] : [],
+                'query_builder' => function (EntityRepository $er) use ($options) {
+                    return $er->joinTranslations($options['locale'])->getInstance();
+                },
             ]
         );
     }
@@ -41,6 +46,7 @@ class ChooseBlogType extends AbstractType
                 'data_class'         => null,
                 'translation_domain' => 'victoire',
                 'blog'               => null,
+                'locale'               => null,
             ]
         );
     }
