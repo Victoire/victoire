@@ -110,6 +110,11 @@ class LinkType extends AbstractType
      */
     protected function manageLinkTypeRelatedFields($linkType, $locale, $form, FormBuilderInterface $builder)
     {
+        $form->remove('route');
+        $form->remove('url');
+        $form->remove('attachedWidget');
+        $form->remove('viewReference');
+        $form->remove('locale');
         switch ($linkType) {
             case Link::TYPE_VIEW_REFERENCE:
                 $locale = $locale ?: $this->requestStack->getCurrentRequest()->getLocale();
