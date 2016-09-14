@@ -93,7 +93,6 @@ class BusinessPageHelper
      * Get the list of entities allowed for the BusinessTemplate page.
      *
      * @param BusinessTemplate $businessTemplate
-     *
      * @param EntityManager    $em
      *
      * @return array
@@ -109,11 +108,11 @@ class BusinessPageHelper
      * Get the list of entities allowed for the BusinessTemplate page.
      *
      * @param BusinessTemplate $businessTemplate
-     *
      * @param EntityManager    $em
      *
-     * @return QueryBuilder
      * @throws \Exception
+     *
+     * @return QueryBuilder
      */
     public function getEntitiesAllowedQueryBuilder(BusinessTemplate $businessTemplate, EntityManager $em)
     {

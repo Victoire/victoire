@@ -46,8 +46,9 @@ class WidgetContentResolverChain
     /**
      * @param Widget $widget
      *
-     * @return BaseWidgetContentResolver
      * @throws \Exception
+     *
+     * @return BaseWidgetContentResolver
      */
     public function getResolverForWidget(Widget $widget)
     {

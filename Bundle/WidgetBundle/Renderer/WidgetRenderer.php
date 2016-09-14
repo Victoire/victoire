@@ -4,8 +4,6 @@ namespace Victoire\Bundle\WidgetBundle\Renderer;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\DependencyInjection\Container;
-use Victoire\Bundle\BusinessEntityBundle\Exception\MissingBusinessEntityInstanceException;
-use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
@@ -45,7 +43,6 @@ class WidgetRenderer
      * @param Container          $container
      * @param WidgetCache        $widgetCache
      * @param WidgetHelper       $widgetHelper
-     *
      * @param VictoireCollector  $victoireCollector
      * @param BusinessPageHelper $bepHelper
      *
