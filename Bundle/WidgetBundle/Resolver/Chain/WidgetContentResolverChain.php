@@ -4,6 +4,7 @@ namespace Victoire\Bundle\WidgetBundle\Resolver\Chain;
 
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
+use Victoire\Bundle\WidgetBundle\Resolver\BaseWidgetContentResolver;
 
 class WidgetContentResolverChain
 {
@@ -42,6 +43,13 @@ class WidgetContentResolverChain
         return false;
     }
 
+    /**
+     * @param Widget $widget
+     *
+     * @throws \Exception
+     *
+     * @return BaseWidgetContentResolver
+     */
     public function getResolverForWidget(Widget $widget)
     {
         $alias = $this->widgetHelper->getWidgetName($widget);
