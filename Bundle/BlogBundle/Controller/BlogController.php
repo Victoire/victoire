@@ -19,7 +19,6 @@ use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\PageBundle\Controller\BasePageController;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
-use Doctrine\ORM\Query\Expr;
 
 /**
  * blog Controller.

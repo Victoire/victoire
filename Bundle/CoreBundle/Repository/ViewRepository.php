@@ -61,7 +61,7 @@ class ViewRepository extends NestedTreeRepository
      */
     public function getAll($excludeUnpublished = false)
     {
-        $this->qb= $this->getInstance();
+        $this->qb = $this->getInstance();
 
         //If $excludeUnpublished === true, we exclude the non published results
         if ($excludeUnpublished) {
@@ -75,7 +75,6 @@ class ViewRepository extends NestedTreeRepository
 
         return $this;
     }
-
 
     /**
      * Find a large amount of views by ViewReferences.
@@ -95,7 +94,7 @@ class ViewRepository extends NestedTreeRepository
             }
         }
 
-        $qb= $this->createQueryBuilder($this->mainAlias);
+        $qb = $this->createQueryBuilder($this->mainAlias);
         $qb->andWhere($this->mainAlias.'.id IN (:pageIds)')
             ->setParameter('pageIds', $pageIds);
 
@@ -126,7 +125,7 @@ class ViewRepository extends NestedTreeRepository
     public function findOneByHomepage($locale = 'fr')
     {
         //the query builder
-        $qb= $this->createQueryBuilder($this->mainAlias);
+        $qb = $this->createQueryBuilder($this->mainAlias);
         $qb
             ->where($this->mainAlias.'.homepage = true')
             ->andWhere($this->mainAlias.'.status = :status')
@@ -153,6 +152,7 @@ class ViewRepository extends NestedTreeRepository
 
         return $this;
     }
+
     /**
      * Get PageSeo.
      *
@@ -163,7 +163,7 @@ class ViewRepository extends NestedTreeRepository
     public function joinTranslations($locale)
     {
         $this->getInstance()
-            ->innerJoin($this->mainAlias.'.translations', 'translation', Expr\Join::WITH, 'translation.locale = :locale' )
+            ->innerJoin($this->mainAlias.'.translations', 'translation', Expr\Join::WITH, 'translation.locale = :locale')
             ->setParameter('locale', $locale);
 
         return $this;
