@@ -57,12 +57,13 @@ class BlogController extends BasePageController
     {
         /** @var BlogRepository $blogRepo */
         $blogRepo = $this->get('doctrine.orm.entity_manager')->getRepository('VictoireBlogBundle:Blog');
-        $blogs = $blogRepo->getAll()->run();
+        $blogs = $blogRepo->joinTranslations($request->getLocale())->run();
         $blog = reset($blogs);
         if (is_numeric($blogId)) {
             $blog = $blogRepo->find($blogId);
         }
         $options['blog'] = $blog;
+        $options['locale'] = $request->getLocale();
         $template = $this->getBaseTemplatePath().':index.html.twig';
         $chooseBlogForm = $this->createForm(ChooseBlogType::class, null, $options);
 
@@ -70,7 +71,8 @@ class BlogController extends BasePageController
         if ($chooseBlogForm->isValid()) {
             $blog = $chooseBlogForm->getData()['blog'];
             $template = $this->getBaseTemplatePath().':_blogItem.html.twig';
-            $chooseBlogForm = $this->createForm(ChooseBlogType::class, null, ['blog' => $blog]);
+            $blogRepo->clearInstance();
+            $chooseBlogForm = $this->createForm(ChooseBlogType::class, null, ['blog' => $blog, 'locale' => $request->getLocale()]);
         }
         $businessProperties = [];
 

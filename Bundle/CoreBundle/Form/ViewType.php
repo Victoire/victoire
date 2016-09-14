@@ -91,7 +91,7 @@ abstract class ViewType extends AbstractType
                     $getAllPageWithoutMe = function (EntityRepository $repo) use ($view) {
                         return $repo->getAll()
                             ->getInstance()
-                            ->andWhere('page.id != :pageId')
+                            ->andWhere('view.id != :pageId')
                             ->setParameter('pageId', $view->getId());
                     };
                 }

@@ -12,8 +12,7 @@ use Doctrine\ORM\QueryBuilder;
  */
 trait StateFullRepositoryTrait
 {
-    private $qb;
-    private $mainAlias;
+    protected $qb;
 
     /**
      * Get query builder instance.
@@ -57,6 +56,7 @@ trait StateFullRepositoryTrait
     public function clearInstance()
     {
         $this->qb = null;
+        $this->mainAlias = null;
 
         return $this;
     }
