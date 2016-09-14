@@ -71,10 +71,7 @@ class LinkType extends AbstractType
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($builder) {
                 $data = $event->getData();
                 $form = $event->getForm();
-                if ($data) {
-                    // manage conditional related status in preset data
-                    self::manageLinkTypeRelatedFields($data->getLinkType(), $data->getLocale(), $form, $builder);
-                }
+                self::manageLinkTypeRelatedFields($data ? $data->getLinkType() : Link::TYPE_NONE, $data ? $data->getLocale() : null, $form, $builder);
             });
 
         $builder
@@ -132,11 +129,11 @@ class LinkType extends AbstractType
                 break;
             case Link::TYPE_ROUTE:
                 $form->add('route', null, [
-                        'label'                          => 'form.link_type.route.label',
-                        'vic_vic_widget_form_group_attr' => ['class' => 'vic-form-group'],
-                        'required'                       => true,
-                        'attr'                           => ['novalidate' => 'novalidate', 'placeholder' => 'form.link_type.route.placeholder'],
-                    ])
+                    'label'                          => 'form.link_type.route.label',
+                    'vic_vic_widget_form_group_attr' => ['class' => 'vic-form-group'],
+                    'required'                       => true,
+                    'attr'                           => ['novalidate' => 'novalidate', 'placeholder' => 'form.link_type.route.placeholder'],
+                ])
                     ->add('route_parameters', JsonType::class, [
                         'label'                          => 'form.link_type.route_parameters.label',
                         'vic_vic_widget_form_group_attr' => ['class' => 'vic-form-group'],
@@ -146,21 +143,21 @@ class LinkType extends AbstractType
                 break;
             case Link::TYPE_URL:
                 $form->add('url', null, [
-                        'label'                          => 'form.link_type.url.label',
-                        'vic_vic_widget_form_group_attr' => ['class' => 'vic-form-group'],
-                        'required'                       => true,
-                        'attr'                           => ['novalidate' => 'novalidate', 'placeholder' => 'form.link_type.url.placeholder'],
-                    ]);
+                    'label'                          => 'form.link_type.url.label',
+                    'vic_vic_widget_form_group_attr' => ['class' => 'vic-form-group'],
+                    'required'                       => true,
+                    'attr'                           => ['novalidate' => 'novalidate', 'placeholder' => 'form.link_type.url.placeholder'],
+                ]);
                 break;
             case Link::TYPE_WIDGET:
                 $form->add('attachedWidget', EntityType::class, [
-                        'label'                          => 'form.link_type.attachedWidget.label',
-                        'placeholder'                    => 'form.link_type.attachedWidget.blank',
-                        'class'                          => 'VictoireWidgetBundle:Widget',
-                        'vic_vic_widget_form_group_attr' => ['class' => 'vic-form-group'],
-                        'required'                       => true,
-                        'attr'                           => ['novalidate' => 'novalidate'],
-                    ]);
+                    'label'                          => 'form.link_type.attachedWidget.label',
+                    'placeholder'                    => 'form.link_type.attachedWidget.blank',
+                    'class'                          => 'VictoireWidgetBundle:Widget',
+                    'vic_vic_widget_form_group_attr' => ['class' => 'vic-form-group'],
+                    'required'                       => true,
+                    'attr'                           => ['novalidate' => 'novalidate'],
+                ]);
                 break;
             case Link::TYPE_NONE:
             case null:
