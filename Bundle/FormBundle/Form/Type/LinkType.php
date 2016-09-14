@@ -74,8 +74,6 @@ class LinkType extends AbstractType
                 if ($data) {
                     // manage conditional related status in preset data
                     self::manageLinkTypeRelatedFields($data->getLinkType(), $data->getLocale(), $form, $builder);
-                } else {
-                    $form->remove('target');
                 }
             });
 
