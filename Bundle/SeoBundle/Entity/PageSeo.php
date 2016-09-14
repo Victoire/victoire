@@ -34,7 +34,6 @@ class PageSeo
      *
      * @ORM\Column(name="meta_title", type="string", nullable=true)
      * @Assert\Length(max = 60)
-     * @Gedmo\Translatable
      */
     protected $metaTitle;
 
@@ -43,7 +42,6 @@ class PageSeo
      *
      * @ORM\Column(name="meta_description", type="string", length=255, nullable=true)
      * @Assert\Length(max = 155)
-     * @Gedmo\Translatable
      */
     protected $metaDescription;
 
@@ -51,7 +49,6 @@ class PageSeo
      * @var string
      *
      * @ORM\Column(name="rel_author", type="string", length=255, nullable=true)
-     * @Gedmo\Translatable
      */
     protected $relAuthor;
 
@@ -59,7 +56,6 @@ class PageSeo
      * @var string
      *
      * @ORM\Column(name="rel_publisher", type="string", length=255, nullable=true)
-     * @Gedmo\Translatable
      */
     protected $relPublisher;
 
@@ -67,7 +63,6 @@ class PageSeo
      * @var string
      *
      * @ORM\Column(name="ogTitle", type="string", length=255, nullable=true)
-     * @Gedmo\Translatable
      */
     protected $ogTitle;
 
@@ -75,7 +70,6 @@ class PageSeo
      * @var string
      *
      * @ORM\Column(name="ogType", type="string", length=255, nullable=true)
-     * @Gedmo\Translatable
      */
     protected $ogType;
 
@@ -91,7 +85,6 @@ class PageSeo
      * @var string
      *
      * @ORM\Column(name="ogUrl", type="string", length=255, nullable=true)
-     * @Gedmo\Translatable
      */
     protected $ogUrl;
 
@@ -99,7 +92,6 @@ class PageSeo
      * @var text
      *
      * @ORM\Column(name="ogDescription", type="text", nullable=true)
-     * @Gedmo\Translatable
      */
     protected $ogDescription;
 
@@ -107,7 +99,6 @@ class PageSeo
      * @var string
      *
      * @ORM\Column(name="fbAdmins", type="string", length=255, nullable=true)
-     * @Gedmo\Translatable
      */
     protected $fbAdmins;
 
@@ -115,7 +106,6 @@ class PageSeo
      * @var string
      *
      * @ORM\Column(name="twitterCard", type="string", length=255, nullable=true)
-     * @Gedmo\Translatable
      */
     protected $twitterCard = 'summary';
 
@@ -123,7 +113,6 @@ class PageSeo
      * @var string
      *
      * @ORM\Column(name="twitterUrl", type="string", length=255, nullable=true)
-     * @Gedmo\Translatable
      * @Assert\Length(max = 15)
      */
     protected $twitterUrl;
@@ -132,7 +121,6 @@ class PageSeo
      * @var string
      *
      * @ORM\Column(name="twitterCreator", type="string", length=255, nullable=true)
-     * @Gedmo\Translatable
      * @Assert\Length(max = 15)
      */
     protected $twitterCreator;
@@ -141,7 +129,6 @@ class PageSeo
      * @var string
      *
      * @ORM\Column(name="twitterTitle", type="string", length=255, nullable=true)
-     * @Gedmo\Translatable
      * @Assert\Length(max = 70)
      */
     protected $twitterTitle;
@@ -150,7 +137,6 @@ class PageSeo
      * @var string
      *
      * @ORM\Column(name="twitterDescription", type="string", length=255, nullable=true)
-     * @Gedmo\Translatable
      * @Assert\Length(max = 200)
      */
     protected $twitterDescription;
@@ -167,7 +153,6 @@ class PageSeo
      * @var string
      *
      * @ORM\Column(name="schemaPageType", type="string", length=255, nullable=true)
-     * @Gedmo\Translatable
      */
     protected $schemaPageType;
 
@@ -175,7 +160,6 @@ class PageSeo
      * @var string
      *
      * @ORM\Column(name="schemaName", type="string", length=255, nullable=true)
-     * @Gedmo\Translatable
      */
     protected $schemaName;
 
@@ -183,7 +167,6 @@ class PageSeo
      * @var string
      *
      * @ORM\Column(name="schemaDescription", type="string", length=255, nullable=true)
-     * @Gedmo\Translatable
      */
     protected $schemaDescription;
 
@@ -199,7 +182,6 @@ class PageSeo
      * @var string
      *
      * @ORM\Column(name="meta_robots_index", type="string", length=255, nullable=true)
-     * @Gedmo\Translatable
      */
     protected $metaRobotsIndex;
 
@@ -207,7 +189,6 @@ class PageSeo
      * @var string
      *
      * @ORM\Column(name="meta_robots_follow", type="string", length=255, nullable=true)
-     * @Gedmo\Translatable
      */
     protected $metaRobotsFollow;
 
@@ -215,7 +196,6 @@ class PageSeo
      * @var string
      *
      * @ORM\Column(name="meta_robots_advanced", type="string", length=255, nullable=true)
-     * @Gedmo\Translatable
      */
     protected $metaRobotsAdvanced;
 
@@ -223,7 +203,6 @@ class PageSeo
      * @var bool
      *
      * @ORM\Column(name="sitemap_indexed", type="boolean", nullable=true, options={"default" = true})
-     * @Gedmo\Translatable
      */
     protected $sitemapIndexed = true;
 
@@ -231,7 +210,6 @@ class PageSeo
      * @var float
      *
      * @ORM\Column(name="sitemap_priority", type="float", nullable=true, options={"default" = "0.8"})
-     * @Gedmo\Translatable
      */
     protected $sitemapPriority = 0.8;
 
@@ -239,7 +217,6 @@ class PageSeo
      * @var string
      *
      * @ORM\Column(name="sitemap_changeFreq", type="string", length=20, nullable=true, options={"default" = "monthly"})
-     * @Gedmo\Translatable
      */
     protected $sitemapChangeFreq = 'monthly';
 
@@ -247,7 +224,6 @@ class PageSeo
      * @var string
      *
      * @ORM\Column(name="rel_canonical", type="string", length=255, nullable=true)
-     * @Gedmo\Translatable
      */
     protected $relCanonical;
 
@@ -255,7 +231,6 @@ class PageSeo
      * @var string
      *
      * @ORM\Column(name="keyword", type="string", length=255, nullable=true)
-     * @Gedmo\Translatable
      */
     protected $keyword;
 
