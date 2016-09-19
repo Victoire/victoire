@@ -3,9 +3,9 @@
 namespace Victoire\Bundle\TwigBundle\Controller;
 
 use Symfony\Bundle\TwigBundle\Controller\ExceptionController as BaseExceptionController;
+use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\FlattenException;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
 
@@ -41,7 +41,8 @@ class ExceptionController extends BaseExceptionController
         $code = $exception->getStatusCode();
 
         //get request extension
-        $uriArray = explode('/', $request->getRequestUri());
+        $uriArray = explode('/', rtrim($request->getRequestUri(), '/'));
+
         $matches = preg_match('/^.*(\..*)$/', array_pop($uriArray), $matches);
 
         //if in production environment and the query is not a file
@@ -54,7 +55,6 @@ class ExceptionController extends BaseExceptionController
                 );
             }
         }
-
         return new Response($this->twig->render(
             $this->findTemplate($request, $_format, $code, $this->debug),
             [
