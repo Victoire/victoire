@@ -18,6 +18,10 @@ The main goal is to give to the final customer the ability to **create**/**edit*
 
 A french documentation has been started and is being completed _slowly_ [here](http://github.com/victoire/documentation-fr/)
 
+##Roadmap
+
+https://docs.google.com/spreadsheets/d/1MTdt5ZsGNPOZp5e_to2LvS39j59M59c29HddpvaVb70/edit?usp=sharing
+
 ##Contribution
 
 Victoire is an open-source, community driven project.
