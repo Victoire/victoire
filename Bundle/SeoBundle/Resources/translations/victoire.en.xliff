@@ -240,7 +240,7 @@
       </trans-unit>
       <trans-unit id="26" resname="form.pageSeo.twitterUrl.placeholder">
         <source>form.pageSeo.twitterUrl.placeholder</source>
-        <target>e.g. @victoiredcms</target>
+        <target>e.g. @TroopersAgency</target>
       </trans-unit>
       <trans-unit id="27" resname="form.pageSeo.twitterCreator.label">
         <source>form.pageSeo.twitterCreator.label</source>
@@ -248,7 +248,7 @@
       </trans-unit>
       <trans-unit id="28" resname="form.pageSeo.twitterCreator.placeholder">
         <source>form.pageSeo.twitterCreator.placeholder</source>
-        <target>e.g. @appventus</target>
+        <target>e.g. @victoiredcms</target>
       </trans-unit>
       <trans-unit id="29" resname="form.pageSeo.twitterDescription.placeholder">
         <source>form.pageSeo.twitterDescription.placeholder</source>

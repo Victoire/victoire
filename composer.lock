@@ -71,114 +71,7 @@
                 "translatable",
                 "translation"
             ],
-            "time": "2016-05-12 16:32:45"
-        },
-        {
-            "name": "appventus/alertify-bundle",
-            "version": "dev-master",
-            "target-dir": "AppVentus/AlertifyBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/AppVentus/AvAlertifyBundle.git",
-                "reference": "01794b3cf6385929e17c94979c6f0b1878f3de56"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/AppVentus/AvAlertifyBundle/zipball/01794b3cf6385929e17c94979c6f0b1878f3de56",
-                "reference": "01794b3cf6385929e17c94979c6f0b1878f3de56",
-                "shasum": ""
-            },
-            "require": {
-                "friendsofsymfony/jsrouting-bundle": "2.0.*@dev"
-            },
-            "require-dev": {
-                "symfony/class-loader": "~2.1"
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "AppVentus\\AlertifyBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Paul Andrieux",
-                    "email": "paul@appventus.com",
-                    "homepage": "http://appventus.com"
-                },
-                {
-                    "name": "Leny Bernard",
-                    "email": "leny@appventus.com",
-                    "homepage": "http://appventus.com"
-                }
-            ],
-            "description": "Symfony AlertifyBundle",
-            "homepage": "https://github.com/AppVentus/AvAlertifyBundle",
-            "keywords": [
-                "alert",
-                "bootstrap"
-            ],
-            "time": "2016-07-20 17:49:01"
-        },
-        {
-            "name": "appventus/assetic-injector-bundle",
-            "version": "dev-master",
-            "target-dir": "AppVentus/AsseticInjectorBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/AppVentus/AsseticInjectorBundle.git",
-                "reference": "6c00c1aada91ea87f27bbb16a93af9d3d66db02f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/AppVentus/AsseticInjectorBundle/zipball/6c00c1aada91ea87f27bbb16a93af9d3d66db02f",
-                "reference": "6c00c1aada91ea87f27bbb16a93af9d3d66db02f",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.2"
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "AppVentus\\AsseticInjectorBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Paul Andrieux",
-                    "email": "paul@appventus.com"
-                },
-                {
-                    "name": "Leny Bernard",
-                    "email": "leny@appventus.com"
-                }
-            ],
-            "description": "This bundle allow you to define global javascripts and stylesheets",
-            "homepage": "http://appventus.com",
-            "keywords": [
-                "assetic",
-                "injector"
-            ],
-            "time": "2016-01-31 18:28:44"
+            "time": "2016-08-05 18:13:58"
         },
         {
             "name": "behat/transliterator",
@@ -4472,7 +4365,117 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2016-08-22 12:09:58"
+            "time": "2016-10-03 18:59:23"
+        },
+        {
+            "name": "troopers/alertify-bundle",
+            "version": "1.2.0",
+            "target-dir": "Troopers/AlertifyBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Troopers/AlertifyBundle.git",
+                "reference": "04e1d02e5cdb68560935ad8f555e18b801684985"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Troopers/AlertifyBundle/zipball/04e1d02e5cdb68560935ad8f555e18b801684985",
+                "reference": "04e1d02e5cdb68560935ad8f555e18b801684985",
+                "shasum": ""
+            },
+            "require": {
+                "friendsofsymfony/jsrouting-bundle": "2.0.*@dev"
+            },
+            "require-dev": {
+                "symfony/class-loader": "~2.1"
+            },
+            "suggest": {
+                "troopers/assetic-injector-bundle": "~1.1"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Troopers\\AlertifyBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Leny Bernard",
+                    "email": "leny@troopers.email",
+                    "homepage": "http://troopers.agency"
+                },
+                {
+                    "name": "Paul Andrieux",
+                    "email": "paul@troopers.email",
+                    "homepage": "http://troopers.agency"
+                }
+            ],
+            "description": "Symfony AlertifyBundle",
+            "homepage": "https://github.com/Troopers/TroopersAlertifyBundle",
+            "keywords": [
+                "alert",
+                "bootstrap"
+            ],
+            "time": "2016-10-03 14:51:14"
+        },
+        {
+            "name": "troopers/assetic-injector-bundle",
+            "version": "1.1.0",
+            "target-dir": "Troopers/AsseticInjectorBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Troopers/AsseticInjectorBundle.git",
+                "reference": "edd4f2510e61f0a9a83df66a23b2652b9c5e8979"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Troopers/AsseticInjectorBundle/zipball/edd4f2510e61f0a9a83df66a23b2652b9c5e8979",
+                "reference": "edd4f2510e61f0a9a83df66a23b2652b9c5e8979",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Troopers\\AsseticInjectorBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Paul Andrieux",
+                    "email": "paul@troopers.email"
+                },
+                {
+                    "name": "Leny Bernard",
+                    "email": "leny@troopers.email"
+                }
+            ],
+            "description": "This bundle allow you to define global javascripts and stylesheets",
+            "homepage": "http://troopers.agency",
+            "keywords": [
+                "assetic",
+                "injector"
+            ],
+            "time": "2016-10-03 14:16:23"
         },
         {
             "name": "twig/extensions",

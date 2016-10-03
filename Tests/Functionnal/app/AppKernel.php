@@ -23,28 +23,29 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
 
-            new AppVentus\AsseticInjectorBundle\AvAsseticInjectorBundle(),
-            new AppVentus\AlertifyBundle\AvAlertifyBundle(),
+            new A2lix\TranslationFormBundle\A2lixTranslationFormBundle(),
+            new Bazinga\Bundle\JsTranslationBundle\BazingaJsTranslationBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
+            new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new JMS\AopBundle\JMSAopBundle(),
             new JMS\TranslationBundle\JMSTranslationBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
-            new Liip\ImagineBundle\LiipImagineBundle(),
+            new Knp\DoctrineBehaviors\Bundle\DoctrineBehaviorsBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new Liip\ImagineBundle\LiipImagineBundle(),
             new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle(),
             new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle(),
             new Snc\RedisBundle\SncRedisBundle(),
-            new Bazinga\Bundle\JsTranslationBundle\BazingaJsTranslationBundle(),
-            new Knp\DoctrineBehaviors\Bundle\DoctrineBehaviorsBundle(),
-            new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
-            new A2lix\TranslationFormBundle\A2lixTranslationFormBundle(),
+            new Troopers\AsseticInjectorBundle\TroopersAsseticInjectorBundle(),
+            new Troopers\AlertifyBundle\TroopersAlertifyBundle(),
 
             //Victoire bundles
             new Victoire\Bundle\AnalyticsBundle\VictoireAnalyticsBundle(),
             new Victoire\Bundle\CoreBundle\VictoireCoreBundle(),
+            new Victoire\Bundle\CriteriaBundle\VictoireCriteriaBundle(),
             new Victoire\Bundle\BlogBundle\VictoireBlogBundle(),
             new Victoire\Bundle\BusinessEntityBundle\VictoireBusinessEntityBundle(),
             new Victoire\Bundle\BusinessPageBundle\VictoireBusinessPageBundle(),
@@ -62,7 +63,6 @@ class AppKernel extends Kernel
             new Victoire\Bundle\ViewReferenceBundle\ViewReferenceBundle(),
             new Victoire\Bundle\WidgetBundle\VictoireWidgetBundle(),
             new Victoire\Bundle\WidgetMapBundle\VictoireWidgetMapBundle(),
-            new Victoire\Bundle\CriteriaBundle\VictoireCriteriaBundle(),
             //Victoire test bundles
             new Victoire\Widget\ForceBundle\VictoireWidgetForceBundle(),
             new Victoire\Widget\LightSaberBundle\VictoireWidgetLightSaberBundle(),
@@ -73,7 +73,6 @@ class AppKernel extends Kernel
     }
 
     /**
-     * @return null
      */
     public function registerContainerConfiguration(LoaderInterface $loader)
     {

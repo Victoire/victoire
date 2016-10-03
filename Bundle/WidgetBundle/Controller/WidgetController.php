@@ -42,14 +42,13 @@ class WidgetController extends Controller
      */
     public function showAction(Request $request, Widget $widget, $viewReferenceId)
     {
-        //the response is for the ajax.js from the AppVentus Ajax Bundle
         try {
             $view = $this->get('victoire_page.page_helper')->findPageByParameters(['id' => $viewReferenceId]);
             $this->get('victoire_widget_map.builder')->build($view);
             $this->get('victoire_core.current_view')->setCurrentView($view);
             $response = new JsonResponse([
-                    'html'    => $this->get('victoire_widget.widget_renderer')->render($widget, $view),
-                    'update'  => 'vic-widget-'.$widget->getId().'-container',
+                    'html' => $this->get('victoire_widget.widget_renderer')->render($widget, $view),
+                    'update' => 'vic-widget-'.$widget->getId().'-container',
                     'success' => true,
                 ]
             );
@@ -123,7 +122,7 @@ class WidgetController extends Controller
 
             $response = new JsonResponse([
                 'success' => true,
-                'html'    => $widgetData['html'],
+                'html' => $widgetData['html'],
             ]);
         } catch (Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
@@ -168,7 +167,7 @@ class WidgetController extends Controller
 
             if ($isNewPage) {
                 $response = new JsonResponse([
-                    'success'  => true,
+                    'success' => true,
                     'redirect' => $this->generateUrl(
                         'victoire_core_page_show',
                         [
@@ -270,7 +269,7 @@ class WidgetController extends Controller
                         'action' => $this->generateUrl(
                             'victoire_core_widget_stylize',
                             [
-                                'id'            => $widget->getId(),
+                                'id' => $widget->getId(),
                                 'viewReference' => $viewReference,
                             ]
                         ),
@@ -287,21 +286,21 @@ class WidgetController extends Controller
                     }
                     $this->get('doctrine.orm.entity_manager')->flush();
                     $params = [
-                        'view'        => $view,
-                        'success'     => true,
-                        'html'        => $this->get('victoire_widget.widget_renderer')->render($widget, $view),
-                        'widgetId'    => $widget->getId(),
+                        'view' => $view,
+                        'success' => true,
+                        'html' => $this->get('victoire_widget.widget_renderer')->render($widget, $view),
+                        'widgetId' => $widget->getId(),
                         'viewCssHash' => $view->getCssHash(),
                     ];
                 } else {
                     $template = ($request->query->get('novalidate', false) !== false) ? 'VictoireCoreBundle:Widget/Form/stylize:form.html.twig' : 'VictoireCoreBundle:Widget/Form:stylize.html.twig';
                     $params = [
-                        'success'  => !$form->isSubmitted(),
-                        'html'     => $this->get('templating')->render(
+                        'success' => !$form->isSubmitted(),
+                        'html' => $this->get('templating')->render(
                             $template,
                             [
-                                'view'   => $view,
-                                'form'   => $form->createView(),
+                                'view' => $view,
+                                'form' => $form->createView(),
                                 'widget' => $widget,
                             ]
                         ),
@@ -316,7 +315,7 @@ class WidgetController extends Controller
                             'action' => $this->generateUrl(
                                 'victoire_core_widget_stylize',
                                 [
-                                    'id'            => $widget->getId(),
+                                    'id' => $widget->getId(),
                                     'viewReference' => $viewReference,
                                 ]
                             ),
@@ -327,9 +326,9 @@ class WidgetController extends Controller
                     'html' => $this->get('templating')->render(
                         'VictoireCoreBundle:Widget/Form:stylize.html.twig',
                         [
-                            'view'    => $view,
-                            'forms'   => $forms,
-                            'widget'  => $widget,
+                            'view' => $view,
+                            'forms' => $forms,
+                            'widget' => $widget,
                             'widgets' => $widgets,
                         ]
                     ),
@@ -362,8 +361,8 @@ class WidgetController extends Controller
             $this->get('widget_manager')->deleteWidget($widget, $view);
 
             return new JsonResponse([
-                    'success'  => true,
-                    'message'  => $this->get('translator')->trans('victoire_widget.delete.success', [], 'victoire'),
+                    'success' => true,
+                    'message' => $this->get('translator')->trans('victoire_widget.delete.success', [], 'victoire'),
                     'widgetId' => $widgetId,
                 ]
             );
@@ -393,8 +392,8 @@ class WidgetController extends Controller
             }
 
             return new JsonResponse([
-                    'success'  => true,
-                    'message'  => $this->get('translator')->trans('victoire_widget.delete.success', [], 'victoire'),
+                    'success' => true,
+                    'message' => $this->get('translator')->trans('victoire_widget.delete.success', [], 'victoire'),
                 ]
             );
         } catch (Exception $ex) {
@@ -434,7 +433,7 @@ class WidgetController extends Controller
             }
 
             return new JsonResponse([
-                    'success'  => true,
+                    'success' => true,
                     'redirect' => $redirect,
                 ]);
         } catch (Exception $ex) {
