@@ -93,6 +93,7 @@ class ArticleRepository extends EntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
     public function getNextRecord($id)
     {
         $queryBuilder = $this->getAll(true)
@@ -105,6 +106,7 @@ class ArticleRepository extends EntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
     public function getVeryFirstRecord()
     {
         $queryBuilder = $this->getAll(true)
@@ -116,6 +118,7 @@ class ArticleRepository extends EntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
     public function getVeryLastRecord()
     {
         $queryBuilder = $this->getAll(true)
