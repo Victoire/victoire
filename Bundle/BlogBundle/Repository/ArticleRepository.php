@@ -80,4 +80,51 @@ class ArticleRepository extends EntityRepository
 
         return $this;
     }
+
+    public function getPreviousRecord($id)
+    {
+        $queryBuilder = $this->getAll(true)
+            ->getInstance();
+
+        return $queryBuilder->andWhere($queryBuilder->expr()->lt('article.id', ':id'))
+            ->setParameter('id', $id)
+            ->orderBy('article.id', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+    public function getNextRecord($id)
+    {
+        $queryBuilder = $this->getAll(true)
+            ->getInstance();
+
+        return $queryBuilder->andWhere($queryBuilder->expr()->gt('article.id', ':id'))
+            ->setParameter('id', $id)
+            ->orderBy('article.id', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+    public function getVeryFirstRecord()
+    {
+        $queryBuilder = $this->getAll(true)
+            ->getInstance();
+
+        return $queryBuilder
+            ->orderBy('article.id', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+    public function getVeryLastRecord()
+    {
+        $queryBuilder = $this->getAll(true)
+            ->getInstance();
+
+        return $queryBuilder
+            ->orderBy('article.id', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }
