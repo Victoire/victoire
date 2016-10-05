@@ -127,7 +127,7 @@ victoire_core:
     templates:
         layout: "::layout.html.twig"
     layouts:
-        fullWidth: "Contenu unique"
+        fullWidth: "Full width content"
         home: "Accueil"
     slots: ~
     base_paths: #(optional) required for a non standard installation
