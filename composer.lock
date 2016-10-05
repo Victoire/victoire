@@ -4369,17 +4369,17 @@
         },
         {
             "name": "troopers/alertify-bundle",
-            "version": "1.2.0",
+            "version": "2.1.0",
             "target-dir": "Troopers/AlertifyBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Troopers/AlertifyBundle.git",
-                "reference": "04e1d02e5cdb68560935ad8f555e18b801684985"
+                "reference": "d2d85d9869bc361958b5fce3749f6bb661b19074"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Troopers/AlertifyBundle/zipball/04e1d02e5cdb68560935ad8f555e18b801684985",
-                "reference": "04e1d02e5cdb68560935ad8f555e18b801684985",
+                "url": "https://api.github.com/repos/Troopers/AlertifyBundle/zipball/d2d85d9869bc361958b5fce3749f6bb661b19074",
+                "reference": "d2d85d9869bc361958b5fce3749f6bb661b19074",
                 "shasum": ""
             },
             "require": {
