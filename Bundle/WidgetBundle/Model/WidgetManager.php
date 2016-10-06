@@ -248,6 +248,8 @@ class WidgetManager
             if ($noValidate === false && $form->isValid()) {
                 $widget->setBusinessEntityId($businessEntityId);
 
+                //force cache invalidation
+                $widget->setUpdatedAt(new \DateTime());
                 $this->entityManager->persist($widget);
 
                 $this->entityManager->persist($currentView);
