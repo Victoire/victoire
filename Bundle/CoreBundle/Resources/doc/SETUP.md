@@ -42,7 +42,6 @@ Follow the instructions on [victoire demo Readme](https://github.com/Victoire/de
     new Victoire\Bundle\MediaBundle\VictoireMediaBundle(),
     new Victoire\Bundle\PageBundle\VictoirePageBundle(),
     new Victoire\Bundle\QueryBundle\VictoireQueryBundle(),
-    new Victoire\Bundle\ResourcesBundle\VictoireResourcesBundle(),
     new Victoire\Bundle\SeoBundle\VictoireSeoBundle(),
     new Victoire\Bundle\SitemapBundle\VictoireSitemapBundle(),
     new Victoire\Bundle\TemplateBundle\VictoireTemplateBundle(),

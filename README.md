@@ -52,7 +52,6 @@ Component | Description
 [**MediaBundle**][7] | Based on [KunstmaanMediaBundle][21], it offers a file management interface and a bridge to the widgets
 [**PageBundle**][8] | One of the most important bundles, it contains all the base page logic
 [**QueryBundle**][9] | Give the possibility to non technical user to build a query
-[**ResourcesBundle**][24] | Contains JS libraries
 [**SeoBundle**][10] | This bundle brings to user about than 50 SEO points
 [**SitemapBundle**][20] | Sitemap related logic
 [**TemplateBundle**][11] | Contains the pages templates logic (nearly close to [PageBundle][22])
@@ -100,5 +99,4 @@ License can be found [here](http://github.com/victoire/victoire/blob/master/lice
 [21]: http://github.com/Kunstmaan/KunstmaanMediaBundle
 [22]: http://github.com/victoire/victoire/blob/master/Bundle/PageBundle
 [23]: http://github.com/victoire/victoire/blob/master/Bundle/FilterBundle/README.md
-[24]: http://github.com/victoire/victoire/blob/master/Bundle/ResourcesBundle/README.md
 [25]: http://github.com/victoire/victoire/blob/master/Bundle/ViewReferenceBundle/README.md
