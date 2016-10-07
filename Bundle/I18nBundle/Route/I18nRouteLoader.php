@@ -48,12 +48,6 @@ class I18nRouteLoader extends BaseRouteLoader
          * */
         $defaultCollection = parent::load($resource, $type);
         $defaultCollection->addDefaults(['_locale' => $this->localeResolver->defaultLocale]);
-        if ($this->localeResolver->localePattern == LocaleResolver::PATTERN_DOMAIN) {
-            $defaultCollection->setHost(
-                '{domain}',
-                ['domain' => $this->localeResolver->defaultDomain]
-            );
-        }
         $collection->addCollection($defaultCollection);
 
         if ($this->localeResolver->localePattern == LocaleResolver::PATTERN_PARAMETER) {
