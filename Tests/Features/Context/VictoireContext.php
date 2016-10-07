@@ -58,6 +58,17 @@ class VictoireContext extends RawMinkContext
     }
 
     /**
+     * @Given /^I visit homepage througth domain "([^"]*)"$/
+     */
+    public function ivisitHomepageThrougthDomain($domain)
+    {
+        $this->getSession()->getDriver()->stop();
+        $url = sprintf('http://z6po@victoire.io:test@%s:8000/app_domain.php', $domain);
+        $this->minkContext->setMinkParameter('base_url', $url);
+        $this->minkContext->visitPath('/');
+    }
+
+    /**
      * @Then /^I fill in wysiwyg with "([^"]*)"$/
      */
     public function iFillInWysiwygOnFieldWith($arg)
