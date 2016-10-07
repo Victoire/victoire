@@ -1,5 +1,5 @@
 @mink:selenium2 @alice(Page) @reset-schema
-Feature: Create a page
+Feature: Domain strategy
 
   Background:
     Given I maximize the window
@@ -7,8 +7,8 @@ Feature: Create a page
 
   @smartStep
   Scenario: I check the domain strategy
-    Given I visit homepage througth domain "fr.victoire.io"
-    Then the title should be "Page d'accueil"
-    Given I visit homepage througth domain "en.victoire.io"
+    Given I visit homepage through domain "en.victoire.io"
     Then the title should be "Homepage"
+    Given I visit homepage through domain "fr.victoire.io"
+    Then the title should be "Page d'accueil"
 
