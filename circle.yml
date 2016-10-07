@@ -32,6 +32,7 @@ dependencies:
     - php Tests/Functionnal/bin/console --env=ci doctrine:database:create --no-debug
     - php Tests/Functionnal/bin/console --env=ci doctrine:schema:create --no-debug
     - php Tests/Functionnal/bin/console --env=ci cache:warmup --no-debug
+    - php Tests/Functionnal/bin/console --env=domain cache:warmup --no-debug
     - php Tests/Functionnal/bin/console --env=ci victoire:generate:view --no-debug
     - php Tests/Functionnal/bin/console --env=ci assets:install Tests/Functionnal/web --no-debug
     - php Tests/Functionnal/bin/console --env=ci bazinga:js-translation:dump --no-debug
