@@ -58,9 +58,9 @@ class VictoireContext extends RawMinkContext
     }
 
     /**
-     * @Given /^I visit homepage througth domain "([^"]*)"$/
+     * @Given /^I visit homepage through domain "([^"]*)"$/
      */
-    public function ivisitHomepageThrougthDomain($domain)
+    public function ivisitHomepageThroughDomain($domain)
     {
         $this->getSession()->getDriver()->stop();
         $url = sprintf('http://z6po@victoire.io:test@%s:8000/app_domain.php', $domain);
