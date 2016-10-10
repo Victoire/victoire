@@ -57,6 +57,14 @@
 
     {% block foot_script %}
         <!-- Script foot includes -->
+        {% if victoire_i18n_available_locales|default([])|length > 1 or is_granted('ROLE_VICTOIRE') %}
+            {% javascripts
+                "@BazingaJsTranslationBundle/Resources/public/js/translator.min.js"
+                "js/translations/config.js" %}
+                <script type="text/javascript" src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+
+        {% endif %}
         <!-- ==================== -->
         {% block foot_script__view %}
             {% if view is defined %}
@@ -88,7 +96,6 @@
                 });
             </script>
             {% endif %}
-            <script src="{{ url('bazinga_jstranslation_js') }}"></script>
             <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
             <script type="text/javascript">
                 {% if is_granted('ROLE_VICTOIRE') %}
