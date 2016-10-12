@@ -90,14 +90,13 @@ class WidgetType extends AbstractType
                 }
             }
         );
-
     }
 
     /**
-     * Add the criterias fields
+     * Add the criterias fields.
      *
      * @param FormBuilderInterface $builder
-     * @param array                              $options
+     * @param array                $options
      */
     protected function addCriteriasFields($builder, $options)
     {
@@ -136,6 +135,7 @@ class WidgetType extends AbstractType
             }
         );
     }
+
     /**
      * Add the fields for the business entity mode.
      *
