@@ -83,10 +83,5 @@
             "Victoire\\Tests\\Features\\": "Tests/Features",
             "Victoire\\Widget\\": "Tests/Functionnal/src/Victoire/Widget"
         }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "2.2.x-dev"
-        }
     }
 }
