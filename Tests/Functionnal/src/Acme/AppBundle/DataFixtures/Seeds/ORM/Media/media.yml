@@ -1,9 +1,9 @@
 Victoire\Bundle\MediaBundle\Entity\Media:
-    appventus:
+    troopers:
         id: 1
         folder: @root
         uuid: 55953304833d5
-        name: appventus
+        name: troopers
         location: local
         contentType: image/jpg
         metadata: []

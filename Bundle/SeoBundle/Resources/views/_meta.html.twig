@@ -1,6 +1,6 @@
 <meta charset="{{ charset|default('UTF-8') }}" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta content='width=device-width, initial-scale=1' name='viewport'/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 
 {% if view.articles is defined %}
 <link rel="alternate" type="application/rss+xml" title="{{ view.name }}" href="{{ path('victoire_blog_rss', {'slug': view.slug}) }}"/>
@@ -8,27 +8,27 @@
 
 {% if view is defined and view.seo is defined and view.seo %}
     <!-- Basics -->
-    {% if view.seo.metaTitle %}<title>{{ view.seo.metaTitle }}</title>{% endif %}
-    {% if view.seo.metaDescription %}<meta name="description" content="{{ view.seo.metaDescription }}"/>{% endif %}
+    {% if view.seo.metaTitle %}<title>{{ view.seo.metaTitle|striptags }}</title>{% endif %}
+    {% if view.seo.metaDescription %}<meta name="description" content="{{ view.seo.metaDescription|striptags }}"/>{% endif %}
 
     <!-- Google Authorship -->
     {% if view.seo.relAuthor %}<link rel="author" href="{{ view.seo.relAuthor }}"/>{% endif %}
     {% if view.seo.relPublisher %}<link rel="publisher" href="{{ view.seo.relPublisher }}"/>{% endif %}
 
     <!-- OpenGraph (Facebook, Linkedin, ...) -->
-    {% if view.seo.ogTitle %}<meta property="og:title" content="{{ view.seo.ogTitle }}"/>{% endif %}
+    {% if view.seo.ogTitle %}<meta property="og:title" content="{{ view.seo.ogTitle|striptags }}"/>{% endif %}
     {% if view.seo.ogType %}<meta property="og:type" content="{{ view.seo.ogType }}"/>{% endif %}
     {% if view.seo.ogImage %}<meta property="og:image" content="{{ app.request.getSchemeAndHttpHost() ~ view.seo.ogImage }}"/>{% endif %}
     {% if view.seo.ogUrl %}<meta property="og:url" content="{{ view.seo.ogUrl }}"/>{% endif %}
-    {% if view.seo.ogDescription %}<meta property="og:description" content="{{ view.seo.ogDescription }}"/>{% endif %}
+    {% if view.seo.ogDescription %}<meta property="og:description" content="{{ view.seo.ogDescription|striptags }}"/>{% endif %}
     {% if view.seo.fbAdmins %}<meta property="fb:admins" content="{{ view.seo.fbAdmins }}"/>{% endif %}
 
     <!-- Twitter -->
     {% if view.seo.twitterCard %}<meta name="twitter:card" content="{{ view.seo|default({'twitterCard': 'summary'}).twitterCard }}"/>{% endif %}
     {% if view.seo.twitterUrl %}<meta name="twitter:site" content="{{ view.seo.twitterUrl }}"/>{% endif %}
-    {% if view.seo.twitterTitle %}<meta name="twitter:title" content="{{ view.seo.twitterTitle }}"/>{% endif %}
+    {% if view.seo.twitterTitle %}<meta name="twitter:title" content="{{ view.seo.twitterTitle|striptags }}"/>{% endif %}
     {% if view.seo.twitterCreator %}<meta name="twitter:creator" content="{{ view.seo.twitterCreator }}"/>{% endif %}
-    {% if view.seo.twitterDescription %}<meta name="twitter:description" content="{{ view.seo.twitterDescription }}"/>{% endif %}
+    {% if view.seo.twitterDescription %}<meta name="twitter:description" content="{{ view.seo.twitterDescription|striptags }}"/>{% endif %}
     {% if view.seo.twitterImage %}<meta name="twitter:image" content="{{ app.request.getSchemeAndHttpHost() ~ view.seo.twitterImage }}"/>{% endif %}
 
     {% if view.seo.metaRobotsIndex %}<meta name="robots" content="{{ view.seo.metaRobotsIndex }},{{ view.seo.metaRobotsFollow }}"/>{% endif %}
@@ -42,5 +42,5 @@
         {% if view.seo.metaRobotsIndex and view.seo.metaRobotsFollow %}<meta name="robots" content="{{ view.seo.metaRobotsIndex }}, {{ view.seo.metaRobotsFollow }}"/>{% endif %}
     {% endif %}
 {% else %}
-<title>{{ view.name|default('Victoire DCMS') }}</title>
+    <title>{{ view.name|default('Victoire DCMS')|striptags }}</title>
 {% endif %}

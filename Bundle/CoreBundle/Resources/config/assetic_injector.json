@@ -47,11 +47,7 @@
                 "@VictoireCoreBundle/Resources/public/js/edit/widget.js",
                 "@VictoireCoreBundle/Resources/public/vendor/vic-confirm/js/confirm.js",
                 "@VictoireCoreBundle/Resources/public/vendor/vic-bootstrap/3.0.3/js/bootstrap.min.js",
-                "@VictoireCoreBundle/Resources/public/js/jquery.mjs.nestedSortable.js",
-                "@BazingaJsTranslationBundle/Resources/public/js/translator.min.js",
-                "js/translations/config.js",
-                "js/translations/victoire/*.js"
-
+                "@VictoireCoreBundle/Resources/public/js/jquery.mjs.nestedSortable.js"
             ]
         },
         "stylesheets":

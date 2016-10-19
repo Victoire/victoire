@@ -16,8 +16,8 @@ Follow the instructions on [victoire demo Readme](https://github.com/Victoire/de
 
 ```php
     //dependencies
-    new AppVentus\AsseticInjectorBundle\AvAsseticInjectorBundle(),
-    new AppVentus\AlertifyBundle\AvAlertifyBundle(),
+    new Troopers\AsseticInjectorBundle\TroopersAsseticInjectorBundle(),
+    new Troopers\AlertifyBundle\TroopersAlertifyBundle(),
     new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
     new FOS\UserBundle\FOSUserBundle(),
     new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
@@ -35,13 +35,13 @@ Follow the instructions on [victoire demo Readme](https://github.com/Victoire/de
     new Victoire\Bundle\BusinessEntityBundle\VictoireBusinessEntityBundle(),
     new Victoire\Bundle\BusinessPageBundle\VictoireBusinessPageBundle(),
     new Victoire\Bundle\CoreBundle\VictoireCoreBundle(),
+    new Victoire\Bundle\CriteriaBundle\VictoireCriteriaBundle(),
     new Victoire\Bundle\FilterBundle\VictoireFilterBundle(),
     new Victoire\Bundle\FormBundle\VictoireFormBundle(),
     new Victoire\Bundle\I18nBundle\VictoireI18nBundle(),
     new Victoire\Bundle\MediaBundle\VictoireMediaBundle(),
     new Victoire\Bundle\PageBundle\VictoirePageBundle(),
     new Victoire\Bundle\QueryBundle\VictoireQueryBundle(),
-    new Victoire\Bundle\ResourcesBundle\VictoireResourcesBundle(),
     new Victoire\Bundle\SeoBundle\VictoireSeoBundle(),
     new Victoire\Bundle\SitemapBundle\VictoireSitemapBundle(),
     new Victoire\Bundle\TemplateBundle\VictoireTemplateBundle(),
@@ -66,7 +66,7 @@ Follow the instructions on [victoire demo Readme](https://github.com/Victoire/de
         templates:
             layout: "::layout.html.twig"
         layouts:
-            fullWidth: "Contenu unique"
+            fullWidth: "Full width content"
         slots:
             header_logo:
                 max: 1
@@ -77,11 +77,11 @@ Follow the instructions on [victoire demo Readme](https://github.com/Victoire/de
 - add the wanted widgets:
 
 ```json
-        "friendsofvictoire/text-widget"      : "dev-master",
-        "friendsofvictoire/button-widget"    : "dev-master",
-        "friendsofvictoire/image-widget"     : "dev-master",
-        "friendsofvictoire/render-widget"    : "dev-master",
-        "friendsofvictoire/breadcrumb-widget": "dev-master",
+        "friendsofvictoire/text-widget"      : "~2.0",
+        "friendsofvictoire/button-widget"    : "~2.0",
+        "friendsofvictoire/image-widget"     : "~2.0",
+        "friendsofvictoire/render-widget"    : "~2.0",
+        "friendsofvictoire/breadcrumb-widget": "~2.0",
         ...
 ```
 
@@ -90,16 +90,14 @@ Get the whole Victoire Widget list [**here**](http://packagist.org/search/?tags=
 Check victoire dependencies:
 
 ```json
-    "knplabs/knp-menu"                       : "2.1.*@dev",
-    "knplabs/knp-menu-bundle"                : "2.1.*@dev",
-    "friendsofsymfony/user-bundle"           : "2.0.*@dev",
-    "stof/doctrine-extensions-bundle"        : "1.2.*@dev",
-    "appventus/assetic-injector-bundle"      : "dev-master",
-    "appventus/alertify-bundle"              : "dev-master",
-    "appventus/shortcuts-bundle"             : "dev-master",
-    "knplabs/gaufrette"                      : "v0.1.7",
-    "knplabs/knp-gaufrette-bundle"           : "v0.1.7",
-    "knplabs/knp-components"                 : "1.3.*@dev",
+        "knplabs/knp-menu": "~2.1",
+        "knplabs/knp-menu-bundle": "~2.1",
+        "friendsofsymfony/user-bundle": "~2.0",
+        "stof/doctrine-extensions-bundle": "~1.2",
+        "troopers/alertify-bundle": "^1.1",
+        "troopers/assetic-injector-bundle": "^1.0",
+        "knplabs/gaufrette": "v0.1.7",
+        "knplabs/knp-gaufrette-bundle": "v0.1.7",
 ```
 
 - setup routing:

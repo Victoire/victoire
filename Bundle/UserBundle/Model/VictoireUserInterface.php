@@ -5,7 +5,7 @@ namespace Victoire\Bundle\UserBundle\Model;
 use FOS\UserBundle\Model\UserInterface;
 
 /**
- * @author Leny BERNARD <leny@appventus.com>
+ * @author Leny BERNARD <leny@troopers.email>
  */
 interface VictoireUserInterface extends UserInterface
 {

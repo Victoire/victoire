@@ -32,7 +32,7 @@ Feature: Mercenary is not a BusinessEntity itself but extends Character which is
             When I select "Bouton" from the "1" select of "main_content" slot
             Then I should see "Créer"
             When I select "Page" from "_a_static_widget_button[link][linkType]"
-            And I wait 1 second
+            And I should see "Choisissez une page"
             When I select "Fiche Personnage - Boba fet" from "_a_static_widget_button[link][viewReference]"
             And I fill in "_a_static_widget_button[title]" with "Fiche de Boba fet"
             And I submit the widget

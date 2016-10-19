@@ -3,6 +3,7 @@
 namespace Victoire\Bundle\CoreBundle\Repository;
 
 use Doctrine\ORM\Query;
+use Doctrine\ORM\Query\Expr;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\PageBundle\Entity\Page;
@@ -15,15 +16,9 @@ use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
  */
 class ViewRepository extends NestedTreeRepository
 {
-    private $queryBuilder;
+    use StateFullRepositoryTrait;
 
-    /**
-     * Get query builder instance.
-     */
-    public function getInstance()
-    {
-        return $this->queryBuilder ? $this->queryBuilder : $this->createQueryBuilder('page');
-    }
+    protected $mainAlias = 'view';
 
     /**
      * Get the query builder for a view  by url.
@@ -34,8 +29,8 @@ class ViewRepository extends NestedTreeRepository
      */
     public function getOneByUrl($url)
     {
-        return $this->createQueryBuilder('page')
-            ->where('page.url = (:url)')
+        return $this->createQueryBuilder($this->mainAlias)
+            ->where($this->mainAlias.'.url = (:url)')
             ->setMaxResults(1)
             ->setParameter('url', $url);
     }
@@ -50,7 +45,7 @@ class ViewRepository extends NestedTreeRepository
     public function filterBySitemapIndexed($indexed = true)
     {
         $qb = $this->getInstance();
-        $qb->innerJoin('page.seo', 'seo')->addSelect('seo')
+        $qb->innerJoin($this->mainAlias.'.seo', 'seo')->addSelect('seo')
             ->andWhere('seo.sitemapIndexed = :sitemapIndexed')
             ->setParameter('sitemapIndexed', $indexed);
 
@@ -66,32 +61,19 @@ class ViewRepository extends NestedTreeRepository
      */
     public function getAll($excludeUnpublished = false)
     {
-        $this->queryBuilder = $this->getInstance();
+        $this->qb = $this->getInstance();
 
         //If $excludeUnpublished === true, we exclude the non published results
         if ($excludeUnpublished) {
-            $this->queryBuilder
-                ->andWhere('page.status = :status')
-                ->orWhere('page.status = :scheduled_status AND page.publishedAt > :publicationDate')
+            $this->qb
+                ->andWhere($this->mainAlias.'.status = :status')
+                ->orWhere($this->mainAlias.'.status = :scheduled_status AND page.publishedAt > :publicationDate')
                 ->setParameter('status', PageStatus::PUBLISHED)
                 ->setParameter('scheduled_status', PageStatus::SCHEDULED)
                 ->setParameter('publicationDate', new \DateTime());
         }
 
         return $this;
-    }
-
-    /**
-     * Run instance.
-     *
-     * @param string $method
-     * @param string $hydrationMode
-     *
-     * @return array
-     */
-    public function run($method = 'getResult', $hydrationMode = Query::HYDRATE_OBJECT)
-    {
-        return $this->getInstance()->getQuery()->$method($hydrationMode);
     }
 
     /**
@@ -112,11 +94,11 @@ class ViewRepository extends NestedTreeRepository
             }
         }
 
-        $queryBuilder = $this->createQueryBuilder('page');
-        $queryBuilder->andWhere('page.id IN (:pageIds)')
+        $qb = $this->createQueryBuilder($this->mainAlias);
+        $qb->andWhere($this->mainAlias.'.id IN (:pageIds)')
             ->setParameter('pageIds', $pageIds);
 
-        $pages = $queryBuilder->getQuery()->getResult();
+        $pages = $qb->getQuery()->getResult();
 
         foreach ($pages as $page) {
             $pageId = $page->getId();
@@ -143,14 +125,14 @@ class ViewRepository extends NestedTreeRepository
     public function findOneByHomepage($locale = 'fr')
     {
         //the query builder
-        $queryBuilder = $this->createQueryBuilder('page');
-        $queryBuilder
-            ->where('page.homepage = true')
-            ->andWhere('page.status = :status')
+        $qb = $this->createQueryBuilder($this->mainAlias);
+        $qb
+            ->where($this->mainAlias.'.homepage = true')
+            ->andWhere($this->mainAlias.'.status = :status')
             ->setMaxResults(1)
             ->setParameter('status', PageStatus::PUBLISHED);
         // Use Translation Walker
-        $query = $queryBuilder->getQuery();
+        $query = $qb->getQuery();
         $view = $query->getOneOrNullResult();
         $view->translate($locale);
 
@@ -166,7 +148,23 @@ class ViewRepository extends NestedTreeRepository
      */
     public function joinSeo($method = 'leftJoin')
     {
-        $this->getInstance()->$method('page.seo', 'seo')->addSelect('seo');
+        $this->getInstance()->$method($this->mainAlias.'.seo', 'seo')->addSelect('seo');
+
+        return $this;
+    }
+
+    /**
+     * Get PageSeo.
+     *
+     * @param string $method leftJoin|innerJoin
+     *
+     * @return ViewRepository
+     */
+    public function joinTranslations($locale)
+    {
+        $this->getInstance()
+            ->innerJoin($this->mainAlias.'.translations', 'translation', Expr\Join::WITH, 'translation.locale = :locale')
+            ->setParameter('locale', $locale);
 
         return $this;
     }
@@ -180,7 +178,7 @@ class ViewRepository extends NestedTreeRepository
      */
     public function filterByIds($ids)
     {
-        $this->getInstance()->andWhere('page.id IN (:ids)')->setParameter('ids', $ids);
+        $this->getInstance()->andWhere($this->mainAlias.'.id IN (:ids)')->setParameter('ids', $ids);
 
         return $this;
     }

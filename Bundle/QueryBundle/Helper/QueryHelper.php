@@ -87,7 +87,8 @@ class QueryHelper
         $itemsQueryBuilder = $em
             ->createQueryBuilder()
             ->select('main_item')
-            ->from($businessClass, 'main_item');
+            ->from($businessClass, 'main_item')
+            ->andWhere('main_item.visibleOnFront = 1');
 
         $view = null;
         if ($containerEntity instanceof View) {

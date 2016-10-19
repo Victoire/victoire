@@ -3,7 +3,6 @@
     "type": "symfony-bundle",
     "description": "Victoire DCMS Force widget",
     "keywords": ["cms", "victoire", "Force", "widget"],
-    "homepage": "http://appventus.com",
     "license": "MIT",
     "authors": [
 	{

@@ -76,8 +76,10 @@ class WidgetSubscriber implements EventSubscriber
             $widgetMap = $entity->getWidgetMap();
             if ($widgetMap->getAction() !== WidgetMap::ACTION_DELETE) {
                 $view = $widgetMap->getView();
-                $this->updateViewCss($view);
-                $this->setTemplateInheritorsCssToUpdate($view);
+                if ($this->em->contains($view)) {
+                    $this->updateViewCss($view);
+                    $this->setTemplateInheritorsCssToUpdate($view);
+                }
             }
         }
 

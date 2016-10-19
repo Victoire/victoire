@@ -6,7 +6,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Victoire\Bundle\FormBundle\Form\Type\SlugType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Victoire\Bundle\MediaBundle\Form\Type\MediaType;
 use Victoire\Bundle\PageBundle\Entity\PageStatus;
 
@@ -22,9 +22,6 @@ class ArticleSettingsType extends ArticleType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('slug', SlugType::class, [
-                'label' => 'form.page.type.slug.label',
-            ])
             ->add('status', ChoiceType::class, [
                 'label'   => 'form.page.type.status.label',
                 'choices' => [
@@ -72,5 +69,14 @@ class ArticleSettingsType extends ArticleType
                 $form->remove('publishedAt');
                 break;
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        parent::configureOptions($resolver);
+        $resolver->setDefault('validation_groups', ['edition', 'Default']);
     }
 }

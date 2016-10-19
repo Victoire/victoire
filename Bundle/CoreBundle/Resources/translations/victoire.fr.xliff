@@ -226,6 +226,10 @@
         <source>victoire.widget.type.criterias.label</source>
         <target>Critères</target>
       </trans-unit>
+      <trans-unit id="35" resname="victoire.widget.modal.title">
+        <source>victoire.widget.modal.title</source>
+        <target>Widget %id% (%type%)</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -7,7 +7,7 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 /**
  * KernelRequestListener will do some things like adding config as globals (ie responsive vars).
  *
- * @author Leny BERNARD <leny@appventus.com>
+ * @author Leny BERNARD <leny@troopers.email>
  */
 class KernelRequestListener
 {
