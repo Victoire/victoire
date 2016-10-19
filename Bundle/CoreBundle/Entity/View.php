@@ -672,7 +672,7 @@ abstract class View
      *
      * @return $this
      */
-    public function setReference(ViewReference $reference, $locale = null)
+    public function setReference(ViewReference $reference = null, $locale = null)
     {
         $locale = $locale ?: $this->getCurrentLocale();
         $this->references[$locale] = $reference;

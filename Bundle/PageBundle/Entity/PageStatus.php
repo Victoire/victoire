@@ -14,4 +14,5 @@ class PageStatus
     const PUBLISHED = 'published';
     const UNPUBLISHED = 'unpublished';
     const SCHEDULED = 'scheduled';
+    const DELETED = 'deleted';
 }

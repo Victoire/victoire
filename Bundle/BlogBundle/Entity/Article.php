@@ -198,6 +198,18 @@ class Article
     }
 
     /**
+     * Set category.
+     *
+     * @param Category $category
+     *
+     * @return Article
+     */
+    public function setCategory(Category $category)
+    {
+        $this->category = $category;
+    }
+
+    /**
      * Get the published at property.
      *
      * @return \DateTime

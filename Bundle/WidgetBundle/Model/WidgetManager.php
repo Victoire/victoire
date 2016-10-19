@@ -248,6 +248,8 @@ class WidgetManager
             if ($noValidate === false && $form->isValid()) {
                 $widget->setBusinessEntityId($businessEntityId);
 
+                //force cache invalidation
+                $widget->setUpdatedAt(new \DateTime());
                 $this->entityManager->persist($widget);
 
                 $this->entityManager->persist($currentView);
@@ -344,16 +346,8 @@ class WidgetManager
     public function overwriteWidget(View $view, Widget $widget)
     {
         $widgetCopy = $this->cloneEntity($widget);
-
-        //we have to persist the widget to get its id
-        $this->entityManager->persist($view);
-        $this->entityManager->flush();
-
-        $originalWidgetMap = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $view);
-
+        $originalWidgetMap = $widget->getWidgetMap();
         $this->widgetMapManager->overwrite($view, $originalWidgetMap, $widgetCopy);
-
-        $this->widgetMapBuilder->build($view);
 
         return $widgetCopy;
     }
@@ -361,16 +355,16 @@ class WidgetManager
     /**
      * @param Widget $entity
      */
-    public function cloneEntity($entity)
+    public function cloneEntity(Widget $entity)
     {
         $entityCopy = clone $entity;
-
+        $entityCopy->setWidgetMap(null);
         //Look for on_to_many relations, if found, duplicate related entities.
         //It is necessary for 'list' widgets, this algo duplicates and persists list items.
         $associations = $this->entityManager->getClassMetadata(get_class($entityCopy))->getAssociationMappings();
         $accessor = PropertyAccess::createPropertyAccessor();
         foreach ($associations as $name => $values) {
-            if ($values['type'] === ClassMetadataInfo::ONE_TO_MANY && $values['fieldName'] != 'widgetMaps') {
+            if ($values['type'] === ClassMetadataInfo::ONE_TO_MANY) {
                 $relatedEntities = $accessor->getValue($entityCopy, $values['fieldName']);
                 $relatedEntitiesCopies = [];
                 foreach ($relatedEntities as $relatedEntity) {

@@ -26,7 +26,7 @@ Scenario: Create widgets
 
     # test text widget
     When I select the option "text" in the dropdown "Actions"
-    Then I should see "Appventus victoireCoreBundle widgettexttype"
+    Then I should see "victoireCoreBundle widgettexttype"
     When I fill in the following:
 	| Content  | widget text |
     When I press "Ok"
@@ -34,7 +34,7 @@ Scenario: Create widgets
 
     # test label widget
     When I select the option "label" in the dropdown "Actions"
-    Then I should see "Appventus victoireCoreBundle widgetlabeltype"
+    Then I should see "victoireCoreBundle widgetlabeltype"
     When I fill in the following:
 	| Content  | widget label |
     When I press "Ok"
@@ -65,7 +65,7 @@ Scenario: Edit widgets
 
     # test text widget
     When I click on "edit" "widget-1" widget action
-    Then I should see "Appventus victoireCoreBundle widgettexttype"
+    Then I should see "victoireCoreBundle widgettexttype"
     When I fill in the following:
 	| Content  | widget text edited |
     When I press "Ok"
@@ -81,7 +81,7 @@ Scenario: Edit widgets
 
     # test label widget
     When I click on "edit" "widget-3" widget action
-    Then I should see "Appventus victoireCoreBundle widgetlabeltype"
+    Then I should see "victoireCoreBundle widgetlabeltype"
     When I fill in the following:
 	| Content  | widget label edited |
     When I press "Ok"

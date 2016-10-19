@@ -42,7 +42,6 @@ class WidgetController extends Controller
      */
     public function showAction(Request $request, Widget $widget, $viewReferenceId)
     {
-        //the response is for the ajax.js from the AppVentus Ajax Bundle
         try {
             $view = $this->get('victoire_page.page_helper')->findPageByParameters(['id' => $viewReferenceId]);
             $this->get('victoire_widget_map.builder')->build($view);
@@ -296,8 +295,8 @@ class WidgetController extends Controller
                 } else {
                     $template = ($request->query->get('novalidate', false) !== false) ? 'VictoireCoreBundle:Widget/Form/stylize:form.html.twig' : 'VictoireCoreBundle:Widget/Form:stylize.html.twig';
                     $params = [
-                        'success'  => !$form->isSubmitted(),
-                        'html'     => $this->get('templating')->render(
+                        'success' => !$form->isSubmitted(),
+                        'html'    => $this->get('templating')->render(
                             $template,
                             [
                                 'view'   => $view,
@@ -393,8 +392,8 @@ class WidgetController extends Controller
             }
 
             return new JsonResponse([
-                    'success'  => true,
-                    'message'  => $this->get('translator')->trans('victoire_widget.delete.success', [], 'victoire'),
+                    'success' => true,
+                    'message' => $this->get('translator')->trans('victoire_widget.delete.success', [], 'victoire'),
                 ]
             );
         } catch (Exception $ex) {

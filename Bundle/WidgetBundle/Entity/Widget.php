@@ -368,10 +368,12 @@ class Widget extends BaseWidget implements VictoireQueryInterface
      *
      * @return Widget
      */
-    public function setWidgetMap(WidgetMap $widgetMap)
+    public function setWidgetMap(WidgetMap $widgetMap = null)
     {
+        if ($widgetMap) {
+            $widgetMap->addWidget($this);
+        }
         $this->widgetMap = $widgetMap;
-        $widgetMap->addWidget($this);
 
         return $this;
     }
@@ -532,12 +534,6 @@ class Widget extends BaseWidget implements VictoireQueryInterface
             throw new \Exception(sprintf('Cannot generate an hash for widget %s if currentView is not defined.',
                 $this->getId()
             ));
-            if (!$this->getCurrentView()->getReference()) {
-                throw new \Exception(sprintf('Cannot generate an hash for widget %s if currentView %s Reference is not defined.',
-                    $this->getId(),
-                    $widget->getCurrentView()->getId()
-                ));
-            }
         }
 
         return sprintf('%s-%s-%s',
@@ -556,7 +552,7 @@ class Widget extends BaseWidget implements VictoireQueryInterface
     {
         if ($this->hasCriteriaNamed('locale')) {
             foreach ($this->getCriterias() as $criteria) {
-                if ($criteria->getName() === 'locale' &&  $criteria->getValue() === $defaultLocale) {
+                if ($criteria->getName() === 'locale' && $criteria->getValue() === $defaultLocale) {
                     return $criteria->getValue();
                 }
             }
