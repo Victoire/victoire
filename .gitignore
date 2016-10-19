@@ -12,3 +12,4 @@
 /.behat.yml
 /behat.yml
 /Tests/Functionnal/app/config/parameters.yml
+/npm-debug.log
