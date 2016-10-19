@@ -56,6 +56,7 @@ class AppKernel extends Kernel
             new Victoire\Bundle\SitemapBundle\VictoireSitemapBundle(),
             new Victoire\Bundle\TemplateBundle\VictoireTemplateBundle(),
             new Victoire\Bundle\TwigBundle\VictoireTwigBundle(),
+            new Victoire\Bundle\UIBundle\VictoireUIBundle(),
             new Victoire\Bundle\UserBundle\VictoireUserBundle(),
             new Victoire\Bundle\ViewReferenceBundle\ViewReferenceBundle(),
             new Victoire\Bundle\WidgetBundle\VictoireWidgetBundle(),
