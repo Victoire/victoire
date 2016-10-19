@@ -1,0 +1,27 @@
+{
+  "name": "victoire",
+  "description": "Fullstack Symfony2 DCMS (Dynamic Content Management System)",
+  "repository": {
+    "url": "https://github.com/victoire/victoire",
+    "type": "git"
+  },
+  "scripts": {
+    "server": "php Tests/Functionnal/bin/console server:run -e test -r vendor/symfony/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/config/router_prod.php",
+    "gulp": "gulp",
+    "styles": "gulp styles",
+    "styles-watch": "gulp watch"
+  },
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-cssmin": "^0.1.7",
+    "gulp-load-plugins": "^1.3.0",
+    "gulp-notify": "^2.2.0",
+    "gulp-sass": "^2.3.2",
+    "gulp-size": "^2.1.0",
+    "gulp-sourcemaps": "^2.1.1",
+    "node-sass": "^3.10.1"
+  }
+}
