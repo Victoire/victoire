@@ -1,0 +1,43 @@
+/// Generate list of declarations
+/// @access public
+/// @author Loïc Goyet
+/// @example
+///   $pod--declarations: (
+///     'margin': 1em 0,
+///     'padding': 1em,
+///     'background-color': rgb(255, 0, 0),
+///   );
+///
+///   .pod {
+///     @include block-generator($pod--declarations);
+///   }
+///
+///   // compiles to
+///   .pod {
+///     margin: 1em 0;
+///     padding: 1em;
+///     background-color: rgb(255, 0, 0);
+///   }
+/// @name block-generator
+/// @output one or several css declarations
+/// @param {map} $declarations
+/// @since 1.4.0
+@mixin block-generator($declarations) {
+  $everything-okay: true;
+  @if type-of($declarations) != 'map' {
+    @warn '`#{$declarations}` is not a map for `block-generator`.';
+    $everything-okay: false;
+  }
+
+  @if length($declarations) == 0 {
+    $everything-okay: false;
+  }
+
+  @if $everything-okay {
+    @each $property, $value in $declarations {
+      @if type-of($property) == 'string' {
+        #{$property}: $value;
+      }
+    }
+  }
+}

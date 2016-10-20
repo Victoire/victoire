@@ -1,8 +1,9 @@
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 
-const STYLE_SRC_DIR = 'Bundle/UIBundle/Resources/style/';
-const STYLE_SRC_DEST = 'Bundle/UIBundle/Resources/public/style';
+const STYLE_SRC_DIR = 'Bundle/UIBundle/Resources/stylesheets/';
+const STYLE_SRC_DEST = 'Bundle/UIBundle/Resources/public/stylesheets';
+const STYLE_SRC_DEST_WEB = 'Tests/Functionnal/web/bundles/victoireui/stylesheets';
 const AUTOPREFIXER_BROWSERS = [
   'ie >= 10',
   'ie_mob >= 10',
@@ -26,25 +27,26 @@ var reportError = function(err) {
 }
 
 var stylePipe = function(src) {
-  return gulp.src(STYLE_SRC_DIR + src)
+  return gulp.src(src)
     .pipe($.sourcemaps.init())
-    .pipe($.sass({
-      precision: 6,
-      indentWidth: 4,
-    })).on('error', reportError)
+    .pipe($.sass({ precision: 6 })).on('error', reportError)
     .pipe($.autoprefixer({ browsers: AUTOPREFIXER_BROWSERS }))
     .pipe($.sourcemaps.write())
-    .pipe(gulp.dest(STYLE_SRC_DEST));
+    .pipe($.size())
+    .pipe(gulp.dest(STYLE_SRC_DEST))
+
+    // In order to not run `npm run assets` everytime a style gulp task is executed
+    .pipe(gulp.dest(STYLE_SRC_DEST_WEB));
 }
 
 // Style required by the victoire UI
 gulp.task('style-front', function() {
-  return stylePipe('front/main-front.scss');
+  return stylePipe(STYLE_SRC_DIR + 'front/main-front.scss');
 });
 
 // Style required by the styleguide
 gulp.task('style-styleguide', function() {
-  return stylePipe('styleguide/main-styleguide.scss');
+  return stylePipe(STYLE_SRC_DIR + 'styleguide/main-styleguide.scss');
 });
 
 // Both stylesheets

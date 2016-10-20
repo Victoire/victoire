@@ -9,11 +9,20 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class StyleguideController extends Controller
 {
     /**
-     * @Route("/styleguide")
+     * @Route("/styleguide", name="victoire_ui_styleguide")
+     * @Route("/styleguide/{component}", name="victoire_ui_styleguide")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction($component = null)
     {
-        return array();
+        $components = array(
+            'styleguide',
+            'button',
+        );
+
+        return array(
+            'components' => $component ? array($component) : $components,
+            'focus' => $component != null,
+        );
     }
 }

@@ -1,0 +1,13 @@
+{
+  "name": "victoire",
+  "description": "Fullstack Symfony2 DCMS (Dynamic Content Management System)",
+  "private": true,
+  "dependencies": {
+    "trowel-core": "^1.2.3",
+    "friendsOfTrowel-buttons-component": "^0.1.0",
+    "friendsOfTrowel-dropdowns-component": "^0.1.0"
+  },
+  "devDependencies": {
+    "clipboard": "^1.5.13"
+  }
+}

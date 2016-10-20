@@ -1,0 +1,28 @@
+.ts-colors {
+  @include styleguide-base;
+  @include gutter-row(rem());
+  @include reset-list;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.ts-colors__item {
+  @include gutter-col(rem(), true);
+  flex: 0 0 200px;
+}
+
+.ts-colors__swatch {
+  @include layout-border('top' 'left' 'right');
+  @include aspect-ratio;
+}
+
+.ts-colors__label {
+  @include layout-border('bottom' 'left' 'right');
+  padding: rem(0.5);
+  display: block
+}
+
+
+.ts-color__swatch {
+}

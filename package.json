@@ -7,6 +7,7 @@
   },
   "scripts": {
     "server": "php Tests/Functionnal/bin/console server:run -e test -r vendor/symfony/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/config/router_prod.php",
+    "assets": "php Tests/Functionnal/bin/console assets:install Tests/Functionnal/web",
     "gulp": "gulp",
     "styles": "gulp styles",
     "styles-watch": "gulp watch"
