@@ -1,0 +1,21 @@
+<h1 class="ts-section__heading">
+    {{ name }}
+    <a class="ts-section__focus-btn" href="{{ path('victoire_ui_styleguide', { 'component': name }) }}">focus</a>
+</h1>
+
+<div class="ts-section__infos">
+    {% if category is defined %}
+        <div>
+            <span class="ts-section__label-info">category : </span>{{ category }}
+        </div>
+    {% endif %}
+
+    {% if framework is defined %}
+    <div>
+        <span class="ts-section__label-info">framework : </span>
+        {% if framework.url|default(false) %}<a class="ts-section__info-anchor" href="{{ framework.url }}">{% endif %}
+            {{ framework.name }}
+        {% if framework.url|default(false) %}</a>{% endif %}
+    </div>
+    {% endif %}
+</div>

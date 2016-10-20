@@ -38,6 +38,8 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    paths:
+        "%kernel.root_dir%/../../../Bundle/UIBundle/Resources/views/Styleguide": styleguide
 
 # Assetic Configuration
 assetic:
