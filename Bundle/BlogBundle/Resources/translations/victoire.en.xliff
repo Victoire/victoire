@@ -110,6 +110,10 @@
         <source>blog.form.title.label</source>
         <target>Category</target>
       </trans-unit>
+      <trans-unit id="19" resname="form.article.type.author.label">
+        <source>form.article.type.author.label</source>
+        <target>Author</target>
+      </trans-unit>
       <trans-unit id="20" resname="victoire.blog.category.add.sub.label">
         <source> victoire.blog.category.add.sub.label</source>
         <target>Add a subcategory</target>

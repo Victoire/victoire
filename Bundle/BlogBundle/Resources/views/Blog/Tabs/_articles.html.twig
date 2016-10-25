@@ -11,7 +11,7 @@
     <div>
         <div class="vic-panel vic-shadow-plan1 -vicBlog">
             <div class="vic-panelBlog-image" {% if article.image %}style="background-image: url({{ article.image.url }});"{% endif %}>
-                <a class="vic-panelBlog-title" href="{{vic_business_link(article)}}">
+                <a class="vic-panelBlog-title" href="{{ vic_business_link(article) }}">
                     <span class="vic-panelBlog-badge -{{ article.status }}">
                         <span class="vic-panelBlog-badge-popover">
                             {% set transKey = 'modal.blog.list.articlesList.status.' ~ article.status %}
@@ -25,6 +25,7 @@
                 <a class="vic-panelBlog-title" href="{{vic_business_link(article)}}">
                     {{ article.name }}
                 </a>
+                <em>{{ article.author.firstname }} {{ article.author.lastname }}</em>
 
                 <time datetime="{{ article.publishedAt|date("Y-m-d") }}" class="vic-panelBlog-date">{{ article.publishedAt|localizeddate("medium", "none", null, null, "cccc d LLLL yyyy") }}</time>
 

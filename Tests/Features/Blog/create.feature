@@ -35,5 +35,14 @@ Background:
         When I fill in "article_translations_fr_description" with "This is a great description."
         When I select "First blog template" from "Modèle à utiliser"
         And I follow "Créer"
-        And I wait 10 seconds
+        And I wait 5 seconds
         Then I should be on "/fr/the-jedi-network/i-m-your-father"
+
+    @alice(Blog) @alice(Article) @alice(BlogTemplate)
+    Scenario: I can view the Article list in the blog management window
+        Given I open the hamburger menu
+        Then I should see "Blog"
+        When I follow "Blog"
+        Then I should see "Listes des articles"
+        And I should see "I'm your father."
+        And I should see "Anakin Skywalker"
