@@ -49,7 +49,8 @@ class ArticleType extends AbstractType
                 'multiple' => true,
             ])
             ->add('author', null, [
-                'label'   => 'form.article.type.author.label',
+                'label'    => 'form.article.type.author.label',
+                'required' => true,
             ])
             ->remove('visibleOnFront');
 
