@@ -52,6 +52,7 @@ class User extends BaseUser implements VictoireUserInterface
     protected $heartbeat;
 
     protected $pages;
+    protected $articles;
 
     /**
      * Get firstname.
