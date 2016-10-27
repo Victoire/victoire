@@ -31,9 +31,9 @@ class RemoteVideoType extends AbstractType
             ->add('code', TextType::class)
             ->add('type', ChoiceType::class, [
                 'choices' => [
-                    'youtube' => 'youtube',
-                    'vimeo' => 'vimeo',
-                    'dailymotion' => 'dailymotion'
+                    'youtube'     => 'youtube',
+                    'vimeo'       => 'vimeo',
+                    'dailymotion' => 'dailymotion',
                 ],
 
             ]);

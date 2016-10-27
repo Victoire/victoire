@@ -118,9 +118,10 @@ class RemoteVideoHelper
     }
 
     /**
-     * Set url
+     * Set url.
      *
      * @param $url
+     *
      * @return $this
      */
     public function setUrl($url)
@@ -131,7 +132,7 @@ class RemoteVideoHelper
     }
 
     /**
-     * Get url
+     * Get url.
      *
      * @return mixed|null
      */

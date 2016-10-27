@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\MediaBundle\Helper\RemoteVideo;
 
-use Behat\Mink\Exception\Exception;
 use Victoire\Bundle\MediaBundle\Entity\Media;
 use Victoire\Bundle\MediaBundle\Form\RemoteVideo\RemoteVideoType;
 use Victoire\Bundle\MediaBundle\Helper\Media\AbstractMediaHandler;
@@ -73,6 +72,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
 
     /**
      * @param Media $media
+     *
      * @throws VideoException
      */
     public function prepareMedia(Media $media)
@@ -111,31 +111,34 @@ class RemoteVideoHandler extends AbstractMediaHandler
             $video->setCode($code);
             $video->setUrl($url);
         } else {
-            throw new VideoException("no code found for remote video");
+            throw new VideoException('no code found for remote video');
         }
     }
 
     /**
      * @param $link
-     * @return mixed
+     *
      * @throws VideoException
+     *
+     * @return mixed
      */
     public function isolateVimeoVideoCode($link)
     {
         try {
-            if(preg_match("/(https?:\/\/)?(www\.)?(player\.)?vimeo\.com\/([a-z]*\/)*([0-9]{6,11})[?]?.*/", $link, $output_array)) {
+            if (preg_match("/(https?:\/\/)?(www\.)?(player\.)?vimeo\.com\/([a-z]*\/)*([0-9]{6,11})[?]?.*/", $link, $output_array)) {
                 return $output_array[5];
             }
         } catch (\Exception $e) {
             throw new VideoException("can't match vimeo code in given url", $e);
         }
-
     }
 
     /**
      * @param $link
-     * @return mixed
+     *
      * @throws VideoException
+     *
+     * @return mixed
      */
     public function isolateYoutubeVideoCode($link)
     {
@@ -150,10 +153,12 @@ class RemoteVideoHandler extends AbstractMediaHandler
 
     /**
      * @param $link
-     * @return bool
+     *
      * @throws VideoException
+     *
+     * @return bool
      */
-    function isolateDailymotionVideoCode($link)
+    public function isolateDailymotionVideoCode($link)
     {
         try {
             if (preg_match('!^.+dailymotion\.com/(video|hub)/([^_]+)[^#]*(#video=([^_&]+))?|(dai\.ly/([^_]+))!', $link, $matches)) {
@@ -163,10 +168,12 @@ class RemoteVideoHandler extends AbstractMediaHandler
                 if (isset($matches[4])) {
                     return $matches[4];
                 }
+
                 return $matches[2];
             }
+
             return false;
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             throw new VideoException("can't match dailymotion code in given url", $e);
         }
     }
