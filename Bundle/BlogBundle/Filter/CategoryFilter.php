@@ -133,7 +133,7 @@ class CategoryFilter extends BaseFilter
                     $data[$id] = $selectedCategory;
                 }
             } else {
-                $data = $this->getRequest()->query->get('filter')['category_filter']['tags'];
+                $data = $this->getRequest()->query->get('filter')['category_filter']['category'];
             }
         }
         $builder
