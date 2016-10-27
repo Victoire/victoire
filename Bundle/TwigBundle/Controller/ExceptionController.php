@@ -41,7 +41,8 @@ class ExceptionController extends BaseExceptionController
         $code = $exception->getStatusCode();
 
         //get request extension
-        $uriArray = explode('/', $request->getRequestUri());
+        $uriArray = explode('/', rtrim($request->getRequestUri(), '/'));
+
         $matches = preg_match('/^.*(\..*)$/', array_pop($uriArray), $matches);
 
         //if in production environment and the query is not a file

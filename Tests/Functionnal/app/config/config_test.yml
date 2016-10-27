@@ -127,7 +127,7 @@ victoire_core:
     templates:
         layout: "::layout.html.twig"
     layouts:
-        fullWidth: "Contenu unique"
+        fullWidth: "Full width content"
         home: "Accueil"
     slots: ~
     base_paths: #(optional) required for a non standard installation
@@ -155,11 +155,11 @@ victoire_i18n:
         en: en
     locale_pattern: parameter
 snc_redis:
-   clients:
-       victoire:
-           type: predis
-           alias: victoire
-           dsn: redis://localhost
+    clients:
+        victoire:
+            type: predis
+            alias: victoire
+            dsn: redis://localhost
 
 parameters:
     locale: fr

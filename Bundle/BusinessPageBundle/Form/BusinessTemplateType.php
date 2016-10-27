@@ -5,7 +5,6 @@ namespace Victoire\Bundle\BusinessPageBundle\Form;
 use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Victoire\Bundle\CoreBundle\Form\ViewType;
 
@@ -14,15 +13,6 @@ use Victoire\Bundle\CoreBundle\Form\ViewType;
  */
 class BusinessTemplateType extends ViewType
 {
-    /*
-    * Constructor
-    */
-
-    public function __construct($availableLocales, RequestStack $requestStack)
-    {
-        parent::__construct($availableLocales, $requestStack);
-    }
-
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
@@ -57,9 +47,6 @@ class BusinessTemplateType extends ViewType
             ->add('backendName', null, [
                 'label'          => 'victoire.form.business_template.backend_name.label',
                 'vic_help_block' => 'victoire.form.business_template.backend_name.help_block',
-            ])
-            ->add('authorRestricted', null, [
-                'label' => 'victoire.form.business_template.author_restricted.label',
             ])
             ->add('query', null, [
                 'label'                        => 'victoire.form.business_template.query.label',

@@ -15,7 +15,7 @@ services:
             class: Victoire\Bundle\CriteriaBundle\DataSource\RolesDataSource
             arguments:
                 - @security.token_storage
-                - @security.role_hierarchy
+                - %security.role_hierarchy.roles%
             tags:
                 - { name: victoire_criteria, group: request, method: getRoles, alias: request_roles }
 

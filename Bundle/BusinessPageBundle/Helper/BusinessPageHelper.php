@@ -4,6 +4,7 @@ namespace Victoire\Bundle\BusinessPageBundle\Helper;
 
 use Doctrine\DBAL\Schema\View;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\QueryBuilder;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
@@ -92,12 +93,28 @@ class BusinessPageHelper
      * Get the list of entities allowed for the BusinessTemplate page.
      *
      * @param BusinessTemplate $businessTemplate
-     *
-     * @throws \Exception
+     * @param EntityManager    $em
      *
      * @return array
      */
     public function getEntitiesAllowed(BusinessTemplate $businessTemplate, EntityManager $em)
+    {
+        return $this->getEntitiesAllowedQueryBuilder($businessTemplate, $em)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Get the list of entities allowed for the BusinessTemplate page.
+     *
+     * @param BusinessTemplate $businessTemplate
+     * @param EntityManager    $em
+     *
+     * @throws \Exception
+     *
+     * @return QueryBuilder
+     */
+    public function getEntitiesAllowedQueryBuilder(BusinessTemplate $businessTemplate, EntityManager $em)
     {
         //the base of the query
         $baseQuery = $this->queryHelper->getQueryBuilder($businessTemplate, $em);
@@ -107,11 +124,7 @@ class BusinessPageHelper
         $baseQuery->andWhere('1 = 1');
 
         //filter with the query of the page
-        $items = $this->queryHelper->buildWithSubQuery($businessTemplate, $baseQuery, $em)
-            ->getQuery()
-            ->getResult();
-
-        return $items;
+        return $this->queryHelper->buildWithSubQuery($businessTemplate, $baseQuery, $em);
     }
 
     /**

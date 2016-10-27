@@ -3,38 +3,28 @@
 
 <form method="POST" action="{{ action }}">
     <div class="vic-row">
-        {% set date = form.publishedAt is defined ? true : false %}
-        {{  _self.global(form, date) }}
-    </div>
-    <br>
-    <div class="vic-row">
-        {{ form_widget(form.translations) }}
-    </div>
-
-    <div class="vic-row">
-        <div class="vic-col-md-12">
-            <h1>{{ 'form.article.settings.type.article.title'|trans }}</h1>
+        <div class="col-md-7">
+            {{ form_widget(form.translations) }}
         </div>
-    </div>
-    <br>
-    <div class="vic-row">
-        <div class="col-md-6">
+        <div class="col-md-5">
+            {% if form.status is defined %}
+                {{ form_row(form.status) }}
+                <div class="publication-date-container{% if form.vars.value.status != constant('Victoire\\Bundle\\PageBundle\\Entity\\PageStatus::SCHEDULED')%} vic-hidden{% endif %}">
+                    {{ form_row(form.publishedAt) }}
+                </div>
+            {% endif %}
             {{ form_row(form.category) }}
-        </div>
-        <div class="vic-col-md-6">
             {{ form_row(form.tags) }}
-        </div>
-    </div>
-
-    <div class="vic-row">
-        <div class="vic-col-md-12">
+            {{ form_row(form.author) }}
             {{ form_rest(form) }}
         </div>
     </div>
+
+
 </form>
 
 <script type="text/javascript">
-    $vic('#victoire_page_settings_type_status').on('change', function(){
+    $vic('#article_settings_status').on('change', function(){
         if ($vic(this).val() == '{{ constant('Victoire\\Bundle\\PageBundle\\Entity\\PageStatus::SCHEDULED') }}') {
             $vic('.publication-date-container').removeClass('vic-hidden');
         } else {
@@ -48,20 +38,3 @@
 %}
 <script type="text/javascript" src="{{ asset_url }}"></script>
 {% endjavascripts %}
-
-{% macro global(form, datePicker) %}
-    {% set col = 3 %}
-    <div class="vic-col-md-{{ datePicker ? 12 - col * 2 : 12 - col }}">
-        <h1>{{ 'form.article.settings.type.global.title'|trans }}</h1>
-    </div>
-    {% if form.status is defined %}
-        <div class="vic-col-md-{{ col }}">
-            {{ form_row(form.status) }}
-        </div>
-        {% if datePicker %}
-            <div class="vic-col-md-{{ col }}">
-                {{ form_row(form.publishedAt) }}
-            </div>
-        {% endif %}
-    {% endif %}
-{% endmacro %}

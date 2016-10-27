@@ -25,6 +25,7 @@ services:
             - @victoire_widget.widget_cache
             - @victoire_widget.widget_helper
             - @victoire_core.victoire_collector
+            - @victoire_business_page.business_page_helper
 
     victoire_widget.widget_cache:
         class: Victoire\Bundle\WidgetBundle\Cache\WidgetCache
@@ -100,3 +101,4 @@ services:
         arguments:
             - "@=service('victoire_criteria.chain.data_source_chain')"
             - "@security.authorization_checker"
+            - "@victoire_core.current_view"

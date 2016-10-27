@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Victoire\Bundle\BlogBundle\Entity\Article;
 use Victoire\Bundle\BlogBundle\Entity\Blog;
 use Victoire\Bundle\BlogBundle\Repository\ArticleTemplateRepository;
 use Victoire\Bundle\BlogBundle\Repository\TagRepository;
@@ -46,6 +47,10 @@ class ArticleType extends AbstractType
             ->add('tags', TagsType::class, [
                 'required' => false,
                 'multiple' => true,
+            ])
+            ->add('author', null, [
+                'label'    => 'form.article.type.author.label',
+                'required' => true,
             ])
             ->remove('visibleOnFront');
 
@@ -108,7 +113,8 @@ class ArticleType extends AbstractType
         foreach ($translations as $translation) {
             $availableLocales[] = $translation->getLocale();
         }
-        $form->add('translations', TranslationsType::class, [
+
+        $options = [
             'required_locales' => $availableLocales,
             'locales'          => $availableLocales,
             'fields'           => [
@@ -122,7 +128,13 @@ class ArticleType extends AbstractType
                 ],
 
             ],
-        ]);
+        ];
+
+        if ($form->getData() instanceof Article && null === $form->getData()->getId()) {
+            $options['exclude_fields'] = ['slug'];
+        }
+
+        $form->add('translations', TranslationsType::class, $options);
     }
 
     /**
@@ -188,6 +200,7 @@ class ArticleType extends AbstractType
         $resolver->setDefaults([
                 'data_class'         => 'Victoire\Bundle\BlogBundle\Entity\Article',
                 'translation_domain' => 'victoire',
+                'cascade_validation' => true,
             ]);
     }
 }

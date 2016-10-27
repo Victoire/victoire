@@ -4,7 +4,6 @@ namespace Victoire\Bundle\BlogBundle\Form;
 
 use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Victoire\Bundle\PageBundle\Form\BasePageType;
 
@@ -13,15 +12,6 @@ use Victoire\Bundle\PageBundle\Form\BasePageType;
  */
 class BlogType extends BasePageType
 {
-    /*
-    * Constructor
-    */
-
-    public function __construct($availableLocales, RequestStack $requestStack)
-    {
-        parent::__construct($availableLocales, $requestStack);
-    }
-
     /**
      * define form fields.
      *

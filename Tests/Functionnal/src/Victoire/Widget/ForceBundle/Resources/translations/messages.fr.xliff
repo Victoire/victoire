@@ -16,7 +16,7 @@
       </trans-unit>
       <trans-unit id="5" resname="dark">
         <source>dark</source>
-        <target>obscure</target>
+        <target>obscur</target>
       </trans-unit>
       <trans-unit id="6" resname="bright">
         <source>dark</source>

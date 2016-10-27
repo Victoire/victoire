@@ -4,10 +4,9 @@ namespace Victoire\Bundle\WidgetBundle\Renderer;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\DependencyInjection\Container;
-use Victoire\Bundle\BusinessEntityBundle\Exception\MissingBusinessEntityInstanceException;
-use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
+use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
 use Victoire\Bundle\CoreBundle\DataCollector\VictoireCollector;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Event\WidgetRenderEvent;
@@ -33,22 +32,29 @@ class WidgetRenderer
      * @var VictoireCollector
      */
     private $victoireCollector;
+    /**
+     * @var BusinessPageHelper
+     */
+    private $bepHelper;
 
     /**
      * WidgetRenderer constructor.
      *
-     * @param Container    $container
-     * @param WidgetCache  $widgetCache
-     * @param WidgetHelper $widgetHelper
+     * @param Container          $container
+     * @param WidgetCache        $widgetCache
+     * @param WidgetHelper       $widgetHelper
+     * @param VictoireCollector  $victoireCollector
+     * @param BusinessPageHelper $bepHelper
      *
      * @internal param Client $redis
      */
-    public function __construct(Container $container, WidgetCache $widgetCache, WidgetHelper $widgetHelper, VictoireCollector $victoireCollector)
+    public function __construct(Container $container, WidgetCache $widgetCache, WidgetHelper $widgetHelper, VictoireCollector $victoireCollector, BusinessPageHelper $bepHelper)
     {
         $this->container = $container;
         $this->widgetCache = $widgetCache;
         $this->widgetHelper = $widgetHelper;
         $this->victoireCollector = $victoireCollector;
+        $this->bepHelper = $bepHelper;
     }
 
     /**
@@ -71,14 +77,9 @@ class WidgetRenderer
             //We'll try to find a sample entity to mock the widget behavior
             /** @var EntityManager $entityManager */
             $entityManager = $this->container->get('doctrine.orm.entity_manager');
-            /** @var BusinessEntityHelper $businessEntityHelper */
-            $businessEntityHelper = $this->container->get('victoire_core.helper.business_entity_helper');
-            $businessEntity = $businessEntityHelper->findById($view->getBusinessEntityId());
-            $queryBuilder = $entityManager->getRepository($businessEntity->getClass())->createQueryBuilder('c');
-            if (null === $mock = $queryBuilder->setMaxResults(1)->getQuery()->getOneOrNullResult()) {
-                throw new MissingBusinessEntityInstanceException($businessEntity->getClass());
+            if ($mock = $this->bepHelper->getEntitiesAllowedQueryBuilder($view, $entityManager)->setMaxResults(1)->getQuery()->getOneOrNullResult()) {
+                $widget->setEntity($mock);
             }
-            $widget->setEntity($mock);
         }
 
         //the templating service
@@ -86,6 +87,12 @@ class WidgetRenderer
 
         //the content of the widget
         $parameters = $this->container->get('victoire_widget.widget_content_resolver')->getWidgetContent($widget);
+        /*
+         * In some cases, for example, WidgetRender in BusinessEntity mode with magic variables {{entity.id}} transformed
+         * into the real business entity id, then if in the rendered action, we need to flush, it would persist the
+         * modified widget which really uncomfortable ;)
+         */
+        $this->container->get('doctrine.orm.entity_manager')->refresh($widget);
 
         //the template displayed is in the widget bundle (with the potential theme)
         $showView = 'show'.ucfirst($widget->getTheme());

@@ -73,9 +73,9 @@ class Widget extends BaseWidget implements VictoireQueryInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="fields", type="array")
+     * @ORM\Column(name="fields", type="text")
      */
-    protected $fields = [];
+    protected $fields = 'a:0:{}';
 
     /**
      * @var string
@@ -197,7 +197,12 @@ class Widget extends BaseWidget implements VictoireQueryInterface
      */
     public function setFields($fields)
     {
-        $this->fields = $fields;
+        $data = @unserialize($fields);
+        if ($fields === 'b:0;' || $data !== false) {
+            $this->fields = $fields;
+        } else {
+            $this->fields = serialize($fields);
+        }
 
         return $this;
     }
@@ -209,7 +214,7 @@ class Widget extends BaseWidget implements VictoireQueryInterface
      */
     public function getFields()
     {
-        return $this->fields;
+        return unserialize($this->fields);
     }
 
     /**
@@ -363,10 +368,12 @@ class Widget extends BaseWidget implements VictoireQueryInterface
      *
      * @return Widget
      */
-    public function setWidgetMap(WidgetMap $widgetMap)
+    public function setWidgetMap(WidgetMap $widgetMap = null)
     {
+        if ($widgetMap) {
+            $widgetMap->addWidget($this);
+        }
         $this->widgetMap = $widgetMap;
-        $widgetMap->addWidget($this);
 
         return $this;
     }
@@ -527,12 +534,6 @@ class Widget extends BaseWidget implements VictoireQueryInterface
             throw new \Exception(sprintf('Cannot generate an hash for widget %s if currentView is not defined.',
                 $this->getId()
             ));
-            if (!$this->getCurrentView()->getReference()) {
-                throw new \Exception(sprintf('Cannot generate an hash for widget %s if currentView %s Reference is not defined.',
-                    $this->getId(),
-                    $widget->getCurrentView()->getId()
-                ));
-            }
         }
 
         return sprintf('%s-%s-%s',
@@ -551,7 +552,7 @@ class Widget extends BaseWidget implements VictoireQueryInterface
     {
         if ($this->hasCriteriaNamed('locale')) {
             foreach ($this->getCriterias() as $criteria) {
-                if ($criteria->getName() === 'locale' &&  $criteria->getValue() === $defaultLocale) {
+                if ($criteria->getName() === 'locale' && $criteria->getValue() === $defaultLocale) {
                     return $criteria->getValue();
                 }
             }

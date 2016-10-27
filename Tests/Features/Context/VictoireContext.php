@@ -48,6 +48,27 @@ class VictoireContext extends RawMinkContext
     }
 
     /**
+     * @Given I login as visitor
+     */
+    public function iLoginAsVisitor()
+    {
+        $this->getSession()->getDriver()->stop();
+        $url = 'http://z6po@victoire.io:test@fr.victoire.io:8000';
+        $this->minkContext->setMinkParameter('base_url', $url);
+    }
+
+    /**
+     * @Given /^I visit homepage through domain "([^"]*)"$/
+     */
+    public function ivisitHomepageThroughDomain($domain)
+    {
+        $this->getSession()->getDriver()->stop();
+        $url = sprintf('http://z6po@victoire.io:test@%s:8000/app_domain.php', $domain);
+        $this->minkContext->setMinkParameter('base_url', $url);
+        $this->minkContext->visitPath('/');
+    }
+
+    /**
      * @Then /^I fill in wysiwyg with "([^"]*)"$/
      */
     public function iFillInWysiwygOnFieldWith($arg)
@@ -120,6 +141,7 @@ class VictoireContext extends RawMinkContext
             $element = $this->getSession()->getPage()->find('xpath', 'descendant-or-self::a[@data-modal="update"]');
         }
         $element->click();
+        $this->getSession()->wait(2000);
     }
 
     /**
@@ -149,9 +171,11 @@ class VictoireContext extends RawMinkContext
     {
         $element = $this->getSession()->getPage()->find(
             'xpath',
-            sprintf('//descendant-or-self::*[normalize-space(text()) = "%s"]/ancestor::div/descendant-or-self::*[normalize-space(text()) = "%s"]', $textBefore, $textAfter)
+            sprintf('//*[normalize-space(text()) = "%s"][preceding::*[normalize-space(text()) = "%s"]]',
+                $textAfter,
+                $textBefore
+            )
         );
-
         if (null === $element) {
             $message = sprintf('"%s" does not preceed "%s"', $textBefore, $textAfter);
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());

@@ -5,7 +5,6 @@ namespace Victoire\Bundle\TemplateBundle\Form;
 use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Victoire\Bundle\CoreBundle\Form\ViewType;
 
@@ -15,19 +14,6 @@ use Victoire\Bundle\CoreBundle\Form\ViewType;
 class TemplateType extends ViewType
 {
     protected $layouts;
-
-    /**
-     * constructor.
-     *
-     * @param $layouts
-     * @param RequestStack $availableLocales
-     * @param RequestStack $requestStack
-     */
-    public function __construct($layouts, $availableLocales, RequestStack $requestStack)
-    {
-        parent::__construct($availableLocales, $requestStack);
-        $this->layouts = $layouts;
-    }
 
     /**
      * define form fields.
@@ -52,6 +38,8 @@ class TemplateType extends ViewType
                 ],
             ],
         ]);
+
+        $builder->remove('roles');
     }
 
     /**
@@ -66,5 +54,10 @@ class TemplateType extends ViewType
                 'layouts'            => $this->layouts,
             ]
         );
+    }
+
+    public function setLayouts($layouts)
+    {
+        $this->layouts = $layouts;
     }
 }

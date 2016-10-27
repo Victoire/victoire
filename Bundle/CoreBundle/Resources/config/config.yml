@@ -45,7 +45,7 @@ victoire_core:
                 list: ~
                 archive: ~
 
-av_alertify:
+troopers_alertify:
     contexts:
         victoire:
             engine: "codrops-notification"

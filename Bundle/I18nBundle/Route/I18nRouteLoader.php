@@ -48,23 +48,12 @@ class I18nRouteLoader extends BaseRouteLoader
          * */
         $defaultCollection = parent::load($resource, $type);
         $defaultCollection->addDefaults(['_locale' => $this->localeResolver->defaultLocale]);
-        if ($this->localeResolver->localePattern == LocaleResolver::PATTERN_DOMAIN) {
-            $domainRegex = addslashes(implode('|', array_keys($this->localeResolver->getDomainConfig())));
-            $defaultCollection->setHost(
-                '{domain}',
-                ['domain' => $this->localeResolver->defaultDomain],
-                ['domain' => $domainRegex ? $domainRegex : '[^\.]++']
-            );
-        }
         $collection->addCollection($defaultCollection);
 
         if ($this->localeResolver->localePattern == LocaleResolver::PATTERN_PARAMETER) {
             $collection = parent::load($resource, $type);
             //Prefix every victoire route with the locale
             $collection->addPrefix('/{_locale}');
-            $collection->addRequirements([
-                '_locale' => implode('|', $this->localeResolver->getAvailableLocales()),
-            ]);
             $collection->addCollection($collection);
             //Add a redirection to the default locale homepage when empty url '/'
             $this->addHomepageRedirection($collection);

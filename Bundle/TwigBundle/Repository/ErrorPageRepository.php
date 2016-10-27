@@ -19,8 +19,8 @@ class ErrorPageRepository extends BasePageRepository
     public function findOneByCode($code, $deepMode = false)
     {
         //the query builder
-        $page = $this->createQueryBuilder('page')
-            ->where('page.code = :code')
+        $page = $this->createQueryBuilder($this->mainAlias)
+            ->where($this->mainAlias.'.code = :code')
             ->setParameter('code', $code)
             ->setMaxResults(1)
             ->getQuery()

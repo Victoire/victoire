@@ -8,6 +8,8 @@
 namespace Victoire\Bundle\WidgetBundle\Resolver;
 
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
+use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
+use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 use Victoire\Bundle\CriteriaBundle\Chain\DataSourceChain;
 use Victoire\Bundle\CriteriaBundle\Entity\Criteria;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
@@ -28,24 +30,36 @@ class WidgetResolver
     private $dataSourceChain;
 
     private $authorizationChecker;
+    /**
+     * @var CurrentViewHelper
+     */
+    private $currentViewHelper;
 
     /**
      * WidgetResolver constructor.
      *
      * @param DataSourceChain      $dataSourceChain
      * @param AuthorizationChecker $authorizationChecker
+     * @param CurrentViewHelper    $currentViewHelper
      */
-    public function __construct(DataSourceChain $dataSourceChain, AuthorizationChecker $authorizationChecker)
+    public function __construct(DataSourceChain $dataSourceChain, AuthorizationChecker $authorizationChecker, CurrentViewHelper $currentViewHelper)
     {
         $this->dataSourceChain = $dataSourceChain;
         $this->authorizationChecker = $authorizationChecker;
+        $this->currentViewHelper = $currentViewHelper;
     }
 
     public function resolve(WidgetMap $widgetMap)
     {
-        //TODO: orderiaze it
+        //TODO: orderize it
+
+        $widgets = $widgetMap->getWidgets();
+        // if the widgetmap is linked to no widgets, it seems that it is an overwrite of the position so keep the replaced widgets for display
+        if ($widgetMap->getReplaced() && count($widgets) === 0) {
+            $widgets = $widgetMap->getReplaced()->getWidgets();
+        }
         /* @var Widget $widget */
-        foreach ($widgetMap->getWidgets() as $_widget) {
+        foreach ($widgets as $_widget) {
             /** @var Criteria $criteria */
             foreach ($_widget->getCriterias() as $criteria) {
                 $value = $this->dataSourceChain->getData($criteria->getName());
@@ -60,6 +74,10 @@ class WidgetResolver
 
     protected function assert($value, $operator, $expected)
     {
+        $businessEntity = null;
+        if ($this->currentViewHelper->getCurrentView() instanceof BusinessPage) {
+            $businessEntity = $this->currentViewHelper->getCurrentView()->getBusinessEntity();
+        }
         $result = false;
         switch ($operator) {
             case self::OPERAND_EQUAL:
@@ -75,10 +93,17 @@ class WidgetResolver
                 $result = in_array($value, unserialize($expected));
                 break;
             case self::IS_GRANTED:
-                $result = $this->authorizationChecker->isGranted($expected);
-                break;
             case self::IS_NOT_GRANTED:
-                $result = false == $this->authorizationChecker->isGranted($expected);
+                if (!$this->authorizationChecker->isGranted('ROLE_VICTOIRE')) {
+                    $granted = $this->authorizationChecker->isGranted($expected, $businessEntity);
+                    if ($operator === self::IS_GRANTED) {
+                        $result = $granted;
+                    } else {
+                        $result = (false === $granted);
+                    }
+                } else {
+                    $result = true;
+                }
                 break;
         }
 

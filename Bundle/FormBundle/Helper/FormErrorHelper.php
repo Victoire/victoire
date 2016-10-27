@@ -2,6 +2,8 @@
 
 namespace Victoire\Bundle\FormBundle\Helper;
 
+use Symfony\Component\Form\Form;
+
 /**
  * A service that give errors from a form as a string.
  *

@@ -33,6 +33,7 @@ class ArticleTranslation
     /**
      * @var string
      *
+     * @Assert\NotBlank(groups={"edition"})
      * @Gedmo\Slug(handlers={
      *     @Gedmo\SlugHandler(class="Victoire\Bundle\BusinessEntityBundle\Handler\TwigSlugHandler"
      * )},fields={"name"}, updatable=false, unique=false)

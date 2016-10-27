@@ -14,9 +14,25 @@
                 <source>victoire_criteria.request_scheme.criteria.label</source>
                 <target>SSL</target>
             </trans-unit>
-            <trans-unit id="3" resname="victoire_criteria.criteria.operator.equal.label">
-                <source>victoire_criteria.criteria.operator.equal.label</source>
-                <target>Égal</target>
+            <trans-unit id="3" resname="victoire_criteria.request_roles.criteria.label">
+                <source>victoire_criteria.request_roles.criteria.label</source>
+                <target>Rôles</target>
+            </trans-unit>
+            <trans-unit id="4" resname="victoire_criteria.request_user.is.connected.criteria.label">
+                <source>victoire_criteria.request_user.is.connected.criteria.label</source>
+                <target>Connecté</target>
+            </trans-unit>
+            <trans-unit id="5" resname="victoire_criteria.request_user.is.not.connected.criteria.label">
+                <source>victoire_criteria.request_user.is.not.connected.criteria.label</source>
+                <target>Non connecté</target>
+            </trans-unit>
+            <trans-unit id="6" resname="victoire_criteria.request_user.criteria.label">
+                <source>victoire_criteria.request_user.criteria.label</source>
+                <target>Est connecté</target>
+            </trans-unit>
+            <trans-unit id="7" resname="victoire_criteria.criteria.operator.help_block">
+                <source>victoire_criteria.criteria.operator.help_block</source>
+                <target>Valeurs prises en charge: equal, true, false, is_granted, is_not_granted</target>
             </trans-unit>
             <trans-unit id="4" resname="victoire_criteria.criteria.operator.is_granted.label">
                 <source>victoire_criteria.criteria.operator.is_granted.label</source>
@@ -53,3 +69,4 @@
         </body>
     </file>
 </xliff>
+

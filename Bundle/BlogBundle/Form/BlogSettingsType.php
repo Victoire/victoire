@@ -4,7 +4,6 @@ namespace Victoire\Bundle\BlogBundle\Form;
 
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Victoire\Bundle\PageBundle\Entity\PageStatus;
 
@@ -13,11 +12,6 @@ use Victoire\Bundle\PageBundle\Entity\PageStatus;
  */
 class BlogSettingsType extends BlogType
 {
-    public function __construct($available_locales, RequestStack $requestStack)
-    {
-        parent::__construct($available_locales, $requestStack);
-    }
-
     /**
      * define form fields.
      *
