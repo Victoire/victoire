@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\MediaBundle\Helper\RemoteVideo;
 
+use Behat\Mink\Exception\Exception;
 use Victoire\Bundle\MediaBundle\Entity\Media;
 use Victoire\Bundle\MediaBundle\Form\RemoteVideo\RemoteVideoType;
 use Victoire\Bundle\MediaBundle\Helper\Media\AbstractMediaHandler;
@@ -72,8 +73,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
 
     /**
      * @param Media $media
-     *
-     * @throws \RuntimeException when the file does not exist
+     * @throws VideoException
      */
     public function prepareMedia(Media $media)
     {
@@ -83,6 +83,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
         }
         $video = new RemoteVideoHelper($media);
         $url = $video->getCode();
+        $code = null;
         //update thumbnail
         switch ($video->getType()) {
             case 'youtube':
@@ -104,6 +105,13 @@ class RemoteVideoHandler extends AbstractMediaHandler
                 }
                 $video->setThumbnailUrl($thumbnailUrl);
                 break;
+        }
+
+        if (null != $code) {
+            $video->setCode($code);
+            $video->setUrl($url);
+        } else {
+            throw new VideoException("no code found for remote video");
         }
     }
 

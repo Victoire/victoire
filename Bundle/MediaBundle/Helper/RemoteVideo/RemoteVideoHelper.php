@@ -116,4 +116,27 @@ class RemoteVideoHelper
 
         return $this;
     }
+
+    /**
+     * Set url
+     *
+     * @param $url
+     * @return $this
+     */
+    public function setUrl($url)
+    {
+        $this->media->setMetadataValue('url', $url);
+
+        return $this;
+    }
+
+    /**
+     * Get url
+     *
+     * @return mixed|null
+     */
+    public function getUrl()
+    {
+        return $this->media->getMetadataValue('url');
+    }
 }
