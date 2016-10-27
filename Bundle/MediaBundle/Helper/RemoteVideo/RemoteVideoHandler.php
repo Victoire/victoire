@@ -5,6 +5,7 @@ namespace Victoire\Bundle\MediaBundle\Helper\RemoteVideo;
 use Victoire\Bundle\MediaBundle\Entity\Media;
 use Victoire\Bundle\MediaBundle\Form\RemoteVideo\RemoteVideoType;
 use Victoire\Bundle\MediaBundle\Helper\Media\AbstractMediaHandler;
+use Victoire\Bundle\MediaBundle\Helper\RemoteVideo\Exception\VideoException;
 
 /**
  * RemoteVideoStrategy.
@@ -72,7 +73,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
     /**
      * @param Media $media
      *
-     * @throws \RuntimeException when the file does not exist
+     * @throws VideoException
      */
     public function prepareMedia(Media $media)
     {
@@ -81,17 +82,21 @@ class RemoteVideoHandler extends AbstractMediaHandler
             $media->setUuid($uuid);
         }
         $video = new RemoteVideoHelper($media);
-        $code = $video->getCode();
+        $url = $video->getCode();
+        $code = null;
         //update thumbnail
         switch ($video->getType()) {
             case 'youtube':
+                $code = $this->isolateYoutubeVideoCode($url);
                 $video->setThumbnailUrl('http://img.youtube.com/vi/'.$code.'/0.jpg');
                 break;
             case 'vimeo':
+                $code = $this->isolateVimeoVideoCode($url);
                 $xml = simplexml_load_file('http://vimeo.com/api/v2/video/'.$code.'.xml');
                 $video->setThumbnailUrl((string) $xml->video->thumbnail_large);
                 break;
             case 'dailymotion':
+                $code = $this->isolateDailymotionVideoCode($url);
                 $json = json_decode(file_get_contents('https://api.dailymotion.com/video/'.$code.'?fields=thumbnail_large_url'));
                 $thumbnailUrl = $json->{'thumbnail_large_url'};
                 /* dirty hack to fix urls for imagine */
@@ -100,6 +105,76 @@ class RemoteVideoHandler extends AbstractMediaHandler
                 }
                 $video->setThumbnailUrl($thumbnailUrl);
                 break;
+        }
+
+        if (null != $code) {
+            $video->setCode($code);
+            $video->setUrl($url);
+        } else {
+            throw new VideoException('no code found for remote video');
+        }
+    }
+
+    /**
+     * @param $link
+     *
+     * @throws VideoException
+     *
+     * @return mixed
+     */
+    public function isolateVimeoVideoCode($link)
+    {
+        try {
+            if (preg_match("/(https?:\/\/)?(www\.)?(player\.)?vimeo\.com\/([a-z]*\/)*([0-9]{6,11})[?]?.*/", $link, $output_array)) {
+                return $output_array[5];
+            }
+        } catch (\Exception $e) {
+            throw new VideoException("can't match vimeo code in given url", $e);
+        }
+    }
+
+    /**
+     * @param $link
+     *
+     * @throws VideoException
+     *
+     * @return mixed
+     */
+    public function isolateYoutubeVideoCode($link)
+    {
+        try {
+            if (preg_match("#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)[^&\n]+(?=\?)|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+#", $link, $matches)) {
+                return $matches[0];
+            }
+        } catch (\Exception $e) {
+            throw new VideoException("can't match youtube code in given url", $e);
+        }
+    }
+
+    /**
+     * @param $link
+     *
+     * @throws VideoException
+     *
+     * @return bool
+     */
+    public function isolateDailymotionVideoCode($link)
+    {
+        try {
+            if (preg_match('!^.+dailymotion\.com/(video|hub)/([^_]+)[^#]*(#video=([^_&]+))?|(dai\.ly/([^_]+))!', $link, $matches)) {
+                if (isset($matches[6])) {
+                    return $matches[6];
+                }
+                if (isset($matches[4])) {
+                    return $matches[4];
+                }
+
+                return $matches[2];
+            }
+
+            return false;
+        } catch (\Exception $e) {
+            throw new VideoException("can't match dailymotion code in given url", $e);
         }
     }
 
@@ -145,12 +220,12 @@ class RemoteVideoHandler extends AbstractMediaHandler
     public function getAddUrlFor(array $params = [])
     {
         return [
-                'video' => [
-                        'path'   => 'VictoireMediaBundle_folder_videocreate',
-                        'params' => [
-                                'folderId' => $params['folderId'],
-                        ],
+            'video' => [
+                'path'   => 'VictoireMediaBundle_folder_videocreate',
+                'params' => [
+                    'folderId' => $params['folderId'],
                 ],
+            ],
         ];
     }
 
@@ -232,9 +307,9 @@ class RemoteVideoHandler extends AbstractMediaHandler
     public function getAddFolderActions()
     {
         return [
-                self::TYPE => [
-                    'type' => self::TYPE,
-                    'name' => 'media.video.add', ],
-                ];
+            self::TYPE => [
+                'type' => self::TYPE,
+                'name' => 'media.video.add', ],
+        ];
     }
 }
