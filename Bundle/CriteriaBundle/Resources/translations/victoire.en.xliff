@@ -14,14 +14,6 @@
                 <source>victoire_criteria.request_scheme.criteria.label</source>
                 <target>SSL</target>
             </trans-unit>
-            <trans-unit id="3" resname="victoire_criteria.criteria.operator.equal.label">
-                <source>victoire_criteria.criteria.operator.equal.label</source>
-                <target>Equals</target>
-            </trans-unit>
-            <trans-unit id="4" resname="victoire_criteria.criteria.operator.is_granted.label">
-                <source>victoire_criteria.criteria.operator.is_granted.label</source>
-                <target>has role</target>
-            </trans-unit>
             <trans-unit id="5" resname="victoire_criteria.request_roles.criteria.label">
                 <source>victoire_criteria.request_roles.criteria.label</source>
                 <target>Roles</target>
@@ -34,21 +26,13 @@
                 <source>victoire_criteria.request_user.is.not.connected.criteria.label</source>
                 <target>Logged out</target>
             </trans-unit>
-            <trans-unit id="8" resname="victoire_criteria.criteria.operator.true.label">
-                <source>victoire_criteria.criteria.operator.true.label</source>
-                <target>True</target>
-            </trans-unit>
             <trans-unit id="9" resname="victoire_criteria.request_user.criteria.label">
                 <source>victoire_criteria.request_user.criteria.label</source>
                 <target>Is logged</target>
             </trans-unit>
-            <trans-unit id="10" resname="victoire_criteria.criteria.operator.false.label">
-                <source>victoire_criteria.criteria.operator.false.label</source>
-                <target>False</target>
-            </trans-unit>
-            <trans-unit id="11" resname="victoire_criteria.criteria.operator.is_not_granted.label">
-                <source>victoire_criteria.criteria.operator.is_not_granted.label</source>
-                <target>Do not has role</target>
+            <trans-unit id="8" resname="victoire_criteria.criteria.operator.help_block">
+                <source>victoire_criteria.criteria.operator.help_block</source>
+                <target>Possible values: equal, true, false, is_granted, is_not_granted</target>
             </trans-unit>
         </body>
     </file>
