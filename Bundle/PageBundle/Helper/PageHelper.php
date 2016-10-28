@@ -424,7 +424,11 @@ class PageHelper
     private function guessBestLayoutForView(View $view, $isAjax)
     {
         if ($isAjax) {
-            $viewLayout = 'modal';
+            if (null != $view->getTemplate()->getLayout()) {
+                $viewLayout = 'modal_' . $view->getTemplate()->getLayout();
+            } else {
+                $viewLayout = 'modal';
+            }
         } elseif (method_exists($view, 'getLayout') && $view->getLayout()) {
             $viewLayout = $view->getLayout();
         } else {
