@@ -425,7 +425,7 @@ class PageHelper
     {
         if ($isAjax) {
             if (null != $view->getTemplate()->getLayout()) {
-                $viewLayout = 'modal_' . $view->getTemplate()->getLayout();
+                $viewLayout = 'modal_'.$view->getTemplate()->getLayout();
             } else {
                 $viewLayout = 'modal';
             }
