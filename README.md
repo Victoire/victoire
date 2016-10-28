@@ -11,16 +11,18 @@
 
 ##Overview
 
-Victoire is a **Symfony2** overlay integrating a business aware cms and a large panel of web marketing tools.
-It can be setup in any symfony2 project in just some few minutes.
+Victoire is a **Symfony** overlay integrating a Dynamic-CMS that use the core business datas in a dynamic and automated way.
+It can be setup in any Symfony project in just some few minutes.
 
-The main goal is to give to the final customer the ability to **create**/**edit**/**delete** each content on its website, even for a static content than a business entity based content and **without any development skill** and with the minimum of training.
+The main goal is to give to the final customer the ability to **create**/**edit**/**delete** each content on its website, as much for a static content than a business entity based content and **without any development skill**, with the minimum of training.
+
+Victoire is the first CMS ever that abilitate content's personalization ! Using various criterias
 
 A french documentation has been started and is being completed _slowly_ [here](http://github.com/victoire/documentation-fr/).
 
 ##Roadmap
 
-https://docs.google.com/spreadsheets/d/1MTdt5ZsGNPOZp5e_to2LvS39j59M59c29HddpvaVb70/edit?usp=sharing
+We define a raw roadmap [here](https://docs.google.com/spreadsheets/d/1MTdt5ZsGNPOZp5e_to2LvS39j59M59c29HddpvaVb70/edit?usp=sharing)
 
 ##Contribution
 
@@ -45,14 +47,15 @@ Component | Description
 [**BlogBundle**][2] | Allow to create and manage one or several blog
 [**BusinessEntityBundle**][3] | Manage BusinessEntity
 [**BusinessPageBundle**][4] | Define and manage [BusinessPage][18] and [BusinessTemplate][19]
-[**CoreBundle**][1] | The core
+[**CoreBundle**][1] | Victoire's core
+[**CriteriaBundle**] | Manage Criterias for content's personalization
 [**FilterBundle**][23] | Allows to filter any list's results
 [**FormBundle**][6] | Based on MopaBootstrapBundle, it brings some cool form themes
 [**I18nBundle**][17] | This bundle manage the internationalization system
 [**MediaBundle**][7] | Based on [KunstmaanMediaBundle][21], it offers a file management interface and a bridge to the widgets
 [**PageBundle**][8] | One of the most important bundles, it contains all the base page logic
 [**QueryBundle**][9] | Give the possibility to non technical user to build a query
-[**SeoBundle**][10] | This bundle brings to user about than 50 SEO points
+[**SeoBundle**][10] | Using SEO Best practices to reach the best SERP position
 [**SitemapBundle**][20] | Sitemap related logic
 [**TemplateBundle**][11] | Contains the pages templates logic (nearly close to [PageBundle][22])
 [**TwigBundle**][13] | Brings ErrorPage (404, 500, 503 etc) and responsive support

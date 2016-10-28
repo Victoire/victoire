@@ -16,7 +16,7 @@
             </trans-unit>
             <trans-unit id="3" resname="victoire_criteria.criteria.operator.equal.label">
                 <source>victoire_criteria.criteria.operator.equal.label</source>
-                <target>Egual</target>
+                <target>Igual</target>
             </trans-unit>
             <trans-unit id="4" resname="victoire_criteria.criteria.operator.is_granted.label">
                 <source>victoire_criteria.criteria.operator.is_granted.label</source>
@@ -24,15 +24,15 @@
             </trans-unit>
             <trans-unit id="5" resname="victoire_criteria.request_roles.criteria.label">
                 <source>victoire_criteria.request_roles.criteria.label</source>
-                <target>Papel</target>
+                <target>Papel activo</target>
             </trans-unit>
             <trans-unit id="6" resname="victoire_criteria.request_user.is.connected.criteria.label">
                 <source>victoire_criteria.request_user.is.connected.criteria.label</source>
-                <target>Iniciar sesión</target>
+                <target>Logueado (sesión iniciada)</target>
             </trans-unit>
             <trans-unit id="7" resname="victoire_criteria.request_user.is.not.connected.criteria.label">
                 <source>victoire_criteria.request_user.is.not.connected.criteria.label</source>
-                <target>Desloguearse</target>
+                <target>Deslogueado (sesión cerrada)</target>
             </trans-unit>
             <trans-unit id="8" resname="victoire_criteria.criteria.operator.true.label">
                 <source>victoire_criteria.criteria.operator.true.label</source>
@@ -48,7 +48,7 @@
             </trans-unit>
             <trans-unit id="11" resname="victoire_criteria.criteria.operator.is_not_granted.label">
                 <source>victoire_criteria.criteria.operator.is_not_granted.label</source>
-                <target>No tiene el papel</target>
+                <target>Papel inactivo</target>
             </trans-unit>
         </body>
     </file>

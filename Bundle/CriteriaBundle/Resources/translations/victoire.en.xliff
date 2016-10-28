@@ -16,7 +16,7 @@
             </trans-unit>
             <trans-unit id="3" resname="victoire_criteria.criteria.operator.equal.label">
                 <source>victoire_criteria.criteria.operator.equal.label</source>
-                <target>Equal</target>
+                <target>Equals</target>
             </trans-unit>
             <trans-unit id="4" resname="victoire_criteria.criteria.operator.is_granted.label">
                 <source>victoire_criteria.criteria.operator.is_granted.label</source>
@@ -28,11 +28,11 @@
             </trans-unit>
             <trans-unit id="6" resname="victoire_criteria.request_user.is.connected.criteria.label">
                 <source>victoire_criteria.request_user.is.connected.criteria.label</source>
-                <target>Log in</target>
+                <target>Logged in</target>
             </trans-unit>
             <trans-unit id="7" resname="victoire_criteria.request_user.is.not.connected.criteria.label">
                 <source>victoire_criteria.request_user.is.not.connected.criteria.label</source>
-                <target>Log out</target>
+                <target>Logged out</target>
             </trans-unit>
             <trans-unit id="8" resname="victoire_criteria.criteria.operator.true.label">
                 <source>victoire_criteria.criteria.operator.true.label</source>
