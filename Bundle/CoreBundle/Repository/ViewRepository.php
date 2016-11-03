@@ -67,7 +67,7 @@ class ViewRepository extends NestedTreeRepository
         if ($excludeUnpublished) {
             $this->qb
                 ->andWhere($this->mainAlias.'.status = :status')
-                ->orWhere($this->mainAlias.'.status = :scheduled_status AND page.publishedAt > :publicationDate')
+                ->orWhere($this->mainAlias.'.status = :scheduled_status AND '.$this->mainAlias.'.publishedAt > :publicationDate')
                 ->setParameter('status', PageStatus::PUBLISHED)
                 ->setParameter('scheduled_status', PageStatus::SCHEDULED)
                 ->setParameter('publicationDate', new \DateTime());
