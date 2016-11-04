@@ -126,6 +126,8 @@ class BaseWidgetContentResolver
 
             $parameters[$widgetField] = $attributeValue;
         }
+
+        $widget->setEntity($entity);
     }
 
     /**
