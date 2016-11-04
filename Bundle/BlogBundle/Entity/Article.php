@@ -130,7 +130,7 @@ class Article
     private $publishedAtString;
 
     /**
-     * @VIC\BusinessProperty("textable")
+     * @VIC\BusinessProperty({"textable", "imageable"})
      */
     private $authorAvatar;
 
