@@ -1,10 +1,10 @@
-##Description
+## Description
 <!-- Describe the most precisely the issue you encounter -->
 
-##Resolution Ideas
+## Resolution Ideas
 <!-- Not mandatory, but if you have some clue about this issue, explain them here -->
 
-##Related to
+## Related to
 
 | Bundle         |    --    | --             | --       |
 | -------------- |:--------:| --             | --       |
