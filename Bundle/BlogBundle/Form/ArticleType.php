@@ -48,6 +48,10 @@ class ArticleType extends AbstractType
                 'required' => false,
                 'multiple' => true,
             ])
+            ->add('author', null, [
+                'label'    => 'form.article.type.author.label',
+                'required' => true,
+            ])
             ->remove('visibleOnFront');
 
         $builder->get('blog')->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {

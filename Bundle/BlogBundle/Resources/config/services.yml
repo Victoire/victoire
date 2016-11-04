@@ -53,6 +53,15 @@ services:
         tags:
             - { name: form.type }
     #ARTICLE
+
+    victoire_blog.article.subscriber:
+        class: Victoire\Bundle\BlogBundle\Listener\ArticleSubscriber
+        arguments:
+            - @victoire_page.user_callable
+            - %victoire_core.user_class%
+        tags:
+            - { name: doctrine.event_subscriber, connection: default, priority: -11 }
+
     victoire_blog.article.form.type:
         class: Victoire\Bundle\BlogBundle\Form\ArticleType
         arguments:
