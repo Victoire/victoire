@@ -32,10 +32,10 @@ class WidgetMapManager
             'slot'     => $slotId,
             'position' => $position,
             'parent'   => $widgetReference,
-            'action' => [
+            'action'   => [
                 WidgetMap::ACTION_CREATE,
-                WidgetMap::ACTION_OVERWRITE
-            ]
+                WidgetMap::ACTION_OVERWRITE,
+            ],
         ]);
 
         if ($quantum) {
