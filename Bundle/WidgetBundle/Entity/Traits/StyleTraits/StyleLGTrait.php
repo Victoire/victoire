@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTraits;
 
+use Doctrine\ORM\Mapping as ORM;
 use Victoire\Bundle\MediaBundle\Entity\Media;
 
 trait StyleLGTrait
