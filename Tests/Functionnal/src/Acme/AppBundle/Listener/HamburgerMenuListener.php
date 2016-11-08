@@ -45,7 +45,7 @@ class HamburgerMenuListener implements MenuListenerInterface
     }
 
     /**
-     * No contextual item to inject
+     * No contextual item to inject.
      *
      * @param Event $event
      *
