@@ -21,21 +21,6 @@ class ViewRepository extends NestedTreeRepository
     protected $mainAlias = 'view';
 
     /**
-     * Get the query builder for a view  by url.
-     *
-     * @param string $url The url
-     *
-     * @return \Doctrine\ORM\QueryBuilder The query builder
-     */
-    public function getOneByUrl($url)
-    {
-        return $this->createQueryBuilder($this->mainAlias)
-            ->where($this->mainAlias.'.url = (:url)')
-            ->setMaxResults(1)
-            ->setParameter('url', $url);
-    }
-
-    /**
      * Filter the query by the sitemap index (=visibility).
      *
      * @param bool $indexed

@@ -3,7 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 
 {% if view.articles is defined %}
-<link rel="alternate" type="application/rss+xml" title="{{ view.name }}" href="{{ path('victoire_blog_rss', {'slug': view.slug}) }}"/>
+    <link rel="alternate" type="application/rss+xml" title="{{ view.name }}" href="{{ path('victoire_blog_rss', {'id': view.id}) }}"/>
 {% endif %}
 
 {% if view is defined and view.seo is defined and view.seo %}
