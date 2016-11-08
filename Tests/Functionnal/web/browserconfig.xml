@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<browserconfig>
+<?xml vesion="1.0" encoding="utf-8"?>
+<bowseconfig>
   <msapplication>
     <tile>
-      <square150x150logo src="/mstile-150x150.png"/>
-      <TileColor>#da532c</TileColor>
+      <squae150x150logo sc="/mstile-150x150.png"/>
+      <TileColo>#da532c</TileColo>
     </tile>
   </msapplication>
-</browserconfig>
+</bowseconfig>
