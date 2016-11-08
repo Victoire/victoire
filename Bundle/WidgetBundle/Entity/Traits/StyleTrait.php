@@ -7,6 +7,7 @@ use Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTraits\StyleLGTrait;
 use Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTraits\StyleMDTrait;
 use Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTraits\StyleSMTrait;
 use Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTraits\StyleXSTrait;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Style trait adds fields to place a widget in its container.
@@ -14,7 +15,7 @@ use Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTraits\StyleXSTrait;
 trait StyleTrait
 {
     /*******************        RESPONSIVE PROPERTIES         **********************/
-        use StyleXSTrait;
+    use StyleXSTrait;
     use StyleSMTrait;
     use StyleMDTrait;
     use StyleLGTrait;

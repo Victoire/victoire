@@ -3,6 +3,7 @@
 namespace Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTraits;
 
 use Victoire\Bundle\MediaBundle\Entity\Media;
+use Doctrine\ORM\Mapping as ORM;
 
 trait StyleSMTrait
 {
