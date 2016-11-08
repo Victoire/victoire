@@ -1,2 +1,13 @@
 imports:
     - { resource: config_test.yml }
+
+monolog:
+    handlers:
+        main:
+            type:   stream
+            path:   "%kernel.logs_dir%/%kernel.environment%.log"
+            level:  fatal
+            channels: [!event]
+        console:
+            type:   console
+            bubble: false
