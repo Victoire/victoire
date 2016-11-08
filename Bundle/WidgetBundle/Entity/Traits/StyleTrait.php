@@ -2,12 +2,12 @@
 
 namespace Victoire\Bundle\WidgetBundle\Entity\Traits;
 
+use Doctrine\ORM\Mapping as ORM;
 use Victoire\Bundle\MediaBundle\Entity\Media;
 use Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTraits\StyleLGTrait;
 use Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTraits\StyleMDTrait;
 use Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTraits\StyleSMTrait;
 use Victoire\Bundle\WidgetBundle\Entity\Traits\StyleTraits\StyleXSTrait;
-use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Style trait adds fields to place a widget in its container.
