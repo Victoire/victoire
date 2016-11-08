@@ -125,7 +125,7 @@ security:
         - { path: ^/admin/, role: ROLE_ADMIN }
 
 victoire_core:
-    user_class: "\\Victoire\\Bundle\\UserBundle\\Entity\\User"
+    user_class: "Victoire\\Bundle\\UserBundle\\Entity\\User"
     layouts:
         defaultLayout: "Full width content"
         customLayout: "Fancy custom layout"
