@@ -6,6 +6,7 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Nelmio\Alice\Fixtures;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -13,18 +14,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class LoadFixtureData extends AbstractFixture implements ContainerAwareInterface
 {
+    use ContainerAwareTrait;
+
     /** @var ContainerInterface */
     private $container;
-    private $fileLocator;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setContainer(ContainerInterface $container = null)
-    {
-        $this->container = $container;
-        $this->fileLocator = $this->container->get('file_locator');
-    }
 
     /**
      * {@inheritdoc}
@@ -32,14 +25,15 @@ class LoadFixtureData extends AbstractFixture implements ContainerAwareInterface
     public function load(ObjectManager $manager)
     {
         // Load fixtures files
-    $files = [];
+        $files = [];
+        $fileLocator = $this->container->get('file_locator');
 
-        $files['user'] = $this->fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/User/user.yml');
-        $files['folder'] = $this->fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/Media/folder.yml');
-        $files['page'] = $this->fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/View/page.yml');
-        $files['template'] = $this->fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/View/template.yml');
-        $files['i18n'] = $this->fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/View/i18n.yml');
-        $files['errorPage'] = $this->fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/View/errorPage.yml');
+        $files['user'] = $fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/User/user.yml');
+        $files['folder'] = $fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/Media/folder.yml');
+        $files['page'] = $fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/View/page.yml');
+        $files['template'] = $fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/View/template.yml');
+        $files['i18n'] = $fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/View/i18n.yml');
+        $files['errorPage'] = $fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/View/errorPage.yml');
 
         Fixtures::load(
             $files,
@@ -124,7 +118,7 @@ class LoadFixtureData extends AbstractFixture implements ContainerAwareInterface
 
         $fileName = uniqid();
         $pdfName = sprintf($rootDir.'/%s/%s.pdf', $dir, $fileName);
-        $pdf = $this->fileLocator->locate('@VictoireCoreBundle/DataFixtures/ORM/lorem.pdf');
+        $pdf = $this->container->get('file_locator')->locate('@VictoireCoreBundle/DataFixtures/ORM/lorem.pdf');
 
         if (!is_dir(dirname($pdfName))) {
             mkdir(dirname($pdfName), 0777, true);
