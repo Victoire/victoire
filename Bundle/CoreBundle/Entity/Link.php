@@ -103,6 +103,11 @@ class Link
      */
     protected $analyticsTrackCode;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Victoire\Bundle\SeoBundle\Entity\PageSeoTranslation", mappedBy="redirectTo")
+     */
+    protected $referers;
+
     protected $parameters;
     protected $viewReferencePage;
 

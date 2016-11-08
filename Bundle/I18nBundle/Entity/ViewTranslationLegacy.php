@@ -30,7 +30,7 @@ class ViewTranslationLegacy extends AbstractPersonalTranslation
     }
 
     /**
-     * @ORM\ManyToOne(targetEntity="Victoire\Bundle\CoreBundle\Entity\View", inversedBy="translations")
+     * @ORM\ManyToOne(targetEntity="Victoire\Bundle\CoreBundle\Entity\View")
      * @ORM\JoinColumn(name="object_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $object;
