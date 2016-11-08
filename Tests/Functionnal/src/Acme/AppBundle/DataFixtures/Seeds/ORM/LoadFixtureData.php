@@ -41,14 +41,14 @@ class LoadFixtureData extends AbstractFixture implements ContainerAwareInterface
         $files['i18n'] = $this->fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/View/i18n.yml');
         $files['errorPage'] = $this->fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/View/errorPage.yml');
 
-        $objects = Fixtures::load(
-        $files,
-        $manager,
-        [
-        'providers'    => [$this],
-        'locale'       => 'fr_FR',
-        'persist_once' => false,
-        ]
+        Fixtures::load(
+            $files,
+            $manager,
+            [
+                'providers'    => [$this],
+                'locale'       => 'fr_FR',
+                'persist_once' => false,
+            ]
     );
 
         $manager->flush();
@@ -86,14 +86,14 @@ class LoadFixtureData extends AbstractFixture implements ContainerAwareInterface
         $rootDir = $this->container->get('kernel')->getRootDir().'/../web';
 
         $existingImages = glob($rootDir.'/'.$dir.'/*.png');
-    // print_r($existingImages);
-    if ($matches = preg_grep('/'.$originalWidth.'-'.$originalHeight.'.png/', $existingImages)) {
-        if (count($matches) > 30) {
-            $image = array_rand($matches);
 
-            return $image;
+        if ($matches = preg_grep('/'.$originalWidth.'-'.$originalHeight.'.png/', $existingImages)) {
+            if (count($matches) > 30) {
+                $image = array_rand($matches);
+
+                return $image;
+            }
         }
-    }
 
         $width = $width ?: rand(100, 300);
         $height = $height ?: rand(100, 300);
