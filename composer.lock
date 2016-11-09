@@ -1272,17 +1272,17 @@
         },
         {
             "name": "friendsofvictoire/button-widget",
-            "version": "2.0.1",
+            "version": "2.0.2",
             "target-dir": "Victoire/Widget/ButtonBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfVictoire/WidgetButtonBundle.git",
-                "reference": "e7587f38d5662ca6c4039e3805eb72c6864d0a22"
+                "reference": "b112f87438172ac6e74150c74372953a61ad7599"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfVictoire/WidgetButtonBundle/zipball/e7587f38d5662ca6c4039e3805eb72c6864d0a22",
-                "reference": "e7587f38d5662ca6c4039e3805eb72c6864d0a22",
+                "url": "https://api.github.com/repos/FriendsOfVictoire/WidgetButtonBundle/zipball/b112f87438172ac6e74150c74372953a61ad7599",
+                "reference": "b112f87438172ac6e74150c74372953a61ad7599",
                 "shasum": ""
             },
             "require": {
@@ -1314,7 +1314,7 @@
                 "victoire",
                 "widget"
             ],
-            "time": "2016-10-07 15:44:33"
+            "time": "2016-11-10 23:59:33"
         },
         {
             "name": "friendsofvictoire/text-widget",
