@@ -44,8 +44,7 @@ class LinkType extends AbstractType
         array $availableLocales,
         RequestStack $requestStack,
         array $modalLayouts
-    )
-    {
+    ) {
         $this->analytics = $analytics;
         $this->viewReferenceRepository = $viewReferenceRepository;
         $this->availableLocales = $availableLocales;
@@ -187,13 +186,13 @@ class LinkType extends AbstractType
     {
         if ($target == Link::TARGET_MODAL && count($this->modalLayouts) > 1) {
             $form->add('modalLayout', ChoiceType::class, [
-                'label' => 'form.link_type.target.modalLayouts.label',
-                'required' => true,
-                'choices' => $this->modalLayouts,
+                'label'        => 'form.link_type.target.modalLayouts.label',
+                'required'     => true,
+                'choices'      => $this->modalLayouts,
                 'choice_label' => function ($value, $key, $index) {
                     return 'form.link_type.target.modalLayouts.choices.'.$value;
                 },
-                'choices_as_values' => true,
+                'choices_as_values'              => true,
                 'vic_vic_widget_form_group_attr' => ['class' => 'vic-form-group viewReference-type page-type url-type route-type attachedWidget-type'],
             ]);
         } else {
@@ -238,14 +237,13 @@ class LinkType extends AbstractType
     }
 
     /**
-     * add the target Field
+     * add the target Field.
      *
      * @param FormBuilderInterface|FormInterface $form
      * @param array                              $options
      */
     protected function addTargetField($form, array $options)
     {
-
         $form->add('target', ChoiceType::class, [
             'label'    => 'form.link_type.target.label',
             'required' => true,
@@ -255,7 +253,7 @@ class LinkType extends AbstractType
                 'form.link_type.choice.target.ajax-modal' => Link::TARGET_MODAL,
             ],
             'choices_as_values' => true,
-            'attr' => [
+            'attr'              => [
                 'data-refreshOnChange' => 'true',
                 'data-target'          => $options['refresh-target'],
             ],

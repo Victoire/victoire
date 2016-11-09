@@ -184,7 +184,6 @@ class PageHelper
      * generates a response from a page.
      *
      * @param View $view
-     *
      * @param null $layout
      *
      * @return Response
