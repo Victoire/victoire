@@ -37,3 +37,14 @@
     left: 35px;
     right: 50px;
 }
+
+*[data-toggle="viclink-modal"]{
+    pointer-events: none;
+    cursor: default;
+}
+
+/* Hinclude workaround because it does not trigger ajaxComplete event */
+[class^='include_'] *[data-toggle="viclink-modal"]
+{
+    pointer-events: auto;
+}
