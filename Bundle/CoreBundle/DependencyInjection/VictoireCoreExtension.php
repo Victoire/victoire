@@ -60,6 +60,9 @@ class VictoireCoreExtension extends Extension
             'victoire_core.layouts', $config['layouts']
         );
         $container->setParameter(
+            'victoire_core.modal_layouts', $config['modal_layouts']
+        );
+        $container->setParameter(
             'victoire_core.slots', $config['slots']
         );
         $container->setParameter(
