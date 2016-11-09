@@ -150,10 +150,12 @@ class PageHelper
      * if seo redirect, return target.
      *
      * @param string $url
+     * @param        $locale
+     * @param null   $layout
      *
      * @return Response
      */
-    public function renderPageByUrl($url, $locale, $isAjax = false)
+    public function renderPageByUrl($url, $locale, $layout = null)
     {
         $page = null;
         if ($viewReference = $this->viewReferenceRepository->getReferenceByUrl($url, $locale)) {
@@ -172,7 +174,7 @@ class PageHelper
             }
 
 
-            return $this->renderPage($page, $isAjax);
+            return $this->renderPage($page, $layout);
         } else {
             throw new NotFoundHttpException(sprintf('Page not found (url: "%s", locale: "%s")', $url, $locale));
         }
@@ -183,9 +185,11 @@ class PageHelper
      *
      * @param View $view
      *
+     * @param null $layout
+     *
      * @return Response
      */
-    public function renderPage($view, $isAjax = false)
+    public function renderPage($view, $layout = null)
     {
         $event = new \Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent($view);
 
@@ -217,11 +221,13 @@ class PageHelper
         $eventName = 'victoire_core.'.$type.'_menu.contextual';
         $this->eventDispatcher->dispatch($eventName, $event);
 
-        //Determine which layout to use
-        $layout = $this->guessBestLayoutForView($view, $isAjax);
+        if (null === $layout) {
+            //Determine which layout to use
+            $layout = $this->guessBestLayoutForView($view);
+        }
 
         //Create the response
-        $response = $this->container->get('templating')->renderResponse('VictoireCoreBundle:Layout:'.$layout, [
+        $response = $this->container->get('templating')->renderResponse('VictoireCoreBundle:Layout:'.$layout.'.html.twig', [
             'view' => $view,
         ]);
 
@@ -417,25 +423,18 @@ class PageHelper
      * Guess which layout to use for a given View.
      *
      * @param View $view
-     * @param bool $isAjax
      *
      * @return string
      */
-    private function guessBestLayoutForView(View $view, $isAjax)
+    private function guessBestLayoutForView(View $view)
     {
-        if ($isAjax) {
-            if (null != $view->getTemplate()->getLayout()) {
-                $viewLayout = 'modal_'.$view->getTemplate()->getLayout();
-            } else {
-                $viewLayout = 'modal';
-            }
-        } elseif (method_exists($view, 'getLayout') && $view->getLayout()) {
+        if (method_exists($view, 'getLayout') && $view->getLayout()) {
             $viewLayout = $view->getLayout();
         } else {
             $viewLayout = $view->getTemplate()->getLayout();
         }
 
-        return $viewLayout.'.html.twig';
+        return $viewLayout;
     }
 
     /**
