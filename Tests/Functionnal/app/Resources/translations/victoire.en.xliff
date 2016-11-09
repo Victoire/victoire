@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+    <file date="2013-11-28T17:11:45Z" source-language="en" target-language="en" datatype="plaintext" original="not.available">
+        <body>
+            <trans-unit id="1">
+                <source>form.link_type.target.modalLayouts.choices.customModal</source>
+                <target>My custom modal</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

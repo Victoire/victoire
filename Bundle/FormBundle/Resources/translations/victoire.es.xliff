@@ -110,6 +110,14 @@
         <source>form.link_type.choice.target.ajax-modal</source>
         <target>En una ventana modal</target>
       </trans-unit>
+      <trans-unit id="26" resname="form.link_type.target.modalLayouts.label">
+        <source>form.link_type.target.modalLayouts.label</source>
+        <target>Modale style</target>
+      </trans-unit>
+      <trans-unit id="27" resname="form.link_type.target.modalLayouts.choices.modal">
+        <source>form.link_type.target.modalLayouts.choices.modal</source>
+        <target>Default</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
