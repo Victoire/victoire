@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\BusinessEntityBundle\Entity\Traits;
 
+use Doctrine\ORM\Mapping as ORM;
 /**
  * BusinessEntity trait adds relationship with the entity proxies.
  */

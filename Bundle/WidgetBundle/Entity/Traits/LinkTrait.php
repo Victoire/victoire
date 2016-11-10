@@ -3,6 +3,8 @@
 namespace Victoire\Bundle\WidgetBundle\Entity\Traits;
 
 use Victoire\Bundle\CoreBundle\Entity\Link;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Link trait adds fields to create a link to a page, widget, url or route.
