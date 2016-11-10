@@ -10,5 +10,4 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 abstract class BackendController extends Controller
 {
     use VictoireAlertifyControllerTrait;
-
 }

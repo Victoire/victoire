@@ -2,11 +2,11 @@
 
 namespace Victoire\Bundle\CoreBundle\Listener;
 
+use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Victoire\Bundle\CoreBundle\Controller\BackendController;
-use Symfony\Component\EventDispatcher\Event;
 
 class ControllerListener
 {
