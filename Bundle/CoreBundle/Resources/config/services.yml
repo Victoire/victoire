@@ -60,6 +60,8 @@ services:
 
     victoire_core.listener.controller_listener:
         class: Victoire\Bundle\CoreBundle\Listener\ControllerListener
+        arguments:
+            - "@event_dispatcher"
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: preExecuteAutorun }
 
