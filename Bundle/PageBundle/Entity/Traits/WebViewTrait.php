@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\PageBundle\Entity\Traits;
 
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Victoire\Bundle\CoreBundle\Annotations as VIC;
 use Victoire\Bundle\PageBundle\Entity\PageStatus;
