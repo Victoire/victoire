@@ -21,7 +21,7 @@ class Link
     const TYPE_URL = 'url';
     const TYPE_WIDGET = 'attachedWidget';
 
-    const TARGET_PARENT= '_parent';
+    const TARGET_PARENT = '_parent';
     const TARGET_BLANK = '_blank';
     const TARGET_MODAL = '_modal';
 
@@ -437,6 +437,7 @@ class Link
     public function setModalLayout($modalLayout)
     {
         $this->modalLayout = $modalLayout;
+
         return $this;
     }
 }

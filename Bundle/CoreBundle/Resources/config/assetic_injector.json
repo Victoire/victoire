@@ -9,7 +9,7 @@
                 "@VictoireCoreBundle/Resources/public/js/smooth-scroll.js",
                 "@VictoireCoreBundle/Resources/public/vendor/jquery-unveil/jquery.unveil.js",
                 "@VictoireCoreBundle/Resources/public/js/unveil.js",
-                "@VictoireCoreBundle/Resources/script/bootstrapModalLink.js"
+                "@VictoireCoreBundle/Resources/script/linkModal.js"
             ],
             "victoire-ngApp":
             [

@@ -23,9 +23,6 @@
     {% endblock head_script %}
     {% block head_style %}
         <!-- HEAD_STYLE -->
-        {% block head_style_bootstrap %}
-            <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" rel="stylesheet" media="screen" />
-        {% endblock head_style_bootstrap %}
         {% stylesheets filter='less, cssrewrite' injector="head" %}
         <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
         {% endstylesheets %}
