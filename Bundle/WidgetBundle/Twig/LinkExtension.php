@@ -225,8 +225,8 @@ class LinkExtension extends \Twig_Extension
         $url = $this->victoireLinkUrl($parameters, true, $url);
         // if modalLayout is set, we add it as GET parameter
         if (!empty($parameters['modalLayout'])) {
-            $url.= !preg_match('/\?/', $url) ? '?' : '&';
-            $url.= 'modalLayout='.$parameters['modalLayout'];
+            $url .= !preg_match('/\?/', $url) ? '?' : '&';
+            $url .= 'modalLayout='.$parameters['modalLayout'];
         }
         //Creates a new twig environment
         $twig = new \Twig_Environment(new \Twig_Loader_Array(['linkTemplate' => '{{ link|raw }}']));
