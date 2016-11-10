@@ -3,12 +3,13 @@
 namespace Acme\AppBundle\Listener;
 
 use Symfony\Component\EventDispatcher\Event;
+use Victoire\Bundle\CoreBundle\Listener\MenuListenerInterface;
 use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
 
 /**
  * When dispatched, this listener add items to the victoire hamburger menu.
  */
-class HamburgerMenuListener
+class HamburgerMenuListener implements MenuListenerInterface
 {
     private $menuBuilder;
     private $mainItem;
@@ -41,5 +42,16 @@ class HamburgerMenuListener
         );
 
         return $this->mainItem;
+    }
+
+    /**
+     * No contextual item to inject.
+     *
+     * @param Event $event
+     *
+     * @return void
+     */
+    public function addContextual($event)
+    {
     }
 }

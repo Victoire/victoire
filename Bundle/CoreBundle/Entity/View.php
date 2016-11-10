@@ -173,7 +173,6 @@ abstract class View
     {
         $this->children = new ArrayCollection();
         $this->widgetMaps = new ArrayCollection();
-        $this->translations = new ArrayCollection();
         $this->references = [];
     }
 

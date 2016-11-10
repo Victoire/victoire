@@ -2,11 +2,21 @@
 
 namespace Victoire\Bundle\CoreBundle\Listener;
 
+use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Victoire\Bundle\CoreBundle\Controller\BackendController;
 
 class ControllerListener
 {
+    protected $eventDispatcher;
+
+    public function __construct(EventDispatcherInterface $eventDispatcher)
+    {
+        $this->eventDispatcher = $eventDispatcher;
+    }
+
     /**
      * @param FilterControllerEvent $event
      */
@@ -16,12 +26,8 @@ class ControllerListener
         if (HttpKernelInterface::MASTER_REQUEST === $event->getRequestType()) {
             // controller catching
             $_controller = $event->getController();
-            if (isset($_controller[0])) {
-                $controller = $_controller[0];
-            }
-            // preExecute method verification
-            if (method_exists($controller, 'preExecute')) {
-                $controller->preExecute();
+            if (isset($_controller[0]) && $_controller[0] instanceof BackendController) {
+                $this->eventDispatcher->dispatch('victoire_core.backend_menu.global', new Event());
             }
         }
     }

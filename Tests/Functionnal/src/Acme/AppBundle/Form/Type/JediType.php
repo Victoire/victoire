@@ -1,6 +1,6 @@
 <?php
 
-namespace Acme\AppBundle\Form;
+namespace Acme\AppBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
