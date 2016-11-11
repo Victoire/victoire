@@ -1,4 +1,4 @@
-![Victoire](Media/victoire.png)
+![Victoire](https://cloud.githubusercontent.com/assets/618536/20215349/db459e60-a813-11e6-894d-ba4ec0f2c088.jpg)
 
 [![Gitter chat](https://badges.gitter.im/Victoire/Victoire.png)](https://gitter.im/Victoire/victoire)
 [![License](https://img.shields.io/packagist/l/Victoire/Victoire.svg)](https://packagist.org/packages/Victoire/Victoire)
