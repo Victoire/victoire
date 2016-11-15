@@ -49,7 +49,7 @@ Component | Description
 [**BusinessEntityBundle**][3] | Manage BusinessEntity
 [**BusinessPageBundle**][4] | Define and manage [BusinessPage][18] and [BusinessTemplate][19]
 [**CoreBundle**][1] | Victoire's core
-[**CriteriaBundle**] | Manage Criterias for content's personalization
+[**CriteriaBundle**][26] | Manage Criterias for content's personalization
 [**FilterBundle**][23] | Allows to filter any list's results
 [**FormBundle**][6] | Based on MopaBootstrapBundle, it brings some cool form themes
 [**I18nBundle**][17] | This bundle manage the internationalization system
@@ -104,3 +104,4 @@ License can be found [here](http://github.com/victoire/victoire/blob/master/lice
 [22]: http://github.com/victoire/victoire/blob/master/Bundle/PageBundle
 [23]: http://github.com/victoire/victoire/blob/master/Bundle/FilterBundle/README.md
 [25]: http://github.com/victoire/victoire/blob/master/Bundle/ViewReferenceBundle/README.md
+[26]: http://github.com/victoire/victoire/blob/master/Bundle/CriteriaBundle
