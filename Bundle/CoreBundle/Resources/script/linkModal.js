@@ -4,13 +4,13 @@ $(document).ready(function() {
         e.preventDefault();
         $('.modal').modal('hide').on('hidden.bs.modal', function(){$(this).remove()});
 
+        $(document).trigger('vic.modal.request');
         var url = $(this).attr('href');
-        $('#canvasloader-container').fadeIn();
         $.get(url, function(data) {
             $('body').append(data);
+            $(document).trigger('vic.modal.append');
         }).success(function() {
-            $('#canvasloader-container').fadeOut();
-            $('input:text:visible:first').focus();
+            $(document).trigger('vic.modal.success');
         });
     });
 
