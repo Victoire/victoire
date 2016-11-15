@@ -4,11 +4,13 @@ $(document).ready(function() {
         e.preventDefault();
         $('.modal').modal('hide').on('hidden.bs.modal', function(){$(this).remove()});
 
+        $(document).trigger('vic.modal.request');
         var url = $(this).attr('href');
         $.get(url, function(data) {
             $('body').append(data);
+            $(document).trigger('vic.modal.append');
         }).success(function() {
-            $('input:text:visible:first').focus();
+            $(document).trigger('vic.modal.success');
         });
     });
 
@@ -16,6 +18,15 @@ $(document).ready(function() {
         $(this).css({
             'pointer-events' : 'auto',
             'cursor' : 'auto'
+        });
+    });
+});
+
+$(document).ajaxComplete(function() {
+    $('*[data-toggle="viclink-modal"]').each(function () {
+        $(this).css({
+            'pointer-events': 'auto',
+            'cursor': 'auto'
         });
     });
 });
