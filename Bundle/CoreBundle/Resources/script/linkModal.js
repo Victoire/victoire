@@ -5,9 +5,12 @@ $(document).ready(function() {
         $('.modal').modal('hide').on('hidden.bs.modal', function(){$(this).remove()});
 
         var url = $(this).attr('href');
+        $('#canvasloader-container').fadeIn();
         $.get(url, function(data) {
             $('body').append(data);
+            $('#ajax-modal').modal('show');
         }).success(function() {
+            $('#canvasloader-container').fadeOut();
             $('input:text:visible:first').focus();
         });
     });
@@ -16,6 +19,15 @@ $(document).ready(function() {
         $(this).css({
             'pointer-events' : 'auto',
             'cursor' : 'auto'
+        });
+    });
+});
+
+$(document).ajaxComplete(function() {
+    $('*[data-toggle="viclink-modal"]').each(function () {
+        $(this).css({
+            'pointer-events': 'auto',
+            'cursor': 'auto'
         });
     });
 });
