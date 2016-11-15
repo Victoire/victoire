@@ -8,7 +8,6 @@ $(document).ready(function() {
         $('#canvasloader-container').fadeIn();
         $.get(url, function(data) {
             $('body').append(data);
-            $('#ajax-modal').modal('show');
         }).success(function() {
             $('#canvasloader-container').fadeOut();
             $('input:text:visible:first').focus();
