@@ -1,0 +1,98 @@
+// scss-lint:disable ColorVariable
+
+// positioning
+$button--vertical-align: middle !default;
+$button--float: null !default;
+
+// display & box-model
+$button--display: inline-block !default;
+$button--border-width: (
+  'default': 0,
+  '-default': 0.0625em,
+) !default;
+
+$button--padding: (
+  'default': 0.666666667em 1.666666667em,
+  '-default': #{0.666666667em - value($button--border-width, ('-default'))} #{1.666666667em - value($button--border-width, ('-default'))},
+  '-xs': 0.666666667em 1.333333337em,
+) !default;
+
+$button--width: (
+  '-block': 100%,
+) !default;
+
+$button--margin: null !default;
+$button--height: null !default;
+
+
+// color
+$button--color: (
+  'default': rgb(31, 13, 51),
+  '-primary': rgb(255, 255, 255),
+  '-success': rgb(255, 255, 255),
+  '-danger': rgb(255, 255, 255),
+  '-warning': rgb(255, 255, 255),
+) !default;
+
+$button--border-color: (
+  '-default': currentColor,
+) !default;
+
+$button--background-color: (
+  'default': (
+    'default': rgb(255, 255, 255) darken(rgb(255, 255, 255), 10%),
+    '[disabled="true"': rgb(255, 255, 255) rgb(255, 255, 255),
+  ),
+  '-primary': (
+    'default': rgb(31, 13, 51) darken(rgb(31, 13, 51), 10%),
+    '[disabled="true"': rgb(31, 13, 51) rgb(31, 13, 51),
+  ),
+  '-success': (
+    'default': rgb(55, 211, 189) darken(rgb(55, 211, 189), 10%),
+    '[disabled="true"': rgb(55, 211, 189) rgb(55, 211, 189),
+  ),
+  '-warning': (
+    'default': rgb(255, 176, 0) darken(rgb(255, 176, 0), 10%),
+    '[disabled="true"': rgb(255, 176, 0) rgb(255, 176, 0),
+  ),
+  '-danger': (
+    'default': rgb(253, 65, 100) darken(rgb(253, 65, 100), 10%),
+    '[disabled="true"': rgb(253, 65, 100) rgb(253, 65, 100),
+  ),
+) !default;
+
+$button--opacity: (
+  '[disabled="true"': 0.5,
+) !default;
+
+
+// text
+$button--font-size: (
+  'default': 1rem,
+  '-lg': 1.2rem,
+  '-sm': 0.8rem,
+  '-xs': 0.65rem,
+) !default;
+
+$button--text-decoration: (
+  '-link': (
+    ':hover': underline,
+  )
+) !default;
+
+$button--line-height: 1.2em !default;
+$button--text-align: center !default;
+
+$button--font-family: null !default;
+$button--font-weight: null !default;
+$button--text-transform: null !default;
+$button--letter-spacing: null !default;
+
+
+// order
+$button--border-radius: 0.2em !default;
+$button--border-style: solid !default;
+
+$button--box-shadow: null !default;
+$button--transition: null !default;
+$button--cursor: null !default;
