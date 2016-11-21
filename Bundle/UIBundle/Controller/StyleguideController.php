@@ -18,6 +18,17 @@ class StyleguideController extends Controller
         $components = array(
             'styleguide',
             'button',
+            // 'layout',
+            // 'dropdown',
+            // 'mode-switcher',
+            // 'navbar',
+            // 'modal',
+            // 'form',
+            // 'tooltip',
+            // 'card',
+            // 'list-group',
+            // 'slot',
+            // 'widget-overlay',
         );
 
         return array(
