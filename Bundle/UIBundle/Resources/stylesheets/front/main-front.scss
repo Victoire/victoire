@@ -8,6 +8,16 @@
 @import '../../public/bower_components/trowel-core/src/trowel';
 
 /**
+ * Global
+ */
+@import 'globals/font-import';
+
+/**
+ * Helpers
+ */
+@import 'helpers/color';
+
+/**
  * Components
  */
 @import 'components/button/button';

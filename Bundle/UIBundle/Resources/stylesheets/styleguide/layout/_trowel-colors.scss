@@ -17,12 +17,25 @@
   @include aspect-ratio;
 }
 
-.ts-colors__label {
-  @include layout-border('bottom' 'left' 'right');
+.ts-colors__legend {
+  display: flex;
   padding: rem(0.5);
-  display: block
+  align-items: center;
+  @include layout-border('bottom' 'left' 'right');
 }
 
+.ts-colors__label {
+  display: block;
+  flex: 1 0;
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+.ts-colors__values {
+  font-size: 0.6em;
+  text-align: right;
+  color: color('gray-dark');
+}
 
 .ts-color__swatch {
 }

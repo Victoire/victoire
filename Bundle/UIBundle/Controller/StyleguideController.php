@@ -16,7 +16,8 @@ class StyleguideController extends Controller
     public function indexAction($component = null)
     {
         $components = array(
-            'styleguide',
+            // 'styleguide',
+            'color',
             'button',
             // 'layout',
             // 'dropdown',
