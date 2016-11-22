@@ -14,3 +14,4 @@
 /Tests/Functionnal/app/config/parameters.yml
 /npm-debug.log
 /Bundle/UIBundle/Resources/public/bower_components/*
+dump.rdb
