@@ -60,4 +60,9 @@
 {% block foot_script %}
     {{ parent() }}
     <script src="{{ asset('/bundles/victoireui/scripts/styleguide/styleguide.js') }}"></script>
+    <script src="{{ asset('/bundles/victoireui/bower_components/friendsOfTrowel-dropdowns-component/src/javascript/dropdowns.js') }}"></script>
+    <script>
+        var dropdowns = document.querySelectorAll('[data-flag="dropdown"]');
+        new Dropdowns(dropdowns);
+    </script>
 {% endblock foot_script %}
