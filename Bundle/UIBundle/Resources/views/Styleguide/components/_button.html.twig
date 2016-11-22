@@ -8,7 +8,7 @@
 
 {% embed '@styleguide/ui/snippet.html.twig' with {
     'snippets': {
-        'html': '',
+        'html': '<a class="vic-btn" href="#" role="button">Anchor</a>\n<button class="vic-btn" type="submit">Button</button>\n<input class="vic-btn" type="button" value="Input">\n<input class="vic-btn" type="submit" value="Submit">',
     }
 } %}
     {% block snippet_preview %}
@@ -16,5 +16,85 @@
         <button class="vic-btn" type="submit">Button</button>
         <input class="vic-btn" type="button" value="Input">
         <input class="vic-btn" type="submit" value="Submit">
+    {% endblock snippet_preview %}
+{% endembed %}
+
+<h2 class="ts-section__sub-heading">Colors</h2>
+{% embed '@styleguide/ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<button class="vic-btn">Default</button>\n<button class="vic-btn vic-btn--info">Info</button>\n<button class="vic-btn vic-btn--success">Success</button>\n<button class="vic-btn vic-btn--warning">Danger</button>\n<button class="vic-btn vic-btn--danger">Danger</button>\n',
+    }
+} %}
+    {% block snippet_preview %}
+        <button class="vic-btn">Default</button>
+        <button class="vic-btn vic-btn--info">Info</button>
+        <button class="vic-btn vic-btn--success">Success</button>
+        <button class="vic-btn vic-btn--warning">Danger</button>
+        <button class="vic-btn vic-btn--danger">Danger</button>
+    {% endblock snippet_preview %}
+{% endembed %}
+
+<h2 class="ts-section__sub-heading">Transparent</h2>
+{% embed '@styleguide/ui/snippet.html.twig' with {
+    'preview': {
+        'background-color': '#172138',
+        'color': '#fff',
+    },
+    'snippets': {
+        'html': '<button class="vic-btn vic-btn--transparent">Transparent</button>\n<button class="vic-btn vic-btn--transparent vic-btn--danger">Transparent</button>',
+    }
+} %}
+    {% block snippet_preview %}
+        <button class="vic-btn vic-btn--transparent">Transparent</button>
+        <button class="vic-btn vic-btn--transparent vic-btn--danger">Transparent</button>
+    {% endblock snippet_preview %}
+{% endembed %}
+
+<h2 class="ts-section__sub-heading">Sizes</h2>
+{% embed '@styleguide/ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<button class="vic-btn vic-btn--lg">large</button>\n<button class="vic-btn">medium</button>\n<button class="vic-btn vic-btn--sm">small</button>\n<button class="vic-btn vic-btn--xs">xsmall</button>',
+    }
+} %}
+    {% block snippet_preview %}
+        <button class="vic-btn vic-btn--lg">large</button>
+        <button class="vic-btn">medium</button>
+        <button class="vic-btn vic-btn--sm">small</button>
+        <button class="vic-btn vic-btn--xs">xsmall</button>
+    {% endblock snippet_preview %}
+{% endembed %}
+
+<h2 class="ts-section__sub-heading">Square</h2>
+{% embed '@styleguide/ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<button class="vic-btn vic-btn--square vic-btn--lg">I</button>\n<button class="vic-btn vic-btn--square">I</button>\n<button class="vic-btn vic-btn--square vic-btn--sm">I</button>',
+    }
+} %}
+    {% block snippet_preview %}
+        <button class="vic-btn vic-btn--square vic-btn--lg">I</button>
+        <button class="vic-btn vic-btn--square">I</button>
+        <button class="vic-btn vic-btn--square vic-btn--sm">I</button>
+    {% endblock snippet_preview %}
+{% endembed %}
+
+<h2 class="ts-section__sub-heading">Radiusless</h2>
+{% embed '@styleguide/ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<button class="vic-btn vic-btn--radiusless">radiusless</button>',
+    }
+} %}
+    {% block snippet_preview %}
+        <button class="vic-btn vic-btn--radiusless">radiusless</button>
+    {% endblock snippet_preview %}
+{% endembed %}
+
+<h2 class="ts-section__sub-heading">Framed</h2>
+{% embed '@styleguide/ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<button class="vic-btn vic-btn--framed vic-btn--transparent">framed</button>',
+    }
+} %}
+    {% block snippet_preview %}
+        <button class="vic-btn vic-btn--framed vic-btn--transparent">framed</button>
     {% endblock snippet_preview %}
 {% endembed %}
