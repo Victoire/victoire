@@ -30,7 +30,12 @@ class RemoteVideoType extends AbstractType
             ->add('name', TextType::class)
             ->add('code', TextType::class)
             ->add('type', ChoiceType::class, [
-                'choices' => ['youtube', 'vimeo', 'dailymotion'],
+                'choices' => [
+                    'youtube'     => 'youtube',
+                    'vimeo'       => 'vimeo',
+                    'dailymotion' => 'dailymotion',
+                ],
+
             ]);
     }
 
@@ -40,7 +45,7 @@ class RemoteVideoType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-                'data_class' => 'Victoire\Bundle\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper',
+            'data_class' => 'Victoire\Bundle\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper',
         ]);
     }
 }

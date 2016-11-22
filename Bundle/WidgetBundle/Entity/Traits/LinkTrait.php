@@ -2,6 +2,8 @@
 
 namespace Victoire\Bundle\WidgetBundle\Entity\Traits;
 
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Victoire\Bundle\CoreBundle\Entity\Link;
 
 /**

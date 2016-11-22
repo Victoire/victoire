@@ -67,6 +67,9 @@
         {% endif %}
         <!-- ==================== -->
         {% block foot_script__view %}
+            {% block foot_script__view_bootstrap %}
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+            {% endblock foot_script__view_bootstrap %}
             {% if view is defined %}
                 <script type="text/javascript">
                     var viewReferenceId = '{{ vic_current_page_reference() }}';

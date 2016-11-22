@@ -209,8 +209,8 @@ class LinkExtension extends \Twig_Extension
         }
 
         //Build the target attribute
-        if ($parameters['target'] == 'ajax-modal') {
-            $attr['data-toggle'] = 'ajax-modal';
+        if ($parameters['target'] == Link::TARGET_MODAL) {
+            $attr['data-toggle'] = 'viclink-modal';
         } elseif ($parameters['target'] == '') {
             $attr['target'] = '_parent';
         } else {
@@ -223,6 +223,11 @@ class LinkExtension extends \Twig_Extension
         }
 
         $url = $this->victoireLinkUrl($parameters, true, $url);
+        // if modalLayout is set, we add it as GET parameter
+        if ($parameters['target'] == Link::TARGET_MODAL && !empty($parameters['modalLayout'])) {
+            $url .= !preg_match('/\?/', $url) ? '?' : '&';
+            $url .= 'modalLayout='.$parameters['modalLayout'];
+        }
         //Creates a new twig environment
         $twig = new \Twig_Environment(new \Twig_Loader_Array(['linkTemplate' => '{{ link|raw }}']));
 

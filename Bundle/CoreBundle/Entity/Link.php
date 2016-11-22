@@ -21,6 +21,10 @@ class Link
     const TYPE_URL = 'url';
     const TYPE_WIDGET = 'attachedWidget';
 
+    const TARGET_PARENT = '_parent';
+    const TARGET_BLANK = '_blank';
+    const TARGET_MODAL = '_modal';
+
     use \Gedmo\Timestampable\Traits\TimestampableEntity;
 
     /**
@@ -52,6 +56,13 @@ class Link
      * @ORM\Column(name="target", type="string", length=10, nullable=true)
      */
     protected $target = '_parent';
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="modal_layout", type="string", length=60, nullable=true, options={"default": "modal"})
+     */
+    protected $modalLayout = 'modal';
 
     /**
      * @ORM\Column(name="view_reference", type="string", length=255, nullable=true)
@@ -92,6 +103,11 @@ class Link
      */
     protected $analyticsTrackCode;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Victoire\Bundle\SeoBundle\Entity\PageSeoTranslation", mappedBy="redirectTo")
+     */
+    protected $referers;
+
     protected $parameters;
     protected $viewReferencePage;
 
@@ -129,6 +145,7 @@ class Link
             'route'              => $this->route,
             'routeParameters'    => $this->routeParameters,
             'target'             => $this->target,
+            'modalLayout'        => $this->modalLayout,
             'url'                => $this->url,
             'viewReference'      => $this->viewReference,
             'viewReferencePage'  => $this->viewReferencePage,
@@ -405,6 +422,26 @@ class Link
     public function setLocale($locale)
     {
         $this->locale = $locale;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getModalLayout()
+    {
+        return $this->modalLayout;
+    }
+
+    /**
+     * @param mixed $modalLayout
+     *
+     * @return Link
+     */
+    public function setModalLayout($modalLayout)
+    {
+        $this->modalLayout = $modalLayout;
 
         return $this;
     }

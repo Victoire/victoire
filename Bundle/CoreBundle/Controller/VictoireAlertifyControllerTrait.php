@@ -26,7 +26,7 @@ trait VictoireAlertifyControllerTrait
                 'layout'  => 'growl',
                 'effect'  => 'jelly',
             ]);
-        $this->container->get('troopers_alertifybundle.helper.alertifyhelper')->alert($content, $type);
+        $this->container->get('alertify')->alert($content, $type);
     }
 
     /**

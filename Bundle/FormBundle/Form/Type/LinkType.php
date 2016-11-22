@@ -24,6 +24,10 @@ class LinkType extends AbstractType
     protected $viewReferenceRepository;
     protected $availableLocales;
     protected $requestStack;
+    /**
+     * @var array
+     */
+    private $modalLayouts;
 
     /**
      * LinkType constructor.
@@ -32,13 +36,20 @@ class LinkType extends AbstractType
      * @param ViewReferenceRepository $viewReferenceRepository
      * @param array                   $availableLocales
      * @param RequestStack            $requestStack
+     * @param array                   $modalLayouts
      */
-    public function __construct($analytics, ViewReferenceRepository $viewReferenceRepository, $availableLocales, RequestStack $requestStack)
-    {
+    public function __construct(
+        array $analytics,
+        ViewReferenceRepository $viewReferenceRepository,
+        array $availableLocales,
+        RequestStack $requestStack,
+        array $modalLayouts
+    ) {
         $this->analytics = $analytics;
         $this->viewReferenceRepository = $viewReferenceRepository;
         $this->availableLocales = $availableLocales;
         $this->requestStack = $requestStack;
+        $this->modalLayouts = $modalLayouts;
     }
 
     /**
@@ -57,30 +68,26 @@ class LinkType extends AbstractType
                     'data-target'          => $options['refresh-target'],
                 ],
             ])
-            ->add('target', ChoiceType::class, [
-                'label'    => 'form.link_type.target.label',
-                'required' => true,
-                'choices'  => [
-                    'form.link_type.choice.target.parent'     => '_parent',
-                    'form.link_type.choice.target.blank'      => '_blank',
-                    'form.link_type.choice.target.ajax-modal' => 'ajax-modal',
-                ],
-                'choices_as_values'              => true,
-                'vic_vic_widget_form_group_attr' => ['class' => 'vic-form-group viewReference-type page-type url-type route-type attachedWidget-type'],
-            ])
-            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($builder) {
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($builder, $options) {
+                /** @var Link $data */
                 $data = $event->getData();
                 $form = $event->getForm();
-                self::manageLinkTypeRelatedFields($data ? $data->getLinkType() : Link::TYPE_NONE, $data ? $data->getLocale() : null, $form, $builder);
+                self::manageLinkTypeRelatedFields($data ? $data->getLinkType() : Link::TYPE_NONE, $data ? $data->getLocale() : null, $form, $builder, $options);
+                self::manageTargetRelatedFields($data ? $data->getTarget() : Link::TARGET_PARENT, $form, $options);
             });
 
+        $this->addTargetField($builder, $options);
+
         $builder
-            ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($builder) {
+            ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($builder, $options) {
                 $form = $event->getForm();
                 $data = $event->getData();
                 $locale = isset($data['locale']) ? $data['locale'] : null;
                 // manage conditional related linkType in pre submit (ajax call to refresh view)
-                self::manageLinkTypeRelatedFields($data['linkType'], $locale, $form, $builder);
+                self::manageLinkTypeRelatedFields($data['linkType'], $locale, $form, $builder, $options);
+                if (isset($data['target'])) {
+                    self::manageTargetRelatedFields($data['target'], $form, $options);
+                }
             });
 
         if (!empty($this->analytics['google']) && $this->analytics['google']['enabled']) {
@@ -102,14 +109,16 @@ class LinkType extends AbstractType
      * @param                                    $locale
      * @param FormBuilderInterface|FormInterface $form
      * @param FormBuilderInterface               $builder
+     * @param array                              $options
      */
-    protected function manageLinkTypeRelatedFields($linkType, $locale, $form, FormBuilderInterface $builder)
+    protected function manageLinkTypeRelatedFields($linkType, $locale, $form, FormBuilderInterface $builder, $options)
     {
         $form->remove('route');
         $form->remove('url');
         $form->remove('attachedWidget');
         $form->remove('viewReference');
         $form->remove('locale');
+        $this->addTargetField($form, $options);
         switch ($linkType) {
             case Link::TYPE_VIEW_REFERENCE:
                 $locale = $locale ?: $this->requestStack->getCurrentRequest()->getLocale();
@@ -167,6 +176,31 @@ class LinkType extends AbstractType
     }
 
     /**
+     * Add the types related to the target value.
+     *
+     * @param string                             $target
+     * @param FormBuilderInterface|FormInterface $form
+     * @param array                              $options
+     */
+    protected function manageTargetRelatedFields($target, $form, $options)
+    {
+        if ($target == Link::TARGET_MODAL && count($this->modalLayouts) > 1) {
+            $form->add('modalLayout', ChoiceType::class, [
+                'label'        => 'form.link_type.target.modalLayouts.label',
+                'required'     => true,
+                'choices'      => $this->modalLayouts,
+                'choice_label' => function ($value, $key, $index) {
+                    return 'form.link_type.target.modalLayouts.choices.'.$value;
+                },
+                'choices_as_values'              => true,
+                'vic_vic_widget_form_group_attr' => ['class' => 'vic-form-group viewReference-type page-type url-type route-type attachedWidget-type'],
+            ]);
+        } else {
+            $form->remove('modalLayout');
+        }
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
@@ -200,5 +234,30 @@ class LinkType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['horizontal'] = $options['horizontal'];
+    }
+
+    /**
+     * add the target Field.
+     *
+     * @param FormBuilderInterface|FormInterface $form
+     * @param array                              $options
+     */
+    protected function addTargetField($form, array $options)
+    {
+        $form->add('target', ChoiceType::class, [
+            'label'    => 'form.link_type.target.label',
+            'required' => true,
+            'choices'  => [
+                'form.link_type.choice.target.parent'     => Link::TARGET_PARENT,
+                'form.link_type.choice.target.blank'      => Link::TARGET_BLANK,
+                'form.link_type.choice.target.ajax-modal' => Link::TARGET_MODAL,
+            ],
+            'choices_as_values' => true,
+            'attr'              => [
+                'data-refreshOnChange' => 'true',
+                'data-target'          => $options['refresh-target'],
+            ],
+            'vic_vic_widget_form_group_attr' => ['class' => 'vic-form-group viewReference-type page-type url-type route-type attachedWidget-type'],
+        ]);
     }
 }

@@ -62,15 +62,8 @@ class WidgetType extends AbstractType
 
         //add the slot to the form
         $builder->add('slot', HiddenType::class, []);
-        $builder->add('criterias', CriteriaCollectionType::class, [
-            'label'         => 'victoire.widget.type.criterias.label',
-            'entry_type'    => CriteriaType::class,
-            'required'      => false,
-            'entry_options' => [
-                'dataSources' => $options['dataSources'],
-            ],
-        ]);
 
+        $this->addCriteriasFields($builder, $options);
         //we use the PRE_SUBMIT event to set the mode option
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
@@ -97,7 +90,24 @@ class WidgetType extends AbstractType
                 }
             }
         );
+    }
 
+    /**
+     * Add the criterias fields.
+     *
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
+    protected function addCriteriasFields($builder, $options)
+    {
+        $builder->add('criterias', CriteriaCollectionType::class, [
+            'label'         => 'victoire.widget.type.criterias.label',
+            'entry_type'    => CriteriaType::class,
+            'required'      => false,
+            'entry_options' => [
+                'dataSources' => $options['dataSources'],
+            ],
+        ]);
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
             function (FormEvent $event) use ($options) {

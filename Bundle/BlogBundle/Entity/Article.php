@@ -16,7 +16,7 @@ use Victoire\Bundle\PageBundle\Entity\PageStatus;
 /**
  * @ORM\Entity(repositoryClass="Victoire\Bundle\BlogBundle\Repository\ArticleRepository"))
  * @ORM\Table("vic_article")
- * @VIC\BusinessEntity({"Date", "Force", "Redactor", "Listing", "BlogArticles", "Title", "CKEditor", "Text", "UnderlineTitle", "Cover", "Image", "Authorship", "ArticleList", "SliderNav"})
+ * @VIC\BusinessEntity({"Date", "Force", "Redactor", "Listing", "BlogArticles", "Title", "CKEditor", "Text", "UnderlineTitle", "Cover", "Image", "Authorship", "ArticleList", "SliderNav", "Render"})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
 class Article
@@ -130,7 +130,7 @@ class Article
     private $publishedAtString;
 
     /**
-     * @VIC\BusinessProperty("textable")
+     * @VIC\BusinessProperty({"textable", "imageable"})
      */
     private $authorAvatar;
 

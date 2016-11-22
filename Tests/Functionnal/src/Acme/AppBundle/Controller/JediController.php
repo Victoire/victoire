@@ -3,7 +3,7 @@
 namespace Acme\AppBundle\Controller;
 
 use Acme\AppBundle\Entity\Jedi;
-use Acme\AppBundle\Form\JediType;
+use Acme\AppBundle\Form\Type\JediType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;

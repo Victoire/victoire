@@ -2,6 +2,8 @@
 
 namespace Victoire\Bundle\QueryBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
  * Query trait adds the query fields.
  */

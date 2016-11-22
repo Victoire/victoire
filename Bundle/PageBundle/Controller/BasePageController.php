@@ -25,7 +25,7 @@ class BasePageController extends Controller
         $response = $this->get('victoire_page.page_helper')->renderPageByUrl(
             $url,
             $request->getLocale(),
-            $request->isXmlHttpRequest()
+            $request->isXmlHttpRequest() ? $request->query->get('modalLayout', null) : null
         );
 
         //throw an exception is the page is not valid

@@ -1,4 +1,5 @@
 imports:
+    - { resource: parameters.yml }
     - { resource: @VictoireCoreBundle/Resources/config/config.yml }
     - { resource: @VictoireTwigBundle/Resources/config/config.yml }
 
@@ -14,7 +15,7 @@ monolog:
             bubble: false
 
 framework:
-    secret:          "s3cr3t"
+    secret:          %secret%
     router:
         resource: "%kernel.root_dir%/config/routing_test.yml"
     form:            ~
@@ -28,6 +29,7 @@ framework:
     trusted_proxies: ~
     session:
         handler_id:  ~
+        name: victoire
     fragments:       ~
     http_method_override: true
     test: ~
@@ -58,9 +60,9 @@ doctrine:
         driver:   "pdo_mysql"
         host:     "127.0.0.1"
         port:     "3306"
-        dbname:   "victoire"
-        user:     "ubuntu"
-        password: ~
+        dbname:   %dbname%
+        user:     %dbuser%
+        password: %dbpassword%
         charset:  UTF8
         server_version: 5.6
 
@@ -123,12 +125,13 @@ security:
         - { path: ^/admin/, role: ROLE_ADMIN }
 
 victoire_core:
-    user_class: "\\Victoire\\Bundle\\UserBundle\\Entity\\User"
-    templates:
-        layout: "::layout.html.twig"
+    user_class: "Victoire\\Bundle\\UserBundle\\Entity\\User"
     layouts:
-        fullWidth: "Full width content"
-        home: "Accueil"
+        defaultLayout: "Full width content"
+        customLayout: "Fancy custom layout"
+    modal_layouts:
+        - "modal"
+        - "customModal"
     slots: ~
     base_paths: #(optional) required for a non standard installation
         - "%kernel.root_dir%/../../../Bundle/BlogBundle"

@@ -1,0 +1,5 @@
+parameters:
+    secret: "s3cr3t"
+    dbname: "victoire"
+    dbuser: "ubuntu"
+    dbpassword: ~
