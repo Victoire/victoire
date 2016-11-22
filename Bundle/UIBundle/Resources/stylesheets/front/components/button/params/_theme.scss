@@ -1,43 +1,23 @@
 // scss-lint:disable ColorVariable
+@import '../../../globals/params/rem';
+@import '../../../globals/params/font';
+@import '../../../globals/params/color';
 
 // positioning
-$button--vertical-align: middle !default;
-$button--float: null !default;
+$button--vertical-align: middle;
+$button--float: null;
 
 // display & box-model
-$button--display: inline-block !default;
-$button--border-width: (
-  'default': 0,
-  '-default': 0.0625em,
-) !default;
-
-$button--padding: (
-  'default': 0.666666667em 1.666666667em,
-  '-default': #{0.666666667em - value($button--border-width, ('-default'))} #{1.666666667em - value($button--border-width, ('-default'))},
-  '-xs': 0.666666667em 1.333333337em,
-) !default;
-
-$button--width: (
-  '-block': 100%,
-) !default;
-
-$button--margin: null !default;
-$button--height: null !default;
-
+$button--display: inline-block;
+$button--border-width: 0;
+$button--padding: 0.785714286em 1.428571429em;
+$button--width: null;
+$button--margin: null;
+$button--height: null;
 
 // color
-$button--color: (
-  'default': rgb(31, 13, 51),
-  '-primary': rgb(255, 255, 255),
-  '-success': rgb(255, 255, 255),
-  '-danger': rgb(255, 255, 255),
-  '-warning': rgb(255, 255, 255),
-) !default;
-
-$button--border-color: (
-  '-default': currentColor,
-) !default;
-
+$button--color: rgb(31, 13, 51);
+$button--border-color: null;
 $button--background-color: (
   'default': (
     'default': rgb(255, 255, 255) darken(rgb(255, 255, 255), 10%),
@@ -59,40 +39,28 @@ $button--background-color: (
     'default': rgb(253, 65, 100) darken(rgb(253, 65, 100), 10%),
     '[disabled="true"': rgb(253, 65, 100) rgb(253, 65, 100),
   ),
-) !default;
-
+);
 $button--opacity: (
   '[disabled="true"': 0.5,
-) !default;
-
+);
 
 // text
-$button--font-size: (
-  'default': 1rem,
-  '-lg': 1.2rem,
-  '-sm': 0.8rem,
-  '-xs': 0.65rem,
-) !default;
-
+$button--font-size: font-weight();
 $button--text-decoration: (
   '-link': (
     ':hover': underline,
   )
-) !default;
-
-$button--line-height: 1.2em !default;
-$button--text-align: center !default;
-
-$button--font-family: null !default;
-$button--font-weight: null !default;
-$button--text-transform: null !default;
-$button--letter-spacing: null !default;
-
+);
+$button--line-height: 1.2em;
+$button--text-align: center;
+$button--font-family: null;
+$button--font-weight: null;
+$button--text-transform: null;
+$button--letter-spacing: null;
 
 // order
-$button--border-radius: 0.2em !default;
-$button--border-style: solid !default;
-
-$button--box-shadow: null !default;
-$button--transition: null !default;
-$button--cursor: null !default;
+$button--border-radius: 0.2em;
+$button--border-style: solid;
+$button--box-shadow: null;
+$button--transition: null;
+$button--cursor: pointer;

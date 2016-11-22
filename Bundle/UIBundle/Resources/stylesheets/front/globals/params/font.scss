@@ -1,0 +1,13 @@
+$app--font-family: 'Source Sans Pro', sans-serif;
+$app--font-weight: (
+  'normal': 400,
+  'bold': 700,
+);
+
+@function font-weight($font-weight: 'normal') {
+  @if type-of($font-weight) == 'text' and map-has-key($app--font-weight, $font-weight) {
+    @return map-get($app--font-weight, $font-weight);
+  } @else {
+    @return false;
+  }
+}

@@ -5,3 +5,16 @@
         "url": "#",
     }
 } %}
+
+{% embed '@styleguide/ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '',
+    }
+} %}
+    {% block snippet_preview %}
+        <a class="vic-btn" href="#" role="button">Anchor</a>
+        <button class="vic-btn" type="submit">Button</button>
+        <input class="vic-btn" type="button" value="Input">
+        <input class="vic-btn" type="submit" value="Submit">
+    {% endblock snippet_preview %}
+{% endembed %}
