@@ -5,3 +5,22 @@
         "url": "#",
     }
 } %}
+
+
+{% embed '@styleguide/ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<div class="vic-dropdown" data-flag="dropdown">\n    <button class="vic-btn" data-toggle="dropdown-trigger">trigger</button>\n\n    <nav class="vic-dropdown__nav" data-flag="dropdown-nav">\n        <a class="vic-dropdown__nav-link" href="#">Action</a>\n        <a class="vic-dropdown__nav-link" href="#">Another action</a>\n        <a class="vic-dropdown__nav-link" href="#">Something else here</a>\n    </nav>\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <div class="vic-dropdown" data-flag="dropdown">
+            <button class="vic-btn" data-toggle="dropdown-trigger">trigger</button>
+
+            <nav class="vic-dropdown__nav" data-flag="dropdown-nav">
+                <a class="vic-dropdown__nav-link" href="#">Action</a>
+                <a class="vic-dropdown__nav-link" href="#">Another action</a>
+                <a class="vic-dropdown__nav-link" href="#">Something else here</a>
+            </nav>
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}

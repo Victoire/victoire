@@ -1,0 +1,16 @@
+@import '../../globals/params/color';
+
+.vic-dropdown .vic-btn::after {
+  $size: 0.6em;
+  $border-width: 2px;
+  content: '';
+  display: inline-block;
+  width: $size;
+  height: $size;
+  border-bottom: $border-width solid color('white');
+  border-left: $border-width solid color('white');
+  transform: rotate(-45deg);
+  transform-origin: bottom left;
+  margin-left: 1em;
+  margin-bottom: 0.05em;
+}

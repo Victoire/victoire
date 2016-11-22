@@ -1,0 +1,44 @@
+// scss-lint:disable ColorVariable
+@import '../../../globals/params/rem';
+@import '../../../globals/params/font';
+@import '../../../globals/params/color';
+
+$dropdown--text-align: null !default;
+$dropdown--display: inline-block;
+$dropdown--font-size: rem();
+
+$dropdown-nav--border: null;
+$dropdown-nav--border-color: null;
+$dropdown-nav--border-radius: null;
+$dropdown-nav--padding: null;
+$dropdown-nav--margin: null;
+$dropdown-nav--box-shadow: 0 0.125em 0.5em 0 color('black', null, 0.25);
+$dropdown-nav--background-color: color('white');
+$dropdown-nav--z-index: 1000;
+$dropdown-nav--max-width: null !default;
+$dropdown-nav--min-width: 13em;
+$dropdown-nav--width: null !default;
+
+$dropdown-navlink--padding: 0 0.625em;
+$dropdown-navlink--margin: null !default;
+$dropdown-navlink--color: (
+  'default': color('grey', 'darker'),
+  ':hover': color('grey', 'darker'),
+  ':focus': color('grey', 'darker'),
+  ':active': color('grey', 'darker'),
+) !default;
+$dropdown-navlink--background-color: (
+  ':hover': #eee,
+  ':focus': #eee,
+  ':active': #eee,
+) !default;
+$dropdown-navlink--text-decoration: (
+  'default': none,
+) !default;
+$dropdown-navlink--font-size: null !default;
+$dropdown-navlink--line-height: 2;
+$dropdown-navlink--letter-spacing: null !default;
+$dropdown-navlink--text-align: null !default;
+$dropdown-navlink--font-family: $app--font-family;
+$dropdown-navlink--cursor: null !default;
+$dropdown-navlink--opacity: null !default;
