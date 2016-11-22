@@ -7,7 +7,7 @@ $app--measures: (
 @function rem($coeff: 'default') {
   @if type-of($coeff) == 'number' {
     @return map-get($app--measures, 'default') * $coeff;
-  } @elseif type-of($coeff) == 'text' and map-has-key($app--measures, $coeff) {
+  } @elseif type-of($coeff) == 'string' and map-has-key($app--measures, $coeff) {
     @return map-get($app--measures, $coeff);
   } @else {
     @return false;

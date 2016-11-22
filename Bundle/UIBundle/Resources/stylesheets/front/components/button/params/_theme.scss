@@ -3,41 +3,125 @@
 @import '../../../globals/params/font';
 @import '../../../globals/params/color';
 
+$button--square-size: (
+  'default': 2.857142857em,
+  '-sm': 2.5em,
+  '-lg': 3.125em,
+);
+$button-framed--border-width: 1px;
+
+
 // positioning
 $button--vertical-align: middle;
 $button--float: null;
 
 // display & box-model
 $button--display: inline-block;
-$button--border-width: 0;
-$button--padding: 0.785714286em 1.428571429em;
-$button--width: null;
+$button--border-width: (
+  '-framed': $button-framed--border-width,
+);
+$button--padding: (
+  'default': 0.785714286em 1.428571429em,
+  '-framed': calc(0.785714286em - #{$button-framed--border-width}) calc(1.428571429em - #{$button-framed--border-width}),
+  '-sm': (
+    'default': 0.583333333em 0.833333333em,
+    '-framed': calc(0.583333333em - #{$button-framed--border-width}) calc(0.833333333em - #{$button-framed--border-width}),
+  ),
+  '-xs': (
+    'default': 0.25em 0.416666667em,
+    '-framed': calc(0.25em - #{$button-framed--border-width}) calc(0.416666667em - #{$button-framed--border-width}),
+  ),
+  '-square': 0,
+);
 $button--margin: null;
-$button--height: null;
+$button--width: (
+  '-square': (
+    'default': map-get($button--square-size, 'default'),
+    '-sm': map-get($button--square-size, '-sm'),
+    '-lg': map-get($button--square-size, '-lg'),
+  ),
+);
+$button--height: (
+  '-square': (
+    'default': map-get($button--square-size, 'default'),
+    '-sm': map-get($button--square-size, '-sm'),
+    '-lg': map-get($button--square-size, '-lg'),
+  ),
+);
 
 // color
-$button--color: rgb(31, 13, 51);
-$button--border-color: null;
+$button--color: (
+  'default': color('white'),
+  ':hover': color('white'),
+  ':active': color('white'),
+  ':focus': color('white'),
+  '-transparent': (
+    'default': color('grey', 'light'),
+    '-framed': (
+      'default': color('grey', 'darker'),
+      ':hover': color('white'),
+      ':active': color('white'),
+      ':focus': color('white'),
+      '-danger': (
+        'default': color('pink'),
+        ':hover': color('white'),
+        ':active': color('white'),
+        ':focus': color('white'),
+      ),
+    ),
+    '-danger': (
+      'default': color('pink'),
+      ':hover': color('white'),
+      ':active': color('white'),
+      ':focus': color('white'),
+    ),
+  ),
+);
+$button--border-color: (
+  '-framed': (
+    'default': currentColor,
+    '-transparent': (
+      ':hover': color('grey', 'darker'),
+      ':active': color('grey', 'darker'),
+      ':focus': color('grey', 'darker'),
+
+      '-danger': (
+        ':hover': color('pink'),
+        ':active': color('pink'),
+        ':focus': color('pink'),
+      )
+    )
+  ),
+);
 $button--background-color: (
   'default': (
-    'default': rgb(255, 255, 255) darken(rgb(255, 255, 255), 10%),
-    '[disabled="true"': rgb(255, 255, 255) rgb(255, 255, 255),
-  ),
-  '-primary': (
-    'default': rgb(31, 13, 51) darken(rgb(31, 13, 51), 10%),
-    '[disabled="true"': rgb(31, 13, 51) rgb(31, 13, 51),
+    'default': color('grey', 'darker') color('black'),
+    '[disabled="true"': color('grey', 'darker') color('grey', 'darker'),
   ),
   '-success': (
-    'default': rgb(55, 211, 189) darken(rgb(55, 211, 189), 10%),
-    '[disabled="true"': rgb(55, 211, 189) rgb(55, 211, 189),
+    'default': color('green') color('green', 'dark'),
+    '[disabled="true"': color('green') color('green'),
   ),
   '-warning': (
-    'default': rgb(255, 176, 0) darken(rgb(255, 176, 0), 10%),
-    '[disabled="true"': rgb(255, 176, 0) rgb(255, 176, 0),
+    'default': color('orange') color('orange', 'dark'),
+    '[disabled="true"': color('orange') color('orange'),
   ),
   '-danger': (
-    'default': rgb(253, 65, 100) darken(rgb(253, 65, 100), 10%),
-    '[disabled="true"': rgb(253, 65, 100) rgb(253, 65, 100),
+    'default': color('pink') color('pink', 'dark'),
+    '[disabled="true"': color('pink') color('pink'),
+  ),
+  '-info': (
+    'default': color('blue') color('blue', 'dark'),
+    '[disabled="true"': color('blue') color('blue'),
+  ),
+  '-transparent': (
+    'default': transparent color('grey', 'darker'),
+    '[disabled="true"': transparent transparent,
+    '-danger': transparent color('pink'),
+    '-framed': (
+      'default': transparent color('grey', 'darker'),
+      '-danger': transparent color('pink'),
+    ),
   ),
 );
 $button--opacity: (
@@ -45,22 +129,35 @@ $button--opacity: (
 );
 
 // text
-$button--font-size: font-weight();
-$button--text-decoration: (
-  '-link': (
-    ':hover': underline,
+$button--font-size: (
+  'default': rem('small'),
+  '-lg': rem(),
+  '-sm': rem(0.75),
+  '-xs': rem(0.75),
+);
+$button--text-decoration: null;
+$button--line-height: (
+  'default': 1.35,
+  '-square': (
+    'default': map-get($button--square-size, 'default'),
+    '-sm': map-get($button--square-size, '-sm'),
+    '-lg': map-get($button--square-size, '-lg'),
   )
 );
-$button--line-height: 1.2em;
-$button--text-align: center;
-$button--font-family: null;
-$button--font-weight: null;
-$button--text-transform: null;
-$button--letter-spacing: null;
+$button--text-align: null;
+$button--font-family: $app--font-family;
+$button--font-weight: font-weight('bold');
+$button--text-transform: uppercase;
+$button--letter-spacing: 0.035714286em;
 
 // order
-$button--border-radius: 0.2em;
-$button--border-style: solid;
+$button--border-radius: (
+  'default': 0.214285714em,
+  '-radiusless': 0,
+);
+$button--border-style: (
+  '-framed': solid,
+);
 $button--box-shadow: null;
 $button--transition: null;
 $button--cursor: pointer;
