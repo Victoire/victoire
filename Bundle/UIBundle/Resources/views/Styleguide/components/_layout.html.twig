@@ -7,7 +7,133 @@
 } %}
 
 <h2 class="ts-section__sub-heading">Container</h2>
+{% embed '@styleguide/ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<div class="vic-container">\n    ...\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <div class="vic-container">
+            This content is inside a container This content is inside a container This content is inside a container This content is inside a container This content is inside a container This content is inside a container This content is inside a container This content is inside a container This content is inside a container This content is inside a container This content is inside a container This content is inside a container This content is inside a container This content is inside a container This content is inside a container This content is inside a container This content is inside a container
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}
+
 <h2 class="ts-section__sub-heading">Container fluid</h2>
-<h2 class="ts-section__sub-heading">Responsive helpers</h2>
+{% embed '@styleguide/ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<div class="vic-container vic-container--fluid">\n    ...\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <div class="vic-container vic-container--fluid">
+            This content is inside a container-fluid This content is inside a container-fluid This content is inside a container-fluid This content is inside a container-fluid This content is inside a container-fluid This content is inside a container-fluid This content is inside a container-fluid This content is inside a container-fluid This content is inside a container-fluid This content is inside a container-fluid This content is inside a container-fluid This content is inside a container-fluid This content is inside a container-fluid This content is inside a container-fluid This content is inside a container-fluid This content is inside a container-fluid This content is inside a container-fluid
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}
+
+<style>
+    .col-showcase {
+        border: 1px solid #e72f7e;
+        background-color: #ec5d9a;
+        margin-bottom: 16px;
+        height: 32px;
+        color: white;
+        line-height: 32px;
+        padding: 0 16px;
+    }
+</style>
+
+
 <h2 class="ts-section__sub-heading">Grid</h2>
+{% embed '@styleguide/ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<div class="vic-grid">\n    <div class="vic-col vic-col--xs-6 vic-col--md-6">\n        .vic-col .vic-col--xs-6 .vic-col--md-6\n    </div>\n\n    <div class="vic-col vic-col--xs-6 vic-col--md-4">\n        .vic-col .vic-col--xs-6 .vic-col--md-4\n    </div>\n\n    <div class="vic-col vic-col--xs-12 vic-col--md-2">\n        .vic-col .vic-col--xs-12 .vic-col--md-2\n    </div>\n\n    <div class="vic-col vic-col--xs-12">\n        .vic-col .vic-col--xs-12\n    </div>\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <div class="vic-grid">
+            <div class="vic-col vic-col--xs-6 vic-col--md-6">
+                <div class="col-showcase">
+                    .vic-col .vic-col--xs-6 .vic-col--md-6
+                </div>
+            </div>
+
+            <div class="vic-col vic-col--xs-6 vic-col--md-4">
+                <div class="col-showcase">
+                    .vic-col .vic-col--xs-6 .vic-col--md-4
+                </div>
+            </div>
+
+            <div class="vic-col vic-col--xs-12 vic-col--md-2">
+                <div class="col-showcase">
+                    .vic-col .vic-col--xs-12 .vic-col--md-2
+                </div>
+            </div>
+
+            <div class="vic-col vic-col--xs-12">
+                <div class="col-showcase">
+                    .vic-col .vic-col--xs-12
+                </div>
+            </div>
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}
+
+
 <h2 class="ts-section__sub-heading">Flexbox grid</h2>
+{% embed '@styleguide/ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<div class="vic-flex-grid">\n    <div class="vic-flex-col">flex col</div>\n    <div class="vic-flex-col">flex col</div>\n    <div class="vic-flex-col vic-flex-col--grow-1">flex col</div>\n    <div class="vic-flex-col">flex col</div>\n    <div class="vic-flex-col">flex col</div>\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <div class="vic-flex-grid">
+            {% for item in 1..5 %}
+                <div class="vic-flex-col{% if item == 3 %} vic-flex-col--grow-1{% endif %}">
+                    <div class="col-showcase" style="height: {{ 32 + item * 10 }}px">
+                        flex col
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}
+
+<h2 class="ts-section__sub-heading">Flexbox grid / aligned center</h2>
+{% embed '@styleguide/ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<div class="vic-flex-grid vic-flex-grid--align-center">\n    ...\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <div class="vic-flex-grid vic-flex-grid--align-center">
+            {% for item in 1..5 %}
+                <div class="vic-flex-col">
+                    <div class="col-showcase" style="height: {{ 92 - item * 10 }}px">
+                        flex col
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}
+
+<h2 class="ts-section__sub-heading">Flexbox grid / justify between</h2>
+{% embed '@styleguide/ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<div class="vic-flex-grid vic-flex-grid--justify-between">\n    ...\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <div class="vic-flex-grid vic-flex-grid--justify-between">
+            {% for item in 1..5 %}
+                <div class="vic-flex-col">
+                    <div class="col-showcase">
+                        flex col
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}
