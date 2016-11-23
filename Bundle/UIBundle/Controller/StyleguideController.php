@@ -20,16 +20,16 @@ class StyleguideController extends Controller
             'color',
             'button',
             'dropdown',
-            // 'layout',
-            // 'mode-switcher',
-            // 'navbar',
-            // 'modal',
+            'layout',
             // 'form',
             // 'tooltip',
-            // 'card',
-            // 'list-group',
             // 'slot',
             // 'widget-overlay',
+            // 'list-group',
+            // 'navbar',
+            // 'mode-switcher',
+            // 'card',
+            // 'modal',
         );
 
         return array(
