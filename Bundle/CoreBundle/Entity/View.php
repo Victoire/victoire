@@ -9,6 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
+use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
@@ -101,7 +102,7 @@ abstract class View
     protected $root;
 
     /**
-     * @ORM\OneToMany(targetEntity="View", mappedBy="parent", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="View", mappedBy="parent", cascade={"remove", "persist"})
      * @ORM\OrderBy({"lft" = "ASC"})
      */
     protected $children = [];
@@ -238,6 +239,9 @@ abstract class View
     public function setParent(View $parent = null)
     {
         $this->parent = $parent;
+        if (!($this instanceof VirtualBusinessPage)) {
+            $parent->addChild($this);
+        }
     }
 
     /**
