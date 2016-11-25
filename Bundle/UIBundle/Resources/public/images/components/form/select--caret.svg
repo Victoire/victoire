@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="10px" height="5px" viewBox="0 0 10 5" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41.1 (35376) - http://www.bohemiancoding.com/sketch -->
+    <title>select-caret</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Maquettes" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Style" transform="translate(-819.000000, -548.000000)" fill="#2F3C59">
+            <g id="Popover" transform="translate(0.000000, 204.000000)">
+                <g id="Group-10" transform="translate(213.000000, 139.000000)">
+                    <g id="Group-8" transform="translate(0.000000, 172.000000)">
+                        <g id="Forms/Selects/Value-Copy-6" transform="translate(323.000000, 0.000000)">
+                            <path d="M291.716056,33.1888831 C292.01025,32.937039 292.485571,32.937039 292.779766,33.1888831 C293.072862,33.4407273 293.07396,33.8484297 292.779766,34.1012242 L288.53261,37.7040211 C288.238415,37.9568156 287.761996,37.9568156 287.467802,37.7040211 L283.220646,34.1012242 C282.926451,33.8484297 282.926451,33.4407273 283.220646,33.1888831 C283.51484,32.937039 283.990161,32.937039 284.284356,33.1888831 L288.000206,36.1435377 L291.716056,33.1888831 L291.716056,33.1888831 Z" id="select-caret"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

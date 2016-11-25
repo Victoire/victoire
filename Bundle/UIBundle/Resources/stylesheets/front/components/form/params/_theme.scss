@@ -1,0 +1,167 @@
+// scss-lint:disable ColorVariable
+@import '../../../globals/params/rem';
+@import '../../../globals/params/font';
+@import '../../../globals/params/color';
+
+$formgroup--font-size: rem();
+$formgroup--font-family: $app--font-family;
+$formgroup--margin-bottom: 2em;
+$formgroup--md-effet: (
+  '-md': true,
+);
+
+$formgroup-label--font-size: 0.875em;
+$formgroup-label--font-family: null;
+$formgroup-label--margin-bottom: 0.5em;
+$formgroup-label--text-align: null;
+$formgroup-label--line-height: 1.143;
+$formgroup-label--color: color('grey');
+$formgroup-label--font-style: null !default;
+$formgroup-label--font-weight: font-weight();
+$formgroup-label--text-transform: null !default;
+
+$formgroup-input--padding: 0 0 0.5em;
+$formgroup-input--font-size: 1em;
+$formgroup-input--line-height: 1.25;
+$formgroup-input--color: (
+  'default': color('grey', 'darker'),
+);
+$formgroup-input--background-color: color('white');
+$formgroup-input--border-width: 0 0 0.0625em 0;
+$formgroup-input--border-style: solid;
+$formgroup-input--border-color: (
+  ':focus': color('orange'),
+  '-info': (
+    'default': color('blue'),
+    ':focus': color('orange'),
+  ),
+  '-error': (
+    'default': color('pink'),
+    ':focus': color('orange'),
+  ),
+  '-success': (
+    'default': color('green'),
+    ':focus': color('orange'),
+  ),
+);
+$formgroup-input--border-radius: null;
+$formgroup-input--box-shadow: null;
+$formgroup-input--font-style: null;
+$formgroup-input--font-weight: null;
+$formgroup-input--text-transform: null;
+$formgroup-input--outline: (
+  ':focus': 0,
+) !default;
+
+$formgroup-help--margin: 0.5em 0 0;
+$formgroup-help--padding: null;
+$formgroup-help--font-size: 0.8em;
+$formgroup-help--line-height: null;
+$formgroup-help--color: (
+  '-info': color('blue'),
+  '-error': color('pink'),
+  '-success': color('green'),
+);
+$formgroup-help--background-color: null;
+$formgroup-help--background-image: null;
+$formgroup-help--background-position: null;
+$formgroup-help--background-size: null;
+$formgroup-help--background-repeat: null;
+$formgroup-help--border-width: null;
+$formgroup-help--border-style: null;
+$formgroup-help--border-color: null;
+$formgroup-help--border-radius: null;
+$formgroup-help--box-shadow: null;
+$formgroup-help--font-style: null;
+$formgroup-help--font-weight: null;
+$formgroup-help--text-transform: null;
+
+$checkbox--font-size: rem();
+$checkbox--line-height: 1.5625em;
+$checkbox--padding: null;
+$checkbox--margin: 0;
+$checkbox--font-style: null;
+$checkbox--font-weight: font-weight();
+$checkbox--text-transform: null;
+
+$checkbox-indicator--size: 1.5625em;
+$checkbox-indicator--margin: 0 0.625em 0 0;
+$checkbox-indicator--background-color: color('white');
+$checkbox-indicator--background-image: null;
+$checkbox-indicator--background-repeat: null;
+$checkbox-indicator--background-size: null;
+$checkbox-indicator--background-position: null;
+$checkbox-indicator--border-radius: 0.1875em;
+$checkbox-indicator--border-width: 1px;
+$checkbox-indicator--border-style: solid !default;
+$checkbox-indicator--border-color: color('grey', 'light');
+$checkbox-indicator--transition-property: null !default;
+$checkbox-indicator--transition-timing-function: null !default;
+$checkbox-indicator--transition-duration: null !default;
+$checkbox-indicator--box-shadow: null !default;
+
+$checkbox-indicator-checked--background-color: color('green');
+$checkbox-indicator-checked--background-image: url('/bundles/victoireui/images/components/form/checkbox--tick.svg');
+$checkbox-indicator-checked--background-repeat: no-repeat;
+$checkbox-indicator-checked--background-size: null;
+$checkbox-indicator-checked--background-position: center;
+$checkbox-indicator-checked--border-color: color('green');
+$checkbox-indicator-checked--box-shadow: null !default;
+
+
+$radio--font-size: rem();
+$radio--line-height: 1.5625em;
+$radio--padding: null;
+$radio--margin: 0;
+$radio--font-style: null;
+$radio--font-weight: font-weight();
+$radio--text-transform: null;
+
+$radio-indicator--size: 1.5625em;
+$radio-indicator--margin: 0 0.625em 0 0;
+$radio-indicator--background-color: color('white');
+$radio-indicator--background-image: null;
+$radio-indicator--background-repeat: null;
+$radio-indicator--background-size: null;
+$radio-indicator--background-position: null;
+$radio-indicator--border-radius: 1.5625em;
+$radio-indicator--border-width: 1px;
+$radio-indicator--border-style: solid;
+$radio-indicator--border-color: color('grey', 'light');
+$radio-indicator--transition-property: null;
+$radio-indicator--transition-timing-function: null;
+$radio-indicator--transition-duration: null;
+$radio-indicator--box-shadow: null;
+
+$radio-indicator-checked--background-color: color('green');
+$radio-indicator-checked--background-image: null;
+$radio-indicator-checked--background-repeat: null;
+$radio-indicator-checked--background-size: null;
+$radio-indicator-checked--background-position: null;
+$radio-indicator-checked--border-color: color('green');
+$radio-indicator-checked--box-shadow: inset 0 0 0 1px color('green'), inset 0 0 0 4px color('white');
+
+
+
+$select--color: color('grey', 'darker');
+$select--font-size: rem();
+$select--font-family: $app--font-family;
+$select--border-radius: null;
+$select--border-width: 0 0 1px;
+$select--border-style: solid;
+$select--border-color: color('grey', 'darker');
+$select--box-shadow: null;
+$select--width: null;
+$select--height: null;
+$select--margin: null;
+$select--padding-x: 0;
+$select--padding-y: 0.5em;
+$select--line-height: 1.35;
+$select--background-color: $formgroup-input--background-color;
+$select--cursor: pointer;
+
+$select-caret--method: 'image'; // 'image' or 'css'
+$select-caret--width: 0.625em;
+$select-caret--height: 0.4em;
+$select-caret--margin-left: 0.3125em;
+$select-caret--background-color: null;
