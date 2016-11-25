@@ -1,5 +1,6 @@
+$app--prefix: 'vic';
 $app--synthax: (
-  'prefix': 'vic',
+  'prefix': $app--prefix,
   'separator': (
     'prefix': '-',
     'element': '__',

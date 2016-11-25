@@ -61,8 +61,12 @@
     {{ parent() }}
     <script src="{{ asset('/bundles/victoireui/scripts/styleguide/styleguide.js') }}"></script>
     <script src="{{ asset('/bundles/victoireui/bower_components/friendsOfTrowel-dropdowns-component/src/javascript/dropdowns.js') }}"></script>
+    <script src="{{ asset('/bundles/victoireui/bower_components/friendsOfTrowel-Forms-component/src/javascript/forms.js') }}"></script>
     <script>
         var dropdowns = document.querySelectorAll('[data-flag="dropdown"]');
         new Dropdowns(dropdowns);
+
+        var mdFormGroups = document.querySelectorAll('[data-flag="mdf-group"]');
+        new MDFormGroups(mdFormGroups);
     </script>
 {% endblock foot_script %}
