@@ -27,6 +27,11 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end()
             ->children()
+                ->arrayNode('domain_name')
+                    ->prototype('scalar')->end()
+                ->end()
+            ->end()
+            ->children()
                 ->scalarNode('cache_dir')
                     ->defaultValue('%kernel.cache_dir%/victoire')
                 ->end()
@@ -87,9 +92,6 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('class')->end()
                     ->end()
                 ->end()
-            ->end()
-            ->arrayNode('domain_name')
-                ->prototype('scalar')->end()
             ->end()
         ;
 
