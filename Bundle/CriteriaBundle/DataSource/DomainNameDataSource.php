@@ -6,8 +6,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
- * Class DomainNameDataSource
- * @package Victoire\Bundle\CriteriaBundle\DataSource
+ * Class DomainNameDataSource.
  */
 class DomainNameDataSource
 {
@@ -22,14 +21,14 @@ class DomainNameDataSource
 
     /**
      * DomainNameDataSource constructor.
-     * @param array $domainName
+     *
+     * @param array        $domainName
      * @param RequestStack $requestStack
      */
     public function __construct(
         array $domainName,
         RequestStack $requestStack
-    )
-    {
+    ) {
         $this->domainName = $domainName;
         $this->requestStack = $requestStack;
     }
@@ -56,14 +55,14 @@ class DomainNameDataSource
     public function getCurrentDomainNameFormParams()
     {
         return [
-            'type' => ChoiceType::class,
+            'type'    => ChoiceType::class,
             'options' => [
-                'choices' => $this->getDomainName(),
+                'choices'           => $this->getDomainName(),
                 'choices_as_values' => true,
                 'choice_label'      => function ($value) {
                     return $value;
                 },
-            ]
+            ],
         ];
     }
 }
