@@ -34,6 +34,10 @@
                 <source>victoire_criteria.criteria.operator.help_block</source>
                 <target>Valeurs prises en charge: equal, true, false, is_granted, is_not_granted</target>
             </trans-unit>
+            <trans-unit id="8" resname="victoire_criteria.request_domain_name.criteria.label">
+                <source>victoire_criteria.request_domain_name.criteria.label</source>
+                <target>Nom de domaine</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
