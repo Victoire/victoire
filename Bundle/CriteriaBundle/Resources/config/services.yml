@@ -25,3 +25,11 @@ services:
                 - @security.authorization_checker
             tags:
                 - { name: victoire_criteria, group: request, method: getLoggedStatus, alias: request_user }
+
+    victoire_criteria.criteria.domain_name_source:
+        class: Victoire\Bundle\CriteriaBundle\DataSource\DomainNameDataSource
+        arguments:
+            - [%victoire_core.domain_name%]
+            - @request_stack
+        tags:
+            - { name: victoire_criteria, group: request, method: getCurrentDomainName, alias: request_domain_name }
