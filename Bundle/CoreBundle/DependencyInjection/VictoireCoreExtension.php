@@ -77,5 +77,8 @@ class VictoireCoreExtension extends Extension
         $container->setParameter(
             'victoire_core.businessTemplates', $config['businessTemplates']
         );
+        $container->setParameter(
+            'victoire_core.domain_name', $config['domain_name']
+        );
     }
 }
