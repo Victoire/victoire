@@ -58,9 +58,9 @@ class BusinessPage extends Page
      *
      * @return string
      **/
-    public function getBusinessEntityId()
+    public function getBusinessEntityName()
     {
-        return $this->getTemplate()->getBusinessEntityId();
+        return $this->getTemplate()->getBusinessEntityName();
     }
 
     /**
@@ -74,7 +74,7 @@ class BusinessPage extends Page
         if ($this->businessEntity === null) {
             //if there is a proxy
             if ($this->getEntityProxy() !== null) {
-                $this->businessEntity = $this->getEntityProxy()->getEntity($this->getBusinessEntityId());
+                $this->businessEntity = $this->getEntityProxy()->getEntity();
 
                 return $this->businessEntity;
             }

@@ -1,0 +1,54 @@
+Victoire\Bundle\ORMBusinessEntityBundle\Entity\ORMBusinessEntity:
+    jedi_business_entity:
+        class: Acme\AppBundle\Entity\Jedi
+        name: jedi
+        availableWidgets: 'a:2:{i:0;s:4:"Text";i:1;s:5:"Force";}'
+    article_business_entity:
+        class: Victoire\Bundle\BlogBundle\Entity\Article
+        name: article
+        availableWidgets: 'a:14:{i:0;s:4:"Date";i:1;s:5:"Force";i:2;s:8:"Redactor";i:3;s:7:"Listing";i:4;s:12:"BlogArticles";i:5;s:5:"Title";i:6;s:8:"CKEditor";i:7;s:4:"Text";i:8;s:14:"UnderlineTitle";i:9;s:5:"Cover";i:10;s:5:"Image";i:11;s:10:"Authorship";i:12;s:11:"ArticleList";i:13;s:9:"SliderNav";}'
+    character_business_entity:
+        class: Acme\AppBundle\Entity\Character
+        name: character
+        availableWidgets: 'a:1:{i:0;s:4:"Text";}'
+Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty:
+    jedi_name:
+        types: a:3:{i:0;s:8:"textable";i:1;s:17:"businessParameter";i:2;s:7:"seoable";}
+        name: name
+        businessEntity: @jedi_business_entity
+        businessIdentifier: 0
+    jedi_slug:
+        types: a:2:{i:0;s:8:"textable";i:1;s:17:"businessParameter";}
+        name: slug
+        businessEntity: @jedi_business_entity
+        businessIdentifier: 1
+    jedi_side:
+        types: a:1:{i:0;s:8:"textable";}
+        name: side
+        businessEntity: @jedi_business_entity
+        businessIdentifier: 0
+    article_name:
+        types: a:3:{i:0;s:8:"textable";i:1;s:17:"businessParameter";i:2;s:7:"seoable";}
+        name: name
+        businessEntity: @article_business_entity
+        businessIdentifier: 0
+    article_slug:
+        types: a:2:{i:0;s:8:"textable";i:1;s:17:"businessParameter";}
+        name: slug
+        businessEntity: @article_business_entity
+        businessIdentifier: 1
+    character_name:
+        types: a:3:{i:0;s:8:"textable";i:1;s:17:"businessParameter";i:2;s:7:"seoable";}
+        name: name
+        businessEntity: @character_business_entity
+        businessIdentifier: 0
+    character_slug:
+        types: a:2:{i:0;s:8:"textable";i:1;s:17:"businessParameter";}
+        name: slug
+        businessEntity: @character_business_entity
+        businessIdentifier: 1
+    character_midiChlorians:
+        types: a:2:{i:0;s:8:"textable";i:1;s:17:"businessParameter";}
+        name: midiChlorians
+        businessEntity: @character_business_entity
+        businessIdentifier: 0

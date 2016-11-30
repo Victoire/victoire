@@ -38,10 +38,11 @@ class WidgetType extends AbstractType
         }
 
         if ($options['mode'] === Widget::MODE_ENTITY) {
-            $this->addEntityFields($builder, $options);
+            $this->addEntityFields($builder, $options, $options['mode']);
         }
 
         if ($options['mode'] === Widget::MODE_QUERY) {
+            $this->addEntityFields($builder, $options, $options['mode']);
             $this->addQueryFields($builder, $options);
         }
 
@@ -87,10 +88,11 @@ class WidgetType extends AbstractType
 
                 //the controller does not use the mode to construct the form, so we update it automatically
                 if ($mode === Widget::MODE_ENTITY) {
-                    $this->addEntityFields($form, $options);
+                    $this->addEntityFields($form, $options, $mode);
                 }
 
                 if ($mode === Widget::MODE_QUERY) {
+                    $this->addEntityFields($form, $options, $mode);
                     $this->addQueryFields($form, $options);
                 }
                 if ($mode === Widget::MODE_BUSINESS_ENTITY) {
@@ -165,7 +167,7 @@ class WidgetType extends AbstractType
      * @param FormBuilderInterface|FormInterface $form
      * @param array                              $options
      */
-    protected function addEntityFields($form, $options)
+    protected function addEntityFields($form, $options, $mode)
     {
         $form
         ->add('fields', WidgetFieldsFormType::class, [
@@ -177,6 +179,7 @@ class WidgetType extends AbstractType
             'business_entity_id' => $options['businessEntityId'],
             'namespace'          => $options['namespace'],
             'widget'             => $options['widget'],
+            'mode'               => $mode,
         ]);
     }
 
@@ -189,11 +192,6 @@ class WidgetType extends AbstractType
     protected function addQueryFields($form, $options)
     {
         $form->add('query');
-        $form->add('fields', WidgetFieldsFormType::class, [
-            'label'     => 'widget.form.entity.fields.label',
-            'namespace' => $options['namespace'],
-            'widget'    => $options['widget'],
-        ]);
     }
 
     /**

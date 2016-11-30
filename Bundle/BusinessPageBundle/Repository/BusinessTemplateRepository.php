@@ -29,7 +29,7 @@ class BusinessTemplateRepository extends EntityRepository
      */
     public function findPagePatternByBusinessEntity(BusinessEntity $businessEntity)
     {
-        return $this->getPagePatternByBusinessEntity($businessEntity->getId())
+        return $this->getPagePatternByBusinessEntity($businessEntity->getName())
             ->getQuery()
             ->getResult();
     }
@@ -41,11 +41,11 @@ class BusinessTemplateRepository extends EntityRepository
      *
      * @return QueryBuilder
      */
-    public function getPagePatternByBusinessEntity($businessEntityId)
+    public function getPagePatternByBusinessEntity($businessEntityName)
     {
         return $this->createQueryBuilder('BusinessTemplate')
-            ->where('BusinessTemplate.businessEntityId = :entityId')
-            ->setParameter(':entityId', $businessEntityId)
+            ->where('BusinessTemplate.businessEntityName = :entityName')
+            ->setParameter(':entityName', $businessEntityName)
             ->orderBy('BusinessTemplate.updatedAt', 'ASC');
     }
 

@@ -8,6 +8,7 @@ services:
     victoire_core.entity_proxy.form.type:
         class: Victoire\Bundle\CoreBundle\Form\EntityProxyFormType
         arguments:
+            - "@doctrine.orm.entity_manager"
             - "@request_stack"
         tags:
             - { name: form.type }
