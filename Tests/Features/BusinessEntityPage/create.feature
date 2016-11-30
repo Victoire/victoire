@@ -53,7 +53,7 @@ Feature: Create business entity pages
 
     Scenario: I can create two Business entities page patterns differentiated by queries and access to their related Business Entity pages
         Given the following BusinessTemplate:
-            | currentLocale | name                                | backendName         | slug                              | businessEntityId | parent | template | query                    |
+            | currentLocale | name                                | backendName         | slug                              | businessEntityName | parent | template | query                    |
             | en            | Jedi profile dark - {{item.name}}   | Jedi profile dark   | jedi-profile-dark-{{item.slug}}   | jedi             | home   | base     | WHERE item.side='dark'   |
             | en            | Jedi profile bright - {{item.name}} | Jedi profile bright | jedi-profile-bright-{{item.slug}} | jedi             | home   | base     | WHERE item.side='bright' |
         Given the following WidgetMap:
@@ -75,7 +75,7 @@ Feature: Create business entity pages
 
     Scenario: I can override a pattern to add some specific content
         Given the following BusinessTemplate:
-            | currentLocale | name                         | backendName  | slug                       | businessEntityId | parent | template |
+            | currentLocale | name                         | backendName  | slug                       | businessEntityName | parent | template |
             | en            | Jedi profile - {{item.name}} | Jedi profile | jedi-profile-{{item.slug}} | jedi             | home   | base     |
         And I wait 2 seconds
         When I am on "/en/jedi-profile-yoda"
@@ -92,7 +92,7 @@ Feature: Create business entity pages
 
     Scenario: I add a BusinessEntity and check if its representation is accessible
         Given the following BusinessTemplate:
-            | currentLocale | name                         | backendName  | slug                       | businessEntityId | parent | template |
+            | currentLocale | name                         | backendName  | slug                       | businessEntityName | parent | template |
             | en            | Jedi profile - {{item.name}} | Jedi profile | jedi-profile-{{item.slug}} | jedi             | home   | base     |
         Given the following WidgetMap:
             | view                       | action | slot         |
@@ -116,7 +116,7 @@ Feature: Create business entity pages
 
     Scenario: I can create businessPage of the same entity on different businessTemplates
         Given the following BusinessTemplate:
-            | currentLocale | name                         | backendName  | slug                       | businessEntityId | parent | template | query                                                                                |
+            | currentLocale | name                         | backendName  | slug                       | businessEntityName | parent | template | query                                                                                |
             | en            | Jedi profile - {{item.name}} | Jedi profile | jedi-profile-{{item.slug}} | jedi             | home   | base     | WHERE LOWER(item.side) LIKE LOWER('bright') OR LOWER(item.side) LIKE LOWER('double') |
             | en            | Sith profile - {{item.name}} | Sith profile | sith-profile-{{item.slug}} | jedi             | home   | base     | WHERE LOWER(item.side) LIKE LOWER('dark') OR LOWER(item.side) LIKE LOWER('double')   |
         Given the following WidgetMap:
@@ -135,7 +135,7 @@ Feature: Create business entity pages
 
     Scenario: I can use the business author criteria
         Given the following BusinessTemplate:
-            | currentLocale | name                         | backendName  | slug                       | businessEntityId | parent | template |
+            | currentLocale | name                         | backendName  | slug                       | businessEntityName | parent | template |
             | en            | Jedi profile - {{item.name}} | Jedi profile | jedi-profile-{{item.slug}} | jedi             | home   | base     |
         Given I am on "/en/victoire-dcms/business-template/show/4"
         And I switch to "layout" mode

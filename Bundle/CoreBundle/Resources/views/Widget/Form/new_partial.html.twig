@@ -33,7 +33,7 @@
                                         {{ ('form.widget.tab.' ~ class|lower ~ '.label')|trans({}, 'victoire') }}
                                     </span>
                                 {% else %}
-                                    <a class="v-drop__anchor {% if widget.businessEntityId == class|lower %} v-drop__anchor--active{% endif %}" data-href="#picker-{{ class|lower }}-{{ quantum }}" data-collapse="show" data-activeclass="v-drop__anchor--active">
+                                    <a class="v-drop__anchor {% if widget.entityProxy.businessEntity is defined and businessEntity.name == widget.entityProxy.businessEntity.name|lower %} v-drop__anchor--active{% endif %}" data-href="#picker-{{ class|lower }}-{{ quantum }}" data-collapse="show" data-activeclass="v-drop__anchor--active">
                                         {{ ('form.widget.tab.' ~ class|lower ~ '.label')|trans({}, 'victoire') }}
                                     </a>
                                 {% endif %}
@@ -46,7 +46,7 @@
     {% endif %}
 
     {% for class, form in forms %}
-        {% set isActive = (class == widget.mode) or (widget.businessEntityId == class|lower and widget.mode != constant('MODE_STATIC', widget)) %}
+        {% set isActive = (class == widget.mode) or ()widget.entityProxy.businessEntity is defined and widget.entityProxy.businessEntity.name == class|lower) %}
 
         <div class="v-collapse" id="picker-{{ class|lower }}-{{ quantum }}" data-group="picker-{{ quantum }}" data-flag="v-collapse"{% if isActive %} data-state="visible"{% endif %}>
             <div class="v-widget-form">

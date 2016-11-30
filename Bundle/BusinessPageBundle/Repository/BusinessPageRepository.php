@@ -28,16 +28,17 @@ class BusinessPageRepository extends EntityRepository
         $qb = $this->createQueryBuilder('BusinessPage');
         $qb->join('BusinessPage.entityProxy', 'proxy');
         $qb->join('BusinessPage.template', 'template');
-        $qb->join('proxy.'.$businessEntity->getId(), 'entity');
+        $qb->join('proxy.businessEntity', 'businessEntity');
 
         $qb->where('template.id = :templateId');
 
-        $qb->andWhere('entity.id = :entityId');
+        $qb->andWhere('businessEntity.name = :entityName');
+        $qb->andWhere('proxy.ressourceId = :entityId');
 
         $qb->setParameter(':templateId', $pattern);
         $qb->setParameter(':entityId', $entity);
-        $result = $qb->getQuery()->getOneOrNullResult();
+        $qb->setParameter(':entityName', $businessEntity->getName());
 
-        return $result;
+        return $qb->getQuery()->getOneOrNullResult();
     }
 }

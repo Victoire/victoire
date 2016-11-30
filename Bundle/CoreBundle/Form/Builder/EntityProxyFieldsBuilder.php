@@ -2,8 +2,11 @@
 
 namespace Victoire\Bundle\CoreBundle\Form\Builder;
 
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Translation\TranslatorInterface;
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessPropertyRepository;
 use Victoire\Bundle\BusinessEntityBundle\Entity\ReceiverProperty;
 use Victoire\Bundle\BusinessEntityBundle\Reader\BusinessEntityCacheReader;
 
@@ -12,15 +15,33 @@ use Victoire\Bundle\BusinessEntityBundle\Reader\BusinessEntityCacheReader;
  */
 class EntityProxyFieldsBuilder
 {
-    private $cacheReader;
     private $translator;
+    /**
+     * @var EntityRepository
+     */
+    private $businessPropertyRepository;
+    /**
+     * @var EntityRepository
+     */
+    private $cacheReader;
+    /**
+     * @var array
+     */
+    private $widgetsConfig;
 
     /**
      * define form fields.
+     *
+     * @param EntityRepository          $businessPropertyRepository
+     * @param BusinessEntityCacheReader $cacheReader
+     * @param                           $widgetsConfig
+     * @param TranslatorInterface       $translator
      */
-    public function __construct(BusinessEntityCacheReader $cacheReader, TranslatorInterface $translator)
+    public function __construct(BusinessPropertyRepository $businessPropertyRepository, BusinessEntityCacheReader $cacheReader, $widgetsConfig, TranslatorInterface $translator)
     {
+        $this->businessPropertyRepository = $businessPropertyRepository;
         $this->cacheReader = $cacheReader;
+        $this->widgetsConfig = $widgetsConfig;
         $this->translator = $translator;
     }
 
@@ -38,7 +59,13 @@ class EntityProxyFieldsBuilder
     public function buildForEntityAndWidgetType(&$builder, $widgetName, $namespace)
     {
         //Try to add a new form for each entity with the correct annotation and business properties
-        $businessProperties = $this->cacheReader->getBusinessProperties($namespace);
+        $rawBusinessProperties = $this->businessPropertyRepository->getByClassname($namespace)->run();
+        $businessProperties = [];
+        foreach ($rawBusinessProperties as $businessProperty) {
+            foreach ($businessProperty->getTypes() as $type) {
+                $businessProperties[$type][] = $businessProperty;
+            }
+        }
         $receiverPropertiesTypes = $this->cacheReader->getReceiverProperties($widgetName);
 
         if (!empty($receiverPropertiesTypes)) {
@@ -58,7 +85,7 @@ class EntityProxyFieldsBuilder
                         );
                         $choices = [];
                         foreach ($businessProperties[$type] as $choice) {
-                            $choices[$choice->getEntityProperty()] = $choice->getEntityProperty();
+                            $choices[$choice->getName()] = $choice->getName();
                         }
 
                         $options = [

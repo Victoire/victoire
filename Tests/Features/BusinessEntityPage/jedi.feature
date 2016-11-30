@@ -64,7 +64,7 @@ Feature: Manage jedis
             | name   | side | midiChlorians | slug   |
             | Anakin | dark | 27700         | anakin |
         And the following BusinessTemplate:
-            | currentLocale | name                         | backendName  | slug                       | businessEntityId | parent | template |
+            | currentLocale | name                         | backendName  | slug                       | businessEntityName | parent | template |
             | en            | Jedi profile - {{item.name}} | Jedi profile | jedi-profile-{{item.slug}} | jedi             | home   | base     |
         And I wait 2 seconds
         And I am on "/en/jedi-profile-anakin"

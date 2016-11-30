@@ -1,0 +1,19 @@
+Victoire\Bundle\BlogBundle\Entity\Article:
+    article:
+        currentLocale: fr
+        author: @anakin
+        name: "I'm your father."
+        description: This is a great article description
+        slug: i-m-your-father
+        status: published
+        template: @template_article
+        blog: @blog-jedi-network
+        publishedAt: <dateTime('now')>
+        createdAt: <dateTime('now')>
+        updatedAt: <dateTime('now')>
+        translations: [@article_en]
+
+Victoire\Bundle\CoreBundle\Entity\EntityProxy:
+    ep_article_i_m_your_father:
+        businessEntity: @article_business_entity
+        ressourceId: @article->getId()

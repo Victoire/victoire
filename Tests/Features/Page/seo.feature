@@ -19,7 +19,7 @@ Feature: Create a seo
             | Anakin | dark   | 20000         | anakin |
             | Yoda   | bright | 17500         | yoda   |
         Given the following BusinessTemplate:
-            | currentLocale | name                         | backendName  | slug                       | businessEntityId | parent | template |
+            | currentLocale | name                         | backendName  | slug                       | businessEntityName | parent | template |
             | en            | Jedi profile - {{item.name}} | Jedi profile | jedi-profile-{{item.slug}} | jedi             | home   | base     |
         And I am on "/en/jedi-profile-anakin"
         Then the title should be "Jedi profile - Anakin"

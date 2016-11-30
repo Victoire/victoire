@@ -29,7 +29,7 @@ class ParameterConverter
         }
 
         //the attribute to set
-        $entityProperty = $businessProperty->getEntityProperty();
+        $entityProperty = $businessProperty->getName();
 
         //the string to replace
         $stringToReplace = '{{item.'.$entityProperty.'}}';

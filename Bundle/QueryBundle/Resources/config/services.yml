@@ -6,3 +6,4 @@ services:
             - "@victoire_core.current_view"
             - "@annotation_reader"
             - "@security.token_storage"
+            - "@victoire_core.entity.business_entity_repository"
