@@ -46,7 +46,7 @@ services:
             - @request
             - @victoire_widget_map.manager
             - @victoire_widget_map.builder
-            - @victoire_business_entity.cache_reader
+            - "@victoire_core.helper.business_entity_helper"
             - @templating
             - @victoire_page.page_helper
             - %victoire_core.slots%

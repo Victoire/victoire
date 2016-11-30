@@ -10,11 +10,13 @@ class EntityProxyProvider
 {
     public function getEntityProxy($entity, BusinessEntity $businessEntity, EntityManager $em)
     {
-        $entityProxy = $em->getRepository('Victoire\Bundle\CoreBundle\Entity\EntityProxy')->findOneBy([$businessEntity->getId() => $entity]);
+        $entityProxy = $em->getRepository('Victoire\Bundle\CoreBundle\Entity\EntityProxy')->findOneBy(['ressourceId' => $entity->getId(), 'businessEntity' => $businessEntity]);
         if (!$entityProxy) {
             $entityProxy = new EntityProxy();
-            $entityProxy->setEntity($entity, $businessEntity->getName());
+            $entityProxy->setRessourceId($entity->getId());
+            $entityProxy->setBusinessEntity($businessEntity);
         }
+        $entityProxy->setEntity($entity);
 
         return $entityProxy;
     }

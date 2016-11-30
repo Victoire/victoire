@@ -4,9 +4,11 @@ namespace Victoire\Bundle\BusinessPageBundle\Helper;
 
 use Doctrine\DBAL\Schema\View;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntityRepository;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
@@ -34,10 +36,11 @@ class BusinessPageHelper
      * @param ParameterConverter      $parameterConverter
      * @param UrlBuilder              $urlBuilder
      */
-    public function __construct(QueryHelper $queryHelper, ViewReferenceRepository $viewReferenceRepository, BusinessEntityHelper $businessEntityHelper, ParameterConverter $parameterConverter, UrlBuilder $urlBuilder)
+    public function __construct(QueryHelper $queryHelper, ViewReferenceRepository $viewReferenceRepository, EntityRepository $businessEntityRepository, BusinessEntityHelper $businessEntityHelper, ParameterConverter $parameterConverter, UrlBuilder $urlBuilder)
     {
         $this->queryHelper = $queryHelper;
         $this->viewReferenceRepository = $viewReferenceRepository;
+        $this->businessEntityRepository = $businessEntityRepository;
         $this->businessEntityHelper = $businessEntityHelper;
         $this->parameterConverter = $parameterConverter;
         $this->urlBuilder = $urlBuilder;
@@ -153,7 +156,7 @@ class BusinessPageHelper
      *
      * @param BusinessTemplate $businessTemplate
      *
-     * @return int The position
+     * @return array The position
      */
     public function getIdentifierPositionInUrl(BusinessTemplate $businessTemplate)
     {
@@ -166,9 +169,9 @@ class BusinessPageHelper
         // preg_match_all('/\{\%\s*([^\%\}]*)\s*\%\}|\{\{\s*([^\}\}]*)\s*\}\}/i', $url, $matches);
 
         //the business property link to the page
-        $businessEntityId = $businessTemplate->getBusinessEntityId();
+        $businessEntityId = $businessTemplate->getBusinessEntityName();
 
-        $businessEntity = $this->businessEntityHelper->findById($businessEntityId);
+        $businessEntity = $this->businessEntityRepository->findBy(['name' => $businessEntityId]);
 
         //the business properties usable in a url
         $businessProperties = $businessEntity->getBusinessPropertiesByType('businessParameter');

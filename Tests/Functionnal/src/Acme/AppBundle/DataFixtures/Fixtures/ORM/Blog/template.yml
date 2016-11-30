@@ -4,7 +4,7 @@ Victoire\Bundle\BlogBundle\Entity\ArticleTemplate:
         name: "{{item.name}}"
         backendName: "First blog template"
         slug: "{{item.slug}}"
-        businessEntityId: article
+        businessEntityName: article
         author: @anakin
         template: @template_base
         status: published
@@ -18,7 +18,7 @@ Victoire\Bundle\BlogBundle\Entity\ArticleTemplate:
         name: "{{item.name}}"
         backendName: "Second blog template"
         slug: "{{item.slug}}"
-        businessEntityId: article
+        businessEntityName: article
         author: @anakin
         template: @template_base
         status: published

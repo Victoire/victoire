@@ -15,4 +15,5 @@ Victoire\Bundle\BlogBundle\Entity\Article:
 
 Victoire\Bundle\CoreBundle\Entity\EntityProxy:
     ep_article_i_m_your_father:
-        article: @article
+        businessEntity: @article_business_entity
+        ressourceId: @article->getId()

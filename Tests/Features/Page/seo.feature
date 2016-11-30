@@ -19,7 +19,7 @@ Scenario: I can add use businessTemplate to manage vbp seo
             | Anakin | dark   | 20000         | anakin |
             | Yoda   | bright | 17500         | yoda   |
     Given the following BusinessTemplate:
-        | currentLocale |name                       | backendName  | slug                    |  businessEntityId | parent  | template |
+        | currentLocale |name                       | backendName  | slug                    |  businessEntityName | parent  | template |
         | fr            |Fiche Jedi - {{item.name}} | Fiche Jedi  | fiche-jedi-{{item.slug}} |  jedi             | home    | base |
     And I am on "/fr/fiche-jedi-anakin"
     Then the title should be "Fiche Jedi - Anakin"

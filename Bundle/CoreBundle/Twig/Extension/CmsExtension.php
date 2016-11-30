@@ -273,7 +273,7 @@ class CmsExtension extends \Twig_Extension_Core
 
         if ($view instanceof BusinessTemplate || $view instanceof BusinessPage) {
             //are we using the same business entity
-            if ($formEntityName === $view->getBusinessEntityId()) {
+            if ($formEntityName === $view->getBusinessEntityName()) {
                 $isBusinessEntityAllowed = true;
             }
         }

@@ -11,20 +11,22 @@
     <div class="v-form-group__help">
         <div class="v-flex-grid v-flex-grid--gutter-sm">
             {% for businessProperty in businessProperties %}
-                <div class="v-flex-col">
-                    {% if businessProperty.type == 'businessParameter' %}
-                        {% set btnTheme = 'info' %}
-                    {% elseif businessProperty.type == 'seoable' %}
-                        {% set btnTheme = 'default' %}
-                    {% endif %}
+                {% for businessPropertyType in businessProperty.types %}
+                    <div class="v-flex-col">
+                        {% if businessPropertyType == 'businessParameter' %}
+                            {% set btnTheme = 'info' %}
+                        {% elseif businessPropertyType == 'seoable' %}
+                            {% set btnTheme = 'default' %}
+                        {% endif %}
 
-                    <a class="v-btn v-btn--xs v-btn--{{ btnTheme|default('default') }}"
-                            onClick="addPropertyToCurrentInput(this, '{{ businessProperty.entityProperty }}')"
-                            title="{{ businessProperty.type }}"
-                    >
-                        {{ businessProperty.entityProperty }}
-                    </a>
-                </div>
+                        <a class="v-btn v-btn--xs v-btn--{{ btnTheme|default('default') }}"
+                                onClick="addPropertyToCurrentInput(this, '{{ businessProperty.name }}')"
+                                title="{{ businessPropertyType }}"
+                        >
+                            {{ businessProperty.name }}
+                        </a>
+                    </div>
+                {% endfor %}
             {% endfor %}
         </div>
     </div>

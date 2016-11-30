@@ -64,7 +64,7 @@ Feature: Manage jedis
           | name   | side   | midiChlorians | slug   |
           | Anakin | dark   | 27700         | anakin |
         Given the following BusinessTemplate:
-            | currentLocale |name                       | backendName  | slug                     |  businessEntityId | parent  | template      |
+            | currentLocale |name                       | backendName  | slug                     |  businessEntityName | parent  | template      |
             | fr            |Fiche Jedi - {{item.name}} | Fiche Jedi   | fiche-jedi-{{item.slug}} |  jedi             | home    | base |
         Given I am on "/fr/fiche-jedi-anakin"
         And I switch to "layout" mode

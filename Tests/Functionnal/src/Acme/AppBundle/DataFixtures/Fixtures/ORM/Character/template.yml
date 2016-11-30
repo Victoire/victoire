@@ -4,7 +4,7 @@ Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate:
         backendName: "Character template"
         slug: "character-{{item.slug}}"
         url: "character-{{item.slug}}"
-        businessEntityId: character
+        businessEntityName: character
         author: @anakin
         locale: fr
         template: @template_base
@@ -18,7 +18,7 @@ Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate:
         name: "Jedi {{item.name}}"
         slug: "jedi-{{item.slug}}"
         url: "jedi-{{item.slug}}"
-        businessEntityId: jedi
+        businessEntityName: jedi
         author: @anakin
         locale: fr
         template: @template_base
@@ -32,7 +32,7 @@ Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate:
         name: "Mercenary {{item.name}}"
         slug: "mercenary-{{item.slug}}"
         url: "mercenary-{{item.slug}}"
-        businessEntityId: character
+        businessEntityName: character
         query: WHERE item.type = 'mercenary'
         author: @anakin
         locale: fr
