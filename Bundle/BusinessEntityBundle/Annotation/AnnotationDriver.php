@@ -1,5 +1,4 @@
 <?php
-
 namespace Victoire\Bundle\BusinessEntityBundle\Annotation;
 
 use Doctrine\Common\Annotations\AnnotationException;
@@ -21,7 +20,6 @@ use Victoire\Bundle\CoreBundle\Annotations\BusinessProperty;
 use Victoire\Bundle\CoreBundle\Annotations\ReceiverProperty as ReceiverPropertyAnnotation;
 use Victoire\Bundle\WidgetBundle\Event\WidgetAnnotationEvent;
 use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
-
 /**
  * Parse all files to get BusinessClasses.
  **/
@@ -59,7 +57,6 @@ class AnnotationDriver extends DoctrineAnnotationDriver
         $this->regex = $regex;
         $this->logger = $logger;
     }
-
     /**
      * Get all class names.
      *
@@ -102,7 +99,6 @@ class AnnotationDriver extends DoctrineAnnotationDriver
                 $classes[] = $class;
             }
         }
-
         return $classes;
     }
 
@@ -153,59 +149,34 @@ class AnnotationDriver extends DoctrineAnnotationDriver
     {
         $classPath = dirname($class->getFileName());
         $inPaths = false;
-
         foreach ($this->paths as $key => $_path) {
             //Check the entity path is in watching paths
             if (strpos($classPath, realpath($_path)) === 0) {
                 $inPaths = true;
             }
         }
-
         if ($inPaths) {
             $classAnnotations = $this->reader->getClassAnnotations($class);
-
             if (!empty($classAnnotations)) {
                 foreach ($classAnnotations as $key => $annot) {
                     if (!is_numeric($key)) {
                         continue;
                     }
-
                     $classAnnotations[get_class($annot)] = $annot;
                 }
             }
-
-            // Evaluate Entity annotation
-            if (isset($classAnnotations['Victoire\Bundle\CoreBundle\Annotations\BusinessEntity'])) {
-                /** @var BusinessEntity $annotationObj */
-                $annotationObj = $classAnnotations['Victoire\Bundle\CoreBundle\Annotations\BusinessEntity'];
-                $businessEntity = BusinessEntityHelper::createBusinessEntity(
-                    $class->getName(),
-                    $this->loadBusinessProperties($class)
-                );
-
-                $event = new BusinessEntityAnnotationEvent(
-                    $businessEntity,
-                    $annotationObj->getWidgets()
-                );
-
-                //do what you want (caching BusinessEntity...)
-                $this->eventDispatcher->dispatch('victoire.business_entity_annotation_load', $event);
-            }
-
             //check if the entity is a widget (extends (in depth) widget class)
             $parentClass = $class->getParentClass();
             $isWidget = false;
             while ($parentClass && ($parentClass = $parentClass->getParentClass()) && !$isWidget && $parentClass->name != null) {
                 $isWidget = $parentClass->name === 'Victoire\\Bundle\\WidgetBundle\\Model\\Widget';
             }
-
             if ($isWidget) {
                 if ($this->widgetHelper->isEnabled(new $class->name())) {
                     $event = new WidgetAnnotationEvent(
                         $this->widgetHelper->getWidgetName(new $class->name()),
                         $this->loadReceiverProperties($class)
                     );
-
                     //dispatch victoire.widget_annotation_load to save receiverProperties in cache
                     $this->eventDispatcher->dispatch('victoire.widget_annotation_load', $event);
                 } else {
@@ -282,7 +253,6 @@ class AnnotationDriver extends DoctrineAnnotationDriver
     {
         $receiverPropertiesTypes = [];
         $properties = $class->getProperties();
-
         //Store receiver properties
         foreach ($properties as $property) {
             $annotations = $this->reader->getPropertyAnnotations($property);
@@ -301,7 +271,6 @@ class AnnotationDriver extends DoctrineAnnotationDriver
                 }
             }
         }
-
         //Set receiver properties as required if necessary
         foreach ($receiverPropertiesTypes as $type => $receiverProperties) {
             /* @var ReceiverProperty[] $receiverProperties */
@@ -309,33 +278,31 @@ class AnnotationDriver extends DoctrineAnnotationDriver
                 $receiverPropertyName = $receiverProperty->getFieldName();
                 $refProperty = $class->getProperty($receiverPropertyName);
                 $annotations = $this->reader->getPropertyAnnotations($refProperty);
-
                 foreach ($annotations as $key => $annotationObj) {
                     if ($annotationObj instanceof Column && $annotationObj->nullable === false) {
                         throw new Exception(sprintf(
-                                'Property "%s" in class "%s" has a @ReceiverProperty annotation and by consequence must have "nullable=true" for ORM\Column annotation',
-                                $refProperty->name,
-                                $refProperty->class
-                            ));
+                            'Property "%s" in class "%s" has a @ReceiverProperty annotation and by consequence must have "nullable=true" for ORM\Column annotation',
+                            $refProperty->name,
+                            $refProperty->class
+                        ));
                     } elseif ($annotationObj instanceof NotBlank) {
                         throw new Exception(sprintf(
-                                'Property "%s" in class "%s" has a @ReceiverProperty annotation and by consequence can not use NotBlank annotation',
-                                $refProperty->name,
-                                $refProperty->class
-                            ));
+                            'Property "%s" in class "%s" has a @ReceiverProperty annotation and by consequence can not use NotBlank annotation',
+                            $refProperty->name,
+                            $refProperty->class
+                        ));
                     } elseif ($annotationObj instanceof NotNull) {
                         throw new Exception(sprintf(
-                                'Property "%s" in class "%s" has a @ReceiverProperty annotation and by consequence can not use NotNull annotation',
-                                $refProperty->name,
-                                $refProperty->class
-                            ));
+                            'Property "%s" in class "%s" has a @ReceiverProperty annotation and by consequence can not use NotNull annotation',
+                            $refProperty->name,
+                            $refProperty->class
+                        ));
                     } elseif ($annotationObj instanceof ReceiverPropertyAnnotation && $annotationObj->isRequired()) {
                         $receiverProperty->setRequired(true);
                     }
                 }
             }
         }
-
         return $receiverPropertiesTypes;
     }
 }
