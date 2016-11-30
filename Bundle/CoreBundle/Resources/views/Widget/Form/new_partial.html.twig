@@ -46,7 +46,7 @@
     {% endif %}
 
     {% for class, form in forms %}
-        {% set isActive = (class == widget.mode) or ()widget.entityProxy.businessEntity is defined and widget.entityProxy.businessEntity.name == class|lower) %}
+        {% set isActive = (class == widget.mode) or (widget.entityProxy.businessEntity is defined and widget.entityProxy.businessEntity.name == class|lower) %}
 
         <div class="v-collapse" id="picker-{{ class|lower }}-{{ quantum }}" data-group="picker-{{ quantum }}" data-flag="v-collapse"{% if isActive %} data-state="visible"{% endif %}>
             <div class="v-widget-form">
