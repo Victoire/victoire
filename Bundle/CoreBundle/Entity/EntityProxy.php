@@ -3,14 +3,16 @@
 namespace Victoire\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
  * The Entity proxy is the link between a view, a widget or any else with the BusinessEntity.
  *
- * @ORM\MappedSuperclass
+ * @ORM\Table("vic_entity_proxy")
+ * @ORM\Entity()
  */
-abstract class BaseEntityProxy
+class EntityProxy
 {
     /**
      * @var int
@@ -30,6 +32,21 @@ abstract class BaseEntityProxy
     protected $widgets;
 
     /**
+     * id of the ressource (could be an integer, an hash...)
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $ressourceId;
+
+    /**
+     * @var BusinessEntity
+     *
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity")
+     * @ORM\JoinColumn(name="business_entity_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected $businessEntity;
+    protected $entity;
+
+    /**
      * Get id.
      *
      * @return int
@@ -42,23 +59,13 @@ abstract class BaseEntityProxy
     /**
      * Get the entity of the proxy.
      *
-     * @param string $entityId
-     *
      * @throws \Exception
      *
-     * @return object
+     * @return mixed
      */
-    public function getEntity($entityId)
+    public function getEntity()
     {
-        //test the entity name
-        if ($entityId == null) {
-            throw new \Exception('The businessEntityId is not defined for the entityProxy with the id:'.$this->getId());
-        }
-
-        $functionName = 'get'.ucfirst($entityId);
-        $entity = call_user_func([$this, $functionName]);
-
-        return $entity;
+        return $this->entity;
     }
 
     /**
@@ -69,13 +76,9 @@ abstract class BaseEntityProxy
      *
      * @throws \Exception
      */
-    public function setEntity($entity, $entityId)
+    public function setEntity($entity)
     {
-        //set the entity
-        $method = 'set'.ucfirst($entityId);
-
-        //set the entity
-        call_user_func([$this, $method], $entity);
+        $this->entity = $entity;
     }
 
     /**
@@ -83,7 +86,7 @@ abstract class BaseEntityProxy
      *
      * @param string $widgets
      *
-     * @return BaseEntityProxy
+     * @return EntityProxy
      */
     public function setWidgets($widgets)
     {
@@ -136,5 +139,39 @@ abstract class BaseEntityProxy
     public function hasWidget(Widget $widget)
     {
         return $this->widgets->contains($widget);
+    }
+
+    /**
+     * @return BusinessEntity
+     */
+    public function getBusinessEntity()
+    {
+        return $this->businessEntity;
+    }
+
+    /**
+     * @param BusinessEntity $businessEntity
+     */
+    public function setBusinessEntity($businessEntity)
+    {
+        $this->businessEntity = $businessEntity;
+    }
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getRessourceId()
+    {
+        return $this->ressourceId;
+    }
+
+    /**
+     * @param mixed $ressource
+     */
+    public function setRessourceId($ressourceId)
+    {
+        $this->ressourceId = $ressourceId;
     }
 }
