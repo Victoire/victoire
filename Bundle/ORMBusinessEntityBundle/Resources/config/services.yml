@@ -1,0 +1,7 @@
+services:
+    victoire_core.entity.orm_business_entity_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - Victoire\Bundle\ORMBusinessEntityBundle\Entity\ORMBusinessEntity
+        lazy: true
