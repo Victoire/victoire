@@ -114,6 +114,9 @@ class WidgetDataWarmer
                     }
                 }
             }
+            if ($entity instanceof Widget && $proxy = $entity->getEntityProxy()) {
+                $entity->setEntity($this->em->getRepository($proxy->getBusinessEntity()->getClass())->findOneById($proxy->getRessourceId()));
+            }
         }
     }
 
