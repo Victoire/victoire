@@ -8,9 +8,11 @@
             </div>
         {% endif %}
         {% for businessProperty in businessProperties %}
-            <div class="businessProperty {{ businessProperty.type }}">
-                <a onClick="businessProperty.addPropertyToCurrentInput('{{ businessProperty.entityProperty }}')" title="{{ businessProperty.type }}">{{ businessProperty.entityProperty }}</a>
-            </div>
+            {% for businessPropertyType in businessProperty.types %}
+                <div class="businessProperty {{ businessPropertyType }}">
+                    <a onClick="businessProperty.addPropertyToCurrentInput('{{ businessProperty.name }}')" title="{{ businessPropertyType }}">{{ businessProperty.name }}</a>
+                </div>
+            {% endfor %}
         {% endfor %}
     </div>
 

@@ -181,8 +181,8 @@ class BusinessEntitySubscriber implements EventSubscriber
         //if it a businessTemplate we have to rebuild virtuals or update BP
         if ($entity instanceof BusinessTemplate) {
             $em = $eventArgs->getEntityManager();
-            $businessEntityId = $entity->getBusinessEntityId();
-            $businessEntity = $this->businessEntityHelper->findById($businessEntityId);
+            $businessEntityId = $entity->getBusinessEntityName();
+            $businessEntity = $eventArgs->getEntityManager()->getRepository('VictoireBusinessEntityBundle:BusinessEntity')->findOneBy(['name' => $businessEntityId]);
             //find all entities
             $entities = $this->businessPageHelper->getEntitiesAllowed($entity, $em);
             foreach ($entities as $be) {

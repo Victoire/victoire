@@ -121,7 +121,7 @@ class BaseWidgetContentResolver
             if ($entity !== null) {
                 $attributeValue = $entity->getEntityAttributeValue($field);
             } else {
-                $attributeValue = $widget->getBusinessEntityId().' -> '.$field;
+                $attributeValue = $widget->getBusinessEntityName().' -> '.$field;
             }
 
             $parameters[$widgetField] = $attributeValue;

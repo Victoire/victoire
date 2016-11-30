@@ -7,7 +7,7 @@ Feature: Edit a widget
             | Anakin | dark   | 20000         | anakin |
             | Yoda   | bright | 17500         | yoda   |
         Given the following BusinessTemplate:
-            | currentLocale |name                       | backendName  | slug                    |  businessEntityId | parent  | template |
+            | currentLocale |name                       | backendName  | slug                    |  businessEntityName | parent  | template |
             | fr            |Fiche Jedi - {{item.name}} | Fiche Jedi  | fiche-jedi-{{item.slug}} |  jedi             | home    | base |
         And I maximize the window
 
@@ -16,7 +16,7 @@ Feature: Edit a widget
             | view | action | slot |
             | fiche-jedi-{{item.slug}} | create | main_content |
         Given the following WidgetForce:
-            | widgetMap                | fields                       | mode           | businessEntityId |
+            | widgetMap                | fields                       | mode           | businessEntityName |
             | fiche-jedi-{{item.slug}} | a:1:{s:4:"side";s:4:"side";} | businessEntity | jedi             |
         Given I am on "/fr/victoire-dcms/business-template/show/4"
         And I should see "Le Côté obscur de la force"

@@ -103,15 +103,15 @@ class WidgetFormBuilder
         // Build each form relative to business entities
         foreach ($classes as $businessEntity) {
             //get the forms for the business entity (entity/query/businessEntity)
-            $entityForms = $this->buildEntityForms($widget, $view, $businessEntity->getId(), $businessEntity->getClass(), $position, $parentWidgetMap, $slot, $quantum);
+            $entityForms = $this->buildEntityForms($widget, $view, $businessEntity->getName(), $businessEntity->getClass(), $position, $parentWidgetMap, $slot, $quantum);
 
             //the list of forms
-            $forms[$businessEntity->getId()] = [];
+            $forms[$businessEntity->getName()] = [];
 
             //foreach of the entity form
             foreach ($entityForms as $formMode => $entityForm) {
                 //we add the form
-                $forms[$businessEntity->getId()][$formMode] = $this->renderNewForm($entityForm, $widget, $slot, $view, $quantum, $businessEntity->getId());
+                $forms[$businessEntity->getName()][$formMode] = $this->renderNewForm($entityForm, $widget, $slot, $view, $quantum, $businessEntity->getName());
             }
         }
 
@@ -336,31 +336,27 @@ class WidgetFormBuilder
      *
      * @param Widget $widget
      * @param View   $view
-     * @param string $businessEntityId
+     * @param BusinessEntity       $businessEntity
      * @param int    $position
+     * @param        $parentWidgetMap
      * @param string $slotId
      *
-     * @throws \Exception
+     * @param        $quantum
      *
-     * @return \Symfony\Component\Form\Form
+     * @return Form
+     * @throws \Exception
      */
-    public function callBuildFormSwitchParameters(Widget $widget, $view, $businessEntityId, $position, $parentWidgetMap, $slotId, $quantum)
+    public function callBuildFormSwitchParameters(Widget $widget, $view, $businessEntity, $position, $parentWidgetMap, $slotId, $quantum)
     {
         $entityClass = null;
+        $entityName = null;
         //if there is an entity
-        if ($businessEntityId) {
-            //get the businessClasses for the widget
-            $classes = $this->container->get('victoire_core.helper.business_entity_helper')->getBusinessClassesForWidget($widget);
-
-            //test the result
-            if (!isset($classes[$businessEntityId])) {
-                throw new \Exception('The entity '.$businessEntityId.' was not found int the business classes.');
-            }
-            //get the class of the entity name
-            $entityClass = $classes[$businessEntityId]->getClass();
+        if ($businessEntity) {
+            $entityClass = $businessEntity->getClass();
+            $entityName = $businessEntity->getName();
         }
 
-        $form = $this->buildForm($widget, $view, $businessEntityId, $entityClass, $widget->getMode(), $slotId, $position, $parentWidgetMap, $quantum);
+        $form = $this->buildForm($widget, $view, $entityName, $entityClass, $widget->getMode(), $slotId, $position, $parentWidgetMap, $quantum);
 
         return $form;
     }

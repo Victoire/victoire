@@ -3,8 +3,10 @@ services:
     victoire_core.entity_proxy.fields_builder:
         class: Victoire\Bundle\CoreBundle\Form\Builder\EntityProxyFieldsBuilder
         arguments:
-            - @victoire_business_entity.cache_reader
-            - @translator
+            - "@victoire_core.entity.business_property_repository"
+            - "@victoire_business_entity.cache_reader"
+            - "%victoire_core.widgets%"
+            - "@translator"
 
     victoire_core.widget_subscriber:
         class: Victoire\Bundle\CoreBundle\EventSubscriber\WidgetSubscriber
@@ -108,12 +110,6 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
-    victoire_core.entity_proxy.subscriber:
-        class: Victoire\Bundle\CoreBundle\EventSubscriber\EntityProxySubscriber
-        calls:
-            - [ setBusinessEntityCacheReader, ["@victoire_business_entity.cache_reader"] ]
-        tags:
-            - { name: doctrine.event_listener, event: loadClassMetadata, priority: 10}
 
     victoire_core.cache_subscriber:
         class: Victoire\Bundle\CoreBundle\EventSubscriber\CacheSubscriber
@@ -123,32 +119,13 @@ services:
             - { name: kernel.event_subscriber }
 
 
-#  ==================  Cache =================== #
-    victoire_core.cache_warmer.entity_proxy_warmer:
-        class: Victoire\Bundle\CoreBundle\CacheWarmer\EntityProxyWarmer
-        arguments:
-            - "@victoire_core.helper.business_entity_helper"
-            - "@file_locator"
-        tags:
-            - { name: kernel.cache_warmer, priority: 100} #Must be lower than victoire_business_entity.warmer
-
-    victoire_core.entity_proxy.cache_driver:
-        class: Victoire\Bundle\CoreBundle\CacheWarmer\EntityProxyCacheDriver
-        arguments:
-            - "@annotation_reader"
-            - "%kernel.cache_dir%"
+#  ==================  Cache =================== #b
 
     victoire_core.helper.business_entity_helper:
         class: Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper
         arguments:
-            - "@victoire_business_entity.cache_reader"
-            - "@victoire_core.cache_builder"
-
-    victoire_core.helper.queriable_business_entity_helper:
-        class: Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper
-        parent: victoire_core.helper.business_entity_helper
-        calls:
-            - [setEntityManager, ["@doctrine.orm.entity_manager"]]
+            - "@victoire_core.entity.orm_business_entity_repository"
+        lazy: true
 
 #  ==================  Error handler =================== #
 

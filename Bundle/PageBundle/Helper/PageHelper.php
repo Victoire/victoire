@@ -212,7 +212,7 @@ class PageHelper
                 $event = new \Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent($view->getTemplate());
             }
             $this->eventDispatcher->dispatch($eventName, $event);
-            $type = $view->getBusinessEntityId();
+            $type = $view->getBusinessEntityName();
         } else {
             $type = $view->getType();
         }
@@ -279,6 +279,9 @@ class PageHelper
                     ->findOneBy([
                         'id'     => $viewReference->getViewId(),
                     ]);
+                $entity = $this->container->get('victoire_business_entity.resolver.orm_business_entity_resolver')->getBusinessEntity($page->getEntityProxy());
+                $page->getEntityProxy()->setEntity($entity);
+
                 $page->setCurrentLocale($viewReference->getLocale());
             } else { //VirtualBusinessPage
                 $page = $this->entityManager->getRepository('VictoireCoreBundle:View')
@@ -295,6 +298,13 @@ class PageHelper
                         }
                         $this->pageSeoHelper->updateSeoByEntity($page, $entity);
                     }
+                    $entityProxy = new EntityProxy();
+                    $entityProxy->setRessourceId($entity->getId());
+                    $entityProxy->setBusinessEntity($this->entityManager->getRepository('VictoireORMBusinessEntityBundle:ORMBusinessEntity')
+                        ->findOneByClass($viewReference->getEntityNamespace()));
+                    $entityProxy->setEntity($entity);
+
+                    $page->setEntityProxy($entityProxy);
                 }
             }
         } elseif ($viewReference instanceof ViewReference) {

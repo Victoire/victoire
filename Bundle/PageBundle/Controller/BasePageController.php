@@ -52,9 +52,8 @@ class BasePageController extends Controller
 
     public function showBusinessPageByIdAction(Request $request, $entityId, $type)
     {
-        $businessEntityHelper = $this->get('victoire_core.helper.queriable_business_entity_helper');
-        $businessEntity = $businessEntityHelper->findById($type);
-        $entity = $businessEntityHelper->getByBusinessEntityAndId($businessEntity, $entityId);
+        $businessEntity = $this->get('victoire_core.entity.business_entity_repository')->findOneBy(['name' => $type]);
+        $entity = $this->get('doctrine.orm.entity_manager')->getRepository($businessEntity->getClass())->findOneById($entityId);
 
         $refClass = new \ReflectionClass($entity);
 
@@ -168,7 +167,7 @@ class BasePageController extends Controller
         //if the page is a business entity page pattern
         if ($page instanceof BusinessTemplate) {
             //we can use the business entity properties on the seo
-            $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($page->getBusinessEntityId());
+            $businessEntity = $this->get('victoire_core.entity.business_entity_repository')->findBy(['name' => $page->getBusinessEntityName()]);
             $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
         }
 

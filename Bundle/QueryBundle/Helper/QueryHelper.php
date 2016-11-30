@@ -4,6 +4,7 @@ namespace Victoire\Bundle\QueryBundle\Helper;
 
 use Doctrine\Common\Annotations\Reader;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
@@ -32,6 +33,10 @@ class QueryHelper
     protected $currentView;
     protected $reader;
     protected $tokenStorage;
+    /**
+     * @var EntityRepository
+     */
+    private $businessEntityRepository;
 
     /**
      * Constructor.
@@ -39,13 +44,16 @@ class QueryHelper
      * @param BusinessEntityHelper $businessEntityHelper
      * @param CurrentViewHelper    $currentView
      * @param Reader               $reader
+     * @param TokenStorage         $tokenStorage
+     * @param EntityRepository     $businessEntityRepository
      */
-    public function __construct(BusinessEntityHelper $businessEntityHelper, CurrentViewHelper $currentView, Reader $reader, TokenStorage $tokenStorage)
+    public function __construct(BusinessEntityHelper $businessEntityHelper, CurrentViewHelper $currentView, Reader $reader, TokenStorage $tokenStorage, EntityRepository $businessEntityRepository)
     {
         $this->businessEntityHelper = $businessEntityHelper;
         $this->currentView = $currentView;
         $this->reader = $reader;
         $this->tokenStorage = $tokenStorage;
+        $this->businessEntityRepository = $businessEntityRepository;
     }
 
     /**
@@ -66,7 +74,7 @@ class QueryHelper
 
 
         //the business name of the container entity
-        $businessEntityId = $containerEntity->getBusinessEntityId();
+        $businessEntityId = $containerEntity->getBusinessEntityName();
 
         //test that there is a business entity name
         if ($businessEntityId === null || $businessEntityId === '') {
@@ -75,8 +83,7 @@ class QueryHelper
         }
 
         //the business class of the container entity
-        $businessEntity = $this->businessEntityHelper->findById(strtolower($businessEntityId));
-
+        $businessEntity = $this->businessEntityRepository->findOneBy(['name' => strtolower($businessEntityId)]);
         //test that there was a businessEntity
         if ($businessEntity === null) {
             throw new \Exception('The business entity was not found for the id:['.$businessEntityId.']');

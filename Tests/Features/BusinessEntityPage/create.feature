@@ -50,7 +50,7 @@ Feature: Create business entity pages
 
     Scenario: I can create two Business entity page patterns differentiated by queries and access to their related Business Entity pages
         Given the following BusinessTemplate:
-            | currentLocale |name                       | backendName  | slug                     |  businessEntityId | parent  | template      | query |
+            | currentLocale |name                       | backendName  | slug                     |  businessEntityName | parent  | template      | query |
             | fr            |Fiche Jedi Dark - {{item.name}} | Fiche Jedi Dark  | fiche-jedi-dark-{{item.slug}} |  jedi             | home    | base | WHERE item.side='dark'|
             | fr            |Fiche Jedi Bright - {{item.name}} | Fiche Jedi Bright  | fiche-jedi-bright-{{item.slug}} |  jedi             | home    | base | WHERE item.side='bright'|
         Given the following WidgetMap:
@@ -72,7 +72,7 @@ Feature: Create business entity pages
 
     Scenario: I can override a pattern to add some specific content
         Given the following BusinessTemplate:
-            | currentLocale |name                       | backendName  | slug                     |  businessEntityId | parent  | template      |
+            | currentLocale |name                       | backendName  | slug                     |  businessEntityName | parent  | template      |
             | fr            |Fiche Jedi - {{item.name}} | Fiche Jedi   | fiche-jedi-{{item.slug}} |  jedi             | home    | base |
         Given I am on "/fr/fiche-jedi-yoda"
         And I switch to "layout" mode
@@ -88,13 +88,13 @@ Feature: Create business entity pages
 
     Scenario: I add a BusinessEntity and check if its representation is accessible
         Given the following BusinessTemplate:
-            | currentLocale |name                       | backendName  | slug                     |  businessEntityId | parent  | template      |
+            | currentLocale |name                       | backendName  | slug                     |  businessEntityName | parent  | template      |
             | fr            |Fiche Jedi - {{item.name}} | Fiche Jedi   | fiche-jedi-{{item.slug}} |  jedi             | home    | base |
         Given the following WidgetMap:
             | view | action | slot |
             | fiche-jedi-{{item.slug}} | create | main_content |
         Given the following WidgetForce:
-            | widgetMap                | fields                       | mode           | businessEntityId |
+            | widgetMap                | fields                       | mode           | businessEntityName |
             | fiche-jedi-{{item.slug}} | a:1:{s:4:"side";s:4:"side";} | businessEntity | jedi             |
         Then I am on "/fr/victoire-dcms/business-template/show/4"
         Then I should see "Le Côté obscur de la force"
@@ -112,7 +112,7 @@ Feature: Create business entity pages
 
     Scenario: I can create businessPage of the same entity on different businessTemplates
         Given the following BusinessTemplate:
-            | currentLocale |name                       | backendName  | slug                     |  businessEntityId | parent  | template      | query |
+            | currentLocale |name                       | backendName  | slug                     |  businessEntityName | parent  | template      | query |
             | fr            |Fiche Jedi - {{item.name}} | Fiche Jedi   | fiche-jedi-{{item.slug}} |  jedi             | home    | base | WHERE LOWER(item.side) LIKE LOWER('bright') OR LOWER(item.side) LIKE LOWER('double') |
             | fr            |Fiche Sith - {{item.name}} | Fiche Sith   | fiche-sith-{{item.slug}} |  jedi             | home    | base | WHERE LOWER(item.side) LIKE LOWER('dark') OR LOWER(item.side) LIKE LOWER('double') |
         Given the following WidgetMap:
@@ -131,7 +131,7 @@ Feature: Create business entity pages
 
     Scenario: I can use the business author criteria
         Given the following BusinessTemplate:
-            | currentLocale |name                       | backendName  | slug                     |  businessEntityId | parent  | template      |
+            | currentLocale |name                       | backendName  | slug                     |  businessEntityName | parent  | template      |
             | fr            |Fiche Jedi - {{item.name}} | Fiche Jedi   | fiche-jedi-{{item.slug}} |  jedi             | home    | base |
         Given I am on "/fr/victoire-dcms/business-template/show/4"
         And I switch to "layout" mode
