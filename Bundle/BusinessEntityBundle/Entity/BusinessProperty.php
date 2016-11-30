@@ -2,48 +2,72 @@
 
 namespace Victoire\Bundle\BusinessEntityBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity(repositoryClass="Victoire\Bundle\BusinessEntityBundle\Entity\BusinessPropertyRepository")
+ * @ORM\Table("vic_business_property")
+ */
 class BusinessProperty
 {
-    protected $type = null;
-    protected $entityProperty = null;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type", type="text", nullable=true)
+     */
+    protected $types = null;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     */
+    protected $name = null;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity", inversedBy="businessProperties")
+     */
+    protected $businessEntity;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="businessIdentifier", type="boolean")
+     */
+    protected $businessIdentifier;
 
     /**
      * Set the type.
      *
      * @param string $type
      */
-    public function setType($type)
+    public function setTypes($types)
     {
-        $this->type = $type;
+        $data = @unserialize($types);
+        if ($types === 'b:0;' || $data !== false) {
+            $this->types = $types;
+        } else {
+            $this->types = serialize($types);
+        }
     }
 
     /**
      * @return string the type of business property
      */
-    public function getType()
+    public function getTypes()
     {
-        return $this->type;
+        return unserialize($this->types);
     }
 
-    /**
-     * Get the property that is tagged.
-     *
-     * @return string The entity property
-     */
-    public function getEntityProperty()
-    {
-        return $this->entityProperty;
-    }
-
-    /**
-     * Set the entity property.
-     *
-     * @param string $property
-     */
-    public function setEntityProperty($property)
-    {
-        $this->entityProperty = $property;
-    }
 
     /**
      * Display object as string.
@@ -52,20 +76,65 @@ class BusinessProperty
      */
     public function __toString()
     {
-        return $this->entityProperty;
+        return $this->name;
     }
 
     /**
-     * setState (convert from array to object).
-     *
+     * @return BusinessEntity
+     */
+    public function getBusinessEntity()
+    {
+        return $this->businessEntity;
+    }
+
+    /**
+     * @param BusinessEntity $businessEntity
+     */
+    public function setBusinessEntity(BusinessEntity $businessEntity)
+    {
+        $this->businessEntity = $businessEntity;
+        $businessEntity->addBusinessProperty($this);
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * @return string
      */
-    public static function __set_state($array)
+    public function getName()
     {
-        $businessPropery = new self();
-        $businessPropery->setType($array['type']);
-        $businessPropery->setEntityProperty($array['entityProperty']);
-
-        return $businessPropery;
+        return $this->name;
     }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isBusinessIdentifier()
+    {
+        return $this->businessIdentifier;
+    }
+
+    /**
+     * @param boolean $businessIdentifier
+     */
+    public function setBusinessIdentifier($businessIdentifier)
+    {
+        $this->businessIdentifier = $businessIdentifier;
+    }
+
+
 }
