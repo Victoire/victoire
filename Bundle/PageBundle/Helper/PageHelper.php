@@ -372,9 +372,12 @@ class PageHelper
                 throw new AccessDeniedException('You are not allowed to see this page');
             }
         } elseif ($page instanceof BusinessPage) {
-            $entity = $page->getBusinessEntity();
-            if (!$entity->isVisibleOnFront() && !$this->authorizationChecker->isGranted('ROLE_VICTOIRE')) {
-                throw new NotFoundHttpException('The BusinessPage for '.get_class($entity).'#'.$entity->getId().' is not visible on front.');
+            if ($entity = $page->getBusinessEntity()) {
+                if (!$entity->isVisibleOnFront() && !$this->authorizationChecker->isGranted('ROLE_VICTOIRE')) {
+                    throw new NotFoundHttpException('The BusinessPage for '.get_class($entity).'#'.$entity->getId().' is not visible on front.');
+                }
+            } else {
+                throw new NotFoundHttpException('The BusinessPage has no related entity.');
             }
             if (!$page->getId()) {
                 $entityAllowed = $this->businessPageHelper->isEntityAllowed($page->getTemplate(), $entity, $this->entityManager);
