@@ -51,6 +51,7 @@ default:
                      Template:           Tests/App/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/template.yml
                      Page:               Tests/App/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/page.yml
                      ErrorPage:          Tests/App/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/errorPage.yml
+                     BusinessEntity:     Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/BusinessEntity/businessEntity.yml
                      Blog:               Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/blog.yml
                      BlogTemplate:       Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/template.yml
                      ArticleI18n:        Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/article_i18n.yml
@@ -67,13 +68,14 @@ default:
                      BlogWithLocalesi18n:   Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/BlogI18n/blogWithLocales.yml
                      LocaleWithBlogsi18n:   Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/BlogI18n/localeWithBlogs.yml
                  dependencies:
-                     Template:             [User]
-                     ErrorPage:            [Template, User]
-                     Page:                 [Template, User]
-                     Blog:                 [Template, BlogTemplate, User]
-                     Article:              [ArticleI18n, Template, Blog, BlogTemplate, BlogBP, User]
-                     CharacterTemplates:   [Template, User, Jedi, Mercenary]
+                     Template:             [User, BusinessEntity]
+                     ErrorPage:            [Template, User, BusinessEntity]
+                     Page:                 [Template, User, BusinessEntity]
+                     Blog:                 [Template, BlogTemplate, User, BusinessEntity]
+                     Article:              [ArticleI18n, Template, Blog, BlogTemplate, BlogBP, User, BusinessEntity]
+                     CharacterTemplates:   [Template, User, Jedi, Mercenary, BusinessEntity]
                      MediaFile:            [Media]
+                     Jedi:                 [BusinessEntity]
                      Blogi18n:             [Template, User]
                      BlogsWithLocalesi18n: [Template, User]
                      BlogWithLocalesi18n:  [Template, User]
