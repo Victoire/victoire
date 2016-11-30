@@ -169,15 +169,17 @@ class Widget extends BaseWidget implements VictoireQueryInterface
     }
 
     /**
-     * get the attached business entity name
+     * Get businessEntityName.
+     *
+     * @return int
      */
     public function getBusinessEntityName()
     {
-        if ($this->entityProxy && $this->entityProxy->getBusinessEntity()) {
-            return $this->entityProxy->getBusinessEntity()->getName();
+        if ($entityProxy = $this->getEntityProxy()) {
+            return $entityProxy->getBusinessEntity()->getName();
         }
 
-        return null;
+        return $this->businessEntityName;
     }
 
     /**
@@ -423,7 +425,7 @@ class Widget extends BaseWidget implements VictoireQueryInterface
             $entityProxy = $this->getEntityProxy();
 
             //if there is a proxy
-            if ($entityProxy !== null && $this->getBusinessEntityName()) {
+            if ($entityProxy !== null) {
                 $this->entity = $entityProxy->getEntity();
             }
         }
