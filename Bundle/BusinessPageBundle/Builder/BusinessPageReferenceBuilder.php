@@ -32,7 +32,7 @@ class BusinessPageReferenceBuilder extends BaseReferenceBuilder
         $businessPageReference->setTemplateId($businessPage->getTemplate()->getId());
         $businessPageReference->setSlug($businessPage->getSlug());
         $businessPageReference->setEntityId($businessPage->getEntityProxy()->getBusinessEntity()->getId());
-        $businessPageReference->setEntityNamespace($em->getClassMetadata(get_class($businessPage->getEntityProxy()->getEntity()))->name);
+        $businessPageReference->setEntityNamespace($businessPage->getEntityProxy()->getBusinessEntity()->getClass());
         $businessPageReference->setViewNamespace($em->getClassMetadata(get_class($businessPage))->name);
         if ($parent = $businessPage->getParent()) {
             $parent->setCurrentLocale($businessPage->getCurrentLocale());
