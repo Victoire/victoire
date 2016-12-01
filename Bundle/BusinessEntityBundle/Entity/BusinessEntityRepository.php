@@ -13,12 +13,11 @@ class BusinessEntityRepository extends EntityRepository
     /**
      * @param array $widgetType
      */
-    public function findByAvailableWidgets($widgetType)
+    public function getByAvailableWidgets($widgetType)
     {
         return $this->createQueryBuilder('be')
             ->where('be.availableWidgets LIKE :widgetType')
             ->setParameter(':widgetType', '%'. $widgetType . '%')
-            ->getQuery()
-            ->execute();
+            ->getQuery();
     }
 }

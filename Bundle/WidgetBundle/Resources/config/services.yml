@@ -51,6 +51,7 @@ services:
             - @victoire_page.page_helper
             - %victoire_core.slots%
             - @victoire_business_page.transformer.virtual_to_business_page_transformer
+            - "@victoire_business_entity.cache_reader"
         scope: request
 
     widget_manager:
