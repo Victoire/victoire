@@ -11,6 +11,10 @@ Victoire\Bundle\ORMBusinessEntityBundle\Entity\ORMBusinessEntity:
         class: Acme\AppBundle\Entity\Character
         name: character
         availableWidgets: 'a:1:{i:0;s:4:"Text";}'
+    spaceship_business_entity:
+        class: Acme\AppBundle\Entity\SpaceShip
+        name: spaceship
+        availableWidgets: 'a:1:{i:0;s:5:"Force";}'
 Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty:
     jedi_name:
         types: a:3:{i:0;s:8:"textable";i:1;s:17:"businessParameter";i:2;s:7:"seoable";}
