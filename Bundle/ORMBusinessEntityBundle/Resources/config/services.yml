@@ -4,4 +4,3 @@ services:
         factory: ["@doctrine.orm.entity_manager", getRepository]
         arguments:
             - Victoire\Bundle\ORMBusinessEntityBundle\Entity\ORMBusinessEntity
-        lazy: true

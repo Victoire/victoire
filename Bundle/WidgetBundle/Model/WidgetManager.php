@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessEntityBundle\Reader\BusinessEntityCacheReader;
 use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
@@ -127,7 +128,7 @@ class WidgetManager
         $widgets = [$widget];
 
         /** @var BusinessEntity[] $classes */
-        $classes = $this->entityManager->getRepository('VictoireBusinessEntityBundle:BusinessEntity')->findByAvailableWidgets($this->widgetHelper->getWidgetName($widget));
+        $classes = $this->businessEntityHelper->getAvailableForWidget($this->widgetHelper->getWidgetName($widget));
 
         $forms = $this->widgetFormBuilder->renderNewQuantumForms($slot, $view, $widgets, $widget, $classes, $position, $parentWidgetMap, $quantum);
 
@@ -240,7 +241,7 @@ class WidgetManager
     public function editWidget(Widget $widget, View $currentView, $quantum = null, $businessEntityId = null, $widgetMode = Widget::MODE_STATIC)
     {
         /** @var BusinessEntity[] $classes */
-        $classes = $this->cacheReader->getBusinessClassesForWidget($widget);
+        $classes = $this->businessEntityHelper->getAvailableForWidget($this->widgetHelper->getWidgetName($widget));
         $request = $this->getRequest();
 
         //the id of the edited widget
