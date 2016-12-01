@@ -8,7 +8,7 @@ use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 /**
  * The ORM business Entity.
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Victoire\Bundle\ORMBusinessEntityBundle\Entity\ORMBusinessEntityRepository")
  */
 class ORMBusinessEntity extends BusinessEntity
 {

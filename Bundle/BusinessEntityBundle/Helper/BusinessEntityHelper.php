@@ -24,18 +24,25 @@ class BusinessEntityHelper
      * @var BusinessEntityRepository
      */
     private $businessEntityRepository;
+    /**
+     * @var BusinessEntityCacheReader
+     */
+    private $cacheReader;
 
     /**
      * Constructor.
      *
-     * @param BusinessEntityRepository $businessEntityRepository
+     * @param EntityRepository|BusinessEntityRepository $businessEntityRepository
+     *
+     * @param BusinessEntityCacheReader                 $cacheReader
      *
      * @internal param BusinessEntityCacheReader $reader
      * @internal param CacheBuilder $builder
      */
-    public function __construct(EntityRepository $businessEntityRepository)
+    public function __construct(EntityRepository $businessEntityRepository, BusinessEntityCacheReader $cacheReader)
     {
         $this->businessEntityRepository = $businessEntityRepository;
+        $this->cacheReader = $cacheReader;
     }
 
 
@@ -68,6 +75,30 @@ class BusinessEntityHelper
     public function findByEntityClassname($classname)
     {
         return $this->businessEntityRepository->findOneBy(['class' => $classname]);
+    }
+
+    public function getAvailableForWidget($widgetName)
+    {
+        $classes = $this->businessEntityRepository->getByAvailableWidgets($widgetName);
+
+        $receiverProperties = $this->cacheReader->getReceiverProperties($widgetName);
+        foreach ($classes as $businessEntity) {
+            $businessProperties = $businessEntity->getBusinessProperties();
+            foreach ($receiverProperties as $receiverType => $receiverProperty) {
+                if (count($businessProperties) > 0) {
+                    /** @var BusinessProperty $businessProperty */
+                    foreach ($businessProperties as $businessProperty) {
+                        if (!in_array($receiverType, $businessProperty->getTypes())) {
+                            $businessEntity->setDisable(true);
+                        }
+                    }
+                } else {
+                    $businessEntity->setDisable(true);
+                }
+            }
+        }
+
+        return $classes;
     }
 
 }

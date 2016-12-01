@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessEntityBundle\Reader\BusinessEntityCacheReader;
 use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
@@ -41,7 +42,7 @@ class WidgetManager
     protected $templating;
     protected $pageHelper;
     protected $slots; // %victoire_core.slots%
-    protected $virtualToBpTransformer; // %victoire_core.slots%
+    protected $virtualToBpTransformer;
 
     /**
      * construct.
@@ -108,7 +109,7 @@ class WidgetManager
         $widgets = ['static' => $widget];
 
         /** @var BusinessEntity[] $classes */
-        $classes = $this->entityManager->getRepository('VictoireBusinessEntityBundle:BusinessEntity')->findByAvailableWidgets($this->widgetHelper->getWidgetName($widget));
+        $classes = $this->businessEntityHelper->getAvailableForWidget($this->widgetHelper->getWidgetName($widget));
 
         $forms = $this->widgetFormBuilder->renderNewQuantumForms($slot, $view, $widgets, $widget, $classes, $position, $parentWidgetMap, $quantum);
 
@@ -219,7 +220,8 @@ class WidgetManager
     public function editWidget(Request $request, Widget $widget, View $currentView, $quantum = null, $businessEntityName = null, $widgetMode = Widget::MODE_STATIC)
     {
         /** @var BusinessEntity[] $classes */
-        $classes = $this->entityManager->getRepository('VictoireBusinessEntityBundle:BusinessEntity')->findByAvailableWidgets($this->widgetHelper->getWidgetName($widget));
+        $classes = $this->businessEntityHelper->getAvailableForWidget($this->widgetHelper->getWidgetName($widget));
+
         //the id of the edited widget
         //a new widget might be created in the case of a legacy
         $initialWidgetId = $widget->getId();
