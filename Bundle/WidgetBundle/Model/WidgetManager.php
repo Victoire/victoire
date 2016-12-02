@@ -242,7 +242,7 @@ class WidgetManager
                 if ($widget->getEntityProxy()) {
                     $namespace = $widget->getEntityProxy()->getBusinessEntity()->getClass();
                 } else {
-                    $namespace = $businessEntity = $this->entityManager->getRepository('VictoireBusinessEntityBundle:BusinessEntity')->findOneBy(['name' => $businessEntityName]);;
+                    $namespace = $businessEntity = $this->entityManager->getRepository('VictoireBusinessEntityBundle:BusinessEntity')->findOneBy(['name' => $businessEntityName])->getClass();
                 }
                 $form = $this->widgetFormBuilder->buildForm($widget, $currentView, $businessEntityName, $namespace, $widgetMode, null, null, null, $quantum);
             } else {
