@@ -29,8 +29,8 @@ Feature: Create business entity pages
 
     Scenario: I can create some content in the pattern
         Given the following BusinessTemplate:
-            | currentLocale | name                         | backendName  | slug                       | businessEntityId | parent | template |
-            | en            | Jedi profile - {{item.name}} | Jedi profile | jedi-profile-{{item.slug}} | jedi             | home   | base     |
+            | currentLocale | name                         | backendName  | slug                       | businessEntityName | parent | template |
+            | en            | Jedi profile - {{item.name}} | Jedi profile | jedi-profile-{{item.slug}} | jedi               | home   | base     |
         And I wait 2 seconds
         When I am on "/en/victoire-dcms/business-template/show/4"
         And I switch to "layout" mode
