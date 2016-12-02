@@ -18,6 +18,7 @@ class BusinessEntityRepository extends EntityRepository
         return $this->createQueryBuilder('be')
             ->where('be.availableWidgets LIKE :widgetType')
             ->setParameter(':widgetType', '%'. $widgetType . '%')
-            ->getQuery();
+            ->getQuery()
+            ->execute();
     }
 }
