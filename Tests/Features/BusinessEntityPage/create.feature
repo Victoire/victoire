@@ -29,7 +29,7 @@ Feature: Create business entity pages
 
     Scenario: I can create some content in the pattern
         Given the following BusinessTemplate:
-            | currentLocale |name                       | backendName  | slug                    |  businessEntityId | parent  | template |
+            | currentLocale |name                       | backendName  | slug                    |  businessEntityName | parent  | template |
             | fr            |Fiche Jedi - {{item.name}} | Fiche Jedi  | fiche-jedi-{{item.slug}} |  jedi             | home    | base |
         Then I am on "/fr/victoire-dcms/business-template/show/4"
         Then I switch to "layout" mode
