@@ -239,7 +239,7 @@ abstract class View
     public function setParent(View $parent = null)
     {
         $this->parent = $parent;
-        if (!($this instanceof VirtualBusinessPage)) {
+        if ($parent && !($this instanceof VirtualBusinessPage)) {
             $parent->addChild($this);
         }
     }
