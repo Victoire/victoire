@@ -6,9 +6,9 @@ Business entities are the foundations of any application built with VictoireDCMS
 They stand for the customer's business logic, they are ubiquitous and their deep integration is the major asset of VictoireDCMS.
 Widgets and business entities are closely related because the widgets are thought to be able to render static data as well as business entity's data.
 
-##How do I turn an Entity into a BusinessEntity ?
+##How do I turn an Entity into a BusinessEntity?
 
-To declare an Entity as a BusinessEntity, you'll have to consider several things :
+To declare an Entity as a BusinessEntity, you'll have to consider several things:
 
 - The BusinessEntityTrait
 - The `BusinessEntity` annotation
@@ -34,7 +34,8 @@ It's a Class annotation so you need to add the following line just before the cl
 ```
 @VIC\BusinessEntity({"Title", "Text"}))
 ```
-`You can add any enabled widget but you'll have to check the compatibility by looking the @VIC/ReceiverProperty annotation in the Widget (eg. If the widget has a ReceiverProperty named` **`textable`** `, you'll have to declare also at least one ` **`textable`** `BusinessProperty).`
+
+You can add any enabled widget but you'll have to check the compatibility by looking the `@VIC/ReceiverProperty` annotation in the Widget (eg. If the widget has a ReceiverProperty named` **`textable`** `, you'll have to declare also at least one ` **`textable`** `BusinessProperty).`
 
 ###@VIC/BusinessProperty( {{ renderableTypes }} ) and @VIC/ReceiverProperty(renderableType)
 
@@ -122,13 +123,13 @@ class Product
 ```
 
 
-##How does the Annotation System works ?
+##How does the Annotation System work?
 
 After you declare your BusinessEntities, you have to warmup the cache because the `EntityProxy` (*technical link between BusinessEntities and views and widgets*) need to be refresh.
 
-First, the `VictoireCoreBundle::boot()` method add the `EntityProxyCacheDriver` to the `DoctrineDriverChain` because an the system will generate the `EntityProxy` Entity file in the victoire cache directory. 
+First, the `VictoireCoreBundle::boot()` method add the `EntityProxyCacheDriver` to the `DoctrineDriverChain` because the system will generate the `EntityProxy` Entity file in the victoire cache directory. 
 
-The `BusinessEntityWarmer` is called, it asks the `AnnotationDriver` to get all the entity class names to parse them (*if you have some BusinessEntity outside the src directory, you'll need to add your path to the victoire_core.base_paths config*) and extract the potential @VIC annotations.
+The `BusinessEntityWarmer` is called, it asks the `AnnotationDriver` to get all the entity class names to parse them (*if you have some BusinessEntity outside the `src` directory, you'll need to add your path to the `victoire_core.base_paths` config*) and extract the potential `@VIC` annotations.
 
 The `CacheSubscriber` receives two kind of events on `victoire.business_entity_annotation_load` and `victoire.widget_annotation_load` and will respectively call the `addBusinessEntityInfo` and `addWidgetInfo` functions which will deal with these informations and tell the `CacheBuilder` to update the `VictoireCache` (which extends `PhpFileCache`) and will write a file in the victoire cache directory.
 
@@ -136,7 +137,7 @@ The `EntityProxyWarmer` will be called just after to generate the `EntityProxy.p
 
 Then our job is done and we can let Doctrine drivers (and our `EntityProxyDriver` injected in first step) do their job and load every class Metadatas.
 
-As a picture is worth a thousand words...
+As a picture is worth a thousand words…
 
 ![Alt text](http://appventus.com/uploads/media/55cde79fc1fff.jpeg?raw=true "Global View")
 

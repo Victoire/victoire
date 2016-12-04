@@ -9,7 +9,7 @@ A WidgetMap lists and organizes the widgets within a view. It's a slot table in 
 ##WidgetMap
 
 The WidgetMap is used to positionnate a widget in a slot.
-Properties :
+Properties:
 
 Property           | Description
 ----------------   | -------------
@@ -30,7 +30,7 @@ Fonction        | Description
 ---------------- | -------------  
 @build | build complete widgetMap from View
 
-Helper : (victoire_widget_map.helper)
+Helper: (victoire_widget_map.helper)
 
 Fonction        | Description
 ---------------- | -------------
@@ -50,7 +50,7 @@ Fonction                 | Description
 @overwriteWidgetMap      | --
 @deleteWidgetFromView    | --
 @updateWidgetMapFromView | --
-@updateWidgetMapOrder    | called by widgetController->updatePosition : update widgetMap position
+@updateWidgetMapOrder    | called by widgetController->updatePosition: update widgetMap position
 
 ##Actions
 
