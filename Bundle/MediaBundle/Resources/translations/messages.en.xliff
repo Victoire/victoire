@@ -88,7 +88,7 @@
       </trans-unit>
       <trans-unit id="21" resname="media.folder.delete.modal.text">
         <source>media.folder.delete.modal.text</source>
-        <target>Are you sure you want to delete "%folder%" ?</target>
+        <target>Are you sure you want to delete "%folder%"?</target>
       </trans-unit>
       <trans-unit id="22" resname="media.folder.delete.modal.title">
         <source>media.folder.delete.modal.title</source>
@@ -120,7 +120,7 @@
       </trans-unit>
       <trans-unit id="29" resname="media.media.deletesure">
         <source>media.media.deletesure</source>
-        <target>Are you sure you want to delete this item ?</target>
+        <target>Are you sure you want to delete this item?</target>
       </trans-unit>
       <trans-unit id="30" resname="media.media.download.action">
         <source>media.media.download.action</source>

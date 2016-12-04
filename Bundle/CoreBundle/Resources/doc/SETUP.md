@@ -1,6 +1,6 @@
-#How to install Victoire DCMS ?
+#How to install Victoire DCMS?
 
-You actually have two ways to install it :
+You actually have two ways to install it:
 
 ## 1. From scratch using Victoire Demo
 
@@ -8,7 +8,7 @@ Follow the instructions on [victoire demo Readme](https://github.com/Victoire/de
 
 ## 2. In an existing Symfony project
 
-- Install Victoire core :
+- Install Victoire core:
 
 ```bash
 composer require victoire/victoire

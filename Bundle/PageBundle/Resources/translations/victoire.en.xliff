@@ -116,11 +116,11 @@
         </trans-unit>
         <trans-unit id="10e981313207b6ebcdd8dc5a8b9e085c0b3eecb2" resname="modal.form.page.settings.action.delete.confirm.title">
             <source>modal.form.page.settings.action.delete.confirm.title</source>
-            <target>Is this your final answer ?</target>
+            <target>Is this your final answer?</target>
         </trans-unit>
         <trans-unit id="f0bdf6be270bede6fc8424cd68807b2988c1c5da" resname="modal.form.page.settings.action.delete.confirm.body">
             <source>modal.form.page.settings.action.delete.confirm.body</source>
-            <target><![CDATA[This action will permanently delete this page from the database. This action is irreversible.<br/><strong> Are you sure ?</strong>]]></target>
+            <target><![CDATA[This action will permanently delete this page from the database. This action is irreversible.<br/><strong> Are you sure?</strong>]]></target>
         </trans-unit>
         <trans-unit id="fdsfdsf0bdf6be270be" resname="victoire_page.create.success">
             <source>victoire_page.create.success</source>
