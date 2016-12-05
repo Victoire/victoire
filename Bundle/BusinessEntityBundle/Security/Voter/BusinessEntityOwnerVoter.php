@@ -12,16 +12,13 @@ use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 class BusinessEntityOwnerVoter extends Voter
 {
     private $userClass;
-    private $businessEntityHelper;
 
     /**
      * @param $userClass
-     * @param BusinessEntityHelper $businessEntityHelper
      */
-    public function __construct($userClass, BusinessEntityHelper $businessEntityHelper)
+    public function __construct($userClass)
     {
         $this->userClass = $userClass;
-        $this->businessEntityHelper = $businessEntityHelper;
     }
 
     /**

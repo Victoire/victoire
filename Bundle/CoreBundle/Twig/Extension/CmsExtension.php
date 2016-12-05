@@ -3,7 +3,6 @@
 namespace Victoire\Bundle\CoreBundle\Twig\Extension;
 
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
-use Symfony\Component\Security\Core\SecurityContext;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
@@ -15,7 +14,6 @@ use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer;
 use Victoire\Bundle\WidgetBundle\Resolver\WidgetResolver;
-use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 
 /**
  * CmsExtension extends Twig with view capabilities.
@@ -148,7 +146,7 @@ class CmsExtension extends \Twig_Extension_Core
         if ($currentView && !empty($currentView->getBuiltWidgetMap()[$slotId])) {
             //parse the widget maps
 
-            /* @var WidgetMap $widgetMap */
+            /* @var \Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap $widgetMap */
             foreach ($currentView->getBuiltWidgetMap()[$slotId] as $widgetMap) {
                 $widget = null;
                 try {

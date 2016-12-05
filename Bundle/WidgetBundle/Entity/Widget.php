@@ -291,16 +291,6 @@ class Widget extends BaseWidget implements VictoireQueryInterface
     }
 
     /**
-     * Get the content.
-     *
-     * @return unknown
-     */
-    public function getValue()
-    {
-        //return $this->getContent();
-    }
-
-    /**
      * Get the type of the object.
      *
      * @return string The type

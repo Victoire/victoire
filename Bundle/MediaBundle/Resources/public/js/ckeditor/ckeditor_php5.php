@@ -236,7 +236,6 @@ class CKEditor
                 $js .= "CKEDITOR.replaceAll('".$className."');";
             }
         } else {
-            $classDetection = '';
             $js .= "CKEDITOR.replaceAll( function (textarea, config) {\n";
             if (!empty($className)) {
                 $js .= "	var classRegex = new RegExp('(?:^| )' + '".$className."' + '(?:$| )');\n";

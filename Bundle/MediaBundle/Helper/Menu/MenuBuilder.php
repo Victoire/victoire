@@ -2,20 +2,13 @@
 
 namespace Victoire\Bundle\MediaBundle\Helper\Menu;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * The MenuBuilder will build the top menu and the side menu of the admin interface.
  */
 class MenuBuilder
 {
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
     /**
      * @var MenuAdaptorInterface[]
      */
@@ -27,27 +20,22 @@ class MenuBuilder
     private $topMenuItems = null;
 
     /**
-     * @var ContainerInterface
-     */
-    private $container;
-
-    /**
      * @var MenuItem|null
      */
     private $currentCache = null;
+    /**
+     * @var RequestStack
+     */
+    private $requestStack;
 
     /**
      * Constructor.
      *
-     * @param TranslatorInterface $translator The translator
-     * @param ContainerInterface  $container  The container
-     *
-     * @TODO: this should only have a Request parameter
+     * @param RequestStack $requestStack  The request stack
      */
-    public function __construct(TranslatorInterface $translator, ContainerInterface $container)
+    public function __construct(RequestStack $requestStack)
     {
-        $this->translator = $translator;
-        $this->container = $container;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -130,8 +118,8 @@ class MenuBuilder
     public function getTopChildren()
     {
         if (is_null($this->topMenuItems)) {
-            /* @var $request Request */
-            $request = $this->container->get('request');
+            /* @var $request \Symfony\Component\HttpFoundation\Request */
+            $request = $this->requestStack->getMasterRequest();
             $this->topMenuItems = [];
             foreach ($this->adaptors as $menuAdaptor) {
                 $menuAdaptor->adaptChildren($this, $this->topMenuItems, null, $request);
@@ -150,11 +138,11 @@ class MenuBuilder
      */
     public function getChildren(MenuItem $parent = null)
     {
-        if ($parent == null) {
+        if ($parent === null) {
             return $this->getTopChildren();
         }
         /* @var $request Request */
-        $request = $this->container->get('request');
+        $request = $this->requestStack->getMasterRequest();
         $result = [];
         foreach ($this->adaptors as $menuAdaptor) {
             $menuAdaptor->adaptChildren($this, $result, $parent, $request);

@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Translation\TranslatorInterface;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessPropertyRepository;
-use Victoire\Bundle\BusinessEntityBundle\Entity\ReceiverProperty;
 use Victoire\Bundle\BusinessEntityBundle\Reader\BusinessEntityCacheReader;
 
 /**
@@ -24,24 +23,18 @@ class EntityProxyFieldsBuilder
      * @var EntityRepository
      */
     private $cacheReader;
-    /**
-     * @var array
-     */
-    private $widgetsConfig;
 
     /**
      * define form fields.
      *
      * @param EntityRepository          $businessPropertyRepository
      * @param BusinessEntityCacheReader $cacheReader
-     * @param                           $widgetsConfig
      * @param TranslatorInterface       $translator
      */
     public function __construct(BusinessPropertyRepository $businessPropertyRepository, BusinessEntityCacheReader $cacheReader, $widgetsConfig, TranslatorInterface $translator)
     {
         $this->businessPropertyRepository = $businessPropertyRepository;
         $this->cacheReader = $cacheReader;
-        $this->widgetsConfig = $widgetsConfig;
         $this->translator = $translator;
     }
 
@@ -70,7 +63,7 @@ class EntityProxyFieldsBuilder
 
         if (!empty($receiverPropertiesTypes)) {
             foreach ($receiverPropertiesTypes as $type => $receiverProperties) {
-                /* @var ReceiverProperty[] $receiverProperties */
+                /* @var \Victoire\Bundle\BusinessEntityBundle\Entity\ReceiverProperty[] $receiverProperties */
                 foreach ($receiverProperties as $receiverProperty) {
 
                     //Check if entity has all the required receiver properties as business properties

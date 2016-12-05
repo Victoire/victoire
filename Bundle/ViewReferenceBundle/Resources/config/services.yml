@@ -86,7 +86,6 @@ services:
             - @victoire_core.view_helper
             - @victoire_view_reference.repository
             - @victoire_view_reference.manager
-            - @doctrine.orm.entity_manager
         tags:
         - { name: kernel.event_listener, event: kernel.request, method: warmUp }
 
