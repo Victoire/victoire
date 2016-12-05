@@ -22,7 +22,7 @@ class WidgetMapBuilder
      *
      * @return array
      */
-    public function build(View $view, EntityManager $em = null, $updatePage = true)
+    public function build(View $view, $updatePage = true)
     {
         $widgetMaps = [];
         // populate a $widgetmaps array with widgetmaps of given view + widgetmaps of it's templates
@@ -45,7 +45,6 @@ class WidgetMapBuilder
         $this->removeDeletedWidgetMaps($slots);
 
         foreach ($slots as $slot => $widgetMaps) {
-            $mainWidgetMap = null;
             $builtWidgetMap[$slot] = [];
 
             $rootWidgetMap = $this->findRootWidgetMap($widgetMaps);

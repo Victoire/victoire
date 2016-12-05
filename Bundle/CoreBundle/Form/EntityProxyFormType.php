@@ -68,7 +68,7 @@ class EntityProxyFormType extends AbstractType
                 function ($businessEntity) {
                     return $businessEntity;
                 },
-                function ($nameToBusinessEntity) use ($entityManager, $options) {
+                function ($nameToBusinessEntity) use ($entityManager) {
                     return $entityManager->getRepository('VictoireBusinessEntityBundle:BusinessEntity')->findOneByName($nameToBusinessEntity);
                 }
             ));

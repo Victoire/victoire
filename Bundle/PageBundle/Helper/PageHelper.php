@@ -198,7 +198,7 @@ class PageHelper
         $this->eventDispatcher->dispatch('victoire.on_render_page', $pageRenderEvent);
 
         //Build WidgetMap
-        $this->widgetMapBuilder->build($view, $this->entityManager, true);
+        $this->widgetMapBuilder->build($view, true);
 
         //Populate widgets with their data
         $this->widgetDataWarmer->warm($this->entityManager, $view);
@@ -318,20 +318,6 @@ class PageHelper
         }
 
         return $page;
-    }
-
-    /**
-     * @param View $page
-     * @param $locale
-     */
-    private function refreshPage($page, $locale)
-    {
-        if ($page && $page instanceof View) {
-            try {
-                $this->entityManager->refresh($page->setTranslatableLocale($locale));
-            } catch (ORMInvalidArgumentException $e) {
-            }
-        }
     }
 
     /**

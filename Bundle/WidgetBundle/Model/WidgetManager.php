@@ -105,7 +105,7 @@ class WidgetManager
      */
     public function newWidget($mode, $type, $slot, $view, $position, $parentWidgetMap, $quantum)
     {
-        $widget = $this->widgetHelper->newWidgetInstance($type, $view, $slot, $mode);
+        $widget = $this->widgetHelper->newWidgetInstance($type, $mode);
         $widgets = ['static' => $widget];
 
         /** @var BusinessEntity[] $classes */
@@ -157,7 +157,7 @@ class WidgetManager
             $this->virtualToBpTransformer->transform($view);
         }
         //create a new widget
-        $widget = $this->widgetHelper->newWidgetInstance($type, $view, $slotId, $mode);
+        $widget = $this->widgetHelper->newWidgetInstance($type, $mode);
 
         $businessEntity = $this->entityManager->getRepository('VictoireBusinessEntityBundle:BusinessEntity')->findOneBy(['name' => $entity]);
         $form = $this->widgetFormBuilder->callBuildFormSwitchParameters($widget, $view, $businessEntity, $position, $widgetReference, $slotId, $quantum);

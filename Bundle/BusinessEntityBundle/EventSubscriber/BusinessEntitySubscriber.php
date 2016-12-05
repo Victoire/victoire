@@ -129,9 +129,6 @@ class BusinessEntitySubscriber implements EventSubscriber
                 }
 
                 if ($businessPage && !$scheduledForRemove) {
-                    $oldSlug = $businessPage->getSlug();
-                    $newSlug = $entity->getSlug();
-
                     $businessPage->setName($virtualBusinessPage->getName());
                     $businessPage->setSlug($virtualBusinessPage->getSlug());
 

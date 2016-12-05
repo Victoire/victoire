@@ -6,15 +6,11 @@ use Doctrine\Common\Annotations\Reader;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
-use Doctrine\ORM\PersistentCollection;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
-use Victoire\Bundle\CoreBundle\Entity\Link;
 use Victoire\Bundle\CoreBundle\Entity\View;
-use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
-use Victoire\Bundle\WidgetBundle\Entity\Traits\LinkTrait;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Widget\ListingBundle\Entity\WidgetListing;
 use Victoire\Widget\ListingBundle\Entity\WidgetListingItem;
@@ -82,7 +78,7 @@ class WidgetDataWarmer
 
             //If entity has LinkTrait, store the entity link id
             if ($this->hasLinkTrait($reflect) && ($entity instanceof Widget || $entity instanceof WidgetListingItem)) {
-                /* @var $entity LinkTrait */
+                /* @var $entity \Victoire\Bundle\WidgetBundle\Entity\Traits\LinkTrait */
                 if ($entity->getLink()) {
                     $linkIds[] = $entity->getLink()->getId();
                 }
@@ -107,7 +103,7 @@ class WidgetDataWarmer
                     if (($entity instanceof WidgetListing || $entity instanceof WidgetListingItem || $entity instanceof WidgetMenu)
                     && ($annotationObj instanceof OneToMany)) {
 
-                        /* @var PersistentCollection $collection */
+                        /* @var \Doctrine\ORM\PersistentCollection $collection */
                         if ($collection = $this->accessor->getValue($entity, $property->getName())) {
                             $this->extractAssociatedEntities($collection->toArray(), $linkIds, $associatedEntities);
                         }
@@ -154,7 +150,7 @@ class WidgetDataWarmer
     {
         $viewReferences = [];
 
-        /* @var Link[] $links */
+        /* @var \Victoire\Bundle\CoreBundle\Entity\Link[] $links */
         $links = $this->em->getRepository('VictoireCoreBundle:Link')->findById($linkIds);
 
         foreach ($links as $link) {
@@ -170,7 +166,7 @@ class WidgetDataWarmer
             }
         }
 
-        /* @var Page[] $pages */
+        /* @var \Victoire\Bundle\PageBundle\Entity\Page[] $pages */
         $pages = $this->em->getRepository('VictoireCoreBundle:View')->findByViewReferences($viewReferences);
 
         foreach ($links as $link) {

@@ -6,9 +6,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Victoire\Bundle\MediaBundle\Entity\Folder;
-use Victoire\Bundle\MediaBundle\Entity\Media;
-use Victoire\Bundle\MediaBundle\Helper\MediaManager;
 
 /**
  * controllerclass which Aviary can use to upload the edited image and add it to the database.
@@ -27,11 +24,11 @@ class AviaryController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        /* @var Folder $folder */
+        /* @var \Victoire\Bundle\MediaBundle\Entity\Folder $folder */
         $folder = $em->getRepository('VictoireMediaBundle:Folder')->getFolder($folderId);
-        /* @var Media $media */
+        /* @var \Victoire\Bundle\MediaBundle\Entity\Media $media */
         $media = $em->getRepository('VictoireMediaBundle:Media')->getMedia($mediaId);
-        /* @var MediaManager $mediaManager */
+        /* @var \Victoire\Bundle\MediaBundle\Helper\MediaManager $mediaManager */
         $mediaManager = $this->get('victoire_media.media_manager');
 
         $handler = $mediaManager->getHandler($media);

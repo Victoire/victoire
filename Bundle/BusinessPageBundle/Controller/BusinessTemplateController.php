@@ -209,8 +209,6 @@ class BusinessTemplateController extends Controller
      */
     public function editAction(View $view)
     {
-        $em = $this->getDoctrine()->getManager();
-
         $editForm = $this->createEditForm($view);
         $deleteForm = $this->createDeleteForm($view->getId());
 

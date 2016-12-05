@@ -228,7 +228,7 @@ class WidgetMap
     /**
      * @param mixed $replaced
      */
-    public function setReplaced($replaced)
+    public function setReplaced(WidgetMap $replaced = null)
     {
         if ($replaced) {
             $replaced->addSubstitute($this);
@@ -286,7 +286,7 @@ class WidgetMap
             }
             // If I am replaced and my replacement has children for the position
             if (!$children[$position]
-                && ($replaced = $this->getReplaced())
+                && $this->getReplaced()
                 && !empty($this->getReplaced()->getChilds($position))) {
                 foreach ($this->getReplaced()->getChilds($position) as $_child) {
                     if ($view) {

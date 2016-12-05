@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\WidgetBundle\Model;
 
-use Victoire\Bundle\CoreBundle\Entity\View;
 
 /**
  * Widget Model.
