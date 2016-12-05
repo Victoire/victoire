@@ -87,7 +87,6 @@ class BaseWidgetContentResolver
                         ->getQuery()
                         ->getOneOrNullResult();
 
-        $fields = $widget->getFields();
         $this->populateParametersWithWidgetFields($widget, $entity, $parameters);
 
         return $parameters;

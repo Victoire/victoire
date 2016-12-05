@@ -175,7 +175,7 @@ class WidgetManager
             $this->virtualToBpTransformer->transform($view);
         }
         //create a new widget
-        $widget = $this->widgetHelper->newWidgetInstance($type, $view, $slotId, $mode);
+        $widget = $this->widgetHelper->newWidgetInstance($type, $mode);
 
         $businessEntity = $this->entityManager->getRepository('VictoireBusinessEntityBundle:BusinessEntity')->findOneBy(['name' => $entity]);
         $form = $this->widgetFormBuilder->callBuildFormSwitchParameters($widget, $view, $businessEntity, $position, $widgetReference, $slotId, $quantum);

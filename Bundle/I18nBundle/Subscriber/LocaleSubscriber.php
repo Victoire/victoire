@@ -13,17 +13,15 @@ use Victoire\Bundle\UserBundle\Model\VictoireUserInterface;
 class LocaleSubscriber implements EventSubscriberInterface
 {
     private $defaultLocale;
-    private $localeResolver;
 
     /**
      * Constructor.
      *
      * @param $defaultLocale the default locale of the application
      */
-    public function __construct($defaultLocale, LocaleResolver $localeResolver)
+    public function __construct($defaultLocale)
     {
         $this->defaultLocale = $defaultLocale;
-        $this->localeResolver = $localeResolver;
     }
 
     /**

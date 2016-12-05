@@ -5,7 +5,6 @@ services:
         arguments:
             - "@victoire_core.entity.business_property_repository"
             - "@victoire_business_entity.cache_reader"
-            - "%victoire_core.widgets%"
             - "@translator"
 
     victoire_core.widget_subscriber:

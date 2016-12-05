@@ -7,7 +7,6 @@ use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 use Victoire\Bundle\CriteriaBundle\Chain\DataSourceChain;
 use Victoire\Bundle\CriteriaBundle\Entity\Criteria;
-use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 
 class WidgetResolver
@@ -53,7 +52,7 @@ class WidgetResolver
         if ($widgetMap->getReplaced() && count($widgets) === 0) {
             $widgets = $widgetMap->getReplaced()->getWidgets();
         }
-        /* @var Widget $widget */
+        /* @var \Victoire\Bundle\WidgetBundle\Entity\Widget $widget */
         foreach ($widgets as $_widget) {
 
             /** @var Criteria $criteria */

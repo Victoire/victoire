@@ -58,7 +58,7 @@ class WidgetHelper
      *
      * @return Widget $widget
      */
-    public function newWidgetInstance($type, $view, $slot, $mode)
+    public function newWidgetInstance($type, $mode)
     {
         $widgetAlias = 'victoire.widget.'.strtolower($type);
         $widget = $this->container->get($widgetAlias);

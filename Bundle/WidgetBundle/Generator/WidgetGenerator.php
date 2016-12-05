@@ -11,19 +11,9 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class WidgetGenerator extends Generator
 {
-    private $filesystem;
     private $templating;
     private $skeletonDirs;
 
-    /**
-     * Constructor.
-     *
-     * @param Filesystem $filesystem
-     */
-    public function __construct(Filesystem $filesystem)
-    {
-        $this->filesystem = $filesystem;
-    }
 
     /**
      * set templating.
