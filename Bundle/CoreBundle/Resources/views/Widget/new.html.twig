@@ -7,11 +7,11 @@
 
         {% block form %}
             {% if entity != null %}
-                {% set isVisible = (form.mode.vars.data == widget.mode) or (form.mode.vars.data == 'entity' and widget.mode == 'static') %}
+                {% set isVisible = (form.mode.vars.data == widget.mode) or (form.mode.vars.data == constant('MODE_ENTITY', widget) and widget.mode == constant('MODE_STATIC', widget)) %}
 
                 {% block entity_collapse %}
                     <div
-                        id="picker{% if entity %}-{{ entity }}{% endif %}-{{ quantum }}-{{ form.mode.vars.data }}"
+                        id="picker{% if entity|lower %}-{{ entity }}{% endif %}-{{ quantum }}-{{ form.mode.vars.data }}"
                         class="v-collapse"
                         data-flag="v-collapse"
                         data-group="picker{% if entity %}-{{ entity }}{% endif %}-{{ quantum }}"
