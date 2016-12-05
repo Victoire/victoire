@@ -9,6 +9,13 @@
 
     {% block head_script %}
         <!-- HEAD_SCRIPT -->
+        <script type="text/javascript">
+            {% if is_granted('ROLE_VICTOIRE') %}
+                var adminLocale = '{{ app.user.locale}}';
+            {% endif %}
+            var locale = '{{ app.request.locale }}';
+            var debug = {{ app.debug ? "true" : "false" }};
+        </script>
         {% if is_granted('ROLE_VICTOIRE') %}
             {% javascripts injector="victoire-head, modernizr" %}
                 <script type="text/javascript" src="{{ asset_url }}"></script>
@@ -100,13 +107,6 @@
             </script>
             {% endif %}
             <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-            <script type="text/javascript">
-                {% if is_granted('ROLE_VICTOIRE') %}
-                    var adminLocale = '{{ app.user.locale}}';
-                {% endif %}
-                var locale = '{{ app.request.locale }}';
-                var debug = {{ app.debug ? "true" : "false" }};
-            </script>
             {% if app.environment == "test" or app.environment == "domain" or app.environment == "prod" %}
                 <script src="/js/fos_js_routes_{{ app.environment }}.js"></script>
             {% else %}
