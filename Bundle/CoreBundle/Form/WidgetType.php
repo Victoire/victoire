@@ -134,7 +134,7 @@ class WidgetType extends AbstractType
         );
         $builder->addEventListener(
             FormEvents::POST_SUBMIT,
-            function (FormEvent $event) use ($options) {
+            function (FormEvent $event) {
                 $widget = $event->getData();
                 /** @var Criteria $criteria */
                 foreach ($widget->getCriterias() as $criteria) {

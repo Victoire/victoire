@@ -42,7 +42,6 @@ services:
         class: Victoire\Bundle\BusinessEntityBundle\Security\Voter\BusinessEntityOwnerVoter
         arguments:
             - '%victoire_core.user_class%'
-            - '@victoire_core.helper.business_entity_helper'
         tags:
             - { name: security.voter }
 

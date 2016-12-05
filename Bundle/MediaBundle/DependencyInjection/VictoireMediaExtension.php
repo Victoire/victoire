@@ -29,7 +29,7 @@ class VictoireMediaExtension extends Extension implements PrependExtensionInterf
         $processor = new Processor();
         $configuration = new Configuration();
 
-        $config = $processor->processConfiguration($configuration, $configs);
+        $processor->processConfiguration($configuration, $configs);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
@@ -57,7 +57,7 @@ class VictoireMediaExtension extends Extension implements PrependExtensionInterf
         $container->prependExtensionConfig('liip_imagine', $liipConfig['liip_imagine']);
 
         $configs = $container->getExtensionConfig($this->getAlias());
-        $config = $this->processConfiguration(new Configuration(), $configs);
+        $this->processConfiguration(new Configuration(), $configs);
     }
 
     /**

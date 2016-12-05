@@ -3,15 +3,11 @@
 namespace Victoire\Bundle\CoreBundle\EventSubscriber;
 
 use Doctrine\Common\EventSubscriber;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\OnFlushEventArgs;
-use Doctrine\ORM\UnitOfWork;
 use Victoire\Bundle\CoreBundle\Builder\ViewCssBuilder;
 use Victoire\Bundle\CoreBundle\Entity\View;
-use Victoire\Bundle\CoreBundle\Repository\ViewRepository;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
-use Victoire\Bundle\WidgetBundle\Repository\WidgetRepository;
 use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
 use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 
@@ -19,14 +15,12 @@ class WidgetSubscriber implements EventSubscriber
 {
     private $viewCssBuilder;
     private $widgetMapBuilder;
-    /* @var UnitOfWork $uow */
+    /* @var \Doctrine\ORM\UnitOfWork $uow */
     private $uow;
-    /* @var EntityManager $em */
+    /* @var \Doctrine\ORM\EntityManager $em */
     private $em;
-    /* @var WidgetRepository $widgetRepo */
+    /* @var \Victoire\Bundle\WidgetBundle\Repository\WidgetRepository $widgetRepo */
     private $widgetRepo;
-    /* @var ViewRepository $viewRepo */
-    private $viewRepo;
 
     /**
      * Construct.
@@ -61,7 +55,6 @@ class WidgetSubscriber implements EventSubscriber
         $this->em = $args->getEntityManager();
         $this->uow = $this->em->getUnitOfWork();
         $this->widgetRepo = $this->em->getRepository('Victoire\Bundle\WidgetBundle\Entity\Widget');
-        $this->viewRepo = $this->em->getRepository('Victoire\Bundle\CoreBundle\Entity\View');
 
         $updatedEntities = $this->uow->getScheduledEntityUpdates();
         $deletedEntities = $this->uow->getScheduledEntityDeletions();

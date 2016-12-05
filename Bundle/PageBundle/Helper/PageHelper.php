@@ -320,20 +320,6 @@ class PageHelper
     }
 
     /**
-     * @param View $page
-     * @param $locale
-     */
-    private function refreshPage($page, $locale)
-    {
-        if ($page && $page instanceof View) {
-            try {
-                $this->entityManager->refresh($page->setTranslatableLocale($locale));
-            } catch (ORMInvalidArgumentException $e) {
-            }
-        }
-    }
-
-    /**
      * If the page is not valid, an exception is thrown.
      *
      * @param mixed $page

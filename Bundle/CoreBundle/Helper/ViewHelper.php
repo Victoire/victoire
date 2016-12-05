@@ -3,7 +3,6 @@
 namespace Victoire\Bundle\CoreBundle\Helper;
 
 use Doctrine\Orm\EntityManager;
-use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper;
 use Victoire\Bundle\ViewReferenceBundle\Provider\ViewReferenceProvider;
