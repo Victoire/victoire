@@ -12,7 +12,8 @@ Scenario: I can create a new page
     And I should see "Créer"
     And I fill in "Nom" with "tatooine"
     Then I submit the widget
-    And I should see "Page créée avec succès"
+    And I wait 2 seconds
+    Then I should see "Page créée avec succès"
     And I should be on "/fr/tatooine"
 
   @alice(Template)
