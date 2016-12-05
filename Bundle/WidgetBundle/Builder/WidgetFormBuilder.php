@@ -267,7 +267,7 @@ class WidgetFormBuilder
         //Prefix base name with form mode to avoid to have unique form fields ids
 
         $form = $formFactory->createNamed(
-            sprintf('%s_%s_%s_%s', $businessEntityId, $this->convertToString($quantum), $formMode, $mockForm->getName()),
+            sprintf('%s_%s_%s_%s', strtolower($businessEntityId), $this->convertToString($quantum), $formMode, $mockForm->getName()),
             $widgetFormTypeClass,
             $widget,
             $optionsContainer->getOptions()
