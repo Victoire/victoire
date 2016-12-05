@@ -149,7 +149,7 @@ class PageSubscriber implements EventSubscriber
                     }
                 }
             }
-            if ($entity instanceof BusinessPage) {
+            if ($entity instanceof BusinessPage && $entity->getEntityProxy()->getBusinessEntity()) {
                 $entityProxy = $entity->getEntityProxy();
                 $businessEntity = $eventArgs->getEntityManager()->getRepository($entityProxy->getBusinessEntity()->getClass())
                     ->findOneById($entityProxy->getRessourceId());
