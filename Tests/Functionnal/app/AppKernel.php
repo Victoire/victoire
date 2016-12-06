@@ -129,12 +129,14 @@ class AppKernel extends Kernel
                 continue;
             }
             $serviceObject = new \ReflectionObject($service);
-            foreach ($serviceObject->getProperties() as $prop) {
-                $prop->setAccessible(true);
-                if ($prop->isStatic()) {
-                    continue;
+            if (! $service instanceof \Closure) {
+                foreach ($serviceObject->getProperties() as $prop) {
+                    $prop->setAccessible(true);
+                    if ($prop->isStatic()) {
+                        continue;
+                    }
+                    $prop->setValue($service, null);
                 }
-                $prop->setValue($service, null);
             }
         }
         $property->setValue($container, null);
