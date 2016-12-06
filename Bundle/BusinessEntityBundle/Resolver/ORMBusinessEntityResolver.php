@@ -1,14 +1,12 @@
 <?php
-namespace Victoire\Bundle\BusinessEntityBundle\Resolver;
 
+namespace Victoire\Bundle\BusinessEntityBundle\Resolver;
 
 use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 
 /**
- * Class ORMBusinessEntityResolver
- *
- * @package Bundle\BusinessEntityBundle\Resolver
+ * Class ORMBusinessEntityResolver.
  */
 class ORMBusinessEntityResolver implements BusinessEntityResolverInterface
 {

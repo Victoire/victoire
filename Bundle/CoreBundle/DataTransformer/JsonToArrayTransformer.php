@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\CoreBundle\DataTransformer;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Form\DataTransformerInterface;
 
 class JsonToArrayTransformer implements DataTransformerInterface

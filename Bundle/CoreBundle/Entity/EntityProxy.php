@@ -32,7 +32,8 @@ class EntityProxy
     protected $widgets;
 
     /**
-     * id of the ressource (could be an integer, an hash...)
+     * id of the ressource (could be an integer, an hash...).
+     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $ressourceId;
@@ -156,8 +157,6 @@ class EntityProxy
     {
         $this->businessEntity = $businessEntity;
     }
-
-
 
     /**
      * @return mixed

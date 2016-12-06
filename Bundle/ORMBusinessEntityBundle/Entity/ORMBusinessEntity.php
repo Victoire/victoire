@@ -21,7 +21,6 @@ class ORMBusinessEntity extends BusinessEntity
      */
     protected $class = null;
 
-
     /**
      * Get the class.
      *

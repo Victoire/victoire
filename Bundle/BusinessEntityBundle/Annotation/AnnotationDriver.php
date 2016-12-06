@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\BusinessEntityBundle\Annotation;
 
 use Doctrine\Common\Annotations\AnnotationException;
@@ -6,19 +7,15 @@ use Doctrine\Common\Annotations\Reader;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver as DoctrineAnnotationDriver;
 use Doctrine\ORM\Mapping\MappingException;
-use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Victoire\Bundle\BusinessEntityBundle\Entity\ReceiverProperty;
-use Victoire\Bundle\BusinessEntityBundle\Event\BusinessEntityAnnotationEvent;
-use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
-use Victoire\Bundle\CoreBundle\Annotations\BusinessEntity;
-use Victoire\Bundle\CoreBundle\Annotations\BusinessProperty;
 use Victoire\Bundle\CoreBundle\Annotations\ReceiverProperty as ReceiverPropertyAnnotation;
 use Victoire\Bundle\WidgetBundle\Event\WidgetAnnotationEvent;
 use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
+
 /**
  * Parse all files to get BusinessClasses.
  **/
@@ -28,6 +25,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
     protected $eventDispatcher;
     protected $widgetHelper;
     protected $paths;
+
     /**
      * construct.
      *
@@ -43,6 +41,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
         $this->widgetHelper = $widgetHelper;
         $this->paths = $paths;
     }
+
     /**
      * Get all class names.
      *
@@ -81,8 +80,10 @@ class AnnotationDriver extends DoctrineAnnotationDriver
                 $classes[] = $className;
             }
         }
+
         return $classes;
     }
+
     /**
      * Parse the given Class to find some annotations related to BusinessEntities.
      */
@@ -126,6 +127,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
             }
         }
     }
+
     /**
      * Load receiver properties and NotBlank constraints from ReflectionClass.
      *
@@ -188,6 +190,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
                 }
             }
         }
+
         return $receiverPropertiesTypes;
     }
 }
