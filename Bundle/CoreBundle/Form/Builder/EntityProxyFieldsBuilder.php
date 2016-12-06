@@ -30,7 +30,7 @@ class EntityProxyFieldsBuilder
      * @param BusinessEntityCacheReader $cacheReader
      * @param TranslatorInterface       $translator
      */
-    public function __construct(BusinessPropertyRepository $businessPropertyRepository, BusinessEntityCacheReader $cacheReader, $widgetsConfig, TranslatorInterface $translator)
+    public function __construct(BusinessPropertyRepository $businessPropertyRepository, BusinessEntityCacheReader $cacheReader, TranslatorInterface $translator)
     {
         $this->businessPropertyRepository = $businessPropertyRepository;
         $this->cacheReader = $cacheReader;
