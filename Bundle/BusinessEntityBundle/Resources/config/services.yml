@@ -50,7 +50,6 @@ services:
         factory: ["@doctrine.orm.entity_manager", getRepository]
         arguments:
             - Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity
-        lazy: true
 
     victoire_core.entity.business_property_repository:
         class: Doctrine\ORM\EntityRepository
