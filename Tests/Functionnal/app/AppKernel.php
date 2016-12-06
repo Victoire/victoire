@@ -136,7 +136,8 @@ class AppKernel extends Kernel
                 }
                 try {
                     $prop->setValue($service, null);
-                } catch (\Exception $e) {}
+                } catch (\Exception $e) {
+                }
             }
         }
         $property->setValue($container, null);
