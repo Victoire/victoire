@@ -7,7 +7,6 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\Security\Http\SecurityEvents;
-use Victoire\Bundle\I18nBundle\Resolver\LocaleResolver;
 use Victoire\Bundle\UserBundle\Model\VictoireUserInterface;
 
 class LocaleSubscriber implements EventSubscriberInterface

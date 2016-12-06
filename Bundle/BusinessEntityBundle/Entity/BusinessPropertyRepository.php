@@ -3,7 +3,6 @@
 namespace Victoire\Bundle\BusinessEntityBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Query\Expr;
 use Victoire\Bundle\CoreBundle\Repository\StateFullRepositoryTrait;
 

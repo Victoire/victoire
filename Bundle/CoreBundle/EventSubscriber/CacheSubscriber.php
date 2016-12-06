@@ -3,7 +3,6 @@
 namespace Victoire\Bundle\CoreBundle\EventSubscriber;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Victoire\Bundle\BusinessEntityBundle\Event\BusinessEntityAnnotationEvent;
 use Victoire\Bundle\CoreBundle\Cache\Builder\CacheBuilder;
 use Victoire\Bundle\WidgetBundle\Event\WidgetAnnotationEvent;
 
@@ -21,7 +20,7 @@ class CacheSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * Save widget receiver properties in cache
+     * Save widget receiver properties in cache.
      *
      * @param WidgetAnnotationEvent $event
      */

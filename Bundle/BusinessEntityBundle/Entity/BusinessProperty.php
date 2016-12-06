@@ -68,7 +68,6 @@ class BusinessProperty
         return unserialize($this->types);
     }
 
-
     /**
      * Display object as string.
      *
@@ -121,7 +120,7 @@ class BusinessProperty
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isBusinessIdentifier()
     {
@@ -129,12 +128,10 @@ class BusinessProperty
     }
 
     /**
-     * @param boolean $businessIdentifier
+     * @param bool $businessIdentifier
      */
     public function setBusinessIdentifier($businessIdentifier)
     {
         $this->businessIdentifier = $businessIdentifier;
     }
-
-
 }

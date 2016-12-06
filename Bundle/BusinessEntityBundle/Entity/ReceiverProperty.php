@@ -50,6 +50,7 @@ class ReceiverProperty
         $receiverProperty = new self();
         $receiverProperty->setFieldName($array['fieldName']);
         $receiverProperty->setRequired($array['required']);
+
         return $receiverProperty;
     }
 }

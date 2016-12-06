@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\BusinessEntityBundle\Annotation;
 
 use Doctrine\Common\Annotations\AnnotationException;
@@ -13,13 +14,10 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Victoire\Bundle\BusinessEntityBundle\Entity\ReceiverProperty;
-use Victoire\Bundle\BusinessEntityBundle\Event\BusinessEntityAnnotationEvent;
-use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
-use Victoire\Bundle\CoreBundle\Annotations\BusinessEntity;
-use Victoire\Bundle\CoreBundle\Annotations\BusinessProperty;
 use Victoire\Bundle\CoreBundle\Annotations\ReceiverProperty as ReceiverPropertyAnnotation;
 use Victoire\Bundle\WidgetBundle\Event\WidgetAnnotationEvent;
 use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
+
 /**
  * Parse all files to get BusinessClasses.
  **/
@@ -57,6 +55,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
         $this->regex = $regex;
         $this->logger = $logger;
     }
+
     /**
      * Get all class names.
      *
@@ -99,6 +98,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
                 $classes[] = $class;
             }
         }
+
         return $classes;
     }
 
@@ -303,6 +303,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
                 }
             }
         }
+
         return $receiverPropertiesTypes;
     }
 }

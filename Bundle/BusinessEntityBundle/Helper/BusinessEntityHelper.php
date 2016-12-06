@@ -2,16 +2,12 @@
 
 namespace Victoire\Bundle\BusinessEntityBundle\Helper;
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntityRepository;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
 use Victoire\Bundle\BusinessEntityBundle\Reader\BusinessEntityCacheReader;
-use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Cache\Builder\CacheBuilder;
-use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
  * The BusinessEntityHelper.
@@ -33,7 +29,6 @@ class BusinessEntityHelper
      * Constructor.
      *
      * @param EntityRepository|BusinessEntityRepository $businessEntityRepository
-     *
      * @param BusinessEntityCacheReader                 $cacheReader
      *
      * @internal param BusinessEntityCacheReader $reader
@@ -45,9 +40,8 @@ class BusinessEntityHelper
         $this->cacheReader = $cacheReader;
     }
 
-
     /**
-     * Get a business entity.q
+     * Get a business entity.q.
      *
      * @param mixed $entity
      *
@@ -100,5 +94,4 @@ class BusinessEntityHelper
 
         return $classes;
     }
-
 }

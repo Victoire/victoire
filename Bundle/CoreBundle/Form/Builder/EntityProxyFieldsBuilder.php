@@ -3,7 +3,6 @@
 namespace Victoire\Bundle\CoreBundle\Form\Builder;
 
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Translation\TranslatorInterface;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessPropertyRepository;

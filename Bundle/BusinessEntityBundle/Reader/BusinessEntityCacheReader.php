@@ -5,7 +5,6 @@ namespace Victoire\Bundle\BusinessEntityBundle\Reader;
 use Victoire\Bundle\BusinessEntityBundle\Annotation\AnnotationDriver;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\CoreBundle\Cache\VictoireCache;
-use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
 
 /**
@@ -72,5 +71,4 @@ class BusinessEntityCacheReader
 
         return $results;
     }
-
 }
