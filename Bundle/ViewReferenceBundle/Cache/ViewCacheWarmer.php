@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\ViewReferenceBundle\Cache;
 
-use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\CoreBundle\Helper\ViewHelper;
 use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceManager;
 use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;

@@ -334,17 +334,17 @@ class WidgetFormBuilder
      * Call the build form with selected parameter switch the parameters
      * The call is not the same if an entity is provided or not.
      *
-     * @param Widget $widget
-     * @param View   $view
-     * @param BusinessEntity       $businessEntity
-     * @param int    $position
-     * @param        $parentWidgetMap
-     * @param string $slotId
+     * @param Widget         $widget
+     * @param View           $view
+     * @param BusinessEntity $businessEntity
+     * @param int            $position
+     * @param                $parentWidgetMap
+     * @param string         $slotId
+     * @param                $quantum
      *
-     * @param        $quantum
+     * @throws \Exception
      *
      * @return Form
-     * @throws \Exception
      */
     public function callBuildFormSwitchParameters(Widget $widget, $view, $businessEntity, $position, $parentWidgetMap, $slotId, $quantum)
     {

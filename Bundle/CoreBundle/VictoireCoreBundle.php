@@ -12,7 +12,6 @@ use Victoire\Bundle\CoreBundle\DependencyInjection\Compiler\TraductionCompilerPa
  */
 class VictoireCoreBundle extends Bundle
 {
-
     /**
      * Build bundle.
      *

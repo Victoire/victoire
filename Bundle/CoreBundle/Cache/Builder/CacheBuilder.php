@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\CoreBundle\Cache\Builder;
 
-use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\CoreBundle\Cache\VictoireCache;
 
 /**
@@ -18,7 +17,6 @@ class CacheBuilder
         $this->cache = $cache;
     }
 
-
     /**
      * save Widget.
      */
@@ -32,5 +30,4 @@ class CacheBuilder
         $widgets[$widgetName]['receiverProperties'] = $receiverProperties;
         $this->cache->save('victoire_business_entity_widgets', $widgets);
     }
-
 }

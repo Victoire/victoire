@@ -9,9 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
-use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
-use Victoire\Bundle\BusinessEntityBundle\Reader\BusinessEntityCacheReader;
 use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Transformer\VirtualToBusinessPageTransformer;
 use Victoire\Bundle\CoreBundle\Entity\View;
@@ -47,19 +45,19 @@ class WidgetManager
     /**
      * construct.
      *
-     * @param WidgetHelper              $widgetHelper
-     * @param WidgetFormBuilder         $widgetFormBuilder
-     * @param WidgetContentResolver     $widgetContentResolver
-     * @param WidgetRenderer            $widgetRenderer
-     * @param EntityManager             $entityManager
-     * @param FormErrorHelper           $formErrorHelper
-     * @param Request                   $request
-     * @param WidgetMapManager          $widgetMapManager
-     * @param WidgetMapBuilder          $widgetMapBuilder
-     * @param BusinessEntityHelper      $cacheReader
-     * @param EngineInterface           $templating
-     * @param PageHelper                $pageHelper
-     * @param array                     $slots
+     * @param WidgetHelper          $widgetHelper
+     * @param WidgetFormBuilder     $widgetFormBuilder
+     * @param WidgetContentResolver $widgetContentResolver
+     * @param WidgetRenderer        $widgetRenderer
+     * @param EntityManager         $entityManager
+     * @param FormErrorHelper       $formErrorHelper
+     * @param Request               $request
+     * @param WidgetMapManager      $widgetMapManager
+     * @param WidgetMapBuilder      $widgetMapBuilder
+     * @param BusinessEntityHelper  $cacheReader
+     * @param EngineInterface       $templating
+     * @param PageHelper            $pageHelper
+     * @param array                 $slots
      */
     public function __construct(
         WidgetHelper $widgetHelper,
