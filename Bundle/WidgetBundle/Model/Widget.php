@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\WidgetBundle\Model;
 
-
 /**
  * Widget Model.
  */

@@ -5,6 +5,7 @@
  * Date: 17/03/2016
  * Time: 17:28.
  */
+
 namespace Victoire\Bundle\WidgetBundle\Resolver;
 
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;

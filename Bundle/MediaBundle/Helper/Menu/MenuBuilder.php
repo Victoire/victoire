@@ -31,7 +31,7 @@ class MenuBuilder
     /**
      * Constructor.
      *
-     * @param RequestStack $requestStack  The request stack
+     * @param RequestStack $requestStack The request stack
      */
     public function __construct(RequestStack $requestStack)
     {

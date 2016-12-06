@@ -27,6 +27,7 @@ class EntityProxyFormType extends AbstractType
     {
         $this->entityManager = $entityManager;
     }
+
     /**
      * define form fields.
      *
@@ -39,12 +40,12 @@ class EntityProxyFormType extends AbstractType
 
         if ($options['mode'] === Widget::MODE_ENTITY) {
             $builder->add('ressourceId', EntityType::class, [
-                'label'       => false,
-                'required'    => false,
+                'label'           => false,
+                'required'        => false,
                 'choice_value'    => 'id',
-                'placeholder' => 'entity_proxy.form.empty_value',
-                'class'       => $options['namespace'],
-                'attr'        => [
+                'placeholder'     => 'entity_proxy.form.empty_value',
+                'class'           => $options['namespace'],
+                'attr'            => [
                     'class' => 'add_'.$options['business_entity_id'].'_link picker_entity_select',
                 ],
             ]);
@@ -61,7 +62,7 @@ class EntityProxyFormType extends AbstractType
             ));
         }
         $builder->add('businessEntity', HiddenType::class, [
-            'data' => $options['business_entity_id']
+            'data' => $options['business_entity_id'],
         ]);
 
         $builder->get('businessEntity')->addModelTransformer(new CallbackTransformer(

@@ -51,6 +51,7 @@ abstract class BusinessEntity
     {
         $this->businessProperties = new ArrayCollection();
     }
+
     /**
      * Get the id.
      *
@@ -147,7 +148,7 @@ abstract class BusinessEntity
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isDisable()
     {
@@ -155,7 +156,7 @@ abstract class BusinessEntity
     }
 
     /**
-     * @param boolean $disable
+     * @param bool $disable
      */
     public function setDisable($disable)
     {
@@ -166,5 +167,4 @@ abstract class BusinessEntity
     {
         return $this->name;
     }
-
 }

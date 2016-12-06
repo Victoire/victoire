@@ -4,7 +4,6 @@ namespace Victoire\Bundle\WidgetBundle\Generator;
 
 use Sensio\Bundle\GeneratorBundle\Generator\Generator;
 use Symfony\Component\DependencyInjection\Container;
-use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * This class build all classes, views and config files relative to a WidgetBundle.
@@ -13,7 +12,6 @@ class WidgetGenerator extends Generator
 {
     private $templating;
     private $skeletonDirs;
-
 
     /**
      * set templating.

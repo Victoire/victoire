@@ -71,7 +71,6 @@ class QueryHelper
             throw new \Exception('The container entity parameter must not be null.');
         }
 
-
         //the business name of the container entity
         $businessEntityId = $containerEntity->getBusinessEntityName();
 
