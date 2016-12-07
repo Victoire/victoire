@@ -1,0 +1,116 @@
+{% include "@styleguide/ui/section-header.html.twig" with {
+    "name": "Dropdown",
+    "framework": {
+        "name": "trowel-dropdown",
+        "url": "#",
+    }
+} %}
+
+<h2 class="ts-section__sub-heading">Dropdowns</h2>
+{% embed '@styleguide/ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<button class="vic-btn" data-flag="drops" data-href="#dropdown-ex-1">dropdown</button>\n\n<div class="vic-drop" id="dropdown-ex-1">\n    <nav class="vic-drop__menu">\n        <a class="vic-drop__anchor" href="#">Drop anchor</a>\n        <a class="vic-drop__anchor" href="#">Drop anchor</a>\n        <a class="vic-drop__anchor" href="#">Drop anchor</a>\n\n        <hr class="vic-drop__divider">\n        <h6 class="vic-drop__heading">Drop heading</h6>\n        <a class="vic-drop__anchor" href="#">Drop anchor</a>\n        <a class="vic-drop__anchor" href="#">Drop anchor</a>\n\n        <hr class="vic-drop__divider">\n        <h6 class="vic-drop__heading">Drop heading</h6>\n        <a class="vic-drop__anchor" href="#">Drop anchor</a>\n    </nav>\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <button class="vic-btn" data-flag="drops" data-href="#dropdown-ex-1">dropdown</button>
+
+        <div class="vic-drop" id="dropdown-ex-1">
+            <nav class="vic-drop__menu">
+                <a class="vic-drop__anchor" href="#">Drop anchor</a>
+                <a class="vic-drop__anchor" href="#">Drop anchor</a>
+                <a class="vic-drop__anchor" href="#">Drop anchor</a>
+                <hr class="vic-drop__divider">
+                <h6 class="vic-drop__heading">Drop heading</h6>
+                <a class="vic-drop__anchor" href="#">Drop anchor</a>
+                <a class="vic-drop__anchor" href="#">Drop anchor</a>
+                <hr class="vic-drop__divider">
+                <h6 class="vic-drop__heading">Drop heading</h6>
+                <a class="vic-drop__anchor" href="#">Drop anchor</a>
+            </nav>
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}
+
+<h2 class="ts-section__sub-heading">Positions</h2>
+{% embed '@styleguide/ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<button class="vic-btn" data-flag="drops" data-position="bottomout leftin" data-href="#dropdown-ex-2">bottom left</button>\n<button class="vic-btn" data-flag="drops" data-position="bottomout rightin" data-href="#dropdown-ex-3">bottom right</button>\n<button class="vic-btn" data-flag="drops" data-position="topout leftin" data-href="#dropdown-ex-4">top left</button>\n<button class="vic-btn" data-flag="drops" data-position="topout rightin" data-href="#dropdown-ex-5">top right</button>',
+    }
+} %}
+    {% block snippet_preview %}
+        <button class="vic-btn" data-flag="drops" data-position="bottomout leftin" data-href="#dropdown-ex-2">bottom left</button>
+        <button class="vic-btn" data-flag="drops" data-position="bottomout rightin" data-href="#dropdown-ex-3">bottom right</button>
+        <button class="vic-btn" data-flag="drops" data-position="topout leftin" data-href="#dropdown-ex-4">top left</button>
+        <button class="vic-btn" data-flag="drops" data-position="topout rightin" data-href="#dropdown-ex-5">top right</button>
+
+        <div class="vic-drop" id="dropdown-ex-2">
+            <nav class="vic-drop__menu">
+                <a class="vic-drop__anchor" href="#">Drop anchor</a>
+                <a class="vic-drop__anchor" href="#">Drop anchor</a>
+                <a class="vic-drop__anchor" href="#">Drop anchor</a>
+            </nav>
+        </div>
+
+        <div class="vic-drop" id="dropdown-ex-3">
+            <nav class="vic-drop__menu">
+                <a class="vic-drop__anchor" href="#">Drop anchor</a>
+                <a class="vic-drop__anchor" href="#">Drop anchor</a>
+                <a class="vic-drop__anchor" href="#">Drop anchor</a>
+            </nav>
+        </div>
+
+        <div class="vic-drop" id="dropdown-ex-4">
+            <nav class="vic-drop__menu">
+                <a class="vic-drop__anchor" href="#">Drop anchor</a>
+                <a class="vic-drop__anchor" href="#">Drop anchor</a>
+                <a class="vic-drop__anchor" href="#">Drop anchor</a>
+            </nav>
+        </div>
+
+        <div class="vic-drop" id="dropdown-ex-5">
+            <nav class="vic-drop__menu">
+                <a class="vic-drop__anchor" href="#">Drop anchor</a>
+                <a class="vic-drop__anchor" href="#">Drop anchor</a>
+                <a class="vic-drop__anchor" href="#">Drop anchor</a>
+            </nav>
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}
+
+
+<h2 class="ts-section__sub-heading">Popover</h2>
+{% embed '@styleguide/ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<button class="vic-btn vic-btn--sm vic-btn--danger" data-flag="drops" data-position="bottomout center" data-href="#dropdown-ex-6" data-position="middle rightout">popover</button>\n\n<div class="vic-drop vic-drop--popover" id="dropdown-ex-6">\n    <div class="vic-drop__content">\n        Lorem ipsum dolor sit amet\n    </div>\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <button class="vic-btn vic-btn--sm vic-btn--danger" data-flag="drops" data-position="bottomout center" data-href="#dropdown-ex-6" data-position="middle rightout">popover</button>
+
+        <div class="vic-drop vic-drop--popover" id="dropdown-ex-6">
+            <div class="vic-drop__content">
+                Lorem ipsum dolor sit amet
+            </div>
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}
+
+
+<h2 class="ts-section__sub-heading">Tooltips</h2>
+{% embed '@styleguide/ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<button class="vic-btn vic-btn--sm vic-btn--info" data-flag="drops" data-position="topout center" data-href="#dropdown-ex-7" data-position="middle rightout" data-behavior="hover">tooltip</button>\n\n<div class="vic-drop vic-drop--tooltip" id="dropdown-ex-7">\n    <div class="vic-drop__content">\n        Lorem ipsum dolor sit amet\n    </div>\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <button class="vic-btn vic-btn--sm vic-btn--info" data-flag="drops" data-position="topout center" data-href="#dropdown-ex-7" data-position="middle rightout" data-behavior="hover">tooltip</button>
+
+        <div class="vic-drop vic-drop--tooltip" id="dropdown-ex-7">
+            <div class="vic-drop__content">
+                Lorem ipsum dolor sit amet
+            </div>
+        </div>
+
+    {% endblock snippet_preview %}
+{% endembed %}
