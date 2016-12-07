@@ -53,7 +53,7 @@ namespace Acme\DemoBundle\Entity;
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
-     * @VIC\BusinessProperty({"textable"})
+     * @VIC\BusinessProperty("textable")
      */
     private $title;
     
@@ -61,7 +61,7 @@ namespace Acme\DemoBundle\Entity;
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=255)
-     * @VIC\BusinessProperty({"textable"})
+     * @VIC\BusinessProperty("textable")
      */
     private $description;
 ```
