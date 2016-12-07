@@ -6,7 +6,8 @@
     "trowel-core": "^1.2.3",
     "friendsOfTrowel-buttons-component": "^0.1.0",
     "friendsOfTrowel-dropdowns-component": "^1.1.0",
-    "friendsOfTrowel-Forms-component": "^0.1.0"
+    "friendsOfTrowel-Forms-component": "^0.1.0",
+    "trowel-drops": "^0.2.0"
   },
   "devDependencies": {
     "clipboard": "^1.5.13"

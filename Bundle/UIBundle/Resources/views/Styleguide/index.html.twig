@@ -60,13 +60,14 @@
 {% block foot_script %}
     {{ parent() }}
     <script src="{{ asset('/bundles/victoireui/scripts/styleguide/styleguide.js') }}"></script>
-    <script src="{{ asset('/bundles/victoireui/bower_components/friendsOfTrowel-dropdowns-component/src/javascript/dropdowns.js') }}"></script>
     <script src="{{ asset('/bundles/victoireui/bower_components/friendsOfTrowel-Forms-component/src/javascript/forms.js') }}"></script>
-    <script>
-        var dropdowns = document.querySelectorAll('[data-flag="dropdown"]');
-        new Dropdowns(dropdowns);
 
+    <script src="{{ asset('/bundles/victoireui/bower_components/tether/dist/js/tether.js') }}"></script>
+    <script src="{{ asset('/bundles/victoireui/bower_components/trowel-drops/dest/javascript/drops.js') }}"></script>
+    <script>
         var mdFormGroups = document.querySelectorAll('[data-flag="mdf-group"]');
         new MDFormGroups(mdFormGroups);
+
+        var drops = new TrowelDrops(document.querySelectorAll('[data-flag="drops"]'));
     </script>
 {% endblock foot_script %}

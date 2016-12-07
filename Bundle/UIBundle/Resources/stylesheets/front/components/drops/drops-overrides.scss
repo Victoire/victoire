@@ -1,0 +1,26 @@
+@import '../../globals/params/rem';
+@import '../../globals/params/color';
+
+.vic-drop {
+  display: none;
+}
+
+[class*="vic-"][data-flag="drops"]:not([data-behavior="hover"])::after {
+  $size: 0.6em;
+  $border-width: 2px;
+  content: '';
+  display: inline-block;
+  width: $size;
+  height: $size;
+  border-bottom: $border-width solid currentColor;
+  border-left: $border-width solid currentColor;
+  transform: rotate(-45deg);
+  transform-origin: bottom left;
+  margin-left: 1em;
+  margin-bottom: 0.05em;
+}
+
+[class*="vic-"][data-flag="drops"][data-position~="topin"]::after,
+[class*="vic-"][data-flag="drops"][data-position~="topout"]::after {
+  transform: rotate(135deg) translate(-60%, 60%);
+}
