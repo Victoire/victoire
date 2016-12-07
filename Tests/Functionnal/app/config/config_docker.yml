@@ -1,0 +1,11 @@
+parameters:
+    secret: "s3cr3t"
+    dbname: "victoire"
+    dbuser: "ubuntu"
+    dbpassword: "ubuntu"
+    dbhost: "victoire-mysql"
+    redis-dns: "redis://victoire-redis"
+
+
+imports:
+    - { resource: config_base.yml }
