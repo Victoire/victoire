@@ -12,7 +12,7 @@
 
 {% macro templatesHierarchy(templates) %}
     {% for template in templates %}
-      <li id="list_{{template.id}}"><a href="{{path('victoire_template_show', {'id' : template.id })}}">{{ template.name|default('#' ~ template.id) }}</a>
+      <li id="list_{{template.id}}"><a href="{{path('victoire_template_show', {'id' : template.id })}}">{{ template.backendName|default(template.name)|default('#' ~ template.id) }}</a>
       {% if template.templateInheritors %}
           <ul>
             {{ _self.templatesHierarchy(template.templateInheritors) }}
