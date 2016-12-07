@@ -27,7 +27,9 @@ function updateSitemapPosition(element, ui)
     var sorted = $vic(element).nestedSortable("toArray");
     loading(true);
     $vic.post(
-        Routing.generate('victoire_sitemap_reorganize'),
+        Routing.generate('victoire_sitemap_reorganize', {
+            '_locale': locale
+        }),
         {
             sorted: sorted
         }
