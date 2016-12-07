@@ -14,6 +14,12 @@ Follow the instructions on [victoire demo Readme](https://github.com/Victoire/de
 composer require victoire/victoire
 ```
 
+If you have a message *… these conflict with your requirements or minimum-stability*, you have to change the minimum stability of Composer. Add this in your `composer.json` file:
+
+```json
+"minimum-stability": "dev"
+```
+
 - Declare in AppKernel:
 
 ```php
