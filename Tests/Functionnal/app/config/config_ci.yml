@@ -12,7 +12,7 @@ snc_redis:
         doctrine:
             type: predis
             alias: doctrine
-            dsn: redis://localhost
+            dsn: %redis-dns%
     doctrine:
         metadata_cache:
             client: doctrine

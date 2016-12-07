@@ -1,0 +1,48 @@
+victoire-mailhog:
+  image: phpdockerio/mailhog:latest
+  container_name: victoire-mailhog
+  ports:
+    - "8001:8025"
+
+victoire-redis:
+  image: phpdockerio/redis:latest
+  container_name: victoire-redis
+
+victoire-mysql:
+  image: mysql:5.6
+  container_name: victoire-mysql
+  environment:
+    - MYSQL_ROOT_PASSWORD=root
+    - MYSQL_DATABASE=victoire
+    - MYSQL_USER=ubuntu
+    - MYSQL_PASSWORD=ubuntu
+
+victoire-webserver:
+  image: phpdockerio/nginx:latest
+  container_name: victoire-webserver
+  volumes:
+      - ..:/var/www/victoire
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+  ports:
+   - "8000:80"
+  links:
+   - victoire-php-fpm
+
+victoire-php-fpm:
+  build: .
+  dockerfile: php-fpm/Dockerfile
+  container_name: victoire-php-fpm
+  volumes:
+    - ..:/var/www/victoire
+    - ./php-fpm/php-ini-overrides.ini:/etc/php/7.0/fpm/conf.d/99-overrides.ini
+  links:
+    - victoire-mailhog
+    - victoire-mysql
+    - victoire-redis
+
+composer:
+  restart: 'no'
+  image: composer/composer:php7
+  command: install
+  volumes:
+    - ..:/app

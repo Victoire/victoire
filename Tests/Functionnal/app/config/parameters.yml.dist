@@ -3,3 +3,5 @@ parameters:
     dbname: "victoire"
     dbuser: "ubuntu"
     dbpassword: ~
+    dbhost: "127.0.0.1"
+    redis-dns: "redis://localhost"
