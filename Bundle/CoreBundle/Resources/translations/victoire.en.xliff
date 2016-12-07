@@ -64,23 +64,23 @@
       </trans-unit>
       <trans-unit id="07b2988c1c5daf0bdf6be270bede6fc8424cd688" resname="modal.button.delete.confirm.body">
         <source>modal.button.delete.confirm.body</source>
-        <target><![CDATA[This action will permanently delete this content from the database. This action is irreversible.<br/><strong> Are you sure ?</strong>]]></target>
+        <target><![CDATA[This action will permanently delete this content from the database. This action is irreversible.<br/><strong> Are you sure?</strong>]]></target>
       </trans-unit>
       <trans-unit id="131320710e98bb9e085c0b3eecb26ebcdd8dc5a8" resname="modal.button.delete.confirm.title">
         <source>modal.button.delete.confirm.title</source>
-        <target>Is this your final answer ?</target>
+        <target>Is this your final answer?</target>
       </trans-unit>
       <trans-unit id="bede6fc8424c07b2988c1c5daf088bdf6be270d6" resname="modal.button.unlink.confirm.body">
         <source>modal.button.unlink.confirm.body</source>
-        <target><![CDATA[This action will permanently delete this content from the database. This action is irreversible.<br/><strong> Are you sure ?</strong>]]></target>
+        <target><![CDATA[This action will permanently delete this content from the database. This action is irreversible.<br/><strong> Are you sure?</strong>]]></target>
       </trans-unit>
       <trans-unit id="26ebcdd8dc5a8131320710e98bb9e085c0b3eecb" resname="modal.button.unlink.confirm.title">
         <source>modal.button.unlink.confirm.title</source>
-        <target>Is this your final answer ?</target>
+        <target>Is this your final answer?</target>
       </trans-unit>
       <trans-unit resname="modal.button.delete.confirm.ok.label">
         <source>modal.button.delete.confirm.ok.label</source>
-        <target>YES, I want to delete it !</target>
+        <target>YES, I want to delete it!</target>
       </trans-unit>
       <trans-unit resname="modal.button.delete.confirm.cancel.label">
         <source>modal.button.delete.confirm.cancel.label</source>
@@ -128,7 +128,7 @@
       </trans-unit>
       <trans-unit resname="victoire.widget.inherited.notice">
         <source>victoire.widget.inherited.notice</source>
-        <target><![CDATA[<strong>Warning ! </strong>This content is owned by a parent template (<i>%templateName%</i>).<br/>If you want to edit the content ONLY on this page, keep on going, you're in the right place.<br/>However, if you want to edit this widget on the parent template, and affect it wherever it is used on the website, you have to click on this link :<a href="%templateEditLink%" data-modal="close" data-toggle="vic-modal"> edit the original content</a>.]]></target>
+        <target><![CDATA[<strong>Warning! </strong>This content is owned by a parent template (<i>%templateName%</i>).<br/>If you want to edit the content ONLY on this page, keep on going, you're in the right place.<br/>However, if you want to edit this widget on the parent template, and affect it wherever it is used on the website, you have to click on this link :<a href="%templateEditLink%" data-modal="close" data-toggle="vic-modal"> edit the original content</a>.]]></target>
       </trans-unit>
       <trans-unit id="9" resname="navbar.mode.edit">
         <source>navbar.mode.edit</source>
@@ -192,7 +192,7 @@
       </trans-unit>
       <trans-unit id="25" resname="victoire.widget.type.asynchronous.label">
         <source>victoire.widget.type.asynchronous.label</source>
-        <target>Asynchronous load ?</target>
+        <target>Asynchronous load?</target>
       </trans-unit>
       <trans-unit id="26" resname="victoire.login.forgot.label">
         <source>victoire.login.forgot.label</source>
@@ -220,7 +220,7 @@
       </trans-unit>
       <trans-unit id="32" resname="victoire.success.message">
         <source>victoire.success.message</source>
-        <target>Victoire !</target>
+        <target>Victoire!</target>
       </trans-unit>
       <trans-unit id="33" resname="widget_modal.quantum.tab.default">
         <source>widget_modal.quantum.tab.default</source>
