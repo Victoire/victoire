@@ -23,7 +23,7 @@ class StyleguideController extends Controller
             'form',
             'drops',
             'slots',
-            // 'widget-overlay',
+            'widgets',
             // 'input-file',
             // 'list-group',
             // 'navbar',
