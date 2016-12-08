@@ -24,7 +24,7 @@ class StyleguideController extends Controller
             'drops',
             'slots',
             'widgets',
-            // 'input-file',
+            'input-images',
             // 'list-group',
             // 'navbar',
             // 'mode-switcher',

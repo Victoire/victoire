@@ -20,7 +20,10 @@ $app--color: (
     'default': rgb(91, 179, 238),
     'dark': darken(rgb(91, 179, 238), 10%),
   ),
-  'white': rgb(255, 255, 255),
+  'white': (
+    'default': rgb(255, 255, 255),
+    'dark': rgb(245, 246, 247),
+  ),
   'black': rgb(23, 33, 56),
   'grey': (
     'darker': rgb(47, 60, 89),
