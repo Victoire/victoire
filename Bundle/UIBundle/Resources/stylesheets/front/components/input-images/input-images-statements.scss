@@ -1,0 +1,63 @@
+@import '../../globals/params/ui-mode';
+
+@mixin mixin-dispatcher($value, $flags, $mixin) {
+  @if $mixin == 'inputimages--aspect-ratio' {
+    @include inputimages--aspect-ratio($value, $flags);
+  }
+};
+
+$inputimage--selector: selector--constructor($inputimages--synthax, 'input-image');
+@include selector($inputimage--selector) {
+  @include declaration('font-family', $inputimages--font-family);
+  @include declaration('font-size', $inputimages--font-size);
+  @include declaration('background-color', $inputimages--background-color);
+  @include declaration('border-radius', $inputimages--border-radius);
+  @include declaration('position', relative);
+  @include block-generation($inputimage--selector);
+}
+
+$inputimage-before--selector: selector--set-pseudo-element($inputimage--selector, 'before');
+@include selector($inputimage-before--selector) {
+  @include declaration('-include-inputimages--aspect-ratio', $inputimages--aspect-ratio);
+  @include declaration('content', '');
+  @include declaration('float', left);
+  @include declaration('margin-right', -100%);
+  @include block-generation($inputimage-before--selector);
+}
+
+$inputimage-after--selector: selector--set-pseudo-element($inputimage--selector, 'after');
+@include selector($inputimage-after--selector) {
+  @include declaration('content', '');
+  @include declaration('display', table);
+  @include declaration('clear', both);
+  @include block-generation($inputimage-after--selector);
+}
+
+$inputimage-nomedia--selector: selector--set-element($inputimage--selector, 'no-media');
+@include selector($inputimage-nomedia--selector) {
+  @include declaration('text-align', center);
+  @include declaration('position', absolute);
+  @include declaration('width', 100%);
+  @include declaration('top', 50%);
+  @include declaration('transform', translateY(-50%));
+  @include declaration('padding', $inputimages--padding);
+  @include declaration('display', none);
+  @include declaration('display', block, ('-no-media'));
+  @include block-generation($inputimage-nomedia--selector);
+}
+
+$inputimage-wtmedia--selector: selector--set-element($inputimage--selector, 'wt-media');
+@include selector($inputimage-wtmedia--selector) {
+  @include declaration('position', absolute);
+  @include declaration('top', $inputimages--padding);
+  @include declaration('left', $inputimages--padding);
+  @include declaration('right', $inputimages--padding);
+  @include declaration('bottom', $inputimages--padding);
+  @include declaration('background-size', contain);
+  @include declaration('background-repeat', no-repeat);
+  @include declaration('background-position', center);
+  @include declaration('text-align', right);
+  @include declaration('display', none);
+  @include declaration('display', block, ('-wt-media'));
+  @include block-generation($inputimage-wtmedia--selector);
+}
