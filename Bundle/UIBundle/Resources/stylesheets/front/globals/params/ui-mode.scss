@@ -1,0 +1,29 @@
+@mixin when-victoire {
+  body[role^="admin-"] & {
+    @content;
+  }
+}
+
+@mixin when-mode-readonly {
+  body[role="admin-readonly"] & {
+    @content;
+  }
+}
+
+@mixin when-mode-layout {
+  body[role="admin-layout"] & {
+    @content;
+  }
+}
+
+@mixin when-mode-edit {
+  body[role="admin-edit"] & {
+    @content;
+  }
+}
+
+@mixin when-mode-style {
+  body[role="admin-style"] & {
+    @content;
+  }
+}
