@@ -1,0 +1,56 @@
+@import '../../globals/params/ui-mode';
+
+// @mixin mixin-dispatcher($value, $flags, $mixin) {
+//   @if $mixin == 'widget-overlays-select--open-width' {
+//     @include widget-overlays-select--open-width($value, $flags);
+//   }
+// };
+
+$widget--selector: selector--constructor($widgets--synthax, 'widget');
+@include selector($widget--selector) {
+  @include declaration('position', relative);
+  @include block-generation($widget--selector);
+}
+
+$widget-overlay--selector: selector--set-element($widget--selector, 'overlay');
+@include selector($widget-overlay--selector) {
+  @include declaration('position', absolute);
+  @include declaration('top', 0);
+  @include declaration('left', 0);
+  @include declaration('width', 100%);
+  @include declaration('height', 100%);
+  @include declaration('display', block);
+  @include declaration('font-family', $widgets-overlay--font-family);
+  @include declaration('font-size', $widgets-overlay--font-size);
+  @include declaration('cursor', $widgets-overlay--cursor);
+  @include declaration('color', $widgets-overlay--color);
+  @include declaration('border-width', $widgets-overlay--border-width);
+  @include declaration('border-style', $widgets-overlay--border-style);
+  @include declaration('border-radius', $widgets-overlay--border-radius);
+  @include declaration('background-color', $widgets-overlay--background-color);
+  @include declaration('opacity', 0);
+  @include declaration('opacity', 1, (':hover'));
+  @include declaration('display', none);
+  @include declaration('box-shadow', $widgets-overlay--box-shadow);
+
+  @include when-mode-edit {
+    display: block;
+  }
+
+  @include when-mode-style {
+    display: block;
+  }
+
+  @include block-generation($widget-overlay--selector);
+}
+
+$widget-overlayicon--selector: selector--set-element($widget--selector, 'overlay-icon');
+@include selector($widget-overlayicon--selector) {
+  @include declaration('position', absolute);
+  @include declaration('top', 50%);
+  @include declaration('left', 50%);
+  @include declaration('transform', translate(-50%, -50%));
+  @include declaration('width', $widgets-overlayicon--size);
+  @include declaration('height', $widgets-overlayicon--size);
+  @include block-generation($widget-overlayicon--selector);
+}

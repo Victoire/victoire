@@ -1,3 +1,5 @@
+@import './color';
+
 @mixin when-victoire {
   body[role^="admin-"] & {
     @content;
@@ -27,3 +29,8 @@
     @content;
   }
 }
+
+$mode-readonly--color: color('blue');
+$mode-layout--color: color('green');
+$mode-edit--color: color('orange');
+$mode-style--color: color('pink');
