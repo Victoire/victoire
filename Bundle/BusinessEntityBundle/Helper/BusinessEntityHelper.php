@@ -8,6 +8,7 @@ use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntityRepository;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
 use Victoire\Bundle\BusinessEntityBundle\Reader\BusinessEntityCacheReader;
 use Victoire\Bundle\CoreBundle\Cache\Builder\CacheBuilder;
+use Victoire\Bundle\ORMBusinessEntityBundle\Entity\ORMBusinessEntityRepository;
 
 /**
  * The BusinessEntityHelper.
@@ -21,6 +22,10 @@ class BusinessEntityHelper
      */
     private $businessEntityRepository;
     /**
+     * @var ORMBusinessEntityRepository
+     */
+    private $ormBusinessEntityRepository;
+    /**
      * @var BusinessEntityCacheReader
      */
     private $cacheReader;
@@ -29,13 +34,15 @@ class BusinessEntityHelper
      * Constructor.
      *
      * @param EntityRepository|BusinessEntityRepository $businessEntityRepository
+     * @param EntityRepository                          $ormBusinessEntityRepository
      * @param BusinessEntityCacheReader                 $cacheReader
      *
      * @internal param BusinessEntityCacheReader $reader
      * @internal param CacheBuilder $builder
      */
-    public function __construct(EntityRepository $businessEntityRepository, BusinessEntityCacheReader $cacheReader)
+    public function __construct(EntityRepository $businessEntityRepository, EntityRepository $ormBusinessEntityRepository, BusinessEntityCacheReader $cacheReader)
     {
+        $this->ormBusinessEntityRepository = $ormBusinessEntityRepository;
         $this->businessEntityRepository = $businessEntityRepository;
         $this->cacheReader = $cacheReader;
     }
@@ -52,7 +59,7 @@ class BusinessEntityHelper
         $businessEntity = null;
         $class = new \ReflectionClass($entity);
         while (!$businessEntity && $class && $class->name !== null) {
-            $businessEntity = $this->businessEntityRepository->findOneBy(['class' => $class->name]);
+            $businessEntity = $this->ormBusinessEntityRepository->findOneBy(['class' => $class->name]);
             $class = $class->getParentClass();
         }
 
