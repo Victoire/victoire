@@ -4,6 +4,7 @@ namespace Victoire\Bundle\WidgetMapBundle\Warmer;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\PropertyAccess\PropertyAccess;
+use Victoire\Bundle\BusinessEntityBundle\Resolver\BusinessEntityResolver;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Entity\Link;
 use Victoire\Bundle\CoreBundle\Entity\View;
@@ -34,20 +35,28 @@ class WidgetDataWarmer
     protected $viewReferenceRepository;
     protected $widgetHelper;
     protected $accessor;
+    protected $manyToOneAssociations;
+    /**
+     * @var BusinessEntityResolver
+     */
+    private $businessEntityResolver;
 
     /**
      * Constructor.
      *
      * @param ViewReferenceRepository $viewReferenceRepository
      * @param WidgetHelper            $widgetHelper
+     * @param BusinessEntityResolver  $businessEntityResolver
      */
     public function __construct(
         ViewReferenceRepository $viewReferenceRepository,
-        WidgetHelper $widgetHelper
+        WidgetHelper $widgetHelper,
+        BusinessEntityResolver $businessEntityResolver
     ) {
         $this->viewReferenceRepository = $viewReferenceRepository;
         $this->widgetHelper = $widgetHelper;
         $this->accessor = PropertyAccess::createPropertyAccessor();
+        $this->businessEntityResolver = $businessEntityResolver;
     }
 
     /**
@@ -171,7 +180,7 @@ class WidgetDataWarmer
                 }
             }
             if ($entity instanceof Widget && $proxy = $entity->getEntityProxy()) {
-                $entity->setEntity($this->em->getRepository($proxy->getBusinessEntity()->getClass())->findOneById($proxy->getRessourceId()));
+                $entity->setEntity($this->businessEntityResolver->getBusinessEntity($proxy));
             }
         }
 

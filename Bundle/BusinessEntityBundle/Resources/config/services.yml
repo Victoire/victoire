@@ -57,10 +57,12 @@ services:
         arguments:
             - Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty
 
-    victoire_business_entity.resolver.orm_business_entity_resolver:
-        class: Victoire\Bundle\BusinessEntityBundle\Resolver\ORMBusinessEntityResolver
+    victoire_business_entity.resolver.business_entity_resolver:
+        class: Victoire\Bundle\BusinessEntityBundle\Resolver\BusinessEntityResolver
         arguments:
-            - "@doctrine.orm.entity_manager"
+            - "@victoire_orm_business_entity.resolver.orm_business_entity_resolver"
+            - "@victoire_api_business_entity.resolver.api_business_entity_resolver"
+
     victoire_business_entity.annotation_driver:
         class: "%victoire_business_entity.annotation_driver_class%"
         arguments:
