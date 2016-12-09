@@ -7,14 +7,14 @@
 <div class="vic-col-md-12 vic-well">
     <ul class="vic-nav-group" id="vic-stylize-nav-group" style="margin-top: 5px;">
         {% for key, responsive_config in victoire_twig_responsive %}
-            {% include 'VictoireCoreBundle:Widget/Form/stylize:_responsiveTab.html.twig' with {'config': responsive_config} %}
+            {% include 'VictoireCoreBundle:Widget/Form/stylize:_responsiveTab.html.twig' with {'config': responsive_config, 'widgetId' : form.vars.value.id } %}
         {% endfor %}
     </ul>
 
     <div class="vic-tab-content">
         {% for key, responsive_config in victoire_twig_responsive %}
             {% set active = (form.vicActiveTab.vars.data is defined and form.vicActiveTab.vars.data) ? form.vicActiveTab.vars.data : loop.first ? key : false %}
-            <div role="tabpanel" class="vic-tab-pane{{ key == active ? ' vic-active' }}" id="vic-widget-layout-{{ key }}">
+            <div role="tabpanel" class="vic-tab-pane{{ key == active ? ' vic-active' }}" id="vic-widget-layout-{{ form.vars.value.id}}-{{ key }}">
                 {% include 'VictoireCoreBundle:Widget/Form/stylize:_fields.html.twig' %}
             </div>
         {% endfor %}
