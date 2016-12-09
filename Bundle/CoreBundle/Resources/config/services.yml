@@ -147,6 +147,7 @@ services:
     victoire_core.helper.business_entity_helper:
         class: Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper
         arguments:
+            - "@victoire_core.entity.business_entity_repository"
             - "@victoire_core.entity.orm_business_entity_repository"
             - "@victoire_business_entity.cache_reader"
         lazy: true
