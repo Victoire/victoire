@@ -26,4 +26,16 @@ class BusinessPropertyRepository extends EntityRepository
 
         return $this;
     }
+    /**
+     * @param array $businessEntity
+     */
+    public function getByBusinessEntity($businessEntity)
+    {
+        $this->getInstance()
+            ->join('Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity', 'be', Expr\Join::WITH, 'businessproperty.businessEntity = be.id')
+            ->where('be.name = :businessEntity')
+            ->setParameter(':businessEntity', $businessEntity);
+
+        return $this;
+    }
 }

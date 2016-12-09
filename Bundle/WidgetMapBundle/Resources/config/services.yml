@@ -10,6 +10,7 @@ services:
         arguments:
             - "@victoire_view_reference.repository"
             - "@victoire_widget.widget_helper"
+            - "@victoire_business_entity.resolver.business_entity_resolver"
 
     victoire_widget_map.contextual_view_warmer:
         class: Victoire\Bundle\WidgetMapBundle\Warmer\ContextualViewWarmer
