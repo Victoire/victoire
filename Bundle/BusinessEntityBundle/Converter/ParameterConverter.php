@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\BusinessEntityBundle\Converter;
 
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
 
 /**
@@ -35,7 +36,8 @@ class ParameterConverter
         $stringToReplace = '{{item.'.$entityProperty.'}}';
 
         //the value of the attribute
-        $attributeValue = $entity->getEntityAttributeValue($entityProperty);
+        $accessor = new PropertyAccessor();
+        $attributeValue = $accessor->getValue($entity, $entityProperty);
 
         //we provide a default value
         if ($attributeValue === null) {

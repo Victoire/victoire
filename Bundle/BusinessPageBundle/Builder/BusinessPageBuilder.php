@@ -5,6 +5,7 @@ namespace Victoire\Bundle\BusinessPageBundle\Builder;
 use Doctrine\ORM\EntityManager;
 use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
 use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
@@ -17,9 +18,6 @@ use Victoire\Bundle\CoreBundle\Exception\IdentifierNotDefinedException;
 use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
 use Victoire\Bundle\ViewReferenceBundle\Builder\ViewReferenceBuilder;
 
-/**
- * @property mixed entityProxyProvider
- */
 class BusinessPageBuilder
 {
     protected $businessEntityHelper;
@@ -187,30 +185,15 @@ class BusinessPageBuilder
                 foreach ($businessProperties as $businessProperty) {
                     //parse of seo attributes
                     foreach ($this->pageParameters as $pageAttribute) {
-                        $string = $this->getEntityAttributeValue($page, $pageAttribute);
+
+                        $accessor = new PropertyAccessor();
+                        $string = $accessor->getValue($page, $pageAttribute);
                         $updatedString = $this->parameterConverter->setBusinessPropertyInstance($string, $businessProperty, $entity);
                         $this->setEntityAttributeValue($page, $pageAttribute, $updatedString);
                     }
                 }
             }
         }
-    }
-
-    /**
-     * Get the content of an attribute of an entity given.
-     *
-     * @param BusinessPage $entity
-     * @param string       $field
-     *
-     * @return mixed
-     */
-    protected function getEntityAttributeValue($entity, $field)
-    {
-        $functionName = 'get'.ucfirst($field);
-
-        $fieldValue = call_user_func([$entity, $functionName]);
-
-        return $fieldValue;
     }
 
     /**
