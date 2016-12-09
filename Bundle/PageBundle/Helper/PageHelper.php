@@ -277,7 +277,7 @@ class PageHelper
                     ->findOneBy([
                         'id'     => $viewReference->getViewId(),
                     ]);
-                $entity = $this->container->get('victoire_business_entity.resolver.orm_business_entity_resolver')->getBusinessEntity($page->getEntityProxy());
+                $entity = $this->container->get('victoire_business_entity.resolver.business_entity_resolver')->getBusinessEntity($page->getEntityProxy());
                 $page->getEntityProxy()->setEntity($entity);
 
                 $page->setCurrentLocale($viewReference->getLocale());
