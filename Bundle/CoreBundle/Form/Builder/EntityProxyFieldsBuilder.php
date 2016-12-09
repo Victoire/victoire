@@ -48,10 +48,10 @@ class EntityProxyFieldsBuilder
      *
      * @return array The all list of fields type to add for the entity namespace given
      */
-    public function buildForEntityAndWidgetType(&$builder, $widgetName, $namespace)
+    public function buildForEntityAndWidgetType(&$builder, $widgetName, $businessEntity)
     {
         //Try to add a new form for each entity with the correct annotation and business properties
-        $rawBusinessProperties = $this->businessPropertyRepository->getByClassname($namespace)->run();
+        $rawBusinessProperties = $this->businessPropertyRepository->getByBusinessEntity($businessEntity)->run();
         $businessProperties = [];
         foreach ($rawBusinessProperties as $businessProperty) {
             foreach ($businessProperty->getTypes() as $type) {

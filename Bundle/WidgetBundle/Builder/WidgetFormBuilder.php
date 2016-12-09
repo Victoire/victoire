@@ -98,12 +98,12 @@ class WidgetFormBuilder
     {
         //the static form
         $forms['static'] = [];
-        $forms['static']['main'] = $this->renderNewForm($this->buildForm($widget, $view, null, null, Widget::MODE_STATIC, $slot, $position, $parentWidgetMap, $quantum), $widget, $slot, $view, $quantum, null);
+        $forms['static']['main'] = $this->renderNewForm($this->buildForm($widget, $view, null, Widget::MODE_STATIC, $slot, $position, $parentWidgetMap, $quantum), $widget, $slot, $view, $quantum, null);
 
         // Build each form relative to business entities
         foreach ($classes as $businessEntity) {
             //get the forms for the business entity (entity/query/businessEntity)
-            $entityForms = $this->buildEntityForms($widget, $view, $businessEntity->getName(), $businessEntity->getClass(), $position, $parentWidgetMap, $slot, $quantum);
+            $entityForms = $this->buildEntityForms($widget, $view, $businessEntity->getName(), $position, $parentWidgetMap, $slot, $quantum);
 
             //the list of forms
             $forms[$businessEntity->getName()] = [];
@@ -156,20 +156,20 @@ class WidgetFormBuilder
      *
      * @return array
      */
-    protected function buildEntityForms($widget, View $view, $businessEntityId = null, $namespace = null, $position = null, $parentWidgetMap = null, $slot = null, $quantum = null)
+    protected function buildEntityForms($widget, View $view, $businessEntityId = null, $position = null, $parentWidgetMap = null, $slot = null, $quantum = null)
     {
         $forms = [];
 
         //get the entity form
-        $entityForm = $this->buildForm($widget, $view, $businessEntityId, $namespace, Widget::MODE_ENTITY, $slot, $position, $parentWidgetMap, $quantum);
+        $entityForm = $this->buildForm($widget, $view, $businessEntityId, Widget::MODE_ENTITY, $slot, $position, $parentWidgetMap, $quantum);
         $forms[Widget::MODE_ENTITY] = $entityForm;
 
         //get the query form
-        $queryForm = $this->buildForm($widget, $view, $businessEntityId, $namespace, Widget::MODE_QUERY, $slot, $position, $parentWidgetMap, $quantum);
+        $queryForm = $this->buildForm($widget, $view, $businessEntityId, Widget::MODE_QUERY, $slot, $position, $parentWidgetMap, $quantum);
         $forms[Widget::MODE_QUERY] = $queryForm;
 
         //get the query form
-        $businessEntityForm = $this->buildForm($widget, $view, $businessEntityId, $namespace, Widget::MODE_BUSINESS_ENTITY, $slot, $position, $parentWidgetMap, $quantum);
+        $businessEntityForm = $this->buildForm($widget, $view, $businessEntityId, Widget::MODE_BUSINESS_ENTITY, $slot, $position, $parentWidgetMap, $quantum);
         $forms[Widget::MODE_BUSINESS_ENTITY] = $businessEntityForm;
 
         return $forms;
@@ -189,15 +189,12 @@ class WidgetFormBuilder
      *
      * @return Form
      */
-    public function buildWidgetForm(Widget $widget, View $view, $businessEntityId = null, $namespace = null, $formMode = Widget::MODE_STATIC, $position = null, $parentWidgetMap = null, $slotId = null, $quantum = null)
+    public function buildWidgetForm(Widget $widget, View $view, $businessEntityId = null, $formMode = Widget::MODE_STATIC, $position = null, $parentWidgetMap = null, $slotId = null, $quantum = null)
     {
         $router = $this->container->get('router');
 
         //test parameters
         if ($businessEntityId !== null) {
-            if ($namespace === null) {
-                throw new \Exception('The namespace is mandatory if the businessEntityId is given');
-            }
             if (in_array($formMode, [Widget::MODE_STATIC, null])) {
                 throw new \Exception('The formMode cannot be null or static if the businessEntityId is given');
             }
@@ -251,7 +248,6 @@ class WidgetFormBuilder
 
         $optionsContainer = new WidgetOptionsContainer([
             'businessEntityId'      => $businessEntityId,
-            'namespace'             => $namespace,
             'mode'                  => $formMode,
             'action'                => $formUrl,
             'method'                => 'POST',
@@ -309,19 +305,16 @@ class WidgetFormBuilder
      *
      * @return Form
      */
-    public function buildForm($widget, View $view, $businessEntityId = null, $namespace = null, $formMode = Widget::MODE_STATIC, $slotId = null, $position = null, $parentWidgetMap = null, $quantum = null)
+    public function buildForm($widget, View $view, $businessEntityId = null, $formMode = Widget::MODE_STATIC, $slotId = null, $position = null, $parentWidgetMap = null, $quantum = null)
     {
         //test parameters
         if ($businessEntityId !== null) {
-            if ($namespace === null) {
-                throw new \Exception('The namespace is mandatory if the businessEntityId is given');
-            }
             if ($formMode === null) {
                 throw new \Exception('The formMode is mandatory if the businessEntityId is given');
             }
         }
 
-        $form = $this->buildWidgetForm($widget, $view, $businessEntityId, $namespace, $formMode, $position, $parentWidgetMap, $slotId, $quantum);
+        $form = $this->buildWidgetForm($widget, $view, $businessEntityId, $formMode, $position, $parentWidgetMap, $slotId, $quantum);
 
         //send event
         $dispatcher = $this->container->get('event_dispatcher');
@@ -348,15 +341,13 @@ class WidgetFormBuilder
      */
     public function callBuildFormSwitchParameters(Widget $widget, $view, $businessEntity, $position, $parentWidgetMap, $slotId, $quantum)
     {
-        $entityClass = null;
         $entityName = null;
         //if there is an entity
         if ($businessEntity) {
-            $entityClass = $businessEntity->getClass();
             $entityName = $businessEntity->getName();
         }
 
-        $form = $this->buildForm($widget, $view, $entityName, $entityClass, $widget->getMode(), $slotId, $position, $parentWidgetMap, $quantum);
+        $form = $this->buildForm($widget, $view, $entityName, $widget->getMode(), $slotId, $position, $parentWidgetMap, $quantum);
 
         return $form;
     }
