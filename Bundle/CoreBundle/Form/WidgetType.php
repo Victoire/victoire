@@ -29,9 +29,6 @@ class WidgetType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         if ($options['businessEntityId'] !== null) {
-            if ($options['namespace'] === null) {
-                throw new \Exception('The namespace is mandatory if the business_entity_id is given.');
-            }
             if ($options['mode'] === null) {
                 throw new \Exception('The mode is mandatory if the business_entity_id is given.');
             }
@@ -156,7 +153,7 @@ class WidgetType extends AbstractType
     {
         $form->add('fields', WidgetFieldsFormType::class, [
             'label'     => 'widget.form.entity.fields.label',
-            'namespace' => $options['namespace'],
+            'businessEntityId' => $options['businessEntityId'],
             'widget'    => $options['widget'],
         ]);
     }
@@ -172,12 +169,11 @@ class WidgetType extends AbstractType
         $form
         ->add('fields', WidgetFieldsFormType::class, [
             'label'     => 'widget.form.entity.fields.label',
-            'namespace' => $options['namespace'],
+            'businessEntityId' => $options['businessEntityId'],
             'widget'    => $options['widget'],
         ])
         ->add('entity_proxy', EntityProxyFormType::class, [
             'business_entity_id' => $options['businessEntityId'],
-            'namespace'          => $options['namespace'],
             'widget'             => $options['widget'],
             'mode'               => $mode,
         ]);
@@ -210,7 +206,6 @@ class WidgetType extends AbstractType
         $resolver->setDefined([
             'widget',
             'slot',
-            'namespace',
             'businessEntityId',
             'dataSources',
         ]);
