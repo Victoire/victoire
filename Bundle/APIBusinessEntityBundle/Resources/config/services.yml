@@ -1,0 +1,9 @@
+services:
+    victoire_core.entity.api_business_entity_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - Victoire\Bundle\APIBusinessEntityBundle\Entity\ORMBusinessEntity
+
+    victoire_api_business_entity.resolver.api_business_entity_resolver:
+        class: Victoire\Bundle\APIBusinessEntityBundle\Resolver\APIBusinessEntityResolver

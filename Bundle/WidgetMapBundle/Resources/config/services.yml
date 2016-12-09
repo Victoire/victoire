@@ -8,6 +8,7 @@ services:
             - "@annotation_reader"
             - "@victoire_view_reference.repository"
             - ["\Victoire\Bundle\MediaBundle\Entity\Media"]
+            - "@victoire_business_entity.resolver.business_entity_resolver"
 
     victoire_widget_map.manager:
         class: Victoire\Bundle\WidgetMapBundle\Manager\WidgetMapManager

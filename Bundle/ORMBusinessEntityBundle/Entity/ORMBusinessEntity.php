@@ -40,4 +40,8 @@ class ORMBusinessEntity extends BusinessEntity
     {
         $this->class = $class;
     }
+    public function getType()
+    {
+        return self::TYPE;
+    }
 }
