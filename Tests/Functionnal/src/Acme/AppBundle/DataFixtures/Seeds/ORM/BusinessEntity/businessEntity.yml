@@ -15,6 +15,19 @@ Victoire\Bundle\ORMBusinessEntityBundle\Entity\ORMBusinessEntity:
         class: Acme\AppBundle\Entity\SpaceShip
         name: Spaceship
         availableWidgets: 'a:1:{i:0;s:5:"Force";}'
+
+Victoire\Bundle\APIBusinessEntityBundle\Entity\APIEndpoint:
+    placeholder_endpoint:
+        name: placeholder
+        host: https://jsonplaceholder.typicode.com
+        token: ~
+Victoire\Bundle\APIBusinessEntityBundle\Entity\APIBusinessEntity:
+    users_business_entity:
+        endpoint: @placeholder_endpoint
+        resource: users
+        name: Users
+        availableWidgets: 'a:1:{i:0;s:4:"Text";}'
+
 Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty:
     jedi_name:
         types: a:3:{i:0;s:8:"textable";i:1;s:17:"businessParameter";i:2;s:7:"seoable";}
@@ -56,3 +69,13 @@ Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty:
         name: midiChlorians
         businessEntity: @character_business_entity
         businessIdentifier: 0
+    users_name:
+        types: a:2:{i:0;s:8:"textable";i:1;s:17:"businessParameter";}
+        name: name
+        businessEntity: @users_business_entity
+        businessIdentifier: 0
+    users_email:
+        types: a:2:{i:0;s:8:"textable";i:1;s:17:"businessParameter";}
+        name: email
+        businessEntity: @users_business_entity
+        businessIdentifier: 1
