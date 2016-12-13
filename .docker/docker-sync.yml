@@ -1,0 +1,9 @@
+options:
+  compose-dev-file-path: 'docker-compose-mac.yml'
+syncs:
+  victoire-sync:
+    src: '../'
+    dest: '/'
+    sync_host_port: 10872
+    sync_excludes: ['vendor/bin/']
+    sync_args: '-v --copy-links --hard-links'

@@ -27,7 +27,7 @@ default:
                 bootstrap: Tests/Functionnal/app/autoload.php
                 path: Tests/Functionnal/app/AppKernel.php
                 class: AppKernel
-                env: ci
+                env: docker
          Lakion\Behat\MinkDebugExtension:
              directory: fails
              screenshot: true

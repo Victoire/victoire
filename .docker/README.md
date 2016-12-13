@@ -15,6 +15,10 @@ Victoire is securized by default, credentials are anakin@victoire.io / test
 ##MAC OS##
 
 Under MACOS, the docker architecture will work but with poor performances.
+After setup the environement with `docker-compose -f docker-compose.yml -f docker-compose.setup.yml up`, you can use the alternative sync system provided.
+To run it, just use `docker-compose -f docker-compose.yml -f docker-compose-mac.yml up -d`
+
+rsync is provided by https://github.com/EugenMayer/docker-sync
 
 ##Services exposed outside your environment##
 
