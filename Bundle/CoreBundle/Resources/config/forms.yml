@@ -10,6 +10,7 @@ services:
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@request_stack"
+            - "@victoire_api_business_entity.resolver.api_business_entity_resolver"
         tags:
             - { name: form.type }
 
