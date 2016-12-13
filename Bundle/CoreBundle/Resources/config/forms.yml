@@ -9,6 +9,7 @@ services:
         class: Victoire\Bundle\CoreBundle\Form\EntityProxyFormType
         arguments:
             - "@doctrine.orm.entity_manager"
+            - "@victoire_api_business_entity.resolver.api_business_entity_resolver"
         tags:
             - { name: form.type }
 
