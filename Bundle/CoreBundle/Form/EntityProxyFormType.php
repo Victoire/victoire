@@ -8,12 +8,13 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
+use Victoire\Bundle\APIBusinessEntityBundle\Resolver\APIBusinessEntityResolver;
 use Victoire\Bundle\ORMBusinessEntityBundle\Entity\ORMBusinessEntity;
 use Victoire\Bundle\WidgetBundle\Model\Widget;
 
@@ -28,14 +29,19 @@ class EntityProxyFormType extends AbstractType
      * @var EntityManager
      */
     private $entityManager;
+    /**
+     * @var APIBusinessEntityResolver
+     */
+    private $apiBusinessEntityResolver;
 
     /** @var RequestStack */
     private $requestStack;
 
-    public function __construct(EntityManager $entityManager, RequestStack $requestStack)
+    public function __construct(EntityManager $entityManager, RequestStack $requestStack, APIBusinessEntityResolver $apiBusinessEntityResolver)
     {
         $this->entityManager = $entityManager;
         $this->requestStack = $requestStack;
+        $this->apiBusinessEntityResolver = $apiBusinessEntityResolver;
     }
 
     /**
@@ -87,7 +93,16 @@ class EntityProxyFormType extends AbstractType
                     }
                 ));
             } else {
-                $builder->add('ressourceId', TextType::class, [
+
+                $propertyAccessor = new PropertyAccessor();
+                $choices = [];
+                $entities = $this->apiBusinessEntityResolver->getBusinessEntities($businessEntity);
+                foreach ($entities as $entity) {
+                    $choices[$propertyAccessor->getValue($entity, 'id')] = $propertyAccessor->getValue($entity, 'email');
+                }
+
+                $builder->add('ressourceId', ChoiceType::class, [
+                    'choices'         => $choices,
                     'label'           => false,
                     'required'        => false,
                     'attr'            => [
