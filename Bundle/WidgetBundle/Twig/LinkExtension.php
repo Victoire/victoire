@@ -91,7 +91,7 @@ class LinkExtension extends \Twig_Extension
     }
 
     /**
-     * Generate the complete link (with the a tag).
+     * Generate the complete URL of a link.
      *
      * @param array  $parameters   The link parameters (go to LinkTrait to have the list)
      * @param string $avoidRefresh Do we have to refresh or not ?
