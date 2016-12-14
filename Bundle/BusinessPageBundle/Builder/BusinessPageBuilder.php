@@ -188,7 +188,7 @@ class BusinessPageBuilder
 
                         $accessor = new PropertyAccessor();
                         $string = $accessor->getValue($page, $pageAttribute);
-                        $updatedString = $this->parameterConverter->setBusinessPropertyInstance($string, $businessProperty, $entity);
+                        $updatedString = $this->parameterConverter->convertFromEntity($string, $businessProperty, $entity);
                         $this->setEntityAttributeValue($page, $pageAttribute, $updatedString);
                     }
                 }
@@ -233,9 +233,9 @@ class BusinessPageBuilder
         $pageUrl = $this->urlBuilder->buildUrl($page);
         //parse the business properties
         foreach ($businessProperties as $businessProperty) {
-            $pageUrl = $this->parameterConverter->setBusinessPropertyInstance($pageUrl, $businessProperty, $entity);
-            $pageSlug = $this->parameterConverter->setBusinessPropertyInstance($pageSlug, $businessProperty, $entity);
-            $pageName = $this->parameterConverter->setBusinessPropertyInstance($pageName, $businessProperty, $entity);
+            $pageUrl = $this->parameterConverter->convertFromEntity($pageUrl, $businessProperty, $entity);
+            $pageSlug = $this->parameterConverter->convertFromEntity($pageSlug, $businessProperty, $entity);
+            $pageName = $this->parameterConverter->convertFromEntity($pageName, $businessProperty, $entity);
         }
         //Check that all twig variables in pattern url was removed for it's generated BusinessPage
         preg_match_all('/\{\%\s*([^\%\}]*)\s*\%\}|\{\{\s*([^\}\}]*)\s*\}\}/i', $pageUrl, $matches);
