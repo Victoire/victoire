@@ -48,6 +48,13 @@ class EntityProxy
     protected $entity;
 
     /**
+     * @var array
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $additionnalProperties;
+
+    /**
      * Get id.
      *
      * @return int
@@ -173,4 +180,21 @@ class EntityProxy
     {
         $this->ressourceId = $ressourceId;
     }
+
+    /**
+     * @return array
+     */
+    public function getAdditionnalProperties()
+    {
+        return unserialize($this->additionnalProperties);
+    }
+
+    /**
+     * @param array $additionnalProperties
+     */
+    public function setAdditionnalProperties($additionnalProperties)
+    {
+        $this->additionnalProperties = serialize($additionnalProperties);
+    }
+
 }
