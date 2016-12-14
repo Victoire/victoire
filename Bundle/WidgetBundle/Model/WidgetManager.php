@@ -236,16 +236,7 @@ class WidgetManager
             if ($widgetView !== $currentView) {
                 $widget = $this->overwriteWidget($currentView, $widget);
             }
-            if ($businessEntityName !== null) {
-                if ($widget->getEntityProxy()) {
-                    $namespace = $widget->getEntityProxy()->getBusinessEntity()->getClass();
-                } else {
-                    $namespace = $businessEntity = $this->entityManager->getRepository('VictoireBusinessEntityBundle:BusinessEntity')->findOneBy(['name' => $businessEntityName])->getClass();
-                }
-                $form = $this->widgetFormBuilder->buildForm($widget, $currentView, $businessEntityName, $namespace, $widgetMode, null, null, null, $quantum);
-            } else {
-                $form = $this->widgetFormBuilder->buildForm($widget, $currentView, null, null, $widgetMode, null, null, null, $quantum);
-            }
+            $form = $this->widgetFormBuilder->buildForm($widget, $currentView, $businessEntityName, $widgetMode, null, null, null, $quantum);
 
             $noValidate = $request->query->get('novalidate', false);
             $form->handleRequest($request);
