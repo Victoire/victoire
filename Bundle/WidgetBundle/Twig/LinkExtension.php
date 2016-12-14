@@ -262,7 +262,6 @@ class LinkExtension extends \Twig_Extension
                 ->guessBestPatternIdForEntity(new \ReflectionClass($businessEntityInstance), $businessEntityInstance->getId(), $this->em);
         }
 
-
         $page = $this->pageHelper->findPageByParameters([
             'templateId' => $templateId,
             'entityId'   => $businessEntityInstance->getId(),
