@@ -5,7 +5,7 @@ install:
   command: sh /var/www/victoire/.docker/php-fpm/build.sh
   links:
     - composer
-    - victoire-php-fpm
+    - victoire-php
     - victoire-mailhog
     - victoire-mysql
     - victoire-redis
