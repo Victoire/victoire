@@ -94,7 +94,7 @@ class PageSeoHelper
                             $value = $accessor->getValue($pageSeo, $seoAttribute);
                             // we only update value if its a string and (if its a VBP or its a BP where value is not defined)
                             if (is_string($value) && ($page instanceof VirtualBusinessPage || ($page instanceof BusinessPage && $value == null))) {
-                                $value = $this->parameterConverter->setBusinessPropertyInstance(
+                                $value = $this->parameterConverter->convertFromEntity(
                                     $value,
                                     $businessProperty,
                                     $entity
