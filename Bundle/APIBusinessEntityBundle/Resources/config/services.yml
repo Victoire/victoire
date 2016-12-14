@@ -7,3 +7,5 @@ services:
 
     victoire_api_business_entity.resolver.api_business_entity_resolver:
         class: Victoire\Bundle\APIBusinessEntityBundle\Resolver\APIBusinessEntityResolver
+        arguments:
+          - "@victoire_business_entity.converter.parameter_converter"

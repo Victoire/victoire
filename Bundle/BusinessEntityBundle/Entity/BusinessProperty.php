@@ -46,6 +46,20 @@ class BusinessProperty
     protected $businessIdentifier;
 
     /**
+     * @var array
+     *
+     * @ORM\Column(name="choices", type="text")
+     */
+    protected $choices;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="listMethod", type="text")
+     */
+    protected $listMethod;
+
+    /**
      * Set the type.
      *
      * @param string $type
@@ -133,5 +147,45 @@ class BusinessProperty
     public function setBusinessIdentifier($businessIdentifier)
     {
         $this->businessIdentifier = $businessIdentifier;
+    }
+
+
+    /**
+     * Set the choices.
+     *
+     * @param string $choices
+     */
+    public function setChoices($choices)
+    {
+        $data = @unserialize($choices);
+        if ($choices === 'b:0;' || $data !== false) {
+            $this->choices = $choices;
+        } else {
+            $this->choices = serialize($choices);
+        }
+    }
+
+    /**
+     * @return string the choice of business property
+     */
+    public function getChoices()
+    {
+        return unserialize($this->choices);
+    }
+
+    /**
+     * @return string
+     */
+    public function getListMethod()
+    {
+        return $this->listMethod;
+    }
+
+    /**
+     * @param string $listMethod
+     */
+    public function setListMethod($listMethod)
+    {
+        $this->listMethod = $listMethod;
     }
 }

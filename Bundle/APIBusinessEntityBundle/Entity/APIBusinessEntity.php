@@ -22,6 +22,20 @@ class APIBusinessEntity extends BusinessEntity
     protected $resource;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="getMethod", type="text")
+     */
+    protected $getMethod;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="listMethod", type="text")
+     */
+    protected $listMethod;
+
+    /**
      * @var APIEndpoint
      *
      * @ORM\ManyToOne(targetEntity="APIEndpoint")
@@ -65,4 +79,37 @@ class APIBusinessEntity extends BusinessEntity
     {
         return self::TYPE;
     }
+
+    /**
+     * @return string
+     */
+    public function getGetMethod()
+    {
+        return $this->getMethod;
+    }
+
+    /**
+     * @param string $getMethod
+     */
+    public function setGetMethod($getMethod)
+    {
+        $this->getMethod = $getMethod;
+    }
+
+    /**
+     * @return string
+     */
+    public function getListMethod()
+    {
+        return $this->listMethod;
+    }
+
+    /**
+     * @param string $listMethod
+     */
+    public function setListMethod($listMethod)
+    {
+        $this->listMethod = $listMethod;
+    }
+
 }

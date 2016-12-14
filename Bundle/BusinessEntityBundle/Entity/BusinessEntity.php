@@ -101,6 +101,21 @@ abstract class BusinessEntity
     {
         return $this->businessProperties;
     }
+    /**
+     * Get a business property by name.
+     *
+     * @return BusinessProperty|null The business property
+     */
+    public function getBusinessPropertyByName($name)
+    {
+        foreach ($this->businessProperties as $businessProperty) {
+            if ($businessProperty->getName() == $name) {
+                return $businessProperty;
+            }
+        }
+
+        return null;
+    }
 
     /**
      * Get the business properties.
@@ -125,6 +140,25 @@ abstract class BusinessEntity
         foreach ($this->getBusinessProperties() as $property) {
             if (in_array($type, $property->getTypes())) {
                 $bp[] = $property;
+            }
+        }
+
+        return $bp;
+    }
+    /**
+     * Get the business properties names by type.
+     *
+     * @param string $type
+     *
+     * @return array The businnes properties
+     */
+    public function getBusinessIdentifiers()
+    {
+        $bp = [];
+        /** @var BusinessProperty $property */
+        foreach ($this->getBusinessProperties() as $property) {
+            if ($property->isBusinessIdentifier()) {
+                $bp[] = $property->getName();
             }
         }
 
