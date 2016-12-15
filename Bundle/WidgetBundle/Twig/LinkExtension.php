@@ -87,6 +87,7 @@ class LinkExtension extends \Twig_Extension
             new \Twig_SimpleFunction('vic_link', [$this, 'victoireLink'], ['is_safe' => ['html']]),
             new \Twig_SimpleFunction('vic_menu_link', [$this, 'victoireMenuLink'], ['is_safe' => ['html']]),
             new \Twig_SimpleFunction('vic_business_link', [$this, 'victoireBusinessLink'], ['is_safe' => ['html']]),
+            new \Twig_SimpleFunction('is_vic_link_active', [$this, 'isVicLinkActive'], ['is_safe' => ['html']]),
         ];
     }
 
@@ -279,6 +280,18 @@ class LinkExtension extends \Twig_Extension
         ];
 
         return $this->victoireLinkUrl($parameters);
+    }
+
+    /**
+     * Check if a given Link is active for current request.
+     *
+     * @param Link $link
+     *
+     * @return bool
+     */
+    public function isVicLinkActive(Link $link)
+    {
+        return $this->request && ($this->request->getRequestUri() == $this->victoireLinkUrl($link->getParameters(), false));
     }
 
     /**
