@@ -282,7 +282,6 @@ class LinkExtension extends \Twig_Extension
         return $this->victoireLinkUrl($parameters);
     }
 
-
     /**
      * Check if a given Link is active for current request.
      *
@@ -292,7 +291,7 @@ class LinkExtension extends \Twig_Extension
      */
     public function isVicLinkActive(Link $link)
     {
-        return ($this->request && ($this->request->getRequestUri() == $this->victoireLinkUrl($link->getParameters(), false)));
+        return $this->request && ($this->request->getRequestUri() == $this->victoireLinkUrl($link->getParameters(), false));
     }
 
     /**
