@@ -111,5 +111,4 @@ class APIBusinessEntity extends BusinessEntity
     {
         $this->listMethod = $listMethod;
     }
-
 }

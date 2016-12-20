@@ -26,6 +26,7 @@ class BusinessPropertyRepository extends EntityRepository
 
         return $this;
     }
+
     /**
      * @param array $businessEntity
      */

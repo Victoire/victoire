@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\APIBusinessEntityBundle\Chain\Exception;
 
 /**
@@ -6,5 +7,4 @@ namespace Victoire\Bundle\APIBusinessEntityBundle\Chain\Exception;
  */
 class UnknownTokenTypeException extends \Exception
 {
-
 }

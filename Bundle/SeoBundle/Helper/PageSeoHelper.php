@@ -89,7 +89,6 @@ class PageSeoHelper
                     foreach ($businessProperties as $businessProperty) {
                         //parse of seo attributes
                         foreach ($this->pageSeoAttributes as $seoAttribute) {
-
                             $accessor = new PropertyAccessor();
                             $value = $accessor->getValue($pageSeo, $seoAttribute);
                             // we only update value if its a string and (if its a VBP or its a BP where value is not defined)

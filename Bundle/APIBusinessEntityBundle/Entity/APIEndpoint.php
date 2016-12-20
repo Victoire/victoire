@@ -3,10 +3,9 @@
 namespace Victoire\Bundle\APIBusinessEntityBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 
 /**
- * API endpoint
+ * API endpoint.
  *
  * @ORM\Entity()
  * @ORM\Table("vic_api_endpoint")
@@ -45,7 +44,6 @@ class APIEndpoint
      * @ORM\Column(name="tokenType", type="string", nullable=true)
      */
     protected $tokenType;
-
 
     /**
      * Get the id.

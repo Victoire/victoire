@@ -35,15 +35,15 @@ class ParameterConverter
         $accessor = new PropertyAccessor();
         $attributeValue = $accessor->getValue($entity, $entityProperty);
 
-        return $this->convert($string, 'item.' . $entityProperty, $attributeValue);
-
+        return $this->convert($string, 'item.'.$entityProperty, $attributeValue);
     }
+
     /**
      * Replace the code string with the value of the entity attribute.
      *
-     * @param string           $string
-     * @param string           $entityProperty
-     * @param string           $attributeValue
+     * @param string $string
+     * @param string $entityProperty
+     * @param string $attributeValue
      *
      * @throws \Exception
      *

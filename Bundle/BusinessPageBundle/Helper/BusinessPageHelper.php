@@ -180,7 +180,7 @@ class BusinessPageHelper
         foreach ($keywords as $index => $keyword) {
             foreach ($businessProperties as $businessProperty) {
                 $entityProperty = $businessProperty->getEntityProperty();
-                    $searchWord = '{{item.'.$entityProperty.'}}';
+                $searchWord = '{{item.'.$entityProperty.'}}';
 
                 if ($searchWord === $keyword) {
                     //the array start at index 0 but we want the position to start at 1

@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\APIBusinessEntityBundle\Authentication;
 
-
 use Victoire\Bundle\APIBusinessEntityBundle\Authentication\Interfaces\APIAuthenticationMethodInterface;
 
 class HeaderAuthenticationHandler implements APIAuthenticationMethodInterface
@@ -10,7 +9,7 @@ class HeaderAuthenticationHandler implements APIAuthenticationMethodInterface
     const TYPE = 'header';
 
     /**
-     * Adds a http header to the curl request with the token
+     * Adds a http header to the curl request with the token.
      */
     public function handle($curl, &$getMethod, &$token)
     {
@@ -18,7 +17,7 @@ class HeaderAuthenticationHandler implements APIAuthenticationMethodInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function getType()
     {

@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\APIBusinessEntityBundle\Authentication;
 
-
 use Victoire\Bundle\APIBusinessEntityBundle\Authentication\Interfaces\APIAuthenticationMethodInterface;
 
 class GetParameterAuthenticationHandler implements APIAuthenticationMethodInterface
@@ -10,7 +9,7 @@ class GetParameterAuthenticationHandler implements APIAuthenticationMethodInterf
     const TYPE = 'get_parameter';
 
     /**
-     * Concats the get path with the token
+     * Concats the get path with the token.
      */
     public function handle($curl, &$getMethod, &$token)
     {
@@ -18,7 +17,7 @@ class GetParameterAuthenticationHandler implements APIAuthenticationMethodInterf
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function getType()
     {

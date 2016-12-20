@@ -149,7 +149,6 @@ class BusinessProperty
         $this->businessIdentifier = $businessIdentifier;
     }
 
-
     /**
      * Set the choices.
      *
