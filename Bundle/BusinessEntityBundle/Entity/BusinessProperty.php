@@ -55,7 +55,7 @@ class BusinessProperty
     /**
      * @var string
      *
-     * @ORM\Column(name="listMethod", type="text")
+     * @ORM\Column(name="listMethod", type="text", nullable=true)
      */
     protected $listMethod;
 
@@ -82,7 +82,7 @@ class BusinessProperty
         if (!$this->types) {
             return [];
         }
-        
+
         return unserialize($this->types);
     }
 
