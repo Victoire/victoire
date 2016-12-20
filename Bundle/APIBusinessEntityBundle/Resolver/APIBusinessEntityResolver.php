@@ -2,7 +2,11 @@
 
 namespace Victoire\Bundle\APIBusinessEntityBundle\Resolver;
 
+use GuzzleHttp\Client;
+use Victoire\Bundle\APIBusinessEntityBundle\Chain\ApiAuthenticationChain;
+use Victoire\Bundle\APIBusinessEntityBundle\Chein\Exception\UnknownTokenType;
 use Victoire\Bundle\APIBusinessEntityBundle\Entity\APIBusinessEntity;
+use Victoire\Bundle\APIBusinessEntityBundle\Entity\APIEndpoint;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Resolver\BusinessEntityResolverInterface;
 use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
@@ -16,15 +20,21 @@ class APIBusinessEntityResolver implements BusinessEntityResolverInterface
      * @var ParameterConverter
      */
     private $parameterConverter;
+    /**
+     * @var ApiAuthenticationChain
+     */
+    private $authenticationChain;
 
     /**
      * APIBusinessEntityResolver constructor.
      *
-     * @param ParameterConverter $parameterConverter
+     * @param ParameterConverter     $parameterConverter
+     * @param ApiAuthenticationChain $authenticationChain
      */
-    public function __construct(ParameterConverter $parameterConverter)
+    public function __construct(ParameterConverter $parameterConverter, APIAuthenticationChain $authenticationChain)
     {
         $this->parameterConverter = $parameterConverter;
+        $this->authenticationChain = $authenticationChain;
     }
 
     /**
@@ -50,9 +60,7 @@ class APIBusinessEntityResolver implements BusinessEntityResolverInterface
             $getMethod = $this->parameterConverter->convert($getMethod, $match, $value);
         }
 
-        $path = sprintf("%s%s", $businessEntity->getEndpoint()->getHost(), $getMethod);
-
-        return $this->callApi($path, $businessEntity->getEndpoint()->getToken());
+        return $this->callApi($businessEntity->getEndpoint()->getHost(), $getMethod, $businessEntity->getEndpoint());
     }
 
     /**
@@ -64,25 +72,26 @@ class APIBusinessEntityResolver implements BusinessEntityResolverInterface
     public function getBusinessEntities(APIBusinessEntity $businessEntity)
     {
         if ($businessEntity->getListMethod()) {
-            $path = sprintf("%s/%s", $businessEntity->getEndpoint()->getHost(), $businessEntity->getListMethod());
-            return $this->callApi($path, $businessEntity->getEndpoint()->getToken());
+            return $this->callApi($businessEntity->getEndpoint()->getHost(), $businessEntity->getListMethod(), $businessEntity->getEndpoint());
         }
 
         return null;
-
     }
 
     /**
      * Sends a curl request to a given path
-     * @param $path
+     * @param APIEndpoint $endPoint
      *
      * @return mixed
      */
-    protected function callApi($path, $token)
+    protected function callApi($host, $getMethod, APIEndpoint $endPoint)
     {
+        $token = $endPoint->getToken();
         $curl = curl_init();
-
-        curl_setopt($curl, CURLOPT_URL,$path . $token);
+        if ($tokenType = $endPoint->getTokenType()) {
+            $this->authenticationChain->resolve($tokenType)->handle($curl, $getMethod, $token);
+        }
+        curl_setopt($curl, CURLOPT_URL,$host . $getMethod);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 
         $result = curl_exec($curl);
@@ -90,6 +99,5 @@ class APIBusinessEntityResolver implements BusinessEntityResolverInterface
         curl_close($curl);
 
         return json_decode($result);
-
     }
 }
