@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\Reference;
 class APIAuthenticationCompilerPass implements CompilerPassInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function process(ContainerBuilder $container)
     {

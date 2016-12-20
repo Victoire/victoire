@@ -55,18 +55,17 @@ class EntityProxyFormType extends AbstractType
                 'VictoireBusinessEntityBundle:BusinessEntity'
             )->findOneByName($options['business_entity_id']);
             if ($businessEntity->getType() == ORMBusinessEntity::TYPE) {
-
                 $builder->add(
                     'ressourceId',
                     EntityType::class,
                     [
-                        'label' => false,
-                        'required' => false,
+                        'label'        => false,
+                        'required'     => false,
                         'choice_value' => 'id',
-                        'placeholder' => 'entity_proxy.form.empty_value',
-                        'class' => $businessEntity->getClass(),
-                        'attr' => [
-                            'class' => 'add_' . $options['business_entity_id'] . '_link picker_entity_select',
+                        'placeholder'  => 'entity_proxy.form.empty_value',
+                        'class'        => $businessEntity->getClass(),
+                        'attr'         => [
+                            'class' => 'add_'.$options['business_entity_id'].'_link picker_entity_select',
                         ],
                     ]
                 );
@@ -98,11 +97,11 @@ class EntityProxyFormType extends AbstractType
                         'ressourceId',
                         ChoiceType::class,
                         [
-                            'choices' => $choices,
-                            'label' => false,
+                            'choices'  => $choices,
+                            'label'    => false,
                             'required' => false,
-                            'attr' => [
-                                'class' => 'add_' . $options['business_entity_id'] . '_link picker_entity_select',
+                            'attr'     => [
+                                'class' => 'add_'.$options['business_entity_id'].'_link picker_entity_select',
                             ],
                         ]
                     );
@@ -111,10 +110,10 @@ class EntityProxyFormType extends AbstractType
                         'ressourceId',
                         TextType::class,
                         [
-                            'label' => false,
+                            'label'    => false,
                             'required' => false,
-                            'attr' => [
-                                'class' => 'add_' . $options['business_entity_id'] . '_link picker_entity_select',
+                            'attr'     => [
+                                'class' => 'add_'.$options['business_entity_id'].'_link picker_entity_select',
                             ],
                         ]
                     );
@@ -124,7 +123,7 @@ class EntityProxyFormType extends AbstractType
                     'additionnalProperties',
                     AdditionnalPropertiesType::class,
                     [
-                        'businessEntity' => $businessEntity
+                        'businessEntity' => $businessEntity,
                     ]
                 );
 
@@ -159,18 +158,16 @@ class EntityProxyFormType extends AbstractType
      *
      * @param OptionsResolver $resolver
      */
-    public
-    function configureOptions(
+    public function configureOptions(
         OptionsResolver $resolver
-    )
-    {
+    ) {
         $resolver->setDefaults(
             [
-                'data_class' => 'Victoire\Bundle\CoreBundle\Entity\EntityProxy',
+                'data_class'         => 'Victoire\Bundle\CoreBundle\Entity\EntityProxy',
                 'business_entity_id' => null,
-                'namespace' => null,
-                'widget' => null,
-                'mode' => null,
+                'namespace'          => null,
+                'widget'             => null,
+                'mode'               => null,
                 'translation_domain' => 'victoire',
             ]
         );

@@ -101,6 +101,7 @@ abstract class BusinessEntity
     {
         return $this->businessProperties;
     }
+
     /**
      * Get a business property by name.
      *
@@ -113,8 +114,6 @@ abstract class BusinessEntity
                 return $businessProperty;
             }
         }
-
-        return null;
     }
 
     /**
@@ -145,6 +144,7 @@ abstract class BusinessEntity
 
         return $bp;
     }
+
     /**
      * Get the business properties names by type.
      *

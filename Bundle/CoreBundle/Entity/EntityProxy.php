@@ -196,5 +196,4 @@ class EntityProxy
     {
         $this->additionnalProperties = serialize($additionnalProperties);
     }
-
 }

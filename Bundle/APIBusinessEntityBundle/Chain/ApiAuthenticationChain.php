@@ -2,7 +2,7 @@
 
 namespace Victoire\Bundle\APIBusinessEntityBundle\Chain;
 
-use Victoire\Bundle\APIBusinessEntityBundle\Authentication\Interfaces\APIAuthenticationMethod;
+use Victoire\Bundle\APIBusinessEntityBundle\Authentication\Interfaces\APIAuthenticationMethodInterface;
 use Victoire\Bundle\APIBusinessEntityBundle\Chain\Exception\UnknownTokenTypeException;
 
 class ApiAuthenticationChain
@@ -15,12 +15,13 @@ class ApiAuthenticationChain
     }
 
     /**
-     * Finds the authentication handler that match with given token type
+     * Finds the authentication handler that match with given token type.
      *
      * @param $tokenType
      *
-     * @return mixed
      * @throws UnknownTokenTypeException
+     *
+     * @return mixed
      */
     public function resolve($tokenType)
     {
@@ -32,17 +33,17 @@ class ApiAuthenticationChain
     }
 
     /**
-     * Adds an authentication method
+     * Adds an authentication method.
      *
-     * @param APIAuthenticationMethod $authenticationMethod
+     * @param APIAuthenticationMethodInterface $authenticationMethod
      */
-    public function addAuthenticationMethod(APIAuthenticationMethod $authenticationMethod)
+    public function addAuthenticationMethod(APIAuthenticationMethodInterface $authenticationMethod)
     {
         $this->authenticationMethods[$authenticationMethod::getType()] = $authenticationMethod;
     }
 
     /**
-     * get authenticaton methods
+     * get authenticaton methods.
      *
      * @return array
      */
@@ -52,7 +53,7 @@ class ApiAuthenticationChain
     }
 
     /**
-     * Get all available authentication methods
+     * Get all available authentication methods.
      *
      * @return array
      */
@@ -60,7 +61,7 @@ class ApiAuthenticationChain
     {
         $types = [];
         foreach ($this->authenticationMethods as $type => $authenticationMethod) {
-           $types[] = $type;
+            $types[] = $type;
         }
 
         return $types;
@@ -69,7 +70,7 @@ class ApiAuthenticationChain
     /**
      * @param string $alias
      *
-     * @return APIAuthenticationMethod
+     * @return APIAuthenticationMethodInterface
      */
     public function getAuthenticationMethod($alias)
     {

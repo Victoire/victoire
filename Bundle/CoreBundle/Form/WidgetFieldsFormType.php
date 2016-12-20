@@ -44,11 +44,11 @@ class WidgetFieldsFormType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class'         => null,
+                'data_class'                => null,
                 'businessEntityId'          => null,
-                'fields'             => [],
-                'widget'             => null,
-                'translation_domain' => 'victoire',
+                'fields'                    => [],
+                'widget'                    => null,
+                'translation_domain'        => 'victoire',
             ]
         );
     }
