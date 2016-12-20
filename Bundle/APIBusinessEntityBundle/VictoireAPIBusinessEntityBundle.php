@@ -7,7 +7,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Victoire\Bundle\APIBusinessEntityBundle\DependencyInjection\Compiler\APIAuthenticationCompilerPass;
 
 /**
- * {@inheritDoc}
+ * {@inheritdoc}
  */
 class VictoireAPIBusinessEntityBundle extends Bundle
 {

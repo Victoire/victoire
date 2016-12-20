@@ -10,11 +10,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Victoire\Bundle\APIBusinessEntityBundle\Entity\APIBusinessEntity;
 
 /**
- * Create an entity proxy for the widget.*
+ * Create an entity proxy for the widget.*.
  */
 class AdditionnalPropertiesType extends AbstractType
 {
-
     /**
      * define form fields.
      *
@@ -27,7 +26,7 @@ class AdditionnalPropertiesType extends AbstractType
         /** @var APIBusinessEntity $businessEntity */
         $businessEntity = $options['businessEntity'];
         $getMethod = $businessEntity->getGetMethod();
-        preg_match_all("/{{([a-zA-Z]+)}}/", $getMethod, $matches);
+        preg_match_all('/{{([a-zA-Z]+)}}/', $getMethod, $matches);
         foreach ($matches[1] as $match) {
             if (!in_array($match, $businessEntity->getBusinessIdentifiers())) {
                 if ($property = $businessEntity->getBusinessPropertyByName($match)) {
@@ -36,7 +35,7 @@ class AdditionnalPropertiesType extends AbstractType
                             $match,
                             TextType::class,
                             [
-                                'label' => false,
+                                'label'    => false,
                                 'required' => false,
                             ]
                         );
@@ -47,8 +46,8 @@ class AdditionnalPropertiesType extends AbstractType
                             $match,
                             ChoiceType::class,
                             [
-                                'choices' => $choices,
-                                'label' => false,
+                                'choices'  => $choices,
+                                'label'    => false,
                                 'required' => false,
                             ]
                         );

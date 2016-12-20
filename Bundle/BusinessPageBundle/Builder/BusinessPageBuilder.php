@@ -185,7 +185,6 @@ class BusinessPageBuilder
                 foreach ($businessProperties as $businessProperty) {
                     //parse of seo attributes
                     foreach ($this->pageParameters as $pageAttribute) {
-
                         $accessor = new PropertyAccessor();
                         $string = $accessor->getValue($page, $pageAttribute);
                         $updatedString = $this->parameterConverter->convertFromEntity($string, $businessProperty, $entity);

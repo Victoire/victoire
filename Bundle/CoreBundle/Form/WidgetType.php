@@ -152,9 +152,9 @@ class WidgetType extends AbstractType
     protected function addBusinessEntityFields($form, $options)
     {
         $form->add('fields', WidgetFieldsFormType::class, [
-            'label'     => 'widget.form.entity.fields.label',
+            'label'            => 'widget.form.entity.fields.label',
             'businessEntityId' => $options['businessEntityId'],
-            'widget'    => $options['widget'],
+            'widget'           => $options['widget'],
         ]);
     }
 
@@ -168,9 +168,9 @@ class WidgetType extends AbstractType
     {
         $form
         ->add('fields', WidgetFieldsFormType::class, [
-            'label'     => 'widget.form.entity.fields.label',
+            'label'            => 'widget.form.entity.fields.label',
             'businessEntityId' => $options['businessEntityId'],
-            'widget'    => $options['widget'],
+            'widget'           => $options['widget'],
         ])
         ->add('entity_proxy', EntityProxyFormType::class, [
             'business_entity_id' => $options['businessEntityId'],
