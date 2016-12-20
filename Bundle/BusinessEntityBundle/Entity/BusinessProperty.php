@@ -48,7 +48,7 @@ class BusinessProperty
     /**
      * @var array
      *
-     * @ORM\Column(name="choices", type="text")
+     * @ORM\Column(name="choices", type="text", nullable=true)
      */
     protected $choices;
 
@@ -79,6 +79,10 @@ class BusinessProperty
      */
     public function getTypes()
     {
+        if (!$this->types) {
+            return [];
+        }
+        
         return unserialize($this->types);
     }
 
@@ -169,6 +173,10 @@ class BusinessProperty
      */
     public function getChoices()
     {
+        if (!$this->choices) {
+            return [];
+        }
+
         return unserialize($this->choices);
     }
 
