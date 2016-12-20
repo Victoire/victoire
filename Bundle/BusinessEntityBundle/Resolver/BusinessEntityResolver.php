@@ -13,7 +13,6 @@ use Victoire\Bundle\ORMBusinessEntityBundle\Resolver\ORMBusinessEntityResolver;
  */
 class BusinessEntityResolver implements BusinessEntityResolverInterface
 {
-
     /**
      * @var ORMBusinessEntityResolver
      */

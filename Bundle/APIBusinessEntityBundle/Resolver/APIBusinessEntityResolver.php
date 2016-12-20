@@ -2,9 +2,7 @@
 
 namespace Victoire\Bundle\APIBusinessEntityBundle\Resolver;
 
-use GuzzleHttp\Client;
 use Victoire\Bundle\APIBusinessEntityBundle\Chain\ApiAuthenticationChain;
-use Victoire\Bundle\APIBusinessEntityBundle\Chein\Exception\UnknownTokenType;
 use Victoire\Bundle\APIBusinessEntityBundle\Entity\APIBusinessEntity;
 use Victoire\Bundle\APIBusinessEntityBundle\Entity\APIEndpoint;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
@@ -38,7 +36,8 @@ class APIBusinessEntityResolver implements BusinessEntityResolverInterface
     }
 
     /**
-     * Fetch API to get a single entity
+     * Fetch API to get a single entity.
+     *
      * @param EntityProxy $entityProxy
      *
      * @return mixed
@@ -49,7 +48,7 @@ class APIBusinessEntityResolver implements BusinessEntityResolverInterface
         $businessEntity = $entityProxy->getBusinessEntity();
         $matches = [];
         $getMethod = $businessEntity->getGetMethod();
-        preg_match_all("/{{([a-zA-Z]+)}}/", $getMethod, $matches);
+        preg_match_all('/{{([a-zA-Z]+)}}/', $getMethod, $matches);
         foreach ($matches[1] as $match) {
             if (in_array($match, $businessEntity->getBusinessIdentifiers())) {
                 $value = $entityProxy->getRessourceId();
@@ -64,7 +63,8 @@ class APIBusinessEntityResolver implements BusinessEntityResolverInterface
     }
 
     /**
-     * Fetch API to get a list of entities
+     * Fetch API to get a list of entities.
+     *
      * @param APIBusinessEntity $businessEntity
      *
      * @return mixed
@@ -74,12 +74,11 @@ class APIBusinessEntityResolver implements BusinessEntityResolverInterface
         if ($businessEntity->getListMethod()) {
             return $this->callApi($businessEntity->getEndpoint()->getHost(), $businessEntity->getListMethod(), $businessEntity->getEndpoint());
         }
-
-        return null;
     }
 
     /**
-     * Sends a curl request to a given path
+     * Sends a curl request to a given path.
+     *
      * @param APIEndpoint $endPoint
      *
      * @return mixed
@@ -91,7 +90,7 @@ class APIBusinessEntityResolver implements BusinessEntityResolverInterface
         if ($tokenType = $endPoint->getTokenType()) {
             $this->authenticationChain->resolve($tokenType)->handle($curl, $getMethod, $token);
         }
-        curl_setopt($curl, CURLOPT_URL,$host . $getMethod);
+        curl_setopt($curl, CURLOPT_URL, $host.$getMethod);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 
         $result = curl_exec($curl);
