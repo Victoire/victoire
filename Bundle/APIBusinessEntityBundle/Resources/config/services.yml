@@ -9,3 +9,16 @@ services:
         class: Victoire\Bundle\APIBusinessEntityBundle\Resolver\APIBusinessEntityResolver
         arguments:
           - "@victoire_business_entity.converter.parameter_converter"
+          - "@victoire_api_business_entity.chain.api_authentication_chain"
+
+    victoire_api_business_entity.chain.api_authentication_chain:
+        class: Victoire\Bundle\APIBusinessEntityBundle\Chain\ApiAuthenticationChain
+
+    victoire_api_business_entity.authentication.get_parameter_authentication_handler:
+        class: Victoire\Bundle\APIBusinessEntityBundle\Authentication\GetParameterAuthenticationHandler
+        tags:
+          - { name: victoire_api_business_entity.api_authentication }
+    victoire_api_business_entity.authentication.header_authentication_handler:
+        class: Victoire\Bundle\APIBusinessEntityBundle\Authentication\HeaderAuthenticationHandler
+        tags:
+          - { name: victoire_api_business_entity.api_authentication }
