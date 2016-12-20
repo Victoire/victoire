@@ -2,7 +2,7 @@
 
 namespace Victoire\Bundle\APIBusinessEntityBundle\Authentication\Interfaces;
 
-interface APIAuthenticationMethod
+interface APIAuthenticationMethodInterface
 {
     /**
      * @param $curl
