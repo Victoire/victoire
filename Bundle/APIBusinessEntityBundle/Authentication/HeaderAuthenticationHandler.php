@@ -3,9 +3,9 @@
 namespace Victoire\Bundle\APIBusinessEntityBundle\Authentication;
 
 
-use Victoire\Bundle\APIBusinessEntityBundle\Authentication\Interfaces\APIAuthenticationMethod;
+use Victoire\Bundle\APIBusinessEntityBundle\Authentication\Interfaces\APIAuthenticationMethodInterface;
 
-class HeaderAuthenticationHandler implements APIAuthenticationMethod
+class HeaderAuthenticationHandler implements APIAuthenticationMethodInterface
 {
     const TYPE = 'header';
 
