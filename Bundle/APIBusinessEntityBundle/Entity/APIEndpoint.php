@@ -39,6 +39,12 @@ class APIEndpoint
      * @ORM\Column(name="token", type="text", nullable=true)
      */
     protected $token;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tokenType", type="string", nullable=true)
+     */
+    protected $tokenType;
 
 
     /**
@@ -97,5 +103,21 @@ class APIEndpoint
     public function setToken($token)
     {
         $this->token = $token;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTokenType()
+    {
+        return $this->tokenType;
+    }
+
+    /**
+     * @param string $tokenType
+     */
+    public function setTokenType($tokenType)
+    {
+        $this->tokenType = $tokenType;
     }
 }
