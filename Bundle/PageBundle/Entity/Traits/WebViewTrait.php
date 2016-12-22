@@ -170,9 +170,16 @@ trait WebViewTrait
         return $this;
     }
 
-    public function getUrl()
+    /**
+     * Get url.
+     *
+     * @param null $currentLocale
+     *
+     * @return mixed
+     */
+    public function getUrl($currentLocale = null)
     {
-        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getUrl');
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate($currentLocale, false), 'getUrl');
     }
 
     public function setUrl($name, $locale = null)
