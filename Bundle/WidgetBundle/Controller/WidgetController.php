@@ -509,7 +509,7 @@ class WidgetController extends Controller
         $logger = $this->get('logger');
 
         //can we see the debug
-        $isDebugAllowed = $securityContext->isGranted('ROLE_VICTOIRE_PAGE_DEBUG');
+        $isDebugAllowed = $securityContext->isGranted('ROLE_VICTOIRE_PAGE_DEBUG') ? true : $this->get('kernel')->isDebug();
 
         //whatever is the exception, we log it
         $logger->error($ex->getMessage());
