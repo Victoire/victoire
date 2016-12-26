@@ -60,6 +60,13 @@ class BusinessProperty
     protected $listMethod;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="filterMethod", type="text", nullable=true)
+     */
+    protected $filterMethod;
+
+    /**
      * Set the type.
      *
      * @param string $type
@@ -195,4 +202,21 @@ class BusinessProperty
     {
         $this->listMethod = $listMethod;
     }
+
+    /**
+     * @return string
+     */
+    public function getFilterMethod()
+    {
+        return $this->filterMethod;
+    }
+
+    /**
+     * @param string $filterMethod
+     */
+    public function setFilterMethod($filterMethod)
+    {
+        $this->filterMethod = $filterMethod;
+    }
+
 }
