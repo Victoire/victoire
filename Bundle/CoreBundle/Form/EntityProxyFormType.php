@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\CoreBundle\Form;
 
+use Victoire\Bundle\CoreBundle\Form\Field\APISelect2Type;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -83,21 +84,11 @@ class EntityProxyFormType extends AbstractType
                     )
                 );
             } else {
-                $propertyAccessor = new PropertyAccessor();
-                $choices = [];
-                /** @var APIBusinessEntity $businessEntity */
                 if ($entities = $this->apiBusinessEntityResolver->getBusinessEntities($businessEntity)) {
-                    foreach ($entities as $entity) {
-                        $choices[$propertyAccessor->getValue($entity, 'id')] = $propertyAccessor->getValue(
-                            $entity,
-                            'email'
-                        );
-                    }
                     $builder->add(
-                        'ressourceId',
-                        ChoiceType::class,
+                        'ressource_id',
+                        APISelect2Type::class,
                         [
-                            'choices'  => $choices,
                             'label'    => false,
                             'required' => false,
                             'attr'     => [
@@ -107,7 +98,7 @@ class EntityProxyFormType extends AbstractType
                     );
                 } else {
                     $builder->add(
-                        'ressourceId',
+                        'ressource_id',
                         TextType::class,
                         [
                             'label'    => false,

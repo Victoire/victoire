@@ -208,3 +208,10 @@ services:
             - "%victoire_i18n.available_locales%"
             - "@request_stack"
             - "@security.authorization_checker"
+
+    victoire_core.type.api_select2_type:
+        class: Victoire\Bundle\CoreBundle\Form\Field\APISelect2Type
+        arguments:
+            - "@victoire_api_business_entity.resolver.api_business_entity_resolver"
+        tags:
+            - { name: form.type }

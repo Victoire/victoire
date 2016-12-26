@@ -34,6 +34,41 @@
     </div>
 {% endblock criteria_row %}
 
+{% block api_select2_widget %}
+    <select {{ block('widget_attributes') }}>
+        {%- set options = choices -%}
+        {{- block('choice_widget_options') -}}
+    </select>
+
+    <script type="text/javascript">
+        $("#{{ id }}").select2({
+            ajax: {
+                url: Routing.generate('victoire_api_fetch', {'businessEntity': 1, '_locale': locale}),
+                dataType: 'json',
+                delay: 250,
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    return {
+                        results: $.map(data, function (item) {
+                            return {
+                                text: item.text,
+                                id: item.id
+                            }
+                        })
+                    };
+                },
+                data: function (params) {
+                    return {
+                        q: params.term
+                    };
+                }
+            },
+            minimumInputLength: 1,
+            width: "100%"
+        });
+    </script>
+{% endblock api_select2_widget %}
+
 {# Buttons #}
 {% block tags_widget %}
 <input type="hidden" id="{{id}}" name="{{ full_name }}" value="{{tag_values}}" tabindex="-1" class="select2-offscreen" />
