@@ -66,6 +66,7 @@ class RouteLoader extends Loader
             'VictoireConfigBundle',
             'VictoireWidgetBundle',
             'VictoireSitemapBundle',
+            'VictoireAPIBusinessEntityBundle',
         ];
 
         foreach ($bundles as $bundle) {
