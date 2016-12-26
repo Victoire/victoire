@@ -46,11 +46,15 @@ class APIBusinessEntityResolver implements BusinessEntityResolverInterface
     {
         /** @var APIBusinessEntity $businessEntity */
         $businessEntity = $entityProxy->getBusinessEntity();
-        $matches = [];
         $getMethod = $businessEntity->getGetMethod();
         preg_match_all('/{{([a-zA-Z]+)}}/', $getMethod, $matches);
+        $identifiers = array_map(function($property) {
+                return $property->getName();
+            },
+            $businessEntity->getBusinessIdentifiers()->toArray()
+        );
         foreach ($matches[1] as $match) {
-            if (in_array($match, $businessEntity->getBusinessIdentifiers())) {
+            if (in_array($match, $identifiers)) {
                 $value = $entityProxy->getRessourceId();
             } else {
                 $props = $entityProxy->getAdditionnalProperties();

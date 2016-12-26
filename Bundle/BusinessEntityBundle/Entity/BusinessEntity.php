@@ -131,14 +131,17 @@ abstract class BusinessEntity
      *
      * @param string $type
      *
-     * @return array The businnes properties
+     * @return BusinessProperty[] The businnes properties
      */
     public function getBusinessPropertiesByType($type)
     {
-        $bp = [];
+        if (!is_array($type)) {
+            $type[] = $type;
+        }
+        $bp = new ArrayCollection();
         foreach ($this->getBusinessProperties() as $property) {
-            if (in_array($type, $property->getTypes())) {
-                $bp[] = $property;
+            if (count(array_diff($type, $property->getTypes())) == 0) {
+                $bp->add($property);
             }
         }
 
@@ -150,15 +153,15 @@ abstract class BusinessEntity
      *
      * @param string $type
      *
-     * @return array The businnes properties
+     * @return ArrayCollection The businnes properties
      */
     public function getBusinessIdentifiers()
     {
-        $bp = [];
+        $bp = new ArrayCollection();
         /** @var BusinessProperty $property */
         foreach ($this->getBusinessProperties() as $property) {
             if ($property->isBusinessIdentifier()) {
-                $bp[] = $property->getName();
+                $bp->add($property);
             }
         }
 
