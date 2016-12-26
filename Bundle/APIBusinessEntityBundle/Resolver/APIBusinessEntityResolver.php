@@ -6,6 +6,7 @@ use Victoire\Bundle\APIBusinessEntityBundle\Chain\ApiAuthenticationChain;
 use Victoire\Bundle\APIBusinessEntityBundle\Entity\APIBusinessEntity;
 use Victoire\Bundle\APIBusinessEntityBundle\Entity\APIEndpoint;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
 use Victoire\Bundle\BusinessEntityBundle\Resolver\BusinessEntityResolverInterface;
 use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 
@@ -75,9 +76,25 @@ class APIBusinessEntityResolver implements BusinessEntityResolverInterface
      */
     public function getBusinessEntities(APIBusinessEntity $businessEntity)
     {
-        if ($businessEntity->getListMethod()) {
-            return $this->callApi($businessEntity->getEndpoint()->getHost(), $businessEntity->getListMethod(), $businessEntity->getEndpoint());
-        }
+        return $this->callApi($businessEntity->getEndpoint()->getHost(), $businessEntity->getListMethod(), $businessEntity->getEndpoint());
+    }
+
+    /**
+     * filter API to get a list of entities.
+     *
+     * @param APIBusinessEntity $businessEntity
+     * @param array $filters
+     *
+     * @return mixed
+     */
+    public function searchBusinessEntities(APIBusinessEntity $businessEntity, BusinessProperty $businessProperty, $filter)
+    {
+        $getMethod = $businessEntity->getListMethod()
+            . (false !== strpos($businessEntity->getListMethod(), '?') ? '&' : '?')
+            . $businessProperty->getFilterMethod();
+        $getMethod = preg_replace('/{{([a-zA-Z]+)}}/', $filter, $getMethod);
+
+        return $this->callApi($businessEntity->getEndpoint()->getHost(), $getMethod, $businessEntity->getEndpoint());
     }
 
     /**
