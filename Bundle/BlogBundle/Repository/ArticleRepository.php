@@ -22,7 +22,7 @@ class ArticleRepository extends EntityRepository
      *
      * @return ArticleRepository
      */
-    public function getAll($excludeUnpublished = false)
+    public function getAll($excludeUnpublished = false, Blog $blog = null)
     {
         $this->clearInstance();
         $this->qb = $this->getInstance();
@@ -35,6 +35,12 @@ class ArticleRepository extends EntityRepository
                 ->setParameter('status', PageStatus::PUBLISHED)
                 ->setParameter('scheduled_status', PageStatus::SCHEDULED)
                 ->setParameter('publicationDate', new \DateTime());
+        }
+
+        if (null != $blog) {
+            $this->qb
+                ->andWhere('article.blog = :blog')
+                ->setParameter('blog', $blog->getId());
         }
 
         return $this;
@@ -83,8 +89,8 @@ class ArticleRepository extends EntityRepository
 
     public function getPreviousRecord($id)
     {
-        $queryBuilder = $this->getAll(true)
-            ->getInstance();
+        $blog = $this->find($id)->getBlog();
+        $queryBuilder = $this->getAll(true, $blog)->getInstance();
 
         return $queryBuilder->andWhere($queryBuilder->expr()->lt('article.id', ':id'))
             ->setParameter('id', $id)
@@ -96,8 +102,8 @@ class ArticleRepository extends EntityRepository
 
     public function getNextRecord($id)
     {
-        $queryBuilder = $this->getAll(true)
-            ->getInstance();
+        $blog = $this->find($id)->getBlog();
+        $queryBuilder = $this->getAll(true, $blog)->getInstance();
 
         return $queryBuilder->andWhere($queryBuilder->expr()->gt('article.id', ':id'))
             ->setParameter('id', $id)
