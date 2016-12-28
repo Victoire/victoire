@@ -3,7 +3,6 @@
 namespace Victoire\Bundle\ORMBusinessEntityBundle\Resolver;
 
 use Doctrine\ORM\EntityManager;
-use Victoire\Bundle\APIBusinessEntityBundle\Entity\APIBusinessEntity;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
 use Victoire\Bundle\BusinessEntityBundle\Resolver\BusinessEntityResolverInterface;
 use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
@@ -26,16 +25,18 @@ class ORMBusinessEntityResolver implements BusinessEntityResolverInterface
         return $this->entityManager->getRepository($entityProxy->getBusinessEntity()->getClass())
             ->findOneById($entityProxy->getRessourceId());
     }
+
     public function getBusinessEntities(ORMBusinessEntity $businessEntity)
     {
         return $this->entityManager->getRepository($businessEntity->getClass())
             ->findAll();
     }
+
     /**
      * filter repo to get a list of entities.
      *
      * @param ORMBusinessEntity $businessEntity
-     * @param array $filters
+     * @param array             $filters
      *
      * @return mixed
      */
@@ -45,7 +46,7 @@ class ORMBusinessEntityResolver implements BusinessEntityResolverInterface
 
         return $this->entityManager->getRepository($businessEntity->getClass())
             ->createQueryBuilder($alias)
-            ->where($alias . '.' . $businessProperty->getName() . 'LIKE %:filter%')
+            ->where($alias.'.'.$businessProperty->getName().'LIKE %:filter%')
             ->setParameter(':filter', $filter)
             ->getQuery()
             ->getResult();

@@ -27,9 +27,9 @@ class AdditionnalPropertiesType extends AbstractType
         $businessEntity = $options['businessEntity'];
         $getMethod = $businessEntity->getGetMethod();
         preg_match_all('/{{([a-zA-Z]+)}}/', $getMethod, $matches);
-        $identifiers = array_map(function($property) {
-                return $property->getName();
-            },
+        $identifiers = array_map(function ($property) {
+            return $property->getName();
+        },
             $businessEntity->getBusinessIdentifiers()->toArray()
         );
         foreach ($matches[1] as $match) {

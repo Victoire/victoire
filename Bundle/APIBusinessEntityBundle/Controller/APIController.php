@@ -1,9 +1,10 @@
 <?php
+
 namespace Victoire\Bundle\APIBusinessEntityBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
@@ -16,13 +17,13 @@ use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
  */
 class APIController extends Controller
 {
-
     /**
      * Method used to change of edit modefetch an api.
      *
      * @Route("/fetch/{businessEntity}", name="victoire_api_fetch", options={"expose"=true})
      *
      * @ParamConverter()
+     *
      * @return JsonResponse Empty response
      */
     public function fetchApiAction(Request $request, BusinessEntity $businessEntity)
@@ -42,7 +43,7 @@ class APIController extends Controller
         $results = [];
         foreach ($businessEntities as $_businessEntity) {
             $results[] = [
-                'id' => $accessor->getValue($_businessEntity, $businessEntity->getBusinessIdentifiers()->first()->getName()),
+                'id'   => $accessor->getValue($_businessEntity, $businessEntity->getBusinessIdentifiers()->first()->getName()),
                 'text' => $accessor->getValue($_businessEntity, $businessParameter->getName()),
             ];
         }

@@ -10,7 +10,9 @@ use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
 use Doctrine\ORM\UnitOfWork;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Victoire\Bundle\APIBusinessEntityBundle\Resolver\APIBusinessEntityResolver;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
+use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\PageBundle\Helper\UserCallableHelper;
@@ -28,6 +30,10 @@ class PageSubscriber implements EventSubscriber
     protected $userCallableHelper;
     protected $urlBuilder;
     protected $viewReferenceRepository;
+    /**
+     * @var APIBusinessEntityResolver
+     */
+    private $apiBusinessEntityResolver;
 
     /**
      * Constructor.
@@ -37,6 +43,7 @@ class PageSubscriber implements EventSubscriber
      * @param string                  $userClass               %victoire_core.user_class%
      * @param ViewReferenceBuilder    $viewReferenceBuilder
      * @param ViewReferenceRepository $viewReferenceRepository
+     * @param APIBusinessEntityResolver $apiBusinessEntityResolver
      *
      * @internal param ViewReferenceBuilder $urlBuilder @victoire_view_reference.builder
      */
@@ -45,13 +52,15 @@ class PageSubscriber implements EventSubscriber
         UserCallableHelper $userCallableHelper,
         $userClass,
         ViewReferenceBuilder $viewReferenceBuilder,
-        ViewReferenceRepository $viewReferenceRepository
+        ViewReferenceRepository $viewReferenceRepository,
+        APIBusinessEntityResolver $apiBusinessEntityResolver
     ) {
         $this->router = $router;
         $this->userClass = $userClass;
         $this->userCallableHelper = $userCallableHelper;
         $this->viewReferenceBuilder = $viewReferenceBuilder;
         $this->viewReferenceRepository = $viewReferenceRepository;
+        $this->apiBusinessEntityResolver = $apiBusinessEntityResolver;
     }
 
     /**
@@ -128,32 +137,41 @@ class PageSubscriber implements EventSubscriber
      */
     public function postLoad(LifecycleEventArgs $eventArgs)
     {
-        $entity = $eventArgs->getEntity();
+        $view = $eventArgs->getEntity();
 
-        if ($entity instanceof View) {
-            $entity->setReferences([$entity->getCurrentLocale() => new ViewReference($entity->getId())]);
+        if ($view instanceof View) {
+            $view->setReferences([$view->getCurrentLocale() => new ViewReference($view->getId())]);
             $viewReferences = $this->viewReferenceRepository->getReferencesByParameters([
-                'viewId'     => $entity->getId(),
-                'templateId' => $entity->getId(),
+                'viewId'     => $view->getId(),
+                'templateId' => $view->getId(),
             ], true, false, 'OR');
             foreach ($viewReferences as $viewReference) {
-                if ($viewReference->getLocale() === $entity->getCurrentLocale()) {
-                    if ($entity instanceof WebViewInterface && $viewReference instanceof ViewReference) {
-                        $entity->setReference($viewReference, $viewReference->getLocale());
-                        $entity->setUrl($viewReference->getUrl());
-                    } elseif ($entity instanceof BusinessTemplate) {
-                        $entity->setReferences([
-                            $entity->getCurrentLocale() => $this->viewReferenceBuilder->buildViewReference($entity, $eventArgs->getEntityManager()),
+                if ($viewReference->getLocale() === $view->getCurrentLocale()) {
+                    if ($view instanceof WebViewInterface && $viewReference instanceof ViewReference) {
+                        $view->setReference($viewReference, $viewReference->getLocale());
+                        $view->setUrl($viewReference->getUrl());
+                    } elseif ($view instanceof BusinessTemplate) {
+                        $view->setReferences([
+                            $view->getCurrentLocale() => $this->viewReferenceBuilder->buildViewReference($view, $eventArgs->getEntityManager()),
                         ]);
                     }
                 }
             }
-            if ($entity instanceof BusinessPage && $entity->getEntityProxy()->getBusinessEntity()) {
-                $entityProxy = $entity->getEntityProxy();
-                $businessEntity = $eventArgs->getEntityManager()->getRepository($entityProxy->getBusinessEntity()->getClass())
-                    ->findOneById($entityProxy->getRessourceId());
+            if ($view instanceof BusinessPage && $businessEntity = $view->getEntityProxy()->getBusinessEntity()) {
+                $entityProxy = $view->getEntityProxy();
+                $viewReference = $view->getReference();
 
-                $entityProxy->setEntity($businessEntity);
+                if ($businessEntity->getType() === ORMBusinessEntity::TYPE) {
+                    $entity = $eventArgs->getEntityManager()->getRepository($businessEntity->getClass())
+                        ->findOneBy(['id' => $viewReference->getEntityId()]);
+                } else {
+                    $entityProxy = new EntityProxy();
+                    $entityProxy->setBusinessEntity($businessEntity);
+                    $entityProxy->setRessourceId($viewReference->getEntityId());
+                    $entity = $this->apiBusinessEntityResolver->getBusinessEntity($entityProxy);
+                }
+
+                $entityProxy->setEntity($entity);
             }
         }
     }

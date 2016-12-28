@@ -102,9 +102,15 @@ class BusinessPageHelper
      */
     public function getEntitiesAllowed(BusinessTemplate $businessTemplate, EntityManager $em)
     {
-        return $this->getEntitiesAllowedQueryBuilder($businessTemplate, $em)
-            ->getQuery()
-            ->getResult();
+        $businessEntity = $businessTemplate->getBusinessEntity();
+        if ($businessEntity->getType() === ORMBusinessEntity::TYPE) {
+            return $this->getEntitiesAllowedQueryBuilder($businessTemplate, $em)
+                ->getQuery()
+                ->getResult();
+        }
+        if ($businessEntity->getType() === APIBusinessEntity::TYPE) {
+            return $this->apiBusinessEntityResolver->getBusinessEntities($businessEntity);
+        }
     }
 
     /**

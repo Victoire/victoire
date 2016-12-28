@@ -30,6 +30,11 @@ trait QueryTrait
      * @ORM\Column(name="business_entity_name", type="string", nullable=true)
      */
     protected $businessEntityName;
+    /**
+     * @ORM\ManyToOne(targetEntity="Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity")
+     * @ORM\JoinColumn(name="business_entity_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected $businessEntity;
 
     /**
      * Get query.

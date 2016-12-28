@@ -34,6 +34,7 @@ class BusinessEntityResolver implements BusinessEntityResolverInterface
     {
         return $this->findResolver($entityProxy->getBusinessEntity())->getBusinessEntity($entityProxy);
     }
+
     public function getBusinessEntities(BusinessEntity $businessEntity)
     {
         return $this->findResolver($businessEntity)->getBusinessEntities($businessEntity);

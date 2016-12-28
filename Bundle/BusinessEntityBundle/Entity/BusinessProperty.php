@@ -218,5 +218,4 @@ class BusinessProperty
     {
         $this->filterMethod = $filterMethod;
     }
-
 }
