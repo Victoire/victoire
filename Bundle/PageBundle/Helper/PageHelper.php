@@ -10,9 +10,12 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Victoire\Bundle\APIBusinessEntityBundle\Resolver\APIBusinessEntityResolver;
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntityInterface;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessPageBundle\Builder\BusinessPageBuilder;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
@@ -23,6 +26,7 @@ use Victoire\Bundle\CoreBundle\Entity\Link;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Event\PageRenderEvent;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
+use Victoire\Bundle\ORMBusinessEntityBundle\Entity\ORMBusinessEntity;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\SeoBundle\Helper\PageSeoHelper;
@@ -54,6 +58,7 @@ class PageHelper
     protected $businessPageHelper;
     protected $viewReferenceRepository;
     protected $widgetDataWarmer;
+    protected $apiBusinessEntityResolver;
 
     /**
      * @param BusinessEntityHelper     $businessEntityHelper
@@ -87,7 +92,8 @@ class PageHelper
         BusinessPageBuilder $businessPageBuilder,
         BusinessPageHelper $businessPageHelper,
         WidgetDataWarmer $widgetDataWarmer,
-        ViewReferenceRepository $viewReferenceRepository
+        ViewReferenceRepository $viewReferenceRepository,
+        APIBusinessEntityResolver $apiBusinessEntityResolver
     ) {
         $this->businessEntityHelper = $businessEntityHelper;
         $this->entityManager = $entityManager;
@@ -104,6 +110,7 @@ class PageHelper
         $this->businessPageHelper = $businessPageHelper;
         $this->widgetDataWarmer = $widgetDataWarmer;
         $this->viewReferenceRepository = $viewReferenceRepository;
+        $this->apiBusinessEntityResolver = $apiBusinessEntityResolver;
     }
 
     /**
@@ -210,7 +217,7 @@ class PageHelper
                 $event = new \Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent($view->getTemplate());
             }
             $this->eventDispatcher->dispatch($eventName, $event);
-            $type = $view->getBusinessEntityName();
+            $type = $view->getBusinessEntity()->getName();
         } else {
             $type = $view->getType();
         }
@@ -249,18 +256,29 @@ class PageHelper
     }
 
     /**
-     * @param BusinessPageReference $viewReference
+     * @param ViewReference $viewReference
      *
-     * @return BusinessPage
-     *                      read the cache to find entity according tu given url
-     * @return object|null
+     * @return BusinessEntityInterface
+     *                      read the cache to find entity according tu given url.
      */
     protected function findEntityByReference(ViewReference $viewReference)
     {
+        $entity = null;
         if ($viewReference instanceof BusinessPageReference && !empty($viewReference->getEntityId())) {
-            return $this->entityManager->getRepository($viewReference->getEntityNamespace())
-                ->findOneById($viewReference->getEntityId());
+            $businessEntity = $this->entityManager->getRepository('VictoireBusinessEntityBundle:BusinessEntity')
+                ->findOneBy(['id' => $viewReference->getBusinessEntity()]);
+            if ($businessEntity->getType() === ORMBusinessEntity::TYPE) {
+                $entity = $this->entityManager->getRepository($businessEntity->getClass())
+                    ->findOneBy(['id' => $viewReference->getEntityId()]);
+            } else {
+                $entityProxy = new EntityProxy();
+                $entityProxy->setBusinessEntity($businessEntity);
+                $entityProxy->setRessourceId($viewReference->getEntityId());
+                $entity = $this->apiBusinessEntityResolver->getBusinessEntity($entityProxy);
+            }
         }
+
+        return $entity;
     }
 
     /**
@@ -297,9 +315,13 @@ class PageHelper
                         $this->pageSeoHelper->updateSeoByEntity($page, $entity);
                     }
                     $entityProxy = new EntityProxy();
-                    $entityProxy->setRessourceId($entity->getId());
-                    $entityProxy->setBusinessEntity($this->entityManager->getRepository('VictoireORMBusinessEntityBundle:ORMBusinessEntity')
-                        ->findOneByClass($viewReference->getEntityNamespace()));
+                    $accessor = new PropertyAccessor();
+                    $entityId = $accessor->getValue($entity, $page->getBusinessEntity()->getBusinessIdentifiers()->first()->getName());
+                    $entityProxy->setRessourceId($entityId);
+                    $this->findEntityByReference($viewReference);
+
+                    $entityProxy->setBusinessEntity($this->entityManager->getRepository('VictoireBusinessEntityBundle:BusinessEntity')
+                        ->findOneById($viewReference->getBusinessEntity()));
                     $entityProxy->setEntity($entity);
 
                     $page->setEntityProxy($entityProxy);
@@ -356,8 +378,8 @@ class PageHelper
                 throw new AccessDeniedException('You are not allowed to see this page');
             }
         } elseif ($page instanceof BusinessPage) {
-            if ($entity = $page->getBusinessEntity()) {
-                if (!$entity->isVisibleOnFront() && !$this->authorizationChecker->isGranted('ROLE_VICTOIRE')) {
+            if ($entity = $page->getEntity()) {
+                if ($page->getBusinessEntity()->getType() === ORMBusinessEntity::TYPE && !$entity->isVisibleOnFront() && !$this->authorizationChecker->isGranted('ROLE_VICTOIRE')) {
                     throw new NotFoundHttpException('The BusinessPage for '.get_class($entity).'#'.$entity->getId().' is not visible on front.');
                 }
             } else {
