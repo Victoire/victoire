@@ -49,9 +49,9 @@ class APIBusinessEntityResolver implements BusinessEntityResolverInterface
         $businessEntity = $entityProxy->getBusinessEntity();
         $getMethod = $businessEntity->getGetMethod();
         preg_match_all('/{{([a-zA-Z]+)}}/', $getMethod, $matches);
-        $identifiers = array_map(function($property) {
-                return $property->getName();
-            },
+        $identifiers = array_map(function ($property) {
+            return $property->getName();
+        },
             $businessEntity->getBusinessIdentifiers()->toArray()
         );
         foreach ($matches[1] as $match) {
@@ -83,15 +83,15 @@ class APIBusinessEntityResolver implements BusinessEntityResolverInterface
      * filter API to get a list of entities.
      *
      * @param APIBusinessEntity $businessEntity
-     * @param array $filters
+     * @param array             $filters
      *
      * @return mixed
      */
     public function searchBusinessEntities(APIBusinessEntity $businessEntity, BusinessProperty $businessProperty, $filter)
     {
         $getMethod = $businessEntity->getListMethod()
-            . (false !== strpos($businessEntity->getListMethod(), '?') ? '&' : '?')
-            . $businessProperty->getFilterMethod();
+            .(false !== strpos($businessEntity->getListMethod(), '?') ? '&' : '?')
+            .$businessProperty->getFilterMethod();
         $getMethod = preg_replace('/{{([a-zA-Z]+)}}/', $filter, $getMethod);
 
         return $this->callApi($businessEntity->getEndpoint()->getHost(), $getMethod, $businessEntity->getEndpoint());
