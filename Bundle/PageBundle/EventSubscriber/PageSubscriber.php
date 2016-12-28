@@ -13,7 +13,6 @@ use Gedmo\Translatable\TranslatableListener;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Victoire\Bundle\APIBusinessEntityBundle\Resolver\APIBusinessEntityResolver;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
-use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
@@ -41,13 +40,12 @@ class PageSubscriber implements EventSubscriber
     /**
      * Constructor.
      *
-     * @param Router                    $router             @router
-     * @param UserCallableHelper        $userCallableHelper @victoire_page.user_callable
-     * @param string                    $userClass          %victoire_core.user_class%
+     * @param Router                    $router                    @router
+     * @param UserCallableHelper        $userCallableHelper        @victoire_page.user_callable
+     * @param string                    $userClass                 %victoire_core.user_class%
      * @param ViewReferenceBuilder      $viewReferenceBuilder
      * @param ViewReferenceRepository   $viewReferenceRepository
      * @param TranslatableListener      $translatableListener
-     *
      * @param APIBusinessEntityResolver $apiBusinessEntityResolver
      *
      * @internal param ViewReferenceBuilder $urlBuilder @victoire_view_reference.builder

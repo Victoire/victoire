@@ -131,7 +131,6 @@ class BusinessPageBuilder
             $page->setSeo($pageSeo);
         }
 
-
         return $page;
     }
 

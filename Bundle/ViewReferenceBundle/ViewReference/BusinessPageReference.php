@@ -27,6 +27,7 @@ class BusinessPageReference extends ViewReference
 
     /**
      * @deprecated
+     *
      * @return mixed
      */
     public function getEntityNamespace()
@@ -36,6 +37,7 @@ class BusinessPageReference extends ViewReference
 
     /**
      * @deprecated
+     *
      * @param mixed $entityNamespace
      */
     public function setEntityNamespace($entityNamespace)
