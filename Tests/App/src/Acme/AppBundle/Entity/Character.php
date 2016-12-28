@@ -2,6 +2,7 @@
 
 namespace Acme\AppBundle\Entity;
 
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntityInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation as Serializer;
@@ -17,7 +18,7 @@ use Victoire\Bundle\UserBundle\Model\User;
  * @ORM\Table("demo_character")
  * @VIC\BusinessEntity({"Text", "Force"})
  */
-class Character
+class Character implements BusinessEntityInterface
 {
     use \Gedmo\Timestampable\Traits\TimestampableEntity;
     use \Victoire\Bundle\BusinessEntityBundle\Entity\Traits\BusinessEntityTrait;
