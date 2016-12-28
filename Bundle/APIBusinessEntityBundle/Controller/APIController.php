@@ -25,7 +25,7 @@ class APIController extends Controller
      * @ParamConverter()
      * @return JsonResponse Empty response
      */
-    public function fetchApi(Request $request, BusinessEntity $businessEntity)
+    public function fetchApiAction(Request $request, BusinessEntity $businessEntity)
     {
         $accessor = new PropertyAccessor();
         $businessParameter = $businessEntity->getBusinessPropertiesByType(['textable', 'businessParameter'])->first();

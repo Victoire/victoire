@@ -136,7 +136,7 @@ abstract class BusinessEntity
     public function getBusinessPropertiesByType($type)
     {
         if (!is_array($type)) {
-            $type[] = $type;
+            $type = [$type];
         }
         $bp = new ArrayCollection();
         foreach ($this->getBusinessProperties() as $property) {
