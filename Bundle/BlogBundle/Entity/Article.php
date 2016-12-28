@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\BlogBundle\Entity;
 
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntityInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -19,7 +20,7 @@ use Victoire\Bundle\PageBundle\Entity\PageStatus;
  * @VIC\BusinessEntity({"Date", "Force", "Redactor", "Listing", "BlogArticles", "Title", "CKEditor", "Text", "UnderlineTitle", "Cover", "Image", "Authorship", "ArticleList", "SliderNav", "Render"})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
-class Article
+class Article implements BusinessEntityInterface
 {
     use BusinessEntityTrait;
     use TimestampableEntity;
