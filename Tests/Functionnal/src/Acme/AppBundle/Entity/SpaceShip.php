@@ -5,6 +5,7 @@ namespace Acme\AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
 use Symfony\Component\PropertyAccess\PropertyAccess;
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntityInterface;
 use Victoire\Bundle\BusinessEntityBundle\Entity\Traits\BusinessEntityTrait;
 use Victoire\Bundle\CoreBundle\Annotations as VIC;
 
@@ -15,7 +16,7 @@ use Victoire\Bundle\CoreBundle\Annotations as VIC;
  * @ORM\Table("space_ship")
  * @VIC\BusinessEntity({"Force"})
  */
-class SpaceShip
+class SpaceShip implements BusinessEntityInterface
 {
     use BusinessEntityTrait;
     use Translatable;
