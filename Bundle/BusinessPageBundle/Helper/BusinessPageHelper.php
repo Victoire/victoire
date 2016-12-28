@@ -146,7 +146,7 @@ class BusinessPageHelper
         $seoBusinessProps = $businessEntity->getBusinessPropertiesByType('seoable');
 
         //the business properties are the identifier and the seoables properties
-        $businessProperties = array_merge($businessProperties, $seoBusinessProps);
+        $businessProperties = array_merge($businessProperties->toArray(), $seoBusinessProps->toArray());
 
         return $businessProperties;
     }
