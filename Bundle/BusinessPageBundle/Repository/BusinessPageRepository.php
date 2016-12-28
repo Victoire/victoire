@@ -3,6 +3,7 @@
 namespace Victoire\Bundle\BusinessPageBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 
@@ -23,7 +24,8 @@ class BusinessPageRepository extends EntityRepository
     public function findPageByBusinessEntityAndPattern(BusinessTemplate $pattern, $entity, BusinessEntity $businessEntity)
     {
         if (is_object($entity)) {
-            $entity = $entity->getId();
+            $accessor = new PropertyAccessor();
+            $entity = $accessor->getValue($entity, $businessEntity->getBusinessIdentifiers()->first()->getName());
         }
         $qb = $this->createQueryBuilder('BusinessPage');
         $qb->join('BusinessPage.entityProxy', 'proxy');

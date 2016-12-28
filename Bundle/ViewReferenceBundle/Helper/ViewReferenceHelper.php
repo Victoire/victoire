@@ -3,6 +3,7 @@
 namespace Victoire\Bundle\ViewReferenceBundle\Helper;
 
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
@@ -35,19 +36,20 @@ class ViewReferenceHelper
      *
      * @return string
      */
-    public static function generateViewReferenceId(View $view, $entity = null)
+    public static function generateViewReferenceId(View $view, $entityId = null)
     {
         $id = $view->getId();
         if ($view instanceof BusinessPage) {
             $id = $view->getTemplate()->getId();
-            $entity = $view->getBusinessEntity();
+            $accessor = new PropertyAccessor();
+            $entityId = $accessor->getValue($view->getEntity(), $view->getBusinessEntity()->getBusinessIdentifiers()->first()->getName());
         } elseif (!$view instanceof WebViewInterface) {
             return $view->getId();
         }
 
         $refId = sprintf('ref_%s', $id);
-        if ($entity) {
-            $refId .= '_'.$entity->getId();
+        if ($entityId) {
+            $refId .= '_'.$entityId;
         }
         if ($view->getCurrentLocale() != '') {
             $refId .= '_'.$view->getCurrentLocale();

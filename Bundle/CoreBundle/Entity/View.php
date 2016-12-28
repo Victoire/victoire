@@ -224,7 +224,7 @@ abstract class View
     /**
      * Get template.
      *
-     * @return string
+     * @return Template
      */
     public function getTemplate()
     {

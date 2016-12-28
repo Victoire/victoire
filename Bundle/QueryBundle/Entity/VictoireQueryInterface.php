@@ -2,6 +2,8 @@
 
 namespace Victoire\Bundle\QueryBundle\Entity;
 
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
+
 interface VictoireQueryInterface
 {
     public function getQuery();
@@ -12,7 +14,7 @@ interface VictoireQueryInterface
 
     public function setOrderBy($orderBy);
 
-    public function getBusinessEntityName();
+    public function getBusinessEntity();
 
-    public function setBusinessEntityName($businessEntityName);
+    public function setBusinessEntity(BusinessEntity $businessEntity);
 }

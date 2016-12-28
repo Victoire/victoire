@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\BusinessPageBundle\Entity;
 
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntityInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 use Victoire\Bundle\PageBundle\Entity\Page;
@@ -31,7 +32,7 @@ class BusinessPage extends Page
      *
      * @var object
      */
-    protected $businessEntity;
+    protected $entity;
 
     /**
      * Set the entity proxy.
@@ -54,32 +55,32 @@ class BusinessPage extends Page
     }
 
     /**
-     * Get the business entity name (PagePattern proxy).
+     * Get the business entity (PagePattern proxy).
      *
      * @return string
      **/
-    public function getBusinessEntityName()
+    public function getBusinessEntity()
     {
-        return $this->getTemplate()->getBusinessEntityName();
+        return $this->getTemplate()->getBusinessEntity();
     }
 
     /**
      * Get the business entity.
      *
-     * @return number
+     * @return BusinessEntityInterface
      */
-    public function getBusinessEntity()
+    public function getEntity()
     {
         //if there is no entity
-        if ($this->businessEntity === null) {
+        if ($this->entity === null) {
             //if there is a proxy
             if ($this->getEntityProxy() !== null) {
-                $this->businessEntity = $this->getEntityProxy()->getEntity();
+                $this->entity = $this->getEntityProxy()->getEntity();
 
-                return $this->businessEntity;
+                return $this->entity;
             }
         }
 
-        return $this->businessEntity;
+        return $this->entity;
     }
 }

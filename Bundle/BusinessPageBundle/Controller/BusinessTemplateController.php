@@ -105,7 +105,7 @@ class BusinessTemplateController extends Controller
 
         /** @var BusinessTemplate $view */
         $view = $this->get('victoire_business_page.BusinessTemplate_chain')->getBusinessTemplate($id);
-        $view->setBusinessEntityName($businessEntity->getName());
+        $view->setBusinessEntity($businessEntity);
 
         $form = $this->createCreateForm($view);
 
@@ -177,7 +177,7 @@ class BusinessTemplateController extends Controller
 
         /** @var BusinessTemplate $view */
         $view = $this->get('victoire_business_page.BusinessTemplate_chain')->getBusinessTemplate($id);
-        $view->setBusinessEntityName($businessEntity->getName());
+        $view->setBusinessEntity($businessEntity);
 
         $form = $this->createCreateForm($view);
 

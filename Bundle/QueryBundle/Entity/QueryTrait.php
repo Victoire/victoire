@@ -3,6 +3,7 @@
 namespace Victoire\Bundle\QueryBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 
 /**
  * Query trait adds the query fields.
@@ -24,12 +25,19 @@ trait QueryTrait
     protected $orderBy;
 
     /**
+     * @deprecated
      *  Auto list mode: businessentity type.
      *
      * @var string
      * @ORM\Column(name="business_entity_name", type="string", nullable=true)
      */
     protected $businessEntityName;
+    /**
+     *
+     * @ORM\ManyToOne(targetEntity="Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity")
+     * @ORM\JoinColumn(name="business_entity_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected $businessEntity;
 
     /**
      * Get query.
@@ -72,22 +80,30 @@ trait QueryTrait
     }
 
     /**
+     * @deprecated
      * Get businessEntityName.
      *
      * @return int
      */
     public function getBusinessEntityName()
     {
-        return $this->businessEntityName;
+        return $this->getBusinessEntity()->getName();
     }
 
     /**
-     * Set businessEntityName.
-     *
-     * @param string $businessEntityName The business entity name
+     * @return mixed
      */
-    public function setBusinessEntityName($businessEntityName)
+    public function getBusinessEntity()
     {
-        $this->businessEntityName = $businessEntityName;
+        return $this->businessEntity;
     }
+
+    /**
+     * @param BusinessEntity $businessEntity
+     */
+    public function setBusinessEntity(BusinessEntity $businessEntity)
+    {
+        $this->businessEntity = $businessEntity;
+    }
+
 }
