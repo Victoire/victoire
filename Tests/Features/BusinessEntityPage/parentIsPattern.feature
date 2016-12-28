@@ -11,8 +11,8 @@ Feature: Mercenary is not a BusinessEntity itself but extends Character which is
             | Boba fet   | 1500          | boba-fet   |
 
         Given the following BusinessTemplate:
-            | currentLocale |name                       | backendName  | slug                     |  businessEntityName | parent  | template      |
-            | fr            |Fiche Personnage - {{item.name}} | Fiche Jedi   | fiche-personnage-{{item.slug}} |  character        | home    | base |
+            | currentLocale |name                       | backendName  | slug                     |  businessEntity | parent  | template      |
+            | fr            |Fiche Personnage - {{item.name}} | Fiche Jedi   | fiche-personnage-{{item.slug}} |  Character        | home    | base |
         Given the following WidgetMap:
             | view | action | slot |
             | fiche-personnage-{{item.slug}} | create | main_content |
