@@ -6,6 +6,8 @@ use Doctrine\DBAL\Schema\View;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Victoire\Bundle\APIBusinessEntityBundle\Entity\APIBusinessEntity;
+use Victoire\Bundle\APIBusinessEntityBundle\Resolver\APIBusinessEntityResolver;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntityRepository;
@@ -13,6 +15,7 @@ use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
+use Victoire\Bundle\ORMBusinessEntityBundle\Entity\ORMBusinessEntity;
 use Victoire\Bundle\QueryBundle\Helper\QueryHelper;
 use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\BusinessPageReference;
@@ -20,7 +23,8 @@ use Victoire\Bundle\ViewReferenceBundle\ViewReference\BusinessPageReference;
 /**
  * The business entity page pattern helper
  * ref: victoire_business_page.business_page_helper.
- */
+ *
+*/
 class BusinessPageHelper
 {
     protected $queryHelper = null;
@@ -28,15 +32,21 @@ class BusinessPageHelper
     protected $businessEntityHelper = null;
     protected $parameterConverter = null;
     protected $urlBuilder = null;
+    /**
+     * @var APIBusinessEntityResolver
+     */
+    private $apiBusinessEntityResolver;
 
     /**
-     * @param QueryHelper             $queryHelper
-     * @param ViewReferenceRepository $viewReferenceRepository
-     * @param BusinessEntityHelper    $businessEntityHelper
-     * @param ParameterConverter      $parameterConverter
-     * @param UrlBuilder              $urlBuilder
+     * @param QueryHelper               $queryHelper
+     * @param ViewReferenceRepository   $viewReferenceRepository
+     * @param EntityRepository          $businessEntityRepository
+     * @param BusinessEntityHelper      $businessEntityHelper
+     * @param ParameterConverter        $parameterConverter
+     * @param UrlBuilder                $urlBuilder
+     * @param APIBusinessEntityResolver $apiBusinessEntityResolver
      */
-    public function __construct(QueryHelper $queryHelper, ViewReferenceRepository $viewReferenceRepository, EntityRepository $businessEntityRepository, BusinessEntityHelper $businessEntityHelper, ParameterConverter $parameterConverter, UrlBuilder $urlBuilder)
+    public function __construct(QueryHelper $queryHelper, ViewReferenceRepository $viewReferenceRepository, EntityRepository $businessEntityRepository, BusinessEntityHelper $businessEntityHelper, ParameterConverter $parameterConverter, UrlBuilder $urlBuilder, APIBusinessEntityResolver $apiBusinessEntityResolver)
     {
         $this->queryHelper = $queryHelper;
         $this->viewReferenceRepository = $viewReferenceRepository;
@@ -44,6 +54,7 @@ class BusinessPageHelper
         $this->businessEntityHelper = $businessEntityHelper;
         $this->parameterConverter = $parameterConverter;
         $this->urlBuilder = $urlBuilder;
+        $this->apiBusinessEntityResolver = $apiBusinessEntityResolver;
     }
 
     /**
@@ -59,6 +70,9 @@ class BusinessPageHelper
      */
     public function isEntityAllowed(BusinessTemplate $businessTemplate, $entity, EntityManager $em = null)
     {
+        if ($businessTemplate->getBusinessEntity()->getType() === APIBusinessEntity::TYPE) {
+            return true;
+        }
         $allowed = true;
 
         //test that an entity is given
@@ -102,9 +116,15 @@ class BusinessPageHelper
      */
     public function getEntitiesAllowed(BusinessTemplate $businessTemplate, EntityManager $em)
     {
-        return $this->getEntitiesAllowedQueryBuilder($businessTemplate, $em)
-            ->getQuery()
-            ->getResult();
+        $businessEntity = $businessTemplate->getBusinessEntity();
+         if ($businessEntity->getType() === ORMBusinessEntity::TYPE) {
+            return $this->getEntitiesAllowedQueryBuilder($businessTemplate, $em)
+                ->getQuery()
+                ->getResult();
+        }
+        if ($businessEntity->getType() === APIBusinessEntity::TYPE) {
+            return $this->apiBusinessEntityResolver->getBusinessEntities($businessEntity);
+        }
     }
 
     /**

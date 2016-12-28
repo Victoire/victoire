@@ -142,10 +142,10 @@ class BusinessEntitySubscriber implements EventSubscriber
                     $businessPage->setSlug($virtualBusinessPage->getSlug());
 
                     $entityManager->persist($businessPage);
-                    $entityManager->flush();
                 }
             }
         }
+        $entityManager->flush();
     }
 
     /**
@@ -253,7 +253,7 @@ class BusinessEntitySubscriber implements EventSubscriber
             $businessTemplate = $entity->getTemplate();
             $page = $this->businessPageBuilder->generateEntityPageFromTemplate(
                 $businessTemplate,
-                $entity->getBusinessEntity(),
+                $entity->getEntity(),
                 $em
             );
             //create VBP ref

@@ -100,7 +100,8 @@ class EntityProxyFormType extends AbstractType
                     )
                 );
             } else {
-                if ($entities = $this->apiBusinessEntityResolver->getBusinessEntities($businessEntity)) {
+                /** @var APIBusinessEntity $businessEntity */
+                if ($businessEntity->getListMethod()) {
                     $builder->add(
                         'ressource_id',
                         APISelect2Type::class,

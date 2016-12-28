@@ -7,6 +7,7 @@ class BusinessPageReference extends ViewReference
     protected $entityId;
     protected $entityNamespace;
     protected $templateId;
+    protected $businessEntity;
 
     /**
      * @return mixed
@@ -25,6 +26,7 @@ class BusinessPageReference extends ViewReference
     }
 
     /**
+     * @deprecated
      * @return mixed
      */
     public function getEntityNamespace()
@@ -33,6 +35,7 @@ class BusinessPageReference extends ViewReference
     }
 
     /**
+     * @deprecated
      * @param mixed $entityNamespace
      */
     public function setEntityNamespace($entityNamespace)
@@ -54,5 +57,21 @@ class BusinessPageReference extends ViewReference
     public function setTemplateId($templateId)
     {
         $this->templateId = $templateId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBusinessEntity()
+    {
+        return $this->businessEntity;
+    }
+
+    /**
+     * @param mixed $businessEntity
+     */
+    public function setBusinessEntity($businessEntity)
+    {
+        $this->businessEntity = $businessEntity;
     }
 }
