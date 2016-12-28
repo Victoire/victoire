@@ -11,8 +11,8 @@ Feature: Create business entity pages
 
     Scenario: I can delete an BE and his BEP
         Given the following BusinessTemplate:
-            | currentLocale |name                       | backendName  | slug                     |  businessEntityName | parent  | template |
-            | fr            |Fiche Jedi - {{item.name}} | Fiche Jedi   | fiche-jedi-{{item.slug}} |  jedi             | home    | base     |
+            | currentLocale |name                       | backendName  | slug                     |  businessEntity | parent  | template |
+            | fr            |Fiche Jedi - {{item.name}} | Fiche Jedi   | fiche-jedi-{{item.slug}} |  Jedi             | home    | base     |
         Given I am on "/fr/fiche-jedi-anakin"
         And I switch to "layout" mode
         And I should see "Nouveau contenu"
