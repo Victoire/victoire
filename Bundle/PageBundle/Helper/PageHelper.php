@@ -259,7 +259,7 @@ class PageHelper
      * @param ViewReference $viewReference
      *
      * @return BusinessEntityInterface
-     *                      read the cache to find entity according tu given url.
+     *                                 read the cache to find entity according tu given url.
      */
     protected function findEntityByReference(ViewReference $viewReference)
     {

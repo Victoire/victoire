@@ -33,7 +33,6 @@ trait QueryTrait
      */
     protected $businessEntityName;
     /**
-     *
      * @ORM\ManyToOne(targetEntity="Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity")
      * @ORM\JoinColumn(name="business_entity_id", referencedColumnName="id", onDelete="CASCADE")
      */
@@ -105,5 +104,4 @@ trait QueryTrait
     {
         $this->businessEntity = $businessEntity;
     }
-
 }

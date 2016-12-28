@@ -2,13 +2,13 @@
 
 namespace Victoire\Bundle\BlogBundle\Entity;
 
-use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntityInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\Validator\Constraints as Assert;
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntityInterface;
 use Victoire\Bundle\BusinessEntityBundle\Entity\Traits\BusinessEntityTrait;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Annotations as VIC;

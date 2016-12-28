@@ -23,8 +23,7 @@ use Victoire\Bundle\ViewReferenceBundle\ViewReference\BusinessPageReference;
 /**
  * The business entity page pattern helper
  * ref: victoire_business_page.business_page_helper.
- *
-*/
+ */
 class BusinessPageHelper
 {
     protected $queryHelper = null;
@@ -117,7 +116,7 @@ class BusinessPageHelper
     public function getEntitiesAllowed(BusinessTemplate $businessTemplate, EntityManager $em)
     {
         $businessEntity = $businessTemplate->getBusinessEntity();
-         if ($businessEntity->getType() === ORMBusinessEntity::TYPE) {
+        if ($businessEntity->getType() === ORMBusinessEntity::TYPE) {
             return $this->getEntitiesAllowedQueryBuilder($businessTemplate, $em)
                 ->getQuery()
                 ->getResult();
