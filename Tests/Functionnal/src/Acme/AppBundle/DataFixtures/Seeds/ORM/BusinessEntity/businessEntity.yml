@@ -27,6 +27,8 @@ Victoire\Bundle\APIBusinessEntityBundle\Entity\APIBusinessEntity:
         resource: users
         name: Users
         availableWidgets: 'a:1:{i:0;s:4:"Text";}'
+        getMethod: /users/{{id}}
+        listMethod: /users
 
 Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty:
     jedi_name:
@@ -74,6 +76,11 @@ Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty:
         name: name
         businessEntity: @users_business_entity
         businessIdentifier: 0
+    users_id:
+        types: a:2:{i:0;s:8:"textable";i:1;s:17:"businessParameter";}
+        name: id
+        businessEntity: @users_business_entity
+        businessIdentifier: 1
     users_email:
         types: a:2:{i:0;s:8:"textable";i:1;s:17:"businessParameter";}
         name: email
