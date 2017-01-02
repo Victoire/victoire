@@ -36,6 +36,13 @@ class APIBusinessEntity extends BusinessEntity
     protected $listMethod;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="pagerParameter", type="text")
+     */
+    protected $pagerParameter;
+
+    /**
      * @var APIEndpoint
      *
      * @ORM\ManyToOne(targetEntity="APIEndpoint")
@@ -99,9 +106,14 @@ class APIBusinessEntity extends BusinessEntity
     /**
      * @return string
      */
-    public function getListMethod()
+    public function getListMethod($page = null)
     {
-        return $this->listMethod;
+        $listMethod = $this->listMethod;
+        if ($page) {
+            $listMethod .= (false !== strpos($listMethod, '?') ? '&' : '?')
+                .str_replace('{{page}}', $page, $this->pagerParameter);
+        }
+        return $listMethod;
     }
 
     /**
@@ -111,4 +123,22 @@ class APIBusinessEntity extends BusinessEntity
     {
         $this->listMethod = $listMethod;
     }
+
+    /**
+     * @return string
+     */
+    public function getPagerParameter()
+    {
+        return $this->pagerParameter;
+    }
+
+    /**
+     * @param string $pagerParameter
+     */
+    public function setPagerParameter($pagerParameter)
+    {
+        $this->pagerParameter = $pagerParameter;
+    }
+
+
 }
