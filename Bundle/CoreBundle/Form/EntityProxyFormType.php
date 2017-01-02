@@ -106,6 +106,7 @@ class EntityProxyFormType extends AbstractType
                         'ressource_id',
                         APISelect2Type::class,
                         [
+                            'businessEntity'    => $businessEntity,
                             'label'    => false,
                             'required' => false,
                             'attr'     => [

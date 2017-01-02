@@ -72,11 +72,17 @@ class APIBusinessEntityResolver implements BusinessEntityResolverInterface
      *
      * @param APIBusinessEntity $businessEntity
      *
-     * @return mixed
+     * @return array
      */
-    public function getBusinessEntities(APIBusinessEntity $businessEntity)
+    public function getBusinessEntities(APIBusinessEntity $businessEntity, $page = 1)
     {
-        return $this->callApi($businessEntity->getEndpoint()->getHost(), $businessEntity->getListMethod(), $businessEntity->getEndpoint());
+        $data = $this->callApi($businessEntity->getEndpoint()->getHost(), $businessEntity->getListMethod($page), $businessEntity->getEndpoint());
+
+        if (count($data) > 0) {
+            $data = array_merge($data, $this->getBusinessEntities($businessEntity, ++$page));
+        }
+
+        return $data;
     }
 
     /**
@@ -102,7 +108,7 @@ class APIBusinessEntityResolver implements BusinessEntityResolverInterface
      *
      * @param APIEndpoint $endPoint
      *
-     * @return mixed
+     * @return array
      */
     protected function callApi($host, $getMethod, APIEndpoint $endPoint)
     {
