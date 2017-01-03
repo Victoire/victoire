@@ -107,6 +107,31 @@ class AnnotationDriver extends DoctrineAnnotationDriver
                     $classAnnotations[get_class($annot)] = $annot;
                 }
             }
+
+
+
+
+            // Evaluate Entity annotation
+            if (isset($classAnnotations['Victoire\Bundle\CoreBundle\Annotations\BusinessEntity'])) {
+                /** @var BusinessEntity $annotationObj */
+                $annotationObj = $classAnnotations['Victoire\Bundle\CoreBundle\Annotations\BusinessEntity'];
+                $businessEntity = BusinessEntityHelper::createBusinessEntity(
+                    $class->getName(),
+                    $this->loadBusinessProperties($class)
+                );
+
+                $event = new BusinessEntityAnnotationEvent(
+                    $businessEntity,
+                    $annotationObj->getWidgets()
+                );
+
+                //do what you want (caching BusinessEntity...)
+                $this->eventDispatcher->dispatch('victoire.business_entity_annotation_load', $event);
+            }
+
+
+
+
             //check if the entity is a widget (extends (in depth) widget class)
             $parentClass = $class->getParentClass();
             $isWidget = false;
@@ -127,6 +152,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
             }
         }
     }
+
 
     /**
      * Load receiver properties and NotBlank constraints from ReflectionClass.
