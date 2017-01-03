@@ -3,7 +3,7 @@
 namespace Victoire\Bundle\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Victoire\Bundle\PageBundle\Entity\BasePage;
+use Victoire\Bundle\PageBundle\Entity\Page;
 
 /**
  * PostPage.
@@ -11,7 +11,7 @@ use Victoire\Bundle\PageBundle\Entity\BasePage;
  * @ORM\Entity(repositoryClass="Victoire\Bundle\BlogBundle\Repository\BlogRepository"))
  * @ORM\Table("vic_blog")
  */
-class Blog extends BasePage
+class Blog extends Page
 {
     const TYPE = 'blog';
 
