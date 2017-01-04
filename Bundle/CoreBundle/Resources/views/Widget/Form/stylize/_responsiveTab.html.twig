@@ -3,7 +3,7 @@
 {% set active = (form.vicActiveTab.vars.data is defined and form.vicActiveTab.vars.data) ? form.vicActiveTab.vars.data : loop.first ? key : false %}
 <li class="item{{ key == active ? ' vic-active' }}">
     <a
-        href="#vic-widget-layout-{{ key }}"
+        href="#vic-widget-layout-{{ widgetId }}-{{ key }}"
         role="tab"
         data-toggle="vic-tab"
         data-key="{{ key }}"

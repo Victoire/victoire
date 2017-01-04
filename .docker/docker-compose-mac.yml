@@ -1,0 +1,3 @@
+victoire-php:
+  volumes:
+    - victoire-sync:/var/www/victoire:rw
