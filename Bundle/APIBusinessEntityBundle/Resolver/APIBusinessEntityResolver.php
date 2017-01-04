@@ -52,7 +52,7 @@ class APIBusinessEntityResolver implements BusinessEntityResolverInterface
         $identifiers = array_map(function ($property) {
             return $property->getName();
         },
-            $businessEntity->getBusinessIdentifiers()->toArray()
+            $businessEntity->getBusinessParameters()->toArray()
         );
         foreach ($matches[1] as $match) {
             if (in_array($match, $identifiers)) {

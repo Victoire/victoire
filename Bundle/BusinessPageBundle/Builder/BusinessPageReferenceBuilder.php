@@ -23,6 +23,13 @@ class BusinessPageReferenceBuilder extends BaseReferenceBuilder
      */
     public function buildReference(View $businessPage, EntityManager $em)
     {
+        $businessEntity = $businessPage->getEntityProxy()->getBusinessEntity();
+        $entity = $businessPage->getEntityProxy()->getEntity();
+        $accessor = new PropertyAccessor();
+        $entityId = null;
+        if ($entity) {
+            $entityId = $accessor->getValue($entity, $businessEntity->getBusinessParameters()->first()->getName());
+        }
         $referenceId = ViewReferenceHelper::generateViewReferenceId($businessPage);
         $businessPageReference = new BusinessPageReference();
         $businessPageReference->setId($referenceId);
@@ -32,7 +39,7 @@ class BusinessPageReferenceBuilder extends BaseReferenceBuilder
         $businessPageReference->setTemplateId($businessPage->getTemplate()->getId());
         $businessPageReference->setSlug($businessPage->getSlug());
         $businessPageReference->setEntityId($businessPage->getEntityProxy()->getEntity() ? $businessPage->getEntityProxy()->getEntity()->getId() : null);
-        $businessPageReference->setEntityNamespace($businessPage->getEntityProxy()->getBusinessEntity()->getClass());
+        $businessPageReference->setBusinessEntity($businessEntity->getId());
         $businessPageReference->setViewNamespace($em->getClassMetadata(get_class($businessPage))->name);
         if ($parent = $businessPage->getParent()) {
             $parent->setCurrentLocale($businessPage->getCurrentLocale());

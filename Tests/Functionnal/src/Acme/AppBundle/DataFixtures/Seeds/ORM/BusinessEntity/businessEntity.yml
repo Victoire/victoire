@@ -35,54 +35,43 @@ Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty:
         types: a:3:{i:0;s:8:"textable";i:1;s:17:"businessParameter";i:2;s:7:"seoable";}
         name: name
         businessEntity: @jedi_business_entity
-        businessIdentifier: 0
     jedi_slug:
         types: a:2:{i:0;s:8:"textable";i:1;s:17:"businessParameter";}
         name: slug
         businessEntity: @jedi_business_entity
-        businessIdentifier: 1
     jedi_side:
         types: a:1:{i:0;s:8:"textable";}
         name: side
         businessEntity: @jedi_business_entity
-        businessIdentifier: 0
     article_name:
         types: a:3:{i:0;s:8:"textable";i:1;s:17:"businessParameter";i:2;s:7:"seoable";}
         name: name
         businessEntity: @article_business_entity
-        businessIdentifier: 0
     article_slug:
         types: a:2:{i:0;s:8:"textable";i:1;s:17:"businessParameter";}
         name: slug
         businessEntity: @article_business_entity
-        businessIdentifier: 1
     character_name:
         types: a:3:{i:0;s:8:"textable";i:1;s:17:"businessParameter";i:2;s:7:"seoable";}
         name: name
         businessEntity: @character_business_entity
-        businessIdentifier: 0
     character_slug:
         types: a:2:{i:0;s:8:"textable";i:1;s:17:"businessParameter";}
         name: slug
         businessEntity: @character_business_entity
-        businessIdentifier: 1
     character_midiChlorians:
         types: a:2:{i:0;s:8:"textable";i:1;s:17:"businessParameter";}
         name: midiChlorians
         businessEntity: @character_business_entity
-        businessIdentifier: 0
     users_name:
         types: a:2:{i:0;s:8:"textable";i:1;s:17:"businessParameter";}
         name: name
         businessEntity: @users_business_entity
-        businessIdentifier: 0
     users_id:
         types: a:2:{i:0;s:8:"textable";i:1;s:17:"businessParameter";}
         name: id
         businessEntity: @users_business_entity
-        businessIdentifier: 1
     users_email:
         types: a:2:{i:0;s:8:"textable";i:1;s:17:"businessParameter";}
         name: email
         businessEntity: @users_business_entity
-        businessIdentifier: 1
