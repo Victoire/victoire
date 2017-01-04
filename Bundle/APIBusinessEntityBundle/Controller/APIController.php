@@ -43,7 +43,7 @@ class APIController extends Controller
         $results = [];
         foreach ($businessEntities as $_businessEntity) {
             $results[] = [
-                'id'   => $accessor->getValue($_businessEntity, $businessEntity->getBusinessIdentifiers()->first()->getName()),
+                'id'   => $accessor->getValue($_businessEntity, $businessEntity->getBusinessParameters()->first()->getName()),
                 'text' => $accessor->getValue($_businessEntity, $businessParameter->getName()),
             ];
         }
