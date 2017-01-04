@@ -10,8 +10,14 @@ namespace Victoire\Bundle\BusinessEntityBundle\Command;
 
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Helper\ProgressHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
+use Victoire\Bundle\CoreBundle\Annotations\BusinessProperty as BusinessPropertyAnnotation;
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
+use Victoire\Bundle\ORMBusinessEntityBundle\Entity\ORMBusinessEntity;
 
 class BusinessEntityDBMigrationCommand extends ContainerAwareCommand
 {
@@ -37,15 +43,17 @@ class BusinessEntityDBMigrationCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        /** @var ProgressHelper $progress */
         $progress = $this->getHelperSet()->get('progress');
         $progress->setProgressCharacter('V');
         $progress->setEmptyBarCharacter('-');
 
-        $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
-
-        foreach ($this->getContainer()->get('victoire_business_entity.annotation_driver')->getAllClassNames() as $className) {
+        $progress->start($output);
+        foreach ($this->getContainer()->get('victoire_business_entity.annotation_driver')->getAllClassNames() as $k => $className) {
             $this->parse(new \ReflectionClass($className));
+            $progress->advance($k);
         }
+        $progress->finish();
 
     }
 
@@ -55,9 +63,10 @@ class BusinessEntityDBMigrationCommand extends ContainerAwareCommand
      */
     public function parse(\ReflectionClass $class)
     {
+        $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
         $classPath = dirname($class->getFileName());
         $inPaths = false;
-        foreach ($this->paths as $key => $_path) {
+        foreach ($this->getContainer()->getParameter('victoire_core.base_paths') as $key => $_path) {
             //Check the entity path is in watching paths
             if (strpos($classPath, realpath($_path)) === 0) {
                 $inPaths = true;
@@ -78,16 +87,16 @@ class BusinessEntityDBMigrationCommand extends ContainerAwareCommand
             if (isset($classAnnotations['Victoire\Bundle\CoreBundle\Annotations\BusinessEntity'])) {
                 /** @var BusinessEntity $annotationObj */
                 $annotationObj = $classAnnotations['Victoire\Bundle\CoreBundle\Annotations\BusinessEntity'];
-                $businessEntity = BusinessEntityHelper::createBusinessEntity(
+                $businessEntity = $this->createBusinessEntity(
                     $class->getName(),
+                    $annotationObj,
                     $this->loadBusinessProperties($class)
                 );
-
+                $entityManager->persist($businessEntity);
             }
-
         }
+        $entityManager->flush();
     }
-
 
     /**
      * load business properties from ReflectionClass.
@@ -96,6 +105,7 @@ class BusinessEntityDBMigrationCommand extends ContainerAwareCommand
      **/
     protected function loadBusinessProperties(\ReflectionClass $class)
     {
+        $reader = $this->getContainer()->get('annotation_reader');
         $businessProperties = [];
         $properties = $class->getProperties();
         $traits = $class->getTraits();
@@ -108,12 +118,13 @@ class BusinessEntityDBMigrationCommand extends ContainerAwareCommand
         }
 
         foreach ($properties as $property) {
-            $annotations = $this->reader->getPropertyAnnotations($property);
+            $annotations = $reader->getPropertyAnnotations($property);
             foreach ($annotations as $key => $annotationObj) {
-                if ($annotationObj instanceof BusinessProperty && !in_array($class, $businessProperties)) {
-                    foreach ($annotations[$key]->getTypes() as $type) {
-                        $businessProperties[$type][] = $property->name;
-                    }
+                if ($annotationObj instanceof BusinessPropertyAnnotation && !in_array($class, $businessProperties)) {
+                    $businessProperties[$property->name] = $annotationObj;
+//                    foreach ($annotations[$key]->getTypes() as $type) {
+//                        $businessProperties[$type][] = $property->name;
+//                    }
                 }
             }
         }
@@ -123,21 +134,50 @@ class BusinessEntityDBMigrationCommand extends ContainerAwareCommand
         if ($parentClass) {
             //load parent properties recursively
             $parentProperties = $this->loadBusinessProperties(new \ReflectionClass($parentClass->getName()));
-            foreach ($parentProperties as $key => $parentProperty) {
-                if (array_key_exists($key, $businessProperties)) {
-                    //if parent and current have a same business property type we merge the properties and remove
-                    //duplicates if properties are the same;
-                    $businessProperties[$key] = array_unique(array_merge($parentProperty, $businessProperties[$key]));
-                } else {
-                    //else we had a business property type for the parent properties
-                    $businessProperties[$key] = $parentProperty;
+            foreach ($parentProperties as $propertyName => $parentProperty) {
+                if (!array_key_exists($propertyName, $businessProperties)) {
+                    $businessProperties[$propertyName] = $parentProperty;
                 }
             }
+//            foreach ($parentProperties as $key => $parentProperty) {
+//                if (in_array($parentProperty, $businessProperties)) {
+//                    //if parent and current have a same business property type we merge the properties and remove
+//                    //duplicates if properties are the same;
+//                    $businessProperties[$key] = array_unique(array_merge($parentProperty, $businessProperties[$key]));
+//                } else {
+//                    //else we had a business property type for the parent properties
+//                    $businessProperties[$key] = $parentProperty;
+//                }
+//            }
         }
 
         return $businessProperties;
     }
 
+    /**
+     * @param $className
+     * @param $annotationObj
+     * @param $businessProperties
+     *
+     * @return ORMBusinessEntity
+     */
+    private function createBusinessEntity($className, $annotationObj, $businessProperties)
+    {
+        $businessEntity = new ORMBusinessEntity();
+        $classNameArray = explode('\\', $className);
+        $entityName = array_pop($classNameArray);
+        $businessEntity->setName($entityName);
+        $businessEntity->setClass($className);
+        $businessEntity->setAvailableWidgets($annotationObj->getWidgets());
+        //parse the array of the annotation reader
+        foreach ($businessProperties as $propertyName => $property) {
+            $businessProperty = new BusinessProperty();
+            $businessProperty->setTypes($property->getTypes());
+            $businessProperty->setBusinessEntity($businessEntity);
+            $businessProperty->setName($propertyName);
+        }
+        return $businessEntity;
+    }
 
 
 }

@@ -22,7 +22,7 @@ class BusinessProperty
     /**
      * @var string
      *
-     * @ORM\Column(name="type", type="text", nullable=true)
+     * @ORM\Column(name="types", type="text", nullable=true)
      */
     protected $types = null;
 
@@ -37,13 +37,6 @@ class BusinessProperty
      * @ORM\ManyToOne(targetEntity="Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity", inversedBy="businessProperties")
      */
     protected $businessEntity;
-
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="businessIdentifier", type="boolean")
-     */
-    protected $businessIdentifier;
 
     /**
      * @var array
@@ -144,21 +137,6 @@ class BusinessProperty
         $this->name = $name;
     }
 
-    /**
-     * @return bool
-     */
-    public function isBusinessIdentifier()
-    {
-        return $this->businessIdentifier;
-    }
-
-    /**
-     * @param bool $businessIdentifier
-     */
-    public function setBusinessIdentifier($businessIdentifier)
-    {
-        $this->businessIdentifier = $businessIdentifier;
-    }
 
     /**
      * Set the choices.
@@ -217,5 +195,9 @@ class BusinessProperty
     public function setFilterMethod($filterMethod)
     {
         $this->filterMethod = $filterMethod;
+    }
+    public function hasType($type)
+    {
+        return in_array($type, $this->getTypes());
     }
 }

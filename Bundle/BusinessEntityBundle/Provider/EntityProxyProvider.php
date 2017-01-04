@@ -12,7 +12,7 @@ class EntityProxyProvider
     public function getEntityProxy($entity, BusinessEntity $businessEntity, EntityManager $em)
     {
         $accessor = new PropertyAccessor();
-        $entityId = $accessor->getValue($entity, $businessEntity->getBusinessIdentifiers()->first()->getName());
+        $entityId = $accessor->getValue($entity, $businessEntity->getBusinessParameters()->first()->getName());
         $entityProxy = $em->getRepository('Victoire\Bundle\CoreBundle\Entity\EntityProxy')->findOneBy(['ressourceId' => $entityId, 'businessEntity' => $businessEntity]);
         if (!$entityProxy) {
             $entityProxy = new EntityProxy();
