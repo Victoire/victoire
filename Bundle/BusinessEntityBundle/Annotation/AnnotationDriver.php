@@ -2,10 +2,17 @@
 
 namespace Victoire\Bundle\BusinessEntityBundle\Annotation;
 
+use Doctrine\Common\Annotations\AnnotationException;
 use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver as DoctrineAnnotationDriver;
 use Doctrine\ORM\Mapping\MappingException;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotNull;
+use Victoire\Bundle\BusinessEntityBundle\Entity\ReceiverProperty;
+use Victoire\Bundle\CoreBundle\Annotations\ReceiverProperty as ReceiverPropertyAnnotation;
 use Victoire\Bundle\WidgetBundle\Event\WidgetAnnotationEvent;
 use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
 
@@ -122,5 +129,71 @@ class AnnotationDriver extends DoctrineAnnotationDriver
                 }
             }
         }
+    }
+
+    /**
+     * Load receiver properties and NotBlank constraints from ReflectionClass.
+     *
+     * @param \ReflectionClass $class
+     *
+     * @throws AnnotationException
+     *
+     * @return array
+     */
+    protected function loadReceiverProperties(\ReflectionClass $class)
+    {
+        $receiverPropertiesTypes = [];
+        $properties = $class->getProperties();
+        //Store receiver properties
+        foreach ($properties as $property) {
+            $annotations = $this->reader->getPropertyAnnotations($property);
+            foreach ($annotations as $key => $annotationObj) {
+                if ($annotationObj instanceof ReceiverPropertyAnnotation && !in_array($class, $receiverPropertiesTypes)) {
+                    if (!$annotations[$key]->getTypes()) {
+                        $message = $class->name.':$'.$property->name.'" field';
+                        throw AnnotationException::requiredError('type', 'ReceiverProperty annotation', $message, 'array or string');
+                    }
+                    foreach ($annotations[$key]->getTypes() as $type) {
+                        $receiverProperty = new ReceiverProperty();
+                        $receiverProperty->setFieldName($property->name);
+                        $receiverPropertiesTypes[$type][] = $receiverProperty;
+                    }
+                }
+            }
+        }
+        //Set receiver properties as required if necessary
+        foreach ($receiverPropertiesTypes as $type => $receiverProperties) {
+            /* @var ReceiverProperty[] $receiverProperties */
+            foreach ($receiverProperties as $receiverProperty) {
+                $receiverPropertyName = $receiverProperty->getFieldName();
+                $refProperty = $class->getProperty($receiverPropertyName);
+                $annotations = $this->reader->getPropertyAnnotations($refProperty);
+                foreach ($annotations as $key => $annotationObj) {
+                    if ($annotationObj instanceof Column && $annotationObj->nullable === false) {
+                        throw new Exception(sprintf(
+                            'Property "%s" in class "%s" has a @ReceiverProperty annotation and by consequence must have "nullable=true" for ORM\Column annotation',
+                            $refProperty->name,
+                            $refProperty->class
+                        ));
+                    } elseif ($annotationObj instanceof NotBlank) {
+                        throw new Exception(sprintf(
+                            'Property "%s" in class "%s" has a @ReceiverProperty annotation and by consequence can not use NotBlank annotation',
+                            $refProperty->name,
+                            $refProperty->class
+                        ));
+                    } elseif ($annotationObj instanceof NotNull) {
+                        throw new Exception(sprintf(
+                            'Property "%s" in class "%s" has a @ReceiverProperty annotation and by consequence can not use NotNull annotation',
+                            $refProperty->name,
+                            $refProperty->class
+                        ));
+                    } elseif ($annotationObj instanceof ReceiverPropertyAnnotation && $annotationObj->isRequired()) {
+                        $receiverProperty->setRequired(true);
+                    }
+                }
+            }
+        }
+
+        return $receiverPropertiesTypes;
     }
 }
