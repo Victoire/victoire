@@ -137,7 +137,6 @@ class BusinessProperty
         $this->name = $name;
     }
 
-
     /**
      * Set the choices.
      *
@@ -196,6 +195,7 @@ class BusinessProperty
     {
         $this->filterMethod = $filterMethod;
     }
+
     public function hasType($type)
     {
         return in_array($type, $this->getTypes());

@@ -102,7 +102,7 @@ class FileHandler extends AbstractMediaHandler
     public function prepareMedia(Media $media)
     {
         if (null === $media->getUuid()) {
-            $uuid = uniqid();
+            $uuid = uniqid('', true);
             $media->setUuid($uuid);
         }
         $content = $media->getContent();

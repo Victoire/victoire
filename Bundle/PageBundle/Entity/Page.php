@@ -14,11 +14,4 @@ class Page extends BasePage
 {
     const TYPE = 'page';
 
-    /**
-     * Construct.
-     **/
-    public function __construct()
-    {
-        parent::__construct();
-    }
 }
