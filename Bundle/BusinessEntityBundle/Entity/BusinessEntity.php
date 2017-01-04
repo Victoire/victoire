@@ -34,7 +34,7 @@ abstract class BusinessEntity
     /**
      * @var BusinessProperty[]
      *
-     * @ORM\OneToMany(targetEntity="Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty", mappedBy="businessEntity")
+     * @ORM\OneToMany(targetEntity="Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty", mappedBy="businessEntity", cascade={"persist", "remove"})
      */
     protected $businessProperties;
 
@@ -155,12 +155,12 @@ abstract class BusinessEntity
      *
      * @return ArrayCollection The businnes properties
      */
-    public function getBusinessIdentifiers()
+    public function getBusinessParameters()
     {
         $bp = new ArrayCollection();
         /** @var BusinessProperty $property */
         foreach ($this->getBusinessProperties() as $property) {
-            if ($property->isBusinessIdentifier()) {
+            if ($property->hasType('businessParameter')) {
                 $bp->add($property);
             }
         }
