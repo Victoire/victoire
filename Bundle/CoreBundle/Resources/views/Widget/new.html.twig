@@ -4,6 +4,7 @@
 
 {% block form_container %}
     {% block body %}
+        {{ block('info') }}
         {% block form %}
             {% if entity != null %}
                 <div id="picker{% if entity %}-{{ entity }}{% endif %}-{{ quantum }}-{{ form.mode.vars.data }}" class="entity vic-tab-pane {% if form.mode.vars.data == widget.mode %}vic-active{% endif %}">
