@@ -3,7 +3,7 @@
 namespace Victoire\Bundle\BusinessEntityBundle\Annotation;
 
 use Doctrine\Common\Annotations\AnnotationException;
-use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Annotations\Reader;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver as DoctrineAnnotationDriver;
 use Doctrine\ORM\Mapping\MappingException;
@@ -29,14 +29,13 @@ class AnnotationDriver extends DoctrineAnnotationDriver
     /**
      * construct.
      *
-     * @param AnnotationReader         $reader
+     * @param Reader         $reader
      * @param EventDispatcherInterface $eventDispatcher
      * @param WidgetHelper             $widgetHelper
      * @param array                    $paths           The paths where to search about Entities
      */
-    public function __construct(AnnotationReader $reader, EventDispatcherInterface $eventDispatcher, $widgetHelper, $paths)
+    public function __construct(Reader $reader, EventDispatcherInterface $eventDispatcher, $widgetHelper, $paths)
     {
-        parent::__construct($reader, $paths);
         $this->reader = $reader;
         $this->eventDispatcher = $eventDispatcher;
         $this->widgetHelper = $widgetHelper;
