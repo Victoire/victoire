@@ -3,20 +3,19 @@
  * Created by PhpStorm.
  * User: paul
  * Date: 03/01/17
- * Time: 16:31
+ * Time: 16:31.
  */
 
 namespace Victoire\Bundle\BusinessEntityBundle\Command;
 
-
+use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\ProgressHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
-use Victoire\Bundle\CoreBundle\Annotations\BusinessProperty as BusinessPropertyAnnotation;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
+use Victoire\Bundle\CoreBundle\Annotations\BusinessProperty as BusinessPropertyAnnotation;
 use Victoire\Bundle\ORMBusinessEntityBundle\Entity\ORMBusinessEntity;
 
 class BusinessEntityDBMigrationCommand extends ContainerAwareCommand
@@ -54,9 +53,7 @@ class BusinessEntityDBMigrationCommand extends ContainerAwareCommand
             $progress->advance($k);
         }
         $progress->finish();
-
     }
-
 
     /**
      * Parse the given Class to find some annotations related to BusinessEntities.
@@ -176,8 +173,7 @@ class BusinessEntityDBMigrationCommand extends ContainerAwareCommand
             $businessProperty->setBusinessEntity($businessEntity);
             $businessProperty->setName($propertyName);
         }
+
         return $businessEntity;
     }
-
-
 }

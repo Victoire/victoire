@@ -7,7 +7,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class APISelect2Type extends AbstractType
 {
@@ -24,6 +23,7 @@ class APISelect2Type extends AbstractType
         parent::buildView($view, $form, $options);
         $view->vars['businessEntity'] = $options['businessEntity'];
     }
+
     /**
      * bind to Menu entity.
      *

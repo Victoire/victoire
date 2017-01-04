@@ -29,7 +29,7 @@ class Widget extends BaseWidget implements VictoireQueryInterface
 
     public function __construct()
     {
-        $this->childrenSlot = uniqid();
+        $this->childrenSlot = uniqid('', true);
         $this->criterias = new ArrayCollection();
     }
 

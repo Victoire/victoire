@@ -83,8 +83,8 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
                     if ($currentFolder->getId() == $folder->getId()) {
                         $menuitem->setActive(true);
                     } else {
-                        foreach ($parents as $parent) {
-                            if ($parent->getId() == $folder->getId()) {
+                        foreach ($parents as $_parent) {
+                            if ($_parent->getId() == $folder->getId()) {
                                 $menuitem->setActive(true);
                                 break;
                             }

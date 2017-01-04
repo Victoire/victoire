@@ -113,6 +113,7 @@ class APIBusinessEntity extends BusinessEntity
             $listMethod .= (false !== strpos($listMethod, '?') ? '&' : '?')
                 .str_replace('{{page}}', $page, $this->pagerParameter);
         }
+
         return $listMethod;
     }
 
@@ -139,6 +140,4 @@ class APIBusinessEntity extends BusinessEntity
     {
         $this->pagerParameter = $pagerParameter;
     }
-
-
 }

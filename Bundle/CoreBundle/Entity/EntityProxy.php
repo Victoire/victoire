@@ -92,7 +92,7 @@ class EntityProxy
     /**
      * Set widgets.
      *
-     * @param string $widgets
+     * @param array $widgets
      *
      * @return EntityProxy
      */

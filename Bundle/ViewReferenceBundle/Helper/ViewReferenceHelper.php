@@ -49,8 +49,9 @@ class ViewReferenceHelper
         if ($entity) {
             $refId .= '_'.$entity->getId();
         }
-        if ($view->getCurrentLocale() != '') {
-            $refId .= '_'.$view->getCurrentLocale();
+        /** @var string $currentLocale */
+        if ('' != $currentLocale = $view->getCurrentLocale()) {
+            $refId .= '_'.$currentLocale;
         }
 
         return $refId;
