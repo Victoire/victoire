@@ -36,7 +36,6 @@ class AnnotationDriver extends DoctrineAnnotationDriver
      */
     public function __construct(AnnotationReader $reader, EventDispatcherInterface $eventDispatcher, $widgetHelper, $paths)
     {
-
         parent::__construct($reader, $paths);
         $this->reader = $reader;
         $this->eventDispatcher = $eventDispatcher;

@@ -13,5 +13,4 @@ use Doctrine\ORM\Mapping as ORM;
 class Page extends BasePage
 {
     const TYPE = 'page';
-
 }
