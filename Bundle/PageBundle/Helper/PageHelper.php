@@ -316,7 +316,7 @@ class PageHelper
                     }
                     $entityProxy = new EntityProxy();
                     $accessor = new PropertyAccessor();
-                    $entityId = $accessor->getValue($entity, $page->getBusinessEntity()->getBusinessIdentifiers()->first()->getName());
+                    $entityId = $accessor->getValue($entity, $page->getBusinessEntity()->getBusinessParameters()->first()->getName());
                     $entityProxy->setRessourceId($entityId);
                     $this->findEntityByReference($viewReference);
 

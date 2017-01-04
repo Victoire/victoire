@@ -25,7 +25,7 @@ class BusinessPageRepository extends EntityRepository
     {
         if (is_object($entity)) {
             $accessor = new PropertyAccessor();
-            $entity = $accessor->getValue($entity, $businessEntity->getBusinessIdentifiers()->first()->getName());
+            $entity = $accessor->getValue($entity, $businessEntity->getBusinessParameters()->first()->getName());
         }
         $qb = $this->createQueryBuilder('BusinessPage');
         $qb->join('BusinessPage.entityProxy', 'proxy');
