@@ -117,30 +117,30 @@ class EntityProxyFormType extends AbstractType
                         'businessEntity' => $businessEntity,
                     ]
                 );
-
-                $builder->add(
-                    'businessEntity',
-                    HiddenType::class,
-                    [
-                        'data' => $options['business_entity_id'],
-                    ]
-                );
-
-                $builder->get('businessEntity')->addModelTransformer(
-                    new CallbackTransformer(
-                        function ($businessEntity) {
-                            return $businessEntity;
-                        },
-                        function ($nameToBusinessEntity) use ($entityManager) {
-                            return $entityManager->getRepository(
-                                'VictoireBusinessEntityBundle:BusinessEntity'
-                            )->findOneByName(
-                                $nameToBusinessEntity
-                            );
-                        }
-                    )
-                );
             }
+
+            $builder->add(
+                'businessEntity',
+                HiddenType::class,
+                [
+                    'data' => $options['business_entity_id'],
+                ]
+            );
+
+            $builder->get('businessEntity')->addModelTransformer(
+                new CallbackTransformer(
+                    function ($businessEntity) {
+                        return $businessEntity;
+                    },
+                    function ($nameToBusinessEntity) use ($entityManager) {
+                        return $entityManager->getRepository(
+                            'VictoireBusinessEntityBundle:BusinessEntity'
+                        )->findOneByName(
+                            $nameToBusinessEntity
+                        );
+                    }
+                )
+            );
         }
     }
 
