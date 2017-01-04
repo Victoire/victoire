@@ -470,6 +470,9 @@ class Article implements BusinessEntityInterface
         return $this->locale;
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return PropertyAccess::createPropertyAccessor()->getValue($this->translate(), 'getName');

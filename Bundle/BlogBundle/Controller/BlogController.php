@@ -340,7 +340,7 @@ class BlogController extends BasePageController
     }
 
     /**
-     * @param unknown $action
+     * @param string $action
      */
     protected function getRoutes($action)
     {

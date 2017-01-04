@@ -2,17 +2,10 @@
 
 namespace Victoire\Bundle\BusinessEntityBundle\Annotation;
 
-use Doctrine\Common\Annotations\AnnotationException;
-use Doctrine\Common\Annotations\Reader;
-use Doctrine\ORM\Mapping\Column;
+use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver as DoctrineAnnotationDriver;
 use Doctrine\ORM\Mapping\MappingException;
-use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\NotNull;
-use Victoire\Bundle\BusinessEntityBundle\Entity\ReceiverProperty;
-use Victoire\Bundle\CoreBundle\Annotations\ReceiverProperty as ReceiverPropertyAnnotation;
 use Victoire\Bundle\WidgetBundle\Event\WidgetAnnotationEvent;
 use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
 
@@ -29,13 +22,15 @@ class AnnotationDriver extends DoctrineAnnotationDriver
     /**
      * construct.
      *
-     * @param Reader                   $reader
+     * @param AnnotationReader         $reader
      * @param EventDispatcherInterface $eventDispatcher
      * @param WidgetHelper             $widgetHelper
      * @param array                    $paths           The paths where to search about Entities
      */
-    public function __construct(Reader $reader, EventDispatcherInterface $eventDispatcher, $widgetHelper, $paths)
+    public function __construct(AnnotationReader $reader, EventDispatcherInterface $eventDispatcher, $widgetHelper, $paths)
     {
+
+        parent::__construct($reader, $paths);
         $this->reader = $reader;
         $this->eventDispatcher = $eventDispatcher;
         $this->widgetHelper = $widgetHelper;

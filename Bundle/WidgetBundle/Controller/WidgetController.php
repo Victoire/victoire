@@ -309,13 +309,13 @@ class WidgetController extends Controller
             } else {
                 $widgets = $widget->getWidgetMap()->getWidgets();
                 $forms = [];
-                foreach ($widgets as $widget) {
-                    $forms[] = $this->get('form.factory')->create(WidgetStyleType::class, $widget, [
+                foreach ($widgets as $_widget) {
+                    $forms[] = $this->get('form.factory')->create(WidgetStyleType::class, $_widget, [
                             'method' => 'POST',
                             'action' => $this->generateUrl(
                                 'victoire_core_widget_stylize',
                                 [
-                                    'id'            => $widget->getId(),
+                                    'id'            => $_widget->getId(),
                                     'viewReference' => $viewReference,
                                 ]
                             ),
