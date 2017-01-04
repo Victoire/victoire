@@ -186,7 +186,7 @@ class WidgetRenderer
     /**
      * Compute slot options.
      *
-     * @param int $slotId
+     * @param int   $slotId
      * @param array $options
      *
      * @return string
