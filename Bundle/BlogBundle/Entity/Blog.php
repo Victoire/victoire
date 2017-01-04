@@ -39,6 +39,7 @@ class Blog extends Page
      */
     public function __construct()
     {
+        parent::__construct();
         $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
         $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
     }
@@ -58,7 +59,7 @@ class Blog extends Page
     /**
      * Set categories.
      *
-     * @param string $categories
+     * @param array $categories
      *
      * @return Blog
      */

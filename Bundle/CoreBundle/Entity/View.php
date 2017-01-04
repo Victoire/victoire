@@ -643,6 +643,7 @@ abstract class View
      */
     public function getReference($locale = null)
     {
+        /** @var string $locale */
         $locale = $locale ?: $this->getCurrentLocale();
         if (is_array($this->references) && isset($this->references[$locale])) {
             return $this->references[$locale];
@@ -683,6 +684,7 @@ abstract class View
      */
     public function setReference(ViewReference $reference = null, $locale = null)
     {
+        /** @var string $locale */
         $locale = $locale ?: $this->getCurrentLocale();
         $this->references[$locale] = $reference;
 

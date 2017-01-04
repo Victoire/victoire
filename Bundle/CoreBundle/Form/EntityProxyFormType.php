@@ -108,9 +108,9 @@ class EntityProxyFormType extends AbstractType
                         APISelect2Type::class,
                         [
                             'businessEntity'    => $businessEntity,
-                            'label'    => false,
-                            'required' => false,
-                            'attr'     => [
+                            'label'             => false,
+                            'required'          => false,
+                            'attr'              => [
                                 'class' => 'add_'.$options['business_entity_id'].'_link picker_entity_select',
                             ],
                         ]
