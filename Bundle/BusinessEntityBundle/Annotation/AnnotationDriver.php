@@ -29,7 +29,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
     /**
      * construct.
      *
-     * @param Reader         $reader
+     * @param Reader                   $reader
      * @param EventDispatcherInterface $eventDispatcher
      * @param WidgetHelper             $widgetHelper
      * @param array                    $paths           The paths where to search about Entities
