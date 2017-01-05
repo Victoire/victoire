@@ -39,7 +39,7 @@ class ViewReferenceHelper
     public static function generateViewReferenceId(View $view, $entityId = null)
     {
         $id = $view->getId();
-        if ($view instanceof BusinessPage) {
+        if ($view instanceof BusinessPage && $view->getEntity()) {
             $id = $view->getTemplate()->getId();
             $accessor = new PropertyAccessor();
             $entityId = $accessor->getValue($view->getEntity(), $view->getBusinessEntity()->getBusinessParameters()->first()->getName());
