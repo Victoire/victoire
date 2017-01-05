@@ -33,7 +33,7 @@ trait QueryTrait
      */
     protected $businessEntityName;
     /**
-     * @ORM\ManyToOne(targetEntity="Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity")
+     * @ORM\ManyToOne(targetEntity="Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity", cascade={"persist"})
      * @ORM\JoinColumn(name="business_entity_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $businessEntity;
