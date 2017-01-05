@@ -28,6 +28,10 @@
             "victoire-head":
             [
                 "@VictoireCoreBundle/Resources/public/vendor/jquery/1.10.2/jquery-1.10.2.js",
+                "@VictoireCoreBundle/Resources/public/vendor/select2-4.0.3/js/select2.full.min.js",
+                "@VictoireCoreBundle/Resources/public/vendor/select2-4.0.3/js/i18n/fr.js",
+                "@VictoireCoreBundle/Resources/public/vendor/select2-4.0.3/js/i18n/en.js",
+                "@VictoireCoreBundle/Resources/public/vendor/select2-4.0.3/js/i18n/es.js",
                 "@VictoireCoreBundle/Resources/public/js/jquery.noConflict.js"
             ],
             "modernizr":
@@ -48,11 +52,7 @@
                 "@VictoireCoreBundle/Resources/public/js/edit/widget.js",
                 "@VictoireCoreBundle/Resources/public/vendor/vic-confirm/js/confirm.js",
                 "@VictoireCoreBundle/Resources/public/vendor/vic-bootstrap/3.0.3/js/bootstrap.min.js",
-                "@VictoireCoreBundle/Resources/public/js/jquery.mjs.nestedSortable.js",
-                "@VictoireCoreBundle/Resources/public/vendor/select2-4.0.3/js/select2.js",
-                "@VictoireCoreBundle/Resources/public/vendor/select2-4.0.3/js/i18n/fr.js",
-                "@VictoireCoreBundle/Resources/public/vendor/select2-4.0.3/js/i18n/en.js",
-                "@VictoireCoreBundle/Resources/public/vendor/select2-4.0.3/js/i18n/es.js"
+                "@VictoireCoreBundle/Resources/public/js/jquery.mjs.nestedSortable.js"
             ]
         },
         "stylesheets":
