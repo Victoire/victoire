@@ -13,7 +13,7 @@
             ],
             "victoire-ngApp":
             [
-                "http://code.angularjs.org/1.4.1/angular-sanitize.min.js",
+                "https://code.angularjs.org/1.4.1/angular-sanitize.min.js",
                 "@VictoireCoreBundle/Resources/script/ngApp/app.js",
                 "@VictoireCoreBundle/Resources/script/ngApp/filters/translateFilter.js",
                 "@VictoireCoreBundle/Resources/script/ngApp/controllers/page/PageCtrl.js",
