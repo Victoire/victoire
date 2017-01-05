@@ -241,7 +241,6 @@ class WidgetManager
             $noValidate = $request->query->get('novalidate', false);
             $form->handleRequest($request);
             if ($noValidate === false && $form->isValid()) {
-                $widget->setBusinessEntityName($businessEntityName);
 
                 //force cache invalidation
                 $widget->setUpdatedAt(new \DateTime());
