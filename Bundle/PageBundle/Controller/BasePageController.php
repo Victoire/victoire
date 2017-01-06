@@ -60,7 +60,6 @@ class BasePageController extends Controller
         $entityProxy->setBusinessEntity($businessEntity);
         $entity = $this->get('victoire_business_entity.resolver.business_entity_resolver')->getBusinessEntity($entityProxy);
 
-
         $templateId = $this->get('victoire_business_page.business_page_helper')
             ->guessBestPatternIdForEntity($entity, $this->container->get('doctrine.orm.entity_manager'));
 
