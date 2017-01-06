@@ -29,7 +29,11 @@ class BusinessPageReferenceBuilder extends BaseReferenceBuilder
         $accessor = new PropertyAccessor();
         $entityId = null;
         if ($entity) {
-            $entityId = $accessor->getValue($entity, $businessEntity->getBusinessParameters()->first()->getName());
+            if (method_exists($entity, 'getId')) {
+                $entityId = $entity->getId();
+            } else {
+                $entityId = $accessor->getValue($entity, $businessEntity->getBusinessParameters()->first()->getName());
+            }
         }
         $referenceId = ViewReferenceHelper::generateViewReferenceId($businessPage);
         $businessPageReference = new BusinessPageReference();
