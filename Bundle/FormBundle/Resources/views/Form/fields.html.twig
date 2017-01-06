@@ -41,7 +41,7 @@
     </select>
 
     <script type="text/javascript">
-        $("#{{ id }}").select2({
+        $vic("#{{ id }}").select2({
             ajax: {
                 url: Routing.generate('victoire_api_fetch', {'businessEntity': {{ businessEntity.id }}, '_locale': locale}),
                 dataType: 'json',
