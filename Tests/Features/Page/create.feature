@@ -5,7 +5,6 @@ Background:
     Given I maximize the window
     And I am on homepage
 
-  @smartStep
 Scenario: I can create a new page
     When I follow the float action button
     Then I should see "Nouvelle page"
