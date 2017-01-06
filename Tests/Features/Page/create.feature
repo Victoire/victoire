@@ -5,7 +5,6 @@ Background:
     Given I maximize the window
     And I am on homepage
 
-  @smartStep
 Scenario: I can create a new page
     Given I should see "Page"
     Given I select the option "Nouvelle page" in the dropdown "Page"
