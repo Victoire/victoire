@@ -15,19 +15,16 @@ use Victoire\Bundle\ORMBusinessEntityBundle\Resolver\ORMBusinessEntityResolver;
  */
 class BusinessEntityResolver implements BusinessEntityResolverInterface
 {
-    /**
-     * @var ORMBusinessEntityResolver
-     */
-    private $ormResolver;
-    /**
-     * @var APIBusinessEntityResolver
-     */
-    private $apiResolver;
+    private $resolvers;
 
-    public function __construct(ORMBusinessEntityResolver $ormResolver, APIBusinessEntityResolver $apiResolver)
+    public function __construct()
     {
-        $this->ormResolver = $ormResolver;
-        $this->apiResolver = $apiResolver;
+        $this->resolvers = [];
+    }
+
+    public function addResolver($resolver, $type)
+    {
+        $this->resolvers[$type] = $resolver;
     }
 
     public function getBusinessEntity(EntityProxy $entityProxy)
@@ -47,11 +44,10 @@ class BusinessEntityResolver implements BusinessEntityResolverInterface
 
     protected function findResolver(BusinessEntity $businessEntity)
     {
-        switch ($businessEntity->getType()) {
-            case ORMBusinessEntity::TYPE:
-                return $this->ormResolver;
-            case APIBusinessEntity::TYPE:
-                return $this->apiResolver;
+        if (array_key_exists($businessEntity->getType(), $this->resolvers)) {
+            return $this->resolvers[$businessEntity->getType()];
+        } else {
+            throw new \Exception(sprintf('there is no resolver for %s type', $businessEntity->getType()));
         }
     }
 }
