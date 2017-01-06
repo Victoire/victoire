@@ -222,7 +222,7 @@ class PageHelper
             $type = $view->getType();
         }
 
-        $eventName = 'victoire_core.'.$type.'_menu.contextual';
+        $eventName = 'victoire_core.'.strtolower($type).'_menu.contextual';
         $this->eventDispatcher->dispatch($eventName, $event);
 
         if (null === $layout) {
