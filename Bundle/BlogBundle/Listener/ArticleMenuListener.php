@@ -34,7 +34,7 @@ class ArticleMenuListener implements MenuListenerInterface
     public function addContextual($event)
     {
         $page = $event->getPage();
-        $currentArticle = $event->getPage()->getBusinessEntity();
+        $currentArticle = $event->getPage()->getEntity();
 
         $bottomRightNavbar = $this->menuBuilder->getBottomRightNavbar();
 
