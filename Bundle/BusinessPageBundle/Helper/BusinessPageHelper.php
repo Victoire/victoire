@@ -226,30 +226,38 @@ class BusinessPageHelper
      *
      * @return View
      */
-    public function guessBestPatternIdForEntity($refClass, $entityId, $em, $originalRefClassName = null)
+    public function guessBestPatternIdForEntity($entity, $em, $originalRefClassName = null)
     {
+        $entityId = $entity->getId();
         $templateId = null;
+        $viewReference = null;
+        $businessEntity = null;
+        $refClass = null;
+        if (is_array($entity) && array_key_exists('_businessEntity', $entity)) {
+            $businessEntity = $entity['_businessEntity'];
+        } else if ($entity instanceof BusinessEntityInterface) {
+
+            $refClass = new \ReflectionClass($entity);
         $refClassName = $em->getClassMetadata($refClass->name)->name;
 
-        $viewReference = null;
         if (!$originalRefClassName) {
             $originalRefClassName = $refClassName;
         }
 
         $businessEntity = $this->businessEntityHelper->findByEntityClassname($refClassName);
+        }
 
         if ($businessEntity) {
             $parameters = [
                 'entityId'        => $entityId,
-                'entityNamespace' => $originalRefClassName,
+                'businessEntity' => $businessEntity->getId(),
             ];
             $viewReference = $this->viewReferenceRepository->getOneReferenceByParameters($parameters);
         }
 
         if (!$viewReference) {
-            $parentRefClass = $refClass->getParentClass();
-            if ($parentRefClass) {
-                $templateId = $this->guessBestPatternIdForEntity($parentRefClass, $entityId, $em, $originalRefClassName);
+            if ($refClass && $parentRefClass = $refClass->getParentClass()) {
+                $templateId = $this->guessBestPatternIdForEntity($parentRefClass, $em, $originalRefClassName);
             } else {
                 throw new \Exception(sprintf('Cannot find a BusinessTemplate that can display the requested BusinessEntity ("%s", "%s".)', $refClassName, $entityId));
             }
