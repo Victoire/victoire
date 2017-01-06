@@ -266,7 +266,7 @@ class LinkExtension extends \Twig_Extension
         }
         if (!$templateId) {
             $templateId = $this->BusinessPageHelper
-                ->guessBestPatternIdForEntity(new \ReflectionClass($businessEntityInstance), $businessEntityInstance->getId(), $this->em);
+                ->guessBestPatternIdForEntity($businessEntityInstance, $this->em);
         }
 
         $page = $this->pageHelper->findPageByParameters([
