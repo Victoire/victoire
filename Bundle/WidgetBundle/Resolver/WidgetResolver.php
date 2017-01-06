@@ -71,7 +71,7 @@ class WidgetResolver
     {
         $businessEntity = null;
         if ($this->currentViewHelper->getCurrentView() instanceof BusinessPage) {
-            $businessEntity = $this->currentViewHelper->getCurrentView()->getBusinessEntity();
+            $businessEntity = $this->currentViewHelper->getCurrentView()->getEntity();
         }
         $result = false;
         switch ($operator) {
