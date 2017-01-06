@@ -8,6 +8,7 @@ Background:
     Scenario: I can delete a blog article
         Given I am on "/fr/the-jedi-network/i-m-your-father"
         When I select the option "Paramètres de la page" in the dropdown "Page"
+        And I wait 2 seconds
         Then I should see "Supprimer"
         Given I follow "Supprimer"
         Then I should see "Cette action va supprimer définitivement cet article. Cette action est irréversible. Êtes-vous sûr ?"
