@@ -42,7 +42,12 @@ class ViewReferenceHelper
         if ($view instanceof BusinessPage && $view->getEntity()) {
             $id = $view->getTemplate()->getId();
             $accessor = new PropertyAccessor();
-            $entityId = $accessor->getValue($view->getEntity(), $view->getBusinessEntity()->getBusinessParameters()->first()->getName());
+            $entity = $view->getEntity();
+            if (method_exists($entity, 'getId')) {
+                $entityId = $entity->getId();
+            } else {
+                $entityId = $accessor->getValue($entity, $view->getBusinessEntity()->getBusinessParameters()->first()->getName());
+            }
         } elseif (!$view instanceof WebViewInterface) {
             return $view->getId();
         }

@@ -5,11 +5,13 @@ namespace Victoire\Bundle\BusinessPageBundle\Helper;
 use Doctrine\DBAL\Schema\View;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\QueryBuilder;
 use Victoire\Bundle\APIBusinessEntityBundle\Entity\APIBusinessEntity;
 use Victoire\Bundle\APIBusinessEntityBundle\Resolver\APIBusinessEntityResolver;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntityInterface;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntityRepository;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
@@ -238,13 +240,13 @@ class BusinessPageHelper
         } else if ($entity instanceof BusinessEntityInterface) {
 
             $refClass = new \ReflectionClass($entity);
-        $refClassName = $em->getClassMetadata($refClass->name)->name;
+            $refClassName = $em->getClassMetadata($refClass->name)->name;
 
-        if (!$originalRefClassName) {
-            $originalRefClassName = $refClassName;
-        }
+            if (!$originalRefClassName) {
+                $originalRefClassName = $refClassName;
+            }
 
-        $businessEntity = $this->businessEntityHelper->findByEntityClassname($refClassName);
+            $businessEntity = $this->businessEntityHelper->findByEntityClassname($refClassName);
         }
 
         if ($businessEntity) {
