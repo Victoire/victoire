@@ -11,7 +11,6 @@ use Victoire\Bundle\BusinessEntityBundle\DependencyInjection\Compiler\BusinessEn
  */
 class VictoireBusinessEntityBundle extends Bundle
 {
-
     /**
      * Build bundle.
      *
