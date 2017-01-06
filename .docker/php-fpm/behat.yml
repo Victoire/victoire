@@ -27,15 +27,14 @@ default:
                 bootstrap: Tests/Functionnal/app/autoload.php
                 path: Tests/Functionnal/app/AppKernel.php
                 class: AppKernel
-                env: ci
                 env: docker
          Lakion\Behat\MinkDebugExtension:
              directory: fails
              screenshot: true
          Behat\MinkExtension\ServiceContainer\MinkExtension:
-             base_url:          'http://anakin@victoire.io:test@172.17.0.9/'
+             base_url:          'http://anakin@victoire.io:test@127.0.0.1:8000/'
              symfony2:          ~
-             goutte:             ~
+             goutte:            ~
              selenium2:
                  wd_host: "http://hub:4444/wd/hub"
                  capabilities:
