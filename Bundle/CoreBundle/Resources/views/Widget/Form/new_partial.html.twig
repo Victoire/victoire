@@ -14,7 +14,7 @@
                 {% if businessEntity.disable %}
                     <li class="vic-disable"><span title="{{ ('form.widget.tab.entity.disable.label')|trans({}, 'victoire') }}">{{ ('form.widget.tab.' ~ businessEntity.name|lower ~ '.label')|trans({}, 'victoire') }}</span></li>
                 {% else %}
-                    <li class="{% if not loop.last %}vic-seperate{% endif %}{% if businessEntity.name|lower == widget.businessEntityName %} vic-active{% endif %}"><a href="#picker-{{ businessEntity.name|lower }}-{{ quantum }}" data-toggle="vic-tab">{{ ('form.widget.tab.' ~ businessEntity.name|lower ~ '.label')|trans({}, 'victoire') }}</a></li>
+                    <li class="{% if not loop.last %}vic-seperate{% endif %}{% if businessEntity.name|lower == widget.businessEntityName|lower %} vic-active{% endif %}"><a href="#picker-{{ businessEntity.name|lower }}-{{ quantum }}" data-toggle="vic-tab">{{ ('form.widget.tab.' ~ businessEntity.name|lower ~ '.label')|trans({}, 'victoire') }}</a></li>
                 {% endif %}
             {% endfor %}
         </ul>
@@ -22,7 +22,7 @@
 
     <div class="vic-tab-content vic-modal-tab-content">
         {% for class, form in forms %}
-            {% set isActive = class == widget.mode or widget.businessEntityName == class|lower or widget.mode == constant('MODE_STATIC', widget) and class == constant('MODE_ENTITY', widget) %}
+            {% set isActive = class == widget.mode or widget.businessEntityName|lower == class|lower or widget.mode == constant('MODE_STATIC', widget) and class == constant('MODE_ENTITY', widget) %}
             <div class="vic-tab-mode vic-tab-pane{% if isActive %} vic-active{% endif %}" id="picker-{{ class|lower }}-{{ quantum }}">
 
                 {% if class != constant('MODE_STATIC', widget) and is_granted('ROLE_VICTOIRE_DEVELOPER') %}

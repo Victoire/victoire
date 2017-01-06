@@ -175,8 +175,8 @@ class Widget extends BaseWidget implements VictoireQueryInterface
      */
     public function getBusinessEntityName()
     {
-        if ($entityProxy = $this->getEntityProxy()) {
-            return $entityProxy->getBusinessEntity()->getName();
+        if ($businessEntity = $this->getBusinessEntity()) {
+            return $businessEntity->getName();
         }
 
         return $this->businessEntityName;
