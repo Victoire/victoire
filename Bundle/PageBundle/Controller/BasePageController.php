@@ -10,6 +10,7 @@ use Victoire\Bundle\BlogBundle\Entity\Blog;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
+use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 
@@ -80,14 +81,16 @@ class BasePageController extends Controller
      */
     public function showBusinessPageByIdAction(Request $request, $entityId, $type)
     {
-        $businessEntityHelper = $this->get('victoire_core.helper.queriable_business_entity_helper');
-        $businessEntity = $businessEntityHelper->findById($type);
-        $entity = $businessEntityHelper->getByBusinessEntityAndId($businessEntity, $entityId);
+        $businessEntity = $this->get('victoire_core.entity.business_entity_repository')->findOneBy(['name' => $type]);
 
-        $refClass = new \ReflectionClass($entity);
+        $entityProxy = new EntityProxy();
+        $entityProxy->setRessourceId($entityId);
+        $entityProxy->setBusinessEntity($businessEntity);
+        $entity = $this->get('victoire_business_entity.resolver.business_entity_resolver')->getBusinessEntity($entityProxy);
+
 
         $templateId = $this->get('victoire_business_page.business_page_helper')
-            ->guessBestPatternIdForEntity($refClass, $entityId, $this->container->get('doctrine.orm.entity_manager'));
+            ->guessBestPatternIdForEntity($entity, $this->container->get('doctrine.orm.entity_manager'));
 
         $page = $this->get('victoire_page.page_helper')->findPageByParameters([
             'viewId'   => $templateId,
