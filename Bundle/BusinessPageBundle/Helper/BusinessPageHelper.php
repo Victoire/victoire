@@ -5,7 +5,6 @@ namespace Victoire\Bundle\BusinessPageBundle\Helper;
 use Doctrine\DBAL\Schema\View;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\QueryBuilder;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
@@ -224,8 +223,7 @@ class BusinessPageHelper
         $refClass = null;
         if (is_array($entity) && array_key_exists('_businessEntity', $entity)) {
             $businessEntity = $entity['_businessEntity'];
-        } else if ($entity instanceof BusinessEntityInterface) {
-
+        } elseif ($entity instanceof BusinessEntityInterface) {
             $refClass = new \ReflectionClass($entity);
             $refClassName = $em->getClassMetadata($refClass->name)->name;
 
@@ -239,7 +237,7 @@ class BusinessPageHelper
         if ($businessEntity) {
             $parameters = [
                 'entityId'        => $entityId,
-                'businessEntity' => $businessEntity->getId(),
+                'businessEntity'  => $businessEntity->getId(),
             ];
             $viewReference = $this->viewReferenceRepository->getOneReferenceByParameters($parameters);
         }
