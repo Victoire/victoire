@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
+use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
@@ -53,12 +54,15 @@ class BasePageController extends Controller
     public function showBusinessPageByIdAction(Request $request, $entityId, $type)
     {
         $businessEntity = $this->get('victoire_core.entity.business_entity_repository')->findOneBy(['name' => $type]);
-        $entity = $this->get('doctrine.orm.entity_manager')->getRepository($businessEntity->getClass())->findOneById($entityId);
 
-        $refClass = new \ReflectionClass($entity);
+        $entityProxy = new EntityProxy();
+        $entityProxy->setRessourceId($entityId);
+        $entityProxy->setBusinessEntity($businessEntity);
+        $entity = $this->get('victoire_business_entity.resolver.business_entity_resolver')->getBusinessEntity($entityProxy);
+
 
         $templateId = $this->get('victoire_business_page.business_page_helper')
-            ->guessBestPatternIdForEntity($refClass, $entityId, $this->container->get('doctrine.orm.entity_manager'));
+            ->guessBestPatternIdForEntity($entity, $this->container->get('doctrine.orm.entity_manager'));
 
         $page = $this->get('victoire_page.page_helper')->findPageByParameters([
             'viewId'   => $templateId,
