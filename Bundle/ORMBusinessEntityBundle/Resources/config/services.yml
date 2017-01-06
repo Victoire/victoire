@@ -9,3 +9,5 @@ services:
         class: Victoire\Bundle\ORMBusinessEntityBundle\Resolver\ORMBusinessEntityResolver
         arguments:
             - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: victoire_business_entity.resolver, type: "orm" }
