@@ -41,6 +41,10 @@ class RequestDataSource
             'type'    => ChoiceType::class,
             'options' => [
                 'choices' => $this->availableLocales,
+                'choices_as_values' => true,
+                'choice_label'      => function ($value) {
+                    return $value;
+                },
             ],
         ];
     }
