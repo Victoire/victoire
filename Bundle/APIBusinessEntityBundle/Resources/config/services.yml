@@ -10,6 +10,8 @@ services:
         arguments:
           - "@victoire_business_entity.converter.parameter_converter"
           - "@victoire_api_business_entity.chain.api_authentication_chain"
+        tags:
+            - { name: victoire_business_entity.resolver, type: "api" }
 
     victoire_api_business_entity.chain.api_authentication_chain:
         class: Victoire\Bundle\APIBusinessEntityBundle\Chain\ApiAuthenticationChain

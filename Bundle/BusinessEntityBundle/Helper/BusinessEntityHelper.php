@@ -75,7 +75,7 @@ class BusinessEntityHelper
      */
     public function findByEntityClassname($classname)
     {
-        return $this->businessEntityRepository->findOneBy(['class' => $classname]);
+        return $this->ormBusinessEntityRepository->findOneBy(['class' => $classname]);
     }
 
     public function getAvailableForWidget($widgetName)
