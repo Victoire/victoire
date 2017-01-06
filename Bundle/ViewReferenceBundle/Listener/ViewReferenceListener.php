@@ -4,6 +4,8 @@ namespace Victoire\Bundle\ViewReferenceBundle\Listener;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Victoire\Bundle\BusinessEntityBundle\Resolver\BusinessEntityResolver;
+use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\ViewReferenceBundle\Builder\ViewReferenceBuilder;
 use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceManager;
 use Victoire\Bundle\ViewReferenceBundle\Event\ViewReferenceEvent;
@@ -17,6 +19,10 @@ class ViewReferenceListener implements EventSubscriberInterface
     private $viewReferenceBuilder;
     private $viewReferenceManager;
     private $em;
+    /**
+     * @var BusinessEntityResolver
+     */
+    private $businessEntityResolver;
 
     /**
      * ViewReferenceListener constructor.
@@ -24,12 +30,14 @@ class ViewReferenceListener implements EventSubscriberInterface
      * @param ViewReferenceBuilder   $viewReferenceBuilder
      * @param ViewReferenceManager   $viewReferenceManager
      * @param EntityManagerInterface $em
+     * @param BusinessEntityResolver $businessEntityResolver
      */
-    public function __construct(ViewReferenceBuilder $viewReferenceBuilder, ViewReferenceManager $viewReferenceManager, EntityManagerInterface $em)
+    public function __construct(ViewReferenceBuilder $viewReferenceBuilder, ViewReferenceManager $viewReferenceManager, EntityManagerInterface $em, BusinessEntityResolver $businessEntityResolver)
     {
         $this->viewReferenceBuilder = $viewReferenceBuilder;
         $this->viewReferenceManager = $viewReferenceManager;
         $this->em = $em;
+        $this->businessEntityResolver = $businessEntityResolver;
     }
 
     /**
@@ -51,6 +59,12 @@ class ViewReferenceListener implements EventSubscriberInterface
     public function updateViewReference(ViewReferenceEvent $event)
     {
         $view = $event->getView();
+
+        if ($view instanceof BusinessPage) {
+            $businessEntity = $this->businessEntityResolver->getBusinessEntity($view->getEntityProxy());
+            $view->getEntityProxy()->setEntity($businessEntity);
+        }
+
         if ($viewReference = $this->viewReferenceBuilder->buildViewReference($view, $this->em)) {
             $this->viewReferenceManager->saveReference($viewReference);
         }
