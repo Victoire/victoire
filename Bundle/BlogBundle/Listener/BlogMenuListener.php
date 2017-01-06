@@ -34,7 +34,7 @@ class BlogMenuListener implements MenuListenerInterface
     public function addContextual($event)
     {
         $mainItem = $this->getMainItem();
-        $currentArticle = $event->getPage()->getBusinessEntity();
+        $currentArticle = $event->getPage()->getEntity();
         $currentBlog = $currentArticle->getBlog();
 
         $mainItem->addChild('menu.blog.settings',
