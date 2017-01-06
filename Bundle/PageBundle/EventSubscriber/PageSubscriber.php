@@ -172,6 +172,7 @@ class PageSubscriber implements EventSubscriber
                 }
 
                 $entityProxy->setEntity($entity);
+                $view->setEntityProxy($entityProxy);
             }
         }
     }

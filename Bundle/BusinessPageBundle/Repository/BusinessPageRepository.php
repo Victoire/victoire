@@ -25,7 +25,11 @@ class BusinessPageRepository extends EntityRepository
     {
         if (is_object($entity)) {
             $accessor = new PropertyAccessor();
-            $entity = $accessor->getValue($entity, $businessEntity->getBusinessParameters()->first()->getName());
+            if (method_exists($entity, 'getId')) {
+                $entityId = $entity->getId();
+            } else {
+                $entityId = $accessor->getValue($entity, $businessEntity->getBusinessParameters()->first()->getName());
+            }
         }
         $qb = $this->createQueryBuilder('BusinessPage');
         $qb->join('BusinessPage.entityProxy', 'proxy');
@@ -38,7 +42,7 @@ class BusinessPageRepository extends EntityRepository
         $qb->andWhere('proxy.ressourceId = :entityId');
 
         $qb->setParameter(':templateId', $pattern);
-        $qb->setParameter(':entityId', $entity);
+        $qb->setParameter(':entityId', $entityId);
         $qb->setParameter(':entityName', $businessEntity->getName());
 
         return $qb->getQuery()->getOneOrNullResult();
