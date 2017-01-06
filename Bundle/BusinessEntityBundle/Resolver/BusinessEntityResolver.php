@@ -2,13 +2,9 @@
 
 namespace Victoire\Bundle\BusinessEntityBundle\Resolver;
 
-use Victoire\Bundle\APIBusinessEntityBundle\Entity\APIBusinessEntity;
-use Victoire\Bundle\APIBusinessEntityBundle\Resolver\APIBusinessEntityResolver;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
 use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
-use Victoire\Bundle\ORMBusinessEntityBundle\Entity\ORMBusinessEntity;
-use Victoire\Bundle\ORMBusinessEntityBundle\Resolver\ORMBusinessEntityResolver;
 
 /*
  * Class BusinessEntityResolver.
