@@ -8,6 +8,8 @@
 
 namespace Victoire\Bundle\BusinessEntityBundle\Command;
 
+use Doctrine\DBAL\Driver\Connection;
+use Doctrine\ORM\EntityManager;
 use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\ProgressHelper;
@@ -16,6 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
 use Victoire\Bundle\CoreBundle\Annotations\BusinessProperty as BusinessPropertyAnnotation;
+use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 use Victoire\Bundle\ORMBusinessEntityBundle\Entity\ORMBusinessEntity;
 
 class BusinessEntityDBMigrationCommand extends ContainerAwareCommand
@@ -42,25 +45,91 @@ class BusinessEntityDBMigrationCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $i = 0;
+        /** @var EntityManager $entityManager */
+        $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
         /** @var ProgressHelper $progress */
         $progress = $this->getHelperSet()->get('progress');
         $progress->setProgressCharacter('V');
         $progress->setEmptyBarCharacter('-');
 
         $progress->start($output);
-        foreach ($this->getContainer()->get('victoire_business_entity.annotation_driver')->getAllClassNames() as $k => $className) {
-            $this->parse(new \ReflectionClass($className));
-            $progress->advance($k);
+        foreach ($this->getContainer()->get('victoire_business_entity.annotation_driver')->getAllClassNames() as $className) {
+            $businessEntity = $this->parse(new \ReflectionClass($className));
+            if ($businessEntity) {
+                $entityManager->persist($businessEntity);
+            }
+            $progress->advance(++$i);
         }
+
+        /** @var \Doctrine\DBAL\Connection $conn */
+        $conn = $this->getContainer()->get('database_connection');
+
+        $sql = "SELECT * FROM vic_entity_proxy";
+        $oldProxies = $conn->fetchAll($sql);
+
+        foreach ($oldProxies as $k => $oldProxy) {
+            $proxy = $this->migrateOldProxies($oldProxy);
+            $entityManager->persist($proxy);
+            $progress->advance(++$i);
+        }
+
+        foreach ($entityManager->getRepository('VictoireBusinessPageBundle:BusinessTemplate')->findAll() as $bt) {
+            $this->migrateBusinessEntityName($bt);
+            $progress->advance(++$i);
+        }
+        foreach ($entityManager->getRepository('VictoireWidgetBundle:Widget')->findAll() as $widget) {
+            $this->migrateBusinessEntityName($widget);
+            $progress->advance(++$i);
+        }
+        $entityManager->flush();
         $progress->finish();
     }
 
+    protected function migrateBusinessEntityName($entity)
+    {
+        /** @var EntityManager $entityManager */
+        $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $businessEntity = $entityManager->getRepository('VictoireBusinessEntityBundle:ORMBusinessEntity')
+            ->createQueryBuilder('proxy')
+            ->where('proxy.name LIKE :prop')
+            ->addParameter(':prop', $entity->getOldBusinessEntityName())
+            ->getQuery()
+            ->getSingleResult();
+        $entity->setBusinessEntity($businessEntity);
+    }
+
+
+    protected function migrateOldProxies($oldProxy)
+    {
+
+        /** @var EntityManager $entityManager */
+        $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
+
+        $proxy = new EntityProxy();
+        foreach ($oldProxy as $oldProxyPropName => $oldProxyPropValue) {
+            if ($oldProxyPropName === 'id') {
+                $proxy->setId($oldProxyPropValue);
+            } else if ($oldProxyPropValue !== null){
+                $businessEntity = $entityManager->getRepository('VictoireBusinessEntityBundle:ORMBusinessEntity')
+                    ->createQueryBuilder('proxy')
+                    ->where('proxy.name LIKE :prop')
+                    ->addParameter(':prop', str_replace('_id', $oldProxyPropName, ''))
+                    ->getQuery()
+                    ->getSingleResult();
+                $proxy->setBusinessEntity($businessEntity);
+                $proxy->setRessourceId($oldProxyPropValue);
+            }
+        }
+
+        return $proxy;
+    }
     /**
      * Parse the given Class to find some annotations related to BusinessEntities.
      */
     public function parse(\ReflectionClass $class)
     {
-        $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $businessEntity = null;
         $classPath = dirname($class->getFileName());
         $inPaths = false;
         foreach ($this->getContainer()->getParameter('victoire_core.base_paths') as $key => $_path) {
@@ -89,10 +158,10 @@ class BusinessEntityDBMigrationCommand extends ContainerAwareCommand
                     $annotationObj,
                     $this->loadBusinessProperties($class)
                 );
-                $entityManager->persist($businessEntity);
             }
         }
-        $entityManager->flush();
+
+        return $businessEntity;
     }
 
     /**

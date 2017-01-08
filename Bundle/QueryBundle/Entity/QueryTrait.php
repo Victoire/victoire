@@ -31,8 +31,8 @@ trait QueryTrait
      */
     protected $businessEntityName;
     /**
-     * @ORM\ManyToOne(targetEntity="Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity")
-     * @ORM\JoinColumn(name="business_entity_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity", cascade={"persist"})
+     * @ORM\JoinColumn(name="related_business_entity_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $businessEntity;
 
@@ -74,6 +74,16 @@ trait QueryTrait
     public function setOrderBy($orderBy)
     {
         $this->orderBy = $orderBy;
+    }
+
+    /**
+     * Get businessEntityName.
+     *
+     * @return int
+     */
+    public function getOldBusinessEntityName()
+    {
+        return $this->businessEntityName;
     }
 
     /**
