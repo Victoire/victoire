@@ -65,7 +65,7 @@ class APIBusinessEntityResolver implements BusinessEntityResolverInterface
         }
 
         $entity = $this->callApi($businessEntity->getEndpoint()->getHost(), $getMethod, $businessEntity->getEndpoint());
-        $entity['_businessEntity'] = $entityProxy->getBusinessEntity();
+        $entity->_businessEntity = $entityProxy->getBusinessEntity();
 
         return $entity;
     }
@@ -82,7 +82,7 @@ class APIBusinessEntityResolver implements BusinessEntityResolverInterface
         $data = $this->callApi($businessEntity->getEndpoint()->getHost(), $businessEntity->getListMethod($page), $businessEntity->getEndpoint());
 
         foreach ($data as $entity) {
-            $entity['_businessEntity'] = $businessEntity;
+            $entity->_businessEntity = $businessEntity;
         }
         if (count($data) > 0) {
             $data = array_merge($data, $this->getBusinessEntities($businessEntity, ++$page));
@@ -109,7 +109,7 @@ class APIBusinessEntityResolver implements BusinessEntityResolverInterface
         $data = $this->callApi($businessEntity->getEndpoint()->getHost(), $getMethod, $businessEntity->getEndpoint());
 
         foreach ($data as $entity) {
-            $entity['_businessEntity'] = $businessEntity;
+            $entity->businessEntity = $businessEntity;
         }
 
         return $data;
