@@ -8,7 +8,6 @@
 
 namespace Victoire\Bundle\BusinessEntityBundle\Command;
 
-use Doctrine\DBAL\Driver\Connection;
 use Doctrine\ORM\EntityManager;
 use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -65,7 +64,7 @@ class BusinessEntityDBMigrationCommand extends ContainerAwareCommand
         /** @var \Doctrine\DBAL\Connection $conn */
         $conn = $this->getContainer()->get('database_connection');
 
-        $sql = "SELECT * FROM vic_entity_proxy";
+        $sql = 'SELECT * FROM vic_entity_proxy';
         $oldProxies = $conn->fetchAll($sql);
 
         foreach ($oldProxies as $k => $oldProxy) {
@@ -99,7 +98,6 @@ class BusinessEntityDBMigrationCommand extends ContainerAwareCommand
         $entity->setBusinessEntity($businessEntity);
     }
 
-
     protected function migrateOldProxies($oldProxy)
     {
 
@@ -110,7 +108,7 @@ class BusinessEntityDBMigrationCommand extends ContainerAwareCommand
         foreach ($oldProxy as $oldProxyPropName => $oldProxyPropValue) {
             if ($oldProxyPropName === 'id') {
                 $proxy->setId($oldProxyPropValue);
-            } else if ($oldProxyPropValue !== null){
+            } elseif ($oldProxyPropValue !== null) {
                 $businessEntity = $entityManager->getRepository('VictoireBusinessEntityBundle:ORMBusinessEntity')
                     ->createQueryBuilder('proxy')
                     ->where('proxy.name LIKE :prop')
@@ -124,6 +122,7 @@ class BusinessEntityDBMigrationCommand extends ContainerAwareCommand
 
         return $proxy;
     }
+
     /**
      * Parse the given Class to find some annotations related to BusinessEntities.
      */
