@@ -18,6 +18,7 @@ use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\PageBundle\Helper\UserCallableHelper;
 use Victoire\Bundle\ViewReferenceBundle\Builder\ViewReferenceBuilder;
 use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
+use Victoire\Bundle\ViewReferenceBundle\ViewReference\BusinessPageReference;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 /**
@@ -157,7 +158,7 @@ class PageSubscriber implements EventSubscriber
                     }
                 }
             }
-            if ($view instanceof BusinessPage && $businessEntity = $view->getEntityProxy()->getBusinessEntity()) {
+            if ($view instanceof BusinessPage && ($businessEntity = $view->getEntityProxy()->getBusinessEntity()) && $view->getReference() instanceof BusinessPageReference) {
                 $entityProxy = $view->getEntityProxy();
                 $viewReference = $view->getReference();
 
