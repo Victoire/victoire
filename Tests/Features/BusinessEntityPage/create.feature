@@ -28,6 +28,38 @@ Feature: Create business entity pages
         Then I should be on "/fr/victoire-dcms/business-template/show/4"
         And I should see "La représentation métier a bien été créée"
 
+    Scenario: I can create a new API Business entity page pattern
+        Given I open the hamburger menu
+        Then I should see "Représentation métier"
+        When I follow "Représentation métier"
+        And I close the hamburger menu
+        Then I should see "Users"
+        Then I should see "Ajouter une représentation métier"
+        When I follow the tab "Users"
+        And I should see "Ajouter une représentation métier"
+        And I follow "Ajouter une représentation métier"
+        Then I should see "Créer une représentation métier"
+        When I fill in "Nom" with "Fiche user - {{item.name}}"
+        And I fill in "URL" with "fiche-user-{{item.id}}"
+        And I follow "Créer"
+        And I wait 2 seconds
+        Then I should be on "/fr/victoire-dcms/business-template/show/4"
+        And I should see "La représentation métier a bien été créée"
+        Then I am on "/fr/victoire-dcms/business-template/show/4"
+        Then I switch to "layout" mode
+        And I should see "Nouveau contenu"
+        When I select "Texte brut" from the "1" select of "main_content" slot
+        Then I should see "Créer"
+        Then I follow the tab "users"
+        And I should see "Objet courant"
+        And I follow "Objet courant"
+        And I select "name" from "users_a_businessEntity_widget_text[fields][content]"
+        And I submit the widget
+        Given I am on "/fr/fiche-user-1"
+        Then I should see "Leanne Graham"
+        Given I am on "/fr/fiche-jedi-2"
+        Then I should see "Ervin Howell"
+
     Scenario: I can create some content in the pattern
         Given the following BusinessTemplate:
             | currentLocale |name                       | backendName  | slug                    |  businessEntity | parent  | template |
