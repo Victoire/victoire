@@ -50,7 +50,7 @@ Feature: Create business entity pages
         And I should see "Nouveau contenu"
         When I select "Texte brut" from the "1" select of "main_content" slot
         Then I should see "Créer"
-        Then I follow the tab "users"
+        Then I follow the tab "Users"
         And I should see "Objet courant"
         And I follow "Objet courant"
         And I select "name" from "users_a_businessEntity_widget_text[fields][content]"
