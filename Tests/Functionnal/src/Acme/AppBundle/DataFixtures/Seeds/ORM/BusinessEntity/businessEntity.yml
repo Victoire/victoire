@@ -29,6 +29,7 @@ Victoire\Bundle\APIBusinessEntityBundle\Entity\APIBusinessEntity:
         availableWidgets: 'a:1:{i:0;s:4:"Text";}'
         getMethod: /users/{{id}}
         listMethod: /users
+        pagerParameter: _page={{page}}
 
 Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty:
     jedi_name:
@@ -63,13 +64,13 @@ Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty:
         types: a:2:{i:0;s:8:"textable";i:1;s:17:"businessParameter";}
         name: midiChlorians
         businessEntity: @character_business_entity
-    users_name:
-        types: a:2:{i:0;s:8:"textable";i:1;s:17:"businessParameter";}
-        name: name
-        businessEntity: @users_business_entity
     users_id:
         types: a:2:{i:0;s:8:"textable";i:1;s:17:"businessParameter";}
         name: id
+        businessEntity: @users_business_entity
+    users_name:
+        types: a:2:{i:0;s:8:"textable";i:1;s:17:"businessParameter";}
+        name: name
         businessEntity: @users_business_entity
     users_email:
         types: a:2:{i:0;s:8:"textable";i:1;s:17:"businessParameter";}
