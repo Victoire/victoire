@@ -9,7 +9,7 @@ use Victoire\Bundle\WidgetBundle\Entity\Widget;
 /**
  * The Entity proxy is the link between a view, a widget or any else with the BusinessEntity.
  *
- * @ORM\Table("vic_entity_proxy")
+ * @ORM\Table("vic_entity_proxy_new")
  * @ORM\Entity()
  */
 class EntityProxy
