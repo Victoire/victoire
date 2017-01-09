@@ -42,10 +42,8 @@ Feature: Create business entity pages
         When I fill in "Nom" with "Fiche user - {{item.name}}"
         And I fill in "URL" with "fiche-user-{{item.id}}"
         And I follow "Créer"
-        And I wait 2 seconds
+        And I wait 20 seconds
         Then I should be on "/fr/victoire-dcms/business-template/show/4"
-        And I should see "La représentation métier a bien été créée"
-        Then I am on "/fr/victoire-dcms/business-template/show/4"
         Then I switch to "layout" mode
         And I should see "Nouveau contenu"
         When I select "Texte brut" from the "1" select of "main_content" slot
@@ -57,7 +55,7 @@ Feature: Create business entity pages
         And I submit the widget
         Given I am on "/fr/fiche-user-1"
         Then I should see "Leanne Graham"
-        Given I am on "/fr/fiche-jedi-2"
+        Given I am on "/fr/fiche-user-2"
         Then I should see "Ervin Howell"
 
     Scenario: I can create some content in the pattern
