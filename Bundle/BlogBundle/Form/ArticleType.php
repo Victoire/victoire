@@ -50,9 +50,9 @@ class ArticleType extends AbstractType
                 'multiple' => true,
             ])
             ->add('author', null, [
-                'label'    => 'form.article.type.author.label',
-                'required' => true,
-                'query_builder' => function(EntityRepository $er) {
+                'label'         => 'form.article.type.author.label',
+                'required'      => true,
+                'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('user')
                         ->where('user.roles LIKE :roles')
                         ->setParameter('roles', '%ROLE_VICTOIRE%');
