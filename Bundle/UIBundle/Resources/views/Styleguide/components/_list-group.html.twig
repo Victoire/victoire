@@ -1,7 +1,31 @@
 {% include "@styleguide/ui/section-header.html.twig" with {
     "name": "List-group",
-    "framework": {
-        "name": "trowel-list-group",
-        "url": "#",
+} %}
+
+
+{% embed '@styleguide/ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<ul class="vict-list-group vict-list-group--main">\n    <li class="vict-list-group__item">lorem</li>\n    <li class="vict-list-group__item">ipsum</li>\n\n    <li class="vict-list-group__sub-list">\n        <ul class="vict-list-group">\n            <li class="vict-list-group__item">dolor</li>\n\n            <li class="vict-list-group__sub-list">\n                <ul class="vict-list-group">\n                    <li class="vict-list-group__item">sit</li>\n                </ul>\n            </li>\n\n            <li class="vict-list-group__item">amet</li>\n        </ul>\n    </li>\n</ul>',
     }
 } %}
+    {% block snippet_preview %}
+        <ul class="vict-list-group vict-list-group--main">
+            <li class="vict-list-group__item">lorem</li>
+            <li class="vict-list-group__item">ipsum</li>
+
+            <li class="vict-list-group__sub-list">
+                <ul class="vict-list-group">
+                    <li class="vict-list-group__item">dolor</li>
+
+                    <li class="vict-list-group__sub-list">
+                        <ul class="vict-list-group">
+                            <li class="vict-list-group__item">sit</li>
+                        </ul>
+                    </li>
+
+                    <li class="vict-list-group__item">amet</li>
+                </ul>
+            </li>
+        </ul>
+    {% endblock snippet_preview %}
+{% endembed %}
