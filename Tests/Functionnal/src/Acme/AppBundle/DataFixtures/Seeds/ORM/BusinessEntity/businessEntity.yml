@@ -19,7 +19,7 @@ Victoire\Bundle\ORMBusinessEntityBundle\Entity\ORMBusinessEntity:
 Victoire\Bundle\APIBusinessEntityBundle\Entity\APIEndpoint:
     placeholder_endpoint:
         name: placeholder
-        host: https://jsonplaceholder.typicode.com
+        host: http://jsonplaceholder.typicode.com
         token: ~
 Victoire\Bundle\APIBusinessEntityBundle\Entity\APIBusinessEntity:
     users_business_entity:
