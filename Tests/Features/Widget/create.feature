@@ -32,3 +32,16 @@ Feature: Create a widget
         And I select "Anakin" from "jedi_a_entity_widget_text[entity_proxy][jedi]"
         And I submit the widget
         Then I should see "dark"
+
+    Scenario: I create an api widget
+        Given I am on the homepage
+        When I switch to "layout" mode
+        And I should see "New content"
+        And I select "Plain Text" from the "1" select of "main_content" slot
+        Then I should see "Create"
+        Then I follow the tab "Users"
+        And I should see "Select"
+        And I select "email" from "users_a_entity_widget_text[fields][content]"
+        And I fill in select2 input "#users_a_entity_widget_text_entity_proxy_ressourceId" with "ervin" and select "Ervin Howell"
+        And I submit the widget
+        Then I should see "Shanna@melissa.tv"
