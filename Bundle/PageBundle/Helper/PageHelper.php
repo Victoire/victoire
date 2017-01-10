@@ -320,7 +320,7 @@ class PageHelper
                     if (method_exists($entity, 'getId')) {
                         $entityId = $entity->getId();
                     } else {
-                        $entityId = $accessor->getValue($entity, $page->getBusinessEntity()->getBusinessParameters()->first()->getName());
+                        $entityId = $accessor->getValue($entity, $page->getBusinessEntity()->getBusinessIdentifiers()->first()->getName());
                     }
                     $entityProxy->setRessourceId($entityId);
                     $this->findEntityByReference($viewReference);
