@@ -34,7 +34,6 @@ before_install:
   - cp -v Tests/Functionnal/app/config/parameters.yml.dist Tests/Functionnal/app/config/parameters.yml
   - npm install less
   - if [[ $TRAVIS_PHP_VERSION != '7.0' && $TRAVIS_PHP_VERSION != 'hhvm' ]]; then phpenv config-rm xdebug.ini; fi
-  - composer self-update
 
 install:
   - composer require --dev symfony/symfony:${SYMFONY_VERSION} --no-update
