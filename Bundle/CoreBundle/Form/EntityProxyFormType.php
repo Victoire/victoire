@@ -132,8 +132,8 @@ class EntityProxyFormType extends AbstractType
             $builder->get('businessEntity')->addModelTransformer(
                     new CallbackTransformer(
                         function ($businessEntity) {
-                        return $businessEntity;
-                    },
+                            return $businessEntity;
+                        },
                     function ($nameToBusinessEntity) use ($entityManager) {
                         return $entityManager->getRepository(
                             'VictoireBusinessEntityBundle:BusinessEntity'

@@ -267,6 +267,7 @@ class VictoireContext extends RawMinkContext
 
         $this->getSession()->executeScript($js);
     }
+
     /**
      * @When /^(?:|I )fill in select2 input "(?P<field>(?:[^"]|\\")*)" with "(?P<value>(?:[^"]|\\")*)" and select "(?P<entry>(?:[^"]|\\")*)"$/
      */
