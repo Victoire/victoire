@@ -36,4 +36,6 @@ $flexcol--flex-shrink: (
   'default': 1,
   '-shrink-0': 0,
 );
-$flexcol--flex-basis: null;
+$flexcol--flex-basis: (
+  '-basis-0': 0,
+);

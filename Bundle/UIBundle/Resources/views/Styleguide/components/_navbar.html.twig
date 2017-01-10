@@ -170,16 +170,16 @@
 <h2 class="ts-section__sub-heading">Footer</h2>
 {% embed '@styleguide/ui/snippet.html.twig' with {
     'snippets': {
-        'html': '',
+        'twig': '<footer class="vict-navbar">\n    <div class="vic-container vic-container--fluid">\n        <div class="vic-flex-grid vic-flex-grid--align-center">\n            <div class="vic-flex-col vic-flex-col--grow-1 vic-flex-col--shrink-0 vic-flex-col--basis-0">\n                <button class="vic-btn vic-btn--transparent vic-drop-trigger--no-toggle" data-flag="drops" data-position="topout leftin" data-href="#navbar-footer-drop-1">\n                    {% include "@SVG/menu.html.twig" %}\n                </button>\n\n                <div class="vic-drop" id="navbar-footer-drop-1">\n                    <nav class="vic-drop__menu">\n                        <a class="vic-drop__anchor" href="#">Business Entities</a>\n                        <a class="vic-drop__anchor" href="#">Special pages</a>\n                    </nav>\n                </div>\n            </div>\n\n            <div class="vic-flex-col vic-flex-col--grow-1 vic-flex-col--shrink-0 vic-flex-col--basis-0 vic-text-align--center">\n                {% include "@bricks/mode-switcher.html.twig" with {\n                    "name": "mode-switcher",\n                    "startMode": "preview",\n                } %}\n            </div>\n\n            <div class="vic-flex-col vic-flex-col--grow-1 vic-flex-col--shrink-0 vic-flex-col--basis-0 vic-text-align--right">\n                <button class="vic-btn vic-btn--sm vic-btn--transparent" data-flag="drops" data-position="topout rightin" data-href="#navbar-footer-drop-2">\n                    {% include "@SVG/template.html.twig" %}\n                </button>\n\n                <div class="vic-drop" id="navbar-footer-drop-2">\n                    <nav class="vic-drop__menu">\n                        <a class="vic-drop__anchor" href="#">dropdown item</a>\n                        <a class="vic-drop__anchor" href="#">dropdown item</a>\n                    </nav>\n                </div>\n\n                <a class="vic-btn vic-btn--sm vic-btn--transparent" href="#">\n                    {% include "@SVG/cogs.html.twig" %}\n                </a>\n\n                <a class="vic-btn vic-btn--sm vic-btn--transparent" href="#">\n                    <span class="vic-seo vic-seo--success">seo</span>\n                </a>\n            </div>\n        </div>\n    </div>\n</footer>',
     }
 } %}
     {% block snippet_preview %}
-        <nav class="vict-navbar">
+        <footer class="vict-navbar">
             <div class="vic-container vic-container--fluid">
                 <div class="vic-flex-grid vic-flex-grid--align-center">
-                    <div class="vic-flex-col vic-flex-col--grow-1 vic-flex-col--shrink-0">
+                    <div class="vic-flex-col vic-flex-col--grow-1 vic-flex-col--shrink-0 vic-flex-col--basis-0">
                         <button class="vic-btn vic-btn--transparent vic-drop-trigger--no-toggle" data-flag="drops" data-position="topout leftin" data-href="#navbar-footer-drop-1">
-                            {% include '@SVG/menu.html.twig' %}
+                            {% include "@SVG/menu.html.twig" %}
                         </button>
 
                         <div class="vic-drop" id="navbar-footer-drop-1">
@@ -190,16 +190,16 @@
                         </div>
                     </div>
 
-                    <div class="vic-flex-col vic-flex-col--grow-1 vic-flex-col--shrink-0 vic-text-align--center">
-                        {% include '@bricks/mode-switcher.html.twig' with {
-                            'name': 'mode-switcher',
-                            'startMode': 'preview',
+                    <div class="vic-flex-col vic-flex-col--grow-1 vic-flex-col--shrink-0 vic-flex-col--basis-0 vic-text-align--center">
+                        {% include "@bricks/mode-switcher.html.twig" with {
+                            "name": "mode-switcher",
+                            "startMode": "preview",
                         } %}
                     </div>
 
-                    <div class="vic-flex-col vic-flex-col--grow-1 vic-flex-col--shrink-0 vic-text-align--right">
+                    <div class="vic-flex-col vic-flex-col--grow-1 vic-flex-col--shrink-0 vic-flex-col--basis-0 vic-text-align--right">
                         <button class="vic-btn vic-btn--sm vic-btn--transparent" data-flag="drops" data-position="topout rightin" data-href="#navbar-footer-drop-2">
-                            {% include '@SVG/template.html.twig' %}
+                            {% include "@SVG/template.html.twig" %}
                         </button>
 
                         <div class="vic-drop" id="navbar-footer-drop-2">
@@ -210,7 +210,7 @@
                         </div>
 
                         <a class="vic-btn vic-btn--sm vic-btn--transparent" href="#">
-                            {% include '@SVG/cogs.html.twig' %}
+                            {% include "@SVG/cogs.html.twig" %}
                         </a>
 
                         <a class="vic-btn vic-btn--sm vic-btn--transparent" href="#">
@@ -218,9 +218,8 @@
                         </a>
                     </div>
                 </div>
-
             </div>
-        </nav>
+        </footer>
     {% endblock snippet_preview %}
 {% endembed %}
 

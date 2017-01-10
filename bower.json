@@ -8,7 +8,7 @@
   "dependencies": {
     "trowel-core": "^3.0.0",
     "trowel-forms": "^1.0.1",
-    "trowel-drops": "^1.0.1",
+    "trowel-drops": "^1.0.2",
     "trowel-buttons": "^1.0.1",
     "trowel-layouts": "^1.0.1"
   }
