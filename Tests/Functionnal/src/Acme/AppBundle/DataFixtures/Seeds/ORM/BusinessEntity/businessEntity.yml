@@ -37,7 +37,7 @@ Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty:
         name: name
         businessEntity: @jedi_business_entity
     jedi_slug:
-        types: a:2:{i:0;s:8:"textable";i:1;s:17:"businessParameter";}
+        types: a:3:{i:0;s:8:"textable";i:1;s:18:"businessIdentifier";i:2;s:17:"businessParameter";}
         name: slug
         businessEntity: @jedi_business_entity
     jedi_side:
@@ -49,7 +49,7 @@ Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty:
         name: name
         businessEntity: @article_business_entity
     article_slug:
-        types: a:2:{i:0;s:8:"textable";i:1;s:17:"businessParameter";}
+        types: a:3:{i:0;s:8:"textable";i:1;s:18:"businessIdentifier";i:2;s:17:"businessParameter";}
         name: slug
         businessEntity: @article_business_entity
     character_name:
@@ -57,7 +57,7 @@ Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty:
         name: name
         businessEntity: @character_business_entity
     character_slug:
-        types: a:2:{i:0;s:8:"textable";i:1;s:17:"businessParameter";}
+        types: a:3:{i:0;s:8:"textable";i:1;s:18:"businessIdentifier";i:2;s:17:"businessParameter";}
         name: slug
         businessEntity: @character_business_entity
     character_midiChlorians:
@@ -65,7 +65,7 @@ Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty:
         name: midiChlorians
         businessEntity: @character_business_entity
     users_id:
-        types: a:2:{i:0;s:8:"textable";i:1;s:17:"businessParameter";}
+        types: a:2:{i:0;s:18:"businessIdentifier";i:1;s:17:"businessParameter";}
         name: id
         businessEntity: @users_business_entity
     users_name:

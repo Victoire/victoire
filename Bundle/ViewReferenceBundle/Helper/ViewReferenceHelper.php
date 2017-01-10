@@ -46,7 +46,7 @@ class ViewReferenceHelper
             if (method_exists($entity, 'getId')) {
                 $entityId = $entity->getId();
             } else {
-                $entityId = $accessor->getValue($entity, $view->getBusinessEntity()->getBusinessParameters()->first()->getName());
+                $entityId = $accessor->getValue($entity, $view->getBusinessEntity()->getBusinessIdentifiers()->first()->getName());
             }
         } elseif (!$view instanceof WebViewInterface) {
             return $view->getId();

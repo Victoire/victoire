@@ -130,8 +130,8 @@ class EntityProxyFormType extends AbstractType
             );
 
             $builder->get('businessEntity')->addModelTransformer(
-                new CallbackTransformer(
-                    function ($businessEntity) {
+                    new CallbackTransformer(
+                        function ($businessEntity) {
                         return $businessEntity;
                     },
                     function ($nameToBusinessEntity) use ($entityManager) {
