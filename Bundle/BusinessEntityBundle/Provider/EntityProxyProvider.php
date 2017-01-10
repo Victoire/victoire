@@ -15,7 +15,7 @@ class EntityProxyProvider
         if (method_exists($entity, 'getId')) {
             $entityId = $entity->getId();
         } else {
-            $entityId = $accessor->getValue($entity, $businessEntity->getBusinessParameters()->first()->getName());
+            $entityId = $accessor->getValue($entity, $businessEntity->getBusinessIdentifiers()->first()->getName());
         }
         $entityProxy = $em->getRepository('Victoire\Bundle\CoreBundle\Entity\EntityProxy')->findOneBy(['ressourceId' => $entityId, 'businessEntity' => $businessEntity]);
         if (!$entityProxy) {

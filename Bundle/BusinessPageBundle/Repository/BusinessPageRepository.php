@@ -28,7 +28,7 @@ class BusinessPageRepository extends EntityRepository
             if (method_exists($entity, 'getId')) {
                 $entityId = $entity->getId();
             } else {
-                $entityId = $accessor->getValue($entity, $businessEntity->getBusinessParameters()->first()->getName());
+                $entityId = $accessor->getValue($entity, $businessEntity->getBusinessIdentifiers()->first()->getName());
             }
         }
         $qb = $this->createQueryBuilder('BusinessPage');

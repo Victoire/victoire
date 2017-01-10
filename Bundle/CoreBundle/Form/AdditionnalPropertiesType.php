@@ -30,7 +30,7 @@ class AdditionnalPropertiesType extends AbstractType
         $identifiers = array_map(function ($property) {
             return $property->getName();
         },
-            $businessEntity->getBusinessParameters()->toArray()
+            $businessEntity->getBusinessIdentifiers()->toArray()
         );
         foreach ($matches[1] as $match) {
             if (!in_array($match, $identifiers)) {

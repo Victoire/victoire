@@ -61,7 +61,7 @@ class ViewReferenceProvider
                         $entityId = $entity->getId();
                     } elseif ($page->getBusinessEntity()->getType() === APIBusinessEntity::TYPE) {
                         $accessor = new PropertyAccessor();
-                        $entityId = $accessor->getValue($entity, $page->getBusinessEntity()->getBusinessParameters()->first()->getName());
+                        $entityId = $accessor->getValue($entity, $page->getBusinessEntity()->getBusinessIdentifiers()->first()->getName());
                     }
                     if (!array_key_exists(ViewReferenceHelper::generateViewReferenceId($page, $entityId), $businessPages)) {
                         $referencableViews[] = ['view' => $page];

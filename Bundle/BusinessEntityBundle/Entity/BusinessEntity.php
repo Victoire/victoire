@@ -167,6 +167,27 @@ abstract class BusinessEntity
 
         return $bp;
     }
+    /**
+     * Get the business identifiers.
+     *
+     * @param string $type
+     *
+     * @return ArrayCollection The businnes properties
+     */
+    public function getBusinessIdentifiers()
+    {
+        $bp = new ArrayCollection();
+        /** @var BusinessProperty $property */
+        foreach ($this->getBusinessProperties() as $property) {
+            if ($property->hasType('businessIdentifier')) {
+                $bp->add($property);
+            }
+        }
+        if ($bp->count() < 1) {
+            throw new \Exception(sprintf("The businessEntity %s must have at lease one businessIdentifier property", $this->name));
+        }
+        return $bp;
+    }
 
     /**
      * @return array
