@@ -26,10 +26,14 @@ class StyleguideController extends Controller
             'widgets',
             'input-images',
             'list-group',
-            // 'navbar',
+            'seo',
+            'image',
+            'menu',
+            'navbar',
             // 'mode-switcher',
             // 'fab',
             // 'card',
+            // 'tabs',
             // 'modal',
         );
 

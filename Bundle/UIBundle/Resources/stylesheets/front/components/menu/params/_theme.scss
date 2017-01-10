@@ -1,0 +1,34 @@
+// scss-lint:disable ColorVariable
+@import '../../../globals/params/rem';
+@import '../../../globals/params/font';
+@import '../../../globals/params/color';
+@import '../../../globals/params/ui-mode';
+
+$menus--font-size: rem();
+$menus--border-width: null;
+$menus--border-style: null;
+$menus--border-color: null;
+$menus--border-radius: null;
+$menus--box-shadow: null;
+$menus--justify-content: null;
+$menus--align-item: null;
+$menus--flex-direction: null;
+$menus--margin: null;
+$menus--padding: null;
+$menus--background-color: null;
+$menus--height: null;
+$menus--gutter: rem(2.375);
+
+$menus-anchor--font-size: rem();
+$menus-anchor--font-family: $app--font-family;
+$menus-anchor--font-weight: font-weight('bold');
+$menus-anchor--text-transform: null;
+$menus-anchor--letter-spacing: null;
+$menus-anchor--line-height: 1.25;
+$menus-anchor--color: (
+  'default': color('grey'),
+  ':hover': color('grey', 'dark'),
+  ':active': color('grey', 'dark'),
+  ':focus': color('grey', 'dark'),
+);
+$menus-anchor--text-decoration: null;

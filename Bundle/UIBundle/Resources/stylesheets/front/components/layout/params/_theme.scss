@@ -4,7 +4,7 @@
 @import '../../../globals/params/color';
 
 $container--enable: true !default; // not a trowel variable
-$container--padding-x: rem(0.5);
+$container--padding-x: rem();
 $container--width: (
   'default': rem(60),
   '-fluid': 100%,
@@ -15,7 +15,10 @@ $grid--gutter: rem();
 $grid--columns: 12 !default; // not a trowel variable
 
 $flexgrid--enable: true !default; // not a trowel variable
-$flexgrid--gutter: rem(0.5);
+$flexgrid--gutter: (
+  'default': rem(0.5),
+  '-gutter-lg': rem(1.1875),
+);
 $flexgrid--flex-wrap: wrap !default;
 $flexgrid--align-items: (
   'default': flex-start,
@@ -29,5 +32,8 @@ $flexcol--flex-grow: (
   'default': 0,
   '-grow-1': 1,
 );
-$flexcol--flex-shrink: 1;
+$flexcol--flex-shrink: (
+  'default': 1,
+  '-shrink-0': 0,
+);
 $flexcol--flex-basis: null;

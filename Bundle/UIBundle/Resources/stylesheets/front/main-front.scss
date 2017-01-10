@@ -27,6 +27,7 @@ $trowel-config: (
  * Helpers
  */
 @import 'helpers/color';
+@import 'helpers/text-align';
 
 /**
  * Components
@@ -39,3 +40,7 @@ $trowel-config: (
 @import 'components/widgets/widgets';
 @import 'components/input-images/input-images';
 @import 'components/list-groups/list-groups';
+@import 'components/seo/seo';
+@import 'components/image/image';
+@import 'components/menu/menu';
+@import 'components/navbar/navbar';

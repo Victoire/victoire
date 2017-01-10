@@ -1,0 +1,11 @@
+@import '../../../globals/params/synthax';
+
+$navbars--prefix: $app--prefix + 't';
+$navbars--synthax: (
+  'prefix': $navbars--prefix,
+  'separator': (
+    'prefix': '-',
+    'element': '__',
+    'modifier': '--',
+  ),
+);

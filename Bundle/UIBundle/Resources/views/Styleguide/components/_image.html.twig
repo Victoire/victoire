@@ -1,0 +1,14 @@
+{% include "@styleguide/ui/section-header.html.twig" with {
+    "name": "image",
+} %}
+
+<h2 class="ts-section__sub-heading">Profile img</h2>
+{% embed '@styleguide/ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<img class="vict-image--profile" src="http://placehold.it/40">',
+    }
+} %}
+    {% block snippet_preview %}
+        <img class="vict-image--profile" src="http://placehold.it/40">
+    {% endblock snippet_preview %}
+{% endembed %}
