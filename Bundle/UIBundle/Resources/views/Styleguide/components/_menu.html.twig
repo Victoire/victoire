@@ -1,0 +1,29 @@
+{% include "@styleguide/ui/section-header.html.twig" with {
+    "name": "menu",
+} %}
+
+{% embed '@styleguide/ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<ul class="vic-menu">\n    <li class="vic-menu__item">\n        <a class="vic-menu__anchor" href="#">anchor</a>\n    </li>\n\n    <li class="vic-menu__item">\n        <a class="vic-menu__anchor" href="#">anchor</a>\n    </li>\n\n    <li class="vic-menu__item">\n        <a class="vic-menu__anchor" href="#">anchor</a>\n    </li>\n\n    <li class="vic-menu__item">\n        <a class="vic-menu__anchor" href="#">anchor</a>\n    </li>\n</ul>',
+    }
+} %}
+    {% block snippet_preview %}
+        <ul class="vic-menu">
+            <li class="vic-menu__item">
+                <a class="vic-menu__anchor" href="#">anchor</a>
+            </li>
+
+            <li class="vic-menu__item">
+                <a class="vic-menu__anchor" href="#">anchor</a>
+            </li>
+
+            <li class="vic-menu__item">
+                <a class="vic-menu__anchor" href="#">anchor</a>
+            </li>
+
+            <li class="vic-menu__item">
+                <a class="vic-menu__anchor" href="#">anchor</a>
+            </li>
+        </ul>
+    {% endblock snippet_preview %}
+{% endembed %}

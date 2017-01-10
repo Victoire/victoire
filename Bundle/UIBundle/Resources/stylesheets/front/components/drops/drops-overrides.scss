@@ -5,6 +5,10 @@
   display: none;
 }
 
+[class*="vic-"][data-flag="drops"]:not([data-behavior="hover"]) {
+  cursor: pointer;
+}
+
 [class*="vic-"][data-flag="drops"]:not([data-behavior="hover"])::after {
   $size: 0.6em;
   $border-width: 2px;
@@ -23,4 +27,8 @@
 [class*="vic-"][data-flag="drops"][data-position~="topin"]::after,
 [class*="vic-"][data-flag="drops"][data-position~="topout"]::after {
   transform: rotate(135deg) translate(-60%, 60%);
+}
+
+.vic-drop-trigger--no-toggle::after {
+  content: none !important;
 }

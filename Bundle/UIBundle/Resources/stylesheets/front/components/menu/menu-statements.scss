@@ -1,0 +1,54 @@
+@import '../../globals/params/ui-mode';
+
+@mixin mixin-dispatcher($value, $flags, $mixin) {
+  @if $mixin == 'menu--gutter-row' {
+    @include menu--gutter-row($value, $flags);
+  } @elseif $mixin == 'menu--gutter-col' {
+    @include menu--gutter-col($value, $flags);
+  }
+};
+
+$menu--selector: selector--constructor($menus--synthax, 'menu');
+@include selector($menu--selector) {
+  @include declaration('display', flex);
+  @include declaration('font-size', $menus--font-size);
+  @include declaration('border-width', $menus--border-width);
+  @include declaration('border-style', $menus--border-style);
+  @include declaration('border-color', $menus--border-color);
+  @include declaration('border-radius', $menus--border-radius);
+  @include declaration('box-shadow', $menus--box-shadow);
+  @include declaration('justify-content', $menus--justify-content);
+  @include declaration('align-item', $menus--align-item);
+  @include declaration('flex-direction', $menus--flex-direction);
+  @include declaration('margin', $menus--margin);
+  @include declaration('padding', $menus--padding);
+  @include declaration('background-color', $menus--background-color);
+  @include declaration('height', $menus--height);
+  @include declaration('-include-menu--gutter-row', $menus--gutter);
+
+  @include declaration('list-style', none, ('<ul'));
+  @if not $menus--padding { @include declaration('padding-left', 0) }
+
+  @include block-generation($menu--selector);
+}
+
+$menu-item--selector: selector--set-element($menu--selector, 'item');
+@include selector($menu-item--selector) {
+  @include declaration('-include-menu--gutter-col', $menus--gutter);
+
+  @include block-generation($menu-item--selector);
+}
+
+$menu-anchor--selector: selector--set-element($menu--selector, 'anchor');
+@include selector($menu-anchor--selector) {
+  @include declaration('font-size', $menus-anchor--font-size);
+  @include declaration('font-family', $menus-anchor--font-family);
+  @include declaration('font-weight', $menus-anchor--font-weight);
+  @include declaration('text-transform', $menus-anchor--text-transform);
+  @include declaration('letter-spacing', $menus-anchor--letter-spacing);
+  @include declaration('line-height', $menus-anchor--line-height);
+  @include declaration('color', $menus-anchor--color);
+  @include declaration('text-decoration', $menus-anchor--text-decoration);
+
+  @include block-generation($menu-anchor--selector);
+}

@@ -14,3 +14,11 @@
   margin-left: 1em;
   margin-bottom: 0.05em;
 }
+
+.vic-flex-col {
+  line-height: 1;
+}
+
+.vic-flex-grid--gutter-lg .vic-flex-col {
+  margin: 19px;
+}

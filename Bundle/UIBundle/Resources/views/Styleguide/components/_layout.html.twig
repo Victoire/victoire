@@ -100,6 +100,25 @@
     {% endblock snippet_preview %}
 {% endembed %}
 
+<h2 class="ts-section__sub-heading">Flexbox grid / large gutter</h2>
+{% embed '@styleguide/ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<div class="vic-flex-grid vic-flex-grid--gutter-lg">\n    <div class="vic-flex-col">flex col</div>\n    <div class="vic-flex-col">flex col</div>\n    <div class="vic-flex-col vic-flex-col--grow-1">flex col</div>\n    <div class="vic-flex-col">flex col</div>\n    <div class="vic-flex-col">flex col</div>\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <div class="vic-flex-grid vic-flex-grid--gutter-lg">
+            {% for item in 1..5 %}
+                <div class="vic-flex-col{% if item == 3 %} vic-flex-col--grow-1{% endif %}">
+                    <div class="col-showcase" style="height: {{ 32 + item * 10 }}px">
+                        flex col
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}
+
 <h2 class="ts-section__sub-heading">Flexbox grid / aligned center</h2>
 {% embed '@styleguide/ui/snippet.html.twig' with {
     'snippets': {

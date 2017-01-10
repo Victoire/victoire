@@ -1,0 +1,56 @@
+// scss-lint:disable ColorVariable
+@import '../../../globals/params/rem';
+@import '../../../globals/params/font';
+@import '../../../globals/params/color';
+@import '../../../globals/params/ui-mode';
+
+$navbars--font-size: rem();
+$navbars--font-family: $app--font-family;
+$navbars--font-weight: font-weight();
+$navbars--z-index: (
+  '-header': 1100,
+  '-footer': 1100,
+);
+$navbars--position: (
+  '-header': fixed,
+  '-footer': fixed,
+);
+$navbars--width: (
+  '-header': 100%,
+  '-footer': 100%,
+);
+$navbars--left: (
+  '-header': 0,
+  '-footer': 0,
+);
+$navbars--top: (
+  '-header': 0,
+);
+$navbars--right: null;
+$navbars--bottom: (
+  '-footer': 0,
+);
+$navbars--text-transform: null;
+$navbars--letter-spacing: null;
+$navbars--line-height: null;
+$navbars--border-width: null;
+$navbars--border-style: null;
+$navbars--border-color: null;
+$navbars--border-radius: null;
+$navbars--box-shadow: null;
+$navbars--text-align: null;
+$navbars--margin: null;
+$navbars--color: color('white');
+$navbars--text-decoration: null;
+$navbars--background-color: (
+  'default': color('black'),
+  '-grey': color('grey', 'darker'),
+);
+$navbars--padding: null;
+$navbars--height: (
+  'default': rem(3.125),
+  '-lg': rem(3.75),
+);
+$navbars--box-shadow: (
+  '-header': 0 0.1875em 0.5em 0 rgba(0, 0, 0, 0.5),
+);

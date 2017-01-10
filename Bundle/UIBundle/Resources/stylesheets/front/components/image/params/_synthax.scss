@@ -1,0 +1,12 @@
+@import '../../../globals/params/synthax';
+
+$images--prefix: $app--prefix + 't';
+
+$images--synthax: (
+  'prefix': $images--prefix,
+  'separator': (
+    'prefix': '-',
+    'element': '__',
+    'modifier': '--',
+  ),
+);
