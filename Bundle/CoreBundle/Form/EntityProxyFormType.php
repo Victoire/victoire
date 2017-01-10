@@ -103,7 +103,7 @@ class EntityProxyFormType extends AbstractType
             } else {
                 if ($entities = $this->apiBusinessEntityResolver->getBusinessEntities($businessEntity)) {
                     $builder->add(
-                        'ressource_id',
+                        'ressourceId',
                         APISelect2Type::class,
                         [
                             'businessEntity'    => $businessEntity,
@@ -114,9 +114,11 @@ class EntityProxyFormType extends AbstractType
                             ],
                         ]
                     );
+                    // The value comes from API, symfony will not validate it.
+                    $builder->get('ressourceId')->resetViewTransformers();
                 } else {
                     $builder->add(
-                        'ressource_id',
+                        'ressourceId',
                         TextType::class,
                         [
                             'label'    => false,
