@@ -42,6 +42,7 @@ before_install:
 
 install:
   - php composer.phar require --dev symfony/symfony:${SYMFONY_VERSION} $DEPENDENCY --no-update
+  - php composer.phar config "minimum-stability" "dev"
   - php -d memory_limit=1536M composer.phar update --no-interaction -vv --profile --no-progress
   - php Tests/Functionnal/bin/console --env=ci doctrine:database:create --no-debug
   - php Tests/Functionnal/bin/console --env=ci doctrine:schema:create --no-debug
