@@ -267,4 +267,38 @@ class VictoireContext extends RawMinkContext
 
         $this->getSession()->executeScript($js);
     }
+    /**
+     * @When /^(?:|I )fill in select2 input "(?P<field>(?:[^"]|\\")*)" with "(?P<value>(?:[^"]|\\")*)" and select "(?P<entry>(?:[^"]|\\")*)"$/
+     */
+    public function fillInSelectInputWithAndSelect($field, $value, $entry)
+    {
+        $page = $this->getSession()->getPage();
+
+        $inputField = $page->find('css', $field);
+        if (!$inputField) {
+            throw new \Exception('No field found');
+        }
+
+        $choice = $inputField->getParent()->find('css', '.select2-selection');
+        if (!$choice) {
+            throw new \Exception('No select2 choice found');
+        }
+        $choice->press();
+
+        $select2Input = $page->find('css', '.select2-search__field');
+        if (!$select2Input) {
+            throw new \Exception('No input found');
+        }
+        $select2Input->setValue($value);
+
+        $this->getSession()->wait(1000);
+
+        $chosenResults = $page->findAll('css', '.select2-results li');
+        foreach ($chosenResults as $result) {
+            if ($result->getText() == $entry) {
+                $result->click();
+                break;
+            }
+        }
+    }
 }
