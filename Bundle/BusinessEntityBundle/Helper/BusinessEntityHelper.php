@@ -86,15 +86,14 @@ class BusinessEntityHelper
         foreach ($classes as $businessEntity) {
             $businessProperties = $businessEntity->getBusinessProperties();
             foreach ($receiverProperties as $receiverType => $receiverProperty) {
+                $businessEntity->setDisable(true);
                 if (count($businessProperties) > 0) {
                     /** @var BusinessProperty $businessProperty */
                     foreach ($businessProperties as $businessProperty) {
-                        if (!in_array($receiverType, $businessProperty->getTypes())) {
-                            $businessEntity->setDisable(true);
+                        if (in_array($receiverType, $businessProperty->getTypes())) {
+                            $businessEntity->setDisable(false);
                         }
                     }
-                } else {
-                    $businessEntity->setDisable(true);
                 }
             }
         }
