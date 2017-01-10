@@ -15,7 +15,7 @@ Feature: Create a widget
         And I should see "Nouveau contenu"
         And I select "Texte brut" from the "1" select of "main_content" slot
         Then I should see "Créer"
-        When I fill in "Texte" with "test"
+        When I fill in "a_static_widget_text_content" with "test"
         And I submit the widget
         Then I should see "test"
 
