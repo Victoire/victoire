@@ -167,6 +167,7 @@ abstract class BusinessEntity
 
         return $bp;
     }
+
     /**
      * Get the business identifiers.
      *
@@ -184,8 +185,9 @@ abstract class BusinessEntity
             }
         }
         if ($bp->count() < 1) {
-            throw new \Exception(sprintf("The businessEntity %s must have at lease one businessIdentifier property", $this->name));
+            throw new \Exception(sprintf('The businessEntity %s must have at lease one businessIdentifier property', $this->name));
         }
+
         return $bp;
     }
 
