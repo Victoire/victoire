@@ -39,12 +39,11 @@ before_install:
   - php composer-setup.php
   - php -r "unlink('composer-setup.php');"
 
-
 install:
   - php composer.phar require --dev symfony/symfony:${SYMFONY_VERSION} $DEPENDENCY --no-update
   - php composer.phar config "minimum-stability" "dev"
   - cat composer.json
-  - php -d memory_limit=1536M composer.phar install --no-interaction -vv --profile --no-progress
+  - php -d memory_limit=1536M composer.phar install --no-interaction -vvv --profile --no-progress
   - php Tests/Functionnal/bin/console --env=ci doctrine:database:create --no-debug
   - php Tests/Functionnal/bin/console --env=ci doctrine:schema:create --no-debug
   - php Tests/Functionnal/bin/console --env=ci cache:warmup --no-debug
