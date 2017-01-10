@@ -1,3 +1,20 @@
 {% include "@styleguide/ui/section-header.html.twig" with {
-    "name": "Mode-switcher",
+    "name": "mode-switcher",
 } %}
+
+{% embed '@styleguide/ui/snippet.html.twig' with {
+    'preview': {
+        'background-color': '#172138',
+        'color': '#fff',
+    },
+    'snippets': {
+        'twig': "{% include '@bricks/mode-switcher.html.twig' with {\n    'name': 'mode-switcher-ex',\n    'startMode': 'preview',\n} %}",
+    }
+} %}
+    {% block snippet_preview %}
+        {% include '@bricks/mode-switcher.html.twig' with {
+            'name': 'mode-switcher-ex',
+            'startMode': 'preview',
+        } %}
+    {% endblock snippet_preview %}
+{% endembed %}

@@ -30,7 +30,7 @@ class StyleguideController extends Controller
             'image',
             'menu',
             'navbar',
-            // 'mode-switcher',
+            'mode-switcher',
             // 'fab',
             // 'card',
             // 'tabs',

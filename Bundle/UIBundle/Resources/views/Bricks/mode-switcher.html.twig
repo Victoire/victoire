@@ -1,0 +1,22 @@
+{% set name = name|default('mode-switcher') %}
+{% set startMode = startMode|default('preview') %}
+
+<div class="vic-mode-switcher">
+    {% for mode in ['create', 'preview', 'edit'] %}
+        <input type="radio" name="{{ name }}" value="{{ mode }}" id="{{ name }}--{{ mode }}"{% if startMode == mode %} checked="checked"{% endif %}>
+    {% endfor %}
+
+    {% for mode in ['create', 'preview', 'edit'] %}
+        <label class="vic-mode-switcher__item" for="{{ name }}--{{ mode }}" data-flag="drops" data-position="topout center" data-href="#{{ name }}--{{ mode }}-popover" data-position="middle rightout" data-behavior="hover">
+            {% include '@SVG/' ~ mode ~ '.html.twig' %}
+        </label>
+
+        <div class="vic-drop vic-drop--tooltip" id="{{ name }}--{{ mode }}-popover">
+            <div class="vic-drop__content">
+                {{ mode }}
+            </div>
+        </div>
+    {% endfor %}
+
+    <span class="vic-mode-switcher__backdrop"></span>
+</div>
