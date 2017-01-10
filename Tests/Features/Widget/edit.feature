@@ -7,8 +7,8 @@ Feature: Edit a widget
             | Anakin | dark   | 20000         | anakin |
             | Yoda   | bright | 17500         | yoda   |
         Given the following BusinessTemplate:
-            | currentLocale |name                       | backendName  | slug                    |  businessEntityId | parent  | template |
-            | fr            |Fiche Jedi - {{item.name}} | Fiche Jedi  | fiche-jedi-{{item.slug}} |  jedi             | home    | base |
+            | currentLocale |name                       | backendName  | slug                    |  businessEntity | parent  | template |
+            | fr            |Fiche Jedi - {{item.name}} | Fiche Jedi  | fiche-jedi-{{item.slug}} |  Jedi             | home    | base |
         And I maximize the window
 
     Scenario: I can create a new Business entity page pattern, create a widget and edit this widget
@@ -16,8 +16,8 @@ Feature: Edit a widget
             | view | action | slot |
             | fiche-jedi-{{item.slug}} | create | main_content |
         Given the following WidgetForce:
-            | widgetMap                | fields                       | mode           | businessEntityId |
-            | fiche-jedi-{{item.slug}} | a:1:{s:4:"side";s:4:"side";} | businessEntity | jedi             |
+            | widgetMap                | fields                       | mode           | businessEntity |
+            | fiche-jedi-{{item.slug}} | a:1:{s:4:"side";s:4:"side";} | businessEntity | Jedi             |
         Given I am on "/fr/victoire-dcms/business-template/show/4"
         And I should see "Le Côté obscur de la force"
         When I switch to "edit" mode

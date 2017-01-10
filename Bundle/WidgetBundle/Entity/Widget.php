@@ -5,7 +5,7 @@ namespace Victoire\Bundle\WidgetBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use Victoire\Bundle\CoreBundle\Entity\BaseEntityProxy;
+use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 use Victoire\Bundle\CriteriaBundle\Entity\Criteria;
 use Victoire\Bundle\QueryBundle\Entity\QueryTrait;
 use Victoire\Bundle\QueryBundle\Entity\VictoireQueryInterface;
@@ -29,7 +29,7 @@ class Widget extends BaseWidget implements VictoireQueryInterface
 
     public function __construct()
     {
-        $this->childrenSlot = uniqid();
+        $this->childrenSlot = uniqid('', true);
         $this->criterias = new ArrayCollection();
     }
 
@@ -151,9 +151,9 @@ class Widget extends BaseWidget implements VictoireQueryInterface
     /**
      * Set the entity proxy.
      *
-     * @param BaseEntityProxy $entityProxy
+     * @param EntityProxy $entityProxy
      */
-    public function setEntityProxy(BaseEntityProxy $entityProxy)
+    public function setEntityProxy(EntityProxy $entityProxy)
     {
         $this->entityProxy = $entityProxy;
     }
@@ -166,6 +166,20 @@ class Widget extends BaseWidget implements VictoireQueryInterface
     public function getEntityProxy()
     {
         return $this->entityProxy;
+    }
+
+    /**
+     * Get businessEntityName.
+     *
+     * @return int
+     */
+    public function getBusinessEntityName()
+    {
+        if ($businessEntity = $this->getBusinessEntity()) {
+            return $businessEntity->getName();
+        }
+
+        return $this->businessEntityName;
     }
 
     /**
@@ -273,16 +287,6 @@ class Widget extends BaseWidget implements VictoireQueryInterface
     public function getTheme()
     {
         return $this->theme;
-    }
-
-    /**
-     * Get the content.
-     *
-     * @return unknown
-     */
-    public function getValue()
-    {
-        //return $this->getContent();
     }
 
     /**
@@ -411,9 +415,8 @@ class Widget extends BaseWidget implements VictoireQueryInterface
             $entityProxy = $this->getEntityProxy();
 
             //if there is a proxy
-            if ($entityProxy !== null && $this->getBusinessEntityId()) {
-                $entity = $entityProxy->getEntity($this->getBusinessEntityId());
-                $this->entity = $entity;
+            if ($entityProxy !== null) {
+                $this->entity = $entityProxy->getEntity();
             }
         }
 

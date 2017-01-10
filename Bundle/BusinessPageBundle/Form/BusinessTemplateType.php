@@ -55,7 +55,7 @@ class BusinessTemplateType extends ViewType
                     'description' => false,
                 ],
             ])
-            ->add('businessEntityId', HiddenType::class);
+            ->add('businessEntityName', HiddenType::class);
     }
 
     /**

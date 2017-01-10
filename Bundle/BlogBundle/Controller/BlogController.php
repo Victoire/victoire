@@ -78,7 +78,7 @@ class BlogController extends BasePageController
 
         if ($blog instanceof BusinessTemplate) {
             //we can use the business entity properties on the seo
-            $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($blog->getBusinessEntityId());
+            $businessEntity = $this->get('victoire_core.entity.business_entity_repository')->findOneBy(['name' => $blog->getBusinessEntityName()]);
             $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
         }
 
@@ -208,7 +208,7 @@ class BlogController extends BasePageController
         //if the page is a business entity page
         if ($blog instanceof BusinessTemplate) {
             //we can use the business entity properties on the seo
-            $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($blog->getBusinessEntityId());
+            $businessEntity = $this->get('victoire_core.entity.business_entity_repository')->findOneBy(['name' => $blog->getBusinessEntityName()]);
             $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
         }
 
@@ -340,7 +340,7 @@ class BlogController extends BasePageController
     }
 
     /**
-     * @param unknown $action
+     * @param string $action
      */
     protected function getRoutes($action)
     {

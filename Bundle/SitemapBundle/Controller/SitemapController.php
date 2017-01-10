@@ -67,9 +67,8 @@ class SitemapController extends Controller
 
         /** @var PageHelper $pageHelper */
         $pageHelper = $this->get('victoire_page.page_helper');
-        $entityManager = $this->getDoctrine()->getManager();
 
-        $getBusinessPages = function (ViewReference $tree) use (&$getBusinessPages, $pageHelper, $entityManager) {
+        $getBusinessPages = function (ViewReference $tree) use (&$getBusinessPages, $pageHelper) {
             $businessPages = [];
             foreach ($tree->getChildren() as $child) {
                 if ($child instanceof BusinessPageReference

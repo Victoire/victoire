@@ -1,8 +1,7 @@
-@mink:selenium2 @alice(Page) @alice(User) @reset-schema
+@alice(Page) @alice(User) @reset-schema
 Feature: Manage jedis
 
     Background:
-        Given I maximize the window
         And I am on homepage
 
     Scenario: I can list jedis
@@ -60,13 +59,15 @@ Feature: Manage jedis
             | Nom    | Medichloriens | Côté de la force |
             | Yoda   | 17700         | bright           |
 
+    @mink:selenium2
     Scenario: I can rename the url of a jedi
+        Given I maximize the window
         Given the following Jedis:
           | name   | side   | midiChlorians | slug   |
           | Anakin | dark   | 27700         | anakin |
         Given the following BusinessTemplate:
-            | currentLocale |name                       | backendName  | slug                     |  businessEntityId | parent  | template      |
-            | fr            |Fiche Jedi - {{item.name}} | Fiche Jedi   | fiche-jedi-{{item.slug}} |  jedi             | home    | base |
+            | currentLocale |name                       | backendName  | slug                     |  businessEntity | parent  | template      |
+            | fr            |Fiche Jedi - {{item.name}} | Fiche Jedi   | fiche-jedi-{{item.slug}} |  Jedi             | home    | base |
         Given I am on "/fr/fiche-jedi-anakin"
         And I switch to "layout" mode
         And I should see "Nouveau contenu"

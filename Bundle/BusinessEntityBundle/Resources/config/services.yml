@@ -29,28 +29,6 @@ services:
         tags:
             - { name: form.type_extension }
 
-    victoire_business_entity.warmer:
-        class: Victoire\Bundle\BusinessEntityBundle\CacheWarmer\BusinessEntityWarmer
-        arguments:
-            - "@victoire_business_entity.annotation_driver"
-        tags:
-            # 110 => Must be higher than victoire_core.cache_warmer.entity_proxy_warmer
-            - { name: kernel.cache_warmer, priority: 110}
-    victoire_business_entity.cache_reader:
-        class: "%victoire_business_entity.cache_reader_class%"
-        arguments:
-            - "@victoire_core.cache"
-            - "@victoire_widget.widget_helper"
-            - "@victoire_business_entity.annotation_driver"
-
-#  ==================  Annotations ================== #
-    victoire_business_entity.annotation_driver:
-        class: "%victoire_business_entity.annotation_driver_class%"
-        arguments:
-            - "@annotation_reader"
-            - "@event_dispatcher"
-            - "@victoire_widget.widget_helper"
-            - "%victoire_core.base_paths%"
 
 #  ==================  Provider ================== #
 
@@ -64,6 +42,41 @@ services:
         class: Victoire\Bundle\BusinessEntityBundle\Security\Voter\BusinessEntityOwnerVoter
         arguments:
             - '%victoire_core.user_class%'
-            - '@victoire_core.helper.business_entity_helper'
         tags:
             - { name: security.voter }
+
+    victoire_core.entity.business_entity_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity
+
+    victoire_core.entity.business_property_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty
+
+    victoire_business_entity.resolver.business_entity_resolver:
+        class: Victoire\Bundle\BusinessEntityBundle\Resolver\BusinessEntityResolver
+
+    victoire_business_entity.annotation_driver:
+        class: "%victoire_business_entity.annotation_driver_class%"
+        arguments:
+            - "@annotation_reader"
+            - "@event_dispatcher"
+            - "@victoire_widget.widget_helper"
+            - "%victoire_core.base_paths%"
+            
+    victoire_business_entity.warmer:
+        class: Victoire\Bundle\BusinessEntityBundle\CacheWarmer\BusinessEntityWarmer
+        arguments:
+            - "@victoire_business_entity.annotation_driver"
+        tags:
+            - { name: kernel.cache_warmer}
+    victoire_business_entity.cache_reader:
+        class: "%victoire_business_entity.cache_reader_class%"
+        arguments:
+            - "@victoire_core.cache"
+            - "@victoire_widget.widget_helper"
+            - "@victoire_business_entity.annotation_driver"

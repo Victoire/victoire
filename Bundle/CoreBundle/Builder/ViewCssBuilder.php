@@ -5,7 +5,6 @@ namespace Victoire\Bundle\CoreBundle\Builder;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\DependencyInjection\Container;
 use Victoire\Bundle\CoreBundle\Entity\View;
-use Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer;
 
 /**
  * View CSS Builder
@@ -15,8 +14,6 @@ class ViewCssBuilder
 {
     protected $container;
     protected $victoireTwigResponsive;
-    private $widgetRenderer;
-    private $webDir;
     private $viewCssDir;
 
     /**

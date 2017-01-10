@@ -8,6 +8,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\Validator\Constraints as Assert;
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntityInterface;
 use Victoire\Bundle\BusinessEntityBundle\Entity\Traits\BusinessEntityTrait;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Annotations as VIC;
@@ -19,7 +20,7 @@ use Victoire\Bundle\PageBundle\Entity\PageStatus;
  * @VIC\BusinessEntity({"Date", "Force", "Redactor", "Listing", "BlogArticles", "Title", "CKEditor", "Text", "UnderlineTitle", "Cover", "Image", "Authorship", "ArticleList", "SliderNav", "Render"})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
-class Article
+class Article implements BusinessEntityInterface
 {
     use BusinessEntityTrait;
     use TimestampableEntity;
@@ -469,6 +470,9 @@ class Article
         return $this->locale;
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return PropertyAccess::createPropertyAccessor()->getValue($this->translate(), 'getName');

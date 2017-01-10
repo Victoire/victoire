@@ -3,6 +3,7 @@
 namespace Victoire\Bundle\BusinessPageBundle\Builder;
 
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\ViewReferenceBundle\Builder\BaseReferenceBuilder;
@@ -23,6 +24,17 @@ class BusinessPageReferenceBuilder extends BaseReferenceBuilder
      */
     public function buildReference(View $businessPage, EntityManager $em)
     {
+        $businessEntity = $businessPage->getEntityProxy()->getBusinessEntity();
+        $entity = $businessPage->getEntityProxy()->getEntity();
+        $accessor = new PropertyAccessor();
+        $entityId = null;
+        if ($entity) {
+            if (method_exists($entity, 'getId')) {
+                $entityId = $entity->getId();
+            } else {
+                $entityId = $accessor->getValue($entity, $businessEntity->getBusinessIdentifiers()->first()->getName());
+            }
+        }
         $referenceId = ViewReferenceHelper::generateViewReferenceId($businessPage);
         $businessPageReference = new BusinessPageReference();
         $businessPageReference->setId($referenceId);
@@ -31,8 +43,8 @@ class BusinessPageReferenceBuilder extends BaseReferenceBuilder
         $businessPageReference->setViewId($businessPage->getId());
         $businessPageReference->setTemplateId($businessPage->getTemplate()->getId());
         $businessPageReference->setSlug($businessPage->getSlug());
-        $businessPageReference->setEntityId($businessPage->getBusinessEntity()->getId());
-        $businessPageReference->setEntityNamespace($em->getClassMetadata(get_class($businessPage->getBusinessEntity()))->name);
+        $businessPageReference->setEntityId($entityId);
+        $businessPageReference->setBusinessEntity($businessEntity->getId());
         $businessPageReference->setViewNamespace($em->getClassMetadata(get_class($businessPage))->name);
         if ($parent = $businessPage->getParent()) {
             $parent->setCurrentLocale($businessPage->getCurrentLocale());

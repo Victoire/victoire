@@ -32,7 +32,7 @@ class WidgetFieldsFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->entityProxyFieldsBuilder->buildForEntityAndWidgetType($builder, $options['widget'], $options['namespace']);
+        $this->entityProxyFieldsBuilder->buildForEntityAndWidgetType($builder, $options['widget'], $options['businessEntityId']);
     }
 
     /**
@@ -44,11 +44,11 @@ class WidgetFieldsFormType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class'         => null,
-                'namespace'          => null,
-                'fields'             => [],
-                'widget'             => null,
-                'translation_domain' => 'victoire',
+                'data_class'                => null,
+                'businessEntityId'          => null,
+                'fields'                    => [],
+                'widget'                    => null,
+                'translation_domain'        => 'victoire',
             ]
         );
     }

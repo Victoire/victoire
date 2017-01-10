@@ -7,7 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 
 class WidgetCssGenerateCommand extends ContainerAwareCommand
@@ -60,9 +59,9 @@ class WidgetCssGenerateCommand extends ContainerAwareCommand
         $templates = [];
         $recursiveGetTemplates = function ($template) use (&$recursiveGetTemplates, &$templates) {
             array_push($templates, $template);
-            foreach ($template->getInheritors() as $template) {
-                if ($template instanceof Template) {
-                    $recursiveGetTemplates($template);
+            foreach ($template->getInheritors() as $_template) {
+                if ($_template instanceof Template) {
+                    $recursiveGetTemplates($_template);
                 }
             }
         };
@@ -76,7 +75,7 @@ class WidgetCssGenerateCommand extends ContainerAwareCommand
         $errorRepo = $entityManager->getRepository('VictoireTwigBundle:ErrorPage');
         $errorPages = $errorRepo->findAll();
 
-        /* @var $views View[] */
+        /* @var $views \Victoire\Bundle\CoreBundle\Entity\View[] */
         $views = array_merge($templates, array_merge($pages, $errorPages));
 
         //Prepare limit
@@ -105,7 +104,7 @@ class WidgetCssGenerateCommand extends ContainerAwareCommand
             }
 
             //Generate CSS file with its widgets style
-            $widgetMapBuilder->build($view, $entityManager);
+            $widgetMapBuilder->build($view);
             $widgets = $widgetRepo->findAllWidgetsForView($view);
             $viewCssBuilder->generateViewCss($view, $widgets);
 

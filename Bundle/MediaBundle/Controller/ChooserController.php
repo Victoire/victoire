@@ -34,7 +34,7 @@ class ChooserController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        /* @var Folder $firstFolder */
+        /* @var \Victoire\Bundle\MediaBundle\Entity\Folder $firstFolder */
         $firstFolder = $em->getRepository('VictoireMediaBundle:Folder')->getFirstTopFolder();
 
         return $this->redirect($this->generateUrl('VictoireMediaBundle_chooser_show_folder', ['folderId' => $firstFolder->getId(), 'type' => $type, 'CKEditorFuncNum' => $cKEditorFuncNum]));
@@ -59,7 +59,7 @@ class ChooserController extends Controller
         /* @var MediaManager $mediaHandler */
         $mediaHandler = $this->get('victoire_media.media_manager');
 
-        /* @var Folder $folder */
+        /* @var \Victoire\Bundle\MediaBundle\Entity\Folder $folder */
         $folder = $em->getRepository('VictoireMediaBundle:Folder')->getFolder($folderId);
         /* @var array $mediaHandler */
         $folders = $em->getRepository('VictoireMediaBundle:Folder')->getAllFolders();

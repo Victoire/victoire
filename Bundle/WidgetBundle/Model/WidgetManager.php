@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
-use Victoire\Bundle\BusinessEntityBundle\Reader\BusinessEntityCacheReader;
+use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Transformer\VirtualToBusinessPageTransformer;
 use Victoire\Bundle\CoreBundle\Entity\View;
@@ -36,28 +36,28 @@ class WidgetManager
     protected $formErrorHelper; // @victoire_form.error_helper
     protected $request; // @request
     protected $widgetMapManager;
-    protected $cacheReader; // @victoire_business_entity.cache_reader
+    protected $businessEntityHelper;
     protected $templating;
     protected $pageHelper;
     protected $slots; // %victoire_core.slots%
-    protected $virtualToBpTransformer; // %victoire_core.slots%
+    protected $virtualToBpTransformer;
 
     /**
      * construct.
      *
-     * @param WidgetHelper              $widgetHelper
-     * @param WidgetFormBuilder         $widgetFormBuilder
-     * @param WidgetContentResolver     $widgetContentResolver
-     * @param WidgetRenderer            $widgetRenderer
-     * @param EntityManager             $entityManager
-     * @param FormErrorHelper           $formErrorHelper
-     * @param Request                   $request
-     * @param WidgetMapManager          $widgetMapManager
-     * @param WidgetMapBuilder          $widgetMapBuilder
-     * @param BusinessEntityCacheReader $cacheReader
-     * @param EngineInterface           $templating
-     * @param PageHelper                $pageHelper
-     * @param array                     $slots
+     * @param WidgetHelper          $widgetHelper
+     * @param WidgetFormBuilder     $widgetFormBuilder
+     * @param WidgetContentResolver $widgetContentResolver
+     * @param WidgetRenderer        $widgetRenderer
+     * @param EntityManager         $entityManager
+     * @param FormErrorHelper       $formErrorHelper
+     * @param Request               $request
+     * @param WidgetMapManager      $widgetMapManager
+     * @param WidgetMapBuilder      $widgetMapBuilder
+     * @param BusinessEntityHelper  $cacheReader
+     * @param EngineInterface       $templating
+     * @param PageHelper            $pageHelper
+     * @param array                 $slots
      */
     public function __construct(
         WidgetHelper $widgetHelper,
@@ -69,7 +69,7 @@ class WidgetManager
         Request $request,
         WidgetMapManager $widgetMapManager,
         WidgetMapBuilder $widgetMapBuilder,
-        BusinessEntityCacheReader $cacheReader,
+        BusinessEntityHelper $businessEntityHelper,
         EngineInterface $templating,
         PageHelper $pageHelper,
         $slots,
@@ -84,7 +84,7 @@ class WidgetManager
         $this->request = $request;
         $this->widgetMapManager = $widgetMapManager;
         $this->widgetMapBuilder = $widgetMapBuilder;
-        $this->cacheReader = $cacheReader;
+        $this->businessEntityHelper = $businessEntityHelper;
         $this->templating = $templating;
         $this->pageHelper = $pageHelper;
         $this->slots = $slots;
@@ -103,11 +103,12 @@ class WidgetManager
      */
     public function newWidget($mode, $type, $slot, $view, $position, $parentWidgetMap, $quantum)
     {
-        $widget = $this->widgetHelper->newWidgetInstance($type, $view, $slot, $mode);
+        $widget = $this->widgetHelper->newWidgetInstance($type, $mode);
         $widgets = ['static' => $widget];
 
         /** @var BusinessEntity[] $classes */
-        $classes = $this->cacheReader->getBusinessClassesForWidget($widget);
+        $classes = $this->businessEntityHelper->getAvailableForWidget($this->widgetHelper->getWidgetName($widget));
+
         $forms = $this->widgetFormBuilder->renderNewQuantumForms($slot, $view, $widgets, $widget, $classes, $position, $parentWidgetMap, $quantum);
 
         return [
@@ -154,9 +155,10 @@ class WidgetManager
             $this->virtualToBpTransformer->transform($view);
         }
         //create a new widget
-        $widget = $this->widgetHelper->newWidgetInstance($type, $view, $slotId, $mode);
+        $widget = $this->widgetHelper->newWidgetInstance($type, $mode);
 
-        $form = $this->widgetFormBuilder->callBuildFormSwitchParameters($widget, $view, $entity, $position, $widgetReference, $slotId, $quantum);
+        $businessEntity = $this->entityManager->getRepository('VictoireBusinessEntityBundle:BusinessEntity')->findOneBy(['name' => $entity]);
+        $form = $this->widgetFormBuilder->callBuildFormSwitchParameters($widget, $view, $businessEntity, $position, $widgetReference, $slotId, $quantum);
 
         $noValidate = $request->query->get('novalidate', false);
 
@@ -169,9 +171,6 @@ class WidgetManager
 
             //get the widget from the form
             $widget = $form->getData();
-
-            //update fields of the widget
-            $widget->setBusinessEntityId($entity);
 
             //persist the widget
             $this->entityManager->persist($widget);
@@ -212,14 +211,14 @@ class WidgetManager
      * @param Request $request
      * @param Widget  $widget
      * @param View    $currentView
-     * @param string  $businessEntityId The entity name is used to know which form to submit
+     * @param string  $businessEntityName The entity name is used to know which form to submit
      *
      * @return template
      */
-    public function editWidget(Request $request, Widget $widget, View $currentView, $quantum = null, $businessEntityId = null, $widgetMode = Widget::MODE_STATIC)
+    public function editWidget(Request $request, Widget $widget, View $currentView, $quantum = null, $businessEntityName = null, $widgetMode = Widget::MODE_STATIC)
     {
         /** @var BusinessEntity[] $classes */
-        $classes = $this->cacheReader->getBusinessClassesForWidget($widget);
+        $classes = $this->businessEntityHelper->getAvailableForWidget($this->widgetHelper->getWidgetName($widget));
 
         //the id of the edited widget
         //a new widget might be created in the case of a legacy
@@ -237,16 +236,11 @@ class WidgetManager
             if ($widgetView !== $currentView) {
                 $widget = $this->overwriteWidget($currentView, $widget);
             }
-            if ($businessEntityId !== null) {
-                $form = $this->widgetFormBuilder->buildForm($widget, $currentView, $businessEntityId, $classes[$businessEntityId]->getClass(), $widgetMode, null, null, null, $quantum);
-            } else {
-                $form = $this->widgetFormBuilder->buildForm($widget, $currentView, null, null, $widgetMode, null, null, null, $quantum);
-            }
+            $form = $this->widgetFormBuilder->buildForm($widget, $currentView, $businessEntityName, $widgetMode, null, null, null, $quantum);
 
             $noValidate = $request->query->get('novalidate', false);
             $form->handleRequest($request);
             if ($noValidate === false && $form->isValid()) {
-                $widget->setBusinessEntityId($businessEntityId);
 
                 //force cache invalidation
                 $widget->setUpdatedAt(new \DateTime());
@@ -271,7 +265,7 @@ class WidgetManager
                     'widgetId'    => $initialWidgetId,
                     'slot'        => $widget->getWidgetMap()->getSlot(),
                     'message'     => $noValidate === false ? $formErrorHelper->getRecursiveReadableErrors($form) : null,
-                    'html'        => $this->widgetFormBuilder->renderForm($form, $widget, $businessEntityId),
+                    'html'        => $this->widgetFormBuilder->renderForm($form, $widget, $businessEntityName),
                 ];
             }
         } else {

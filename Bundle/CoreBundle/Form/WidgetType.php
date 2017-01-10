@@ -29,19 +29,17 @@ class WidgetType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         if ($options['businessEntityId'] !== null) {
-            if ($options['namespace'] === null) {
-                throw new \Exception('The namespace is mandatory if the business_entity_id is given.');
-            }
             if ($options['mode'] === null) {
                 throw new \Exception('The mode is mandatory if the business_entity_id is given.');
             }
         }
 
         if ($options['mode'] === Widget::MODE_ENTITY) {
-            $this->addEntityFields($builder, $options);
+            $this->addEntityFields($builder, $options, $options['mode']);
         }
 
         if ($options['mode'] === Widget::MODE_QUERY) {
+            $this->addEntityFields($builder, $options, $options['mode']);
             $this->addQueryFields($builder, $options);
         }
 
@@ -79,10 +77,11 @@ class WidgetType extends AbstractType
 
                 //the controller does not use the mode to construct the form, so we update it automatically
                 if ($mode === Widget::MODE_ENTITY) {
-                    $this->addEntityFields($form, $options);
+                    $this->addEntityFields($form, $options, $mode);
                 }
 
                 if ($mode === Widget::MODE_QUERY) {
+                    $this->addEntityFields($form, $options, $mode);
                     $this->addQueryFields($form, $options);
                 }
                 if ($mode === Widget::MODE_BUSINESS_ENTITY) {
@@ -124,7 +123,7 @@ class WidgetType extends AbstractType
         );
         $builder->addEventListener(
             FormEvents::POST_SUBMIT,
-            function (FormEvent $event) use ($options) {
+            function (FormEvent $event) {
                 $widget = $event->getData();
                 /** @var Criteria $criteria */
                 foreach ($widget->getCriterias() as $criteria) {
@@ -145,9 +144,9 @@ class WidgetType extends AbstractType
     protected function addBusinessEntityFields($form, $options)
     {
         $form->add('fields', WidgetFieldsFormType::class, [
-            'label'     => 'widget.form.entity.fields.label',
-            'namespace' => $options['namespace'],
-            'widget'    => $options['widget'],
+            'label'            => 'widget.form.entity.fields.label',
+            'businessEntityId' => $options['businessEntityId'],
+            'widget'           => $options['widget'],
         ]);
     }
 
@@ -157,18 +156,18 @@ class WidgetType extends AbstractType
      * @param FormBuilderInterface|FormInterface $form
      * @param array                              $options
      */
-    protected function addEntityFields($form, $options)
+    protected function addEntityFields($form, $options, $mode)
     {
         $form
         ->add('fields', WidgetFieldsFormType::class, [
-            'label'     => 'widget.form.entity.fields.label',
-            'namespace' => $options['namespace'],
-            'widget'    => $options['widget'],
+            'label'            => 'widget.form.entity.fields.label',
+            'businessEntityId' => $options['businessEntityId'],
+            'widget'           => $options['widget'],
         ])
         ->add('entity_proxy', EntityProxyFormType::class, [
             'business_entity_id' => $options['businessEntityId'],
-            'namespace'          => $options['namespace'],
             'widget'             => $options['widget'],
+            'mode'               => $mode,
         ]);
     }
 
@@ -181,11 +180,6 @@ class WidgetType extends AbstractType
     protected function addQueryFields($form, $options)
     {
         $form->add('query');
-        $form->add('fields', WidgetFieldsFormType::class, [
-            'label'     => 'widget.form.entity.fields.label',
-            'namespace' => $options['namespace'],
-            'widget'    => $options['widget'],
-        ]);
     }
 
     /**
@@ -204,7 +198,6 @@ class WidgetType extends AbstractType
         $resolver->setDefined([
             'widget',
             'slot',
-            'namespace',
             'businessEntityId',
             'dataSources',
         ]);

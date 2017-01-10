@@ -28,6 +28,10 @@
             "victoire-head":
             [
                 "@VictoireCoreBundle/Resources/public/vendor/jquery/1.10.2/jquery-1.10.2.js",
+                "@VictoireCoreBundle/Resources/public/vendor/select2-4.0.3/js/select2.full.min.js",
+                "@VictoireCoreBundle/Resources/public/vendor/select2-4.0.3/js/i18n/fr.js",
+                "@VictoireCoreBundle/Resources/public/vendor/select2-4.0.3/js/i18n/en.js",
+                "@VictoireCoreBundle/Resources/public/vendor/select2-4.0.3/js/i18n/es.js",
                 "@VictoireCoreBundle/Resources/public/js/jquery.noConflict.js"
             ],
             "modernizr":
@@ -63,7 +67,8 @@
                 "@VictoireCoreBundle/Resources/public/vendor/vic-bootstrap/3.0.3/css/bootstrap.min.css",
                 "@VictoireCoreBundle/Resources/style/less/bricks/bricks.less",
                 "@VictoireCoreBundle/Resources/style/less/layouts/layouts.less",
-                "@VictoireCoreBundle/Resources/style/less/ugly.less"
+                "@VictoireCoreBundle/Resources/style/less/ugly.less",
+                "@VictoireCoreBundle/Resources/public/vendor/select2-4.0.3/css/select2.css"
             ]
         }
     }

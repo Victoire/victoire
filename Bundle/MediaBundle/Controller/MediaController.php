@@ -13,7 +13,6 @@ use Victoire\Bundle\MediaBundle\Entity\Folder;
 use Victoire\Bundle\MediaBundle\Entity\Media;
 use Victoire\Bundle\MediaBundle\Form\BulkUploadType;
 use Victoire\Bundle\MediaBundle\Helper\BulkUploadHelper;
-use Victoire\Bundle\MediaBundle\Helper\MediaManager;
 
 /**
  * MediaController.
@@ -35,11 +34,11 @@ class MediaController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        /* @var Media $media */
+        /* @var \Victoire\Bundle\MediaBundle\Entity\Media $media */
         $media = $em->getRepository('VictoireMediaBundle:Media')->getMedia($mediaId);
         $folder = $media->getFolder();
 
-        /* @var MediaManager $mediaManager */
+        /* @var \Victoire\Bundle\MediaBundle\Helper\MediaManager $mediaManager */
         $mediaManager = $this->get('victoire_media.media_manager');
         $handler = $mediaManager->getHandler($media);
         $helper = $handler->getFormHelper($media);
@@ -77,7 +76,7 @@ class MediaController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        /* @var Media $media */
+        /* @var \Victoire\Bundle\MediaBundle\Entity\Media $media */
         $media = $em->getRepository('VictoireMediaBundle:Media')->getMedia($mediaId);
         $medianame = $media->getName();
         $folder = $media->getFolder();
@@ -104,7 +103,7 @@ class MediaController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        /* @var Folder $folder */
+        /* @var \Victoire\Bundle\MediaBundle\Entity\Folder $folder */
         $folder = $em->getRepository('VictoireMediaBundle:Folder')->getFolder($folderId);
 
         $helper = new BulkUploadHelper();
@@ -115,7 +114,7 @@ class MediaController extends Controller
             $form->handleRequest($request);
             if ($form->isValid()) {
                 foreach ($helper->getFiles() as $file) {
-                    /* @var Media $media */
+                    /* @var \Victoire\Bundle\MediaBundle\Entity\Media $media */
                     $media = $this->get('victoire_media.media_manager')->getHandler($file)->createNew($file);
                     $media->setFolder($folder);
                     $em->getRepository('VictoireMediaBundle:Media')->save($media);
@@ -153,7 +152,7 @@ class MediaController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        /* @var Folder $folder */
+        /* @var \Victoire\Bundle\MediaBundle\Entity\Folder $folder */
         $folder = $em->getRepository('VictoireMediaBundle:Folder')->getFolder($folderId);
 
         $drop = null;
@@ -217,10 +216,10 @@ class MediaController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        /* @var Folder $folder */
+        /* @var \Victoire\Bundle\MediaBundle\Entity\Folder $folder */
         $folder = $em->getRepository('VictoireMediaBundle:Folder')->getFolder($folderId);
 
-        /* @var MediaManager $mediaManager */
+        /* @var \Victoire\Bundle\MediaBundle\Helper\MediaManager $mediaManager */
         $mediaManager = $this->get('victoire_media.media_manager');
         $handler = $mediaManager->getHandlerForType($type);
         $media = new Media();

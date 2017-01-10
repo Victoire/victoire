@@ -3,7 +3,8 @@
 namespace Victoire\Bundle\BusinessPageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Victoire\Bundle\CoreBundle\Entity\BaseEntityProxy;
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntityInterface;
+use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 use Victoire\Bundle\PageBundle\Entity\Page;
 
 /**
@@ -19,9 +20,9 @@ class BusinessPage extends Page
     /**
      * Auto simple mode: joined entity.
      *
-     * @var BaseEntityProxy
+     * @var EntityProxy
      *
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\CoreBundle\Entity\EntityProxy", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\CoreBundle\Entity\EntityProxy", cascade={"persist", "remove"}, fetch="EAGER")
      * @ORM\JoinColumn(name="entityProxy_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $entityProxy;
@@ -31,12 +32,12 @@ class BusinessPage extends Page
      *
      * @var object
      */
-    protected $businessEntity;
+    protected $entity;
 
     /**
      * Set the entity proxy.
      *
-     * @param BaseEntityProxy $entityProxy
+     * @param EntityProxy $entityProxy
      */
     public function setEntityProxy($entityProxy)
     {
@@ -46,7 +47,7 @@ class BusinessPage extends Page
     /**
      * Get the entity proxy.
      *
-     * @return BaseEntityProxy
+     * @return EntityProxy
      */
     public function getEntityProxy()
     {
@@ -54,32 +55,32 @@ class BusinessPage extends Page
     }
 
     /**
-     * Get the business entity name (PagePattern proxy).
+     * Get the business entity (PagePattern proxy).
      *
      * @return string
      **/
-    public function getBusinessEntityId()
+    public function getBusinessEntity()
     {
-        return $this->getTemplate()->getBusinessEntityId();
+        return $this->getTemplate()->getBusinessEntity();
     }
 
     /**
      * Get the business entity.
      *
-     * @return number
+     * @return BusinessEntityInterface
      */
-    public function getBusinessEntity()
+    public function getEntity()
     {
         //if there is no entity
-        if ($this->businessEntity === null) {
+        if ($this->entity === null) {
             //if there is a proxy
             if ($this->getEntityProxy() !== null) {
-                $this->businessEntity = $this->getEntityProxy()->getEntity($this->getBusinessEntityId());
+                $this->entity = $this->getEntityProxy()->getEntity();
 
-                return $this->businessEntity;
+                return $this->entity;
             }
         }
 
-        return $this->businessEntity;
+        return $this->entity;
     }
 }

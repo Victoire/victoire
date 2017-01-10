@@ -12,14 +12,14 @@ Feature: Mercenary is not a BusinessEntity itself but extends Character which is
 
         Given I open the hamburger menu
         Given the following BusinessTemplate:
-            | currentLocale |name                       | backendName  | slug                     |  businessEntityId | parent  | template      |
-            | fr            |Fiche Personnage - {{item.name}} | Fiche Jedi   | fiche-personnage-{{item.slug}} |  character        | home    | base |
+            | currentLocale |name                       | backendName  | slug                     |  businessEntity | parent  | template      |
+            | fr            |Fiche Personnage - {{item.name}} | Fiche Jedi   | fiche-personnage-{{item.slug}} |  Character        | home    | base |
         Given the following WidgetMap:
             | view | action | slot |
             | fiche-personnage-{{item.slug}} | create | main_content |
         Given the following WidgetText:
-            | widgetMap                | fields                       | mode           | businessEntityId |
-            | fiche-personnage-{{item.slug}} | a:1:{s:7:"content";s:4:"name";} | businessEntity | character             |
+            | widgetMap                | fields                       | mode           | businessEntity |
+            | fiche-personnage-{{item.slug}} | a:1:{s:7:"content";s:4:"name";} | businessEntity | Character |
         Given I am on "/fr/victoire-dcms/business-template/show/4"
             Then I should see "Boba fet"
         Given I am on "/fr/fiche-personnage-boba-fet"

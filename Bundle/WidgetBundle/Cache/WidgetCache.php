@@ -93,7 +93,7 @@ class WidgetCache
         $hash = null;
         if (!$widget instanceof WidgetSlotInterface) {
             if ($widget->getMode() == Widget::MODE_BUSINESS_ENTITY
-                && ($entity = $widget->getEntity())
+                && $widget->getEntity()
                 && method_exists($widget->getEntity(), 'getUpdatedAt')) {
                 $hash = $this->generateBusinessEntityHash($widget);
             } elseif ($widget->getMode() == Widget::MODE_STATIC) {

@@ -5,6 +5,7 @@ namespace Victoire\Bundle\BusinessPageBundle\Builder;
 use Doctrine\ORM\EntityManager;
 use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
 use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
@@ -17,9 +18,6 @@ use Victoire\Bundle\CoreBundle\Exception\IdentifierNotDefinedException;
 use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
 use Victoire\Bundle\ViewReferenceBundle\Builder\ViewReferenceBuilder;
 
-/**
- * @property mixed entityProxyProvider
- */
 class BusinessPageBuilder
 {
     protected $businessEntityHelper;
@@ -85,55 +83,52 @@ class BusinessPageBuilder
         }
 
         //find Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity object according to the given $entity
-        $businessEntity = $this->businessEntityHelper->findByEntityInstance($entity);
+        $businessEntity = $businessTemplate->getBusinessEntity();
+        //the business properties usable in a url
+        $businessProperties = $this->getBusinessProperties($businessEntity);
 
-        if ($businessEntity !== null) {
-            //the business properties usable in a url
-            $businessProperties = $this->getBusinessProperties($businessEntity);
+        $entityProxy = $this->entityProxyProvider->getEntityProxy($entity, $businessEntity, $em);
 
-            $entityProxy = $this->entityProxyProvider->getEntityProxy($entity, $businessEntity, $em);
-
-            $page->setEntityProxy($entityProxy);
-            $page->setTemplate($businessTemplate);
-            /*
-             * Returns class and parent's uses
-             *
-             * @param $class
-             * @param bool $autoload
-             * @return array
-             */
-            $class_uses_deep = function ($class, $autoload = true) {
-                $traits = [];
-                do {
-                    $traits = array_merge(class_uses($class, $autoload), $traits);
-                } while ($class = get_parent_class($class));
-                foreach ($traits as $trait => $same) {
-                    $traits = array_merge(class_uses($trait, $autoload), $traits);
-                }
-
-                return array_unique($traits);
-            };
-
-            $isTranslatableEntity = in_array(Translatable::class, $class_uses_deep($entity));
-            foreach ($businessTemplate->getTranslations() as $translation) {
-                if ($isTranslatableEntity) {
-                    $entity->setCurrentLocale($translation->getLocale());
-                }
-                $page->setCurrentLocale($translation->getLocale());
-                $businessTemplate->setCurrentLocale($translation->getLocale());
-                $page = $this->populatePage($page, $businessTemplate, $businessProperties, $em, $entity);
+        $page->setEntityProxy($entityProxy);
+        $page->setTemplate($businessTemplate);
+        /*
+         * Returns class and parent's uses
+         *
+         * @param $class
+         * @param bool $autoload
+         * @return array
+         */
+        $class_uses_deep = function ($class, $autoload = true) {
+            $traits = [];
+            do {
+                $traits = array_merge(class_uses($class, $autoload), $traits);
+            } while ($class = get_parent_class($class));
+            foreach ($traits as $trait => $same) {
+                $traits = array_merge(class_uses($trait, $autoload), $traits);
             }
 
+            return array_unique($traits);
+        };
+
+        $isTranslatableEntity = in_array(Translatable::class, $class_uses_deep($entity));
+        foreach ($businessTemplate->getTranslations() as $translation) {
             if ($isTranslatableEntity) {
-                $entity->setCurrentLocale($currentLocale);
+                $entity->setCurrentLocale($translation->getLocale());
             }
-            $page->setCurrentLocale($currentLocale);
-            $businessTemplate->setCurrentLocale($currentLocale);
+            $page->setCurrentLocale($translation->getLocale());
+            $businessTemplate->setCurrentLocale($translation->getLocale());
+            $page = $this->populatePage($page, $businessTemplate, $businessProperties, $em, $entity);
+        }
 
-            if ($seo = $businessTemplate->getSeo()) {
-                $pageSeo = clone $seo;
-                $page->setSeo($pageSeo);
-            }
+        if ($isTranslatableEntity) {
+            $entity->setCurrentLocale($currentLocale);
+        }
+        $page->setCurrentLocale($currentLocale);
+        $businessTemplate->setCurrentLocale($currentLocale);
+
+        if ($seo = $businessTemplate->getSeo()) {
+            $pageSeo = clone $seo;
+            $page->setSeo($pageSeo);
         }
 
         return $page;
@@ -155,7 +150,7 @@ class BusinessPageBuilder
         $seoBusinessProps = $businessEntity->getBusinessPropertiesByType('seoable');
 
         //the business properties are the identifier and the seoables properties
-        $businessProperties = array_merge($businessProperties, $seoBusinessProps);
+        $businessProperties = array_merge($businessProperties->toArray(), $seoBusinessProps->toArray());
 
         return $businessProperties;
     }
@@ -171,14 +166,14 @@ class BusinessPageBuilder
         //if no entity is provided
         if ($entity === null) {
             //we look for the entity of the page
-            if ($page->getBusinessEntity() !== null) {
-                $entity = $page->getBusinessEntity();
+            if ($page->getEntity() !== null) {
+                $entity = $page->getEntity();
             }
         }
 
         //only if we have an entity instance
         if ($entity !== null) {
-            $businessEntity = $this->businessEntityHelper->findByEntityInstance($entity);
+            $businessEntity = $page->getBusinessEntity();
 
             if ($businessEntity !== null) {
                 $businessProperties = $this->getBusinessProperties($businessEntity);
@@ -187,30 +182,14 @@ class BusinessPageBuilder
                 foreach ($businessProperties as $businessProperty) {
                     //parse of seo attributes
                     foreach ($this->pageParameters as $pageAttribute) {
-                        $string = $this->getEntityAttributeValue($page, $pageAttribute);
-                        $updatedString = $this->parameterConverter->setBusinessPropertyInstance($string, $businessProperty, $entity);
+                        $accessor = new PropertyAccessor();
+                        $string = $accessor->getValue($page, $pageAttribute);
+                        $updatedString = $this->parameterConverter->convertFromEntity($string, $businessProperty, $entity);
                         $this->setEntityAttributeValue($page, $pageAttribute, $updatedString);
                     }
                 }
             }
         }
-    }
-
-    /**
-     * Get the content of an attribute of an entity given.
-     *
-     * @param BusinessPage $entity
-     * @param string       $field
-     *
-     * @return mixed
-     */
-    protected function getEntityAttributeValue($entity, $field)
-    {
-        $functionName = 'get'.ucfirst($field);
-
-        $fieldValue = call_user_func([$entity, $functionName]);
-
-        return $fieldValue;
     }
 
     /**
@@ -250,9 +229,9 @@ class BusinessPageBuilder
         $pageUrl = $this->urlBuilder->buildUrl($page);
         //parse the business properties
         foreach ($businessProperties as $businessProperty) {
-            $pageUrl = $this->parameterConverter->setBusinessPropertyInstance($pageUrl, $businessProperty, $entity);
-            $pageSlug = $this->parameterConverter->setBusinessPropertyInstance($pageSlug, $businessProperty, $entity);
-            $pageName = $this->parameterConverter->setBusinessPropertyInstance($pageName, $businessProperty, $entity);
+            $pageUrl = $this->parameterConverter->convertFromEntity($pageUrl, $businessProperty, $entity);
+            $pageSlug = $this->parameterConverter->convertFromEntity($pageSlug, $businessProperty, $entity);
+            $pageName = $this->parameterConverter->convertFromEntity($pageName, $businessProperty, $entity);
         }
         //Check that all twig variables in pattern url was removed for it's generated BusinessPage
         preg_match_all('/\{\%\s*([^\%\}]*)\s*\%\}|\{\{\s*([^\}\}]*)\s*\}\}/i', $pageUrl, $matches);

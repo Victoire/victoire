@@ -7,7 +7,6 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Nelmio\Alice\Fixtures;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Load fixtures.
@@ -15,9 +14,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class LoadFixtureData extends AbstractFixture implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
-
-    /** @var ContainerInterface */
-    private $container;
 
     /**
      * {@inheritdoc}
@@ -30,10 +26,10 @@ class LoadFixtureData extends AbstractFixture implements ContainerAwareInterface
 
         $files['user'] = $fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/User/user.yml');
         $files['folder'] = $fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/Media/folder.yml');
-        $files['page'] = $fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/View/page.yml');
         $files['template'] = $fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/View/template.yml');
-        $files['i18n'] = $fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/View/i18n.yml');
+        $files['page'] = $fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/View/page.yml');
         $files['errorPage'] = $fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/View/errorPage.yml');
+        $files['businessEntity'] = $fileLocator->locate('@AcmeAppBundle/DataFixtures/Seeds/ORM/BusinessEntity/businessEntity.yml');
 
         Fixtures::load(
             $files,

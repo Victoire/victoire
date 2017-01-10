@@ -14,9 +14,12 @@ services:
         arguments:
             - "@victoire_query.query_helper"
             - "@victoire_view_reference.repository"
+            - "@victoire_core.entity.business_entity_repository"
             - "@victoire_core.helper.business_entity_helper"
             - "@victoire_business_entity.converter.parameter_converter"
             - "@victoire_core.url_builder"
+            - "@victoire_api_business_entity.resolver.api_business_entity_resolver"
+        lazy: true
 
     victoire_business_page.business_page_builder:
         class: Victoire\Bundle\BusinessPageBundle\Builder\BusinessPageBuilder

@@ -39,6 +39,13 @@
                 <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
             {% endstylesheets %}
         {% endif %}
+        {% if app.debug %}
+            <style>
+                #vic-mode-toggler, .vic-mode-container {
+                    margin-bottom: 36px;
+                }
+            </style>
+        {% endif %}
         <!-- END HEAD_STYLE -->
         <!-- CUSTOM PAGE STYLE -->
         {{ cms_page_css() }}
@@ -116,6 +123,9 @@
             {% javascripts injector="foot, victoire-ngApp, alertify-codrops-notification" %}
             <script type="text/javascript" src="{{ asset_url }}"></script>
             {% endjavascripts %}
+            <script>
+
+            </script>
         {% endblock foot_script_victoire %}
         {% block alertify %}
             {{ app.session|alertify|raw }}

@@ -4,6 +4,7 @@ namespace Victoire\Bundle\WidgetBundle\Resolver;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Victoire\Bundle\QueryBundle\Helper\QueryHelper;
 use Victoire\Bundle\WidgetBundle\Model\Widget;
 
@@ -87,7 +88,6 @@ class BaseWidgetContentResolver
                         ->getQuery()
                         ->getOneOrNullResult();
 
-        $fields = $widget->getFields();
         $this->populateParametersWithWidgetFields($widget, $entity, $parameters);
 
         return $parameters;
@@ -119,9 +119,10 @@ class BaseWidgetContentResolver
         foreach ($fields as $widgetField => $field) {
             //get the value of the field
             if ($entity !== null) {
-                $attributeValue = $entity->getEntityAttributeValue($field);
+                $accessor = new PropertyAccessor();
+                $attributeValue = $accessor->getValue($entity, $field);
             } else {
-                $attributeValue = $widget->getBusinessEntityId().' -> '.$field;
+                $attributeValue = $widget->getBusinessEntityName().' -> '.$field;
             }
 
             $parameters[$widgetField] = $attributeValue;

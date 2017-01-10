@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Victoire\Bundle\BlogBundle\Entity\ArticleTemplate;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
-use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\FormBundle\Form\Type\UrlvalidatedType;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\TemplateBundle\Entity\Template;

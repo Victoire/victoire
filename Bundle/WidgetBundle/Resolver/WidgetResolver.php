@@ -5,6 +5,7 @@
  * Date: 17/03/2016
  * Time: 17:28.
  */
+
 namespace Victoire\Bundle\WidgetBundle\Resolver;
 
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
@@ -12,7 +13,6 @@ use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 use Victoire\Bundle\CriteriaBundle\Chain\DataSourceChain;
 use Victoire\Bundle\CriteriaBundle\Entity\Criteria;
-use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 
 class WidgetResolver
@@ -58,7 +58,7 @@ class WidgetResolver
         if ($widgetMap->getReplaced() && count($widgets) === 0) {
             $widgets = $widgetMap->getReplaced()->getWidgets();
         }
-        /* @var Widget $widget */
+        /* @var \Victoire\Bundle\WidgetBundle\Entity\Widget $widget */
         foreach ($widgets as $_widget) {
             /** @var Criteria $criteria */
             foreach ($_widget->getCriterias() as $criteria) {
@@ -76,7 +76,7 @@ class WidgetResolver
     {
         $businessEntity = null;
         if ($this->currentViewHelper->getCurrentView() instanceof BusinessPage) {
-            $businessEntity = $this->currentViewHelper->getCurrentView()->getBusinessEntity();
+            $businessEntity = $this->currentViewHelper->getCurrentView()->getEntity();
         }
         $result = false;
         switch ($operator) {

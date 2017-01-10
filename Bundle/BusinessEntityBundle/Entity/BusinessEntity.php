@@ -2,30 +2,54 @@
 
 namespace Victoire\Bundle\BusinessEntityBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+
 /**
  * The business Entity.
+ *
+ * @ORM\Entity(repositoryClass="Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntityRepository")
+ * @ORM\Table("vic_business_entity")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="type", type="string")
  */
-class BusinessEntity
+abstract class BusinessEntity
 {
-    const CACHE_CLASSES = 'victoire_business_entity_classes';
-    const CACHE_WIDGETS = 'victoire_business_entity_widgets';
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
 
-    protected $id = null;
-    protected $class = null;
-    protected $name = null;
-    protected $businessProperties = [];
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    protected $name;
+
+    /**
+     * @var BusinessProperty[]
+     *
+     * @ORM\OneToMany(targetEntity="Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty", mappedBy="businessEntity", cascade={"persist", "remove"})
+     */
+    protected $businessProperties;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="availableWidgets", type="text")
+     */
+    protected $availableWidgets;
+
     protected $disable = false;
 
-    public static function __set_state($array)
+    public function __construct()
     {
-        $businessEntity = new self();
-        $businessEntity->setId($array['id']);
-        $businessEntity->setClass($array['class']);
-        $businessEntity->setName($array['name']);
-        $businessEntity->setBusinessProperties($array['businessProperties']);
-        $businessEntity->setDisable($array['disable']);
-
-        return $businessEntity;
+        $this->businessProperties = new ArrayCollection();
     }
 
     /**
@@ -36,16 +60,6 @@ class BusinessEntity
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set the id.
-     *
-     * @param string $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
     }
 
     /**
@@ -69,75 +83,13 @@ class BusinessEntity
     }
 
     /**
-     * Get the class.
-     *
-     * @return string The class
-     */
-    public function getClass()
-    {
-        return $this->class;
-    }
-
-    /**
-     * Set the class.
-     *
-     * @param string $class
-     */
-    public function setClass($class)
-    {
-        $this->class = $class;
-    }
-
-    /**
-     * Is disable.
-     *
-     * @return bool
-     */
-    public function isDisable()
-    {
-        return $this->disable;
-    }
-
-    /**
-     * Set disable.
-     *
-     * @param bool $disable
-     */
-    public function setDisable($disable)
-    {
-        $this->disable = $disable;
-    }
-
-    /**
-     * Set disable if BusinessEntity dont have all receiverProperties required.
-     *
-     * @param array $receiverProperties
-     */
-    public function setDisableForReceiverProperties($receiverProperties = [])
-    {
-        foreach ($receiverProperties as $receiverProperty => $value) {
-            if (!array_key_exists($receiverProperty, $this->businessProperties)) {
-                $this->disable = true;
-            }
-        }
-    }
-
-    /**
      * Add a business property.
      *
      * @param BusinessProperty $businessProperty
      */
     public function addBusinessProperty(BusinessProperty $businessProperty)
     {
-        //the type of business property (textable, slideable...)
-        $type = $businessProperty->getType();
-
-        if (!isset($this->businessProperties[$type])) {
-            $this->businessProperties[$type] = [];
-        }
-
-        //add the business property indexed by the type
-        $this->businessProperties[$type][] = $businessProperty;
+        $this->businessProperties->add($businessProperty);
     }
 
     /**
@@ -148,6 +100,20 @@ class BusinessEntity
     public function getBusinessProperties()
     {
         return $this->businessProperties;
+    }
+
+    /**
+     * Get a business property by name.
+     *
+     * @return BusinessProperty|null The business property
+     */
+    public function getBusinessPropertyByName($name)
+    {
+        foreach ($this->businessProperties as $businessProperty) {
+            if ($businessProperty->getName() == $name) {
+                return $businessProperty;
+            }
+        }
     }
 
     /**
@@ -165,16 +131,100 @@ class BusinessEntity
      *
      * @param string $type
      *
-     * @return array The businnes properties
+     * @return BusinessProperty[] The businnes properties
      */
     public function getBusinessPropertiesByType($type)
     {
-        $bp = [];
-
-        if (isset($this->businessProperties[$type])) {
-            $bp = $this->businessProperties[$type];
+        if (!is_array($type)) {
+            $type = [$type];
+        }
+        $bp = new ArrayCollection();
+        foreach ($this->getBusinessProperties() as $property) {
+            if (count(array_diff($type, $property->getTypes())) == 0) {
+                $bp->add($property);
+            }
         }
 
         return $bp;
+    }
+
+    /**
+     * Get the business properties names by type.
+     *
+     * @param string $type
+     *
+     * @return ArrayCollection The businnes properties
+     */
+    public function getBusinessParameters()
+    {
+        $bp = new ArrayCollection();
+        /** @var BusinessProperty $property */
+        foreach ($this->getBusinessProperties() as $property) {
+            if ($property->hasType('businessParameter')) {
+                $bp->add($property);
+            }
+        }
+
+        return $bp;
+    }
+
+    /**
+     * Get the business identifiers.
+     *
+     * @param string $type
+     *
+     * @return ArrayCollection The businnes properties
+     */
+    public function getBusinessIdentifiers()
+    {
+        $bp = new ArrayCollection();
+        /** @var BusinessProperty $property */
+        foreach ($this->getBusinessProperties() as $property) {
+            if ($property->hasType('businessIdentifier')) {
+                $bp->add($property);
+            }
+        }
+        if ($bp->count() < 1) {
+            throw new \Exception(sprintf('The businessEntity %s must have at lease one businessIdentifier property', $this->name));
+        }
+
+        return $bp;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAvailableWidgets()
+    {
+        return unserialize($this->availableWidgets);
+    }
+
+    /**
+     * @param array $availableWidgets
+     */
+    public function setAvailableWidgets($availableWidgets)
+    {
+        $this->availableWidgets = serialize($availableWidgets);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDisable()
+    {
+        return $this->disable;
+    }
+
+    /**
+     * @param bool $disable
+     */
+    public function setDisable($disable)
+    {
+        $this->disable = $disable;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 }

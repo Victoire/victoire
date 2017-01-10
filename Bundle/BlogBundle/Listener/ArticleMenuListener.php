@@ -35,7 +35,7 @@ class ArticleMenuListener implements MenuListenerInterface
     {
         $mainItem = $this->getMainItem();
         $page = $event->getPage();
-        $currentArticle = $event->getPage()->getBusinessEntity();
+        $currentArticle = $event->getPage()->getEntity();
 
         $mainItem->addChild('menu.page.settings',
             [

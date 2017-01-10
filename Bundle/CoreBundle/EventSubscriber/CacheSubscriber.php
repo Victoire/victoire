@@ -3,7 +3,6 @@
 namespace Victoire\Bundle\CoreBundle\EventSubscriber;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Victoire\Bundle\BusinessEntityBundle\Event\BusinessEntityAnnotationEvent;
 use Victoire\Bundle\CoreBundle\Cache\Builder\CacheBuilder;
 use Victoire\Bundle\WidgetBundle\Event\WidgetAnnotationEvent;
 
@@ -20,22 +19,13 @@ class CacheSubscriber implements EventSubscriberInterface
         $this->cacheBuilder = $cacheBuilder;
     }
 
-    public function addBusinessEntityInfo(BusinessEntityAnnotationEvent $event)
-    {
-        //Save business entity in cache
-        $this->cacheBuilder->saveBusinessEntity($event->getBusinessEntity());
-        //Add the business entity in widget cache entry
-        foreach ($event->getWidgets() as $widget) {
-            if (is_array($widget)) {
-                $widget = $widget[0];
-            }
-            $this->cacheBuilder->addWidgetBusinessEntity($widget, $event->getBusinessEntity());
-        }
-    }
-
+    /**
+     * Save widget receiver properties in cache.
+     *
+     * @param WidgetAnnotationEvent $event
+     */
     public function addWidgetInfo(WidgetAnnotationEvent $event)
     {
-        //save widget receiver properties in cache
         $this->cacheBuilder->saveWidgetReceiverProperties($event->getWidgetName(), $event->getReceiverProperties());
     }
 
@@ -47,8 +37,7 @@ class CacheSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            'victoire.business_entity_annotation_load' => 'addBusinessEntityInfo',
-            'victoire.widget_annotation_load'          => 'addWidgetInfo',
+            'victoire.widget_annotation_load' => 'addWidgetInfo',
         ];
     }
 }
