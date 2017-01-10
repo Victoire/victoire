@@ -34,16 +34,13 @@ before_install:
   - cp -v Tests/Functionnal/app/config/parameters.yml.dist Tests/Functionnal/app/config/parameters.yml
   - npm install less
   - if [[ $TRAVIS_PHP_VERSION != '7.0' && $TRAVIS_PHP_VERSION != 'hhvm' && $PHPUNIT_FLAGS = "" ]]; then phpenv config-rm xdebug.ini; fi
-  - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-  - php -r "if (hash_file('SHA384', 'composer-setup.php') === '55d6ead61b29c7bdee5cccfb50076874187bd9f21f65d8991d46ec5cc90518f447387fb9f76ebae1fbbacf329e583e30') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
-  - php composer-setup.php
-  - php -r "unlink('composer-setup.php');"
+  - composer self-update
 
 install:
-  - php composer.phar require --dev symfony/symfony:${SYMFONY_VERSION} $DEPENDENCY --no-update
-  - php composer.phar config "minimum-stability" "dev"
+  - composer require --dev symfony/symfony:${SYMFONY_VERSION} $DEPENDENCY --no-update
+  - composer config "minimum-stability" "dev"
   - cat composer.json
-  - php -d memory_limit=1536M composer.phar install --no-interaction -vvv --profile --no-progress
+  - composer install --no-interaction -vvv --profile --no-progress
   - php Tests/Functionnal/bin/console --env=ci doctrine:database:create --no-debug
   - php Tests/Functionnal/bin/console --env=ci doctrine:schema:create --no-debug
   - php Tests/Functionnal/bin/console --env=ci cache:warmup --no-debug
