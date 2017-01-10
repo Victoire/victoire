@@ -191,7 +191,10 @@
                     </div>
 
                     <div class="vic-flex-col vic-flex-col--grow-1 vic-flex-col--shrink-0 vic-text-align--center">
-                        hello world !
+                        {% include '@bricks/mode-switcher.html.twig' with {
+                            'name': 'mode-switcher',
+                            'startMode': 'preview',
+                        } %}
                     </div>
 
                     <div class="vic-flex-col vic-flex-col--grow-1 vic-flex-col--shrink-0 vic-text-align--right">
