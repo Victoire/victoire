@@ -16,7 +16,7 @@ $button--vertical-align: middle;
 $button--float: null;
 
 // display & box-model
-$button--display: inline-block;
+$button--display: inline-flex;
 $button--border-width: (
   '-framed': $button-framed--border-width,
 );
@@ -114,6 +114,7 @@ $button--background-color: (
     'default': color('blue') color('blue', 'dark'),
     '[disabled="true"': color('blue') color('blue'),
   ),
+  '-locale': color('grey') color('grey', 'dark'),
   '-transparent': (
     'default': transparent color('grey', 'darker'),
     '[disabled="true"': transparent transparent,
