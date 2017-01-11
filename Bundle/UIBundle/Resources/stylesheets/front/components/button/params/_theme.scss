@@ -115,6 +115,10 @@ $button--background-color: (
     '[disabled="true"': color('blue') color('blue'),
   ),
   '-locale': color('grey') color('grey', 'dark'),
+  '-fab': (
+    'default': color('green') color('green', 'dark'),
+    '-fab-open': color('grey', 'darker') color('grey', 'darker'),
+  ),
   '-transparent': (
     'default': transparent color('grey', 'darker'),
     '[disabled="true"': transparent transparent,
@@ -155,10 +159,13 @@ $button--letter-spacing: 0.035714286em;
 $button--border-radius: (
   'default': 0.214285714em,
   '-radiusless': 0,
+  '-fab': 100%,
 );
 $button--border-style: (
   '-framed': solid,
 );
-$button--box-shadow: null;
+$button--box-shadow: (
+  '-fab': 0 0.25em 0.5em 0 color('black', null, 0.2),
+);
 $button--transition: null;
 $button--cursor: pointer;

@@ -20,8 +20,9 @@ class StyleguideController extends Controller
             'color',
             'layout',
             'button',
-            'form',
             'drops',
+            'fab',
+            'form',
             'slots',
             'widgets',
             'input-images',
@@ -31,10 +32,10 @@ class StyleguideController extends Controller
             'menu',
             'mode-switcher',
             'navbar',
-            // 'fab',
             // 'card',
             // 'tabs',
             // 'modal',
+            // 'collapse',
         );
 
         return array(
