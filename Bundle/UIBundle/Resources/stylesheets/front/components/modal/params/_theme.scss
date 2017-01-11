@@ -1,0 +1,23 @@
+// scss-lint:disable ColorVariable
+@import '../../../globals/params/rem';
+@import '../../../globals/params/font';
+@import '../../../globals/params/color';
+@import '../../../globals/params/ui-mode';
+@import '../../navbar/params/theme';
+
+$modals--font-size: rem();
+$modals--height: calc(100% - #{value($navbars--height, ('-lg'))});
+$modals--top: value($navbars--height, ('-lg'));
+$modals--left: 0;
+$modals--right: 0;
+$modals--bottom: 0;
+$modals--z-index: 1000;
+$modals--background-color: color('white');
+$modals--translate-y: (
+  'default': -4em,
+  '[data-modal="show"': 0,
+);
+$modals--duration: 300ms;
+$modals--timing-function: ease-in-out;
+
+$modals-content--padding-y: 3.125em;

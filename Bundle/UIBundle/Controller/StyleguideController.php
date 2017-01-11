@@ -32,9 +32,9 @@ class StyleguideController extends Controller
             'menu',
             'mode-switcher',
             'navbar',
-            // 'card',
+            'modal',
             // 'tabs',
-            // 'modal',
+            // 'card',
             // 'collapse',
         );
 

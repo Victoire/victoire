@@ -227,7 +227,7 @@
 <h2 class="ts-section__sub-heading">Vertical navbar</h2>
 {% embed '@styleguide/ui/snippet.html.twig' with {
     'snippets': {
-        'html': '',
+        'twig': '<nav class="vict-navbar vict-navbar--vertical">\n    <div class="vic-flex-grid vic-flex-grid--direction-column">\n        <div class="vic-flex-col">\n            <a href="#" class="vic-btn vic-btn--square vic-btn--warning">\n                {% include "@SVG/locale.html.twig" %}\n\n                fr\n            </a>\n        </div>\n\n        <div class="vic-flex-col">\n            <a href="#" class="vic-btn vic-btn--square vic-btn--locale">\n                {% include "@SVG/locale.html.twig" %}\n\n                en\n            </a>\n        </div>\n\n        <div class="vic-flex-col">\n            <a href="#" class="vic-btn vic-btn--square vic-btn--locale">\n                {% include "@SVG/locale.html.twig" %}\n\n                al\n            </a>\n        </div>\n\n        <div class="vic-flex-col">\n            <a href="#" class="vic-btn vic-btn--square vic-btn--transparent">\n                {% include "@SVG/locale-add.html.twig" %}\n            </a>\n        </div>\n    </div>\n</nav>',
     }
 } %}
     {% block snippet_preview %}
