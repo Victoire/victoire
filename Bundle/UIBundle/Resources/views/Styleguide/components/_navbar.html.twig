@@ -231,5 +231,38 @@
     }
 } %}
     {% block snippet_preview %}
+        <nav class="vict-navbar vict-navbar--vertical" style="height: 350px">
+            <div class="vic-flex-grid vic-flex-grid--direction-column">
+                <div class="vic-flex-col">
+                    <a href="#" class="vic-btn vic-btn--square vic-btn--warning">
+                        {% include '@SVG/locale.html.twig' %}
+
+                        fr
+                    </a>
+                </div>
+
+                <div class="vic-flex-col">
+                    <a href="#" class="vic-btn vic-btn--square vic-btn--locale">
+                        {% include '@SVG/locale.html.twig' %}
+
+                        en
+                    </a>
+                </div>
+
+                <div class="vic-flex-col">
+                    <a href="#" class="vic-btn vic-btn--square vic-btn--locale">
+                        {% include '@SVG/locale.html.twig' %}
+
+                        al
+                    </a>
+                </div>
+
+                <div class="vic-flex-col">
+                    <a href="#" class="vic-btn vic-btn--square vic-btn--transparent">
+                        {% include '@SVG/locale-add.html.twig' %}
+                    </a>
+                </div>
+            </div>
+        </nav>
     {% endblock snippet_preview %}
 {% endembed %}

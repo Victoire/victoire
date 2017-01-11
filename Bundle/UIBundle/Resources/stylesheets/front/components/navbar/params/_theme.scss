@@ -18,6 +18,7 @@ $navbars--position: (
 $navbars--width: (
   '-header': 100%,
   '-footer': 100%,
+  '-vertical': 3.125em,
 );
 $navbars--left: (
   '-header': 0,
@@ -33,9 +34,15 @@ $navbars--bottom: (
 $navbars--text-transform: null;
 $navbars--letter-spacing: null;
 $navbars--line-height: null;
-$navbars--border-width: null;
-$navbars--border-style: null;
-$navbars--border-color: null;
+$navbars--border-width: (
+  '-vertical': 1px,
+);
+$navbars--border-style: (
+  '-vertical': solid,
+);
+$navbars--border-color: (
+  '-vertical': color('grey', 'lighter'),
+);
 $navbars--border-radius: null;
 $navbars--box-shadow: null;
 $navbars--text-align: null;
@@ -45,11 +52,13 @@ $navbars--text-decoration: null;
 $navbars--background-color: (
   'default': color('black'),
   '-grey': color('grey', 'darker'),
+  '-vertical': color('white', 'dark'),
 );
 $navbars--padding: null;
 $navbars--height: (
   'default': rem(3.125),
   '-lg': rem(3.75),
+  '-vertical': 100%,
 );
 $navbars--box-shadow: (
   '-header': 0 0.1875em 0.5em 0 rgba(0, 0, 0, 0.5),
