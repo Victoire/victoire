@@ -1,0 +1,11 @@
+@import '../../../globals/params/synthax';
+
+$modals--prefix: 'vi';
+$modals--synthax: (
+  'prefix': $modals--prefix,
+  'separator': (
+    'prefix': '-',
+    'element': '__',
+    'modifier': '--',
+  ),
+);
