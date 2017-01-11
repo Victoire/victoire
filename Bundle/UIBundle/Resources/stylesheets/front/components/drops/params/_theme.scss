@@ -12,7 +12,10 @@ $drops--font-weight: font-weight('normal');
 $drops--text-transform: null !default;
 $drops--letter-spacing: null !default;
 $drops--line-height: null !default;
-$drops--text-align: left !default;
+$drops--text-align: (
+  'default': left,
+  '-fab': center,
+) !default;
 $drops--text-decoration: null !default;
 $drops--margin: null !default;
 $drops--min-width: (
@@ -24,6 +27,7 @@ $drops--width: null !default;
 $drops--border-width: (
   'default': 1px,
   '-tooltip': 0,
+  '-fab': 0,
 ) !default;
 $drops--border-style: solid !default;
 $drops--border-color: (
@@ -36,21 +40,25 @@ $drops--border-radius: (
 ) !default;
 $drops--color: (
   '-tooltip': rgb(255, 255, 255),
+  '-fab': rgb(255, 255, 255),
 ) !default;
 $drops--box-shadow: (
   'default': 0 0.125em 0.5em 0 color('black', null, 0.25),
-  '-popover': 0 0.125em 1.875em 0 color('black', null, 0.10),
-  '-tooltip': 0 0 0.3125em 0 color('black', null, 0.20),
+  '-popover': 0 0.125em 1.875em 0 color('black', null, 0.1),
+  '-tooltip': 0 0 0.3125em 0 color('black', null, 0.2),
+  '-fab': none,
 );
 $drops--background: null !default;
 $drops--background-color: (
   'default': color('white'),
   '-tooltip': rgb(0, 0, 0),
+  '-fab': transparent,
 ) !default;
 $drops--padding-x: (
   'default': rem(0.625),
   '-popover': 1.25em,
   '-tooltip': 0.714285714em,
+  '-fab': 0,
 ) !default;
 $drops--margin: (
   '-tooltip': 0.625em,
@@ -69,7 +77,9 @@ $drops-caret--height: (
   '-tooltip': 5px,
 ) !default;
 
-$drops-menu--padding-y: null !default;
+$drops-menu--padding-y: (
+  '-fab': 0.3125em,
+);
 $drops-menu--margin: null !default;
 $drops-menu--font-size: null !default;
 $drops-menu--color: null !default;
@@ -85,7 +95,9 @@ $drops-heading--text-transform: null !default;
 $drops-heading--text-decoration: null !default;
 $drops-heading--color: #818a91 !default;
 
-$drops-anchor--padding-y: null;
+$drops-anchor--padding-y: (
+  '-fab': 0.3125em,
+);
 $drops-anchor--font-size: null !default;
 $drops-anchor--line-height: 2;
 $drops-anchor--letter-spacing: null !default;
@@ -99,11 +111,22 @@ $drops-anchor--color: (
   ':hover': color('grey', 'darker'),
   ':focus': color('grey', 'darker'),
   ':active': color('grey', 'darker'),
+  '-fab': (
+    'default': color('white'),
+    ':hover': color('white'),
+    ':focus': color('white'),
+    ':active': color('white'),
+  ),
 );
 $drops-anchor--background-color:  (
   ':hover': #eee,
   ':focus': #eee,
   ':active': #eee,
+  '-fab': (
+    ':hover': transparent,
+    ':focus': transparent,
+    ':active': transparent,
+  )
 );
 
 $drops-header--padding-y: 0.5rem !default;
