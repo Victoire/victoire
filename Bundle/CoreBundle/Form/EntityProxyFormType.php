@@ -3,13 +3,12 @@
 namespace Victoire\Bundle\CoreBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
+use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
-use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
 
 /**
  * Create an entity proxy for the widget.
@@ -23,6 +22,7 @@ class EntityProxyFormType extends AbstractType
 
     /**
      * EntityProxyFormType constructor.
+     *
      * @param RequestStack $requestStack
      */
     public function __construct(RequestStack $requestStack)
