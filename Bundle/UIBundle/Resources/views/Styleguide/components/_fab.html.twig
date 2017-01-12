@@ -4,15 +4,15 @@
 
 {% embed '@styleguide/ui/snippet.html.twig' with {
     'snippets': {
-        'twig': '<button class="vic-btn vic-btn--square vic-btn--lg vic-btn--fab">\n    {% include "@SVG/fab.html.twig" %}\n</button>\n\n<button class="vic-btn vic-btn--square vic-btn--lg vic-btn--fab vic-btn--fab-open">\n    {% include "@SVG/fab.html.twig" %}\n</button>',
+        'twig': '<button class="v-btn v-btn--square v-btn--lg v-btn--fab">\n    {% include "@SVG/fab.html.twig" %}\n</button>\n\n<button class="v-btn v-btn--square v-btn--lg v-btn--fab v-btn--fab-open">\n    {% include "@SVG/fab.html.twig" %}\n</button>',
     }
 } %}
     {% block snippet_preview %}
-        <button class="vic-btn vic-btn--square vic-btn--lg vic-btn--fab">
+        <button class="v-btn v-btn--square v-btn--lg v-btn--fab">
             {% include '@SVG/fab.html.twig' %}
         </button>
 
-        <button class="vic-btn vic-btn--square vic-btn--lg vic-btn--fab vic-btn--fab-open">
+        <button class="v-btn v-btn--square v-btn--lg v-btn--fab v-btn--fab-open">
             {% include '@SVG/fab.html.twig' %}
         </button>
     {% endblock snippet_preview %}
@@ -20,21 +20,21 @@
 
 {% embed '@styleguide/ui/snippet.html.twig' with {
     'snippets': {
-        'twig': '<button class="vic-btn vic-btn--square vic-btn--lg vic-btn--fab vic-drop-trigger--no-toggle" data-flag="drops" data-position="bottomout center" data-href="#fab-example-dropdown" data-position="middle rightout">\n    {% include "@SVG/fab.html.twig" %}\n</button>\n\n<div class="vic-drop vic-drop--fab" id="fab-example-dropdown">\n    <nav class="vic-drop__menu">\n        <a class="vic-drop__anchor" href="#">\n            <span class="vic-drop__anchor-label">Drop anchor</span>\n\n            <span class="vic-drop__anchor-icon">\n                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="18" viewBox="13 11 15 18">\n                    <g fill="currentColor" fill-rule="evenodd">\n                        <path d="M24.1023 20.1274v-.5h-3.28l.5.5v-3.28h-1.695v3.28l.5-.5h-3.2797v1.695h3.28l-.5-.5v3.28h1.6948v-3.28l-.5.5h3.2798v-1.195zm-.5.195h-3.28v3.28l.5-.5h-.695l.5.5v-3.28h-3.2798l.5.5v-.695l-.5.5h3.28v-3.28l-.5.5h.695l-.5-.5v3.28h3.2798l-.5-.5v.695l.5-.5z"/>\n                        <path d="M26 11H15c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V13c0-1.1-.9-2-2-2zm0 16H15V13h11v14z"/>\n                    </g>\n                </svg>\n            </span>\n        </a>\n\n        <a class="vic-drop__anchor" href="#">\n            <span class="vic-drop__anchor-label">Drop anchor</span>\n\n            <span class="vic-drop__anchor-icon">\n                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="13 13 15 15">\n                    <path fill="currentColor" fill-rule="evenodd" d="M26.3333 13H14.6667C13.75 13 13 13.75 13 14.6667v11.6666C13 27.25 13.75 28 14.6667 28h11.6666C27.25 28 28 27.25 28 26.3333V14.6667C28 13.75 27.25 13 26.3333 13zM25 19h-9v-2h9v2zm0 3h-9v-2h9v2zm-3 3h-6v-2h6v2z"/>\n                </svg>\n            </span>\n        </a>\n    </nav>\n</div>',
+        'twig': '<button class="v-btn v-btn--square v-btn--lg v-btn--fab v-drop-trigger--no-toggle" data-flag="v-drop" data-position="bottomout center" data-href="#fab-example-dropdown" data-position="middle rightout">\n    {% include "@SVG/fab.html.twig" %}\n</button>\n\n<div class="v-drop v-drop--fab" id="fab-example-dropdown">\n    <nav class="v-drop__menu">\n        <a class="v-drop__anchor" href="#">\n            <span class="v-drop__anchor-label">Drop anchor</span>\n\n            <span class="v-drop__anchor-icon">\n                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="18" viewBox="13 11 15 18">\n                    <g fill="currentColor" fill-rule="evenodd">\n                        <path d="M24.1023 20.1274v-.5h-3.28l.5.5v-3.28h-1.695v3.28l.5-.5h-3.2797v1.695h3.28l-.5-.5v3.28h1.6948v-3.28l-.5.5h3.2798v-1.195zm-.5.195h-3.28v3.28l.5-.5h-.695l.5.5v-3.28h-3.2798l.5.5v-.695l-.5.5h3.28v-3.28l-.5.5h.695l-.5-.5v3.28h3.2798l-.5-.5v.695l.5-.5z"/>\n                        <path d="M26 11H15c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V13c0-1.1-.9-2-2-2zm0 16H15V13h11v14z"/>\n                    </g>\n                </svg>\n            </span>\n        </a>\n\n        <a class="v-drop__anchor" href="#">\n            <span class="v-drop__anchor-label">Drop anchor</span>\n\n            <span class="v-drop__anchor-icon">\n                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="13 13 15 15">\n                    <path fill="currentColor" fill-rule="evenodd" d="M26.3333 13H14.6667C13.75 13 13 13.75 13 14.6667v11.6666C13 27.25 13.75 28 14.6667 28h11.6666C27.25 28 28 27.25 28 26.3333V14.6667C28 13.75 27.25 13 26.3333 13zM25 19h-9v-2h9v2zm0 3h-9v-2h9v2zm-3 3h-6v-2h6v2z"/>\n                </svg>\n            </span>\n        </a>\n    </nav>\n</div>',
     }
 } %}
     {% block snippet_preview %}
         <div style="text-align: center;">
-            <button class="vic-btn vic-btn--square vic-btn--lg vic-btn--fab vic-drop-trigger--no-toggle" data-flag="drops" data-position="bottomout center" data-href="#fab-example-dropdown" data-position="middle rightout">
+            <button class="v-btn v-btn--square v-btn--lg v-btn--fab v-drop-trigger--no-toggle" data-flag="v-drop" data-position="bottomout center" data-href="#fab-example-dropdown" data-position="middle rightout">
                 {% include '@SVG/fab.html.twig' %}
             </button>
 
-            <div class="vic-drop vic-drop--fab" id="fab-example-dropdown">
-                <nav class="vic-drop__menu">
-                    <a class="vic-drop__anchor" href="#">
-                        <span class="vic-drop__anchor-label">Drop anchor</span>
+            <div class="v-drop v-drop--fab" id="fab-example-dropdown">
+                <nav class="v-drop__menu">
+                    <a class="v-drop__anchor" href="#">
+                        <span class="v-drop__anchor-label">Drop anchor</span>
 
-                        <span class="vic-drop__anchor-icon">
+                        <span class="v-drop__anchor-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="18" viewBox="13 11 15 18">
                                 <g fill="currentColor" fill-rule="evenodd">
                                     <path d="M24.1023 20.1274v-.5h-3.28l.5.5v-3.28h-1.695v3.28l.5-.5h-3.2797v1.695h3.28l-.5-.5v3.28h1.6948v-3.28l-.5.5h3.2798v-1.195zm-.5.195h-3.28v3.28l.5-.5h-.695l.5.5v-3.28h-3.2798l.5.5v-.695l-.5.5h3.28v-3.28l-.5.5h.695l-.5-.5v3.28h3.2798l-.5-.5v.695l.5-.5z"/>
@@ -44,10 +44,10 @@
                         </span>
                     </a>
 
-                    <a class="vic-drop__anchor" href="#">
-                        <span class="vic-drop__anchor-label">Drop anchor</span>
+                    <a class="v-drop__anchor" href="#">
+                        <span class="v-drop__anchor-label">Drop anchor</span>
 
-                        <span class="vic-drop__anchor-icon">
+                        <span class="v-drop__anchor-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="13 13 15 15">
                                 <path fill="currentColor" fill-rule="evenodd" d="M26.3333 13H14.6667C13.75 13 13 13.75 13 14.6667v11.6666C13 27.25 13.75 28 14.6667 28h11.6666C27.25 28 28 27.25 28 26.3333V14.6667C28 13.75 27.25 13 26.3333 13zM25 19h-9v-2h9v2zm0 3h-9v-2h9v2zm-3 3h-6v-2h6v2z"/>
                             </svg>

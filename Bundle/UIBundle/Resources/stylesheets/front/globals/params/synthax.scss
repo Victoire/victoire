@@ -1,9 +1,1 @@
-$app--prefix: 'vic';
-$app--synthax: (
-  'prefix': $app--prefix,
-  'separator': (
-    'prefix': '-',
-    'element': '__',
-    'modifier': '--',
-  ),
-);
+$app--prefix: map-get(map-get($trowel-config, 'synthax'), 'prefix');

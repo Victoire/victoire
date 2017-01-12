@@ -8,7 +8,7 @@
   }
 };
 
-$menu--selector: selector--constructor($menus--synthax, 'menu');
+$menu--selector: selector--constructor(null, 'menu');
 @include selector($menu--selector) {
   @include declaration('display', flex);
   @include declaration('font-size', $menus--font-size);

@@ -4,18 +4,18 @@
 
 {% embed '@styleguide/ui/snippet.html.twig' with {
     'snippets': {
-        'twig': '<button class="vic-btn vic-btn--primary" data-vi-modal-show="#modal-example-1">open modal</button>\n\n<div class="vi-modal" id="modal-example-1" data-flag="vi-modal">\n    <div class="vi-modal__header">\n        <nav class="vict-navbar vict-navbar--grey">\n            <div class="vic-container vic-container--fluid">\n                <div class="vic-flex-grid">\n                    <div class="vic-flex-col">\n                        <strong>WIDGET #256 - Français</strong>\n                    </div>\n                </div>\n            </div>\n        </nav>\n    </div>\n\n    <div class="vi-modal__body">\n        <div>\n            <nav class="vict-navbar vict-navbar--vertical">\n                <div class="vic-flex-grid vic-flex-grid--direction-column">\n                    <div class="vic-flex-col">\n                        <a href="#" class="vic-btn vic-btn--square vic-btn--warning">\n                            {% include "@SVG/locale.html.twig" %}\n\n                            fr\n                        </a>\n                    </div>\n\n                    <div class="vic-flex-col">\n                        <a href="#" class="vic-btn vic-btn--square vic-btn--locale">\n                            {% include "@SVG/locale.html.twig" %}\n\n                            en\n                        </a>\n                    </div>\n\n                    <div class="vic-flex-col">\n                        <a href="#" class="vic-btn vic-btn--square vic-btn--locale">\n                            {% include "@SVG/locale.html.twig" %}\n\n                            al\n                        </a>\n                    </div>\n\n                    <div class="vic-flex-col">\n                        <a href="#" class="vic-btn vic-btn--square vic-btn--transparent">\n                            {% include "@SVG/locale-add.html.twig" %}\n                        </a>\n                    </div>\n                </div>\n            </nav>\n        </div>\n\n        <div class="vi-modal__content">\n            <div class="vic-container">\n                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n            </div>\n        </div>\n    </div>\n\n    <div class="vi-modal__footer">\n        <nav class="vict-navbar">\n            <div class="vic-container">\n                <div class="vic-flex-grid vic-flex-grid--justify-between">\n                    <div class="vic-flex-col">\n                        <button class="vic-btn vic-btn--transparent">Supprimer</button>\n                        <button class="vic-btn vic-btn--transparent vic-btn--danger" data-vi-modal-hide="#modal-example-1">Annuler</button>\n                    </div>\n\n                    <div class="vic-flex-col">\n                        <button class="vic-btn vic-btn--warning">Mettre à jour</button>\n                    </div>\n                </div>\n            </div>\n        </nav>\n    </div>\n</div>',
+        'twig': '<button class="v-btn v-btn--primary" data-v-modal-show="#modal-example-1">open modal</button>\n\n<div class="v-modal" id="modal-example-1" data-flag="v-modal">\n    <div class="v-modal__header">\n        <nav class="v-navbar v-navbar--grey">\n            <div class="v-container v-container--fluid">\n                <div class="v-flex-grid">\n                    <div class="v-flex-col">\n                        <strong>WIDGET #256 - Français</strong>\n                    </div>\n                </div>\n            </div>\n        </nav>\n    </div>\n\n    <div class="v-modal__body">\n        <div>\n            <nav class="v-navbar v-navbar--vertical">\n                <div class="v-flex-grid v-flex-grid--direction-column">\n                    <div class="v-flex-col">\n                        <a href="#" class="v-btn v-btn--square v-btn--warning">\n                            {% include "@SVG/locale.html.twig" %}\n\n                            fr\n                        </a>\n                    </div>\n\n                    <div class="v-flex-col">\n                        <a href="#" class="v-btn v-btn--square v-btn--locale">\n                            {% include "@SVG/locale.html.twig" %}\n\n                            en\n                        </a>\n                    </div>\n\n                    <div class="v-flex-col">\n                        <a href="#" class="v-btn v-btn--square v-btn--locale">\n                            {% include "@SVG/locale.html.twig" %}\n\n                            al\n                        </a>\n                    </div>\n\n                    <div class="v-flex-col">\n                        <a href="#" class="v-btn v-btn--square v-btn--transparent">\n                            {% include "@SVG/locale-add.html.twig" %}\n                        </a>\n                    </div>\n                </div>\n            </nav>\n        </div>\n\n        <div class="v-modal__content">\n            <div class="v-container">\n                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n            </div>\n        </div>\n    </div>\n\n    <div class="v-modal__footer">\n        <nav class="v-navbar">\n            <div class="v-container">\n                <div class="v-flex-grid v-flex-grid--justify-between">\n                    <div class="v-flex-col">\n                        <button class="v-btn v-btn--transparent">Supprimer</button>\n                        <button class="v-btn v-btn--transparent v-btn--danger" data-v-modal-hide="#modal-example-1">Annuler</button>\n                    </div>\n\n                    <div class="v-flex-col">\n                        <button class="v-btn v-btn--warning">Mettre à jour</button>\n                    </div>\n                </div>\n            </div>\n        </nav>\n    </div>\n</div>',
     }
 } %}
     {% block snippet_preview %}
-        <button class="vic-btn vic-btn--primary" data-vi-modal-show="#modal-example-1">open modal</button>
+        <button class="v-btn v-btn--primary" data-v-modal-show="#modal-example-1">open modal</button>
 
-        <div class="vi-modal" id="modal-example-1" data-flag="vi-modal">
-            <div class="vi-modal__header">
-                <nav class="vict-navbar vict-navbar--grey">
-                    <div class="vic-container vic-container--fluid">
-                        <div class="vic-flex-grid">
-                            <div class="vic-flex-col">
+        <div class="v-modal" id="modal-example-1" data-flag="v-modal">
+            <div class="v-modal__header">
+                <nav class="v-navbar v-navbar--grey">
+                    <div class="v-container v-container--fluid">
+                        <div class="v-flex-grid">
+                            <div class="v-flex-col">
                                 <strong>WIDGET #256 - Français</strong>
                             </div>
                         </div>
@@ -23,36 +23,36 @@
                 </nav>
             </div>
 
-            <div class="vi-modal__body">
+            <div class="v-modal__body">
                 <div>
-                    <nav class="vict-navbar vict-navbar--vertical">
-                        <div class="vic-flex-grid vic-flex-grid--direction-column">
-                            <div class="vic-flex-col">
-                                <a href="#" class="vic-btn vic-btn--square vic-btn--warning">
+                    <nav class="v-navbar v-navbar--vertical">
+                        <div class="v-flex-grid v-flex-grid--direction-column">
+                            <div class="v-flex-col">
+                                <a href="#" class="v-btn v-btn--square v-btn--warning">
                                     {% include "@SVG/locale.html.twig" %}
 
                                     fr
                                 </a>
                             </div>
 
-                            <div class="vic-flex-col">
-                                <a href="#" class="vic-btn vic-btn--square vic-btn--locale">
+                            <div class="v-flex-col">
+                                <a href="#" class="v-btn v-btn--square v-btn--locale">
                                     {% include "@SVG/locale.html.twig" %}
 
                                     en
                                 </a>
                             </div>
 
-                            <div class="vic-flex-col">
-                                <a href="#" class="vic-btn vic-btn--square vic-btn--locale">
+                            <div class="v-flex-col">
+                                <a href="#" class="v-btn v-btn--square v-btn--locale">
                                     {% include "@SVG/locale.html.twig" %}
 
                                     al
                                 </a>
                             </div>
 
-                            <div class="vic-flex-col">
-                                <a href="#" class="vic-btn vic-btn--square vic-btn--transparent">
+                            <div class="v-flex-col">
+                                <a href="#" class="v-btn v-btn--square v-btn--transparent">
                                     {% include "@SVG/locale-add.html.twig" %}
                                 </a>
                             </div>
@@ -60,24 +60,24 @@
                     </nav>
                 </div>
 
-                <div class="vi-modal__content">
-                    <div class="vic-container">
+                <div class="v-modal__content">
+                    <div class="v-container">
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                     </div>
                 </div>
             </div>
 
-            <div class="vi-modal__footer">
-                <nav class="vict-navbar">
-                    <div class="vic-container">
-                        <div class="vic-flex-grid vic-flex-grid--justify-between">
-                            <div class="vic-flex-col">
-                                <button class="vic-btn vic-btn--transparent">Supprimer</button>
-                                <button class="vic-btn vic-btn--transparent vic-btn--danger" data-vi-modal-hide="#modal-example-1">Annuler</button>
+            <div class="v-modal__footer">
+                <nav class="v-navbar">
+                    <div class="v-container">
+                        <div class="v-flex-grid v-flex-grid--justify-between">
+                            <div class="v-flex-col">
+                                <button class="v-btn v-btn--transparent">Supprimer</button>
+                                <button class="v-btn v-btn--transparent v-btn--danger" data-v-modal-hide="#modal-example-1">Annuler</button>
                             </div>
 
-                            <div class="vic-flex-col">
-                                <button class="vic-btn vic-btn--warning">Mettre à jour</button>
+                            <div class="v-flex-col">
+                                <button class="v-btn v-btn--warning">Mettre à jour</button>
                             </div>
                         </div>
                     </div>
@@ -90,18 +90,18 @@
 <h2 class="ts-section__sub-heading">Without sidebar</h2>
 {% embed '@styleguide/ui/snippet.html.twig' with {
     'snippets': {
-        'twig': '<button class="vic-btn vic-btn--primary" data-vi-modal-show="#modal-example-2">open modal</button>\n\n<div class="vi-modal" id="modal-example-2" data-flag="vi-modal">\n    <div class="vi-modal__header">\n        <nav class="vict-navbar vict-navbar--grey">\n            <div class="vic-container vic-container--fluid">\n                <div class="vic-flex-grid">\n                    <div class="vic-flex-col">\n                        <strong>WIDGET #256 - Français</strong>\n                    </div>\n                </div>\n            </div>\n        </nav>\n    </div>\n\n    <div class="vi-modal__body">\n        <div class="vi-modal__content">\n            <div class="vic-container">\n                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n            </div>\n        </div>\n    </div>\n\n    <div class="vi-modal__footer">\n        <nav class="vict-navbar">\n            <div class="vic-container">\n                <div class="vic-flex-grid vic-flex-grid--justify-between">\n                    <div class="vic-flex-col">\n                        <button class="vic-btn vic-btn--transparent">Supprimer</button>\n                        <button class="vic-btn vic-btn--transparent vic-btn--danger" data-vi-modal-hide="#modal-example-2">Annuler</button>\n                    </div>\n\n                    <div class="vic-flex-col">\n                        <button class="vic-btn vic-btn--warning">Mettre à jour</button>\n                    </div>\n                </div>\n            </div>\n        </nav>\n    </div>\n</div>',
+        'twig': '<button class="v-btn v-btn--primary" data-v-modal-show="#modal-example-2">open modal</button>\n\n<div class="v-modal" id="modal-example-2" data-flag="v-modal">\n    <div class="v-modal__header">\n        <nav class="v-navbar v-navbar--grey">\n            <div class="v-container v-container--fluid">\n                <div class="v-flex-grid">\n                    <div class="v-flex-col">\n                        <strong>WIDGET #256 - Français</strong>\n                    </div>\n                </div>\n            </div>\n        </nav>\n    </div>\n\n    <div class="v-modal__body">\n        <div class="v-modal__content">\n            <div class="v-container">\n                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n            </div>\n        </div>\n    </div>\n\n    <div class="v-modal__footer">\n        <nav class="v-navbar">\n            <div class="v-container">\n                <div class="v-flex-grid v-flex-grid--justify-between">\n                    <div class="v-flex-col">\n                        <button class="v-btn v-btn--transparent">Supprimer</button>\n                        <button class="v-btn v-btn--transparent v-btn--danger" data-v-modal-hide="#modal-example-2">Annuler</button>\n                    </div>\n\n                    <div class="v-flex-col">\n                        <button class="v-btn v-btn--warning">Mettre à jour</button>\n                    </div>\n                </div>\n            </div>\n        </nav>\n    </div>\n</div>',
     }
 } %}
     {% block snippet_preview %}
-        <button class="vic-btn vic-btn--primary" data-vi-modal-show="#modal-example-2">open modal</button>
+        <button class="v-btn v-btn--primary" data-v-modal-show="#modal-example-2">open modal</button>
 
-        <div class="vi-modal" id="modal-example-2" data-flag="vi-modal">
-            <div class="vi-modal__header">
-                <nav class="vict-navbar vict-navbar--grey">
-                    <div class="vic-container vic-container--fluid">
-                        <div class="vic-flex-grid">
-                            <div class="vic-flex-col">
+        <div class="v-modal" id="modal-example-2" data-flag="v-modal">
+            <div class="v-modal__header">
+                <nav class="v-navbar v-navbar--grey">
+                    <div class="v-container v-container--fluid">
+                        <div class="v-flex-grid">
+                            <div class="v-flex-col">
                                 <strong>WIDGET #256 - Français</strong>
                             </div>
                         </div>
@@ -109,25 +109,25 @@
                 </nav>
             </div>
 
-            <div class="vi-modal__body">
-                <div class="vi-modal__content">
-                    <div class="vic-container">
+            <div class="v-modal__body">
+                <div class="v-modal__content">
+                    <div class="v-container">
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                     </div>
                 </div>
             </div>
 
-            <div class="vi-modal__footer">
-                <nav class="vict-navbar">
-                    <div class="vic-container">
-                        <div class="vic-flex-grid vic-flex-grid--justify-between">
-                            <div class="vic-flex-col">
-                                <button class="vic-btn vic-btn--transparent">Supprimer</button>
-                                <button class="vic-btn vic-btn--transparent vic-btn--danger" data-vi-modal-hide="#modal-example-2">Annuler</button>
+            <div class="v-modal__footer">
+                <nav class="v-navbar">
+                    <div class="v-container">
+                        <div class="v-flex-grid v-flex-grid--justify-between">
+                            <div class="v-flex-col">
+                                <button class="v-btn v-btn--transparent">Supprimer</button>
+                                <button class="v-btn v-btn--transparent v-btn--danger" data-v-modal-hide="#modal-example-2">Annuler</button>
                             </div>
 
-                            <div class="vic-flex-col">
-                                <button class="vic-btn vic-btn--warning">Mettre à jour</button>
+                            <div class="v-flex-col">
+                                <button class="v-btn v-btn--warning">Mettre à jour</button>
                             </div>
                         </div>
                     </div>

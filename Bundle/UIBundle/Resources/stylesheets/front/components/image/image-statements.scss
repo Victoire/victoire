@@ -6,7 +6,7 @@
 //   }
 // };
 
-$image--selector: selector--constructor($images--synthax, 'image');
+$image--selector: selector--constructor(null, 'image');
 @include selector($image--selector) {
   @include declaration('font-size', $images--font-size);
   @include declaration('border-width', $images--border-width);

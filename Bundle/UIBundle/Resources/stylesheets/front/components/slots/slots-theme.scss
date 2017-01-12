@@ -1,7 +1,7 @@
 // scss-lint:disable ColorVariable
-@import '../../../globals/params/rem';
-@import '../../../globals/params/font';
-@import '../../../globals/params/color';
+@import '../../globals/params/rem';
+@import '../../globals/params/font';
+@import '../../globals/params/color';
 
 $slots--font-family: $app--font-family;
 $slots--font-size: rem(1);

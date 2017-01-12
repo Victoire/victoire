@@ -7,7 +7,7 @@
 };
 
 
-$slot--selector: selector--constructor($slots--synthax, 'slot');
+$slot--selector: selector--constructor(null, 'slot');
 @include selector($slot--selector) {
   @include declaration('display', none);
   @include declaration('cursor', $slots--cursor);

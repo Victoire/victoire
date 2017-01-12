@@ -6,7 +6,7 @@
 //   }
 // };
 
-$navbar--selector: selector--constructor($navbars--synthax, 'navbar');
+$navbar--selector: selector--constructor(null, 'navbar');
 @include selector($navbar--selector) {
   @include declaration('font-size', $navbars--font-size);
   @include declaration('font-family', $navbars--font-family);

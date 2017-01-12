@@ -1,36 +1,36 @@
-var ViTrowelModals = function(modals) {
+var VTrowelModals = function(modals) {
     modals.forEach(function(modal) {
-        var modal_obj = new ViTrowelModal(modal);
+        var modal_obj = new VTrowelModal(modal);
     })
 }
 
-var ViTrowelModal = function(modal) {
+var VTrowelModal = function(modal) {
     this._modal = modal;
-    this._togglers = document.querySelectorAll('[data-vi-modal-toggle="#' + this._modal.id + '"]');
-    this._showers = document.querySelectorAll('[data-vi-modal-show="#' + this._modal.id + '"]');
-    this._hidders = document.querySelectorAll('[data-vi-modal-hide="#' + this._modal.id + '"]');
+    this._togglers = document.querySelectorAll('[data-v-modal-toggle="#' + this._modal.id + '"]');
+    this._showers = document.querySelectorAll('[data-v-modal-show="#' + this._modal.id + '"]');
+    this._hidders = document.querySelectorAll('[data-v-modal-hide="#' + this._modal.id + '"]');
     this._visible = false;
 
     this.hide();
     this._listener();
 }
 
-ViTrowelModal.prototype.show = function () {
+VTrowelModal.prototype.show = function () {
     this._modal.setAttribute('data-modal', 'show');
     return this._visible = true;
 };
 
-ViTrowelModal.prototype.hide = function () {
+VTrowelModal.prototype.hide = function () {
     this._modal.setAttribute('data-modal', 'hide');
     return this._visible = false;
 };
 
-ViTrowelModal.prototype.toggle = function () {
+VTrowelModal.prototype.toggle = function () {
     if (this._visible) return this.hide();
     return this.show();
 };
 
-ViTrowelModal.prototype._listener = function () {
+VTrowelModal.prototype._listener = function () {
     if (this._togglers) {
         this._togglers.forEach(function(toggler) {
             toggler.addEventListener('click', function() {
@@ -55,5 +55,3 @@ ViTrowelModal.prototype._listener = function () {
         }.bind(this));
     }
 };
-
-var modals = new ViTrowelModals(document.querySelectorAll('[data-flag="vi-modal"]'))
