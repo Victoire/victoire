@@ -8,14 +8,14 @@
 
 {% embed '@styleguide/ui/snippet.html.twig' with {
     'snippets': {
-        'html': '<div class="vict-form-group">\n    <label class="vict-form-group__label">label</label>\n    <input class="vict-form-group__input" type="text" value="hello world !">\n    <small class="vict-form-group__help">This is a help message</small>\n</div>',
+        'html': '<div class="v-form-group">\n    <label class="v-form-group__label">label</label>\n    <input class="v-form-group__input" type="text" value="hello world !">\n    <small class="v-form-group__help">This is a help message</small>\n</div>',
     }
 } %}
     {% block snippet_preview %}
-        <div class="vict-form-group">
-            <label class="vict-form-group__label">label</label>
-            <input class="vict-form-group__input" type="text" value="hello world !">
-            <small class="vict-form-group__help">This is a help message</small>
+        <div class="v-form-group">
+            <label class="v-form-group__label">label</label>
+            <input class="v-form-group__input" type="text" value="hello world !">
+            <small class="v-form-group__help">This is a help message</small>
         </div>
     {% endblock snippet_preview %}
 {% endembed %}
@@ -25,26 +25,26 @@
 
 {% embed '@styleguide/ui/snippet.html.twig' with {
     'snippets': {
-        'html': '<div class="vict-form-group vict-form-group--info">\n    <label class="vict-form-group__label">label</label>\n    <input class="vict-form-group__input" type="text" value="hello world !">\n    <small class="vict-form-group__help">This is a help message</small>\n</div>\n\n<div class="vict-form-group vict-form-group--error">\n    <label class="vict-form-group__label">label</label>\n    <input class="vict-form-group__input" type="text" value="hello world !">\n    <small class="vict-form-group__help">This is a help message</small>\n</div>\n\n<div class="vict-form-group vict-form-group--success">\n    <label class="vict-form-group__label">label</label>\n    <input class="vict-form-group__input" type="text" value="hello world !">\n    <small class="vict-form-group__help">This is a help message</small>\n</div>',
+        'html': '<div class="v-form-group v-form-group--info">\n    <label class="v-form-group__label">label</label>\n    <input class="v-form-group__input" type="text" value="hello world !">\n    <small class="v-form-group__help">This is a help message</small>\n</div>\n\n<div class="v-form-group v-form-group--error">\n    <label class="v-form-group__label">label</label>\n    <input class="v-form-group__input" type="text" value="hello world !">\n    <small class="v-form-group__help">This is a help message</small>\n</div>\n\n<div class="v-form-group v-form-group--success">\n    <label class="v-form-group__label">label</label>\n    <input class="v-form-group__input" type="text" value="hello world !">\n    <small class="v-form-group__help">This is a help message</small>\n</div>',
     }
 } %}
     {% block snippet_preview %}
-        <div class="vict-form-group vict-form-group--info">
-            <label class="vict-form-group__label">label</label>
-            <input class="vict-form-group__input" type="text" value="hello world !">
-            <small class="vict-form-group__help">This is a help message</small>
+        <div class="v-form-group v-form-group--info">
+            <label class="v-form-group__label">label</label>
+            <input class="v-form-group__input" type="text" value="hello world !">
+            <small class="v-form-group__help">This is a help message</small>
         </div>
 
-        <div class="vict-form-group vict-form-group--error">
-            <label class="vict-form-group__label">label</label>
-            <input class="vict-form-group__input" type="text" value="hello world !">
-            <small class="vict-form-group__help">This is a help message</small>
+        <div class="v-form-group v-form-group--error">
+            <label class="v-form-group__label">label</label>
+            <input class="v-form-group__input" type="text" value="hello world !">
+            <small class="v-form-group__help">This is a help message</small>
         </div>
 
-        <div class="vict-form-group vict-form-group--success">
-            <label class="vict-form-group__label">label</label>
-            <input class="vict-form-group__input" type="text" value="hello world !">
-            <small class="vict-form-group__help">This is a help message</small>
+        <div class="v-form-group v-form-group--success">
+            <label class="v-form-group__label">label</label>
+            <input class="v-form-group__input" type="text" value="hello world !">
+            <small class="v-form-group__help">This is a help message</small>
         </div>
     {% endblock snippet_preview %}
 {% endembed %}
@@ -54,13 +54,13 @@
 
 {% embed '@styleguide/ui/snippet.html.twig' with {
     'snippets': {
-        'html': '<div class="vict-form-group vict-form-group--md" data-flag="mdf-group">\n    <label class="vict-form-group__label" for="input-example-md" data-flag="mdf-label">label</label>\n    <input class="vict-form-group__input" id="input-example-md" type="text" data-flag="mdf-input" value="hello world !">\n</div>',
+        'html': '<div class="v-form-group v-form-group--md" data-flag="v-mdForm">\n    <label class="v-form-group__label" for="input-example-md" data-flag="mdf-label">label</label>\n    <input class="v-form-group__input" id="input-example-md" type="text" data-flag="mdf-input" value="hello world !">\n</div>',
     }
 } %}
     {% block snippet_preview %}
-        <div class="vict-form-group vict-form-group--md" data-flag="mdf-group">
-            <label class="vict-form-group__label" for="input-example-md" data-flag="mdf-label">label</label>
-            <input class="vict-form-group__input" id="input-example-md" type="text" data-flag="mdf-input">
+        <div class="v-form-group v-form-group--md" data-flag="v-mdForm">
+            <label class="v-form-group__label" for="input-example-md" data-flag="mdf-label">label</label>
+            <input class="v-form-group__input" id="input-example-md" type="text" data-flag="mdf-input">
         </div>
     {% endblock snippet_preview %}
 {% endembed %}
@@ -70,13 +70,13 @@
 <h2 class="ts-section__sub-heading">Select</h2>
 {% embed '@styleguide/ui/snippet.html.twig' with {
     'snippets': {
-        'html': '<div class="vict-form-group">\n    <div class="vict-select">\n        <select class="vict-select__native">\n            <option selected>Open this select menu</option>\n            <option value="1">One</option>\n            <option value="2">Two</option>\n            <option value="3">Three</option>\n        </select>\n    </div>\n</div>',
+        'html': '<div class="v-form-group">\n    <div class="v-select">\n        <select class="v-select__native">\n            <option selected>Open this select menu</option>\n            <option value="1">One</option>\n            <option value="2">Two</option>\n            <option value="3">Three</option>\n        </select>\n    </div>\n</div>',
     }
 } %}
     {% block snippet_preview %}
-        <div class="vict-form-group">
-            <div class="vict-select">
-                <select class="vict-select__native">
+        <div class="v-form-group">
+            <div class="v-select">
+                <select class="v-select__native">
                     <option selected>Open this select menu</option>
                     <option value="1">One</option>
                     <option value="2">Two</option>
@@ -90,14 +90,14 @@
 <h2 class="ts-section__sub-heading">Checkbox</h2>
 {% embed '@styleguide/ui/snippet.html.twig' with {
     'snippets': {
-        'html': '<div class="vict-form-group">\n    <label class="vict-checkbox">\n        <input class="vict-checkbox__native" type="checkbox">\n        <span class="vict-checkbox__indicator"></span>\n        Hello world !\n    </label>\n</div>',
+        'html': '<div class="v-form-group">\n    <label class="v-checkbox">\n        <input class="v-checkbox__native" type="checkbox">\n        <span class="v-checkbox__indicator"></span>\n        Hello world !\n    </label>\n</div>',
     }
 } %}
     {% block snippet_preview %}
-        <div class="vict-form-group">
-            <label class="vict-checkbox">
-                <input class="vict-checkbox__native" type="checkbox">
-                <span class="vict-checkbox__indicator"></span>
+        <div class="v-form-group">
+            <label class="v-checkbox">
+                <input class="v-checkbox__native" type="checkbox">
+                <span class="v-checkbox__indicator"></span>
                 Hello world !
             </label>
         </div>
@@ -108,22 +108,22 @@
 <h2 class="ts-section__sub-heading">Radio</h2>
 {% embed '@styleguide/ui/snippet.html.twig' with {
     'snippets': {
-        'html': '<div class="vict-form-group">\n    <label class="vict-radio">\n        <input class="vict-radio__native" type="radio" name="radio-example">\n        <span class="vict-radio__indicator"></span>\n        Option 1\n    </label>\n</div>\n\n<div class="vict-form-group">\n    <label class="vict-radio">\n        <input class="vict-radio__native" type="radio" name="radio-example">\n        <span class="vict-radio__indicator"></span>\n        Option 2\n    </label>\n</div>',
+        'html': '<div class="v-form-group">\n    <label class="v-radio">\n        <input class="v-radio__native" type="radio" name="radio-example">\n        <span class="v-radio__indicator"></span>\n        Option 1\n    </label>\n</div>\n\n<div class="v-form-group">\n    <label class="v-radio">\n        <input class="v-radio__native" type="radio" name="radio-example">\n        <span class="v-radio__indicator"></span>\n        Option 2\n    </label>\n</div>',
     }
 } %}
     {% block snippet_preview %}
-        <div class="vict-form-group">
-            <label class="vict-radio">
-                <input class="vict-radio__native" type="radio" name="radio-example">
-                <span class="vict-radio__indicator"></span>
+        <div class="v-form-group">
+            <label class="v-radio">
+                <input class="v-radio__native" type="radio" name="radio-example">
+                <span class="v-radio__indicator"></span>
                 Option 1
             </label>
         </div>
 
-        <div class="vict-form-group">
-            <label class="vict-radio">
-                <input class="vict-radio__native" type="radio" name="radio-example">
-                <span class="vict-radio__indicator"></span>
+        <div class="v-form-group">
+            <label class="v-radio">
+                <input class="v-radio__native" type="radio" name="radio-example">
+                <span class="v-radio__indicator"></span>
                 Option 2
             </label>
         </div>

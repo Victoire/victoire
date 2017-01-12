@@ -6,7 +6,7 @@
   }
 };
 
-$inputimage--selector: selector--constructor($inputimages--synthax, 'input-image');
+$inputimage--selector: selector--constructor(null, 'input-image');
 @include selector($inputimage--selector) {
   @include declaration('font-family', $inputimages--font-family);
   @include declaration('font-size', $inputimages--font-size);

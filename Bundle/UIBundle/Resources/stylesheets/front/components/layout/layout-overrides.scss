@@ -1,6 +1,6 @@
 @import '../../globals/params/color';
 
-.vic-dropdown .vic-btn::after {
+.#{$app--prefix}-dropdown .#{$app--prefix}-btn::after {
   $size: 0.6em;
   $border-width: 2px;
   content: '';
@@ -15,14 +15,14 @@
   margin-bottom: 0.05em;
 }
 
-.vic-flex-col {
+.#{$app--prefix}-flex-col {
   line-height: 1;
 }
 
-.vic-flex-grid--gutter-lg .vic-flex-col {
+.#{$app--prefix}-flex-grid--gutter-lg .#{$app--prefix}-flex-col {
   margin: 19px;
 }
 
-.vic-flex-grid--direction-column {
+.#{$app--prefix}-flex-grid--direction-column {
   flex-direction: column;
 }

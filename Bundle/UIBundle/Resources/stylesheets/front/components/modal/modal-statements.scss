@@ -6,7 +6,7 @@
   }
 };
 
-$modal--selector: selector--constructor($modals--synthax, 'modal');
+$modal--selector: selector--constructor(null, 'modal');
 @include selector($modal--selector) {
   @include declaration('display', flex);
   @include declaration('flex-direction', column);

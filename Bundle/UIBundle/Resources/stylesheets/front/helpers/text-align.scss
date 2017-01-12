@@ -1,5 +1,5 @@
 @each $align in (left, center, justify, right) {
-  .vic-text-align--#{$align} {
+  .#{$app--prefix}-text-align--#{$align} {
     text-align: $align;
   }
 }

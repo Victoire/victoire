@@ -6,7 +6,7 @@
 //   }
 // };
 
-$seo--selector: selector--constructor($seos--synthax, 'seo');
+$seo--selector: selector--constructor(null, 'seo');
 @include selector($seo--selector) {
   @include declaration('display', inline-flex);
   @include declaration('align-items', center);

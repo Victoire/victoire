@@ -8,7 +8,7 @@
   }
 };
 
-$listgroup--selector: selector--constructor($listgroups--synthax, 'list-group');
+$listgroup--selector: selector--constructor(null, 'list-group');
 @include selector($listgroup--selector) {
   @include declaration('list-style', none, ('<ul', ));
   @include declaration('padding-left', 0, ('<ul', ));

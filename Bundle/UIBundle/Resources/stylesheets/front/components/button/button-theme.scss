@@ -1,7 +1,7 @@
 // scss-lint:disable ColorVariable
-@import '../../../globals/params/rem';
-@import '../../../globals/params/font';
-@import '../../../globals/params/color';
+@import '../../globals/params/rem';
+@import '../../globals/params/font';
+@import '../../globals/params/color';
 
 $button--square-size: (
   'default': 2.857142857em,
@@ -18,6 +18,7 @@ $button--float: null;
 // display & box-model
 $button--display: inline-flex;
 $button--border-width: (
+  'default': 0,
   '-framed': $button-framed--border-width,
 );
 $button--padding: (
@@ -140,7 +141,12 @@ $button--font-size: (
   '-sm': rem(0.75),
   '-xs': rem(0.75),
 );
-$button--text-decoration: null;
+$button--text-decoration: (
+  'default': none,
+  ':hover': none,
+  ':active': none,
+  ':focus': none,
+);
 $button--line-height: (
   'default': 1.35,
   '-square': (

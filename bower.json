@@ -6,10 +6,10 @@
     "clipboard": "^1.5.13"
   },
   "dependencies": {
-    "trowel-core": "^3.0.0",
-    "trowel-forms": "^1.0.1",
-    "trowel-drops": "^1.0.2",
-    "trowel-buttons": "^1.0.1",
-    "trowel-layouts": "^1.0.1"
+    "trowel-core": "^3.2.0",
+    "trowel-forms": "^1.1.0",
+    "trowel-drops": "^1.1.1",
+    "trowel-buttons": "^1.1.0",
+    "trowel-layouts": "^1.1.0"
   }
 }

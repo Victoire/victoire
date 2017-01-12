@@ -1,15 +1,16 @@
 @import '../../globals/params/rem';
 @import '../../globals/params/color';
+@import '../../globals/params/synthax';
 
-.vic-drop {
+.#{$app--prefix}-drop {
   display: none;
 }
 
-[class*="vic-"][data-flag="drops"]:not([data-behavior="hover"]) {
+[class*="#{$app--prefix}-"][data-flag="drops"]:not([data-behavior="hover"]) {
   cursor: pointer;
 }
 
-[class*="vic-"][data-flag="drops"]:not([data-behavior="hover"])::after {
+[class*="#{$app--prefix}-"][data-flag="drops"]:not([data-behavior="hover"])::after {
   $size: 0.6em;
   $border-width: 2px;
   content: '';
@@ -24,11 +25,11 @@
   margin-bottom: 0.05em;
 }
 
-[class*="vic-"][data-flag="drops"][data-position~="topin"]::after,
-[class*="vic-"][data-flag="drops"][data-position~="topout"]::after {
+[class*="#{$app--prefix}-"][data-flag="drops"][data-position~="topin"]::after,
+[class*="#{$app--prefix}-"][data-flag="drops"][data-position~="topout"]::after {
   transform: rotate(135deg) translate(-60%, 60%);
 }
 
-.vic-drop-trigger--no-toggle::after {
+.#{$app--prefix}-drop-trigger--no-toggle::after {
   content: none !important;
 }

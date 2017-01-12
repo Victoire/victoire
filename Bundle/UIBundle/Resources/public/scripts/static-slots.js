@@ -1,5 +1,5 @@
-var slotSelects = document.querySelectorAll('.vic-slot__select');
-var slotOpenModifier = 'vic-slot--open';
+var slotSelects = document.querySelectorAll('.v-slot__select');
+var slotOpenModifier = 'v-slot--open';
 
 for (var i = 0; i < slotSelects.length; i++) {
     slotSelects[i].addEventListener('focus', slotFocus());
@@ -25,8 +25,8 @@ function slotBlur() {
 };
 
 function slotSize() {
-    var smClass = 'vic-slot--sm';
-    var slots = document.querySelectorAll('.vic-slot');
+    var smClass = 'v-slot--sm';
+    var slots = document.querySelectorAll('.v-slot');
 
     for (var i = 0; i < slots.length; i++) {
         var slot = slots[i];

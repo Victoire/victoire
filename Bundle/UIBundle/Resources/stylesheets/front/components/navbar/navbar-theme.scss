@@ -1,8 +1,8 @@
 // scss-lint:disable ColorVariable
-@import '../../../globals/params/rem';
-@import '../../../globals/params/font';
-@import '../../../globals/params/color';
-@import '../../../globals/params/ui-mode';
+@import '../../globals/params/rem';
+@import '../../globals/params/font';
+@import '../../globals/params/color';
+@import '../../globals/params/ui-mode';
 
 $navbars--font-size: rem();
 $navbars--font-family: $app--font-family;

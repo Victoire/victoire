@@ -6,7 +6,7 @@
 //   }
 // };
 
-$widget--selector: selector--constructor($widgets--synthax, 'widget');
+$widget--selector: selector--constructor(null, 'widget');
 @include selector($widget--selector) {
   @include declaration('position', relative);
   @include block-generation($widget--selector);
