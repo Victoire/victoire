@@ -2,9 +2,11 @@
 
 namespace Victoire\Bundle\BusinessEntityBundle\EventSubscriber;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PostFlushEventArgs;
 use Doctrine\ORM\UnitOfWork;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
@@ -21,6 +23,10 @@ class BusinessEntitySubscriber implements EventSubscriber
 {
     protected $businessPageBuilder;
     protected $dispatcher;
+    protected $businessEntityHelper;
+    protected $flushedBusinessEntities;
+    protected $businessPageHelper;
+    protected $flushedBusinessTemplates;
 
     /**
      * @param BusinessPageBuilder      $businessPageBuilder
@@ -37,6 +43,8 @@ class BusinessEntitySubscriber implements EventSubscriber
         $this->businessEntityHelper = $businessEntityHelper;
         $this->businessPageHelper = $businessPageHelper;
         $this->dispatcher = $dispatcher;
+        $this->flushedBusinessEntities = new ArrayCollection();
+        $this->flushedBusinessTemplates = new ArrayCollection();
     }
 
     /**
@@ -50,6 +58,7 @@ class BusinessEntitySubscriber implements EventSubscriber
             'postUpdate',
             'postPersist',
             'preRemove',
+            'postFlush',
         ];
     }
 
@@ -143,18 +152,18 @@ class BusinessEntitySubscriber implements EventSubscriber
     }
 
     /**
-     * This method throw an event if needed for a view related to a businessEntity.
+     * Iterate over inserted BusinessEntities and BusinessTemplates catched by postPersist
+     * and dispatch event to generate the needed ViewReferences.
      *
-     * @param LifecycleEventArgs $eventArgs
+     * @param PostFlushEventArgs $eventArgs
      *
      * @throws \Exception
      */
-    private function updateViewReference(LifecycleEventArgs $eventArgs)
+    public function postFlush(PostFlushEventArgs $eventArgs)
     {
-        $entity = $eventArgs->getEntity();
-        //if it's a businessEntity we need to rebuild virtuals (BPs are rebuild in businessEntitySubscriber)
-        if ($businessEntity = $this->businessEntityHelper->findByEntityInstance($entity)) {
-            $em = $eventArgs->getEntityManager();
+        $em = $eventArgs->getEntityManager();
+        foreach ($this->flushedBusinessEntities as $entity) {
+            $businessEntity = $this->businessEntityHelper->findByEntityInstance($entity);
             //find all BT that can represent the businessEntity
             $businessTemplates = $em->getRepository('VictoireBusinessPageBundle:BusinessTemplate')->findPagePatternByBusinessEntity($businessEntity);
             foreach ($businessTemplates as $businessTemplate) {
@@ -178,9 +187,8 @@ class BusinessEntitySubscriber implements EventSubscriber
                 }
             }
         }
-        //if it a businessTemplate we have to rebuild virtuals or update BP
-        if ($entity instanceof BusinessTemplate) {
-            $em = $eventArgs->getEntityManager();
+
+        foreach ($this->flushedBusinessTemplates as $entity) {
             $businessEntityId = $entity->getBusinessEntityId();
             $businessEntity = $this->businessEntityHelper->findById($businessEntityId);
             //find all entities
@@ -205,6 +213,28 @@ class BusinessEntitySubscriber implements EventSubscriber
                     $this->dispatcher->dispatch(ViewReferenceEvents::UPDATE_VIEW_REFERENCE, $event);
                 }
             }
+        }
+        $this->flushedBusinessEntities->clear();
+        $this->flushedBusinessTemplates->clear();
+    }
+
+    /**
+     * This method throw an event if needed for a view related to a businessEntity.
+     *
+     * @param LifecycleEventArgs $eventArgs
+     *
+     * @throws \Exception
+     */
+    private function updateViewReference(LifecycleEventArgs $eventArgs)
+    {
+        $entity = $eventArgs->getEntity();
+        //if it's a businessEntity we need to rebuild virtuals (BPs are rebuild in businessEntitySubscriber)
+        if ($businessEntity = $this->businessEntityHelper->findByEntityInstance($entity)) {
+            $this->flushedBusinessEntities->add($entity);
+        }
+        //if it a businessTemplate we have to rebuild virtuals or update BP
+        if ($entity instanceof BusinessTemplate) {
+            $this->flushedBusinessTemplates->add($entity);
         }
     }
 

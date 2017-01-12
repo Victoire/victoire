@@ -5,6 +5,7 @@ namespace Acme\AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Knp\DoctrineBehaviors\Model\Translatable\Translation;
+use Victoire\Bundle\CoreBundle\Annotations as VIC;
 
 /**
  * SpaceShipTranslation.
@@ -20,6 +21,7 @@ class SpaceShipTranslation
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=55)
+     * @VIC\BusinessProperty("businessParameter")
      */
     protected $name;
 
@@ -30,6 +32,7 @@ class SpaceShipTranslation
      *     @Gedmo\SlugHandler(class="Victoire\Bundle\BusinessEntityBundle\Handler\TwigSlugHandler"
      * )},fields={"name"}, updatable=false, unique=false)
      * @ORM\Column(name="slug", type="string", length=255)
+     * @VIC\BusinessProperty("businessParameter")
      */
     protected $slug;
 
