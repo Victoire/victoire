@@ -30,6 +30,15 @@ class SpaceShip
     private $id;
 
     /**
+     * @VIC\BusinessProperty("businessParameter")
+     */
+    private $slug;
+    /**
+     * @VIC\BusinessProperty("businessParameter")
+     */
+    private $name;
+
+    /**
      * @return int
      */
     public function getId()
@@ -49,7 +58,7 @@ class SpaceShip
 
     public function setName($name, $locale = null)
     {
-        $this->translate($locale, false)->setDescription($name);
+        $this->translate($locale, false)->setName($name);
         $this->mergeNewTranslations();
     }
 
@@ -60,7 +69,7 @@ class SpaceShip
 
     public function setSlug($slug, $locale = null)
     {
-        $this->translate($locale, false)->setDescription($slug);
+        $this->translate($locale, false)->setSlug($slug);
         $this->mergeNewTranslations();
     }
 }
