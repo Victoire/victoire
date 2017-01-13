@@ -136,9 +136,6 @@ class ArticleType extends AbstractType
             ],
         ];
 
-        if ($form->getData() instanceof Article && null === $form->getData()->getId()) {
-            $options['exclude_fields'] = ['slug'];
-        }
 
         $form->add('translations', TranslationsType::class, $options);
     }
