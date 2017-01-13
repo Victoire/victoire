@@ -142,6 +142,11 @@ class QueryHelper
         //Add ORDER BY if set
         if ($orderBy = json_decode($containerEntity->getOrderBy(), true)) {
             foreach ($orderBy as $addOrderBy) {
+                // Ignore this order if one parameters is missing.
+                if ((!isset($addOrderBy['by'])) || (!isset($addOrderBy['order']))) {
+                    continue;
+                }
+
                 $reflectionClass = new \ReflectionClass($itemsQueryBuilder->getRootEntities()[0]);
                 $reflectionProperty = $reflectionClass->getProperty($addOrderBy['by']);
 
