@@ -132,9 +132,15 @@ class ArticleType extends AbstractType
                     'field_type' => MediaType::class,
                     'required'   => false,
                 ],
-
             ],
         ];
+
+        if ($form->getData() instanceof Article && null === $form->getData()->getId()) {
+            $options['fields']['slug'] = [
+                'required'       => false,
+                'vic_help_block' => 'form.article.slug.help_block',
+            ];
+        }
 
         $form->add('translations', TranslationsType::class, $options);
     }

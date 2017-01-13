@@ -234,6 +234,10 @@
         <source>form.article.category.placeholder</source>
         <target>Choisissez</target>
       </trans-unit>
+      <trans-unit id="51" resname="form.article.slug.help_block">
+        <source>form.article.slug.help_block</source>
+        <target>Si ce champ est vide, le slug sera auto-généré</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
