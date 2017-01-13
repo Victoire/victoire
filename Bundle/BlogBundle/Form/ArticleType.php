@@ -136,7 +136,6 @@ class ArticleType extends AbstractType
             ],
         ];
 
-
         $form->add('translations', TranslationsType::class, $options);
     }
 

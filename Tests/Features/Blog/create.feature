@@ -38,6 +38,23 @@ Background:
         And I wait 5 seconds
         Then I should be on "/fr/the-jedi-network/i-m-your-father"
 
+    @alice(Blog) @alice(BlogTemplate)
+    Scenario: I create a new article with a slug
+        Given I open the hamburger menu
+        Then I should see "Blog"
+        When I follow "Blog"
+        Then I should see "The Jedi network"
+        And I should see "Créer un article maintenant"
+        When I follow "Créer un article maintenant"
+        Then I should see "Créer un nouvel article"
+        When I fill in "article_translations_fr_name" with "I'm your father."
+        When I fill in "article_translations_fr_description" with "This is a great description."
+        When I fill in "article_translations_fr_slug" with "custom-slug"
+        When I select "First blog template" from "Modèle à utiliser"
+        And I follow "Créer"
+        And I wait 5 seconds
+        Then I should be on "/fr/the-jedi-network/custom-slug"
+
     @alice(Blog) @alice(Article) @alice(BlogTemplate)
     Scenario: I can view the Article list in the blog management window
         Given I open the hamburger menu
