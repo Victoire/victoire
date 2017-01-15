@@ -1,0 +1,73 @@
+{% include "@styleguide/ui/section-header.html.twig" with {
+    "name": "collapse"
+} %}
+
+{% embed '@styleguide/ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<a class="v-btn v-btn--warning" data-collapse="toggle" data-href="#collapse-ex-1-1">quantum</a>\n<a class="v-btn v-btn--info" data-collapse="toggle" data-href="#collapse-ex-1-2">style</a>\n\n<div>\n    <div class="v-collapse v-collapse--plain" id="collapse-ex-1-1" data-flag="v-collapse" data-group="collapse-group-1">\n        <div class="v-container">\n            quantum\n        </div>\n    </div>\n\n    <div class="v-collapse v-collapse--plain" id="collapse-ex-1-2" data-flag="v-collapse" data-group="collapse-group-1">\n        <div class="v-container">\n            style\n        </div>\n    </div>\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <a class="v-btn v-btn--warning" data-collapse="toggle" data-href="#collapse-ex-1-1">quantum</a>
+        <a class="v-btn v-btn--info" data-collapse="toggle" data-href="#collapse-ex-1-2">style</a>
+
+        <div>
+            <div class="v-collapse v-collapse--plain" id="collapse-ex-1-1" data-flag="v-collapse" data-group="collapse-group-1">
+                <div class="v-container">
+                    quantum
+                </div>
+            </div>
+
+            <div class="v-collapse v-collapse--plain" id="collapse-ex-1-2" data-flag="v-collapse" data-group="collapse-group-1">
+                <div class="v-container">
+                    style
+                </div>
+            </div>
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}
+
+{% embed '@styleguide/ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<div class="v-tabs-nav">\n    <div class="v-tabs-nav__item">\n        <a class="v-tabs-nav__anchor" data-collapse="show" data-href="#collapse-ex-3-1" data-activeclass="v-tabs-nav__anchor--active">manuel</a>\n    </div>\n\n    <div class="v-tabs-nav__item">\n        <a class="v-tabs-nav__anchor" data-flag="v-drop" data-position="bottomout center" data-href="#drop-in-tab-ex">\n            entités\n\n            <svg style="margin-left: 0.4em;" xmlns="http://www.w3.org/2000/svg" width="8" height="6" viewBox="65 6 8 6">\n                <path fill="currentColor" fill-rule="evenodd" d="M65.94 7L69 10.0904 72.06 7l.94.9514L69 12l-4-4.0486"/>\n            </svg>\n        </a>\n\n        <div class="v-drop" id="drop-in-tab-ex">\n            <nav class="v-drop__menu">\n                <a class="v-drop__anchor" data-collapse="show" data-href="#collapse-ex-3-2">Entité 1</a>\n                <a class="v-drop__anchor" data-collapse="show" data-href="#collapse-ex-3-3">Entité 2</a>\n            </nav>\n        </div>\n    </div>\n</div>\n\n<div class="v-tabs-collapses">\n    <div class="v-collapse" id="collapse-ex-3-1" data-flag="v-collapse" data-group="tab-ex-3" data-state="visible">\n        tab 1\n    </div>\n\n    <div class="v-collapse" id="collapse-ex-3-2" data-flag="v-collapse" data-group="tab-ex-3">\n        tab 2\n    </div>\n\n    <div class="v-collapse" id="collapse-ex-3-3" data-flag="v-collapse" data-group="tab-ex-3">\n        tab 3\n    </div>\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <div class="v-tabs-nav">
+            <div class="v-tabs-nav__item">
+                <a class="v-tabs-nav__anchor" data-collapse="show" data-href="#collapse-ex-3-1" data-activeclass="v-tabs-nav__anchor--active">manuel</a>
+            </div>
+
+            <div class="v-tabs-nav__item">
+                <a class="v-tabs-nav__anchor" data-flag="v-drop" data-position="bottomout center" data-href="#drop-in-tab-ex">
+                    entités
+
+                    <svg style="margin-left: 0.4em;" xmlns="http://www.w3.org/2000/svg" width="8" height="6" viewBox="65 6 8 6">
+                        <path fill="currentColor" fill-rule="evenodd" d="M65.94 7L69 10.0904 72.06 7l.94.9514L69 12l-4-4.0486"/>
+                    </svg>
+                </a>
+
+                <div class="v-drop" id="drop-in-tab-ex">
+                    <nav class="v-drop__menu">
+                        <a class="v-drop__anchor" data-collapse="show" data-href="#collapse-ex-3-2">Entité 1</a>
+                        <a class="v-drop__anchor" data-collapse="show" data-href="#collapse-ex-3-3">Entité 2</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div class="v-tabs-collapses">
+            <div class="v-collapse" id="collapse-ex-3-1" data-flag="v-collapse" data-group="tab-ex-3" data-state="visible">
+                tab 1
+            </div>
+
+            <div class="v-collapse" id="collapse-ex-3-2" data-flag="v-collapse" data-group="tab-ex-3">
+                tab 2
+            </div>
+
+            <div class="v-collapse" id="collapse-ex-3-3" data-flag="v-collapse" data-group="tab-ex-3">
+                tab 3
+            </div>
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}

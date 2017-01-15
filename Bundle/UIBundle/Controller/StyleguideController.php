@@ -33,9 +33,9 @@ class StyleguideController extends Controller
             'mode-switcher',
             'navbar',
             'modal',
+            'collapse',
             // 'tabs',
             // 'card',
-            // 'collapse',
         );
 
         return array(
