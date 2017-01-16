@@ -7,6 +7,7 @@ Background:
 
     Scenario: I can delete a blog article
         Given I am on "/fr/the-jedi-network/i-m-your-father"
+        And I wait 3 seconds
         When I select the option "Paramètres de la page" in the dropdown "Page"
         Then I should see "Supprimer"
         Given I follow "Supprimer"
