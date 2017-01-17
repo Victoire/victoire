@@ -41,7 +41,7 @@ class FileType extends AbstractType
     }
 
     /**
-     * setup a custom name to avoid the automatic name theneration "file" that conflicts with "file" field name
+     * setup a custom name to avoid the automatic name theneration "file" that conflicts with "file" field name.
      */
     public function getBlockPrefix()
     {
