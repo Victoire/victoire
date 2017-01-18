@@ -13,5 +13,5 @@ final class VictoireBlogEvents
      * This event allows you to modify the response and get the article.
      * The event listener method receives a Victoire\Bundle\BlogBundle\Event\ArticleEvent instance.
      */
-    const CREATE_ARTICLE = 'victoire_blog.create.aricle';
+    const CREATE_ARTICLE = 'victoire_blog.create.article';
 }
