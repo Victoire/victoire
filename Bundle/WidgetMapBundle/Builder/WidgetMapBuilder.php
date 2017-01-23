@@ -24,37 +24,28 @@ class WidgetMapBuilder
      */
     public function build(View $view, EntityManager $em = null, $updatePage = true)
     {
-        $widgetMaps = [];
-        // populate a $widgetmaps array with widgetmaps of given view + widgetmaps of it's templates
-        if ($view->getWidgetMaps()) {
-            $widgetMaps = $view->getWidgetMaps()->toArray();
-        }
-        $template = clone $view;
         $builtWidgetMap = [];
 
-        while (null !== $template = $template->getTemplate()) {
-            if ($template->getWidgetMaps()) {
-                foreach ($template->getWidgetMaps()->toArray() as $item) {
-                    $widgetMaps[] = $item;
-                }
-            }
-        }
+        $widgetMaps = $view->getWidgetMapsForViewAndTemplates($view);
+
+        $view->setBuiltWidgetMap($builtWidgetMap);
 
         $slots = $this->removeOverwritedWidgetMaps($widgetMaps);
 
         $this->removeDeletedWidgetMaps($slots);
 
-        foreach ($slots as $slot => $widgetMaps) {
+        foreach ($slots as $slot => $slotWidgetMaps) {
             $mainWidgetMap = null;
             $builtWidgetMap[$slot] = [];
 
-            $rootWidgetMap = $this->findRootWidgetMap($widgetMaps);
+            $rootWidgetMap = $this->findRootWidgetMap($slotWidgetMaps);
 
             if ($rootWidgetMap) {
                 $builtWidgetMap[$slot][] = $rootWidgetMap;
-                $builtWidgetMap = $this->orderizeWidgetMap($rootWidgetMap, $builtWidgetMap, $slot, $widgetMaps, $view);
+                $builtWidgetMap = $this->orderizeWidgetMap($rootWidgetMap, $builtWidgetMap, $slot, $slotWidgetMaps, $view);
             }
         }
+
         if ($updatePage) {
             $view->setBuiltWidgetMap($builtWidgetMap);
         }
@@ -99,25 +90,31 @@ class WidgetMapBuilder
         return $availablePositions;
     }
 
-    /*
+    /**
      * Get the children of given WidgetMap and place them recursively in the "builtWidgetMap" array at the right place
      * depending of the children parents and positions
+     *
      * @param WidgetMap $currentWidgetMap
+     * @param $builtWidgetMap
+     * @param $slot
+     * @param $slotWidgetMaps
+     * @param View $view
+     *
+     * @return mixed
      */
-    protected function orderizeWidgetMap($currentWidgetMap, $builtWidgetMap, $slot, $widgetMaps, $view)
+    protected function orderizeWidgetMap(WidgetMap $currentWidgetMap, $builtWidgetMap, $slot, $slotWidgetMaps, View $view)
     {
         $children = $currentWidgetMap->getChildren($view);
         foreach ($children as $child) {
             // check if the founded child belongs to the view
-            if (in_array($child, $widgetMaps, true)
-            ) {
+            if (in_array($child, $slotWidgetMaps, true)) {
                 // Find the position of the "currentWidgetMap" inside the builtWidgetMap,
                 // add "1" to this position if wanted position is "after", 0 is it's before.
                 $offset = array_search($currentWidgetMap, $builtWidgetMap[$slot]) + ($child->getPosition() == WidgetMap::POSITION_AFTER ? 1 : 0);
                 // insert the child in builtWidgetMap at offset position
                 array_splice($builtWidgetMap[$slot], $offset, 0, [$child]);
                 // call myself with child
-                $builtWidgetMap = $this->orderizeWidgetMap($child, $builtWidgetMap, $slot, $widgetMaps, $view);
+                $builtWidgetMap = $this->orderizeWidgetMap($child, $builtWidgetMap, $slot, $slotWidgetMaps, $view);
             }
         }
 
@@ -173,7 +170,9 @@ class WidgetMapBuilder
     /**
      * Find the "root" widgetmap (the one that has no parent).
      *
-     * @param WidgetMap[] $widgetMaps
+     * @param $widgetMaps
+     *
+     * @return WidgetMap|null
      */
     private function findRootWidgetMap($widgetMaps)
     {

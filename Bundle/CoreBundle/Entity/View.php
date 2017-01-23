@@ -224,7 +224,7 @@ abstract class View
     /**
      * Get template.
      *
-     * @return string
+     * @return View
      */
     public function getTemplate()
     {
@@ -521,9 +521,9 @@ abstract class View
     }
 
     /**
-     * Get widgets.
+     * Get WidgetMaps.
      *
-     * @return Collection[WidgetMap]
+     * @return WidgetMap[]
      */
     public function getWidgetMaps()
     {
@@ -531,9 +531,9 @@ abstract class View
     }
 
     /**
-     * Add widget.
+     * Add WidgetMap.
      *
-     * @param Widget $widgetMap
+     * @param WidgetMap $widgetMap
      */
     public function addWidgetMap(WidgetMap $widgetMap)
     {
@@ -551,6 +551,30 @@ abstract class View
     public function removeWidgetMap(WidgetMap $widgetMap)
     {
         $this->widgetMaps->removeElement($widgetMap);
+    }
+
+    /**
+     * Get WidgetMaps for View and Templates.
+     *
+     * @return WidgetMap[]
+     */
+    public function getWidgetMapsForViewAndTemplates($viewContext = null)
+    {
+        $widgetMaps = [];
+
+        foreach ($this->getWidgetMaps() as $_widgetMap) {
+            if($viewContext) {
+                $_widgetMap->setViewContext($viewContext);
+            }
+            $widgetMaps[] = $_widgetMap;
+        }
+
+        if ($template = $this->getTemplate()) {
+            $templateWM = $template->getWidgetMapsForViewAndTemplates($viewContext);
+            $widgetMaps = array_merge($widgetMaps, $templateWM);
+        }
+
+        return $widgetMaps;
     }
 
     /**
@@ -737,6 +761,11 @@ abstract class View
         return $this->widgets;
     }
 
+    /**
+     * @param View $view
+     * 
+     * @return bool
+     */
     public function isTemplateOf(View $view)
     {
         while ($_view = $view->getTemplate()) {
