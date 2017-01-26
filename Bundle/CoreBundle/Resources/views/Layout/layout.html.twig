@@ -43,6 +43,8 @@
         {% stylesheets filter='less, cssrewrite' injector="victoire-edit, alertify-codrops-notification" %}
             <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
         {% endstylesheets %}
+
+        <link rel="stylesheet" href="{{ asset('bundles/victoireui/stylesheets/main-front.css') }}"/>
     {% endif %}
     <!-- END HEAD_STYLE -->
 
@@ -117,6 +119,9 @@
                     });
                 });
             </script>
+
+            <script src="{{ asset('/bundles/victoireui/bower_components/tether/dist/js/tether.js') }}"></script>
+            <script src="{{ asset('/bundles/victoireui/scripts/victoire.bundle.js') }}"></script>
         {% endif %}
 
         <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
