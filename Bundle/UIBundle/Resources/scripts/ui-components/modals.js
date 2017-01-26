@@ -9,7 +9,7 @@ export default class TrowelModals {
     }
 }
 
-class TrowelModal (
+class TrowelModal {
     constructor(modal) {
         this._modal = modal;
         this._togglers = document.querySelectorAll('[data-v-modal-toggle="#' + this._modal.id + '"]');
@@ -61,4 +61,4 @@ class TrowelModal (
             }.bind(this));
         }
     };
-)
+}
