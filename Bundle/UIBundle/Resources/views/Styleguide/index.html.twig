@@ -2,7 +2,6 @@
 
 {% block head_style %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('bundles/victoireui/stylesheets/main-front.css') }}"/>
     <link rel="stylesheet" href="{{ asset('bundles/victoireui/stylesheets/main-styleguide.css') }}"/>
 {% endblock head_style %}
 
@@ -61,7 +60,4 @@
     {{ parent() }}
 
     <script src="{{ asset('/bundles/victoireui/scripts/styleguide/styleguide.js') }}"></script>
-
-    <script src="{{ asset('/bundles/victoireui/bower_components/tether/dist/js/tether.js') }}"></script>
-    <script src="{{ asset('/bundles/victoireui/scripts/victoire.bundle.js') }}"></script>
 {% endblock foot_script %}
