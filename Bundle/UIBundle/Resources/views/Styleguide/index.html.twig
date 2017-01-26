@@ -46,18 +46,6 @@
 
         {% if not focus %}
             <h1>Styleguide</h1>
-
-            <p>This page list with code snippet all the Victoire UIs' visual components. The components below rely the assets listed below :</p>
-
-            <ul>
-                <li><strong>stylesheet</strong> - <i>into the &lt;head&gt;</i> - <code>Bundle/UIBundle/Resources/public/stylesheets/main-front.css</code></li>
-                <li><strong>script</strong> - <i>at the &lt;body&gt; end</i> - <code>Bundle/UIBundle/Resources/public/bower_components/tether/dist/js/tether.min.js</code></li>
-                <li><strong>script</strong> - <i>at the &lt;body&gt; end</i> - <code>Bundle/UIBundle/Resources/public/bower_components/trowel-forms/src/javascript/forms.js</code></li>
-                <li><strong>script</strong> - <i>at the &lt;body&gt; end</i> - <code>Bundle/UIBundle/Resources/public/bower_components/trowel-drops/src/javascript/drops.js</code></li>
-                <li><strong>script</strong> - <i>at the &lt;body&gt; end</i> - <code>Bundle/UIBundle/Resources/public/scripts/static-slots.js</code></li>
-                <li><strong>script</strong> - <i>at the &lt;body&gt; end</i> - <code>Bundle/UIBundle/Resources/public/scripts/modals.js</code></li>
-                <li><strong>script</strong> - <i>at the &lt;body&gt; end <strong>must be the last script of this list</strong></i> - <code>Bundle/UIBundle/Resources/public/scripts/initiator.js</code></li>
-            </ul>
         {% endif %}
 
         {% for component in components %}
