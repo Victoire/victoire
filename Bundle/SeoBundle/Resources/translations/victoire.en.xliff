@@ -192,7 +192,7 @@
       </trans-unit>
       <trans-unit id="13" resname="form.pageSeo.metaTitle.placeholder">
         <source>form.pageSeo.metaTitle.placeholder</source>
-        <target>Limited to 60 characters</target>
+        <target>Limited to 65 characters</target>
       </trans-unit>
       <trans-unit id="14" resname="form.pageSeo.metaDescription.placeholder">
         <source>form.pageSeo.metaDescription.placeholder</source>
