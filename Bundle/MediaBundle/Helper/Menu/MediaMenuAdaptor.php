@@ -81,7 +81,7 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
                 $menuitem->setInternalname($folder->getName());
                 $menuitem->setParent($parent);
                 $menuitem->setRole($folder->getRel());
-                if (isset($currentFolder) && (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0 || in_array($request->attributes->get('_route'), $allRoutes))) {
+                if (isset($currentFolder) && (stripos($request->attributes->get('_route'), $menuitem->getRoute()) !== false || in_array($request->attributes->get('_route'), $allRoutes))) {
                     if ($currentFolder->getId() == $folder->getId()) {
                         $menuitem->setActive(true);
                     } else {
