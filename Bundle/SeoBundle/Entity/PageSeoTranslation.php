@@ -22,7 +22,7 @@ class PageSeoTranslation
      * @var string
      *
      * @ORM\Column(name="meta_title", type="string", nullable=true)
-     * @Assert\Length(max = 60)
+     * @Assert\Length(max = 65)
      */
     protected $metaTitle;
 

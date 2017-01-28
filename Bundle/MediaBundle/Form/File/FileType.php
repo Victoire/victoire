@@ -39,4 +39,12 @@ class FileType extends AbstractType
             'data_class' => 'Victoire\Bundle\MediaBundle\Helper\File\FileHelper',
         ]);
     }
+
+    /**
+     * setup a custom name to avoid the automatic name theneration "file" that conflicts with "file" field name.
+     */
+    public function getBlockPrefix()
+    {
+        return 'media_file';
+    }
 }
