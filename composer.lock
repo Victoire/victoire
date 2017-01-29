@@ -4,8 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ead07e88bcadad79fa1d0f5d211012f4",
-    "content-hash": "9b5a78abe9b4ce25c44764d7408d2fdb",
+    "content-hash": "591aa5201225f18f7752a06c5a14ef51",
     "packages": [
         {
             "name": "a2lix/translation-form-bundle",
@@ -448,7 +447,7 @@
             "keywords": [
                 "database"
             ],
-            "time": "2015-03-30 12:14:13"
+            "time": "2015-03-30T12:14:13+00:00"
         },
         {
             "name": "doctrine/dbal",
@@ -688,7 +687,7 @@
                 "cache",
                 "caching"
             ],
-            "time": "2016-01-26 17:28:51"
+            "time": "2016-01-26T17:28:51+00:00"
         },
         {
             "name": "doctrine/doctrine-fixtures-bundle",
@@ -745,7 +744,7 @@
                 "Fixture",
                 "persistence"
             ],
-            "time": "2015-11-04 21:23:23"
+            "time": "2015-11-04T21:23:23+00:00"
         },
         {
             "name": "doctrine/doctrine-migrations-bundle",
@@ -1059,22 +1058,22 @@
         },
         {
             "name": "doctrine/orm",
-            "version": "v2.5.2",
+            "version": "2.5.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "464b5fdbfbbeb4a65465ac173c4c5d90960f41ff"
+                "reference": "e6c434196c8ef058239aaa0724b4aadb0107940b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/464b5fdbfbbeb4a65465ac173c4c5d90960f41ff",
-                "reference": "464b5fdbfbbeb4a65465ac173c4c5d90960f41ff",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/e6c434196c8ef058239aaa0724b4aadb0107940b",
+                "reference": "e6c434196c8ef058239aaa0724b4aadb0107940b",
                 "shasum": ""
             },
             "require": {
                 "doctrine/cache": "~1.4",
                 "doctrine/collections": "~1.2",
-                "doctrine/common": ">=2.5-dev,<2.6-dev",
+                "doctrine/common": ">=2.5-dev,<2.8-dev",
                 "doctrine/dbal": ">=2.5-dev,<2.6-dev",
                 "doctrine/instantiator": "~1.0.1",
                 "ext-pdo": "*",
@@ -1083,7 +1082,6 @@
             },
             "require-dev": {
                 "phpunit/phpunit": "~4.0",
-                "satooshi/php-coveralls": "dev-master",
                 "symfony/yaml": "~2.3|~3.0"
             },
             "suggest": {
@@ -1132,7 +1130,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2015-11-23 12:44:25"
+            "time": "2016-12-18 15:42:34"
         },
         {
             "name": "friendsofsymfony/jsrouting-bundle",
@@ -1195,19 +1193,20 @@
         },
         {
             "name": "friendsofsymfony/user-bundle",
-            "version": "dev-master",
+            "version": "v2.0.0-beta1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "a586a9333f81a1b87396303f0a4b2854f1a0648d"
+                "reference": "28151dcb25de663c05ce26917fd6a0b5cb2787cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/a586a9333f81a1b87396303f0a4b2854f1a0648d",
-                "reference": "a586a9333f81a1b87396303f0a4b2854f1a0648d",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/28151dcb25de663c05ce26917fd6a0b5cb2787cf",
+                "reference": "28151dcb25de663c05ce26917fd6a0b5cb2787cf",
                 "shasum": ""
             },
             "require": {
+                "paragonie/random_compat": "^1 || ^2",
                 "php": "^5.5.9 || ^7.0",
                 "symfony/form": "^2.7 || ^3.0",
                 "symfony/framework-bundle": "^2.7 || ^3.0",
@@ -1225,11 +1224,7 @@
                 "symfony/console": "^2.7 || ^3.0",
                 "symfony/phpunit-bridge": "^2.7 || ^3.0",
                 "symfony/validator": "^2.7 || ^3.0",
-                "symfony/yaml": "^2.7 || ^3.0",
-                "willdurand/propel-typehintable-behavior": "^1.0"
-            },
-            "suggest": {
-                "willdurand/propel-typehintable-behavior": "Needed when using the propel implementation"
+                "symfony/yaml": "^2.7 || ^3.0"
             },
             "type": "symfony-bundle",
             "extra": {
@@ -1268,7 +1263,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2016-10-24 14:16:11"
+            "time": "2016-11-29T14:53:27+00:00"
         },
         {
             "name": "friendsofvictoire/button-widget",
@@ -1314,7 +1309,7 @@
                 "victoire",
                 "widget"
             ],
-            "time": "2016-11-10 23:59:33"
+            "time": "2016-11-10T23:59:33+00:00"
         },
         {
             "name": "friendsofvictoire/text-widget",
@@ -1364,7 +1359,7 @@
                 "victoire",
                 "widget"
             ],
-            "time": "2016-08-22 12:56:40"
+            "time": "2016-08-22T12:56:40+00:00"
         },
         {
             "name": "fzaninotto/faker",
@@ -1550,7 +1545,7 @@
                 "image manipulation",
                 "image processing"
             ],
-            "time": "2015-09-19 16:54:05"
+            "time": "2015-09-19T16:54:05+00:00"
         },
         {
             "name": "incenteev/composer-parameter-handler",
@@ -1805,7 +1800,7 @@
                 "annotations",
                 "aop"
             ],
-            "time": "2015-12-09 16:30:46"
+            "time": "2015-12-09T16:30:46+00:00"
         },
         {
             "name": "jms/cg",
@@ -1852,7 +1847,7 @@
             "keywords": [
                 "code generation"
             ],
-            "time": "2016-04-07 10:21:44"
+            "time": "2016-04-07T10:21:44+00:00"
         },
         {
             "name": "jms/di-extra-bundle",
@@ -2287,7 +2282,7 @@
                 "translatable",
                 "tree"
             ],
-            "time": "2016-09-30 06:03:12"
+            "time": "2016-09-30T06:03:12+00:00"
         },
         {
             "name": "knplabs/gaufrette",
@@ -2370,7 +2365,7 @@
                 "filesystem",
                 "media"
             ],
-            "time": "2014-02-24 18:17:33"
+            "time": "2014-02-24T18:17:33+00:00"
         },
         {
             "name": "knplabs/knp-menu",
@@ -2886,7 +2881,7 @@
                 }
             ],
             "description": "Composer plugin that provides efficient querying for installed package versions (no runtime IO)",
-            "time": "2016-07-25 07:13:56"
+            "time": "2016-07-25T07:13:56+00:00"
         },
         {
             "name": "ocramius/proxy-manager",
@@ -2998,7 +2993,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2016-10-17 15:23:22"
+            "time": "2016-10-17T15:23:22+00:00"
         },
         {
             "name": "phpcollection/phpcollection",
@@ -3046,7 +3041,7 @@
                 "sequence",
                 "set"
             ],
-            "time": "2015-05-17 12:39:23"
+            "time": "2015-05-17T12:39:23+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -3096,7 +3091,7 @@
                 "php",
                 "type"
             ],
-            "time": "2015-07-25 16:39:46"
+            "time": "2015-07-25T16:39:46+00:00"
         },
         {
             "name": "predis/predis",
@@ -3197,37 +3192,42 @@
         },
         {
             "name": "sensio/distribution-bundle",
-            "version": "dev-master",
+            "version": "v3.0.2",
+            "target-dir": "Sensio/Bundle/DistributionBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "7bc47dcfdbde6d567e1a834577d1c04ddb970281"
+                "reference": "67b34359f91c25ad36b960f66a287df0615d7c54"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/7bc47dcfdbde6d567e1a834577d1c04ddb970281",
-                "reference": "7bc47dcfdbde6d567e1a834577d1c04ddb970281",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/67b34359f91c25ad36b960f66a287df0615d7c54",
+                "reference": "67b34359f91c25ad36b960f66a287df0615d7c54",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.9",
-                "sensiolabs/security-checker": "~3.0|~4.0",
-                "symfony/class-loader": "~2.3|~3.0",
-                "symfony/config": "~2.3|~3.0",
-                "symfony/dependency-injection": "~2.3|~3.0",
-                "symfony/filesystem": "~2.3|~3.0",
-                "symfony/http-kernel": "~2.3|~3.0",
-                "symfony/process": "~2.3|~3.0"
+                "php": ">=5.3.3",
+                "symfony/class-loader": "~2.2",
+                "symfony/config": "~2.2",
+                "symfony/dependency-injection": "~2.2",
+                "symfony/filesystem": "~2.2",
+                "symfony/form": "~2.2",
+                "symfony/framework-bundle": "~2.2",
+                "symfony/http-foundation": "~2.2",
+                "symfony/http-kernel": "~2.2",
+                "symfony/process": "~2.2",
+                "symfony/validator": "~2.2",
+                "symfony/yaml": "~2.2"
             },
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "5.0.x-dev"
+                    "dev-master": "3.0.x-dev"
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Sensio\\Bundle\\DistributionBundle\\": ""
+                "psr-0": {
+                    "Sensio\\Bundle\\DistributionBundle": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -3237,15 +3237,17 @@
             "authors": [
                 {
                     "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
                 }
             ],
-            "description": "Base bundle for Symfony Distributions",
+            "description": "The base bundle for the Symfony Distributions",
             "keywords": [
                 "configuration",
                 "distribution"
             ],
-            "time": "2016-10-08 18:50:33"
+            "time": "2014-07-16T07:46:27+00:00"
         },
         {
             "name": "sensio/framework-extra-bundle",
@@ -3314,38 +3316,42 @@
         },
         {
             "name": "sensio/generator-bundle",
-            "version": "2.5.x-dev",
-            "target-dir": "Sensio/Bundle/GeneratorBundle",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioGeneratorBundle.git",
-                "reference": "ab9345fdea575b936b00c915b09540862e92a94f"
+                "reference": "d635c8192fe8168a8ae32e19a996482aa13b5897"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/ab9345fdea575b936b00c915b09540862e92a94f",
-                "reference": "ab9345fdea575b936b00c915b09540862e92a94f",
+                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/d635c8192fe8168a8ae32e19a996482aa13b5897",
+                "reference": "d635c8192fe8168a8ae32e19a996482aa13b5897",
                 "shasum": ""
             },
             "require": {
-                "symfony/console": "~2.5",
-                "symfony/framework-bundle": "~2.2"
+                "symfony/console": "~2.7|~3.0",
+                "symfony/framework-bundle": "~2.7|~3.0",
+                "symfony/process": "~2.7|~3.0",
+                "symfony/yaml": "~2.7|~3.0",
+                "twig/twig": "^1.28.2|^2.0"
             },
             "require-dev": {
-                "doctrine/orm": "~2.2,>=2.2.3",
-                "symfony/doctrine-bridge": "~2.2",
-                "twig/twig": "~1.11"
+                "doctrine/orm": "~2.4",
+                "symfony/doctrine-bridge": "~2.7|~3.0"
             },
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.5.x-dev"
+                    "dev-master": "3.1.x-dev"
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "Sensio\\Bundle\\GeneratorBundle": ""
-                }
+                "psr-4": {
+                    "Sensio\\Bundle\\GeneratorBundle\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -3358,51 +3364,7 @@
                 }
             ],
             "description": "This bundle generates code for you",
-            "time": "2015-05-05 01:52:20"
-        },
-        {
-            "name": "sensiolabs/security-checker",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sensiolabs/security-checker.git",
-                "reference": "86cb2dada982c01b53726ea6ef66b2abe4200b22"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/security-checker/zipball/86cb2dada982c01b53726ea6ef66b2abe4200b22",
-                "reference": "86cb2dada982c01b53726ea6ef66b2abe4200b22",
-                "shasum": ""
-            },
-            "require": {
-                "symfony/console": "~2.7|~3.0"
-            },
-            "bin": [
-                "security-checker"
-            ],
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "SensioLabs\\Security": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien.potencier@gmail.com"
-                }
-            ],
-            "description": "A security checker for your composer.lock",
-            "time": "2016-10-24 14:47:53"
+            "time": "2017-01-16 16:53:36"
         },
         {
             "name": "snc/redis-bundle",
@@ -3651,7 +3613,7 @@
                 "compression",
                 "minification"
             ],
-            "time": "2015-12-28 13:12:39"
+            "time": "2015-12-28T13:12:39+00:00"
         },
         {
             "name": "symfony/monolog-bundle",
@@ -4476,7 +4438,7 @@
                 "alert",
                 "bootstrap"
             ],
-            "time": "2016-10-24 16:19:13"
+            "time": "2016-10-24T16:19:13+00:00"
         },
         {
             "name": "troopers/assetic-injector-bundle",
@@ -4527,7 +4489,7 @@
                 "assetic",
                 "injector"
             ],
-            "time": "2016-10-03 14:16:23"
+            "time": "2016-10-03T14:16:23+00:00"
         },
         {
             "name": "twig/extensions",
@@ -4739,7 +4701,7 @@
                 }
             ],
             "description": "JSONP callback validator.",
-            "time": "2014-01-20 22:35:06"
+            "time": "2014-01-20T22:35:06+00:00"
         },
         {
             "name": "zendframework/zend-code",
@@ -5165,7 +5127,7 @@
                 "test",
                 "web"
             ],
-            "time": "2016-02-15 07:55:18"
+            "time": "2016-02-15T07:55:18+00:00"
         },
         {
             "name": "behat/mink-goutte-driver",
@@ -5598,7 +5560,7 @@
             "keywords": [
                 "promise"
             ],
-            "time": "2016-05-18 16:56:05"
+            "time": "2016-05-18T16:56:05+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -5774,7 +5736,7 @@
                 }
             ],
             "description": "Some BEHAT contexts",
-            "time": "2016-08-05 08:12:05"
+            "time": "2016-08-05T08:12:05+00:00"
         },
         {
             "name": "lakion/mink-debug-extension",
@@ -5834,7 +5796,7 @@
                 "debug",
                 "logging"
             ],
-            "time": "2016-07-20 08:01:08"
+            "time": "2016-07-20T08:01:08+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -5933,7 +5895,7 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2016-09-30 07:12:33"
+            "time": "2016-09-30T07:12:33+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -5980,7 +5942,7 @@
                     "email": "me@mikevanriel.com"
                 }
             ],
-            "time": "2016-06-10 07:14:17"
+            "time": "2016-06-10T07:14:17+00:00"
         },
         {
             "name": "phpspec/prophecy",
@@ -6105,7 +6067,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-09-14 06:51:16"
+            "time": "2015-09-14T06:51:16+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -6193,7 +6155,7 @@
             "keywords": [
                 "template"
             ],
-            "time": "2015-06-21 13:50:34"
+            "time": "2015-06-21T13:50:34+00:00"
         },
         {
             "name": "phpunit/php-timer",
@@ -6237,7 +6199,7 @@
             "keywords": [
                 "timer"
             ],
-            "time": "2016-05-12 18:03:57"
+            "time": "2016-05-12T18:03:57+00:00"
         },
         {
             "name": "phpunit/php-token-stream",
@@ -6414,7 +6376,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2015-08-19 09:14:08"
+            "time": "2015-08-19T09:14:08+00:00"
         },
         {
             "name": "psr/http-message",
@@ -6748,7 +6710,7 @@
             "keywords": [
                 "global state"
             ],
-            "time": "2015-10-12 03:26:01"
+            "time": "2015-10-12T03:26:01+00:00"
         },
         {
             "name": "sebastian/recursion-context",
@@ -6836,7 +6798,51 @@
             ],
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
-            "time": "2015-06-21 13:59:46"
+            "time": "2015-06-21T13:59:46+00:00"
+        },
+        {
+            "name": "sensiolabs/security-checker",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sensiolabs/security-checker.git",
+                "reference": "86cb2dada982c01b53726ea6ef66b2abe4200b22"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sensiolabs/security-checker/zipball/86cb2dada982c01b53726ea6ef66b2abe4200b22",
+                "reference": "86cb2dada982c01b53726ea6ef66b2abe4200b22",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/console": "~2.7|~3.0"
+            },
+            "bin": [
+                "security-checker"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "SensioLabs\\Security": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien.potencier@gmail.com"
+                }
+            ],
+            "description": "A security checker for your composer.lock",
+            "time": "2016-10-24 14:47:53"
         },
         {
             "name": "webmozart/assert",
@@ -6893,7 +6899,6 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "infinite-networks/form-bundle": 20,
-        "sensio/distribution-bundle": 20,
         "snc/redis-bundle": 20
     },
     "prefer-stable": false,
