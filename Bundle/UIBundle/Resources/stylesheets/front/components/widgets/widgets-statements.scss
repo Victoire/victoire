@@ -1,15 +1,17 @@
 @import '../../globals/params/ui-mode';
 
-// @mixin mixin-dispatcher($value, $flags, $mixin) {
-//   @if $mixin == 'widget-overlays-select--open-width' {
-//     @include widget-overlays-select--open-width($value, $flags);
-//   }
-// };
-
 $widget--selector: selector--constructor(null, 'widget');
 @include selector($widget--selector) {
   @include declaration('position', relative);
   @include block-generation($widget--selector);
+
+  @include when-mode-edit {
+    min-height: 20px;
+  }
+
+  @include when-mode-style {
+    min-height: 20px;
+  }
 }
 
 $widget-overlay--selector: selector--set-element($widget--selector, 'overlay');
@@ -23,7 +25,6 @@ $widget-overlay--selector: selector--set-element($widget--selector, 'overlay');
   @include declaration('font-family', $widgets-overlay--font-family);
   @include declaration('font-size', $widgets-overlay--font-size);
   @include declaration('cursor', $widgets-overlay--cursor);
-  @include declaration('color', $widgets-overlay--color);
   @include declaration('border-width', $widgets-overlay--border-width);
   @include declaration('border-style', $widgets-overlay--border-style);
   @include declaration('border-radius', $widgets-overlay--border-radius);
@@ -35,10 +36,28 @@ $widget-overlay--selector: selector--set-element($widget--selector, 'overlay');
 
   @include when-mode-edit {
     display: block;
+
+    &,
+    &:hover {
+      color: $mode-edit--color;
+    }
+
+    &:active {
+      color: color('orange', 'dark');
+    }
   }
 
   @include when-mode-style {
     display: block;
+
+    &,
+    &:hover {
+      color: $mode-style--color;
+    }
+
+    &:active {
+      color: color('pink', 'dark');
+    }
   }
 
   @include block-generation($widget-overlay--selector);
@@ -53,4 +72,18 @@ $widget-overlayicon--selector: selector--set-element($widget--selector, 'overlay
   @include declaration('width', $widgets-overlayicon--size);
   @include declaration('height', $widgets-overlayicon--size);
   @include block-generation($widget-overlayicon--selector);
+}
+
+$widget-overlayicon-edit--selector: selector--set-modifier-element($widget-overlayicon--selector, 'edit');
+@include selector($widget-overlayicon-edit--selector) {
+  @include when-mode-style {
+    display: none;
+  }
+}
+
+$widget-overlayicon-style--selector: selector--set-modifier-element($widget-overlayicon--selector, 'style');
+@include selector($widget-overlayicon-style--selector) {
+  @include when-mode-edit {
+    display: none;
+  }
 }
