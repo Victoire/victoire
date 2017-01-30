@@ -43,7 +43,7 @@
         "doctrine/data-fixtures": "~1.1.1",
         "doctrine/doctrine-fixtures-bundle": "~2.2",
         "doctrine/doctrine-migrations-bundle": "^1.0",
-        "doctrine/orm": "v2.5.2",
+        "doctrine/orm": "~2.5.2@stable",
         "friendsofsymfony/jsrouting-bundle": "~2.0",
         "friendsofsymfony/user-bundle": "v2.0.0-beta1",
         "friendsofvictoire/text-widget": "~2.0",
