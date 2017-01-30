@@ -101,41 +101,10 @@ class AppKernel extends Kernel
      */
     public function shutdown()
     {
-        if ($this->environment === 'ci') {
-            if (false === $this->booted) {
-                return;
-            }
-
-            $container = $this->container;
-            parent::shutdown();
-            $this->cleanupContainer($container);
-        } else {
-            parent::shutdown();
+        if (($this->environment === 'ci') && (false === $this->booted)) {
+            return;
         }
-    }
 
-    /**
-     * Remove all container references from all loaded services.
-     */
-    protected function cleanupContainer($container)
-    {
-        $object = new \ReflectionObject($container);
-        $property = $object->getProperty('services');
-        $property->setAccessible(true);
-        $services = $property->getValue($container) ?: [];
-        foreach ($services as $id => $service) {
-            if ('kernel' === $id) {
-                continue;
-            }
-            $serviceObject = new \ReflectionObject($service);
-            foreach ($serviceObject->getProperties() as $prop) {
-                $prop->setAccessible(true);
-                if ($prop->isStatic()) {
-                    continue;
-                }
-                $prop->setValue($service, null);
-            }
-        }
-        $property->setValue($container, null);
+        parent::shutdown();
     }
 }
