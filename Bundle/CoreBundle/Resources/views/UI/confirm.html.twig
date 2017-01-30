@@ -30,6 +30,7 @@
 
 <script>
 $vic('#{{ id }}').vicmodal({ show : true, keyboard: true, backdrop: false });
+$vic('#{{ id }}').attr('data-modal', 'show');
 $vic('#{{ id }} .{{ confirm_button_class }}').focus();
 $vic('#{{ id }}').on('hide',function(){
     $vic('.vic-confirm-waiting').removeClass('vic-confirm-waiting');

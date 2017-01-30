@@ -23,6 +23,7 @@ function openModal(url) {
                 keyboard: true,
                 backdrop: false
             });
+            $vic('#vic-modal').attr('data-modal', 'show');
         }
         loading(false);
         $vic(document).trigger('victoire_modal_open_after');
@@ -70,10 +71,10 @@ $vic(document).on('click', 'a[data-toggle="vic-modal"]', function(event) {
 // Close a modal
 function closeModal(modal) {
     if (modal == undefined) {
-        modal = $vic('.vic-modal.vic-in').last();
+        modal = $vic('.v-modal[data-modal="show"]').last();
     }
 
-    $vic(modal).vicmodal('hide');
+    $vic(modal).attr('data-modal', 'hidden');
     setTimeout(function() {$vic('.vic-creating').removeClass('vic-creating');}, 10);
 }
 
@@ -83,7 +84,7 @@ function closeModal(modal) {
 $vic(document).on('keyup', function(e) {
     if (e.keyCode == 27) {
         if (!$vic('body').hasClass('page-unloading')) {
-            closeModal($vic('.vic-modal').last());
+            closeModal($vic('.v-modal').last());
         } else {
             $vic('body').removeClass('page-unloading');
         }
@@ -91,9 +92,9 @@ $vic(document).on('keyup', function(e) {
 });
 
 // Close modal
-$vic(document).on('click', '.vic-modal *[data-modal="close"]', function(event) {
+$vic(document).on('click', '.v-modal [data-modal="close"]', function(event) {
     event.preventDefault();
-    modal = $vic(event.target).parents('.vic-modal');
+    modal = $vic(event.target).parents('.v-modal');
     closeModal(modal);
 });
 // END MODAL BASICS

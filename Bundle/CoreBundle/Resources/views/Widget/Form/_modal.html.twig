@@ -1,8 +1,8 @@
 {% extends 'VictoireCoreBundle::_modal.html.twig' %}
-
 {% trans_default_domain "victoire" %}
 
-{% block modal_container_classes %}{{ parent() }} vic-widget-modal{% endblock %}
+{% block modal_container_classes %}{{ parent() }} v-modal--widget{% endblock %}
+
 {% block modal_header_title %}
     {{ 'victoire.widget.modal.title'|trans({
         '%type%': ('widget.'~widget.type~'.new.action.label')|trans(),
@@ -10,19 +10,24 @@
     }) }}
 {% endblock modal_header_title %}
 
+{% block modal_footer_content %}
+    <div class="v-flex-grid v-flex-grid--justify-between">
+        <div class="v-flex-col">
+            {% if widget.id %}
+                <a href="{{ path('victoire_core_widget_delete_bulk', {'id':widget.id, 'viewReference': view.reference.id })}}" class="v-btn v-btn--transparent" data-toggle="vic-confirm" data-modal="delete-bulk" data-title="{{ 'modal.button.delete.confirm.title'|trans({}, 'victoire') }}" data-body="{{ 'modal.button.delete.confirm.body'|trans({}, 'victoire') }}" title="{{ 'modal.button.delete.title'|trans({}, 'victoire') }}">
+                    {{ 'modal.button.delete.title'|trans({}, 'victoire') }}
+                </a>
+            {% endif %}
 
-{% block modal_footer %}
-    <div class="vic-modal-footer">
-        <div class="vic-container">
-            <div class="vic-modal-footer-content">
-                {% block modal_footer_content %}
-                    {% if widget.id %}
-                        <a href="{{ path('victoire_core_widget_delete_bulk', {'id':widget.id, 'viewReference': view.reference.id })}}" class="vic-btn vic-btn-danger vic-pull-left" data-toggle="vic-confirm" data-modal="delete-bulk" data-title="{{ 'modal.button.delete.confirm.title'|trans({}, 'victoire') }}" data-body="{{ 'modal.button.delete.confirm.body'|trans({}, 'victoire') }}" title="{{ 'modal.button.delete.title'|trans({}, 'victoire') }}"><i class="fa fa-trash-o"></i> <span>{{ 'modal.button.delete.title'|trans({}, 'victoire') }}</span></a>
-                    {% endif %}
-                    <a href="#" class="vic-btn vic-btn-default vic-pull-left" data-modal="close"><i class="fa fa-times-circle"></i> {{ 'modal.button.cancel.title'|trans({}, 'victoire') }}</a>
-                    <a href="#" class="vic-btn vic-btn-success" data-modal="{% block action %}create{% endblock action %}" title="{{ ('modal.button.'~ block('action') ~'.title')|trans({}, 'victoire') }}"><i class="fa fa-check-circle"></i> {{ ('modal.button.'~ block('action') ~'.title')|trans({}, 'victoire') }}</a>
-                {% endblock modal_footer_content %}
-            </div>
+            <a href="#" class="v-btn v-btn--transparent v-btn--danger" data-modal="close">
+                {{ 'modal.button.cancel.title'|trans({}, 'victoire') }}
+            </a>
+        </div>
+
+        <div class="v-flex-col">
+            <a href="#" class="v-btn v-btn--warning" data-modal="{% block action %}create{% endblock action %}" title="{{ ('modal.button.'~ block('action') ~'.title')|trans({}, 'victoire') }}">
+                {{ ('modal.button.'~ block('action') ~'.title')|trans({}, 'victoire') }}
+            </a>
         </div>
     </div>
-{% endblock modal_footer %}
+{% endblock modal_footer_content %}
