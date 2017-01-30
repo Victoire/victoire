@@ -3,21 +3,21 @@
 
 
 // Open select when click on dropdown link
-$vic(document).on('focus', '.vic-new-widget select', function(event) {
-    $vic(this).addClass('vic-open');
+$vic(document).on('focus', '.v-slot select', function(event) {
+    $vic(this).parent('.v-slot').addClass('v-slot--open');
 });
-$vic(document).on('blur', '.vic-new-widget select', function(event) {
+$vic(document).on('blur', '.v-slot select', function(event) {
+    $vic(event.target).parent('.v-slot').removeClass('v-slot--open');
     $vic(event.target).prop('selectedIndex', 0);
-    $vic(event.target).removeClass('vic-open');
 });
 
 // Create modal for new widget
-$vic(document).on('change', '.vic-new-widget select', function(event) {
+$vic(document).on('change', '.v-slot select', function(event) {
     event.preventDefault();
     var url = generateNewWidgetUrl(event.target);
-    $vic(event.target).blur();
+    $vic(this).blur();
     openModal(url);
-    $vic(this).parents('.vic-new-widget').first().addClass('vic-creating');
+    $vic(this).parents('.v-slot').first().addClass('vic-creating');
 });
 
 $vic(document).on('click', '.vic-widget-modal a[data-modal="update"], .vic-widget-modal a[data-modal="create"]', function(event) {
