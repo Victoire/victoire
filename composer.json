@@ -97,7 +97,6 @@
             "Victoire\\Widget\\": "Tests/Functionnal/src/Victoire/Widget"
         }
     },
-    "minimum-stability": "dev",
     "repositories": [
         {
             "type": "vcs",
