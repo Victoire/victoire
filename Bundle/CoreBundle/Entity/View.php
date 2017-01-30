@@ -563,37 +563,19 @@ abstract class View
         $widgetMaps = [];
 
         foreach ($this->getWidgetMaps() as $_widgetMap) {
-            if($viewContext) {
+            if ($viewContext) {
                 $_widgetMap->setViewContext($viewContext);
             }
+
             $widgetMaps[] = $_widgetMap;
         }
 
         if ($template = $this->getTemplate()) {
-            $templateWM = $template->getWidgetMapsForViewAndTemplates($viewContext);
-            $widgetMaps = array_merge($widgetMaps, $templateWM);
+            $templateWigetMaps = $template->getWidgetMapsForViewAndTemplates($viewContext);
+            $widgetMaps = array_merge($widgetMaps, $templateWigetMaps);
         }
 
         return $widgetMaps;
-    }
-
-    /**
-     * Get widgets ids as array.
-     *
-     * @return array
-     */
-    public function getWidgetsIds()
-    {
-        $widgetIds = [];
-        foreach ($this->getBuiltWidgetMap() as $slot => $_widgetMaps) {
-            foreach ($_widgetMaps as $widgetMap) {
-                foreach ($widgetMap->getWidgets() as $widget) {
-                    $widgetIds[] = $widget->getId();
-                }
-            }
-        }
-
-        return $widgetIds;
     }
 
     /**
