@@ -7,30 +7,15 @@
 $navbars--font-size: rem();
 $navbars--font-family: $app--font-family;
 $navbars--font-weight: font-weight();
-$navbars--z-index: (
-  '-header': 1100,
-  '-footer': 1100,
-);
-$navbars--position: (
-  '-header': fixed,
-  '-footer': fixed,
-);
+$navbars--z-index: null;
+$navbars--position: null;
 $navbars--width: (
-  '-header': 100%,
-  '-footer': 100%,
   '-vertical': 3.125em,
 );
-$navbars--left: (
-  '-header': 0,
-  '-footer': 0,
-);
-$navbars--top: (
-  '-header': 0,
-);
+$navbars--left: null;
+$navbars--top: null;
 $navbars--right: null;
-$navbars--bottom: (
-  '-footer': 0,
-);
+$navbars--bottom: null;
 $navbars--text-transform: null;
 $navbars--letter-spacing: null;
 $navbars--line-height: null;

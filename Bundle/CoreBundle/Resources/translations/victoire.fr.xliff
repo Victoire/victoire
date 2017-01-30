@@ -98,7 +98,15 @@
         <source>victoire.menu.publication.scheduled.tooltip</source>
         <target>Cette page sera publiée à partir du %publication_date%.</target>
       </trans-unit>
-      <trans-unit id="58893b9963e43" resname="victoire_core.edit_mode_switch">
+      <trans-unit id="79ba9ce9459413ff95ae62ceaad270428e26643b" resname="victoire.menu.publication.draft.tooltip">
+        <source>victoire.menu.publication.draft.tooltip</source>
+        <target>Cette page est actuellement en brouillon</target>
+      </trans-unit>
+      <trans-unit id="79ba9ce9459413ff95ae62ceaad270428e243b66" resname="victoire.menu.publication.unpublished.tooltip">
+        <source>victoire.menu.publication.unpublished.tooltip</source>
+        <target>Cette page est actuellement non publiée</target>
+      </trans-unit>
+      <trans-unit id="ceb669459413ff95ae62ceaad270428e24379ba9" resname="victoire_core.edit_mode_switch">
         <source>victoire_core.edit_mode_switch</source>
         <target>Mode édition</target>
       </trans-unit>
@@ -225,6 +233,10 @@
       <trans-unit id="58893b9966c5a" resname="victoire.widget.modal.title">
         <source>victoire.widget.modal.title</source>
         <target>Widget %id% (%type%)</target>
+      </trans-unit>
+      <trans-unit id="36" resname="menu.additionals">
+        <source>menu.additionals</source>
+        <target><![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="6" height="22" viewBox="29 13 6 22"><path fill="currentColor" fill-rule="evenodd" d="M30 32.5006C30 33.881 31.12 35 32.5006 35 33.881 35 35 33.881 35 32.5006 35 31.12 33.881 30 32.5006 30 31.12 30 30 31.12 30 32.5006zm0-8C30 25.88 31.12 27 32.5006 27 33.881 27 35 25.88 35 24.5006 35 23.12 33.881 22 32.5006 22 31.12 22 30 23.12 30 24.5006zM30 16.5c0 1.381 1.12 2.5 2.5006 2.5C33.881 19 35 17.881 35 16.5S33.881 14 32.5006 14C31.12 14 30 15.119 30 16.5z"></path></svg>]]></target>
       </trans-unit>
     </body>
   </file>

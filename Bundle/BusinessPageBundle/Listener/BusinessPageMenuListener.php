@@ -35,7 +35,7 @@ class BusinessPageMenuListener implements MenuListenerInterface
      */
     public function addGlobal(Event $event)
     {
-        $this->mainItem = $this->menuBuilder->getLeftNavbar();
+        $this->mainItem = $this->menuBuilder->getBottomLeftNavbar()->getChild('menu.additionals');
 
         if ($this->menuBuilder->isGranted('ROLE_VICTOIRE_BET')) {
             $this
@@ -44,6 +44,9 @@ class BusinessPageMenuListener implements MenuListenerInterface
                     'menu.business_template',
                     [
                         'route' => 'victoire_business_template_index',
+                        'linkAttributes' => [
+                            'class' => 'v-drop__anchor',
+                        ],
                     ]
                 )
                 ->setLinkAttribute('data-toggle', 'vic-modal');

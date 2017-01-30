@@ -1,0 +1,28 @@
+@import '../globals/params/z-index';
+
+#footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: z-index(3);
+}
+
+[id^="footer-drop-"] {
+  z-index: z-index(4);
+}
+
+#v-footer-navbar-bottom-left {
+  list-style: none;
+  margin-bottom: 0;
+  padding-left: 0;
+}
+
+#v-footer-navbar-bottom-right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  list-style: none;
+  margin-bottom: 0;
+  padding-left: 0;
+}

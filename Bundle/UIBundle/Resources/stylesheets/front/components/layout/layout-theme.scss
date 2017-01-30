@@ -26,6 +26,7 @@ $flexgrid--align-items: (
 );
 $flexgrid--justify-content: (
   '-justify-between': space-between,
+  '-justify-end': flex-end,
 );
 
 $flexcol--flex-grow: (

@@ -31,18 +31,18 @@ class TemplateMenuListener implements MenuListenerInterface
      */
     public function addContextual($event)
     {
-        $mainItem = $this->getMainItem();
+        $menuBottomRight = $this->menuBuilder->getBottomRightNavbar();
         $template = $event->getTemplate();
 
         //this contextual menu appears only for template
-        $mainItem->addChild('menu.template.settings',
+        $menuBottomRight->addChild('menu.template.settings',
             [
                 'route'           => 'victoire_template_settings',
                 'routeParameters' => ['id' => $template->getId()],
                 ]
         )->setLinkAttribute('data-toggle', 'vic-modal');
 
-        return $mainItem;
+        return;
     }
 
     /**
@@ -54,18 +54,23 @@ class TemplateMenuListener implements MenuListenerInterface
      */
     public function addGlobal(Event $event)
     {
-        $mainItem = $this->getMainItem();
-        $mainItem->addChild('menu.template.new', [
+        $menuTemplate = $this->menuBuilder->getBottomRightNavbar()->getChild('menu.template');
+
+        $menuTemplate->addChild('menu.template.new', [
             'route' => 'victoire_template_new',
-            ]
-        )->setLinkAttribute('data-toggle', 'vic-modal');
+            'linkAttributes' => [
+                'class' => 'v-drop__anchor',
+            ],
+        ])->setLinkAttribute('data-toggle', 'vic-modal');
 
-        $mainItem->addChild('menu.template.index', [
+        $menuTemplate->addChild('menu.template.index', [
             'route' => 'victoire_template_index',
-            ]
-        )->setLinkAttribute('data-toggle', 'vic-modal');
+            'linkAttributes' => [
+                'class' => 'v-drop__anchor',
+            ],
+        ])->setLinkAttribute('data-toggle', 'vic-modal');
 
-        return $mainItem;
+        return;
     }
 
     public function getMainItem()

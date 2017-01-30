@@ -36,7 +36,7 @@
       </trans-unit>
       <trans-unit id="58893b99344f8" resname="menu.business_template">
         <source>menu.business_template</source>
-        <target><![CDATA[<i class="vic-menuImg vic-menuImg-sandbox"></i> Représentation métier]]></target>
+        <target>Représentation métier</target>
       </trans-unit>
       <trans-unit id="58893b993450b" resname="victoire.business_template.create.success">
         <source>victoire.business_template.create.success</source>

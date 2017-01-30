@@ -102,7 +102,15 @@
         <source>victoire.menu.publication.scheduled.tooltip</source>
         <target>Esta página se publica a partir de %publication_date%.</target>
       </trans-unit>
-      <trans-unit id="58893b995fe57" resname="victoire_core.edit_mode_switch">
+      <trans-unit id="2ceaad270428e24379baceb669459413ff95ae69" resname="victoire.menu.publication.draft.tooltip">
+        <source>victoire.menu.publication.draft.tooltip</source>
+        <target>Esta página está actualmente un borrador</target>
+      </trans-unit>
+      <trans-unit id="ceb2ceaad270428e24379ba9669459413ff95ae6" resname="victoire.menu.publication.unpublished.tooltip">
+        <source>victoire.menu.publication.unpublished.tooltip</source>
+        <target>Esta página está actualmente non publicadá</target>
+      </trans-unit>
+      <trans-unit id="ceb669459413ff95ae62ceaad270428e24379ba9" resname="victoire_core.edit_mode_switch">
         <source>victoire_core.edit_mode_switch</source>
         <target>Modo de edición</target>
       </trans-unit>

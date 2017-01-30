@@ -56,3 +56,11 @@ $trowel-config: (
 @import 'components/mode-switcher/mode-switcher';
 @import 'components/modal/modal';
 @import 'components/collapse/collapse';
+@import 'components/logo/logo';
+
+/**
+ * Layout
+ */
+@import 'layout/header';
+@import 'layout/footer';
+@import 'layout/float-container';

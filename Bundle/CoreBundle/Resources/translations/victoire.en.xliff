@@ -102,7 +102,15 @@
         <source>victoire.menu.publication.scheduled.tooltip</source>
         <target>This page will be published from %publication_date%.</target>
       </trans-unit>
-      <trans-unit id="58893b995d203" resname="victoire_core.edit_mode_switch">
+      <trans-unit id="b6ce69459413ff95ae62ceaad270428e249379ba" resname="victoire.menu.publication.draft.tooltip">
+        <source>victoire.menu.publication.draft.tooltip</source>
+        <target>This page is actually in draft</target>
+      </trans-unit>
+      <trans-unit id="13ff95ae62b6ce694594ceaad270428e249379ba" resname="victoire.menu.publication.unpublished.tooltip">
+        <source>victoire.menu.publication.unpublished.tooltip</source>
+        <target>This page is actually unpublished</target>
+      </trans-unit>
+      <trans-unit id="ceb669459413ff95ae62ceaad270428e24379ba9" resname="victoire_core.edit_mode_switch">
         <source>victoire_core.edit_mode_switch</source>
         <target>Edit mode</target>
       </trans-unit>

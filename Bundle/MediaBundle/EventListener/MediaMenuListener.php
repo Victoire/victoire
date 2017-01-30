@@ -25,14 +25,20 @@ class MediaMenuListener
      */
     public function addGlobal(Event $event)
     {
-        $this->mainItem = $this->menuBuilder->getLeftNavbar();
+        $topNavbar = $this->menuBuilder->getTopNavbar();
 
-        $this->mainItem
+        $topNavbar
             ->addChild('menu.media', [
                 'uri' => '#',
+                'attributes' => [
+                    'class' => 'v-menu__item',
+                ],
+                'linkAttributes' => [
+                    'class' => 'v-menu__anchor',
+                ],
             ])
             ->setLinkAttribute('id', 'media-manager');
 
-        return $this->mainItem;
+        return;
     }
 }

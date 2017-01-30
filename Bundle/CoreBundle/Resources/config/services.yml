@@ -35,6 +35,30 @@ services:
         tags:
             - { name: knp_menu.menu, alias: topnavbar }
 
+    victoire_core.admin_menu.navbar_bottom_left:
+        class: Knp\Menu\MenuItem
+        factory_service: victoire_core.admin_menu_builder
+        factory_method: getBottomLeftNavbar
+        scope: request
+        tags:
+            - { name: knp_menu.menu, alias: bottomleftnavbar }
+
+    victoire_core.admin_menu.navbar_bottom_right:
+        class: Knp\Menu\MenuItem
+        factory_service: victoire_core.admin_menu_builder
+        factory_method: getBottomRightNavbar
+        scope: request
+        tags:
+            - { name: knp_menu.menu, alias: bottomrightnavbar }
+
+    victoire_core.admin_menu.navbar_float_action:
+        class: Knp\Menu\MenuItem
+        factory_service: victoire_core.admin_menu_builder
+        factory_method: getFloatActionNavbar
+        scope: request
+        tags:
+            - { name: knp_menu.menu, alias: floatactionnavbar }
+
     victoire_core.admin_menu.navbar_left:
         class: Knp\Menu\MenuItem
         factory_service: victoire_core.admin_menu_builder

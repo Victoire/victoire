@@ -1,117 +1,90 @@
-<section id="vic-admin-menu" class="victoire vic-menu-main vic-list-unstyled vic-clearfix vic-navbar-fixed-top" role="navigation">
+<header id="header" class="v-navbar v-navbar--lg v-navbar--header">
+    <div class="v-container v-container--fluid">
+        {% block header %}
+            <div class="v-flex-grid v-flex-grid--gutter-lg  v-flex-grid--align-center">
+                <div class="v-flex-col">
+                    {% block brand %}
+                        {% include "@SVG/logo.html.twig" with {
+                            "height": 60,
+                        } %}
+                    {% endblock brand %}
+                </div>
 
-    {% block header %}
-    {% block leftMenu %}
-    {% if is_granted('ROLE_VICTOIRE_LEFTNAVBAR') %}
-    <div class="vic-trigger vic-pull-left">
-        <a class="vic-menu-leftnavbar-trigger" id="vic-menu-leftnavbar-trigger">
-            <i></i>
-        </a>
+                <div class="v-flex-col v-flex-col--grow-1">
+                    {% block menu %}
+                        {{ knp_menu_render('topnavbar') }}
+                    {% endblock %}
+                </div>
 
-        <nav class="vic-menu-leftnavbar">
-            <div class="vic-scroller">
-                {#
-                <ul id="vic-menu" class="vic-menu-main vic-list-unstyled vic-clearfix"></ul>
-                #}
-                {{ knp_menu_render('leftnavbar') }}
-            </div>
-        </nav>
-    </div>
-    {% endif %}
-    {% endblock %}
-
-    {% block brand %}
-    <div class="vic-topNavbar-logo vic-loading">
-        <a href="#">
-            <img class="vic-picto" src="{{ asset('bundles/victoirecore/images/menu/vic-logo-menu-main-picto.svg') }}" alt="Logo Victoire DCMS" />
-            <img class="vic-logo-label" src="{{ asset('bundles/victoirecore/images/menu/vic-logo-menu-main-label.svg') }}" alt="Logo Victoire DCMS" />
-        </a>
-    </div>
-    {% endblock %}
-    {% endblock %}
-
-    {% block menu_container %}
-
-    <div class="vic-collapse vic-navbar-collapse vic-navbar-responsive-collapse">
-            {% block menu %}
-                {{ knp_menu_render('topnavbar') }}
-            {% endblock %}
-
-        <ul class="vic-userNav vic-menu-main-list" id="vic-topNavbar-right">
-            {# Add a publication representation of the view (only for BasePage))  #}
-
-            {% if view is defined and (view.published is defined and not view.published) %}
-            <li class="vic-text-center">
-                {% if view.status == constant('Victoire\\Bundle\\PageBundle\\Entity\\PageStatus::SCHEDULED') %}
-                    {% set icon = "clock-o" %}
-                    {% set tooltip = "victoire.menu.publication.scheduled.tooltip"|trans({'%publication_date%': view.publishedAt|localizeddate('medium', 'none', null, null, "cccc dd/MM/yyyy à hh'h'mm") }, 'victoire') %}
-                {% elseif view.status == constant('Victoire\\Bundle\\PageBundle\\Entity\\PageStatus::DRAFT') %}
-                    {% set icon = "pencil" %}
-                {% elseif view.status == constant('Victoire\\Bundle\\PageBundle\\Entity\\PageStatus::UNPUBLISHED') %}
-                    {% set icon = "moon-o" %}
-                {% endif %}
-                <a href="{{ path('victoire_core_page_settings', {'id' : view.id }) }}" data-toggle="vic-modal"{% if tooltip is defined %}title="{{ tooltip }}"{% endif %} style="font-size:10px;margin-top:5px;">
-                {# todo use vic tooltips #}
-                {# todo kick style inline #}
-                {# todo add unpublished and draft tooltip #}
-
-                    <i class="fa fa-{{ icon }} fa-2x"></i>
-                </a>
-            </li>
-            {% endif %}
-
-            <li class="vic-menu-main-list-lastItem">
-                <div class="vic-dropdown">
-                    <a class="vic-dropdown-toggle" id="dropdownMenu1" data-toggle="vic-dropdown">
-                        <img src="https://www.gravatar.com/avatar/{{ app.user.email|hash }}?s=70&d={{ 'https://fr.gravatar.com/userimage/63937294/1d5eaaa346a27c5915344db44177b469.png?size=70'|url_encode }}" class="vic-img-circle" alt="avatar" height="36">
-
-                        <span class="vic-caret"></span>
+                <div class="v-flex-col">
+                    <a class="v-btn v-btn--transparent v-btn--sm" data-flag="v-drop" data-position="bottomout rightin" data-href="#header-drop-profile">
+                        <img class="v-image--profile" src="https://www.gravatar.com/avatar/{{ app.user.email|hash }}?s=70&d={{ 'https://fr.gravatar.com/userimage/63937294/1d5eaaa346a27c5915344db44177b469.png?size=70'|url_encode }}">
                     </a>
 
-                    <ul class="vic-dropdown-menu vic-pull-right" role="menu" aria-labelledby="dropdownMenu1">
-                        <li role="presentation">
-                            <a role="menuitem" tabindex="-1" href="{{ path('fos_user_security_logout') }}" class="vic-pull-left">{{ 'vicmenu.logout.label'|trans({}, 'victoire') }}</i></a>
-                        </li>
-                    </ul>
+                    <div class="v-drop" id="header-drop-profile">
+                        <nav class="v-drop__menu">
+                            <a class="v-drop__anchor" href="{{ path('fos_user_security_logout') }}">{{ 'vicmenu.logout.label'|trans({}, 'victoire') }}</a>
+                        </nav>
+                    </div>
                 </div>
-            </li>
-        </ul>
+            </div>
+        {% endblock %}
     </div>
-    {% endblock %}
-</section>
+</header>
 
-<section id="vic-mode-toggler">
-    <ul class="vic-mode-container">
-        {% spaceless %}
-            <li class="vic-mode-item">
-                <button class="vic-mode vic-mode-readonly{{ edit_mode|default("admin-readonly") == "admin-readonly" ? ' vic-active' }}" type="button" data-mode="admin-readonly" title="{{ 'navbar.mode.readonly'|trans({}, 'victoire') }}">
-                    <img src="{{ asset('bundles/victoirecore/images/mode/readonly.svg') }}">
-                </button>
-            </li>
+{{ knp_menu_render('floatactionnavbar') }}
 
-            <li class="vic-mode-item">
-                <button class="vic-mode vic-mode-layout{{ "admin-layout" == edit_mode ? ' vic-active' }}" type="button" data-mode="admin-layout" title="{{ 'navbar.mode.layout'|trans({}, 'victoire') }}">
-                    <img src="{{ asset('bundles/victoirecore/images/mode/layout.svg') }}">
-                </button>
-            </li>
+<footer class="v-navbar" id="footer">
+    <div class="v-container v-container--fluid">
+        <div class="v-flex-grid v-flex-grid--align-center">
+            <div class="v-flex-col v-flex-col--grow-1 v-flex-col--shrink-0 v-flex-col--basis-0">
+                {{ knp_menu_render('bottomleftnavbar') }}
+            </div>
 
-            <li class="vic-mode-item">
-                <button class="vic-mode vic-mode-edit{{ "admin-edit" == edit_mode ? ' vic-active' }}" type="button" data-mode="admin-edit" title="{{ 'navbar.mode.edit'|trans({}, 'victoire') }}">
-                    <img src="{{ asset('bundles/victoirecore/images/mode/edit.svg') }}">
-                </button>
-            </li>
+            <div class="v-flex-col v-flex-col--grow-1 v-flex-col--shrink-0 v-flex-col--basis-0 v-text-align--center">
+                {% include "@bricks/mode-switcher.html.twig" with {
+                    "name": "mode-switcher",
+                    "startMode": edit_mode,
+                } %}
+            </div>
 
-            <li class="vic-mode-item">
-                <button class="vic-mode vic-mode-style{{ "admin-style" == edit_mode ? ' vic-active' }}" type="button" data-mode="admin-style" title="{{ 'navbar.mode.style'|trans({}, 'victoire') }}">
-                    <img src="{{ asset('bundles/victoirecore/images/mode/style.svg') }}">
-                </button>
-            </li>
-        {% endspaceless %}
-    </ul>
-</section>
+            <div class="v-flex-col v-flex-col--grow-1 v-flex-col--shrink-0 v-flex-col--basis-0 v-text-align--right">
+                <div class="v-flex-grid v-flex-grid--align-center v-flex-grid--justify-end">
+                    <div class="v-flex-col">
+                        {% if view is defined and (view.published is defined and not view.published) %}
+                            {% if view.status == constant('Victoire\\Bundle\\PageBundle\\Entity\\PageStatus::SCHEDULED') %}
+                                {% set icon = "clock-o" %}
+                                {% set theme = "info" %}
+                                {% set tooltip = "victoire.menu.publication.scheduled.tooltip"|trans({'%publication_date%': view.publishedAt|localizeddate('medium', 'none', null, null, "cccc dd/MM/yyyy à hh'h'mm") }, 'victoire') %}
+                            {% elseif view.status == constant('Victoire\\Bundle\\PageBundle\\Entity\\PageStatus::DRAFT') %}
+                                {% set icon = "pencil" %}
+                                {% set theme = "warning" %}
+                                {% set tooltip = "victoire.menu.publication.draft.tooltip"|trans({}, 'victoire') %}
+                            {% elseif view.status == constant('Victoire\\Bundle\\PageBundle\\Entity\\PageStatus::UNPUBLISHED') %}
+                                {% set icon = "moon-o" %}
+                                {% set theme = "danger" %}
+                                {% set tooltip = "victoire.menu.publication.unpublished.tooltip"|trans({}, 'victoire') %}
+                            {% endif %}
 
-<script>
-    $vic(function () {
-        $vic('[data-toggle="vic-tooltip"]').tooltip();
-    });
-</script>
+                            <a class="v-btn v-btn--sm v-btn--{{ theme|default('success') }}" href="{{ path('victoire_core_page_settings', {'id' : view.id }) }}" data-toggle="vic-modal" {% if tooltip is defined %}data-flag="v-drop" data-position="topout center" data-href="#view-status-dropdown" data-behavior="hover"{% endif %}>
+                                <i class="fa fa-{{ icon }} fa-2x"></i>
+                            </a>
+
+                            {% if tooltip is defined %}
+                                <div class="v-drop v-drop--tooltip" id="view-status-dropdown">
+                                    <div class="v-drop__content">
+                                        {{ tooltip }}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+
+                    <div class="v-flex-col">
+                        {{ knp_menu_render('bottomrightnavbar') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
