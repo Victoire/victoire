@@ -3,7 +3,7 @@ Bugfix | feature | documentation
 
 ## Purpose
 <!-- If bugfix -->
-Fix the issue [#xxx](https://github.com/Victoire/victoire/issues/xxx)
+Fixes #xxx
 
 OR
 <!-- If feature -->
