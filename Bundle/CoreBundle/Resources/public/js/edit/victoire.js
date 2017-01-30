@@ -48,7 +48,7 @@ function trackChange(elem)
 function enableSortableSlots(){
     $vic(".vic-slot").each(function(){
         $vic(this).sortable({
-            handle: '.vic-hover-widget:not(.disabled)',
+            handle: '.v-widget__overlay:not(.disabled)',
             items: "> .vic-widget-container:not(.vic-undraggable)",
             placeholder: "vic-ui-state-highlight",
             forcePlaceholderSize: true,
@@ -63,7 +63,7 @@ function enableSortableSlots(){
                     ui.item.next().next().addClass('disabled');
                 }
 
-                $vic('.vic-hover-widget').each(function() {
+                $vic('.v-widget__overlay').each(function() {
                     $vic(this).addClass('disabled');
                 })
             },
@@ -93,7 +93,7 @@ function enableSortableSlots(){
                     updateWidgetPosition(sorted, ui);
                 } else {
                     $vic(this).sortable('cancel');
-                    $vic('new-widget-button.disabled, .vic-hover-widget.disabled').each(function(index, el) {
+                    $vic('new-widget-button.disabled, .v-widget__overlay.disabled').each(function(index, el) {
                         $vic(el).removeClass('disabled');
                     });
                 }
@@ -113,7 +113,7 @@ function updateWidgetPosition(sorted, ui) {
     ajaxCall.fail(function() {
         $vic(".vic-slot").each(function(){
             $vic(this).sortable('cancel');
-            $vic('new-widget-button.disabled, .vic-hover-widget.disabled').each(function(index, el) {
+            $vic('new-widget-button.disabled, .v-widget__overlay.disabled').each(function(index, el) {
                 $vic(el).removeClass('disabled');
             });
         });
@@ -127,7 +127,7 @@ function updateWidgetPosition(sorted, ui) {
         $rootScope.widgetMaps = jsonResponse.availablePositions;
         $rootScope.$apply();
 
-        $vic('.vic-hover-widget.disabled').each(function() {
+        $vic('.v-widget__overlay.disabled').each(function() {
             $vic(this).removeClass('disabled');
         })
     });

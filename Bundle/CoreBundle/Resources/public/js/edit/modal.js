@@ -42,7 +42,7 @@ $vic(document).on('click', 'a[data-toggle="vic-none"]', function(event) {
 
 
 // Open modal
-$vic(document).on('click', 'a.vic-hover-widget', function(event) {
+$vic(document).on('click', '.v-widget__overlay', function(event) {
     event.preventDefault();
 
     var role = $vic('body').attr('role');

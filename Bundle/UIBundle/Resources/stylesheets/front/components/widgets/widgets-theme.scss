@@ -7,11 +7,6 @@
 $widgets-overlay--font-family: $app--font-family;
 $widgets-overlay--font-size: rem(1);
 $widgets-overlay--cursor: pointer;
-$widgets-overlay--color: (
-  'default': $mode-edit--color,
-  ':hover': $mode-edit--color,
-  ':active': color('orange', 'dark'),
-);
 $widgets-overlay--border-width: 1px;
 $widgets-overlay--border-style: solid;
 $widgets-overlay--border-radius: 0.3125em;
