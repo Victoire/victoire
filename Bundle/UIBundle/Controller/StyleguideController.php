@@ -18,6 +18,7 @@ class StyleguideController extends Controller
         $components = array(
             // 'styleguide',
             'color',
+            'text',
             'layout',
             'button',
             'drops',

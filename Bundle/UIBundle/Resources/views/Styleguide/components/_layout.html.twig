@@ -156,3 +156,22 @@
         </div>
     {% endblock snippet_preview %}
 {% endembed %}
+
+<h2 class="ts-section__sub-heading">Flexbox grid / justify center</h2>
+{% embed '@styleguide/ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<div class="v-flex-grid v-flex-grid--justify-center">\n    ...\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <div class="v-flex-grid v-flex-grid--justify-center">
+            {% for item in 1..5 %}
+                <div class="v-flex-col">
+                    <div class="col-showcase">
+                        flex col
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}

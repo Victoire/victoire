@@ -14,12 +14,12 @@
     <div class="v-flex-grid v-flex-grid--justify-between">
         <div class="v-flex-col">
             {% if widget.id %}
-                <a href="{{ path('victoire_core_widget_delete_bulk', {'id':widget.id, 'viewReference': view.reference.id })}}" class="v-btn v-btn--transparent" data-toggle="vic-confirm" data-modal="delete-bulk" data-title="{{ 'modal.button.delete.confirm.title'|trans({}, 'victoire') }}" data-body="{{ 'modal.button.delete.confirm.body'|trans({}, 'victoire') }}" title="{{ 'modal.button.delete.title'|trans({}, 'victoire') }}">
+                <a href="{{ path('victoire_core_widget_delete_bulk', {'id':widget.id, 'viewReference': view.reference.id })}}" class="v-btn v-btn--transparent v-btn--danger" data-toggle="vic-confirm" data-modal="delete-bulk" data-title="{{ 'modal.button.delete.confirm.title'|trans({}, 'victoire') }}" data-body="{{ 'modal.button.delete.confirm.body'|trans({}, 'victoire') }}" title="{{ 'modal.button.delete.title'|trans({}, 'victoire') }}">
                     {{ 'modal.button.delete.title'|trans({}, 'victoire') }}
                 </a>
             {% endif %}
 
-            <a href="#" class="v-btn v-btn--transparent v-btn--danger" data-modal="close">
+            <a href="#" class="v-btn v-btn--transparent" data-modal="close">
                 {{ 'modal.button.cancel.title'|trans({}, 'victoire') }}
             </a>
         </div>
