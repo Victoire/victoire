@@ -60,7 +60,7 @@
         "liip/imagine-bundle": "~1.0",
         "nelmio/alice": "~2.0",
         "predis/predis": "^1.1",
-        "sensio/distribution-bundle": ">=2.3.x-dev",
+        "sensio/distribution-bundle": "~5.0@stable",
         "sensio/framework-extra-bundle": "~3.0",
         "sensio/generator-bundle": "~2.3",
         "snc/redis-bundle": "2.x-dev",
