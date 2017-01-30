@@ -44,7 +44,7 @@
         "doctrine/doctrine-fixtures-bundle": "~2.2",
         "doctrine/doctrine-migrations-bundle": "^1.0",
         "doctrine/orm": "v2.5.2",
-        "friendsofsymfony/jsrouting-bundle": "~2.0",
+        "friendsofsymfony/jsrouting-bundle": "~2.0@dev",
         "friendsofsymfony/user-bundle": "v2.0.0-beta1",
         "friendsofvictoire/text-widget": "~2.0",
         "friendsofvictoire/button-widget": "~2.0",
