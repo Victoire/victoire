@@ -157,12 +157,6 @@ stof_doctrine_extensions:
             tree: true
 ```
 
-- Install FOSJSRouting:
-
-```bash
-composer require friendsofsymfony/jsrouting-bundle
-```
-
 - Enable the `localizeddate` filter:
 
 ```yml
