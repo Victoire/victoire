@@ -7,7 +7,14 @@ services:
         arguments:
             - "@annotation_reader"
             - "@victoire_view_reference.repository"
-            - ["\Victoire\Bundle\MediaBundle\Entity\Media"]
+            - WidgetSliderItem: WidgetSlider
+              WidgetSocialButtonsItem: WidgetSocialButtons
+              WidgetTabItem: WidgetTab
+              WidgetListingItem: WidgetListing
+              WidgetListingItem: WidgetArticleList
+              MenuItem: WidgetMenu
+              WidgetFormQuestion: WidgetForm
+              MenuItem: MenuItem
 
     victoire_widget_map.manager:
         class: Victoire\Bundle\WidgetMapBundle\Manager\WidgetMapManager
