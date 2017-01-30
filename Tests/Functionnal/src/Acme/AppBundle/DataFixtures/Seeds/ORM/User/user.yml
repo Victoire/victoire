@@ -7,8 +7,6 @@ Victoire\Bundle\UserBundle\Entity\User:
         lastname: Skywalker
         enabled: true
         locale: fr
-        locked: false
-        expired: false
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         roles:
@@ -22,7 +20,5 @@ Victoire\Bundle\UserBundle\Entity\User:
         lastname: 6PO
         enabled: true
         locale: fr
-        locked: false
-        expired: false
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
