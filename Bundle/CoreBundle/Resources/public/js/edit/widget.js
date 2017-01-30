@@ -46,7 +46,7 @@ $vic(document).on('change', '.v-slot select', function(event) {
     $vic(this).parents('.v-slot').first().addClass('vic-creating');
 });
 
-$vic(document).on('click', '.vic-widget-modal a[data-modal="update"], .vic-widget-modal a[data-modal="create"]', function(event) {
+$vic(document).on('click', '.v-modal--widget a[data-modal="update"], .v-modal--widget a[data-modal="create"]', function(event) {
     event.preventDefault();
     // we remove the prototype picker to avoid persist it
     if ($vic("select.picker_entity_select").length != 0 && $vic("select.picker_entity_select").attr('name').indexOf('appventus_victoirecorebundle_widgetlistingtype[items][__name__][entity]') !== -1) {
@@ -149,7 +149,7 @@ $vic(document).on('click', 'a#widget-new-tab', function(event) {
     $vic(document).trigger("victoire_widget_delete_postsubmit");
 });
 // Delete a widget after submit
-$vic(document).on('click', '.vic-widget-modal a.vic-confirmed, .vic-hover-widget-unlink', function(event) {
+$vic(document).on('click', '.v-modal--widget a.vic-confirmed, .vic-hover-widget-unlink', function(event) {
     event.preventDefault();
     $vic(document).trigger("victoire_widget_delete_presubmit");
 

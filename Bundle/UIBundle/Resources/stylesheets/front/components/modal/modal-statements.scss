@@ -47,3 +47,17 @@ $modal-content--selector: selector--set-element($modal--selector, 'content');
 
   @include block-generation($modal-content--selector);
 }
+
+
+$modal-heading--selector: selector--set-element($modal--selector, 'heading');
+@include selector($modal-heading--selector) {
+  @include declaration('font-family', $modals-heading--font-family);
+  @include declaration('font-size', $modals-heading--font-size);
+  @include declaration('line-height', $modals-heading--line-height);
+  @include declaration('letter-spacing', $modals-heading--letter-spacing);
+  @include declaration('font-weight', $modals-heading--font-weight);
+  @include declaration('margin', $modals-heading--margin);
+  @include declaration('text-transform', $modals-heading--text-transform);
+
+  @include block-generation($modal-heading--selector);
+}
