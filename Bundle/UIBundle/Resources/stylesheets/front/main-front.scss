@@ -41,6 +41,7 @@ $trowel-config: (
 /**
  * Components
  */
+@import 'components/texts/texts';
 @import 'components/layout/layout';
 @import 'components/button/button';
 @import 'components/form/form';
