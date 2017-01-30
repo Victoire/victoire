@@ -11,6 +11,32 @@ $vic(document).on('blur', '.v-slot select', function(event) {
     $vic(event.target).prop('selectedIndex', 0);
 });
 
+// Eval width of the slots to add or not a class
+function evalSlotWidth(slot) {
+    var smallClass = 'v-slot--sm';
+
+    if (slot.offsetWidth > 250 && slot.classList.contains(smallClass)) {
+        slot.classList.remove(smallClass);
+    } else if (slot.offsetWidth <= 250 && slot.offsetWidth > 0) {
+        slot.classList.add(smallClass);
+    }
+
+    return;
+}
+
+$vic(document).ready(function() {
+    $('.v-slot').each(function(index, el) {
+        return evalSlotWidth(el);
+    });
+});
+
+$vic(window).resize(function() {
+    $('.v-slot').each(function(index, el) {
+        return evalSlotWidth(el);
+    });
+});
+
+
 // Create modal for new widget
 $vic(document).on('change', '.v-slot select', function(event) {
     event.preventDefault();
