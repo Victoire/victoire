@@ -30,6 +30,14 @@
   transform: rotate(135deg) translate(-60%, 60%);
 }
 
+// scss-lint:disable ImportantRule
 .#{$app--prefix}-drop-trigger--no-toggle::after {
   content: none !important;
+}
+// scss-lint:enable ImportantRule
+
+ul.#{$app--prefix}-drop {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0;
 }

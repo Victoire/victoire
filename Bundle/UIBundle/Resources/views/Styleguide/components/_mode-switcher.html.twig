@@ -8,13 +8,13 @@
         'color': '#fff',
     },
     'snippets': {
-        'twig': "{% include '@bricks/mode-switcher.html.twig' with {\n    'name': 'mode-switcher-ex',\n    'startMode': 'preview',\n} %}",
+        'twig': "{% include '@bricks/mode-switcher.html.twig' with {\n    'name': 'mode-switcher-ex',\n    'startMode': 'admin-readonly',\n} %}",
     }
 } %}
     {% block snippet_preview %}
         {% include '@bricks/mode-switcher.html.twig' with {
             'name': 'mode-switcher-ex',
-            'startMode': 'preview',
+            'startMode': 'admin-readonly',
         } %}
     {% endblock snippet_preview %}
 {% endembed %}

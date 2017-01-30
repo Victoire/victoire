@@ -15,6 +15,7 @@ $drops--line-height: null !default;
 $drops--text-align: (
   'default': left,
   '-fab': center,
+  '-tooltip': center,
 ) !default;
 $drops--text-decoration: null !default;
 $drops--margin: null !default;
@@ -105,6 +106,7 @@ $drops-anchor--font-weight: null !default;
 $drops-anchor--text-transform: null !default;
 $drops-anchor--text-decoration:  (
   'default': none,
+  ':hover': none,
 );
 $drops-anchor--color: (
   'default': color('grey', 'darker'),

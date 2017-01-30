@@ -51,6 +51,8 @@ linters:
 
   IdSelector:
     enabled: true
+    exclude:
+        - 'Bundle/UIBundle/Resources/stylesheets/front/layout/**/*.scss'
 
   ImportPath:
     enabled: true

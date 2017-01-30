@@ -3,6 +3,7 @@
 .#{$app--prefix}-btn {
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 $drop-fab-anchor--box-shadow: 0 0.285714286em 0.571428571em 0 color('black', null, 0.2);

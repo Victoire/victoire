@@ -1,0 +1,18 @@
+@import '../globals/params/z-index';
+
+#header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: z-index(3);
+}
+
+.ts-body #header {
+  z-index: 0;
+  display: none;
+}
+
+[id^="header-drop-"] {
+  z-index: z-index(4);
+}

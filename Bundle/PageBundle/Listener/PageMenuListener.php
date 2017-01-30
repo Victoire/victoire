@@ -36,21 +36,25 @@ class PageMenuListener implements MenuListenerInterface
         //get the current page
         $page = $event->getPage();
 
-        $mainItem = $this->getMainItem();
-        $mainItem->addChild('menu.page.settings',
-            [
-                'route'           => 'victoire_core_page_settings',
-                'routeParameters' => ['id' => $page->getId()],
-            ]
-        )->setLinkAttribute('data-toggle', 'vic-modal');
-        $mainItem->addChild('menu.page.seoSettings',
-            [
-                'route'           => 'victoire_seo_pageSeo_settings',
-                'routeParameters' => ['id' => $page->getId()],
-            ]
-        )->setLinkAttribute('data-toggle', 'vic-modal');
+        $bottomRightNavbar = $this->menuBuilder->getBottomRightNavbar();
 
-        return $mainItem;
+        $bottomRightNavbar->addChild('menu.page.settings', [
+            'route'           => 'victoire_core_page_settings',
+            'routeParameters' => ['id' => $page->getId()],
+            'linkAttributes' => [
+                'class' => 'v-btn v-btn--sm v-btn--transparent',
+            ],
+        ])->setLinkAttribute('data-toggle', 'vic-modal');
+
+        $bottomRightNavbar->addChild('menu.page.seoSettings', [
+            'route'           => 'victoire_seo_pageSeo_settings',
+            'routeParameters' => ['id' => $page->getId()],
+            'linkAttributes' => [
+                'class' => 'v-btn v-btn--sm v-btn--transparent',
+            ],
+        ])->setLinkAttribute('data-toggle', 'vic-modal');
+
+        return;
     }
 
     /**
@@ -62,16 +66,18 @@ class PageMenuListener implements MenuListenerInterface
      */
     public function addGlobal(Event $event)
     {
-        $mainItem = $this->getMainItem();
+        $floatActionDropdown = $this->menuBuilder->getFloatActionDropdown();
 
-        $mainItem->addChild('menu.page.new', [
+        $floatActionDropdown->addChild('menu.page.new', [
             'route'     => 'victoire_core_page_new',
-            ]
-        )
-        ->setExtra('translation_domain', 'victoire')
-        ->setLinkAttribute('data-toggle', 'vic-modal');
+            'linkAttributes' => [
+                'class' => 'v-drop__anchor',
+            ],
+        ])
+            ->setExtra('translation_domain', 'victoire')
+            ->setLinkAttribute('data-toggle', 'vic-modal');
 
-        return $mainItem;
+        return;
     }
 
     /**

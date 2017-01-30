@@ -1,0 +1,13 @@
+@import '../globals/params/z-index';
+
+/**
+ * (1) - equals (header height - (fab height / 2))
+ */
+#v-float-container {
+  list-style: none;
+  padding: 0;
+  z-index: z-index(5);
+  position: fixed;
+  right: 104px;
+  top: 35px;
+}

@@ -16,11 +16,11 @@
       </trans-unit>
       <trans-unit id="58893b99231ad" resname="menu.leftnavbar.blog.label">
         <source>menu.leftnavbar.blog.label</source>
-        <target><![CDATA[<i class="vic-menuImg vic-menuImg-network"></i> Blog]]></target>
+        <target>Blog</target>
       </trans-unit>
       <trans-unit id="58893b99231cb" resname="menu.blog.article.new">
         <source>menu.blog.article.new</source>
-        <target><![CDATA[<i class="vic-menuImg vic-menuImg-new"></i> Nuevo artículo]]></target>
+        <target><![CDATA[<span class="v-drop__anchor-label">Nuevo artículo</span><span class="v-drop__anchor-icon">  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="18" viewBox="13 11 15 18">    <g fill="currentColor" fill-rule="evenodd">      <path d="M24.1023 20.1274v-.5h-3.28l.5.5v-3.28h-1.695v3.28l.5-.5h-3.2797v1.695h3.28l-.5-.5v3.28h1.6948v-3.28l-.5.5h3.2798v-1.195zm-.5.195h-3.28v3.28l.5-.5h-.695l.5.5v-3.28h-3.2798l.5.5v-.695l-.5.5h3.28v-3.28l-.5.5h.695l-.5-.5v3.28h3.2798l-.5-.5v.695l.5-.5z"/>      <path d="M26 11H15c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V13c0-1.1-.9-2-2-2zm0 16H15V13h11v14z"/>    </g>  </svg></span>]]></target>
       </trans-unit>
       <trans-unit id="58893b99231e7" resname="victoire_blog.index.title">
         <source>victoire_blog.index.title</source>
