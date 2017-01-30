@@ -247,7 +247,7 @@ class WidgetMap
     }
 
     /**
-     * @return mixed
+     * @return WidgetMap
      */
     public function getReplaced()
     {
@@ -255,7 +255,7 @@ class WidgetMap
     }
 
     /**
-     * @param mixed $replaced
+     * @param WidgetMap $replaced
      */
     public function setReplaced($replaced)
     {
