@@ -41,14 +41,14 @@
                 {{ knp_menu_render('bottomleftnavbar') }}
             </div>
 
-            <div class="v-flex-col v-flex-col--grow-1 v-flex-col--shrink-0 v-flex-col--basis-0 v-text-align--center">
+            <div class="v-flex-col v-flex-col--grow-1 v-flex-col--shrink-0 v-flex-col--basis-0 v-text--center">
                 {% include "@bricks/mode-switcher.html.twig" with {
                     "name": "mode-switcher",
                     "startMode": edit_mode,
                 } %}
             </div>
 
-            <div class="v-flex-col v-flex-col--grow-1 v-flex-col--shrink-0 v-flex-col--basis-0 v-text-align--right">
+            <div class="v-flex-col v-flex-col--grow-1 v-flex-col--shrink-0 v-flex-col--basis-0 v-text--right">
                 <div class="v-flex-grid v-flex-grid--align-center v-flex-grid--justify-end">
                     <div class="v-flex-col">
                         {% if view is defined and (view.published is defined and not view.published) %}
