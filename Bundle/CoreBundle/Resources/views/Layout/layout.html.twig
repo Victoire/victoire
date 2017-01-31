@@ -54,7 +54,7 @@
 {% endblock head_style %}
 
 {% block container_attributes %}{{ parent() }} {% if app.session.get('victoire.edit_mode') %}role="{{ app.session.get('victoire.edit_mode') }}"{% endif %}{% endblock container_attributes %}
-{% block container_class %}{% endblock container_class %}
+{% block container_class %}{% if is_granted('ROLE_VICTOIRE') %}victoire-ui{% endif %}{% endblock container_class %}
 {% block container_attr %}{% if view is defined %}ng-controller="PageController as pageCtrl" ng-init="init({{ is_granted("ROLE_VICTOIRE") ? "true" : "false" }})"{% endif %}{% endblock %}
 
 {% block victoire_ui %}
