@@ -12,15 +12,18 @@ export default class MDFormGroups {
 class MDFormGroup {
     constructor(element) {
         this._group = element;
-        this._label = this._group.querySelector('[data-flag="mdf-label"]');
-        this._input = this._group.querySelector('[data-flag="mdf-input"]');
+        this._label = this._group.querySelector('.v-form-group__label');
+        this._input = this._group.querySelector('.v-form-group__input');
+
         this._dataGroup = {
             'name': 'data-mdform',
             'fold': 'folded',
             'unfold': 'unfolded',
         };
 
-        this._init();
+        if (this._label && this._input && !this._input.getAttribute('placeholder')) {
+            this._init();
+        }
     }
 
     _init() {

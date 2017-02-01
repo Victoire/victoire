@@ -3,7 +3,10 @@ $form--prefix: null;
 
 $formgroup--font-size: rem();
 $formgroup--font-family: $app--font-family;
-$formgroup--margin-bottom: 2em;
+$formgroup--margin-bottom: (
+  'default': 2em,
+  '-small': 0.65em,
+);
 $formgroup--md-effet: (
   '-md': true,
 );
@@ -24,7 +27,7 @@ $formgroup-input--line-height: 1.25;
 $formgroup-input--color: (
   'default': color('grey', 'darker'),
 );
-$formgroup-input--background-color: color('white');
+$formgroup-input--background-color: transparent;
 $formgroup-input--border-width: 0 0 0.0625em 0;
 $formgroup-input--border-style: solid;
 $formgroup-input--border-color: (
@@ -144,7 +147,9 @@ $radio-indicator-checked--box-shadow: inset 0 0 0 1px color('green'), inset 0 0 
 $select--color: color('grey', 'darker');
 $select--font-size: rem();
 $select--font-family: $app--font-family;
-$select--border-radius: null;
+$select--border-radius: (
+  'default': null,
+);
 $select--border-width: 0 0 1px;
 $select--border-style: solid;
 $select--border-color: color('grey', 'darker');
@@ -154,7 +159,7 @@ $select--height: null;
 $select--margin: null;
 $select--padding-x: 0;
 $select--padding-y: 0.5em;
-$select--line-height: 1.35;
+$select--line-height: 1.3;
 $select--background-color: $formgroup-input--background-color;
 $select--cursor: pointer;
 

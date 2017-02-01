@@ -53,7 +53,7 @@
 		this.isVisible = false;
 		this.isInput = this.element.is('input');
 
-		this.bootcssVer = this.isInput ? (this.element.is('.vic-form-control') ? 3 : 2) : ( this.bootcssVer = this.element.is('.vic-input-group') ? 3 : 2 );
+		this.bootcssVer = this.isInput ? (this.element.is('.v-form-group__input') ? 3 : 2) : ( this.bootcssVer = this.element.is('.vic-input-group') ? 3 : 2 );
 
 		this.component = this.element.is('.vic-date') ? ( this.bootcssVer == 3 ? this.element.find('.vic-input-group-addon .vic-glyphicon-th, .vic-input-group-addon .vic-glyphicon-time, .vic-input-group-addon .vic-glyphicon-calendar').parent() : this.element.find('.vic-add-on .icon-th, .add-on .icon-time, .add-on .icon-calendar').parent()) : false;
 		this.componentReset = this.element.is('.vic-date') ? ( this.bootcssVer == 3 ? this.element.find('.vic-input-group-addon .vic-glyphicon-remove').parent() : this.element.find('.vic-add-on .icon-remove').parent()) : false;
