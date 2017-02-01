@@ -1,6 +1,3 @@
-@import '../globals/params/color';
-@import '../globals/params/synthax';
-
 @mixin color-helper--declarations($name, $value, $variant: null) {
   $selector-name: if($variant, $name + '-' + $variant, $name);
 

@@ -1,0 +1,5 @@
+$text--selector: selector--constructor(null, 'text');
+@include selector($text--selector) {
+  @include declaration(text-align, $text--text-align);
+  @include block-generation($text--selector);
+}

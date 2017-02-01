@@ -30,39 +30,19 @@ $trowel-config: (
 /**
  * Global
  */
-@import 'globals/font-import';
+@import 'globals/**/*';
 
 /**
  * Helpers
  */
-@import 'helpers/color';
+@import 'helpers/*';
 
 /**
  * Components
  */
-@import 'components/texts/texts';
-@import 'components/layout/layout';
-@import 'components/button/button';
-@import 'components/form/form';
-@import 'components/drops/drops';
-@import 'components/slots/slots';
-@import 'components/widgets/widgets';
-@import 'components/input-images/input-images';
-@import 'components/list-groups/list-groups';
-@import 'components/seo/seo';
-@import 'components/image/image';
-@import 'components/menu/menu';
-@import 'components/navbar/navbar';
-@import 'components/mode-switcher/mode-switcher';
-@import 'components/modal/modal';
-@import 'components/collapse/collapse';
-@import 'components/logo/logo';
+@import 'components/*/*';
 
 /**
  * Layout
  */
-@import 'layout/header';
-@import 'layout/footer';
-@import 'layout/float-container';
-@import 'layout/body';
-@import 'layout/modals';
+@import 'layout/*';

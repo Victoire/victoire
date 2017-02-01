@@ -1,0 +1,80 @@
+@mixin mixin-dispatcher($value, $flags, $mixin) {
+  @if $mixin == 'listgroup-item--margin-top' {
+    @include listgroup-item--margin-top($value, $flags);
+  } @elseif $mixin == 'listgroup-item--cascade-padding' {
+    @include listgroup-item--cascade-padding($value, $flags);
+  }
+};
+
+$listgroup--selector: selector--constructor(null, 'list-group');
+@include selector($listgroup--selector) {
+  @include declaration('list-style', none, ('<ul', ));
+  @include declaration('padding-left', 0, ('<ul', ));
+  @include declaration('list-style', none, ('<ol', ));
+  @include declaration('padding-left', 0, ('<ol', ));
+
+  @include declaration('font-size', $listgroups--font-size);
+  @include declaration('font-family', $listgroups--font-family);
+  @include declaration('font-weight', $listgroups--font-weight);
+  @include declaration('text-transform', $listgroups--text-transform);
+  @include declaration('letter-spacing', $listgroups--letter-spacing);
+  @include declaration('line-height', $listgroups--line-height);
+  @include declaration('border-radius', $listgroups--border-radius);
+  @include declaration('box-shadow', $listgroups--box-shadow);
+  @include declaration('text-align', $listgroups--text-align);
+  @include declaration('margin', $listgroups--margin);
+  @include declaration('color', $listgroups--color);
+  @include declaration('text-decoration', $listgroups--text-decoration);
+  @include declaration('background-color', $listgroups--background-color);
+  @include declaration('border-radius', $listgroups--border-radius);
+
+  @include declaration('overflow', hidden);
+  @include declaration('border-width', $listgroups--border-width);
+  @include declaration('border-style', $listgroups--border-style);
+  @include declaration('border-color', $listgroups--border-color);
+
+
+  @include block-generation($listgroup--selector);
+}
+
+$listgroup-in-listgroup--selector: selector--append-parent($listgroup--selector, $listgroup--selector);
+@include selector($listgroup-in-listgroup--selector) {
+  @if $listgroups--margin { @include declaration('margin', 0); }
+  @if $listgroups--border-width { @include declaration('border-width', 0); }
+
+  @include block-generation($listgroup-in-listgroup--selector);
+}
+
+
+$listgroup-item--selector: selector--set-element($listgroup--selector, 'item');
+@include selector($listgroup-item--selector) {
+  @include declaration('-include-listgroup-item--margin-top', $listgroups--border-width);
+  @include declaration('padding-top', $listgroups-item--padding-y);
+  @include declaration('padding-bottom', $listgroups-item--padding-y);
+  @include declaration('padding-left', $listgroups-item--padding-x);
+  @include declaration('padding-right', $listgroups-item--padding-x);
+  @include declaration('border-top-width', $listgroups--border-width);
+  @include declaration('border-top-style', $listgroups--border-style);
+  @include declaration('border-top-color', $listgroups--border-color);
+
+  @include block-generation($listgroup-item--selector);
+}
+
+$listgroup-sublist--selector: selector--set-element($listgroup--selector, 'sub-list');
+$listgroup-item-in-sublist--selector: selector--append-parent($listgroup-item--selector, $listgroup-sublist--selector);
+
+@include selector($listgroup-item-in-sublist--selector) {
+  @if $listgroups--border-width { @include declaration('margin-top', 0) };
+
+  @include block-generation($listgroup-item-in-sublist--selector);
+}
+
+$listgroup-item-in-cascade--selector: $listgroup-item--selector;
+@for $cascade from 1 through 5 {
+  $listgroup-item-in-cascade--selector: selector--append-parent($listgroup-item-in-cascade--selector, $listgroup-sublist--selector);
+
+  @include selector($listgroup-item-in-cascade--selector) {
+    @include declaration('-include-listgroup-item--cascade-padding', $cascade);
+    @include block-generation($listgroup-item-in-cascade--selector);
+  }
+}

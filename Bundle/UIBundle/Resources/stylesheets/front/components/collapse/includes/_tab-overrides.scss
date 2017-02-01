@@ -1,0 +1,31 @@
+@import '../../navbar/includes/theme';
+
+.#{$app--prefix}-tabs-nav {
+  justify-content: center;
+  height: value($navbars--height);
+}
+
+.#{$app--prefix}-tabs-nav__anchor {
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  position: relative;
+}
+
+.#{$app--prefix}-tabs-nav__anchor--active::after {
+  content: '';
+  position: absolute;
+  height: 0.1875em;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: color('orange');
+}
+
+
+.#{$app--prefix}-tabs-nav--widget-modal {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}

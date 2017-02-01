@@ -58,6 +58,8 @@ linters:
     enabled: true
     leading_underscore: false
     filename_extension: false
+    exclude:
+        - 'Bundle/UIBundle/Resources/stylesheets/front/main-front.scss'
 
   Indentation:
     enabled: true
