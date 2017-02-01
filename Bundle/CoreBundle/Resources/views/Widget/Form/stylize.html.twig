@@ -17,7 +17,7 @@
 
     <div class="vic-tab-content vic-modal-tab-content vic-modal-tab-content-container">
         {% for index, form in forms %}
-        <div class="vic-tab-quantum vic-tab-pane{% if form.vars.data.id == widget.id %} vic-active{% endif %}" id="widget-{{ widgets[index].id }}-tab-pane">
+        <div class="vic-tab-quantum vic-tab-pane{% if form.vars.data.id == widget.id %} vic-active{% endif %}" id="widget-{{ widgets[index].id }}-tab-pane" data-group="tab-widget-quantum">
             {% include 'VictoireCoreBundle:Widget/Form/stylize:form.html.twig' %}
         </div>
         {% endfor %}

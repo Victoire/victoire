@@ -4,7 +4,7 @@
 
 {% embed '@styleguide/ui/snippet.html.twig' with {
     'snippets': {
-        'twig': '<button class="v-btn v-btn--primary" data-v-modal-show="#modal-example-1">open modal</button>\n\n<section class="v-modal" id="modal-example-1" data-flag="v-modal">\n    <div class="v-modal__header">\n        <nav class="v-navbar v-navbar--grey">\n            <div class="v-container v-container--fluid">\n                <div class="v-flex-grid">\n                    <div class="v-flex-col">\n                        <h2 class="v-modal__heading">WIDGET #256 - Français</h2>\n                    </div>\n                </div>\n            </div>\n        </nav>\n    </div>\n\n    <div class="v-modal__body">\n        <div>\n            <nav class="v-navbar v-navbar--vertical">\n                <div class="v-flex-grid v-flex-grid--direction-column">\n                    <div class="v-flex-col">\n                        <a href="#" class="v-btn v-btn--square v-btn--warning">\n                            {% include "@SVG/locale.html.twig" %}\n\n                            fr\n                        </a>\n                    </div>\n\n                    <div class="v-flex-col">\n                        <a href="#" class="v-btn v-btn--square v-btn--locale">\n                            {% include "@SVG/locale.html.twig" %}\n\n                            en\n                        </a>\n                    </div>\n\n                    <div class="v-flex-col">\n                        <a href="#" class="v-btn v-btn--square v-btn--locale">\n                            {% include "@SVG/locale.html.twig" %}\n\n                            al\n                        </a>\n                    </div>\n\n                    <div class="v-flex-col">\n                        <a href="#" class="v-btn v-btn--square v-btn--transparent">\n                            {% include "@SVG/locale-add.html.twig" %}\n                        </a>\n                    </div>\n                </div>\n            </nav>\n        </div>\n\n        <div class="v-modal__content">\n            <div class="v-container">\n                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n            </div>\n        </div>\n    </div>\n\n    <div class="v-modal__footer">\n        <nav class="v-navbar">\n            <div class="v-container">\n                <div class="v-flex-grid v-flex-grid--justify-between">\n                    <div class="v-flex-col">\n                        <button class="v-btn v-btn--transparent">Supprimer</button>\n                        <button class="v-btn v-btn--transparent v-btn--danger" data-v-modal-hide="#modal-example-1">Annuler</button>\n                    </div>\n\n                    <div class="v-flex-col">\n                        <button class="v-btn v-btn--warning">Mettre à jour</button>\n                    </div>\n                </div>\n            </div>\n        </nav>\n    </div>\n</section>',
+        'twig': '<button class="v-btn v-btn--primary" data-v-modal-show="#modal-example-1">open modal</button>\n\n<section class="v-modal" id="modal-example-1" data-flag="v-modal">\n    <div class="v-modal__header">\n        <nav class="v-navbar v-navbar--grey">\n            <div class="v-container v-container--fluid">\n                <div class="v-flex-grid">\n                    <div class="v-flex-col">\n                        <h2 class="v-modal__heading">WIDGET #256 - Français</h2>\n                    </div>\n                </div>\n            </div>\n        </nav>\n    </div>\n\n    <div class="v-modal__body">\n        <div>\n            <nav class="v-navbar v-navbar--vertical">\n                <div class="v-flex-grid v-flex-grid--direction-column">\n                    <div class="v-flex-col">\n                        <a href="#" class="v-btn v-btn--square v-btn--warning">\n                            {% include "@SVG/quantum.html.twig" %}\n\n                            fr\n                        </a>\n                    </div>\n\n                    <div class="v-flex-col">\n                        <a href="#" class="v-btn v-btn--square v-btn--locale">\n                            {% include "@SVG/quantum.html.twig" %}\n\n                            en\n                        </a>\n                    </div>\n\n                    <div class="v-flex-col">\n                        <a href="#" class="v-btn v-btn--square v-btn--locale">\n                            {% include "@SVG/quantum.html.twig" %}\n\n                            al\n                        </a>\n                    </div>\n\n                    <div class="v-flex-col">\n                        <a href="#" class="v-btn v-btn--square v-btn--transparent">\n                            {% include "@SVG/quantum-add.html.twig" %}\n                        </a>\n                    </div>\n                </div>\n            </nav>\n        </div>\n\n        <div class="v-modal__content">\n            <div class="v-container">\n                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n            </div>\n        </div>\n    </div>\n\n    <div class="v-modal__footer">\n        <nav class="v-navbar">\n            <div class="v-container">\n                <div class="v-flex-grid v-flex-grid--justify-between">\n                    <div class="v-flex-col">\n                        <button class="v-btn v-btn--transparent">Supprimer</button>\n                        <button class="v-btn v-btn--transparent v-btn--danger" data-v-modal-hide="#modal-example-1">Annuler</button>\n                    </div>\n\n                    <div class="v-flex-col">\n                        <button class="v-btn v-btn--warning">Mettre à jour</button>\n                    </div>\n                </div>\n            </div>\n        </nav>\n    </div>\n</section>',
     }
 } %}
     {% block snippet_preview %}
@@ -29,7 +29,7 @@
                         <div class="v-flex-grid v-flex-grid--direction-column">
                             <div class="v-flex-col">
                                 <a href="#" class="v-btn v-btn--square v-btn--warning">
-                                    {% include "@SVG/locale.html.twig" %}
+                                    {% include "@SVG/quantum.html.twig" %}
 
                                     fr
                                 </a>
@@ -37,7 +37,7 @@
 
                             <div class="v-flex-col">
                                 <a href="#" class="v-btn v-btn--square v-btn--locale">
-                                    {% include "@SVG/locale.html.twig" %}
+                                    {% include "@SVG/quantum.html.twig" %}
 
                                     en
                                 </a>
@@ -45,7 +45,7 @@
 
                             <div class="v-flex-col">
                                 <a href="#" class="v-btn v-btn--square v-btn--locale">
-                                    {% include "@SVG/locale.html.twig" %}
+                                    {% include "@SVG/quantum.html.twig" %}
 
                                     al
                                 </a>
@@ -53,7 +53,7 @@
 
                             <div class="v-flex-col">
                                 <a href="#" class="v-btn v-btn--square v-btn--transparent">
-                                    {% include "@SVG/locale-add.html.twig" %}
+                                    {% include "@SVG/quantum-add.html.twig" %}
                                 </a>
                             </div>
                         </div>
