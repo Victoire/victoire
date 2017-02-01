@@ -7,3 +7,7 @@
     text-decoration: none;
   }
 }
+
+.#{$app--prefix}-collapse {
+  @include clearfix;
+}
