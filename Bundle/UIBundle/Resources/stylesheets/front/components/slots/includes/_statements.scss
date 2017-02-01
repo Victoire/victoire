@@ -1,0 +1,85 @@
+@mixin mixin-dispatcher($value, $flags, $mixin) {
+  @if $mixin == 'slots-select--open-width' {
+    @include slots-select--open-width($value, $flags);
+  }
+};
+
+
+$slot--selector: selector--constructor(null, 'slot');
+@include selector($slot--selector) {
+  @include declaration('display', none);
+  @include declaration('cursor', $slots--cursor);
+  @include declaration('position', relative);
+  @include declaration('font-family', $slots--font-family);
+  @include declaration('font-size', $slots--font-size);
+  @include declaration('color', $slots--color);
+  @include declaration('font-weight', $slots--font-weight);
+  @include declaration('height', $slots--height);
+  @include declaration('text-align', center);
+  @include declaration('margin', $slots--margin);
+  @include block-generation($slot--selector);
+
+  @include when-mode-layout {
+    display: block;
+  }
+}
+
+$slot-border--selector: selector--set-pseudo-element($slot--selector, 'before');
+@include selector($slot-border--selector) {
+  @include declaration('content', '');
+  @include declaration('display', block);
+  @include declaration('position', absolute);
+  @include declaration('top', 0);
+  @include declaration('left', 0);
+  @include declaration('width', 100%);
+  @include declaration('height', 100%);
+  @include declaration('z-index', 0);
+  @include declaration('border-width', $slots--border-width);
+  @include declaration('border-style', $slots--border-style);
+  @include declaration('border-color', $slots--border-color);
+  @include declaration('border-radius', $slots--border-radius);
+  @include declaration('background-color', $slots--background-color);
+  @include block-generation($slot-border--selector);
+}
+
+$slot-select--selector: selector--set-element($slot--selector, 'select');
+@include selector($slot-select--selector) {
+  @include declaration('position', absolute);
+  @include declaration('left', 0);
+  @include declaration('left', 50%, ('-open'));
+  @include declaration('width', 100%);
+  @include declaration('height', 100%);
+  @include declaration('cursor', $slots--cursor);
+  @include declaration('outline', 0, (':focus'));
+  @include declaration('-include-slots-select--open-width', $slots-select--open-width);
+  @include declaration('appearance', none);
+  @include declaration('background', color('black', null, 0));
+  @include declaration('opacity', 0);
+  @include declaration('z-index', 2);
+  @include block-generation($slot-select--selector);
+}
+
+$slot-label--selector: selector--set-element($slot--selector, 'label');
+@include selector($slot-label--selector) {
+  @include declaration('height', $slots--height);
+  @include declaration('display', inline-flex);
+  @include declaration('align-items', center);
+  @include declaration('justify-content', center);
+  @include declaration('position', relative);
+  @include declaration('z-index', 1);
+  @include block-generation($slot-label--selector);
+}
+
+$slot-labelicon--selector: selector--set-element($slot--selector, 'label-icon');
+@include selector($slot-labelicon--selector) {
+  @include declaration('height', $slots-labelicon--size);
+  @include declaration('width', $slots-labelicon--size);
+  @include block-generation($slot-labelicon--selector);
+}
+
+$slot-labeltext--selector: selector--set-element($slot--selector, 'label-text');
+@include selector($slot-labeltext--selector) {
+  @include declaration('margin-left', $slots-label--gutter);
+  @include declaration('display', none, ('-sm'));
+  @include block-generation($slot-labeltext--selector);
+}

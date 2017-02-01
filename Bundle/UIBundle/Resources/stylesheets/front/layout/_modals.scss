@@ -1,6 +1,3 @@
-@import '../globals/params/synthax';
-@import '../globals/params/z-index';
-
 .#{$app--prefix}-drop[id^="picker-entities"],
 .#{$app--prefix}-drop[id^="picker-modes"] {
   z-index: z-index(3);

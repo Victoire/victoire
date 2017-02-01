@@ -43,6 +43,7 @@ gulp.task('styles', () => {
         STYLE_SRC_DIR + '/styleguide/main-styleguide.scss'
     ])
         .pipe($.sourcemaps.init())
+        .pipe($.sassGlob())
         .pipe($.sass({ precision: 6 })).on('error', reportError)
         .pipe($.autoprefixer({ browsers: AUTOPREFIXER_BROWSERS }))
         .pipe($.sourcemaps.write())

@@ -1,0 +1,87 @@
+$widget--selector: selector--constructor(null, 'widget');
+@include selector($widget--selector) {
+  @include declaration('position', relative);
+  @include block-generation($widget--selector);
+
+  @include when-mode-edit {
+    min-height: 20px;
+  }
+
+  @include when-mode-style {
+    min-height: 20px;
+  }
+}
+
+$widget-overlay--selector: selector--set-element($widget--selector, 'overlay');
+@include selector($widget-overlay--selector) {
+  @include declaration('position', absolute);
+  @include declaration('top', 0);
+  @include declaration('left', 0);
+  @include declaration('width', 100%);
+  @include declaration('height', 100%);
+  @include declaration('display', block);
+  @include declaration('font-family', $widgets-overlay--font-family);
+  @include declaration('font-size', $widgets-overlay--font-size);
+  @include declaration('cursor', $widgets-overlay--cursor);
+  @include declaration('border-width', $widgets-overlay--border-width);
+  @include declaration('border-style', $widgets-overlay--border-style);
+  @include declaration('border-radius', $widgets-overlay--border-radius);
+  @include declaration('background-color', $widgets-overlay--background-color);
+  @include declaration('opacity', 0);
+  @include declaration('opacity', 1, (':hover'));
+  @include declaration('display', none);
+  @include declaration('box-shadow', $widgets-overlay--box-shadow);
+
+  @include when-mode-edit {
+    display: block;
+
+    &,
+    &:hover {
+      color: $mode-edit--color;
+    }
+
+    &:active {
+      color: color('orange', 'dark');
+    }
+  }
+
+  @include when-mode-style {
+    display: block;
+
+    &,
+    &:hover {
+      color: $mode-style--color;
+    }
+
+    &:active {
+      color: color('pink', 'dark');
+    }
+  }
+
+  @include block-generation($widget-overlay--selector);
+}
+
+$widget-overlayicon--selector: selector--set-element($widget--selector, 'overlay-icon');
+@include selector($widget-overlayicon--selector) {
+  @include declaration('position', absolute);
+  @include declaration('top', 50%);
+  @include declaration('left', 50%);
+  @include declaration('transform', translate(-50%, -50%));
+  @include declaration('width', $widgets-overlayicon--size);
+  @include declaration('height', $widgets-overlayicon--size);
+  @include block-generation($widget-overlayicon--selector);
+}
+
+$widget-overlayicon-edit--selector: selector--set-modifier-element($widget-overlayicon--selector, 'edit');
+@include selector($widget-overlayicon-edit--selector) {
+  @include when-mode-style {
+    display: none;
+  }
+}
+
+$widget-overlayicon-style--selector: selector--set-modifier-element($widget-overlayicon--selector, 'style');
+@include selector($widget-overlayicon-style--selector) {
+  @include when-mode-edit {
+    display: none;
+  }
+}
