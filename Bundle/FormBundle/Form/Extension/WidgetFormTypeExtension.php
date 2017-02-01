@@ -70,7 +70,7 @@ class WidgetFormTypeExtension extends AbstractTypeExtension
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'vic_widget_form_control_class'  => 'vic-form-control',
+            'vic_widget_form_control_class'  => 'v-form-group__input',
             'vic_widget_form_group'          => true,
             'vic_widget_addon_prepend'       => null,
             'vic_widget_addon_append'        => null,
@@ -79,7 +79,8 @@ class WidgetFormTypeExtension extends AbstractTypeExtension
             'vic_widget_type'                => '',
             'vic_widget_items_attr'          => [],
             'vic_vic_widget_form_group_attr' => [
-                'class' => 'vic-form-group',
+                'class' => 'v-form-group v-form-group--md',
+                'data-flag' => 'v-mdForm',
             ],
             'vic_widget_vic_checkbox_label' => $this->options['vic_checkbox_label'],
         ]);

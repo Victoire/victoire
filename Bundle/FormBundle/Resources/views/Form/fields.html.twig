@@ -82,7 +82,7 @@
     {% spaceless %}
         {% if vic_button_offset is not empty %}
             {% set attr = attr|merge({'for': id, 'class': vic_button_offset }) %}
-            <div class="vic-form-group">
+            <div class="v-form-group">
                 <div {% for attrname, attrvalue in attr %} {{attrname}}="{{attrvalue}}"{% endfor %}>
                 {{ form_widget(form) }}
                 </div>
@@ -98,8 +98,8 @@
 {# Widgets #}
 
 {% block choice_widget_collapsed %}
-    <div class="vic-custom-select">
-        {% set attr = attr|merge({'class': ''}) %}
+    <div class="v-select">
+        {% set attr = attr|merge({'class': 'v-select__native'}) %}
         {{ parent() }}
     </div>
 
@@ -108,24 +108,31 @@
 
 {% block textarea_widget %}
     {% set type = type|default('text') %}
+
     {% if type != 'hidden' and ( vic_widget_addon_prepend|default(null) is not null or vic_widget_addon_append|default(null) is not null ) %}
-    <div class="vic-input-group">
-        {% if vic_widget_addon_prepend|default(null) is not null %}
-            {% set widget_addon = vic_widget_addon_prepend %}
-            {{ block('widget_addon') }}
-        {% endif %}
+        <div class="vic-input-group">
+            {% if vic_widget_addon_prepend|default(null) is not null %}
+                {% set widget_addon = vic_widget_addon_prepend %}
+
+                {{ block('widget_addon') }}
+            {% endif %}
     {% endif %}
-    {% set attr = attr|merge({'class': attr.class|default('') ~ ' ' ~ vic_widget_form_control_class}) %}
-    {{ parent() }}
-    {% if vic_horizontal %}
-            {{ block('form_message') }}
-    {% endif %}
+
+            {% set attr = attr|merge({'class': attr.class|default('') ~ ' ' ~ vic_widget_form_control_class}) %}
+
+            {{ parent() }}
+
+            {% if vic_horizontal %}
+                {{ block('form_message') }}
+            {% endif %}
+
     {% if type != 'hidden' and ( vic_widget_addon_prepend|default(null) is not null or vic_widget_addon_append|default(null) is not null ) %}
-        {% if vic_widget_addon_append|default(null) is not null %}
-        {% set widget_addon = vic_widget_addon_append %}
-        {{ block('widget_addon') }}
-        {% endif %}
-    </div>
+            {% if vic_widget_addon_append|default(null) is not null %}
+                {% set widget_addon = vic_widget_addon_append %}
+
+                {{ block('widget_addon') }}
+            {% endif %}
+        </div>
     {% endif %}
 {% endblock textarea_widget %}
 
@@ -327,7 +334,7 @@
 {% if widget == 'single_text' %}
     {% if timepicker is defined %}
         <div data-provider="timepicker" class="vic-input-group vic-date" data-date="{{ value }}" data-link-field="{{ id }}" data-link-format="hh:ii">
-            <input class="vic-form-control" type="text" {% if read_only %} readonly="readonly"{% endif %}{% if disabled %} disabled="disabled"{% endif %}{% if required %} required="required"{% endif %}>
+            <input class="v-form-group__input" type="text" {% if read_only %} readonly="readonly"{% endif %}{% if disabled %} disabled="disabled"{% endif %}{% if required %} required="required"{% endif %}>
             <input type="hidden" value="{{ value }}" {{ block('widget_attributes') }}>
             <span class="vic-input-group-addon">{{ victoire_icon('time') }}</span>
         </div>
@@ -353,7 +360,7 @@
     {% if widget == 'single_text' %}
         {% if vic_datetimepicker is defined %}
             <div data-provider="datetimepicker" class="vic-input-group vic-date" data-date="{% if value %}{{ value|date('d-m-Y H:i') }}{% endif %}" data-link-field="{{ id }}" data-link-format="dd-mm-yyyy hh:ii">
-                <input class="vic-form-control" type="text" {% if read_only %} readonly="readonly"{% endif %}{% if disabled %} disabled="disabled"{% endif %}{% if required %} required="required"{% endif %} value="{% if value %}{{ value|date('d-m-Y H:i') }}{% endif %}">
+                <input class="v-form-group__input" type="text" {% if read_only %} readonly="readonly"{% endif %}{% if disabled %} disabled="disabled"{% endif %}{% if required %} required="required"{% endif %} value="{% if value %}{{ value|date('d-m-Y H:i') }}{% endif %}">
                 <input type="hidden" value="{% if value %}{{ value|date('d-m-Y H:i') }}{% endif %}" {{ block('widget_attributes') }}>
                 <span class="vic-input-group-addon">{{ victoire_icon('th') }}</span>
             </div>
@@ -431,7 +438,7 @@
         {% endif %}
         {% set label_attr_class = '' %}
         {% if vic_horizontal %}
-            {% set label_attr_class = 'vic-control-label ' ~ label_attr_class ~ vic_horizontal_label_class %}
+            {% set label_attr_class = 'v-form-group__label ' ~ label_attr_class ~ vic_horizontal_label_class %}
         {% endif %}
         {% set label_attr = label_attr|merge({'class': label_attr.class|default('') ~ label_attr_class ~ (required ? ' vic-required' : '') }) %}
         <label{% for attrname,attrvalue in label_attr %} {{attrname}}="{{attrvalue}}"{% endfor %}>
@@ -456,11 +463,11 @@
 {% endblock form_label %}
 
 {% block vic_help_label %}
-    <span class="vic-help-block">{{ vic_help_label|trans({}, translation_domain) }}</span>
+    <span class="v-form-group__help">{{ vic_help_label|trans({}, translation_domain) }}</span>
 {% endblock vic_help_label %}
 
 {% block vic_help_label_tooltip %}
-    <span class="vic-help-block">
+    <span class="v-form-group__help">
         <a href="#" data-toggle="vic-tooltip" data-placement="{{ vic_help_label_tooltip.placement}}" data-title="{{ vic_help_label_tooltip.title|trans({}, translation_domain) }}">
             {% if vic_help_label_tooltip.icon is not same as(false) %}
                 {{ victoire_icon(vic_help_label_tooltip.icon) }}
@@ -473,7 +480,7 @@
 {% endblock vic_help_label_tooltip %}
 
 {% block vic_help_label_popover %}
-    <span class="vic-help-block">
+    <span class="v-form-group__help">
         <a href="#" data-toggle="vic-popover" data-trigger="hover" data-placement="{{ vic_help_label_popover.placement}}" data-title="{{ vic_help_label_popover.title|trans({}, translation_domain) }}" data-content="{{ vic_help_label_popover.content|trans({}, translation_domain) }}" >
             {% if vic_help_label_popover.icon is not same as(false) %}
                 {{ victoire_icon(vic_help_label_popover.icon) }}
@@ -555,7 +562,7 @@
 {% block form_help %}
     {% spaceless %}
         {% if vic_help_block %}
-            <p class="vic-help-block">{{ vic_help_block|trans({}, translation_domain)|raw }}</p>
+            <p class="v-form-group__help">{{ vic_help_block|trans({}, translation_domain)|raw }}</p>
         {%endif %}
         {% if vic_business_property_picker %}
             {% include 'VictoireBusinessEntityBundle:BusinessProperty:list.html.twig' with {
@@ -579,7 +586,7 @@
 {% block form_vic_widget_remove_btn %}
 {% spaceless %}
     {% if vic_widget_remove_btn.wrapper_div is not same as(false) %}
-        <div class="vic-form-group">
+        <div class="v-form-group">
             <div class="{{ vic_widget_remove_btn.wrapper_div.class }} vic-col-lg-offset-3">
     {% endif %}
     {% if vic_widget_remove_btn|default(null) %}
@@ -769,8 +776,8 @@
 
 {% block font_awesome_picker_widget %}
     {% spaceless %}
-    <div class="vic-form-group">
-        <input type="search" {{ block('widget_attributes') }} class="vic-form-control" {% if value is not empty %}value="{{ value }}" {% endif %}/>
+    <div class="v-form-group">
+        <input type="search" {{ block('widget_attributes') }} class="v-form-group__input" {% if value is not empty %}value="{{ value }}" {% endif %}/>
     </div>
     <script type="text/javascript">
 

@@ -1,15 +1,24 @@
 // Select
 // ------
 
-.#{$form--prefix}-select__native {
+.#{$app--prefix}-select__native {
   padding-top: 0;
 }
 
-.#{$form--prefix}-select {
+.#{$app--prefix}-select {
   display: block;
+  line-height: 1;
 }
 
-.#{$form--prefix}-select::after {
+.#{$app--prefix}-form-group__label {
+  top: 0;
+
+  &[data-mdform="folded"] {
+    pointer-events: none;
+  }
+}
+
+.#{$app--prefix}-select::after {
   background-image: url('/bundles/victoireui/images/components/form/select--caret.svg');
   background-repeat: no-repeat;
 }
