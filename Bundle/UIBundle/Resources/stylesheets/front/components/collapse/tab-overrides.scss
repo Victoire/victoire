@@ -22,3 +22,11 @@
   width: 100%;
   background-color: color('orange');
 }
+
+
+.#{$app--prefix}-tabs-nav--widget-modal {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}

@@ -14,6 +14,11 @@ function openModal(url) {
         if (false === response.success) {
             warn(response.message, 10000);
         } else {
+            //remove drops from the previous instance of the modal
+            $vic('#vic-modal [data-flag="v-drop"]').each(function(index, el) {
+                $vic($vic(el).attr('data-href')).remove();
+            });
+
             //remove the previous instance of the modal
             $vic('#vic-modal').remove();
             //add the html of the modal

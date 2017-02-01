@@ -115,7 +115,10 @@ $button--background-color: (
     'default': color('blue') color('blue', 'dark'),
     '[disabled="true"': color('blue') color('blue'),
   ),
-  '-locale': color('grey') color('grey', 'dark'),
+  '-quantum': (
+    'default': color('grey') color('grey', 'dark'),
+    '-quantum-active': color('orange') color('orange', 'dark'),
+  ),
   '-fab': (
     'default': color('green') color('green', 'dark'),
     '-fab-open': color('grey', 'darker') color('grey', 'darker'),

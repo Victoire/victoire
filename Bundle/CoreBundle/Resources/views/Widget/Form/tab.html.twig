@@ -1,4 +1,15 @@
 {% trans_default_domain "victoire" %}
-<li class="{% if not isLast %}vic-separate{% endif %}{% if active is defined and active == true %} vic-active{% endif %}">
-    <a id="widget-{{ id }}-tab" class="quantum-tab-name" href="#widget-{{ id }}-tab-pane" data-toggle="vic-tab" data-tab-name="{{ 'victoire.widget.modal.title'|trans({'%type%': ('widget.'~widget.type~'.new.action.label')|trans(), '%id%': widget.id ? ('#'~widget.id) : ''}) }}"><span>{{ widget.quantum ? widget.quantum : "widget_modal.quantum.tab.default"|trans({}, 'victoire') }}</span> <i class="edit fa fa-pencil"></i></a>
-</li>
+
+{% set name = widget.quantum ? widget.quantum : "widget_modal.quantum.tab.default"|trans({}, 'victoire') %}
+
+<div class="v-flex-col">
+    <button
+        class="v-btn v-btn--square v-btn--quantum"
+        data-collapse="show"
+        data-href="#widget-{{ id }}-tab-pane"
+        data-activeclass="v-btn--quantum-active"
+    >
+        {% include "@SVG/quantum.html.twig" %}
+        {{ name|truncate(2, false, '') }}
+    </button>
+</div>

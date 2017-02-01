@@ -12,7 +12,9 @@
     "styles": "gulp styles",
     "styles-watch": "gulp watch",
     "cc": "php Tests/Functionnal/bin/console cache:clear",
-    "js-routing": "php Tests/Functionnal/bin/console fos:js-routing:dump -e test --target=Tests/Functionnal/web/js/fos_js_routes_test.js"
+    "js-routing": "php Tests/Functionnal/bin/console fos:js-routing:dump -e test --target=Tests/Functionnal/web/js/fos_js_routes_test.js",
+    "assetic": "php Tests/Functionnal/bin/console assetic:dump",
+    "assetic-watch": "php Tests/Functionnal/bin/console assetic:watch"
   },
   "license": "MIT",
   "dependencies": {

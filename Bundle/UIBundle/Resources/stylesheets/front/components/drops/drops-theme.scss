@@ -110,24 +110,31 @@ $drops-anchor--text-decoration:  (
 );
 $drops-anchor--color: (
   'default': color('grey', 'darker'),
-  ':hover': color('grey', 'darker'),
-  ':focus': color('grey', 'darker'),
-  ':active': color('grey', 'darker'),
+  '~disabled': color('grey'),
+  '<a': (
+    ':hover': color('grey', 'darker'),
+    ':focus': color('grey', 'darker'),
+    ':active': color('grey', 'darker'),
+  ),
   '-fab': (
     'default': color('white'),
-    ':hover': color('white'),
-    ':focus': color('white'),
-    ':active': color('white'),
+    '<a': (
+      ':hover': color('white'),
+      ':focus': color('white'),
+      ':active': color('white'),
+    ),
   ),
 );
 $drops-anchor--background-color:  (
-  ':hover': #eee,
-  ':focus': #eee,
-  ':active': #eee,
-  '-fab': (
-    ':hover': transparent,
-    ':focus': transparent,
-    ':active': transparent,
+  '<a': (
+    ':hover': #eee,
+    ':focus': #eee,
+    ':active': #eee,
+    '-fab': (
+      ':hover': transparent,
+      ':focus': transparent,
+      ':active': transparent,
+    )
   )
 );
 

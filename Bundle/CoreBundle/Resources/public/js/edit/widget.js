@@ -54,7 +54,7 @@ $vic(document).on('click', '.v-modal--widget a[data-modal="update"], .v-modal--w
     }
 
     var forms = [];
-    $vic('.vic-tab-quantum').each(function(index, quantum) {
+    $vic('[data-group="tab-widget-quantum"]').each(function(index, quantum) {
         // matches widget edit form with more than one mode available
         var activeForm = $vic(quantum).find('.vic-tab-mode.vic-active .vic-tab-pane.vic-active > form');
         // matches widget edit form with only static mode available
@@ -136,18 +136,19 @@ $vic(document).on('click', 'a#widget-new-tab', function(event) {
         url : url
     }).done(function(response) {
         if (true === response.success) {
-            $vic('.vic-modal-tab-content-container .vic-tab-quantum').removeClass('vic-active');
-            $vic('.vic-modal-nav-tabs li').removeClass('vic-active');
-            var form = $vic(response.html).find('.vic-tab-quantum').first();
-            var tab = $vic(response.html).find('.vic-modal-nav-tabs li:not(.widget-new-tab)').last();
-            $vic('li.widget-new-tab').before(tab);
-            $vic('div.vic-modal-tab-content-container').append(form);
-            $vic('#victoire-modal-label').html($vic(response.html).find('li:not(.widget-new-tab) .quantum-tab-name').last().data('tabName'));
+            $vic('[data-group="tab-widget-quantum"][data-state="visible"]').attr('data-state', 'hidden');
+            $vic('.v-btn--quantum-active').removeClass('v-btn--quantum-active');
+            var form = $vic(response.html).find('[data-group="tab-widget-quantum"]').first();
+            var tab = $vic(response.html).find('.v-btn--quantum').last().addClass('v-btn--quantum-active').parent();
+            $vic('#widget-new-tab').parent('.v-flex-col').before(tab);
+            $vic('#v-modal-tab-content-container').append(form);
+
             loading(false);
         }
     });
     $vic(document).trigger("victoire_widget_delete_postsubmit");
 });
+
 // Delete a widget after submit
 $vic(document).on('click', '.v-modal--widget a.vic-confirmed, .vic-hover-widget-unlink', function(event) {
     event.preventDefault();
