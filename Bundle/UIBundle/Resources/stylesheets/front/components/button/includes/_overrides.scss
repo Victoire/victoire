@@ -59,3 +59,15 @@ $drop-fab-anchor--box-shadow: 0 0.285714286em 0.571428571em 0 color('black', nul
 .#{$app--prefix}-drop--fab .#{$app--prefix}-drop__anchor:focus .#{$app--prefix}-drop__anchor-icon {
   background-color: color('green', 'dark');
 }
+
+.#{$app--prefix}-btn--quantum__ic {
+  margin-right: 0.2em;
+}
+
+.#{$app--prefix}-btn__ic--before {
+  margin-right: 0.5em;
+}
+
+.#{$app--prefix}-btn__ic--after {
+  margin-left: 0.5em;
+}
