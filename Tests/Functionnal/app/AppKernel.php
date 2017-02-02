@@ -1,6 +1,7 @@
 <?php
 
 use Symfony\Component\Config\Loader\LoaderInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Kernel;
 
 require_once __DIR__.'/autoload.php';
@@ -101,41 +102,49 @@ class AppKernel extends Kernel
      */
     public function shutdown()
     {
-        if ($this->environment === 'ci') {
-            if (false === $this->booted) {
-                return;
-            }
-
-            $container = $this->container;
-            parent::shutdown();
-            $this->cleanupContainer($container);
-        } else {
-            parent::shutdown();
+        if (false === $this->booted) {
+            return;
         }
+
+        if (!in_array($this->getEnvironment(), ['test', 'test_cached'], true)) {
+            parent::shutdown();
+
+            return;
+        }
+
+        $container = $this->getContainer();
+        parent::shutdown();
+        $this->cleanupContainer($container);
     }
 
     /**
      * Remove all container references from all loaded services.
+     *
+     * @param ContainerInterface $container
      */
-    protected function cleanupContainer($container)
+    protected function cleanupContainer(ContainerInterface $container)
     {
-        $object = new \ReflectionObject($container);
-        $property = $object->getProperty('services');
-        $property->setAccessible(true);
-        $services = $property->getValue($container) ?: [];
-        foreach ($services as $id => $service) {
-            if ('kernel' === $id) {
+        $containerReflection = new \ReflectionObject($container);
+        $containerServicesPropertyReflection = $containerReflection->getProperty('services');
+        $containerServicesPropertyReflection->setAccessible(true);
+        $services = $containerServicesPropertyReflection->getValue($container) ?: [];
+
+        foreach ($services as $serviceId => $service) {
+            if ('kernel' === $serviceId || 'http_kernel' === $serviceId) {
                 continue;
             }
-            $serviceObject = new \ReflectionObject($service);
-            foreach ($serviceObject->getProperties() as $prop) {
-                $prop->setAccessible(true);
-                if ($prop->isStatic()) {
-                    continue;
+            $serviceReflection = new \ReflectionObject($service);
+            $servicePropertiesReflections = $serviceReflection->getProperties();
+            $servicePropertiesDefaultValues = $serviceReflection->getDefaultProperties();
+            foreach ($servicePropertiesReflections as $servicePropertyReflection) {
+                $defaultPropertyValue = null;
+                if (isset($servicePropertiesDefaultValues[$servicePropertyReflection->getName()])) {
+                    $defaultPropertyValue = $servicePropertiesDefaultValues[$servicePropertyReflection->getName()];
                 }
-                $prop->setValue($service, null);
+                $servicePropertyReflection->setAccessible(true);
+                $servicePropertyReflection->setValue($service, $defaultPropertyValue);
             }
         }
-        $property->setValue($container, null);
+        $containerServicesPropertyReflection->setValue($container, null);
     }
 }
