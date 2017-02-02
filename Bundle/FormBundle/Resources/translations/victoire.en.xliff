@@ -1,120 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="en" datatype="plaintext" original="not.available">
-    <header>
-      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
-      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
-    </header>
     <body>
-      <trans-unit id="1" resname="(optional)">
+      <trans-unit id="58893b9979c6a" resname="(optional)">
         <source>(optional)</source>
         <target><![CDATA[<em>(Optional)</em>]]></target>
       </trans-unit>
-      <trans-unit id="2" resname="victoire.collection.button.label.add_item">
+      <trans-unit id="58893b9979c8d" resname="victoire.collection.button.label.add_item">
         <source>victoire.collection.button.label.add_item</source>
         <target>Add item</target>
       </trans-unit>
-      <trans-unit id="3" resname="victoire.collection.button.label.remove_item">
+      <trans-unit id="58893b9979cba" resname="victoire.collection.button.label.remove_item">
         <source>victoire.collection.button.label.remove_item</source>
         <target>Remove item</target>
       </trans-unit>
-      <trans-unit id="4" resname="Link">
+      <trans-unit id="58893b9979cdf" resname="Link">
         <source>Link</source>
         <target>Link</target>
       </trans-unit>
-      <trans-unit id="5" resname="form.link_type.linkType.label">
+      <trans-unit id="58893b9979cfe" resname="form.link_type.linkType.label">
         <source>form.link_type.linkType.label</source>
         <target>Link type</target>
       </trans-unit>
-      <trans-unit id="6" resname="form.link_type.linkType.view_reference">
+      <trans-unit id="58893b9979d29" resname="form.link_type.linkType.view_reference">
         <source>form.link_type.linkType.view_reference</source>
         <target>Website page</target>
       </trans-unit>
-      <trans-unit id="7" resname="form.link_type.linkType.none">
+      <trans-unit id="58893b9979d3e" resname="form.link_type.linkType.none">
         <source>form.link_type.linkType.none</source>
         <target>No link</target>
       </trans-unit>
-      <trans-unit id="8" resname="form.link_type.linkType.route">
+      <trans-unit id="58893b9979d56" resname="form.link_type.linkType.route">
         <source>form.link_type.linkType.route</source>
         <target>Routing (advanced mode)</target>
       </trans-unit>
-      <trans-unit id="9" resname="form.link_type.linkType.url">
+      <trans-unit id="58893b9979d7d" resname="form.link_type.linkType.url">
         <source>form.link_type.linkType.url</source>
         <target>URL</target>
       </trans-unit>
-      <trans-unit id="10" resname="form.link_type.linkType.widget">
+      <trans-unit id="58893b9979d95" resname="form.link_type.linkType.widget">
         <source>form.link_type.linkType.widget</source>
         <target>Anchor (Widget)</target>
       </trans-unit>
-      <trans-unit id="11" resname="form.link_type.url.label">
+      <trans-unit id="58893b9979dd3" resname="form.link_type.url.label">
         <source>form.link_type.url.label</source>
         <target>URL</target>
       </trans-unit>
-      <trans-unit id="12" resname="form.link_type.view_reference.label">
+      <trans-unit id="58893b9979df7" resname="form.link_type.view_reference.label">
         <source>form.link_type.view_reference.label</source>
         <target>Website page</target>
       </trans-unit>
-      <trans-unit id="13" resname="form.link_type.view_reference.blank">
+      <trans-unit id="58893b9979e12" resname="form.link_type.view_reference.blank">
         <source>form.link_type.view_reference.blank</source>
         <target>Choose a page</target>
       </trans-unit>
-      <trans-unit id="14" resname="form.link_type.attachedWidget.label">
+      <trans-unit id="58893b9979e28" resname="form.link_type.attachedWidget.label">
         <source>form.link_type.attachedWidget.label</source>
         <target>Anchor (Widget)</target>
       </trans-unit>
-      <trans-unit id="15" resname="form.link_type.attachedWidget.blank">
+      <trans-unit id="58893b9979e3c" resname="form.link_type.attachedWidget.blank">
         <source>form.link_type.attachedWidget.blank</source>
         <target>Choose an anchor</target>
       </trans-unit>
-      <trans-unit id="16" resname="form.link_type.route.label">
+      <trans-unit id="58893b9979e52" resname="form.link_type.route.label">
         <source>form.link_type.route.label</source>
         <target>Routing</target>
       </trans-unit>
-      <trans-unit id="17" resname="form.link_type.route.placeholder">
+      <trans-unit id="58893b9979e6a" resname="form.link_type.route.placeholder">
         <source>form.link_type.route.placeholder</source>
         <target>Set the routing</target>
       </trans-unit>
-      <trans-unit id="18" resname="form.link_type.route_parameters.label">
+      <trans-unit id="58893b9979e7b" resname="form.link_type.route_parameters.label">
         <source>form.link_type.route_parameters.label</source>
         <target>Routing parametres</target>
       </trans-unit>
-      <trans-unit id="23" resname="form.link_type.route_parameters.placeholder">
+      <trans-unit id="58893b9979e9c" resname="form.link_type.route_parameters.placeholder">
         <source>form.link_type.route_parameters.placeholder</source>
         <target>Set the routing parameters - JSON format</target>
       </trans-unit>
-      <trans-unit id="19" resname="form.link_type.target.label">
+      <trans-unit id="58893b9979eb6" resname="form.link_type.target.label">
         <source>form.link_type.target.label</source>
         <target>Link target</target>
       </trans-unit>
-      <trans-unit id="30" resname="form.link_type.url.placeholder">
+      <trans-unit id="58893b9979ece" resname="form.link_type.url.placeholder">
         <source>form.link_type.url.placeholder</source>
         <target>Use the following format : http://...</target>
       </trans-unit>
-      <trans-unit id="20" resname="form.link_type.choice.target.parent">
+      <trans-unit id="58893b9979ee8" resname="form.link_type.choice.target.parent">
         <source>form.link_type.choice.target.parent</source>
         <target>In the active page</target>
       </trans-unit>
-      <trans-unit id="21" resname="form.link_type.choice.target.blank">
+      <trans-unit id="58893b9979f04" resname="form.link_type.choice.target.blank">
         <source>form.link_type.choice.target.blank</source>
         <target>In a new tab</target>
       </trans-unit>
-      <trans-unit id="22" resname="form.link_type.analytics_track_code.label">
+      <trans-unit id="58893b9979f22" resname="form.link_type.analytics_track_code.label">
         <source>form.link_type.analytics_track_code.label</source>
         <target>Tracking code</target>
       </trans-unit>
-      <trans-unit id="24" resname="form.link_type.analytics_track_code.placeholder">
+      <trans-unit id="58893b9979f39" resname="form.link_type.analytics_track_code.placeholder">
         <source>form.link_type.analytics_track_code.placeholder</source>
         <target>Tracking (onclick)</target>
       </trans-unit>
-      <trans-unit id="25" resname="form.link_type.choice.target.ajax-modal">
+      <trans-unit id="58893b9979f4d" resname="form.link_type.choice.target.ajax-modal">
         <source>form.link_type.choice.target.ajax-modal</source>
         <target>In a new modal window</target>
       </trans-unit>
-      <trans-unit id="26" resname="form.link_type.target.modalLayouts.label">
+      <trans-unit id="58893b9979f63" resname="form.link_type.target.modalLayouts.label">
         <source>form.link_type.target.modalLayouts.label</source>
         <target>Modale style</target>
       </trans-unit>
-      <trans-unit id="27" resname="form.link_type.target.modalLayouts.choices.modal">
+      <trans-unit id="58893b9979f7a" resname="form.link_type.target.modalLayouts.choices.modal">
         <source>form.link_type.target.modalLayouts.choices.modal</source>
         <target>Default</target>
       </trans-unit>
