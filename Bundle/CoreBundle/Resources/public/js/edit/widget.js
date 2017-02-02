@@ -56,15 +56,18 @@ $vic(document).on('click', '.v-modal--widget a[data-modal="update"], .v-modal--w
     var forms = [];
     $vic('[data-group="tab-widget-quantum"]').each(function(index, quantum) {
         // matches widget edit form with more than one mode available
-        var activeForm = $vic(quantum).find('.vic-tab-mode.vic-active .vic-tab-pane.vic-active > form');
+        var activeForm = $vic(quantum).find('[data-group="picker-' + index + '"][data-state="visible"] [data-flag="v-collapse"][data-state="visible"] > form');
+
         // matches widget edit form with only static mode available
         if (activeForm.length == 0) {
-            activeForm = $vic(quantum).find('.vic-tab-pane.vic-active form, form');
+            activeForm = $vic(quantum).find('[data-group="picker-' + index + '"][data-state="visible"] form');
         }
+
         // matches widget stylize form
-        if (activeForm.length == 0 && $vic(quantum).hasClass('vic-active')) {
+        if (activeForm.length == 0 && $vic(quantum).attr('data-state') == 'visible') {
             activeForm = $vic(quantum).find('form[name="widget_style"]');
         }
+
         forms = $vic.merge(forms, [activeForm]);
     });
 
