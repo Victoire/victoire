@@ -52,17 +52,25 @@
                 <div class="v-flex-grid v-flex-grid--justify-between / v-widget-nav">
                     <div class="v-flex-col">
                         <button class="v-btn v-btn--info v-mode-trigger" data-flag="v-drop v-mode-drop" data-href="#picker-modes-{{ class|lower }}-{{ quantum }}">
-                            <span class="v-mode-trigger__placeholder-label">{{ ('form.widget.tab.mode.label')|trans({}, 'victoire') }}</span>
-                            <span class="v-mode-trigger__entity-label">{{ ('form.widget.tab.mode_picker.label')|trans({}, 'victoire') }}</span>
-                            <span class="v-mode-trigger__query-label">{{ ('form.widget.tab.mode_query.label')|trans({}, 'victoire') }}</span>
+                            <span class="v-mode-trigger__placeholder-label">
+                                {{ ('form.widget.tab.mode.label')|trans({}, 'victoire') }}
+                            </span>
+
+                            <span class="v-mode-trigger__entity-label">
+                                {{ ('form.widget.tab.mode_picker.label')|trans({}, 'victoire') }}
+                            </span>
+
+                            <span class="v-mode-trigger__query-label">
+                                {{ ('form.widget.tab.mode_query.label')|trans({}, 'victoire') }}
+                            </span>
 
                             {% if is_business_entity_allowed(class|lower, view) %}
-                                <span class="v-mode-trigger__businessEntity-label">{{ ('form.widget.tab.mode_entity_instance.label')|trans({}, 'victoire') }} {{ ('form.widget.tab.entity_instance.label')|trans({}, 'victoire')|lower }}</span>
+                                <span class="v-mode-trigger__businessEntity-label">
+                                    {{ ('form.widget.tab.mode_entity_instance.label')|trans({}, 'victoire') }}
+                                </span>
                             {% endif %}
 
-                            <svg class="v-mode-trigger__caret" xmlns="http://www.w3.org/2000/svg" width="11" height="5" viewBox="281 33 11 5">
-                                <path fill="currentColor" fill-rule="evenodd" d="M289.716 33.189c.2942-.252.7696-.252 1.0638 0 .293.2517.2942.6594 0 .9122l-4.2472 3.6028c-.2942.2528-.7706.2528-1.0648 0l-4.2472-3.6028c-.294-.2528-.294-.6605 0-.9123.2942-.252.7696-.252 1.0638 0l3.7158 2.9544 3.716-2.9546z"/>
-                            </svg>
+                            {% include '@SVG/caret.html.twig' with { class: 'v-btn__ic v-btn__ic--after' } %}
                         </button>
 
                         <div class="v-drop" id="picker-modes-{{ class|lower }}-{{ quantum }}">

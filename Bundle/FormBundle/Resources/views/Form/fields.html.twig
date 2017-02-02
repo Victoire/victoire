@@ -19,19 +19,35 @@
 
     <div class="v-collapse v-collapse--plain" id="collapse-{{ id }}" data-flag="v-collapse">
         <div class="v-container">
+            {{ form_row(form.parent.quantum) }}
             {{ form_widget(form) }}
         </div>
     </div>
 {% endblock %}
 
 {% block criteria_row %}
-    <div class="vic-row">
-        <div class="vic-col-md-4">{{ ('victoire_criteria.'~form.vars.data.name~'.criteria.label')|trans }}</div>
-    </div>
-    <div class="vic-row">
-        <div class="vic-col-md-4">{{ form_widget(form.operator) }}</div>
-        <div class="vic-col-md-4">{{ form_widget(form.value) }}</div>
-        {{ form_row(form.name) }}
+    <div>
+        <label class="v-form-group__label">
+            {{ ('victoire_criteria.' ~ form.vars.data.name ~ '.criteria.label')|trans }}
+        </label>
+
+        <div class="v-grid">
+            <div class="v-col v-col--sm-6">
+                <div class="v-form-group">
+                    {{ form_widget(form.operator) }}
+                </div>
+            </div>
+
+            <div class="v-col v-col--sm-6">
+                <div class="v-form-group">
+                    {{ form_widget(form.value) }}
+                </div>
+            </div>
+
+            <div class="v-col">
+                {{ form_row(form.name) }}
+            </div>
+        </div>
     </div>
 {% endblock criteria_row %}
 
