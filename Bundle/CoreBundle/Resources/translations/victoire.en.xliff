@@ -238,6 +238,30 @@
         <source>victoire.widget.modal.title</source>
         <target>Widget %id% (%type%)</target>
       </trans-unit>
+      <trans-unit id="36" resname="menu.additionals">
+        <source>menu.additionals</source>
+        <target><![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="6" height="22" viewBox="29 13 6 22"><path fill="currentColor" fill-rule="evenodd" d="M30 32.5006C30 33.881 31.12 35 32.5006 35 33.881 35 35 33.881 35 32.5006 35 31.12 33.881 30 32.5006 30 31.12 30 30 31.12 30 32.5006zm0-8C30 25.88 31.12 27 32.5006 27 33.881 27 35 25.88 35 24.5006 35 23.12 33.881 22 32.5006 22 31.12 22 30 23.12 30 24.5006zM30 16.5c0 1.381 1.12 2.5 2.5006 2.5C33.881 19 35 17.881 35 16.5S33.881 14 32.5006 14C31.12 14 30 15.119 30 16.5z"></path></svg>]]></target>
+      </trans-unit>
+      <trans-unit id="37" resname="form.widget.tab.entities.label">
+          <source>form.widget.tab.entities.label</source>
+          <target>Entities</target>
+      </trans-unit>
+      <trans-unit id="38" resname="form.widget.tab.mode.label">
+          <source>form.widget.tab.mode.label</source>
+          <target>Mode</target>
+      </trans-unit>
+      <trans-unit id="39" resname="form.widget.tab.mode_picker.label">
+          <source>form.widget.tab.mode_picker.label</source>
+          <target>Selection mode</target>
+      </trans-unit>
+      <trans-unit id="40" resname="form.widget.tab.mode_query.label">
+          <source>form.widget.tab.mode_query.label</source>
+          <target>Request mode</target>
+      </trans-unit>
+      <trans-unit id="41" resname="form.widget.tab.mode_entity_instance.label">
+          <source>form.widget.tab.mode_entity_instance.label</source>
+          <target>Current object mode</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

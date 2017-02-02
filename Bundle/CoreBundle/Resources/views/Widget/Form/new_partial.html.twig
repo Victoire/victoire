@@ -15,7 +15,7 @@
 
             <div class="v-tabs-nav__item">
                 <a class="v-tabs-nav__anchor" data-flag="v-drop" data-position="bottomout center" data-href="#picker-entities-{{ quantum }}">
-                    entités
+                    {{ ('form.widget.tab.entities.label')|trans({}, 'victoire') }}
 
                     <svg style="margin-left: 0.4em;" xmlns="http://www.w3.org/2000/svg" width="8" height="6" viewBox="65 6 8 6">
                         <path fill="currentColor" fill-rule="evenodd" d="M65.94 7L69 10.0904 72.06 7l.94.9514L69 12l-4-4.0486"/>
@@ -44,58 +44,50 @@
     {% endif %}
 
     {% for class, form in forms %}
-        {% set isActive = class == widget.mode or widget.businessEntityId == class|lower and widget.mode == constant('MODE_BUSINESS_ENTITY', widget) %}
+        {% set isActive = (class == widget.mode) or (widget.businessEntityId == class|lower and widget.mode != constant('MODE_STATIC', widget)) %}
 
         <div class="v-collapse" id="picker-{{ class|lower }}-{{ quantum }}" data-group="picker-{{ quantum }}" data-flag="v-collapse"{% if isActive %} data-state="visible"{% endif %}>
             {% if class != constant('MODE_STATIC', widget) and is_granted('ROLE_VICTOIRE_DEVELOPER') %}
-                <button class="v-btn v-btn--info" data-flag="v-drop" data-href="#picker-modes-{{ class|lower }}-{{ quantum }}">Mode</button>
 
-                <div class="v-drop" id="picker-modes-{{ class|lower }}-{{ quantum }}">
-                    <nav class="v-drop__menu">
-                        <a class="v-drop__anchor" data-href="#picker-{{ class|lower }}-{{ quantum }}-entity">
-                            {{ ('form.widget.tab.picker.label')|trans({}, 'victoire') }}
-                        </a>
+                <div class="v-flex-grid v-flex-grid--justify-between / v-widget-nav">
+                    <div class="v-flex-col">
+                        <button class="v-btn v-btn--info v-mode-trigger" data-flag="v-drop v-mode-drop" data-href="#picker-modes-{{ class|lower }}-{{ quantum }}">
+                            <span class="v-mode-trigger__placeholder-label">{{ ('form.widget.tab.mode.label')|trans({}, 'victoire') }}</span>
+                            <span class="v-mode-trigger__entity-label">{{ ('form.widget.tab.mode_picker.label')|trans({}, 'victoire') }}</span>
+                            <span class="v-mode-trigger__query-label">{{ ('form.widget.tab.mode_query.label')|trans({}, 'victoire') }}</span>
 
-                        <a class="v-drop__anchor" data-href="#picker-{{ class|lower }}-{{ quantum }}-query">
-                            {{ ('form.widget.tab.query.label')|trans({}, 'victoire') }}
-                        </a>
+                            {% if is_business_entity_allowed(class|lower, view) %}
+                                <span class="v-mode-trigger__businessEntity-label">{{ ('form.widget.tab.mode_entity_instance.label')|trans({}, 'victoire') }} {{ ('form.widget.tab.entity_instance.label')|trans({}, 'victoire')|lower }}</span>
+                            {% endif %}
 
-                        {% if is_business_entity_allowed(class|lower, view) %}
-                            <a class="v-drop__anchor" data-href="#picker-{{ class|lower }}-{{ quantum }}-businessEntity">
-                                {{ ('form.widget.tab.entity_instance.label')|trans({}, 'victoire') }}
-                            </a>
-                        {% endif %}
-                    </nav>
+                            <svg class="v-mode-trigger__caret" xmlns="http://www.w3.org/2000/svg" width="11" height="5" viewBox="281 33 11 5">
+                                <path fill="currentColor" fill-rule="evenodd" d="M289.716 33.189c.2942-.252.7696-.252 1.0638 0 .293.2517.2942.6594 0 .9122l-4.2472 3.6028c-.2942.2528-.7706.2528-1.0648 0l-4.2472-3.6028c-.294-.2528-.294-.6605 0-.9123.2942-.252.7696-.252 1.0638 0l3.7158 2.9544 3.716-2.9546z"/>
+                            </svg>
+                        </button>
+
+                        <div class="v-drop" id="picker-modes-{{ class|lower }}-{{ quantum }}">
+                            <nav class="v-drop__menu">
+                                <a class="v-drop__anchor" data-collapse="show" data-href="#picker-{{ class|lower }}-{{ quantum }}-entity" data-activeclass="v-drop__anchor--active" data-triggerclass="v-mode-trigger--entity">
+                                    {{ ('form.widget.tab.picker.label')|trans({}, 'victoire') }}
+                                </a>
+
+                                <a class="v-drop__anchor" data-collapse="show" data-href="#picker-{{ class|lower }}-{{ quantum }}-query" data-activeclass="v-drop__anchor--active" data-triggerclass="v-mode-trigger--query">
+                                    {{ ('form.widget.tab.query.label')|trans({}, 'victoire') }}
+                                </a>
+
+                                {% if is_business_entity_allowed(class|lower, view) %}
+                                    <a class="v-drop__anchor" data-href="#picker-{{ class|lower }}-{{ quantum }}-businessEntity" data-activeclass="v-drop__anchor--active" data-triggerclass="v-mode-trigger--businessEntity">
+                                        {{ ('form.widget.tab.entity_instance.label')|trans({}, 'victoire') }}
+                                    </a>
+                                {% endif %}
+                            </nav>
+                        </div>
+                    </div>
                 </div>
 
-
-                <ul class="vic-nav vic-nav-tabs vic-modal-nav-tabs">
-                    <li class="{% if widget.mode == constant('MODE_ENTITY', widget) %}vic-active {% endif %}vic-seperate">
-                        <a href="#picker-{{ class|lower }}-{{ quantum }}-entity" data-toggle="vic-tab">
-                            {{ ('form.widget.tab.picker.label')|trans({}, 'victoire') }}
-                        </a>
-                    </li>
-
-                    <li{% if widget.mode == constant('MODE_QUERY', widget) %} class="vic-active"{% endif %}>
-                        <a href="#picker-{{ class|lower }}-{{ quantum }}-query" data-toggle="vic-tab">
-                            {{ ('form.widget.tab.query.label')|trans({}, 'victoire') }}
-                        </a>
-                    </li>
-
-                    {% if is_business_entity_allowed(class|lower, view) %}
-                        <li{% if widget.mode == constant('MODE_BUSINESS_ENTITY', widget) %} class="vic-active"{% endif %}>
-                            <a href="#picker-{{ class|lower }}-{{ quantum }}-businessEntity" data-toggle="vic-tab">
-                                {{ ('form.widget.tab.entity_instance.label')|trans({}, 'victoire') }}
-                            </a>
-                        </li>
-                    {% endif %}
-                </ul>
-
-                <div class="vic-tab-content vic-modal-tab-content">
-                    {% for subForm in form %}
-                        {{ subForm|raw }}
-                    {% endfor %}
-                </div>
+                {% for subForm in form %}
+                    {{ subForm|raw }}
+                {% endfor %}
             {% else %}
                 {% for el, subForm in form %}
                     {{ subForm|raw }}

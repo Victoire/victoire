@@ -1,0 +1,21 @@
+.#{$app--prefix}-mode-trigger__placeholder-label {
+  .#{$app--prefix}-mode-trigger--entity &,
+  .#{$app--prefix}-mode-trigger--query &,
+  .#{$app--prefix}-mode-trigger--businessEntity & {
+    display: none;
+  }
+}
+
+@each $mode in ('entity', 'query', 'businessEntity') {
+  .#{$app--prefix}-mode-trigger__#{$mode}-label {
+    display: none;
+
+    .#{$app--prefix}-mode-trigger--#{$mode} & {
+      display: inline;
+    }
+  }
+}
+
+.#{$app--prefix}-mode-trigger__caret {
+  margin-left: 0.4em;
+}
