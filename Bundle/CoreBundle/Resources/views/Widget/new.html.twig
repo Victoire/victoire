@@ -5,9 +5,18 @@
 {% block form_container %}
     {% block body %}
         {{ block('info') }}
+
         {% block form %}
             {% if entity != null %}
-                <div id="picker{% if entity %}-{{ entity }}{% endif %}-{{ quantum }}-{{ form.mode.vars.data }}" class="entity vic-tab-pane {% if form.mode.vars.data == widget.mode %}vic-active{% endif %}">
+                {% set isVisible = (form.mode.vars.data == widget.mode) or (form.mode.vars.data == 'entity' and widget.mode == 'static') %}
+
+                <div
+                    id="picker{% if entity %}-{{ entity }}{% endif %}-{{ quantum }}-{{ form.mode.vars.data }}"
+                    class="v-collapse{% if form.mode.vars.data == widget.mode %} hello-world{% endif %}"
+                    data-flag="v-collapse"
+                    data-group="picker{% if entity %}-{{ entity }}{% endif %}-{{ quantum }}"
+                    {% if isVisible %}data-state="visible"{% endif %}
+                >
                     {% block form_entity %}
                         {{ form_start(form) }}
                         {{ form_end(form) }}
@@ -20,6 +29,7 @@
                 {% endblock form_static %}
             {% endif %}
         {% endblock form %}
+
         {{ block('scripts') }}
     {% endblock body %}
 {% endblock form_container %}
