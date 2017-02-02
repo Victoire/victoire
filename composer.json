@@ -1,17 +1,11 @@
 {
     "name": "victoire/victoire",
     "type": "symfony-bundle",
-    "description": "Victoire is a Dynamic-CMS based on Symfony framework",
+    "description": "Victoire is a cms based on Symfony framework",
     "keywords": [
-        "DCMS",
         "Victoire",
-        "FriendsofVictoire",
-        "FoV",
-        "Dynamic",
         "CMS",
-        "WebStation",
-        "Symfony",
-        "Overlay"
+        "Symfony"
     ],
     "license": "MIT",
     "homepage": "http://victoire.io",
@@ -37,7 +31,7 @@
         "email": "contact@victoire.io"
     },
     "require": {
-        "php": ">=5.5.9",
+        "php": ">=5.4",
         "a2lix/translation-form-bundle": "^2.1",
         "doctrine/doctrine-bundle": "~1.4",
         "doctrine/data-fixtures": "~1.1.1",
