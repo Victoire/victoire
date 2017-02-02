@@ -259,18 +259,28 @@
     {% if expanded %}
         {% set attr = attr|merge({'class': attr.class|default(vic_horizontal_input_wrapper_class)}) %}
     {% endif %}
-    {% for child in form %}
-        {% if vic_widget_type != 'inline' %}
-        <div class="{{ multiple ? 'vic-checkbox' : 'vic-radio' }}">
-        {% endif %}
-            <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-                {{ form_widget(child, {'vic_horizontal_label_class': vic_horizontal_label_class, 'vic_horizontal_input_wrapper_class': vic_horizontal_input_wrapper_class, 'attr': {'class': attr.widget_class|default('')}}) }}
-                {{ child.vars.label|trans({}, translation_domain) }}
-            </label>
-        {% if vic_widget_type != 'inline' %}
-        </div>
-        {% endif %}
-    {% endfor %}
+
+    {% if vic_widget_type == 'inline' %}<div class="v-flex-grid">{% endif %}
+        {% for child in form %}
+            {% if vic_widget_type == 'inline' %}
+                {% set label_attr = label_attr|merge({'class': label_attr.class ~ ' v-flex-col'}) %}
+            {% else %}
+                {% set label_attr = label_attr|merge({'class': label_attr.class ~ ' v-form-group v-form-group--small'}) %}
+            {% endif %}
+
+            <div{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+                {{ form_widget(child, {
+                    'vic_horizontal_label_class': vic_horizontal_label_class,
+                    'choiceLabel': child.vars.label|trans({}, translation_domain),
+                    'vic_horizontal_input_wrapper_class': vic_horizontal_input_wrapper_class,
+                    'attr': {
+                        'class': attr.widget_class|default('')
+                    }
+                }) }}
+            </div>
+        {% endfor %}
+    {% if vic_widget_type == 'inline' %}</div>{% endif %}
+
     {{ block('form_message') }}
     {% if expanded %}
     {% endif %}
@@ -278,29 +288,29 @@
 {% endblock choice_widget_expanded %}
 
 {% block checkbox_widget %}
-{% spaceless %}
-{% if label is not same as(false) and label is empty %}
-    {% set label = name|humanize %}
-{% endif %}
-{% if form.parent != null and 'choice' not in form.parent.vars.block_prefixes %}
-    <div class="vic-checkbox">
-{% endif %}
+    {% spaceless %}
+        {% if label is not same as(false) and label is empty %}
+            {% set label = name|humanize %}
+        {% endif %}
 
-{% if form.parent != null and 'choice' not in form.parent.vars.block_prefixes and vic_label_render %}
-    <label {% if not vic_horizontal %}class="vic-checkbox-inline"{% endif %}>
-{% endif %}
-        <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %}/>
-{% if form.parent != null and 'choice' not in form.parent.vars.block_prefixes %}
-    {% if vic_label_render and vic_widget_vic_checkbox_label in ['both', 'widget'] %}
-        {{ label|trans({}, translation_domain) }}
-    </label>
-    {% endif %}
-{% endif %}
-{% if form.parent != null and 'choice' not in form.parent.vars.block_prefixes %}
-    </div>
-    {{ block('form_message') }}
-{% endif %}
-{% endspaceless %}
+        {% if form.parent != null and 'choice' not in form.parent.vars.block_prefixes %}<div>{% endif %}
+            <label class="v-checkbox {% if not vic_horizontal %} vic-checkbox-inline{% endif %}">
+                {% set attr = attr|merge({'class': attr.class|default('') ~ ' v-checkbox__native'}) %}
+                <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %}/>
+                <span class="v-checkbox__indicator"></span>
+
+                {% if form.parent != null and 'choice' not in form.parent.vars.block_prefixes %}
+                    {% if vic_label_render and vic_widget_vic_checkbox_label in ['both', 'widget'] %}
+                        {{ label|trans({}, translation_domain) }}
+                    {% endif %}
+                {% endif %}
+
+                {% if choiceLabel|default(false) %}
+                    {{ choiceLabel }}
+                {% endif %}
+            </label>
+        {% if form.parent != null and 'choice' not in form.parent.vars.block_prefixes %}</div>{{ block('form_message') }}{% endif %}
+    {% endspaceless %}
 {% endblock checkbox_widget %}
 
 {% block date_widget %}
