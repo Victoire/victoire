@@ -11,16 +11,17 @@
 
 
 {% block criteria_collection_row %}
+    <a class="v-btn v-btn--warning" data-collapse="toggle" data-href="#collapse-{{ id }}">
+        {% include '@SVG/quantum.html.twig' with { class: 'v-btn__ic v-btn__ic--before' } %}
+        {{ 'victoire.widget.type.criterias.label'|trans({}, 'victoire') }}
+        {% include '@SVG/caret.html.twig' with { class: 'v-btn__ic v-btn__ic--after' } %}
+    </a>
 
-    <div class="vic-criterias-container">
-        <a class="vic-pull-right" href="#" onclick="$vic(this).parent().find('.vic-criterias-form-container').slideToggle();">
-            {{ form_label(form) }} <i class="fa fa-crosshairs"></i>
-        </a>
-        <div style="display: none" class="vic-criterias-form-container">
+    <div class="v-collapse v-collapse--plain" id="collapse-{{ id }}" data-flag="v-collapse">
+        <div class="v-container">
             {{ form_widget(form) }}
         </div>
     </div>
-
 {% endblock %}
 
 {% block criteria_row %}

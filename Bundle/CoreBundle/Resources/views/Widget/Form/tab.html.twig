@@ -9,7 +9,7 @@
         data-href="#widget-{{ id }}-tab-pane"
         data-activeclass="v-btn--quantum-active"
     >
-        {% include "@SVG/quantum.html.twig" %}
+        {% include "@SVG/quantum.html.twig" with { class: 'v-btn--quantum__ic' } %}
         {{ name|truncate(2, false, '') }}
     </button>
 </div>
