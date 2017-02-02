@@ -58,7 +58,9 @@ class WidgetType extends AbstractType
                 'required' => false,
             ]);
         $builder->add('theme', HiddenType::class);
-        $builder->add('quantum', HiddenType::class);
+        $builder->add('quantum', null, [
+            'label' => 'victoire.widget.type.quantum.label',
+        ]);
 
         //add the slot to the form
         $builder->add('slot', HiddenType::class, []);

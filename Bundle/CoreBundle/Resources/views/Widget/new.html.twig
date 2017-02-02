@@ -1,5 +1,4 @@
 {% form_theme form 'VictoireFormBundle:Form:fields.html.twig' %}
-
 {% trans_default_domain "victoire" %}
 
 {% block form_container %}
@@ -10,22 +9,38 @@
             {% if entity != null %}
                 {% set isVisible = (form.mode.vars.data == widget.mode) or (form.mode.vars.data == 'entity' and widget.mode == 'static') %}
 
-                <div
-                    id="picker{% if entity %}-{{ entity }}{% endif %}-{{ quantum }}-{{ form.mode.vars.data }}"
-                    class="v-collapse{% if form.mode.vars.data == widget.mode %} hello-world{% endif %}"
-                    data-flag="v-collapse"
-                    data-group="picker{% if entity %}-{{ entity }}{% endif %}-{{ quantum }}"
-                    {% if isVisible %}data-state="visible"{% endif %}
-                >
-                    {% block form_entity %}
-                        {{ form_start(form) }}
-                        {{ form_end(form) }}
-                    {% endblock form_entity %}
-                </div>
+                {% block entity_collapse %}
+                    <div
+                        id="picker{% if entity %}-{{ entity }}{% endif %}-{{ quantum }}-{{ form.mode.vars.data }}"
+                        class="v-collapse{% if form.mode.vars.data == widget.mode %} hello-world{% endif %}"
+                        data-flag="v-collapse"
+                        data-group="picker{% if entity %}-{{ entity }}{% endif %}-{{ quantum }}"
+                        {% if isVisible %}data-state="visible"{% endif %}
+                    >
+                        {% block form_entity %}
+                            {% block form_entity_start %}{{ form_start(form) }}{% endblock %}
+                                {{ block('form_entity_base_before') }}
+                                {% block form_entity_base %}{{ block('form_base') }}{% endblock %}
+                                {{ block('form_entity_base_after') }}
+
+                                {{ block('form_entity_body_before') }}
+                                {% block form_entity_body %}{% endblock %}
+                                {{ block('form_entity_body_after') }}
+                            {% block form_entity_end %}{{ form_end(form) }}{% endblock %}
+                        {% endblock form_entity %}
+                    </div>
+                {% endblock entity_collapse %}
             {% else %}
                 {% block form_static %}
-                    {{ form_start(form) }}
-                    {{ form_end(form) }}
+                    {% block form_static_start %}{{ form_start(form) }}{% endblock %}
+                        {{ block('form_static_base_before') }}
+                        {% block form_static_base %}{{ block('form_base') }}{% endblock %}
+                        {{ block('form_static_base_after') }}
+
+                        {{ block('form_static_body_before') }}
+                        {% block form_static_body %}{% endblock %}
+                        {{ block('form_static_body_after') }}
+                    {% block form_static_end %}{{ form_end(form) }}{% endblock %}
                 {% endblock form_static %}
             {% endif %}
         {% endblock form %}
@@ -33,3 +48,17 @@
         {{ block('scripts') }}
     {% endblock body %}
 {% endblock form_container %}
+
+{% block form_base %}
+    {{ block('form_base_start') }}
+
+    {% block form_base_criterias %}{{ form_row(form.criterias) }}{% endblock %}
+
+    {% block form_base_asynchronous %}
+        <div class="v-form-group">
+            {{ form_widget(form.asynchronous) }}
+        </div>
+    {% endblock form_base_asynchronous %}
+
+    {{ block('form_base_end') }}
+{% endblock %}

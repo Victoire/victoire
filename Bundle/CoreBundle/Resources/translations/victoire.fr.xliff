@@ -228,7 +228,7 @@
       </trans-unit>
       <trans-unit id="58893b9966c2d" resname="victoire.widget.type.criterias.label">
         <source>victoire.widget.type.criterias.label</source>
-        <target>Critères</target>
+        <target>Quantum</target>
       </trans-unit>
       <trans-unit id="58893b9966c5a" resname="victoire.widget.modal.title">
         <source>victoire.widget.modal.title</source>
@@ -257,6 +257,10 @@
       <trans-unit id="41" resname="form.widget.tab.mode_entity_instance.label">
           <source>form.widget.tab.mode_entity_instance.label</source>
           <target>Mode objet courant</target>
+      </trans-unit>
+      <trans-unit id="42" resname="victoire.widget.type.quantum.label">
+          <source>victoire.widget.type.quantum.label</source>
+          <target>Nom du quantum</target>
       </trans-unit>
     </body>
   </file>
