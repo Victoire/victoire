@@ -190,7 +190,7 @@ services:
 
 
     twig.extension.routing:
-        class: 'Victoire\Bundle\CoreBundle\Twig\Extension\RoutingExtention'
+        class: 'Victoire\Bundle\CoreBundle\Twig\Extension\RoutingExtension'
         public: false
         arguments:
             - '@victoire_page.page_helper'

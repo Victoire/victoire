@@ -40,6 +40,6 @@ class GlobalsExtension extends \Twig_Extension implements Twig_Extension_Globals
      */
     public function getName()
     {
-        return 'Globals_extention';
+        return 'Globals_extension';
     }
 }
